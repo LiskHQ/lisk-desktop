@@ -9,12 +9,11 @@ const TransactionAddress = ({
 }) => {
   const account = [...bookmarks.LSK, ...bookmarks.BTC].filter(acc => acc.address === address);
 
-  const renderAddress = () => {
-    if (token === tokenMap.LSK.key) {
-      return account.length ? account[0].title : address;
-    }
-    return account.length ? account[0].title : address.replace(regex.btcAddressTrunk, '$1...$3');
-  };
+  const formatter = (token === tokenMap.LSK.key)
+    ? value => value
+    : (value => value.replace(regex.btcAddressTrunk, '$1...$3'));
+
+  const renderAddress = () => (account.length ? account[0].title : formatter(address));
 
   return (
     <div className={`${styles.wrapper} transaction-address`}>
