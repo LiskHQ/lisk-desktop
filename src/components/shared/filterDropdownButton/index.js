@@ -33,6 +33,7 @@ class FilterDropdownButton extends React.Component {
     this.applyFilters = this.applyFilters.bind(this);
     this.setChildRef = this.setChildRef.bind(this);
     this.extendFilters = this.extendFilters.bind(this);
+    this.renderFields = this.renderFields.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -87,7 +88,9 @@ class FilterDropdownButton extends React.Component {
     this.setState({ areFiltersExtended: !this.state.areFiltersExtended });
   }
 
-  renderFields(name, label, placeholder, valueFormatter, type) {
+  renderFields({
+    name, label, placeholder, valueFormatter, type,
+  }) {
     const Component = filterComponents[type];
     const props = {
       name, label, placeholder, valueFormatter,
@@ -148,16 +151,12 @@ class FilterDropdownButton extends React.Component {
       >
         <form onSubmit={this.applyFilters} className={`${styles.form} filter-container`}>
           <div className={`${styles.container} ${areFiltersExtended && styles.extendedContainer}`}>
-            {primaryFilters.map(({
-              name, label, placeholder, valueFormatter, type,
-            }) => this.renderFields(name, label, placeholder, valueFormatter, type))}
+            {primaryFilters.map(this.renderFields)}
             {!areFiltersExtended && this.renderFooter()}
           </div>
           {areFiltersExtended && (
           <div className={styles.container}>
-            {secondaryFilters.map(({
-              name, label, placeholder, valueFormatter, type,
-            }) => this.renderFields(name, label, placeholder, valueFormatter, type))}
+            {secondaryFilters.map(this.renderFields)}
             {this.renderFooter()}
           </div>
           )}
