@@ -11,7 +11,7 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './delegatesTable.css';
 
 const DelegatesTable = ({
-  columns, delegates, tabs, t,
+  columns, delegates, tabs, t, filters, applyFilters,
 }) => {
   const data = delegates.data.map(d => ({ ...d, id: d.username }));
 
@@ -49,12 +49,25 @@ const DelegatesTable = ({
     delegates.loadData({ offset: delegates.data.length });
   };
 
+  const handleFilter = ({ target: { value } }) => {
+    applyFilters({
+      ...filters,
+      search: value,
+    });
+  };
+
   return (
     <Box isLoading={delegates.isLoading}>
       <Box.Header>
         <Box.Tabs {...tabs} />
         <span>
-          <Input size="xs" placeholder={t('Filter by name...')} />
+          <Input
+            onChange={handleFilter}
+            value={filters.search}
+            className="filter-by-name"
+            size="xs"
+            placeholder={t('Filter by name...')}
+          />
         </span>
       </Box.Header>
       <Box.Content className={styles.content}>

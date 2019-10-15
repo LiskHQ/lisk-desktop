@@ -64,6 +64,15 @@ describe('DelegatesTable page', () => {
     );
   });
 
+  it('allows to filter delegates by by name', () => {
+    const { username } = delegates[0];
+    const wrapper = mount(<DelegatesTable {...{ ...props, delegates }} />);
+    wrapper.find('input.filter-by-name').simulate('change', { target: { value: username } });
+    expect(props.loadDelegates).toHaveBeenCalledWith(
+      expect.objectContaining({ q: username }),
+    );
+  });
+
   it('shows vote checkboxes if props.votingModeEnabled', () => {
     const wrapper = mount(<DelegatesTable {...{ ...props, delegates, votes: {} }} />);
     expect(wrapper.find('CheckBox')).toHaveLength(0);

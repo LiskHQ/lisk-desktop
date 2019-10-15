@@ -62,7 +62,9 @@ function withDelegatesData() {
       }
 
       applyFilters(filters) {
-        this.setState({ filters });
+        this.setState({ filters }, () => {
+          this.loadDelegates({ q: this.state.filters.search });
+        });
       }
 
       render() {

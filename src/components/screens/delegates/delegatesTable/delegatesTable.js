@@ -64,11 +64,14 @@ const DelegatesTable = ({
       className: 'not-voted',
     }],
     active: filters.tab,
-    onClick: ({ value }) => applyFilters({ tab: value }),
+    onClick: ({ value }) => applyFilters({ tab: value, search: '' }),
   };
 
   return (
-    <ShaderDelegatesTable {...{ columns, delegates, tabs }} />
+    <ShaderDelegatesTable {...{
+      columns, delegates, tabs, applyFilters, filters,
+    }}
+    />
   );
 };
 

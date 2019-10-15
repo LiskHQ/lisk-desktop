@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import DelegatesTable from '.';
 import delegates from '../../../../test/constants/delegates';
 
-describe('DelegatesTable page', () => {
+describe('DelegatesTable', () => {
   let props;
   let delegatesWitData;
 
@@ -26,6 +26,7 @@ describe('DelegatesTable page', () => {
       tabs: {
         tabs: [{ name: 'Active delegates' }, { name: 'Standby delegates' }],
       },
+      filters: {},
     };
     delegatesWitData = {
       ...props.blocks,
