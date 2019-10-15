@@ -13,7 +13,7 @@ class AccountVisualWithAddress extends React.Component {
     const { isMediumViewPort, bookmarks, showBookmarkedAddress } = this.props;
 
     if (showBookmarkedAddress) {
-      const bookmarkedAddress = bookmarks.LSK.find(element => element.address === address);
+      const bookmarkedAddress = bookmarks[this.props.token.active].find(element => element.address === address);
       if (bookmarkedAddress) return bookmarkedAddress.title;
     }
 
