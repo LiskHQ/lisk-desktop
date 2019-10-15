@@ -5,6 +5,8 @@ import DelegatesTable from './delegatesTable';
 import accounts from '../../../../../test/constants/accounts';
 import delegates from '../../../../../test/constants/delegates';
 
+jest.mock('../../../../constants/voting', () => ({ maxCountOfVotes: 6 }));
+
 describe('DelegatesTable page', () => {
   let props;
 

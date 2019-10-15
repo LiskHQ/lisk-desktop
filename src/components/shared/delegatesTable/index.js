@@ -5,10 +5,12 @@ import { Input } from '../../toolbox/inputs';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { tokenMap } from '../../../constants/tokens';
 import Box from '../../toolbox/box';
+import Illustration from '../../toolbox/illustration';
 import LiskAmount from '../liskAmount';
 import Table from '../../toolbox/table';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './delegatesTable.css';
+import votingConst from '../../../constants/voting';
 
 const DelegatesTable = ({
   columns, delegates, tabs, t, filters, applyFilters,
@@ -71,11 +73,21 @@ const DelegatesTable = ({
         </span>
       </Box.Header>
       <Box.Content className={styles.content}>
-        <Table {...{ columns, data, rowClassName: 'delegate-row' }} />
+        {delegates.data.length && !delegates.isLoading
+          ? <Table {...{ columns, data, rowClassName: 'delegate-row' }} />
+          : (
+            <Box.EmptyState>
+              <Illustration name="emptyWallet" />
+              <h3>{`${delegates.error || t('No delegates found.')}`}</h3>
+            </Box.EmptyState>
+          )
+      }
       </Box.Content>
-      <Box.FooterButton onClick={handleLoadMore} className="loadMore">
-        {t('Load more')}
-      </Box.FooterButton>
+      {delegates.data.length >= votingConst.maxCountOfVotes && (
+        <Box.FooterButton onClick={handleLoadMore} className="loadMore">
+          {t('Load more')}
+        </Box.FooterButton>
+      )}
     </Box>
   );
 };
