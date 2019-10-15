@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import DelegatesTable from './delegatesTable';
+import accounts from '../../../../../test/constants/accounts';
 import delegates from '../../../../../test/constants/delegates';
 
 describe('DelegatesTable page', () => {
@@ -12,6 +13,8 @@ describe('DelegatesTable page', () => {
       delegates: [],
       loadDelegates: jest.fn(({ callback }) => callback()),
       votes: {},
+      loadVotes: jest.fn(),
+      account: accounts.genesis,
     };
   });
 

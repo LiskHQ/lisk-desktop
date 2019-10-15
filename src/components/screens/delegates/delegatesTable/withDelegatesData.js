@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPendingVotesList } from '../../../../utils/voting';
 import voteFilters from '../../../../constants/voteFilters';
 
 function withDelegatesData() {
@@ -20,6 +21,12 @@ function withDelegatesData() {
       }
 
       componentDidMount() {
+        const { account, votes } = this.props;
+        if (account.serverPublicKey && getPendingVotesList(votes).length === 0) {
+          this.props.loadVotes({
+            address: account.address,
+          });
+        }
         if (this.props.delegates.length === 0) {
           this.loadDelegates({});
         }
