@@ -1,5 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 import { tokenMap } from '../../../../constants/tokens';
 import AvatarWithNameAndAddress from '../../../shared/avatarWithNameAndAddress';
 import LiskAmount from '../../../shared/liskAmount';
@@ -22,7 +23,12 @@ const DelegatesTable = ({
     { id: 'productivity' },
     {
       id: 'vote',
-      header: t('Vote weight'),
+      header: <React.Fragment>
+        {t('Vote weight')}
+        <Tooltip className="showOnLeft">
+          <p>{t('Sum of LSK in all accounts who have voted for this delegate.')}</p>
+        </Tooltip>
+      </React.Fragment>,
       /* eslint-disable-next-line react/display-name */
       getValue: ({ vote }) => <strong><LiskAmount val={vote} token={tokenMap.LSK.key} /></strong>,
       className: grid['col-xs-2'],

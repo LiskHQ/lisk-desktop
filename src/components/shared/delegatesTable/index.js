@@ -7,6 +7,7 @@ import { tokenMap } from '../../../constants/tokens';
 import Box from '../../toolbox/box';
 import LiskAmount from '../liskAmount';
 import Table from '../../toolbox/table';
+import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './delegatesTable.css';
 
 const DelegatesTable = ({
@@ -21,13 +22,23 @@ const DelegatesTable = ({
       className: grid['col-xs-1'],
     },
     rewards: {
-      header: t('Forged'),
+      header: <React.Fragment>
+        {t('Forged')}
+        <Tooltip className="showOnLeft">
+          <p>{t('Sum of all LSK awarded to a delegate for each block successfully generated on the blockchain.')}</p>
+        </Tooltip>
+      </React.Fragment>,
       /* eslint-disable-next-line react/display-name */
       getValue: ({ rewards }) => <LiskAmount val={rewards} token={tokenMap.LSK.key} />,
       className: grid['col-xs-2'],
     },
     productivity: {
-      header: t('Productivity'),
+      header: <React.Fragment>
+        {t('Productivity')}
+        <Tooltip className="showOnLeft">
+          <p>{t('Percentage of successfully forged blocks of when the delegate should have forged a block of transactions.')}</p>
+        </Tooltip>
+      </React.Fragment>,
       getValue: ({ productivity }) => `${formatAmountBasedOnLocale({ value: productivity })} %`,
       className: grid['col-xs-2'],
     },
