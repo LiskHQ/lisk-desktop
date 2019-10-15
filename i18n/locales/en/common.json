@@ -215,6 +215,7 @@
   "Insufficient funds (Fee: {{fee}} LSK)": "Insufficient funds (Fee: {{fee}} LSK)",
   "Invalid PIN": "Invalid PIN",
   "Invalid address": "Invalid address",
+  "Invalid address or public key": "Invalid address or public key",
   "Invalid amount": "Invalid amount",
   "Invalid dates": "Invalid dates",
   "Is Blockchain Secure?": "Is Blockchain Secure?",

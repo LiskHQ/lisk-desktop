@@ -30,7 +30,7 @@ class AddressFilter extends React.Component {
       let error = false;
 
       if (validateAddress(tokenMap.LSK.key, value) !== 0 && validateLSKPublicKey(value) !== 0 && value !== '') {
-        feedback = t('Invalid address');
+        feedback = t('Invalid address or public key');
         error = true;
       }
 
