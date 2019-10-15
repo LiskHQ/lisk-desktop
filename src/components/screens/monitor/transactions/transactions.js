@@ -21,6 +21,8 @@ const Transactions = ({ t, transactions }) => {
     placeholder: t('Your message'),
     name: 'message',
     type: 'text',
+    // TODO: Enable field when API allows message param
+    disabled: true,
   }, {
     label: t('Recipient'),
     placeholder: t('Address or Public key'),

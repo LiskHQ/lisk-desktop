@@ -89,7 +89,7 @@ class FilterDropdownButton extends React.Component {
   }
 
   renderFields({
-    name, label, placeholder, valueFormatter, type,
+    name, label, placeholder, valueFormatter, type, disabled,
   }) {
     const Component = filterComponents[type];
     const props = {
@@ -97,6 +97,7 @@ class FilterDropdownButton extends React.Component {
     };
     return (
       <Component
+        disabled={disabled}
         key={name}
         showRightDropdown={type === 'date-range' && this.state.areFiltersExtended}
         {...props}
