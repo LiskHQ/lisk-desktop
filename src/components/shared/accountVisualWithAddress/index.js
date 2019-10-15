@@ -15,7 +15,9 @@ class AccountVisualWithAddress extends React.Component {
     if (showBookmarkedAddress) {
       const bookmarkedAddress = bookmarks.LSK.find(element => element.address === address);
       if (bookmarkedAddress) return bookmarkedAddress.title;
-    } else if (isMediumViewPort) {
+    }
+
+    if (isMediumViewPort) {
       return address.replace(regex.lskAddressTrunk, '$1...$3');
     }
 
