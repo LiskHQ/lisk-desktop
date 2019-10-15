@@ -29,12 +29,12 @@ const Transactions = ({ t, transactions }) => {
     type: 'address',
   }, {
     label: t('Type'),
-    placeholder: t('Eg. 1,5'),
+    placeholder: t('Eg. {{value}}', { value: '1,5' }),
     name: 'type',
     type: 'text',
   }, {
     label: t('Height'),
-    placeholder: t('Eg. 10180477'),
+    placeholder: t('Eg. {{value}}', { value: '10180477' }),
     name: 'height',
     type: 'integer',
   }];
