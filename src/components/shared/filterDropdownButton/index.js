@@ -95,6 +95,7 @@ class FilterDropdownButton extends React.Component {
     return (
       <Component
         key={name}
+        showRightDropdown={type === 'date-range' && this.state.areFiltersExtended}
         {...props}
         filters={this.getFilters({ name, type })}
         updateCustomFilters={this.handleFiltersChange}

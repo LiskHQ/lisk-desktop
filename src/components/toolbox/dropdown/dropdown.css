@@ -77,6 +77,19 @@
     }
   }
 
+  &:global(.showRight) {
+    left: calc(100% + 5px);
+    transform-origin: calc(100% + 5px) 5px;
+    top: -1px;
+
+    & .dropdownArrow {
+      left: -18px;
+      transform-origin: bottom;
+      transform: rotate(-90deg);
+      top: 9px;
+    }
+  }
+
   &:global(.dark) {
     background: var(--color-maastricht-blue);
     border: 1px solid var(--light-border-color);
