@@ -1,15 +1,12 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { connect } from 'react-redux';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import { tokenMap } from '../../../constants/tokens';
-import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
 import Icon from '../../toolbox/icon';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import LiskAmount from '../liskAmount';
-import regex from '../../../utils/regex';
 import Illustration from '../../toolbox/illustration';
 import styles from './transactionsTable.css';
 import FilterDropdownButton from '../filterDropdownButton';
@@ -18,8 +15,7 @@ import withFilters from '../../../utils/withFilters';
 import FilterBar from '../filterBar';
 import routes from '../../../constants/routes';
 import Table from '../../toolbox/table';
-import transactionTypeIcons from '../../../constants/transactionTypeIcons';
-import { transactionNames } from '../../../constants/transactionTypes';
+import AccountVisualWithAddress from '../accountVisualWithAddress';
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -39,39 +35,6 @@ class TransactionsTable extends React.Component {
     }));
   }
 
-  getTransformedAddress(address) {
-    const { isMediumViewPort, bookmarks } = this.props;
-    const bookmarkedAddress = bookmarks.LSK.find(element => element.address === address);
-
-    if (bookmarkedAddress) return bookmarkedAddress.title;
-    if (isMediumViewPort) return address.replace(regex.lskAddressTrunk, '$1...$3');
-    return address;
-  }
-
-  renderAddressField(transaction, key) {
-    const { t } = this.props;
-
-    if (transaction.type !== 0 && key === 'recipientId') {
-      return (
-        <div className={`${styles.address}`}>
-          <Icon
-            className={styles.txIcon}
-            name={transactionTypeIcons[transaction.type] || transactionTypeIcons.default}
-          />
-          <span className={styles.addressValue}>{transactionNames(t)[transaction.type]}</span>
-        </div>
-      );
-    }
-    return (
-      <div className={`${styles.address}`}>
-        <AccountVisual address={transaction[key]} size={32} />
-        <span className={styles.addressValue}>
-          {this.getTransformedAddress(transaction[key])}
-        </span>
-      </div>
-    );
-  }
-
   render() {
     const {
       title,
@@ -86,6 +49,7 @@ class TransactionsTable extends React.Component {
       clearAllFilters,
       changeSort,
       sort,
+      isMediumViewPort,
     } = this.props;
 
     const roundSize = 101;
@@ -130,12 +94,16 @@ class TransactionsTable extends React.Component {
                   {
                     header: t('Sender'),
                     className: grid['col-xs-3'],
-                    getValue: transaction => this.renderAddressField(transaction, 'senderId'),
+                    getValue: transaction => (
+                      <AccountVisualWithAddress address={transaction.senderId} isMediumViewPort={isMediumViewPort} transactionSubject="senderId" transactionType={transaction.type} showBookmarkedAddress />
+                    ),
                   },
                   {
                     header: t('Recipient'),
                     className: grid['col-xs-3'],
-                    getValue: transaction => this.renderAddressField(transaction, 'recipientId'),
+                    getValue: transaction => (
+                      <AccountVisualWithAddress address={transaction.recipientId} isMediumViewPort={isMediumViewPort} transactionSubject="recipientId" transactionType={transaction.type} showBookmarkedAddress />
+                    ),
                   },
                   {
                     header: t('Date'),
@@ -218,10 +186,6 @@ const defaultFilters = {
 
 const defaultSort = 'timestamp:desc';
 
-const mapStateToProps = state => ({
-  bookmarks: state.bookmarks,
-});
-
-export default connect(mapStateToProps)(withFilters('transactions', defaultFilters, defaultSort)(
+export default withFilters('transactions', defaultFilters, defaultSort)(
   withResizeValues(withTranslation()(TransactionsTable)),
-));
+);

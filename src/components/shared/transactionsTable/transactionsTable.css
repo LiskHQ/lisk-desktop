@@ -1,14 +1,5 @@
 @import '../../../app/variables.css';
 
-.address {
-  display: flex;
-  align-items: center;
-
-  & .addressValue {
-    margin-left: 10px;
-  }
-}
-
 .sortingColumn {
   cursor: pointer;
 }
@@ -37,11 +28,6 @@
   align-items: center;
   text-align: center;
   max-width: 150px;
-}
-
-.txIcon {
-  width: 32px;
-  height: 32px;
 }
 
 .content {
