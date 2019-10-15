@@ -21,6 +21,7 @@ describe('DelegatesTable page', () => {
         },
       },
       loadVotes: jest.fn(),
+      voteToggled: jest.fn(),
       account: accounts.genesis,
     };
   });
@@ -61,5 +62,12 @@ describe('DelegatesTable page', () => {
     expect(props.loadDelegates).toHaveBeenCalledWith(
       expect.objectContaining({ offset: delegates.length }),
     );
+  });
+
+  it('shows vote checkboxes if props.votingModeEnabled', () => {
+    const wrapper = mount(<DelegatesTable {...{ ...props, delegates, votes: {} }} />);
+    expect(wrapper.find('CheckBox')).toHaveLength(0);
+    wrapper.setProps({ votingModeEnabled: true });
+    expect(wrapper.find('CheckBox')).toHaveLength(delegates.length);
   });
 });
