@@ -3,6 +3,8 @@ import { mount } from 'enzyme';
 import Transactions from './transactions';
 import transactions from '../../../../../test/constants/transactions';
 
+jest.mock('../../../../constants/monitor', () => ({ DEFAULT_LIMIT: 4 }));
+
 describe('Transactions monitor page', () => {
   const props = {
     t: key => key,
@@ -34,10 +36,10 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to load more transactions', () => {
-    const wrapper = mount(<Transactions {...props} />);
+    const wrapper = mount(<Transactions {... { ...props, transactions: transactionsWithData }} />);
     wrapper.find('button.load-more').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith(
-      { offset: props.transactions.data.length, sort },
+      { offset: transactionsWithData.data.length, sort },
     );
   });
 
