@@ -71,7 +71,7 @@ const liskServiceApi = {
     path: '/api/v1/transactions',
     transformResponse: response => response.data,
     searchParams: {
-      limit: 20,
+      limit: DEFAULT_LIMIT,
       ...(dateFrom && { from: formatDate(dateFrom) }),
       ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
       ...(amountFrom && { min: utils.convertLSKToBeddows(amountFrom) }),
