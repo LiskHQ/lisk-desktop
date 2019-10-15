@@ -33,10 +33,15 @@ function withDelegatesData() {
       }
 
       getDelegatesData() {
+        const tabFilters = {
+          [voteFilters.all]: () => true,
+          [voteFilters.voted]: ({ voteStatus }) => voteStatus && voteStatus.confirmed,
+          [voteFilters.notVoted]: ({ voteStatus }) => !voteStatus || !voteStatus.confirmed,
+        };
         return this.props.delegates.map(d => ({
           ...d,
-          voteStatus: this.props.votes[d.address],
-        }));
+          voteStatus: this.props.votes[d.username],
+        })).filter(tabFilters[this.state.filters.tab]);
       }
 
       loadDelegates({ q = '', offset = 0 }) {
