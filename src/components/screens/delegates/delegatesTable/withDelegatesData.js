@@ -21,7 +21,7 @@ function withDelegatesData() {
 
       componentDidMount() {
         if (this.props.delegates.length === 0) {
-          this.loadDelegates();
+          this.loadDelegates({});
         }
       }
 
@@ -32,7 +32,7 @@ function withDelegatesData() {
         }));
       }
 
-      loadDelegates(q = '', offset = 0) {
+      loadDelegates({ q = '', offset = 0 }) {
         this.setState({ isLoading: true }, () => {
           this.props.loadDelegates({
             offset,

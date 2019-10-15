@@ -34,8 +34,12 @@ const DelegatesTable = ({
   };
   columns = columns.map(c => ({ ...columnDefaults[c.id], ...c }));
 
+  const handleLoadMore = () => {
+    delegates.loadData({ offset: delegates.data.length });
+  };
+
   return (
-    <Box>
+    <Box isLoading={delegates.isLoading}>
       <Box.Header>
         <Box.Tabs {...tabs} />
         <span>
@@ -45,6 +49,9 @@ const DelegatesTable = ({
       <Box.Content className={styles.content}>
         <Table {...{ columns, data }} />
       </Box.Content>
+      <Box.FooterButton onClick={handleLoadMore} className="loadMore">
+        {t('Load more')}
+      </Box.FooterButton>
     </Box>
   );
 };

@@ -35,4 +35,12 @@ describe('DelegatesTable page', () => {
     wrapper.find('.tab.voted').simulate('click');
     expect(wrapper.find('.tab.voted')).toHaveClassName('active');
   });
+
+  it('allows to load more delegates', () => {
+    const wrapper = mount(<DelegatesTable {...{ ...props, delegates }} />);
+    wrapper.find('button.loadMore').simulate('click');
+    expect(props.loadDelegates).toHaveBeenCalledWith(
+      expect.objectContaining({ offset: delegates.length }),
+    );
+  });
 });
