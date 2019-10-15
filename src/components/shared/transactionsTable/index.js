@@ -95,6 +95,7 @@ class TransactionsTable extends React.Component {
                   {
                     header: t('Sender'),
                     className: grid['col-xs-3'],
+                    id: 'sender',
                     getValue: transaction => (
                       <AccountVisualWithAddress
                         address={transaction.senderId}
@@ -108,6 +109,7 @@ class TransactionsTable extends React.Component {
                   {
                     header: t('Recipient'),
                     className: grid['col-xs-3'],
+                    id: 'recipient',
                     getValue: transaction => (
                       <AccountVisualWithAddress
                         address={transaction.recipientId}
@@ -139,6 +141,7 @@ class TransactionsTable extends React.Component {
                   {
                     header: t('Fee'),
                     className: grid['col-xs-1'],
+                    id: 'fee',
                     getValue: transaction => (
                       <Tooltip
                         title={t('Transaction')}
@@ -153,6 +156,7 @@ class TransactionsTable extends React.Component {
                   {
                     header: t('Status'),
                     className: grid['col-xs-1'],
+                    id: 'status',
                     getValue: transaction => (
                       <Tooltip
                         title={transaction.confirmations > roundSize ? t('Confirmed') : t('Pending')}
