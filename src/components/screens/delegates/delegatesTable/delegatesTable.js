@@ -1,21 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '../../../../constants/tokens';
-import AccountVisual from '../../../toolbox/accountVisual';
+import AvatarWithNameAndAddress from '../../../shared/avatarWithNameAndAddress';
 import LiskAmount from '../../../shared/liskAmount';
 import ShaderDelegatesTable from '../../../shared/delegatesTable';
 import voteFilters from '../../../../constants/voteFilters';
 import withDelegatesData from './withDelegatesData';
-
-const AvatarWithNameAndAddress = ({ username, account: { address } }) => (
-  <div>
-    <AccountVisual size={36} address={address} />
-    <span>
-      <div>{username}</div>
-      <div>{address}</div>
-    </span>
-  </div>
-);
 
 const DelegatesTable = ({
   t, delegates, filters, applyFilters,
