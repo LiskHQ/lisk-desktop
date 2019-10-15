@@ -34,7 +34,7 @@ const DelegatesTable = ({
       id: 'vote',
       header: t('Vote weight'),
       /* eslint-disable-next-line react/display-name */
-      getValue: ({ vote }) => <LiskAmount val={vote} token={tokenMap.LSK.key} />,
+      getValue: ({ vote }) => <strong><LiskAmount val={vote} token={tokenMap.LSK.key} /></strong>,
       className: grid['col-xs-2'],
     },
   ];

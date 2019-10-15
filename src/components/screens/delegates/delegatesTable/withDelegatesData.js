@@ -28,7 +28,7 @@ function withDelegatesData() {
       getDelegatesData() {
         return this.props.delegates.map(d => ({
           ...d,
-          vote: this.props.votes[d.address],
+          voteStatus: this.props.votes[d.address],
         }));
       }
 
