@@ -16,6 +16,7 @@ import FilterBar from '../filterBar';
 import routes from '../../../constants/routes';
 import Table from '../../toolbox/table';
 import AccountVisualWithAddress from '../accountVisualWithAddress';
+import { DEFAULT_LIMIT } from '../../../constants/monitor';
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -95,14 +96,26 @@ class TransactionsTable extends React.Component {
                     header: t('Sender'),
                     className: grid['col-xs-3'],
                     getValue: transaction => (
-                      <AccountVisualWithAddress address={transaction.senderId} isMediumViewPort={isMediumViewPort} transactionSubject="senderId" transactionType={transaction.type} showBookmarkedAddress />
+                      <AccountVisualWithAddress
+                        address={transaction.senderId}
+                        isMediumViewPort={isMediumViewPort}
+                        transactionSubject="senderId"
+                        transactionType={transaction.type}
+                        showBookmarkedAddress
+                      />
                     ),
                   },
                   {
                     header: t('Recipient'),
                     className: grid['col-xs-3'],
                     getValue: transaction => (
-                      <AccountVisualWithAddress address={transaction.recipientId} isMediumViewPort={isMediumViewPort} transactionSubject="recipientId" transactionType={transaction.type} showBookmarkedAddress />
+                      <AccountVisualWithAddress
+                        address={transaction.recipientId}
+                        isMediumViewPort={isMediumViewPort}
+                        transactionSubject="recipientId"
+                        transactionType={transaction.type}
+                        showBookmarkedAddress
+                      />
                     ),
                   },
                   {
@@ -154,7 +167,9 @@ class TransactionsTable extends React.Component {
                 ]}
               />
             </Box.Content>
-            {isLoadMoreEnabled && (
+            {isLoadMoreEnabled
+              && !!transactions.data.length
+              && transactions.data.length % DEFAULT_LIMIT === 0 && (
               <Box.FooterButton className="load-more" onClick={this.handleLoadMore}>
                 {t('Load more')}
               </Box.FooterButton>
