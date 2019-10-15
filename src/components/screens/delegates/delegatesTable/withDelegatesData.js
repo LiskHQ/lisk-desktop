@@ -6,9 +6,6 @@ function withDelegatesData() {
     class DelegatesContainer extends React.Component {
       constructor(props) {
         super(props);
-        if (props.delegates.length === 0) {
-          this.loadDelegates('');
-        }
         this.state = {
           isLoading: false,
           filters: {
@@ -18,7 +15,14 @@ function withDelegatesData() {
         };
 
         this.loadDelegates = this.loadDelegates.bind(this);
+        this.loadDelegatesFinished = this.loadDelegatesFinished.bind(this);
         this.applyFilters = this.applyFilters.bind(this);
+      }
+
+      componentDidMount() {
+        if (this.props.delegates.length === 0) {
+          this.loadDelegates();
+        }
       }
 
       getDelegatesData() {
@@ -29,18 +33,20 @@ function withDelegatesData() {
       }
 
       loadDelegates(q = '', offset = 0) {
-        this.setState({ isLoading: true });
-
-        this.props.loadDelegates({
-          offset,
-          q,
-          refresh: offset === 0,
-          callback: () => {
-            if (this.state.isLoading) {
-              this.setState({ isLoading: false });
-            }
-          },
+        this.setState({ isLoading: true }, () => {
+          this.props.loadDelegates({
+            offset,
+            q,
+            refresh: offset === 0,
+            callback: this.loadDelegatesFinished,
+          });
         });
+      }
+
+      loadDelegatesFinished() {
+        if (this.state.isLoading) {
+          this.setState({ isLoading: false });
+        }
       }
 
       applyFilters(filters) {

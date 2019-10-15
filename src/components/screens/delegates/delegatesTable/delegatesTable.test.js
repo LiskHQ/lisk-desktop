@@ -2,32 +2,16 @@ import React from 'react';
 import { mount } from 'enzyme';
 import DelegatesTable from './delegatesTable';
 import delegates from '../../../../../test/constants/delegates';
-import voteFilters from '../../../../constants/voteFilters';
 
 describe('DelegatesTable page', () => {
   let props;
-  let delegatesWitData;
 
   beforeEach(() => {
     props = {
       t: key => key,
-      delegates: {
-        isLoading: true,
-        data: [],
-        loadData: jest.fn(),
-        clearData: jest.fn(),
-        urlSearchParams: {},
-      },
-      filters: {
-        tab: voteFilters.all,
-        search: '',
-      },
-      applyFilters: jest.fn((filters) => { props.filters = filters; }),
-    };
-    delegatesWitData = {
-      ...props.blocks,
-      isLoading: false,
-      data: delegates,
+      delegates: [],
+      loadDelegates: jest.fn(({ callback }) => callback()),
+      votes: {},
     };
   });
 
@@ -41,16 +25,14 @@ describe('DelegatesTable page', () => {
   it('renders table with delegates', () => {
     const wrapper = mount(<DelegatesTable {...props} />);
     expect(wrapper.find('TableRow.row')).toHaveLength(0);
-    wrapper.setProps({ delegates: delegatesWitData });
+    wrapper.setProps({ delegates });
     expect(wrapper.find('TableRow.row')).toHaveLength(delegates.length + 1);
   });
 
   it('allows to switch tabs', () => {
-    const wrapper = mount(<DelegatesTable {...props} />);
+    const wrapper = mount(<DelegatesTable {...{ ...props, delegates }} />);
     expect(wrapper.find('.tab.voted')).not.toHaveClassName('active');
     wrapper.find('.tab.voted').simulate('click');
-    wrapper.setProps({ filters: props.filters });
     expect(wrapper.find('.tab.voted')).toHaveClassName('active');
-    expect(props.applyFilters).toHaveBeenCalledWith({ tab: voteFilters.voted });
   });
 });
