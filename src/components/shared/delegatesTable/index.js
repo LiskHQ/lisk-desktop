@@ -71,7 +71,7 @@ const DelegatesTable = ({
         </span>
       </Box.Header>
       <Box.Content className={styles.content}>
-        <Table {...{ columns, data }} />
+        <Table {...{ columns, data, rowClassName: 'delegate-row' }} />
       </Box.Content>
       <Box.FooterButton onClick={handleLoadMore} className="loadMore">
         {t('Load more')}

@@ -35,9 +35,9 @@ describe('DelegatesTable page', () => {
 
   it('renders table with delegates', () => {
     const wrapper = mount(<DelegatesTable {...props} />);
-    expect(wrapper.find('TableRow.row')).toHaveLength(0);
+    expect(wrapper.find('.delegate-row')).toHaveLength(0);
     wrapper.setProps({ delegates });
-    expect(wrapper.find('TableRow.row:not(.header)')).toHaveLength(delegates.length);
+    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(delegates.length);
   });
 
   it('allows to switch to "Voted" tab', () => {
@@ -45,7 +45,7 @@ describe('DelegatesTable page', () => {
     expect(wrapper.find('.tab.voted')).not.toHaveClassName('active');
     wrapper.find('.tab.voted').simulate('click');
     expect(wrapper.find('.tab.voted')).toHaveClassName('active');
-    expect(wrapper.find('TableRow.row:not(.header)')).toHaveLength(getTotalVotesCount(props.votes));
+    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(getTotalVotesCount(props.votes));
   });
 
   it('allows to switch to "Not voted" tab', () => {
@@ -53,7 +53,7 @@ describe('DelegatesTable page', () => {
     expect(wrapper.find('.tab.not-voted')).not.toHaveClassName('active');
     wrapper.find('.tab.not-voted').simulate('click');
     expect(wrapper.find('.tab.not-voted')).toHaveClassName('active');
-    expect(wrapper.find('TableRow.row:not(.header)')).toHaveLength(delegates.length - getTotalVotesCount(props.votes));
+    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(delegates.length - getTotalVotesCount(props.votes));
   });
 
   it('allows to load more delegates', () => {

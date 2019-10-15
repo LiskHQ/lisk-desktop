@@ -6,7 +6,7 @@ import TableRow from './tableRow';
 import styles from './table.css';
 
 const Table = ({
-  data, columns, onSortChange, sort, getRowLink,
+  data, columns, onSortChange, sort, getRowLink, rowClassName,
 }) => {
   const onHeaderClick = ({ id, isSortable }) => {
     if (isSortable) {
@@ -46,7 +46,7 @@ const Table = ({
             Container: Link,
             to: getRowLink(row),
           })}
-          className={grid.row}
+          className={[grid.row, rowClassName].join(' ')}
         >
           {columns.map(({ className, id, getValue }) => (
             <span className={className} key={id}>
@@ -64,12 +64,14 @@ Table.propTypes = {
   columns: PropTypes.array.isRequired,
   onSortChange: PropTypes.func,
   getRowLink: PropTypes.func,
+  rowClassName: PropTypes.string,
   sort: PropTypes.string,
 };
 
 Table.defaultProps = {
   onSortChange: () => null,
   getRowLink: () => null,
+  rowClassName: '',
   sort: '',
 };
 

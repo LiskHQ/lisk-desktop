@@ -43,8 +43,8 @@ describe('DelegatesTable', () => {
 
   it('renders table with delegates', () => {
     const wrapper = mount(<DelegatesTable {...props} />);
-    expect(wrapper.find('TableRow.row')).toHaveLength(0);
+    expect(wrapper.find('.delegate-row')).toHaveLength(0);
     wrapper.setProps({ delegates: delegatesWitData });
-    expect(wrapper.find('TableRow.row')).toHaveLength(delegates.length + 1);
+    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(delegates.length);
   });
 });
