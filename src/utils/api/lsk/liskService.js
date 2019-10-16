@@ -5,6 +5,7 @@ import { getNetworkNameBasedOnNethash } from '../../getNetwork';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import i18n from '../../../i18n';
 import networks from '../../../constants/networks';
+import voting from '../../../constants/voting';
 
 const liskServiceUrl = 'https://service.lisk.io';
 const liskServiceTestnetUrl = 'https://testnet-service.lisk.io';
@@ -86,12 +87,12 @@ const liskServiceApi = {
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
   }),
 
-  getDelegates: async ({ networkConfig }, searchParams) => liskServiceGet({
+  getDelegates: async ({ networkConfig }, { tab, ...searchParams }) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
-    path: '/api/v1/delegates',
+    path: `/api/v1/delegates${tab}`,
     transformResponse: response => response.data,
     searchParams: {
-      limit: DEFAULT_LIMIT,
+      limit: tab === '/active' ? voting.maxCountOfVotes : DEFAULT_LIMIT,
       ...searchParams,
     },
   }),

@@ -47,7 +47,8 @@ const Delegates = ({
         name: ('Standby delegates'),
       },
     ],
-    active: filters.tabs,
+    active: filters.tab,
+    onClick: ({ value }) => applyFilters({ tab: value }),
   };
 
   return (

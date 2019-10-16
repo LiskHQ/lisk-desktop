@@ -7,18 +7,26 @@ import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
 
+const defaultUrlSearchParams = { tab: '/active' };
+const delegatesKey = 'delegates';
+
 export default compose(
   withRouter,
   withData({
-    delegates: {
+    [delegatesKey]: {
       apiUtil: liskService.getDelegates,
       defaultData: [],
+      defaultUrlSearchParams,
       autoload: true,
-      transformResponse: (response, oldData) => (
-        [...oldData, ...response.filter(block => !oldData.find(({ id }) => id === block.id))]
+      transformResponse: (response, oldData, urlSearchParams) => (
+        urlSearchParams.offset
+          ? [...oldData, ...response.filter(
+            delegate => !oldData.find(({ username }) => username === delegate.username),
+          )]
+          : response
       ),
     },
   }),
-  withFilters('delegates', { tabs: '/active' }),
+  withFilters(delegatesKey, defaultUrlSearchParams),
   withTranslation(),
 )(Delegates);
