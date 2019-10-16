@@ -27,9 +27,7 @@ function withDelegatesData() {
             address: account.address,
           });
         }
-        if (this.props.delegates.length === 0) {
-          this.loadDelegates({});
-        }
+        this.loadDelegates({});
       }
 
       getDelegatesData() {

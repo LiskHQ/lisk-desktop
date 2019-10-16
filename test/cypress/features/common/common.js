@@ -48,8 +48,8 @@ Given(/^I am on (.*?) page$/, function (page) {
       cy.visit(urls.registerDelegate);
       break;
     case 'delegates':
-      cy.route('/api/delegates**').as('requestDelegate');
       cy.visit(urls.delegates);
+      cy.route('/api/delegates**').as('requestDelegate');
       cy.wait('@requestDelegate');
       break;
     case 'wallet':
