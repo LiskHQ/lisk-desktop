@@ -16,7 +16,7 @@ const BackupPassphrase = ({
       <h1>
         {t('Save your passphrase')}
       </h1>
-      <p>{t('Your passphrase is your login and password combined. Keep it \nsafe as it is the only way to access your wallet.')}</p>
+      <p>{t('Keep it safe as it is the only way to access your wallet.')}</p>
     </div>
     <div className={`${grid['col-sm-10']} ${registerStyles.PassphraseBackupContainer}`}>
       <PassphraseBackup
