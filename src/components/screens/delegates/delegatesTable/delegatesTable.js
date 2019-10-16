@@ -14,7 +14,7 @@ import withDelegatesData from './withDelegatesData';
 import styles from './delegatesTable.css';
 
 const DelegatesTable = ({
-  t, delegates, filters, applyFilters, votingModeEnabled, votes, voteToggled,
+  t, delegates, filters, applyFilters, votingModeEnabled, votes, voteToggled, account,
 }) => {
   const shouldShowVoteColumn = votingModeEnabled || getTotalVotesCount(votes) > 0;
   const columns = [
@@ -67,7 +67,8 @@ const DelegatesTable = ({
       name: t('All delegates'),
       value: voteFilters.all,
       className: 'all-delegates',
-    }, {
+    },
+    ...(account.address ? [{
       name: t('Voted'),
       value: voteFilters.voted,
       className: 'voted',
@@ -75,7 +76,8 @@ const DelegatesTable = ({
       name: t('Not voted'),
       value: voteFilters.notVoted,
       className: 'not-voted',
-    }],
+    }] : []),
+    ],
     active: filters.tab,
     onClick: ({ value }) => applyFilters({ tab: value, search: '' }),
   };

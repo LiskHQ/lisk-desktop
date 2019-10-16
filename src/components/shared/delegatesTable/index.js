@@ -62,7 +62,10 @@ const DelegatesTable = ({
   return (
     <Box main isLoading={delegates.isLoading}>
       <Box.Header>
-        <Box.Tabs {...tabs} />
+        {tabs.tabs.length === 1
+          ? <h2>{tabs.tabs[0].name}</h2>
+          : <Box.Tabs {...tabs} />
+        }
         <span>
           <Input
             onChange={handleFilter}

@@ -81,4 +81,10 @@ describe('DelegatesTable page', () => {
     wrapper.setProps({ votingModeEnabled: true });
     expect(wrapper.find('CheckBox')).toHaveLength(delegates.length);
   });
+
+  it('doesn\'t show tabs if not logged in', () => {
+    const wrapper = mount(<DelegatesTable {...{ ...props, account: {} }} />);
+    expect(wrapper.find('.tab')).toHaveLength(0);
+    expect(wrapper.find('header h2')).toHaveText('All delegates');
+  });
 });
