@@ -133,8 +133,6 @@ class FilterDropdownButton extends React.Component {
   render() {
     const { t, fields } = this.props;
     const { areFiltersExtended } = this.state;
-    const primaryFilters = fields.slice(0, 4);
-    const secondaryFilters = fields.slice(4, 8);
 
     return (
       <DropdownButton
@@ -152,12 +150,14 @@ class FilterDropdownButton extends React.Component {
       >
         <form onSubmit={this.applyFilters} className={`${styles.form} filter-container`}>
           <div className={`${styles.container} ${areFiltersExtended && styles.extendedContainer}`}>
-            {primaryFilters.map(this.renderFields)}
+            {fields
+              .filter((field, index) => (areFiltersExtended ? index <= 3 : index <= 2))
+              .map(this.renderFields)}
             {!areFiltersExtended && this.renderFooter()}
           </div>
           {areFiltersExtended && (
           <div className={styles.container}>
-            {secondaryFilters.map(this.renderFields)}
+              {fields.filter((field, index) => index >= 4).map(this.renderFields)}
             {this.renderFooter()}
           </div>
           )}
