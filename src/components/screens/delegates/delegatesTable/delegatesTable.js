@@ -4,14 +4,15 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { getTotalVotesCount } from '../../../../utils/voting';
 import { tokenMap } from '../../../../constants/tokens';
 import AvatarWithNameAndAddress from '../../../shared/avatarWithNameAndAddress';
+import FirstTimeVotingOverlay from './firstTimeVotingOverlay';
 import LiskAmount from '../../../shared/liskAmount';
 import ShaderDelegatesTable from '../../../shared/delegatesTable';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import VoteCheckbox from './voteCheckbox';
 import routes from '../../../../constants/routes';
+import styles from './delegatesTable.css';
 import voteFilters from '../../../../constants/voteFilters';
 import withDelegatesData from './withDelegatesData';
-import styles from './delegatesTable.css';
 
 const DelegatesTable = ({
   t, delegates, filters, applyFilters, votingModeEnabled, votes, voteToggled, account,
@@ -27,7 +28,11 @@ const DelegatesTable = ({
       /* eslint-disable-next-line react/display-name */
       getValue: delegate => (
         <VoteCheckbox {...{
-          delegate, votingModeEnabled, toggle: voteToggled, className: styles.checkbox,
+          delegate,
+          votingModeEnabled,
+          toggle: voteToggled,
+          className: styles.checkbox,
+          accent: firstTimeVotingActive,
         }}
         />
       ),
@@ -87,30 +92,12 @@ const DelegatesTable = ({
   };
 
   return (
-    <div className={styles.wrapper}>
-      {firstTimeVotingActive
-        ? (
-          <div className={styles.selectingDelegatesOverlay}>
-            <Tooltip
-              styles={{
-                infoIcon: styles.infoIcon,
-                tooltip: styles.tooltipClass,
-              }}
-              tooltipClassName={styles.tooltipClassName}
-              className={styles.selectingDelegates}
-              alwaysShow
-              title={t('Selecting Delegates')}
-            >
-              <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
-            </Tooltip>
-          </div>
-        )
-        : null}
+    <FirstTimeVotingOverlay enabled={firstTimeVotingActive}>
       <ShaderDelegatesTable {...{
         columns, delegates, tabs, applyFilters, filters,
       }}
       />
-    </div>
+    </FirstTimeVotingOverlay>
   );
 };
 
