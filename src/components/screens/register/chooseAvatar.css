@@ -39,10 +39,6 @@
   }
 }
 
-.text {
-  width: 350px !important;
-}
-
 .avatarsHolder {
   align-items: center;
   display: flex;
