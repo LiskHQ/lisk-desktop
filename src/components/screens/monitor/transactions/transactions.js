@@ -4,7 +4,7 @@ import TransactionsTable from '../../../shared/transactionsTable';
 
 const Transactions = ({ t, transactions }) => {
   const fields = [{
-    label: t('Date'),
+    label: t('Date Range'),
     name: 'date',
     type: 'date-range',
   }, {

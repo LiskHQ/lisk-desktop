@@ -116,6 +116,7 @@
   "DD.MM.YY": "DD.MM.YY",
   "Dashboard": "Dashboard",
   "Date": "Date",
+  "Date Range": "Date Range",
   "Date must be after {{firstBlock}}": "Date must be after {{firstBlock}}",
   "Delegate": "Delegate",
   "Delegate #{{rank}}": "Delegate #{{rank}}",
