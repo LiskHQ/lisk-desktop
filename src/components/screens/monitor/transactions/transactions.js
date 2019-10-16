@@ -18,12 +18,9 @@ const Transactions = ({ t, transactions }) => {
     type: 'address',
   }, {
     label: t('Message'),
-    // TODO: Replace with "Your message" when API allows message param
-    placeholder: t('Filtering by message not yet available'),
+    placeholder: t('Your message'),
     name: 'message',
     type: 'text',
-    // TODO: Enable field when API allows message param
-    disabled: true,
   }, {
     label: t('Recipient'),
     placeholder: t('Address or Public key'),
