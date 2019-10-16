@@ -20,7 +20,6 @@ const BackupPassphrase = ({
     </div>
     <div className={`${grid['col-sm-10']} ${registerStyles.PassphraseBackupContainer}`}>
       <PassphraseBackup
-        subHeader={t('Please carefully write down these 12 words and store them in a safe place.')}
         account={account}
         t={t}
         paperWalletName="lisk_passphrase"

@@ -42,7 +42,7 @@ class PassphraseBackup extends React.Component {
 
   render() {
     const {
-      t, account, subHeader,
+      t, account,
     } = this.props;
 
     return (
@@ -51,7 +51,7 @@ class PassphraseBackup extends React.Component {
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
               <h2>{t('Passphrase')}</h2>
-              {subHeader && <p className={styles.infoText}>{subHeader}</p>}
+              <p className={styles.infoText}>{t('Please carefully write down these 12 words and store them in a safe place.')}</p>
               <div className={`${styles.inputs} ${grid.row} passphrase`}>
                 {account.passphrase.split(' ').map((value, i) => (
                   <span key={i} className={`${grid['col-xs-2']}`}>
