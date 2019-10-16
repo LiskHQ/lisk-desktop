@@ -49,12 +49,7 @@
   flex-basis: 100%;
   align-items: center;
   color: var(--color-slate-gray);
-
-  & > p {
-    @mixin contentNormal;
-
-    margin: 20px;
-  }
+  margin: 40px 0;
 }
 
 .hrSection::before,

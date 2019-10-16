@@ -6,8 +6,6 @@ import { Input } from '../../toolbox/inputs';
 import { SecondaryButton } from '../../toolbox/buttons/button';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import Icon from '../../toolbox/icon';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import links from '../../../constants/externalLinks';
 import renderPaperwallet from '../../../utils/paperwallet';
 import styles from './passphraseBackup.css';
 
@@ -65,36 +63,26 @@ class PassphraseBackup extends React.Component {
                 ))}
               </div>
               <div className={styles.copyButtonContainer}>
-              <CopyToClipboard
+                <CopyToClipboard
                   onClick={this.handleClick}
-                value={account.passphrase}
-                text={t('Copy to clipboard')}
-                copyClassName={styles.copyIcon}
-                Container={SecondaryButton}
-                containerProps={{ size: 'xs' }}
-              />
+                  value={account.passphrase}
+                  text={t('Copy to clipboard')}
+                  copyClassName={styles.copyIcon}
+                  Container={SecondaryButton}
+                  containerProps={{ size: 'xs' }}
+                />
                 <span className={styles.tipContainer}>
                   <Icon color="red" name="warningIcon" />
                   <p>{t('Make sure to store it somewhere safe')}</p>
                 </span>
+              </div>
             </div>
           </div>
-          <div className={styles.hrSection}>
-            <p>{t('OR')}</p>
-          </div>
+          <div className={styles.hrSection} />
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
-              <h2>
-                {t('Paper wallet')}
-                <Tooltip
-                  title="Paper wallet"
-                >
-                  <p>
-                    {t('You can print your passphrase and store it in a safe place. ')}
-                    {t('We highly recommend deleting the PDF file after printing.')}
-                  </p>
-                </Tooltip>
-              </h2>
+              <h2>{t('Paper wallet')}</h2>
+              <p className={styles.infoText}>{t('You can also download, print and store safely your pasphrase.')}</p>
               <div style={{ display: 'none' }} ref={this.setCanvasRef}>
                 <QRCode value={account.passphrase} />
               </div>
