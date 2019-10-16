@@ -2,7 +2,7 @@ import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import DelegatesTable from '../../../shared/delegatesTable';
-import PageLayout from '../../../toolbox/pageLayout';
+import MonitorHeader from '../header';
 
 const AvatarWithAddress = ({ address }) => (
   <React.Fragment>
@@ -44,12 +44,13 @@ const Delegates = ({
   };
 
   return (
-    <PageLayout>
+    <div>
+      <MonitorHeader />
       <DelegatesTable {...{
         columns, delegates, tabs, filters, applyFilters,
       }}
       />
-    </PageLayout>
+    </div>
   );
 };
 
