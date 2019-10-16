@@ -7,7 +7,6 @@ import CheckBox from '../../toolbox/checkBox';
 import HardwareWalletIllustration from '../../toolbox/hardwareWalletIllustration';
 import PassphraseInput from '../../toolbox/passphraseInput';
 import Tooltip from '../../toolbox/tooltip/tooltip';
-import links from '../../../constants/externalLinks';
 import styles from './transactionSummary.css';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 
@@ -80,13 +79,6 @@ class TransactionSummary extends React.Component {
     return {
       LSK: {
         title: t('Transaction fee'),
-        footer: <a
-          href={links.transactionFee}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          {t('Read more')}
-        </a>,
         children: t(`Every transaction needs to be confirmed and forged into Lisk blockchain network. 
                     Such operations require hardware resources and because of that there is a small fee for processing those.`),
       },
