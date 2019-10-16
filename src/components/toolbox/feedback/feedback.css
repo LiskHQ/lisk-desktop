@@ -31,7 +31,7 @@
 
   &.error:not(:empty) {
     background: var(--error-background-color);
-    color: var(--color-burnt-sienna);
+    color: var(--color-white);
     padding: 8px var(--horizontal-padding-l);
     margin-top: 10px;
 

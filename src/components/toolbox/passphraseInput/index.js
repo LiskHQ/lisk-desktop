@@ -132,41 +132,43 @@ class passphraseInput extends React.Component {
 
     return (
       <React.Fragment>
-        <div className={`${styles.inputs} ${grid.row} passphrase`}>
-          {[...Array(inputsLength)].map((x, i) => (
-            <span key={i} className={`${grid['col-xs-2']}`}>
-              <Input
-                setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
-                placeholder={this.state.focus === i ? '' : i + 1}
-                className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
-                value={values[i] || ''}
-                type={this.state.showPassphrase ? 'text' : 'password'}
-                autoComplete="off"
-                onBlur={this.removeFocusedField}
-                onFocus={this.setFocusedField}
-                onPaste={this.handlePaste}
-                onChange={this.handleValueChange}
-                onKeyDown={this.keyAction}
-                data-index={i}
-              />
-            </span>
-          ))}
-        </div>
-
-        <div className={styles.footerContent}>
+        <div className={styles.wrapper}>
           <label className={`${styles.showPassphrase}`} onClick={this.handleToggleShowPassphrase}>
             <Icon name={iconName} />
-            <span className={`${styles.label}`}>{showPassphrase ? t('Hide passphrase') : t('Show passphrase')}</span>
+            <span className={`${styles.label}`}>{showPassphrase ? t('Hide') : t('Show')}</span>
           </label>
 
-          <Feedback
-            className={styles.errorMessage}
-            show={!!(this.state.validationError || secondPPFeedback !== '')}
-            status={(this.state.validationError || secondPPFeedback !== '') ? 'error' : ''}
-            showIcon
-          >
-            { secondPPFeedback || this.state.validationError }
-          </Feedback>
+          <div className={`${styles.inputs} ${grid.row} passphrase`}>
+            {[...Array(inputsLength)].map((x, i) => (
+              <span key={i} className={`${grid['col-xs-2']}`}>
+                <Input
+                  setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
+                  placeholder={this.state.focus === i ? '' : i + 1}
+                  className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
+                  value={values[i] || ''}
+                  type={this.state.showPassphrase ? 'text' : 'password'}
+                  autoComplete="off"
+                  onBlur={this.removeFocusedField}
+                  onFocus={this.setFocusedField}
+                  onPaste={this.handlePaste}
+                  onChange={this.handleValueChange}
+                  onKeyDown={this.keyAction}
+                  data-index={i}
+                />
+              </span>
+            ))}
+          </div>
+
+          <div className={styles.footerContent}>
+            <Feedback
+              className={styles.errorMessage}
+              show={!!(this.state.validationError || secondPPFeedback !== '')}
+              status={(this.state.validationError || secondPPFeedback !== '') ? 'error' : ''}
+              showIcon={false}
+            >
+              { secondPPFeedback || this.state.validationError }
+            </Feedback>
+          </div>
         </div>
       </React.Fragment>
     );
