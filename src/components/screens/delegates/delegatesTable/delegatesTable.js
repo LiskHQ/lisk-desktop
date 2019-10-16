@@ -7,7 +7,7 @@ import AvatarWithNameAndAddress from '../../../shared/avatarWithNameAndAddress';
 import LiskAmount from '../../../shared/liskAmount';
 import ShaderDelegatesTable from '../../../shared/delegatesTable';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
-import VoteCheckbox from '../delegatesListView/voteCheckbox';
+import VoteCheckbox from './voteCheckbox';
 import routes from '../../../../constants/routes';
 import voteFilters from '../../../../constants/voteFilters';
 import withDelegatesData from './withDelegatesData';
@@ -23,9 +23,9 @@ const DelegatesTable = ({
       header: t('Vote'),
       className: grid['col-xs-1'],
       /* eslint-disable-next-line react/display-name */
-      getValue: data => (
+      getValue: delegate => (
         <VoteCheckbox {...{
-          data, status: data.voteStatus, votingModeEnabled, toggle: voteToggled,
+          delegate, votingModeEnabled, toggle: voteToggled,
         }}
         />
       ),
