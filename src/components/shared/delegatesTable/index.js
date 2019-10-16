@@ -37,12 +37,13 @@ const DelegatesTable = ({
     productivity: {
       header: <React.Fragment>
         {t('Productivity')}
+        &nbsp;
         <Tooltip className="showOnLeft">
           <p>{t('Percentage of successfully forged blocks of when the delegate should have forged a block of transactions.')}</p>
         </Tooltip>
       </React.Fragment>,
       getValue: ({ productivity }) => `${formatAmountBasedOnLocale({ value: productivity })} %`,
-      className: grid['col-xs-2'],
+      className: grid['col-xs-1'],
     },
   };
   columns = columns.map(c => ({ ...columnDefaults[c.id], ...c }));
@@ -59,7 +60,7 @@ const DelegatesTable = ({
   };
 
   return (
-    <Box isLoading={delegates.isLoading}>
+    <Box main isLoading={delegates.isLoading}>
       <Box.Header>
         <Box.Tabs {...tabs} />
         <span>
@@ -73,7 +74,7 @@ const DelegatesTable = ({
         </span>
       </Box.Header>
       <Box.Content className={styles.content}>
-        {delegates.data.length && !delegates.isLoading
+        {delegates.data.length || delegates.isLoading
           ? <Table {...{ columns, data, rowClassName: 'delegate-row' }} />
           : (
             <Box.EmptyState>
