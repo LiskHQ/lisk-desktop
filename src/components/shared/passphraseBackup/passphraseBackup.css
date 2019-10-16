@@ -115,6 +115,13 @@
   }
 }
 
+.passphraseSubheader {
+  @mixin contentLargest;
+
+  margin: 8px 0;
+  color: var(--color-slate-gray);
+}
+
 .copyIcon {
   display: none;
 }

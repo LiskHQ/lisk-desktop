@@ -35,7 +35,7 @@ class PassphraseBackup extends React.Component {
 
   render() {
     const {
-      t, account,
+      t, account, subHeader,
     } = this.props;
 
     return (
@@ -43,29 +43,8 @@ class PassphraseBackup extends React.Component {
         <div className={`${styles.optionsHolder}`}>
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
-              <h2>
-                {t('Passphrase')}
-
-                <Tooltip
-                  title={t('Save the passphrase')}
-                  footer={(
-                    <a
-                      href={links.howToStorePassphrase}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      {t('Read more')}
-                    </a>
-)}
-                >
-                  <p>
-                    {
-                    t('Be sure to store your passphrase in a safe place. We highly recommend using a password manager or paperwallet.')
-                  }
-                  </p>
-                </Tooltip>
-
-              </h2>
+              <h2>{t('Passphrase')}</h2>
+              {subHeader && <p className={styles.passphraseSubheader}>{subHeader}</p>}
               <div className={`${styles.inputs} ${grid.row} passphrase`}>
                 {account.passphrase.split(' ').map((value, i) => (
                   <span key={i} className={`${grid['col-xs-2']}`}>
