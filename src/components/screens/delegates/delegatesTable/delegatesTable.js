@@ -43,7 +43,9 @@ const DelegatesTable = ({
           <AvatarWithNameAndAddress {...delegate} />
         </Link>
       ),
-      className: shouldShowVoteColumn ? grid['col-xs-5'] : grid['col-xs-6'],
+      className: shouldShowVoteColumn
+        ? [grid['col-xs-4'], grid['col-md-5']].join(' ')
+        : [grid['col-xs-5'], grid['col-md-6']].join(' '),
     },
     { id: 'rewards' },
     { id: 'productivity' },

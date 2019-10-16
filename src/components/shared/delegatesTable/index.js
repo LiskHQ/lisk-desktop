@@ -43,7 +43,7 @@ const DelegatesTable = ({
         </Tooltip>
       </React.Fragment>,
       getValue: ({ productivity }) => `${formatAmountBasedOnLocale({ value: productivity })} %`,
-      className: grid['col-xs-1'],
+      className: [grid['col-xs-2'], grid['col-md-1']].join(' '),
     },
   };
   columns = columns.map(c => ({ ...columnDefaults[c.id], ...c }));
