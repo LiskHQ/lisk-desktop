@@ -67,7 +67,7 @@ class DateField extends React.Component {
           />
         </label>
         <Dropdown
-          className={`${showRightDropdown ? `showRight ${styles.dropdownRight}` : 'showLeft'} ${styles.calendarDropdown}`}
+          className={`${showRightDropdown ? 'showRight' : 'showLeft'} ${styles.calendarDropdown}`}
           showDropdown={shownDropdown}
         >
           { everShownDropdown

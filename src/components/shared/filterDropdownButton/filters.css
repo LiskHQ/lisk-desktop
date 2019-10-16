@@ -83,9 +83,4 @@
       top: calc(50% - 18px);
     }
   }
-
-  & .dropdownRight {
-    left: calc(100% + 15px);
-    min-width: 304px;
-  }
 }
