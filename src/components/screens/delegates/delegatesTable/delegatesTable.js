@@ -17,6 +17,8 @@ const DelegatesTable = ({
   t, delegates, filters, applyFilters, votingModeEnabled, votes, voteToggled, account,
 }) => {
   const shouldShowVoteColumn = votingModeEnabled || getTotalVotesCount(votes) > 0;
+  const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
+
   const columns = [
     ...(shouldShowVoteColumn ? [{
       id: 'voteStatus',
@@ -25,7 +27,7 @@ const DelegatesTable = ({
       /* eslint-disable-next-line react/display-name */
       getValue: delegate => (
         <VoteCheckbox {...{
-          delegate, votingModeEnabled, toggle: voteToggled,
+          delegate, votingModeEnabled, toggle: voteToggled, className: styles.checkbox,
         }}
         />
       ),
@@ -85,10 +87,30 @@ const DelegatesTable = ({
   };
 
   return (
-    <ShaderDelegatesTable {...{
-      columns, delegates, tabs, applyFilters, filters,
-    }}
-    />
+    <div className={styles.wrapper}>
+      {firstTimeVotingActive
+        ? (
+          <div className={styles.selectingDelegatesOverlay}>
+            <Tooltip
+              styles={{
+                infoIcon: styles.infoIcon,
+                tooltip: styles.tooltipClass,
+              }}
+              tooltipClassName={styles.tooltipClassName}
+              className={styles.selectingDelegates}
+              alwaysShow
+              title={t('Selecting Delegates')}
+            >
+              <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
+            </Tooltip>
+          </div>
+        )
+        : null}
+      <ShaderDelegatesTable {...{
+        columns, delegates, tabs, applyFilters, filters,
+      }}
+      />
+    </div>
   );
 };
 

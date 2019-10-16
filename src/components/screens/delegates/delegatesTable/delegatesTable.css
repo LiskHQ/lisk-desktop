@@ -1,3 +1,46 @@
+@import '../../../../app/variables.css';
+@import '../../../../app/mixins.css';
+
 .delegateLink:hover {
   text-decoration: none;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.selectingDelegatesOverlay {
+  background: rgba(255, 255, 255, 0.8);
+  bottom: 13px;
+  position: absolute;
+  top: 50px;
+  left: 2px;
+  right: 2px;
+  width: 100%;
+  z-index: var(--overlay-index);
+  box-sizing: border-box;
+  border-radius: var(--border-radius-standard);
+}
+
+.selectingDelegates {
+  position: absolute;
+  top: 60px;
+  bottom: 50px;
+  left: 10px;
+  width: 36px;
+  border-radius: var(--border-radius-standard);
+  background-color: var(--color-highlight-checkboxes);
+  z-index: calc(var(--overlay-index) + 1);
+
+  & .tooltipClass {
+    top: 220px;
+  }
+
+  & .infoIcon {
+    display: none;
+  }
+}
+
+.checkbox {
+  z-index: calc(var(--overlay-index) + 2);
 }
