@@ -87,7 +87,7 @@ const DelegatesTable = ({
           )
       }
       </Box.Content>
-      {delegates.data.length >= votingConst.maxCountOfVotes && (
+      {delegates.data.length >= votingConst.maxCountOfVotes && !delegates.isLoading && (
         <Box.FooterButton onClick={handleLoadMore} className="loadMore">
           {t('Load more')}
         </Box.FooterButton>

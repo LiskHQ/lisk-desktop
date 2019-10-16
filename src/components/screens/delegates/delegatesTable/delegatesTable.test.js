@@ -25,6 +25,7 @@ describe('DelegatesTable page', () => {
       loadVotes: jest.fn(),
       voteToggled: jest.fn(),
       account: accounts.genesis,
+      votingModeEnabled: false,
     };
   });
 
