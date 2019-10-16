@@ -68,6 +68,8 @@
 }
 
 .inputs {
+  background-color: var(--color-white);
+  border: 1px solid var(--dark-border-color);
   flex-wrap: wrap;
   margin-top: 4px;
   margin-bottom: 14px;
