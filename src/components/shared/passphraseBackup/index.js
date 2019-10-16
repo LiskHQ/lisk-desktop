@@ -14,10 +14,14 @@ import styles from './passphraseBackup.css';
 class PassphraseBackup extends React.Component {
   constructor(props) {
     super();
+    this.state = {
+      showTip: false,
+    };
 
     this.walletName = `${props.paperWalletName}_${moment().format('YYYY_MM_DD_HH_mm')}.pdf`;
     this.generatePaperwallet = this.generatePaperwallet.bind(this);
     this.setCanvasRef = this.setCanvasRef.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   /* istanbul ignore next */
@@ -33,6 +37,11 @@ class PassphraseBackup extends React.Component {
     this.canvasRef = node;
   }
 
+  handleClick() {
+    this.setState({ showTip: true });
+    setTimeout(() => { this.setState({ showTip: false }); }, 3000);
+  }
+
   render() {
     const {
       t, account, subHeader,
@@ -44,7 +53,7 @@ class PassphraseBackup extends React.Component {
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
               <h2>{t('Passphrase')}</h2>
-              {subHeader && <p className={styles.passphraseSubheader}>{subHeader}</p>}
+              {subHeader && <p className={styles.infoText}>{subHeader}</p>}
               <div className={`${styles.inputs} ${grid.row} passphrase`}>
                 {account.passphrase.split(' ').map((value, i) => (
                   <span key={i} className={`${grid['col-xs-2']}`}>
@@ -55,13 +64,19 @@ class PassphraseBackup extends React.Component {
                   </span>
                 ))}
               </div>
+              <div className={styles.copyButtonContainer}>
               <CopyToClipboard
+                  onClick={this.handleClick}
                 value={account.passphrase}
                 text={t('Copy to clipboard')}
                 copyClassName={styles.copyIcon}
                 Container={SecondaryButton}
                 containerProps={{ size: 'xs' }}
               />
+                <span className={styles.tipContainer}>
+                  <Icon color="red" name="warningIcon" />
+                  <p>{t('Make sure to store it somewhere safe')}</p>
+                </span>
             </div>
           </div>
           <div className={styles.hrSection}>

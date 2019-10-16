@@ -87,7 +87,25 @@
   }
 }
 
-.passphraseSubheader {
+.tipContainer {
+  display: flex;
+  flex-direction: row;
+
+  & p {
+    font-size: var(--font-size-small-secondary);
+    font-weight: var(--font-weight-semi-bold);
+    margin-left: 5px;
+  }
+}
+
+.copyButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.infoText {
   @mixin contentLargest;
 
   margin: 8px 0;
