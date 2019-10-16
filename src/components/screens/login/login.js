@@ -11,7 +11,7 @@ import { extractAddress } from '../../../utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
 import { getNetworksList } from '../../../utils/getNetwork';
 import networks from '../../../constants/networks';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import links from '../../../constants/externalLinks';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import PassphraseInput from '../../toolbox/passphraseInput';
@@ -200,11 +200,6 @@ class Login extends React.Component {
                 >
                   {t('Sign in')}
                 </PrimaryButton>
-                <Link to={routes.splashscreen.path}>
-                  <TertiaryButton className={`${styles.button} ${styles.backButton}`}>
-                    {t('Go back')}
-                  </TertiaryButton>
-                </Link>
               </div>
             </form>
           </div>
