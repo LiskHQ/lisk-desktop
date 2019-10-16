@@ -128,7 +128,7 @@ class ConfirmPassphrase extends React.Component {
           <h1>
             {t('Confirm your passphrase')}
           </h1>
-          <p className={styles.text}>{t('Based on your passphrase that was generated in the previous step, select the missing words below.')}</p>
+          <p className={styles.text}>{t('Keep it safe as it is the only way to access your wallet.')}</p>
         </div>
 
         <div className={`${styles.confirmHolder} passphrase-holder`}>
@@ -174,7 +174,7 @@ class ConfirmPassphrase extends React.Component {
               onClick={() => this.handleConfirm(this.verifyChoices())}
               disabled={!this.enableConfirmButton()}
             >
-              {t('Continue')}
+              {t('Confirm')}
             </PrimaryButton>
           </span>
         </div>
