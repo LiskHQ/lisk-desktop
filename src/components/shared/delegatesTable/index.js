@@ -13,7 +13,7 @@ import styles from './delegatesTable.css';
 import votingConst from '../../../constants/voting';
 
 const DelegatesTable = ({
-  columns, delegates, tabs, t, filters, applyFilters,
+  columns, delegates, tabs, t, filters, applyFilters, ...rest
 }) => {
   const data = delegates.data.map(d => ({ ...d, id: d.username }));
 
@@ -78,7 +78,12 @@ const DelegatesTable = ({
       </Box.Header>
       <Box.Content className={styles.content}>
         {delegates.data.length || delegates.isLoading
-          ? <Table {...{ columns, data, rowClassName: 'delegate-row' }} />
+          ? (
+            <Table {...{
+              columns, data, rowClassName: 'delegate-row', ...rest,
+            }}
+            />
+          )
           : (
             <Box.EmptyState>
               <Illustration name="emptyWallet" />

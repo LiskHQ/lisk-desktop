@@ -45,7 +45,9 @@ const DelegatesTable = ({
       getValue: delegate => (
         <Link
           className={styles.delegateLink}
-          to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.account.address}`}
+          to={votingModeEnabled
+            ? routes.delegates.path
+            : `${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.account.address}`}
         >
           <AvatarWithNameAndAddress {...delegate} />
         </Link>
@@ -91,10 +93,12 @@ const DelegatesTable = ({
     onClick: ({ value }) => applyFilters({ tab: value }),
   };
 
+  const onRowClick = votingModeEnabled ? voteToggled : undefined;
+
   return (
     <FirstTimeVotingOverlay enabled={firstTimeVotingActive}>
       <ShaderDelegatesTable {...{
-        columns, delegates, tabs, applyFilters, filters,
+        columns, delegates, tabs, applyFilters, filters, onRowClick,
       }}
       />
     </FirstTimeVotingOverlay>

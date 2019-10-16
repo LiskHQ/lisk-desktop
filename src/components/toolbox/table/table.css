@@ -97,3 +97,7 @@
 .sortAsc::after {
   transform: rotate(180deg);
 }
+
+.clickable {
+  cursor: pointer;
+}
