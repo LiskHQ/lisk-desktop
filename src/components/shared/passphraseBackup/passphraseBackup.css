@@ -85,6 +85,7 @@
 .tipContainer {
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   & p {
     font-size: var(--font-size-small-secondary);
@@ -94,10 +95,15 @@
 }
 
 .copyButtonContainer {
+  height: 32px;
   display: flex;
   justify-content: space-between;
   width: 100%;
   align-items: center;
+}
+
+.hidden {
+  display: none;
 }
 
 .infoText {

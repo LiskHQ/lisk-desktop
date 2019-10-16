@@ -77,6 +77,7 @@ import verifyMessageTextareaViewActive from '../../../assets/images/icons/verify
 import walletIcon from '../../../assets/images/icons/wallet.svg';
 import walletIconActive from '../../../assets/images/icons/wallet-active.svg';
 import warningIcon from '../../../assets/images/icons/warning-icon.svg';
+import warningRound from '../../../assets/images/icons/warning-round.svg';
 
 export const icons = {
   academy,
@@ -155,6 +156,7 @@ export const icons = {
   walletIcon,
   walletIconActive,
   warningIcon,
+  warningRound,
 };
 
 
