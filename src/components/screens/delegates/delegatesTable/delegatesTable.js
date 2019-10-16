@@ -81,7 +81,7 @@ const DelegatesTable = ({
     }] : []),
     ],
     active: filters.tab,
-    onClick: ({ value }) => applyFilters({ tab: value, search: '' }),
+    onClick: ({ value }) => applyFilters({ tab: value }),
   };
 
   return (
