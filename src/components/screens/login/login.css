@@ -54,14 +54,15 @@
 
     display: flex;
     justify-content: center;
-    margin: 0 0 20px;
+    margin: 0 0 10px;
   }
 
   & > p {
-    @mixin contentLarge;
+    @mixin contentLargest;
 
     color: var(--color-slate-gray);
     margin: 0;
+    letter-spacing: 1px;
 
     & > a {
       margin: 0;

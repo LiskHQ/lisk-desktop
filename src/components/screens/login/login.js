@@ -128,19 +128,16 @@ class Login extends React.Component {
           >
 
             <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
-              <span className={styles.stepsLabel}>
-                {t('Sign in')}
-              </span>
               <h1>
                 {t('Sign in with a passphrase')}
               </h1>
               <p>
-                {t('New to Lisk? ')}
+                {t('Don’t have a Lisk account yet? ')}
                 <Link
                   className={`${styles.link}`}
                   to={routes.register.path}
                 >
-                  {t('Create an account')}
+                  {t('Create it now')}
                 </Link>
               </p>
             </div>
