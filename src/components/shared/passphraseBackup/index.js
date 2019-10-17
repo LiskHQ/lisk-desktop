@@ -1,13 +1,12 @@
 import QRCode from 'qrcode.react';
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import moment from 'moment';
-import { Input } from '../../toolbox/inputs';
 import { SecondaryButton } from '../../toolbox/buttons/button';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import Icon from '../../toolbox/icon';
 import renderPaperwallet from '../../../utils/paperwallet';
 import styles from './passphraseBackup.css';
+import PassphraseGenerator from '../passphraseGenerator';
 
 class PassphraseBackup extends React.Component {
   constructor(props) {
@@ -52,16 +51,7 @@ class PassphraseBackup extends React.Component {
             <div className={`${styles.optionContent}`}>
               <h2>{t('Passphrase')}</h2>
               <p className={styles.infoText}>{t('Please carefully write down these 12 words and store them in a safe place.')}</p>
-              <div className={`${styles.inputs} ${grid.row} passphrase`}>
-                {account.passphrase.split(' ').map((value, i) => (
-                  <span key={i} className={`${grid['col-xs-2']}`}>
-                    <Input
-                      readOnly
-                      value={value}
-                    />
-                  </span>
-                ))}
-              </div>
+              <PassphraseGenerator values={account.passphrase.split(' ')} />
               <div className={styles.copyButtonContainer}>
                 <CopyToClipboard
                   onClick={this.handleClick}
