@@ -22,7 +22,7 @@ describe('Delegates monitor page', () => {
       filters: {
         tab: '/active',
       },
-      applyFilters: jest.fn(),
+      applyFilters: jest.fn((filters) => { props.filters = filters; }),
     };
 
     delegatesWithData = {
@@ -42,5 +42,14 @@ describe('Delegates monitor page', () => {
     expect(wrapper.find('.delegate-row')).toHaveLength(0);
     wrapper.setProps({ delegates: delegatesWithData });
     expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(delegates.length);
+  });
+
+  it('allows to switch to "Standby delegates" tab', () => {
+    const wrapper = mount(<Delegates {...{ ...props }} />);
+    expect(wrapper.find('.tab.standby')).not.toHaveClassName('active');
+    wrapper.find('.tab.standby').simulate('click');
+    expect(props.applyFilters).toHaveBeenCalledWith({ tab: '/standby' });
+    wrapper.setProps(props);
+    expect(wrapper.find('.tab.standby')).toHaveClassName('active');
   });
 });

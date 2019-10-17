@@ -42,9 +42,11 @@ const Delegates = ({
       {
         value: '/active',
         name: ('Active delegates'),
+        className: 'active',
       }, {
         value: '/standby',
         name: ('Standby delegates'),
+        className: 'standby',
       },
     ],
     active: filters.tab,
