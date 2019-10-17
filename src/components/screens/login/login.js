@@ -117,7 +117,7 @@ class Login extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t } = this.props;
+    const { t, history } = this.props;
 
     return (
       <React.Fragment>
@@ -162,7 +162,10 @@ class Login extends React.Component {
                   {t('Sign in')}
                 </PrimaryButton>
 
-                <TertiaryButton className={`${styles.button} login-button`}>
+                <TertiaryButton
+                  className={`${styles.button} login-button`}
+                  onClick={() => history.push(routes.hwWallet.path)}
+                >
                   <Icon name="hwWalletIcon" className={styles.hwWalletIcon} />
                   {t('Sign in with a hardware wallet')}
                 </TertiaryButton>
