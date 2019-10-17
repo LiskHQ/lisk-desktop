@@ -100,11 +100,14 @@ const liskServiceApi = {
           ...searchParams,
         },
       }),
-      standby: ({ networkConfig }, { ...searchParams }) => liskServiceGet({
+      standby: ({ networkConfig }, { offset = 0, ...searchParams }) => liskServiceGet({
         serverUrl: getServerUrl(networkConfig),
-        path: '/api/v1/delegates/standby',
-        transformResponse: response => response.data,
+        path: '/api/v1/delegates',
+        transformResponse: response => response.data.filter(
+          delegate => delegate.rank > voting.maxCountOfVotes,
+        ),
         searchParams: {
+          offset: offset + (Object.keys(searchParams).length ? 0 : voting.maxCountOfVotes),
           limit: DEFAULT_LIMIT,
           ...searchParams,
         },
