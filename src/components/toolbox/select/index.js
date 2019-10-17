@@ -38,7 +38,9 @@ class Select extends React.Component {
   }
 
   render() {
-    const { options, size, className } = this.props;
+    const {
+      options, size, className, placeholder,
+    } = this.props;
     const { selected, isOpen } = this.state;
     return (
       <OutsideClickHandler
@@ -49,7 +51,8 @@ class Select extends React.Component {
         <label className={`${styles.inputHolder} ${isOpen ? styles.isOpen : ''}`}>
           <Input
             readOnly
-            value={options[selected].label}
+            placeholder={placeholder}
+            value={selected && options[selected].label}
             onClick={this.toggleIsOpen}
             size={size}
           />
@@ -80,7 +83,6 @@ Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
   })).isRequired,
-  selected: PropTypes.number,
   size: PropTypes.oneOf([
     'l', 'm', 's', 'xs',
   ]),
