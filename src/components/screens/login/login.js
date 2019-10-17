@@ -163,7 +163,7 @@ class Login extends React.Component {
                 </PrimaryButton>
 
                 <TertiaryButton
-                  className={`${styles.button} login-button`}
+                  className={`${styles.button} signin-hwWallet-button`}
                   onClick={() => history.push(routes.hwWallet.path)}
                 >
                   <Icon name="hwWalletIcon" className={styles.hwWalletIcon} />
@@ -175,7 +175,7 @@ class Login extends React.Component {
 
             <p className={styles.exploreAsGuest}>
               {t('Don’t feel like signing in now?')}
-              <Link className={`${styles.link}`} to={routes.dashboard.path}>
+              <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
                 {t('Explore as a guest')}
               </Link>
             </p>
