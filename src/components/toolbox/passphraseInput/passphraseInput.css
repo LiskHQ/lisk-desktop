@@ -67,7 +67,7 @@
 .footerContent {
   align-items: center;
   display: flex;
-  height: 40px;
+  height: auto;
   justify-content: space-between;
   width: 100%;
   position: absolute;
