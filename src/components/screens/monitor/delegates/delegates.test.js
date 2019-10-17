@@ -3,12 +3,22 @@ import { mount } from 'enzyme';
 import Delegates from './delegates';
 import delegates from '../../../../../test/constants/delegates';
 
-jest.mock('../../../../constants/monitor', () => ({ DEFAULT_LIMIT: 6 }));
+jest.mock('../../../../constants/monitor', () => ({ DEFAULT_LIMIT: 8 }));
 
 describe('Delegates monitor page', () => {
   let props;
   let delegatesWithData;
   const name = '1234';
+
+  const switchTab = (wrapper, tab) => {
+    wrapper.find(`.tab.${tab}`).simulate('click');
+    wrapper.setProps({
+      filters: {
+        ...props.filters,
+        tab,
+      },
+    });
+  };
 
   beforeEach(() => {
     props = {
@@ -23,7 +33,7 @@ describe('Delegates monitor page', () => {
       filters: {
         tab: 'active',
       },
-      applyFilters: jest.fn((filters) => { props.filters = filters; }),
+      applyFilters: jest.fn(),
     };
 
     delegatesWithData = {
@@ -48,9 +58,7 @@ describe('Delegates monitor page', () => {
   it('allows to switch to "Standby delegates" tab', () => {
     const wrapper = mount(<Delegates {...{ ...props }} />);
     expect(wrapper.find('.tab.standby')).not.toHaveClassName('active');
-    wrapper.find('.tab.standby').simulate('click');
-    expect(props.applyFilters).toHaveBeenCalledWith({ tab: 'standby' });
-    wrapper.setProps(props);
+    switchTab(wrapper, 'standby');
     expect(wrapper.find('.tab.standby')).toHaveClassName('active');
   });
 
@@ -73,5 +81,19 @@ describe('Delegates monitor page', () => {
     expect(props.applyFilters).toHaveBeenCalledWith({ search: name, tab: props.filters.tab });
     wrapper.find('input.filter-by-name').simulate('change', { target: { value: '' } });
     expect(props.applyFilters).toHaveBeenCalledWith({ search: '', tab: props.filters.tab });
+  });
+
+  it('cannot load more active delegates', () => {
+    const wrapper = mount(<Delegates {...{ ...props, delegates: delegatesWithData }} />);
+    expect(wrapper.find('.tab.active')).toHaveClassName('active');
+    expect(wrapper.find('button.loadMore')).toHaveLength(0);
+  });
+
+  it('allows to load more standby delegates', () => {
+    const tab = 'standby';
+    const wrapper = mount(<Delegates {...{ ...props, delegates: delegatesWithData }} />);
+    switchTab(wrapper, tab);
+    wrapper.find('button.loadMore').simulate('click');
+    expect(props.delegates.loadData).toHaveBeenCalledWith({ offset: delegates.length, tab });
   });
 });
