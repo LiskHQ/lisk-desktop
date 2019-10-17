@@ -3,14 +3,9 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DEFAULT_LIMIT } from '../../../../constants/monitor';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
+import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import DelegatesTable from '../../../shared/delegatesTable';
 import MonitorHeader from '../header';
-
-const AvatarWithAddress = ({ address }) => (
-  <React.Fragment>
-    {address}
-  </React.Fragment>
-);
 
 const Delegates = ({
   delegates, t, filters, applyFilters,
@@ -25,7 +20,8 @@ const Delegates = ({
     {
       id: 'address',
       header: t('Address'),
-      getValue: AvatarWithAddress,
+      /* eslint-disable-next-line react/display-name */
+      getValue: ({ address }) => <AccountVisualWithAddress {...{ address }} />,
       className: grid['col-xs-3'],
     },
     { id: 'rewards' },

@@ -51,6 +51,11 @@ class AccountVisualWithAddress extends React.Component {
   }
 }
 
+AccountVisualWithAddress.defaultProps = {
+  transactionType: transactionTypes.send,
+  showBookmarkedAddress: false,
+};
+
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
   token: state.settings.token,
