@@ -7,7 +7,7 @@ import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
 
-const defaultUrlSearchParams = { tab: '/active' };
+const defaultUrlSearchParams = { tab: 'active' };
 const delegatesKey = 'delegates';
 
 export default compose(

@@ -48,7 +48,7 @@ describe('Delegates monitor page', () => {
     const wrapper = mount(<Delegates {...{ ...props }} />);
     expect(wrapper.find('.tab.standby')).not.toHaveClassName('active');
     wrapper.find('.tab.standby').simulate('click');
-    expect(props.applyFilters).toHaveBeenCalledWith({ tab: '/standby' });
+    expect(props.applyFilters).toHaveBeenCalledWith({ tab: 'standby' });
     wrapper.setProps(props);
     expect(wrapper.find('.tab.standby')).toHaveClassName('active');
   });

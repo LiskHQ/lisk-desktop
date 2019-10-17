@@ -87,15 +87,31 @@ const liskServiceApi = {
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
   }),
 
-  getDelegates: async ({ networkConfig }, { tab, ...searchParams }) => liskServiceGet({
-    serverUrl: getServerUrl(networkConfig),
-    path: `/api/v1/delegates${tab}`,
-    transformResponse: response => response.data,
-    searchParams: {
-      limit: tab === '/active' ? voting.maxCountOfVotes : DEFAULT_LIMIT,
-      ...searchParams,
-    },
-  }),
+  getDelegates: async (network, { tab, ...rest }) => {
+    const tabOptions = {
+      active: ({ networkConfig }, { search = '', ...searchParams }) => liskServiceGet({
+        serverUrl: getServerUrl(networkConfig),
+        path: '/api/v1/delegates/active',
+        transformResponse: response => response.data.filter(
+          delegate => delegate.username.includes(search),
+        ),
+        searchParams: {
+          limit: voting.maxCountOfVotes,
+          ...searchParams,
+        },
+      }),
+      standby: ({ networkConfig }, { ...searchParams }) => liskServiceGet({
+        serverUrl: getServerUrl(networkConfig),
+        path: '/api/v1/delegates/standby',
+        transformResponse: response => response.data,
+        searchParams: {
+          limit: DEFAULT_LIMIT,
+          ...searchParams,
+        },
+      }),
+    };
+    return tabOptions[tab](network, rest);
+  },
 };
 
 export default liskServiceApi;

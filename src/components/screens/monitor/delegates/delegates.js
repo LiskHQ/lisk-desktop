@@ -40,11 +40,11 @@ const Delegates = ({
   const tabs = {
     tabs: [
       {
-        value: '/active',
+        value: 'active',
         name: ('Active delegates'),
         className: 'active',
       }, {
-        value: '/standby',
+        value: 'standby',
         name: ('Standby delegates'),
         className: 'standby',
       },
