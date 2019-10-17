@@ -1,6 +1,5 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from '../icon';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../../utils/passphrase';
 import Input from '../inputs/input';
@@ -79,8 +78,7 @@ class passphraseInput extends React.Component {
     this.validatePassphrase({ values, focus: index });
   }
 
-  // eslint-disable-next-line max-statements
-  validatePassphrase({ values, inputsLength = this.state.inputsLength, focus = null }) {
+  validatePassphrase({ values, inputsLength = this.state.inputsLength, focus = 0 }) {
     let errorState = { validationError: '', partialPassphraseError: [], passphraseIsInvalid: false };
 
     const passphrase = values.join(' ').trim();
@@ -124,10 +122,13 @@ class passphraseInput extends React.Component {
     this.setState({ showPassphrase });
   }
 
+  // eslint-disable-next-line complexity
   render() {
     const { t } = this.props;
     const secondPPFeedback = (this.props.isSecondPassphrase && this.props.secondPPFeedback) || '';
-    const { values, inputsLength, showPassphrase } = this.state;
+    const {
+      values, inputsLength, showPassphrase, partialPassphraseError, passphraseIsInvalid, focus,
+    } = this.state;
     const iconName = showPassphrase ? 'showPassphraseIcon' : 'hidePassphraseIcon';
 
     return (
@@ -138,25 +139,42 @@ class passphraseInput extends React.Component {
             <span className={`${styles.label}`}>{showPassphrase ? t('Hide') : t('Show')}</span>
           </label>
 
-          <div className={`${styles.inputs} ${grid.row} passphrase`}>
-            {[...Array(inputsLength)].map((x, i) => (
-              <span key={i} className={`${grid['col-xs-2']}`}>
-                <Input
-                  setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
-                  placeholder={this.state.focus === i ? '' : i + 1}
-                  className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
-                  value={values[i] || ''}
-                  type={this.state.showPassphrase ? 'text' : 'password'}
-                  autoComplete="off"
-                  onBlur={this.removeFocusedField}
-                  onFocus={this.setFocusedField}
-                  onPaste={this.handlePaste}
-                  onChange={this.handleValueChange}
-                  onKeyDown={this.keyAction}
-                  data-index={i}
-                />
-              </span>
-            ))}
+          <div className={[
+            styles.inputs,
+            focus !== null ? styles.boxSelected : '',
+            partialPassphraseError.length || passphraseIsInvalid || secondPPFeedback !== '' ? styles.boxOnError : '',
+            'passphrase',
+          ].join(' ')}
+          >
+            {
+              // eslint-disable-next-line complexity
+              [...Array(inputsLength)].map((x, i) => (
+                <span key={i}>
+                  <span className={[
+                    styles.inputNumber,
+                    partialPassphraseError[i] || passphraseIsInvalid || secondPPFeedback !== '' ? styles.inputNumberError : '',
+                    focus === i ? styles.inputNumberSelected : '',
+                  ].join(' ')}
+                  >
+                    {`${i + 1}. `}
+                  </span>
+                  <Input
+                    setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
+                    placeholder="___________"
+                    className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
+                    value={values[i] || ''}
+                    type={this.state.showPassphrase ? 'text' : 'password'}
+                    autoComplete="off"
+                    onBlur={this.removeFocusedField}
+                    onFocus={this.setFocusedField}
+                    onPaste={this.handlePaste}
+                    onChange={this.handleValueChange}
+                    onKeyDown={this.keyAction}
+                    data-index={i}
+                  />
+                </span>
+              ))
+            }
           </div>
 
           <div className={styles.footerContent}>
