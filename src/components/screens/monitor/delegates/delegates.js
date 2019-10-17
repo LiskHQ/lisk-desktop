@@ -22,9 +22,8 @@ const Delegates = ({
       header: t('Address'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ address }) => <AccountVisualWithAddress {...{ address }} />,
-      className: grid['col-xs-3'],
+      className: [grid['col-xs-5'], grid['col-md-6']].join(' '),
     },
-    { id: 'rewards' },
     { id: 'productivity' },
     {
       id: 'approval',
