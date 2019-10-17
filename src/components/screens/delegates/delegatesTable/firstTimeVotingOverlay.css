@@ -4,7 +4,7 @@
   position: relative;
 
   & .selectingDelegatesOverlay {
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--overlay-color);
     bottom: 13px;
     position: absolute;
     top: 50px;
