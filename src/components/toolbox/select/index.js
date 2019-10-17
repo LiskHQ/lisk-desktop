@@ -39,7 +39,7 @@ class Select extends React.Component {
 
   render() {
     const {
-      options, size, className, placeholder,
+      options, size, className, placeholder, smallSizeOptions,
     } = this.props;
     const { selected, isOpen } = this.state;
     return (
@@ -65,7 +65,7 @@ class Select extends React.Component {
         >
           {options.map((option, index) => (
             <span
-              className={`${styles.option} option`}
+              className={`${smallSizeOptions ? styles.optionSmall : styles.optionLarge} option`}
               data-index={index}
               onClick={this.setSelected}
               key={`option-${index}`}
