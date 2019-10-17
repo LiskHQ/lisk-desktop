@@ -1,4 +1,5 @@
 import * as popsicle from 'popsicle';
+import { utils } from '@liskhq/lisk-transactions';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
 import { getNetworkNameBasedOnNethash } from '../../getNetwork';
 import { getTimestampFromFirstBlock } from '../../datetime';
@@ -63,12 +64,18 @@ const liskServiceApi = {
     path: `/api/v1/block/${id}`,
   }),
 
-  getLastTransactions: async ({ networkConfig }, searchParams) => liskServiceGet({
+  getTransactions: async ({ networkConfig }, {
+    dateFrom, dateTo, amountFrom, amountTo, ...searchParams
+  }) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
-    path: '/api/v1/transactions/last',
+    path: '/api/v1/transactions',
     transformResponse: response => response.data,
     searchParams: {
-      limit: 20,
+      limit: DEFAULT_LIMIT,
+      ...(dateFrom && { from: formatDate(dateFrom) }),
+      ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
+      ...(amountFrom && { min: utils.convertLSKToBeddows(amountFrom) }),
+      ...(amountTo && { max: utils.convertLSKToBeddows(amountTo) }),
       ...searchParams,
     },
   }),

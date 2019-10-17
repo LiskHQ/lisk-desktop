@@ -76,7 +76,6 @@
   }
 }
 
-.sortable,
 .sortAsc,
 .sortDesc {
   cursor: pointer;
@@ -96,6 +95,38 @@
 
 .sortAsc::after {
   transform: rotate(180deg);
+}
+
+.titleWrapper {
+  position: relative;
+}
+
+.sortInactive {
+  cursor: pointer;
+
+  &::after {
+    display: inline-block;
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: -13px;
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-bottom-color: var(--color-ghost);
+  }
+
+  &::before {
+    display: inline-block;
+    content: " ";
+    position: absolute;
+    bottom: 0;
+    right: -13px;
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-top-color: var(--color-ghost);
+  }
 }
 
 .clickable {

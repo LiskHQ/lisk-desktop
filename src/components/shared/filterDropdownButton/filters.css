@@ -9,7 +9,7 @@
     @mixin contentNormal bold;
 
     color: var(--color-maastricht-blue);
-    margin: 20px 0 8px;
+    margin: 16px 0 8px;
     text-align: initial;
   }
 

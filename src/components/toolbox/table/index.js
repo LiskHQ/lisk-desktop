@@ -14,15 +14,21 @@ const Table = ({
     }
   };
 
-  const getSortClass = ({ id, isSortable }) => (
-    isSortable && ([
-      sort.includes(id) ? (
-        styles[sort.includes('asc') ? 'sortAsc' : 'sortDesc']
-      ) : styles.sortable,
-      'sort-by',
-      id,
-    ].join(' '))
-  );
+  const getSortClass = ({ id, isSortable }) => {
+    if (isSortable) {
+      const className = ['sort-by', id];
+      if (sort.includes(id) && sort.includes('asc')) {
+        className.push(styles.sortAsc);
+      } else if (sort.includes(id) && sort.includes('desc')) {
+        className.push(styles.sortDesc);
+      } else {
+        className.push(styles.sortInactive);
+      }
+      return className.join(' ');
+    }
+
+    return '';
+  };
 
   return (
     <React.Fragment>
@@ -32,8 +38,10 @@ const Table = ({
           className, header, id, isSortable,
         }) => (
           <div key={id} className={className} onClick={() => onHeaderClick({ id, isSortable })}>
-            <span className={getSortClass({ id, isSortable })}>
-              {header}
+            <span className={styles.titleWrapper}>
+              <span className={getSortClass({ id, isSortable })}>
+                {header}
+              </span>
             </span>
           </div>
         ))}

@@ -77,6 +77,20 @@
     }
   }
 
+  &:global(.showRight) {
+    transform-origin: 9px 50%;
+    top: -1px;
+    left: calc(100% + 15px);
+    min-width: 304px;
+
+    & .dropdownArrow {
+      left: -18px;
+      transform-origin: bottom;
+      transform: rotate(-90deg);
+      top: 9px;
+    }
+  }
+
   &:global(.dark) {
     background: var(--color-maastricht-blue);
     border: 1px solid var(--light-border-color);
