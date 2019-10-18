@@ -23,7 +23,7 @@ describe('DiscreetModeToggle Component', () => {
     expect(wrapper.find('div')).toHaveClassName('toggle');
     expect(wrapper.find('span')).toHaveText('Enable discreet mode when signed in (optional)');
     wrapper.find('.discreetMode').simulate('change', true);
-    expect(props.settingsUpdated).toBeCalled();
+    expect(props.settingsUpdated).toBeCalledWith({ discreetMode: true });
     wrapper.setProps({ isDiscreetMode: true });
   });
 
@@ -35,7 +35,7 @@ describe('DiscreetModeToggle Component', () => {
     expect(wrapper.find('div')).toHaveClassName('toggle');
     expect(wrapper.find('span')).toHaveText('Enable discreet mode when signed in (optional)');
     wrapper.find('.discreetMode').simulate('change', true);
-    expect(props.settingsUpdated).toBeCalled();
+    expect(props.settingsUpdated).toBeCalledWith({ discreetMode: false });
     wrapper.setProps({ isDiscreetMode: false });
   });
 });

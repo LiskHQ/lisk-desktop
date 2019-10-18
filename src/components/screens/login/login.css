@@ -26,7 +26,8 @@
     width: 100%;
   }
 
-  & .button {
+  & .button,
+  & .hwLink {
     @mixin contentLargest bold;
 
     width: 100%;
@@ -38,6 +39,10 @@
     & .hwWalletIcon {
       margin-right: 15px;
     }
+  }
+
+  & .hwLink {
+    margin-top: 24px;
   }
 
   & .backButton {
