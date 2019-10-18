@@ -127,7 +127,7 @@ class Login extends React.Component {
           >
             <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
               <h1>
-                {t('Sign in with a passphrase')}
+                {t('Sign in with a Passphrase')}
               </h1>
               <p>
                 {t('Don’t have a Lisk account yet? ')}
