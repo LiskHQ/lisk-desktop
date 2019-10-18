@@ -30,7 +30,7 @@ const Transactions = ({ t, transactions }) => {
     label: t('Type'),
     placeholder: t('Select from options'),
     name: 'type',
-    type: 'dropdown',
+    type: 'select',
   }, {
     label: t('Height'),
     placeholder: t('Eg. {{value}}', { value: '10180477' }),

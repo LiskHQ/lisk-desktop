@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import DropdownFilter from './dropdownFilter';
+import SelectFilter from './selectFilter';
 
-describe('DropdownFilter', () => {
+describe('SelectFilter', () => {
   const props = {
     t: v => v,
     filters: {
@@ -11,7 +11,7 @@ describe('DropdownFilter', () => {
     name: 'type',
     updateCustomFilters: jest.fn(),
   };
-  const wrapper = mount(<DropdownFilter {...props} />);
+  const wrapper = mount(<SelectFilter {...props} />);
 
   it('should handle input selection', () => {
     wrapper.find('Select.input').simulate('click');

@@ -4,7 +4,7 @@ import { transactionNames } from '../../../constants/transactionTypes';
 import styles from './filters.css';
 import Select from '../../toolbox/select';
 
-const DropdownFilter = ({
+const SelectFilter = ({
   label, t, placeholder, filters, name, updateCustomFilters,
 }) => {
   const transactionTypes = Object.keys(transactionNames(t))
@@ -40,4 +40,4 @@ const DropdownFilter = ({
   );
 };
 
-export default withTranslation()(DropdownFilter);
+export default withTranslation()(SelectFilter);

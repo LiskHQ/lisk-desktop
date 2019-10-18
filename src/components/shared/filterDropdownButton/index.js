@@ -10,7 +10,7 @@ import IntegerFilter from './integerFilter';
 import TextFilter from './textFilter';
 import styles from './filterContainer.css';
 import AddressFilter from './addressFilter';
-import DropdownFilter from './dropdownFilter';
+import SelectFilter from './selectFilter';
 
 const filterComponents = {
   'date-range': DateFieldGroup,
@@ -18,7 +18,7 @@ const filterComponents = {
   text: TextFilter,
   integer: IntegerFilter,
   address: AddressFilter,
-  dropdown: DropdownFilter,
+  select: SelectFilter,
 };
 
 class FilterDropdownButton extends React.Component {
