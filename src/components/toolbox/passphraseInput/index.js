@@ -163,7 +163,7 @@ class passphraseInput extends React.Component {
                   </span>
                   <Input
                     setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
-                    placeholder="___________"
+                    placeholder="_________"
                     className={[
                       partialPassphraseError[i] || passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : '',
                       focus === i ? 'selected' : '',
