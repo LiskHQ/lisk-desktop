@@ -8,7 +8,7 @@ const SelectFilter = ({
   label, t, placeholder, filters, name, updateCustomFilters,
 }) => {
   const transactionTypes = Object.keys(transactionNames(t))
-    .filter((tx, i) => i <= 4)
+    .slice(0, 5)
     .map((key, i) => ({
       value: key,
       label: `${key} - ${transactionNames(t)[i]}`,
