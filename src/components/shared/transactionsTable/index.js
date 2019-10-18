@@ -146,9 +146,10 @@ class TransactionsTable extends React.Component {
                     getValue: transaction => (
                       <Tooltip
                         title={t('Transaction')}
-                        className="showOnBottom"
-                        tooltipClassName={styles.tooltip}
+                        className="showOnLeft"
+                        tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
                         content={<LiskAmount val={transaction.fee} token={tokenMap.LSK.key} />}
+                        size="m"
                       >
                         <p>{`${transaction.type} - ${transactionNames(t)[transaction.type]}`}</p>
                       </Tooltip>
@@ -164,6 +165,7 @@ class TransactionsTable extends React.Component {
                         className="showOnLeft"
                         tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
                         content={<Icon name={transaction.confirmations > roundSize ? 'approved' : 'pending'} />}
+                        size="s"
                       >
                         <p>{`${transaction.confirmations}/${roundSize} ${t('Confirmations')}`}</p>
                       </Tooltip>
