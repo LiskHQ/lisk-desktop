@@ -1,4 +1,5 @@
 import actionTypes from '../../constants/actions';
+import voting from '../../constants/voting';
 
 const blocks = (state = { latestBlocks: [] }, action) => {
   switch (action.type) {
@@ -7,7 +8,7 @@ const blocks = (state = { latestBlocks: [] }, action) => {
         ...state,
         latestBlocks: [
           action.data.block,
-          ...state.latestBlocks.slice(0, 9),
+          ...state.latestBlocks.slice(0, voting.numberOfActiveDelegates),
         ],
       };
     default:
