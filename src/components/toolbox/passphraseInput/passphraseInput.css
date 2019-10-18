@@ -53,6 +53,10 @@
       &:focus {
         color: var(--color-ultramarine-blue);
       }
+
+      &::placeholder {
+        font-family: sans-serif;
+      }
     }
   }
 }
