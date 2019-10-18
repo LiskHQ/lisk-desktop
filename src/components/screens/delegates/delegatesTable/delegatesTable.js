@@ -96,7 +96,7 @@ const DelegatesTable = ({
 
   const onRowClick = votingModeEnabled ? voteToggled : undefined;
 
-  const canLoadMore = delegates.data.length >= votingConst.maxCountOfVotes;
+  const canLoadMore = delegates.data.length >= votingConst.numberOfActiveDelegates;
 
   return (
     <FirstTimeVotingOverlay enabled={firstTimeVotingActive}>

@@ -96,7 +96,7 @@ const liskServiceApi = {
           delegate => delegate.username.includes(search),
         ),
         searchParams: {
-          limit: voting.maxCountOfVotes,
+          limit: voting.numberOfActiveDelegates,
           ...searchParams,
         },
       }),
@@ -104,10 +104,10 @@ const liskServiceApi = {
         serverUrl: getServerUrl(networkConfig),
         path: '/api/v1/delegates',
         transformResponse: response => response.data.filter(
-          delegate => delegate.rank > voting.maxCountOfVotes,
+          delegate => delegate.rank > voting.numberOfActiveDelegates,
         ),
         searchParams: {
-          offset: offset + (Object.keys(searchParams).length ? 0 : voting.maxCountOfVotes),
+          offset: offset + (Object.keys(searchParams).length ? 0 : voting.numberOfActiveDelegates),
           limit: DEFAULT_LIMIT,
           ...searchParams,
         },
