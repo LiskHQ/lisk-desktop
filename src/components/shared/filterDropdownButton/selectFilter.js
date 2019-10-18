@@ -18,8 +18,6 @@ const SelectFilter = ({
     updateCustomFilters({
       [name]: {
         value,
-        error: '',
-        loading: false,
       },
     });
   };
