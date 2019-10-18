@@ -11,7 +11,7 @@ import { extractAddress } from '../../../utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
 import { getNetworksList } from '../../../utils/getNetwork';
 import networks from '../../../constants/networks';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import PassphraseInput from '../../toolbox/passphraseInput';
 import Piwik from '../../../utils/piwik';
 import DiscreetModeToggle from '../../shared/discreetModeToggle';
@@ -117,7 +117,7 @@ class Login extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t, history } = this.props;
+    const { t } = this.props;
 
     return (
       <React.Fragment>
@@ -131,7 +131,7 @@ class Login extends React.Component {
               </h1>
               <p>
                 {t('Don’t have a Lisk account yet? ')}
-                <Link className={`${styles.link}`} to={routes.register.path}>
+                <Link className={styles.link} to={routes.register.path}>
                   {t('Create it now')}
                 </Link>
               </p>
@@ -162,13 +162,13 @@ class Login extends React.Component {
                   {t('Sign in')}
                 </PrimaryButton>
 
-                <TertiaryButton
-                  className={`${styles.button} signin-hwWallet-button`}
-                  onClick={() => history.push(routes.hwWallet.path)}
+                <Link
+                  className={`${styles.hwLink} signin-hwWallet-button`}
+                  to={(routes.hwWallet.path)}
                 >
                   <Icon name="hwWalletIcon" className={styles.hwWalletIcon} />
                   {t('Sign in with a hardware wallet')}
-                </TertiaryButton>
+                </Link>
 
               </div>
             </form>

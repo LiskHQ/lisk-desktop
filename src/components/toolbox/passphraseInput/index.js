@@ -122,14 +122,20 @@ class passphraseInput extends React.Component {
     this.setState({ showPassphrase });
   }
 
-  // eslint-disable-next-line complexity
   render() {
     const { t } = this.props;
     const secondPPFeedback = (this.props.isSecondPassphrase && this.props.secondPPFeedback) || '';
     const {
-      values, inputsLength, showPassphrase, partialPassphraseError, passphraseIsInvalid, focus,
+      focus,
+      inputsLength,
+      partialPassphraseError,
+      passphraseIsInvalid,
+      showPassphrase,
+      validationError,
+      values,
     } = this.state;
     const iconName = showPassphrase ? 'showPassphraseIcon' : 'hidePassphraseIcon';
+    const isFeedbackOnError = validationError || secondPPFeedback !== '';
 
     return (
       <React.Fragment>
@@ -141,19 +147,16 @@ class passphraseInput extends React.Component {
 
           <div className={[
             styles.inputs,
-            focus !== null ? styles.boxSelected : '',
-            partialPassphraseError.length || passphraseIsInvalid || secondPPFeedback !== '' ? styles.boxOnError : '',
+            partialPassphraseError.length ? styles.boxOnError : '',
             'passphrase',
           ].join(' ')}
           >
             {
-              // eslint-disable-next-line complexity
               [...Array(inputsLength)].map((x, i) => (
                 <span key={i}>
                   <span className={[
                     styles.inputNumber,
-                    partialPassphraseError[i] || passphraseIsInvalid || secondPPFeedback !== '' ? styles.inputNumberError : '',
-                    focus === i ? styles.inputNumberSelected : '',
+                    partialPassphraseError[i] ? styles.inputNumberError : '',
                   ].join(' ')}
                   >
                     {`${i + 1}. `}
@@ -161,7 +164,10 @@ class passphraseInput extends React.Component {
                   <Input
                     setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
                     placeholder="___________"
-                    className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
+                    className={[
+                      partialPassphraseError[i] || passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : '',
+                      focus === i ? 'selected' : '',
+                    ].join(' ')}
                     value={values[i] || ''}
                     type={this.state.showPassphrase ? 'text' : 'password'}
                     autoComplete="off"
@@ -180,11 +186,11 @@ class passphraseInput extends React.Component {
           <div className={styles.footerContent}>
             <Feedback
               className={styles.errorMessage}
-              show={!!(this.state.validationError || secondPPFeedback !== '')}
-              status={(this.state.validationError || secondPPFeedback !== '') ? 'error' : ''}
+              show={!!isFeedbackOnError}
+              status={isFeedbackOnError ? 'error' : ''}
               showIcon={false}
             >
-              { secondPPFeedback || this.state.validationError }
+              { secondPPFeedback || validationError }
             </Feedback>
           </div>
         </div>

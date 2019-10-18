@@ -9,7 +9,6 @@ const Header = ({
 }) => pathname !== routes.termsOfUse.path && (
   isSigninFlow ? (
     <SignInHeader
-      dark={false}
       hideNetwork={pathname === routes.hwWallet.path}
       showSettings
     />

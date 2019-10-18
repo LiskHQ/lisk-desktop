@@ -18,6 +18,10 @@
   box-sizing: border-box;
   outline: none;
 
+  &:focus-within {
+    border-color: var(--color-ultramarine-blue);
+  }
+
   & > span {
     width: calc(100% / 6);
     display: flex;
@@ -28,12 +32,12 @@
     box-sizing: border-box;
     color: var(--color-ghost);
 
-    & .inputNumber {
-      width: 20px;
+    &:focus-within {
+      color: var(--color-ultramarine-blue);
     }
 
-    & .inputNumberSelected {
-      color: var(--color-ultramarine-blue);
+    & .inputNumber {
+      width: 20px;
     }
 
     & .inputNumberError {
@@ -56,12 +60,8 @@
   }
 }
 
-.boxSelected {
-  border: 1px solid var(--color-ultramarine-blue);
-}
-
 .boxOnError {
-  border: 1px solid var(--color-burnt-sienna);
+  border-color: var(--color-burnt-sienna) !important;
 }
 
 .footerContent {
