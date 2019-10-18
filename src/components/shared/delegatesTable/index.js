@@ -26,7 +26,7 @@ const DelegatesTable = ({
       header: <React.Fragment>
         {t('Forged')}
         <Tooltip className="showOnLeft">
-          <p>{t('Sum of all LSK awarded to a delegate for each block successfully generated on the blockchain.')}</p>
+          <p>{t('Total amount of LSK forged by a delegate.')}</p>
         </Tooltip>
       </React.Fragment>,
       /* eslint-disable-next-line react/display-name */
@@ -38,7 +38,7 @@ const DelegatesTable = ({
         {t('Productivity')}
         &nbsp;
         <Tooltip className="showOnLeft">
-          <p>{t('Percentage of successfully forged blocks of when the delegate should have forged a block of transactions.')}</p>
+          <p>{t('Productivity rate specifies how many blocks were successfully forged by a delegate.')}</p>
         </Tooltip>
       </React.Fragment>,
       getValue: ({ productivity }) => `${formatAmountBasedOnLocale({ value: productivity })} %`,
