@@ -32,7 +32,7 @@
   &.error:not(:empty) {
     background: var(--error-background-color);
     color: var(--color-white);
-    padding: 8px var(--horizontal-padding-l);
+    padding: 12px 16px;
     margin-top: 10px;
 
     &.m {
