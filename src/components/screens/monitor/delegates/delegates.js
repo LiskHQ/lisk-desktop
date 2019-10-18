@@ -6,6 +6,7 @@ import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import DelegatesTable from '../../../shared/delegatesTable';
 import MonitorHeader from '../header';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 
 const Delegates = ({
   delegates, t, filters, applyFilters,
@@ -27,7 +28,12 @@ const Delegates = ({
     { id: 'productivity' },
     {
       id: 'approval',
-      header: t('Approval'),
+      header: <React.Fragment>
+        {t('Approval')}
+        <Tooltip className="showOnLeft">
+          <p>{t('Approval rate specifies the percentage of all votes received by a delegate.')}</p>
+        </Tooltip>
+      </React.Fragment>,
       getValue: ({ approval }) => `${formatAmountBasedOnLocale({ value: approval })} %`,
       className: grid['col-xs-2'],
     },
