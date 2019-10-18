@@ -8,6 +8,7 @@ import DelegatesTable from '../../../shared/delegatesTable';
 import MonitorHeader from '../header';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
+import styles from './delegates.css';
 
 const Delegates = ({
   delegates, t, filters, applyFilters,
@@ -24,7 +25,14 @@ const Delegates = ({
       header: t('Address'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ address }) => <AccountVisualWithAddress {...{ address, size: 36 }} />,
-      className: [grid['col-xs-5'], grid['col-md-6']].join(' '),
+      className: [grid['col-xs-3'], grid['col-md-4']].join(' '),
+    },
+    {
+      id: 'status',
+      header: t('Status'),
+      /* eslint-disable-next-line react/display-name */
+      getValue: ({ status }) => <div className={[styles.status, styles[status]].join(' ')} />,
+      className: grid['col-xs-1'],
     },
     { id: 'productivity' },
     {
