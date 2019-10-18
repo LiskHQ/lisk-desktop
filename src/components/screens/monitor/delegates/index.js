@@ -6,6 +6,7 @@ import Delegates from './delegates';
 import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
+import withForgingStatus from './withForgingStatus';
 
 const defaultUrlSearchParams = { tab: 'active' };
 const delegatesKey = 'delegates';
@@ -28,5 +29,6 @@ export default compose(
     },
   }),
   withFilters(delegatesKey, defaultUrlSearchParams),
+  withForgingStatus(),
   withTranslation(),
 )(Delegates);
