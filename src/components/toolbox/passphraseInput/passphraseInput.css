@@ -14,7 +14,7 @@
   border: 1px solid var(--dark-border-color);
   border-radius: 3px;
   background-color: var(--color-white);
-  padding: 16px 24px;
+  padding: 0px 24px;
   box-sizing: border-box;
   outline: none;
 
@@ -53,10 +53,6 @@
         color: var(--color-ultramarine-blue);
       }
     }
-  }
-
-  & > span:nth-child(-n+6) {
-    margin: 0 0 12px 0;
   }
 }
 
