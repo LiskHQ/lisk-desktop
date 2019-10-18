@@ -22,7 +22,7 @@
     border-color: var(--color-ultramarine-blue);
   }
 
-  & > span {
+  & > .inputContainer {
     width: calc(100% / 6);
     display: flex;
     flex-direction: row;
@@ -31,6 +31,7 @@
     flex-grow: 1;
     box-sizing: border-box;
     color: var(--color-ghost);
+    margin: 15px 0 20px;
 
     &:focus-within {
       color: var(--color-ultramarine-blue);
@@ -49,17 +50,22 @@
       border: none;
       text-align: left;
       padding: 0 1px !important;
+      height: 20px !important;
 
       &:focus {
         color: var(--color-ultramarine-blue);
       }
     }
   }
+
+  & > .inputContainer:nth-child(-n+6) {
+    margin-bottom: 0;
+  }
 }
 
 .boxOnError,
 .boxOnError:focus-within {
-  border-color: var(--color-burnt-sienna) !important;
+  border-color: var(--color-burnt-sienna);
 }
 
 .footerContent {
