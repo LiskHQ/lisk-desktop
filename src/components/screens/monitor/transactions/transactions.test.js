@@ -18,7 +18,6 @@ describe('Transactions monitor page', () => {
   const amountFrom = '1.3';
   const sort = 'timestamp:desc';
   const height = '1234';
-  const type = '0';
   const transactionsWithData = {
     ...props.transactions,
     isLoading: false,
@@ -91,11 +90,11 @@ describe('Transactions monitor page', () => {
     expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:desc' });
   });
 
-  it('allows to clear the filter after filtering by type', () => {
+  it('allows to clear the filter after filtering by height', () => {
     const wrapper = mount(<Transactions {...props} />);
     wrapper.find('button.filter').simulate('click');
     wrapper.find('.more-less-switch').simulate('click');
-    wrapper.find('input.type').simulate('change', { target: { value: type } });
+    wrapper.find('input.height').simulate('change', { target: { value: height } });
     wrapper.find('form.filter-container').simulate('submit');
     wrapper.find('span.clear-filter').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalled();
