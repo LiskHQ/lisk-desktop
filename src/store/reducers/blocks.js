@@ -8,8 +8,18 @@ const blocks = (state = { latestBlocks: [] }, action) => {
         ...state,
         latestBlocks: [
           action.data.block,
-          ...state.latestBlocks.slice(0, voting.numberOfActiveDelegates),
-        ],
+          ...state.latestBlocks,
+        ].slice(0, voting.numberOfActiveDelegates),
+      };
+    case actionTypes.olderBlocksRetrieved:
+      return {
+        ...state,
+        latestBlocks: [
+          ...state.latestBlocks,
+          ...action.blocks.filter(block => (
+            block.height < Math.min(...state.latestBlocks.map(b => b.height))
+          )),
+        ].slice(0, voting.numberOfActiveDelegates),
       };
     default:
       return state;
