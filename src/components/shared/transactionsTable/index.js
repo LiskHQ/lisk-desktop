@@ -17,6 +17,7 @@ import routes from '../../../constants/routes';
 import Table from '../../toolbox/table';
 import AccountVisualWithAddress from '../accountVisualWithAddress';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
+import { transactionNames } from '../../../constants/transactionTypes';
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -149,7 +150,7 @@ class TransactionsTable extends React.Component {
                         tooltipClassName={styles.tooltip}
                         content={<LiskAmount val={transaction.fee} token={tokenMap.LSK.key} />}
                       >
-                        <p>{`${t('Type')} ${transaction.type}`}</p>
+                        <p>{`${transaction.type} - ${transactionNames(t)[transaction.type]}`}</p>
                       </Tooltip>
                     ),
                   },
