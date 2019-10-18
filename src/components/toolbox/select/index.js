@@ -52,7 +52,7 @@ class Select extends React.Component {
           <Input
             readOnly
             placeholder={placeholder}
-            value={typeof selected === 'number' ? options[selected].label : ''}
+            value={options[selected] ? options[selected].label : ''}
             onClick={this.toggleIsOpen}
             size={size}
           />
