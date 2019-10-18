@@ -10,7 +10,7 @@ const DropdownFilter = ({
   const transactionTypes = Object.keys(transactionNames(t))
     .filter((tx, i) => i <= 4)
     .map((key, i) => ({
-      value: Number(key),
+      value: key,
       label: `${key} - ${transactionNames(t)[i]}`,
     }));
 
