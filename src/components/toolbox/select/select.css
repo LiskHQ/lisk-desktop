@@ -7,16 +7,16 @@
   & .dropdown {
     transform-origin: top center;
 
-    & .optionSmall {
-      @mixin contentNormal;
-
-      padding: 10px 15px;
-    }
-
-    & .optionLarge {
+    & .option {
       @mixin contentLargest;
 
       padding: 15px 20px;
+    }
+
+    & .xs {
+      @mixin contentNormal;
+
+      padding: 10px 15px;
     }
   }
 }

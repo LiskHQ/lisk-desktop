@@ -31,7 +31,6 @@ const SelectFilter = ({
         selected={filters[name]}
         onChange={onChange}
         className={styles.input}
-        smallSizeOptions
         size="xs"
       />
     </div>
