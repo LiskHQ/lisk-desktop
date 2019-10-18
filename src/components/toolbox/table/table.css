@@ -128,3 +128,7 @@
     border-top-color: var(--color-ghost);
   }
 }
+
+.clickable {
+  cursor: pointer;
+}
