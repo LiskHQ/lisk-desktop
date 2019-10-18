@@ -3,6 +3,12 @@ import { mount } from 'enzyme';
 import Delegates from './delegates';
 import delegates from '../../../../../test/constants/delegates';
 
+const transformToLiskServiceFormat = ({ account, ...delegate }) => ({
+  ...delegate,
+  ...account,
+});
+const delegatesApiResponse = delegates.map(transformToLiskServiceFormat);
+
 jest.mock('../../../../constants/monitor', () => ({ DEFAULT_LIMIT: 8 }));
 
 describe('Delegates monitor page', () => {
@@ -39,7 +45,7 @@ describe('Delegates monitor page', () => {
     delegatesWithData = {
       ...props.delegates,
       isLoading: false,
-      data: delegates,
+      data: delegatesApiResponse,
     };
   });
 
@@ -52,7 +58,7 @@ describe('Delegates monitor page', () => {
     const wrapper = mount(<Delegates {...props} />);
     expect(wrapper.find('.delegate-row')).toHaveLength(0);
     wrapper.setProps({ delegates: delegatesWithData });
-    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(delegates.length);
+    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(delegatesApiResponse.length);
   });
 
   it('allows to switch to "Standby delegates" tab', () => {
@@ -94,6 +100,8 @@ describe('Delegates monitor page', () => {
     const wrapper = mount(<Delegates {...{ ...props, delegates: delegatesWithData }} />);
     switchTab(wrapper, tab);
     wrapper.find('button.loadMore').simulate('click');
-    expect(props.delegates.loadData).toHaveBeenCalledWith({ offset: delegates.length, tab });
+    expect(props.delegates.loadData).toHaveBeenCalledWith({
+      offset: delegatesApiResponse.length, tab,
+    });
   });
 });
