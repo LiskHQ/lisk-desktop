@@ -7,6 +7,7 @@ import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import DelegatesTable from '../../../shared/delegatesTable';
 import MonitorHeader from '../header';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
+import routes from '../../../../constants/routes';
 
 const Delegates = ({
   delegates, t, filters, applyFilters,
@@ -59,11 +60,13 @@ const Delegates = ({
     ? false
     : !!delegates.data.length && delegates.data.length % DEFAULT_LIMIT === 0;
 
+  const getRowLink = delegate => `${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.address}`;
+
   return (
     <div>
       <MonitorHeader />
       <DelegatesTable {...{
-        columns, delegates, tabs, filters, applyFilters, canLoadMore,
+        columns, delegates, tabs, filters, applyFilters, canLoadMore, getRowLink,
       }}
       />
     </div>
