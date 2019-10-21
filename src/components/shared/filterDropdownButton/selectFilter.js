@@ -7,12 +7,20 @@ import Select from '../../toolbox/select';
 const SelectFilter = ({
   label, t, placeholder, filters, name, updateCustomFilters,
 }) => {
-  const transactionTypes = Object.keys(transactionNames(t))
-    .slice(0, 5)
-    .map((key, i) => ({
-      value: key,
-      label: `${key} - ${transactionNames(t)[i]}`,
-    }));
+  const getTransactionTypes = () => {
+    const transactionTypes = Object.keys(transactionNames(t))
+      .slice(0, 5)
+      .map((key, i) => ({
+        value: key,
+        label: `${key} - ${transactionNames(t)[i]}`,
+      }));
+
+    if (placeholder) {
+      transactionTypes.unshift({ value: '', label: placeholder });
+    }
+
+    return transactionTypes;
+  };
 
   const onChange = ({ value }) => {
     updateCustomFilters({
@@ -27,7 +35,7 @@ const SelectFilter = ({
       <span className={styles.fieldLabel}>{label}</span>
       <Select
         placeholder={placeholder}
-        options={transactionTypes}
+        options={getTransactionTypes()}
         selected={filters[name]}
         onChange={onChange}
         className={styles.input}

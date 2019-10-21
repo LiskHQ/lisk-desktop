@@ -28,7 +28,7 @@ const Transactions = ({ t, transactions }) => {
     type: 'address',
   }, {
     label: t('Type'),
-    placeholder: t('Select from options'),
+    placeholder: t('All types'),
     name: 'type',
     type: 'select',
   }, {
