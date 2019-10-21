@@ -11,11 +11,21 @@ class Select extends React.Component {
 
     this.state = {
       isOpen: false,
-      selected: props.selected,
+      selected: '',
     };
 
     this.setSelected = this.setSelected.bind(this);
     this.toggleIsOpen = this.toggleIsOpen.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({ selected: this.props.selected });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.selected !== this.props.selected && this.props.selected === '') {
+      this.setState({ selected: this.props.selected });
+    }
   }
 
   toggleIsOpen() {
@@ -51,6 +61,9 @@ class Select extends React.Component {
         <label className={`${styles.inputHolder} ${isOpen ? styles.isOpen : ''}`}>
           <Input
             readOnly
+            className={
+              selected && options[selected].label !== placeholder && styles.selectedInput
+            }
             placeholder={placeholder}
             value={options[selected] ? options[selected].label : ''}
             onClick={this.toggleIsOpen}
@@ -61,7 +74,7 @@ class Select extends React.Component {
           className={styles.dropdown}
           showArrow={false}
           showDropdown={isOpen}
-          active={selected}
+          active={!selected && placeholder ? 0 : selected}
         >
           {options.map((option, index) => (
             <span

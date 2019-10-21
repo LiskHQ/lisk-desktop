@@ -27,8 +27,8 @@
   display: flex;
   position: relative;
 
-  & input,
-  & input:read-only {
+  & .selectedInput,
+  & .selectedInput:read-only {
     color: var(--color-maastricht-blue);
     cursor: inherit;
   }
