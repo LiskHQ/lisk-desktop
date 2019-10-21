@@ -153,7 +153,7 @@ class passphraseInput extends React.Component {
           >
             {
               [...Array(inputsLength)].map((x, i) => (
-                <span key={i} className={styles.inputContainer}>
+                <span key={i} className={styles.inputContainer} autoComplete="off">
                   <span className={[
                     styles.inputNumber,
                     partialPassphraseError[i] ? styles.inputNumberError : '',

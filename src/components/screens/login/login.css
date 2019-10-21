@@ -164,7 +164,7 @@
 }
 
 .discreetMode {
-  margin-top: 10px;
+  margin-top: 16px;
 }
 
 .exploreAsGuest {
@@ -174,7 +174,7 @@
   bottom: 0;
   color: var(--color-slate-gray);
   margin: 0 0 32px;
-  letter-spacing: 1px;
+  letter-spacing: 0px;
 
   & > a {
     margin: 0 0 0 5px;
