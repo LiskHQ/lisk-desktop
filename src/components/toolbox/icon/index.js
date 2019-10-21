@@ -36,6 +36,7 @@ import iconEdit from '../../../assets/images/icons/icon-edit.svg';
 import iconEmptyRecentTransactions from '../../../assets/images/icons/empty-recent-transactions.svg';
 import iconFilter from '../../../assets/images/icons/icon-filter.svg';
 import iconLedgerDevice from '../../../assets/images/icons/icon-ledger-device.svg';
+import iconLink from '../../../assets/images/icons/iconLink.svg';
 import iconLoader from '../../../assets/images/icons/icon-loader.svg';
 import iconTrezorDevice from '../../../assets/images/icons/icon-trezor-device.svg';
 import iconWarning from '../../../assets/images/icons/icon-warning.svg';
@@ -117,6 +118,7 @@ export const icons = {
   iconEmptyRecentTransactions,
   iconFilter,
   iconLedgerDevice,
+  iconLink,
   iconLoader,
   iconTrezorDevice,
   iconWarning,

@@ -24,6 +24,7 @@
 
   & .items {
     padding: 0px 10px;
+    display: flex;
   }
 }
 
@@ -60,4 +61,16 @@
   &.greenLabel {
     color: #00b262;
   }
+}
+
+.exportToCSVBtn {
+  font-size: 12px !important;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconLink {
+  margin-left: 5px;
 }

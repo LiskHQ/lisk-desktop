@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+  <g fill="none" fill-rule="evenodd">
+    <rect width="14" height="14" fill="#FFF" fill-opacity=".1" opacity=".1"/>
+    <g stroke="#8A8CA2" stroke-linecap="round" transform="translate(2 2)">
+      <path d="M5.5,5 L10.5,0"/>
+      <polyline points="7.5 0 10.5 0 10.5 3"/>
+      <path d="M3.21428571,1 L2,1 C0.8954305,1 -1.3527075e-16,1.8954305 0,3 L0,8 C1.3527075e-16,9.1045695 0.8954305,10 2,10 L7,10 C8.1045695,10 9,9.1045695 9,8 L9,6.78571429 L9,6.78571429"/>
+    </g>
+  </g>
+</svg>
