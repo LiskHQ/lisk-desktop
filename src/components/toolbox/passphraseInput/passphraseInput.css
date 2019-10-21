@@ -38,7 +38,7 @@
     }
 
     & .inputNumber {
-      width: 20px;
+      width: 25px;
     }
 
     & .inputNumberError:focus-within,
@@ -49,8 +49,9 @@
     & input {
       border: none;
       text-align: left;
-      padding: 0 2px 3px !important;
+      padding: 0 2px 1px !important;
       height: 20px !important;
+      box-sizing: border-box;
 
       &:focus {
         color: var(--color-ultramarine-blue);
@@ -58,6 +59,9 @@
 
       &::placeholder {
         font-family: sans-serif;
+        color: var(--color-ghost);
+        border-bottom: 1px solid;
+        height: 13px;
       }
     }
   }
