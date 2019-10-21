@@ -12,7 +12,7 @@
   transition: var(--transition-button) !important;
 
   &.l {
-    height: 50px;
+    height: 48px;
     padding: 0 28px;
   }
 
