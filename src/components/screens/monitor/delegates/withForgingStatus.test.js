@@ -7,6 +7,7 @@ import withForgingStatus from './withForgingStatus';
 
 jest.mock('../../../../utils/api/lsk/liskService', () => ({
   getLastBlocks: jest.fn(() => Promise.resolve([])),
+  getNextForgers: jest.fn(() => Promise.resolve([])),
 }));
 
 describe('withForgingStatus', () => {

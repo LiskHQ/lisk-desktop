@@ -1,11 +1,20 @@
 import { connect } from 'react-redux';
 import React from 'react';
+import moment from 'moment';
 import { olderBlocksRetrieved } from '../../../../actions/blocks';
 import liskService from '../../../../utils/api/lsk/liskService';
 import voting from '../../../../constants/voting';
 
 const withForgingStatus = delegatesKey => (ChildComponent) => {
   class DelegatesContainer extends React.Component {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        nextForgingTimes: {},
+      };
+    }
+
     componentDidMount() {
       const { network: networkConfig, latestBlocks } = this.props;
       const limit = 100;
@@ -16,6 +25,14 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
           this.props.olderBlocksRetrieved({ blocks });
         });
       }
+
+      liskService.getNextForgers({ networkConfig }, { limit }).then((nextForgers) => {
+        const nextForgingTimes = nextForgers.reduce((accumulator, delegate, i) => ({
+          ...accumulator,
+          [delegate.username]: moment().add(i * 10, 'seconds'),
+        }), {});
+        this.setState({ nextForgingTimes });
+      });
     }
 
     // TODO figure out how to mock latestBlocks in connect
@@ -39,6 +56,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       return data.map(delegate => ({
         ...delegate,
         status: this.getForgingStatus(delegate),
+        forgingTime: this.state.nextForgingTimes[delegate.username],
       }));
     }
 

@@ -1,6 +1,7 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import moment from 'moment';
 import { DEFAULT_LIMIT } from '../../../../constants/monitor';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
@@ -25,7 +26,16 @@ const Delegates = ({
       header: t('Address'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ address }) => <AccountVisualWithAddress {...{ address, size: 36 }} />,
-      className: [grid['col-xs-3'], grid['col-md-4']].join(' '),
+      className: [grid['col-xs-4'], grid['col-md-3']].join(' '),
+    },
+    {
+      id: 'forgingTime',
+      header: t('Forging time'),
+      /* eslint-disable-next-line react/display-name */
+      getValue: ({ forgingTime }) => (forgingTime
+        ? moment(forgingTime).fromNow(false)
+        : '-'),
+      className: ['hidden-m', grid['col-md-2']].join(' '),
     },
     {
       id: 'status',
