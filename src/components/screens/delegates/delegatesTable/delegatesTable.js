@@ -12,6 +12,7 @@ import VoteCheckbox from './voteCheckbox';
 import routes from '../../../../constants/routes';
 import styles from './delegatesTable.css';
 import voteFilters from '../../../../constants/voteFilters';
+import votingConst from '../../../../constants/voting';
 import withDelegatesData from './withDelegatesData';
 
 const DelegatesTable = ({
@@ -95,10 +96,12 @@ const DelegatesTable = ({
 
   const onRowClick = votingModeEnabled ? voteToggled : undefined;
 
+  const canLoadMore = delegates.data.length >= votingConst.numberOfActiveDelegates;
+
   return (
     <FirstTimeVotingOverlay enabled={firstTimeVotingActive}>
       <ShaderDelegatesTable {...{
-        columns, delegates, tabs, applyFilters, filters, onRowClick,
+        columns, delegates, tabs, applyFilters, filters, onRowClick, canLoadMore,
       }}
       />
     </FirstTimeVotingOverlay>

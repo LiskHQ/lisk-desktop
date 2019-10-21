@@ -23,7 +23,7 @@ const MenuItems = ({
           id={item.id}
           activeClassName={styles.selected}
         >
-          <Icon name={`${item.icon}${pathname.includes(item.path) ? 'Active' : ''}`} />
+          <Icon name={`${item.icon}${pathname.startsWith(item.path) ? 'Active' : ''}`} />
           <span className={styles.label}>{item.label}</span>
         </NavLink>
       ))

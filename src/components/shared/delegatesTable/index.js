@@ -10,10 +10,9 @@ import LiskAmount from '../liskAmount';
 import Table from '../../toolbox/table';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './delegatesTable.css';
-import votingConst from '../../../constants/voting';
 
 const DelegatesTable = ({
-  columns, delegates, tabs, t, filters, applyFilters, ...rest
+  columns, delegates, tabs, t, filters, applyFilters, canLoadMore, ...rest
 }) => {
   const data = delegates.data.map(d => ({ ...d, id: d.username }));
 
@@ -27,7 +26,7 @@ const DelegatesTable = ({
       header: <React.Fragment>
         {t('Forged')}
         <Tooltip className="showOnLeft">
-          <p>{t('Sum of all LSK awarded to a delegate for each block successfully generated on the blockchain.')}</p>
+          <p>{t('Total amount of LSK forged by a delegate.')}</p>
         </Tooltip>
       </React.Fragment>,
       /* eslint-disable-next-line react/display-name */
@@ -39,7 +38,7 @@ const DelegatesTable = ({
         {t('Productivity')}
         &nbsp;
         <Tooltip className="showOnLeft">
-          <p>{t('Percentage of successfully forged blocks of when the delegate should have forged a block of transactions.')}</p>
+          <p>{t('Productivity rate specifies how many blocks were successfully forged by a delegate.')}</p>
         </Tooltip>
       </React.Fragment>,
       getValue: ({ productivity }) => `${formatAmountBasedOnLocale({ value: productivity })} %`,
@@ -49,7 +48,7 @@ const DelegatesTable = ({
   columns = columns.map(c => ({ ...columnDefaults[c.id], ...c }));
 
   const handleLoadMore = () => {
-    delegates.loadData({ offset: delegates.data.length });
+    delegates.loadData({ offset: delegates.data.length, ...filters });
   };
 
   const handleFilter = ({ target: { value } }) => {
@@ -92,7 +91,7 @@ const DelegatesTable = ({
           )
       }
       </Box.Content>
-      {delegates.data.length >= votingConst.maxCountOfVotes && !delegates.isLoading && (
+      {!!canLoadMore && !delegates.isLoading && (
         <Box.FooterButton onClick={handleLoadMore} className="loadMore">
           {t('Load more')}
         </Box.FooterButton>
