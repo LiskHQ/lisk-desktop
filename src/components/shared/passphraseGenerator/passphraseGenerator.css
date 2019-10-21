@@ -1,6 +1,6 @@
 @import '../../../app/variables.css';
 
-.container {
+.passphraseContainer {
   width: 100%;
   background-color: var(--color-white);
   border: 1px solid var(--dark-border-color);
@@ -15,11 +15,15 @@
     justify-content: space-between;
   }
 
+  & .inputContainer {
+    margin: 6px 0;
+    display: flex;
+    justify-content: left;
+  }
+
   & .inputValue {
     @mixin contentLargest;
-    
-    margin: 6px 0;
-    color: var(--color-black);
+
     text-align: left;
 
     &::before {
@@ -29,7 +33,60 @@
     }
   }
 
+  & .default {
+    color: var(--color-maastricht-blue);
+  }
+
+  & .emptyInput {
+    color: var(--color-ghost);
+    cursor: pointer;
+
+    &::before {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-maastricht-blue);
+    }
+  }
+
+  & .emptyInputFocused {
+    color: var(--color-ultramarine-blue);
+    cursor: pointer;
+
+    &::before {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-ultramarine-blue);
+    }
+  }
+
+  & .selected {
+    color: var(--color-maastricht-blue);
+    font-weight: var(--font-weight-bold);
+
+    &::before {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-maastricht-blue);
+    }
+  }
+
+  & .disabled {
+    color: var(--color-ghost);
+  }
+
   & .whitespace {
     position: absolute;
+  }
+}
+
+.optionsContainer {
+  display: flex;
+  justify-content: left;
+  margin-top: 20px;
+
+  & div {
+    cursor: pointer;
+    padding: 10px 30px;
+    background-color: var(--color-white);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-ultramarine-blue);
+    margin-right: 20px;
   }
 }
