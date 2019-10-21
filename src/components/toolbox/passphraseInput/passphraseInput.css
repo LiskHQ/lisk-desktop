@@ -31,7 +31,7 @@
     flex-grow: 1;
     box-sizing: border-box;
     color: var(--color-ghost);
-    margin: 15px 0 20px;
+    margin: 15px 0 15px;
 
     &:focus-within {
       color: var(--color-ultramarine-blue);
@@ -49,7 +49,7 @@
     & input {
       border: none;
       text-align: left;
-      padding: 0 1px !important;
+      padding: 0 2px 3px !important;
       height: 20px !important;
 
       &:focus {
@@ -62,7 +62,7 @@
     }
   }
 
-  & > .inputContainer:nth-child(-n+6) {
+  & > .inputContainer:nth-last-child(n + 7) {
     margin-bottom: 0;
   }
 }
