@@ -33,7 +33,7 @@ const Delegates = ({
       header: t('Forging time'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ forgingTime }) => (forgingTime
-        ? moment(forgingTime).fromNow(false)
+        ? moment(forgingTime.diff(moment())).format(t('m [min] s [sec]'))
         : '-'),
       className: ['hidden-m', grid['col-md-2']].join(' '),
     },
