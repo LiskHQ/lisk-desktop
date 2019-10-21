@@ -29,6 +29,6 @@ export default compose(
     },
   }),
   withFilters(delegatesKey, defaultUrlSearchParams),
-  withForgingStatus(),
+  withForgingStatus(delegatesKey),
   withTranslation(),
 )(Delegates);

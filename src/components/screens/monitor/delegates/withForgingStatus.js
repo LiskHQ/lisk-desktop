@@ -4,7 +4,7 @@ import { olderBlocksRetrieved } from '../../../../actions/blocks';
 import liskService from '../../../../utils/api/lsk/liskService';
 import voting from '../../../../constants/voting';
 
-const withForgingStatus = () => (ChildComponent) => {
+const withForgingStatus = delegatesKey => (ChildComponent) => {
   class DelegatesContainer extends React.Component {
     componentDidMount() {
       const { network: networkConfig, latestBlocks } = this.props;
@@ -22,7 +22,6 @@ const withForgingStatus = () => (ChildComponent) => {
       const roundStartHeight = height - (height % voting.numberOfActiveDelegates);
       const block = latestBlocks.find(b => b.generatorPublicKey === delegate.publicKey);
       if (block) {
-        // console.log(delegate.username, block.height - roundStartHeight);
         if (block.height > roundStartHeight) {
           return 'forgedThisRound';
         }
@@ -32,7 +31,7 @@ const withForgingStatus = () => (ChildComponent) => {
     }
 
     getDelegatesData() {
-      const { data } = this.props.delegates;
+      const { data } = this.props[delegatesKey];
       return data.map(delegate => ({
         ...delegate,
         status: this.getForgingStatus(delegate),
@@ -40,11 +39,14 @@ const withForgingStatus = () => (ChildComponent) => {
     }
 
     render() {
+      const {
+        latestBlocks, network, olderBlocksRetrieved: _, ...rest
+      } = this.props;
       return (
         <ChildComponent {...{
-          ...this.props,
-          delegates: {
-            ...this.props.delegates,
+          ...rest,
+          [delegatesKey]: {
+            ...this.props[delegatesKey],
             data: this.getDelegatesData(),
           },
         }}
