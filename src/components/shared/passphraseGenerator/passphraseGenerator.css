@@ -67,6 +67,26 @@
     }
   }
 
+    & .error {
+      color: var(--color-burnt-sienna);
+      font-weight: var(--font-weight-bold);
+
+    &::before {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-burnt-sienna);
+    }
+  }
+
+  & .correct {
+      color: var(--color-ufo-green);
+      font-weight: var(--font-weight-bold);
+
+    &::before {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-ufo-green);
+    }
+  }
+
   & .disabled {
     color: var(--color-ghost);
   }

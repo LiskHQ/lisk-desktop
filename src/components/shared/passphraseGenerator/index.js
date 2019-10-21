@@ -12,11 +12,26 @@ class PassphraseGenerator extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.hasErrors && !this.props.hasErrors) {
+      this.setState({
+        fieldSelected: undefined,
+        displayOptions: undefined,
+        chosenWords: {},
+      });
+    }
+  }
+
+  // eslint-disable-next-line complexity
   getStyle(i) {
-    const { missingWords, isConfirmation } = this.props;
+    const {
+      missingWords, isConfirmation, hasErrors, isCorrect,
+    } = this.props;
     const { fieldSelected, chosenWords } = this.state;
 
     if (!missingWords) return styles.default;
+    if (chosenWords[i] && hasErrors) return styles.error;
+    if (chosenWords[i] && isCorrect) return styles.correct;
     if (chosenWords[i]) return styles.selected;
     if (missingWords.includes(i) && fieldSelected === i) return styles.emptyInputFocused;
     if (missingWords.includes(i) && fieldSelected !== i) return styles.emptyInput;
@@ -32,12 +47,23 @@ class PassphraseGenerator extends React.Component {
     return this.state.chosenWords[i] || '_________';
   }
 
+  chooseWord(index, option) {
+    this.setState({
+      ...this.state,
+      chosenWords: {
+        ...this.state.chosenWords,
+        [index]: option,
+      },
+    });
+    this.props.handleSelect(option, index);
+  }
+
   render() {
     const {
       values, options, missingWords,
     } = this.props;
 
-    const { fieldSelected } = this.state;
+    const { fieldSelected, chosenWords } = this.state;
 
     return (
       <div>
@@ -51,19 +77,10 @@ class PassphraseGenerator extends React.Component {
             ))}
           </div>
         </div>
-        {fieldSelected && (
+        {fieldSelected && Object.keys(chosenWords).length < 2 && (
           <div className={styles.optionsContainer}>
             {options[fieldSelected].map((option, i) => (
-              <div
-                onClick={() => this.setState({
-                  ...this.state,
-                  chosenWords: {
-                    ...this.state.chosenWords,
-                    [fieldSelected]: option,
-                  },
-                })}
-                key={i}
-              >
+              <div onClick={() => this.chooseWord(fieldSelected, option)} key={i}>
                 {option}
               </div>
             ))}

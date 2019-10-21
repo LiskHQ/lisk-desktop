@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
-import Options from './confirmPassphraseOptions';
+import PassphraseGenerator from '../../shared/passphraseGenerator';
 
 class ConfirmPassphrase extends React.Component {
   constructor() {
@@ -52,10 +52,10 @@ class ConfirmPassphrase extends React.Component {
   }
 
   verifyChoices() {
-    const { answers, words } = this.state;
+    const { answers } = this.state;
     const passphrase = this.props.passphrase.split(/\s/);
-    const corrects = answers.filter((answer, index) => answer === passphrase[words[index]]);
-    return corrects.length === answers.length;
+    const corrects = answers.filter((answer, index) => answer === passphrase[index]);
+    return corrects.length === 2;
   }
 
   handleConfirm(status) {
@@ -117,7 +117,6 @@ class ConfirmPassphrase extends React.Component {
     const {
       words, options, hasErrors, answers, isCorrect, outOfTries,
     } = this.state;
-    let optionIndex = 0;
 
     return (
       <React.Fragment>
@@ -131,32 +130,20 @@ class ConfirmPassphrase extends React.Component {
           <p className={styles.text}>{t('Keep it safe as it is the only way to access your wallet.')}</p>
         </div>
 
-        <div className={`${styles.confirmHolder} passphrase-holder`}>
-          {passphrase.split(/\s/).map((word, key) => (
-            <span className={styles.word} key={key}>
-              { !words.includes(key)
-                ? word
-                : (
-                  <Options
-                    isCorrect={isCorrect}
-                    hasErrors={hasErrors}
-                    options={options[optionIndex]}
-                    answers={answers}
-                    handleSelect={this.handleSelect}
-                    enabled={optionIndex === 0 || answers[optionIndex - 1]}
-                    optionIndex={optionIndex++}
-                  />
-                )
-              }
-            </span>
-          ))
-          }
-          {
-            <div className={`${styles.errorMessage} ${outOfTries ? styles.showError : ''}`}>
-              {outOfTries && <span>{t('Choose the right words.')}</span>}
-            </div>
-          }
-        </div>
+        <PassphraseGenerator
+          handleSelect={this.handleSelect}
+          missingWords={words}
+          options={{
+            [words[0]]: options[0],
+            [words[1]]: options[1],
+          }}
+          hasErrors={hasErrors}
+          answers={answers}
+          isCorrect={isCorrect}
+          outOfTries={outOfTries}
+          values={passphrase.split(' ')}
+          isConfirmation
+        />
 
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
