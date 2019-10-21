@@ -1,6 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import styles from './accountVisualWithAddress.css';
 import Icon from '../../toolbox/icon';
 import transactionTypeIcons from '../../../constants/transactionTypeIcons';
@@ -28,7 +29,7 @@ class AccountVisualWithAddress extends React.Component {
 
   render() {
     const {
-      address, transactionSubject, transactionType, t,
+      address, transactionSubject, transactionType, t, size,
     } = this.props;
     return (
       <div className={`${styles.address}`}>
@@ -42,7 +43,7 @@ class AccountVisualWithAddress extends React.Component {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <AccountVisual address={address} size={32} />
+            <AccountVisual address={address} size={size} />
             <span className={styles.addressValue}>{this.getTransformedAddress(address)}</span>
           </React.Fragment>
         )}
@@ -50,6 +51,24 @@ class AccountVisualWithAddress extends React.Component {
     );
   }
 }
+
+AccountVisualWithAddress.propTypes = {
+  address: PropTypes.string.isRequired,
+  bookmarks: PropTypes.shape().isRequired,
+  showBookmarkedAddress: PropTypes.bool,
+  size: PropTypes.number,
+  t: PropTypes.func.isRequired,
+  token: PropTypes.shape().isRequired,
+  transactionSubject: PropTypes.string,
+  transactionType: PropTypes.oneOf(Object.keys(transactionNames(x => x)).map(Number)),
+};
+
+AccountVisualWithAddress.defaultProps = {
+  showBookmarkedAddress: false,
+  size: 32,
+  transactionSubject: '',
+  transactionType: transactionTypes.send,
+};
 
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,

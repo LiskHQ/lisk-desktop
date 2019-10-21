@@ -3,7 +3,6 @@ import AccountVisualDemo from './accountVisual/demo';
 import AnimationDemo from './animation/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
 import BoxDemo from './box/demo';
-import ButtonDemo from './buttons/demo';
 import CalendarDemo from './calendar/demo';
 import CheckBoxDemo from './checkBox/demo';
 import DropdownButtonDemo from './dropdownButton/demo';
@@ -11,7 +10,6 @@ import DropdownDemo from './dropdown/demo';
 import HardwareWalletIllustrationDemo from './hardwareWalletIllustration/demo';
 import IconDemo from './icon/demo';
 import IllustrationDemo from './illustration/demo';
-import InputDemo from './inputs/demo';
 import OnboardingDemo from './onboarding/demo';
 import PageHeaderDemo from './pageHeader/demo';
 import PassphraseInputDemo from './passphraseInput/demo';
@@ -49,13 +47,11 @@ const ToolboxDemo = () => (
     <AnimationDemo />
     <AutoSuggestDemo />
     <BoxDemo />
-    <ButtonDemo />
     <CalendarDemo />
     <CheckBoxDemo />
     <DropdownDemo />
     <DropdownButtonDemo />
     <IconDemo />
-    <InputDemo />
     <IllustrationDemo />
     <HardwareWalletIllustrationDemo />
     <OnboardingDemo />

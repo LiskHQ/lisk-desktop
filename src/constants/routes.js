@@ -7,6 +7,7 @@ import Blocks from '../components/screens/monitor/blocks';
 import Bookmarks from '../components/screens/bookmarks';
 import Dashboard from '../components/screens/dashboard';
 import Delegates from '../components/screens/delegates';
+import DelegatesMonitor from '../components/screens/monitor/delegates';
 import Extensions from '../components/screens/extensions';
 import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
@@ -54,6 +55,12 @@ export default {
     path: '/monitor/blocks',
     component: Blocks,
     isPrivate: false,
+    exact: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  delegatesMonitor: {
+    path: '/monitor/delegates',
+    component: DelegatesMonitor,
     exact: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },

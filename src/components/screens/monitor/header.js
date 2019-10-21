@@ -23,6 +23,10 @@ export const Header = ({ t, history }) => {
           value: routes.blocks.path,
           name: t('Blocks'),
           className: 'blocks',
+        }, {
+          value: routes.delegatesMonitor.path,
+          name: t('Delegates'),
+          className: 'delegates',
         }]}
         active={history.location.pathname}
         onClick={setActiveTab}
