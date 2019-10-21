@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './delegates.css';
-import DelegatesListView from './delegatesListView';
+import DelegatesTable from './delegatesTable';
 import VotingHeader from './votingHeader';
 import Onboarding from '../../toolbox/onboarding/onboarding';
 import { getTotalActions } from '../../../utils/voting';
@@ -76,7 +76,7 @@ class Delegates extends React.Component {
           votes={votes}
         />
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
-          <DelegatesListView
+          <DelegatesTable
             account={account}
             loadVotes={loadVotes}
             loadDelegates={loadDelegates}

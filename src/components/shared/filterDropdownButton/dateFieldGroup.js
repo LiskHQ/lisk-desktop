@@ -115,7 +115,7 @@ class DateFieldGroup extends React.Component {
   }
 
   render() {
-    const { label, filters } = this.props;
+    const { label, filters, showRightDropdown } = this.props;
     const { fields } = this.state;
     const dateFieldProps = {
       dateFormat: this.dateFormat,
@@ -131,9 +131,9 @@ class DateFieldGroup extends React.Component {
       <div className={styles.fieldGroup}>
         <span className={styles.fieldLabel}>{label}</span>
         <div className={styles.fieldRow}>
-          <DateField name="dateFrom" {...dateFieldProps} />
+          <DateField showRightDropdown={showRightDropdown} name="dateFrom" {...dateFieldProps} />
           <span className={styles.separator} />
-          <DateField name="dateTo" {...dateFieldProps} />
+          <DateField showRightDropdown={showRightDropdown} name="dateTo" {...dateFieldProps} />
         </div>
         <Feedback show={!!feedback} status="error" size="xs">
           { feedback }

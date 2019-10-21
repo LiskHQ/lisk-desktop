@@ -102,18 +102,6 @@ class UserAccount extends React.Component {
 
         <a
           className={styles.dropdownOption}
-          href={externalLinks.liskAcademy}
-          rel="noopener noreferrer"
-          target="_blank"
-          onClick={this.toggleDropdown}
-        >
-          <Icon name="academy" className={styles.defaultIcon} />
-          <Icon name="academyActive" className={styles.activeIcon} />
-          <span>{t('Lisk Academy')}</span>
-        </a>
-
-        <a
-          className={styles.dropdownOption}
           href={externalLinks.discord}
           rel="noopener noreferrer"
           target="_blank"

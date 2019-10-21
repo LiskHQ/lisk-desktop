@@ -1,0 +1,13 @@
+.address {
+  display: flex;
+  align-items: center;
+
+  & .addressValue {
+    margin-left: 10px;
+  }
+}
+
+.txIcon {
+  width: 32px;
+  height: 32px;
+}

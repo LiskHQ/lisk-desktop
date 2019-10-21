@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TransactionTypeFigure from '../../wallet/transactions/typeFigure/TransactionTypeFigure';
-import TransactionAddress from '../../wallet/transactions/address/TransactionAddress';
+import TransactionAddress from '../../../shared/transactionAddress/TransactionAddress';
 import TransactionAmount from '../../wallet/transactions/amount/TransactionAmount';
 import { SecondaryButton } from '../../../toolbox/buttons/button';
 import routes from '../../../../constants/routes';

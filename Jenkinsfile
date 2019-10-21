@@ -123,9 +123,9 @@ version: "3"
 services:
 
   lisk:
-      ports:
-        - \\${ENV_LISK_HTTP_PORT}
-        - \\${ENV_LISK_WS_PORT}
+    ports:
+      - \\${ENV_LISK_HTTP_PORT}
+      - \\${ENV_LISK_WS_PORT}
 EOF
 
 										ENV_LISK_VERSION="$LISK_CORE_VERSION" make coldstart
@@ -160,7 +160,16 @@ EOF
 							}
 						}
 						}
-					}
+					},
+					"percy": {
+						ansiColor('xterm') {
+							nvm(getNodejsVersion()) {
+								withCredentials([string(credentialsId: 'PERCY_TOKEN', variable: 'PERCY_TOKEN')]) {
+									sh 'npm run percy'
+								}
+							}
+						}
+					},
 				)
 			}
 		}

@@ -1,14 +1,5 @@
 @import '../../../app/variables.css';
 
-.address {
-  display: flex;
-  align-items: center;
-
-  & .addressValue {
-    margin-left: 10px;
-  }
-}
-
 .sortingColumn {
   cursor: pointer;
 }
@@ -39,14 +30,10 @@
   max-width: 150px;
 }
 
-.rowLink:hover {
-  text-decoration: none;
+.content {
+  padding: 0 !important;
 }
 
-.tableRow {
-  border-bottom: 1px solid var(--color-platinum);
-}
-
-.rowLink:last-child > div {
-  border-bottom: none;
+.tooltipOffset {
+  left: -8px;
 }

@@ -1,5 +1,6 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import numeral from 'numeral';
+import { cryptography } from '@liskhq/lisk-client';
 import { tokenMap } from '../constants/tokens';
 import getBtcConfig from './api/btc/config';
 import i18n from '../i18n';
@@ -33,6 +34,15 @@ export const validateAddress = (tokenType, address, netCode = 1) => {
     case tokenMap.LSK.key:
     default:
       return reg.address.test(address) ? 0 : 1;
+  }
+};
+
+export const validateLSKPublicKey = (address) => {
+  try {
+    cryptography.getAddressFromPublicKey(address);
+    return 0;
+  } catch (e) {
+    return 1;
   }
 };
 
