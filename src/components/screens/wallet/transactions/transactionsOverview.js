@@ -6,6 +6,8 @@ import FilterContainer from './filters/filterContainer';
 import FilterBar from '../../../shared/filterBar';
 import TransactionsList from './transactionsList';
 import Tabs from '../../../toolbox/tabs';
+import { SecondaryButton } from '../../../toolbox/buttons/button';
+import Icon from '../../../toolbox/icon';
 import styles from './transactions.css';
 
 class TransactionsOverview extends React.Component {
@@ -56,6 +58,7 @@ class TransactionsOverview extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     const isSmallScreen = this.isSmallScreen();
     const filters = this.generateFilters();
 
@@ -75,6 +78,10 @@ class TransactionsOverview extends React.Component {
                   saveFilters={this.props.saveFilters}
                   customFilters={this.props.activeCustomFilters}
                 />
+                <SecondaryButton className={styles.exportToCSVBtn} size="xs">
+                  {t('Export to CSV')}
+                  <Icon name="iconLink" className={styles.iconLink} />
+                </SecondaryButton>
               </div>
             )
             : null}
