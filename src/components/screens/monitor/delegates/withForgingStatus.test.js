@@ -6,8 +6,19 @@ import liskService from '../../../../utils/api/lsk/liskService';
 import withForgingStatus from './withForgingStatus';
 
 jest.mock('../../../../utils/api/lsk/liskService', () => ({
-  getLastBlocks: jest.fn(() => Promise.resolve([])),
-  getNextForgers: jest.fn(() => Promise.resolve([])),
+  getLastBlocks: jest.fn(() => Promise.resolve([
+    {
+      id: '3599899182780576212',
+      height: 10322981,
+      timestamp: 1569853530,
+      generatorPublicKey: '88260051bbe6634431f8a2f3ac66680d1ee9ef1087222e6823d9b4d81170edc7',
+    },
+  ])),
+  getNextForgers: jest.fn(() => Promise.resolve([
+    {
+      publicKey: '88260051bbe6634431f8a2f3ac66680d1ee9ef1087222e6823d9b4d81170edc7',
+    },
+  ])),
 }));
 
 describe('withForgingStatus', () => {
