@@ -18,6 +18,10 @@ const getServerUrl = (networkConfig) => {
   if (name === networks.testnet.name) {
     return liskServiceTestnetUrl;
   }
+  const liskServiceDevnetUrl = localStorage.getItem('liskServiceUrl');
+  if (liskServiceDevnetUrl) {
+    return liskServiceDevnetUrl;
+  }
   throw new Error(i18n.t('This feature is supported only for mainnet and testnet.'));
 };
 
