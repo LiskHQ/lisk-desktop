@@ -31,11 +31,19 @@ const delegatesApiResponse = delegates.map(transformToLiskServiceFormat);
 
 describe('withForgingStatus', () => {
   const className = 'dummy';
-  const DummyComponent = jest.fn(() => <span className={className} />);
+  const DummyComponent = jest.fn(props => (
+    <span className={className}>
+      {props.delegates.data.map(delegate => (
+        <span className={delegate.username} key={delegate.username}>
+          <span className="publicKey">{delegate.publicKey}</span>
+          <span className="lastBlockHeight">{delegate.lastBlock && delegate.lastBlock.height}</span>
+        </span>
+      ))}
+    </span>
+  ));
   const delegatesKey = 'delegates';
   const notForgingDeleagte = delegatesApiResponse[0];
   const forgingDelegates = delegatesApiResponse.slice(1);
-
 
   const generateBlock = height => ({
     height,
@@ -43,7 +51,7 @@ describe('withForgingStatus', () => {
     generatorPublicKey: forgingDelegates[height % forgingDelegates.length].publicKey,
   });
 
-  const generate100Blocks = () => [...Array(100)].map((_, i) => generateBlock(i));
+  const generateBlocks = n => [...Array(n)].map((_, i) => generateBlock(i)).reverse();
 
   const props = {
     [delegatesKey]: {
@@ -80,11 +88,29 @@ describe('withForgingStatus', () => {
   });
 
   it('should load last block of "Not forging" delegate', () => {
-    setup({ latestBlocks: generate100Blocks() });
+    setup({ latestBlocks: generateBlocks(100) });
     jest.runAllTimers();
     expect(liskService.getLastBlocks).toHaveBeenCalledWith(
       { networkConfig: defaultState.network },
       { limit: 1, address: notForgingDeleagte.publicKey },
     );
+  });
+
+  it('update last blocks of generator of new block on new block', () => {
+    const latestBlocks = generateBlocks(100);
+    const newBlock = generateBlock(101);
+    const newBlockGenerator = forgingDelegates.find(
+      delegate => delegate.publicKey === newBlock.generatorPublicKey,
+    );
+    const wrapper = setup({ latestBlocks });
+
+    wrapper.setProps({
+      latestBlocks: [
+        newBlock,
+        ...latestBlocks,
+      ],
+    });
+
+    expect(wrapper.find(`.${newBlockGenerator.username} .lastBlockHeight`)).toHaveText(`${newBlock.height}`);
   });
 });
