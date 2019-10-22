@@ -15,6 +15,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
 
       this.state = {
         nextForgers: {},
+        lastBlocks: {},
       };
     }
 
@@ -64,6 +65,10 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
               nextHeight: newBlock.leight + voting.numberOfActiveDelegates,
             },
           },
+          lastBlocks: {
+            ...this.state.lastBlocks,
+            [newBlock.generatorPublicKey]: newBlock,
+          },
         });
         if (newBlock.height % 101 === 1) { // to update next forgers in a new round
           this.loadNextForgers(latestBlocks);
@@ -77,7 +82,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       const { latestBlocks } = this.props;
       const height = latestBlocks[0] && latestBlocks[0].height;
       const roundStartHeight = height - (height % voting.numberOfActiveDelegates);
-      const block = latestBlocks.find(b => b.generatorPublicKey === delegate.publicKey);
+      const block = this.getLastBlock(delegate);
       const { nextHeight } = this.state.nextForgers[delegate.publicKey] || {};
       if (block) {
         if (block.height > roundStartHeight) {
@@ -93,14 +98,19 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       return '';
     }
 
-    getDelegatesData() {
+    getLastBlock(delegate) {
       const { latestBlocks } = this.props;
+      return this.state.lastBlocks[delegate.publicKey]
+        || latestBlocks.reverse().find(b => b.generatorPublicKey === delegate.publicKey);
+    }
+
+    getDelegatesData() {
       const { data } = this.props[delegatesKey];
       return data.map(delegate => ({
         ...delegate,
         status: this.getForgingStatus(delegate),
         ...this.state.nextForgers[delegate.publicKey],
-        lastBlock: latestBlocks.find(b => b.generatorPublicKey === delegate.publicKey),
+        lastBlock: this.getLastBlock(delegate),
       }));
     }
 
