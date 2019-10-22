@@ -30,7 +30,12 @@ const Delegates = ({
     },
     {
       id: 'forgingTime',
-      header: t('Forging time'),
+      header: <React.Fragment>
+        {t('Forging time')}
+        <Tooltip className="showOnLeft">
+          <p>{t('Time until a delegate can forge their next block.')}</p>
+        </Tooltip>
+      </React.Fragment>,
       /* eslint-disable-next-line react/display-name */
       getValue: ({ forgingTime }) => (forgingTime
         ? moment(forgingTime.diff(moment())).format(t('m [min] s [sec]'))
@@ -39,7 +44,12 @@ const Delegates = ({
     },
     {
       id: 'status',
-      header: t('Status'),
+      header: <React.Fragment>
+        {t('Status')}
+        <Tooltip className="showOnLeft">
+          <p>{t('Status turns green if a delegate has forged their last block, or red if they missed it.')}</p>
+        </Tooltip>
+      </React.Fragment>,
       /* eslint-disable-next-line react/display-name */
       getValue: ({ status }) => <div className={[styles.status, styles[status]].join(' ')} />,
       className: grid['col-xs-1'],
