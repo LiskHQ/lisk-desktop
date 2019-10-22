@@ -17,6 +17,7 @@ import routes from '../../../constants/routes';
 import Table from '../../toolbox/table';
 import AccountVisualWithAddress from '../accountVisualWithAddress';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
+import { transactionNames } from '../../../constants/transactionTypes';
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -145,11 +146,12 @@ class TransactionsTable extends React.Component {
                     getValue: transaction => (
                       <Tooltip
                         title={t('Transaction')}
-                        className="showOnBottom"
-                        tooltipClassName={styles.tooltip}
+                        className="showOnLeft"
+                        tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
                         content={<LiskAmount val={transaction.fee} token={tokenMap.LSK.key} />}
+                        size="m"
                       >
-                        <p>{`${t('Type')} ${transaction.type}`}</p>
+                        <p>{`${transaction.type} - ${transactionNames(t)[transaction.type]}`}</p>
                       </Tooltip>
                     ),
                   },
@@ -163,6 +165,7 @@ class TransactionsTable extends React.Component {
                         className="showOnLeft"
                         tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
                         content={<Icon name={transaction.confirmations > roundSize ? 'approved' : 'pending'} />}
+                        size="s"
                       >
                         <p>{`${transaction.confirmations}/${roundSize} ${t('Confirmations')}`}</p>
                       </Tooltip>

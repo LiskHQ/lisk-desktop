@@ -12,6 +12,12 @@
 
       padding: 15px 20px;
     }
+
+    & .xs {
+      @mixin contentNormal;
+
+      padding: 10px 15px;
+    }
   }
 }
 
@@ -21,8 +27,8 @@
   display: flex;
   position: relative;
 
-  & input,
-  & input:read-only {
+  & .selectedInput,
+  & .selectedInput:read-only {
     color: var(--color-maastricht-blue);
     cursor: inherit;
   }
