@@ -130,20 +130,23 @@ class ConfirmPassphrase extends React.Component {
           <p className={styles.text}>{t('Keep it safe as it is the only way to access your wallet.')}</p>
         </div>
 
-        <PassphraseGenerator
-          handleSelect={this.handleSelect}
-          missingWords={words}
-          options={{
-            [words[0]]: options[0],
-            [words[1]]: options[1],
-          }}
-          hasErrors={hasErrors}
-          answers={answers}
-          isCorrect={isCorrect}
-          outOfTries={outOfTries}
-          values={passphrase.split(' ')}
-          isConfirmation
-        />
+        <div className={`${grid['col-sm-10']} ${styles.passphraseContainer}`}>
+          <PassphraseGenerator
+            showInfo
+            handleSelect={this.handleSelect}
+            missingWords={words}
+            options={{
+              [words[0]]: options[0],
+              [words[1]]: options[1],
+            }}
+            hasErrors={hasErrors}
+            answers={answers}
+            isCorrect={isCorrect}
+            outOfTries={outOfTries}
+            values={passphrase.split(' ')}
+            isConfirmation
+          />
+        </div>
 
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>

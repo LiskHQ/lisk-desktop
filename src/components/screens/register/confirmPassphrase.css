@@ -27,6 +27,10 @@
   width: 475px !important;
 }
 
+.passphraseContainer {
+  margin-bottom: 40px;
+}
+
 .confirmHolder {
   align-items: flex-start;
   display: flex;

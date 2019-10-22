@@ -1,5 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { withTranslation } from 'react-i18next';
 import styles from './passphraseGenerator.css';
 
 class PassphraseGenerator extends React.Component {
@@ -44,7 +45,7 @@ class PassphraseGenerator extends React.Component {
   }
 
   renderMissingValue(i) {
-    return this.state.chosenWords[i] || '_________';
+    return this.state.chosenWords[i] || '_______';
   }
 
   chooseWord(index, option) {
@@ -60,13 +61,19 @@ class PassphraseGenerator extends React.Component {
 
   render() {
     const {
-      values, options, missingWords,
+      values, options, missingWords, t, showInfo,
     } = this.props;
 
     const { fieldSelected, chosenWords } = this.state;
 
     return (
       <div>
+        {showInfo && (
+          <React.Fragment>
+            <h2 className={styles.header}>{t('Passphrase')}</h2>
+            <p className={styles.subheader}>{t('Please carefully write down these 12 words and store them in a safe place.')}</p>
+          </React.Fragment>
+        )}
         <div className={styles.passphraseContainer}>
           <div className={`${styles.inputsRow} ${grid.row} passphrase`}>
             {values.map((value, i) => (
@@ -91,4 +98,4 @@ class PassphraseGenerator extends React.Component {
   }
 }
 
-export default PassphraseGenerator;
+export default withTranslation()(PassphraseGenerator);

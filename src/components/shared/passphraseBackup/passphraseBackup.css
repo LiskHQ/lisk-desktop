@@ -17,15 +17,6 @@
   flex-direction: column;
   width: 100%;
 
-  & > h2 {
-    @mixin contentNormal bold;
-
-    align-items: center;
-    color: var(--color-maastricht-blue);
-    display: flex;
-    margin: 0;
-  }
-
   & > .downloadLisk {
     display: flex;
 

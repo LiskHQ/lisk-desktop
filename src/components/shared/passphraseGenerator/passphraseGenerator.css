@@ -1,4 +1,21 @@
 @import '../../../app/variables.css';
+@import '../../../app/mixins.css';
+
+.header {
+  @mixin contentNormal bold;
+
+  color: var(--color-maastricht-blue);
+  display: flex;
+  margin: 0;
+}
+
+.subheader {
+  @mixin contentLargest;
+
+  text-align: left;
+  margin: 15px 0;
+  color: var(--color-slate-gray);
+}
 
 .passphraseContainer {
   width: 100%;
