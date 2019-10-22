@@ -16,7 +16,7 @@
     border-color: var(--color-deep-green);
   }
 
-  &.missedThisRound {
+  &.notForging {
     border-color: var(--color-burnt-sienna);
     background-color: var(--color-burnt-sienna);
   }

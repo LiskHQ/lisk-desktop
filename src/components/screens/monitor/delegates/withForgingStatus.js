@@ -65,10 +65,6 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
               nextHeight: newBlock.leight + voting.numberOfActiveDelegates,
             },
           },
-          lastBlocks: {
-            ...this.state.lastBlocks,
-            [newBlock.generatorPublicKey]: newBlock,
-          },
         });
         if (newBlock.height % 101 === 1) { // to update next forgers in a new round
           this.loadNextForgers(latestBlocks);
@@ -78,30 +74,35 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
 
     // TODO figure out how to mock latestBlocks in connect
     // istanbul ignore next
-    getForgingStatus(delegate) { // eslint-disable-line max-statements
+    getForgingStatus(delegate) { // eslint-disable-line
       const { latestBlocks } = this.props;
       const height = latestBlocks[0] && latestBlocks[0].height;
       const roundStartHeight = height - (height % voting.numberOfActiveDelegates);
-      const block = this.getLastBlock(delegate);
-      const { nextHeight } = this.state.nextForgers[delegate.publicKey] || {};
-      if (block) {
-        if (block.height > roundStartHeight) {
-          return 'forgedThisRound';
+      const lastBlock = this.getLastBlock(delegate);
+      if (latestBlocks.length >= limit && !lastBlock) {
+        setTimeout(() => {
+          this.requestLastBlock(delegate);
+        }, delegate.rank * 100);
+      }
+      if (delegate.rank <= voting.numberOfActiveDelegates && lastBlock && lastBlock.height) {
+        if (lastBlock.height > roundStartHeight - voting.numberOfActiveDelegates) {
+          if (lastBlock.height > roundStartHeight) {
+            return 'forgedThisRound';
+          }
+          return 'forgedLastRound';
         }
-        return 'forgedLastRound';
-      } if (delegate.rank <= voting.numberOfActiveDelegates) {
-        if (nextHeight > roundStartHeight + voting.numberOfActiveDelegates) {
-          return 'missedThisRound';
+        if (lastBlock.height > roundStartHeight - 2 * voting.numberOfActiveDelegates) {
+          return 'missedLastRound';
         }
-        return 'missedLastRound';
+        return 'notForging';
       }
       return '';
     }
 
     getLastBlock(delegate) {
       const { latestBlocks } = this.props;
-      return this.state.lastBlocks[delegate.publicKey]
-        || latestBlocks.reverse().find(b => b.generatorPublicKey === delegate.publicKey);
+      return latestBlocks.find(b => b.generatorPublicKey === delegate.publicKey)
+        || this.state.lastBlocks[delegate.publicKey];
     }
 
     getDelegatesData() {
@@ -112,6 +113,32 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
         ...this.state.nextForgers[delegate.publicKey],
         lastBlock: this.getLastBlock(delegate),
       }));
+    }
+
+    // TODO figure out how to mock latestBlocks in connect
+    // istanbul ignore next
+    async requestLastBlock(delegate) {
+      if (!this.getLastBlock(delegate) && delegate.rank <= voting.numberOfActiveDelegates) {
+        const { network: networkConfig } = this.props;
+        this.setState({
+          lastBlocks: {
+            ...this.state.lastBlocks,
+            [delegate.publicKey]: { },
+          },
+        });
+        const blocks = await liskService.getLastBlocks(
+          { networkConfig }, { address: delegate.publicKey, limit: 1 },
+        );
+        this.setState({
+          lastBlocks: {
+            ...this.state.lastBlocks,
+            [delegate.publicKey]: blocks.map(block => ({
+              ...block,
+              timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
+            }))[0],
+          },
+        });
+      }
     }
 
     render() {

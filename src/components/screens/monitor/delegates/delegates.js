@@ -18,8 +18,8 @@ const Delegates = ({
   const getForgingTitle = status => ({
     forgedThisRound: t('Forging'),
     forgedLastRound: t('Awaiting slot'),
-    missedThisRound: t('Not forging'),
-    missedLastRound: t('Awaiting slot'),
+    notForging: t('Not forging'),
+    missedLastRound: t('Missed block'),
   }[status] || t('Standby'));
 
   const columns = [
