@@ -51,8 +51,6 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       });
     }
 
-    // TODO figure out how to mock latestBlocks in connect
-    // istanbul ignore next
     componentDidUpdate(prevProps) {
       const { latestBlocks } = this.props;
       const newBlock = latestBlocks[0] || {};

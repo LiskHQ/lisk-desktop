@@ -113,4 +113,22 @@ describe('withForgingStatus', () => {
 
     expect(wrapper.find(`.${newBlockGenerator.username} .lastBlockHeight`)).toHaveText(`${newBlock.height}`);
   });
+
+  it('fetches nextForgers on round start', () => {
+    const latestBlocks = generateBlocks(101);
+    const newBlock = generateBlock(102);
+    const wrapper = setup({ latestBlocks });
+
+    liskService.getNextForgers.mockReset();
+    wrapper.setProps({
+      latestBlocks: [
+        newBlock,
+        ...latestBlocks,
+      ],
+    });
+    expect(liskService.getNextForgers).toHaveBeenCalledWith(
+      { networkConfig: defaultState.network },
+      { limit: 100 },
+    );
+  });
 });
