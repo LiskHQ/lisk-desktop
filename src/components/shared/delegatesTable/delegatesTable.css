@@ -1,3 +1,7 @@
 .content {
   padding: 0 !important;
 }
+
+.infoIcon {
+  margin: 0 2px 2px;
+}

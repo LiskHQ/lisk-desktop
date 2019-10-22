@@ -7,7 +7,6 @@ import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import DelegatesTable from '../../../shared/delegatesTable';
 import MonitorHeader from '../header';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
 import styles from './delegates.css';
 
@@ -30,12 +29,8 @@ const Delegates = ({
     },
     {
       id: 'forgingTime',
-      header: <React.Fragment>
-        {t('Forging time')}
-        <Tooltip className="showOnLeft">
-          <p>{t('Time until a delegate can forge their next block.')}</p>
-        </Tooltip>
-      </React.Fragment>,
+      header: t('Forging time'),
+      headerTooltip: t('Time until a delegate can forge their next block.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ forgingTime }) => (forgingTime
         ? moment(forgingTime.diff(moment())).format(t('m [min] s [sec]'))
@@ -44,12 +39,8 @@ const Delegates = ({
     },
     {
       id: 'status',
-      header: <React.Fragment>
-        {t('Status')}
-        <Tooltip className="showOnLeft">
-          <p>{t('Status turns green if a delegate has forged their last block, or red if they missed it.')}</p>
-        </Tooltip>
-      </React.Fragment>,
+      header: t('Status'),
+      headerTooltip: t('Status turns green if a delegate has forged their last block, or red if they missed it.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ status }) => <div className={[styles.status, styles[status]].join(' ')} />,
       className: grid['col-xs-1'],
@@ -57,12 +48,8 @@ const Delegates = ({
     { id: 'productivity' },
     {
       id: 'approval',
-      header: <React.Fragment>
-        {t('Approval')}
-        <Tooltip className="showOnLeft">
-          <p>{t('Approval rate specifies the percentage of all votes received by a delegate.')}</p>
-        </Tooltip>
-      </React.Fragment>,
+      header: t('Approval'),
+      headerTooltip: t('Approval rate specifies the percentage of all votes received by a delegate.'),
       getValue: ({ approval }) => `${formatAmountBasedOnLocale({ value: approval })} %`,
       className: grid['col-xs-2'],
     },

@@ -23,29 +23,34 @@ const DelegatesTable = ({
       className: grid['col-xs-1'],
     },
     rewards: {
-      header: <React.Fragment>
-        {t('Forged')}
-        <Tooltip className="showOnLeft">
-          <p>{t('Total amount of LSK forged by a delegate.')}</p>
-        </Tooltip>
-      </React.Fragment>,
+      header: t('Forged'),
+      headerTooltip: t('Total amount of LSK forged by a delegate.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ rewards }) => <LiskAmount val={rewards} token={tokenMap.LSK.key} />,
       className: grid['col-xs-2'],
     },
     productivity: {
-      header: <React.Fragment>
-        {t('Productivity')}
-        &nbsp;
-        <Tooltip className="showOnLeft">
-          <p>{t('Productivity rate specifies how many blocks were successfully forged by a delegate.')}</p>
-        </Tooltip>
-      </React.Fragment>,
+      header: t('Productivity'),
+      headerTooltip: t('Productivity rate specifies how many blocks were successfully forged by a delegate.'),
       getValue: ({ productivity }) => `${formatAmountBasedOnLocale({ value: productivity })} %`,
       className: [grid['col-xs-2'], grid['col-md-1']].join(' '),
     },
   };
-  columns = columns.map(c => ({ ...columnDefaults[c.id], ...c }));
+  columns = columns.map(column => ({
+    ...columnDefaults[column.id],
+    ...column,
+  })).map(({ headerTooltip, ...column }) => ({
+    ...column,
+    ...(headerTooltip && ({
+      header: <React.Fragment>
+        {column.header}
+        &nbsp;
+        <Tooltip className="showOnLeft" styles={{ infoIcon: styles.infoIcon }}>
+          <p>{headerTooltip}</p>
+        </Tooltip>
+      </React.Fragment>,
+    })),
+  }));
 
   const handleLoadMore = () => {
     delegates.loadData({ offset: delegates.data.length, ...filters });
