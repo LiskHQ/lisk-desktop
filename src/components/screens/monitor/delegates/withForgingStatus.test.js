@@ -2,26 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import { mount } from 'enzyme';
 import { firstBlockTime } from '../../../../constants/datetime';
+import blocks from '../../../../../test/constants/blocks';
 import defaultState from '../../../../../test/constants/defaultState';
 import delegates from '../../../../../test/constants/delegates';
 import liskService from '../../../../utils/api/lsk/liskService';
+import voting from '../../../../constants/voting';
 import withForgingStatus from './withForgingStatus';
-
-jest.mock('../../../../utils/api/lsk/liskService', () => ({
-  getLastBlocks: jest.fn(() => Promise.resolve([
-    {
-      id: '3599899182780576212',
-      height: 10322981,
-      timestamp: 1569853530,
-      generatorPublicKey: '88260051bbe6634431f8a2f3ac66680d1ee9ef1087222e6823d9b4d81170edc7',
-    },
-  ])),
-  getNextForgers: jest.fn(() => Promise.resolve([
-    {
-      publicKey: '88260051bbe6634431f8a2f3ac66680d1ee9ef1087222e6823d9b4d81170edc7',
-    },
-  ])),
-}));
 
 const transformToLiskServiceFormat = ({ account, ...delegate }) => ({
   ...delegate,
@@ -37,12 +23,13 @@ describe('withForgingStatus', () => {
         <span className={delegate.username} key={delegate.username}>
           <span className="publicKey">{delegate.publicKey}</span>
           <span className="lastBlockHeight">{delegate.lastBlock && delegate.lastBlock.height}</span>
+          <span className="status">{delegate.status}</span>
         </span>
       ))}
     </span>
   ));
   const delegatesKey = 'delegates';
-  const notForgingDeleagte = delegatesApiResponse[0];
+  const notForgingDelegate = delegatesApiResponse[0];
   const forgingDelegates = delegatesApiResponse.slice(1);
 
   const generateBlock = height => ({
@@ -51,7 +38,20 @@ describe('withForgingStatus', () => {
     generatorPublicKey: forgingDelegates[height % forgingDelegates.length].publicKey,
   });
 
-  const generateBlocks = n => [...Array(n)].map((_, i) => generateBlock(i)).reverse();
+  const generateBlocks = ({ offset = 0, limit = 100 } = {}) =>
+    [...Array(limit)].map((_, i) => generateBlock(i + offset)).reverse();
+
+  const setupLatestBlocks = (lastBlockHeightAgo) => {
+    const currentHeight = voting.numberOfActiveDelegates * 10 + 10;
+    const roundStartHeight = voting.numberOfActiveDelegates * 10;
+    const height = roundStartHeight - lastBlockHeightAgo;
+    const limit = 100;
+    const latestBlocks = generateBlocks({ offset: currentHeight - limit, limit });
+    liskService.getLastBlocks.mockImplementation(
+      () => Promise.resolve([{ height, timestamp: 10243287 }]),
+    );
+    return latestBlocks;
+  };
 
   const props = {
     [delegatesKey]: {
@@ -70,8 +70,18 @@ describe('withForgingStatus', () => {
     return wrapper;
   };
 
+  beforeEach(() => {
+    jest.spyOn(liskService, 'getLastBlocks').mockImplementation(() => Promise.resolve(blocks));
+    jest.spyOn(liskService, 'getNextForgers').mockImplementation(() => Promise.resolve([
+      {
+        publicKey: '88260051bbe6634431f8a2f3ac66680d1ee9ef1087222e6823d9b4d81170edc7',
+      },
+    ]));
+  });
+
   afterEach(() => {
     liskService.getLastBlocks.mockReset();
+    liskService.getNextForgers.mockReset();
   });
 
   it('should render passed component', () => {
@@ -88,17 +98,17 @@ describe('withForgingStatus', () => {
   });
 
   it('should load last block of "Not forging" delegate', () => {
-    setup({ latestBlocks: generateBlocks(100) });
+    setup({ latestBlocks: generateBlocks() });
     jest.runAllTimers();
     expect(liskService.getLastBlocks).toHaveBeenCalledWith(
       { networkConfig: defaultState.network },
-      { limit: 1, address: notForgingDeleagte.publicKey },
+      { limit: 1, address: notForgingDelegate.publicKey },
     );
   });
 
   it('update last blocks of generator of new block on new block', () => {
-    const latestBlocks = generateBlocks(100);
-    const newBlock = generateBlock(101);
+    const latestBlocks = generateBlocks({ limit: 100 });
+    const newBlock = generateBlock(latestBlocks.length + 1);
     const newBlockGenerator = forgingDelegates.find(
       delegate => delegate.publicKey === newBlock.generatorPublicKey,
     );
@@ -115,11 +125,10 @@ describe('withForgingStatus', () => {
   });
 
   it('fetches nextForgers on round start', () => {
-    const latestBlocks = generateBlocks(101);
-    const newBlock = generateBlock(102);
+    const latestBlocks = generateBlocks({ limit: 101 });
+    const newBlock = generateBlock(latestBlocks.length + 1);
     const wrapper = setup({ latestBlocks });
 
-    liskService.getNextForgers.mockReset();
     wrapper.setProps({
       latestBlocks: [
         newBlock,
@@ -130,5 +139,32 @@ describe('withForgingStatus', () => {
       { networkConfig: defaultState.network },
       { limit: 100 },
     );
+  });
+
+  it('marks delegate as forgedThisRound if it has a block in the current round round', () => {
+    const wrapper = setup({ latestBlocks: generateBlocks() });
+    expect(wrapper.find(`.${forgingDelegates[0].username} .status`)).toHaveText('forgedThisRound');
+  });
+
+  it('marks delegate as missedLastRound if its last block is older than 1 round', (done) => {
+    const latestBlocks = setupLatestBlocks(voting.numberOfActiveDelegates + 1);
+    const wrapper = setup({ latestBlocks });
+    jest.runAllTimers();
+    // TODO refactor this as should be a better way to test it https://stackoverflow.com/a/43855794
+    setImmediate(() => {
+      expect(wrapper.find(`.${notForgingDelegate.username} .status`)).toHaveText('missedLastRound');
+      done();
+    });
+  });
+
+  it('marks delegate as notForging if its last block is older than 2 rounds', (done) => {
+    const latestBlocks = setupLatestBlocks(voting.numberOfActiveDelegates * 2 + 1);
+    const wrapper = setup({ latestBlocks });
+    jest.runAllTimers();
+    // TODO refactor this as should be a better way to test it https://stackoverflow.com/a/43855794
+    setImmediate(() => {
+      expect(wrapper.find(`.${notForgingDelegate.username} .status`)).toHaveText('notForging');
+      done();
+    });
   });
 });

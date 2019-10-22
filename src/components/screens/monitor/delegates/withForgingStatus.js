@@ -8,6 +8,35 @@ import voting from '../../../../constants/voting';
 
 const limit = 100;
 
+const mapLastBlockToStatus = (lastBlock, height) => {
+  const roundStartHeight = height - (height % voting.numberOfActiveDelegates);
+  const statusRanges = [
+    {
+      min: Number.NEGATIVE_INFINITY,
+      max: roundStartHeight - voting.numberOfActiveDelegates * 2,
+      value: 'notForging',
+    },
+    {
+      min: roundStartHeight - voting.numberOfActiveDelegates * 2,
+      max: roundStartHeight - voting.numberOfActiveDelegates,
+      value: 'missedLastRound',
+    },
+    {
+      min: roundStartHeight - voting.numberOfActiveDelegates,
+      max: roundStartHeight,
+      value: 'forgedLastRound',
+    },
+    {
+      min: roundStartHeight,
+      max: Number.POSITIVE_INFINITY,
+      value: 'forgedThisRound',
+    },
+  ];
+  return statusRanges.find(
+    ({ min, max }) => min <= lastBlock.height && lastBlock.height < max,
+  ).value;
+};
+
 const withForgingStatus = delegatesKey => (ChildComponent) => {
   class DelegatesContainer extends React.Component {
     constructor(props) {
@@ -22,8 +51,6 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     async componentDidMount() {
       const { network: networkConfig, latestBlocks } = this.props;
       let blocks = latestBlocks;
-      // TODO figure out how to mock latestBlocks in connect
-      // istanbul ignore else
       if (blocks.length < limit) {
         blocks = await liskService.getLastBlocks({ networkConfig }, { limit });
         blocks = blocks.map(block => ({
@@ -70,12 +97,9 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       }
     }
 
-    // TODO figure out how to mock latestBlocks in connect
-    // istanbul ignore next
-    getForgingStatus(delegate) { // eslint-disable-line
+    getForgingStatus(delegate) {
       const { latestBlocks } = this.props;
       const height = latestBlocks[0] && latestBlocks[0].height;
-      const roundStartHeight = height - (height % voting.numberOfActiveDelegates);
       const lastBlock = this.getLastBlock(delegate);
       if (latestBlocks.length >= limit && !lastBlock) {
         setTimeout(() => {
@@ -83,16 +107,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
         }, delegate.rank * 100);
       }
       if (delegate.rank <= voting.numberOfActiveDelegates && lastBlock && lastBlock.height) {
-        if (lastBlock.height > roundStartHeight - voting.numberOfActiveDelegates) {
-          if (lastBlock.height > roundStartHeight) {
-            return 'forgedThisRound';
-          }
-          return 'forgedLastRound';
-        }
-        if (lastBlock.height > roundStartHeight - 2 * voting.numberOfActiveDelegates) {
-          return 'missedLastRound';
-        }
-        return 'notForging';
+        return mapLastBlockToStatus(lastBlock, height);
       }
       return '';
     }
@@ -113,8 +128,6 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       }));
     }
 
-    // TODO figure out how to mock latestBlocks in connect
-    // istanbul ignore next
     async requestLastBlock(delegate) {
       if (delegate.rank <= voting.numberOfActiveDelegates) {
         const { network: networkConfig } = this.props;
