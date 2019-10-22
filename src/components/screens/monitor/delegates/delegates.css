@@ -25,3 +25,7 @@
     border-color: var(--color-burnt-sienna);
   }
 }
+
+.statusToolip {
+  min-width: 200px;
+}

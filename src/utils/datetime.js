@@ -51,7 +51,12 @@ export const formatInputToDate = (value, separator = '.') => {
   ].join('').substring(0, 8);
 };
 
+export const convertUnixSecondsToLiskEpochSeconds = timestamp => (
+  moment(timestamp * 1000).unix() - moment(firstBlockTime).unix()
+);
+
 export default {
+  convertUnixSecondsToLiskEpochSeconds,
   getTimestampFromFirstBlock,
   getDateTimestampFromFirstBlock,
   formatInputToDate,

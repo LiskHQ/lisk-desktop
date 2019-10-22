@@ -4,15 +4,24 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import moment from 'moment';
 import { DEFAULT_LIMIT } from '../../../../constants/monitor';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
+import { getUnixTimestampFromValue } from '../../../../utils/datetime';
 import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import DelegatesTable from '../../../shared/delegatesTable';
 import MonitorHeader from '../header';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
 import styles from './delegates.css';
 
 const Delegates = ({
   delegates, t, filters, applyFilters,
 }) => {
+  const getForgingTitle = status => ({
+    forgedThisRound: t('Forging'),
+    forgedLastRound: t('Awaiting slot'),
+    missedThisRound: t('Not forging'),
+    missedLastRound: t('Awaiting slot'),
+  }[status] || t('Standby'));
+
   const columns = [
     { id: 'rank' },
     {
@@ -42,7 +51,21 @@ const Delegates = ({
       header: t('Status'),
       headerTooltip: t('Status turns green if a delegate has forged their last block, or red if they missed it.'),
       /* eslint-disable-next-line react/display-name */
-      getValue: ({ status }) => <div className={[styles.status, styles[status]].join(' ')} />,
+      getValue: ({ status, lastBlock }) => (
+        <Tooltip
+          title={getForgingTitle(status)}
+          className="showOnBottom"
+          size="s"
+          content={(<div className={[styles.status, styles[status]].join(' ')} />)}
+        >
+          <p className={styles.statusToolip}>
+            {lastBlock && t('Last block forged @{{height}} {{timeAgo}}', {
+              height: lastBlock.height,
+              timeAgo: moment(getUnixTimestampFromValue(lastBlock.timestamp)).fromNow(),
+            })}
+          </p>
+        </Tooltip>
+      ),
       className: grid['col-xs-1'],
     },
     { id: 'productivity' },

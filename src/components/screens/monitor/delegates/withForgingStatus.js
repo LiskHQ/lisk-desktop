@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import moment from 'moment';
+import { convertUnixSecondsToLiskEpochSeconds } from '../../../../utils/datetime';
 import { olderBlocksRetrieved } from '../../../../actions/blocks';
 import liskService from '../../../../utils/api/lsk/liskService';
 import voting from '../../../../constants/voting';
@@ -24,6 +25,10 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       // istanbul ignore else
       if (blocks.length < limit) {
         blocks = await liskService.getLastBlocks({ networkConfig }, { limit });
+        blocks = blocks.map(block => ({
+          ...block,
+          timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
+        }));
         this.props.olderBlocksRetrieved({ blocks });
       }
 
@@ -89,11 +94,13 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     }
 
     getDelegatesData() {
+      const { latestBlocks } = this.props;
       const { data } = this.props[delegatesKey];
       return data.map(delegate => ({
         ...delegate,
         status: this.getForgingStatus(delegate),
         ...this.state.nextForgers[delegate.publicKey],
+        lastBlock: latestBlocks.find(b => b.generatorPublicKey === delegate.publicKey),
       }));
     }
 
