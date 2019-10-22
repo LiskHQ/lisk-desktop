@@ -11,21 +11,10 @@ class Select extends React.Component {
 
     this.state = {
       isOpen: false,
-      selected: '',
     };
 
     this.setSelected = this.setSelected.bind(this);
     this.toggleIsOpen = this.toggleIsOpen.bind(this);
-  }
-
-  componentDidMount() {
-    this.setState({ selected: this.props.selected });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.selected !== this.props.selected && this.props.selected === '') {
-      this.setState({ selected: this.props.selected });
-    }
   }
 
   toggleIsOpen() {
@@ -36,9 +25,8 @@ class Select extends React.Component {
   setSelected({ target: { dataset: { index } } }) {
     const { options, onChange } = this.props;
     const selected = Number(index);
-    this.setState({ selected, isOpen: false });
-    return this.state.selected !== selected
-      ? onChange(options[selected]) : null;
+    onChange(options[selected]);
+    this.setState({ isOpen: false });
   }
 
   componentWillUnmount() {
@@ -51,7 +39,11 @@ class Select extends React.Component {
     const {
       options, size, className, placeholder,
     } = this.props;
-    const { selected, isOpen } = this.state;
+    const { isOpen } = this.state;
+    const selected = placeholder && this.props.selected
+      ? Number(this.props.selected) + 1
+      : this.props.selected;
+
     return (
       <OutsideClickHandler
         disabled={!isOpen}
@@ -62,10 +54,10 @@ class Select extends React.Component {
           <Input
             readOnly
             className={
-              selected && options[selected].label !== placeholder && styles.selectedInput
+              typeof selected === 'number' && options[selected].label !== placeholder && styles.selectedInput
             }
             placeholder={placeholder}
-            value={options[selected] ? options[selected].label : ''}
+            value={typeof selected === 'number' ? options[selected].label : ''}
             onClick={this.toggleIsOpen}
             size={size}
           />
