@@ -1,5 +1,7 @@
 import React from 'react';
+import moment from 'moment';
 import { mount } from 'enzyme';
+import { firstBlockTime } from '../../../../constants/datetime';
 import defaultState from '../../../../../test/constants/defaultState';
 import delegates from '../../../../../test/constants/delegates';
 import liskService from '../../../../utils/api/lsk/liskService';
@@ -21,26 +23,48 @@ jest.mock('../../../../utils/api/lsk/liskService', () => ({
   ])),
 }));
 
+const transformToLiskServiceFormat = ({ account, ...delegate }) => ({
+  ...delegate,
+  ...account,
+});
+const delegatesApiResponse = delegates.map(transformToLiskServiceFormat);
+
 describe('withForgingStatus', () => {
   const className = 'dummy';
-  const DummyComponent = () => <span className={className} />;
+  const DummyComponent = jest.fn(() => <span className={className} />);
   const delegatesKey = 'delegates';
+  const notForgingDeleagte = delegatesApiResponse[0];
+  const forgingDelegates = delegatesApiResponse.slice(1);
+
+
+  const generateBlock = height => ({
+    height,
+    timestamp: moment(firstBlockTime).unix() + height * 10,
+    generatorPublicKey: forgingDelegates[height % forgingDelegates.length].publicKey,
+  });
+
+  const generate100Blocks = () => [...Array(100)].map((_, i) => generateBlock(i));
 
   const props = {
     [delegatesKey]: {
       isLoading: true,
-      data: delegates,
+      data: delegatesApiResponse,
       loadData: jest.fn(),
       clearData: jest.fn(),
       urlSearchParams: {},
     },
+    latestBlocks: [],
   };
 
-  const setup = () => {
+  const setup = (extraProps = {}) => {
     const DummyComponentHOC = withForgingStatus(delegatesKey)(DummyComponent);
-    const wrapper = mount(<DummyComponentHOC {...props} />);
+    const wrapper = mount(<DummyComponentHOC {...{ ...props, ...extraProps }} />);
     return wrapper;
   };
+
+  afterEach(() => {
+    liskService.getLastBlocks.mockReset();
+  });
 
   it('should render passed component', () => {
     const wrapper = setup();
@@ -52,6 +76,15 @@ describe('withForgingStatus', () => {
     expect(liskService.getLastBlocks).toHaveBeenCalledWith(
       { networkConfig: defaultState.network },
       { limit: 100 },
+    );
+  });
+
+  it('should load last block of "Not forging" delegate', () => {
+    setup({ latestBlocks: generate100Blocks() });
+    jest.runAllTimers();
+    expect(liskService.getLastBlocks).toHaveBeenCalledWith(
+      { networkConfig: defaultState.network },
+      { limit: 1, address: notForgingDeleagte.publicKey },
     );
   });
 });

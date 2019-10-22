@@ -118,7 +118,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     // TODO figure out how to mock latestBlocks in connect
     // istanbul ignore next
     async requestLastBlock(delegate) {
-      if (!this.getLastBlock(delegate) && delegate.rank <= voting.numberOfActiveDelegates) {
+      if (delegate.rank <= voting.numberOfActiveDelegates) {
         const { network: networkConfig } = this.props;
         this.setState({
           lastBlocks: {
@@ -132,10 +132,10 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
         this.setState({
           lastBlocks: {
             ...this.state.lastBlocks,
-            [delegate.publicKey]: blocks.map(block => ({
-              ...block,
-              timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
-            }))[0],
+            [delegate.publicKey]: {
+              ...blocks[0],
+              timestamp: convertUnixSecondsToLiskEpochSeconds(blocks[0].timestamp),
+            },
           },
         });
       }
@@ -157,8 +157,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       );
     }
   }
-  const mapStateToProps = ({ blocks: { latestBlocks }, network }) => ({
-    latestBlocks,
+  const mapStateToProps = ({ network }) => ({
     network,
   });
 
