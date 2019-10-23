@@ -151,8 +151,9 @@
   }
 
   &.s {
-    padding: 8px 20px;
-    width: 200px;
+    padding: 16px 20px;
+    width: auto;
+    max-width: 286px;
 
     & > header {
       margin-bottom: var(--tooltip-spacing-inside-s);
@@ -163,20 +164,7 @@
     }
 
     & p {
-      @mixin contentNormal;
-    }
-  }
-
-  &.m {
-    padding: 12.5px 25px;
-    max-width: 225px;
-
-    & > header {
-      margin-bottom: var(--tooltip-spacing-inside-m);
-    }
-
-    & > footer {
-      margin-top: var(--tooltip-spacing-inside-m);
+      font-size: inherit;
     }
   }
 }
