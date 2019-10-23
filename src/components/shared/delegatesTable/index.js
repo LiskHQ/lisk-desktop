@@ -51,7 +51,7 @@ const DelegatesTable = ({
           className={i === columns.length - 1 ? 'showOnLeft' : 'showOnBottom'}
           styles={{ infoIcon: styles.infoIcon }}
         >
-          <p>{headerTooltip}</p>
+          <p className={styles.headerTooltip}>{headerTooltip}</p>
         </Tooltip>
       </React.Fragment>,
     })),

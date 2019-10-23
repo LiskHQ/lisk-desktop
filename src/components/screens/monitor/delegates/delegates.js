@@ -58,16 +58,15 @@ const Delegates = ({
         <Tooltip
           title={getForgingTitle(status)}
           className="showOnBottom"
-          tooltipClassName={styles.statusToolip}
           size="s"
           content={(<div className={[styles.status, styles[status]].join(' ')} />)}
+          footer={(
+            <p className={styles.statusToolip}>
+              {lastBlock && moment(getUnixTimestampFromValue(lastBlock.timestamp)).fromNow()}
+            </p>
+          )}
         >
-          <p>
-            {lastBlock && t('Last block forged @{{height}} {{timeAgo}}', {
-              height: lastBlock.height,
-              timeAgo: moment(getUnixTimestampFromValue(lastBlock.timestamp)).fromNow(),
-            })}
-          </p>
+          <p>{lastBlock && t('Last block forged @{{height}}', lastBlock)}</p>
         </Tooltip>
       ),
       className: grid['col-xs-1'],

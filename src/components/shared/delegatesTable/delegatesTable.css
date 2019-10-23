@@ -5,3 +5,7 @@
 .infoIcon {
   margin: 0 2px 4px;
 }
+
+.headerTooltip {
+  width: 240px;
+}

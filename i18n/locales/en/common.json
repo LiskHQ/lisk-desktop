@@ -225,7 +225,7 @@
   "Label is too long.": "Label is too long.",
   "Language": "Language",
   "Last Forged Block": "Last Forged Block",
-  "Last block forged @{{height}} {{timeAgo}}": "Last block forged @{{height}} {{timeAgo}}",
+  "Last block forged @{{height}}": "Last block forged @{{height}}",
   "Later": "Later",
   "Less filters": "Less filters",
   "Like almost all blockchains Lisk has transparency at it’s core. This means that anyone can view everything that happens on the Lisk network, including the holdings of each account.": "Like almost all blockchains Lisk has transparency at it’s core. This means that anyone can view everything that happens on the Lisk network, including the holdings of each account.",
