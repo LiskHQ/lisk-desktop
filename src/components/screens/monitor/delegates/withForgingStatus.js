@@ -43,17 +43,20 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     async componentDidMount() {
       let { latestBlocks: blocks } = this.props;
       if (blocks.length < this.blocksFetchLimit) {
-        blocks = await this.loadLastBlocks();
+        blocks = [
+          ...await this.loadLastBlocks({ limit: this.blocksFetchLimit }),
+          ...await this.loadLastBlocks({
+            offset: this.blocksFetchLimit, limit: this.blocksFetchLimit,
+          }),
+        ];
       }
 
       this.loadNextForgers(blocks);
     }
 
-    async loadLastBlocks() {
+    async loadLastBlocks(params) {
       const { network: networkConfig } = this.props;
-      let blocks = await liskService.getLastBlocks(
-        { networkConfig }, { limit: this.blocksFetchLimit },
-      );
+      let blocks = await liskService.getLastBlocks({ networkConfig }, params);
       blocks = blocks.map(block => ({
         ...block,
         timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
@@ -132,7 +135,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     getForgingStatus(delegate) {
       const { latestBlocks } = this.props;
       const lastBlock = this.getLastBlock(delegate);
-      if (latestBlocks.length >= this.blocksFetchLimit && !lastBlock) {
+      if (latestBlocks.length >= this.blocksFetchLimit * 2 && !lastBlock) {
         setTimeout(() => {
           // This timeout is used to prevent too many requests at once.
           // It loads delegates with lower rank sooner as they are more likely above the fold.

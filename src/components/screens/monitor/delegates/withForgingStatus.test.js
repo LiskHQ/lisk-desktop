@@ -38,14 +38,14 @@ describe('withForgingStatus', () => {
     generatorPublicKey: forgingDelegates[height % forgingDelegates.length].publicKey,
   });
 
-  const generateBlocks = ({ offset = 0, limit = 100 } = {}) =>
+  const generateBlocks = ({ offset = 0, limit = 200 } = {}) =>
     [...Array(limit)].map((_, i) => generateBlock(i + offset)).reverse();
 
   const setupLatestBlocks = ({ lastBlockHeightAgo }) => {
     const currentHeight = voting.numberOfActiveDelegates * 10 + 10;
     const roundStartHeight = voting.numberOfActiveDelegates * 10 + 1;
     const height = roundStartHeight - lastBlockHeightAgo;
-    const limit = 100;
+    const limit = 200;
     const latestBlocks = generateBlocks({ offset: currentHeight - limit, limit });
     liskService.getLastBlocks.mockImplementation(
       () => Promise.resolve([{ height, timestamp: 10243287 }]),
@@ -107,7 +107,7 @@ describe('withForgingStatus', () => {
   });
 
   it('update last blocks of generator of new block on new block', () => {
-    const latestBlocks = generateBlocks({ limit: 100 });
+    const latestBlocks = generateBlocks({ limit: 201 });
     const newBlock = generateBlock(latestBlocks.length + 1);
     const newBlockGenerator = forgingDelegates.find(
       delegate => delegate.publicKey === newBlock.generatorPublicKey,
@@ -125,7 +125,7 @@ describe('withForgingStatus', () => {
   });
 
   it('fetches nextForgers on round start', () => {
-    const latestBlocks = generateBlocks({ limit: 101 });
+    const latestBlocks = generateBlocks({ limit: 202 });
     const newBlock = generateBlock(latestBlocks.length + 1);
     const wrapper = setup({ latestBlocks });
 
