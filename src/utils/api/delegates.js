@@ -112,7 +112,7 @@ export const castVotes = async ({
       secondPassphrase,
       timeOffset,
     )
-    : await signVoteTransaction(account, votedList, unvotedList);
+    : await signVoteTransaction(account, votedList, unvotedList, timeOffset);
 
   return Promise.all(signedTransactions.map(transaction => (
     new Promise((resolve, reject) => {
