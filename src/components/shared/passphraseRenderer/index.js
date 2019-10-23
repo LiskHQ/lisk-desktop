@@ -88,7 +88,6 @@ class PassphraseRenderer extends React.Component {
             {values.map((value, i) => (
               <div onClick={() => this.handleClick(i)} className={`${grid['col-xs-2']} ${styles.inputContainer}`} key={i}>
                 <span className={`${styles.inputValue} ${this.getStyle(i)}`}>{missingWords && missingWords.includes(i) ? this.renderMissingValue(i) : value}</span>
-                <span className={styles.whitespace}>&nbsp;</span>
               </div>
             ))}
           </div>
