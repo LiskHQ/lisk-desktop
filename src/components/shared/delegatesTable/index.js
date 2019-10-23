@@ -39,13 +39,18 @@ const DelegatesTable = ({
   columns = columns.map(column => ({
     ...columnDefaults[column.id],
     ...column,
-  })).map(({ headerTooltip, ...column }) => ({
+  })).map(({ headerTooltip, ...column }, i) => ({
     ...column,
     ...(headerTooltip && ({
       header: <React.Fragment>
         {column.header}
         &nbsp;
-        <Tooltip className="showOnLeft" styles={{ infoIcon: styles.infoIcon }}>
+        <Tooltip
+          title={column.header}
+          size="s"
+          className={i === columns.length - 1 ? 'showOnLeft' : 'showOnBottom'}
+          styles={{ infoIcon: styles.infoIcon }}
+        >
           <p>{headerTooltip}</p>
         </Tooltip>
       </React.Fragment>,

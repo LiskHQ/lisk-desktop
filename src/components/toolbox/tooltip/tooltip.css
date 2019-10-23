@@ -163,7 +163,8 @@
 
   &.s {
     padding: 8px 20px;
-    width: auto;
+    box-sizing: border-box;
+    width: 200px;
 
     & > header {
       margin-bottom: var(--tooltip-spacing-inside-s);
