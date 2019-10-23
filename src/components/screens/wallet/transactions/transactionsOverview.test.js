@@ -24,6 +24,7 @@ describe('TransactionsOverview ', () => {
   const props = {
     t: data => data,
     address: accounts.genesis.address,
+    networkName: 'testnet',
     onInit: spy(),
     onLoadMore: spy(),
     onFilterSet: spy(),
