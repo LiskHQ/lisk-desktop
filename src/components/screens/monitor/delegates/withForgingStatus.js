@@ -161,7 +161,8 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     }
 
     async requestLastBlock(delegate) {
-      if (delegate.rank <= voting.numberOfActiveDelegates) {
+      const lastBlock = this.getLastBlock(delegate);
+      if (!lastBlock && delegate.rank <= voting.numberOfActiveDelegates) {
         const { network: networkConfig } = this.props;
         this.setState({
           lastBlocks: {
