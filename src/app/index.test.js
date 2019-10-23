@@ -7,7 +7,6 @@ import configureStore from 'redux-mock-store';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../i18n'; // initialized i18next instance
 import App from '.';
-import Splashscreen from '../components/screens/splashscreen/splashscreen';
 import Login from '../components/screens/login/login';
 import TransactionsDashboard from '../components/shared/transactionDashboard';
 import routes from '../constants/routes';
@@ -24,8 +23,7 @@ const addRouter = Component => (props, path) =>
   </Provider>);
 
 const publicComponent = [
-  { route: '/', component: Splashscreen },
-  { route: '/login', component: Login },
+  { route: '/', component: Login },
 ];
 
 const privateComponent = [

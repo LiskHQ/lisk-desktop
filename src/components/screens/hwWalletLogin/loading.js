@@ -27,7 +27,7 @@ class Loading extends React.Component {
         <p>{t('Lisk Hub currently supports Ledger Nano S, Ledger Nano X, Trezor One and Trezor Model T wallets')}</p>
         <LoadingIcon />
         <p>{t('Looking for a device...')}</p>
-        <Link to={routes.splashscreen.path}>
+        <Link to={routes.login.path}>
           <TertiaryButton>
             {t('Go back')}
           </TertiaryButton>
