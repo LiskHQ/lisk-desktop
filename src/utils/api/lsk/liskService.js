@@ -28,8 +28,9 @@ const getServerUrl = (networkConfig) => {
 const formatDate = (value, options) => getTimestampFromFirstBlock(value, 'DD.MM.YY', options);
 
 const liskServiceGet = ({
-  path, transformResponse = x => x, searchParams = {}, serverUrl = liskServiceUrl,
+  path, transformResponse = x => x, searchParams = {}, serverUrl = liskServiceUrl, networkConfig,
 }) => new Promise((resolve, reject) => {
+  serverUrl = networkConfig ? getServerUrl(networkConfig) : serverUrl;
   popsicle.get(`${serverUrl}${path}?${new URLSearchParams(searchParams)}`)
     .use(popsicle.plugins.parse('json'))
     .then((response) => {
@@ -39,6 +40,10 @@ const liskServiceGet = ({
         reject(new Error(response.body.message || response.body.error));
       }
     }).catch((error) => {
+      if (error.code === 'EUNAVAILABLE') {
+        const networkName = getNetworkNameBasedOnNethash(networkConfig);
+        error = new Error(i18n.t('Unable to connect to {{networkName}}', { networkName }));
+      }
       reject(error);
     });
 });
@@ -53,7 +58,7 @@ const liskServiceApi = {
   getLastBlocks: async (
     { networkConfig }, { dateFrom, dateTo, ...searchParams },
   ) => liskServiceGet({
-    serverUrl: getServerUrl(networkConfig),
+    networkConfig,
     path: '/api/v1/blocks',
     transformResponse: response => response.data,
     searchParams: {
@@ -65,14 +70,14 @@ const liskServiceApi = {
   }),
 
   getBlockDetails: async ({ networkConfig }, { id }) => liskServiceGet({
-    serverUrl: getServerUrl(networkConfig),
+    networkConfig,
     path: `/api/v1/block/${id}`,
   }),
 
   getTransactions: async ({ networkConfig }, {
     dateFrom, dateTo, amountFrom, amountTo, ...searchParams
   }) => liskServiceGet({
-    serverUrl: getServerUrl(networkConfig),
+    networkConfig,
     path: '/api/v1/transactions',
     transformResponse: response => response.data,
     searchParams: {
@@ -86,7 +91,7 @@ const liskServiceApi = {
   }),
 
   getBlockTransactions: async ({ networkConfig }, { id, ...searchParams }) => liskServiceGet({
-    serverUrl: getServerUrl(networkConfig),
+    networkConfig,
     path: `/api/v1/block/${id}/transactions`,
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
   }),
@@ -94,7 +99,7 @@ const liskServiceApi = {
   getDelegates: async (network, { tab, ...rest }) => {
     const tabOptions = {
       active: ({ networkConfig }, { search = '', ...searchParams }) => liskServiceGet({
-        serverUrl: getServerUrl(networkConfig),
+        networkConfig,
         path: '/api/v1/delegates/active',
         transformResponse: response => response.data.filter(
           delegate => delegate.username.includes(search),
@@ -105,7 +110,7 @@ const liskServiceApi = {
         },
       }),
       standby: ({ networkConfig }, { offset = 0, ...searchParams }) => liskServiceGet({
-        serverUrl: getServerUrl(networkConfig),
+        networkConfig,
         path: '/api/v1/delegates',
         transformResponse: response => response.data.filter(
           delegate => delegate.rank > voting.numberOfActiveDelegates,
@@ -121,7 +126,7 @@ const liskServiceApi = {
   },
 
   getNextForgers: async ({ networkConfig }, searchParams) => liskServiceGet({
-    serverUrl: getServerUrl(networkConfig),
+    networkConfig,
     path: '/api/v1/delegates/next_forgers',
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
     transformResponse: response => response.data,
