@@ -117,10 +117,6 @@ const menu = {
         label: i18n.t('Help'),
         submenu: [
           {
-            label: i18n.t('Lisk Help Center'),
-            click: menu.onClickLink.bind(null, electron, 'https://help.lisk.io/'),
-          },
-          {
             label: i18n.t('Lisk Website'),
             click: menu.onClickLink.bind(null, electron, 'https://lisk.io'),
           },
@@ -131,10 +127,6 @@ const menu = {
           {
             label: i18n.t('Lisk Explorer'),
             click: menu.onClickLink.bind(null, electron, 'https://explorer.lisk.io'),
-          },
-          {
-            label: i18n.t('Lisk Academy'),
-            click: menu.onClickLink.bind(null, electron, 'https://lisk.io/academy'),
           },
           {
             type: 'separator',

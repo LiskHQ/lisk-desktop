@@ -8,10 +8,12 @@ const Tabs = ({
     {tabs.map((filter, i) => (
       <li
         key={i}
-        className={`${className}
-          ${filter.className}
-          ${(active === filter.value) || isActive(filter.value) ? `${styles.active} active` : ''}`
-        }
+        className={[
+          'tab',
+          className,
+          filter.className,
+          ((active === filter.value) || isActive(filter.value)) ? `${styles.active} active` : '',
+        ].join(' ')}
         onClick={() => onClick(filter)}
       >
         {filter.name}

@@ -3,7 +3,7 @@ import { fromRawLsk } from '../../../utils/lsk';
 import FormattedNumber from '../formattedNumber';
 
 const roundToPlaces = (value, places) => {
-  if (!places) {
+  if (!Number.isInteger(places)) {
     return value;
   }
   const x = 10 ** places;

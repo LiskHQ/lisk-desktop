@@ -6,7 +6,6 @@ import Fees from '../../../../../constants/fees';
 import FormBase from './formBase';
 import Icon from '../../../../toolbox/icon';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
-import links from '../../../../../constants/externalLinks';
 import styles from './form.css';
 
 export default class FormLsk extends React.Component {
@@ -86,15 +85,6 @@ export default class FormLsk extends React.Component {
             <Tooltip
               className="showOnTop"
               title={t('Bytes counter')}
-              footer={(
-                <a
-                  href={links.transactionFee}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  {t('Read more')}
-                </a>
-)}
             >
               <p className={styles.tooltipText}>
                 {

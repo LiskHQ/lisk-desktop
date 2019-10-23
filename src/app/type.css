@@ -119,8 +119,7 @@ h6 {
 }
 
 p,
-i,
-strong {
+i {
   font-size: var(--paragraph-font-size-l);
 }
 

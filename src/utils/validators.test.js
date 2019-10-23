@@ -1,4 +1,4 @@
-import { validateAddress, validateAmountFormat } from './validators';
+import { validateAddress, validateLSKPublicKey, validateAmountFormat } from './validators';
 import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
 import i18n from '../i18n';
@@ -16,6 +16,18 @@ describe('Validate Address', () => {
 
   it('Should validate BTC address', () => {
     expect(validateAddress('BTC', accounts.genesis.address)).toBe(1);
+  });
+});
+
+describe('Validate Public Key', () => {
+  const invalidPublicKey = '35c6b25520fc868b56c83fed6e1nduioasuz9qw84a57f';
+
+  it('Should return 0 if public key is valid', () => {
+    expect(validateLSKPublicKey(accounts.genesis.publicKey)).toBe(0);
+  });
+
+  it('Should return 1 if public key is invalid', () => {
+    expect(validateLSKPublicKey(invalidPublicKey)).toBe(1);
   });
 });
 

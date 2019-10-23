@@ -51,7 +51,6 @@ Dropdown.propTypes = {
   showDropdown: PropTypes.bool,
   className: PropTypes.string,
   showArrow: PropTypes.bool,
-  active: PropTypes.number,
   align: PropTypes.oneOf(['left', 'center', 'right']),
 };
 

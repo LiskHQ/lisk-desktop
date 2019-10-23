@@ -249,7 +249,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
       { ...data, timeOffset, network },
       createTransactionType.transaction,
     ))
-    : await to(signSendTransaction(account, data));
+    : await to(signSendTransaction(account, { ...data, timeOffset }));
 
   if (error) {
     return dispatch({

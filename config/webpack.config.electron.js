@@ -12,7 +12,7 @@ module.exports = merge(baseConfig, {
     path: resolve(__dirname, '../app/build'),
     filename: 'main.js',
   },
-  target: 'electron-renderer',
+  target: 'electron-main',
   node: {
     __dirname: false,
   },

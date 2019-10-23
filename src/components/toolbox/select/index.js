@@ -11,7 +11,6 @@ class Select extends React.Component {
 
     this.state = {
       isOpen: false,
-      selected: props.selected,
     };
 
     this.setSelected = this.setSelected.bind(this);
@@ -26,9 +25,8 @@ class Select extends React.Component {
   setSelected({ target: { dataset: { index } } }) {
     const { options, onChange } = this.props;
     const selected = Number(index);
-    this.setState({ selected, isOpen: false });
-    return this.state.selected !== selected
-      ? onChange(options[selected]) : null;
+    onChange(options[selected]);
+    this.setState({ isOpen: false });
   }
 
   componentWillUnmount() {
@@ -38,8 +36,14 @@ class Select extends React.Component {
   }
 
   render() {
-    const { options, size, className } = this.props;
-    const { selected, isOpen } = this.state;
+    const {
+      options, size, className, placeholder,
+    } = this.props;
+    const { isOpen } = this.state;
+    const selected = placeholder && this.props.selected
+      ? Number(this.props.selected) + 1
+      : this.props.selected;
+
     return (
       <OutsideClickHandler
         disabled={!isOpen}
@@ -49,7 +53,11 @@ class Select extends React.Component {
         <label className={`${styles.inputHolder} ${isOpen ? styles.isOpen : ''}`}>
           <Input
             readOnly
-            value={options[selected].label}
+            className={
+              typeof selected === 'number' && options[selected].label !== placeholder && styles.selectedInput
+            }
+            placeholder={placeholder}
+            value={typeof selected === 'number' ? options[selected].label : ''}
             onClick={this.toggleIsOpen}
             size={size}
           />
@@ -58,11 +66,11 @@ class Select extends React.Component {
           className={styles.dropdown}
           showArrow={false}
           showDropdown={isOpen}
-          active={selected}
+          active={!selected && placeholder ? 0 : selected}
         >
           {options.map((option, index) => (
             <span
-              className={`${styles.option} option`}
+              className={`${styles.option} ${styles[size]} option`}
               data-index={index}
               onClick={this.setSelected}
               key={`option-${index}`}
@@ -80,7 +88,6 @@ Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
   })).isRequired,
-  selected: PropTypes.number,
   size: PropTypes.oneOf([
     'l', 'm', 's', 'xs',
   ]),

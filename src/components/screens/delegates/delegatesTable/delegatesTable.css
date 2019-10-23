@@ -1,0 +1,9 @@
+@import '../../../../app/variables.css';
+
+.delegateLink:hover {
+  text-decoration: none;
+}
+
+.checkbox {
+  z-index: calc(var(--overlay-index) + 2);
+}

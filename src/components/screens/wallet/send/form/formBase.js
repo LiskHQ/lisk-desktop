@@ -12,7 +12,6 @@ import Converter from '../../../../shared/converter';
 import Piwik from '../../../../../utils/piwik';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import i18n from '../../../../../i18n';
-import links from '../../../../../constants/externalLinks';
 import regex from '../../../../../utils/regex';
 import styles from './form.css';
 
@@ -205,15 +204,6 @@ class FormBase extends React.Component {
                 <Tooltip
                   className="showOnTop"
                   title={t('Transaction fee')}
-                  footer={(
-                    <a
-                      href={links.transactionFee}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      {t('Read more')}
-                    </a>
-)}
                 >
                   <p className={styles.tooltipText}>
                     {

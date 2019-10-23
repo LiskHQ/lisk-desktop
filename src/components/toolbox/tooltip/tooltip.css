@@ -5,6 +5,7 @@
   --info-icon-size: 14px;
   --info-icon-font-size: 9px;
   --tooltip-spacing-inside: 10px;
+  --tooltip-spacing-inside-m: 7.5px;
   --tooltip-spacing-inside-s: 5px;
 }
 
@@ -170,6 +171,19 @@
 
     & > footer {
       margin-top: var(--tooltip-spacing-inside-s);
+    }
+  }
+
+  &.m {
+    padding: 12.5px 25px;
+    max-width: 225px;
+
+    & > header {
+      margin-bottom: var(--tooltip-spacing-inside-m);
+    }
+
+    & > footer {
+      margin-top: var(--tooltip-spacing-inside-m);
     }
   }
 }

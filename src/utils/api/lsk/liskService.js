@@ -1,9 +1,11 @@
 import * as popsicle from 'popsicle';
+import { utils } from '@liskhq/lisk-transactions';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
 import { getNetworkNameBasedOnNethash } from '../../getNetwork';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import i18n from '../../../i18n';
 import networks from '../../../constants/networks';
+import voting from '../../../constants/voting';
 
 const liskServiceUrl = 'https://service.lisk.io';
 const liskServiceTestnetUrl = 'https://testnet-service.lisk.io';
@@ -63,12 +65,18 @@ const liskServiceApi = {
     path: `/api/v1/block/${id}`,
   }),
 
-  getLastTransactions: async ({ networkConfig }, searchParams) => liskServiceGet({
+  getTransactions: async ({ networkConfig }, {
+    dateFrom, dateTo, amountFrom, amountTo, ...searchParams
+  }) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
-    path: '/api/v1/transactions/last',
+    path: '/api/v1/transactions',
     transformResponse: response => response.data,
     searchParams: {
-      limit: 20,
+      limit: DEFAULT_LIMIT,
+      ...(dateFrom && { from: formatDate(dateFrom) }),
+      ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
+      ...(amountFrom && { min: utils.convertLSKToBeddows(amountFrom) }),
+      ...(amountTo && { max: utils.convertLSKToBeddows(amountTo) }),
       ...searchParams,
     },
   }),
@@ -78,6 +86,35 @@ const liskServiceApi = {
     path: `/api/v1/block/${id}/transactions`,
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
   }),
+
+  getDelegates: async (network, { tab, ...rest }) => {
+    const tabOptions = {
+      active: ({ networkConfig }, { search = '', ...searchParams }) => liskServiceGet({
+        serverUrl: getServerUrl(networkConfig),
+        path: '/api/v1/delegates/active',
+        transformResponse: response => response.data.filter(
+          delegate => delegate.username.includes(search),
+        ),
+        searchParams: {
+          limit: voting.numberOfActiveDelegates,
+          ...searchParams,
+        },
+      }),
+      standby: ({ networkConfig }, { offset = 0, ...searchParams }) => liskServiceGet({
+        serverUrl: getServerUrl(networkConfig),
+        path: '/api/v1/delegates',
+        transformResponse: response => response.data.filter(
+          delegate => delegate.rank > voting.numberOfActiveDelegates,
+        ),
+        searchParams: {
+          offset: offset + (Object.keys(searchParams).length ? 0 : voting.numberOfActiveDelegates),
+          limit: DEFAULT_LIMIT,
+          ...searchParams,
+        },
+      }),
+    };
+    return tabOptions[tab](network, rest);
+  },
 };
 
 export default liskServiceApi;
