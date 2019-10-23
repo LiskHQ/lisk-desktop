@@ -27,5 +27,5 @@
 }
 
 .statusToolip {
-  min-width: 200px;
+  width: 250px !important;
 }
