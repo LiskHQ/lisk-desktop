@@ -8,35 +8,6 @@ import voting from '../../../../constants/voting';
 
 const limit = 100;
 
-const mapLastBlockToStatus = (lastBlock, height) => {
-  const roundStartHeight = height - (height % voting.numberOfActiveDelegates);
-  const statusRanges = [
-    {
-      min: Number.NEGATIVE_INFINITY,
-      max: roundStartHeight - voting.numberOfActiveDelegates * 2,
-      value: 'notForging',
-    },
-    {
-      min: roundStartHeight - voting.numberOfActiveDelegates * 2,
-      max: roundStartHeight - voting.numberOfActiveDelegates,
-      value: 'missedLastRound',
-    },
-    {
-      min: roundStartHeight - voting.numberOfActiveDelegates,
-      max: roundStartHeight,
-      value: 'forgedLastRound',
-    },
-    {
-      min: roundStartHeight,
-      max: Number.POSITIVE_INFINITY,
-      value: 'forgedThisRound',
-    },
-  ];
-  return statusRanges.find(
-    ({ min, max }) => min <= lastBlock.height && lastBlock.height < max,
-  ).value;
-};
-
 const withForgingStatus = delegatesKey => (ChildComponent) => {
   class DelegatesContainer extends React.Component {
     constructor(props) {
@@ -97,19 +68,50 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       }
     }
 
-    getForgingStatus(delegate) {
+    mapDelegateLastBlockToStatus(lastBlock) {
       const { latestBlocks } = this.props;
       const height = latestBlocks[0] && latestBlocks[0].height;
+      const roundStartHeight = height - (height % voting.numberOfActiveDelegates) + 1;
+      const statusRanges = [
+        {
+          min: Number.NEGATIVE_INFINITY,
+          max: roundStartHeight - voting.numberOfActiveDelegates * 2,
+          value: 'notForging',
+        },
+        {
+          min: roundStartHeight - voting.numberOfActiveDelegates * 2,
+          max: roundStartHeight - voting.numberOfActiveDelegates,
+          value: 'missedLastRound',
+        },
+        {
+          min: roundStartHeight - voting.numberOfActiveDelegates,
+          max: roundStartHeight,
+          value: 'forgedLastRound',
+        },
+        {
+          min: roundStartHeight,
+          max: Number.POSITIVE_INFINITY,
+          value: 'forgedThisRound',
+        },
+      ];
+      return statusRanges.find(
+        ({ min, max }) => min <= lastBlock.height && lastBlock.height < max,
+      ).value;
+    }
+
+    getForgingStatus(delegate) {
+      const { latestBlocks } = this.props;
       const lastBlock = this.getLastBlock(delegate);
       if (latestBlocks.length >= limit && !lastBlock) {
         setTimeout(() => {
+          // This timeout is used to prevent too many requests at once.
+          // It loads delegates with lower rank sooner as they are more likely above the fold.
           this.requestLastBlock(delegate);
         }, delegate.rank * 100);
       }
-      if (delegate.rank <= voting.numberOfActiveDelegates && lastBlock && lastBlock.height) {
-        return mapLastBlockToStatus(lastBlock, height);
-      }
-      return '';
+      return (delegate.rank <= voting.numberOfActiveDelegates && lastBlock && lastBlock.height)
+        ? this.mapDelegateLastBlockToStatus(lastBlock)
+        : '';
     }
 
     getLastBlock(delegate) {

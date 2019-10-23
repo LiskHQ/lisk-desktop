@@ -41,9 +41,9 @@ describe('withForgingStatus', () => {
   const generateBlocks = ({ offset = 0, limit = 100 } = {}) =>
     [...Array(limit)].map((_, i) => generateBlock(i + offset)).reverse();
 
-  const setupLatestBlocks = (lastBlockHeightAgo) => {
+  const setupLatestBlocks = ({ lastBlockHeightAgo }) => {
     const currentHeight = voting.numberOfActiveDelegates * 10 + 10;
-    const roundStartHeight = voting.numberOfActiveDelegates * 10;
+    const roundStartHeight = voting.numberOfActiveDelegates * 10 + 1;
     const height = roundStartHeight - lastBlockHeightAgo;
     const limit = 100;
     const latestBlocks = generateBlocks({ offset: currentHeight - limit, limit });
@@ -146,8 +146,21 @@ describe('withForgingStatus', () => {
     expect(wrapper.find(`.${forgingDelegates[0].username} .status`)).toHaveText('forgedThisRound');
   });
 
-  it('marks delegate as missedLastRound if its last block is older than 1 round', (done) => {
-    const latestBlocks = setupLatestBlocks(voting.numberOfActiveDelegates + 1);
+  it('marks delegate as forgedLastRound if its last block is in previous round', (done) => {
+    const latestBlocks = setupLatestBlocks({ lastBlockHeightAgo: 1 });
+    const wrapper = setup({ latestBlocks });
+    jest.runAllTimers();
+    // TODO refactor this as should be a better way to test it https://stackoverflow.com/a/43855794
+    setImmediate(() => {
+      expect(wrapper.find(`.${notForgingDelegate.username} .status`)).toHaveText('forgedLastRound');
+      done();
+    });
+  });
+
+  it('marks delegate as missedLastRound if its last block 2 rounds ago', (done) => {
+    const latestBlocks = setupLatestBlocks({
+      lastBlockHeightAgo: voting.numberOfActiveDelegates + 1,
+    });
     const wrapper = setup({ latestBlocks });
     jest.runAllTimers();
     // TODO refactor this as should be a better way to test it https://stackoverflow.com/a/43855794
@@ -158,7 +171,9 @@ describe('withForgingStatus', () => {
   });
 
   it('marks delegate as notForging if its last block is older than 2 rounds', (done) => {
-    const latestBlocks = setupLatestBlocks(voting.numberOfActiveDelegates * 2 + 1);
+    const latestBlocks = setupLatestBlocks({
+      lastBlockHeightAgo: voting.numberOfActiveDelegates * 2 + 1,
+    });
     const wrapper = setup({ latestBlocks });
     jest.runAllTimers();
     // TODO refactor this as should be a better way to test it https://stackoverflow.com/a/43855794
