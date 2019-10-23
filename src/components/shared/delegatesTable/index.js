@@ -85,22 +85,24 @@ const DelegatesTable = ({
           />
         </span>
       </Box.Header>
-      <Box.Content className={styles.content}>
-        {delegates.data.length || delegates.isLoading
-          ? (
+      {delegates.data.length || delegates.isLoading
+        ? (
+          <Box.Content className={styles.content}>
             <Table {...{
               columns, data, rowClassName: 'delegate-row', ...rest,
             }}
             />
-          )
-          : (
+          </Box.Content>
+        )
+        : (
+          <Box.Content>
             <Box.EmptyState>
               <Illustration name="emptyWallet" />
               <h3>{`${delegates.error || t('No delegates found.')}`}</h3>
             </Box.EmptyState>
-          )
+          </Box.Content>
+        )
       }
-      </Box.Content>
       {!!canLoadMore && !delegates.isLoading && (
         <Box.FooterButton onClick={handleLoadMore} className="loadMore">
           {t('Load more')}
