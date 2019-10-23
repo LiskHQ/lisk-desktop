@@ -26,10 +26,23 @@
     width: 100%;
   }
 
-  & .button {
+  & .button,
+  & .hwLink {
     @mixin contentLargest bold;
 
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    & .hwWalletIcon {
+      margin-right: 15px;
+    }
+  }
+
+  & .hwLink {
+    margin-top: 24px;
   }
 
   & .backButton {
@@ -54,14 +67,15 @@
 
     display: flex;
     justify-content: center;
-    margin: 0 0 20px;
+    margin: 0 0 10px;
   }
 
   & > p {
-    @mixin contentLarge;
+    @mixin contentLargest;
 
     color: var(--color-slate-gray);
     margin: 0;
+    letter-spacing: 1px;
 
     & > a {
       margin: 0;
@@ -87,7 +101,7 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  margin: 48px auto 40px;
+  margin: 30px auto 40px;
   max-width: 665px;
   width: 100%;
 
@@ -109,12 +123,16 @@
   }
 
   & .inputLabel {
-    @mixin contentNormal bold;
+    @mixin contentLargest bold;
 
-    align-items: center;
     color: var(--color-maastricht-blue);
-    display: flex;
-    margin: 0 0 9px 0;
+  }
+
+  & .inputText {
+    @mixin contentLargest;
+
+    color: var(--color-slate-gray);
+    margin: 8px 0 16px;
   }
 
   & .addressInput {
@@ -145,16 +163,20 @@
   }
 }
 
-.tooltip {
-  & :global(.tooltip-window) {
-    max-width: 464px;
-  }
-
-  & .tooltipText {
-    margin-bottom: 8px;
-  }
+.discreetMode {
+  margin-top: 16px;
 }
 
-.discreetMode {
-  margin-top: 20px;
+.exploreAsGuest {
+  @mixin contentLargest;
+
+  position: absolute;
+  bottom: 0;
+  color: var(--color-slate-gray);
+  margin: 0 0 32px;
+  letter-spacing: 0px;
+
+  & > a {
+    margin: 0 0 0 5px;
+  }
 }

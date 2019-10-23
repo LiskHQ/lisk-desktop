@@ -87,7 +87,7 @@ describe('Request PIN Component', () => {
     expect(PK).toEqual('');
   });
 
-  it('Should go to splashscreen if do click in Go Back', () => {
+  it('Should go to Sign In if do click in Go Back', () => {
     wrapper.find('button.tertiary-btn').simulate('click');
     expect(props.goBack).toBeCalled();
   });

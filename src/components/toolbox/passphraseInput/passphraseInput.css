@@ -1,24 +1,93 @@
 @import '../../../app/variables.css';
 @import '../../../app/mixins.css';
 
-.inputs {
-  flex-wrap: wrap;
+.wrapper {
+  margin: 0;
+  position: relative;
+}
 
-  & > span {
-    margin: 0 0 12px 0;
+.inputs {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  border: 1px solid var(--dark-border-color);
+  border-radius: 3px;
+  background-color: var(--color-white);
+  padding: 0px 24px;
+  box-sizing: border-box;
+  outline: none;
+
+  &:focus-within {
+    border-color: var(--color-ultramarine-blue);
+  }
+
+  & > .inputContainer {
+    width: calc(100% / 6);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    box-sizing: border-box;
+    color: var(--color-ghost);
+    margin: 15px 0 15px;
+
+    &:focus-within {
+      color: var(--color-ultramarine-blue);
+    }
+
+    & .inputNumber {
+      width: 25px;
+    }
+
+    & .inputNumberError:focus-within,
+    & .inputNumberError {
+      color: var(--color-burnt-sienna);
+    }
 
     & input {
-      text-align: center;
+      border: none;
+      text-align: left;
+      padding: 0 2px 1px !important;
+      height: 20px !important;
+      box-sizing: border-box;
+
+      &:focus {
+        color: var(--color-ultramarine-blue);
+
+        &::placeholder {
+          border-bottom: none;
+        }
+      }
+
+      &::placeholder {
+        font-family: sans-serif;
+        color: var(--color-ghost);
+        border-bottom: 1px solid;
+        height: 13px;
+      }
     }
   }
+
+  & > .inputContainer:nth-last-child(n + 7) {
+    margin-bottom: 0;
+  }
+}
+
+.boxOnError,
+.boxOnError:focus-within {
+  border-color: var(--color-burnt-sienna);
 }
 
 .footerContent {
   align-items: center;
   display: flex;
-  height: 40px;
+  height: auto;
   justify-content: space-between;
   width: 100%;
+  position: absolute;
+  z-index: 1;
 }
 
 .errorMessage {
@@ -31,6 +100,9 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  position: absolute;
+  top: -36px;
+  right: 0;
 
   & > input {
     display: none;

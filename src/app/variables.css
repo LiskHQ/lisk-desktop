@@ -112,7 +112,7 @@ or "warn/action" ineastd of "red/green"
   --overlay-color: rgba(255, 255, 255, 0.8);
   --dark-border-color: rgba(0, 0, 0, 0.08);
   --primary-background-color: color(var(--color-ultramarine-blue) a(8%));
-  --error-background-color: color(var(--color-burnt-sienna) a(8%));
+  --error-background-color: var(--color-burnt-sienna);
   --color-dialog-mask: color(var(--color-maastricht-blue) a(52%));
   --color-primary-standard: var(--color-ultramarine-blue);
   --color-primary-light: #9db8fa;
