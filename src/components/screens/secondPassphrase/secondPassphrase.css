@@ -18,6 +18,7 @@
     line-height: 25px;
     margin: 4px;
     margin-bottom: 20px;
+    color: var(--color-slate-gray);
 
     & strong {
       color: var(--color-maastricht-blue);
