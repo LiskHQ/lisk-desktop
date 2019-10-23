@@ -135,7 +135,6 @@ class ConfirmPassphrase extends React.Component {
             hasErrors={hasErrors}
             answers={answers}
             isCorrect={isCorrect}
-            outOfTries={outOfTries}
             values={passphrase.split(' ')}
             isConfirmation
           />
