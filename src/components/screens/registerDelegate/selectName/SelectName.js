@@ -6,7 +6,6 @@ import { PrimaryButton } from '../../../toolbox/buttons/button';
 import { fromRawLsk } from '../../../../utils/lsk';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import regex from '../../../../utils/regex';
-import links from '../../../../constants/externalLinks';
 import Fees from '../../../../constants/fees';
 import styles from './selectName.css';
 
@@ -127,15 +126,6 @@ class SelectName extends React.Component {
               t('The top 101 delegates are able to forge new blocks and recieve forging rewards.')
             }
           </p>
-
-          <a
-            className={`${styles.link} learm-more-link`}
-            href={links.votingAndDelegates}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t('Learn more')}
-          </a>
 
           <label className={styles.nicknameLabel}>{t('Your nickname')}</label>
 

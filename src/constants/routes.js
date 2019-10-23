@@ -9,7 +9,6 @@ import Dashboard from '../components/screens/dashboard';
 import Delegates from '../components/screens/delegates';
 import DelegatesMonitor from '../components/screens/monitor/delegates';
 import Extensions from '../components/screens/extensions';
-import Help from '../components/screens/help';
 import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
 import Monitor from '../components/screens/monitor';
@@ -92,11 +91,6 @@ export default {
     component: Delegates,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
-  },
-  help: {
-    path: '/help',
-    component: Help,
-    isPrivate: false,
   },
   settings: {
     path: '/settings',

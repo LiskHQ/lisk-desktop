@@ -1,6 +1,6 @@
 {
   "name": "lisk-hub",
-  "version": "1.22.0-beta.1",
+  "version": "1.22.0-rc.1",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
@@ -38,7 +38,8 @@
     "install-storybook-dependencies": "cd ./storybook/; npm install; cd ..",
     "storybook": "start-storybook -p 6006",
     "clear_jest": "jest --clearCache",
-    "serve": "http-server"
+    "serve": "http-server",
+    "percy": "build-storybook && percy-storybook --widths=320,1280"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
@@ -121,6 +122,7 @@
     "@babel/plugin-transform-runtime": "7.6.0",
     "@babel/preset-env": "7.6.3",
     "@babel/preset-react": "7.6.3",
+    "@percy/storybook": "3.2.0",
     "@storybook/addon-actions": "^5.0.3",
     "@storybook/addon-links": "^5.0.3",
     "@storybook/addons": "^5.0.3",

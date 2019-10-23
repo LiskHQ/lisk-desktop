@@ -42,7 +42,6 @@ describe('RegisterDelegate', () => {
   it('renders properly SelectName component', () => {
     expect(wrapper).toContainMatchingElement('.select-name-container');
     expect(wrapper).toContainMatchingElements(2, '.select-name-text-description');
-    expect(wrapper).toContainMatchingElement('.learm-more-link');
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper).toContainMatchingElement('.feedback');
     expect(wrapper).toContainMatchingElement('.confirm-btn');

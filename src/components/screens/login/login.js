@@ -12,7 +12,6 @@ import { getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login
 import { getNetworksList } from '../../../utils/getNetwork';
 import networks from '../../../constants/networks';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
-import links from '../../../constants/externalLinks';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import PassphraseInput from '../../toolbox/passphraseInput';
 import styles from './login.css';
@@ -152,16 +151,6 @@ class Login extends React.Component {
                   <Tooltip
                     className={`${styles.tooltip}`}
                     title={t('What is a passphrase?')}
-                    footer={(
-                      <a
-                        href={links.whatIsAnPassphrase}
-                        tabIndex="-1"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        {t('Read more')}
-                      </a>
-)}
                   >
                     <React.Fragment>
                       <p className={`${styles.tooltipText}`}>

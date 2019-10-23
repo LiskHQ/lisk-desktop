@@ -18,6 +18,7 @@ reports
 test/cypress/screenshots/
 test/cypress/videos/
 .history
+storybook-static
 
 ## Commercial fonts
 src/assets/fonts/basier-circle/*
