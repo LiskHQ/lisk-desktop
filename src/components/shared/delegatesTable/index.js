@@ -31,7 +31,7 @@ const DelegatesTable = ({
     },
     productivity: {
       header: t('Productivity'),
-      headerTooltip: t('Productivity rate specifies how many blocks were successfully forged by a delegate.'),
+      headerTooltip: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
       getValue: ({ productivity }) => `${formatAmountBasedOnLocale({ value: productivity })} %`,
       className: [grid['col-xs-2'], grid['col-md-1']].join(' '),
     },

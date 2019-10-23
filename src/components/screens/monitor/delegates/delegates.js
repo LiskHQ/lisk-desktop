@@ -42,7 +42,7 @@ const Delegates = ({
     ...(filters.tab === 'active' ? [{
       id: 'forgingTime',
       header: t('Forging time'),
-      headerTooltip: t('Time until a delegate can forge their next block.'),
+      headerTooltip: t('Time until next forging slot of a delegate.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ forgingTime }) => (forgingTime
         ? moment(forgingTime.diff(moment())).format(t('m [min] s [sec]'))
@@ -52,7 +52,7 @@ const Delegates = ({
     {
       id: 'status',
       header: t('Status'),
-      headerTooltip: t('Status turns green if a delegate has forged their last block, or red if they missed it.'),
+      headerTooltip: t('Current status of a delegate: forging, not forging, awaiting slot or missed block.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ status, lastBlock }) => (
         <Tooltip
@@ -76,7 +76,7 @@ const Delegates = ({
     {
       id: 'approval',
       header: t('Approval'),
-      headerTooltip: t('Approval rate specifies the percentage of all votes received by a delegate.'),
+      headerTooltip: t('Percentage of total supply voting for a delegate.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ approval }) => <strong>{`${formatAmountBasedOnLocale({ value: approval })} %`}</strong>,
       className: grid['col-xs-2'],
