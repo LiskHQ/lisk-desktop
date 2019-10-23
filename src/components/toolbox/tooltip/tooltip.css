@@ -55,7 +55,8 @@
 
   &:global(.showOnLeft) {
     & .tooltip {
-      transform: translateY(-50%) translateX(-112%);
+      right: calc(-100% + 48px);
+      left: auto;
 
       & .tooltipArrow {
         left: auto;
