@@ -34,9 +34,12 @@ const Delegates = ({
       header: t('Address'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ address }) => <AccountVisualWithAddress {...{ address, size: 36 }} />,
-      className: [grid['col-xs-4'], grid['col-md-3']].join(' '),
+      className: (filters.tab === 'active'
+        ? [grid['col-xs-4'], grid['col-md-3']]
+        : [grid['col-xs-5'], grid['col-md-6']]
+      ).join(' '),
     },
-    {
+    ...(filters.tab === 'active' ? [{
       id: 'forgingTime',
       header: t('Forging time'),
       headerTooltip: t('Time until a delegate can forge their next block.'),
@@ -68,6 +71,7 @@ const Delegates = ({
       ),
       className: grid['col-xs-1'],
     },
+    ] : []),
     { id: 'productivity' },
     {
       id: 'approval',
