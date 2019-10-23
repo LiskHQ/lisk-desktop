@@ -44,9 +44,8 @@ describe('Register Process - Confirm Passphrase', () => {
     selectWrongWords(wrapper);
     wrapper.find('.emptyInput').at(0).simulate('click');
     selectWrongWords(wrapper);
-    wrapper.update();
     wrapper.find('.buttonsHolder Button').at(1).simulate('click');
-    clock.tick(3000);
+    clock.tick(1500);
     wrapper.update();
     expect(wrapper.find('.emptyInput')).toExist();
   });
