@@ -1,6 +1,5 @@
 import React from 'react';
-import { expect } from 'chai';
-import { spy, useFakeTimers } from 'sinon';
+import { useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
 import ConfirmPassphrase from './confirmPassphrase';
 
@@ -10,28 +9,12 @@ describe('Register Process - Confirm Passphrase', () => {
 
   const props = {
     passphrase: 'barely feature filter inmate exotic sister dog boil crush build canvas latin',
-    nextStep: spy(),
   };
 
-  const selectWrongWords = (comp, shouldUpdate = false) => {
-    comp.find('ConfirmPassphraseOptions').forEach((optionsHolder) => {
-      optionsHolder.find('.option').forEach(option =>
-        !props.passphrase.includes(option.text()) && option.find('Button').simulate('click'));
-    });
-    if (shouldUpdate) {
-      comp.find('.buttonsHolder Button').at(1).simulate('click');
-      clock.tick(1500);
-      comp.update();
-    }
+  const selectWrongWords = (comp) => {
+    comp.find('div.option').forEach(option =>
+      !props.passphrase.includes(option.text) && option.simulate('click'));
   };
-
-  const selectRightWords = (comp) => {
-    comp.find('ConfirmPassphraseOptions').forEach((optionsHolder) => {
-      optionsHolder.find('.option').forEach(option =>
-        props.passphrase.includes(option.text()) && option.find('Button').simulate('click'));
-    });
-  };
-
   beforeEach(() => {
     wrapper = mount(<ConfirmPassphrase {...props} />);
     clock = useFakeTimers({
@@ -44,39 +27,27 @@ describe('Register Process - Confirm Passphrase', () => {
     clock.restore();
   });
 
-  it('Should render with two words missing from given passphrase', () => {
-    expect(wrapper.find('.word')).to.have.length(12);
-    expect(wrapper.find('ConfirmPassphraseOptions')).to.have.length(2);
-    expect(wrapper.find('.option')).to.have.length(6);
-  });
-
-  it('Should update style based on choices', () => {
+  it('Should handle right selection', () => {
+    wrapper.find('.passphraseContainer');
+    wrapper.find('.emptyInput').at(0).simulate('click');
     selectWrongWords(wrapper);
-    expect(wrapper.find('.answered')).to.have.length(2);
-
-    expect(wrapper.find('.buttonsHolder Button').at(1).prop('disabled')).to.be.equal(false);
+    expect(wrapper.find('.selected')).toExist();
+    wrapper.find('.emptyInput').at(0).simulate('click');
+    selectWrongWords(wrapper);
     wrapper.find('.buttonsHolder Button').at(1).simulate('click');
-
-    expect(wrapper.find('.hasErrors')).to.have.length(2);
-    clock.tick(1500);
-    wrapper.update();
-
-    expect(wrapper.find('.answered')).to.have.length(0);
-
-    selectRightWords(wrapper);
-    wrapper.find('.buttonsHolder Button').at(1).simulate('click');
-
-    expect(wrapper.find('.isCorrect')).to.have.length(2);
-    clock.tick(1500);
-    expect(props.nextStep).to.have.been.calledWith({ passphrase: props.passphrase });
+    expect(wrapper.find('.error')).toExist();
   });
 
-  it('Should show error message if user pick wrong words 3 times in a row', () => {
-    selectWrongWords(wrapper, true);
-    selectWrongWords(wrapper, true);
-    selectWrongWords(wrapper, true);
-
-    expect(wrapper.find('.answered')).to.have.length(2);
-    expect(wrapper.find('.errorMessage')).to.have.className('showError');
+  it('Should update empty values after wrong selection', () => {
+    wrapper.find('.passphraseContainer');
+    wrapper.find('.emptyInput').at(0).simulate('click');
+    selectWrongWords(wrapper);
+    wrapper.find('.emptyInput').at(0).simulate('click');
+    selectWrongWords(wrapper);
+    wrapper.update();
+    wrapper.find('.buttonsHolder Button').at(1).simulate('click');
+    clock.tick(3000);
+    wrapper.update();
+    expect(wrapper.find('.emptyInput')).toExist();
   });
 });

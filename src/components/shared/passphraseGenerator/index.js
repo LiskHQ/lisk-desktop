@@ -87,7 +87,7 @@ class PassphraseGenerator extends React.Component {
         {fieldSelected && Object.keys(chosenWords).length < 2 && (
           <div className={styles.optionsContainer}>
             {options[fieldSelected].map((option, i) => (
-              <div onClick={() => this.chooseWord(fieldSelected, option)} key={i}>
+              <div className="option" onClick={() => this.chooseWord(fieldSelected, option)} key={i}>
                 {option}
               </div>
             ))}

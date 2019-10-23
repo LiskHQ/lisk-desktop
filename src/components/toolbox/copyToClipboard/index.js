@@ -28,13 +28,13 @@ class CopyToClipboard extends React.Component {
 
   render() {
     const {
-      value, t, className, text, copyClassName, Container, containerProps,
+      value, t, className, text, copyClassName, Container, containerProps, onClick,
     } = this.props;
     const { copied } = this.state;
     return (
       <div onClick={(e) => {
         e.stopPropagation();
-        this.props.onClick();
+        if (onClick) onClick();
       }}
       >
         <ReactCopyToClipboard text={value} onCopy={this.textIsCopied}>

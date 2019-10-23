@@ -8,6 +8,7 @@ describe('CopyToClipboard', () => {
     text: 'test',
     className: 'className',
     value: 2,
+    onClick: jest.fn(),
   };
   const copiedText = 'Copied!';
 
