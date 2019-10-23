@@ -27,7 +27,7 @@ describe('Register Process - Confirm Passphrase', () => {
     clock.restore();
   });
 
-  it('Should handle right selection', () => {
+  it('Should handle selection', () => {
     wrapper.find('.passphraseContainer');
     wrapper.find('.emptyInput').at(0).simulate('click');
     selectWrongWords(wrapper);
