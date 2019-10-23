@@ -12,12 +12,10 @@ class ConfirmPassphrase extends React.Component {
     super();
     this.state = {
       words: [2, 9],
-      tries: 0,
       answers: [],
       options: [],
       hasErrors: false,
       isCorrect: false,
-      outOfTries: false,
     };
 
     this.handleSelect = this.handleSelect.bind(this);
@@ -59,15 +57,10 @@ class ConfirmPassphrase extends React.Component {
   }
 
   handleConfirm(status) {
-    const { tries } = this.state;
     const numberOfWords = 2;
-    const maxTries = 3;
-    const triesCount = status ? tries : tries + 1;
     const state = {
-      tries: triesCount,
       isCorrect: status,
       hasErrors: !status,
-      outOfTries: !(triesCount < maxTries),
     };
     const cb = status
       ? () => this.props.nextStep({ passphrase: this.props.passphrase })
@@ -147,7 +140,6 @@ class ConfirmPassphrase extends React.Component {
             isConfirmation
           />
         </div>
-
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
           <span className={`${registerStyles.button}`}>
