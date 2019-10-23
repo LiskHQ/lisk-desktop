@@ -18,7 +18,7 @@
   width: 100%;
 
   & > h2 {
-    @mixin contentNormal bold;
+    @mixin contentLargest bold;
 
     color: var(--color-maastricht-blue);
     display: flex;
