@@ -6,6 +6,28 @@ import { olderBlocksRetrieved } from '../../../../actions/blocks';
 import liskService from '../../../../utils/api/lsk/liskService';
 import voting from '../../../../constants/voting';
 
+
+/**
+ * This HOC inserts live data to list of delegates, used on delegates monitor.
+ *
+ * The live data is relative to forging rounds on Lisk network.
+ * Blocks on Lisk network are in rounds of 101 blocks.
+ * Each block has an integer height:
+ * the 1st block of the first round (aka genesis block) has height = 1,
+ * the 2nd block of the first round has height = 2,
+ * ...
+ * the 1st block of the second round has height = 101 + 1
+ * ...
+ * the n-th block of the m-th round has height = (101 * (m - 1)) + n
+ *
+ * For each delegate, this HOC inserts:
+ * - forgingTime - Time until a delegate can forge their next block, based on nextForgers API
+ * - lastBlock - Last block forged by this delegate, based on lastBlocks API and new block Websocket
+ * - status - Forging status of the delegate, based on when lastBlock was forged
+ *   For details on possible values of status, refer to unit test of this HOC.
+ *
+ *
+ */
 const withForgingStatus = delegatesKey => (ChildComponent) => {
   class DelegatesContainer extends React.Component {
     constructor(props) {
