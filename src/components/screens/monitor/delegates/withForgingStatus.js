@@ -6,8 +6,6 @@ import { olderBlocksRetrieved } from '../../../../actions/blocks';
 import liskService from '../../../../utils/api/lsk/liskService';
 import voting from '../../../../constants/voting';
 
-const limit = 100;
-
 const withForgingStatus = delegatesKey => (ChildComponent) => {
   class DelegatesContainer extends React.Component {
     constructor(props) {
@@ -17,26 +15,36 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
         nextForgers: {},
         lastBlocks: {},
       };
+      this.blocksFetchLimit = 100;
     }
 
     async componentDidMount() {
-      const { network: networkConfig, latestBlocks } = this.props;
-      let blocks = latestBlocks;
-      if (blocks.length < limit) {
-        blocks = await liskService.getLastBlocks({ networkConfig }, { limit });
-        blocks = blocks.map(block => ({
-          ...block,
-          timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
-        }));
-        this.props.olderBlocksRetrieved({ blocks });
+      let { latestBlocks: blocks } = this.props;
+      if (blocks.length < this.blocksFetchLimit) {
+        blocks = await this.loadLastBlocks();
       }
 
       this.loadNextForgers(blocks);
     }
 
+    async loadLastBlocks() {
+      const { network: networkConfig } = this.props;
+      let blocks = await liskService.getLastBlocks(
+        { networkConfig }, { limit: this.blocksFetchLimit },
+      );
+      blocks = blocks.map(block => ({
+        ...block,
+        timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
+      }));
+      this.props.olderBlocksRetrieved({ blocks });
+      return blocks;
+    }
+
     async loadNextForgers(blocks) {
       const { network: networkConfig } = this.props;
-      const nextForgers = await liskService.getNextForgers({ networkConfig }, { limit });
+      const nextForgers = await liskService.getNextForgers(
+        { networkConfig }, { limit: this.blocksFetchLimit },
+      );
       const height = blocks[0] && blocks[0].height;
       this.setState({
         nextForgers: nextForgers.reduce((accumulator, delegate, i) => ({
@@ -102,7 +110,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     getForgingStatus(delegate) {
       const { latestBlocks } = this.props;
       const lastBlock = this.getLastBlock(delegate);
-      if (latestBlocks.length >= limit && !lastBlock) {
+      if (latestBlocks.length >= this.blocksFetchLimit && !lastBlock) {
         setTimeout(() => {
           // This timeout is used to prevent too many requests at once.
           // It loads delegates with lower rank sooner as they are more likely above the fold.
