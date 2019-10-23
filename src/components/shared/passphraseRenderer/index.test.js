@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import PassphraseGenerator from '.';
+import PassphraseRenderer from '.';
 
-describe('PassphraseGenerator', () => {
+describe('PassphraseRenderer', () => {
   let wrapper;
   const props = {
     values: [
@@ -29,7 +29,7 @@ describe('PassphraseGenerator', () => {
 
 
   it('should should allow to select an option', () => {
-    wrapper = mount(<PassphraseGenerator {...props} />);
+    wrapper = mount(<PassphraseRenderer {...props} />);
     wrapper.find('.emptyInput').at(0).simulate('click');
     wrapper.find('div.option').at(0).simulate('click');
     expect(props.handleSelect).toHaveBeenCalledWith('thunder', 2);

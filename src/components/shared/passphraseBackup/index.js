@@ -6,7 +6,7 @@ import CopyToClipboard from '../../toolbox/copyToClipboard';
 import Icon from '../../toolbox/icon';
 import renderPaperwallet from '../../../utils/paperwallet';
 import styles from './passphraseBackup.css';
-import PassphraseGenerator from '../passphraseGenerator';
+import PassphraseRenderer from '../passphraseRenderer';
 
 class PassphraseBackup extends React.Component {
   constructor(props) {
@@ -49,7 +49,7 @@ class PassphraseBackup extends React.Component {
         <div className={`${styles.optionsHolder}`}>
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
-              <PassphraseGenerator showInfo values={account.passphrase.split(' ')} />
+              <PassphraseRenderer showInfo values={account.passphrase.split(' ')} />
               <div className={styles.copyButtonContainer}>
                 <CopyToClipboard
                   onClick={this.handleClick}

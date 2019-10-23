@@ -1,9 +1,9 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
-import styles from './passphraseGenerator.css';
+import styles from './passphraseRenderer.css';
 
-class PassphraseGenerator extends React.Component {
+class PassphraseRenderer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -98,4 +98,4 @@ class PassphraseGenerator extends React.Component {
   }
 }
 
-export default withTranslation()(PassphraseGenerator);
+export default withTranslation()(PassphraseRenderer);

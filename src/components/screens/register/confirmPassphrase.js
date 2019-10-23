@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
-import PassphraseGenerator from '../../shared/passphraseGenerator';
+import PassphraseRenderer from '../../shared/passphraseRenderer';
 
 class ConfirmPassphrase extends React.Component {
   constructor() {
@@ -124,7 +124,7 @@ class ConfirmPassphrase extends React.Component {
         </div>
 
         <div className={`${grid['col-sm-10']} ${styles.passphraseContainer}`}>
-          <PassphraseGenerator
+          <PassphraseRenderer
             showInfo
             handleSelect={this.handleSelect}
             missingWords={words}
