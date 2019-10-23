@@ -10,10 +10,13 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
 
 const Delegates = ({
-  delegates, t, filters, applyFilters,
+  delegates, t, filters, applyFilters, changeSort, sort,
 }) => {
   const columns = [
-    { id: 'rank' },
+    {
+      id: 'rank',
+      isSortable: filters.tab === 'active',
+    },
     {
       id: 'username',
       header: ('Name'),
@@ -26,7 +29,10 @@ const Delegates = ({
       getValue: ({ address }) => <AccountVisualWithAddress {...{ address, size: 36 }} />,
       className: [grid['col-xs-5'], grid['col-md-6']].join(' '),
     },
-    { id: 'productivity' },
+    {
+      id: 'productivity',
+      isSortable: filters.tab === 'active',
+    },
     {
       id: 'approval',
       header: <React.Fragment>
@@ -66,7 +72,15 @@ const Delegates = ({
     <div>
       <MonitorHeader />
       <DelegatesTable {...{
-        columns, delegates, tabs, filters, applyFilters, canLoadMore, getRowLink,
+        columns,
+        delegates,
+        tabs,
+        filters,
+        applyFilters,
+        canLoadMore,
+        getRowLink,
+        onSortChange: changeSort,
+        sort,
       }}
       />
     </div>
