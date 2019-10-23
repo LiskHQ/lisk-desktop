@@ -38,7 +38,7 @@ class HardwareWalletLogin extends React.Component {
   }
 
   goBack() {
-    this.props.history.push(routes.splashscreen.path);
+    this.props.history.push(routes.login.path);
   }
 
   render() {

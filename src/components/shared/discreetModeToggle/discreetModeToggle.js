@@ -1,37 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Icon from '../../toolbox/icon';
+import CheckBox from '../../toolbox/checkBox';
 import styles from './discreetModeToggle.css';
 
 const DiscreetModeToggle = ({
   className,
-  disabledText,
-  enabledText,
-  iconPosition,
   isDiscreetMode,
   settingsUpdated,
+  t,
 }) => (
   <div className={`${styles.wrapper} ${className}`}>
-    <label
-      className={iconPosition === 'left' ? '' : styles.rightAlignment}
-      onClick={() => { settingsUpdated({ discreetMode: !isDiscreetMode }); }}
-    >
-      <Icon name={isDiscreetMode ? 'discreetModeOff' : 'discreetModeOn'} />
-      <span>{isDiscreetMode ? enabledText : disabledText}</span>
-    </label>
+    <CheckBox
+      name="discreetMode"
+      className={`${styles.checkbox} discreetMode`}
+      checked={isDiscreetMode}
+      onChange={() => { settingsUpdated({ discreetMode: !isDiscreetMode }); }}
+    />
+    <span>{t('Enable discreet mode when signed in (optional)')}</span>
   </div>
 );
 
 DiscreetModeToggle.defaultProps = {
   className: '',
-  iconPosition: 'left',
 };
 
 DiscreetModeToggle.propTypes = {
   className: PropTypes.string,
-  disabledText: PropTypes.string.isRequired,
-  enabledText: PropTypes.string.isRequired,
-  iconPosition: PropTypes.string,
   isDiscreetMode: PropTypes.bool,
   settingsUpdated: PropTypes.func,
 };

@@ -23,17 +23,17 @@ class TermsOfUse extends React.Component {
   onTermsOfUseAlreadyAccepted() {
     // istanbul ignore else
     if (this.props.settings.areTermsOfUseAccepted) {
-      this.props.history.push(routes.splashscreen.path);
+      this.props.history.push(routes.login.path);
     }
   }
 
   // eslint-disable-next-line class-methods-use-this
   checkTermsOfUse() {
-    Piwik.trackingEvent('SplashScreen', 'Link', 'Terms of Use');
+    Piwik.trackingEvent('TermsOfUse', 'Link', 'Terms of Use');
   }
 
   onAccept() {
-    Piwik.trackingEvent('SplashScreen', 'Button', 'Accept Terms of Use');
+    Piwik.trackingEvent('TermsOfUse', 'Button', 'Accept Terms of Use');
     this.props.settingsUpdated({ areTermsOfUseAccepted: true });
   }
 

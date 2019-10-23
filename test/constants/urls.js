@@ -8,13 +8,12 @@ const urls = {
   accounts: '/explorer/accounts',
   transactions: '/explorer/transactions',
   register: '/register',
-  login: '/login',
   secondPassphrase: '/second-passphrase',
   registerDelegate: '/register-delegate',
   delegates: '/delegates',
   delegatesVote: '/delegates/vote',
   signMessage: '/sign-message',
-  splashscreen: '/',
+  login: '/',
 };
 
 export default urls;

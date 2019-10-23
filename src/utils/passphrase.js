@@ -134,7 +134,7 @@ export const getPassphraseValidationErrors = (passphrase) => {
   }
 
   if (invalidWords.length > 0) {
-    validationError = i18next.t('Please check the highlighted words');
+    validationError = i18next.t('Please check the highlighted word and make sure it’s correct.');
   }
 
   return { validationError, partialPassphraseError };

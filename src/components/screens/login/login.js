@@ -11,12 +11,12 @@ import { extractAddress } from '../../../utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
 import { getNetworksList } from '../../../utils/getNetwork';
 import networks from '../../../constants/networks';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
-import Tooltip from '../../toolbox/tooltip/tooltip';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import PassphraseInput from '../../toolbox/passphraseInput';
-import styles from './login.css';
 import Piwik from '../../../utils/piwik';
 import DiscreetModeToggle from '../../shared/discreetModeToggle';
+import Icon from '../../toolbox/icon/index';
+import styles from './login.css';
 
 class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
@@ -125,46 +125,22 @@ class Login extends React.Component {
           <div
             className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
           >
-
             <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
-              <span className={styles.stepsLabel}>
-                {t('Sign in')}
-              </span>
               <h1>
-                {t('Sign in with a passphrase')}
+                {t('Sign in with a Passphrase')}
               </h1>
               <p>
-                {t('New to Lisk? ')}
-                <Link
-                  className={`${styles.link}`}
-                  to={routes.register.path}
-                >
-                  {t('Create an account')}
+                {t('Don’t have a Lisk account yet? ')}
+                <Link className={styles.link} to={routes.register.path}>
+                  {t('Create it now')}
                 </Link>
               </p>
             </div>
 
             <form onSubmit={this.onFormSubmit}>
               <div className={`${styles.inputsHolder}`}>
-                <h2 className={`${styles.inputLabel}`}>
-                  {t('Passphrase')}
-                  <Tooltip
-                    className={`${styles.tooltip}`}
-                    title={t('What is a passphrase?')}
-                  >
-                    <React.Fragment>
-                      <p className={`${styles.tooltipText}`}>
-                        {t('A passphrase is a combination of a username and password. You saved your passphrase when registering your Lisk account.')}
-                      </p>
-                      <p className={`${styles.tooltipText}`}>
-                        {t('If you are typing out your passphrase you can use tab or space to go to the next field.')}
-                      </p>
-                      <p className={`${styles.tooltupText}`}>
-                        {t('For longer passphrases, simply paste them in the first input field.')}
-                      </p>
-                    </React.Fragment>
-                  </Tooltip>
-                </h2>
+                <label className={styles.inputLabel}>{t('Passphrase')}</label>
+                <p className={styles.inputText}>{t('Please type in or paste your passphrase below.')}</p>
 
                 <PassphraseInput
                   inputsLength={12}
@@ -172,11 +148,7 @@ class Login extends React.Component {
                   onFill={this.checkPassphrase}
                 />
 
-                <DiscreetModeToggle
-                  className={styles.discreetMode}
-                  disabledText={t('Discreet Mode Disabled')}
-                  enabledText={t('Discreet Mode Enabled')}
-                />
+                <DiscreetModeToggle className={styles.discreetMode} />
               </div>
               <div className={`${styles.buttonsHolder}`}>
                 <PrimaryButton
@@ -189,13 +161,24 @@ class Login extends React.Component {
                 >
                   {t('Sign in')}
                 </PrimaryButton>
-                <Link to={routes.splashscreen.path}>
-                  <TertiaryButton className={`${styles.button} ${styles.backButton}`}>
-                    {t('Go back')}
-                  </TertiaryButton>
+
+                <Link
+                  className={`${styles.hwLink} signin-hwWallet-button`}
+                  to={(routes.hwWallet.path)}
+                >
+                  <Icon name="hwWalletIcon" className={styles.hwWalletIcon} />
+                  {t('Sign in with a hardware wallet')}
                 </Link>
+
               </div>
             </form>
+
+            <p className={styles.exploreAsGuest}>
+              {t('Don’t feel like signing in now?')}
+              <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
+                {t('Explore as a guest')}
+              </Link>
+            </p>
           </div>
         </div>
       </React.Fragment>

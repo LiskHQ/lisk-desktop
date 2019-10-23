@@ -31,6 +31,7 @@ import helpActive from '../../../assets/images/icons/help-active.svg';
 import helpCenter from '../../../assets/images/icons/help-center.svg';
 import helpCenterArrow from '../../../assets/images/icons/arrow.svg';
 import hidePassphraseIcon from '../../../assets/images/icons/icon-hide-passphrase.svg';
+import hwWalletIcon from '../../../assets/images/icons/hw-wallet.svg';
 import iconEdit from '../../../assets/images/icons/icon-edit.svg';
 import iconEmptyRecentTransactions from '../../../assets/images/icons/empty-recent-transactions.svg';
 import iconFilter from '../../../assets/images/icons/icon-filter.svg';
@@ -110,6 +111,7 @@ export const icons = {
   helpCenter,
   helpCenterArrow,
   hidePassphraseIcon,
+  hwWalletIcon,
   iconEdit,
   iconEmptyRecentTransactions,
   iconFilter,
