@@ -69,23 +69,12 @@
 
 .infoIcon {
   align-items: center;
-  border: 1px solid var(--color-blue-gray);
-  color: var(--color-blue-gray);
-  border-radius: var(--border-radius-standard);
-  box-sizing: border-box;
   cursor: pointer;
   display: flex;
   height: var(--info-icon-size);
   justify-content: center;
   margin-left: 5px;
   width: var(--info-icon-size);
-
-  &::before {
-    @mixin contentSmallest;
-
-    content: '?';
-    font-size: var(--info-icon-font-size);
-  }
 }
 
 .tooltip {
