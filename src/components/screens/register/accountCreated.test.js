@@ -5,7 +5,7 @@ import AccountCreated from './accountCreated';
 describe('Register Process - Account created', () => {
   let wrapper;
   const props = {
-    t: jest.fn(),
+    t: k => k,
   };
 
   beforeEach(() => {
