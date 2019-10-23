@@ -77,7 +77,8 @@ const Delegates = ({
       id: 'approval',
       header: t('Approval'),
       headerTooltip: t('Approval rate specifies the percentage of all votes received by a delegate.'),
-      getValue: ({ approval }) => `${formatAmountBasedOnLocale({ value: approval })} %`,
+      /* eslint-disable-next-line react/display-name */
+      getValue: ({ approval }) => <strong>{`${formatAmountBasedOnLocale({ value: approval })} %`}</strong>,
       className: grid['col-xs-2'],
     },
   ];
