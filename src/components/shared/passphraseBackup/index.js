@@ -70,7 +70,7 @@ class PassphraseBackup extends React.Component {
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
               <h2>{t('Paper wallet')}</h2>
-              <p className={styles.infoText}>{t('You can also download, print and store safely your pasphrase.')}</p>
+              <p className={styles.infoText}>{t('You can also download, print and store safely your passphrase.')}</p>
               <div style={{ display: 'none' }} ref={this.setCanvasRef}>
                 <QRCode value={account.passphrase} />
               </div>
