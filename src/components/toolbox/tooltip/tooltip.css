@@ -152,7 +152,6 @@
 
   &.s {
     padding: 8px 20px;
-    box-sizing: border-box;
     width: 200px;
 
     & > header {
@@ -161,6 +160,10 @@
 
     & > footer {
       margin-top: var(--tooltip-spacing-inside-s);
+    }
+
+    & p {
+      @mixin contentNormal;
     }
   }
 
