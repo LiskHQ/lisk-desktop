@@ -58,7 +58,12 @@ const DelegatesTable = ({
   }));
 
   const handleLoadMore = () => {
-    delegates.loadData({ offset: delegates.data.length, ...filters });
+    delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
+      ...acc,
+      ...(filters[key] && { [key]: filters[key] }),
+    }), {
+      offset: delegates.data.length,
+    }));
   };
 
   const handleFilter = ({ target: { value } }) => {
