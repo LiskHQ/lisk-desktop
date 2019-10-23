@@ -14,7 +14,6 @@
   display: flex;
   flex-direction: column;
   height: auto;
-  overflow: hidden;
   position: relative;
 
   &.full {
