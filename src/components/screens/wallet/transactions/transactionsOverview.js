@@ -58,9 +58,12 @@ class TransactionsOverview extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, address, networkName } = this.props;
     const isSmallScreen = this.isSmallScreen();
     const filters = this.generateFilters();
+    // TODO remove the hardcode network once that the URL be available in production
+    // for mainnet and testnet. Right now ONLY works for testnet STAGIN mode.
+    const csvLink = `https://testnet-service-staging.lisk.io/api/v1/account/${address}/transactions/csv`;
 
     return (
       <div className={`${styles.transactions} transactions`}>
@@ -78,10 +81,18 @@ class TransactionsOverview extends React.Component {
                   saveFilters={this.props.saveFilters}
                   customFilters={this.props.activeCustomFilters}
                 />
-                <SecondaryButton className={styles.exportToCSVBtn} size="xs">
-                  {t('Export to CSV')}
-                  <Icon name="iconLink" className={styles.iconLink} />
-                </SecondaryButton>
+                { // TODO remove the valiation once be ready for all networks
+                  networkName === 'Testnet'
+                    ? (
+                      <a href={csvLink} className={styles.exportToCSVLink} download="transactions.csv">
+                        <SecondaryButton className={styles.exportToCSVBtn} size="xs">
+                          {t('Export to CSV')}
+                          <Icon name="iconLink" className={styles.iconLink} />
+                        </SecondaryButton>
+                      </a>
+                    )
+                    : null
+                }
               </div>
             )
             : null}
@@ -117,6 +128,7 @@ class TransactionsOverview extends React.Component {
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
   account: state.account,
+  networkName: state.network.name,
 });
 
 export default connect(mapStateToProps)(TransactionsOverview);

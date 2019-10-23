@@ -63,6 +63,10 @@
   }
 }
 
+.exportToCSVLink {
+  text-decoration: none !important;
+}
+
 .exportToCSVBtn {
   margin-left: 10px;
   display: flex;
