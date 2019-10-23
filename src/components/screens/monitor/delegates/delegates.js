@@ -20,7 +20,7 @@ const Delegates = ({
     forgedLastRound: t('Awaiting slot'),
     notForging: t('Not forging'),
     missedLastRound: t('Missed block'),
-  }[status] || t('Standby'));
+  }[status] || t('Loading'));
 
   const columns = [
     { id: 'rank' },
