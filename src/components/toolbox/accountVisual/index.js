@@ -171,6 +171,15 @@ const getHashChunks = (address) => {
   return addressHash.match(/\d{5}/g);
 };
 
+function replaceUrlByHashOnScheme(uniqueSvgUrlHash, gradientScheme) {
+  const id = `${gradientScheme.id}-${uniqueSvgUrlHash}`;
+  return {
+    ...gradientScheme,
+    id,
+    url: `url(#${id})`,
+  };
+}
+
 class AccountVisual extends React.Component {
   constructor(props) {
     super(props);
@@ -186,27 +195,24 @@ class AccountVisual extends React.Component {
   computeShapesAndGradients(newSize) {
     const { address } = this.props;
 
-    const replaceUrlByHashOnScheme = gradientScheme => ({
-      ...gradientScheme,
-      url: gradientScheme.url.replace(/\)/g, `-${this.uniqueSvgUrlHash})`),
-      id: `${gradientScheme.id}-${this.uniqueSvgUrlHash}`,
-    });
-
     const addressHashChunks = getHashChunks(address);
     const gradientScheme = gradientSchemes[
       addressHashChunks[0].substr(1, 2) % gradientSchemes.length];
 
     const gradientsSchemesUrlsHashed = {
-      primary: gradientScheme.primary.map(replaceUrlByHashOnScheme),
-      secondary: gradientScheme.secondary.map(replaceUrlByHashOnScheme),
+      primary: pickTwo(addressHashChunks[1], gradientScheme.primary).map(
+        replaceUrlByHashOnScheme.bind(null, this.uniqueSvgUrlHash),
+      ),
+      secondary: pickTwo(addressHashChunks[2], gradientScheme.secondary).map(
+        replaceUrlByHashOnScheme.bind(null, this.uniqueSvgUrlHash),
+      ),
     };
-    const primaryGradients = pickTwo(addressHashChunks[1], gradientsSchemesUrlsHashed.primary);
-    const secondaryGradients = pickTwo(addressHashChunks[2], gradientsSchemesUrlsHashed.secondary);
+
     const shapes = [
-      getBackgroundCircle(newSize, primaryGradients[0]),
-      getShape(addressHashChunks[1], newSize, primaryGradients[1], 1),
-      getShape(addressHashChunks[2], newSize, secondaryGradients[0], 0.23),
-      getShape(addressHashChunks[3], newSize, secondaryGradients[1], 0.18),
+      getBackgroundCircle(newSize, gradientsSchemesUrlsHashed.primary[0]),
+      getShape(addressHashChunks[1], newSize, gradientsSchemesUrlsHashed.primary[1], 1),
+      getShape(addressHashChunks[2], newSize, gradientsSchemesUrlsHashed.secondary[0], 0.23),
+      getShape(addressHashChunks[3], newSize, gradientsSchemesUrlsHashed.secondary[1], 0.18),
     ];
 
     return [shapes, gradientsSchemesUrlsHashed];
