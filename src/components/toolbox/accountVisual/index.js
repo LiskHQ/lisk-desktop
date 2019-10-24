@@ -2,11 +2,11 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
 import { Gradients, gradientSchemes } from './gradients';
-import generateUniqueId from '../../../utils/generateUniqueId';
-import breakpoints from '../../../constants/breakpoints';
-import styles from './accountVisual.css';
-import reg from '../../../utils/regex';
 import Icon from '../icon';
+import generateUniqueId from '../../../utils/generateUniqueId';
+import reg from '../../../utils/regex';
+import styles from './accountVisual.css';
+import withResizeValues from '../../../utils/withResizeValues';
 
 /*
  * Account Visual
@@ -174,39 +174,22 @@ const getHashChunks = (address) => {
 class AccountVisual extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isMBreakpoint: window.innerWidth <= breakpoints.m };
-    this.resizeWindow = this.resizeWindow.bind(this);
+    this.uniqueSvgUrlHash = generateUniqueId();
   }
 
-  shouldComponentUpdate(nextProps, state) {
-    return this.state.isMBreakpoint !== state.isMBreakpoint
+  shouldComponentUpdate(nextProps) {
+    return nextProps.isMediumViewPort !== this.props.isMediumViewPort
       || nextProps.address !== this.props.address
       || nextProps.placeholder !== this.props.placeholder;
   }
 
-  resizeWindow() {
-    this.setState({ isMBreakpoint: window.innerWidth <= breakpoints.m });
-  }
-
-  UNSAFE_componentWillMount() { // eslint-disable-line camelcase
-    this.uniqueSvgUrlHash = generateUniqueId();
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.resizeWindow);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeWindow);
-  }
-
   render() { // eslint-disable-line max-statements
     const {
-      address, size, sizeM, className, placeholder,
+      address, size, sizeM, className, placeholder, isMediumViewPort,
     } = this.props;
 
     const sizeL = size || 200;
-    const newSize = this.state.isMBreakpoint && sizeM ? sizeM : sizeL;
+    const newSize = isMediumViewPort && sizeM ? sizeM : sizeL;
 
     if (placeholder) {
       return (
@@ -262,4 +245,4 @@ class AccountVisual extends React.Component {
   }
 }
 
-export default AccountVisual;
+export default withResizeValues(AccountVisual);
