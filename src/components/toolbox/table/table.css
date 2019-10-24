@@ -78,19 +78,29 @@
 }
 
 .sortAsc,
-.sortDesc {
+.sortDesc,
+.sortInactive {
   cursor: pointer;
 
+  &::before,
   &::after {
     display: inline-block;
     content: " ";
+    position: absolute;
+    right: -13px;
     width: 0;
     height: 0;
-    margin-left: 5px;
     border: 4px solid transparent;
-    border-top-color: var(--color-content-light);
     transition: all var(--animation-speed-fastest) linear;
     transform-origin: 5px 2px;
+  }
+}
+
+.sortAsc,
+.sortDesc {
+  &::after {
+    top: 7px;
+    border-top-color: var(--color-content-light);
   }
 }
 
@@ -103,30 +113,14 @@
 }
 
 .sortInactive {
-  cursor: pointer;
-
   &::after {
-    display: inline-block;
-    content: " ";
-    position: absolute;
-    top: 0;
-    right: -13px;
-    width: 0;
-    height: 0;
-    border: 4px solid transparent;
-    border-bottom-color: var(--color-ghost);
+    bottom: 0;
+    border-top-color: var(--color-ghost);
   }
 
   &::before {
-    display: inline-block;
-    content: " ";
-    position: absolute;
-    bottom: 0;
-    right: -13px;
-    width: 0;
-    height: 0;
-    border: 4px solid transparent;
-    border-top-color: var(--color-ghost);
+    top: 0;
+    border-bottom-color: var(--color-ghost);
   }
 }
 

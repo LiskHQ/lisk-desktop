@@ -8,6 +8,7 @@ import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
 import withForgingStatus from './withForgingStatus';
+import withLocalSort from '../../../../utils/withLocalSort';
 
 const defaultUrlSearchParams = { tab: 'active' };
 const delegatesKey = 'delegates';
@@ -36,5 +37,6 @@ export default compose(
   withFilters(delegatesKey, defaultUrlSearchParams),
   connect(mapStateToProps),
   withForgingStatus(delegatesKey),
+  withLocalSort(delegatesKey, 'rank:asc'),
   withTranslation(),
 )(Delegates);

@@ -13,7 +13,7 @@ import routes from '../../../../constants/routes';
 import styles from './delegates.css';
 
 const Delegates = ({
-  delegates, t, filters, applyFilters,
+  delegates, t, filters, applyFilters, changeSort, sort,
 }) => {
   const getForgingTitle = status => ({
     forgedThisRound: t('Forging'),
@@ -23,7 +23,10 @@ const Delegates = ({
   }[status] || t('Loading'));
 
   const columns = [
-    { id: 'rank' },
+    {
+      id: 'rank',
+      isSortable: filters.tab === 'active',
+    },
     {
       id: 'username',
       header: ('Name'),
@@ -72,7 +75,10 @@ const Delegates = ({
       className: grid['col-xs-1'],
     },
     ] : []),
-    { id: 'productivity' },
+    {
+      id: 'productivity',
+      isSortable: filters.tab === 'active',
+    },
     {
       id: 'approval',
       header: t('Approval'),
@@ -109,7 +115,15 @@ const Delegates = ({
     <div>
       <MonitorHeader />
       <DelegatesTable {...{
-        columns, delegates, tabs, filters, applyFilters, canLoadMore, getRowLink,
+        columns,
+        delegates,
+        tabs,
+        filters,
+        applyFilters,
+        canLoadMore,
+        getRowLink,
+        onSortChange: changeSort,
+        sort,
       }}
       />
     </div>
