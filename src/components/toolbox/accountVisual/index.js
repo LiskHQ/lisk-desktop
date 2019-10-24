@@ -2,11 +2,11 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
 import { Gradients, gradientSchemes } from './gradients';
-import generateUniqueId from '../../../utils/generateUniqueId';
-import breakpoints from '../../../constants/breakpoints';
-import styles from './accountVisual.css';
-import reg from '../../../utils/regex';
 import Icon from '../icon';
+import generateUniqueId from '../../../utils/generateUniqueId';
+import reg from '../../../utils/regex';
+import styles from './accountVisual.css';
+import withResizeValues from '../../../utils/withResizeValues';
 
 /*
  * Account Visual
@@ -171,42 +171,59 @@ const getHashChunks = (address) => {
   return addressHash.match(/\d{5}/g);
 };
 
+function replaceUrlByHashOnScheme(uniqueSvgUrlHash, gradientScheme) {
+  const id = `${gradientScheme.id}-${uniqueSvgUrlHash}`;
+  return {
+    ...gradientScheme,
+    id,
+    url: `url(#${id})`,
+  };
+}
+
 class AccountVisual extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isSBreakpoint: window.innerWidth <= breakpoints.s };
-    this.resizeWindow = this.resizeWindow.bind(this);
+    this.uniqueSvgUrlHash = generateUniqueId();
   }
 
-  shouldComponentUpdate(nextProps, state) {
-    return this.state.isSBreakpoint !== state.isSBreakpoint
+  shouldComponentUpdate(nextProps) {
+    return nextProps.isMediumViewPort !== this.props.isMediumViewPort
       || nextProps.address !== this.props.address
       || nextProps.placeholder !== this.props.placeholder;
   }
 
-  resizeWindow() {
-    this.setState({ isSBreakpoint: window.innerWidth <= breakpoints.s });
+  computeShapesAndGradients(newSize) {
+    const { address } = this.props;
+
+    const addressHashChunks = getHashChunks(address);
+    const gradientScheme = gradientSchemes[
+      addressHashChunks[0].substr(1, 2) % gradientSchemes.length];
+
+    const gradientsSchemesUrlsHashed = {
+      primary: pickTwo(addressHashChunks[1], gradientScheme.primary).map(
+        replaceUrlByHashOnScheme.bind(null, this.uniqueSvgUrlHash),
+      ),
+      secondary: pickTwo(addressHashChunks[2], gradientScheme.secondary).map(
+        replaceUrlByHashOnScheme.bind(null, this.uniqueSvgUrlHash),
+      ),
+    };
+
+    const shapes = [
+      getBackgroundCircle(newSize, gradientsSchemesUrlsHashed.primary[0]),
+      getShape(addressHashChunks[1], newSize, gradientsSchemesUrlsHashed.primary[1], 1),
+      getShape(addressHashChunks[2], newSize, gradientsSchemesUrlsHashed.secondary[0], 0.23),
+      getShape(addressHashChunks[3], newSize, gradientsSchemesUrlsHashed.secondary[1], 0.18),
+    ];
+
+    return [shapes, gradientsSchemesUrlsHashed];
   }
 
-  UNSAFE_componentWillMount() { // eslint-disable-line camelcase
-    this.uniqueSvgUrlHash = generateUniqueId();
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.resizeWindow);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeWindow);
-  }
-
-  render() { // eslint-disable-line max-statements
+  render() {
     const {
-      address, size, sizeS, className, placeholder,
+      address, size, sizeM, className, placeholder, isMediumViewPort,
     } = this.props;
 
-    const sizeL = size || 200;
-    const newSize = this.state.isSBreakpoint && sizeS ? sizeS : sizeL;
+    const newSize = isMediumViewPort && sizeM ? sizeM : size;
 
     if (placeholder) {
       return (
@@ -226,29 +243,8 @@ class AccountVisual extends React.Component {
         />
       );
     }
+    const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(newSize);
 
-    const replaceUrlByHashOnScheme = gradientScheme => ({
-      ...gradientScheme,
-      url: gradientScheme.url.replace(/\)/g, `-${this.uniqueSvgUrlHash})`),
-      id: `${gradientScheme.id}-${this.uniqueSvgUrlHash}`,
-    });
-
-    const addressHashChunks = getHashChunks(address);
-    const gradientScheme = gradientSchemes[
-      addressHashChunks[0].substr(1, 2) % gradientSchemes.length];
-
-    const gradientsSchemesUrlsHashed = {
-      primary: gradientScheme.primary.map(replaceUrlByHashOnScheme),
-      secondary: gradientScheme.secondary.map(replaceUrlByHashOnScheme),
-    };
-    const primaryGradients = pickTwo(addressHashChunks[1], gradientsSchemesUrlsHashed.primary);
-    const secondaryGradients = pickTwo(addressHashChunks[2], gradientsSchemesUrlsHashed.secondary);
-    const shapes = [
-      getBackgroundCircle(newSize, primaryGradients[0]),
-      getShape(addressHashChunks[1], newSize, primaryGradients[1], 1),
-      getShape(addressHashChunks[2], newSize, secondaryGradients[0], 0.23),
-      getShape(addressHashChunks[3], newSize, secondaryGradients[1], 0.18),
-    ];
     return (
       <div style={{ height: newSize, width: newSize }} className={`${styles.wrapper} ${className}`}>
         <svg height={newSize} width={newSize} className={styles.accountVisual}>
@@ -262,4 +258,8 @@ class AccountVisual extends React.Component {
   }
 }
 
-export default AccountVisual;
+AccountVisual.defaultProps = {
+  size: 200,
+};
+
+export default withResizeValues(AccountVisual);

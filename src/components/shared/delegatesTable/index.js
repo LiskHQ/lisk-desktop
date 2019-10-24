@@ -23,32 +23,47 @@ const DelegatesTable = ({
       className: grid['col-xs-1'],
     },
     rewards: {
-      header: <React.Fragment>
-        {t('Forged')}
-        <Tooltip className="showOnLeft">
-          <p>{t('Total amount of LSK forged by a delegate.')}</p>
-        </Tooltip>
-      </React.Fragment>,
+      header: t('Forged'),
+      headerTooltip: t('Total amount of LSK forged by a delegate.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ rewards }) => <LiskAmount val={rewards} token={tokenMap.LSK.key} />,
       className: grid['col-xs-2'],
     },
     productivity: {
-      header: <React.Fragment>
-        {t('Productivity')}
-        &nbsp;
-        <Tooltip className="showOnLeft">
-          <p>{t('Productivity rate specifies how many blocks were successfully forged by a delegate.')}</p>
-        </Tooltip>
-      </React.Fragment>,
+      header: t('Productivity'),
+      headerTooltip: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
       getValue: ({ productivity }) => `${formatAmountBasedOnLocale({ value: productivity })} %`,
       className: [grid['col-xs-2'], grid['col-md-1']].join(' '),
     },
   };
-  columns = columns.map(c => ({ ...columnDefaults[c.id], ...c }));
+  columns = columns.map(column => ({
+    ...columnDefaults[column.id],
+    ...column,
+  })).map(({ headerTooltip, ...column }, i) => ({
+    ...column,
+    ...(headerTooltip && ({
+      header: <React.Fragment>
+        {column.header}
+        &nbsp;
+        <Tooltip
+          title={column.header}
+          size="s"
+          className={i === columns.length - 1 ? 'showOnLeft' : 'showOnBottom'}
+          styles={{ infoIcon: styles.infoIcon }}
+        >
+          <p className={styles.headerTooltip}>{headerTooltip}</p>
+        </Tooltip>
+      </React.Fragment>,
+    })),
+  }));
 
   const handleLoadMore = () => {
-    delegates.loadData({ offset: delegates.data.length, ...filters });
+    delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
+      ...acc,
+      ...(filters[key] && { [key]: filters[key] }),
+    }), {
+      offset: delegates.data.length,
+    }));
   };
 
   const handleFilter = ({ target: { value } }) => {
@@ -75,22 +90,24 @@ const DelegatesTable = ({
           />
         </span>
       </Box.Header>
-      <Box.Content className={styles.content}>
-        {delegates.data.length || delegates.isLoading
-          ? (
+      {delegates.data.length || delegates.isLoading
+        ? (
+          <Box.Content className={styles.content}>
             <Table {...{
               columns, data, rowClassName: 'delegate-row', ...rest,
             }}
             />
-          )
-          : (
+          </Box.Content>
+        )
+        : (
+          <Box.Content>
             <Box.EmptyState>
               <Illustration name="emptyWallet" />
               <h3>{`${delegates.error || t('No delegates found.')}`}</h3>
             </Box.EmptyState>
-          )
+          </Box.Content>
+        )
       }
-      </Box.Content>
       {!!canLoadMore && !delegates.isLoading && (
         <Box.FooterButton onClick={handleLoadMore} className="loadMore">
           {t('Load more')}
