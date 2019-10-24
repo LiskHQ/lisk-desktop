@@ -13,7 +13,7 @@ import routes from '../../../../constants/routes';
 import styles from './delegates.css';
 
 const Delegates = ({
-  delegates, t, filters, applyFilters, changeSort, sort,
+  delegates, t, filters, applyFilters, changeSort, sort, isMediumViewPort,
 }) => {
   const getForgingTitle = status => ({
     forgedThisRound: t('Forging'),
@@ -36,9 +36,9 @@ const Delegates = ({
       id: 'address',
       header: t('Address'),
       /* eslint-disable-next-line react/display-name */
-      getValue: ({ address }) => <AccountVisualWithAddress {...{ address, size: 36 }} />,
+      getValue: ({ address }) => <AccountVisualWithAddress {...{ address, isMediumViewPort }} />,
       className: (filters.tab === 'active'
-        ? [grid['col-xs-4'], grid['col-md-3']]
+        ? [grid['col-xs-3'], grid['col-md-3']]
         : [grid['col-xs-5'], grid['col-md-6']]
       ).join(' '),
     },
@@ -72,7 +72,7 @@ const Delegates = ({
           <p>{lastBlock && t('Last block forged @{{height}}', lastBlock)}</p>
         </Tooltip>
       ),
-      className: grid['col-xs-1'],
+      className: [grid['col-xs-2'], grid['col-md-1']].join(' '),
     },
     ] : []),
     {
