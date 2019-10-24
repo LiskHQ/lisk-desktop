@@ -64,12 +64,12 @@ const Delegates = ({
           size="s"
           content={(<div className={[styles.status, styles[status]].join(' ')} />)}
           footer={(
-            <p className={styles.statusToolip}>
-              {lastBlock && moment(getUnixTimestampFromValue(lastBlock.timestamp)).fromNow()}
-            </p>
+            <p>{lastBlock && moment(getUnixTimestampFromValue(lastBlock.timestamp)).fromNow()}</p>
           )}
         >
-          <p>{lastBlock && t('Last block forged @{{height}}', lastBlock)}</p>
+          <p className={styles.statusToolip}>
+            {lastBlock && t('Last block forged @{{height}}', lastBlock)}
+          </p>
         </Tooltip>
       ),
       className: [grid['col-xs-2'], grid['col-md-1']].join(' '),
