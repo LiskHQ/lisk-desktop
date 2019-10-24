@@ -115,6 +115,12 @@ const liskServiceApi = {
     };
     return tabOptions[tab](network, rest);
   },
+
+  getLiskServiceUrl: (networkName) => {
+    if (networkName === networks.mainnet.name) return liskServiceUrl;
+    if (networkName === networks.testnet.name) return liskServiceTestnetUrl;
+    return null;
+  },
 };
 
 export default liskServiceApi;
