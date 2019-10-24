@@ -59,7 +59,7 @@ class PassphraseRenderer extends React.Component {
       .length === 2;
 
     const cb = status
-      ? () => this.props.nextStep({ passphrase: this.props.passphrase })
+      ? () => this.props.nextStep()
       : () => this.getRandomIndexesFromPassphrase(2);
 
     this.setState({

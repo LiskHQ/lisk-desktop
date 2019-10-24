@@ -10,11 +10,6 @@ class ConfirmPassphrase extends React.Component {
   constructor() {
     super();
     this.state = {
-      words: [2, 9],
-      answers: [],
-      options: [],
-      hasErrors: false,
-      isCorrect: false,
       disabledButton: true,
       shouldVerify: false,
     };
@@ -34,7 +29,7 @@ class ConfirmPassphrase extends React.Component {
   render() {
     const { t, passphrase, prevStep } = this.props;
     const {
-      words, options, hasErrors, answers, isCorrect, disabledButton, shouldVerify,
+      answers, disabledButton, shouldVerify,
     } = this.state;
 
     return (
@@ -54,16 +49,8 @@ class ConfirmPassphrase extends React.Component {
             showInfo
             passphrase={passphrase}
             toggleButtonStatus={status => this.setState({ disabledButton: status })}
-            handleSelect={this.handleSelect}
-            missingWords={words}
             shouldVerify={shouldVerify}
-            options={{
-              [words[0]]: options[0],
-              [words[1]]: options[1],
-            }}
-            hasErrors={hasErrors}
             answers={answers}
-            isCorrect={isCorrect}
             values={passphrase.split(' ')}
             nextStep={() => this.props.nextStep()}
             isConfirmation
