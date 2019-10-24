@@ -72,12 +72,9 @@
     }
   }
 
-  & .emptyWordFocused {
+  & .emptyWordFocused,
+  & .emptyWordFocused::before {
     color: var(--color-ultramarine-blue);
-
-    &::before {
-      color: var(--color-ultramarine-blue);
-    }
   }
 
   & .selected,
