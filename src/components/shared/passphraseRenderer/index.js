@@ -45,8 +45,8 @@ class PassphraseRenderer extends React.Component {
 
   getMissingWordsStyle(i) {
     const { fieldSelected } = this.state;
-    if (fieldSelected === i) return styles.emptyInputFocused;
-    return styles.emptyInput;
+    if (fieldSelected === i) return styles.emptyWordFocused;
+    return styles.emptyWord;
   }
 
   handleClick(index) {
