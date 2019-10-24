@@ -174,18 +174,18 @@ const getHashChunks = (address) => {
 class AccountVisual extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isSBreakpoint: window.innerWidth <= breakpoints.s };
+    this.state = { isMBreakpoint: window.innerWidth <= breakpoints.m };
     this.resizeWindow = this.resizeWindow.bind(this);
   }
 
   shouldComponentUpdate(nextProps, state) {
-    return this.state.isSBreakpoint !== state.isSBreakpoint
+    return this.state.isMBreakpoint !== state.isMBreakpoint
       || nextProps.address !== this.props.address
       || nextProps.placeholder !== this.props.placeholder;
   }
 
   resizeWindow() {
-    this.setState({ isSBreakpoint: window.innerWidth <= breakpoints.s });
+    this.setState({ isMBreakpoint: window.innerWidth <= breakpoints.m });
   }
 
   UNSAFE_componentWillMount() { // eslint-disable-line camelcase
@@ -202,11 +202,11 @@ class AccountVisual extends React.Component {
 
   render() { // eslint-disable-line max-statements
     const {
-      address, size, sizeS, className, placeholder,
+      address, size, sizeM, className, placeholder,
     } = this.props;
 
     const sizeL = size || 200;
-    const newSize = this.state.isSBreakpoint && sizeS ? sizeS : sizeL;
+    const newSize = this.state.isMBreakpoint && sizeM ? sizeM : sizeL;
 
     if (placeholder) {
       return (
