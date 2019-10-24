@@ -25,6 +25,7 @@
 
 .text {
   width: 475px !important;
+  margin-bottom: 32px;
 }
 
 .passphraseContainer {

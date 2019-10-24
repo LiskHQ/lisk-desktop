@@ -54,54 +54,45 @@
     color: var(--color-maastricht-blue);
   }
 
-  & .emptyInput {
-    color: var(--color-ghost);
+  & .emptyWord,
+  & .emptyWordFocused {
     cursor: pointer;
+    font-family: sans-serif;
 
     &::before {
       font-weight: var(--font-weight-bold);
+    }
+  }
+
+  & .emptyWord {
+    color: var(--color-ghost);
+
+    &::before {
       color: var(--color-maastricht-blue);
     }
   }
 
-  & .emptyInputFocused {
+  & .emptyWordFocused,
+  & .emptyWordFocused::before {
     color: var(--color-ultramarine-blue);
-    cursor: pointer;
-
-    &::before {
-      font-weight: var(--font-weight-bold);
-      color: var(--color-ultramarine-blue);
-    }
   }
 
-  & .selected {
+  & .selected,
+  & .selected::before {
     color: var(--color-maastricht-blue);
     font-weight: var(--font-weight-bold);
-
-    &::before {
-      font-weight: var(--font-weight-bold);
-      color: var(--color-maastricht-blue);
-    }
   }
 
-  & .error {
+  & .error,
+  & .error::before {
     color: var(--color-burnt-sienna);
     font-weight: var(--font-weight-bold);
-
-    &::before {
-      font-weight: var(--font-weight-bold);
-      color: var(--color-burnt-sienna);
-    }
   }
 
-  & .correct {
+  & .correct,
+  & .correct::before {
     color: var(--color-ufo-green);
     font-weight: var(--font-weight-bold);
-
-    &::before {
-      font-weight: var(--font-weight-bold);
-      color: var(--color-ufo-green);
-    }
   }
 
   & .disabled {
@@ -120,7 +111,7 @@
 
   & div {
     cursor: pointer;
-    padding: 10px 30px;
+    padding: 8px 26px;
     background-color: var(--color-white);
     font-weight: var(--font-weight-bold);
     color: var(--color-ultramarine-blue);

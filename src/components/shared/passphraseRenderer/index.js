@@ -23,21 +23,30 @@ class PassphraseRenderer extends React.Component {
     }
   }
 
-  // eslint-disable-next-line complexity
   getStyle(i) {
     const {
-      missingWords, isConfirmation, hasErrors, isCorrect,
+      missingWords, isConfirmation,
     } = this.props;
-    const { fieldSelected, chosenWords } = this.state;
+    const { chosenWords } = this.state;
 
     if (!missingWords) return styles.default;
-    if (chosenWords[i] && hasErrors) return styles.error;
-    if (chosenWords[i] && isCorrect) return styles.correct;
-    if (chosenWords[i]) return styles.selected;
-    if (missingWords.includes(i) && fieldSelected === i) return styles.emptyInputFocused;
-    if (missingWords.includes(i) && fieldSelected !== i) return styles.emptyInput;
+    if (chosenWords[i]) return this.getChosenWordsStyle(i);
+    if (missingWords.includes(i)) return this.getMissingWordsStyle(i);
     if (isConfirmation) return styles.disabled;
     return styles.default;
+  }
+
+  getChosenWordsStyle() {
+    const { hasErrors, isCorrect } = this.props;
+    if (hasErrors) return styles.error;
+    if (isCorrect) return styles.correct;
+    return styles.selected;
+  }
+
+  getMissingWordsStyle(i) {
+    const { fieldSelected } = this.state;
+    if (fieldSelected === i) return styles.emptyWordFocused;
+    return styles.emptyWord;
   }
 
   handleClick(index) {
@@ -79,7 +88,6 @@ class PassphraseRenderer extends React.Component {
             {values.map((value, i) => (
               <div onClick={() => this.handleClick(i)} className={`${grid['col-xs-2']} ${styles.inputContainer}`} key={i}>
                 <span className={`${styles.inputValue} ${this.getStyle(i)}`}>{missingWords && missingWords.includes(i) ? this.renderMissingValue(i) : value}</span>
-                <span className={styles.whitespace}>&nbsp;</span>
               </div>
             ))}
           </div>

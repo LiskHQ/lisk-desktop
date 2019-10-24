@@ -64,8 +64,8 @@ class ConfirmPassphrase extends React.Component {
     };
     const cb = status
       ? () => this.props.nextStep({ passphrase: this.props.passphrase })
-      : () => !state.outOfTries
-        && this.getRandomIndexesFromPassphrase(this.props.passphrase, numberOfWords);
+      : () => this.getRandomIndexesFromPassphrase(this.props.passphrase, numberOfWords);
+
     this.setState(state);
     this.timeout = setTimeout(cb, 1500);
   }
@@ -108,7 +108,7 @@ class ConfirmPassphrase extends React.Component {
   render() {
     const { t, passphrase, prevStep } = this.props;
     const {
-      words, options, hasErrors, answers, isCorrect, outOfTries,
+      words, options, hasErrors, answers, isCorrect,
     } = this.state;
 
     return (
@@ -135,7 +135,6 @@ class ConfirmPassphrase extends React.Component {
             hasErrors={hasErrors}
             answers={answers}
             isCorrect={isCorrect}
-            outOfTries={outOfTries}
             values={passphrase.split(' ')}
             isConfirmation
           />

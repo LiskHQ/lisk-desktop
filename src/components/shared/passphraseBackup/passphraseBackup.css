@@ -39,7 +39,8 @@
   }
 
   & .downloadBtn {
-    min-width: 89px;
+    padding-right: 15px;
+    padding-left: 15px;
   }
 }
 
@@ -90,6 +91,13 @@
   @mixin contentLargest;
 
   margin: 15px 0;
+  color: var(--color-slate-gray);
+}
+
+.infoFooterText {
+  @mixin contentLargest;
+
+  margin: 15px 0 0;
   color: var(--color-slate-gray);
 }
 
