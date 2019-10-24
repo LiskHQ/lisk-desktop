@@ -1,4 +1,5 @@
 import React from 'react';
+import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
 import styles from './passphraseRenderer.css';
@@ -7,10 +8,28 @@ class PassphraseRenderer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      indexes: [2, 9],
       fieldSelected: undefined,
       displayOptions: undefined,
       chosenWords: {},
+      options: {},
+      isCorrect: false,
+      hasErrors: false,
     };
+  }
+
+
+  UNSAFE_componentWillMount() { // eslint-disable-line camelcase
+    const { indexes } = this.state;
+
+    const options = this.assembleWordOptions(this.props.values, indexes);
+    this.setState({
+      ...this.state,
+      options: {
+        [indexes[0]]: options[0],
+        [indexes[1]]: options[1],
+      },
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -21,12 +40,84 @@ class PassphraseRenderer extends React.Component {
         chosenWords: {},
       });
     }
+
+    if (!prevProps.shouldVerify && this.props.shouldVerify) {
+      this.handleConfirm();
+    }
   }
 
-  getStyle(i) {
-    const {
-      missingWords, isConfirmation,
-    } = this.props;
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
+  handleConfirm() {
+    const { chosenWords, indexes } = this.state;
+    const { values } = this.props;
+
+    const answers = Object.values(chosenWords);
+    const status = answers.filter((answer, index) => answer === values[indexes[index]])
+      .length === 2;
+
+    const cb = status
+      ? () => this.props.nextStep({ passphrase: this.props.passphrase })
+      : () => this.getRandomIndexesFromPassphrase(2);
+
+    this.setState({
+      isCorrect: status,
+      hasErrors: !status,
+    });
+
+    this.timeout = setTimeout(cb, 1500);
+  }
+
+  getRandomIndexesFromPassphrase(qty) {
+    let idxs = this.props.values.map((w, index) => index);
+    const indexes = [...Array(qty)]
+      .map(() => {
+        const index = idxs[Math.floor(Math.random() * idxs.length)];
+        idxs = [...idxs.slice(0, index), ...idxs.slice(index + 1)];
+        return index;
+      })
+      .sort((a, b) => a - b);
+    const options = this.assembleWordOptions(this.props.passphrase, indexes);
+
+    this.setState({
+      options: {
+        [indexes[0]]: options[0],
+        [indexes[1]]: options[1],
+      },
+      indexes,
+      answers: [],
+      hasErrors: false,
+      chosenWords: {},
+      fieldSelected: undefined,
+    });
+    this.props.toggleButtonStatus(false);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  assembleWordOptions(passphrase, missing) {
+    const { values } = this.props;
+    const wordsList = fillWordsList.filter(word => !passphrase.includes(word));
+    const numberOfOptions = 3;
+
+    const mixWithMissingWords = options =>
+      options.map((list, listIndex) => {
+        const rand = Math.floor(Math.random() * 0.99 * list.length);
+        list[rand] = values[missing[listIndex]];
+        return list;
+      });
+
+    const wordOptions = [...Array(missing.length)].map(() =>
+      [...Array(numberOfOptions)].map(
+        () => wordsList[Math.floor(Math.random() * wordsList.length)],
+      ));
+
+    return mixWithMissingWords(wordOptions);
+  }
+
+  getStyle(i, missingWords) {
+    const { isConfirmation } = this.props;
     const { chosenWords } = this.state;
 
     if (!missingWords) return styles.default;
@@ -37,7 +128,7 @@ class PassphraseRenderer extends React.Component {
   }
 
   getChosenWordsStyle() {
-    const { hasErrors, isCorrect } = this.props;
+    const { hasErrors, isCorrect } = this.state;
     if (hasErrors) return styles.error;
     if (isCorrect) return styles.correct;
     return styles.selected;
@@ -58,6 +149,10 @@ class PassphraseRenderer extends React.Component {
   }
 
   chooseWord(index, option) {
+    if (Object.keys(this.state.chosenWords).length >= 1) {
+      this.props.toggleButtonStatus(true);
+    }
+
     this.setState({
       ...this.state,
       chosenWords: {
@@ -65,37 +160,50 @@ class PassphraseRenderer extends React.Component {
         [index]: option,
       },
     });
-    this.props.handleSelect(option, index);
   }
 
   render() {
     const {
-      values, options, missingWords, t, showInfo,
+      values, t, showInfo, isConfirmation,
     } = this.props;
-
-    const { fieldSelected, chosenWords } = this.state;
+    const { options, fieldSelected, chosenWords } = this.state;
+    const missingWordsIndexes = isConfirmation && Object.keys(options).map(k => Number(k));
 
     return (
       <div>
         {showInfo && (
           <React.Fragment>
             <h2 className={styles.header}>{t('Passphrase')}</h2>
-            <p className={styles.subheader}>{t('Please carefully write down these 12 words and store them in a safe place.')}</p>
+            <p className={styles.subheader}>
+              {t('Please carefully write down these 12 words and store them in a safe place.')}
+            </p>
           </React.Fragment>
         )}
         <div className={styles.passphraseContainer}>
           <div className={`${styles.inputsRow} ${grid.row} passphrase`}>
             {values.map((value, i) => (
-              <div onClick={() => this.handleClick(i)} className={`${grid['col-xs-2']} ${styles.inputContainer}`} key={i}>
-                <span className={`${styles.inputValue} ${this.getStyle(i)}`}>{missingWords && missingWords.includes(i) ? this.renderMissingValue(i) : value}</span>
+              <div
+                onClick={() => this.handleClick(i)}
+                className={`${grid['col-xs-2']} ${styles.inputContainer}`}
+                key={i}
+              >
+                <span className={`${styles.inputValue} ${this.getStyle(i, missingWordsIndexes)}`}>
+                  {isConfirmation && missingWordsIndexes.includes(i)
+                    ? this.renderMissingValue(i)
+                    : value}
+                </span>
               </div>
             ))}
           </div>
         </div>
-        {fieldSelected && Object.keys(chosenWords).length < 2 && (
+        {typeof fieldSelected === 'number' && Object.keys(chosenWords).length < 2 && (
           <div className={styles.optionsContainer}>
             {options[fieldSelected].map((option, i) => (
-              <div className="option" onClick={() => this.chooseWord(fieldSelected, option)} key={i}>
+              <div
+                className="option"
+                onClick={() => this.chooseWord(fieldSelected, option)}
+                key={i}
+              >
                 {option}
               </div>
             ))}
