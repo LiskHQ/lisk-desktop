@@ -7,6 +7,7 @@ import SummaryStep from './summaryStep';
 import TransactionResult from '../../shared/transactionResult';
 import routes from '../../../constants/routes';
 import styles from './secondPassphrase.css';
+import ConfirmPassphrase from './confirmPassphrase';
 
 class SecondPassphrase extends React.Component {
   constructor() {
@@ -50,6 +51,10 @@ class SecondPassphrase extends React.Component {
               ...account,
               passphrase: this.secondPassphrase,
             }}
+          />
+          <ConfirmPassphrase
+            t={t}
+            passphrase={this.secondPassphrase}
           />
           <SummaryStep
             secondPassphrase={this.secondPassphrase}
