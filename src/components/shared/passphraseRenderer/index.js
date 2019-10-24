@@ -18,7 +18,6 @@ class PassphraseRenderer extends React.Component {
     };
   }
 
-
   UNSAFE_componentWillMount() { // eslint-disable-line camelcase
     const { indexes } = this.state;
 
