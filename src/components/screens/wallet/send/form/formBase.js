@@ -143,8 +143,8 @@ class FormBase extends React.Component {
       t, token, children, extraFields, fee, networkConfig, bookmarks,
     } = this.props;
     const isSubmitButtonDisabled = !!(isLoading
-      || Object.values(fields).find(({ error, value }) => error || value === '')
-      || Object.values(extraFields).find(({ error }) => error)
+      || Object.values(fields).find(({ value }) => value === '')
+      || Object.values({ ...extraFields, ...fields }).find(({ error }) => error)
     );
     return (
       <Box className={styles.wrapper} width="medium">
