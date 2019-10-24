@@ -30,7 +30,7 @@ describe('PassphraseRenderer', () => {
 
   it('should should allow to select an option', () => {
     wrapper = mount(<PassphraseRenderer {...props} />);
-    wrapper.find('.emptyInput').at(0).simulate('click');
+    wrapper.find('.emptyWord').at(0).simulate('click');
     wrapper.find('div.option').at(0).simulate('click');
     expect(props.handleSelect).toHaveBeenCalledWith('thunder', 2);
   });

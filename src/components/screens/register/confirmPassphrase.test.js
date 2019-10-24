@@ -29,10 +29,10 @@ describe('Register Process - Confirm Passphrase', () => {
 
   it('Should handle selection', () => {
     wrapper.find('.passphraseContainer');
-    wrapper.find('.emptyInput').at(0).simulate('click');
+    wrapper.find('.emptyWord').at(0).simulate('click');
     selectWrongWords(wrapper);
     expect(wrapper.find('.selected')).toExist();
-    wrapper.find('.emptyInput').at(0).simulate('click');
+    wrapper.find('.emptyWord').at(0).simulate('click');
     selectWrongWords(wrapper);
     wrapper.find('.buttonsHolder Button').at(1).simulate('click');
     expect(wrapper.find('.error')).toExist();
@@ -40,13 +40,13 @@ describe('Register Process - Confirm Passphrase', () => {
 
   it('Should update empty values after wrong selection', () => {
     wrapper.find('.passphraseContainer');
-    wrapper.find('.emptyInput').at(0).simulate('click');
+    wrapper.find('.emptyWord').at(0).simulate('click');
     selectWrongWords(wrapper);
-    wrapper.find('.emptyInput').at(0).simulate('click');
+    wrapper.find('.emptyWord').at(0).simulate('click');
     selectWrongWords(wrapper);
     wrapper.find('.buttonsHolder Button').at(1).simulate('click');
     clock.tick(1500);
     wrapper.update();
-    expect(wrapper.find('.emptyInput')).toExist();
+    expect(wrapper.find('.emptyWord')).toExist();
   });
 });
