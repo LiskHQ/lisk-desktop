@@ -25,7 +25,7 @@
     "bundlesize": "bundlesize",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
     "start": "electron ./app/",
-    "dist": "electron-builder --ia32 --x64 --publish onTag",
+    "dist": "build --ia32 --x64 --publish onTag",
     "dist:win": "build --win --ia32 --x64 --publish onTag",
     "dist:mac": "build --mac",
     "dist:linux": "build --linux --x64 --publish onTag",
