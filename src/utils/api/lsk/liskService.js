@@ -131,6 +131,12 @@ const liskServiceApi = {
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
     transformResponse: response => response.data,
   }),
+
+  getLiskServiceUrl: (networkName) => {
+    if (networkName === networks.mainnet.name) return liskServiceUrl;
+    if (networkName === networks.testnet.name) return liskServiceTestnetUrl;
+    return null;
+  },
 };
 
 export default liskServiceApi;

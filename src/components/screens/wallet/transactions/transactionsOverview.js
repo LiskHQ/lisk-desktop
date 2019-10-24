@@ -8,6 +8,7 @@ import TransactionsList from './transactionsList';
 import Tabs from '../../../toolbox/tabs';
 import { SecondaryButton } from '../../../toolbox/buttons/button';
 import Icon from '../../../toolbox/icon';
+import liskServiceApi from '../../../../utils/api/lsk/liskService';
 import styles from './transactions.css';
 
 class TransactionsOverview extends React.Component {
@@ -17,6 +18,7 @@ class TransactionsOverview extends React.Component {
     this.props.onInit();
     this.isActiveFilter = this.isActiveFilter.bind(this);
     this.setTransactionsFilter = this.setTransactionsFilter.bind(this);
+    this.getExportCSVLinkBasedOnNetwork = this.getExportCSVLinkBasedOnNetwork.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -57,13 +59,24 @@ class TransactionsOverview extends React.Component {
     ];
   }
 
+  getExportCSVLinkBasedOnNetwork() {
+    const { address, networkName } = this.props;
+
+    // TODO remove this validation
+    if (networkName !== 'Custom Node') {
+      const liskServiceUrl = liskServiceApi.getLiskServiceUrl(networkName);
+      return `${liskServiceUrl}/api/v1/account/${address}/transactions/csv`;
+    }
+
+    // TODO remove all the code for this function after this line
+    // Right now ONLY works for testnet STAGIN mode.
+    return `https://testnet-service-staging.lisk.io/api/v1/account/${address}/transactions/csv`;
+  }
+
   render() {
-    const { t, address, networkName } = this.props;
+    const { t, networkName } = this.props;
     const isSmallScreen = this.isSmallScreen();
     const filters = this.generateFilters();
-    // TODO remove the hardcode network once that the URL be available in production
-    // for mainnet and testnet. Right now ONLY works for testnet STAGIN mode.
-    const csvLink = `https://testnet-service-staging.lisk.io/api/v1/account/${address}/transactions/csv`;
 
     return (
       <div className={`${styles.transactions} transactions`}>
@@ -84,7 +97,7 @@ class TransactionsOverview extends React.Component {
                 { // TODO remove the valiation once be ready for all networks
                   networkName === 'Testnet'
                     ? (
-                      <a href={csvLink} className={styles.exportToCSVLink} download="transactions.csv">
+                      <a href={this.getExportCSVLinkBasedOnNetwork()} className={styles.exportToCSVLink} download="transactions.csv">
                         <SecondaryButton className={styles.exportToCSVBtn} size="xs">
                           {t('Export to CSV')}
                           <Icon name="iconLink" className={styles.iconLink} />
