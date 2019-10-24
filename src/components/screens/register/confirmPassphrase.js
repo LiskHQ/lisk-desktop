@@ -70,7 +70,7 @@ class ConfirmPassphrase extends React.Component {
             <PrimaryButton
               className={`${registerStyles.continueBtn} passphrase-is-correct-button`}
               onClick={this.verifyChoices}
-              disabled={!disabledButton}
+              disabled={disabledButton}
             >
               {t('Confirm')}
             </PrimaryButton>

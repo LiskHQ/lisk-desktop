@@ -91,7 +91,7 @@ class PassphraseRenderer extends React.Component {
       chosenWords: {},
       fieldSelected: undefined,
     });
-    this.props.toggleButtonStatus(false);
+    this.props.toggleButtonStatus(true);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -149,7 +149,7 @@ class PassphraseRenderer extends React.Component {
 
   chooseWord(index, option) {
     if (Object.keys(this.state.chosenWords).length >= 1) {
-      this.props.toggleButtonStatus(true);
+      this.props.toggleButtonStatus(false);
     }
 
     this.setState({

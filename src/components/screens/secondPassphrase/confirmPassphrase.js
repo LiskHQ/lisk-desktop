@@ -8,8 +8,8 @@ class ConfirmPassphrase extends React.Component {
   constructor() {
     super();
     this.state = {
-      disableButton: true,
       shouldVerify: false,
+      disabledButton: true,
     };
 
     this.verifyChoices = this.verifyChoices.bind(this);
@@ -28,9 +28,9 @@ class ConfirmPassphrase extends React.Component {
     const {
       t, passphrase, nextStep, prevStep,
     } = this.props;
-    const { shouldVerify } = this.state;
+    const { shouldVerify, disabledButton } = this.state;
     return (
-      <Box>
+      <Box className={styles.passphraseConfirmation}>
         <Box.Header>
           <h2>{t('Confirm your 2nd passphrase')}</h2>
         </Box.Header>
@@ -39,7 +39,7 @@ class ConfirmPassphrase extends React.Component {
             <p className={styles.info}>{t('Based on your passphrase that was generated in the previous step, select the missing words below')}</p>
             <PassphraseRenderer
               passphrase={passphrase}
-              toggleButtonStatus={status => this.setState({ disableButton: status })}
+              toggleButtonStatus={status => this.setState({ disabledButton: status })}
               shouldVerify={shouldVerify}
               values={passphrase.split(' ')}
               nextStep={() => nextStep()}
@@ -47,10 +47,11 @@ class ConfirmPassphrase extends React.Component {
             />
           </div>
         </Box.Content>
-        <Box.Footer>
+        <Box.Footer className={styles.confirmPassphraseFooter}>
           <PrimaryButton
             className={styles.confirmBtn}
             onClick={this.verifyChoices}
+            disabled={disabledButton}
           >
             {t('Confirm')}
           </PrimaryButton>
