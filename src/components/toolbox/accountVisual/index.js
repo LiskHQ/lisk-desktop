@@ -183,32 +183,8 @@ class AccountVisual extends React.Component {
       || nextProps.placeholder !== this.props.placeholder;
   }
 
-  render() { // eslint-disable-line max-statements
-    const {
-      address, size, sizeM, className, placeholder, isMediumViewPort,
-    } = this.props;
-
-    const sizeL = size || 200;
-    const newSize = isMediumViewPort && sizeM ? sizeM : sizeL;
-
-    if (placeholder) {
-      return (
-        <span
-          className={`${styles.placeholder} ${className}`}
-          style={{ height: newSize, width: newSize }}
-        />
-      );
-    }
-
-    if (!reg.address.test(address)) {
-      return (
-        <Icon
-          name="btcIcon"
-          className={`${styles.wrapper} ${className}`}
-          style={{ height: newSize, width: newSize }}
-        />
-      );
-    }
+  computeShapesAndGradients(newSize) {
+    const { address } = this.props;
 
     const replaceUrlByHashOnScheme = gradientScheme => ({
       ...gradientScheme,
@@ -232,6 +208,37 @@ class AccountVisual extends React.Component {
       getShape(addressHashChunks[2], newSize, secondaryGradients[0], 0.23),
       getShape(addressHashChunks[3], newSize, secondaryGradients[1], 0.18),
     ];
+
+    return [shapes, gradientsSchemesUrlsHashed];
+  }
+
+  render() {
+    const {
+      address, size, sizeM, className, placeholder, isMediumViewPort,
+    } = this.props;
+
+    const newSize = isMediumViewPort && sizeM ? sizeM : size;
+
+    if (placeholder) {
+      return (
+        <span
+          className={`${styles.placeholder} ${className}`}
+          style={{ height: newSize, width: newSize }}
+        />
+      );
+    }
+
+    if (!reg.address.test(address)) {
+      return (
+        <Icon
+          name="btcIcon"
+          className={`${styles.wrapper} ${className}`}
+          style={{ height: newSize, width: newSize }}
+        />
+      );
+    }
+    const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(newSize);
+
     return (
       <div style={{ height: newSize, width: newSize }} className={`${styles.wrapper} ${className}`}>
         <svg height={newSize} width={newSize} className={styles.accountVisual}>
@@ -244,5 +251,9 @@ class AccountVisual extends React.Component {
     );
   }
 }
+
+AccountVisual.defaultProps = {
+  size: 200,
+};
 
 export default withResizeValues(AccountVisual);
