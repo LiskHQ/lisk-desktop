@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const { NamedModulesPlugin } = require('webpack');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
@@ -13,6 +14,7 @@ module.exports = merge(baseConfig, reactConfig, {
     path: resolve(__dirname, '../app', '../app/build'),
     filename: 'bundle.[name].[hash].js',
   },
+  mode: 'production',
   optimization: {
     minimizer: [new TerserPlugin({ test: /\.js(\?.*)?$/i })],
     runtimeChunk: 'single', // enable "runtime" chunk
@@ -27,6 +29,7 @@ module.exports = merge(baseConfig, reactConfig, {
     },
   },
   plugins: [
+    new BundleAnalyzerPlugin(),
     new webpack.DefinePlugin({
       PRODUCTION: true,
       TEST: false,
