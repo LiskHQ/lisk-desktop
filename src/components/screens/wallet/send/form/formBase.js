@@ -8,6 +8,9 @@ import { parseSearchParams } from '../../../../../utils/searchParams';
 import { validateAmountFormat } from '../../../../../utils/validators';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../../../toolbox/box';
+import BoxHeader from '../../../../toolbox/box/header';
+import BoxContent from '../../../../toolbox/box/content';
+import BoxFooter from '../../../../toolbox/box/footer';
 import Converter from '../../../../shared/converter';
 import Piwik from '../../../../../utils/piwik';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
@@ -148,10 +151,10 @@ class FormBase extends React.Component {
     );
     return (
       <Box className={styles.wrapper} width="medium">
-        <Box.Header>
+        <BoxHeader>
           <h1>{ t('Send {{token}}', { token }) }</h1>
-        </Box.Header>
-        <Box.Content className={styles.formSection}>
+        </BoxHeader>
+        <BoxContent className={styles.formSection}>
           <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
             <BookmarkAutoSuggest
@@ -216,8 +219,8 @@ class FormBase extends React.Component {
             ) : null }
           </label>
           { children }
-        </Box.Content>
-        <Box.Footer>
+        </BoxContent>
+        <BoxFooter>
           <PrimaryButton
             className={`${styles.confirmButton} btn-submit send-next-button`}
             disabled={isSubmitButtonDisabled}
@@ -225,7 +228,7 @@ class FormBase extends React.Component {
           >
             {t('Go to confirmation')}
           </PrimaryButton>
-        </Box.Footer>
+        </BoxFooter>
       </Box>
     );
   }

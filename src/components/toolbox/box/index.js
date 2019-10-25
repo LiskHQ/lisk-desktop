@@ -1,21 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Content from './content';
-import EmptyState from './emptyState';
-import Footer from './footer';
-import FooterButton from './footerButton';
-import Header from './header';
-import InfoText from './infoText';
 import ProgressBar from '../progressBar/progressBar';
-import Row from './row';
-import Tabs from '../tabs';
 import styles from './box.css';
 
 const Box = ({
   main, width, className, children, isLoading,
 }) => {
   const hasHeader = Array.isArray(children) && children.some(child => (
-    child && (child.type === 'header' || child.type.displayName === 'Box.Header')
+    child && (child.type === 'header' || child.type.displayName === 'BoxHeader')
   ));
   return (
     <div className={`
@@ -50,20 +42,6 @@ Box.defaultProps = {
   isLoading: false,
 };
 
-const subcomponents = [
-  Content,
-  EmptyState,
-  Footer,
-  FooterButton,
-  Header,
-  InfoText,
-  Row,
-  Tabs,
-];
-
-subcomponents.forEach((subcomponent) => {
-  Box[subcomponent.name] = subcomponent;
-  subcomponent.displayName = `${Box.name}.${subcomponent.name}`;
-});
+Box.displayName = 'Box';
 
 export default Box;

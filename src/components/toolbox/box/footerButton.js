@@ -24,4 +24,6 @@ FooterButton.defaultProps = {
   className: '',
 };
 
+FooterButton.displayName = 'BoxFooterButton';
+
 export default FooterButton;

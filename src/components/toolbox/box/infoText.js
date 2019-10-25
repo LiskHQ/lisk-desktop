@@ -22,4 +22,6 @@ InfoText.defaultProps = {
   className: '',
 };
 
+InfoText.displayName = 'BoxInfoText';
+
 export default InfoText;

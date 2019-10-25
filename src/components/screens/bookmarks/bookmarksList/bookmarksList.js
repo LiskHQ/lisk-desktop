@@ -6,6 +6,10 @@ import { PrimaryButton, SecondaryButton, WarningButton } from '../../../toolbox/
 import { tokenMap } from '../../../../constants/tokens';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
+import BoxFooter from '../../../toolbox/box/footer';
+import BoxEmptyState from '../../../toolbox/box/emptyState';
 import regex from '../../../../utils/regex';
 import routes from '../../../../constants/routes';
 import styles from './bookmarksList.css';
@@ -111,7 +115,7 @@ class BookmarksList extends React.Component {
 
     return (
       <Box className={` ${styles.box} ${className} bookmarks-list`}>
-        <Box.Header>
+        <BoxHeader>
           <h2>{title || t('Bookmarks')}</h2>
           { enableFilter
             ? (
@@ -127,8 +131,8 @@ class BookmarksList extends React.Component {
             )
             : null
           }
-        </Box.Header>
-        <Box.Content className={`${styles.bookmarkList} bookmark-list-container`}>
+        </BoxHeader>
+        <BoxContent className={`${styles.bookmarkList} bookmark-list-container`}>
           {
           selectedBookmarks.length
             ? selectedBookmarks.map(bookmark => (
@@ -222,13 +226,13 @@ class BookmarksList extends React.Component {
               <React.Fragment>
                 { bookmarks[token.active].length
                   ? (
-                    <Box.EmptyState className={emptyStateClassName}>
+                    <BoxEmptyState className={emptyStateClassName}>
                       <Illustration name="emptyBookmarkFiler" className="bookmark-empty-filter-illustration" />
                       <p>{t('There are no results matching this filter.')}</p>
-                    </Box.EmptyState>
+                    </BoxEmptyState>
                   )
                   : (
-                    <Box.EmptyState className={emptyStateClassName}>
+                    <BoxEmptyState className={emptyStateClassName}>
                       { limit
                         ? (
                           <React.Fragment>
@@ -247,21 +251,21 @@ class BookmarksList extends React.Component {
                           </React.Fragment>
                         )
                   }
-                    </Box.EmptyState>
+                    </BoxEmptyState>
                   )
             }
               </React.Fragment>
             )
         }
-        </Box.Content>
+        </BoxContent>
         {
           selectedBookmarks.length && limit
             ? (
-              <Box.Footer className={styles.footer}>
+              <BoxFooter className={styles.footer}>
                 <Link to={routes.bookmarks.path}>
                   <SecondaryButton size="s">{t('View All')}</SecondaryButton>
                 </Link>
-              </Box.Footer>
+              </BoxFooter>
             )
             : null
         }

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../../toolbox/box';
+import BoxHeader from '../../toolbox/box/header';
+import BoxFooterButton from '../../toolbox/box/footerButton';
 import AccountVisual from '../../toolbox/accountVisual';
 import VotesTableHeader from './votesTableHeader';
 import TableRow from '../../toolbox/table/tableRow';
@@ -109,7 +111,7 @@ class VotesTab extends React.Component {
 
     return (
       <Box main isLoading={isLoading} className={`${styles.wrapper}`}>
-        <Box.Header>
+        <BoxHeader>
           <h1>{t('Voted delegates')}</h1>
           <div className={`${styles.filterHolder}`}>
             <Input
@@ -122,7 +124,7 @@ class VotesTab extends React.Component {
               size="xs"
             />
           </div>
-        </Box.Header>
+        </BoxHeader>
         <main className={`${styles.results} ${canLoadMore ? styles.hasMore : ''}`}>
           <VotesTableHeader t={t} />
           {filteredVotes.length
@@ -183,9 +185,9 @@ class VotesTab extends React.Component {
             )}
         </main>
         {canLoadMore && (
-          <Box.FooterButton onClick={this.onShowMore} className="show-votes">
+          <BoxFooterButton onClick={this.onShowMore} className="show-votes">
             {t('Load more')}
-          </Box.FooterButton>
+          </BoxFooterButton>
         )
         }
       </Box>

@@ -4,6 +4,10 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import { tokenMap } from '../../../constants/tokens';
 import Box from '../../toolbox/box';
+import BoxHeader from '../../toolbox/box/header';
+import BoxContent from '../../toolbox/box/content';
+import BoxFooterButton from '../../toolbox/box/footerButton';
+import BoxEmptyState from '../../toolbox/box/emptyState';
 import Icon from '../../toolbox/icon';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import LiskAmount from '../liskAmount';
@@ -65,28 +69,28 @@ class TransactionsTable extends React.Component {
 
     return (
       <Box main isLoading={transactions.isLoading} className="transactions-box">
-        <Box.Header>
+        <BoxHeader>
           <h1>{title}</h1>
           <FilterDropdownButton
             fields={fields}
             filters={filters}
             applyFilters={applyFilters}
           />
-        </Box.Header>
+        </BoxHeader>
         <FilterBar {...{
           clearFilter, clearAllFilters, filters, formatters, t,
         }}
         />
         {transactions.error ? (
-          <Box.Content>
-            <Box.EmptyState>
+          <BoxContent>
+            <BoxEmptyState>
               <Illustration name="emptyWallet" />
               <h3>{emptyStateMessage || `${transactions.error}`}</h3>
-            </Box.EmptyState>
-          </Box.Content>
+            </BoxEmptyState>
+          </BoxContent>
         ) : (
           <React.Fragment>
-            <Box.Content className={styles.content}>
+            <BoxContent className={styles.content}>
               <Table
                 getRowLink={transaction => `${routes.transactions.path}/${transaction.id}`}
                 onSortChange={changeSort}
@@ -173,13 +177,13 @@ class TransactionsTable extends React.Component {
                   },
                 ]}
               />
-            </Box.Content>
+            </BoxContent>
             {isLoadMoreEnabled
               && !!transactions.data.length
               && transactions.data.length % DEFAULT_LIMIT === 0 && (
-              <Box.FooterButton className="load-more" onClick={this.handleLoadMore}>
+              <BoxFooterButton className="load-more" onClick={this.handleLoadMore}>
                 {t('Load more')}
-              </Box.FooterButton>
+              </BoxFooterButton>
             )}
           </React.Fragment>
         )}

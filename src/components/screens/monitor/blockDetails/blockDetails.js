@@ -4,6 +4,9 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import { tokenMap } from '../../../../constants/tokens';
 import Box from '../../../toolbox/box';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
+import BoxRow from '../../../toolbox/box/row';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import Feedback from '../../../toolbox/feedback/feedback';
 import LabeledValue from '../../../toolbox/labeledValue';
@@ -85,10 +88,10 @@ const BlockDetails = ({
   return (
     <PageLayout>
       <Box isLoading={blockDetails.isLoading} width="full">
-        <Box.Header>
+        <BoxHeader>
           <h1>{t('Block details')}</h1>
-        </Box.Header>
-        <Box.Content>
+        </BoxHeader>
+        <BoxContent>
           { blockDetails.error ? (
             <Feedback status="error" show>{t('Failed to load block details.')}</Feedback>
           ) : (
@@ -107,25 +110,25 @@ const BlockDetails = ({
                 </div>
               ) : (
                 <React.Fragment>
-                  <Box.Row>
+                  <BoxRow>
                     {fields.id}
                     {fields.height}
                     {fields.version}
                     {fields.confirmations}
                     {fields.reward}
-                  </Box.Row>
-                  <Box.Row>
+                  </BoxRow>
+                  <BoxRow>
                     {fields.totalFee}
                     {fields.totalForged}
                     {fields.totalAmount}
                     {fields.date}
                     {fields.generator}
-                  </Box.Row>
+                  </BoxRow>
                 </React.Fragment>
               )}
             </React.Fragment>
           ) }
-        </Box.Content>
+        </BoxContent>
       </Box>
 
       <TransactionsTable
