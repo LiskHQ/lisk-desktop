@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { fromRawLsk } from '../../../utils/lsk';
 import AccountVisual from '../../toolbox/accountVisual';
 import Fees from '../../../constants/fees';
@@ -22,6 +21,8 @@ const SummaryStep = ({
           passphrase: account.passphrase,
           account: account.info.LSK,
           callback: ({ success, error }) => {
+            // TODO: To be tackled during multiStep refactoring
+            /* istanbul ignore next */
             nextStep({
               success,
               ...(success ? {
