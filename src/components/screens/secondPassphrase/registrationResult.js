@@ -18,7 +18,7 @@ const RegistrationResult = ({
     </Box.Content>
     <Box.Footer className={styles.confirmPassphraseFooter}>
       <PrimaryButton
-        className={styles.confirmBtn}
+        className={[styles.confirmBtn, 'go-to-wallet'].join(' ')}
         onClick={finalCallback}
       >
         {t('Go to wallet')}
