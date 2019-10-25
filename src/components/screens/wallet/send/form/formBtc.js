@@ -119,19 +119,15 @@ export default class FormBtc extends React.Component {
       : t('Invalid amount');
   }
 
-  // TODO move dynamic fee calculation and presentation to a separate component
   getCalculatedDynamicFee(dynamicFeePerByte) {
     const { fields: { amount }, unspentTransactionOutputs } = this.state;
-    if (amount.error) {
-      return 0;
-    }
-    const feeInSatoshis = btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
-      unspentTransactionOutputs,
-      satoshiValue: toRawLsk(amount.value),
-      dynamicFeePerByte,
-    });
-
-    return feeInSatoshis;
+    return amount.error
+      ? 0
+      : btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
+        unspentTransactionOutputs,
+        satoshiValue: toRawLsk(amount.value),
+        dynamicFeePerByte,
+      });
   }
 
   selectProcessingSpeed({ item, index }) {
