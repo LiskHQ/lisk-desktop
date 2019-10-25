@@ -60,9 +60,9 @@ class TransactionsOverview extends React.Component {
   }
 
   getExportCSVLinkBasedOnNetwork() {
-    const { address, networkName } = this.props;
+    const { address, network } = this.props;
 
-    const liskServiceUrl = liskServiceApi.getLiskServiceUrl(networkName);
+    const liskServiceUrl = liskServiceApi.getLiskServiceUrl(network);
     if (liskServiceUrl) {
       return `${liskServiceUrl}/api/v1/account/${address}/transactions/csv`;
     }
@@ -137,7 +137,7 @@ class TransactionsOverview extends React.Component {
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
   account: state.account,
-  networkName: state.network.name,
+  network: state.network,
 });
 
 export default connect(mapStateToProps)(TransactionsOverview);

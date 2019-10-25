@@ -129,10 +129,12 @@ const liskServiceApi = {
     return tabOptions[tab](network, rest);
   },
 
-  getLiskServiceUrl: (networkName) => {
-    if (networkName === networks.mainnet.name) return liskServiceUrl;
-    if (networkName === networks.testnet.name) return liskServiceTestnetUrl;
-    return null;
+  getLiskServiceUrl: (networkConfig) => {
+    try {
+      return getServerUrl(networkConfig);
+    } catch (e) {
+      return null;
+    }
   },
 
   getNextForgers: async ({ networkConfig }, searchParams) => liskServiceGet({
