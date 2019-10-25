@@ -87,13 +87,13 @@ class PassphraseRenderer extends React.Component {
           <div className={`${styles.inputsRow} ${grid.row} passphrase`}>
             {values.map((value, i) => (
               <div onClick={() => this.handleClick(i)} className={`${grid['col-xs-2']} ${styles.inputContainer}`} key={i}>
-                <span className={`${styles.inputValue} ${this.getStyle(i)}`}>{missingWords && missingWords.includes(i) ? this.renderMissingValue(i) : value}</span>
+                <span className={`${styles.inputValue} ${this.getStyle(i)} word`}>{missingWords && missingWords.includes(i) ? this.renderMissingValue(i) : value}</span>
               </div>
             ))}
           </div>
         </div>
         {fieldSelected && Object.keys(chosenWords).length < 2 && (
-          <div className={styles.optionsContainer}>
+          <div className={[styles.optionsContainer, 'word-options'].join(' ')}>
             {options[fieldSelected].map((option, i) => (
               <div className="option" onClick={() => this.chooseWord(fieldSelected, option)} key={i}>
                 {option}
