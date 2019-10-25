@@ -27,4 +27,7 @@ export default {
     delegates: [],
     votes: {},
   },
+  blocks: {
+    latestBlocks: [],
+  },
 };

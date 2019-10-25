@@ -27,7 +27,7 @@ describe('Tooltip wrapper', () => {
   });
 
   it('Should render the tooltip hidden', () => {
-    expect(wrapper.find('.infoIcon')).to.have.length(1);
+    expect(wrapper.find('.infoIcon').hostNodes()).to.have.length(1);
     expect(wrapper.find('.tooltip.shownTooltip')).to.have.length(0);
   });
 
@@ -39,7 +39,7 @@ describe('Tooltip wrapper', () => {
 
   it('Should show the tooltip on click', () => {
     expect(wrapper.find('.tooltip.shownTooltip')).to.have.length(0);
-    wrapper.find('.infoIcon').simulate('click');
+    wrapper.find('.infoIcon').hostNodes().simulate('click');
     expect(wrapper.find('.tooltip')).to.have.className('shownTooltip');
   });
 

@@ -31,6 +31,7 @@ const actionTypes = {
   networkSet: 'NETWORK_SET',
   networkStatusUpdated: 'NETWORK_STATUS_UPDATED',
   newBlockCreated: 'NEW_BLOCK_CREATED',
+  olderBlocksRetrieved: 'OLDER_BLOCKS_RETRIEVED',
   passphraseUsed: 'PASSPHRASE_USED',
   pendingVotesAdded: 'PENDING_VOTES_ADDED',
   pricesRetrieved: 'PRICES_RETRIEVED',
