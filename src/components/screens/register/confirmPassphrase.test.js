@@ -40,7 +40,7 @@ describe('Register Process - Confirm Passphrase', () => {
     expect(wrapper.find('.selected')).toExist();
     wrapper.find('.emptyWord').at(0).simulate('click');
     selectRightWords(wrapper);
-    wrapper.find('.buttonsHolder Button').at(1).simulate('click');
+    wrapper.find('.confirmPassphraseFooter Button').at(0).simulate('click');
     expect(wrapper.find('.correct')).toExist();
     clock.tick(1500);
     wrapper.update();
@@ -53,7 +53,7 @@ describe('Register Process - Confirm Passphrase', () => {
     selectWrongWords(wrapper);
     wrapper.find('.emptyWord').at(0).simulate('click');
     selectWrongWords(wrapper);
-    wrapper.find('.buttonsHolder Button').at(1).simulate('click');
+    wrapper.find('.confirmPassphraseFooter Button').at(0).simulate('click');
     clock.tick(1500);
     wrapper.update();
     expect(wrapper.find('.emptyWord')).toExist();

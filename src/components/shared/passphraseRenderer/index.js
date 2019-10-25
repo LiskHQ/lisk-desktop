@@ -218,7 +218,7 @@ class PassphraseRenderer extends React.Component {
           </PrimaryButton>
           <TertiaryButton
             className={styles.editBtn}
-            onClick={() => prevStep()}
+            onClick={prevStep}
           >
             {t('Go back')}
           </TertiaryButton>
