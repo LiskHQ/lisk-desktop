@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Icon from '../icon';
 import styles from './tooltip.css';
 
 class Tooltip extends React.Component {
@@ -76,7 +77,8 @@ class Tooltip extends React.Component {
         {React.isValidElement(content)
           ? content
           : (
-            <span
+            <Icon
+              name="tooltipQuestionMark"
               className={`${styles.infoIcon} ${infoIcon}`}
               onClick={this.handleClick}
             />
@@ -116,7 +118,7 @@ Tooltip.propTypes = {
   footer: PropTypes.node,
   className: PropTypes.string,
   content: PropTypes.node,
-  size: PropTypes.oneOf(['s', 'l']),
+  size: PropTypes.oneOf(['s', 'm', 'l']),
 };
 
 Tooltip.defaultProps = {

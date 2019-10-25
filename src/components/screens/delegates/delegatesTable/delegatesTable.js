@@ -7,7 +7,6 @@ import AvatarWithNameAndAddress from '../../../shared/avatarWithNameAndAddress';
 import FirstTimeVotingOverlay from './firstTimeVotingOverlay';
 import LiskAmount from '../../../shared/liskAmount';
 import ShaderDelegatesTable from '../../../shared/delegatesTable';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
 import VoteCheckbox from './voteCheckbox';
 import routes from '../../../../constants/routes';
 import styles from './delegatesTable.css';
@@ -61,12 +60,8 @@ const DelegatesTable = ({
     { id: 'productivity' },
     {
       id: 'vote',
-      header: <React.Fragment>
-        {t('Vote weight')}
-        <Tooltip className="showOnLeft">
-          <p>{t('Sum of LSK in all accounts who have voted for this delegate.')}</p>
-        </Tooltip>
-      </React.Fragment>,
+      header: t('Vote weight'),
+      headerTooltip: t('Sum of LSK in all accounts who have voted for this delegate.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ vote }) => (
         <strong><LiskAmount val={vote} roundTo={0} token={tokenMap.LSK.key} /></strong>

@@ -1,3 +1,11 @@
 .content {
   padding: 0 !important;
 }
+
+.infoIcon {
+  margin: 0 2px 4px;
+}
+
+.headerTooltip {
+  width: 240px;
+}

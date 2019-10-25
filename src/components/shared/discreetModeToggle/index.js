@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import { settingsUpdated } from '../../../actions/settings';
 import DiscreetModeToggle from './discreetModeToggle';
 
@@ -11,4 +12,7 @@ const mapDispatchToProps = {
   settingsUpdated,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DiscreetModeToggle);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(DiscreetModeToggle));

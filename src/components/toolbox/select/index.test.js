@@ -24,6 +24,6 @@ describe('Select toolbox component', () => {
     expect(wrapper.find('Input')).toHaveValue(props.options[1].label);
     wrapper.find('Input').simulate('click');
     wrapper.find('.option').first().simulate('click', { target: { dataset: { index: 0 } } });
-    expect(wrapper.find('Input')).toHaveValue(props.options[0].label);
+    expect(wrapper.find('Input')).toHaveValue(props.options[1].label);
   });
 });

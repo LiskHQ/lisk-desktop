@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { SecondaryButton } from '../../../toolbox/buttons/button';
 import { tokenMap } from '../../../../constants/tokens';
 import Box from '../../../toolbox/box';
 import Icon from '../../../toolbox/icon';
 import TransactionList from './transactionList';
-import links from '../../../../constants/externalLinks';
 import styles from './recentTransactions.css';
 import txFilters from '../../../../constants/transactionFilters';
 
@@ -59,22 +57,6 @@ class RecentTransactions extends Component {
                 <Icon name="iconEmptyRecentTransactions" />
                 <h1>{t('No Transactions Yet')}</h1>
                 <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
-                <div>
-                  {
-                // TODO this validation should be remove once we have the external link for BTC
-                activeToken.key === tokenMap.LSK.key
-                  ? (
-                    <a
-                      href={links.outgoingTransactions}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      <SecondaryButton>{t('Learn more')}</SecondaryButton>
-                    </a>
-                  )
-                  : null
-              }
-                </div>
               </Box.EmptyState>
             )
             : null

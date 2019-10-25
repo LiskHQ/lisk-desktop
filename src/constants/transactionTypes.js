@@ -10,10 +10,10 @@ export const transactionNames = t => ({
   1: t('Second passphrase registration'),
   2: t('Delegate registration'),
   3: t('Delegate vote'),
-  4: t('Multisignature Creation'),
-  5: t('Blockchain Application Registration'),
-  6: t('Send Lisk to Blockchain Application'),
-  7: t('Send Lisk from Blockchain Application'),
+  4: t('Multisignature creation'),
+  5: t('Blockchain application registration'),
+  6: t('Send Lisk to blockchain application'),
+  7: t('Send Lisk from blockchain application'),
 });
 
 export const createTransactionType = {

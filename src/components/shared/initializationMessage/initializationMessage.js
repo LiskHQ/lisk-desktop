@@ -2,7 +2,6 @@ import React from 'react';
 import 'numeral/locales';
 import FlashMessage from '../../toolbox/flashMessage/flashMessage';
 import FlashMessageHolder from '../../toolbox/flashMessage/holder';
-import externalLinks from '../../../constants/externalLinks';
 import routes from '../../../constants/routes';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 
@@ -31,10 +30,6 @@ export const InitializationMessageRenderer = ({
     <FlashMessage shouldShow={shouldShowInitialization}>
       <FlashMessage.Content
         icon="warningIcon"
-        link={{
-          label: t('Learn more'),
-          action: externalLinks.accountInitialization,
-        }}
       >
         {t('We advise all users to initialize their account as soon as possible. To do so, simply make one outgoing transaction.')}
       </FlashMessage.Content>

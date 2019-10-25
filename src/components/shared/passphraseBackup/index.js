@@ -7,7 +7,6 @@ import { SecondaryButton } from '../../toolbox/buttons/button';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import Icon from '../../toolbox/icon';
 import Tooltip from '../../toolbox/tooltip/tooltip';
-import links from '../../../constants/externalLinks';
 import renderPaperwallet from '../../../utils/paperwallet';
 import styles from './passphraseBackup.css';
 
@@ -48,15 +47,6 @@ class PassphraseBackup extends React.Component {
 
                 <Tooltip
                   title={t('Save the passphrase')}
-                  footer={(
-                    <a
-                      href={links.howToStorePassphrase}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      {t('Read more')}
-                    </a>
-)}
                 >
                   <p>
                     {

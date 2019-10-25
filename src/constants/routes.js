@@ -9,7 +9,6 @@ import Dashboard from '../components/screens/dashboard';
 import Delegates from '../components/screens/delegates';
 import DelegatesMonitor from '../components/screens/monitor/delegates';
 import Extensions from '../components/screens/extensions';
-import Help from '../components/screens/help';
 import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
 import Monitor from '../components/screens/monitor';
@@ -19,7 +18,6 @@ import SecondPassphrase from '../components/screens/secondPassphrase';
 import Send from '../components/screens/wallet/send/send';
 import Settings from '../components/screens/settings';
 import SignMessage from '../components/screens/signMessage';
-import Splashscreen from '../components/screens/splashscreen';
 import TermsOfUse from '../components/screens/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
 import MonitorTransactions from '../components/screens/monitor/transactions';
@@ -93,11 +91,6 @@ export default {
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  help: {
-    path: '/help',
-    component: Help,
-    isPrivate: false,
-  },
   settings: {
     path: '/settings',
     component: Settings,
@@ -157,13 +150,6 @@ export default {
     isSigninFlow: true,
     isPrivate: false,
   },
-  splashscreen: {
-    path: '/',
-    component: Splashscreen,
-    isPrivate: false,
-    isSigninFlow: true,
-    exact: true,
-  },
   register: {
     path: '/register',
     component: Register,
@@ -171,10 +157,11 @@ export default {
     isSigninFlow: true,
   },
   login: {
-    path: '/login',
+    path: '/',
     component: Login,
     isPrivate: false,
     isSigninFlow: true,
+    exact: true,
   },
   termsOfUse: {
     path: '/terms-of-use',

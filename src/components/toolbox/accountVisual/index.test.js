@@ -51,29 +51,30 @@ describe('AccountVisual', () => {
     expect(wrapper.find('rect')).to.have.attr('fill').match(/url\(#loriot-3-\d{13}-\w{5}\)/);
   });
 
-  it('should have given default size and change to sizeS size if resized to S breakpoint', () => {
+  it('should have given default size and change to sizeM size if resized to M breakpoint', () => {
     const props = {
       address: accounts.genesis.address,
       size: 100,
-      sizeS: 60,
+      sizeM: 60,
     };
 
+    // manipulate breakpoints to simulate m breakpoint
+    const mBreakpointBackup = breakpoints.m;
+    breakpoints.m = window.innerWidth - 1;
     const wrapper = mount(<AccountVisual {...props} />);
 
     expect(wrapper).to.have.exactly(1).descendants('svg');
     expect(wrapper.find('svg')).to.have.attr('height', `${props.size}`);
     expect(wrapper.find('svg')).to.have.attr('width', `${props.size}`);
 
-    // manipulate breakpoints to simulate s breakpoint
-    const sBreakpointBackup = breakpoints.s;
-    breakpoints.s = window.innerWidth + 1;
+    breakpoints.m = window.innerWidth + 1;
     window.dispatchEvent(new Event('resize'));
 
     expect(wrapper).to.have.exactly(1).descendants('svg');
-    expect(wrapper.find('svg')).to.have.attr('height', `${props.sizeS}`);
-    expect(wrapper.find('svg')).to.have.attr('width', `${props.sizeS}`);
+    expect(wrapper.find('svg')).to.have.attr('height', `${props.sizeM}`);
+    expect(wrapper.find('svg')).to.have.attr('width', `${props.sizeM}`);
 
-    breakpoints.s = sBreakpointBackup;
+    breakpoints.m = mBreakpointBackup;
   });
 
   it('should removeEventListener on unmount', () => {

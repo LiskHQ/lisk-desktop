@@ -28,9 +28,9 @@ const Transactions = ({ t, transactions }) => {
     type: 'address',
   }, {
     label: t('Type'),
-    placeholder: t('Eg. {{value}}', { value: '1,5' }),
+    placeholder: t('All types'),
     name: 'type',
-    type: 'text',
+    type: 'select',
   }, {
     label: t('Height'),
     placeholder: t('Eg. {{value}}', { value: '10180477' }),

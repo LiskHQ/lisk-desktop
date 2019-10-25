@@ -31,6 +31,7 @@ import helpActive from '../../../assets/images/icons/help-active.svg';
 import helpCenter from '../../../assets/images/icons/help-center.svg';
 import helpCenterArrow from '../../../assets/images/icons/arrow.svg';
 import hidePassphraseIcon from '../../../assets/images/icons/icon-hide-passphrase.svg';
+import hwWalletIcon from '../../../assets/images/icons/hw-wallet.svg';
 import iconEdit from '../../../assets/images/icons/icon-edit.svg';
 import iconEmptyRecentTransactions from '../../../assets/images/icons/empty-recent-transactions.svg';
 import iconFilter from '../../../assets/images/icons/icon-filter.svg';
@@ -61,6 +62,7 @@ import settingsActive from '../../../assets/images/icons/settings-active.svg';
 import showPassphraseIcon from '../../../assets/images/icons/icon-show-passphrase.svg';
 import signin from '../../../assets/images/icons/signin.svg';
 import signinActive from '../../../assets/images/icons/signin-active.svg';
+import tooltipQuestionMark from '../../../assets/images/icons/tooltip-question-icon.svg';
 import transactionApproved from '../../../assets/images/icons/transaction-status-approved.svg';
 import transactionError from '../../../assets/images/icons/transaction-error.svg';
 import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
@@ -110,6 +112,7 @@ export const icons = {
   helpCenter,
   helpCenterArrow,
   hidePassphraseIcon,
+  hwWalletIcon,
   iconEdit,
   iconEmptyRecentTransactions,
   iconFilter,
@@ -140,6 +143,7 @@ export const icons = {
   showPassphraseIcon,
   signin,
   signinActive,
+  tooltipQuestionMark,
   transactionApproved,
   transactionError,
   transactionPending,

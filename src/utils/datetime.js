@@ -51,7 +51,18 @@ export const formatInputToDate = (value, separator = '.') => {
   ].join('').substring(0, 8);
 };
 
+/**
+ * Converts Unix timestamp (seconds since Jan 01 1970 UTC)
+ * to Lisk Epoch timestamp (seconds since May 24 2016, 17:00 UTC).
+ * @param {Number} timmestamp - Unix timestamp in seconds
+ * @returns {Number} - Timestamp in seconds from first block
+ */
+export const convertUnixSecondsToLiskEpochSeconds = timestamp => (
+  moment(timestamp * 1000).unix() - moment(firstBlockTime).unix()
+);
+
 export default {
+  convertUnixSecondsToLiskEpochSeconds,
   getTimestampFromFirstBlock,
   getDateTimestampFromFirstBlock,
   formatInputToDate,
