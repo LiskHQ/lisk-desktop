@@ -27,7 +27,6 @@ const actionTypes = {
   liskAPIClientUpdate: 'LISK_API_CLIENT_UPDATE',
   loadingFinished: 'LOADING_FINISHED',
   loadingStarted: 'LOADING_STARTED',
-  moduleAdded: 'MODULE_ADDED',
   networkSet: 'NETWORK_SET',
   networkStatusUpdated: 'NETWORK_STATUS_UPDATED',
   newBlockCreated: 'NEW_BLOCK_CREATED',
