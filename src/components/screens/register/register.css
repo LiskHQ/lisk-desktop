@@ -23,7 +23,7 @@
   & .button {
     @mixin contentLargest bold;
 
-    width: var(--footer-button-width);
+    width: 431px;
 
     & > button {
       width: 100%;
