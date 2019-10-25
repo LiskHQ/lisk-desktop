@@ -50,7 +50,7 @@ Ideally we should end up with a structure similar to:
   "..."
 }
 ```
-Data used by all token types should be put into a common node or at the root as it's right now, like the `extensions` and `search` node, having `tokenKeys` node inside if needed.
+Data used by all token types should be put into a common node or at the root as it's right now, like the `search` node, having `tokenKeys` node inside if needed.
 Transactions node can keep the same structure given that we use a normalize so all the transactions have the same structure of information so we can display them in a similar way and since we won't show transactions of different tokens at the same time.
 
 
