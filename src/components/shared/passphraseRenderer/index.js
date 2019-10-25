@@ -160,7 +160,7 @@ class PassphraseRenderer extends React.Component {
 
   render() {
     const {
-      values, t, showInfo, isConfirmation, prevStep,
+      values, t, showInfo, isConfirmation, prevStep, footerStyle,
     } = this.props;
     const {
       options, fieldSelected, chosenWords, disabledButton,
@@ -208,7 +208,7 @@ class PassphraseRenderer extends React.Component {
           </div>
         )}
         {isConfirmation && (
-        <div className={styles.confirmPassphraseFooter}>
+        <div className={`${styles.confirmPassphraseFooter} ${footerStyle}`}>
           <PrimaryButton
             className={styles.confirmBtn}
             onClick={this.handleConfirm}

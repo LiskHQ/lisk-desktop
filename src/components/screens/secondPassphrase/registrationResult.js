@@ -7,7 +7,7 @@ import { PrimaryButton } from '../../toolbox/buttons/button';
 const RegistrationResult = ({
   t, finalCallback, message, illustration,
 }) => (
-  <Box className={styles.passphraseConfirmation}>
+  <Box className={`${styles.passphraseConfirmation} ${styles.lastStep}`}>
     <Box.Header>
       <h2>{t('Registration completed')}</h2>
     </Box.Header>

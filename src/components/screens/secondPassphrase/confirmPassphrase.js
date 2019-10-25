@@ -19,6 +19,7 @@ const ConfirmPassphrase = ({
           nextStep={nextStep}
           prevStep={prevStep}
           isConfirmation
+          footerStyle={styles.confirmationFooter}
         />
       </div>
     </Box.Content>

@@ -33,7 +33,6 @@
 
   & .footer {
     width: 100%;
-    min-width: 720px;
     margin: 40px 0 20px;
     padding: 0;
     display: flex;
@@ -74,4 +73,16 @@
   margin-top: 40px;
   align-items: center;
   text-align: center;
+}
+
+.confirmationFooter{
+  position: absolute;
+  display: flex;
+  bottom: 20px;
+  width: 100%;
+  justify-content: center;
+} 
+
+.lastStep {
+  min-width: 720px;
 }
