@@ -51,19 +51,8 @@ class FormBase extends React.Component {
 
     this.onAmountChange = this.onAmountChange.bind(this);
     this.onGoNext = this.onGoNext.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
     this.updateField = this.updateField.bind(this);
     this.setEntireBalance = this.setEntireBalance.bind(this);
-  }
-
-  onInputChange({ target }) {
-    const { fields } = this.state;
-    const newState = {
-      ...fields[target.name],
-      value: target.value,
-    };
-    this.props.onInputChange({ target }, newState);
-    this.updateField(target.name, newState);
   }
 
   updateAmountField(value) {
@@ -106,6 +95,7 @@ class FormBase extends React.Component {
   }
 
   updateField(name, value) {
+    this.props.onInputChange({ target: { name, value: value.value } }, value);
     this.setState(({ fields }) => ({
       fields: {
         ...fields,
@@ -126,7 +116,11 @@ class FormBase extends React.Component {
       this.updateAmountField(target.value);
     }, 300);
 
-    this.onInputChange({ target });
+    const { fields } = this.state;
+    this.updateField(target.name, {
+      ...fields[target.name],
+      value: target.value,
+    });
   }
 
   onGoNext() {
@@ -143,8 +137,8 @@ class FormBase extends React.Component {
       t, token, children, extraFields, fee, networkConfig, bookmarks,
     } = this.props;
     const isSubmitButtonDisabled = !!(isLoading
-      || Object.values(fields).find(({ error, value }) => error || value === '')
-      || Object.values(extraFields).find(({ error }) => error)
+      || Object.values(fields).find(({ value }) => value === '')
+      || Object.values({ ...extraFields, ...fields }).find(({ error }) => error)
     );
     return (
       <Box className={styles.wrapper} width="medium">
