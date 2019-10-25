@@ -62,21 +62,18 @@ class TransactionsOverview extends React.Component {
   getExportCSVLinkBasedOnNetwork() {
     const { address, networkName } = this.props;
 
-    // TODO remove this validation
-    if (networkName !== 'Custom Node') {
-      const liskServiceUrl = liskServiceApi.getLiskServiceUrl(networkName);
+    const liskServiceUrl = liskServiceApi.getLiskServiceUrl(networkName);
+    if (liskServiceUrl) {
       return `${liskServiceUrl}/api/v1/account/${address}/transactions/csv`;
     }
-
-    // TODO remove all the code for this function after this line
-    // Right now ONLY works for testnet STAGIN mode.
-    return `https://testnet-service-staging.lisk.io/api/v1/account/${address}/transactions/csv`;
+    return '';
   }
 
   render() {
-    const { t, networkName } = this.props;
+    const { t } = this.props;
     const isSmallScreen = this.isSmallScreen();
     const filters = this.generateFilters();
+    const exportToCSVLink = this.getExportCSVLinkBasedOnNetwork();
 
     return (
       <div className={`${styles.transactions} transactions`}>
@@ -94,17 +91,16 @@ class TransactionsOverview extends React.Component {
                   saveFilters={this.props.saveFilters}
                   customFilters={this.props.activeCustomFilters}
                 />
-                { // TODO remove the valiation once be ready for all networks
-                  networkName === 'Testnet'
-                    ? (
-                      <a href={this.getExportCSVLinkBasedOnNetwork()} className={styles.exportToCSVLink} download="transactions.csv">
+                {
+                  !!exportToCSVLink
+                    && (
+                      <a href={exportToCSVLink} className={styles.exportToCSVLink} download="transactions.csv">
                         <SecondaryButton className={styles.exportToCSVBtn} size="xs">
                           {t('Export to CSV')}
                           <Icon name="iconLink" className={styles.iconLink} />
                         </SecondaryButton>
                       </a>
                     )
-                    : null
                 }
               </div>
             )
