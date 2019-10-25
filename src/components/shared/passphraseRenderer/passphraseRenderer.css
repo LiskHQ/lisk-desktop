@@ -119,3 +119,21 @@
     box-shadow: var(--box-shadow-standard);
   }
 }
+
+.confirmPassphraseFooter {
+  margin-top: 40px;
+  align-self: center;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > .confirmBtn {
+    width: var(--footer-button-width);
+  }
+
+  & > .editBtn {
+    margin-top: 5px;
+    width: auto !important;
+  }
+}

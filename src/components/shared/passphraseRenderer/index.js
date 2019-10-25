@@ -3,6 +3,7 @@ import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
 import styles from './passphraseRenderer.css';
+import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 
 class PassphraseRenderer extends React.Component {
   constructor(props) {
@@ -15,7 +16,10 @@ class PassphraseRenderer extends React.Component {
       options: {},
       isCorrect: false,
       hasErrors: false,
+      disabledButton: true,
     };
+
+    this.handleConfirm = this.handleConfirm.bind(this);
   }
 
   UNSAFE_componentWillMount() { // eslint-disable-line camelcase
@@ -38,10 +42,6 @@ class PassphraseRenderer extends React.Component {
         displayOptions: undefined,
         chosenWords: {},
       });
-    }
-
-    if (!prevProps.shouldVerify && this.props.shouldVerify) {
-      this.handleConfirm();
     }
   }
 
@@ -90,8 +90,8 @@ class PassphraseRenderer extends React.Component {
       hasErrors: false,
       chosenWords: {},
       fieldSelected: undefined,
+      disabledButton: true,
     });
-    this.props.toggleButtonStatus(true);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -148,24 +148,23 @@ class PassphraseRenderer extends React.Component {
   }
 
   chooseWord(index, option) {
-    if (Object.keys(this.state.chosenWords).length >= 1) {
-      this.props.toggleButtonStatus(false);
-    }
-
     this.setState({
       ...this.state,
       chosenWords: {
         ...this.state.chosenWords,
         [index]: option,
       },
+      disabledButton: Object.keys(this.state.chosenWords).length < 1,
     });
   }
 
   render() {
     const {
-      values, t, showInfo, isConfirmation,
+      values, t, showInfo, isConfirmation, prevStep,
     } = this.props;
-    const { options, fieldSelected, chosenWords } = this.state;
+    const {
+      options, fieldSelected, chosenWords, disabledButton,
+    } = this.state;
     const missingWordsIndexes = isConfirmation && Object.keys(options).map(k => Number(k));
 
     return (
@@ -207,6 +206,23 @@ class PassphraseRenderer extends React.Component {
               </div>
             ))}
           </div>
+        )}
+        {isConfirmation && (
+        <div className={styles.confirmPassphraseFooter}>
+          <PrimaryButton
+            className={styles.confirmBtn}
+            onClick={this.handleConfirm}
+            disabled={disabledButton}
+          >
+            {t('Confirm')}
+          </PrimaryButton>
+          <TertiaryButton
+            className={styles.editBtn}
+            onClick={() => prevStep()}
+          >
+            {t('Go back')}
+          </TertiaryButton>
+        </div>
         )}
       </div>
     );

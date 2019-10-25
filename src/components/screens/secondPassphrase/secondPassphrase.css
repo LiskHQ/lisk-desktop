@@ -33,7 +33,7 @@
 
   & .footer {
     width: 100%;
-    min-width: 572px;
+    min-width: 720px;
     margin: 40px 0 20px;
     padding: 0;
     display: flex;
@@ -67,12 +67,6 @@
 .passphraseConfirmation {
   height: 445px;
   margin-bottom: 12px;
-}
-
-.confirmPassphraseFooter {
-  position: absolute;
-  bottom: 10px;
-  align-self: center;
 }
 
 .transactionResultContent {
