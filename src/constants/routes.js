@@ -8,7 +8,6 @@ import Bookmarks from '../components/screens/bookmarks';
 import Dashboard from '../components/screens/dashboard';
 import Delegates from '../components/screens/delegates';
 import DelegatesMonitor from '../components/screens/monitor/delegates';
-import Extensions from '../components/screens/extensions';
 import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
 import Monitor from '../components/screens/monitor';
@@ -123,11 +122,6 @@ export default {
   addAccount: {
     path: '/add-account',
     component: Login,
-    isPrivate: false,
-  },
-  extensions: {
-    path: '/extensions',
-    component: Extensions,
     isPrivate: false,
   },
   accounts: {

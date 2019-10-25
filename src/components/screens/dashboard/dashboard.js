@@ -6,8 +6,6 @@ import NewsFeed from './newsFeed';
 import WalletDetails from '../../shared/walletDetails';
 import PageHeader from '../../toolbox/pageHeader';
 import breakpoints from '../../../constants/breakpoints';
-import ExtensionPoint from '../../shared/extensionPoint';
-import LiskHubExtensions from '../../../utils/liskHubExtensions';
 import RecentTransactions from './recentTransactions';
 import styles from './dashboard.css';
 import Onboarding from '../../toolbox/onboarding/onboarding';
@@ -113,7 +111,6 @@ class Dashboard extends React.Component {
                   ? (
                     <div className={`${styles.bookmarks} bookmarks`}>
                       <BookmarksList history={history} limit={5} />
-                      <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
                     </div>
                   )
                   : null
@@ -122,7 +119,6 @@ class Dashboard extends React.Component {
 
             <div className={`${styles.community} community-feed`}>
               <NewsFeed />
-              <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
             </div>
 
             {
@@ -130,7 +126,6 @@ class Dashboard extends React.Component {
                 ? (
                   <div className={`${styles.bookmarks} bookmarks`}>
                     <BookmarksList history={history} limit={5} />
-                    <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
                   </div>
                 )
                 : null
