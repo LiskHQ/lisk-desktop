@@ -146,10 +146,10 @@ class TransactionsTable extends React.Component {
                     getValue: transaction => (
                       <Tooltip
                         title={t('Transaction')}
-                        className="showOnLeft"
+                        className="showOnBottom"
                         tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
                         content={<LiskAmount val={transaction.fee} token={tokenMap.LSK.key} />}
-                        size="m"
+                        size="s"
                       >
                         <p>{`${transaction.type} - ${transactionNames(t)[transaction.type]}`}</p>
                       </Tooltip>

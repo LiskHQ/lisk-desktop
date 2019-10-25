@@ -1,0 +1,31 @@
+@import '../../../../app/variables.css';
+
+.status {
+  box-sizing: border-box;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--color-light-gray);
+
+  &.forgedThisRound {
+    border-color: var(--color-deep-green);
+    background-color: var(--color-deep-green);
+  }
+
+  &.forgedLastRound {
+    border-color: var(--color-deep-green);
+  }
+
+  &.notForging {
+    border-color: var(--color-burnt-sienna);
+    background-color: var(--color-burnt-sienna);
+  }
+
+  &.missedLastRound {
+    border-color: var(--color-burnt-sienna);
+  }
+}
+
+.statusToolip {
+  white-space: nowrap;
+}

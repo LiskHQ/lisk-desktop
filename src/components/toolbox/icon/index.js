@@ -61,6 +61,7 @@ import settingsActive from '../../../assets/images/icons/settings-active.svg';
 import showPassphraseIcon from '../../../assets/images/icons/icon-show-passphrase.svg';
 import signin from '../../../assets/images/icons/signin.svg';
 import signinActive from '../../../assets/images/icons/signin-active.svg';
+import tooltipQuestionMark from '../../../assets/images/icons/tooltip-question-icon.svg';
 import transactionApproved from '../../../assets/images/icons/transaction-status-approved.svg';
 import transactionError from '../../../assets/images/icons/transaction-error.svg';
 import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
@@ -141,6 +142,7 @@ export const icons = {
   showPassphraseIcon,
   signin,
   signinActive,
+  tooltipQuestionMark,
   transactionApproved,
   transactionError,
   transactionPending,
