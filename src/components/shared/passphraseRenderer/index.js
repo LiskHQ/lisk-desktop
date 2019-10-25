@@ -184,7 +184,7 @@ class PassphraseRenderer extends React.Component {
                 className={`${grid['col-xs-2']} ${styles.inputContainer}`}
                 key={i}
               >
-                <span className={`${styles.inputValue} ${this.getStyle(i, missingWordsIndexes)}`}>
+                <span className={`${styles.inputValue} ${this.getStyle(i, missingWordsIndexes)} word`}>
                   {isConfirmation && missingWordsIndexes.includes(i)
                     ? this.renderMissingValue(i)
                     : value}
@@ -194,7 +194,7 @@ class PassphraseRenderer extends React.Component {
           </div>
         </div>
         {typeof fieldSelected === 'number' && Object.keys(chosenWords).length < 2 && (
-          <div className={styles.optionsContainer}>
+          <div className={[styles.optionsContainer, 'word-options'].join(' ')}>
             {options[fieldSelected].map((option, i) => (
               <div
                 className="option"
