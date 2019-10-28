@@ -57,16 +57,16 @@ class PassphraseRenderer extends React.Component {
     const { values } = this.state;
 
     const answers = Object.values(chosenWords);
-    const status = answers.filter((answer, index) => answer === values[indexes[index]])
+    const isCorrect = answers.filter((answer, index) => answer === values[indexes[index]])
       .length === 2;
 
-    const cb = status
+    const cb = isCorrect
       ? () => this.props.nextStep()
       : () => this.setRandomIndexesFromPassphrase(2);
 
     this.setState({
-      isCorrect: status,
-      hasErrors: !status,
+      isCorrect,
+      hasErrors: !isCorrect,
     });
 
     this.timeout = setTimeout(cb, 1500);
