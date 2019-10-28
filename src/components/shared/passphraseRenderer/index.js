@@ -78,7 +78,7 @@ class PassphraseRenderer extends React.Component {
         return index;
       })
       .sort((a, b) => a - b);
-    const options = this.assembleWordOptions(this.props.passphrase, indexes);
+    const options = this.assembleWordOptions(this.props.values, indexes);
 
     this.setState({
       options: {
@@ -95,9 +95,8 @@ class PassphraseRenderer extends React.Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  assembleWordOptions(passphrase, missing) {
-    const { values } = this.props;
-    const wordsList = fillWordsList.filter(word => !passphrase.includes(word));
+  assembleWordOptions(values, missing) {
+    const wordsList = fillWordsList.filter(word => !values.includes(word));
     const numberOfOptions = 3;
 
     const mixWithMissingWords = options =>

@@ -22,7 +22,6 @@ const ConfirmPassphrase = ({
     <div className={`${grid['col-sm-10']} ${styles.passphraseContainer}`}>
       <PassphraseRenderer
         showInfo
-        passphrase={passphrase}
         values={passphrase.split(' ')}
         nextStep={nextStep}
         prevStep={prevStep}

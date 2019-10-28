@@ -14,7 +14,6 @@ const ConfirmPassphrase = ({
       <div className={styles.passphraseConfirmationContainer}>
         <p className={styles.info}>{t('Based on your passphrase that was generated in the previous step, select the missing words below')}</p>
         <PassphraseRenderer
-          passphrase={passphrase}
           values={passphrase.split(' ')}
           nextStep={nextStep}
           prevStep={prevStep}
