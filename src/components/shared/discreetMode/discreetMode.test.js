@@ -56,7 +56,7 @@ describe('DiscreetMode Component', () => {
     expect(wrapper.find('div')).not.toHaveClassName('discreetMode');
   });
 
-  it('should render properly with DiscreetMode ON in Other  page with blur', () => {
+  it('should render properly with DiscreetMode ON in Other page', () => {
     const newProps = {
       ...props,
       location: {
