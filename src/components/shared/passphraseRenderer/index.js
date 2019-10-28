@@ -62,7 +62,7 @@ class PassphraseRenderer extends React.Component {
 
     const cb = status
       ? () => this.props.nextStep()
-      : () => this.getRandomIndexesFromPassphrase(2);
+      : () => this.setRandomIndexesFromPassphrase(2);
 
     this.setState({
       isCorrect: status,
@@ -72,7 +72,7 @@ class PassphraseRenderer extends React.Component {
     this.timeout = setTimeout(cb, 1500);
   }
 
-  getRandomIndexesFromPassphrase(qty) {
+  setRandomIndexesFromPassphrase(qty) {
     const { values } = this.state;
     let idxs = values.map((w, index) => index);
     const indexes = [...Array(qty)]
