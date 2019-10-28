@@ -20,11 +20,11 @@ class DiscreetMode extends Component {
 
   shouldEnableDiscreetMode() {
     const {
-      addresses, location, isDiscreetMode, shouldEvaluate,
+      addresses, location, isDiscreetMode, shouldEvaluateForOtherAccounts,
     } = this.props;
     if (!isDiscreetMode) return false;
 
-    if (shouldEvaluate) {
+    if (shouldEvaluateForOtherAccounts) {
       if (addresses.length && location.pathname.includes(routes.transactions.path)) {
         return this.handleBlurOnTransactionDetailsPage();
       }
@@ -44,7 +44,7 @@ class DiscreetMode extends Component {
 
 DiscreetMode.defaultProps = {
   addresses: [],
-  shouldEvaluate: false,
+  shouldEvaluateForOtherAccounts: false,
 };
 
 DiscreetMode.propTypes = {
@@ -52,7 +52,7 @@ DiscreetMode.propTypes = {
   addresses: PropTypes.array,
   isDiscreetMode: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
-  shouldEvaluate: PropTypes.bool,
+  shouldEvaluateForOtherAccounts: PropTypes.bool,
 };
 
 
