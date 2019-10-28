@@ -1,6 +1,8 @@
 import React from 'react';
 import { tokenMap } from '../../../constants/tokens';
 import Box from '../../toolbox/box';
+import BoxHeader from '../../toolbox/box/header';
+import BoxContent from '../../toolbox/box/content';
 import CheckBox from '../../toolbox/checkBox';
 import LanguageSelect from './languageSelect';
 import Piwik from '../../../utils/piwik';
@@ -81,10 +83,10 @@ class Settings extends React.Component {
     return (
       <div className={styles.settingsHolder}>
         <Box className={styles.wrapper} width="medium">
-          <Box.Header>
+          <BoxHeader>
             <h1>{t('Settings')}</h1>
-          </Box.Header>
-          <Box.Content className={styles.content}>
+          </BoxHeader>
+          <BoxContent className={styles.content}>
             <section>
               <h2>{t('Locale')}</h2>
               <div className={styles.fieldGroup}>
@@ -191,7 +193,7 @@ class Settings extends React.Component {
                 </div>
               </label>
             </section>
-          </Box.Content>
+          </BoxContent>
         </Box>
       </div>
     );

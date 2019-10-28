@@ -1,6 +1,13 @@
 import React from 'react';
 import { PrimaryButton, TertiaryButton } from '../buttons/button';
 import Box from '.';
+import BoxHeader from './header';
+import BoxContent from './content';
+import BoxRow from './row';
+import BoxFooter from './footer';
+import BoxFooterButton from './footerButton';
+import BoxEmptyState from './emptyState';
+import BoxTabs from '../tabs';
 import DemoRenderer from '../demoRenderer';
 import Icon from '../icon';
 
@@ -12,25 +19,25 @@ const BoxDemo = () => (
     <h2>Box</h2>
     <DemoRenderer>
       <Box main isLoading>
-        <Box.Content> Content </Box.Content>
+        <BoxContent> Content </BoxContent>
       </Box>
     </DemoRenderer>
     <DemoRenderer>
       <Box width="medium">
-        <Box.Header>
+        <BoxHeader>
           <h1>Custom header</h1>
-        </Box.Header>
-        <Box.Content>Content</Box.Content>
-        <Box.Footer>
+        </BoxHeader>
+        <BoxContent>Content</BoxContent>
+        <BoxFooter>
           <PrimaryButton onClick={onClick}>Submit</PrimaryButton>
           <TertiaryButton onClick={onClick}>Cancel</TertiaryButton>
-        </Box.Footer>
+        </BoxFooter>
       </Box>
     </DemoRenderer>
     <DemoRenderer>
       <Box isLoading>
-        <Box.Header>
-          <Box.Tabs
+        <BoxHeader>
+          <BoxTabs
             tabs={[
               { name: 'Tab 1', value: 'tab1' },
               { name: 'Tab 2', value: 'tab2' },
@@ -39,26 +46,26 @@ const BoxDemo = () => (
             active="tab2"
           />
           <span>Some other stuff</span>
-        </Box.Header>
-        <Box.Content>
-          <Box.Row>Row #1</Box.Row>
-          <Box.Row>Row #2</Box.Row>
-          <Box.Row>Row #3</Box.Row>
-          <Box.Row>Row #4</Box.Row>
-        </Box.Content>
-        <Box.FooterButton onClick={onClick}>Load more</Box.FooterButton>
+        </BoxHeader>
+        <BoxContent>
+          <BoxRow>Row #1</BoxRow>
+          <BoxRow>Row #2</BoxRow>
+          <BoxRow>Row #3</BoxRow>
+          <BoxRow>Row #4</BoxRow>
+        </BoxContent>
+        <BoxFooterButton onClick={onClick}>Load more</BoxFooterButton>
       </Box>
     </DemoRenderer>
     <DemoRenderer>
       <Box>
-        <Box.Header>
+        <BoxHeader>
           <h1>Custom header</h1>
-        </Box.Header>
-        <Box.EmptyState>
+        </BoxHeader>
+        <BoxEmptyState>
           <Icon name="noTweetsIcon" />
           <h1>Title of empty state</h1>
           <p>And some longer text explaining what to do about this situation</p>
-        </Box.EmptyState>
+        </BoxEmptyState>
       </Box>
     </DemoRenderer>
   </React.Fragment>

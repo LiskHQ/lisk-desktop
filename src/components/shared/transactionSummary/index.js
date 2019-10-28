@@ -3,6 +3,9 @@ import React from 'react';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import { extractPublicKey } from '../../../utils/account';
 import Box from '../../toolbox/box';
+import BoxHeader from '../../toolbox/box/header';
+import BoxContent from '../../toolbox/box/content';
+import BoxFooter from '../../toolbox/box/footer';
 import CheckBox from '../../toolbox/checkBox';
 import HardwareWalletIllustration from '../../toolbox/hardwareWalletIllustration';
 import PassphraseInput from '../../toolbox/passphraseInput';
@@ -101,13 +104,13 @@ class TransactionSummary extends React.Component {
 
     return (
       <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
-        <Box.Header className="summary-header">
+        <BoxHeader className="summary-header">
           <h2>
             {title}
             {isHardwareWalletConnected ? t(' - Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel }) : ''}
           </h2>
-        </Box.Header>
-        <Box.Content className={`${styles.content} summary-content`}>
+        </BoxHeader>
+        <BoxContent className={`${styles.content} summary-content`}>
           <HardwareWalletIllustration account={account} size="s" />
           {children}
           <section>
@@ -164,12 +167,12 @@ class TransactionSummary extends React.Component {
           )
           : null
       }
-        </Box.Content>
+        </BoxContent>
         {
       isHardwareWalletConnected
         ? null
         : (
-          <Box.Footer className="summary-footer">
+          <BoxFooter className="summary-footer">
             <PrimaryButton
               className={`${styles.confirmBtn} confirm-button`}
               disabled={
@@ -186,7 +189,7 @@ class TransactionSummary extends React.Component {
             >
               {cancelButton.label}
             </TertiaryButton>
-          </Box.Footer>
+          </BoxFooter>
         )
     }
       </Box>

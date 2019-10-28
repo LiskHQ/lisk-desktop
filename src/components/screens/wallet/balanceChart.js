@@ -2,6 +2,8 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Line as LineChart } from 'react-chartjs-2';
 import Box from '../../toolbox/box';
+import BoxHeader from '../../toolbox/box/header';
+import BoxEmptyState from '../../toolbox/box/emptyState';
 import styles from './balanceChart.css';
 import * as ChartUtils from '../../../utils/balanceChart';
 import { tokenMap } from '../../../constants/tokens';
@@ -31,9 +33,9 @@ class BalanceGraph extends React.PureComponent {
 
     return (
       <Box className={`${styles.wrapper}`}>
-        <Box.Header>
+        <BoxHeader>
           <h1>{t('{{token}} balance', { token: tokenMap[token].label })}</h1>
-        </Box.Header>
+        </BoxHeader>
         <div className={styles.content}>
           <div className={`${styles.graphHolder}`}>
             { transactions.length
@@ -44,11 +46,11 @@ class BalanceGraph extends React.PureComponent {
                 />
               )
               : (
-                <Box.EmptyState>
+                <BoxEmptyState>
                   <p>
                     {t('There are no transactions.')}
                   </p>
-                </Box.EmptyState>
+                </BoxEmptyState>
               )
             }
           </div>
