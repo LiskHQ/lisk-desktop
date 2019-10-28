@@ -38,16 +38,6 @@ class PassphraseRenderer extends React.Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.hasErrors && !this.props.hasErrors) {
-      this.setState({
-        fieldSelected: undefined,
-        displayOptions: undefined,
-        chosenWords: {},
-      });
-    }
-  }
-
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
