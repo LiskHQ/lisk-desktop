@@ -17,6 +17,7 @@ class PassphraseRenderer extends React.Component {
       isCorrect: false,
       hasErrors: false,
       disabledButton: true,
+      values: [],
     };
 
     this.handleConfirm = this.handleConfirm.bind(this);
@@ -24,14 +25,16 @@ class PassphraseRenderer extends React.Component {
 
   UNSAFE_componentWillMount() { // eslint-disable-line camelcase
     const { indexes } = this.state;
+    const values = this.props.passphrase.split(' ');
 
-    const options = this.assembleWordOptions(this.props.values, indexes);
+    const options = this.assembleWordOptions(values, indexes);
     this.setState({
       ...this.state,
       options: {
         [indexes[0]]: options[0],
         [indexes[1]]: options[1],
       },
+      values,
     });
   }
 
@@ -51,7 +54,7 @@ class PassphraseRenderer extends React.Component {
 
   handleConfirm() {
     const { chosenWords, indexes } = this.state;
-    const { values } = this.props;
+    const { values } = this.state;
 
     const answers = Object.values(chosenWords);
     const status = answers.filter((answer, index) => answer === values[indexes[index]])
@@ -70,7 +73,8 @@ class PassphraseRenderer extends React.Component {
   }
 
   getRandomIndexesFromPassphrase(qty) {
-    let idxs = this.props.values.map((w, index) => index);
+    const { values } = this.state;
+    let idxs = values.map((w, index) => index);
     const indexes = [...Array(qty)]
       .map(() => {
         const index = idxs[Math.floor(Math.random() * idxs.length)];
@@ -78,7 +82,8 @@ class PassphraseRenderer extends React.Component {
         return index;
       })
       .sort((a, b) => a - b);
-    const options = this.assembleWordOptions(this.props.values, indexes);
+    console.log(values);
+    const options = this.assembleWordOptions(values, indexes);
 
     this.setState({
       options: {
@@ -159,10 +164,10 @@ class PassphraseRenderer extends React.Component {
 
   render() {
     const {
-      values, t, showInfo, isConfirmation, prevStep, footerStyle,
+      t, showInfo, isConfirmation, prevStep, footerStyle,
     } = this.props;
     const {
-      options, fieldSelected, chosenWords, disabledButton,
+      options, fieldSelected, chosenWords, disabledButton, values,
     } = this.state;
     const missingWordsIndexes = isConfirmation && Object.keys(options).map(k => Number(k));
 

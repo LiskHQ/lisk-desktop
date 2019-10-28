@@ -49,7 +49,7 @@ class PassphraseBackup extends React.Component {
         <div className={`${styles.optionsHolder}`}>
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
-              <PassphraseRenderer showInfo values={account.passphrase.split(' ')} />
+              <PassphraseRenderer showInfo passphrase={account.passphrase} />
               <div className={styles.copyButtonContainer}>
                 <CopyToClipboard
                   onClick={this.handleClick}
