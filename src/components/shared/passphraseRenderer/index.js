@@ -82,7 +82,6 @@ class PassphraseRenderer extends React.Component {
         return index;
       })
       .sort((a, b) => a - b);
-    console.log(values);
     const options = this.assembleWordOptions(values, indexes);
 
     this.setState({
@@ -95,7 +94,6 @@ class PassphraseRenderer extends React.Component {
       hasErrors: false,
       chosenWords: {},
       fieldSelected: undefined,
-      disabledButton: true,
     });
   }
 
@@ -158,7 +156,6 @@ class PassphraseRenderer extends React.Component {
         ...this.state.chosenWords,
         [index]: option,
       },
-      disabledButton: Object.keys(this.state.chosenWords).length < 1,
     });
   }
 
@@ -167,7 +164,7 @@ class PassphraseRenderer extends React.Component {
       t, showInfo, isConfirmation, prevStep, footerStyle,
     } = this.props;
     const {
-      options, fieldSelected, chosenWords, disabledButton, values,
+      options, fieldSelected, chosenWords, values,
     } = this.state;
     const missingWordsIndexes = isConfirmation && Object.keys(options).map(k => Number(k));
 
@@ -216,7 +213,7 @@ class PassphraseRenderer extends React.Component {
           <PrimaryButton
             className={[styles.confirmBtn, 'confirm'].join(' ')}
             onClick={this.handleConfirm}
-            disabled={disabledButton}
+            disabled={Object.keys(chosenWords).length < 2}
           >
             {t('Confirm')}
           </PrimaryButton>
