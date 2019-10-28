@@ -75,13 +75,13 @@
   text-align: center;
 }
 
-.confirmationFooter{
+.confirmationFooter {
   position: absolute;
   display: flex;
   bottom: 20px;
   width: 100%;
   justify-content: center;
-} 
+}
 
 .lastStep {
   min-width: 720px;
