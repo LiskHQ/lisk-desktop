@@ -17,7 +17,7 @@ const TransactionAmount = ({
     <div className={`${styles.wrapper} transaction-amount`}>
       { transaction.type === transactionTypes.send
         ? (
-          <DiscreetMode>
+          <DiscreetMode shouldEvaluate>
             <span className={isRecieve && !isSentToSelf ? styles.recieve : ''}>
               {isRecieve ? '' : '- '}
               <LiskAmount val={transaction.amount} roundTo={roundTo} />

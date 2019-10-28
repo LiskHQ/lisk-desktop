@@ -49,10 +49,25 @@ describe('DiscreetMode Component', () => {
       location: {
         pathname: '/explorer/accounts/34234234L',
       },
+      shouldEvaluate: true,
     };
     wrapper = setup(newProps);
     expect(wrapper).toContainMatchingElements(1, 'div');
     expect(wrapper.find('div')).not.toHaveClassName('discreetMode');
+  });
+
+  it('should render properly with DiscreetMode ON in Other  page with blur', () => {
+    const newProps = {
+      ...props,
+      location: {
+        pathname: '/explorer/transactions',
+      },
+      addresses: ['16313739661670634666L', '234324234L'],
+      shouldEvaluate: true,
+    };
+    wrapper = setup(newProps);
+    expect(wrapper).toContainMatchingElements(1, 'div');
+    expect(wrapper.find('div')).toHaveClassName('discreetMode');
   });
 
   it('should render properly with DiscreetMode OFF', () => {
