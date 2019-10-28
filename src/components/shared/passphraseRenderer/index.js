@@ -209,7 +209,7 @@ class PassphraseRenderer extends React.Component {
         {isConfirmation && (
         <div className={`${styles.confirmPassphraseFooter} ${footerStyle}`}>
           <PrimaryButton
-            className={styles.confirmBtn}
+            className={[styles.confirmBtn, 'confirm'].join(' ')}
             onClick={this.handleConfirm}
             disabled={disabledButton}
           >

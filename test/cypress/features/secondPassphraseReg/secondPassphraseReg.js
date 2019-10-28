@@ -10,8 +10,24 @@ Given(/^I enter the delegate name$/, function () {
   cy.wait(1200);
 });
 
-Given(/^I go to confirmation$/, function () {
+Given(/^I remember my passphrase$/, function () {
+  this.passphrase = [];
+  cy.get(ss.copyPassphrase).each(($el) => {
+    this.passphrase = [...this.passphrase, $el[0].textContent];
+  });
   cy.get(ss.goToConfirmation).click();
+});
+
+Given(/^I confirm my passphrase$/, function () {
+  cy.get(ss.copyPassphrase).each(($wordElement) => {
+    if ($wordElement[0].className.includes('empty')) {
+      cy.wrap($wordElement).click();
+      cy.get(ss.passphraseWordConfirm).each(($option) => {
+        if (this.passphrase.includes($option[0].textContent)) cy.wrap($option).click();
+      });
+    }
+  });
+  cy.get(ss.passphraseConfirmButton).click();
 });
 
 Given(/^I confirm transaction$/, function () {
