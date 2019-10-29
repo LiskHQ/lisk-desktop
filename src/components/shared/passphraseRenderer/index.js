@@ -22,7 +22,7 @@ class PassphraseRenderer extends React.Component {
     this.handleConfirm = this.handleConfirm.bind(this);
   }
 
-  UNSAFE_componentWillMount() { // eslint-disable-line camelcase
+  componentDidMount() {
     const { indexes } = this.state;
     const values = this.props.passphrase.split(' ');
 
