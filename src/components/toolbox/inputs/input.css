@@ -103,8 +103,13 @@
     padding-left: 36px;
   }
 
+  & .feedback {
+    position: absolute;
+    z-index: 1;
+  }
+
   & .feedback:not(:empty) {
-    margin-top: 10px;
+    margin-top: 8px;
   }
 }
 

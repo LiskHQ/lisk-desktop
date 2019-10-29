@@ -22,3 +22,7 @@
     height: 3px;
   }
 }
+
+.searchInput + span {
+  position: relative !important;
+}

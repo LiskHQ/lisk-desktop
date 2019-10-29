@@ -16,10 +16,9 @@ const Feedback = ({
     !!status && styles[status],
     'feedback',
   ].filter(name => name).join(' ');
+
   return (
-    <span
-      className={classNames}
-    >
+    <span className={classNames}>
       {showIcon && icon && <Icon name={icon} />}
       {children}
     </span>
