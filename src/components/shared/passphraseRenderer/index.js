@@ -15,7 +15,6 @@ class PassphraseRenderer extends React.Component {
       options: {},
       isCorrect: false,
       hasErrors: false,
-      disabledButton: true,
       values: [],
     };
 
