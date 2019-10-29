@@ -21,7 +21,6 @@
     padding-top var(--animation-speed-fast) linear,
     margin-top var(--animation-speed-fast) linear,
     background var(--animation-speed-fast) linear;
-  width: 100%;
 
   &.show {
     max-height: 100px;

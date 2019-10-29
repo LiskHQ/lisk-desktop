@@ -135,7 +135,7 @@ class SearchBar extends React.Component {
           name="searchText"
           value={searchTextValue}
           placeholder={t('Search within the network...')}
-          className="search-input"
+          className={`${styles.searchInput} search-input`}
           onKeyDown={this.onHandleKeyPress}
           isLoading={suggestions.isLoading || this.timeout}
           feedback={feedback}
