@@ -59,9 +59,9 @@ class PassphraseBackup extends React.Component {
                   Container={SecondaryButton}
                   containerProps={{ size: 'xs' }}
                 />
-                <span className={`${styles.tipContainer} ${!this.state.showTip && styles.hidden}`}>
+                <span className={['tip', styles.tipContainer, !this.state.showTip && styles.hidden].join(' ')}>
                   <Icon color="red" name="warningRound" />
-                  <p className="tip">{t('Make sure to store it somewhere safe')}</p>
+                  <p>{t('Make sure to store it somewhere safe')}</p>
                 </span>
               </div>
             </div>

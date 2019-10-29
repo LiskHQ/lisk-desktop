@@ -14,7 +14,9 @@ describe('PassphraseBackup', () => {
 
   it('should show tip after copying passphrase', () => {
     wrapper = mount(<PassphraseBackup {...props} />);
+    expect(wrapper.find('.tip')).toHaveClassName('hidden');
     wrapper.find('CopyToClipboard').at(0).simulate('click');
-    expect(wrapper.find('.tip').text()).toBe('Make sure to store it somewhere safe');
+    expect(wrapper.find('.tip')).not.toHaveClassName('hidden');
+    expect(wrapper.find('.tip')).toHaveText('Make sure to store it somewhere safe');
   });
 });
