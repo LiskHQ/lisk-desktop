@@ -20,6 +20,7 @@ class PassphraseRenderer extends React.Component {
 
     this.values = props.passphrase.split(' ');
     this.handleConfirm = this.handleConfirm.bind(this);
+    this.setRandomIndexesFromPassphrase = this.setRandomIndexesFromPassphrase.bind(this);
   }
 
   componentWillUnmount() {
