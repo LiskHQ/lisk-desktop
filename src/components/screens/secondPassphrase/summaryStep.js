@@ -26,7 +26,7 @@ const SummaryStep = ({
               ...(success ? {
                 header: t('Registration completed'),
                 illustration: 'secondPassphraseSuccess',
-                title: t('Second passphrase registration submitted'),
+                title: t('2nd passphrase registration submitted'),
                 message: t('You will be notified when your transaction is confirmed.'),
                 primaryButon: {
                   title: t('Go to Wallet'),
@@ -36,8 +36,8 @@ const SummaryStep = ({
               } : {
                 header: t('Registration failed'),
                 illustration: 'secondPassphraseError',
-                title: t('Second passphrase registration submitted'),
-                message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
+                title: t('2nd passphrase registration failed'),
+                message: t('There was an error on the transaction.'),
                 primaryButon: {
                   title: t('Go to Wallet'),
                   onClick: finalCallback,
