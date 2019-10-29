@@ -74,11 +74,11 @@ class PassphraseRenderer extends React.Component {
     const numberOfOptions = 3;
 
     const mixWithMissingWords = options =>
-      options.reduce((list, item, listIndex) => {
+      options.reduce((accumulator, item, listIndex) => {
         const rand = Math.floor(Math.random() * 0.99 * item.length);
         item[rand] = values[missing[listIndex]];
-        list[missing[listIndex]] = item;
-        return list;
+        accumulator[missing[listIndex]] = item;
+        return accumulator;
       }, {});
 
     const wordOptions = [...Array(missing.length)].map(() =>
