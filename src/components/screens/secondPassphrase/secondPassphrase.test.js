@@ -29,7 +29,6 @@ describe('SecondPassphrase', () => {
     });
 
     const selectRightWord = (comp, secondPassphrase) => {
-      comp.find('.emptyWord').at(0).simulate('click');
       comp.find('div.option').forEach(option =>
         secondPassphrase.includes(option.text()) && option.simulate('click'));
     };
@@ -92,8 +91,7 @@ describe('SecondPassphrase', () => {
       expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
     });
 
-    // TODO enable the next test when implemented
-    it.skip('should handle registerSecondPassphrase failure', () => {
+    it('should handle registerSecondPassphrase failure', () => {
       props.secondPassphraseRegistered = jest.fn(({ callback }) => {
         callback({ success: false, error: { message: 'custom message' } });
       });
@@ -109,7 +107,6 @@ describe('SecondPassphrase', () => {
       wrapper.update();
       wrapper.find('.confirmation-checkbox input').first().simulate('change');
       wrapper.find('.confirm-button').hostNodes().simulate('click');
-
       expect(props.secondPassphraseRegistered).toHaveBeenCalledWith(expect.objectContaining({
         passphrase: props.account.passphrase,
       }));

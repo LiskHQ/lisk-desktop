@@ -35,10 +35,8 @@ describe('Register Process - Confirm Passphrase', () => {
 
   it('Should handle selection', () => {
     wrapper.find('.passphraseContainer');
-    wrapper.find('.emptyWord').at(0).simulate('click');
     selectRightWords(wrapper);
     expect(wrapper.find('.selected')).toExist();
-    wrapper.find('.emptyWord').at(0).simulate('click');
     selectRightWords(wrapper);
     wrapper.find('.confirmPassphraseFooter Button').at(0).simulate('click');
     expect(wrapper.find('.correct')).toExist();
@@ -49,9 +47,7 @@ describe('Register Process - Confirm Passphrase', () => {
 
   it('Should update empty values after wrong selection', () => {
     wrapper.find('.passphraseContainer');
-    wrapper.find('.emptyWord').at(0).simulate('click');
     selectWrongWords(wrapper);
-    wrapper.find('.emptyWord').at(0).simulate('click');
     selectWrongWords(wrapper);
     wrapper.find('.confirmPassphraseFooter Button').at(0).simulate('click');
     clock.tick(1500);

@@ -21,13 +21,12 @@ const SummaryStep = ({
           passphrase: account.passphrase,
           account: account.info.LSK,
           callback: ({ success, error }) => {
-            // TODO: To be tackled during multiStep refactoring
-            /* istanbul ignore next */
             nextStep({
               success,
               ...(success ? {
-                title: t('2nd passphrase registered'),
+                header: t('Registration completed'),
                 illustration: 'secondPassphraseSuccess',
+                title: t('Second passphrase registration submitted'),
                 message: t('You will be notified when your transaction is confirmed.'),
                 primaryButon: {
                   title: t('Go to Wallet'),
@@ -35,8 +34,9 @@ const SummaryStep = ({
                   onClick: finalCallback,
                 },
               } : {
-                title: t('Registration failed'),
+                header: t('Registration failed'),
                 illustration: 'secondPassphraseError',
+                title: t('Second passphrase registration submitted'),
                 message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
                 primaryButon: {
                   title: t('Go to Wallet'),

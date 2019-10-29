@@ -5,15 +5,15 @@ import styles from './secondPassphrase.css';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 
 const RegistrationResult = ({
-  t, finalCallback, message, illustration,
+  t, finalCallback, message, illustration, title, header,
 }) => (
   <Box width="medium" className={`${styles.passphraseConfirmation}`}>
     <Box.Header>
-      <h2>{t('Registration completed')}</h2>
+      <h2>{header}</h2>
     </Box.Header>
     <Box.Content className={styles.transactionResultContent}>
       <Illustration name={illustration} />
-      <h1 className={styles.header}>{t('Second passphrase registration submitted')}</h1>
+      <h1 className={styles.header}>{title}</h1>
       <p className={styles.info}>{message}</p>
     </Box.Content>
     <Box.Footer className={styles.confirmPassphraseFooter}>
