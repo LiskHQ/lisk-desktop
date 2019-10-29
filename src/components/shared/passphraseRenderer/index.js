@@ -13,10 +13,7 @@ class PassphraseRenderer extends React.Component {
       indexes: initialIndexes,
       fieldSelected: initialIndexes[0],
       chosenWords: {},
-      options: {
-        [initialIndexes[0]]: this.assembleWordOptions(props.passphrase.split(' '), initialIndexes)[0],
-        [initialIndexes[1]]: this.assembleWordOptions(props.passphrase.split(' '), initialIndexes)[1],
-      },
+      options: this.assembleWordOptions(props.passphrase.split(' '), initialIndexes),
       isCorrect: false,
       hasErrors: false,
     };
@@ -57,13 +54,9 @@ class PassphraseRenderer extends React.Component {
         return index;
       })
       .sort((a, b) => a - b);
-    const options = this.assembleWordOptions(this.values, indexes);
 
     this.setState({
-      options: {
-        [indexes[0]]: options[0],
-        [indexes[1]]: options[1],
-      },
+      options: this.assembleWordOptions(this.values, indexes),
       indexes,
       answers: [],
       hasErrors: false,
@@ -78,11 +71,12 @@ class PassphraseRenderer extends React.Component {
     const numberOfOptions = 3;
 
     const mixWithMissingWords = options =>
-      options.map((list, listIndex) => {
-        const rand = Math.floor(Math.random() * 0.99 * list.length);
-        list[rand] = values[missing[listIndex]];
+      options.reduce((list, item, listIndex) => {
+        const rand = Math.floor(Math.random() * 0.99 * item.length);
+        item[rand] = values[missing[listIndex]];
+        list[missing[listIndex]] = item;
         return list;
-      });
+      }, {});
 
     const wordOptions = [...Array(missing.length)].map(() =>
       [...Array(numberOfOptions)].map(
