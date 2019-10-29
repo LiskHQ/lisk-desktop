@@ -1,13 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import PassphraseBackup from '.';
-import { generatePassphrase } from '../../../utils/passphrase';
+import accounts from '../../../../test/constants/accounts';
 
 describe('PassphraseBackup', () => {
   let wrapper;
   const props = {
     account: {
-      passphrase: generatePassphrase(),
+      passphrase: accounts.genesis.passphrase,
     },
     t: key => key,
   };
