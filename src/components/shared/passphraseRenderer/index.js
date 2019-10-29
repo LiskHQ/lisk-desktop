@@ -11,7 +11,7 @@ class PassphraseRenderer extends React.Component {
     this.state = {
       indexes: [2, 9],
       fieldSelected: undefined,
-      displayOptions: undefined,
+      displayOptions: true,
       chosenWords: {},
       options: {},
       isCorrect: false,
@@ -35,6 +35,7 @@ class PassphraseRenderer extends React.Component {
         [indexes[1]]: options[1],
       },
       values,
+      fieldSelected: indexes[0],
     });
   }
 
@@ -83,7 +84,8 @@ class PassphraseRenderer extends React.Component {
       answers: [],
       hasErrors: false,
       chosenWords: {},
-      fieldSelected: undefined,
+      fieldSelected: indexes[0],
+      displayOptions: true,
     });
   }
 
@@ -139,13 +141,19 @@ class PassphraseRenderer extends React.Component {
     return this.state.chosenWords[i] || '_______';
   }
 
-  chooseWord(index, option) {
+  chooseWord(selectedIndex, option) {
+    const { chosenWords, indexes } = this.state;
+    const otherIndex = indexes.find(index => index !== selectedIndex);
+    const displayOptions = Object.values(chosenWords) < 2;
+
     this.setState({
       ...this.state,
       chosenWords: {
-        ...this.state.chosenWords,
-        [index]: option,
+        ...chosenWords,
+        [selectedIndex]: option,
       },
+      fieldSelected: displayOptions ? otherIndex : undefined,
+      displayOptions,
     });
   }
 
@@ -154,7 +162,7 @@ class PassphraseRenderer extends React.Component {
       t, showInfo, isConfirmation, prevStep, footerStyle,
     } = this.props;
     const {
-      options, fieldSelected, chosenWords, values,
+      options, fieldSelected, chosenWords, values, displayOptions,
     } = this.state;
     const missingWordsIndexes = isConfirmation && Object.keys(options).map(k => Number(k));
 
@@ -185,19 +193,17 @@ class PassphraseRenderer extends React.Component {
             ))}
           </div>
         </div>
-        {typeof fieldSelected === 'number' && Object.keys(chosenWords).length < 2 && (
-          <div className={[styles.optionsContainer, 'word-options'].join(' ')}>
-            {options[fieldSelected].map((option, i) => (
-              <div
-                className="option"
-                onClick={() => this.chooseWord(fieldSelected, option)}
-                key={i}
-              >
-                {option}
-              </div>
-            ))}
-          </div>
-        )}
+        <div className={[styles.optionsContainer, 'word-options'].join(' ')}>
+          {isConfirmation && displayOptions && options[fieldSelected].map((option, i) => (
+            <div
+              className="option"
+              onClick={() => this.chooseWord(fieldSelected, option)}
+              key={i}
+            >
+              {option}
+            </div>
+          ))}
+        </div>
         {isConfirmation && (
         <div className={`${styles.confirmPassphraseFooter} ${footerStyle}`}>
           <PrimaryButton
