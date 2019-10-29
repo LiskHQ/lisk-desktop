@@ -191,7 +191,7 @@ class PassphraseRenderer extends React.Component {
           </div>
         </div>
         <div className={[styles.optionsContainer, 'word-options'].join(' ')}>
-          {isConfirmation && fieldSelected && options[fieldSelected].map((option, i) => (
+          {isConfirmation && typeof fieldSelected === 'number' && options[fieldSelected].map((option, i) => (
             <div
               className="option"
               onClick={() => this.chooseWord(fieldSelected, option)}
