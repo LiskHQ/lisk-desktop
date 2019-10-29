@@ -24,7 +24,6 @@ const SummaryStep = ({
             nextStep({
               success,
               ...(success ? {
-                header: t('Registration completed'),
                 illustration: 'secondPassphraseSuccess',
                 title: t('2nd passphrase registration submitted'),
                 message: t('You will be notified when your transaction is confirmed.'),
@@ -34,7 +33,6 @@ const SummaryStep = ({
                   onClick: finalCallback,
                 },
               } : {
-                header: t('Registration failed'),
                 illustration: 'secondPassphraseError',
                 title: t('2nd passphrase registration failed'),
                 message: t('There was an error on the transaction.'),

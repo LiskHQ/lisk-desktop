@@ -7,7 +7,7 @@ import SummaryStep from './summaryStep';
 import routes from '../../../constants/routes';
 import styles from './secondPassphrase.css';
 import ConfirmPassphrase from './confirmPassphrase';
-import RegistrationResult from './registrationResult';
+import TransactionResult from '../../shared/transactionResult';
 
 class SecondPassphrase extends React.Component {
   constructor() {
@@ -62,7 +62,7 @@ class SecondPassphrase extends React.Component {
             account={account}
             t={t}
           />
-          <RegistrationResult t={t} />
+          <TransactionResult t={t} />
         </MultiStep>
       </div>
     );
