@@ -28,7 +28,7 @@ const SummaryStep = ({
                 title: t('2nd passphrase registration submitted'),
                 message: t('You will be notified when your transaction is confirmed.'),
                 primaryButon: {
-                  title: t('Go to Wallet'),
+                  title: t('Go to wallet'),
                   className: 'go-to-wallet',
                   onClick: finalCallback,
                 },
@@ -37,7 +37,7 @@ const SummaryStep = ({
                 title: t('2nd passphrase registration failed'),
                 message: t('There was an error on the transaction.'),
                 primaryButon: {
-                  title: t('Go to Wallet'),
+                  title: t('Go to wallet'),
                   onClick: finalCallback,
                 },
                 error,
