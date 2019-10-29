@@ -45,9 +45,9 @@ class PassphraseRenderer extends React.Component {
     this.timeout = setTimeout(cb, 1500);
   }
 
-  setRandomIndexesFromPassphrase(qty) {
+  setRandomIndexesFromPassphrase(numberOfMissingWords) {
     let idxs = this.values.map((w, index) => index);
-    const indexes = [...Array(qty)]
+    const indexes = [...Array(numberOfMissingWords)]
       .map(() => {
         const index = idxs[Math.floor(Math.random() * idxs.length)];
         idxs = [...idxs.slice(0, index), ...idxs.slice(index + 1)];
