@@ -8,33 +8,21 @@ import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 class PassphraseRenderer extends React.Component {
   constructor(props) {
     super(props);
+    const initialIndexes = [2, 9];
     this.state = {
-      indexes: [2, 9],
-      fieldSelected: undefined,
+      indexes: initialIndexes,
+      fieldSelected: initialIndexes[0],
       chosenWords: {},
-      options: {},
+      options: {
+        [initialIndexes[0]]: this.assembleWordOptions(props.passphrase.split(' '), initialIndexes)[0],
+        [initialIndexes[1]]: this.assembleWordOptions(props.passphrase.split(' '), initialIndexes)[1],
+      },
       isCorrect: false,
       hasErrors: false,
-      values: [],
     };
 
+    this.values = props.passphrase.split(' ');
     this.handleConfirm = this.handleConfirm.bind(this);
-  }
-
-  componentDidMount() {
-    const { indexes } = this.state;
-    const values = this.props.passphrase.split(' ');
-
-    const options = this.assembleWordOptions(values, indexes);
-    this.setState({
-      ...this.state,
-      options: {
-        [indexes[0]]: options[0],
-        [indexes[1]]: options[1],
-      },
-      values,
-      fieldSelected: indexes[0],
-    });
   }
 
   componentWillUnmount() {
@@ -43,10 +31,9 @@ class PassphraseRenderer extends React.Component {
 
   handleConfirm() {
     const { chosenWords, indexes } = this.state;
-    const { values } = this.state;
 
     const answers = Object.values(chosenWords);
-    const isCorrect = answers.filter((answer, index) => answer === values[indexes[index]])
+    const isCorrect = answers.filter((answer, index) => answer === this.values[indexes[index]])
       .length === 2;
 
     const cb = isCorrect
@@ -62,8 +49,7 @@ class PassphraseRenderer extends React.Component {
   }
 
   setRandomIndexesFromPassphrase(qty) {
-    const { values } = this.state;
-    let idxs = values.map((w, index) => index);
+    let idxs = this.values.map((w, index) => index);
     const indexes = [...Array(qty)]
       .map(() => {
         const index = idxs[Math.floor(Math.random() * idxs.length)];
@@ -71,7 +57,7 @@ class PassphraseRenderer extends React.Component {
         return index;
       })
       .sort((a, b) => a - b);
-    const options = this.assembleWordOptions(values, indexes);
+    const options = this.assembleWordOptions(this.values, indexes);
 
     this.setState({
       options: {
@@ -158,7 +144,7 @@ class PassphraseRenderer extends React.Component {
       t, showInfo, isConfirmation, prevStep, footerStyle,
     } = this.props;
     const {
-      options, fieldSelected, chosenWords, values,
+      options, fieldSelected, chosenWords,
     } = this.state;
     const missingWordsIndexes = isConfirmation && Object.keys(options).map(k => Number(k));
 
@@ -174,7 +160,7 @@ class PassphraseRenderer extends React.Component {
         )}
         <div className={styles.passphraseContainer}>
           <div className={`${styles.inputsRow} ${grid.row} passphrase`}>
-            {values.map((value, i) => (
+            {this.values.map((value, i) => (
               <div
                 onClick={() => this.handleClick(i)}
                 className={`${grid['col-xs-2']} ${styles.inputContainer}`}
