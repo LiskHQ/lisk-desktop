@@ -9,7 +9,7 @@ describe('PassphraseBackup', () => {
     account: {
       passphrase: generatePassphrase(),
     },
-    t: jest.fn(),
+    t: key => key,
   };
 
   it('should show tip after copying passphrase', () => {
