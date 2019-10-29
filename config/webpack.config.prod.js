@@ -21,7 +21,7 @@ module.exports = merge(baseConfig, reactConfig, {
     splitChunks: {
       cacheGroups: {
         vendor: {
-          test: /[\\/]node_modules[\\/]/,
+          test: /[\\/]node_modules[\\/](?!jspdf)[a-zA-Z0-9-._]+[\\/]/,
           name: 'vendor',
           chunks: 'all',
         },
