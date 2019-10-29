@@ -6,6 +6,10 @@ import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import { tokenMap } from '../../../../constants/tokens';
 import BlockFilterDropdown from './blockFilterDropdown';
 import Box from '../../../toolbox/box';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
+import BoxFooterButton from '../../../toolbox/box/footerButton';
+import BoxEmptyState from '../../../toolbox/box/emptyState';
 import FilterBar from '../../../shared/filterBar';
 import Illustration from '../../../toolbox/illustration';
 import LiskAmount from '../../../shared/liskAmount';
@@ -40,26 +44,26 @@ const Blocks = ({
     <div>
       <MonitorHeader />
       <Box isLoading={blocks.isLoading} width="full" main>
-        <Box.Header>
+        <BoxHeader>
           <h2>{t('All blocks')}</h2>
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
-        </Box.Header>
+        </BoxHeader>
         <FilterBar {...{
           clearFilter, clearAllFilters, filters, formatters, t,
         }}
         />
         {!blocks.isLoading && blocks.data.length === 0
           ? (
-            <Box.Content>
-              <Box.EmptyState>
+            <BoxContent>
+              <BoxEmptyState>
                 <Illustration name="emptyWallet" />
                 <h3>{`${blocks.error || t('No search results in given criteria.')}`}</h3>
-              </Box.EmptyState>
-            </Box.Content>
+              </BoxEmptyState>
+            </BoxContent>
           )
           : (
             <React.Fragment>
-              <Box.Content className={styles.content}>
+              <BoxContent className={styles.content}>
                 <Table
                   getRowLink={block => `${routes.blocks.path}/${block.id}`}
                   data={blocks.data}
@@ -109,14 +113,14 @@ const Blocks = ({
                     /* eslint-enable react/display-name */
                   }]}
                 />
-              </Box.Content>
+              </BoxContent>
               {!!blocks.data.length && blocks.data.length % DEFAULT_LIMIT === 0 && (
-              <Box.FooterButton
+              <BoxFooterButton
                 className="load-more"
                 onClick={handleLoadMore}
               >
                 {t('Load more')}
-              </Box.FooterButton>
+              </BoxFooterButton>
               )}
             </React.Fragment>
           )

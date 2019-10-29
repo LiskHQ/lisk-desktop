@@ -2,6 +2,8 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
+import BoxHeader from '../../toolbox/box/header';
+import BoxRow from '../../toolbox/box/row';
 import Icon from '../../toolbox/icon';
 import LiskAmount from '../../shared/liskAmount';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
@@ -16,10 +18,10 @@ class WalletDetails extends React.Component {
 
     return (
       <Box className={styles.wrapper}>
-        <Box.Header>
+        <BoxHeader>
           <h1>{t('Wallet details')}</h1>
-        </Box.Header>
-        <Box.Row className={styles.row}>
+        </BoxHeader>
+        <BoxRow className={styles.row}>
           <AccountVisual
             address={address}
             size={40}
@@ -33,12 +35,12 @@ class WalletDetails extends React.Component {
               />
             </div>
           </div>
-        </Box.Row>
-        <Box.Row className={styles.row}>
+        </BoxRow>
+        <BoxRow className={styles.row}>
           <Icon name="balance" />
           <div>
             <label>{t('Balance')}</label>
-            <DiscreetMode>
+            <DiscreetMode shouldEvaluateForOtherAccounts>
               <div className={styles.value}>
                 <LiskAmount val={balance} />
                 {' '}
@@ -46,7 +48,7 @@ class WalletDetails extends React.Component {
               </div>
             </DiscreetMode>
           </div>
-        </Box.Row>
+        </BoxRow>
       </Box>
     );
   }

@@ -5,16 +5,12 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { applyDeviceClass } from './utils/applyDeviceClass';
 import App from './app';
-// import history from './history';
 import store from './store';
 import i18n from './i18n'; // initialized i18next instance
 import externalLinks from './utils/externalLinks';
-import localJSONStorage from './utils/localJSONStorage';
-import loadRemoteComponent from './utils/extensions';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
 import newRelease from './utils/newRelease';
-import LiskHubExtensions from './utils/liskHubExtensions';
 
 if (env.production) {
   externalLinks.init();
@@ -48,14 +44,3 @@ if (module.hot) {
 }
 
 applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
-
-window.LiskHubExtensions = LiskHubExtensions;
-
-// TODO multiple URLS
-const url = localJSONStorage.get('url', '');
-
-// urls.forEach((url) => {
-if (url) {
-  loadRemoteComponent(url);
-}
-// });

@@ -1,7 +1,7 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import AccountInfo from './accountInfo';
-import Box from '../../../../toolbox/box';
+import BoxRow from '../../../../toolbox/box/row';
 import TransactionTypeFigure from '../../../wallet/transactions/typeFigure/TransactionTypeFigure';
 import TransactionVotes from './transactionVotes';
 import styles from './transactionDetailView.css';
@@ -49,7 +49,7 @@ class TransactionDetailView extends React.Component {
             <h2 className="tx-header">{title}</h2>
           </div>
         ) : null}
-        <Box.Row className={styles.detailsWrapper}>
+        <BoxRow className={styles.detailsWrapper}>
           <AccountInfo
             name={getDelegateName(transaction)}
             token={activeToken}
@@ -58,10 +58,10 @@ class TransactionDetailView extends React.Component {
             addressClass="sender-address"
             label={senderLabel}
           />
-        </Box.Row>
+        </BoxRow>
         {transaction.type === transactionTypes.send
           ? (
-            <Box.Row className={styles.detailsWrapper}>
+            <BoxRow className={styles.detailsWrapper}>
               <AccountInfo
                 token={activeToken}
                 netCode={netCode}
@@ -69,21 +69,21 @@ class TransactionDetailView extends React.Component {
                 addressClass="receiver-address"
                 label={t('Recipient')}
               />
-            </Box.Row>
+            </BoxRow>
           )
           : null
         }
         {children}
         { transaction.type === transactionTypes.send
           && (transaction.asset && transaction.asset.data) ? (
-            <Box.Row>
+            <BoxRow>
               <div className={styles.detailsWrapper}>
                 <span className={styles.label}>{t('Message')}</span>
                 <div className={`${styles.message} tx-reference`}>
                   {transaction.asset.data}
                 </div>
               </div>
-            </Box.Row>
+            </BoxRow>
           ) : null
         }
         { transaction.type === transactionTypes.vote && transaction.votesName ? (

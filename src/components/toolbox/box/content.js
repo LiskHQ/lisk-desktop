@@ -15,4 +15,6 @@ Content.defaultProps = {
   className: '',
 };
 
+Content.displayName = 'BoxContent';
+
 export default Content;

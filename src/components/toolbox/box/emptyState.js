@@ -11,4 +11,6 @@ EmptyState.defaultProps = {
   className: '',
 };
 
+EmptyState.displayName = 'BoxEmptyState';
+
 export default EmptyState;

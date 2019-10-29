@@ -5,6 +5,10 @@ import { Input } from '../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
+import BoxHeader from '../../toolbox/box/header';
+import BoxContent from '../../toolbox/box/content';
+import BoxFooter from '../../toolbox/box/footer';
+import BoxInfoText from '../../toolbox/box/infoText';
 import Icon from '../../toolbox/icon';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './verifyMessage.css';
@@ -135,16 +139,16 @@ export default class VerifyMessageInput extends React.Component {
 
     return (
       <Box main>
-        <Box.Header>
+        <BoxHeader>
           <h1>{t('Verify message')}</h1>
-        </Box.Header>
-        <Box.Content>
-          <Box.InfoText>
+        </BoxHeader>
+        <BoxContent>
+          <BoxInfoText>
             {t('Use this tool to verify the validity of a signed message. This allows you to ensure that the person who signed the message was in fact the account owner')}
             <Tooltip className="showOnBottom">
               <p>{t('If you would like to ensure the ownership of another account, you can send a message via Lisk Hub and request the recipient to sign it.')}</p>
             </Tooltip>
-          </Box.InfoText>
+          </BoxInfoText>
           <div className={styles.inputViewSwitcher}>
             {t('Input view')}
             <Icon
@@ -174,8 +178,8 @@ export default class VerifyMessageInput extends React.Component {
               type={type}
             />
           ))}
-        </Box.Content>
-        <Box.Footer>
+        </BoxContent>
+        <BoxFooter>
           <PrimaryButton
             onClick={this.goNext}
             disabled={!this.canSubmit}
@@ -184,7 +188,7 @@ export default class VerifyMessageInput extends React.Component {
             {t('Continue')}
           </PrimaryButton>
           <TertiaryButton onClick={history.goBack} className="go-back">{t('Go back')}</TertiaryButton>
-        </Box.Footer>
+        </BoxFooter>
       </Box>
     );
   }

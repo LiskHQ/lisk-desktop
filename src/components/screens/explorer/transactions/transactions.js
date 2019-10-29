@@ -5,6 +5,9 @@ import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import { SecondaryButton } from '../../../toolbox/buttons/button';
 import { tokenMap } from '../../../../constants/tokens';
 import Box from '../../../toolbox/box';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
+import BoxRow from '../../../toolbox/box/row';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import DiscreetMode from '../../../shared/discreetMode';
 import LiskAmount from '../../../shared/liskAmount';
@@ -72,7 +75,7 @@ class Transactions extends React.Component {
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
         { !error ? (
           <Box width="medium" isLoading={isLoading}>
-            <Box.Header>
+            <BoxHeader>
               <h1>{t('Transaction details')}</h1>
               <CopyToClipboard
                 value={this.getLinkToCopy()}
@@ -81,15 +84,15 @@ class Transactions extends React.Component {
                 containerProps={{ size: 'xs' }}
                 copyClassName={styles.copyIcon}
               />
-            </Box.Header>
-            <Box.Content className={styles.mainContent}>
+            </BoxHeader>
+            <BoxContent className={styles.mainContent}>
               <TransactionDetailView
                 netCode={netCode}
                 address={address}
                 activeToken={activeToken}
                 transaction={transaction}
               >
-                <Box.Row>
+                <BoxRow>
                   <div className={styles.value}>
                     <span className={styles.label}>{t('Date')}</span>
                     <span className={`${styles.date} tx-date`}>
@@ -115,8 +118,8 @@ class Transactions extends React.Component {
                       {transaction.confirmations || 0}
                     </span>
                   </div>
-                </Box.Row>
-                <Box.Row>
+                </BoxRow>
+                <BoxRow>
                   <div className={`${styles.value}`}>
                     <span className={styles.label}>
                       {t('Transaction ID')}
@@ -133,15 +136,15 @@ class Transactions extends React.Component {
                       />
                     </span>
                   </div>
-                </Box.Row>
-                <Box.Row>
+                </BoxRow>
+                <BoxRow>
                   { transaction.type === transactionTypes.send
                     ? (
                       <div className={styles.value}>
                         <span className={styles.label}>
                           {t('Amount')}
                         </span>
-                        <DiscreetMode addresses={addresses}>
+                        <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
                           <span className="tx-amount">
                             <LiskAmount val={transaction.amount} />
                             {' '}
@@ -160,9 +163,9 @@ class Transactions extends React.Component {
                       {activeToken}
                     </span>
                   </div>
-                </Box.Row>
+                </BoxRow>
               </TransactionDetailView>
-            </Box.Content>
+            </BoxContent>
           </Box>
         ) : (
           <NotFound />

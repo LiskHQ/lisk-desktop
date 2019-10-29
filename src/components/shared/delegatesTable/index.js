@@ -5,6 +5,11 @@ import { Input } from '../../toolbox/inputs';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { tokenMap } from '../../../constants/tokens';
 import Box from '../../toolbox/box';
+import BoxHeader from '../../toolbox/box/header';
+import BoxContent from '../../toolbox/box/content';
+import BoxFooterButton from '../../toolbox/box/footerButton';
+import BoxEmptyState from '../../toolbox/box/emptyState';
+import BoxTabs from '../../toolbox/tabs';
 import Illustration from '../../toolbox/illustration';
 import LiskAmount from '../liskAmount';
 import Table from '../../toolbox/table';
@@ -75,10 +80,10 @@ const DelegatesTable = ({
 
   return (
     <Box main isLoading={delegates.isLoading}>
-      <Box.Header>
+      <BoxHeader>
         {tabs.tabs.length === 1
           ? <h2>{tabs.tabs[0].name}</h2>
-          : <Box.Tabs {...tabs} />
+          : <BoxTabs {...tabs} />
         }
         <span>
           <Input
@@ -89,29 +94,29 @@ const DelegatesTable = ({
             placeholder={t('Filter by name...')}
           />
         </span>
-      </Box.Header>
+      </BoxHeader>
       {delegates.data.length || delegates.isLoading
         ? (
-          <Box.Content className={styles.content}>
+          <BoxContent className={styles.content}>
             <Table {...{
               columns, data, rowClassName: 'delegate-row', ...rest,
             }}
             />
-          </Box.Content>
+          </BoxContent>
         )
         : (
-          <Box.Content>
-            <Box.EmptyState>
+          <BoxContent>
+            <BoxEmptyState>
               <Illustration name="emptyWallet" />
               <h3>{`${delegates.error || t('No delegates found.')}`}</h3>
-            </Box.EmptyState>
-          </Box.Content>
+            </BoxEmptyState>
+          </BoxContent>
         )
       }
       {!!canLoadMore && !delegates.isLoading && (
-        <Box.FooterButton onClick={handleLoadMore} className="loadMore">
+        <BoxFooterButton onClick={handleLoadMore} className="loadMore">
           {t('Load more')}
-        </Box.FooterButton>
+        </BoxFooterButton>
       )}
     </Box>
   );

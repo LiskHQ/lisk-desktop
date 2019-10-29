@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const { NamedModulesPlugin } = require('webpack');
@@ -13,13 +14,7 @@ module.exports = merge(baseConfig, reactConfig, {
     filename: 'bundle.[name].[hash].js',
   },
   optimization: {
-    minimize: false,
-    // minimize: true, TODO enable this lines when you remove all component.displayName
-    // minimizer: [
-    //   new TerserPlugin({
-    //     test: /\.js(\?.*)?$/i,
-    //   }),
-    // ],
+    minimizer: [new TerserPlugin({ test: /\.js(\?.*)?$/i })],
     runtimeChunk: 'single', // enable "runtime" chunk
     splitChunks: {
       cacheGroups: {

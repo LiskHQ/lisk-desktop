@@ -4,6 +4,8 @@ import moment from 'moment/min/moment-with-locales';
 import { withTranslation } from 'react-i18next';
 import voting from '../../../constants/voting';
 import Box from '../../toolbox/box';
+import BoxHeader from '../../toolbox/box/header';
+import BoxContent from '../../toolbox/box/content';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { getUnixTimestampFromValue } from '../../../utils/datetime';
 import { tokenMap } from '../../../constants/tokens';
@@ -27,10 +29,10 @@ const DelegateTab = ({ delegate, account, t }) => {
 
   return (
     <Box>
-      <Box.Header>
+      <BoxHeader>
         <h1>{t('Delegate stats')}</h1>
-      </Box.Header>
-      <Box.Content className={styles.wrapper}>
+      </BoxHeader>
+      <BoxContent className={styles.wrapper}>
         <ul className={styles.delegateStats}>
           <li className="rank">
             <span className={styles.label}>{t('Rank')}</span>
@@ -74,7 +76,7 @@ const DelegateTab = ({ delegate, account, t }) => {
             {timeFromLastBlock}
           </li>
         </ul>
-      </Box.Content>
+      </BoxContent>
     </Box>
   );
 };
