@@ -110,7 +110,6 @@ describe('SecondPassphrase', () => {
       expect(props.secondPassphraseRegistered).toHaveBeenCalledWith(expect.objectContaining({
         passphrase: props.account.passphrase,
       }));
-      console.log(wrapper.debug());
       expect(wrapper.find('h1')).toHaveText('2nd passphrase registration failed');
     });
   });
