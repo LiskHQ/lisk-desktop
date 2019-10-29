@@ -40,7 +40,7 @@ class WalletDetails extends React.Component {
           <Icon name="balance" />
           <div>
             <label>{t('Balance')}</label>
-            <DiscreetMode>
+            <DiscreetMode shouldEvaluateForOtherAccounts>
               <div className={styles.value}>
                 <LiskAmount val={balance} />
                 {' '}

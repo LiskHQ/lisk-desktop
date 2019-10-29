@@ -144,7 +144,7 @@ class Transactions extends React.Component {
                         <span className={styles.label}>
                           {t('Amount')}
                         </span>
-                        <DiscreetMode addresses={addresses}>
+                        <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
                           <span className="tx-amount">
                             <LiskAmount val={transaction.amount} />
                             {' '}
