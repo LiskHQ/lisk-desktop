@@ -15,6 +15,6 @@ describe('PassphraseBackup', () => {
   it('should show tip after copying passphrase', () => {
     wrapper = mount(<PassphraseBackup {...props} />);
     wrapper.find('CopyToClipboard').at(0).simulate('click');
-    expect('tip').toBeTruthy();
+    expect(wrapper.find('.tip').text()).toBe('Make sure to store it somewhere safe');
   });
 });
