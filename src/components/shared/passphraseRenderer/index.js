@@ -11,7 +11,6 @@ class PassphraseRenderer extends React.Component {
     this.state = {
       indexes: [2, 9],
       fieldSelected: undefined,
-      displayOptions: true,
       chosenWords: {},
       options: {},
       isCorrect: false,
@@ -85,7 +84,6 @@ class PassphraseRenderer extends React.Component {
       hasErrors: false,
       chosenWords: {},
       fieldSelected: indexes[0],
-      displayOptions: true,
     });
   }
 
@@ -134,7 +132,7 @@ class PassphraseRenderer extends React.Component {
   }
 
   handleClick(index) {
-    this.setState({ fieldSelected: index, displayOptions: true });
+    this.setState({ fieldSelected: index });
   }
 
   renderMissingValue(i) {
@@ -144,7 +142,7 @@ class PassphraseRenderer extends React.Component {
   chooseWord(selectedIndex, option) {
     const { chosenWords, indexes } = this.state;
     const otherIndex = indexes.find(index => index !== selectedIndex);
-    const displayOptions = Object.values(chosenWords) < 2;
+    const shouldDisplayOptions = Object.values(chosenWords) < 2;
 
     this.setState({
       ...this.state,
@@ -152,8 +150,7 @@ class PassphraseRenderer extends React.Component {
         ...chosenWords,
         [selectedIndex]: option,
       },
-      fieldSelected: displayOptions ? otherIndex : undefined,
-      displayOptions,
+      fieldSelected: shouldDisplayOptions ? otherIndex : undefined,
     });
   }
 
@@ -162,7 +159,7 @@ class PassphraseRenderer extends React.Component {
       t, showInfo, isConfirmation, prevStep, footerStyle,
     } = this.props;
     const {
-      options, fieldSelected, chosenWords, values, displayOptions,
+      options, fieldSelected, chosenWords, values,
     } = this.state;
     const missingWordsIndexes = isConfirmation && Object.keys(options).map(k => Number(k));
 
@@ -194,7 +191,7 @@ class PassphraseRenderer extends React.Component {
           </div>
         </div>
         <div className={[styles.optionsContainer, 'word-options'].join(' ')}>
-          {isConfirmation && displayOptions && options[fieldSelected].map((option, i) => (
+          {isConfirmation && fieldSelected && options[fieldSelected].map((option, i) => (
             <div
               className="option"
               onClick={() => this.chooseWord(fieldSelected, option)}
