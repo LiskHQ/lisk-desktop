@@ -8,17 +8,18 @@ import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 class PassphraseRenderer extends React.Component {
   constructor(props) {
     super(props);
+    this.values = props.passphrase.split(' ');
     const initialIndexes = [2, 9];
+
     this.state = {
       indexes: initialIndexes,
       fieldSelected: initialIndexes[0],
       chosenWords: {},
-      options: this.assembleWordOptions(props.passphrase.split(' '), initialIndexes),
+      options: this.assembleWordOptions(this.values, initialIndexes),
       isCorrect: false,
       hasErrors: false,
     };
 
-    this.values = props.passphrase.split(' ');
     this.handleConfirm = this.handleConfirm.bind(this);
     this.setRandomIndexesFromPassphrase = this.setRandomIndexesFromPassphrase.bind(this);
   }
