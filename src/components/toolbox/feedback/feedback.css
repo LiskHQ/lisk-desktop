@@ -1,38 +1,37 @@
 @import '../../../app/variables.css';
 @import '../../../app/mixins.css';
 
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
 .feedback {
   @mixin contentNormal;
 
-  align-items: center;
-  box-sizing: border-box;
-  border-radius: var(--border-radius-standard);
-  color: var(--color-slate-gray);
   display: flex;
-  height: auto;
+  align-items: center;
   justify-content: flex-start;
-  max-height: 0px;
-  opacity: 0;
-  padding: 0;
-  transition:
-    max-height var(--animation-speed-fast) linear,
-    opacity var(--animation-speed-fast) linear,
-    padding-bottom var(--animation-speed-fast) linear,
-    padding-top var(--animation-speed-fast) linear,
-    margin-top var(--animation-speed-fast) linear,
-    background var(--animation-speed-fast) linear;
-
-  &.show {
-    max-height: 100px;
-    opacity: 1;
-    padding: 8px 0;
-  }
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 12px 16px;
+  color: var(--color-slate-gray);
+  height: auto;
+  opacity: 1;
+  border-radius: var(--border-radius-standard);
+  transform: scaleY(0);
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 
   &.error:not(:empty) {
     background: var(--error-background-color);
     color: var(--color-white);
-    padding: 12px 16px;
-    margin-top: 10px;
+    animation: fadeIn 0.2s forwards;
+    transform-origin: top;
+    display: inline-block;
 
     &.m {
       padding: 8px var(--horizontal-padding-m);
@@ -43,13 +42,14 @@
       padding: 8px var(--horizontal-padding-s);
     }
   }
-
-  & > img {
-    margin-right: 10px;
-  }
 }
 
-.dark {
-  color: var(--color-white) !important;
-  background: var(--color-burnt-sienna) !important;
+@keyframes fadeIn {
+  0% {
+    transform: scaleY(0);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
 }

@@ -10,6 +10,7 @@ import { fromRawLsk } from '../../../../utils/lsk';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import regex from '../../../../utils/regex';
 import Fees from '../../../../constants/fees';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './selectName.css';
 
 class SelectName extends React.Component {
@@ -130,7 +131,12 @@ class SelectName extends React.Component {
             }
           </p>
 
-          <label className={styles.nicknameLabel}>{t('Your nickname')}</label>
+          <label className={styles.nicknameLabel}>
+            {t('Your nickname')}
+            <Tooltip classNam>
+              <p>{t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}</p>
+            </Tooltip>
+          </label>
 
           <div>
             <Input
@@ -145,7 +151,8 @@ class SelectName extends React.Component {
               error={error}
               isLoading={loading}
               status={error ? 'error' : 'ok'}
-              feedback={error || t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}
+              feedbackType="permanent"
+              feedback={error || t('')}
             />
           </div>
           <BoxFooter>
