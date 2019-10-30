@@ -1,12 +1,11 @@
 /* istanbul ignore file */
-import JSPDF from 'jspdf';
 import logo from '../assets/images/paperwallet/lisk-logo-blue-on-white-rgb.png';
 import usbStick from '../assets/images/paperwallet/usb-stick.png';
 import printer from '../assets/images/paperwallet/print.png';
 import fonts from './paperwalletFonts';
 
 class Paperwallet {
-  constructor(props) {
+  constructor(JSPDF, props) {
     this.doc = new JSPDF({
       orientation: 'p',
       unit: 'pt',
@@ -130,8 +129,8 @@ class Paperwallet {
   }
 }
 
-const renderPaperwallet = (data, walletName) => {
-  const pdf = new Paperwallet(data);
+const renderPaperwallet = (JSPDF, data, walletName) => {
+  const pdf = new Paperwallet(JSPDF, data);
   pdf.save(walletName);
 };
 

@@ -13,13 +13,14 @@ module.exports = merge(baseConfig, reactConfig, {
     path: resolve(__dirname, '../app', '../app/build'),
     filename: 'bundle.[name].[hash].js',
   },
+  mode: 'production',
   optimization: {
     minimizer: [new TerserPlugin({ test: /\.js(\?.*)?$/i })],
     runtimeChunk: 'single', // enable "runtime" chunk
     splitChunks: {
       cacheGroups: {
         vendor: {
-          test: /[\\/]node_modules[\\/]/,
+          test: /[\\/]node_modules[\\/](?!jspdf)[a-zA-Z0-9-._]+[\\/]/,
           name: 'vendor',
           chunks: 'all',
         },

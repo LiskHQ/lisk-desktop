@@ -39,7 +39,7 @@
     "storybook": "start-storybook -p 6006",
     "clear_jest": "jest --clearCache",
     "serve": "http-server",
-    "percy": "build-storybook && percy-storybook --widths=320,1280"
+    "percy": "build-storybook && percy-storybook --widths=769"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",

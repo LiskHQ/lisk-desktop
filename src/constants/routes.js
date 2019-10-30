@@ -18,7 +18,6 @@ import Send from '../components/screens/wallet/send/send';
 import Settings from '../components/screens/settings';
 import SignMessage from '../components/screens/signMessage';
 import TermsOfUse from '../components/screens/termsOfUse';
-import ToolboxDemo from '../components/toolbox/demo';
 import MonitorTransactions from '../components/screens/monitor/transactions';
 import TransactionDashboard from '../components/shared/transactionDashboard';
 import Transactions from '../components/screens/explorer/transactions';
@@ -26,12 +25,6 @@ import VerifyMessage from '../components/screens/verify-message';
 import Voting from '../components/screens/delegates/voting';
 
 export default {
-  toolboxDemo: {
-    path: '/toolbox',
-    pathSuffix: '/:component?',
-    component: ToolboxDemo,
-    isPrivate: false,
-  },
   dashboard: {
     path: '/dashboard',
     component: Dashboard,

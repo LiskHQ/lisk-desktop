@@ -24,7 +24,6 @@ const getLocales = (url) => {
 
 const langRegex = getLocales('../i18n/languages.js');
 const entries = {
-  vendor: ['babel-polyfill', 'url-polyfill', 'react', 'redux', 'react-dom', 'react-redux'],
   app: `${resolve(__dirname, '../src')}/main.js`,
   head: `${resolve(__dirname, '../src/assets/css')}/styles.head.css`,
 };
