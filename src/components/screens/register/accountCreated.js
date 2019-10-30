@@ -10,9 +10,6 @@ import Illustration from '../../toolbox/illustration';
 
 const AccountCreated = ({ t }) => (
   <React.Fragment>
-    <span className={`${registerStyles.stepsLabel}`}>
-      {t('Step {{current}} / {{total}}', { current: 4, total: 4 })}
-    </span>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
         {t('Perfect! You\'re all set')}
