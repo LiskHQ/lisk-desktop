@@ -10,6 +10,7 @@ import AccountCreated from './accountCreated';
 import routes from '../../../constants/routes';
 import styles from './register.css';
 import MultiStepV2 from '../../../../libs/multiStepV2';
+import MultiStepProgressBar from '../../shared/multiStepProgressBar';
 
 class Register extends React.Component {
   constructor() {
@@ -51,7 +52,8 @@ class Register extends React.Component {
       <React.Fragment>
         <div className={`${styles.register} ${grid.row}`}>
           <MultiStepV2
-            className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
+            navStyles={{ wrapper: styles.wrapper }}
+            progressBar={MultiStepProgressBar}
           >
             <ChooseAvatar
               accounts={accounts}

@@ -112,13 +112,13 @@ class MultiStepV2 extends React.Component {
       extraProps.reset = this.reset;
     }
 
-    // const normalizedStyles = navStyles && getStyles(navStyles);
+    const normalizedStyles = navStyles && getStyles(navStyles);
 
     return (
-      <Element key={key}>
+      <Element {...normalizedStyles.wrapper} key={key}>
         {showNav ? (
           <Nav
-            // normalizedStyles={normalizedStyles}
+            normalizedStyles={normalizedStyles}
             hideGroups={hideGroups}
             hideSteps={hideSteps}
             steps={children}
