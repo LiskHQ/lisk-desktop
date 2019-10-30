@@ -26,7 +26,7 @@ import diveIntoDetails from '../../../assets/images/illustrations/diveIntoDetail
 import manageYourLSK from '../../../assets/images/illustrations/manageYourLSK.svg';
 import verifyMessageError from '../../../assets/images/illustrations/verify-message-error.svg';
 import verifyMessageSuccess from '../../../assets/images/illustrations/verify-message-success.svg';
-
+import registrationSuccess from '../../../assets/images/illustrations/registration-success.svg';
 
 export const illustrations = {
   welcomeLiskDelegates,
@@ -55,6 +55,7 @@ export const illustrations = {
   manageYourLSK,
   verifyMessageError,
   verifyMessageSuccess,
+  registrationSuccess,
 };
 
 const Illustration = ({ name, className }) => (

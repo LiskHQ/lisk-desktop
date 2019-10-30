@@ -11,13 +11,6 @@
   }
 }
 
-.optionIcon {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin: 0 24px;
-}
-
 .optionContent {
   align-items: flex-start;
   display: flex;
@@ -25,9 +18,8 @@
   width: 100%;
 
   & > h2 {
-    @mixin contentNormal bold;
+    @mixin contentLargest bold;
 
-    align-items: center;
     color: var(--color-maastricht-blue);
     display: flex;
     margin: 0;
@@ -47,24 +39,8 @@
   }
 
   & .downloadBtn {
-    min-width: 89px;
-  }
-}
-
-.passphraseField {
-  width: 99px;
-  height: 48px;
-  border-radius: 3px;
-  border: solid 1px rgba(0, 0, 0, 0.08);
-  background-color: #fff;
-  margin-right: 8px;
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  & div {
-    @mixin contentLargest;
+    padding-right: 15px;
+    padding-left: 15px;
   }
 }
 
@@ -73,12 +49,7 @@
   flex-basis: 100%;
   align-items: center;
   color: var(--color-slate-gray);
-
-  & > p {
-    @mixin contentNormal;
-
-    margin: 20px;
-  }
+  margin: 40px 0;
 }
 
 .hrSection::before,
@@ -91,28 +62,43 @@
   line-height: 0px;
 }
 
-.passwordRow {
+.tipContainer {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+
+  & p {
+    font-size: var(--font-size-small-secondary);
+    font-weight: var(--font-weight-semi-bold);
+    margin-left: 5px;
+  }
 }
 
-.inputs {
-  flex-wrap: wrap;
-  margin-top: 4px;
-  margin-bottom: 14px;
+.copyButtonContainer {
+  margin-top: 15px;
+  height: 32px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
 
-  & > span {
-    margin: 6px 0;
+.hidden {
+  display: none;
+}
 
-    & input {
-      @mixin contentLarge;
+.infoText {
+  @mixin contentLargest;
 
-      color: var(--color-maastricht-blue) !important;
-      text-align: center;
-      height: 48px;
-    }
-  }
+  margin: 15px 0;
+  color: var(--color-slate-gray);
+}
+
+.infoFooterText {
+  @mixin contentLargest;
+
+  margin: 15px 0 0;
+  color: var(--color-slate-gray);
 }
 
 .copyIcon {

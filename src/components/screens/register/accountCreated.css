@@ -6,31 +6,8 @@
   --avatar-size: calc(105px - var(--avatar-padding));
 }
 
-.accountHolder {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 40px 0 30px;
-
-  & .avatar {
-    background: var(--color-white);
-    border-radius: 50%;
-    box-shadow: var(--box-shadow-avatar);
-    box-sizing: border-box;
-    display: flex;
-    height: var(--avatar-size);
-    padding: var(--avatar-padding);
-    width: var(--avatar-size);
-  }
-
-  & .address {
-    @mixin addressFont;
-
-    color: var(--color-content);
-    margin: 20px 0 0;
-    text-align: center;
-  }
+.illustration {
+  margin: 42px 0;
 }
 
 .text {
