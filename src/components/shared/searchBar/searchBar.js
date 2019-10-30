@@ -138,8 +138,8 @@ class SearchBar extends React.Component {
           className={`${styles.searchInput} search-input`}
           onKeyDown={this.onHandleKeyPress}
           isLoading={suggestions.isLoading || this.timeout}
-          feedback={feedback}
         />
+        { feedback && <span className={styles.searchFeedback}>{feedback}</span> }
         {
           suggestions.data.addresses.length
             ? (

@@ -169,13 +169,10 @@ class RequestLsk extends React.Component {
           </span>
           <Feedback
             className={`${styles.feedback} ${styles.referenceFeedback}`}
-            show={!!fields.reference.feedback}
             status={fields.reference.error ? 'error' : ''}
-            showIcon={false}
             size="s"
-          >
-            { fields.reference.feedback }
-          </Feedback>
+            message={fields.reference.feedback}
+          />
         </label>
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>

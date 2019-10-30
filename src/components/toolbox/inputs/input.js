@@ -49,6 +49,7 @@ const Input = ({
   label,
   type,
   isMasked,
+  feedbackType,
   ...props
 }) => {
   status = updateStatus({
@@ -79,14 +80,10 @@ const Input = ({
           })}
         />
         <Feedback
+          message={feedback}
           size={size}
-          className={styles.feedback}
           status={status}
-          show={!!feedback}
-          dark={dark}
-        >
-          {feedback}
-        </Feedback>
+        />
       </span>
     </React.Fragment>
   );

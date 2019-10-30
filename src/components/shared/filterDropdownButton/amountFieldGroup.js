@@ -123,12 +123,10 @@ class AmountFieldGroup extends React.Component {
         </div>
         <Feedback
           className={styles.feedback}
-          show={!!this.state.feedback}
           status={this.state.feedback ? 'error' : ''}
           size="xs"
-        >
-          { this.state.feedback }
-        </Feedback>
+          message={this.state.feedback}
+        />
       </div>
     );
   }

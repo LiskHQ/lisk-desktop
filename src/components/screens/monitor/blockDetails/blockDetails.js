@@ -93,7 +93,10 @@ const BlockDetails = ({
         </BoxHeader>
         <BoxContent>
           { blockDetails.error ? (
-            <Feedback status="error" show>{t('Failed to load block details.')}</Feedback>
+            <Feedback
+              message={t('Failed to load block details.')}
+              status="error"
+            />
           ) : (
             <React.Fragment>
               {isMediumViewPort ? (
