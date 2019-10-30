@@ -4,7 +4,6 @@ import AnimationDemo from './animation/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
 import BoxDemo from './box/demo';
 import CalendarDemo from './calendar/demo';
-import CheckBoxDemo from './checkBox/demo';
 import DropdownButtonDemo from './dropdownButton/demo';
 import DropdownDemo from './dropdown/demo';
 import HardwareWalletIllustrationDemo from './hardwareWalletIllustration/demo';
@@ -48,7 +47,6 @@ const ToolboxDemo = () => (
     <AutoSuggestDemo />
     <BoxDemo />
     <CalendarDemo />
-    <CheckBoxDemo />
     <DropdownDemo />
     <DropdownButtonDemo />
     <IconDemo />
