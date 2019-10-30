@@ -3,7 +3,7 @@
 .container {
   display: flex;
   height: 2px;
-  margin-bottom: 24px;
+  margin-bottom: 14px;
 
   & div {
     width: 100px;
