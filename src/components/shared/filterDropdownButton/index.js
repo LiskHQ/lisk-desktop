@@ -1,6 +1,6 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
-import moment from 'moment/min/moment-with-locales';
+import moment from 'moment';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import AmountFieldGroup from './amountFieldGroup';
 import DateFieldGroup from './dateFieldGroup';

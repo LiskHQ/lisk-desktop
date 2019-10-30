@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment/min/moment-with-locales';
+import moment from 'moment';
 import { shallow } from 'enzyme';
 import YearView from './yearView';
 
