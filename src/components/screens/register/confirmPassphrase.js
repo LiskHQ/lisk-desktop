@@ -5,19 +5,17 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
-import Options from './confirmPassphraseOptions';
+import PassphraseRenderer from '../../shared/passphraseRenderer';
 
 class ConfirmPassphrase extends React.Component {
   constructor() {
     super();
     this.state = {
       words: [2, 9],
-      tries: 0,
       answers: [],
       options: [],
       hasErrors: false,
       isCorrect: false,
-      outOfTries: false,
     };
 
     this.handleSelect = this.handleSelect.bind(this);
@@ -52,27 +50,22 @@ class ConfirmPassphrase extends React.Component {
   }
 
   verifyChoices() {
-    const { answers, words } = this.state;
+    const { answers } = this.state;
     const passphrase = this.props.passphrase.split(/\s/);
-    const corrects = answers.filter((answer, index) => answer === passphrase[words[index]]);
-    return corrects.length === answers.length;
+    const corrects = answers.filter((answer, index) => answer === passphrase[index]);
+    return corrects.length === 2;
   }
 
   handleConfirm(status) {
-    const { tries } = this.state;
     const numberOfWords = 2;
-    const maxTries = 3;
-    const triesCount = status ? tries : tries + 1;
     const state = {
-      tries: triesCount,
       isCorrect: status,
       hasErrors: !status,
-      outOfTries: !(triesCount < maxTries),
     };
     const cb = status
       ? () => this.props.nextStep({ passphrase: this.props.passphrase })
-      : () => !state.outOfTries
-        && this.getRandomIndexesFromPassphrase(this.props.passphrase, numberOfWords);
+      : () => this.getRandomIndexesFromPassphrase(this.props.passphrase, numberOfWords);
+
     this.setState(state);
     this.timeout = setTimeout(cb, 1500);
   }
@@ -115,9 +108,8 @@ class ConfirmPassphrase extends React.Component {
   render() {
     const { t, passphrase, prevStep } = this.props;
     const {
-      words, options, hasErrors, answers, isCorrect, outOfTries,
+      words, options, hasErrors, answers, isCorrect,
     } = this.state;
-    let optionIndex = 0;
 
     return (
       <React.Fragment>
@@ -128,36 +120,25 @@ class ConfirmPassphrase extends React.Component {
           <h1>
             {t('Confirm your passphrase')}
           </h1>
-          <p className={styles.text}>{t('Based on your passphrase that was generated in the previous step, select the missing words below.')}</p>
+          <p className={styles.text}>{t('Keep it safe as it is the only way to access your wallet.')}</p>
         </div>
 
-        <div className={`${styles.confirmHolder} passphrase-holder`}>
-          {passphrase.split(/\s/).map((word, key) => (
-            <span className={styles.word} key={key}>
-              { !words.includes(key)
-                ? word
-                : (
-                  <Options
-                    isCorrect={isCorrect}
-                    hasErrors={hasErrors}
-                    options={options[optionIndex]}
-                    answers={answers}
-                    handleSelect={this.handleSelect}
-                    enabled={optionIndex === 0 || answers[optionIndex - 1]}
-                    optionIndex={optionIndex++}
-                  />
-                )
-              }
-            </span>
-          ))
-          }
-          {
-            <div className={`${styles.errorMessage} ${outOfTries ? styles.showError : ''}`}>
-              {outOfTries && <span>{t('Choose the right words.')}</span>}
-            </div>
-          }
+        <div className={`${grid['col-sm-10']} ${styles.passphraseContainer}`}>
+          <PassphraseRenderer
+            showInfo
+            handleSelect={this.handleSelect}
+            missingWords={words}
+            options={{
+              [words[0]]: options[0],
+              [words[1]]: options[1],
+            }}
+            hasErrors={hasErrors}
+            answers={answers}
+            isCorrect={isCorrect}
+            values={passphrase.split(' ')}
+            isConfirmation
+          />
         </div>
-
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
           <span className={`${registerStyles.button}`}>
@@ -174,7 +155,7 @@ class ConfirmPassphrase extends React.Component {
               onClick={() => this.handleConfirm(this.verifyChoices())}
               disabled={!this.enableConfirmButton()}
             >
-              {t('Continue')}
+              {t('Confirm')}
             </PrimaryButton>
           </span>
         </div>
