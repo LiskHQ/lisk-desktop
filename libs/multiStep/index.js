@@ -21,7 +21,7 @@ import { getStyles } from './utils';
  *
  *
  */
-class MultiStepV2 extends React.Component {
+class MultiStep extends React.Component {
   state = {
     key: 0,
     data: {},
@@ -115,7 +115,7 @@ class MultiStepV2 extends React.Component {
     const ProgressBar = progressBar;
 
     return (
-      <Element {...normalizedStyles.wrapper} key={key}>
+      <Element {...normalizedStyles && normalizedStyles.wrapper} key={key}>
         {showNav ? (
           <Nav
             normalizedStyles={normalizedStyles}
@@ -147,4 +147,4 @@ class MultiStepV2 extends React.Component {
   }
 }
 
-export default MultiStepV2;
+export default MultiStep;

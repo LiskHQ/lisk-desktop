@@ -9,7 +9,7 @@ import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
 import routes from '../../../constants/routes';
 import styles from './register.css';
-import MultiStepV2 from '../../../../libs/multiStepV2';
+import MultiStep from '../../../../libs/multiStep';
 import MultiStepProgressBar from '../../shared/multiStepProgressBar';
 
 class Register extends React.Component {
@@ -51,7 +51,7 @@ class Register extends React.Component {
     return (
       <React.Fragment>
         <div className={`${styles.register} ${grid.row}`}>
-          <MultiStepV2
+          <MultiStep
             navStyles={{ wrapper: styles.wrapper }}
             progressBar={MultiStepProgressBar}
           >
@@ -70,7 +70,7 @@ class Register extends React.Component {
             <AccountCreated
               account={selectedAccount}
             />
-          </MultiStepV2>
+          </MultiStep>
         </div>
       </React.Fragment>
     );
