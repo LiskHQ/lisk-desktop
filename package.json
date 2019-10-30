@@ -6,8 +6,7 @@
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
   "main": "main.js",
   "scripts": {
-    "postinstall": "npm-run-all check-node-version",
-    "electron-rebuild": "electron-rebuild --force",
+    "postinstall": "electron-builder install-app-deps",
     "check-node-version": "node ./config/checkNodeVersion.js",
     "install-electron-dependencies": "cd ./app && npm install && cd ..",
     "build": "npm-run-all clean-build copy-files build-prod build-electron",
@@ -147,7 +146,6 @@
     "electron-devtools-installer": "2.2.4",
     "electron-ipc-mock": "0.0.3",
     "electron-json-storage": "4.1.5",
-    "electron-rebuild": "1.8.2",
     "electron-updater": "4.0.6",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",
@@ -237,6 +235,9 @@
     },
     "win": {
       "target": "nsis"
+    },
+    "mac": {
+      "hardenedRuntime": false
     }
   },
   "bundlesize": [
