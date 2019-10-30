@@ -1,6 +1,9 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
 import Box from '../../../toolbox/box';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
+import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton } from '../../../toolbox/buttons/button';
 import { fromRawLsk } from '../../../../utils/lsk';
@@ -108,11 +111,11 @@ class SelectName extends React.Component {
 
     return (
       <Box width="medium">
-        <Box.Header>
+        <BoxHeader>
           <h1>{t('Become a delegate')}</h1>
-        </Box.Header>
+        </BoxHeader>
 
-        <Box.Content className={`${styles.container} select-name-container`}>
+        <BoxContent className={`${styles.container} select-name-container`}>
           <p className={`${styles.description} select-name-text-description`}>
             {
               t(`Delegates are the most commited Lisk community members responsible for 
@@ -145,7 +148,7 @@ class SelectName extends React.Component {
               feedback={error || t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}
             />
           </div>
-          <Box.Footer>
+          <BoxFooter>
             <PrimaryButton
               onClick={() => nextStep({ nickname })}
               disabled={isBtnDisabled}
@@ -153,8 +156,8 @@ class SelectName extends React.Component {
             >
               {t('Go to confirmation')}
             </PrimaryButton>
-          </Box.Footer>
-        </Box.Content>
+          </BoxFooter>
+        </BoxContent>
       </Box>
     );
   }

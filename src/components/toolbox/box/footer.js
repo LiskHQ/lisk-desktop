@@ -15,4 +15,6 @@ Footer.defaultProps = {
   className: '',
 };
 
+Footer.displayName = 'BoxFooter';
+
 export default Footer;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-import Box from '../../../../toolbox/box';
+import BoxRow from '../../../../toolbox/box/row';
 import styles from './transactionDetailView.css';
 import routes from '../../../../../constants/routes';
 
@@ -11,7 +11,7 @@ const transactionVotes = ({ votes, t }) => {
     <React.Fragment>
       {votes.added
         ? (
-          <Box.Row>
+          <BoxRow>
             <div className={styles.detailsWrapper}>
               <span className={styles.label}>
                 {`${t('Added votes')} (${votes.added.length})`}
@@ -31,11 +31,11 @@ const transactionVotes = ({ votes, t }) => {
                 ))}
               </div>
             </div>
-          </Box.Row>
+          </BoxRow>
         ) : null}
       {votes.deleted
         ? (
-          <Box.Row>
+          <BoxRow>
             <div className={styles.detailsWrapper}>
               <span className={styles.label}>
                 {`${t('Removed votes')} (${votes.deleted.length})`}
@@ -55,7 +55,7 @@ const transactionVotes = ({ votes, t }) => {
                 ))}
               </div>
             </div>
-          </Box.Row>
+          </BoxRow>
         ) : null}
     </React.Fragment>
   );

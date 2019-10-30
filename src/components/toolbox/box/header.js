@@ -10,4 +10,6 @@ Header.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
+Header.displayName = 'BoxHeader';
+
 export default Header;

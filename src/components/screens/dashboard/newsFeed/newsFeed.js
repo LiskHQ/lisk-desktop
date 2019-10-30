@@ -2,6 +2,10 @@ import React from 'react';
 import styles from './newsFeed.css';
 import News from './news';
 import Box from '../../../toolbox/box';
+import BoxRow from '../../../toolbox/box/row';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
+import BoxEmptyState from '../../../toolbox/box/emptyState';
 import Icon from '../../../toolbox/icon';
 
 class NewsFeed extends React.Component {
@@ -16,32 +20,32 @@ class NewsFeed extends React.Component {
 
     return (
       <Box className="newsFeed-box">
-        <Box.Header>
+        <BoxHeader>
           <h1>{t('Community feed')}</h1>
-        </Box.Header>
-        <Box.Content className={styles.container}>
+        </BoxHeader>
+        <BoxContent className={styles.container}>
           {
               filteredNewsFeed.length
                 ? filteredNewsFeed.map(news => (
-                  <Box.Row isClickable key={news.sourceId} className={styles.row}>
+                  <BoxRow isClickable key={news.sourceId} className={styles.row}>
                     <News
                       t={t}
                       {...news}
                     />
-                  </Box.Row>
+                  </BoxRow>
                 ))
                 : null
             }
           {
               newsFeed.error && (
-                <Box.EmptyState className="empty-news">
+                <BoxEmptyState className="empty-news">
                   <Icon name="noTweetsIcon" />
                   <h1>{t('No available tweets')}</h1>
                   <p>{t('At this moment there is a connection problem with the tweets feed')}</p>
-                </Box.EmptyState>
+                </BoxEmptyState>
               )
             }
-        </Box.Content>
+        </BoxContent>
       </Box>
     );
   }

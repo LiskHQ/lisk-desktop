@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { tokenMap } from '../../../../constants/tokens';
 import Box from '../../../toolbox/box';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxEmptyState from '../../../toolbox/box/emptyState';
 import Icon from '../../../toolbox/icon';
 import TransactionList from './transactionList';
 import styles from './recentTransactions.css';
@@ -34,9 +36,9 @@ class RecentTransactions extends Component {
 
     return (
       <Box className={`${styles.box} ${className}`}>
-        <Box.Header>
+        <BoxHeader>
           <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken.label })}</h2>
-        </Box.Header>
+        </BoxHeader>
         {
           isLoggedIn && transactions.length
             ? (
@@ -53,22 +55,22 @@ class RecentTransactions extends Component {
         {
           isLoggedIn && !transactions.length
             ? (
-              <Box.EmptyState>
+              <BoxEmptyState>
                 <Icon name="iconEmptyRecentTransactions" />
                 <h1>{t('No Transactions Yet')}</h1>
                 <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
-              </Box.EmptyState>
+              </BoxEmptyState>
             )
             : null
         }
         {
           !isLoggedIn
             ? (
-              <Box.EmptyState>
+              <BoxEmptyState>
                 <Icon name="iconEmptyRecentTransactions" />
                 <h1>{t('Sign in to view recent transactions')}</h1>
                 <p>{t('In order to see your recent transactions you need to sign in.')}</p>
-              </Box.EmptyState>
+              </BoxEmptyState>
             )
             : null
         }

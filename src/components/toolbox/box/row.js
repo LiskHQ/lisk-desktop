@@ -24,4 +24,6 @@ Row.defaultProps = {
   isClickable: false,
 };
 
+Row.displayName = 'BoxRow';
+
 export default Row;
