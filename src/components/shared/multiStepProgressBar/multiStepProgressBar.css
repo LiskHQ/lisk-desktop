@@ -1,0 +1,20 @@
+@import '../../../app/variables.css';
+
+.container {
+  display: flex;
+  height: 2px;
+  margin-bottom: 24px;
+
+  & div {
+    width: 100px;
+    margin: 0 5px;
+  }
+
+  & .active {
+    background-color: var(--color-ultramarine-blue);
+  }
+
+  & .inactive {
+    background-color: var(--color-ghost);
+  }
+}

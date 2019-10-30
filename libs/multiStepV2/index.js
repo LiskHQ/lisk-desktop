@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from './navigator';
 import { Element } from './element';
-// import { getStyles } from './utils';
+import { getStyles } from './utils';
 
 /**
  *
@@ -84,8 +84,6 @@ class MultiStepV2 extends React.Component {
       backButtonTitle,
       showNav,
       navStyles,
-      // showProgressBar,
-      // progressStepContainerStyle,
       interactive,
       backButton,
       prevPage,
@@ -95,6 +93,7 @@ class MultiStepV2 extends React.Component {
       navigatorButton,
       groupButton,
       stepButton,
+      progressBar,
     } = this.props;
 
     const { key, data, current } = this.state;
@@ -113,6 +112,7 @@ class MultiStepV2 extends React.Component {
     }
 
     const normalizedStyles = navStyles && getStyles(navStyles);
+    const ProgressBar = progressBar;
 
     return (
       <Element {...normalizedStyles.wrapper} key={key}>
@@ -135,13 +135,12 @@ class MultiStepV2 extends React.Component {
             move={this.move}
           />
         ) : null}
-        {/*         {showProgressBar ? (
-          <Progress
-            progressStepContainerStyle={progressStepContainerStyle}
-            current={current + 1}
+        {ProgressBar && (
+          <ProgressBar
+            current={current}
             total={children.length}
           />
-        ) : null} */}
+        )}
         {React.cloneElement(children[current], extraProps)}
       </Element>
     );
