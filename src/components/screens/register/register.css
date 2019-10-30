@@ -23,7 +23,7 @@
   & .button {
     @mixin contentLargest bold;
 
-    width: var(--footer-button-width);
+    width: 431px;
 
     & > button {
       width: 100%;
@@ -77,7 +77,7 @@
 
     margin: 0;
     color: var(--color-slate-gray);
-    width: 450px;
+    min-width: 450px;
   }
 }
 

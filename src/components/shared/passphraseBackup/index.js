@@ -1,6 +1,5 @@
 import QRCode from 'qrcode.react';
 import React from 'react';
-import moment from 'moment';
 import { SecondaryButton } from '../../toolbox/buttons/button';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import Icon from '../../toolbox/icon';
@@ -15,7 +14,7 @@ class PassphraseBackup extends React.Component {
       showTip: false,
     };
 
-    this.walletName = `${props.paperWalletName}_${moment().format('YYYY_MM_DD_HH_mm')}.pdf`;
+    this.walletName = `${props.paperWalletName}.pdf`;
     this.generatePaperwallet = this.generatePaperwallet.bind(this);
     this.setCanvasRef = this.setCanvasRef.bind(this);
     this.handleClick = this.handleClick.bind(this);
