@@ -202,7 +202,7 @@ const ss = {
   searchAccountRowTitle: '.account-title',
   searchTransactionRowId: '.transaction-id',
   searchDelegatesRow: '.delegates-row',
-  searchMessage: '.search-bar .feedback',
+  searchMessage: '.search-bar-feedback',
   searchDelegetesResults: '.delegates-content',
   searchAccountResults: '.account-content',
   searchTransactionRow: '.search-transaction-row',
