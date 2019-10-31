@@ -98,7 +98,7 @@ class BookmarksList extends React.Component {
       ...this.state,
       eddittedTitle: {
         value: target.value,
-        feedback: target.value.length > 20 ? this.props.t('Label name is too long') : '',
+        feedback: target.value.length > 20 ? this.props.t('Label is too long.') : '',
       },
     });
   }
