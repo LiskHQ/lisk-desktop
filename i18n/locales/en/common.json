@@ -218,6 +218,7 @@
   "LSK received": "LSK received",
   "Label": "Label",
   "Label is too long.": "Label is too long.",
+  "Label name is too long": "Label name is too long",
   "Language": "Language",
   "Last Forged Block": "Last Forged Block",
   "Last block forged @{{height}}": "Last block forged @{{height}}",

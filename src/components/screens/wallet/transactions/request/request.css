@@ -178,3 +178,30 @@
 .copyIcon {
   display: none;
 }
+
+.feedback {
+  @mixin contentSmallest;
+
+  box-sizing: border-box;
+  color: var(--color-slate-gray);
+  display: none;
+  justify-content: flex-end;
+  padding: 8px 0;
+  width: 100%;
+  position: absolute;
+  bottom: -35px;
+  right: 0;
+
+  &:global(.error) {
+    color: var(--color-burnt-sienna);
+  }
+
+  &.show {
+    display: flex;
+  }
+}
+
+.show {
+  opacity: 1;
+  transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+}

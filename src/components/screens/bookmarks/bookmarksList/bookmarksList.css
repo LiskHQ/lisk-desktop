@@ -31,6 +31,7 @@
 
       & .editInput {
         width: 224px;
+        padding-right: 40px;
       }
 
       & .avatarAndDescriptionWrapper {

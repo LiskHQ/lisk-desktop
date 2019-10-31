@@ -92,7 +92,11 @@ class BookmarksList extends React.Component {
 
   onTitleChange({ target }) {
     this.setState({
-      eddittedTitle: target.value,
+      ...this.state,
+      eddittedTitle: {
+        value: target.value,
+        feedback: target.value.length > 20 ? this.props.t('Label name is too long') : '',
+      },
     });
   }
 
@@ -158,12 +162,17 @@ class BookmarksList extends React.Component {
                     eddittedAddress === bookmark.address
                       ? (
                         <Input
+                          autoComplete="off"
                           className={`bookmarks-edit-input ${styles.editInput}`}
-                          size="m"
                           onChange={this.onTitleChange}
-                          value={eddittedTitle}
-                          setRef={(input) => { this.editInput = input; }}
                           placeholder={t('Filter by name or address...')}
+                          setRef={(input) => { this.editInput = input; }}
+                          size="m"
+                          value={eddittedTitle.value}
+                          name="bookmarkName"
+                          error={!!eddittedTitle.feedback}
+                          feedback={eddittedTitle.feedback}
+                          status={eddittedTitle.feedback ? 'error' : 'ok'}
                         />
                       )
                       : (
@@ -191,6 +200,7 @@ class BookmarksList extends React.Component {
                               onClick={e => this.saveChanges(e)}
                               className="bookmarks-save-changes-button"
                               size="m"
+                              disabled={!!eddittedTitle.feedback}
                             >
                               {t('Save changes')}
                             </PrimaryButton>
