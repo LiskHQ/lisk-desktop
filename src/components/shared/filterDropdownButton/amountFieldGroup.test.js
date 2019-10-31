@@ -47,14 +47,14 @@ describe('AmountFieldGroup', () => {
       wrapper.find('.amountToInput input').simulate('change', { target: { name: 'amountTo', value: '99' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
-      expect(wrapper).toContainMatchingElement('.feedback.show');
+      expect(wrapper).toContainMatchingElement('.feedback');
     });
 
     it('Should show error if invalid amount value', () => {
       wrapper.find('.amountFromInput input').simulate('change', { target: { name: 'amountFrom', value: '123.123.' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
-      expect(wrapper).toContainMatchingElement('.feedback.show');
+      expect(wrapper).toContainMatchingElement('.feedback');
     });
   });
 });

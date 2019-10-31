@@ -75,21 +75,21 @@ describe('DateFieldGroup', () => {
       wrapper.find('.dateToInput input').simulate('change', { target: { name: 'dateTo', value: '12.12.16' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
-      expect(wrapper).toContainMatchingElement('.feedback.show');
+      expect(wrapper).toContainMatchingElement('.feedback');
     });
 
     it('Should show error if date before first block', () => {
       wrapper.find('.dateFromInput input').simulate('change', { target: { name: 'dateFrom', value: '111111' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
-      expect(wrapper).toContainMatchingElement('.feedback.show');
+      expect(wrapper).toContainMatchingElement('.feedback');
     });
 
     it('Should show error if invalid date format', () => {
       wrapper.find('.dateFromInput input').simulate('change', { target: { name: 'dateFrom', value: '12.13.16' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
-      expect(wrapper).toContainMatchingElement('.feedback.show');
+      expect(wrapper).toContainMatchingElement('.feedback');
     });
   });
 });

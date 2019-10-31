@@ -29,27 +29,31 @@
   &.error:not(:empty) {
     background: var(--error-background-color);
     color: var(--color-white);
-    animation: fadeIn 0.2s forwards;
+    animation: fadeIn var(--animation-speed-fastest) forwards;
     transform-origin: top;
     display: inline-block;
+  }
 
-    &.m {
-      padding: 8px var(--horizontal-padding-m);
-    }
+  &.l {
+    padding: 12px var(--horizontal-padding-m);
+  }
 
-    &.s,
-    &.xs {
-      padding: 8px var(--horizontal-padding-s);
-    }
+  &.m {
+    padding: 8px var(--horizontal-padding-m);
+  }
+
+  &.s,
+  &.xs {
+    padding: 8px var(--horizontal-padding-s);
   }
 }
 
 @keyframes fadeIn {
-  0% {
+  from {
     transform: scaleY(0);
   }
 
-  100% {
+  to {
     transform: scaleY(1);
   }
 }

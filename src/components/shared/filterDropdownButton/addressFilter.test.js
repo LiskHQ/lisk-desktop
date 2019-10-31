@@ -27,6 +27,6 @@ describe('AddressFilter', () => {
     wrapper.find('.input').at(1).simulate('change', { target: { name: 'recipient', value: '123' } });
     jest.advanceTimersByTime(300);
     wrapper.update();
-    expect(wrapper).toContainMatchingElement('.feedback.show');
+    expect(wrapper).toContainMatchingElement('.feedback');
   });
 });

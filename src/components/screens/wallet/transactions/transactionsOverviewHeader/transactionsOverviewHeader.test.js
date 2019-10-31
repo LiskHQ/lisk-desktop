@@ -32,11 +32,9 @@ describe('Transactions Overview Header', () => {
     });
 
     it('Should toggle request LSK dropdown', () => {
-      expect(wrapper.find('.requestContainer')).to.not.have.descendants('.show');
       wrapper.find('.requestContainer button').first().simulate('click');
       expect(wrapper.find('.requestContainer')).to.have.descendants('.show');
       wrapper.find('.requestContainer button').first().simulate('click');
-      expect(wrapper.find('.requestContainer')).to.not.have.descendants('.show');
     });
   });
 

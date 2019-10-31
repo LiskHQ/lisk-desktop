@@ -67,7 +67,10 @@ class BookmarksList extends React.Component {
   updateBookmark(e, { address, title }) {
     this.setState({
       eddittedAddress: address,
-      eddittedTitle: title,
+      eddittedTitle: {
+        feedback: '',
+        value: title,
+      },
     });
   }
 
@@ -83,7 +86,7 @@ class BookmarksList extends React.Component {
     bookmarkUpdated({
       account: {
         address: eddittedAddress,
-        title: eddittedTitle,
+        title: eddittedTitle.value,
       },
       token: token.active,
     });
