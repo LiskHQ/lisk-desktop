@@ -51,7 +51,7 @@ class Register extends React.Component {
       <React.Fragment>
         <div className={`${styles.register} ${grid.row}`}>
           <MultiStep
-            navStyles={{ wrapper: styles.wrapper }}
+            navStyles={{ multiStepWrapper: styles.wrapper }}
             progressBar={MultiStepProgressBar}
           >
             <ChooseAvatar

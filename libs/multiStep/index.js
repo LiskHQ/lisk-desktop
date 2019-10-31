@@ -116,7 +116,7 @@ class MultiStep extends React.Component {
     const ProgressBar = progressBar;
 
     return (
-      <Element {...normalizedStyles && normalizedStyles.wrapper} key={key}>
+      <Element {...normalizedStyles && normalizedStyles.multiStepWrapper} key={key}>
         {showNav ? (
           <Nav
             normalizedStyles={normalizedStyles}
