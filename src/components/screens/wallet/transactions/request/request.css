@@ -182,22 +182,19 @@
 .feedback {
   @mixin contentSmallest;
 
+  display: flex;
   box-sizing: border-box;
   color: var(--color-slate-gray);
-  display: none;
   justify-content: flex-end;
-  padding: 8px 0;
+  padding: 8px 0 0;
   width: 100%;
   position: absolute;
-  bottom: -35px;
+  bottom: -25px;
   right: 0;
+  opacity: 0;
 
   &:global(.error) {
     color: var(--color-burnt-sienna);
-  }
-
-  &.show {
-    display: flex;
   }
 }
 
