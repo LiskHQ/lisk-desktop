@@ -5,8 +5,9 @@ export const Element = ({ children, type, ...rest }) => {
     return <div {...rest}>{children}</div>;
   }
   try {
-    // const { View } = require('react-native');
-    const Type = type; // || View;
+    // eslint-disable-next-line import/no-unresolved
+    const { View } = typeof document === 'undefined' && require('react-native');
+    const Type = type || View;
     return <Type {...rest}>{children}</Type>;
   } catch (e) {
     return {};
@@ -24,8 +25,9 @@ export const Button = ({
     );
   }
   try {
-    // const ReactButton = require('react-native').Button;
-    const Type = type; // || ReactButton;
+    // eslint-disable-next-line import/no-unresolved
+    const ReactButton = require('react-native').Button;
+    const Type = type || ReactButton;
     return (
       <Type
         {...rest}
