@@ -1,13 +1,12 @@
 {
   "name": "lisk-hub",
-  "version": "1.22.0-rc.1",
+  "version": "1.22.0",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
   "main": "main.js",
   "scripts": {
-    "postinstall": "npm-run-all check-node-version",
-    "electron-rebuild": "electron-rebuild --force",
+    "postinstall": "electron-builder install-app-deps",
     "check-node-version": "node ./config/checkNodeVersion.js",
     "install-electron-dependencies": "cd ./app && npm install && cd ..",
     "build": "npm-run-all clean-build copy-files build-prod build-electron",
@@ -25,10 +24,10 @@
     "bundlesize": "bundlesize",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
     "start": "electron ./app/",
-    "dist": "build --ia32 --x64 --publish onTag",
-    "dist:win": "build --win --ia32 --x64 --publish onTag",
-    "dist:mac": "build --mac",
-    "dist:linux": "build --linux --x64 --publish onTag",
+    "dist": "electron-builder --ia32 --x64 --publish onTag",
+    "dist:win": "electron-builder --win --ia32 --x64 --publish onTag",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux --x64 --publish onTag",
     "copy-files": "cpx \"./src/{index.html,assets/**/*}\" ./app/build/",
     "clean-build": "rm -rf app/build",
     "clean-dist": "rm -rf dist",
@@ -48,8 +47,8 @@
     "url": "https://github.com/LiskHQ/lisk-hub"
   },
   "dependencies": {
-    "@ledgerhq/hw-transport-node-hid": "4.68.2",
-    "@ledgerhq/hw-transport-u2f": "4.68.2",
+    "@ledgerhq/hw-transport-node-hid": "4.73.2",
+    "@ledgerhq/hw-transport-u2f": "4.73.2",
     "@liskhq/lisk-client": "2.0.0",
     "@liskhq/lisk-transactions": "2.0.0",
     "await-to-js": "2.1.1",
@@ -149,11 +148,10 @@
     "cypress-pipe": "1.3.3",
     "del-cli": "1.1.0",
     "electron": "4.2.4",
-    "electron-builder": "20.38.3",
+    "electron-builder": "21.2.0",
     "electron-devtools-installer": "2.2.4",
     "electron-ipc-mock": "0.0.3",
     "electron-json-storage": "4.1.5",
-    "electron-rebuild": "1.8.2",
     "electron-updater": "4.0.6",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",
@@ -245,6 +243,9 @@
     },
     "win": {
       "target": "nsis"
+    },
+    "mac": {
+      "hardenedRuntime": false
     }
   },
   "bundlesize": [

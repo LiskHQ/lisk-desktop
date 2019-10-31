@@ -71,20 +71,26 @@ export default class FormBtc extends React.Component {
     }
   }
 
+  updateFee() {
+    this.setState(({ fields }) => ({
+      fields: {
+        ...fields,
+        processingSpeed: {
+          ...fields.processingSpeed,
+          txFee: this.getCalculatedDynamicFee(fields.processingSpeed.value),
+        },
+      },
+    }));
+  }
+
   onInputChange({ target }, newState) {
-    const { fields } = this.state;
     if (target.name === 'amount') {
-      const txFee = this.getCalculatedDynamicFee(fields.processingSpeed.value, target.value);
-      this.setState(() => ({
+      this.setState(({ fields }) => ({
         fields: {
           ...fields,
-          processingSpeed: {
-            ...fields.processingSpeed,
-            txFee,
-          },
           [target.name]: newState,
         },
-      }));
+      }), this.updateFee);
     }
   }
 
@@ -113,19 +119,15 @@ export default class FormBtc extends React.Component {
       : t('Invalid amount');
   }
 
-  // TODO move dynamic fee calculation and presentation to a separate component
-  getCalculatedDynamicFee(dynamicFeePerByte, value) {
+  getCalculatedDynamicFee(dynamicFeePerByte) {
     const { fields: { amount }, unspentTransactionOutputs } = this.state;
-    if (amount.error) {
-      return 0;
-    }
-    const feeInSatoshis = btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
-      unspentTransactionOutputs,
-      satoshiValue: toRawLsk(value || amount.value),
-      dynamicFeePerByte,
-    });
-
-    return feeInSatoshis;
+    return amount.error
+      ? 0
+      : btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
+        unspentTransactionOutputs,
+        satoshiValue: toRawLsk(amount.value),
+        dynamicFeePerByte,
+      });
   }
 
   selectProcessingSpeed({ item, index }) {
