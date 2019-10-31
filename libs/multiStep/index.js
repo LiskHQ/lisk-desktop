@@ -105,7 +105,7 @@ class MultiStep extends React.Component {
       sharedData: data,
     };
 
-    if (current === children.length - 1) {
+    if (current === children.length - 2) {
       if (typeof finalCallback === 'function') {
         extraProps.finalCallback = finalCallback;
       }
