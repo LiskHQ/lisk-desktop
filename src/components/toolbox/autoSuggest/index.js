@@ -132,7 +132,7 @@ class AutoSuggest extends React.Component {
     const { isOnFocus } = this.state;
     const { selectedItem, items } = this.props;
     const bookmarksList = this.getFilterList();
-    console.log(selectedItem);
+
     if ((!items.length && selectedItem.error) || (!isOnFocus && selectedItem.error)) return true;
     if ((isOnFocus || !isOnFocus) && items.length && !bookmarksList.length && selectedItem.error) {
       return true;
