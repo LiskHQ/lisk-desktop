@@ -21,7 +21,6 @@ class AutoSuggest extends React.Component {
     this.bindAll();
   }
 
-  // eslint-disable-next-line max-statements
   bindAll() {
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.getFilterList = this.getFilterList.bind(this);
