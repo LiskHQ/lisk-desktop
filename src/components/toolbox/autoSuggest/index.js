@@ -31,9 +31,6 @@ class AutoSuggest extends React.Component {
     this.onSelectItem = this.onSelectItem.bind(this);
     this.resetListIndex = this.resetListIndex.bind(this);
     this.handleUpdateIndex = this.handleUpdateIndex.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.isOnError = this.isOnError.bind(this);
   }
 
   getFilterList() {
@@ -124,21 +121,23 @@ class AutoSuggest extends React.Component {
     this.props.onChange(e);
   }
 
-  onBlur() {
+  onBlur = () => {
     this.setState({ isOnFocus: false });
   }
 
-  onFocus() {
+  onFocus = () => {
     this.setState({ isOnFocus: true });
   }
 
-  isOnError() {
+  isOnError = () => {
     const { isOnFocus } = this.state;
     const { selectedItem, items } = this.props;
     const bookmarksList = this.getFilterList();
-
+    console.log(selectedItem);
     if ((!items.length && selectedItem.error) || (!isOnFocus && selectedItem.error)) return true;
-    if ((isOnFocus || !isOnFocus) && items.length && !bookmarksList.length) return true;
+    if ((isOnFocus || !isOnFocus) && items.length && !bookmarksList.length && selectedItem.error) {
+      return true;
+    }
     return false;
   }
 
