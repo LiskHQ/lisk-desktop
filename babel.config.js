@@ -13,6 +13,7 @@ module.exports = {
     ['@babel/plugin-transform-runtime', {
       regenerator: true,
     }],
+    'transform-class-properties',
   ],
   env: {
     test: {
@@ -24,6 +25,7 @@ module.exports = {
         ['@babel/plugin-transform-runtime', {
           regenerator: true,
         }],
+        'transform-class-properties',
       ],
     },
   },

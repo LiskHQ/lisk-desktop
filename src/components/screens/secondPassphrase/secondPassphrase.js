@@ -2,12 +2,12 @@ import React from 'react';
 import { generatePassphrase } from '../../../utils/passphrase';
 import Fees from '../../../constants/fees';
 import FirstStep from './firstStep';
-import MultiStep from '../../shared/multiStep';
 import SummaryStep from './summaryStep';
 import routes from '../../../constants/routes';
 import styles from './secondPassphrase.css';
 import ConfirmPassphrase from './confirmPassphrase';
 import TransactionResult from '../../shared/transactionResult';
+import MultiStep from '../../../../libs/multiStep';
 
 class SecondPassphrase extends React.Component {
   constructor() {
@@ -43,7 +43,7 @@ class SecondPassphrase extends React.Component {
     const { t, account, secondPassphraseRegistered } = this.props;
     return (
       <div className={styles.wrapper}>
-        <MultiStep showNav={false} finalCallback={this.goToWallet}>
+        <MultiStep finalCallback={this.goToWallet}>
           <FirstStep
             t={t}
             goBack={this.backToPreviousPage}

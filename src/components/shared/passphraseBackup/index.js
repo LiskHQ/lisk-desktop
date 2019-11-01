@@ -3,8 +3,8 @@ import React from 'react';
 import { SecondaryButton } from '../../toolbox/buttons/button';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import Icon from '../../toolbox/icon';
-import renderPaperwallet from '../../../utils/paperwallet';
 import styles from './passphraseBackup.css';
+import renderPaperwallet from '../../../utils/paperwallet';
 import PassphraseRenderer from '../passphraseRenderer';
 
 class PassphraseBackup extends React.Component {
@@ -22,11 +22,15 @@ class PassphraseBackup extends React.Component {
 
   /* istanbul ignore next */
   generatePaperwallet() {
-    const data = {
-      ...this.props,
-      qrcode: this.canvasRef.firstChild.toDataURL(),
-    };
-    renderPaperwallet(data, this.walletName);
+    import(/* webpackChunkName: "jspdf" */ 'jspdf')
+      .then((module) => {
+        const JSPDF = module.default;
+        const data = {
+          ...this.props,
+          qrcode: this.canvasRef.firstChild.toDataURL(),
+        };
+        renderPaperwallet(JSPDF, data, this.walletName);
+      });
   }
 
   setCanvasRef(node) {

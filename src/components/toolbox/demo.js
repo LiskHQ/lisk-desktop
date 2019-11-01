@@ -4,7 +4,6 @@ import AnimationDemo from './animation/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
 import BoxDemo from './box/demo';
 import CalendarDemo from './calendar/demo';
-import CheckBoxDemo from './checkBox/demo';
 import DropdownButtonDemo from './dropdownButton/demo';
 import DropdownDemo from './dropdown/demo';
 import HardwareWalletIllustrationDemo from './hardwareWalletIllustration/demo';
@@ -16,7 +15,6 @@ import PassphraseInputDemo from './passphraseInput/demo';
 import SpinnerDemo from './spinner/demo';
 import SwitcherDemo from './switcher/demo';
 import TableDemo from './table/demo';
-import TooltipDemo from './tooltip/demo';
 import styles from './demo.css';
 
 const getName = child => child.type.name.replace('Demo', '');
@@ -48,7 +46,6 @@ const ToolboxDemo = () => (
     <AutoSuggestDemo />
     <BoxDemo />
     <CalendarDemo />
-    <CheckBoxDemo />
     <DropdownDemo />
     <DropdownButtonDemo />
     <IconDemo />
@@ -60,7 +57,6 @@ const ToolboxDemo = () => (
     <SpinnerDemo />
     <SwitcherDemo />
     <TableDemo />
-    <TooltipDemo />
   </WithTableOfContents>
 );
 
