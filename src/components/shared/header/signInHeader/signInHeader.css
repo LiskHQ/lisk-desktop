@@ -116,3 +116,12 @@
     margin: 10px 0;
   }
 }
+
+.customNodeError {
+  display: block;
+  padding: 8px var(--horizontal-padding-s);
+  margin: 8px 0 0;
+  background: var(--error-background-color);
+  color: var(--color-white);
+  border-radius: var(--border-radius-standard);
+}
