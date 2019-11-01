@@ -122,7 +122,7 @@ class AmountFieldGroup extends React.Component {
           { this.generateField({ name: 'amountTo', placeholder: t('Max') }) }
         </div>
         <Feedback
-          className={styles.feedback}
+          className={[styles.feedback, 'amount-feedback'].join(' ')}
           status={this.state.feedback ? 'error' : ''}
           size="xs"
           message={this.state.feedback}

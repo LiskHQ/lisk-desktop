@@ -180,7 +180,7 @@
 }
 
 .feedback {
-  @mixin contentSmallest;
+  @mixin contentNormal;
 
   display: flex;
   box-sizing: border-box;
@@ -193,12 +193,12 @@
   right: 0;
   opacity: 0;
 
-  &:global(.error) {
+  &.error {
     color: var(--color-burnt-sienna);
   }
 }
 
-.show {
+.feedback:not(:empty) {
   opacity: 1;
   transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
 }

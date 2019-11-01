@@ -49,7 +49,6 @@ const Input = ({
   label,
   type,
   isMasked,
-  feedbackType,
   ...props
 }) => {
   status = updateStatus({

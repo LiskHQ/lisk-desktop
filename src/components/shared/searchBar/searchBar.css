@@ -23,10 +23,6 @@
   }
 }
 
-.searchInput + span {
-  position: relative !important;
-}
-
 .searchFeedback {
   @mixin contentNormal;
 

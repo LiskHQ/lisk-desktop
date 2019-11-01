@@ -94,7 +94,6 @@ describe('Recipient Input', () => {
     wrapper.find('input.recipient').simulate('focus');
     wrapper.find('input.recipient').simulate('change', wrongValue);
     wrapper.setProps({
-      ...props,
       selectedItem: {
         ...props.selectedItem,
         error: true,
@@ -107,7 +106,6 @@ describe('Recipient Input', () => {
     wrapper.find('input.recipient').simulate('focus');
     wrapper.find('input.recipient').simulate('change', correctValue);
     wrapper.setProps({
-      ...props,
       selectedItem: {
         ...props.selectedItem,
         error: false,

@@ -151,8 +151,7 @@ class SelectName extends React.Component {
               error={error}
               isLoading={loading}
               status={error ? 'error' : 'ok'}
-              feedbackType="permanent"
-              feedback={error || t('')}
+              feedback={error}
             />
           </div>
           <BoxFooter>

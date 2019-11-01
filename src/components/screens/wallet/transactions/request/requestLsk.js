@@ -167,8 +167,8 @@ class RequestLsk extends React.Component {
             />
             <span className={[
               styles.feedback,
-              fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : '',
-              fields.reference.feedback ? styles.show : ''].join(' ')}
+              messageMaxLength - byteCount < 10 ? styles.error : '',
+            ].join(' ')}
             >
               {fields.reference.feedback}
             </span>
