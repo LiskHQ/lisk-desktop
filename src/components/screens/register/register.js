@@ -2,13 +2,14 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generatePassphrase } from '../../../utils/passphrase';
 import { extractAddress } from '../../../utils/account';
-import MultiStep from '../../shared/multiStep';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
 import routes from '../../../constants/routes';
 import styles from './register.css';
+import MultiStep from '../../../../libs/multiStep';
+import MultiStepProgressBar from '../../shared/multiStepProgressBar';
 
 class Register extends React.Component {
   constructor() {
@@ -50,7 +51,8 @@ class Register extends React.Component {
       <React.Fragment>
         <div className={`${styles.register} ${grid.row}`}>
           <MultiStep
-            className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
+            navStyles={{ multiStepWrapper: styles.wrapper }}
+            progressBar={MultiStepProgressBar}
           >
             <ChooseAvatar
               accounts={accounts}

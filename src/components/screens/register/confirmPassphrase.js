@@ -113,9 +113,6 @@ class ConfirmPassphrase extends React.Component {
 
     return (
       <React.Fragment>
-        <span className={`${registerStyles.stepsLabel}`}>
-          {t('Step {{current}} / {{total}}', { current: 3, total: 4 })}
-        </span>
         <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
           <h1>
             {t('Confirm your passphrase')}
