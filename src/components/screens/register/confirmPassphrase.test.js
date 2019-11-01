@@ -9,12 +9,18 @@ describe('Register Process - Confirm Passphrase', () => {
 
   const props = {
     passphrase: 'barely feature filter inmate exotic sister dog boil crush build canvas latin',
+    nextStep: jest.fn(),
   };
 
   const selectWrongWords = (comp) => {
-    comp.find('div.option').forEach(option =>
-      !props.passphrase.includes(option.text()) && option.simulate('click'));
+    comp.find('div.option').forEach(option => !props.passphrase.includes(option.text()) && option.simulate('click'));
   };
+
+  const selectRightWords = (comp) => {
+    comp.find('div.option').forEach(option => props.passphrase.includes(option.text()) && option.simulate('click'));
+  };
+
+
   beforeEach(() => {
     wrapper = mount(<ConfirmPassphrase {...props} />);
     clock = useFakeTimers({
@@ -29,22 +35,21 @@ describe('Register Process - Confirm Passphrase', () => {
 
   it('Should handle selection', () => {
     wrapper.find('.passphraseContainer');
-    wrapper.find('.emptyWord').at(0).simulate('click');
-    selectWrongWords(wrapper);
+    selectRightWords(wrapper);
     expect(wrapper.find('.selected')).toExist();
-    wrapper.find('.emptyWord').at(0).simulate('click');
-    selectWrongWords(wrapper);
-    wrapper.find('.buttonsHolder Button').at(1).simulate('click');
-    expect(wrapper.find('.error')).toExist();
+    selectRightWords(wrapper);
+    wrapper.find('.confirmPassphraseFooter Button').at(0).simulate('click');
+    expect(wrapper.find('.correct')).toExist();
+    clock.tick(1500);
+    wrapper.update();
+    expect(props.nextStep).toHaveBeenCalled();
   });
 
   it('Should update empty values after wrong selection', () => {
     wrapper.find('.passphraseContainer');
-    wrapper.find('.emptyWord').at(0).simulate('click');
     selectWrongWords(wrapper);
-    wrapper.find('.emptyWord').at(0).simulate('click');
     selectWrongWords(wrapper);
-    wrapper.find('.buttonsHolder Button').at(1).simulate('click');
+    wrapper.find('.confirmPassphraseFooter Button').at(0).simulate('click');
     clock.tick(1500);
     wrapper.update();
     expect(wrapper.find('.emptyWord')).toExist();

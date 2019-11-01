@@ -94,7 +94,7 @@ class TransactionSummary extends React.Component {
   render() {
     const {
       title, children, confirmButton, cancelButton, account,
-      t, fee, confirmation, classNames, token,
+      t, fee, confirmation, classNames, token, footerClassName,
     } = this.props;
     const {
       secondPassphrase, isHardwareWalletConnected, isConfirmed,
@@ -172,7 +172,7 @@ class TransactionSummary extends React.Component {
       isHardwareWalletConnected
         ? null
         : (
-          <BoxFooter className="summary-footer">
+          <BoxFooter className={`${footerClassName} summary-footer`}>
             <PrimaryButton
               className={`${styles.confirmBtn} confirm-button`}
               disabled={

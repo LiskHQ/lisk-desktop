@@ -70,9 +70,8 @@
 
     color: var(--color-maastricht-blue);
     display: flex;
+    margin: 55px 0 -10px;
     align-items: center;
-    margin-top: 5px;
-    margin-bottom: 16px;
   }
 }
 

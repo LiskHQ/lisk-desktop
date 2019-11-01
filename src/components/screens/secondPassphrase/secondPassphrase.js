@@ -3,9 +3,10 @@ import { generatePassphrase } from '../../../utils/passphrase';
 import Fees from '../../../constants/fees';
 import FirstStep from './firstStep';
 import SummaryStep from './summaryStep';
-import TransactionResult from '../../shared/transactionResult';
 import routes from '../../../constants/routes';
 import styles from './secondPassphrase.css';
+import ConfirmPassphrase from './confirmPassphrase';
+import TransactionResult from '../../shared/transactionResult';
 import MultiStep from '../../../../libs/multiStep';
 
 class SecondPassphrase extends React.Component {
@@ -50,6 +51,10 @@ class SecondPassphrase extends React.Component {
               ...account,
               passphrase: this.secondPassphrase,
             }}
+          />
+          <ConfirmPassphrase
+            t={t}
+            passphrase={this.secondPassphrase}
           />
           <SummaryStep
             secondPassphrase={this.secondPassphrase}

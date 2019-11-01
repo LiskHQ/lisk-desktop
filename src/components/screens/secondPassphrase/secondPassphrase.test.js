@@ -28,6 +28,11 @@ describe('SecondPassphrase', () => {
       wrapper = mount(<SecondPassphrase {...props} />);
     });
 
+    const selectRightWord = (comp, secondPassphrase) => {
+      comp.find('div.option').forEach(option =>
+        secondPassphrase.includes(option.text()) && option.simulate('click'));
+    };
+
     it('renders MultiStep component and passphrase', () => {
       expect(wrapper).toContainMatchingElement('MultiStep');
       expect(wrapper).toContainMatchingElement('.passphrase');
@@ -60,29 +65,29 @@ describe('SecondPassphrase', () => {
       expect(props.history.push).toHaveBeenCalledWith(routes.settings.path);
     });
 
-    it('should require user to confirm awarenes of what 2nd passphrase is', () => {
-      wrapper.find('.go-to-confirmation').first().simulate('click');
-      expect(wrapper.find('.confirm-button').first()).toBeDisabled();
-      wrapper.find('.confirmation-checkbox input').first().simulate('change');
-      expect(wrapper.find('.confirm-button').first()).not.toBeDisabled();
-    });
-
     it('should allow to registerSecondPassphrase and go to wallet', () => {
       props.secondPassphraseRegistered = jest.fn(({ callback }) => {
         callback({ success: true });
       });
       wrapper = mount(<SecondPassphrase {...props} />);
-
+      const secondPassphrase = wrapper.find('.passphrase').text();
       wrapper.find('.go-to-confirmation').first().simulate('click');
-      wrapper.find('.confirmation-checkbox input').first().simulate('change');
-      expect(wrapper.find('.confirm-button').first()).not.toBeDisabled();
-      wrapper.find('.confirm-button').first().simulate('click');
+
+      selectRightWord(wrapper, secondPassphrase);
+      selectRightWord(wrapper, secondPassphrase);
+      wrapper.find('.confirmPassphraseFooter .confirmBtn').hostNodes().simulate('click');
+
+      jest.runAllTimers();
+      wrapper.update();
+      wrapper.find('.confirmation-checkbox input').simulate('change');
+      wrapper.find('.confirm-button').hostNodes().simulate('click');
+
       expect(props.secondPassphraseRegistered).toHaveBeenCalledWith(expect.objectContaining({
         passphrase: props.account.passphrase,
       }));
-      expect(wrapper.find('.result-box-header')).toHaveText('2nd passphrase registered');
+      expect(wrapper.find('h1')).toHaveText('2nd passphrase registration submitted');
+      wrapper.find('button.go-to-wallet').simulate('click');
 
-      wrapper.find('.go-to-wallet').first().simulate('click');
       expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
     });
 
@@ -91,14 +96,21 @@ describe('SecondPassphrase', () => {
         callback({ success: false, error: { message: 'custom message' } });
       });
       wrapper = mount(<SecondPassphrase {...props} />);
+      const secondPassphrase = wrapper.find('.passphrase').text();
       wrapper.find('.go-to-confirmation').first().simulate('click');
+
+      selectRightWord(wrapper, secondPassphrase);
+      selectRightWord(wrapper, secondPassphrase);
+      wrapper.find('.confirmPassphraseFooter Button').first().simulate('click');
+
+      jest.runAllTimers();
+      wrapper.update();
       wrapper.find('.confirmation-checkbox input').first().simulate('change');
-      expect(wrapper.find('.confirm-button').first()).not.toBeDisabled();
-      wrapper.find('.confirm-button').first().simulate('click');
+      wrapper.find('.confirm-button').hostNodes().simulate('click');
       expect(props.secondPassphraseRegistered).toHaveBeenCalledWith(expect.objectContaining({
         passphrase: props.account.passphrase,
       }));
-      expect(wrapper.find('.result-box-header')).toHaveText('Registration failed');
+      expect(wrapper.find('h1')).toHaveText('2nd passphrase registration failed');
     });
   });
 });

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { fromRawLsk } from '../../../utils/lsk';
 import AccountVisual from '../../toolbox/accountVisual';
 import Fees from '../../../constants/fees';
@@ -11,7 +10,7 @@ const SummaryStep = ({
   t, account, prevStep, nextStep, secondPassphrase, secondPassphraseRegistered, finalCallback,
 }) => (
   <TransactionSummary
-    title={t('2nd passphrase registration summary')}
+    title={t('Register 2nd passphrase summary')}
     account={account}
     t={t}
     confirmButton={{
@@ -25,20 +24,20 @@ const SummaryStep = ({
             nextStep({
               success,
               ...(success ? {
-                title: t('2nd passphrase registered'),
                 illustration: 'secondPassphraseSuccess',
+                title: t('2nd passphrase registration submitted'),
                 message: t('You will be notified when your transaction is confirmed.'),
                 primaryButon: {
-                  title: t('Go to Wallet'),
+                  title: t('Go to wallet'),
                   className: 'go-to-wallet',
                   onClick: finalCallback,
                 },
               } : {
-                title: t('Registration failed'),
                 illustration: 'secondPassphraseError',
-                message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
+                title: t('2nd passphrase registration failed'),
+                message: t('There was an error on the transaction.'),
                 primaryButon: {
-                  title: t('Go to Wallet'),
+                  title: t('Go to wallet'),
                   onClick: finalCallback,
                 },
                 error,
@@ -54,6 +53,8 @@ const SummaryStep = ({
     }}
     fee={fromRawLsk(Fees.setSecondPassphrase)}
     confirmation={t('I’m aware registering a 2nd passphrase is irreversible and it will be required to confirm transactions.')}
+    classNames={styles.passphraseConfirmation}
+    footerClassName={styles.confirmPassphraseFooter}
   >
     <section>
       <label>{t('Account')}</label>

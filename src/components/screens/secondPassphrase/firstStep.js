@@ -23,7 +23,7 @@ const FirstStep = ({
         account={account}
         t={t}
         passphraseName={t('Second passphrase')}
-        paperWalletName="lisk_2nd_passphrase"
+        paperWalletName="lisk_passphrase_store_safely"
       />
     </BoxContent>
     <BoxFooter className="summary-footer">

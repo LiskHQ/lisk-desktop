@@ -190,7 +190,7 @@ const ss = {
   chooseAvatar: '.choose-avatar span',
   copyPassphrase: '.passphrase .word',
   passphraseWordConfirm: '.word-options .option',
-  passphraseConfirmButton: '.passphrase-is-correct-button',
+  passphraseConfirmButton: 'button.confirm',
   exploreAsGuestBtn: '.explore-as-guest-button',
   walletOnboarding: '.wallet-onboarding',
   walletOnboardingClose: '.wallet-onboarding .banner-close',

@@ -58,9 +58,13 @@
   & .emptyWordFocused {
     cursor: pointer;
     font-family: sans-serif;
+    position: relative;
+    bottom: 2px;
 
     &::before {
       font-weight: var(--font-weight-bold);
+      position: relative;
+      top: 2px;
     }
   }
 
@@ -79,6 +83,7 @@
 
   & .selected,
   & .selected::before {
+    cursor: pointer;
     color: var(--color-maastricht-blue);
     font-weight: var(--font-weight-bold);
   }
@@ -107,14 +112,33 @@
 .optionsContainer {
   display: flex;
   justify-content: left;
-  margin-top: 20px;
 
   & div {
     cursor: pointer;
+    margin-top: 20px;
     padding: 8px 26px;
     background-color: var(--color-white);
     font-weight: var(--font-weight-bold);
     color: var(--color-ultramarine-blue);
     margin-right: 20px;
+    box-shadow: var(--box-shadow-standard);
+  }
+}
+
+.confirmPassphraseFooter {
+  margin-top: 40px;
+  align-self: center;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > .confirmBtn {
+    width: var(--footer-button-width);
+  }
+
+  & > .editBtn {
+    margin-top: 5px;
+    width: auto !important;
   }
 }
