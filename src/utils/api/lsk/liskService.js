@@ -131,6 +131,15 @@ const liskServiceApi = {
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
     transformResponse: response => response.data,
   }),
+
+  getTopAccounts: async ({ networkConfig }, searchParams) => liskServiceGet({
+    networkConfig,
+    path: '/api/v1/accounts/top',
+    searchParams: {
+      limit: DEFAULT_LIMIT,
+      ...searchParams,
+    },
+  }),
 };
 
 export default liskServiceApi;

@@ -47,9 +47,9 @@ const Table = ({
         ))}
       </TableRow>
       )}
-      {data.map(row => (
+      {data.map((row, index) => (
         <TableRow
-          key={row.id}
+          key={index}
           {...(getRowLink(row) && {
             Container: Link,
             to: getRowLink(row),
