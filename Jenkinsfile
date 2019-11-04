@@ -9,6 +9,9 @@ pipeline {
 	environment {
 		LISK_CORE_VERSION = '1.5.0'
 	}
+	parameters {
+		booleanParam(name: 'SKIP_PERCY', defaultValue: false, description: 'Skip running percy.')
+	}
 	stages {
 		stage('Install npm dependencies') {
 			steps {
@@ -162,10 +165,16 @@ EOF
 						}
 					},
 					"percy": {
-						ansiColor('xterm') {
-							nvm(getNodejsVersion()) {
-								withCredentials([string(credentialsId: 'PERCY_TOKEN', variable: 'PERCY_TOKEN')]) {
-									sh 'npm run percy'
+						script {
+							if(params.SKIP_PERCY){
+								echo 'Skipping percy run as requested.'
+							} else {
+								ansiColor('xterm') {
+									nvm(getNodejsVersion()) {
+										withCredentials([string(credentialsId: 'PERCY_TOKEN', variable: 'PERCY_TOKEN')]) {
+											sh 'npm run percy'
+										}
+									}
 								}
 							}
 						}
