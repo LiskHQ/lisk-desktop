@@ -165,10 +165,7 @@ class RequestLsk extends React.Component {
               className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
               name={fields.reference.error ? 'alertIcon' : 'okIcon'}
             />
-            <span className={[
-              styles.feedback,
-              messageMaxLength - byteCount < 10 ? styles.error : '',
-            ].join(' ')}
+            <span className={`${styles.feedback} ${messageMaxLength - byteCount < 10 ? styles.error : ''}`}
             >
               {fields.reference.feedback}
             </span>
