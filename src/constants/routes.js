@@ -1,6 +1,5 @@
 import { tokenMap } from './tokens';
-import Accounts from
-  '../components/screens/explorer/accounts';
+import Accounts from '../components/screens/explorer/accounts';
 import AddBookmark from '../components/screens/bookmarks/addBookmark';
 import BlockDetails from '../components/screens/monitor/blockDetails';
 import Blocks from '../components/screens/monitor/blocks';
@@ -11,6 +10,8 @@ import DelegatesMonitor from '../components/screens/monitor/delegates';
 import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
 import Monitor from '../components/screens/monitor';
+import MonitorAccounts from '../components/screens/monitor/accounts';
+import MonitorTransactions from '../components/screens/monitor/transactions';
 import Register from '../components/screens/register';
 import RegisterDelegate from '../components/screens/registerDelegate';
 import SecondPassphrase from '../components/screens/secondPassphrase';
@@ -18,7 +19,6 @@ import Send from '../components/screens/wallet/send/send';
 import Settings from '../components/screens/settings';
 import SignMessage from '../components/screens/signMessage';
 import TermsOfUse from '../components/screens/termsOfUse';
-import MonitorTransactions from '../components/screens/monitor/transactions';
 import TransactionDashboard from '../components/shared/transactionDashboard';
 import Transactions from '../components/screens/explorer/transactions';
 import VerifyMessage from '../components/screens/verify-message';
@@ -166,6 +166,12 @@ export default {
     path: '/monitor/blocks',
     pathSuffix: '/:id?',
     component: BlockDetails,
+    isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  monitorAccounts: {
+    path: '/monitor/accounts',
+    component: MonitorAccounts,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },

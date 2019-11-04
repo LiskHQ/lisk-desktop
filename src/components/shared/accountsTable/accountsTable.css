@@ -1,0 +1,5 @@
+@import '../../../app/variables.css';
+
+.content {
+  padding: 0 !important;
+}
