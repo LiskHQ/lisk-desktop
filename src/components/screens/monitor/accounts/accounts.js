@@ -2,13 +2,13 @@ import React from 'react';
 import MonitorHeader from '../header';
 import AccountsTable from '../../../shared/accountsTable';
 
-const MonitorAccounts = ({ t, transactions }) => (
+const MonitorAccounts = ({ t, accounts }) => (
   <div>
     <MonitorHeader />
     <AccountsTable
       isLoadMoreEnabled
       title={t('Accounts')}
-      transactions={transactions}
+      accounts={accounts}
       t={t}
     />
   </div>

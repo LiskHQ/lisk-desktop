@@ -7,14 +7,14 @@ import liskServiceApi from '../../../../utils/api/lsk/liskService';
 
 export default compose(
   withData({
-    transactions: {
-      apiUtil: liskServiceApi.getTransactions,
+    accounts: {
+      apiUtil: liskServiceApi.getTopAccounts,
       defaultData: [],
       autoload: true,
-      transformResponse: (response, oldData, urlSearchParams) => (
+      transformResponse: (response, accounts, urlSearchParams) => (
         urlSearchParams.offset
-          ? [...oldData, ...response.filter(block => !oldData.find(({ id }) => id === block.id))]
-          : response
+          ? [...accounts, ...response.data]
+          : response.data
       ),
     },
   }),

@@ -17,14 +17,14 @@ import styles from './accountsTable.css';
 
 class AccountsTable extends React.Component {
   handleLoadMore = () => {
-    const { transactions } = this.props;
-    transactions.loadData({ offset: transactions.data.length });
+    const { accounts } = this.props;
+    accounts.loadData({ offset: accounts.data.length });
   }
 
   render() {
     const {
       title,
-      transactions,
+      accounts,
       isLoadMoreEnabled,
       t,
       emptyStateMessage,
@@ -32,17 +32,17 @@ class AccountsTable extends React.Component {
     } = this.props;
 
     return (
-      <Box main isLoading={transactions.isLoading} className="transactions-box">
+      <Box main isLoading={accounts.isLoading} className="accounts-box">
         <BoxHeader>
           <h1>{title}</h1>
         </BoxHeader>
         {
-          transactions.error
+          accounts.error
             ? (
               <BoxContent>
                 <BoxEmptyState>
                   <Illustration name="emptyWallet" />
-                  <h3>{emptyStateMessage || `${transactions.error}`}</h3>
+                  <h3>{emptyStateMessage || `${accounts.error}`}</h3>
                 </BoxEmptyState>
               </BoxContent>
             )
@@ -50,40 +50,39 @@ class AccountsTable extends React.Component {
               <React.Fragment>
                 <BoxContent className={styles.content}>
                   <Table
-                    getRowLink={transaction => `${routes.accounts.path}/${transaction.id}`}
-                    data={transactions.data}
+                    getRowLink={account => `${routes.accounts.path}/${account.address}`}
+                    data={accounts.data}
                     columns={[
                       {
                         header: t('Rank'),
                         className: grid['col-xs-1'],
                         id: 'rank',
-                        getValue: () => (<span># Rank</span>),
+                        getValue: () => (<span className={styles.counter} />),
                       },
                       {
                         header: t('Address'),
                         className: grid['col-xs-5'],
                         id: 'address',
-                        getValue: transaction => (
+                        getValue: account => (
                           <AccountVisualWithAddress
-                            address={transaction.recipientId}
+                            address={account.address}
                             isMediumViewPort={isMediumViewPort}
                             transactionSubject="address"
-                            transactionType={transaction.type}
                             showBookmarkedAddress
                           />
                         ),
                       },
                       {
                         header: t('Balance'),
-                        className: grid['col-xs-2'],
+                        className: grid['col-xs-3'],
                         id: 'balance',
-                        getValue: transaction => (
-                          <LiskAmount val={transaction.amount} token={tokenMap.LSK.key} />
+                        getValue: account => (
+                          <LiskAmount val={account.balance} token={tokenMap.LSK.key} />
                         ),
                       },
                       {
                         header: t('Supply'),
-                        className: grid['col-xs-2'],
+                        className: grid['col-xs-1'],
                         id: 'supply',
                         getValue: () => (<span>supply</span>),
                       },
@@ -94,11 +93,12 @@ class AccountsTable extends React.Component {
                         getValue: () => (<span>description</span>),
                       },
                     ]}
+                    rowClassName="accounts-row"
                   />
                 </BoxContent>
                 {
-                  isLoadMoreEnabled && !!transactions.data.length
-                  && transactions.data.length % DEFAULT_LIMIT === 0
+                  isLoadMoreEnabled && !!accounts.data.length
+                  && accounts.data.length % DEFAULT_LIMIT === 0
                     ? (
                       <BoxFooterButton className="load-more" onClick={this.handleLoadMore}>
                         {t('Load more')}
