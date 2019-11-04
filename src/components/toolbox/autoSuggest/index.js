@@ -11,7 +11,7 @@ class AutoSuggest extends React.Component {
     this.state = {
       dropdownIndex: 0,
       isLoading: false,
-      isOnFocus: true,
+      isFocused: true,
     };
 
     this.loaderTimeout = null;
@@ -121,20 +121,20 @@ class AutoSuggest extends React.Component {
   }
 
   onBlur = () => {
-    this.setState({ isOnFocus: false });
+    this.setState({ isFocused: false });
   }
 
   onFocus = () => {
-    this.setState({ isOnFocus: true });
+    this.setState({ isFocused: true });
   }
 
   isOnError = () => {
-    const { isOnFocus } = this.state;
+    const { isFocused } = this.state;
     const { selectedItem, items } = this.props;
     const bookmarksList = this.getFilterList();
 
-    if ((!items.length && selectedItem.error) || (!isOnFocus && selectedItem.error)) return true;
-    if ((isOnFocus || !isOnFocus) && items.length && !bookmarksList.length && selectedItem.error) {
+    if ((!items.length && selectedItem.error) || (!isFocused && selectedItem.error)) return true;
+    if ((isFocused || !isFocused) && items.length && !bookmarksList.length && selectedItem.error) {
       return true;
     }
     return false;

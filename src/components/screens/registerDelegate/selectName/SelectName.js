@@ -133,7 +133,7 @@ class SelectName extends React.Component {
 
           <label className={styles.nicknameLabel}>
             {t('Your nickname')}
-            <Tooltip classNam>
+            <Tooltip>
               <p>{t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}</p>
             </Tooltip>
           </label>

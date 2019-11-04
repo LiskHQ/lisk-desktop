@@ -93,7 +93,6 @@ class BookmarksList extends React.Component {
 
   onTitleChange({ target }) {
     this.setState({
-      ...this.state,
       editedTitle: target.value,
       feedback: target.value.length > 20 ? this.props.t('Label is too long.') : '',
     });
