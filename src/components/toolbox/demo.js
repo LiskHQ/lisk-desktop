@@ -7,7 +7,6 @@ import CalendarDemo from './calendar/demo';
 import DropdownButtonDemo from './dropdownButton/demo';
 import DropdownDemo from './dropdown/demo';
 import HardwareWalletIllustrationDemo from './hardwareWalletIllustration/demo';
-import IconDemo from './icon/demo';
 import IllustrationDemo from './illustration/demo';
 import OnboardingDemo from './onboarding/demo';
 import PageHeaderDemo from './pageHeader/demo';
@@ -48,7 +47,6 @@ const ToolboxDemo = () => (
     <CalendarDemo />
     <DropdownDemo />
     <DropdownButtonDemo />
-    <IconDemo />
     <IllustrationDemo />
     <HardwareWalletIllustrationDemo />
     <OnboardingDemo />
