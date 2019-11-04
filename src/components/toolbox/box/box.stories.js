@@ -1,40 +1,37 @@
 import React from 'react';
-import { PrimaryButton, TertiaryButton } from '../buttons/button';
-import Box from '.';
-import BoxHeader from './header';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
+import Box from './index';
 import BoxContent from './content';
-import BoxRow from './row';
+import BoxHeader from './header';
 import BoxFooter from './footer';
+import { PrimaryButton, TertiaryButton } from '../buttons/button';
+import BoxTabs from '../tabs';
+import BoxRow from './row';
 import BoxFooterButton from './footerButton';
 import BoxEmptyState from './emptyState';
-import BoxTabs from '../tabs';
-import DemoRenderer from '../demoRenderer';
 import Icon from '../icon';
 
-/* eslint-disable-next-line no-console */
-const onClick = console.log;
-
-const BoxDemo = () => (
-  <React.Fragment>
-    <h2>Box</h2>
-    <DemoRenderer>
+storiesOf('Toolbox', module)
+  .add('Box', () => (
+    <StoryWrapper>
+      <h3>Box main isLoading </h3>
       <Box main isLoading>
         <BoxContent> Content </BoxContent>
       </Box>
-    </DemoRenderer>
-    <DemoRenderer>
+      <h3>Box width=medium header footer</h3>
       <Box width="medium">
         <BoxHeader>
           <h1>Custom header</h1>
         </BoxHeader>
         <BoxContent>Content</BoxContent>
         <BoxFooter>
-          <PrimaryButton onClick={onClick}>Submit</PrimaryButton>
-          <TertiaryButton onClick={onClick}>Cancel</TertiaryButton>
+          <PrimaryButton>Submit</PrimaryButton>
+          <TertiaryButton>Cancel</TertiaryButton>
         </BoxFooter>
       </Box>
-    </DemoRenderer>
-    <DemoRenderer>
+      <h3>Box isLoading header tabs content row footerButton</h3>
       <Box isLoading>
         <BoxHeader>
           <BoxTabs
@@ -42,7 +39,7 @@ const BoxDemo = () => (
               { name: 'Tab 1', value: 'tab1' },
               { name: 'Tab 2', value: 'tab2' },
             ]}
-            onClick={onClick}
+            onClick={action('clicked')}
             active="tab2"
           />
           <span>Some other stuff</span>
@@ -53,10 +50,9 @@ const BoxDemo = () => (
           <BoxRow>Row #3</BoxRow>
           <BoxRow>Row #4</BoxRow>
         </BoxContent>
-        <BoxFooterButton onClick={onClick}>Load more</BoxFooterButton>
+        <BoxFooterButton onClick={action('clicked')}>Load more</BoxFooterButton>
       </Box>
-    </DemoRenderer>
-    <DemoRenderer>
+      <h3>Box header emptyState icon</h3>
       <Box>
         <BoxHeader>
           <h1>Custom header</h1>
@@ -67,8 +63,5 @@ const BoxDemo = () => (
           <p>And some longer text explaining what to do about this situation</p>
         </BoxEmptyState>
       </Box>
-    </DemoRenderer>
-  </React.Fragment>
-);
-
-export default BoxDemo;
+    </StoryWrapper>
+  ));

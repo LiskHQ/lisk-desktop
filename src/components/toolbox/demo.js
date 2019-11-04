@@ -2,7 +2,6 @@ import React from 'react';
 import AccountVisualDemo from './accountVisual/demo';
 import AnimationDemo from './animation/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
-import BoxDemo from './box/demo';
 import CalendarDemo from './calendar/demo';
 import DropdownButtonDemo from './dropdownButton/demo';
 import DropdownDemo from './dropdown/demo';
@@ -43,7 +42,6 @@ const ToolboxDemo = () => (
     <AccountVisualDemo />
     <AnimationDemo />
     <AutoSuggestDemo />
-    <BoxDemo />
     <CalendarDemo />
     <DropdownDemo />
     <DropdownButtonDemo />
