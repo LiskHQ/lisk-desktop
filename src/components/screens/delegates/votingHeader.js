@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { loginType } from '../../../constants/hwConstants';
 import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons/button';
 import Tooltip from '../../toolbox/tooltip/tooltip';
+import Icon from '../../toolbox/icon';
 import SignInTooltipWrapper from '../../shared/signInTooltipWrapper';
 import routes from '../../../constants/routes';
 import votingConst from '../../../constants/voting';
@@ -23,6 +24,28 @@ function shouldShowRegisterDelagteButton(account) {
 }
 
 class VotingHeader extends React.Component {
+  state = {};
+
+  // This is equal to the header margin top
+  headerTopEdge = 15;
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.locateHeader);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.locateHeader);
+  }
+
+  locateHeader = ({ target }) => {
+    this.isAboveHeader = target.documentElement.scrollTop >= this.headerTopEdge;
+    if (this.isAboveHeader && !this.state.isHeaderSticky) {
+      this.setState({ isHeaderSticky: true });
+    } else if (!this.isAboveHeader && this.state.isHeaderSticky) {
+      this.setState({ isHeaderSticky: false });
+    }
+  }
+
   render() {
     const {
       t,
@@ -31,6 +54,7 @@ class VotingHeader extends React.Component {
       votingModeEnabled,
       account,
     } = this.props;
+    const { isHeaderSticky } = this.state;
     const voteList = getVoteList(votes);
     const unvoteList = getUnvoteList(votes);
     const totalActions = getTotalActions(votes);
@@ -39,99 +63,111 @@ class VotingHeader extends React.Component {
       fee,
     } = votingConst;
     return (
-      <div className={`${styles.wrapper} voting-header`}>
-        <span>
-          { account && account.address
+      <div
+        className={`${styles.wrapper} voting-header ${isHeaderSticky ? styles.sticky : ''}`}
+        ref={(el) => { this.wrapper = el; }}
+      >
+        <div className={styles.bg} />
+        <div className={styles.stickyContent}>
+          <div className={styles.info}>
+            { account && account.address
+              ? (
+                <div className={styles.infoItem}>
+                  <figure className={styles.icon}>
+                    <Icon name="balance" />
+                  </figure>
+                  <h5>
+                    <span className="total-voting-number">{getTotalVotesCount(votes)}</span>
+                    {`/${maxCountOfVotes}`}
+                  </h5>
+                  <span>{t('Total')}</span>
+                </div>
+              )
+              : (
+                <div className={styles.box}>
+                  <h2>
+                    {`${t('Delegates')}`}
+                  </h2>
+                  <span>{t('All important information about delegates.')}</span>
+                </div>
+              )
+            }
+            { votingModeEnabled
+              ? (
+                <div className={`${styles.infoItem} ${styles.addedVotes}`}>
+                  <figure className={styles.icon}>
+                    <Icon name="balance" />
+                  </figure>
+                  <h5 className="added-votes-count">{voteList.length}</h5>
+                  <span>{t('Added')}</span>
+                </div>
+              )
+              : null
+            }
+            { unvoteList.length
+              ? (
+                <div className={`${styles.infoItem} ${styles.removedVotes}`}>
+                  <figure className={styles.icon}>
+                    <Icon name="balance" />
+                  </figure>
+                  <h5 className="removed-votes-count">{unvoteList.length}</h5>
+                  <span>{t('Removed')}</span>
+                </div>
+              )
+              : null
+            }
+            { votingModeEnabled
+              ? (
+                <div className={styles.infoItem}>
+                  <figure className={styles.icon}>
+                    <Icon name="balance" />
+                  </figure>
+                  <h5>
+                    {totalActions}
+                    <Tooltip className={styles.tooltip}>
+                      <p>{t('Each time you add or remove a vote it is counted as an action. There\'s {{fee}} LSK fee per every 33 actions.', { fee })}</p>
+                    </Tooltip>
+                  </h5>
+                  <span>{t('Transaction fee')}</span>
+                </div>
+              )
+              : null
+            }
+          </div>
+          { votingModeEnabled
             ? (
-              <span className={styles.box}>
-                <h2>
-                  <span className="total-voting-number">{getTotalVotesCount(votes)}</span>
-                  {`/${maxCountOfVotes}`}
-                </h2>
-                <div>{t('My votes after confirmation')}</div>
-              </span>
+              <div className={styles.actionBar}>
+                <SecondaryButton onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
+                  {t('Cancel')}
+                </SecondaryButton>
+                <Link to={totalActions !== 0 ? routes.voting.path : routes.delegates.path}>
+                  <PrimaryButton className={`${styles.btn} go-to-confirmation-button`} disabled={totalActions === 0}>
+                    {t('Confirm')}
+                  </PrimaryButton>
+                </Link>
+              </div>
             )
             : (
-              <span className={styles.box}>
-                <h2>
-                  {' '}
-                  {t('Delegates')}
-                  {' '}
-                </h2>
-                <div>{t('All important information about delegates.')}</div>
-              </span>
+              <div className={styles.actionBar}>
+                { shouldShowRegisterDelagteButton(account)
+                  ? (
+                    <Link to={routes.registerDelegate.path}>
+                      <SecondaryButton className={`register-delegate ${styles.btn}`}>
+                        {t('Register as a Delegate')}
+                      </SecondaryButton>
+                    </Link>
+                  )
+                  : null
+                }
+                <SignInTooltipWrapper>
+                  <PrimaryButton onClick={toggleVotingMode} className={`start-voting-button ${styles.btn}`}>
+                    {t('Start voting')}
+                  </PrimaryButton>
+                </SignInTooltipWrapper>
+              </div>
             )
-              }
-          { votingModeEnabled
-            ? (
-              <span className={`${styles.outlinedBox} ${styles.addedVotes}`}>
-                <h3 className="added-votes-count">{voteList.length}</h3>
-                <span>{t('Added votes')}</span>
-              </span>
-            )
-            : null }
-          { unvoteList.length
-            ? (
-              <span className={`${styles.outlinedBox} ${styles.removedVotes}`}>
-                <h3 className="removed-votes-count">{unvoteList.length}</h3>
-                <span>{t('Removed votes')}</span>
-              </span>
-            )
-            : null }
-          { votingModeEnabled
-            ? (
-              <span className={styles.outlinedBox}>
-                <h3>
-                  {totalActions}
-                  <Tooltip className={styles.tooltip}>
-                    <p>{t('Each time you add or remove a vote it is counted as an action. There\'s {{fee}} LSK fee per every 33 actions.', { fee })}</p>
-                  </Tooltip>
-                </h3>
-                <span className={styles.hideInMedium}>{t('Total transactions (')}</span>
-                <span>
-                  {t('Total fee: ')}
-                  <b>
-                    {`${fee * totalActions} LSK`}
-                  </b>
-                </span>
-                <span className={styles.hideInMedium}>)</span>
-              </span>
-            )
-            : null }
-        </span>
-        { votingModeEnabled
-          ? (
-            <span>
-              <SecondaryButton onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
-                {t('Cancel voting')}
-              </SecondaryButton>
-              <Link to={totalActions !== 0 ? routes.voting.path : routes.delegates.path}>
-                <PrimaryButton className={`${styles.btn} go-to-confirmation-button`} disabled={totalActions === 0}>
-                  {t('Go to confirmation')}
-                </PrimaryButton>
-              </Link>
-            </span>
-          )
-          : (
-            <span>
-              { shouldShowRegisterDelagteButton(account)
-                ? (
-                  <Link to={routes.registerDelegate.path}>
-                    <SecondaryButton className={`register-delegate ${styles.btn}`}>
-                      {t('Register as a Delegate')}
-                    </SecondaryButton>
-                  </Link>
-                )
-                : null
-              }
-              <SignInTooltipWrapper>
-                <PrimaryButton onClick={toggleVotingMode} className={`start-voting-button ${styles.btn}`}>
-                  {t('Start voting')}
-                </PrimaryButton>
-              </SignInTooltipWrapper>
-            </span>
-          )
-            }
+          }
+        </div>
       </div>
     );
   }
