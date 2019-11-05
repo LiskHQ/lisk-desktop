@@ -60,6 +60,7 @@ describe('Recipient Input', () => {
 
   it('should validate bookmark', () => {
     const evt = { target: { name: 'recipient', value: '123456L' } };
+    wrapper.find('input.recipient').simulate('focus');
     wrapper.find('input.recipient').simulate('change', evt);
     wrapper.update();
     jest.advanceTimersByTime(300);
@@ -83,5 +84,35 @@ describe('Recipient Input', () => {
     wrapper.find('Input.input input').simulate('keyDown', { keyCode: keyCodes.enter });
     wrapper.find('.bookmark-list li').at(0).simulate('click');
     expect(props.onSelectItem).toBeCalled();
+    wrapper.find('input.recipient').simulate('blur');
+  });
+
+  it('should show error message if value is wrong and then remove it when value is correct', () => {
+    const wrongValue = { target: { name: 'recipient', value: 'HHH' } };
+    const correctValue = { target: { name: 'recipient', value: 'FRG' } };
+    wrapper = mount(<AutoSuggest {...props} />);
+    wrapper.find('input.recipient').simulate('focus');
+    wrapper.find('input.recipient').simulate('change', wrongValue);
+    wrapper.setProps({
+      selectedItem: {
+        ...props.selectedItem,
+        error: true,
+        feedback: 'wrong value',
+      },
+    });
+    wrapper.find('input.recipient').simulate('blur');
+    expect(wrapper.find('.feedback').text()).toEqual('wrong value');
+
+    wrapper.find('input.recipient').simulate('focus');
+    wrapper.find('input.recipient').simulate('change', correctValue);
+    wrapper.setProps({
+      selectedItem: {
+        ...props.selectedItem,
+        error: false,
+        feedback: '',
+      },
+    });
+    wrapper.find('input.recipient').simulate('blur');
+    expect(wrapper.find('.feedback').text()).toEqual('');
   });
 });

@@ -135,9 +135,7 @@ class DateFieldGroup extends React.Component {
           <span className={styles.separator} />
           <DateField showRightDropdown={showRightDropdown} name="dateTo" {...dateFieldProps} />
         </div>
-        <Feedback show={!!feedback} status="error" size="xs">
-          { feedback }
-        </Feedback>
+        <Feedback status="error" size="xs" message={feedback} />
       </div>
     );
   }

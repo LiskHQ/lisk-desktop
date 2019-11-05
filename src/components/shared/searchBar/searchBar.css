@@ -22,3 +22,10 @@
     height: 3px;
   }
 }
+
+.searchFeedback {
+  @mixin contentNormal;
+
+  color: var(--color-slate-gray);
+  margin-top: 20px;
+}

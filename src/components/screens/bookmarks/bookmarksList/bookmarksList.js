@@ -66,8 +66,9 @@ class BookmarksList extends React.Component {
 
   updateBookmark(e, { address, title }) {
     this.setState({
-      eddittedAddress: address,
-      eddittedTitle: title,
+      editedAddress: address,
+      editedTitle: title,
+      feedback: '',
     });
   }
 
@@ -79,11 +80,11 @@ class BookmarksList extends React.Component {
 
   saveChanges(e) {
     const { token, bookmarkUpdated } = this.props;
-    const { eddittedAddress, eddittedTitle } = this.state;
+    const { editedAddress, editedTitle } = this.state;
     bookmarkUpdated({
       account: {
-        address: eddittedAddress,
-        title: eddittedTitle,
+        address: editedAddress,
+        title: editedTitle,
       },
       token: token.active,
     });
@@ -92,13 +93,14 @@ class BookmarksList extends React.Component {
 
   onTitleChange({ target }) {
     this.setState({
-      eddittedTitle: target.value,
+      editedTitle: target.value,
+      feedback: target.value.length > 20 ? this.props.t('Label is too long.') : '',
     });
   }
 
   onRowClick(e) {
-    const { eddittedAddress } = this.state;
-    if (eddittedAddress) {
+    const { editedAddress } = this.state;
+    if (editedAddress) {
       e.preventDefault();
     }
   }
@@ -108,7 +110,7 @@ class BookmarksList extends React.Component {
       t, token, className, enableFilter, title, isEditable, bookmarks, emptyStateClassName, limit,
     } = this.props;
     const {
-      filter, eddittedAddress, eddittedTitle,
+      filter, editedAddress, editedTitle, feedback,
     } = this.state;
 
     const selectedBookmarks = this.getBookmarkListBasedOnSelectedToken();
@@ -139,7 +141,7 @@ class BookmarksList extends React.Component {
               <Link
                 onClick={this.onRowClick}
                 key={bookmark.address}
-                className={`${styles.row} ${eddittedAddress === bookmark.address ? styles.editting : ''} bookmark-list-row`}
+                className={`${styles.row} ${editedAddress === bookmark.address ? styles.editting : ''} bookmark-list-row`}
                 to={`${routes.accounts.path}/${bookmark.address}`}
               >
                 <div className={styles.avatarAndDescriptionWrapper}>
@@ -155,15 +157,20 @@ class BookmarksList extends React.Component {
                       : null
                   }
                   {
-                    eddittedAddress === bookmark.address
+                    editedAddress === bookmark.address
                       ? (
                         <Input
+                          autoComplete="off"
                           className={`bookmarks-edit-input ${styles.editInput}`}
-                          size="m"
                           onChange={this.onTitleChange}
-                          value={eddittedTitle}
-                          setRef={(input) => { this.editInput = input; }}
                           placeholder={t('Filter by name or address...')}
+                          setRef={(input) => { this.editInput = input; }}
+                          size="m"
+                          value={editedTitle}
+                          name="bookmarkName"
+                          error={!!feedback}
+                          feedback={feedback}
+                          status={feedback ? 'error' : 'ok'}
                         />
                       )
                       : (
@@ -177,7 +184,7 @@ class BookmarksList extends React.Component {
                 { isEditable
                   ? (
                     <div className={styles.buttonContainer}>
-                      { eddittedAddress === bookmark.address
+                      { editedAddress === bookmark.address
                         ? (
                           <React.Fragment>
                             <SecondaryButton
@@ -191,6 +198,7 @@ class BookmarksList extends React.Component {
                               onClick={e => this.saveChanges(e)}
                               className="bookmarks-save-changes-button"
                               size="m"
+                              disabled={!!feedback}
                             >
                               {t('Save changes')}
                             </PrimaryButton>

@@ -186,12 +186,9 @@ class passphraseInput extends React.Component {
           <div className={styles.footerContent}>
             <Feedback
               className={styles.errorMessage}
-              show={!!isFeedbackOnError}
               status={isFeedbackOnError ? 'error' : ''}
-              showIcon={false}
-            >
-              { secondPPFeedback || validationError }
-            </Feedback>
+              message={secondPPFeedback || validationError}
+            />
           </div>
         </div>
       </React.Fragment>

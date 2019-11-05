@@ -2,7 +2,6 @@ import React from 'react';
 import { Input, AutoresizeTextarea } from '../../../../toolbox/inputs';
 import CircularProgress from '../../../../toolbox/circularProgress/circularProgress';
 import Converter from '../../../../shared/converter';
-import Feedback from '../../../../toolbox/feedback/feedback';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
 import Icon from '../../../../toolbox/icon';
@@ -166,16 +165,10 @@ class RequestLsk extends React.Component {
               className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
               name={fields.reference.error ? 'alertIcon' : 'okIcon'}
             />
+            <span className={`${styles.feedback} ${messageMaxLength - byteCount < 10 ? styles.error : ''}`}>
+              {fields.reference.feedback}
+            </span>
           </span>
-          <Feedback
-            className={`${styles.feedback} ${styles.referenceFeedback}`}
-            show={!!fields.reference.feedback}
-            status={fields.reference.error ? 'error' : ''}
-            showIcon={false}
-            size="s"
-          >
-            { fields.reference.feedback }
-          </Feedback>
         </label>
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>

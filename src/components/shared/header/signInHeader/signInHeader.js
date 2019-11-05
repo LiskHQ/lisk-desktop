@@ -261,6 +261,15 @@ class Header extends React.Component {
                                   feedback={validationError}
                                   dark={dark}
                                 />
+                                {
+                                  validationError
+                                    ? (
+                                      <span className={styles.customNodeError}>
+                                        {validationError}
+                                      </span>
+                                    )
+                                    : null
+                                }
                               </div>
                               {
                                 isActiveItem

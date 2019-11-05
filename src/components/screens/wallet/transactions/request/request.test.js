@@ -81,7 +81,7 @@ describe('Request', () => {
       expect(wrapper.find('.fieldGroup .feedback.show')).not.toExist();
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(wrapper.find('.fieldGroup .feedback.show')).toExist();
+      expect(wrapper.find('.fieldGroup .feedback')).toExist();
       expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
 
       evt = { target: { name: 'reference', value: '' } };
@@ -100,7 +100,7 @@ describe('Request', () => {
       };
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(wrapper.find('.fieldGroup .feedback.show')).toExist();
+      expect(wrapper.find('.fieldGroup .feedback')).toExist();
       expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
     });
   });

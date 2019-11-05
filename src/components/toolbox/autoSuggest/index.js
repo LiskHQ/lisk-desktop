@@ -11,6 +11,7 @@ class AutoSuggest extends React.Component {
     this.state = {
       dropdownIndex: 0,
       isLoading: false,
+      isFocused: true,
     };
 
     this.loaderTimeout = null;
@@ -119,6 +120,26 @@ class AutoSuggest extends React.Component {
     this.props.onChange(e);
   }
 
+  onBlur = () => {
+    this.setState({ isFocused: false });
+  }
+
+  onFocus = () => {
+    this.setState({ isFocused: true });
+  }
+
+  isOnError = () => {
+    const { isFocused } = this.state;
+    const { selectedItem, items } = this.props;
+    const bookmarksList = this.getFilterList();
+
+    if ((!items.length && selectedItem.error) || (!isFocused && selectedItem.error)) return true;
+    if ((isFocused || !isFocused) && items.length && !bookmarksList.length && selectedItem.error) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     const {
       selectedItem,
@@ -134,7 +155,7 @@ class AutoSuggest extends React.Component {
         <span className={`${styles.inputWrapper} ${className}`}>
           <Input
             autoComplete="off"
-            className={`${styles.input} ${selectedItem.error ? 'error' : ''} ${className} bookmark`}
+            className={`${styles.input} ${this.isOnError() ? 'error' : ''} ${className} bookmark`}
             name={className}
             value={selectedItem.selected ? selectedItem.title : selectedItem.value}
             placeholder={placeholder}
@@ -142,8 +163,10 @@ class AutoSuggest extends React.Component {
             onChange={this.onChange}
             feedback={selectedItem.feedback}
             isLoading={isLoading && selectedItem.value}
-            status={selectedItem.error ? 'error' : 'ok'}
+            status={this.isOnError() ? 'error' : 'ok'}
             icon={renderIcon(selectedItem)}
+            onBlur={this.onBlur}
+            onFocus={this.onFocus}
           />
           <ul className={`${styles.suggestionList} bookmark-list`} ref={(node) => { this.listContainerRef = node; }}>
             { this.getFilterList()

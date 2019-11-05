@@ -7,16 +7,15 @@ describe('Feedback Component', () => {
     const props = {
       showIcon: true,
       status: 'error',
-      show: true,
+      message: 'Test Feedback',
     };
-    const wrapper = shallow(<Feedback {...props}>Test Feedback</Feedback>);
-    expect(wrapper).toHaveClassName('error show');
-    expect(wrapper).toContainExactlyOneMatchingElement('Icon');
+    const wrapper = shallow(<Feedback {...props} />);
+    expect(wrapper.find('span').at(0)).toHaveClassName('error');
   });
 
   it('Should render with text but without showing', () => {
-    const wrapper = shallow(<Feedback>Test Feedback</Feedback>);
-    expect(wrapper).not.toHaveClassName('error show');
+    const wrapper = shallow(<Feedback message="Test Feedback" />);
+    expect(wrapper.find('span').at(0)).not.toHaveClassName('error');
     expect(wrapper).toIncludeText('Test Feedback');
   });
 });
