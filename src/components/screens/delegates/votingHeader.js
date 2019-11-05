@@ -81,14 +81,14 @@ class VotingHeader extends React.Component {
                       <span className="total-voting-number">{getTotalVotesCount(votes)}</span>
                       {`/${maxCountOfVotes}`}
                     </h5>
-                    <span>{t('Total')}</span>
+                    <span className={styles.subTitle}>{t('Total')}</span>
                   </div>
                   <div className={`${styles.infoItem} ${styles.added}`}>
                     <figure className={styles.icon}>
                       <Icon name="addedVotes" />
                     </figure>
                     <h5 className="added-votes-count">{voteList.length}</h5>
-                    <span>{t('Added')}</span>
+                    <span className={styles.subTitle}>{t('Added')}</span>
                   </div>
                 </Fragment>
               )
@@ -98,7 +98,7 @@ class VotingHeader extends React.Component {
                     <h2>
                       {`${t('Delegates')}`}
                     </h2>
-                    <span>{t('All important information about delegates.')}</span>
+                    <span className={styles.subTitle}>{t('All important information about delegates.')}</span>
                   </div>
                 </Fragment>
               )
@@ -110,7 +110,7 @@ class VotingHeader extends React.Component {
                     <Icon name="removedVotes" />
                   </figure>
                   <h5 className="removed-votes-count">{unvoteList.length}</h5>
-                  <span>{t('Removed')}</span>
+                  <span className={styles.subTitle}>{t('Removed')}</span>
                 </div>
               )
               : null
@@ -127,7 +127,7 @@ class VotingHeader extends React.Component {
                       <p>{t('Each time you add or remove a vote it is counted as an action. There\'s {{fee}} LSK fee per every 33 actions.', { fee })}</p>
                     </Tooltip>
                   </h5>
-                  <span>{t('Transaction fee')}</span>
+                  <span className={styles.subTitle}>{t('Transaction fee')}</span>
                 </div>
               )
               : null
