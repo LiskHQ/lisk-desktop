@@ -8,12 +8,13 @@ import Icon from '../../toolbox/icon';
 import LiskAmount from '../../shared/liskAmount';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import DiscreetMode from '../../shared/discreetMode';
+import { getAddress } from '../../../utils/hwManager';
 import styles from './walletDetails.css';
 
 class WalletDetails extends React.Component {
   render() {
     const {
-      balance, t, address, activeToken,
+      balance, t, address, activeToken, account,
     } = this.props;
 
     return (
@@ -27,7 +28,14 @@ class WalletDetails extends React.Component {
             size={40}
           />
           <div>
-            <label>{t('Address')}</label>
+            <label onClick={() => getAddress({
+              deviceId: account.hwInfo.deviceId,
+              index: account.hwInfo.derivationIndex,
+              showOnDevice: true,
+            })}
+            >
+              {t('Address')}
+            </label>
             <div className={styles.value}>
               <CopyToClipboard
                 value={address}

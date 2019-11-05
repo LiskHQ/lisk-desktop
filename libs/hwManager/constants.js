@@ -11,16 +11,18 @@ export const IPC_MESSAGES = {
   DISCONNECT: 'disconnect',
   ERROR: 'error',
   EXIT: 'exit',
+  GET_ADDRESS: 'GET_ADDRESS',
   GET_CONNECTED_DEVICES_LIST: 'getConnectedDevicesList',
-  HW_COMMAND: 'hwCommand',
   GET_PUBLICK_KEY: 'GET_PUBLICKEY',
-  SIGN_TRANSACTION: 'SIGN_TX',
+  HW_COMMAND: 'hwCommand',
   HW_CONNECTED: 'hwConnected',
   HW_DISCONNECTED: 'hwDisconnected',
-  VALIDATE_PIN: 'validateTrezorPin',
   MISSING_PIN: 'pin_not_provided_from_ui',
+  SIGN_TRANSACTION: 'SIGN_TX',
+  VALIDATE_PIN: 'validateTrezorPin',
 };
 export const FUNCTION_TYPES = {
   [IPC_MESSAGES.GET_PUBLICK_KEY]: 'getPublicKey',
+  [IPC_MESSAGES.GET_ADDRESS]: 'getAddress',
   [IPC_MESSAGES.SIGN_TRANSACTION]: 'signTransaction',
 };
