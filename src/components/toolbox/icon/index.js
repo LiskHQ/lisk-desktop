@@ -70,6 +70,9 @@ import tx2ndPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg'
 import txDefault from '../../../assets/images/icons/tx-default.svg';
 import txDelegate from '../../../assets/images/icons/tx-delegate.svg';
 import txVote from '../../../assets/images/icons/tx-vote.svg';
+import addedVotes from '../../../assets/images/icons/added-votes.svg';
+import removedVotes from '../../../assets/images/icons/removed-votes.svg';
+import totalVotes from '../../../assets/images/icons/total-votes.svg';
 import user from '../../../assets/images/icons/user.svg';
 import userActive from '../../../assets/images/icons/user-active.svg';
 import verifyMessageInputsView from '../../../assets/images/icons/verify-message-inputs-view.svg';
@@ -152,6 +155,9 @@ export const icons = {
   txDefault,
   txDelegate,
   txVote,
+  addedVotes,
+  removedVotes,
+  totalVotes,
   user,
   userActive,
   verifyMessageInputsView,
