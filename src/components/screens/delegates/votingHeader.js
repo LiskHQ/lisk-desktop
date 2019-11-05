@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { loginType } from '../../../constants/hwConstants';
 import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons/button';
@@ -70,45 +70,44 @@ class VotingHeader extends React.Component {
         <div className={styles.bg} />
         <div className={styles.stickyContent}>
           <div className={styles.info}>
-            { account && account.address
-              ? (
-                <div className={styles.infoItem}>
-                  <figure className={styles.icon}>
-                    <Icon name="balance" />
-                  </figure>
-                  <h5>
-                    <span className="total-voting-number">{getTotalVotesCount(votes)}</span>
-                    {`/${maxCountOfVotes}`}
-                  </h5>
-                  <span>{t('Total')}</span>
-                </div>
-              )
-              : (
-                <div className={styles.box}>
-                  <h2>
-                    {`${t('Delegates')}`}
-                  </h2>
-                  <span>{t('All important information about delegates.')}</span>
-                </div>
-              )
-            }
             { votingModeEnabled
               ? (
-                <div className={`${styles.infoItem} ${styles.addedVotes}`}>
-                  <figure className={styles.icon}>
-                    <Icon name="balance" />
-                  </figure>
-                  <h5 className="added-votes-count">{voteList.length}</h5>
-                  <span>{t('Added')}</span>
-                </div>
+                <Fragment>
+                  <div className={`${styles.infoItem} ${styles.total}`}>
+                    <figure className={styles.icon}>
+                      <Icon name="totalVotes" />
+                    </figure>
+                    <h5>
+                      <span className="total-voting-number">{getTotalVotesCount(votes)}</span>
+                      {`/${maxCountOfVotes}`}
+                    </h5>
+                    <span>{t('Total')}</span>
+                  </div>
+                  <div className={`${styles.infoItem} ${styles.added}`}>
+                    <figure className={styles.icon}>
+                      <Icon name="addedVotes" />
+                    </figure>
+                    <h5 className="added-votes-count">{voteList.length}</h5>
+                    <span>{t('Added')}</span>
+                  </div>
+                </Fragment>
               )
-              : null
+              : (
+                <Fragment>
+                  <div className={`${styles.box} ${styles.signedOut}`}>
+                    <h2>
+                      {`${t('Delegates')}`}
+                    </h2>
+                    <span>{t('All important information about delegates.')}</span>
+                  </div>
+                </Fragment>
+              )
             }
             { unvoteList.length
               ? (
-                <div className={`${styles.infoItem} ${styles.removedVotes}`}>
+                <div className={`${styles.infoItem} ${styles.removed}`}>
                   <figure className={styles.icon}>
-                    <Icon name="balance" />
+                    <Icon name="removedVotes" />
                   </figure>
                   <h5 className="removed-votes-count">{unvoteList.length}</h5>
                   <span>{t('Removed')}</span>
@@ -118,9 +117,9 @@ class VotingHeader extends React.Component {
             }
             { votingModeEnabled
               ? (
-                <div className={styles.infoItem}>
+                <div className={`${styles.infoItem} ${styles.fee}`}>
                   <figure className={styles.icon}>
-                    <Icon name="balance" />
+                    <Icon name="walletIcon" />
                   </figure>
                   <h5>
                     {totalActions}
@@ -161,7 +160,7 @@ class VotingHeader extends React.Component {
                 }
                 <SignInTooltipWrapper>
                   <PrimaryButton onClick={toggleVotingMode} className={`start-voting-button ${styles.btn}`}>
-                    {t('Start voting')}
+                    {Object.keys(votes).length ? t('Edit votes') : t('Start voting')}
                   </PrimaryButton>
                 </SignInTooltipWrapper>
               </div>
