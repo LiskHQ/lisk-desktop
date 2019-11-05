@@ -86,7 +86,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // it was not getting the account with secondPublicKey right
     // after a new block with second passphrase registration transaction was received
     // Adding timeout explained in
-    // https://github.com/LiskHQ/lisk-hub/pull/1609
+    // https://github.com/LiskHQ/lisk-desktop/pull/1609
     setTimeout(() => {
       updateAccountData(store);
 

@@ -1,5 +1,5 @@
 {
-  "name": "lisk-hub",
+  "name": "lisk-desktop",
   "version": "1.22.0",
   "description": "Lisk",
   "main": "./build/main.js",

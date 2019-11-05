@@ -133,7 +133,7 @@ const menu = {
           },
           {
             label: i18n.t('What\'s New...'),
-            click: menu.onClickLink.bind(null, electron, 'https://github.com/LiskHQ/lisk-hub/releases'),
+            click: menu.onClickLink.bind(null, electron, 'https://github.com/LiskHQ/lisk-desktop/releases'),
           },
         ],
       },

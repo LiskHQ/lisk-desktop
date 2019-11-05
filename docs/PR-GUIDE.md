@@ -18,8 +18,8 @@
 
 ##### Before creating PR make use that:
  - All conflicts are resolved
- - The PR follows our [Test guide](/LiskHQ/lisk-hub/blob/development/docs/TEST_GUIDE.md)
- - The PR follows our [CSS guide](/LiskHQ/lisk-hub/blob/development/docs/CSS_GUIDE.md)
+ - The PR follows our [Test guide](/LiskHQ/lisk-desktop/blob/development/docs/TEST_GUIDE.md)
+ - The PR follows our [CSS guide](/LiskHQ/lisk-desktop/blob/development/docs/CSS_GUIDE.md)
 
 When you're done, submit a pull request and for one of the maintainers to check it out. We would let you know if there is any problem or any changes that should be considered.
 ##### Format of pull requests

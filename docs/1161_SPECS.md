@@ -1,6 +1,6 @@
 ### Specification
 
-This document describes how showing and gathering feedback data from lisk-service will he handled by lisk-hub application logic. 
+This document describes how showing and gathering feedback data from lisk-service will he handled by Lisk application logic. 
 
 
 - Each component will have a uniqueID

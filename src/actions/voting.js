@@ -18,7 +18,7 @@ import { tokenMap } from '../constants/tokens';
  * Add data to the list of all delegates
  *
  * This action is used in delegatesListView to clear delegates
- * https://github.com/LiskHQ/lisk-hub/blob/d284b32f747e6b5c9189a3aeeff975b13a7a466b/src/components/delegatesListView/index.js#L21-L23
+ * https://github.com/LiskHQ/lisk-desktop/blob/d284b32f747e6b5c9189a3aeeff975b13a7a466b/src/components/delegatesListView/index.js#L21-L23
  */
 export const delegatesAdded = data => ({
   type: actionTypes.delegatesAdded,
