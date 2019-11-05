@@ -83,7 +83,7 @@ describe('Offline middleware', () => {
       code: 'EPARSE',
     };
 
-    const expectedResult = 'Failed to connect to node Make sure that you are using the latest version of Lisk Hub.';
+    const expectedResult = 'Failed to connect to node Make sure that you are using the latest version of Lisk.';
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
       label: expectedResult,

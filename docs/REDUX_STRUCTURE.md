@@ -28,7 +28,7 @@ Where we have the accounts information and the bookmarks separated per token typ
 On `settings` we have which token is the active one, and also a list with the tokens, of which token is enabled by the user.  
 And also a unified `service` node, not just as liskService as we have right now on Lisk-Hub.  
 
-### Lisk Hub
+### Lisk
 - Remove `peers` from the store, and use global instances of desired API client.
 - Rename `liskService` to just `service` so we can have all service information centralized in one place, and splitting necessary data among `tokenKeys`.
 - Accounts being already on the `accounts` structure, separated by `tokenKey` and having common information on the root.

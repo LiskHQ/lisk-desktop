@@ -1,4 +1,4 @@
-# Lisk Hub
+# Lisk Desktop
 
 [![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=lisk-hub/development)](https://jenkins.lisk.io/job/lisk-hub/job/development)
 [![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-hub/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-hub?branch=development)

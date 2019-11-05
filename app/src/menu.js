@@ -26,7 +26,7 @@ const addAboutMenuForNonMac = ({ template, electron }) => {
         const options = {
           buttons: ['OK'],
           icon: `${__dirname}/assets/images/LISK.png`,
-          message: `${i18n.t('Lisk Hub')}\n${i18n.t('Version')} ${electron.app.getVersion()}\n${copyright}`,
+          message: `${i18n.t('Lisk')}\n${i18n.t('Version')} ${electron.app.getVersion()}\n${copyright}`,
         };
         electron.dialog.showMessageBox(focusedWindow, options, () => {});
       }

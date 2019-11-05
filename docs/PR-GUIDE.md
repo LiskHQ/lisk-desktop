@@ -1,4 +1,4 @@
-# Lisk Hub Pull Request Guideline
+# Lisk Desktop Pull Request Guideline
 
 
 

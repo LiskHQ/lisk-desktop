@@ -1,7 +1,7 @@
 {
   "name": "lisk-hub",
   "version": "1.22.0",
-  "description": "Lisk Hub",
+  "description": "Lisk",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
   "main": "main.js",
@@ -222,7 +222,7 @@
   },
   "build": {
     "appId": "io.lisk.hub",
-    "productName": "Lisk Hub",
+    "productName": "Lisk",
     "protocols": {
       "name": "lisk-hub",
       "schemes": [

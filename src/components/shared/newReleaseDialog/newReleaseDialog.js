@@ -29,7 +29,7 @@ class NewReleaseDialog extends React.Component {
     return !!ipc && (
       <Dialog hasClose>
         <Dialog.Title>
-          {t('Lisk Hub {{version}} is here!', { version })}
+          {t('Lisk {{version}} is here!', { version })}
         </Dialog.Title>
         <Dialog.Description>
           <p>{t('Would you like to download it now?')}</p>

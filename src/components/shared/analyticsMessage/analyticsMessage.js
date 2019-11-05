@@ -11,7 +11,7 @@ const AnalyticsMessage = ({ t, onClick }) => (
         action: onClick,
       }}
     >
-      {t('Opt-in to sharing anonymous data in order to improve Lisk Hub.')}
+      {t('Opt-in to sharing anonymous data in order to improve Lisk.')}
     </FlashMessage.Content>
   </FlashMessage>
 );

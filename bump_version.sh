@@ -28,7 +28,7 @@ if [ -z "${changes}" ]; then
   bump "package.json"
   bump "app/package.json"
 
-  git commit -m "Bump Lisk Hub to ${release}"
+  git commit -m "Bump Lisk to ${release}"
   git tag "v${release}"
   git push origin
   git push origin --tags

@@ -40,7 +40,7 @@ describe('Electron Browser Window Wrapper', () => {
       buildFromTemplate: () => (electron.Menu),
       popup: spy(),
     },
-    app: { getName: () => ('Lisk Hub'), getVersion: () => ('some version') },
+    app: { getName: () => ('Lisk'), getVersion: () => ('some version') },
   };
   const url = 'http://localhost:8080/';
 
