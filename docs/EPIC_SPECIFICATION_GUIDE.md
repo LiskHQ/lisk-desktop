@@ -1,6 +1,6 @@
-# Lisk Hub Epic Specificaiton Guideline
+# Lisk Desktop Epic Specificaiton Guideline
 
-Lisk Hub team will gather community enhancement proposals in the backlog of the project. 
+Lisk Desktop team will gather community enhancement proposals in the backlog of the project. 
 
 Once a substantial ammount of proposals have been identified as belonging to the same type/category of enhancemnt, an epic will be created to handle the development journey towards it's implementation. 
 

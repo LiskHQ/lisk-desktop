@@ -2,7 +2,7 @@
 
 properties([disableConcurrentBuilds(), pipelineTriggers([])])
 pipeline {
-	agent { node { label 'lisk-hub' } }
+	agent { node { label 'lisk-desktop' } }
 	options {
 		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
@@ -51,7 +51,7 @@ pipeline {
 						}
 						archiveArtifacts artifacts: 'app/build/'
 						archiveArtifacts artifacts: 'app/build-testnet/'
-						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
+						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-desktop*'
 						stash includes: 'app/build/', name: 'build'
 					}
 				)

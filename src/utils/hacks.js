@@ -8,7 +8,7 @@ import Lisk from '@liskhq/lisk-client';
 // accepts only time offset so this util is creating that.
 //
 // For more info, see:
-// https://github.com/LiskHQ/lisk-hub/issues/1277
+// https://github.com/LiskHQ/lisk-desktop/issues/1277
 //
 // eslint-disable-next-line import/prefer-default-export
 export const getTimeOffset = state => (

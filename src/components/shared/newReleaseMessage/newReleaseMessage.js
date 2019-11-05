@@ -14,7 +14,7 @@ const NewReleaseMessage = ({
 }) => (
   <FlashMessage shouldShow {...props}>
     <FlashMessage.Content>
-      <strong>{t('Lisk Hub {{version}}', { version })}</strong>
+      <strong>{t('Lisk {{version}}', { version })}</strong>
       {t(' is out. ')}
       {releaseSummary}
       <TertiaryButton

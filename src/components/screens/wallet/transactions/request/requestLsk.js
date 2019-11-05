@@ -120,7 +120,7 @@ class RequestLsk extends React.Component {
     return (
       <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t}>
         <span className={`${styles.label}`}>
-          {t('Use the sharing link to easily request any amount of LSK from Lisk Hub or Lisk Mobile users.')}
+          {t('Use the sharing link to easily request any amount of LSK from Lisk users.')}
         </span>
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>

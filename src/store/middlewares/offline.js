@@ -11,7 +11,7 @@ const getErrorMessage = (errorCode, address) => {
       message = i18next.t('Failed to connect: Node {{address}} is not active', { address });
       break;
     case 'EPARSE':
-      message += i18next.t(' Make sure that you are using the latest version of Lisk Hub.');
+      message += i18next.t(' Make sure that you are using the latest version of Lisk.');
       break;
     default: break;
   }

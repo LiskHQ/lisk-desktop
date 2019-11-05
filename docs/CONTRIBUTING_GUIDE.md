@@ -18,14 +18,14 @@ We've tried to make a stable project and try to fix bugs and add new features co
 Before you start, read the **[README.md](/README.md)** file for info on the project and how to set it up.
 
 ## Finding first issue
-Go to [issues tab](https://github.com/LiskHQ/lisk-hub/issues) and look for 
+Go to [issues tab](https://github.com/LiskHQ/lisk-desktop/issues) and look for 
 
-*✏️ `good first issue`* - it is a label for tasks that are perfect for people who want to start with lisk-hub.
+*✏️ `good first issue`* - it is a label for tasks that are perfect for people who want to start with Lisk.
 
 ## Reporting issues
 
- 1. Check if problem already exist in [issues tab](https://github.com/LiskHQ/lisk-hub/issues)
- 2. If not, create a new [issue](https://github.com/LiskHQ/lisk-hub/issues/new/choose)
+ 1. Check if problem already exist in [issues tab](https://github.com/LiskHQ/lisk-desktop/issues)
+ 2. If not, create a new [issue](https://github.com/LiskHQ/lisk-desktop/issues/new/choose)
  3. Fill our [template](/.github/issue_template.md)
  4. Click `Submit new issue`
 ##### Guidance

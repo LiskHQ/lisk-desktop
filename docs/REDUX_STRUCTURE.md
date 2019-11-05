@@ -26,9 +26,9 @@ Showing here just the parts related to the multi currencies structure.
 ```
 Where we have the accounts information and the bookmarks separated per token type, and other informations that are relevant for more than one token being directly on the `accounts` node.  
 On `settings` we have which token is the active one, and also a list with the tokens, of which token is enabled by the user.  
-And also a unified `service` node, not just as liskService as we have right now on Lisk-Hub.  
+And also a unified `service` node, not just as liskService as we have right now on Lisk.  
 
-### Lisk Hub
+### Lisk
 - Remove `peers` from the store, and use global instances of desired API client.
 - Rename `liskService` to just `service` so we can have all service information centralized in one place, and splitting necessary data among `tokenKeys`.
 - Accounts being already on the `accounts` structure, separated by `tokenKey` and having common information on the root.
@@ -39,7 +39,7 @@ And also a unified `service` node, not just as liskService as we have right now 
 - `transactions` and `transaction` being cleaned up once the `activeTokens` is changed.
 Ideally we should end up with a structure similar to:
 ```json
-// lisk-hub final store example
+// Lisk final store example
 {
   "accounts": { "info": { "tokenKey": {} }, "passphrase": "", "other account common info" },
   "bookmarks": {"tokenKey": [{ "address": "", "balance": "" }]},

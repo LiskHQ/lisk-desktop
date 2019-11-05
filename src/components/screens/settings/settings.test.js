@@ -26,7 +26,7 @@ describe('Setting', () => {
       LSK: {
         ...accounts.genesis,
         isDelegate: false,
-        username: 'lisk-hub',
+        username: 'lisk-desktop',
       },
     },
   };

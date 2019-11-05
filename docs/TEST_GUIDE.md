@@ -40,23 +40,23 @@ The problem of these assumptions is that we cannot be 100% sure that the mocks b
 ## Unit tests
 
 ### What do they test?
-One unit ([component](/LiskHQ/lisk-hub/blob/development/src/components),
-[util](/LiskHQ/lisk-hub/blob/development/src/utils),
-[action](/LiskHQ/lisk-hub/blob/development/src/actions),
-[reducer](/LiskHQ/lisk-hub/blob/development/src/store/reducers),
-[middleware](/LiskHQ/lisk-hub/blob/development/src/store/middlewares), or
-[subscriber](/LiskHQ/lisk-hub/blob/development/src/store/subscribers)) in isolation.
+One unit ([component](/LiskHQ/lisk-desktop/blob/development/src/components),
+[util](/LiskHQ/lisk-desktop/blob/development/src/utils),
+[action](/LiskHQ/lisk-desktop/blob/development/src/actions),
+[reducer](/LiskHQ/lisk-desktop/blob/development/src/store/reducers),
+[middleware](/LiskHQ/lisk-desktop/blob/development/src/store/middlewares), or
+[subscriber](/LiskHQ/lisk-desktop/blob/development/src/store/subscribers)) in isolation.
 
 ### What doesn't need unit test?
-- **action that contains no logic** - it is an integration point between React and Redux therefore it should be be covered by integration tests, e.g. [accountUpdated action](https://github.com/LiskHQ/lisk-hub/blob/8239062584a9573ac8e99bd28d681563b40048b2/src/actions/account.js#L29-L32) 
-- **React HOC (higher order component)** - also integration point, e.g. [header HOC](/LiskHQ/lisk-hub/blob/development/src/components/header/index.js)
-- **Presentational React component with no logic** - should have coverage by being rendered by its parent in its unit test or integration, e.g. [Spinner component](/LiskHQ/lisk-hub/blob/development/src/components/spinner/index.js) 
+- **action that contains no logic** - it is an integration point between React and Redux therefore it should be be covered by integration tests, e.g. [accountUpdated action](https://github.com/LiskHQ/lisk-desktop/blob/8239062584a9573ac8e99bd28d681563b40048b2/src/actions/account.js#L29-L32) 
+- **React HOC (higher order component)** - also integration point, e.g. [header HOC](/LiskHQ/lisk-desktop/blob/development/src/components/header/index.js)
+- **Presentational React component with no logic** - should have coverage by being rendered by its parent in its unit test or integration, e.g. [Spinner component](/LiskHQ/lisk-desktop/blob/development/src/components/spinner/index.js) 
 
 ### How are they organized?
-Each unit test live in the same folder as the unit that it tests. E.g. tests for [/src/components/login/login.js](/LiskHQ/lisk-hub/blob/development/src/components/login/login.js) are in [/src/components/login/login.test.js](/LiskHQ/lisk-hub/blob/development/src/components/login/login.test.js).
+Each unit test live in the same folder as the unit that it tests. E.g. tests for [/src/components/login/login.js](/LiskHQ/lisk-desktop/blob/development/src/components/login/login.js) are in [/src/components/login/login.test.js](/LiskHQ/lisk-desktop/blob/development/src/components/login/login.test.js).
 
 #### Jest
-Configuration is in [jest.config.js](/LiskHQ/lisk-hub/blob/development/jest.config.js) and [config/setupJest.js](/LiskHQ/lisk-hub/blob/development/config/setupJest.js).
+Configuration is in [jest.config.js](/LiskHQ/lisk-desktop/blob/development/jest.config.js) and [config/setupJest.js](/LiskHQ/lisk-desktop/blob/development/config/setupJest.js).
 
 ### How to run them?
 
@@ -64,11 +64,11 @@ Run Jest suites with:
 ```
 npm run test
 ```
-Enable suites by uncommenting lines in [jest.config.js](/LiskHQ/lisk-hub/blob/development/jest.config.js)
+Enable suites by uncommenting lines in [jest.config.js](/LiskHQ/lisk-desktop/blob/development/jest.config.js)
 
 Please refer to [Jest examples](https://github.com/facebook/jest/tree/master/examples) for more info. 
 
-See [relevant sections of README](/LiskHQ/lisk-hub#run-unit-tests)
+See [relevant sections of README](/LiskHQ/lisk-desktop#run-unit-tests)
 
 ### What tools are used?
 #### Current preferred way (we are in a transition period):
@@ -77,20 +77,20 @@ See [relevant sections of README](/LiskHQ/lisk-hub#run-unit-tests)
 - To assert on React components we use [jest-enzyme](https://github.com/FormidableLabs/enzyme-matchers/tree/master/packages/jest-enzyme) because it gives more descriptive messages when the assertion fails
  #### Deprecated way:
 - **Assertions** use `expect` syntax of [chai](http://www.chaijs.com/), e.g.:
-https://github.com/LiskHQ/lisk-hub/blob/80afda8289b75cb70bf345d14d36117fde2bdd90/src/utils/passphrase.test.js#L136
+https://github.com/LiskHQ/lisk-desktop/blob/80afda8289b75cb70bf345d14d36117fde2bdd90/src/utils/passphrase.test.js#L136
 - **Spies, stubs, and mocks** use [sinon](http://sinonjs.org/), e.g.:
-https://github.com/LiskHQ/lisk-hub/blob/19a2a613fa08a34fe3088b0e40c11c7fa37a645d/src/store/middlewares/savedSettings.test.js#L20
+https://github.com/LiskHQ/lisk-desktop/blob/19a2a613fa08a34fe3088b0e40c11c7fa37a645d/src/store/middlewares/savedSettings.test.js#L20
 - To test **React components** we use [enzyme](http://airbnb.io/enzyme/), e.g.:
-https://github.com/LiskHQ/lisk-hub/blob/79165170a326a7f98efee098732e55be37d31223/src/components/toolbox/sliderCheckbox/index.test.js#L21
-- To **assert on React compopnents** we use [chai-enzyme](https://github.com/producthunt/chai-enzyme) because it gives more descriptive messages when the assertion fails, e.g.: https://github.com/LiskHQ/lisk-hub/commit/bc7677c6d5c205449311ac4e18fd3de6fe2b23ff
-- To **assert on spies, stubs and mocks** we use [sinon-chai](https://github.com/domenic/sinon-chai), often together with [sinon.match](http://sinonjs.org/releases/v1.17.7/matchers/), e.g.: https://github.com/LiskHQ/lisk-hub/blob/c82683df85b2bc3277c697ebacff24463a8fed2c/src/components/register/register.test.js#L64-L67
+https://github.com/LiskHQ/lisk-desktop/blob/79165170a326a7f98efee098732e55be37d31223/src/components/toolbox/sliderCheckbox/index.test.js#L21
+- To **assert on React compopnents** we use [chai-enzyme](https://github.com/producthunt/chai-enzyme) because it gives more descriptive messages when the assertion fails, e.g.: https://github.com/LiskHQ/lisk-desktop/commit/bc7677c6d5c205449311ac4e18fd3de6fe2b23ff
+- To **assert on spies, stubs and mocks** we use [sinon-chai](https://github.com/domenic/sinon-chai), often together with [sinon.match](http://sinonjs.org/releases/v1.17.7/matchers/), e.g.: https://github.com/LiskHQ/lisk-desktop/blob/c82683df85b2bc3277c697ebacff24463a8fed2c/src/components/register/register.test.js#L64-L67
 
 
 ## Integration tests
 
-Recently were reimplemented using Cypress and now reside together with [e2e tests](/LiskHQ/lisk-hub/blob/development/test/cypress/e2e)
+Recently were reimplemented using Cypress and now reside together with [e2e tests](/LiskHQ/lisk-desktop/blob/development/test/cypress/e2e)
 
-[Legacy tests](/LiskHQ/lisk-hub/blob/development/test/integration) are obsolete and should be removed after unit test will satisfy coverage criteria
+[Legacy tests](/LiskHQ/lisk-desktop/blob/development/test/integration) are obsolete and should be removed after unit test will satisfy coverage criteria
 
 
 ## E2E and Integration tests
@@ -99,12 +99,12 @@ Recently were reimplemented using Cypress and now reside together with [e2e test
 User scenarios in the application, where interaction between components, localStorage, Lisk APIs happens
 
 ### How to run them?
-See [relevant sections of README](/LiskHQ/lisk-hub#run-end-to-end-tests)
+See [relevant sections of README](/LiskHQ/lisk-desktop#run-end-to-end-tests)
 
 ### How are they organized?
-E2E and integration tests for each major feature have the tests specified in its own `*.spec.js` in [/test/cypress/e2e/](/LiskHQ/lisk-hub/blob/development/test/cypress/e2e)
+E2E and integration tests for each major feature have the tests specified in its own `*.spec.js` in [/test/cypress/e2e/](/LiskHQ/lisk-desktop/blob/development/test/cypress/e2e)
 
-Configuration is in [cypress.conf.js](/LiskHQ/lisk-hub/blob/development/cypress/cypress.conf.js).
+Configuration is in [cypress.conf.js](/LiskHQ/lisk-desktop/blob/development/cypress/cypress.conf.js).
 
 ### How do I decide whether I should write E2E or Integration test?
 Use at least one e2e test for every feature / api call.

@@ -186,7 +186,7 @@ class Settings extends React.Component {
                   <span className={styles.labelName}>
                     {t('Anonymous analytics collection')}
                   </span>
-                  <p>{t('Help improve Lisk Hub by allowing Lisk to gather anonymous usage data used for analytical purposes.')}</p>
+                  <p>{t('Help improve Lisk by allowing Lisk to gather anonymous usage data used for analytical purposes.')}</p>
                   <a target="_blank" href={links.privacyPolicy} className={styles.link}>
                     {t('Privacy Policy')}
                   </a>

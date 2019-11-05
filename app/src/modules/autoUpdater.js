@@ -23,7 +23,7 @@ export default ({ // eslint-disable-line max-statements
     if (updater.error !== error) {
       updater.error = error;
       if (error && error.toString().indexOf('404 Not Found') === -1) {
-        // this condition is because of https://github.com/LiskHQ/lisk-hub/issues/647
+        // this condition is because of https://github.com/LiskHQ/lisk-desktop/issues/647
         dialog.showErrorBox('Error: ', error == null ? 'unknown' : error.toString());
       }
     }

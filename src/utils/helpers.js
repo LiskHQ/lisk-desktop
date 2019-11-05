@@ -59,7 +59,7 @@ export const filterObjectPropsWithValue = (object = {}, value) => (
  */
 export const getErrorReportMailto = (error) => {
   const recipient = 'hubdev@lisk.io';
-  const subject = `User Reported Error - Lisk Hub - ${VERSION}`; // eslint-disable-line no-undef
+  const subject = `User Reported Error - Lisk - ${VERSION}`; // eslint-disable-line no-undef
   return `mailto:${recipient}?&subject=${subject}&body=${error}`;
 };
 

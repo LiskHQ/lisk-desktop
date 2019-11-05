@@ -11,7 +11,7 @@ const getOnboardingSlides = () => ([{
   illustration: 'welcomeLiskDelegates',
 }, {
   title: ('Your voice matters'),
-  content: ('In this section of Lisk Hub you can vote for up to 101 delegates to run Lisk’s blockchain network and by doing so have a real impact on the Lisk ecosystem.'),
+  content: ('In this section of Lisk you can vote for up to 101 delegates to run Lisk’s blockchain network and by doing so have a real impact on the Lisk ecosystem.'),
   illustration: 'yourVoiceMatters',
 }]);
 

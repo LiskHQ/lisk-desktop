@@ -1,19 +1,19 @@
-# Lisk Hub
+# Lisk Desktop
 
-[![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=lisk-hub/development)](https://jenkins.lisk.io/job/lisk-hub/job/development)
-[![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-hub/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-hub?branch=development)
+[![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=lisk-desktop/development)](https://jenkins.lisk.io/job/lisk-desktop/job/development)
+[![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-desktop/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-desktop?branch=development)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![Join the chat at https://gitter.im/LiskHQ/lisk](https://badges.gitter.im/LiskHQ/lisk.svg)](https://gitter.im/LiskHQ/lisk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Dependencies Status](https://david-dm.org/liskHQ/lisk-hub/status.svg)](https://david-dm.org/liskHQ/lisk-hub)
-[![devDependencies Status](https://david-dm.org/liskHQ/lisk-hub/dev-status.svg)](https://david-dm.org/liskHQ/lisk-hub?type=dev)
+[![Dependencies Status](https://david-dm.org/liskHQ/lisk-desktop/status.svg)](https://david-dm.org/liskHQ/lisk-desktop)
+[![devDependencies Status](https://david-dm.org/liskHQ/lisk-desktop/dev-status.svg)](https://david-dm.org/liskHQ/lisk-desktop?type=dev)
 
 ## For Contributors
 Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for more information.
 ## Development
 
 ```
-git clone https://github.com/LiskHQ/lisk-hub.git
-cd lisk-hub
+git clone https://github.com/LiskHQ/lisk-desktop.git
+cd lisk-desktop
 npm install
 npm run dev
 ```
@@ -131,7 +131,7 @@ Run lisk test node with [pm2](http://pm2.keymetrics.io/)  on `localhost:4000`
 
 #### Run
 
-Start the development version of lisk-hub:
+Start the development version of Lisk:
 ```
 npm run dev
 ```
@@ -161,7 +161,7 @@ http://localhost:6006/
 
 
 ## Contributors
-See [contributors section](https://github.com/LiskHQ/lisk-hub/graphs/contributors).
+See [contributors section](https://github.com/LiskHQ/lisk-desktop/graphs/contributors).
 
 ## License
 
@@ -171,5 +171,5 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the [GNU General Public License](https://github.com/LiskHQ/lisk-hub/tree/master/LICENSE) along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the [GNU General Public License](https://github.com/LiskHQ/lisk-desktop/tree/master/LICENSE) along with this program.  If not, see <http://www.gnu.org/licenses/>.
 

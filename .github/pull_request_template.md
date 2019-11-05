@@ -13,5 +13,5 @@
 
 
 ### Review checklist
-- The PR follows our [Test guide](/LiskHQ/lisk-hub/blob/development/docs/TEST_GUIDE.md)
-- The PR follows our [CSS guide](/LiskHQ/lisk-hub/blob/development/docs/CSS_GUIDE.md)
+- The PR follows our [Test guide](/LiskHQ/lisk-desktop/blob/development/docs/TEST_GUIDE.md)
+- The PR follows our [CSS guide](/LiskHQ/lisk-desktop/blob/development/docs/CSS_GUIDE.md)

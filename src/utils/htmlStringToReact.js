@@ -12,7 +12,7 @@ const htmlStringToReact = (html = '') => {
       elements.map((element, index) => {
         const [tag, content, after] = element.match(regex.htmlElements).slice(1);
         const props = tag === 'a' && /#\d+$/.test(content) ? {
-          href: `https://github.com/LiskHQ/lisk-hub/issues/${content.replace(/\D/g, '')}`,
+          href: `https://github.com/LiskHQ/lisk-desktop/issues/${content.replace(/\D/g, '')}`,
         } : {};
         return (
           <Fragment key={`${tag}-${index}`}>

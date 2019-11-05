@@ -52,7 +52,7 @@ class Dashboard extends React.Component {
     const { t } = this.props;
     return [{
       title: t('Ready to go!'),
-      content: t('The ultimate gateway to the ecosystem. Hub’s new design lets you easily manage your tokens (and much, much more).'),
+      content: t('The ultimate gateway to the ecosystem. Lisk’s new design lets you easily manage your tokens (and much, much more).'),
       illustration: 'hubReadyToGo',
     }, {
       title: t('Stay Informed'),
@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
       illustration: 'sendLSKTokens',
     }, {
       title: t('Get Involved'),
-      content: t('Community is key. Vote for delegates, or register as one yourself. Feel like a feature is missing? Request it directly from the Hub.'),
+      content: t('Community is key. Vote for delegates, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.'),
       illustration: 'timeToContribute',
     }];
   }
