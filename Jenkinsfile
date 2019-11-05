@@ -82,7 +82,7 @@ pipeline {
 								script {
 									// we don't want to fail the build if reporting to coveralls.io fails
 									try {
-										withCredentials([string(credentialsId: 'lisk-desktop-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
+										withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
 											sh 'cat coverage/jest/lcov.info |coveralls'
 										}
 									} catch(err) {
@@ -101,8 +101,8 @@ pipeline {
 							          branches: [[name: "v${env.LISK_CORE_VERSION}" ]],
 								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk']]])
 						}
-						withCredentials([string(credentialsId: 'lisk-desktop-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
-						withCredentials([string(credentialsId: 'lisk-desktop-cypress-record-key', variable: 'CYPRESS_RECORD_KEY')]) {
+						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
+						withCredentials([string(credentialsId: 'lisk-hub-cypress-record-key', variable: 'CYPRESS_RECORD_KEY')]) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
 									githubNotify context: 'Jenkins e2e tests',
