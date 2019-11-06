@@ -40,7 +40,7 @@ class WalletDetails extends React.Component {
             account.loginType !== 0
               ? (
                 <div
-                  className={styles.verifyAddress}
+                  className={`${styles.verifyAddress} verify-address`}
                   onClick={() => getAddress({
                     deviceId: account.hwInfo.deviceId,
                     index: account.hwInfo.derivationIndex,
