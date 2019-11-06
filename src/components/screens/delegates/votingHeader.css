@@ -22,7 +22,7 @@
   & .bg {
     position: fixed;
     width: 100%;
-    height: 78px;
+    height: 0px;
     left: 0;
     top: 73px;
     z-index: 0;
@@ -46,6 +46,7 @@
     & .bg {
       opacity: 1;
       z-index: 1;
+      height: 78px;
     }
   }
 }
@@ -131,6 +132,11 @@
       margin: 0;
       padding: 0;
       height: 45px;
+
+      & > .subTitle,
+      & h5 {
+        border-right: none;
+      }
 
       & .subTitle {
         padding: 0;

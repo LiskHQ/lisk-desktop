@@ -31,10 +31,24 @@ class VotingHeader extends React.Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.locateHeader);
+
+    // Didn't bind it to state, since there's not need to re-render
+    // THe fixed amount is related to the design specifications
+    setTimeout(() => {
+      this.headerTopEdge = this.wrapper.getBoundingClientRect().y - 58;
+    }, 1);
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.locateHeader);
+  }
+
+  componentDidUpdate(newProps) {
+    if (this.props.onBoardingDiscarded !== newProps.onBoardingDiscarded) {
+      setTimeout(() => {
+        this.headerTopEdge = this.wrapper.getBoundingClientRect().y - 58;
+      }, 1);
+    }
   }
 
   locateHeader = ({ target }) => {
