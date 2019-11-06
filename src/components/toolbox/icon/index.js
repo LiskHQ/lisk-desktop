@@ -155,9 +155,6 @@ export const icons = {
   txDefault,
   txDelegate,
   txVote,
-  addedVotes,
-  removedVotes,
-  totalVotes,
   user,
   userActive,
   verifyMessageInputsView,
@@ -169,6 +166,9 @@ export const icons = {
   walletIconActive,
   warningIcon,
   warningRound,
+  addedVotes,
+  removedVotes,
+  totalVotes,
 };
 
 
