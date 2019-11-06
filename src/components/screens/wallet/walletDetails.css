@@ -3,6 +3,8 @@
 
 .wrapper {
   & .row {
+    position: relative;
+
     & > * {
       margin-right: 15px;
       margin-left: -2px;
@@ -28,4 +30,11 @@
   & .copyIcon {
     vertical-align: -2px;
   }
+}
+
+.verifyAddress {
+  position: absolute;
+  top: 45px;
+  right: 25px;
+  cursor: pointer;
 }

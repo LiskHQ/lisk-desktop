@@ -76,6 +76,7 @@ import verifyMessageInputsView from '../../../assets/images/icons/verify-message
 import verifyMessageInputsViewActive from '../../../assets/images/icons/verify-message-inputs-view-active.svg';
 import verifyMessageTextareaView from '../../../assets/images/icons/verify-message-textarea-view.svg';
 import verifyMessageTextareaViewActive from '../../../assets/images/icons/verify-message-textarea-view-active.svg';
+import verifyWalletAddress from '../../../assets/images/icons/verify-icon.svg';
 import walletIcon from '../../../assets/images/icons/wallet.svg';
 import walletIconActive from '../../../assets/images/icons/wallet-active.svg';
 import warningIcon from '../../../assets/images/icons/warning-icon.svg';
@@ -157,6 +158,7 @@ export const icons = {
   verifyMessageInputsViewActive,
   verifyMessageTextareaView,
   verifyMessageTextareaViewActive,
+  verifyWalletAddress,
   walletIcon,
   walletIconActive,
   warningIcon,
