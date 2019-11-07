@@ -1,4 +1,5 @@
 import React from 'react';
+import { BigNumber } from 'bignumber.js';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '../../../constants/tokens';
 import Box from '../../toolbox/box';
@@ -23,13 +24,15 @@ class AccountsTable extends React.Component {
 
   render() {
     const {
-      title,
       accounts,
-      isLoadMoreEnabled,
-      t,
       emptyStateMessage,
+      isLoadMoreEnabled,
       isMediumViewPort,
+      networkStatus,
+      t,
+      title,
     } = this.props;
+    const supply = networkStatus.data.supply;
 
     return (
       <Box main isLoading={accounts.isLoading} className="accounts-box">
@@ -84,13 +87,22 @@ class AccountsTable extends React.Component {
                         header: t('Supply'),
                         className: grid['col-xs-1'],
                         id: 'supply',
-                        getValue: () => (<span>supply</span>),
+                        getValue: (account) => {
+                          const amount = new BigNumber(account.balance / supply * 100);
+                          return <span>{`${amount.toFormat(2)} %`}</span>;
+                        },
                       },
                       {
                         header: t('Owner'),
                         className: grid['col-xs-2'],
                         id: 'owner',
-                        getValue: () => (<span>description</span>),
+                        getValue: (account) => {
+                          const delegateUsername = account.delegate ? account.delegate.username : '';
+                          const text = account.knowledge
+                            ? `${account.knowledge.owner} ${account.knowledge.description}`
+                            : delegateUsername;
+                          return (<span>{text}</span>);
+                        },
                       },
                     ]}
                     rowClassName="accounts-row"

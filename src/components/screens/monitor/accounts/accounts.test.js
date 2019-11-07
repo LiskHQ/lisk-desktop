@@ -24,12 +24,29 @@ describe('Top Accounts Monitor Page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
+      networkStatus: {
+        data: {
+          supply: 9999999999999,
+        },
+      },
     };
 
     accountsWithData = {
       ...props.accounts,
       isLoading: false,
-      data: accountsApiResponse,
+      data: [
+        {
+          address: '1234567L',
+          delegate: {
+            username: 'geenesis',
+          },
+          knowledge: {
+            owner: 'Lisk',
+            description: 'assetes',
+          },
+        },
+        ...accountsApiResponse,
+      ],
     };
 
     wrapper = setup(props);
@@ -42,7 +59,7 @@ describe('Top Accounts Monitor Page', () => {
   it('renders table with accounts', () => {
     expect(wrapper.find('.accounts-row')).toHaveLength(0);
     wrapper.setProps({ accounts: accountsWithData });
-    expect(wrapper.find('.accounts-row').hostNodes()).toHaveLength(accountsApiResponse.length);
+    expect(wrapper.find('.accounts-row').hostNodes()).toHaveLength(accountsApiResponse.length + 1);
   });
 
   it('shows error if API failed', () => {

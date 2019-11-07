@@ -6,17 +6,25 @@ import MonitorAccounts from './accounts';
 import liskServiceApi from '../../../../utils/api/lsk/liskService';
 
 export default compose(
-  withData({
-    accounts: {
-      apiUtil: liskServiceApi.getTopAccounts,
-      defaultData: [],
-      autoload: true,
-      transformResponse: (response, accounts, urlSearchParams) => (
-        urlSearchParams.offset
-          ? [...accounts, ...response.data]
-          : response.data
-      ),
+  withData(
+    {
+      accounts: {
+        apiUtil: liskServiceApi.getTopAccounts,
+        defaultData: [],
+        autoload: true,
+        transformResponse: (response, accounts, urlSearchParams) => (
+          urlSearchParams.offset
+            ? [...accounts, ...response.data]
+            : response.data
+        ),
+      },
+      networkStatus: {
+        apiUtil: liskServiceApi.getNetworkStatus,
+        defaultData: {},
+        autoload: true,
+        transformResponse: response => response,
+      },
     },
-  }),
+  ),
   withTranslation(),
 )(MonitorAccounts);
