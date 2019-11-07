@@ -5,12 +5,6 @@ import Delegates from './delegates';
 import { loginType } from '../../../constants/hwConstants';
 import accounts from '../../../../test/constants/accounts';
 
-const setScrollPosition = (edge) => {
-  global.innerHeight = 500;
-  global.document.height = 1000;
-  global.document.documentElement.scrollTop = edge === 'above' ? 500 : 30;
-};
-
 describe('Delegates', () => {
   let wrapper;
   const votes = {
