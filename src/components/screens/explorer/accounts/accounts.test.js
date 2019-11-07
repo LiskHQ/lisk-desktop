@@ -3,6 +3,11 @@ import { mount } from 'enzyme';
 import Accounts from './accounts';
 import accounts from '../../../../../test/constants/accounts';
 import routes from '../../../../constants/routes';
+import * as hwManager from '../../../../utils/hwManager';
+
+jest.mock('../../../../utils/hwManager.js', () => ({
+  getAddress: jest.fn(),
+}));
 
 describe('Accounts Component', () => {
   let wrapper;
@@ -26,7 +31,10 @@ describe('Accounts Component', () => {
       [accounts.genesis.address]: accounts.genesis,
     },
     address: accounts.genesis.address,
-    account: accounts.empty_account,
+    account: {
+      ...accounts.empty_account,
+      loginType: 0,
+    },
     match: { params: { address: accounts.genesis.address } },
     history: { push: jest.fn(), location: { search: ' ' } },
     bookmarks: {
@@ -91,6 +99,24 @@ describe('Accounts Component', () => {
       expect(wrapper).toContainMatchingElement('.transaction-filter-item');
       wrapper.find('.transaction-filter-item').at(1).simulate('click');
       expect(props.transactions.loadData).toBeCalled();
+    });
+
+    it('click verify address when user use hardware wallet', () => {
+      const newProps = {
+        ...props,
+        account: {
+          ...props.account,
+          loginType: 1,
+          hwInfo: {
+            deviceId: 'abc123',
+            derivationIndex: 1,
+          },
+        },
+      };
+      wrapper = mount(<Accounts {...newProps} />);
+      expect(wrapper).toContainMatchingElement('.verify-address');
+      wrapper.find('.verify-address').at(0).simulate('click');
+      expect(hwManager.getAddress).toBeCalled();
     });
   });
 

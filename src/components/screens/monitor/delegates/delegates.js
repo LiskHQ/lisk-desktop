@@ -72,7 +72,7 @@ const Delegates = ({
           </p>
         </Tooltip>
       ),
-      className: [grid['col-xs-2'], grid['col-md-1']].join(' '),
+      className: [grid['col-xs-2'], grid['col-md-1'], styles.statusTitle].join(' '),
     },
     ] : []),
     {
@@ -85,7 +85,7 @@ const Delegates = ({
       headerTooltip: t('Percentage of total supply voting for a delegate.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ approval }) => <strong>{`${formatAmountBasedOnLocale({ value: approval })} %`}</strong>,
-      className: grid['col-xs-2'],
+      className: [grid['col-xs-2'], grid['col-md-1'], styles.approvalTitle].join(' '),
     },
   ];
 
