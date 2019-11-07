@@ -81,6 +81,7 @@ import walletIcon from '../../../assets/images/icons/wallet.svg';
 import walletIconActive from '../../../assets/images/icons/wallet-active.svg';
 import warningIcon from '../../../assets/images/icons/warning-icon.svg';
 import warningRound from '../../../assets/images/icons/warning-round.svg';
+import qrCode from '../../../assets/images/icons/qr-code.svg';
 
 export const icons = {
   academy,
@@ -163,6 +164,7 @@ export const icons = {
   walletIconActive,
   warningIcon,
   warningRound,
+  qrCode,
 };
 
 
