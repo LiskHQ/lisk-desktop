@@ -1,4 +1,5 @@
 import React from 'react';
+import QRCode from 'qrcode.react';
 import { withTranslation } from 'react-i18next';
 import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
@@ -10,6 +11,7 @@ import CopyToClipboard from '../../toolbox/copyToClipboard';
 import DiscreetMode from '../../shared/discreetMode';
 import { getAddress } from '../../../utils/hwManager';
 import styles from './walletDetails.css';
+import Tooltip from '../../toolbox/tooltip/tooltip';
 
 class WalletDetails extends React.Component {
   render() {
@@ -35,6 +37,14 @@ class WalletDetails extends React.Component {
                 className="account-address"
               />
             </div>
+            <Tooltip
+              tooltipClassName={styles.qrCodeWrapper}
+              className="showOnBottom"
+              title={t('Scan address')}
+              content={<Icon name="qrCode" className={styles.qrCodeIcon} />}
+            >
+              <QRCode value={address} size={154} />
+            </Tooltip>
           </div>
           <div className={styles.addressIcons}>
             {

@@ -32,6 +32,15 @@
   & .copyIcon {
     vertical-align: -2px;
   }
+
+  & .qrCodeWrapper {
+    width: 194px;
+    height: 222px;
+  }
+
+  & .qrCodeIcon {
+    cursor: pointer;
+  }
 }
 
 .addressIcons {
