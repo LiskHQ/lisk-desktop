@@ -106,12 +106,12 @@
       }
     }
 
-    &.added {
+    &.addedVotes {
       width: 90px;
       padding: 19px 13px 19px 30px;
     }
 
-    &.removed {
+    &.removedVotes {
       width: 114px;
       padding: 19px 14px 19px 28px;
     }

@@ -78,7 +78,7 @@ class VotingHeader extends React.Component {
     } = votingConst;
     return (
       <div
-        className={`${styles.wrapper} voting-header ${isHeaderSticky ? styles.sticky : ''}`}
+        className={`${styles.wrapper} voting-header ${isHeaderSticky ? `${styles.sticky} sticky` : ''}`}
         ref={(el) => { this.wrapper = el; }}
       >
         <div className={styles.bg} />
@@ -97,7 +97,7 @@ class VotingHeader extends React.Component {
                     </h5>
                     <span className={styles.subTitle}>{t('Total')}</span>
                   </div>
-                  <div className={`${styles.infoItem} ${styles.added}`}>
+                  <div className={`${styles.infoItem} ${styles.addedVotes}`}>
                     <figure className={styles.icon}>
                       <Icon name="addedVotes" />
                     </figure>
@@ -119,7 +119,7 @@ class VotingHeader extends React.Component {
             }
             { unvoteList.length
               ? (
-                <div className={`${styles.infoItem} ${styles.removed}`}>
+                <div className={`${styles.infoItem} ${styles.removedVotes}`}>
                   <figure className={styles.icon}>
                     <Icon name="removedVotes" />
                   </figure>

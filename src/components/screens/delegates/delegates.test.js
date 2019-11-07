@@ -2,7 +2,14 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import Delegates from './delegates';
+import { loginType } from '../../../constants/hwConstants';
 import accounts from '../../../../test/constants/accounts';
+
+const setScrollPosition = (edge) => {
+  global.innerHeight = 500;
+  global.document.height = 1000;
+  global.document.documentElement.scrollTop = edge === 'above' ? 500 : 30;
+};
 
 describe('Delegates', () => {
   let wrapper;
@@ -30,6 +37,7 @@ describe('Delegates', () => {
     delegates,
     votes,
     t: key => key,
+    onBoardingDiscarded: false,
     history: { location: { search: '' } },
     clearVotes: jest.fn(),
     account: { address: delegates[0].address },
@@ -53,6 +61,16 @@ describe('Delegates', () => {
   it('should not show "Register delegate" button if guest mode', () => {
     wrapper = mount(<Delegates {...props} account={{}} />);
     expect(wrapper.find('.register-delegate')).to.have.lengthOf(0);
+  });
+
+  it('should show "Register delegate" button if not a delegate', () => {
+    const noDelegateAccount = {
+      loginType: loginType.normal,
+      address: delegates[0].address,
+      hwInfo: {},
+    };
+    wrapper = mount(<Delegates {...props} account={noDelegateAccount} />);
+    expect(wrapper.find('.register-delegate')).to.not.have.lengthOf(0);
   });
 
   it('should not show "Register delegate" button if already delegate', () => {

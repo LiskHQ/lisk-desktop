@@ -81,6 +81,7 @@ module.exports = {
     'src/components/shared/header/signInHeader/signInHeader.js',
     'src/components/screens/register/register.js',
     'src/components/toolbox/demoRenderer.js',
+    'src/components/screens/delegates/votingHeader.js',
   ],
   coverageThreshold: {
     global: {
