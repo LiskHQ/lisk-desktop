@@ -245,6 +245,8 @@
   "Lisk {{version}}": "Lisk {{version}}",
   "Lisk {{version}} is here!": "Lisk {{version}} is here!",
   "Lisk's blockchain is based on the Delegated Proof of Stake (DPoS) consensus algorithm, in which 101 delegates are voted in by token holders to secure the network.": "Lisk's blockchain is based on the Delegated Proof of Stake (DPoS) consensus algorithm, in which 101 delegates are voted in by token holders to secure the network.",
+  "Load latest blocks": "Load latest blocks",
+  "Load latest transactions": "Load latest transactions",
   "Load more": "Load more",
   "Loading": "Loading",
   "Loading name...": "Loading name...",

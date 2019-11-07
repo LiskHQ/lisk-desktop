@@ -13,6 +13,7 @@ import BoxEmptyState from '../../../toolbox/box/emptyState';
 import FilterBar from '../../../shared/filterBar';
 import Illustration from '../../../toolbox/illustration';
 import LiskAmount from '../../../shared/liskAmount';
+import LoadLatestButton from '../../../shared/loadLatestButton';
 import MonitorHeader from '../header';
 import Table from '../../../toolbox/table';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
@@ -41,6 +42,8 @@ const Blocks = ({
     }));
   };
 
+  const loadLastBlocks = () => blocks.loadData();
+
   return (
     <div>
       <MonitorHeader />
@@ -50,6 +53,12 @@ const Blocks = ({
           <h2 className="blocks-header-title">{t('All blocks')}</h2>
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
         </BoxHeader>
+        <LoadLatestButton
+          event="update.block"
+          onClick={loadLastBlocks}
+        >
+          {t('Load latest blocks')}
+        </LoadLatestButton>
         <FilterBar {...{
           clearFilter, clearAllFilters, filters, formatters, t,
         }}
