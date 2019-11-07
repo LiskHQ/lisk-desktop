@@ -4,6 +4,8 @@
 .wrapper {
   & .row {
     position: relative;
+    margin: 0;
+    padding: 20px;
 
     & > * {
       margin-right: 15px;
@@ -32,9 +34,19 @@
   }
 }
 
-.verifyAddress {
-  position: absolute;
-  top: 45px;
-  right: 25px;
+.addressIcons {
+  width: auto;
+  height: 100%;
+  max-width: 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin: 0 0 0 auto !important;
+  position: relative;
+}
+
+.helperIcon {
   cursor: pointer;
+  line-height: 0;
+  margin-left: 5px;
 }

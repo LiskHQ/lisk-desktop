@@ -36,22 +36,24 @@ class WalletDetails extends React.Component {
               />
             </div>
           </div>
-          {
-            account.loginType !== 0
-              ? (
-                <div
-                  className={`${styles.verifyAddress} verify-address`}
-                  onClick={() => getAddress({
-                    deviceId: account.hwInfo.deviceId,
-                    index: account.hwInfo.derivationIndex,
-                    showOnDevice: true,
-                  })}
-                >
-                  <Icon name="verifyWalletAddress" alt="verifyWalletAddress" title="Verify address" />
-                </div>
-              )
-              : null
-          }
+          <div className={styles.addressIcons}>
+            {
+              account.loginType !== 0
+                ? (
+                  <div
+                    className={`${styles.helperIcon} verify-address`}
+                    onClick={() => getAddress({
+                      deviceId: account.hwInfo.deviceId,
+                      index: account.hwInfo.derivationIndex,
+                      showOnDevice: true,
+                    })}
+                  >
+                    <Icon name="verifyWalletAddress" alt="verifyWalletAddress" title="Verify address" />
+                  </div>
+                )
+                : null
+            }
+          </div>
         </BoxRow>
         <BoxRow className={styles.row}>
           <Icon name="balance" />
