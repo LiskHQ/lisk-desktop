@@ -2,9 +2,10 @@ import { castVotes, transfer, utils } from '@liskhq/lisk-transactions';
 import i18next from 'i18next';
 import { getAccount } from './api/lsk/account';
 import {
+  checkIfInsideLiskApp,
+  getAddress,
   getPublicKey,
   signTransaction,
-  checkIfInsideLiskApp,
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
@@ -102,11 +103,12 @@ const signVoteTransaction = async (
 };
 
 export {
-  getPublicKey,
+  checkIfInsideLiskApp,
   getAccountsFromDevice,
+  getAddress,
+  getPublicKey,
   signSendTransaction,
   signVoteTransaction,
-  checkIfInsideLiskApp,
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,

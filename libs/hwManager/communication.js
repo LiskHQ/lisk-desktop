@@ -39,6 +39,22 @@ const getPublicKey = async (data) => {
 };
 
 /**
+ * getAddress - Function.
+ * Use for get the Address from the account
+ * @param {object} data -> Object that contain the information about the device and data
+ * @param {string} data.deviceId -> Id of the hw device
+ * @param {number} data.index -> index of the account of wich will extact information
+ * @param {boolean} data.showOnDevice -> Boolean value to inform device if show or
+ * not information in screen
+ */
+const getAddress = async (data) => {
+  const response = await executeCommand(IPC_MESSAGES.HW_COMMAND, {
+    action: IPC_MESSAGES.GET_ADDRESS, data,
+  });
+  return response;
+};
+
+/**
  * signTransaction - Function.
  * Use for sign a transaction, this could be send or vote
  * @param {object} data -> Object that contain the information about the device and data
@@ -126,4 +142,5 @@ export {
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
   validatePin,
+  getAddress,
 };

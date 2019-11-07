@@ -120,6 +120,21 @@ const getPublicKey = async (transporter, { device, data }) => {
   }
 };
 
+const getAddress = async (transporter, { device, data }) => {
+  let transport = null;
+  try {
+    transport = await transporter.open(device.path);
+    const liskLedger = new DposLedger(transport);
+    const ledgerAccount = getLedgerAccount(data.index);
+    const { publicKey: res } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
+    transport.close();
+    return res;
+  } catch (error) {
+    if (transport) transport.close();
+    throw error;
+  }
+};
+
 const signTransaction = async (transporter, { device, data }) => {
   let transport = null;
   try {
@@ -137,6 +152,7 @@ const signTransaction = async (transporter, { device, data }) => {
 
 export default {
   checkIfInsideLiskApp,
+  getAddress,
   getPublicKey,
   listener,
   signTransaction,
