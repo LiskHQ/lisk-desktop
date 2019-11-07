@@ -38,7 +38,7 @@ const DelegatesTable = ({
       header: t('Productivity'),
       headerTooltip: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
       getValue: ({ productivity }) => `${formatAmountBasedOnLocale({ value: productivity })} %`,
-      className: [grid['col-xs-2'], grid['col-md-1']].join(' '),
+      className: [grid['col-xs-2'], grid['col-md-2'], grid['col-lg-2']].join(' '),
     },
   };
   columns = columns.map(column => ({
