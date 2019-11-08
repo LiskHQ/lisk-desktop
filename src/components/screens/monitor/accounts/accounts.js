@@ -1,6 +1,6 @@
 import React from 'react';
 import MonitorHeader from '../header';
-import AccountsTable from '../../../shared/accountsTable';
+import AccountsTable from './accountsTable';
 
 const MonitorAccounts = ({ t, accounts, networkStatus }) => (
   <div>

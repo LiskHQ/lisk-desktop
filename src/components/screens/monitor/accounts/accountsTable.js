@@ -1,19 +1,20 @@
 import React from 'react';
 import { BigNumber } from 'bignumber.js';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { tokenMap } from '../../../constants/tokens';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import BoxFooterButton from '../../toolbox/box/footerButton';
-import BoxEmptyState from '../../toolbox/box/emptyState';
-import LiskAmount from '../liskAmount';
-import Illustration from '../../toolbox/illustration';
-import withResizeValues from '../../../utils/withResizeValues';
-import routes from '../../../constants/routes';
-import Table from '../../toolbox/table';
-import AccountVisualWithAddress from '../accountVisualWithAddress';
-import { DEFAULT_LIMIT } from '../../../constants/monitor';
+import { tokenMap } from '../../../../constants/tokens';
+import Box from '../../../toolbox/box';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
+import BoxFooterButton from '../../../toolbox/box/footerButton';
+import BoxEmptyState from '../../../toolbox/box/emptyState';
+import LiskAmount from '../../../shared/liskAmount';
+import Illustration from '../../../toolbox/illustration';
+import withResizeValues from '../../../../utils/withResizeValues';
+import routes from '../../../../constants/routes';
+import Table from '../../../toolbox/table';
+import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
+import { DEFAULT_LIMIT } from '../../../../constants/monitor';
+import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 import styles from './accountsTable.css';
 
 class AccountsTable extends React.Component {
@@ -25,8 +26,6 @@ class AccountsTable extends React.Component {
   render() {
     const {
       accounts,
-      emptyStateMessage,
-      isLoadMoreEnabled,
       isMediumViewPort,
       networkStatus,
       t,
@@ -45,7 +44,7 @@ class AccountsTable extends React.Component {
               <BoxContent>
                 <BoxEmptyState>
                   <Illustration name="emptyWallet" />
-                  <h3>{emptyStateMessage || `${accounts.error}`}</h3>
+                  <h3>{`${accounts.error}`}</h3>
                 </BoxEmptyState>
               </BoxContent>
             )
@@ -89,7 +88,7 @@ class AccountsTable extends React.Component {
                         id: 'supply',
                         getValue: (account) => {
                           const amount = new BigNumber(account.balance / supply * 100);
-                          return <span>{`${amount.toFormat(2)} %`}</span>;
+                          return <span>{`${formatAmountBasedOnLocale({ value: amount.toFormat(2) })} %`}</span>;
                         },
                       },
                       {
@@ -99,17 +98,19 @@ class AccountsTable extends React.Component {
                         getValue: (account) => {
                           const delegateUsername = account.delegate ? account.delegate.username : '';
                           const text = account.knowledge
+                            && account.knowledge.owner && account.knowledge.description
                             ? `${account.knowledge.owner} ${account.knowledge.description}`
                             : delegateUsername;
-                          return (<span>{text}</span>);
+                          return text;
                         },
                       },
                     ]}
                     rowClassName="accounts-row"
+                    rowKey="address"
                   />
                 </BoxContent>
                 {
-                  isLoadMoreEnabled && !!accounts.data.length
+                  !!accounts.data.length
                   && accounts.data.length % DEFAULT_LIMIT === 0
                     ? (
                       <BoxFooterButton className="load-more" onClick={this.handleLoadMore}>
@@ -127,9 +128,7 @@ class AccountsTable extends React.Component {
 }
 
 AccountsTable.defaultProps = {
-  isLoadMoreEnabled: false,
   title: '',
-  emptyStateMessage: '',
 };
 
 export default withResizeValues(AccountsTable);

@@ -141,10 +141,9 @@ const liskServiceApi = {
     },
   }),
 
-  getNetworkStatus: async ({ networkConfig }, searchParams) => liskServiceGet({
+  getNetworkStatus: async ({ networkConfig }) => liskServiceGet({
     networkConfig,
     path: '/api/v1/network/status',
-    searchParams,
   }),
 };
 
