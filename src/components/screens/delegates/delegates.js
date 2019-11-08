@@ -12,20 +12,22 @@ class Delegates extends React.Component {
 
     this.state = {
       votingModeEnabled: getTotalActions(props.votes) > 0,
+      onBoardingDiscarded: false,
     };
-
-    this.toggleVotingMode = this.toggleVotingMode.bind(this);
-    this.getOnboardingSlides = this.getOnboardingSlides.bind(this);
   }
 
-  toggleVotingMode() {
+  toggleVotingMode = () => {
     if (this.state.votingModeEnabled) {
       this.props.clearVotes();
     }
     this.setState({ votingModeEnabled: !this.state.votingModeEnabled });
   }
 
-  getOnboardingSlides() {
+  obBoardingDiscarded = () => {
+    this.setState({ onBoardingDiscarded: true });
+  }
+
+  getOnboardingSlides = () => {
     const { t } = this.props;
     return [{
       title: t('Welcome to Lisk Delegates!'),
@@ -54,7 +56,7 @@ class Delegates extends React.Component {
       t,
       votes,
     } = this.props;
-    const { votingModeEnabled } = this.state;
+    const { votingModeEnabled, onBoardingDiscarded } = this.state;
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
         { account && account.address
@@ -62,6 +64,7 @@ class Delegates extends React.Component {
             <Onboarding
               slides={this.getOnboardingSlides()}
               finalCallback={this.toggleVotingMode}
+              onDiscard={this.obBoardingDiscarded}
               actionButtonLabel={t('Start voting')}
               name="delegateOnboarding"
             />
@@ -74,6 +77,7 @@ class Delegates extends React.Component {
           toggleVotingMode={this.toggleVotingMode}
           account={account}
           votes={votes}
+          onBoardingDiscarded={onBoardingDiscarded}
         />
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
           <DelegatesTable

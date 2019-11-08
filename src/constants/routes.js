@@ -21,7 +21,7 @@ import SignMessage from '../components/screens/signMessage';
 import TermsOfUse from '../components/screens/termsOfUse';
 import TransactionDashboard from '../components/shared/transactionDashboard';
 import Transactions from '../components/screens/explorer/transactions';
-import VerifyMessage from '../components/screens/verify-message';
+import VerifyMessage from '../components/screens/verifyMessage';
 import Voting from '../components/screens/delegates/voting';
 
 export default {

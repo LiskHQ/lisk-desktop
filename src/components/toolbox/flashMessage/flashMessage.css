@@ -15,6 +15,7 @@
   padding: 0 24px;
   position: relative;
   width: 100%;
+  z-index: 99;
 
   & img {
     margin-right: 7px;
