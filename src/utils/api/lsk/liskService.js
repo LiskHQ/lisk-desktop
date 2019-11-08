@@ -6,9 +6,15 @@ import { getTimestampFromFirstBlock } from '../../datetime';
 import i18n from '../../../i18n';
 import networks from '../../../constants/networks';
 import voting from '../../../constants/voting';
+import { version } from '../../../../package.json';
 
-const liskServiceUrl = 'https://service.lisk.io';
-const liskServiceTestnetUrl = 'https://testnet-service.lisk.io';
+const isStaging = () => (
+  localStorage.getItem('useLiskServiceStaging') || version.includes('beta') || version.includes('rc')
+    ? '-staging' : ''
+);
+
+const liskServiceUrl = 'https://service.lisk.io'; // TODO use isStaging() here once the server is available
+const liskServiceTestnetUrl = `https://testnet-service${isStaging()}.lisk.io`;
 
 const getServerUrl = (networkConfig) => {
   const name = getNetworkNameBasedOnNethash(networkConfig);
