@@ -20,16 +20,21 @@ const IconAndText = ({
             {text || value}
           </span>
           {' '}
-          <Icon name="copy" className={copyClassName} />
+          <Icon name="copy" className={`${styles.icon} ${copyClassName}`} />
         </span>
       )}
     </Container>
   </ReactCopyToClipboard>
 );
 
-const IconOnly = ({ copyClassName, value, onCopy }) => (
+const IconOnly = ({
+  copyClassName,
+  value,
+  onCopy,
+  copied,
+}) => (
   <ReactCopyToClipboard text={value} onCopy={onCopy}>
-    <Icon name="copy" className={copyClassName} />
+    <Icon name={copied ? 'transaction-status-approved' : 'copy'} className={`${styles.icon} ${copyClassName}`} />
   </ReactCopyToClipboard>
 );
 
@@ -65,7 +70,7 @@ class CopyToClipboard extends React.Component {
       >
         {
           type === 'icon'
-            ? <IconOnly {...this.props} copied={copied} />
+            ? <IconOnly {...this.props} copied={copied} onCopy={this.textIsCopied} />
             : <IconAndText {...this.props} copied={copied} onCopy={this.textIsCopied} />
         }
       </div>
