@@ -30,7 +30,8 @@
   }
 
   & .copyIcon {
-    vertical-align: -2px;
+    height: 18px;
+    vertical-align: middle;
   }
 
   & .qrCodeWrapper {
@@ -52,10 +53,19 @@
   align-items: flex-end;
   margin: 0 0 0 auto !important;
   position: relative;
-}
 
-.helperIcon {
-  cursor: pointer;
-  line-height: 0;
-  margin-left: 5px;
+  & .helperIcon {
+    cursor: pointer;
+    line-height: 0;
+    margin-left: 18px;
+
+    & img {
+      filter: grayscale(100%) brightness(130%);
+
+      &:hover {
+        filter: grayscale(0) brightness(100%);
+      }
+    }
+
+  }
 }

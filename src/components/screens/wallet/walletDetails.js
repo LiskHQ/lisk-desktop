@@ -32,21 +32,27 @@ class WalletDetails extends React.Component {
           <div>
             <label>{t('Address')}</label>
             <div className={styles.value}>
-              <CopyToClipboard
-                value={address}
-                className="account-address"
-              />
+              <span className="account-address">{address}</span>
             </div>
-            <Tooltip
-              tooltipClassName={styles.qrCodeWrapper}
-              className="showOnBottom"
-              title={t('Scan address')}
-              content={<Icon name="qrCode" className={styles.qrCodeIcon} />}
-            >
-              <QRCode value={address} size={154} />
-            </Tooltip>
           </div>
           <div className={styles.addressIcons}>
+            <div className={styles.helperIcon}>
+              <CopyToClipboard
+                value={address}
+                type="icon"
+                copyClassName={styles.copyIcon}
+              />
+            </div>
+            <div className={styles.helperIcon}>
+              <Tooltip
+                tooltipClassName={styles.qrCodeWrapper}
+                className="showOnBottom"
+                title={t('Scan address')}
+                content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
+              >
+                <QRCode value={address} size={154} />
+              </Tooltip>
+            </div>
             {
               account.loginType !== 0
                 ? (
@@ -58,7 +64,13 @@ class WalletDetails extends React.Component {
                       showOnDevice: true,
                     })}
                   >
-                    <Icon name="verifyWalletAddress" alt="verifyWalletAddress" title="Verify address" />
+                    <Tooltip
+                      className="showOnBottom"
+                      title={t('Verify address')}
+                      content={<Icon name="verifyWalletAddressActive" className={styles.qrCodeIcon} />}
+                    >
+                      <span>Verify the address in your hardware wallet device.</span>
+                    </Tooltip>
                   </div>
                 )
                 : null
