@@ -100,7 +100,7 @@
 
     &.total {
       width: 110px;
-      padding: 19px 14px 19px 20px;
+      padding: 9px 14px 9px 0;
 
       & figure {
         width: 18px;
@@ -109,16 +109,16 @@
 
     &.addedVotes {
       width: 90px;
-      padding: 19px 13px 19px 30px;
+      padding: 9px 13px 9px 30px;
     }
 
     &.removedVotes {
       width: 114px;
-      padding: 19px 14px 19px 28px;
+      padding: 9px 14px 9px 28px;
     }
 
     &.fee {
-      padding: 19px 11px 19px 29px;
+      padding: 9px 11px 9px 29px;
       width: 190px;
 
       & > .subTitle,
@@ -132,7 +132,7 @@
       display: block;
       margin: 0;
       padding: 0;
-      height: 45px;
+      height: 56px;
 
       & > .subTitle,
       & h5 {
@@ -141,7 +141,6 @@
 
       & .subTitle {
         padding: 0;
-        margin-top: 6px;
         width: auto;
       }
     }
