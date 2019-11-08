@@ -1,9 +1,10 @@
+import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import liskService from '../utils/api/lsk/liskService';
 
-const useServiceSocketUpdates = (networkConfig, event, initialState = false) => {
-  networkConfig = { name: 'Custom node' }; // TODO get real networkConfig;
+const useServiceSocketUpdates = (event, initialState = false) => {
+  const networkConfig = useSelector(state => state.network);
   const [isUpdateAvailable, setUpdateAvailable] = useState(initialState);
   const reset = () => setUpdateAvailable(initialState);
 

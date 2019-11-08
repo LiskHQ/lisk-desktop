@@ -3,7 +3,7 @@ import { PrimaryButton } from '../../toolbox/buttons/button';
 import useServiceSocketUpdates from '../../../hooks/useServiceSocketUpdates';
 
 const LoadLatestButton = ({ children, onClick, event }) => {
-  const [isUpdateAvailable, hideUpdateButton] = useServiceSocketUpdates('TODO use network config', event);
+  const [isUpdateAvailable, hideUpdateButton] = useServiceSocketUpdates(event);
 
   const handleClick = () => {
     hideUpdateButton();
