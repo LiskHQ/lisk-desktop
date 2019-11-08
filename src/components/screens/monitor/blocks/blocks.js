@@ -42,7 +42,7 @@ const Blocks = ({
     }));
   };
 
-  const loadLastBlocks = () => blocks.loadData();
+  const loadLastBlocks = () => applyFilters(filters);
 
   return (
     <div>
