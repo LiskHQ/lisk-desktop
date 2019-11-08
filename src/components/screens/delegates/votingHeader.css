@@ -54,6 +54,7 @@
 .info {
   display: flex;
   flex-flow: row nowrap;
+  height: 58px;
 
   & > div {
     display: flex;
