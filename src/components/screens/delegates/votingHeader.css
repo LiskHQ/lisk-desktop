@@ -93,8 +93,8 @@
     }
 
     & h5 {
-      align-items: flex-start;
       font-weight: bold;
+      align-items: center;
     }
 
     &.total {

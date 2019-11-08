@@ -136,8 +136,8 @@ class VotingHeader extends React.Component {
                     <Icon name="walletIcon" />
                   </figure>
                   <h5>
-                    {totalActions}
-                    <Tooltip className={styles.tooltip}>
+                    <span>{totalActions}</span>
+                    <Tooltip className={`${styles.tooltip} showOnBottom`}>
                       <p>{t('Each time you add or remove a vote it is counted as an action. There\'s {{fee}} LSK fee per every 33 actions.', { fee })}</p>
                     </Tooltip>
                   </h5>
