@@ -19,8 +19,6 @@ import styles from './delegatesTable.css';
 const DelegatesTable = ({
   columns, delegates, tabs, t, filters, applyFilters, canLoadMore, ...rest
 }) => {
-  const data = delegates.data.map(d => ({ ...d, id: d.username }));
-
   const columnDefaults = {
     rank: {
       header: t('Rank'),
@@ -99,7 +97,11 @@ const DelegatesTable = ({
         ? (
           <BoxContent className={styles.content}>
             <Table {...{
-              columns, data, rowClassName: 'delegate-row', ...rest,
+              columns,
+              data: delegates.data,
+              rowKey: 'username',
+              rowClassName: 'delegate-row',
+              ...rest,
             }}
             />
           </BoxContent>

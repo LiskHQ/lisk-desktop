@@ -6,7 +6,7 @@ import TableRow from './tableRow';
 import styles from './table.css';
 
 const Table = ({
-  data, columns, onSortChange, sort, getRowLink, rowClassName, onRowClick,
+  data, columns, onSortChange, sort, getRowLink, rowClassName, onRowClick, rowKey,
 }) => {
   const onHeaderClick = ({ id, isSortable }) => {
     if (isSortable) {
@@ -49,7 +49,7 @@ const Table = ({
       )}
       {data.map(row => (
         <TableRow
-          key={row.id}
+          key={row[rowKey]}
           {...(getRowLink(row) && {
             Container: Link,
             to: getRowLink(row),
@@ -85,9 +85,10 @@ Table.propTypes = {
 const noop = () => null;
 
 Table.defaultProps = {
-  onSortChange: noop,
   getRowLink: noop,
+  onSortChange: noop,
   rowClassName: '',
+  rowKey: 'id',
   sort: '',
 };
 
