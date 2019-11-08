@@ -1,3 +1,11 @@
 .clickable {
   cursor: pointer;
 }
+
+.icon {
+  filter: grayscale(100%) brightness(130%);
+
+  &:hover {
+    filter: grayscale(0) brightness(100%);
+  }
+}

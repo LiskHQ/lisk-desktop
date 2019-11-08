@@ -5,6 +5,39 @@ import Icon from '../icon';
 import styles from './copyToClipboard.css';
 import Piwik from '../../../utils/piwik';
 
+const IconAndText = ({
+  value, t, className, text, copyClassName, Container, containerProps, onCopy, copied,
+}) => (
+  <ReactCopyToClipboard text={value} onCopy={onCopy}>
+    <Container disabled={copied} {...containerProps}>
+      {copied ? (
+        <span className={`${className} copied`}>
+          {t('Copied!')}
+        </span>
+      ) : (
+        <span className={`${className} ${styles.clickable} default`}>
+          <span className="copy-title">
+            {text || value}
+          </span>
+          {' '}
+          <Icon name="copy" className={`${styles.icon} ${copyClassName}`} />
+        </span>
+      )}
+    </Container>
+  </ReactCopyToClipboard>
+);
+
+const IconOnly = ({
+  copyClassName,
+  value,
+  onCopy,
+  copied,
+}) => (
+  <ReactCopyToClipboard text={value} onCopy={onCopy}>
+    <Icon name={copied ? 'transaction-status-approved' : 'copy'} className={`${styles.icon} ${copyClassName}`} />
+  </ReactCopyToClipboard>
+);
+
 class CopyToClipboard extends React.Component {
   constructor() {
     super();
@@ -27,33 +60,19 @@ class CopyToClipboard extends React.Component {
   }
 
   render() {
-    const {
-      value, t, className, text, copyClassName, Container, containerProps, onClick,
-    } = this.props;
     const { copied } = this.state;
+    const { onClick, type } = this.props;
     return (
       <div onClick={(e) => {
         e.stopPropagation();
         if (onClick) onClick();
       }}
       >
-        <ReactCopyToClipboard text={value} onCopy={this.textIsCopied}>
-          <Container disabled={copied} {...containerProps}>
-            {copied ? (
-              <span className={`${className} copied`}>
-                {t('Copied!')}
-              </span>
-            ) : (
-              <span className={`${className} ${styles.clickable} default`}>
-                <span className="copy-title">
-                  {text || value}
-                </span>
-                {' '}
-                <Icon name="copy" className={copyClassName} />
-              </span>
-            )}
-          </Container>
-        </ReactCopyToClipboard>
+        {
+          type === 'icon'
+            ? <IconOnly {...this.props} copied={copied} onCopy={this.textIsCopied} />
+            : <IconAndText {...this.props} copied={copied} onCopy={this.textIsCopied} />
+        }
       </div>
     );
   }
