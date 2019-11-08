@@ -58,13 +58,13 @@ class AccountsTable extends React.Component {
                     columns={[
                       {
                         header: t('Rank'),
-                        className: grid['col-xs-1'],
+                        className: `${grid['col-xs-1']} ${grid['col-md-1']}`,
                         id: 'rank',
                         getValue: () => (<span className={styles.counter} />),
                       },
                       {
                         header: t('Address'),
-                        className: grid['col-xs-5'],
+                        className: `${grid['col-xs-3']} ${grid['col-md-5']}`,
                         id: 'address',
                         getValue: account => (
                           <AccountVisualWithAddress
@@ -77,15 +77,15 @@ class AccountsTable extends React.Component {
                       },
                       {
                         header: t('Balance'),
-                        className: grid['col-xs-3'],
+                        className: `${grid['col-xs-3']} ${grid['col-md-3']}`,
                         id: 'balance',
                         getValue: account => (
-                          <LiskAmount val={account.balance} token={tokenMap.LSK.key} />
+                          <LiskAmount val={account.balance} roundTo={0} token={tokenMap.LSK.key} />
                         ),
                       },
                       {
                         header: t('Supply'),
-                        className: grid['col-xs-1'],
+                        className: `${grid['col-xs-2']} ${grid['col-md-1']}`,
                         id: 'supply',
                         getValue: (account) => {
                           const amount = new BigNumber(account.balance / supply * 100);
@@ -94,7 +94,7 @@ class AccountsTable extends React.Component {
                       },
                       {
                         header: t('Owner'),
-                        className: grid['col-xs-2'],
+                        className: `${grid['col-xs-3']} ${grid['col-md-2']}`,
                         id: 'owner',
                         getValue: (account) => {
                           const delegateUsername = account.delegate ? account.delegate.username : '';
