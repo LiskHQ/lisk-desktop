@@ -1,0 +1,9 @@
+.wrapper {
+  position: relative;
+}
+
+.innerContent {
+  position: absolute;
+  bottom: 50%;
+  transform: translateY(-50%);
+}
