@@ -5,13 +5,27 @@ const DoughnutChart = (props) => {
   const legend = {
     display: true,
     position: 'left',
-    align: 'center',
+      onClick: () => undefined,
     labels: {
+        padding: 16,
       fontSize: 13,
       boxWidth: 3,
       usePointStyle: true,
     },
   };
+
+    const data = {
+      ...this.props.data,
+      datasets: [
+        {
+          ...this.props.data.datasets[0],
+          borderWidth: 0,
+        }],
+    };
+
+    const options = {
+      cutoutPercentage: 65,
+    };
 
   return (
     <Doughnut legend={legend} {...props} />
