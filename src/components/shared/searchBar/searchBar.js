@@ -7,6 +7,7 @@ import routes from '../../../constants/routes';
 import regex from '../../../utils/regex';
 import keyCodes from '../../../constants/keyCodes';
 import styles from './searchBar.css';
+import Blocks from './blocks';
 
 class SearchBar extends React.Component {
   constructor() {
@@ -172,6 +173,19 @@ class SearchBar extends React.Component {
             ? (
               <Transactions
                 transactions={suggestions.data.transactions}
+                onSelectedRow={this.onSelectTransaction}
+                rowItemIndex={rowItemIndex}
+                updateRowItemIndex={this.updateRowItemIndex}
+                t={t}
+              />
+            )
+            : null
+        }
+        {
+          suggestions.data.blocks.length
+            ? (
+              <Blocks
+                blocks={suggestions.data.blocks}
                 onSelectedRow={this.onSelectTransaction}
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}
