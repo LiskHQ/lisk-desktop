@@ -3,12 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 import styles from './doughnutChart.css';
 
 class DoughnutChart extends React.Component {
-  componentDidMount() {
-    console.log(this.doughnutRef);
-  }
-
   render() {
-    const { innerContent } = this.props;
     const legend = {
       display: true,
       position: 'left',
@@ -16,7 +11,7 @@ class DoughnutChart extends React.Component {
       labels: {
         padding: 16,
         fontSize: 13,
-        boxWidth: 3,
+        boxWidth: 8,
         usePointStyle: true,
       },
     };
@@ -36,7 +31,6 @@ class DoughnutChart extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <div className={styles.innerContent}>{innerContent}</div>
         <Doughnut
           {...this.props}
           ref={(e) => { this.doughnutRef = e; }}
