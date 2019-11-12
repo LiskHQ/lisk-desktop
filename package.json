@@ -58,7 +58,7 @@
     "bitcore-mnemonic": "1.7.0",
     "body-parser": "1.18.3",
     "browser-or-node": "1.1.0",
-    "chart.js": "2.7.3",
+    "chart.js": "2.9.2",
     "cheerio": "1.0.0-rc.2",
     "dpos-ledger-api": "2.0.0",
     "electron-localshortcut": "3.1.0",

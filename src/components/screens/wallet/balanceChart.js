@@ -1,23 +1,23 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { Line as LineChart } from 'react-chartjs-2';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxEmptyState from '../../toolbox/box/emptyState';
-import styles from './balanceChart.css';
 import * as ChartUtils from '../../../utils/balanceChart';
 import { tokenMap } from '../../../constants/tokens';
 import i18n from '../../../i18n';
+import Charts from '../../shared/charts';
+import styles from './balanceChart.css';
 
 class BalanceGraph extends React.PureComponent {
   render() {
     const {
-      t, transactions, balance, address, token, isDiscreetMode,
+      t, transactions, token, balance, address, isDiscreetMode,
     } = this.props;
 
     const format = ChartUtils.getChartDateFormat(transactions);
 
-    const data = ChartUtils.getBalanceData.bind(null, {
+    const data = ChartUtils.getBalanceData({
       transactions,
       balance,
       address,
@@ -40,9 +40,10 @@ class BalanceGraph extends React.PureComponent {
           <div className={`${styles.graphHolder}`}>
             { transactions.length
               ? (
-                <LineChart
-                  options={options}
+                <Charts
                   data={data}
+                  options={options}
+                  type="line"
                 />
               )
               : (
