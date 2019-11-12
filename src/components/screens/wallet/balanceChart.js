@@ -9,56 +9,52 @@ import i18n from '../../../i18n';
 import Charts from '../../shared/charts';
 import styles from './balanceChart.css';
 
-class BalanceGraph extends React.PureComponent {
-  render() {
-    const {
-      t, transactions, token, balance, address, isDiscreetMode,
-    } = this.props;
+const BalanceGraph = ({
+  t, transactions, token, balance, address, isDiscreetMode,
+}) => {
+  const format = ChartUtils.getChartDateFormat(transactions);
 
-    const format = ChartUtils.getChartDateFormat(transactions);
+  const data = ChartUtils.getBalanceData({
+    transactions,
+    balance,
+    address,
+    format,
+  });
 
-    const data = ChartUtils.getBalanceData({
-      transactions,
-      balance,
-      address,
-      format,
-    });
+  const options = ChartUtils.graphOptions({
+    format,
+    token,
+    isDiscreetMode,
+    locale: i18n.language,
+  });
 
-    const options = ChartUtils.graphOptions({
-      format,
-      token,
-      isDiscreetMode,
-      locale: i18n.language,
-    });
-
-    return (
-      <Box className={`${styles.wrapper}`}>
-        <BoxHeader>
-          <h1>{t('{{token}} balance', { token: tokenMap[token].label })}</h1>
-        </BoxHeader>
-        <div className={styles.content}>
-          <div className={`${styles.graphHolder}`}>
-            { transactions.length
-              ? (
-                <Charts
-                  data={data}
-                  options={options}
-                  type="line"
-                />
-              )
-              : (
-                <BoxEmptyState>
-                  <p>
-                    {t('There are no transactions.')}
-                  </p>
-                </BoxEmptyState>
-              )
-            }
-          </div>
+  return (
+    <Box className={`${styles.wrapper}`}>
+      <BoxHeader>
+        <h1>{t('{{token}} balance', { token: tokenMap[token].label })}</h1>
+      </BoxHeader>
+      <div className={styles.content}>
+        <div className={`${styles.graphHolder}`}>
+          { transactions.length
+            ? (
+              <Charts
+                data={data}
+                options={options}
+                type="line"
+              />
+            )
+            : (
+              <BoxEmptyState>
+                <p>
+                  {t('There are no transactions.')}
+                </p>
+              </BoxEmptyState>
+            )
+          }
         </div>
-      </Box>
-    );
-  }
-}
+      </div>
+    </Box>
+  );
+};
 
 export default withTranslation()(BalanceGraph);
