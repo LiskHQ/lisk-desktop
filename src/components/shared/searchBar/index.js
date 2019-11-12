@@ -11,6 +11,7 @@ export default withData({
       delegates: [],
       addresses: [],
       transactions: [],
+      blocks: [],
     },
   },
 })((withTranslation()(SearchBar)));
