@@ -34,7 +34,7 @@ const styles = {
   maastrichtBlue: '#0c152e',
   ultramarineBlue: '#4070f4',
   contentFontFamily: '\'basier-circle\', sans-serif',
-  fontSize: 12,
+  fontSize: 13,
 };
 
 export const graphOptions = ({
@@ -43,13 +43,7 @@ export const graphOptions = ({
   locale,
   isDiscreetMode = false,
 }) => ({
-  plugins: {
-    hideAxisX: false,
-  },
   maintainAspectRatio: false,
-  gridLines: {
-    display: true,
-  },
   legend: {
     display: false,
   },
@@ -66,19 +60,19 @@ export const graphOptions = ({
         },
         round: true,
       },
+      gridLines: {
+        display: false,
+      },
       distribution: 'linear',
       ticks: {
         callback: (value) => {
           moment.locale(locale);
-          return moment(value).format(format);
+          return moment(value, format).format('MMM YY');
         },
         fontColor: styles.slateGray,
         fontSize: styles.fontSize,
         fontFamily: styles.contentFontFamily,
         maxRotation: 0,
-      },
-      gridLines: {
-        display: false,
       },
     }],
     yAxes: [{
@@ -102,8 +96,8 @@ export const graphOptions = ({
   },
   elements: {
     point: {
-      radius: 1,
-      hoverRadius: 3,
+      radius: 2,
+      hoverRadius: 4,
       hitRadius: 10,
     },
     line: {
