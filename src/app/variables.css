@@ -184,3 +184,7 @@ or "warn/action" ineastd of "red/green"
   @custom-media --xSmall-viewport (max-width: 414px);
   @custom-media --xxSmall-viewport (max-width: 320px);
 }
+
+:root [data-theme="dark"] {
+  // dark theme colors will placed here
+}
