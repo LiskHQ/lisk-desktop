@@ -7,6 +7,7 @@ import { toastDisplayed } from '../../../actions/toaster';
 import { accountUpdated } from '../../../actions/account';
 import { networkSet } from '../../../actions/network';
 import { getActiveTokenAccount } from '../../../utils/account';
+import withTheme from '../../../utils/withTheme';
 
 const mapStateToProps = state => ({
   hasSecondPassphrase: !!(state.account.info && state.account.info.LSK.secondPublicKey),
@@ -26,4 +27,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(Settings));
+)(withTranslation()(withTheme(Settings)));

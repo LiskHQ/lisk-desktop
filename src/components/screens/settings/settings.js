@@ -138,6 +138,19 @@ class Settings extends React.Component {
                   <p>{t('Hide balance and transactions amounts')}</p>
                 </div>
               </label>
+              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <CheckBox
+                  name="DarkMode"
+                  className={`${styles.checkbox} DarkMode`}
+                  checked={settings.DarkMode}
+                  onChange={this.handleCheckboxChange}
+                />
+                <div>
+                  <span className={styles.labelName}>Dark Mode</span>
+                  <p>Hide balance and transactions amounts</p>
+                </div>
+              </label>
+
 
             </section>
             <section>
