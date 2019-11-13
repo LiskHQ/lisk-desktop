@@ -6,7 +6,7 @@ const Blocks = ({
 }) => (
   <div className={styles.wrapper}>
     <header className={styles.header}>
-      <label>{t('Blocks')}</label>
+      <label>{t('Block')}</label>
     </header>
     <div className={styles.content}>
       {blocks.map((block, i) => (
