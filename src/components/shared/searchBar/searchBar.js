@@ -196,8 +196,6 @@ class SearchBar extends React.Component {
               <Blocks
                 blocks={suggestions.data.blocks}
                 onSelectedRow={this.onSelectBlock}
-                rowItemIndex={rowItemIndex}
-                updateRowItemIndex={this.updateRowItemIndex}
                 t={t}
               />
             )
