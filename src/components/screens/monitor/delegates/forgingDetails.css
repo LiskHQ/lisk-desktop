@@ -1,0 +1,27 @@
+.contentWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+  & div {
+    flex-grow: 1;
+  }
+
+  & h3 {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 20px;
+    margin: 0;
+    position: relative;
+
+    &::after {
+      background-color: var(--color-platinum);
+      content: '';
+      height: 1px;
+      left: 0;
+      top: 25px;
+      position: absolute;
+      right: 95px;
+    }
+  }
+}

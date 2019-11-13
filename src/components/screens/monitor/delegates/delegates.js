@@ -11,6 +11,7 @@ import MonitorHeader from '../header';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
 import styles from './delegates.css';
+import ForgingDetails from './forgingDetails';
 
 const Delegates = ({
   delegates, t, filters, applyFilters, changeSort, sort, isMediumViewPort,
@@ -114,6 +115,7 @@ const Delegates = ({
   return (
     <div>
       <MonitorHeader />
+      <ForgingDetails t={t} />
       <DelegatesTable {...{
         columns,
         delegates,
