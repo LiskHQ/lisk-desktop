@@ -86,7 +86,6 @@
     "popmotion-react": "1.1.1",
     "popsicle": "9.1.0",
     "postcss": "6.0.12",
-    "postcss-cssnext": "2.11.0",
     "private": "0.1.8",
     "prop-types": "15.7.2",
     "qrcode.react": "0.8.0",
@@ -196,6 +195,7 @@
     "postcss-mixins": "6.2.1",
     "postcss-nesting": "7.0.0",
     "postcss-partial-import": "=4.1.0",
+    "postcss-preset-env": "6.7.0",
     "postcss-reporter": "6.0.0",
     "raw-loader": "1.0.0",
     "react-addons-test-utils": "15.6.2",
@@ -263,11 +263,6 @@
       "maxSize": "1.50 MB"
     }
   ],
-  "greenkeeper": {
-    "ignore": [
-      "postcss-cssnext"
-    ]
-  },
   "engines": {
     "node": ">=v8.14.0 <=v10.0.0"
   },
