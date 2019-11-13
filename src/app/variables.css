@@ -186,5 +186,10 @@ or "warn/action" ineastd of "red/green"
 }
 
 :root [data-theme="dark"] {
-  // dark theme colors will placed here
+  --color-white: #111112;
+  --color-platinum: #4d4d50;
+  --color-white-smoke: #1c1c1c;
+  --color-maastricht-blue: #fff;
+  --dark-border-color: #373739;
+  --color-mystic: #4d4d50;
 }
