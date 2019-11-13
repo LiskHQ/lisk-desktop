@@ -9,7 +9,6 @@ const Graphic = ({
   width,
   height,
   options,
-  customOptions,
 }) => {
   const Graph = type && GRAPH_TYPES[type];
 
@@ -18,7 +17,7 @@ const Graphic = ({
       data={data}
       width={width}
       height={height}
-      options={customOptions || optionsByGraphic(type, options)}
+      options={optionsByGraphic(type, options)}
     />
   );
 };
@@ -35,7 +34,6 @@ Graphic.propTypes = {
 Graphic.defaultProps = {
   type: 'line',
   options: {},
-  customOptions: null,
 };
 
 export default Graphic;
