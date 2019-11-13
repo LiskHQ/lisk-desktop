@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './transactions.css';
+import styles from './transactionsAndBlocks.css';
 
 const Blocks = ({
   t, blocks, onSelectedRow, updateRowItemIndex, rowItemIndex,
@@ -13,7 +13,7 @@ const Blocks = ({
         <div
           key={block.id}
           data-index={i}
-          className={`${styles.transactionRow} ${rowItemIndex === i ? styles.active : ''}`}
+          className={`${styles.resultRow} ${rowItemIndex === i ? styles.active : ''}`}
           onMouseEnter={updateRowItemIndex}
           onClick={() => onSelectedRow(block.id)}
         >

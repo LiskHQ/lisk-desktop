@@ -1,6 +1,6 @@
 import React from 'react';
 import LiskAmount from '../liskAmount';
-import styles from './transactions.css';
+import styles from './transactionsAndBlocks.css';
 import transactionTypes from '../../../constants/transactionTypes';
 import Icon from '../../toolbox/icon';
 
@@ -51,7 +51,7 @@ const Transactions = ({
             <div
               key={transaction.id}
               data-index={index}
-              className={`${styles.transactionRow} ${rowItemIndex === index ? styles.active : ''} search-transaction-row`}
+              className={`${styles.resultRow} ${rowItemIndex === index ? styles.active : ''} search-transaction-row`}
               onClick={() => onSelectedRow(transaction.id)}
               onMouseEnter={updateRowItemIndex}
             >
