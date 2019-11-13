@@ -4,25 +4,45 @@ import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import styles from './forgingDetails.css';
 
-const ForgingDetails = ({ t }) => (
-  <Box>
-    <BoxHeader>
-      <h2>{t('Forging details')}</h2>
-    </BoxHeader>
-    <BoxContent>
-      <div className={styles.contentWrapper}>
-        <div>
-          <h3>{t('Total forged')}</h3>
+const ForgingDetails = ({ t, delegates }) => {
+  const lastForger = delegates.data.sort(
+    (a, b) =>
+      b.lastBlock && a.lastBlock && b.lastBlock.height - a.lastBlock.height,
+  )[0];
+  const nextForgers = delegates.data
+    .sort((a, b) => a.forgingTime - b.forgingTime)
+    .slice(0, 10);
+  return (
+    <Box>
+      <BoxHeader>
+        <h2>{t('Forging details')}</h2>
+      </BoxHeader>
+      <BoxContent>
+        <div className={styles.contentWrapper}>
+          <div>
+            <h3>{t('Total forged')}</h3>
+            <div className={styles.totalForged}>Content</div>
+          </div>
+          <div>
+            <h3>{t('Next forgers')}</h3>
+            <div className={styles.contentBody}>
+              {nextForgers.map((delegate, i) => (
+                <span key={delegate.address}>
+                  {`${delegate.username}${
+                    i !== nextForgers.length - 1 ? ', ' : ''
+                  }`}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3>{t('Last forger')}</h3>
+            <div className={styles.contentBody}>{lastForger && lastForger.username}</div>
+          </div>
         </div>
-        <div>
-          <h3>{t('Next forgers')}</h3>
-        </div>
-        <div>
-          <h3>{t('Last forger')}</h3>
-        </div>
-      </div>
-    </BoxContent>
-  </Box>
-);
+      </BoxContent>
+    </Box>
+  );
+};
 
 export default ForgingDetails;

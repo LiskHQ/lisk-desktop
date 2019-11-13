@@ -1,3 +1,6 @@
+@import '../../../../app/variables.css';
+@import '../../../../app/mixins.css';
+
 .contentWrapper {
   display: flex;
   flex-direction: row;
@@ -5,6 +8,7 @@
 
   & div {
     flex-grow: 1;
+    flex-basis: 33%;
   }
 
   & h3 {
@@ -23,5 +27,20 @@
       position: absolute;
       right: 95px;
     }
+  }
+
+  & .contentBody,
+  & .totalForged {
+    margin-top: 15px;
+  }
+
+  & .totalForged {
+    @mixin contentNormal;
+  }
+
+  & .contentBody {
+    @mixin contentNormal bold;
+
+    color: var(--color-ultramarine-blue);
   }
 }
