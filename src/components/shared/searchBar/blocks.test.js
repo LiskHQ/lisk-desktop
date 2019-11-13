@@ -16,8 +16,6 @@ describe('Blocks', () => {
       },
     ],
     onSelectedRow: jest.fn(),
-    rowItemIndex: 0,
-    updateRowItemIndex: jest.fn(),
   };
 
   beforeEach(() => {
