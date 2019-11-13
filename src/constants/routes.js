@@ -43,6 +43,7 @@ export default {
     forbiddenTokens: [tokenMap.BTC.key],
   },
   blocks: {
+    pathPrefix: '',
     path: '/monitor/blocks',
     component: Blocks,
     isPrivate: false,

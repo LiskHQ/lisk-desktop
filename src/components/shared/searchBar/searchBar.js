@@ -21,6 +21,7 @@ class SearchBar extends React.Component {
     this.onChangeSearchTextValue = this.onChangeSearchTextValue.bind(this);
     this.onSelectAccount = this.onSelectedRow.bind(this, 'accounts');
     this.onSelectTransaction = this.onSelectedRow.bind(this, 'transactions');
+    this.onSelectBlock = this.onSelectedRow.bind(this, 'blocks');
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.updateRowItemIndex = this.updateRowItemIndex.bind(this);
   }
@@ -74,12 +75,19 @@ class SearchBar extends React.Component {
   }
 
   onKeyPress() {
-    const { suggestions: { data: { addresses, delegates, transactions } } } = this.props;
+    const {
+      suggestions: {
+        data: {
+          addresses, delegates, transactions, blocks,
+        },
+      },
+    } = this.props;
     const { rowItemIndex } = this.state;
 
     if (addresses.length) this.onSelectAccount(addresses[rowItemIndex].address);
     if (delegates.length) this.onSelectAccount(delegates[rowItemIndex].account.address);
     if (transactions.length) this.onSelectTransaction(transactions[rowItemIndex].id);
+    if (blocks.length) this.onSelectTransaction(blocks[rowItemIndex].id);
   }
 
   onHandleKeyPress(e) {
@@ -118,6 +126,7 @@ class SearchBar extends React.Component {
     const isEmptyResults = !suggestions.isLoading && !suggestions.data.addresses.length
       && !suggestions.data.delegates.length
       && !suggestions.data.transactions.length
+      && !suggestions.data.blocks.length
       && searchTextValue.length
       && !isSearchTextError;
 
@@ -186,7 +195,7 @@ class SearchBar extends React.Component {
             ? (
               <Blocks
                 blocks={suggestions.data.blocks}
-                onSelectedRow={this.onSelectTransaction}
+                onSelectedRow={this.onSelectBlock}
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}
                 t={t}

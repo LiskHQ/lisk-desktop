@@ -1,23 +1,26 @@
 import React from 'react';
-import styles from './accountsAndDeletegates.css';
+import styles from './transactions.css';
 
 const Blocks = ({
   t, blocks, onSelectedRow, updateRowItemIndex, rowItemIndex,
 }) => (
-  <div>
+  <div className={styles.wrapper}>
     <header className={styles.header}>
       <label>{t('Blocks')}</label>
     </header>
-    {blocks.map((block, i) => (
-      <div
-        className={`${styles.accountRow} ${rowItemIndex === i ? styles.active : ''} delegates-row`}
-        key={block.id}
-        onMouseEnter={updateRowItemIndex}
-        onClick={() => onSelectedRow(block.account.address)}
-      >
-        {block.id}
-      </div>
-    ))}
+    <div className={styles.content}>
+      {blocks.map((block, i) => (
+        <div
+          key={block.id}
+          data-index={i}
+          className={`${styles.transactionRow} ${rowItemIndex === i ? styles.active : ''}`}
+          onMouseEnter={updateRowItemIndex}
+          onClick={() => onSelectedRow(block.id)}
+        >
+          {block.id}
+        </div>
+      ))}
+    </div>
   </div>
 );
 
