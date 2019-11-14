@@ -54,7 +54,7 @@ class App extends React.Component {
             className={mainClassNames}
             ref={(el) => { this.main = el; }}
           >
-            <section>
+            <section data-theme={routeObj.isSigninFlow ? '' : theme}>
               <FlashMessageHolder />
               <InitializationMessage history={history} />
               <div className={`${styles.mainContent} ${!routeObj.isSigninFlow ? styles.mainBox : ''}`}>
