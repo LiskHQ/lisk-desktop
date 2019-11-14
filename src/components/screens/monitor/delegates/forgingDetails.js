@@ -3,11 +3,16 @@ import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import styles from './forgingDetails.css';
+import LiskAmount from '../../../shared/liskAmount';
+import { tokenMap, initialLSKSupply } from '../../../../constants/tokens';
 
-const ForgingDetails = ({ t, delegates, sortDirection }) => {
+const ForgingDetails = ({
+  t, delegates, sortDirection, networkStatus,
+}) => {
   // When sorting changes, delegates.data is reversed
   // TODO: Check for alternative solution
   const delegatesList = sortDirection.includes('asc') ? [...delegates.data] : [...delegates.data].reverse();
+  const totalForged = networkStatus.data.supply - initialLSKSupply;
 
   const lastForger = [...delegatesList].sort(
     (a, b) =>
@@ -26,7 +31,9 @@ const ForgingDetails = ({ t, delegates, sortDirection }) => {
         <div className={styles.contentWrapper}>
           <div>
             <h3>{t('Total forged')}</h3>
-            <div className={styles.totalForged}>Content</div>
+            <div className={styles.totalForged}>
+              <LiskAmount val={totalForged} token={tokenMap.LSK.key} />
+            </div>
           </div>
           <div>
             <h3>{t('Next forgers')}</h3>

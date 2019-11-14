@@ -12,3 +12,5 @@ export const tokenMap = {
 };
 
 export const tokenKeys = Object.keys(tokenMap);
+
+export const initialLSKSupply = 10000000000000000;

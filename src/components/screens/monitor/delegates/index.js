@@ -34,6 +34,11 @@ export default compose(
           : response
       ),
     },
+    networkStatus: {
+      apiUtil: liskService.getNetworkStatus,
+      defaultData: {},
+      autoload: true,
+    },
   }),
   withResizeValues,
   withFilters(delegatesKey, defaultUrlSearchParams),
