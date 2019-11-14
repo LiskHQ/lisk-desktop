@@ -1,13 +1,21 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-
+about: Propose an idea for new improvements/features
+title: ''
+labels: ''
+assignees: ''
 ---
 
-<!--- Provide a descriptive summary in the Title above -->
-### Description of the problem
-<!-- A description of the problem you want to solve, including why you think this is a problem -->
+### Description
 
+Please describe what functionality is needed
 
-### Suggested solution
-<!--- An overview of the suggested solution -->
+### Motivation
+
+Please describe why it is needed
+
+### Acceptance Criteria
+
+Please describe the conditions which must be met for this issue to close
+
+### Additional Information

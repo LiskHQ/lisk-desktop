@@ -2,7 +2,7 @@
 
 ### What issue have I solved?
 <!--- Complementary description if needed -->
-#INSERT_ISSUE_NUMBER
+Resolves #INSERT_ISSUE_NUMBER
 
 ### How have I implemented/fixed it?
 <!--- Describe your technical implementation -->
