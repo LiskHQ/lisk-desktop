@@ -5,11 +5,11 @@ import BoxContent from '../../../toolbox/box/content';
 import styles from './forgingDetails.css';
 
 const ForgingDetails = ({ t, delegates }) => {
-  const lastForger = delegates.data.sort(
+  const lastForger = [...delegates.data].sort(
     (a, b) =>
       b.lastBlock && a.lastBlock && b.lastBlock.height - a.lastBlock.height,
   )[0];
-  const nextForgers = delegates.data
+  const nextForgers = [...delegates.data]
     .sort((a, b) => a.forgingTime - b.forgingTime)
     .slice(0, 10);
   return (
