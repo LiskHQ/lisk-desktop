@@ -1,12 +1,14 @@
 import merge from 'lodash.merge';
 import { typeLine, typeBar, typeDoughnut } from './constants';
 
+// ========================================= //
+//                                GRAPHS STYLES                                  //
+// ========================================= //
 const styles = {
   borderColor: 'rgba(15, 126, 255, 0.5)',
   whiteColor: '#ffffff',
   platinumColor: '#e1e3eb',
   slateGray: '#70778b',
-  whiteSmoke: '#f5f7fa80',
   maastrichtBlue: '#0c152e',
   ultramarineBlue: '#4070f4',
   contentFontFamily: '\'basier-circle\', sans-serif',
@@ -14,15 +16,60 @@ const styles = {
 };
 
 // ========================================= //
-//                                LINE GRAPH                                         //
+//                              BASE OPTIONS                                      //
 // ========================================= //
-const lineGraphOptions = options => merge({
+const baseOptions = {
   maintainAspectRatio: false,
 
   legend: {
     display: true,
+    position: 'left',
+    align: 'center',
+    fullWidth: true,
+    labels: {
+      boxWidth: 5,
+      fontSize: styles.fontSize,
+      fontFamily: styles.contentFontFamily,
+      usePointStyle: true,
+    },
   },
 
+  layout: {
+    padding: {
+      left: 20,
+      right: 8,
+      top: 20,
+      bottom: 8,
+    },
+  },
+
+  tooltips: {
+    enabled: true,
+    mode: 'index',
+    backgroundColor: styles.whiteColor,
+    bodyFontColor: styles.maastrichtBlue,
+    bodyFontFamily: styles.contentFontFamily,
+    bodyFontSize: 11,
+    bodyFontStyle: 'bold',
+    borderColor: styles.platinumColor,
+    borderWidth: 1,
+    titleFontColor: styles.slateGray,
+    titleFontFamily: styles.contentFontFamily,
+    titleFontSize: styles.fontSize,
+    titleFontStyle: 'semi-bold',
+    displayColors: false,
+    xPadding: 10,
+    yPadding: 10,
+    titleMarginBottom: 10,
+    cornerRadius: 3,
+    caretSize: 10,
+  },
+};
+
+// ========================================= //
+//                                LINE GRAPH                                         //
+// ========================================= //
+export const lineGraphOptions = options => merge({
   scales: {
     xAxes: [{
       display: true,
@@ -51,15 +98,6 @@ const lineGraphOptions = options => merge({
     }],
   },
 
-  layout: {
-    padding: {
-      left: 20,
-      right: 8,
-      top: 20,
-      bottom: 8,
-    },
-  },
-
   elements: {
     point: {
       radius: 2,
@@ -70,48 +108,12 @@ const lineGraphOptions = options => merge({
       tension: 0,
     },
   },
-
-  tooltips: {
-    enabled: true,
-    mode: 'index',
-    backgroundColor: styles.whiteColor,
-    bodyFontColor: styles.maastrichtBlue,
-    bodyFontFamily: styles.contentFontFamily,
-    bodyFontSize: 13,
-    bodyFontStyle: 'bold',
-    borderColor: styles.platinumColor,
-    borderWidth: 1,
-    titleFontColor: styles.slateGray,
-    titleFontFamily: styles.contentFontFamily,
-    titleFontSize: 11,
-    titleFontStyle: 'semi-bold',
-    displayColors: false,
-    xPadding: 20,
-    yPadding: 20,
-    titleMarginBottom: 12,
-    cornerRadius: 0,
-    caretSize: 15,
-  },
-}, options);
+}, baseOptions, options);
 
 // ========================================= //
 //                                BAR GRAPH                                         //
 // ========================================= //
-const barGraphOptions = options => merge({
-  maintainAspectRatio: false,
-
-  legend: {
-    display: true,
-    position: 'left',
-    align: 'left',
-    fullWidth: true,
-    labels: {
-      boxWidth: 2,
-      fontSize: styles.fontSize,
-      fontFamily: styles.contentFontFamily,
-    },
-  },
-
+export const barGraphOptions = options => merge({
   scales: {
     xAxes: [{
       display: true,
@@ -147,15 +149,6 @@ const barGraphOptions = options => merge({
     }],
   },
 
-  layout: {
-    padding: {
-      left: 20,
-      right: 8,
-      top: 20,
-      bottom: 8,
-    },
-  },
-
   elements: {
     rectangle: {
       backgroundColor: styles.ultramarineBlue,
@@ -164,91 +157,24 @@ const barGraphOptions = options => merge({
       borderSkipped: 'bottom',
     },
   },
-
-  tooltips: {
-    enabled: true,
-    mode: 'index',
-    backgroundColor: styles.whiteColor,
-    bodyFontColor: styles.maastrichtBlue,
-    bodyFontFamily: styles.contentFontFamily,
-    bodyFontSize: 11,
-    bodyFontStyle: 'bold',
-    borderColor: styles.platinumColor,
-    borderWidth: 1,
-    titleFontColor: styles.slateGray,
-    titleFontFamily: styles.contentFontFamily,
-    titleFontSize: 11,
-    titleFontStyle: 'semi-bold',
-    displayColors: false,
-    xPadding: 10,
-    yPadding: 10,
-    titleMarginBottom: 10,
-    cornerRadius: 3,
-    caretSize: 10,
-  },
-}, options);
+}, baseOptions, options);
 
 
 // ========================================= //
 //                            DOUGGNUT GRAPH                                 //
 // ========================================= //
-const doughnutGraphOptions = options => merge({
-  maintainAspectRatio: false,
-
+export const doughnutGraphOptions = options => merge({
   cutoutPercentage: 60,
-
-  legend: {
-    display: true,
-    position: 'left',
-    align: 'center',
-    fullWidth: true,
-    labels: {
-      boxWidth: 9,
-      fontSize: styles.fontSize,
-      fontFamily: styles.contentFontFamily,
-    },
-  },
-
-  layout: {
-    padding: {
-      left: 20,
-      right: 8,
-      top: 20,
-      bottom: 8,
-    },
-  },
 
   elements: {
     arc: {
-      backgroundColor: '#454545',
+      backgroundColor: styles.ultramarineBlue,
       borderAlign: 'center',
-      borderColor: '#fff',
+      borderColor: styles.whiteColor,
       borderWidth: 1,
     },
   },
-
-  tooltips: {
-    enabled: true,
-    mode: 'index',
-    backgroundColor: styles.whiteColor,
-    bodyFontColor: styles.maastrichtBlue,
-    bodyFontFamily: styles.contentFontFamily,
-    bodyFontSize: 11,
-    bodyFontStyle: 'bold',
-    borderColor: styles.platinumColor,
-    borderWidth: 1,
-    titleFontColor: styles.slateGray,
-    titleFontFamily: styles.contentFontFamily,
-    titleFontSize: 11,
-    titleFontStyle: 'semi-bold',
-    displayColors: false,
-    xPadding: 10,
-    yPadding: 10,
-    titleMarginBottom: 10,
-    cornerRadius: 3,
-    caretSize: 10,
-  },
-}, options);
+}, baseOptions, options);
 
 
 // ========================================= //
@@ -260,10 +186,12 @@ export const optionsByGraphic = (type, options) => {
       return lineGraphOptions(options);
     }
 
+    // istanbul ignore next
     case typeBar: {
       return barGraphOptions(options);
     }
 
+    // istanbul ignore next
     case typeDoughnut: {
       return doughnutGraphOptions(options);
     }
