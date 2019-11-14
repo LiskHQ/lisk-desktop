@@ -115,7 +115,7 @@ const Delegates = ({
   return (
     <div>
       <MonitorHeader />
-      <ForgingDetails t={t} delegates={delegates} />
+      <ForgingDetails t={t} sortDirection={sort} delegates={delegates} />
       <DelegatesTable {...{
         columns,
         delegates,

@@ -4,12 +4,17 @@ import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import styles from './forgingDetails.css';
 
-const ForgingDetails = ({ t, delegates }) => {
-  const lastForger = [...delegates.data].sort(
+const ForgingDetails = ({ t, delegates, sortDirection }) => {
+  // When sorting changes, delegates.data is reversed
+  // TODO: Check for alternative solution
+  const delegatesList = sortDirection.includes('asc') ? [...delegates.data] : [...delegates.data].reverse();
+
+  const lastForger = [...delegatesList].sort(
     (a, b) =>
       b.lastBlock && a.lastBlock && b.lastBlock.height - a.lastBlock.height,
   )[0];
-  const nextForgers = [...delegates.data]
+
+  const nextForgers = [...delegatesList]
     .sort((a, b) => a.forgingTime - b.forgingTime)
     .slice(0, 10);
   return (
