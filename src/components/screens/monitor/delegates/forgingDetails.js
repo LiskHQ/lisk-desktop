@@ -9,9 +9,7 @@ import { tokenMap, initialLSKSupply } from '../../../../constants/tokens';
 const ForgingDetails = ({
   t, delegates, sortDirection, networkStatus,
 }) => {
-  // When sorting changes, delegates.data is reversed
-  // TODO: Check for alternative solution
-  const delegatesList = sortDirection.includes('asc') ? [...delegates.data] : [...delegates.data].reverse();
+  const delegatesList = sortDirection && sortDirection.includes('asc') ? [...delegates.data] : [...delegates.data].reverse();
   const totalForged = networkStatus.data.supply - initialLSKSupply;
 
   const lastForger = [...delegatesList].sort(
@@ -20,8 +18,9 @@ const ForgingDetails = ({
   )[0];
 
   const nextForgers = [...delegatesList]
-    .sort((a, b) => a.forgingTime - b.forgingTime)
-    .slice(0, 10);
+    .filter(d => d.forgingTime)
+    .slice(0, 10)
+    .sort((a, b) => a.forgingTime - b.forgingTime);
   return (
     <Box>
       <BoxHeader>
