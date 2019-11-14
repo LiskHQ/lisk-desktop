@@ -108,6 +108,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
       Other Colors
   *************************/
+  --color-budy-bg: var(--color-mystic);
   --light-border-color: rgba(255, 255, 255, 0.24);
   --overlay-color: rgba(255, 255, 255, 0.8);
   --dark-border-color: rgba(0, 0, 0, 0.08);
@@ -192,4 +193,5 @@ or "warn/action" ineastd of "red/green"
   --color-maastricht-blue: #fff;
   --dark-border-color: #373739;
   --color-mystic: #4d4d50;
+  --color-budy-bg: #000;
 }
