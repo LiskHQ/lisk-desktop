@@ -1,4 +1,5 @@
 import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -27,14 +28,14 @@ const ForgingDetails = ({
         <h2>{t('Forging details')}</h2>
       </BoxHeader>
       <BoxContent>
-        <div className={styles.contentWrapper}>
-          <div>
+        <div className={`${styles.contentWrapper} ${grid.row}`}>
+          <div className={grid['col-sm-4']}>
             <h3>{t('Total forged')}</h3>
             <div className={styles.totalForged}>
               <LiskAmount className="total-forged" val={totalForged} token={tokenMap.LSK.key} />
             </div>
           </div>
-          <div>
+          <div className={grid['col-sm-4']}>
             <h3>{t('Next forgers')}</h3>
             <div className={styles.contentBody}>
               {nextForgers.map((delegate, i) => (
@@ -46,7 +47,7 @@ const ForgingDetails = ({
               ))}
             </div>
           </div>
-          <div>
+          <div className={grid['col-sm-4']}>
             <h3>{t('Last forger')}</h3>
             <div className={styles.contentBody}>{lastForger && lastForger.username}</div>
           </div>
