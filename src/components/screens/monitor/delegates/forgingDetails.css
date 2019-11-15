@@ -3,7 +3,7 @@
 
 .contentWrapper {
   & h3 {
-    @mixin contentNormal bold
+    @mixin contentNormal bold;
 
     margin: 0;
     position: relative;

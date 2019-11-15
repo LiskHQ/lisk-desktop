@@ -1,11 +1,13 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { Link } from 'react-router-dom';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import styles from './forgingDetails.css';
 import LiskAmount from '../../../shared/liskAmount';
 import { tokenMap, initialLSKSupply } from '../../../../constants/tokens';
+import routes from '../../../../constants/routes';
 
 const ForgingDetails = ({
   t, delegates, sortDirection, networkStatus,
@@ -39,17 +41,22 @@ const ForgingDetails = ({
             <h3>{t('Next forgers')}</h3>
             <div className={styles.contentBody}>
               {nextForgers.map((delegate, i) => (
-                <span className="next-forger" key={delegate.address}>
-                  {`${delegate.username}${
-                    i !== nextForgers.length - 1 ? ', ' : ''
-                  }`}
+                <span key={delegate.address}>
+                  <Link className="next-forger" to={`${routes.accounts.path}/${delegate.address}`}>
+                    {delegate.username}
+                  </Link>
+                  {i !== nextForgers.length - 1 ? ', ' : ' '}
                 </span>
               ))}
             </div>
           </div>
           <div className={grid['col-sm-4']}>
             <h3>{t('Last forger')}</h3>
-            <div className={styles.contentBody}>{lastForger && lastForger.username}</div>
+            {lastForger && (
+              <div className={styles.contentBody}>
+                <Link to={`${routes.accounts.path}/${lastForger.address}`}>{lastForger.username}</Link>
+              </div>
+            )}
           </div>
         </div>
       </BoxContent>
