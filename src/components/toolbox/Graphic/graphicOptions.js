@@ -27,7 +27,7 @@ const baseOptions = {
     align: 'center',
     fullWidth: true,
     labels: {
-      boxWidth: 5,
+      boxWidth: 8,
       fontSize: styles.fontSize,
       fontFamily: styles.contentFontFamily,
       usePointStyle: true,
