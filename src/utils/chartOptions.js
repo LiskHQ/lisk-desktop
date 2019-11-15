@@ -1,10 +1,10 @@
 import merge from 'lodash.merge';
-import { typeLine, typeBar, typeDoughnut } from './constants';
+import { typeLine, typeBar, typeDoughnut } from '../constants/chartConstants';
 
-// ========================================= //
-//                                GRAPHS STYLES                                  //
-// ========================================= //
-const styles = {
+/**
+ * Base css styles for the charts
+ */
+export const styles = {
   borderColor: 'rgba(15, 126, 255, 0.5)',
   whiteColor: '#ffffff',
   platinumColor: '#e1e3eb',
@@ -15,9 +15,11 @@ const styles = {
   fontSize: 13,
 };
 
-// ========================================= //
-//                              BASE OPTIONS                                      //
-// ========================================= //
+/**
+ * Base chart options.
+ * These options are in all the chart settings
+ * that's why are pase of the base options settings
+ */
 const baseOptions = {
   maintainAspectRatio: false,
 
@@ -37,9 +39,9 @@ const baseOptions = {
   layout: {
     padding: {
       left: 20,
-      right: 8,
+      right: 20,
       top: 20,
-      bottom: 8,
+      bottom: 10,
     },
   },
 
@@ -66,16 +68,17 @@ const baseOptions = {
   },
 };
 
-// ========================================= //
-//                                LINE GRAPH                                         //
-// ========================================= //
+/**
+ * Options ONLY for Line chart
+ * @param {object} options - More options that can be pass to the chart
+ */
 export const lineGraphOptions = options => merge({
   scales: {
     xAxes: [{
       display: true,
       distribution: 'linear',
       gridLines: {
-        display: true,
+        display: false,
       },
       ticks: {
         fontColor: styles.slateGray,
@@ -88,6 +91,9 @@ export const lineGraphOptions = options => merge({
     yAxes: [{
       position: 'left',
       type: 'linear',
+      gridLines: {
+        display: true,
+      },
       ticks: {
         display: true,
         maxTicksLimit: 5,
@@ -110,9 +116,10 @@ export const lineGraphOptions = options => merge({
   },
 }, baseOptions, options);
 
-// ========================================= //
-//                                BAR GRAPH                                         //
-// ========================================= //
+/**
+ * Options ONLY for Bar chart
+ * @param {object} options - More options that can be pass to the chart
+ */
 export const barGraphOptions = options => merge({
   scales: {
     xAxes: [{
@@ -160,9 +167,10 @@ export const barGraphOptions = options => merge({
 }, baseOptions, options);
 
 
-// ========================================= //
-//                            DOUGNUT GRAPH                                   //
-// ========================================= //
+/**
+ * Options ONLY for Doughnut chart
+ * @param {object} options - More options that can be pass to the chart
+ */
 export const doughnutGraphOptions = options => merge({
   cutoutPercentage: 60,
 
@@ -177,9 +185,12 @@ export const doughnutGraphOptions = options => merge({
 }, baseOptions, options);
 
 
-// ========================================= //
-//                            GRAPHIC OPTIONS                                   //
-// ========================================= //
+/**
+ * Function that return the corresponding options object
+ * based on the selected chart type.
+ * @param {string} type - can be line, bar or doughnut
+ * @param {object} options - More options that can be pass to the chart
+ */
 export const optionsByGraphic = (type, options) => {
   switch (type) {
     case typeLine: {

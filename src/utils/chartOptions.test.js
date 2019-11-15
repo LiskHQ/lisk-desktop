@@ -3,7 +3,7 @@ import {
   barGraphOptions,
   doughnutGraphOptions,
   optionsByGraphic,
-} from './graphicOptions';
+} from './chartOptions';
 
 describe('Graphic Options for Charts', () => {
   const extaOptions = {

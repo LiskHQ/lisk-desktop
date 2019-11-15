@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GRAPH_TYPES } from './constants';
-import { optionsByGraphic } from './graphicOptions';
+import { GRAPH_TYPES } from '../../../constants/chartConstants';
+import { optionsByGraphic } from '../../../utils/chartOptions';
 
 const Chart = ({
   type,
