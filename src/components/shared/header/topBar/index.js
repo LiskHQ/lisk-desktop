@@ -7,7 +7,7 @@ import { settingsUpdated } from '../../../../actions/settings';
 import { networkSet } from '../../../../actions/network';
 import accountConfig from '../../../../constants/account';
 import TopBar from './topBar';
-import withTheme from '../../../../utils/withTheme';
+import withTheme from '../../../../utils/theme';
 
 const mapStateToProps = state => ({
   account: state.account,
