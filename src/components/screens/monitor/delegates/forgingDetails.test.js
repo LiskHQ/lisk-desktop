@@ -5,7 +5,6 @@ import ForgingDetails from './forgingDetails';
 
 describe('Forging Details', () => {
   let wrapper;
-  const setup = properties => mount(<ForgingDetails {...properties} />);
   let props = {
     t: key => key,
     sortDirection: 'asc',
@@ -31,7 +30,7 @@ describe('Forging Details', () => {
   };
 
   beforeEach(() => {
-    wrapper = setup(props);
+    wrapper = mount(<ForgingDetails {...props} />);
   });
 
   it('renders a list of sorted forgers', () => {
@@ -43,17 +42,12 @@ describe('Forging Details', () => {
       ...props,
       sorDirection: 'desc',
     };
-    wrapper = setup(props);
+    wrapper = mount(<ForgingDetails {...props} />);
 
     expect(wrapper.find('.next-forger').at(0)).toIncludeText('genesis_30');
   });
 
   it('shows the list of total forged', () => {
-    props = {
-      ...props,
-      sorDirection: 'desc',
-    };
-    wrapper = setup(props);
     expect(wrapper.find('.total-forged')).toIncludeText('89,900,000,000');
   });
 });
