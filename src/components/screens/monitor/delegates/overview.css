@@ -1,0 +1,17 @@
+@import '../../../../app/variables.css';
+
+.container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.graphContainer {
+  position: relative;
+  flex-grow: 1;
+  height: 293px;
+}
