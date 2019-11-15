@@ -3,9 +3,8 @@
 
 .contentWrapper {
   & h3 {
-    font-weight: 600;
-    font-size: 13px;
-    line-height: 20px;
+    @mixin contentNormal bold
+
     margin: 0;
     position: relative;
 
