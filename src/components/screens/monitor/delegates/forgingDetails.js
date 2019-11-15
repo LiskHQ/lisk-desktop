@@ -10,7 +10,7 @@ const ForgingDetails = ({
   t, delegates, sortDirection, networkStatus,
 }) => {
   const delegatesList = sortDirection && sortDirection.includes('asc') ? [...delegates.data] : [...delegates.data].reverse();
-  const totalForged = networkStatus.data.supply - initialLSKSupply;
+  const totalForged = networkStatus && networkStatus.data.supply - initialLSKSupply;
 
   const lastForger = [...delegatesList].sort(
     (a, b) =>
@@ -31,14 +31,14 @@ const ForgingDetails = ({
           <div>
             <h3>{t('Total forged')}</h3>
             <div className={styles.totalForged}>
-              <LiskAmount val={totalForged} token={tokenMap.LSK.key} />
+              <LiskAmount className="total-forged" val={totalForged} token={tokenMap.LSK.key} />
             </div>
           </div>
           <div>
             <h3>{t('Next forgers')}</h3>
             <div className={styles.contentBody}>
               {nextForgers.map((delegate, i) => (
-                <span key={delegate.address}>
+                <span className="next-forger" key={delegate.address}>
                   {`${delegate.username}${
                     i !== nextForgers.length - 1 ? ', ' : ''
                   }`}

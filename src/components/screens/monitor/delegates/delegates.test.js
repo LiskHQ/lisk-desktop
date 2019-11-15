@@ -53,7 +53,7 @@ describe('Delegates monitor page', () => {
   });
 
   it('renders a page with header', () => {
-    expect(wrapper.find('Box header')).toIncludeText('Active delegates');
+    expect(wrapper.find('Box header').at(1)).toIncludeText('Active delegates');
   });
 
   it('renders table with delegates', () => {
