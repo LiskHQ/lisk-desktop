@@ -97,8 +97,8 @@ export const graphOptions = ({
   elements: {
     point: {
       radius: 2,
-      hoverRadius: 4,
-      hitRadius: 10,
+      hoverRadius: 6,
+      hitRadius: 20,
     },
     line: {
       tension: 0,
@@ -132,8 +132,8 @@ export const graphOptions = ({
     xPadding: 20,
     yPadding: 20,
     titleMarginBottom: 12,
-    cornerRadius: 0,
-    caretSize: 15,
+    cornerRadius: 6,
+    caretSize: 10,
   },
 });
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { GRAPH_TYPES } from './constants';
 import { optionsByGraphic } from './graphicOptions';
 
-const Graphic = ({
+const Chart = ({
   type,
   data,
   width,
@@ -22,7 +22,7 @@ const Graphic = ({
   );
 };
 
-Graphic.propTypes = {
+Chart.propTypes = {
   type: PropTypes.string,
   data: PropTypes.object.isRequired,
   width: PropTypes.number,
@@ -31,9 +31,9 @@ Graphic.propTypes = {
   customOptions: PropTypes.object,
 };
 
-Graphic.defaultProps = {
+Chart.defaultProps = {
   type: 'line',
   options: {},
 };
 
-export default Graphic;
+export default Chart;

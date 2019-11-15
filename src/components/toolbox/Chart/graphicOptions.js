@@ -27,7 +27,7 @@ const baseOptions = {
     align: 'center',
     fullWidth: true,
     labels: {
-      boxWidth: 5,
+      boxWidth: 8,
       fontSize: styles.fontSize,
       fontFamily: styles.contentFontFamily,
       usePointStyle: true,
@@ -100,7 +100,7 @@ export const lineGraphOptions = options => merge({
 
   elements: {
     point: {
-      radius: 2,
+      radius: 5,
       hoverRadius: 4,
       hitRadius: 10,
     },
@@ -161,7 +161,7 @@ export const barGraphOptions = options => merge({
 
 
 // ========================================= //
-//                            DOUGGNUT GRAPH                                 //
+//                            DOUGNUT GRAPH                                   //
 // ========================================= //
 export const doughnutGraphOptions = options => merge({
   cutoutPercentage: 60,

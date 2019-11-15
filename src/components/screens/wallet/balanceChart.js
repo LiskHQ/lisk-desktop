@@ -6,7 +6,7 @@ import BoxEmptyState from '../../toolbox/box/emptyState';
 import * as ChartUtils from '../../../utils/balanceChart';
 import { tokenMap } from '../../../constants/tokens';
 import i18n from '../../../i18n';
-import Graphic from '../../toolbox/Graphic';
+import Chart from '../../toolbox/Chart';
 import styles from './balanceChart.css';
 
 const BalanceGraph = ({
@@ -37,7 +37,7 @@ const BalanceGraph = ({
         <div className={`${styles.graphHolder}`}>
           { transactions.length
             ? (
-              <Graphic
+              <Chart
                 data={data}
                 options={options}
                 type="line"
