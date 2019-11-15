@@ -10,7 +10,19 @@ import DelegatesTable from '../../../shared/delegatesTable';
 import MonitorHeader from '../header';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
+import Overview from './overview';
 import styles from './delegates.css';
+
+const dataDoug = {
+  labels: ['Standby delegates', 'Active delegates'],
+  datasets: [
+    {
+      label: 'delegates',
+      data: [1700, 101],
+      backgroundColor: ['#68d284', '#4873ec'],
+    },
+  ],
+};
 
 const Delegates = ({
   delegates, t, filters, applyFilters, changeSort, sort, isMediumViewPort,
@@ -114,6 +126,12 @@ const Delegates = ({
   return (
     <div>
       <MonitorHeader />
+      <Overview
+        t={t}
+        delegateStatusData={dataDoug}
+        delegateForgingData={{}}
+        delegateRegisteredData={{}}
+      />
       <DelegatesTable {...{
         columns,
         delegates,
