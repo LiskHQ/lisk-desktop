@@ -22,8 +22,9 @@ const ForgingDetails = ({
 
   const nextForgers = [...delegatesList]
     .filter(d => d.forgingTime)
-    .slice(0, 10)
-    .sort((a, b) => a.forgingTime - b.forgingTime);
+    .sort((a, b) => a.forgingTime - b.forgingTime)
+    .slice(0, 10);
+
   return (
     <Box>
       <BoxHeader>
