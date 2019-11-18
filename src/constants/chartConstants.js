@@ -25,10 +25,10 @@ export const chartStyles = {
   fontSize: 13,
 };
 
-export const doughnutColorPallete = [
+export const colorPallete = [
   chartStyles.ufoGreen,
-  chartStyles.maastrichtBlue,
   chartStyles.ultramarineBlue,
+  chartStyles.maastrichtBlue,
   chartStyles.linthPink,
   chartStyles.darkBlue,
 ];

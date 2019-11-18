@@ -77,25 +77,25 @@ describe('Chart Setting', () => {
         text: 'Custom Chart Title',
       },
     };
-  
+
     it('Options for LINE chart', () => {
       const options = optionsByChart('line', extaOptions);
       const lineOptions = lineChartOptions(extaOptions);
       expect(options).toEqual(lineOptions);
     });
-  
+
     it('Options for BAR chart', () => {
       const options = optionsByChart('bar', extaOptions);
       const barOptions = barChartOptions(extaOptions);
       expect(options).toEqual(barOptions);
     });
-  
+
     it('Options for DOUGGNUT chart', () => {
       const options = optionsByChart('doughnut', extaOptions);
       const doughnutOptions = doughnutChartOptions(extaOptions);
       expect(options).toEqual(doughnutOptions);
     });
-  
+
     it('invlid options', () => {
       const options = optionsByChart('scatter', extaOptions);
       expect(options).toEqual([]);

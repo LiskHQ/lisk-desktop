@@ -4,7 +4,7 @@ import {
   typeBar,
   typeDoughnut,
   chartStyles,
-  doughnutColorPallete,
+  colorPallete,
 } from '../constants/chartConstants';
 
 /**
@@ -183,18 +183,16 @@ export const doughnutChartOptions = options => merge({
  * @param {object} data - More data that can be pass to the chart
  */
 export const lineChartData = data => merge({
-  datasets: [
-    {
-      backgroundColor: chartStyles.transparent,
-      borderColor: chartStyles.borderColor,
-      pointBorderColor: chartStyles.borderColor,
-      pointBackgroundColor: chartStyles.whiteColor,
-      pointHoverBackgroundColor: chartStyles.whiteColor,
-      pointHoverBorderColor: chartStyles.ultramarineBlue,
-      pointHoverBorderWidth: 4,
-      borderWidth: 2,
-    },
-  ],
+  datasets: (data.datasets || []).map((_, index) => ({
+    backgroundColor: chartStyles.transparent,
+    borderColor: colorPallete[index],
+    pointBorderColor: colorPallete[index],
+    pointBackgroundColor: chartStyles.whiteColor,
+    pointHoverBackgroundColor: chartStyles.whiteColor,
+    pointHoverBorderColor: colorPallete[index],
+    pointHoverBorderWidth: 4,
+    borderWidth: 2,
+  })),
 }, data);
 
 
@@ -203,24 +201,15 @@ export const lineChartData = data => merge({
  * @param {object} data - More data that can be pass to the chart
  */
 export const barChartData = data => merge({
-  datasets: [
-    {
-      barPercentage: 1,
-      categoryPercentage: 0.5,
-      barThickness: 'flex',
-      maxBarThickness: 14,
-      minBarLength: 0,
-    },
-    {
-      barPercentage: 1,
-      categoryPercentage: 0.5,
-      barThickness: 'flex',
-      maxBarThickness: 14,
-      minBarLength: 0,
-      stack: 'dob',
-      backgroundColor: chartStyles.ufoGreen,
-    },
-  ],
+  datasets: (data.datasets || []).map((_, index) => ({
+    barPercentage: 1,
+    categoryPercentage: 0.5,
+    barThickness: 'flex',
+    maxBarThickness: 14,
+    minBarLength: 1,
+    stack: index,
+    backgroundColor: colorPallete[index],
+  })),
 }, data);
 
 
@@ -231,7 +220,7 @@ export const barChartData = data => merge({
 export const doughnutChartData = data => merge({
   datasets: [
     {
-      backgroundColor: doughnutColorPallete,
+      backgroundColor: colorPallete,
     },
   ],
 }, data);
