@@ -1,5 +1,3 @@
-@import '../../../app/variables.css';
-
 .wrapper {
   display: flex;
   height: calc(100% - 12px);

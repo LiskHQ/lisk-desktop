@@ -1,5 +1,3 @@
-@import './../../../app/variables.css';
-
 .loadingIcon {
   animation: spin var(--animation-speed-slow) linear infinite;
   width: 48px;
