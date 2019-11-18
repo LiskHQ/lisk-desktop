@@ -2,6 +2,10 @@
 @import '../../../../app/mixins.css';
 
 .contentWrapper {
+  & > div {
+    padding: 0 20px;
+  }
+
   & h3 {
     @mixin contentNormal bold;
 
@@ -15,7 +19,7 @@
       left: 0;
       top: 25px;
       position: absolute;
-      right: 95px;
+      width: 100%;
     }
   }
 
