@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import moment from 'moment';
 import delegates from '../../../../../test/constants/delegates';
 import ForgingDetails from './forgingDetails';
 
@@ -17,8 +18,8 @@ describe('Forging Details', () => {
       isLoading: true,
       data: delegates.map((delegate, i) => ({
         ...delegate,
-        forgingTime: i,
-      })),
+        forgingTime: moment().add(i * 10, 'seconds'),
+      })).sort(() => Math.random() - 0.5),
       loadData: jest.fn(),
       clearData: jest.fn(),
       urlSearchParams: {},
@@ -34,7 +35,7 @@ describe('Forging Details', () => {
   });
 
   it('renders a list of sorted forgers', () => {
-    expect(wrapper.find('.next-forger').at(0)).toIncludeText('genesis_30');
+    expect(wrapper.find('.next-forger').at(0)).toHaveText('genesis_3');
   });
 
   it('renders the list in the same order independently of the sort direction', () => {
@@ -44,7 +45,7 @@ describe('Forging Details', () => {
     };
     wrapper = mount(<ForgingDetails {...props} />);
 
-    expect(wrapper.find('.next-forger').at(0)).toIncludeText('genesis_30');
+    expect(wrapper.find('.next-forger').at(0)).toHaveText('genesis_3');
   });
 
   it('shows the list of total forged', () => {
