@@ -34,9 +34,11 @@ const ForgingDetails = ({
         <div className={`${styles.contentWrapper} ${grid.row}`}>
           <div className={grid['col-sm-4']}>
             <h3>{t('Total forged')}</h3>
-            <div className={styles.totalForged}>
-              <LiskAmount className="total-forged" val={totalForged} token={tokenMap.LSK.key} />
-            </div>
+            {!!totalForged && (
+              <div className={styles.totalForged}>
+                <LiskAmount className="total-forged" val={totalForged} token={tokenMap.LSK.key} />
+              </div>
+            )}
           </div>
           <div className={grid['col-sm-4']}>
             <h3>{t('Next forgers')}</h3>
