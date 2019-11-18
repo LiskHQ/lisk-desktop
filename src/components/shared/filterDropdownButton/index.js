@@ -135,7 +135,7 @@ class FilterDropdownButton extends React.Component {
     const { t, fields } = this.props;
     const { areFiltersExtended } = this.state;
 
-    return (
+    return fields.length === 0 ? null : (
       <DropdownButton
         buttonClassName={`${styles.filterTransactionsButton} filterTransactions filter`}
         buttonLabel={(
