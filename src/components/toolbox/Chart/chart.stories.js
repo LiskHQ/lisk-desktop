@@ -4,7 +4,6 @@ import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWr
 import Box from '../box';
 import BoxHeader from '../box/header';
 import Chart from './index';
-import { styles } from '../../../utils/chartOptions';
 import style from './chart.stories.css';
 
 storiesOf('Toolbox', module)
@@ -21,14 +20,6 @@ storiesOf('Toolbox', module)
                 {
                   label: '123456789L',
                   data: [35, 55, 23, 67, 98, 46, 134, 66, 70, 33, 100, 120],
-                  backgroundColor: styles.whiteSmoke,
-                  borderColor: styles.borderColor,
-                  pointBorderColor: styles.borderColor,
-                  pointBackgroundColor: styles.whiteColor,
-                  pointHoverBackgroundColor: styles.whiteColor,
-                  pointHoverBorderColor: styles.ultramarineBlue,
-                  pointHoverBorderWidth: 4,
-                  borderWidth: 2,
                 },
               ],
             }}
@@ -47,22 +38,10 @@ storiesOf('Toolbox', module)
                 {
                   label: '123456789L',
                   data: [35, 55, 23, 67, 98, 46, 134, 66, 70, 33, 100, 120],
-                  barPercentage: 1,
-                  categoryPercentage: 0.5,
-                  barThickness: 'flex',
-                  maxBarThickness: 14,
-                  minBarLength: 0,
                 },
                 {
                   label: '987654321L',
                   data: [10, 27, 30, 30, 80, 20, 100, 45, 138, 77, 88, 121],
-                  barPercentage: 1,
-                  categoryPercentage: 0.5,
-                  barThickness: 'flex',
-                  maxBarThickness: 14,
-                  minBarLength: 0,
-                  stack: 'dob',
-                  backgroundColor: '#2bd67b',
                 },
               ],
             }}
@@ -81,12 +60,6 @@ storiesOf('Toolbox', module)
                 {
                   label: 'ABC',
                   data: [100, 634, 329, 98],
-                  backgroundColor: [
-                    '#68d284',
-                    '#4873ec',
-                    '#2c4a93',
-                    '#0d152c',
-                  ],
                 },
               ],
             }}
