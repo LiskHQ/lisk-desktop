@@ -93,9 +93,6 @@ pipeline {
 						}
 					},
 					"cypress": {
-						githubNotify context: 'Jenkins e2e tests',
-							     description: 'e2e tests in progress...',
-							     status: 'PENDING'
 						dir('lisk') {
 							checkout([$class: 'GitSCM',
 							          branches: [[name: "v${env.LISK_CORE_VERSION}" ]],
@@ -105,9 +102,6 @@ pipeline {
 						withCredentials([string(credentialsId: 'lisk-hub-cypress-record-key', variable: 'CYPRESS_RECORD_KEY')]) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
-									githubNotify context: 'Jenkins e2e tests',
-										     description: 'e2e tests are running',
-										     status: 'PENDING'
 									nvm(getNodejsVersion()) {
 										sh '''#!/bin/bash -xe
 										export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
@@ -141,20 +135,15 @@ EOF
 										set -o pipefail
 										npm run cypress:run |tee cypress.log
 										ret=$?
-										if [ $ret -eq 0 ]; then
-										  grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
-										  echo $ret >.cypress_status
-										else
+										if [ $ret -ne 0 ]; then
 										  FAILED_TESTS="$( awk '/Spec/{f=1}f' cypress.log |grep --only-matching '✖ .*.feature' |awk '{ print "test/cypress/features/"$2 }' |xargs| tr -s ' ' ',' )"
-										  cd $WORKSPACE/$BRANCH_NAME
-										  make coldstart
-										  export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
-										  sleep 10
-										  cd -
-										  npm run cypress:run -- --record --spec $FAILED_TESTS |tee cypress.log
-										  ret=$?
-										  grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
-										  echo $ret >.cypress_status
+                                          cd $WORKSPACE/$BRANCH_NAME
+                                          make coldstart
+                                          export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
+                                          sleep 10
+                                          cd -
+                                          npm run cypress:run -- --record --spec $FAILED_TESTS |tee cypress.log
+                                          ret=$?
 										fi
 										exit $ret
 										'''
@@ -198,21 +187,6 @@ EOF
 				  onlyStable: false,
 				  sourceEncoding: 'ASCII'
 			junit 'coverage/jest/junit.xml'
-			script {
-				catchError {
-					if(readFile(".cypress_status").trim() == '0'){
-					    status = 'SUCCESS'
-					    adjective = 'passed'
-					} else {
-					    status = 'FAILURE'
-					    adjective = 'failed'
-					}
-					githubNotify context: 'Jenkins e2e tests',
-						     description: 'e2e tests ' + adjective,
-						     status: status,
-						     targetUrl: readFile(".cypress_url").trim()
-				}
-			}
 		}
 		fixed {
 			script {
