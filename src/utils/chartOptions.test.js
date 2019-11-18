@@ -1,3 +1,4 @@
+import merge from 'lodash.merge';
 import {
   lineChartOptions,
   barChartOptions,
@@ -63,11 +64,6 @@ describe('Chart Setting', () => {
       const doughnutOptions = doughnutChartData(dougjnutData);
       expect(options).toEqual(doughnutOptions);
     });
-
-    it('invlid data', () => {
-      const options = dataByChart('scatter', lineData);
-      expect(options).toEqual([]);
-    });
   });
 
   describe('Options', () => {
@@ -80,25 +76,17 @@ describe('Chart Setting', () => {
 
     it('Options for LINE chart', () => {
       const options = optionsByChart('line', extaOptions);
-      const lineOptions = lineChartOptions(extaOptions);
-      expect(options).toEqual(lineOptions);
+      expect(options).toEqual(merge(lineChartOptions, extaOptions));
     });
 
     it('Options for BAR chart', () => {
       const options = optionsByChart('bar', extaOptions);
-      const barOptions = barChartOptions(extaOptions);
-      expect(options).toEqual(barOptions);
+      expect(options).toEqual(merge(barChartOptions, extaOptions));
     });
 
     it('Options for DOUGGNUT chart', () => {
       const options = optionsByChart('doughnut', extaOptions);
-      const doughnutOptions = doughnutChartOptions(extaOptions);
-      expect(options).toEqual(doughnutOptions);
-    });
-
-    it('invlid options', () => {
-      const options = optionsByChart('scatter', extaOptions);
-      expect(options).toEqual([]);
+      expect(options).toEqual(merge(doughnutChartOptions, extaOptions));
     });
   });
 });

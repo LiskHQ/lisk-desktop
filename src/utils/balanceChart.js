@@ -98,7 +98,7 @@ export const graphOptions = ({
   elements: {
     point: {
       radius: 2,
-      hoverRadius: 6,
+      hoverRadius: 2,
       hitRadius: 20,
     },
     line: {

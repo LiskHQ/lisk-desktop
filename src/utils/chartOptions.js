@@ -7,11 +7,55 @@ import {
   colorPallete,
 } from '../constants/chartConstants';
 
+
 /**
- * Base chart options.
- * These options are in all the chart settings
- * that's why are pase of the base options settings
+ * data ONLY for Line chart
+ * @param {object} data - More data that can be pass to the chart
  */
+export const lineChartData = data => merge({
+  datasets: (data.datasets).map((_, index) => ({
+    backgroundColor: chartStyles.transparent,
+    borderColor: colorPallete[index],
+    pointBorderColor: colorPallete[index],
+    pointBackgroundColor: chartStyles.whiteColor,
+    pointHoverBackgroundColor: chartStyles.whiteColor,
+    pointHoverBorderColor: colorPallete[index],
+    pointHoverBorderWidth: 4,
+    borderWidth: 2,
+  })),
+}, data);
+
+
+/**
+ * data ONLY for Bar chart
+ * @param {object} data - More data that can be pass to the chart
+ */
+export const barChartData = data => merge({
+  datasets: (data.datasets).map((_, index) => ({
+    barPercentage: 1,
+    categoryPercentage: 0.5,
+    barThickness: 'flex',
+    maxBarThickness: 14,
+    minBarLength: 2,
+    stack: index,
+    backgroundColor: colorPallete[index],
+  })),
+}, data);
+
+
+/**
+ * data ONLY for Doughnut chart
+ * @param {object} data - More data that can be pass to the chart
+ */
+export const doughnutChartData = data => merge({
+  datasets: [
+    {
+      backgroundColor: colorPallete,
+    },
+  ],
+}, data);
+
+
 const baseOptions = {
   maintainAspectRatio: false,
 
@@ -60,11 +104,8 @@ const baseOptions = {
   },
 };
 
-/**
- * Options ONLY for Line chart
- * @param {object} options - More options that can be pass to the chart
- */
-export const lineChartOptions = options => merge({
+
+export const lineChartOptions = {
   scales: {
     xAxes: [{
       display: true,
@@ -106,14 +147,10 @@ export const lineChartOptions = options => merge({
       tension: 0,
     },
   },
-}, baseOptions, options);
+};
 
 
-/**
- * Options ONLY for Bar chart
- * @param {object} options - More options that can be pass to the chart
- */
-export const barChartOptions = options => merge({
+export const barChartOptions = {
   scales: {
     xAxes: [{
       display: true,
@@ -157,14 +194,10 @@ export const barChartOptions = options => merge({
       borderSkipped: 'bottom',
     },
   },
-}, baseOptions, options);
+};
 
 
-/**
- * Options ONLY for Doughnut chart
- * @param {object} options - More options that can be pass to the chart
- */
-export const doughnutChartOptions = options => merge({
+export const doughnutChartOptions = {
   cutoutPercentage: 60,
 
   elements: {
@@ -175,56 +208,19 @@ export const doughnutChartOptions = options => merge({
       borderWidth: 1,
     },
   },
-}, baseOptions, options);
+};
 
+const typeOptions = {
+  [typeLine]: lineChartOptions,
+  [typeBar]: barChartOptions,
+  [typeDoughnut]: doughnutChartOptions,
+};
 
-/**
- * data ONLY for Line chart
- * @param {object} data - More data that can be pass to the chart
- */
-export const lineChartData = data => merge({
-  datasets: (data.datasets || []).map((_, index) => ({
-    backgroundColor: chartStyles.transparent,
-    borderColor: colorPallete[index],
-    pointBorderColor: colorPallete[index],
-    pointBackgroundColor: chartStyles.whiteColor,
-    pointHoverBackgroundColor: chartStyles.whiteColor,
-    pointHoverBorderColor: colorPallete[index],
-    pointHoverBorderWidth: 4,
-    borderWidth: 2,
-  })),
-}, data);
-
-
-/**
- * data ONLY for Bar chart
- * @param {object} data - More data that can be pass to the chart
- */
-export const barChartData = data => merge({
-  datasets: (data.datasets || []).map((_, index) => ({
-    barPercentage: 1,
-    categoryPercentage: 0.5,
-    barThickness: 'flex',
-    maxBarThickness: 14,
-    minBarLength: 1,
-    stack: index,
-    backgroundColor: colorPallete[index],
-  })),
-}, data);
-
-
-/**
- * data ONLY for Doughnut chart
- * @param {object} data - More data that can be pass to the chart
- */
-export const doughnutChartData = data => merge({
-  datasets: [
-    {
-      backgroundColor: colorPallete,
-    },
-  ],
-}, data);
-
+const typeData = {
+  [typeLine]: lineChartData,
+  [typeBar]: barChartData,
+  [typeDoughnut]: doughnutChartData,
+};
 
 /**
  * Function that return the corresponding options object
@@ -232,25 +228,7 @@ export const doughnutChartData = data => merge({
  * @param {string} type - can be line, bar or doughnut
  * @param {object} options - More options that can be pass to the chart
  */
-export const optionsByChart = (type, options) => {
-  switch (type) {
-    case typeLine: {
-      return lineChartOptions(options);
-    }
-
-    case typeBar: {
-      return barChartOptions(options);
-    }
-
-    case typeDoughnut: {
-      return doughnutChartOptions(options);
-    }
-
-    default:
-      return [];
-  }
-};
-
+export const optionsByChart = (type, options) => merge(typeOptions[type], baseOptions, options);
 
 /**
  * Function that return the corresponding data object
@@ -258,24 +236,7 @@ export const optionsByChart = (type, options) => {
  * @param {string} type - can be line, bar or doughnut
  * @param {object} data - More data that can be pass to the chart
  */
-export const dataByChart = (type, data) => {
-  switch (type) {
-    case typeLine: {
-      return lineChartData(data);
-    }
-
-    case typeBar: {
-      return barChartData(data);
-    }
-
-    case typeDoughnut: {
-      return doughnutChartData(data);
-    }
-
-    default:
-      return [];
-  }
-};
+export const dataByChart = (type, data) => typeData[type](data);
 
 
 export default {
