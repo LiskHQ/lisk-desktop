@@ -33,6 +33,7 @@ const styles = {
   whiteSmoke: '#f5f7fa80',
   maastrichtBlue: '#0c152e',
   ultramarineBlue: '#4070f4',
+  transparent: 'rgba(0, 0, 0, 0)',
   contentFontFamily: '\'basier-circle\', sans-serif',
   fontSize: 13,
 };
@@ -200,7 +201,7 @@ export const getBalanceData = ({
   return {
     datasets: [{
       data,
-      backgroundColor: styles.whiteSmoke,
+      backgroundColor: styles.transparent,
       borderColor: styles.borderColor,
       pointBorderColor: styles.borderColor,
       pointBackgroundColor: styles.whiteColor,

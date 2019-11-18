@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GRAPH_TYPES } from '../../../constants/chartConstants';
-import { optionsByGraphic } from '../../../utils/chartOptions';
+import { CHART_TYPES } from '../../../constants/chartConstants';
+import { dataByChart, optionsByChart } from '../../../utils/chartOptions';
 
 const Chart = ({
   type,
@@ -10,20 +10,20 @@ const Chart = ({
   height,
   options,
 }) => {
-  const Graph = type && GRAPH_TYPES[type];
+  const Graph = CHART_TYPES[type];
 
   return (
     <Graph
-      data={data}
+      data={dataByChart(type, data)}
       width={width}
       height={height}
-      options={optionsByGraphic(type, options)}
+      options={optionsByChart(type, options)}
     />
   );
 };
 
 Chart.propTypes = {
-  type: PropTypes.string,
+  type: PropTypes.oneOf(Object.keys(CHART_TYPES)),
   data: PropTypes.object.isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
