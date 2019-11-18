@@ -1,0 +1,5 @@
+@import '../../../../app/mixins.css';
+
+.cellHeader {
+  @mixin contentLargest bold;
+}
