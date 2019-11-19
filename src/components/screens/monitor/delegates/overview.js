@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
-import Graphic from '../../../toolbox/Graphic';
+import Chart from '../../../toolbox/charts';
 import styles from './overview.css';
 
 const Overview = ({
@@ -19,21 +19,21 @@ const Overview = ({
       <div className={styles.graphContainer}>
         {
           delegateStatusData
-            ? <Graphic type="doughnut" data={delegateStatusData} />
+            ? <Chart type="doughnut" data={delegateStatusData} />
             : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
         }
       </div>
       <div className={styles.graphContainer}>
         {
           delegateForgingData
-            ? <Graphic type="doughnut" data={delegateForgingData} />
+            ? <Chart type="doughnut" data={delegateForgingData} />
             : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
         }
       </div>
       <div className={styles.graphContainer}>
         {
           delegateRegisteredData
-            ? <Graphic type="line" data={delegateRegisteredData} />
+            ? <Chart type="line" data={delegateRegisteredData} />
             : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
         }
       </div>
