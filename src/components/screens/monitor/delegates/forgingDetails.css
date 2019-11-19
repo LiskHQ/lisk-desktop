@@ -2,8 +2,8 @@
 @import '../../../../app/mixins.css';
 
 .contentWrapper {
-  & > div {
-    padding: 0 20px;
+  & > div:not(:last-child) {
+    padding-right: 40px;
   }
 
   & h3 {
