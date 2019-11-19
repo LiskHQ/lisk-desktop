@@ -30,7 +30,6 @@ const DelegatesTable = ({
         <VoteCheckbox {...{
           delegate,
           votingModeEnabled,
-          toggle: voteToggled,
           className: styles.checkbox,
           accent: firstTimeVotingActive,
         }}
