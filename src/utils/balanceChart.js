@@ -33,8 +33,9 @@ const styles = {
   whiteSmoke: '#f5f7fa80',
   maastrichtBlue: '#0c152e',
   ultramarineBlue: '#4070f4',
+  transparent: 'rgba(0, 0, 0, 0)',
   contentFontFamily: '\'basier-circle\', sans-serif',
-  fontSize: 12,
+  fontSize: 13,
 };
 
 export const graphOptions = ({
@@ -43,13 +44,7 @@ export const graphOptions = ({
   locale,
   isDiscreetMode = false,
 }) => ({
-  plugins: {
-    hideAxisX: false,
-  },
   maintainAspectRatio: false,
-  gridLines: {
-    display: true,
-  },
   legend: {
     display: false,
   },
@@ -66,19 +61,19 @@ export const graphOptions = ({
         },
         round: true,
       },
+      gridLines: {
+        display: false,
+      },
       distribution: 'linear',
       ticks: {
         callback: (value) => {
           moment.locale(locale);
-          return moment(value).format(format);
+          return moment(value, format).format('MMM YY');
         },
         fontColor: styles.slateGray,
         fontSize: styles.fontSize,
         fontFamily: styles.contentFontFamily,
         maxRotation: 0,
-      },
-      gridLines: {
-        display: false,
       },
     }],
     yAxes: [{
@@ -102,9 +97,9 @@ export const graphOptions = ({
   },
   elements: {
     point: {
-      radius: 1,
-      hoverRadius: 6,
-      hitRadius: 20,
+      radius: 2,
+      hoverRadius: 2,
+      hitRadius: 1,
     },
     line: {
       tension: 0,
@@ -138,8 +133,8 @@ export const graphOptions = ({
     xPadding: 20,
     yPadding: 20,
     titleMarginBottom: 12,
-    cornerRadius: 0,
-    caretSize: 15,
+    cornerRadius: 6,
+    caretSize: 10,
   },
 });
 
@@ -206,7 +201,7 @@ export const getBalanceData = ({
   return {
     datasets: [{
       data,
-      backgroundColor: styles.whiteSmoke,
+      backgroundColor: styles.transparent,
       borderColor: styles.borderColor,
       pointBorderColor: styles.borderColor,
       pointBackgroundColor: styles.whiteColor,
