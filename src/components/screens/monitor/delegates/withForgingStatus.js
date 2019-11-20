@@ -79,6 +79,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
             nextHeight: height + i + 1,
           },
         }), {}),
+        nextForgersList: nextForgers.slice(0, 10),
       });
     }
 
@@ -200,6 +201,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
             data: this.getDelegatesData(),
           },
           lastBlock: latestBlocks[0],
+          nextForgers: this.state.nextForgersList,
         }}
         />
       );

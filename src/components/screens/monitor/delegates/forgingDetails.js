@@ -10,13 +10,9 @@ import { tokenMap, initialLSKSupply } from '../../../../constants/tokens';
 import routes from '../../../../constants/routes';
 
 const ForgingDetails = ({
-  t, delegates, networkStatus, lastBlock,
+  t, networkStatus, lastBlock, nextForgers,
 }) => {
   const totalForged = networkStatus && networkStatus.data.supply - initialLSKSupply;
-  const nextForgers = delegates.data
-    .filter(d => d.forgingTime)
-    .sort((a, b) => a.forgingTime - b.forgingTime)
-    .slice(0, 10);
 
   return (
     <Box>
@@ -36,7 +32,7 @@ const ForgingDetails = ({
           <div className={`${grid['col-sm-4']} ${styles.content}`}>
             <h3>{t('Next forgers')}</h3>
             <div className={styles.contentBody}>
-              {nextForgers.map((delegate, i) => (
+              {nextForgers && nextForgers.map((delegate, i) => (
                 <span key={delegate.address}>
                   <Link className="next-forger" to={`${routes.accounts.path}/${delegate.address}`}>
                     {delegate.username}
@@ -48,11 +44,11 @@ const ForgingDetails = ({
           </div>
           <div className={`${grid['col-sm-4']} ${styles.content}`}>
             <h3>{t('Last forger')}</h3>
-            {lastBlock && (
-              <div className={styles.contentBody}>
+            <div className={styles.contentBody}>
+              {lastBlock && (
                 <Link to={`${routes.accounts.path}/${lastBlock.generatorUsername}`}>{lastBlock.generatorUsername}</Link>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </BoxContent>
