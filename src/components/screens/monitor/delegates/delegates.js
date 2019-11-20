@@ -19,7 +19,16 @@ const dataDoug = {
     {
       label: 'delegates',
       data: [1700, 101],
-      backgroundColor: ['#68d284', '#4873ec'],
+    },
+  ],
+};
+
+const lineChart = {
+  labels: ['Jul', 'Aug', 'Sep', 'Nov'],
+  datasets: [
+    {
+      label: 'Register Delegates',
+      data: [10, 19, 4, 33],
     },
   ],
 };
@@ -129,8 +138,8 @@ const Delegates = ({
       <Overview
         t={t}
         delegateStatusData={dataDoug}
-        delegateForgingData={{}}
-        delegateRegisteredData={{}}
+        delegateForgingData={dataDoug}
+        delegateRegisteredData={lineChart}
       />
       <DelegatesTable {...{
         columns,
