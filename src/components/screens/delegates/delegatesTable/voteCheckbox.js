@@ -23,6 +23,7 @@ const VoteCheckbox = ({
               added={added}
               accent={accent}
               removed={removed}
+              readOnly
               id={`vote-${account.publicKey}`}
             />
           )
