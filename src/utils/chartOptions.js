@@ -133,6 +133,7 @@ export const lineChartOptions = {
         fontColor: chartStyles.slateGray,
         fontSize: chartStyles.fontSize,
         fontFamily: chartStyles.contentFontFamily,
+        beginAtZero: true,
       },
     }],
   },
@@ -157,8 +158,10 @@ export const barChartOptions = {
       position: 'bottom',
       stacked: true,
       gridLines: {
-        display: false,
-        offsetGridLines: true,
+        display: true,
+        lineWidth: 0,
+        zeroLineWidth: 1,
+        drawTicks: false,
       },
       ticks: {
         fontColor: chartStyles.slateGray,
@@ -174,7 +177,9 @@ export const barChartOptions = {
       stacked: true,
       gridLines: {
         display: true,
-        offsetGridLines: true,
+        lineWidth: 0,
+        zeroLineWidth: 1,
+        drawTicks: false,
       },
       ticks: {
         display: true,
