@@ -7,6 +7,7 @@ import { networkStatusUpdated } from '../../actions/network';
 
 describe('Socket middleware', () => {
   let store;
+  let state;
   let next;
   let transactions;
   let closeSpy;
@@ -30,68 +31,7 @@ describe('Socket middleware', () => {
       },
     };
 
-    store = {
-      getState: () => ({
-        network: {
-          status: { online: true },
-          name: 'Custom Node',
-          networks: {
-            LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
-          },
-        },
-        account: { address: '1234' },
-        settings: {
-          token: {
-            active: 'LSK',
-          },
-        },
-      }),
-      dispatch: spy(),
-    };
-  });
-
-  it(`should dispatch ${actionTypes.newBlockCreated}, on login action, unless a new block was added`, () => {
-    transactions = { transactions: [{ senderId: '1234', recipientId: '5678' }] };
-
-    expect(store.dispatch).to.not.have.been.calledWith();
-
-    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
-    ipcCallbacks.focus();
-    socketCallbacks['blocks/change'](transactions);
-
-    expect(store.dispatch).to.have.been.calledWith({
-      type: actionTypes.newBlockCreated,
-      data: { block: transactions, windowIsFocused: true },
-    });
-  });
-
-
-  it('should close the connection after logout', () => {
-    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
-    expect(io.connect().close).to.not.have.been.calledWith();
-    middleware(store)(next)({ type: actionTypes.accountLoggedOut });
-    expect(io.connect().close).to.have.been.calledWith();
-    expect(store.dispatch).to.not.have.been.calledWith(networkStatusUpdated({ online: false }));
-  });
-  // it depends on actionTypes.accountLoggedOut in test above that sets connection to null
-  it('should not dispatch any action then there is no connection', () => {
-    middleware(store)(next)({ type: actionTypes.accountLoggedOut });
-    expect(io.connect().close).to.not.have.been.calledWith();
-    expect(store.dispatch).to.not.have.been.calledWith(networkStatusUpdated({ online: false }));
-  });
-
-  it('should dispatch online event on reconnect', () => {
-    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
-    socketCallbacks.reconnect();
-    expect(store.dispatch).to.have.been.calledWith(networkStatusUpdated({ online: true }));
-  });
-
-  it(`should dispatch ${actionTypes.accountLoggedIn} with https protocol`, () => {
-    store.getState = () => ({
-      ...store,
+    state = {
       network: {
         status: { online: true },
         name: 'Custom Node',
@@ -102,19 +42,66 @@ describe('Socket middleware', () => {
           },
         },
       },
+      account: { address: '1234' },
+      settings: {
+        token: {
+          active: 'LSK',
+        },
+      },
+    };
+    store = {
+      getState: () => state,
+      dispatch: spy(),
+    };
+  });
+
+  it(`should dispatch ${actionTypes.newBlockCreated}, on login action, unless a new block was added`, () => {
+    transactions = { transactions: [{ senderId: '1234', recipientId: '5678' }] };
+
+    expect(store.dispatch).to.not.have.been.calledWith();
+
+    middleware(store)(next)({ type: actionTypes.networkSet });
+    ipcCallbacks.focus();
+    socketCallbacks['blocks/change'](transactions);
+
+    expect(store.dispatch).to.have.been.calledWith({
+      type: actionTypes.newBlockCreated,
+      data: { block: transactions, windowIsFocused: true },
     });
-    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+  });
+
+  it('should dispatch online event on reconnect', () => {
+    middleware(store)(next)({ type: actionTypes.networkSet });
+    socketCallbacks.reconnect();
+    expect(store.dispatch).to.have.been.calledWith(networkStatusUpdated({ online: true }));
+  });
+
+  it(`should dispatch ${actionTypes.networkSet} with https protocol`, () => {
+    state = {
+      ...state,
+      network: {
+        status: { online: true },
+        name: 'Custom Node',
+        networks: {
+          LSK: {
+            nodeUrl: 'hhtp://localhost:4000',
+            nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+          },
+        },
+      },
+    };
+    middleware(store)(next)({ type: actionTypes.networkSet });
     expect(store.dispatch).to.not.have.been.calledWith(networkStatusUpdated({ online: true }));
   });
 
   it('should dispatch offline event on disconnect', () => {
-    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+    middleware(store)(next)({ type: actionTypes.networkSet });
     socketCallbacks.disconnect();
     expect(store.dispatch).to.have.been.calledWith(networkStatusUpdated({ online: false }));
   });
 
   it('should passes the action to next middleware', () => {
-    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+    middleware(store)(next)({ type: actionTypes.networkSet });
     expect(next).to.have.been.calledWith();
   });
 
@@ -128,7 +115,7 @@ describe('Socket middleware', () => {
         on: spy(),
       };
 
-      middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+      middleware(store)(next)({ type: actionTypes.networkSet });
 
       expect(window.ipc.on).to.have.been.calledWith('blur');
       expect(window.ipc.on).to.have.been.calledWith('focus');
@@ -140,13 +127,13 @@ describe('Socket middleware', () => {
         on: null,
       };
 
-      middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+      middleware(store)(next)({ type: actionTypes.networkSet });
 
       expect(window.ipc.on).to.have.equal(null);
     });
 
     it('should register window focus changes', () => {
-      middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+      middleware(store)(next)({ type: actionTypes.networkSet });
       ipcCallbacks.blur();
       socketCallbacks['blocks/change'](transactions);
 
@@ -157,7 +144,7 @@ describe('Socket middleware', () => {
     });
 
     it('should register window focus changes', () => {
-      middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+      middleware(store)(next)({ type: actionTypes.networkSet });
       ipcCallbacks.focus();
       socketCallbacks['blocks/change'](transactions);
 
