@@ -15,7 +15,7 @@ import ForgingDetails from './forgingDetails';
 
 const Delegates = ({
   delegates, t, filters, applyFilters, changeSort, sort,
-  isMediumViewPort, networkStatus, lastBlock, nextForgers,
+  isMediumViewPort, networkStatus, latestBlock, nextForgers,
 }) => {
   const getForgingTitle = status => ({
     forgedThisRound: t('Forging'),
@@ -118,7 +118,7 @@ const Delegates = ({
       <MonitorHeader />
       <ForgingDetails
         t={t}
-        lastBlock={lastBlock}
+        latestBlock={latestBlock}
         networkStatus={networkStatus}
         nextForgers={nextForgers}
       />

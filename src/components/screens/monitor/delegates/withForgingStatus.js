@@ -222,7 +222,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
             ...this.props[delegatesKey],
             data: this.getDelegatesData(),
           },
-          lastBlock: latestBlocks.map(this.ensureGeneratorUsername.bind(this))[0],
+          latestBlock: latestBlocks.map(this.ensureGeneratorUsername.bind(this))[0],
           nextForgers: this.state.nextForgers,
         }}
         />

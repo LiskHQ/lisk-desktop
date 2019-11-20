@@ -10,7 +10,7 @@ import { tokenMap, initialLSKSupply } from '../../../../constants/tokens';
 import routes from '../../../../constants/routes';
 
 const ForgingDetails = ({
-  t, networkStatus, lastBlock, nextForgers,
+  t, networkStatus, latestBlock, nextForgers,
 }) => {
   const totalForged = networkStatus && networkStatus.data.supply - initialLSKSupply;
 
@@ -45,8 +45,8 @@ const ForgingDetails = ({
           <div className={`${grid['col-sm-4']} ${styles.content}`}>
             <h3>{t('Last forger')}</h3>
             <div className={styles.contentBody}>
-              {lastBlock && (
-                <Link to={`${routes.accounts.path}/${lastBlock.generatorUsername}`}>{lastBlock.generatorUsername}</Link>
+              {latestBlock && (
+                <Link to={`${routes.accounts.path}/${latestBlock.generatorUsername}`}>{latestBlock.generatorUsername}</Link>
               )}
             </div>
           </div>
