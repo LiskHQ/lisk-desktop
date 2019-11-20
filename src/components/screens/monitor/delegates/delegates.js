@@ -14,7 +14,7 @@ import styles from './delegates.css';
 import ForgingDetails from './forgingDetails';
 
 const Delegates = ({
-  delegates, t, filters, applyFilters, changeSort, sort, isMediumViewPort, networkStatus,
+  delegates, t, filters, applyFilters, changeSort, sort, isMediumViewPort, networkStatus, lastBlock,
 }) => {
   const getForgingTitle = status => ({
     forgedThisRound: t('Forging'),
@@ -117,7 +117,7 @@ const Delegates = ({
       <MonitorHeader />
       <ForgingDetails
         t={t}
-        sortDirection={sort}
+        lastBlock={lastBlock}
         networkStatus={networkStatus}
         delegates={delegates}
       />

@@ -10,17 +10,10 @@ import { tokenMap, initialLSKSupply } from '../../../../constants/tokens';
 import routes from '../../../../constants/routes';
 
 const ForgingDetails = ({
-  t, delegates, sortDirection, networkStatus,
+  t, delegates, networkStatus, lastBlock,
 }) => {
-  const delegatesList = sortDirection && sortDirection.includes('asc') ? [...delegates.data] : [...delegates.data].reverse();
   const totalForged = networkStatus && networkStatus.data.supply - initialLSKSupply;
-
-  const lastForger = [...delegatesList].sort(
-    (a, b) =>
-      b.lastBlock && a.lastBlock && b.lastBlock.height - a.lastBlock.height,
-  )[0];
-
-  const nextForgers = [...delegatesList]
+  const nextForgers = delegates.data
     .filter(d => d.forgingTime)
     .sort((a, b) => a.forgingTime - b.forgingTime)
     .slice(0, 10);
@@ -55,9 +48,9 @@ const ForgingDetails = ({
           </div>
           <div className={`${grid['col-sm-4']} ${styles.content}`}>
             <h3>{t('Last forger')}</h3>
-            {lastForger && (
+            {lastBlock && (
               <div className={styles.contentBody}>
-                <Link to={`${routes.accounts.path}/${lastForger.address}`}>{lastForger.username}</Link>
+                <Link to={`${routes.accounts.path}/${lastBlock.generatorUsername}`}>{lastBlock.generatorUsername}</Link>
               </div>
             )}
           </div>
