@@ -44,7 +44,7 @@ const Blocks = ({
   return (
     <div>
       <MonitorHeader />
-      <BlocksOverview t={t} />
+      <BlocksOverview blocks={blocks} t={t} />
       <Box isLoading={blocks.isLoading} width="full" main>
         <BoxHeader>
           <h2>{t('All blocks')}</h2>

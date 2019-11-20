@@ -120,8 +120,10 @@ export const barChartOptions = options => merge({
       position: 'bottom',
       stacked: true,
       gridLines: {
-        display: false,
-        offsetGridLines: true,
+        display: true,
+        lineWidth: 0,
+        zeroLineWidth: 1,
+        drawTicks: false,
       },
       ticks: {
         fontColor: chartStyles.slateGray,
@@ -137,7 +139,9 @@ export const barChartOptions = options => merge({
       stacked: true,
       gridLines: {
         display: true,
-        offsetGridLines: true,
+        lineWidth: 0,
+        zeroLineWidth: 1,
+        drawTicks: false,
       },
       ticks: {
         display: true,
@@ -145,6 +149,7 @@ export const barChartOptions = options => merge({
         fontColor: chartStyles.slateGray,
         fontSize: chartStyles.fontSize,
         fontFamily: chartStyles.contentFontFamily,
+        beginAtZero: true,
       },
     }],
   },
