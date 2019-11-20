@@ -54,7 +54,6 @@ export default class VoteUrlProcessor extends React.Component {
           publicKey: v.publicKey,
         },
         username: v.username,
-        balance: v.balance,
       }));
       this.setState({
         pendingVotes: [],
