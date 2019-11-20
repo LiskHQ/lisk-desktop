@@ -34,7 +34,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       super(props);
 
       this.state = {
-        nextForgers: {},
+        nextForgers: [],
         lastBlocks: {},
       };
       this.blocksFetchLimit = 100;
@@ -72,36 +72,44 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       );
       const height = blocks[0] && blocks[0].height;
       this.setState({
-        nextForgers: nextForgers.reduce((accumulator, delegate, i) => ({
-          ...accumulator,
-          [delegate.publicKey]: {
-            forgingTime: moment().add(i * 10, 'seconds'),
-            nextHeight: height + i + 1,
-            username: delegate.username,
-          },
-        }), {}),
-        nextForgersList: nextForgers.slice(0, 10),
+        nextForgers: nextForgers.map((delegate, i) => ({
+          ...delegate,
+          forgingTime: moment().add(i * 10, 'seconds'),
+          nextHeight: height + i + 1,
+          username: delegate.username,
+        })),
       });
     }
 
     componentDidUpdate(prevProps) {
       const { latestBlocks } = this.props;
       const newBlock = latestBlocks[0] || {};
+      const forgerIndex = this.state.nextForgers.findIndex(delegate =>
+        delegate.publicKey === newBlock.generatorPublicKey);
+      const nextForgers = this.getUpdatedNextForgersList(forgerIndex, newBlock.height);
+
       if (prevProps.latestBlocks[0] && prevProps.latestBlocks[0].height < newBlock.height) {
-        this.setState({
-          nextForgers: {
-            ...this.state.nextForgers,
-            [newBlock.generatorPublicKey]: {
-              ...(this.state.nextForgers[newBlock.generatorPublicKey] || {}),
-              forgingTime: moment().add(voting.numberOfActiveDelegates * 10, 'seconds'),
-              nextHeight: newBlock.leight + voting.numberOfActiveDelegates,
-            },
-          },
-        });
+        this.setState({ nextForgers });
         if (newBlock.height % 101 === 1) { // to update next forgers in a new round
           this.loadNextForgers(latestBlocks);
         }
       }
+    }
+
+    getUpdatedNextForgersList(forgerIndex, newBlockHeight) {
+      const nextForgers = [...this.state.nextForgers];
+
+      if (forgerIndex !== -1) {
+        const forger = {
+          ...nextForgers[forgerIndex],
+          forgingTime: moment().add(voting.numberOfActiveDelegates * 10, 'seconds'),
+          nextHeight: newBlockHeight + voting.numberOfActiveDelegates,
+        };
+        nextForgers.push(forger);
+        nextForgers.splice(0, 1);
+      }
+
+      return nextForgers;
     }
 
     mapDelegateLastBlockToStatus(lastBlock) {
@@ -161,7 +169,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       return data.map(delegate => ({
         ...delegate,
         status: this.getForgingStatus(delegate),
-        ...this.state.nextForgers[delegate.publicKey],
+        ...this.state.nextForgers.find(item => delegate.publicKey === item.publicKey),
         lastBlock: this.getLastBlock(delegate),
       }));
     }
@@ -192,11 +200,14 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     }
 
     ensureGeneratorUsername(block) {
+      const generator = this.state.nextForgers.find(
+        delegate => delegate.publicKey === block.generatorPublicKey,
+      );
+
       return {
         ...block,
         generatorUsername: block.generatorUsername
-          || (this.state.nextForgers[block.generatorPublicKey]
-            && this.state.nextForgers[block.generatorPublicKey].username),
+          || (generator && generator.username),
       };
     }
 
@@ -212,7 +223,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
             data: this.getDelegatesData(),
           },
           lastBlock: latestBlocks.map(this.ensureGeneratorUsername.bind(this))[0],
-          nextForgers: this.state.nextForgersList,
+          nextForgers: this.state.nextForgers,
         }}
         />
       );

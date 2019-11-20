@@ -32,7 +32,7 @@ const ForgingDetails = ({
           <div className={`${grid['col-sm-4']} ${styles.content}`}>
             <h3>{t('Next forgers')}</h3>
             <div className={styles.contentBody}>
-              {nextForgers && nextForgers.map((delegate, i) => (
+              {nextForgers && nextForgers.slice(0, 10).map((delegate, i) => (
                 <span key={delegate.address}>
                   <Link className="next-forger" to={`${routes.accounts.path}/${delegate.address}`}>
                     {delegate.username}
