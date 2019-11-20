@@ -76,7 +76,6 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
           ...delegate,
           forgingTime: moment().add(i * 10, 'seconds'),
           nextHeight: height + i + 1,
-          username: delegate.username,
         })),
       });
     }
