@@ -51,7 +51,7 @@ pipeline {
 						}
 						archiveArtifacts artifacts: 'app/build/'
 						archiveArtifacts artifacts: 'app/build-testnet/'
-						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-desktop*'
+						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-linux-*'
 						stash includes: 'app/build/', name: 'build'
 					}
 				)
