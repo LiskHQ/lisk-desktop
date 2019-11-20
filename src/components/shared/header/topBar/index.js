@@ -7,6 +7,7 @@ import { settingsUpdated } from '../../../../actions/settings';
 import { networkSet } from '../../../../actions/network';
 import accountConfig from '../../../../constants/account';
 import TopBar from './topBar';
+import withTheme from '../../../../utils/theme';
 
 const mapStateToProps = state => ({
   account: state.account,
@@ -23,4 +24,10 @@ const mapDispatchToProps = {
   settingsUpdated,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withTranslation()(TopBar)));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(
+    withTranslation()(
+      withTheme(TopBar),
+    ),
+  ),
+);

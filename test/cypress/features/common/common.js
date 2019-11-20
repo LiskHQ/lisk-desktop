@@ -187,3 +187,7 @@ Then(/^I confirm transfer$/, function () {
 Then(/^I go back to wallet$/, function () {
   cy.get(ss.okayBtn).click();
 });
+
+Then(/^I dismiss the onboarding$/, function () {
+  cy.get(ss.closeOnboardingBtn).click();
+});

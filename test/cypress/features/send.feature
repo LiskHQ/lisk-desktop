@@ -9,6 +9,7 @@ Feature: Send
     And I go to transfer confirmation
     And I confirm transfer
     And I go back to wallet
+    And I dismiss the onboarding
     Then I should see pending transaction
     Then The latest transaction is transfer to random
     Then I should not see pending transaction

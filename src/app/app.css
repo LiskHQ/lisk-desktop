@@ -43,6 +43,8 @@ body {
     height: calc(100% - 73px);
     display: flex;
     flex-direction: column;
+    overflow: auto;
+    background-color: var(--color-budy-bg);
   }
 
   &.loaded > section {

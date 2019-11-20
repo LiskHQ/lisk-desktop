@@ -53,6 +53,7 @@
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
     "react/sort-comp": "off",
+    "react/display-name": "off",
 
     "implicit-arrow-linebreak": "off",
     "react/jsx-closing-tag-location": "off",
