@@ -14,6 +14,7 @@
     z-index: var(--overlay-index);
     box-sizing: border-box;
     border-radius: var(--border-radius-standard);
+    pointer-events: none;
   }
 
   & .selectingDelegates {
