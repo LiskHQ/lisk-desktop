@@ -14,16 +14,10 @@ describe('Forging Details', () => {
         supply: 9000000000000000000,
       },
     },
-    delegates: {
-      isLoading: true,
-      data: delegates.map((delegate, i) => ({
-        ...delegate,
-        forgingTime: moment().add(i * 10, 'seconds'),
-      })).sort(() => Math.random() - 0.5),
-      loadData: jest.fn(),
-      clearData: jest.fn(),
-      urlSearchParams: {},
-    },
+    nextForgers: delegates.map((delegate, i) => ({
+      ...delegate,
+      forgingTime: moment().add(i * 10, 'seconds'),
+    })),
     filters: {
       tab: 'active',
     },
