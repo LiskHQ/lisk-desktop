@@ -35,7 +35,7 @@ Then(/^Total voting number shows (\d+)$/, function (number) {
 
 Then(/^I choose the (\d+) delegate$/, function (number) {
   cy.get(ss.delegateRow).eq(number - 1).as('dg');
-  cy.get('@dg').find(ss.voteCheckbox).click({force: true});
+  cy.get('@dg').click();
 });
 
 Then(/^I go to confirmation$/, function () {
