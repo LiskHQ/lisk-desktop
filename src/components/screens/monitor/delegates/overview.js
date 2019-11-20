@@ -1,3 +1,4 @@
+// istanbul ignore file
 import React from 'react';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
@@ -19,21 +20,42 @@ const Overview = ({
       <div className={styles.graphContainer}>
         {
           delegateStatusData
-            ? <Chart type="doughnut" data={delegateStatusData} />
+            ? (
+              <div className={styles.chartBox}>
+                <h1 className={styles.chartTitle}>{t('Delegates')}</h1>
+                <div className={styles.chart}>
+                  <Chart type="doughnut" data={delegateStatusData} />
+                </div>
+              </div>
+            )
             : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
         }
       </div>
       <div className={styles.graphContainer}>
         {
           delegateForgingData
-            ? <Chart type="doughnut" data={delegateForgingData} />
+            ? (
+              <div className={styles.chartBox}>
+                <h1 className={styles.chartTitle}>{t('Delegates Forging Status')}</h1>
+                <div className={styles.chart}>
+                  <Chart type="doughnut" data={delegateForgingData} />
+                </div>
+              </div>
+            )
             : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
         }
       </div>
       <div className={styles.graphContainer}>
         {
           delegateRegisteredData
-            ? <Chart type="line" data={delegateRegisteredData} />
+            ? (
+              <div className={styles.chartBox}>
+                <h1 className={styles.chartTitle}>{t('Registered Delegates')}</h1>
+                <div className={styles.chart}>
+                  <Chart type="line" data={delegateRegisteredData} options={{ legend: { display: false } }} />
+                </div>
+              </div>
+            )
             : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
         }
       </div>
