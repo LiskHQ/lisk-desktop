@@ -13,28 +13,14 @@ import routes from '../../../../constants/routes';
 import Overview from './overview';
 import styles from './delegates.css';
 
-const dataDoug = {
-  labels: ['Standby delegates', 'Active delegates'],
-  datasets: [
-    {
-      label: 'delegates',
-      data: [1700, 101],
-    },
-  ],
-};
-
-const lineChart = {
-  labels: ['Jul', 'Aug', 'Sep', 'Nov'],
-  datasets: [
-    {
-      label: 'Register Delegates',
-      data: [10, 19, 4, 33],
-    },
-  ],
-};
-
 const Delegates = ({
-  delegates, t, filters, applyFilters, changeSort, sort, isMediumViewPort,
+  applyFilters,
+  changeSort,
+  delegates,
+  filters,
+  isMediumViewPort,
+  sort,
+  t,
 }) => {
   const getForgingTitle = status => ({
     forgedThisRound: t('Forging'),
@@ -132,14 +118,45 @@ const Delegates = ({
 
   const getRowLink = delegate => `${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.address}`;
 
+  const activeAndStandByDelegatesData = () => {
+    const data = [0, 101];
+    return data;
+  };
+
+  const delegatesBlocksData = () => {
+    const data = [0, 0, 0];
+    if (delegates.data.length) {
+      delegates.data.forEach((delegate) => {
+        if (delegate.status === 'forgedThisRound') data[0] += delegate.producedBlocks;
+        if (delegate.status === 'notForging') data[2] += 1;
+        data[1] += delegate.missedBlocks;
+      });
+    }
+    return data;
+  };
+
   return (
     <div>
       <MonitorHeader />
       <Overview
         t={t}
-        delegateStatusData={dataDoug}
-        delegateForgingData={dataDoug}
-        delegateRegisteredData={lineChart}
+        delegateStatusData={{
+          labels: [t('Standby delegates'), t('Active delegates')],
+          datasets: [
+            {
+              label: 'delegates',
+              data: activeAndStandByDelegatesData(),
+            },
+          ],
+        }}
+        delegateForgingData={{
+          labels: [t('Forged blocks'), t('Missed blocks'), t('Not forging')],
+          datasets: [
+            {
+              data: delegatesBlocksData(),
+            },
+          ],
+        }}
       />
       <DelegatesTable {...{
         columns,

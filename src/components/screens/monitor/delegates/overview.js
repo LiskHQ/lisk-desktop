@@ -8,7 +8,6 @@ import styles from './overview.css';
 
 const Overview = ({
   delegateForgingData,
-  delegateRegisteredData,
   delegateStatusData,
   t,
 }) => (
@@ -39,20 +38,6 @@ const Overview = ({
                 <h1 className={styles.chartTitle}>{t('Delegates Forging Status')}</h1>
                 <div className={styles.chart}>
                   <Chart type="doughnut" data={delegateForgingData} />
-                </div>
-              </div>
-            )
-            : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
-        }
-      </div>
-      <div className={styles.graphContainer}>
-        {
-          delegateRegisteredData
-            ? (
-              <div className={styles.chartBox}>
-                <h1 className={styles.chartTitle}>{t('Registered Delegates')}</h1>
-                <div className={styles.chart}>
-                  <Chart type="line" data={delegateRegisteredData} options={{ legend: { display: false } }} />
                 </div>
               </div>
             )
