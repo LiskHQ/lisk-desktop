@@ -77,6 +77,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
           [delegate.publicKey]: {
             forgingTime: moment().add(i * 10, 'seconds'),
             nextHeight: height + i + 1,
+            username: delegate.username,
           },
         }), {}),
         nextForgersList: nextForgers.slice(0, 10),
@@ -91,6 +92,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
           nextForgers: {
             ...this.state.nextForgers,
             [newBlock.generatorPublicKey]: {
+              ...(this.state.nextForgers[newBlock.generatorPublicKey] || {}),
               forgingTime: moment().add(voting.numberOfActiveDelegates * 10, 'seconds'),
               nextHeight: newBlock.leight + voting.numberOfActiveDelegates,
             },
@@ -189,6 +191,15 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       }
     }
 
+    ensureGeneratorUsername(block) {
+      return {
+        ...block,
+        generatorUsername: block.generatorUsername
+          || (this.state.nextForgers[block.generatorPublicKey]
+            && this.state.nextForgers[block.generatorPublicKey].username),
+      };
+    }
+
     render() {
       const {
         latestBlocks, network, olderBlocksRetrieved: _, ...rest
@@ -200,7 +211,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
             ...this.props[delegatesKey],
             data: this.getDelegatesData(),
           },
-          lastBlock: latestBlocks[0],
+          lastBlock: latestBlocks.map(this.ensureGeneratorUsername.bind(this))[0],
           nextForgers: this.state.nextForgersList,
         }}
         />
