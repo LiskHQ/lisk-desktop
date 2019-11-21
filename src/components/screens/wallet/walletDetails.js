@@ -54,7 +54,7 @@ class WalletDetails extends React.Component {
               </Tooltip>
             </div>
             {
-              account.loginType !== 0
+              (typeof account.loginType === 'number' && account.loginType !== 0)
                 ? (
                   <div
                     className={`${styles.helperIcon} verify-address`}
@@ -69,7 +69,7 @@ class WalletDetails extends React.Component {
                       title={t('Verify address')}
                       content={<Icon name="verifyWalletAddressActive" className={styles.qrCodeIcon} />}
                     >
-                      <span>Verify the address in your hardware wallet device.</span>
+                      <span>{t('Verify the address in your hardware wallet device.')}</span>
                     </Tooltip>
                   </div>
                 )
