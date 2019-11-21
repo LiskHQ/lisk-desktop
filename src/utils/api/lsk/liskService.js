@@ -143,6 +143,13 @@ const liskServiceApi = {
     }
   },
 
+  getActiveAndStandByDelegates: async ({ networkConfig }) => liskServiceGet({
+    networkConfig,
+    path: '/api/v1/delegates',
+    searchParams: { limit: 1 },
+    transformResponse: response => response.meta,
+  }),
+
   getNextForgers: async ({ networkConfig }, searchParams) => liskServiceGet({
     networkConfig,
     path: '/api/v1/delegates/next_forgers',

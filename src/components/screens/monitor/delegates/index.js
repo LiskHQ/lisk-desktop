@@ -22,21 +22,29 @@ const mapStateToProps = ({ blocks: { latestBlocks } }) => ({
 
 const ComposedDelegates = compose(
   withRouter,
-  withData({
-    [delegatesKey]: {
-      apiUtil: liskService.getDelegates,
-      defaultData: [],
-      defaultUrlSearchParams,
-      autoload: true,
-      transformResponse: (response, oldData, urlSearchParams) => (
-        urlSearchParams.offset
-          ? [...oldData, ...response.filter(
-            delegate => !oldData.find(({ username }) => username === delegate.username),
-          )]
-          : response
-      ),
+  withData(
+    {
+      [delegatesKey]: {
+        apiUtil: liskService.getDelegates,
+        defaultData: [],
+        defaultUrlSearchParams,
+        autoload: true,
+        transformResponse: (response, oldData, urlSearchParams) => (
+          urlSearchParams.offset
+            ? [...oldData, ...response.filter(
+              delegate => !oldData.find(({ username }) => username === delegate.username),
+            )]
+            : response
+        ),
+      },
+      chartsActiveAndStandby: {
+        apiUtil: liskService.getActiveAndStandByDelegates,
+        defaultData: [],
+        autoload: true,
+        transformResponse: response => ([response.total - 101, 101]),
+      },
     },
-  }),
+  ),
   withResizeValues,
   withFilters(delegatesKey, defaultUrlSearchParams),
   connect(mapStateToProps),

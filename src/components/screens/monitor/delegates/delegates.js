@@ -16,6 +16,7 @@ import styles from './delegates.css';
 const Delegates = ({
   applyFilters,
   changeSort,
+  chartsActiveAndStandby,
   delegates,
   filters,
   isMediumViewPort,
@@ -118,21 +119,40 @@ const Delegates = ({
 
   const getRowLink = delegate => `${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.address}`;
 
-  const activeAndStandByDelegatesData = () => {
-    const data = [0, 101];
-    return data;
+  const activeAndStandbyData = {
+    labels: [t('Standby delegates'), t('Active delegates')],
+    datasets: [
+      {
+        label: 'delegates',
+        data: chartsActiveAndStandby.data,
+      },
+    ],
   };
 
-  const delegatesBlocksData = () => {
-    const data = [0, 0, 0];
-    if (delegates.data.length) {
-      delegates.data.forEach((delegate) => {
-        if (delegate.status === 'forgedThisRound') data[0] += delegate.producedBlocks;
-        if (delegate.status === 'notForging') data[2] += 1;
-        data[1] += delegate.missedBlocks;
-      });
-    }
-    return data;
+  const delegatesForgedData = {
+    labels: [t('Forging blocks'), t('Not forging'), t('Awaiting slot'), t('Missed blocks')],
+    datasets: [
+      {
+        data: delegates.data.length
+          ? delegates.data.reduce((acc, delegate) => {
+            if (delegate.status === 'forgedThisRound') acc[0] += 1;
+            if (delegate.status === 'notForging') acc[1] += 1;
+            if (delegate.status === 'forgedLastRound') acc[2] += 1;
+            if (delegate.status === 'missedLastRound') acc[3] += 1;
+            return acc;
+          }, [0, 0, 0, 0])
+          : [],
+      },
+    ],
+  };
+
+  const options = {
+    tooltips: {
+      callbacks: {
+        title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+        label(tooltipItem, data) { return data.datasets[0].data[tooltipItem.index]; },
+      },
+    },
   };
 
   return (
@@ -140,23 +160,9 @@ const Delegates = ({
       <MonitorHeader />
       <Overview
         t={t}
-        delegateStatusData={{
-          labels: [t('Standby delegates'), t('Active delegates')],
-          datasets: [
-            {
-              label: 'delegates',
-              data: activeAndStandByDelegatesData(),
-            },
-          ],
-        }}
-        delegateForgingData={{
-          labels: [t('Forged blocks'), t('Missed blocks'), t('Not forging')],
-          datasets: [
-            {
-              data: delegatesBlocksData(),
-            },
-          ],
-        }}
+        activeAndStandbyData={activeAndStandbyData}
+        delegateForgingData={delegatesForgedData}
+        options={options}
       />
       <DelegatesTable {...{
         columns,

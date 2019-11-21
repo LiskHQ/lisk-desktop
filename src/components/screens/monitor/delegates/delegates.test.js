@@ -38,6 +38,13 @@ describe('Delegates monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
+      chartsActiveAndStandby: {
+        isLoading: true,
+        data: [588, 101],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
       filters: {
         tab: 'active',
       },
@@ -53,7 +60,7 @@ describe('Delegates monitor page', () => {
   });
 
   it('renders a page with header', () => {
-    expect(wrapper.find('Box header')).toIncludeText('Active delegates');
+    expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Active delegates');
   });
 
   it('renders table with delegates', () => {
