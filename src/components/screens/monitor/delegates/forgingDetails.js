@@ -13,6 +13,7 @@ const ForgingDetails = ({
   t, networkStatus, latestBlock, nextForgers,
 }) => {
   const totalForged = networkStatus && networkStatus.data.supply - initialLSKSupply;
+  const forgersListLength = 10;
 
   return (
     <Box>
@@ -32,12 +33,12 @@ const ForgingDetails = ({
           <div className={`${grid['col-sm-4']} ${styles.content}`}>
             <h3>{t('Next forgers')}</h3>
             <div className={styles.contentBody}>
-              {nextForgers && nextForgers.slice(0, 10).map((delegate, i) => (
+              {nextForgers && nextForgers.slice(0, forgersListLength).map((delegate, i) => (
                 <span key={delegate.address}>
                   <Link className="next-forger" to={`${routes.accounts.path}/${delegate.address}`}>
                     {delegate.username}
                   </Link>
-                  {i !== nextForgers.length - 1 ? ', ' : ' '}
+                  {i !== forgersListLength - 1 ? ', ' : ''}
                 </span>
               ))}
             </div>
