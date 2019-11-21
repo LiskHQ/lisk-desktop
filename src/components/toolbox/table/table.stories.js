@@ -1,19 +1,18 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
+import Table from './index';
 import CheckBox from '../checkBox';
-import DemoRenderer from '../demoRenderer';
-import Table from '.';
 
-/* eslint-disable-next-line no-console */
-const onSortChange = console.log;
-
-const TableDemo = () => (
-  <div>
-    <h2>Table</h2>
-    <DemoRenderer>
+storiesOf('Toolbox', module)
+  .add('Table', () => (
+    <StoryWrapper>
+      <h3>Table</h3>
       <Table
         sort="id:asc"
-        onSortChange={onSortChange}
+        onSortChange={action('clicked')}
         data={[
           { id: 1, name: 'Row 1' },
           { id: 2, name: 'Row 2' },
@@ -31,8 +30,5 @@ const TableDemo = () => (
           /* eslint-enable react/display-name */
         }]}
       />
-    </DemoRenderer>
-  </div>
-);
-
-export default TableDemo;
+    </StoryWrapper>
+  ));

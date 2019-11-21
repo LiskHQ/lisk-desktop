@@ -43,6 +43,7 @@ import iconWarning from '../../../assets/images/icons/icon-warning.svg';
 import incoming from '../../../assets/images/icons/incoming.svg';
 import liskChat from '../../../assets/images/icons/lisk-chat.svg';
 import liskLogo from '../../../assets/images/lisk-logo-v2.svg';
+import liskLogoDark from '../../../assets/images/lisk-logo-dark.svg';
 import liskLogoWhite from '../../../assets/images/lisk-logo-white-v2.svg';
 import logout from '../../../assets/images/icons/logout.svg';
 import logoutActive from '../../../assets/images/icons/logout-active.svg';
@@ -177,6 +178,7 @@ export const icons = {
   qrCodeActive,
   copyActive,
   verifyWalletAddressActive,
+  liskLogoDark,
 };
 
 

@@ -98,8 +98,8 @@ export const graphOptions = ({
   elements: {
     point: {
       radius: 2,
-      hoverRadius: 6,
-      hitRadius: 20,
+      hoverRadius: 2,
+      hitRadius: 1,
     },
     line: {
       tension: 0,

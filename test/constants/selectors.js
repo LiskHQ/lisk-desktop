@@ -234,6 +234,7 @@ const ss = {
   toast: '.toast',
   confirmButton: '.confirm-button',
   coinRow: '.coin-row',
+  closeOnboardingBtn: '.closeOnboarding',
 };
 
 export default ss;

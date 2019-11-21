@@ -108,6 +108,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
       Other Colors
   *************************/
+  --color-budy-bg: var(--color-mystic);
   --light-border-color: rgba(255, 255, 255, 0.24);
   --overlay-color: rgba(255, 255, 255, 0.8);
   --dark-border-color: rgba(0, 0, 0, 0.08);
@@ -183,4 +184,14 @@ or "warn/action" ineastd of "red/green"
   @custom-media --small-viewport (max-width: 768px);
   @custom-media --xSmall-viewport (max-width: 414px);
   @custom-media --xxSmall-viewport (max-width: 320px);
+}
+
+:root [data-theme="dark"] {
+  --color-white: #111112;
+  --color-platinum: #4d4d50;
+  --color-white-smoke: #1c1c1c;
+  --color-maastricht-blue: #fff;
+  --dark-border-color: #373739;
+  --color-mystic: #4d4d50;
+  --color-budy-bg: #000;
 }
