@@ -11,9 +11,9 @@ const NotAvailable = ({
 }) => (
   <div className={styles.container}>
     <div className={styles.wrapper}>
-      <Illustration name="emptyWallet" />
-      <h1 className="result-box-header">{t('Nothing to see here')}</h1>
-      <p className="transaction-status body-message">{t('This feature is supported only for mainnet and testnet.')}</p>
+      <Illustration name="pageNotFound" />
+      <h1 className="result-box-header">{t('Sorry, this action isn’t possible')}</h1>
+      <p className="transaction-status body-message">{t('This feature can be accessed through Mainet and Testnet.')}</p>
       <PrimaryButton
         onClick={() => { history.push(routes.dashboard.path); }}
         className={styles.button}
