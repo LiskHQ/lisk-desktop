@@ -1,3 +1,5 @@
+import fs from 'fs';
+import https from 'https';
 import localeHandler from './localeHandler';
 import menu from '../menu';
 import process from './process';
@@ -74,16 +76,53 @@ const win = {
     win.browser.webContents.on('context-menu', (e, props) => {
       menuPopup({ props, selectionMenu, inputMenu }); // eslint-disable-line no-use-before-define
     });
+    /**  */
+    /* istanbul ignore next */
+    const download = (url, dest, callback) => {
+      const file = fs.createWriteStream(dest);
+      https.get(url, (response) => {
+        response.pipe(file);
+        file.on('finish', () => {
+          file.close(callback); // close() is async, call callback after close completes.
+        });
+      }).on('error', (err) => { // Handle errors
+        fs.unlink(dest); // Delete the file async. (But we don't check the result)
+        if (callback) callback(err.message);
+      });
+    };
+    /* istanbul ignore next */
+    const urlSaveAs = (remoteUrl) => {
+      // app.getPath("desktop")       // User's Desktop folder
+      // app.getPath("documents")     // User's "My Documents" folder
+      // app.getPath("downloads")     // User's Downloads folder
+      const { dialog, app } = electron;
+      const options = {
+        // buttonLabel: 'yashr',
+        defaultPath: `${app.getPath('downloads')}/transactions.csv`,
+        filters: [
+          { name: 'CSV files', extensions: ['csv'] },
+        ],
+      };
+      const userChosenPath = dialog.showSaveDialog(options);
+      if (userChosenPath) {
+        download(remoteUrl, userChosenPath, err => console.log(err));
+      }
+    };
 
     const handleRedirect = (e, url) => {
       if (url !== win.browser.webContents.getURL()) {
         e.preventDefault();
-        electron.shell.openExternal(url);
+        const regex = new RegExp(/.*\/transactions\/csv$/);
+        /* istanbul ignore next */
+        if (regex.test(url)) {
+          urlSaveAs(url);
+        } else {
+          electron.shell.openExternal(url);
+        }
       }
     };
     win.browser.webContents.on('will-navigate', handleRedirect);
     win.browser.webContents.on('new-window', handleRedirect);
-
     // Resolve all events from stack when dom is ready
     win.browser.webContents.on('did-finish-load', () => {
       win.isUILoaded = true;
