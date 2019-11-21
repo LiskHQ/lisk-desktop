@@ -8,36 +8,38 @@ import MonitorAccounts from './accounts';
 import liskServiceApi from '../../../../utils/api/lsk/liskService';
 import NotAvailable from '../notAvailable';
 
-const BlocksMonitor = () => {
+const ComposedAccounts = compose(
+  withData(
+    {
+      accounts: {
+        apiUtil: liskServiceApi.getTopAccounts,
+        defaultData: [],
+        autoload: true,
+        transformResponse: (response, accounts, urlSearchParams) => (
+          urlSearchParams.offset
+            ? [...accounts, ...response.data]
+            : response.data
+        ),
+      },
+      networkStatus: {
+        apiUtil: liskServiceApi.getNetworkStatus,
+        defaultData: {},
+        autoload: true,
+        transformResponse: response => response,
+      },
+    },
+  ),
+  withTranslation(),
+)(MonitorAccounts);
+
+const AccountsMonitor = () => {
   const network = useSelector(state => state.network);
 
   return (
     network.name === 'Custom Node'
       ? <NotAvailable />
-      : (compose(
-        withData(
-          {
-            accounts: {
-              apiUtil: liskServiceApi.getTopAccounts,
-              defaultData: [],
-              autoload: true,
-              transformResponse: (response, accounts, urlSearchParams) => (
-                urlSearchParams.offset
-                  ? [...accounts, ...response.data]
-                  : response.data
-              ),
-            },
-            networkStatus: {
-              apiUtil: liskServiceApi.getNetworkStatus,
-              defaultData: {},
-              autoload: true,
-              transformResponse: response => response,
-            },
-          },
-        ),
-        withTranslation(),
-      )(MonitorAccounts))
+      : <ComposedAccounts />
   );
 };
 
-export default BlocksMonitor;
+export default AccountsMonitor;

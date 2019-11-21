@@ -9,6 +9,23 @@ import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
 import NotAvailable from '../notAvailable';
 
+const ComposedBlocks = compose(
+  withRouter,
+  withData({
+    blocks: {
+      apiUtil: liskService.getLastBlocks,
+      defaultData: [],
+      autoload: true,
+      transformResponse: (response, oldData, urlSearchParams) => (
+        urlSearchParams.offset
+          ? [...oldData, ...response.filter(block =>
+            !oldData.find(({ id }) => id === block.id))]
+          : response
+      ),
+    },
+  }),
+  withTranslation(),
+)(Blocks);
 
 const BlocksMonitor = () => {
   const network = useSelector(state => state.network);
@@ -16,23 +33,7 @@ const BlocksMonitor = () => {
   return (
     network.name === 'Custom Node'
       ? <NotAvailable />
-      : (compose(
-        withRouter,
-        withData({
-          blocks: {
-            apiUtil: liskService.getLastBlocks,
-            defaultData: [],
-            autoload: true,
-            transformResponse: (response, oldData, urlSearchParams) => (
-              urlSearchParams.offset
-                ? [...oldData, ...response.filter(block =>
-                  !oldData.find(({ id }) => id === block.id))]
-                : response
-            ),
-          },
-        }),
-        withTranslation(),
-      )(Blocks))
+      : <ComposedBlocks />
   );
 };
 

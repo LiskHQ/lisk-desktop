@@ -13,6 +13,31 @@ import NotAvailable from '../notAvailable';
 const mapStateToProps = (state, ownProps) => ({
   id: ownProps.match.params.id,
 });
+const ComposedBlockDetails = compose(
+  withRouter,
+  connect(mapStateToProps),
+  withData({
+    blockDetails: {
+      apiUtil: liskService.getBlockDetails,
+      autoload: true,
+      getApiParams: (state, ownProps) => ({ id: ownProps.id }),
+      transformResponse: response => (response.data && response.data[0]),
+    },
+    blockTransactions: {
+      apiUtil: liskService.getBlockTransactions,
+      defaultData: [],
+      autoload: true,
+      getApiParams: (state, ownProps) => ({ id: ownProps.id }),
+      transformResponse: (response, oldData) => [
+        ...oldData,
+        ...response.data.filter(transaction =>
+          !oldData.find(({ id }) => id === transaction.id)),
+      ],
+    },
+  }),
+  withTranslation(),
+  withResizeValues,
+)(BlockDetails);
 
 const BlockDetailsMonitor = () => {
   const network = useSelector(state => state.network);
@@ -20,31 +45,7 @@ const BlockDetailsMonitor = () => {
   return (
     network.name === 'Custom Node'
       ? <NotAvailable />
-      : (compose(
-        withRouter,
-        connect(mapStateToProps),
-        withData({
-          blockDetails: {
-            apiUtil: liskService.getBlockDetails,
-            autoload: true,
-            getApiParams: (state, ownProps) => ({ id: ownProps.id }),
-            transformResponse: response => (response.data && response.data[0]),
-          },
-          blockTransactions: {
-            apiUtil: liskService.getBlockTransactions,
-            defaultData: [],
-            autoload: true,
-            getApiParams: (state, ownProps) => ({ id: ownProps.id }),
-            transformResponse: (response, oldData) => [
-              ...oldData,
-              ...response.data.filter(transaction =>
-                !oldData.find(({ id }) => id === transaction.id)),
-            ],
-          },
-        }),
-        withTranslation(),
-        withResizeValues,
-      )(BlockDetails))
+      : <ComposedBlockDetails />
   );
 };
 
