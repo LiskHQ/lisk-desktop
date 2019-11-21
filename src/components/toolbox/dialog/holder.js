@@ -50,7 +50,8 @@ class DialogHolder extends React.Component {
 
   render() {
     const { dismissed } = this.state;
-    const ChildComponent = this.state.dialog;
+    const { children } = this.props;
+    const ChildComponent = this.state.dialog || children;
     return React.isValidElement(ChildComponent) && (
       <div
         className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}

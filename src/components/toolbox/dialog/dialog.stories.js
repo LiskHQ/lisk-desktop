@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { PrimaryButton, SecondaryButton } from '../buttons/button';
 import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
@@ -6,9 +6,10 @@ import Dialog from './dialog';
 import DialogHolder from './holder';
 
 storiesOf('Toolbox', module)
-  .add('Dialog', () => {
-    const showDialog = () => {
-      DialogHolder.showDialog(
+  .add('Dialog', () => (
+    <StoryWrapper>
+      <h3>Dialog</h3>
+      <DialogHolder>
         <Dialog hasClose>
           <Dialog.Title>
             Dialog Title
@@ -24,15 +25,7 @@ storiesOf('Toolbox', module)
               Accept
             </PrimaryButton>
           </Dialog.Options>
-        </Dialog>,
-      );
-    };
-    useEffect(showDialog, []);
-    return (
-      <StoryWrapper>
-        <h3>Dialog</h3>
-        <DialogHolder />
-        <PrimaryButton onClick={showDialog}>Show dialog</PrimaryButton>
-      </StoryWrapper>
-    );
-  });
+        </Dialog>
+      </DialogHolder>
+    </StoryWrapper>
+  ));
