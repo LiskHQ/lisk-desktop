@@ -209,8 +209,7 @@ export const doughnutChartOptions = {
     arc: {
       backgroundColor: chartStyles.ultramarineBlue,
       borderAlign: 'center',
-      borderColor: chartStyles.whiteColor,
-      borderWidth: 1,
+      borderWidth: 0,
     },
   },
 };
