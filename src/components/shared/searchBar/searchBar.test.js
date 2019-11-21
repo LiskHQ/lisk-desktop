@@ -16,6 +16,7 @@ describe('SearchBar', () => {
         addresses: [],
         transactions: [],
         delegates: [],
+        blocks: [],
       },
       loadData: jest.fn(),
       clearData: jest.fn(),

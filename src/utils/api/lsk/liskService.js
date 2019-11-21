@@ -22,7 +22,7 @@ const getServerUrl = (networkConfig) => {
   if (liskServiceDevnetUrl) {
     return liskServiceDevnetUrl;
   }
-  throw new Error(i18n.t('This feature is supported only for mainnet and testnet.'));
+  throw new Error(i18n.t('This feature can be accessed through Mainet and Testnet.'));
 };
 
 const formatDate = (value, options) => getTimestampFromFirstBlock(value, 'DD.MM.YY', options);
