@@ -1,12 +1,12 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxTabs from '../../../toolbox/tabs';
-import Chart from '../../../toolbox/charts';
+import Box from '../../../../toolbox/box';
+import BoxHeader from '../../../../toolbox/box/header';
+import BoxContent from '../../../../toolbox/box/content';
+import BoxTabs from '../../../../toolbox/tabs';
+import Chart from '../../../../toolbox/charts';
 import styles from './blocksOverview.css';
-import { chartStyles } from '../../../../constants/chartConstants';
+import { chartStyles } from '../../../../../constants/chartConstants';
 
 class BlocksOverview extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class BlocksOverview extends React.Component {
       labels: new Array(this.state.activeTab),
       datasets: [{
         label: 'block data',
-        data: blocks.data.map(block => block.numberOfTransactions).slice(0, this.state.activeTab),
+        data: blocks.data.map(block => block.numberOfTransactions),
         backgroundColor: chartStyles.ultramarineBlue,
       }],
     };
@@ -55,7 +55,7 @@ class BlocksOverview extends React.Component {
       labels: ['Empty', 'Not Empty'],
       datasets: [{
         backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
-        data: blocks.data.splice(0, this.state.activeTab).reduce((acc, item) => {
+        data: blocks.data.reduce((acc, item) => {
           if (item.numberOfTransactions) acc[1]++;
           else acc[0]++;
           return acc;
@@ -85,6 +85,8 @@ class BlocksOverview extends React.Component {
       active: this.state.activeTab,
       onClick: this.changeTab,
     };
+
+    console.log(this.props);
 
     return (
       <Box>
