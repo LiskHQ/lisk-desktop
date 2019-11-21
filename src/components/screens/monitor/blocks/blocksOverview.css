@@ -1,8 +1,16 @@
 @import '../../../../app/mixins.css';
 
-.cell {
-  height: 200px;
-  margin-bottom: 20px;
+.box {
+  margin-bottom: 40px;
+
+  & .cell {
+    height: 190px;
+    margin-bottom: 20px;
+
+    & h2 {
+      margin: 0;
+    }
+  }
 }
 
 .cellHeader {

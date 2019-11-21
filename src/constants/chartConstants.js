@@ -20,6 +20,7 @@ export const chartStyles = {
   darkBlue: '#19224d',
   ufoGreen: '#2bd67b',
   linthPink: '#f8d2d2',
+  mystic: '#edf0f5',
   transparent: 'rgba(0, 0, 0, 0)',
   contentFontFamily: '\'basier-circle\', sans-serif',
   fontSize: 13,
