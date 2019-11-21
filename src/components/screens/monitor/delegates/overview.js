@@ -8,7 +8,8 @@ import styles from './overview.css';
 
 const Overview = ({
   delegateForgingData,
-  delegateStatusData,
+  activeAndStandbyData,
+  options,
   t,
 }) => (
   <Box>
@@ -18,12 +19,12 @@ const Overview = ({
     <div className={styles.container}>
       <div className={styles.graphContainer}>
         {
-          delegateStatusData
+          activeAndStandbyData.datasets[0].data.length
             ? (
               <div className={styles.chartBox}>
                 <h1 className={styles.chartTitle}>{t('Delegates')}</h1>
                 <div className={styles.chart}>
-                  <Chart type="doughnut" data={delegateStatusData} />
+                  <Chart type="doughnut" data={activeAndStandbyData} options={options} />
                 </div>
               </div>
             )
@@ -32,12 +33,26 @@ const Overview = ({
       </div>
       <div className={styles.graphContainer}>
         {
-          delegateForgingData
+          delegateForgingData.datasets[0].data.length
             ? (
               <div className={styles.chartBox}>
                 <h1 className={styles.chartTitle}>{t('Delegates Forging Status')}</h1>
                 <div className={styles.chart}>
-                  <Chart type="doughnut" data={delegateForgingData} />
+                  <Chart type="doughnut" data={delegateForgingData} options={options} />
+                </div>
+              </div>
+            )
+            : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
+        }
+      </div>
+      <div className={styles.graphContainer}>
+        {
+          delegateForgingData.datasets[0].data.length
+            ? (
+              <div className={styles.chartBox}>
+                <h1 className={styles.chartTitle}>{t('Registered Delegates')}</h1>
+                <div className={styles.chart}>
+                  <Chart type="line" data={delegateForgingData} />
                 </div>
               </div>
             )

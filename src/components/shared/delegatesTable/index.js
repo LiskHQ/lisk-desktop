@@ -78,7 +78,7 @@ const DelegatesTable = ({
 
   return (
     <Box main isLoading={delegates.isLoading}>
-      <BoxHeader>
+      <BoxHeader className="delegates-table">
         {tabs.tabs.length === 1
           ? <h2>{tabs.tabs[0].name}</h2>
           : <BoxTabs {...tabs} />
