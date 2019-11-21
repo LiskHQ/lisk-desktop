@@ -9,7 +9,7 @@ storiesOf('Toolbox', module)
   .add('Dialog', () => (
     <StoryWrapper>
       <h3>Dialog</h3>
-      <DialogHolder>
+      <DialogHolder disableAnimation>
         <Dialog hasClose>
           <Dialog.Title>
             Dialog Title

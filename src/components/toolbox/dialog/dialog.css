@@ -57,6 +57,11 @@
   top: 0;
   z-index: var(--dialog-index);
 
+  &.disableAnimation {
+    animation-duration: 0ms;
+    animation-delay: 0ms;
+  }
+
   &.show {
     animation-name: showMask;
 
@@ -98,6 +103,11 @@
   transform: translateY(-50%) scale(0.9);
   visibility: hidden;
   width: 100%;
+}
+
+.disableAnimation .wrapper {
+  animation-duration: 0ms;
+  animation-delay: 0ms;
 }
 
 .title {
