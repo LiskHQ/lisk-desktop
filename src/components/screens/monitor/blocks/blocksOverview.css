@@ -1,15 +1,11 @@
 @import '../../../../app/mixins.css';
 
-.box {
-  margin-bottom: 40px;
+.cell {
+  height: 190px;
+  margin-bottom: 20px;
 
-  & .cell {
-    height: 190px;
-    margin-bottom: 20px;
-
-    & h2 {
-      margin: 0;
-    }
+  & h2 {
+    margin: 0;
   }
 }
 
