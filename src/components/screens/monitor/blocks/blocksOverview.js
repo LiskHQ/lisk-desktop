@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
-import Chart from '../../../toolbox/Chart';
+import Chart from '../../../toolbox/charts';
 import styles from './blocksOverview.css';
 import { chartStyles } from '../../../../constants/chartConstants';
 
