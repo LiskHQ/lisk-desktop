@@ -86,8 +86,6 @@ class BlocksOverview extends React.Component {
       onClick: this.changeTab,
     };
 
-    console.log(this.props);
-
     return (
       <Box>
         <BoxHeader>
