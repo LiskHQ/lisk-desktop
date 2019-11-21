@@ -3,71 +3,118 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
+import BoxTabs from '../../../toolbox/tabs';
 import Chart from '../../../toolbox/charts';
 import styles from './blocksOverview.css';
 import { chartStyles } from '../../../../constants/chartConstants';
 
-const BlocksOverview = ({ t, blocks }) => {
-  const barChartData = {
-    labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(() => ''),
-    datasets: [{
-      label: 'block data',
-      data: blocks.data.map(block => block.numberOfTransactions).slice(0, 10),
-      backgroundColor: chartStyles.ultramarineBlue,
-    }],
-  };
+class BlocksOverview extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeTab: 10,
+    };
 
-  const options = {
-    legend: {
-      display: false,
-    },
-  };
+    this.changeTab = this.changeTab.bind(this);
+  }
 
-  const doughnutChartData = {
-    labels: ['Empty', 'Not Empty'],
-    datasets: [{
-      backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
-      data: blocks.data.splice(0, 10).reduce((acc, item) => {
-        if (item.numberOfTransactions) acc[1]++;
-        else acc[0]++;
-        return acc;
-      }, [0, 0]),
-    }],
-  };
+  changeTab({ value }) {
+    this.setState({ activeTab: value });
+    this.props.blocks.loadData({ limit: value.toString() });
+  }
 
-  const douthnutChartOptions = {
-    cutoutPercentage: 70,
-  };
+  render() {
+    const { t, blocks } = this.props;
+    const barChartData = {
+      labels: new Array(this.state.activeTab),
+      datasets: [{
+        label: 'block data',
+        data: blocks.data.map(block => block.numberOfTransactions).slice(0, this.state.activeTab),
+        backgroundColor: chartStyles.ultramarineBlue,
+      }],
+    };
 
-  return (
-    <Box>
-      <BoxHeader>
-        <h2>{t('Overview')}</h2>
-      </BoxHeader>
-      <BoxContent>
-        <div className={`${grid.row} ${styles.box}`}>
-          <div className={`${grid['col-sm-8']} ${styles.cell}`}>
-            <h2 className={styles.cellHeader}>{t('Transactions per block')}</h2>
-            <Chart
-              type="bar"
-              options={options}
-              data={barChartData}
-            />
+    const options = {
+      legend: {
+        display: false,
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            display: false,
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Last blocks',
+          },
+        }],
+      },
+    };
+
+    const doughnutChartData = {
+      labels: ['Empty', 'Not Empty'],
+      datasets: [{
+        backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
+        data: blocks.data.splice(0, this.state.activeTab).reduce((acc, item) => {
+          if (item.numberOfTransactions) acc[1]++;
+          else acc[0]++;
+          return acc;
+        }, [0, 0]),
+      }],
+    };
+
+    const douthnutChartOptions = {
+      cutoutPercentage: 70,
+    };
+
+    const tabs = {
+      tabs: [
+        {
+          value: 10,
+          name: ('Last 10 Blocks'),
+        },
+        {
+          value: 50,
+          name: ('Last 50 Blocks'),
+        },
+        {
+          value: 100,
+          name: ('Last 100 Blocks'),
+        },
+      ],
+      active: this.state.activeTab,
+      onClick: this.changeTab,
+    };
+
+    return (
+      <Box>
+        <BoxHeader>
+          <h2>{t('Overview')}</h2>
+          <BoxTabs {...tabs} />
+        </BoxHeader>
+        <BoxContent>
+          <div className={`${grid.row} ${styles.box}`}>
+            <div className={`${grid['col-sm-8']} ${styles.cell}`}>
+              <h2 className={styles.cellHeader}>{t('Transactions per block')}</h2>
+              <Chart
+                type="bar"
+                options={options}
+                data={barChartData}
+              />
+            </div>
+            <div className={`${grid['col-sm-4']} ${styles.cell}`}>
+              <h2 className={styles.cellHeader}>{t('Empty/Not empty')}</h2>
+              <Chart
+                type="doughnut"
+                data={doughnutChartData}
+                options={douthnutChartOptions}
+              />
+            </div>
           </div>
-          <div className={`${grid['col-sm-4']} ${styles.cell}`}>
-            <h2 className={styles.cellHeader}>{t('Empty/Not empty')}</h2>
-            <Chart
-              type="doughnut"
-              data={doughnutChartData}
-              options={douthnutChartOptions}
-              width={900}
-              height={900}
-            />
-          </div>
-        </div>
-      </BoxContent>
-    </Box>
-  );
-};
+        </BoxContent>
+      </Box>
+    );
+  }
+}
 
 export default BlocksOverview;
