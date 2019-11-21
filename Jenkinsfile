@@ -7,7 +7,7 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
 	environment {
-		LISK_CORE_VERSION = '1.5.0'
+		LISK_CORE_VERSION = '2.1.3'
 	}
 	parameters {
 		booleanParam(name: 'SKIP_PERCY', defaultValue: false, description: 'Skip running percy.')
@@ -98,8 +98,8 @@ pipeline {
 							     status: 'PENDING'
 						dir('lisk') {
 							checkout([$class: 'GitSCM',
-							          branches: [[name: "v${env.LISK_CORE_VERSION}" ]],
-								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk']]])
+							          tags: [[name: "v${env.LISK_CORE_VERSION}" ]],
+								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-core']]])
 						}
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
 						withCredentials([string(credentialsId: 'lisk-hub-cypress-record-key', variable: 'CYPRESS_RECORD_KEY')]) {
