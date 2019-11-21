@@ -11,29 +11,37 @@ import withForgingStatus from './withForgingStatus';
 import withLocalSort from '../../../../utils/withLocalSort';
 import withResizeValues from '../../../../utils/withResizeValues';
 
-const defaultUrlSearchParams = { tab: 'active' };
+const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
+const standByDelegatesKey = 'standByDelegates';
 
 const mapStateToProps = ({ blocks: { latestBlocks } }) => ({
   latestBlocks,
 });
+
+const transformResponse = (response, oldData, urlSearchParams) => (
+  urlSearchParams.offset
+    ? [...oldData, ...response.filter(
+      delegate => !oldData.find(({ username }) => username === delegate.username),
+    )]
+    : response
+);
 
 export default compose(
   withRouter,
   withData(
     {
       [delegatesKey]: {
-        apiUtil: liskService.getDelegates,
+        apiUtil: liskService.getActiveDelegates,
         defaultData: [],
-        defaultUrlSearchParams,
         autoload: true,
-        transformResponse: (response, oldData, urlSearchParams) => (
-          urlSearchParams.offset
-            ? [...oldData, ...response.filter(
-              delegate => !oldData.find(({ username }) => username === delegate.username),
-            )]
-            : response
-        ),
+        transformResponse,
+      },
+      [standByDelegatesKey]: {
+        apiUtil: liskService.getStandbyDelegates,
+        defaultData: [],
+        autoload: true,
+        transformResponse,
       },
       chartsActiveAndStandby: {
         apiUtil: liskService.getActiveAndStandByDelegates,
@@ -44,7 +52,7 @@ export default compose(
     },
   ),
   withResizeValues,
-  withFilters(delegatesKey, defaultUrlSearchParams),
+  withFilters(standByDelegatesKey, defaultUrlSearchParams),
   connect(mapStateToProps),
   withForgingStatus(delegatesKey),
   withLocalSort(delegatesKey, 'rank:asc'),
