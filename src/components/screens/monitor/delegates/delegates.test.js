@@ -38,6 +38,13 @@ describe('Delegates monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
+      standByDelegates: {
+        isLoading: true,
+        data: [],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
       chartsActiveAndStandby: {
         isLoading: true,
         data: [588, 101],
@@ -102,7 +109,7 @@ describe('Delegates monitor page', () => {
 
   it('allows to load more standby delegates', () => {
     const tab = 'standby';
-    wrapper = setup({ ...props, delegates: delegatesWithData });
+    wrapper = setup({ ...props, standByDelegates: delegatesWithData });
     switchTab(tab);
     wrapper.find('button.loadMore').simulate('click');
     expect(props.delegates.loadData).toHaveBeenCalledWith({

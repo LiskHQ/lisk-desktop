@@ -1,5 +1,5 @@
 import { withTranslation } from 'react-i18next';
-import React from 'react';
+import React, { useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import moment from 'moment';
 import { DEFAULT_LIMIT } from '../../../../constants/monitor';
@@ -13,16 +13,20 @@ import routes from '../../../../constants/routes';
 import Overview from './overview';
 import styles from './delegates.css';
 
+// TODO resolve this by moving more logic to Overview component
+// eslint-disable-next-line max-statements
 const Delegates = ({
   applyFilters,
   changeSort,
   chartsActiveAndStandby,
   delegates,
+  standByDelegates,
   filters,
   isMediumViewPort,
   sort,
   t,
 }) => {
+  const [activeTab, setActiveTab] = useState('active');
   const getForgingTitle = status => ({
     forgedThisRound: t('Forging'),
     forgedLastRound: t('Awaiting slot'),
@@ -33,7 +37,7 @@ const Delegates = ({
   const columns = [
     {
       id: 'rank',
-      isSortable: filters.tab === 'active',
+      isSortable: activeTab === 'active',
     },
     {
       id: 'username',
@@ -45,12 +49,12 @@ const Delegates = ({
       header: t('Address'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ address }) => <AccountVisualWithAddress {...{ address, isMediumViewPort }} />,
-      className: (filters.tab === 'active'
+      className: (activeTab === 'active'
         ? [grid['col-xs-3'], grid['col-md-3']]
         : [grid['col-xs-5'], grid['col-md-6']]
       ).join(' '),
     },
-    ...(filters.tab === 'active' ? [{
+    ...(activeTab === 'active' ? [{
       id: 'forgingTime',
       header: t('Forging time'),
       headerTooltip: t('Time until next forging slot of a delegate.'),
@@ -85,7 +89,7 @@ const Delegates = ({
     ] : []),
     {
       id: 'productivity',
-      isSortable: filters.tab === 'active',
+      isSortable: activeTab === 'active',
     },
     {
       id: 'approval',
@@ -109,13 +113,13 @@ const Delegates = ({
         className: 'standby',
       },
     ],
-    active: filters.tab,
-    onClick: ({ value }) => applyFilters({ ...filters, tab: value }),
+    active: activeTab,
+    onClick: ({ value }) => setActiveTab(value),
   };
 
-  const canLoadMore = filters.tab === 'active'
+  const canLoadMore = activeTab === 'active'
     ? false
-    : !!delegates.data.length && delegates.data.length % DEFAULT_LIMIT === 0;
+    : !!standByDelegates.data.length && standByDelegates.data.length % DEFAULT_LIMIT === 0;
 
   const getRowLink = delegate => `${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.address}`;
 
@@ -154,6 +158,13 @@ const Delegates = ({
       },
     },
   };
+
+  delegates = activeTab === 'active'
+    ? {
+      ...delegates,
+      data: delegates.data.filter(d => d.username.includes(filters.search || '')),
+    }
+    : standByDelegates;
 
   return (
     <div>
