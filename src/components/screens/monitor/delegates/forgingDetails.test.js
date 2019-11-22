@@ -22,6 +22,9 @@ describe('Forging Details', () => {
       tab: 'active',
     },
     applyFilters: jest.fn(),
+    latestBlock: {
+      height: 50,
+    },
   };
 
   beforeEach(() => {
