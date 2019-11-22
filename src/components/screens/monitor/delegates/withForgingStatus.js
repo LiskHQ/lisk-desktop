@@ -83,11 +83,11 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     componentDidUpdate(prevProps) {
       const { latestBlocks } = this.props;
       const newBlock = latestBlocks[0] || {};
-      const forger = this.state.nextForgers.find(delegate =>
+      const lastForgerIndex = this.state.nextForgers.findIndex(delegate =>
         delegate.publicKey === newBlock.generatorPublicKey);
-      const nextForgers = this.getUpdatedNextForgersList(forger, newBlock.height);
 
       if (prevProps.latestBlocks[0] && prevProps.latestBlocks[0].height < newBlock.height) {
+        const nextForgers = this.getUpdatedNextForgersList(lastForgerIndex, newBlock.height);
         this.setState({ nextForgers });
         if (newBlock.height % 101 === 1) { // to update next forgers in a new round
           this.loadNextForgers(latestBlocks);
@@ -95,18 +95,17 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
       }
     }
 
-    getUpdatedNextForgersList(forger, newBlockHeight) {
+    getUpdatedNextForgersList(forgerIndex) {
       const nextForgers = [...this.state.nextForgers];
-
-      if (forger) {
-        nextForgers.push({
-          ...forger,
+      if (forgerIndex > -1) {
+        nextForgers[forgerIndex] = {
+          ...nextForgers[forgerIndex],
           forgingTime: moment().add(voting.numberOfActiveDelegates * 10, 'seconds'),
-          nextHeight: newBlockHeight + voting.numberOfActiveDelegates,
-        });
-        nextForgers.shift();
-      }
+        };
+        const forgersToPush = nextForgers.splice(0, forgerIndex + 1);
 
+        nextForgers.concat(forgersToPush);
+      }
       return nextForgers;
     }
 
