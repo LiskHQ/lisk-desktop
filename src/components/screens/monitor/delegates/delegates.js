@@ -126,12 +126,33 @@ const Delegates = ({
 
   const getRowLink = delegate => `${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.address}`;
 
+  const getAmountOfDelegatesInTime = () => {
+    const totalDelegates = chartsActiveAndStandby.data;
+    const final = [totalDelegates];
+    chartsRegisteredDelegates.data
+      .map(coordinate => (coordinate.y))
+      .reduce((amountOfDelegates, amountOfDelegatesByMonth) => {
+        final.unshift(amountOfDelegates - amountOfDelegatesByMonth);
+        return amountOfDelegates - amountOfDelegatesByMonth;
+      }, totalDelegates);
+
+    return final;
+  };
+
+  const getAmountOfDelegatesLabels = () => {
+    const labels = chartsRegisteredDelegates.data.map(coordenate => (coordenate.x));
+    labels.push('Now');
+    return labels;
+  };
+
   const activeAndStandbyData = {
     labels: [t('Standby delegates'), t('Active delegates')],
     datasets: [
       {
         label: 'delegates',
-        data: chartsActiveAndStandby.data,
+        data: typeof chartsActiveAndStandby.data === 'number'
+          ? [chartsActiveAndStandby.data - 101, 101]
+          : [],
       },
     ],
   };
@@ -140,24 +161,28 @@ const Delegates = ({
     labels: Object.values(statuses),
     datasets: [
       {
-        data: Object.values(delegates.data.reduce((acc, delegate) => {
-          acc[delegate.status] += 1;
-          return acc;
-        }, {
-          forgedThisRound: 0,
-          forgedLastRound: 0,
-          notForging: 0,
-          missedLastRound: 0,
-        })),
+        data: delegates.data.length
+          ? Object.values(delegates.data.reduce((acc, delegate) => {
+            acc[delegate.status] += 1;
+            return acc;
+          }, {
+            forgedThisRound: 0,
+            forgedLastRound: 0,
+            notForging: 0,
+            missedLastRound: 0,
+          }))
+          : [],
       },
     ],
   };
 
   const registeredDelegates = {
-    labels: chartsRegisteredDelegates.data.map(coordenate => (coordenate.x)),
+    labels: getAmountOfDelegatesLabels(),
     datasets: [
       {
-        data: chartsRegisteredDelegates.data.map(coordenate => (coordenate.y)),
+        data: chartsRegisteredDelegates.data.length
+          ? getAmountOfDelegatesInTime()
+          : [],
       },
     ],
   };
