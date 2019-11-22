@@ -14,7 +14,8 @@ const ForgingDetails = ({
 }) => {
   const totalForged = networkStatus && networkStatus.data.supply - initialLSKSupply;
   const remainingBlocksInRound = latestBlock && 101 - (latestBlock.height % 101);
-  const nextForgersInRound = nextForgers.slice(0, Math.min(10, remainingBlocksInRound));
+  const nextForgersInRound = nextForgers && nextForgers
+    .slice(0, Math.min(10, remainingBlocksInRound));
   return (
     <Box>
       <BoxHeader>
@@ -33,7 +34,7 @@ const ForgingDetails = ({
           <div className={`${grid['col-sm-4']} ${styles.content}`}>
             <h3>{t('Next forgers')}</h3>
             <div className={styles.contentBody}>
-              {nextForgersInRound && nextForgersInRound.map((delegate, i) => (
+              {nextForgers && nextForgersInRound.map((delegate, i) => (
                 <span key={delegate.address}>
                   <Link className="next-forger" to={`${routes.accounts.path}/${delegate.address}`}>
                     {delegate.username}
@@ -47,7 +48,7 @@ const ForgingDetails = ({
             <h3>{t('Last forger')}</h3>
             <div className={styles.contentBody}>
               {latestBlock && (
-                <Link to={`${routes.accounts.path}/${latestBlock.generatorUsername}`}>{latestBlock.generatorUsername}</Link>
+                <Link to={`${routes.accounts.path}/${latestBlock.generatorAddress}`}>{latestBlock.generatorUsername}</Link>
               )}
             </div>
           </div>

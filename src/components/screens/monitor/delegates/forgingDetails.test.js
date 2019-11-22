@@ -6,7 +6,7 @@ import ForgingDetails from './forgingDetails';
 
 describe('Forging Details', () => {
   let wrapper;
-  let props = {
+  const props = {
     t: key => key,
     sortDirection: 'asc',
     networkStatus: {
@@ -29,16 +29,6 @@ describe('Forging Details', () => {
   });
 
   it('renders a list of sorted forgers', () => {
-    expect(wrapper.find('.next-forger').at(0)).toHaveText('genesis_3');
-  });
-
-  it('renders the list in the same order independently of the sort direction', () => {
-    props = {
-      ...props,
-      sorDirection: 'desc',
-    };
-    wrapper = mount(<ForgingDetails {...props} />);
-
     expect(wrapper.find('.next-forger').at(0)).toHaveText('genesis_3');
   });
 

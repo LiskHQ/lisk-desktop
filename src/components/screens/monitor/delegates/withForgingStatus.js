@@ -194,9 +194,16 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     }
 
     ensureGeneratorUsername(block) {
-      const username = block.generatorUsername || this.state.nextForgers.find(
-        delegate => delegate.publicKey === block.generatorPublicKey,
-      ).username;
+      let username;
+
+      if (block.generatorUsername) username = block.generatorUsername;
+      else if (this.state.nextForgers) {
+        const forger = this.state.nextForgers.find(
+          delegate => delegate.publicKey === block.generatorPublicKey,
+        );
+
+        username = forger && forger.username;
+      }
 
       return {
         ...block,
