@@ -49,7 +49,7 @@ export default compose(
         apiUtil: liskService.getActiveAndStandByDelegates,
         defaultData: [],
         autoload: true,
-        transformResponse: response => ([response.total - 101, 101]),
+        transformResponse: response => response.total,
       },
 
       chartsRegisteredDelegates: {
