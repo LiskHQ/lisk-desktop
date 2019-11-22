@@ -97,11 +97,11 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
 
     getUpdatedNextForgersList(forgerIndex) {
       const nextForgers = [...this.state.nextForgers];
-      nextForgers[forgerIndex] = {
-        ...nextForgers[forgerIndex],
-        forgingTime: moment().add(voting.numberOfActiveDelegates * 10, 'seconds'),
-      };
-      const forgersToPush = nextForgers.splice(0, forgerIndex + 1);
+
+      const forgersToPush = nextForgers.splice(0, forgerIndex + 1).map((forger, i) => ({
+        ...forger,
+        forgingTime: moment().add(voting.numberOfActiveDelegates * (i * 10), 'seconds'),
+      }));
 
       return nextForgers.concat(forgersToPush);
     }
