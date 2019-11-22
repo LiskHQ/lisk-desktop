@@ -14,9 +14,7 @@ const ForgingDetails = ({
 }) => {
   const totalForged = networkStatus && networkStatus.data.supply - initialLSKSupply;
   const remainingBlocksInRound = latestBlock && 101 - (latestBlock.height % 101);
-  const nextForgersInRound = nextForgers.filter(
-    (forger, i) => i < 10 && i < remainingBlocksInRound,
-  );
+  const nextForgersInRound = nextForgers.slice(0, Math.min(10, remainingBlocksInRound));
   return (
     <Box>
       <BoxHeader>
