@@ -1,4 +1,4 @@
- @define-mixin contentSmallest {
+@define-mixin contentSmallest {
   font-family: var(--content-font);
   font-size: 11px;
   font-weight: var(--font-weight-semi-bold);
