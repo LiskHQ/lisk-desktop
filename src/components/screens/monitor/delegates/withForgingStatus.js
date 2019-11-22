@@ -194,14 +194,13 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
     }
 
     ensureGeneratorUsername(block) {
-      const generator = this.state.nextForgers.find(
+      const username = block.generatorUsername || this.state.nextForgers.find(
         delegate => delegate.publicKey === block.generatorPublicKey,
-      );
+      ).username;
 
       return {
         ...block,
-        generatorUsername: block.generatorUsername
-          || (generator && generator.username),
+        generatorUsername: username,
       };
     }
 
@@ -216,7 +215,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
             ...this.props[delegatesKey],
             data: this.getDelegatesData(),
           },
-          latestBlock: latestBlocks.map(this.ensureGeneratorUsername.bind(this))[0],
+          latestBlock: latestBlocks.slice(0, 1).map(this.ensureGeneratorUsername.bind(this))[0],
           nextForgers: this.state.nextForgers,
         }}
         />
