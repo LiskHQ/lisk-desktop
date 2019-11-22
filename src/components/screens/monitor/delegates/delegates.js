@@ -19,20 +19,23 @@ const Delegates = ({
   applyFilters,
   changeSort,
   chartsActiveAndStandby,
+  chartsRegisteredDelegates,
   delegates,
-  standByDelegates,
   filters,
   isMediumViewPort,
   sort,
+  standByDelegates,
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
-  const getForgingTitle = status => ({
+  const statuses = {
     forgedThisRound: t('Forging'),
     forgedLastRound: t('Awaiting slot'),
     notForging: t('Not forging'),
     missedLastRound: t('Missed block'),
-  }[status] || t('Loading'));
+  };
+
+  const getForgingTitle = status => statuses[status] || t('Loading');
 
   const columns = [
     {
@@ -134,29 +137,33 @@ const Delegates = ({
   };
 
   const delegatesForgedData = {
-    labels: [t('Forging blocks'), t('Not forging'), t('Awaiting slot'), t('Missed blocks')],
+    labels: Object.values(statuses),
     datasets: [
       {
         data: delegates.data.length
-          ? delegates.data.reduce((acc, delegate) => {
-            if (delegate.status === 'forgedThisRound') acc[0] += 1;
-            if (delegate.status === 'notForging') acc[1] += 1;
-            if (delegate.status === 'forgedLastRound') acc[2] += 1;
-            if (delegate.status === 'missedLastRound') acc[3] += 1;
+          ? Object.values(delegates.data.reduce((acc, delegate) => {
+            acc[delegate.status] += 1;
             return acc;
-          }, [0, 0, 0, 0])
+          }, {
+            forgedThisRound: 0,
+            forgedLastRound: 0,
+            notForging: 0,
+            missedLastRound: 0,
+          }))
           : [],
       },
     ],
   };
 
-  const options = {
-    tooltips: {
-      callbacks: {
-        title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
-        label(tooltipItem, data) { return data.datasets[0].data[tooltipItem.index]; },
+  const registeredDelegates = {
+    labels: chartsRegisteredDelegates.data.map(coordenate => (coordenate.x)),
+    datasets: [
+      {
+        data: chartsRegisteredDelegates.data.length
+          ? chartsRegisteredDelegates.data.map(coordenate => (coordenate.y))
+          : [],
       },
-    },
+    ],
   };
 
   delegates = activeTab === 'active'
@@ -173,7 +180,7 @@ const Delegates = ({
         t={t}
         activeAndStandbyData={activeAndStandbyData}
         delegateForgingData={delegatesForgedData}
-        options={options}
+        registeredDelegates={registeredDelegates}
       />
       <DelegatesTable {...{
         columns,
