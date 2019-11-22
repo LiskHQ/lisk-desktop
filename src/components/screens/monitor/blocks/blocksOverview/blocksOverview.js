@@ -48,6 +48,12 @@ class BlocksOverview extends React.Component {
             labelString: 'Last blocks',
           },
         }],
+        yAxes: [{
+          ticks: {
+            padding: 15,
+            fontSize: 12,
+          },
+        }],
       },
     };
 
@@ -88,7 +94,7 @@ class BlocksOverview extends React.Component {
 
     return (
       <Box>
-        <BoxHeader>
+        <BoxHeader className="box-header">
           <h2>{t('Overview')}</h2>
           <BoxTabs {...tabs} />
         </BoxHeader>
