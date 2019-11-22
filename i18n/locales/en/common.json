@@ -457,6 +457,7 @@
   "Use this tool to verify the validity of a signed message. This allows you to ensure that the person who signed the message was in fact the account owner": "Use this tool to verify the validity of a signed message. This allows you to ensure that the person who signed the message was in fact the account owner",
   "Verify address": "Verify address",
   "Verify message": "Verify message",
+  "Verify the address in your hardware wallet device.": "Verify the address in your hardware wallet device.",
   "Version": "Version",
   "View": "View",
   "View All": "View All",
