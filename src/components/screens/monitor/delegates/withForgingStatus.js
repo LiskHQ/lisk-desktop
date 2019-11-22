@@ -87,7 +87,7 @@ const withForgingStatus = delegatesKey => (ChildComponent) => {
         delegate.publicKey === newBlock.generatorPublicKey);
 
       if (prevProps.latestBlocks[0] && prevProps.latestBlocks[0].height < newBlock.height) {
-        const nextForgers = this.getUpdatedNextForgersList(lastForgerIndex, newBlock.height);
+        const nextForgers = this.getUpdatedNextForgersList(lastForgerIndex);
         this.setState({ nextForgers });
         if (newBlock.height % 101 === 1) { // to update next forgers in a new round
           this.loadNextForgers(latestBlocks);
