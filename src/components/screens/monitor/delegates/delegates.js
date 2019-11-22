@@ -140,17 +140,15 @@ const Delegates = ({
     labels: Object.values(statuses),
     datasets: [
       {
-        data: delegates.data.length
-          ? Object.values(delegates.data.reduce((acc, delegate) => {
-            acc[delegate.status] += 1;
-            return acc;
-          }, {
-            forgedThisRound: 0,
-            forgedLastRound: 0,
-            notForging: 0,
-            missedLastRound: 0,
-          }))
-          : [],
+        data: Object.values(delegates.data.reduce((acc, delegate) => {
+          acc[delegate.status] += 1;
+          return acc;
+        }, {
+          forgedThisRound: 0,
+          forgedLastRound: 0,
+          notForging: 0,
+          missedLastRound: 0,
+        })),
       },
     ],
   };
@@ -159,9 +157,7 @@ const Delegates = ({
     labels: chartsRegisteredDelegates.data.map(coordenate => (coordenate.x)),
     datasets: [
       {
-        data: chartsRegisteredDelegates.data.length
-          ? chartsRegisteredDelegates.data.map(coordenate => (coordenate.y))
-          : [],
+        data: chartsRegisteredDelegates.data.map(coordenate => (coordenate.y)),
       },
     ],
   };

@@ -4,6 +4,7 @@ import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import Chart from '../../../toolbox/charts';
+import { typeLine, typeDoughnut } from '../../../../constants/chartConstants';
 import styles from './overview.css';
 
 const Overview = ({
@@ -25,7 +26,7 @@ const Overview = ({
                 <h1 className={styles.chartTitle}>{t('Delegates')}</h1>
                 <div className={styles.chart}>
                   <Chart
-                    type="doughnut"
+                    type={typeDoughnut}
                     data={activeAndStandbyData}
                     options={{
                       tooltips: {
@@ -52,7 +53,7 @@ const Overview = ({
                 <h1 className={styles.chartTitle}>{t('Delegates Forging Status')}</h1>
                 <div className={styles.chart}>
                   <Chart
-                    type="doughnut"
+                    type={typeDoughnut}
                     data={delegateForgingData}
                     options={{
                       tooltips: {
@@ -79,7 +80,7 @@ const Overview = ({
                 <h1 className={styles.chartTitle}>{t('Registered Delegates')}</h1>
                 <div className={styles.chart}>
                   <Chart
-                    type="line"
+                    type={typeLine}
                     data={registeredDelegates}
                     options={{ legend: { display: false } }}
                   />

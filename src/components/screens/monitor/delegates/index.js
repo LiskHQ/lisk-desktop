@@ -67,7 +67,10 @@ export default compose(
             };
           }, {});
 
-          return Object.entries(result).map(coordenate => ({ x: coordenate[0], y: coordenate[1] }));
+          return Object.entries(result)
+            .map(coordenate => ({ x: coordenate[0], y: coordenate[1] }))
+            .sort((categoryA, categoryB) => categoryB - categoryA)
+            .slice(-4);
         },
       },
     },
