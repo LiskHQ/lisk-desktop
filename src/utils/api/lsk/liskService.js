@@ -125,6 +125,14 @@ const liskServiceApi = {
     return tabOptions[tab](network, rest);
   },
 
+  getLiskServiceUrl: (networkConfig) => {
+    try {
+      return getServerUrl(networkConfig);
+    } catch (e) {
+      return null;
+    }
+  },
+
   getNextForgers: async ({ networkConfig }, searchParams) => liskServiceGet({
     networkConfig,
     path: '/api/v1/delegates/next_forgers',

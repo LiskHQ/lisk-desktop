@@ -29,7 +29,7 @@ const TransactionsMonitor = () => {
   const network = useSelector(state => state.network);
 
   return (
-    network.name === 'Custom Node'
+    liskServiceApi.getLiskServiceUrl(network) === null
       ? <NotAvailable />
       : <ComposedTransactions />
   );

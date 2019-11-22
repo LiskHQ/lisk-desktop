@@ -20,7 +20,7 @@ describe('Transactions monitor page', () => {
   it('should render Transactions when using testnet', () => {
     const store = fakeStore({
       network: {
-        name: 'testnet',
+        name: 'Testnet',
       },
     });
     const wrapper = mount(<Provider store={store}><TransactionsMonitor /></Provider>);
