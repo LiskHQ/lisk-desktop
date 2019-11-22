@@ -130,6 +130,17 @@ const liskServiceApi = {
     transformResponse: response => response.meta,
   }),
 
+  getRegisteredDelegates: async ({ networkConfig }) => liskServiceGet({
+    networkConfig,
+    path: '/api/v1/transactions',
+    searchParams: {
+      limit: 100,
+      type: 2,
+      sort: 'timestamp:desc',
+    },
+    transformResponse: response => response.data,
+  }),
+
   getNextForgers: async ({ networkConfig }, searchParams) => liskServiceGet({
     networkConfig,
     path: '/api/v1/delegates/next_forgers',

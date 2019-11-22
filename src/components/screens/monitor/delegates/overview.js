@@ -7,9 +7,9 @@ import Chart from '../../../toolbox/charts';
 import styles from './overview.css';
 
 const Overview = ({
-  delegateForgingData,
   activeAndStandbyData,
-  options,
+  delegateForgingData,
+  registeredDelegates,
   t,
 }) => (
   <Box>
@@ -24,7 +24,20 @@ const Overview = ({
               <div className={styles.chartBox}>
                 <h1 className={styles.chartTitle}>{t('Delegates')}</h1>
                 <div className={styles.chart}>
-                  <Chart type="doughnut" data={activeAndStandbyData} options={options} />
+                  <Chart
+                    type="doughnut"
+                    data={activeAndStandbyData}
+                    options={{
+                      tooltips: {
+                        callbacks: {
+                          title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+                          label(tooltipItem, data) {
+                            return data.datasets[0].data[tooltipItem.index];
+                          },
+                        },
+                      },
+                    }}
+                  />
                 </div>
               </div>
             )
@@ -38,7 +51,20 @@ const Overview = ({
               <div className={styles.chartBox}>
                 <h1 className={styles.chartTitle}>{t('Delegates Forging Status')}</h1>
                 <div className={styles.chart}>
-                  <Chart type="doughnut" data={delegateForgingData} options={options} />
+                  <Chart
+                    type="doughnut"
+                    data={delegateForgingData}
+                    options={{
+                      tooltips: {
+                        callbacks: {
+                          title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+                          label(tooltipItem, data) {
+                            return data.datasets[0].data[tooltipItem.index];
+                          },
+                        },
+                      },
+                    }}
+                  />
                 </div>
               </div>
             )
@@ -47,12 +73,16 @@ const Overview = ({
       </div>
       <div className={styles.graphContainer}>
         {
-          delegateForgingData.datasets[0].data.length
+          registeredDelegates.datasets[0].data.length
             ? (
               <div className={styles.chartBox}>
                 <h1 className={styles.chartTitle}>{t('Registered Delegates')}</h1>
                 <div className={styles.chart}>
-                  <Chart type="line" data={delegateForgingData} />
+                  <Chart
+                    type="line"
+                    data={registeredDelegates}
+                    options={{ legend: { display: false } }}
+                  />
                 </div>
               </div>
             )

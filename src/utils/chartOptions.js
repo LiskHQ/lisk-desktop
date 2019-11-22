@@ -141,7 +141,7 @@ export const lineChartOptions = {
     point: {
       radius: 2,
       hoverRadius: 2,
-      hitRadius: 1,
+      hitRadius: 10,
     },
     line: {
       tension: 0,
