@@ -30,7 +30,7 @@ const transformResponse = (response, oldData, urlSearchParams) => (
     : response
 );
 
-export default compose(
+const ComposedDelegates = compose(
   withRouter,
   withData(
     {
