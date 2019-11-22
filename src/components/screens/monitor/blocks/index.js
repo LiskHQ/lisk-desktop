@@ -31,7 +31,7 @@ const BlocksMonitor = () => {
   const network = useSelector(state => state.network);
 
   return (
-    network.name === 'Custom Node'
+    liskService.getLiskServiceUrl(network) === null
       ? <NotAvailable />
       : <ComposedBlocks />
   );

@@ -125,6 +125,24 @@ const liskServiceApi = {
     return tabOptions[tab](network, rest);
   },
 
+  /**
+   * Returns lisk-service URL based on network name and nethash
+   *
+   * In particular it resolves mainnet/testnet nethash to coresponding lisk-service instance
+   *
+   * @param {Object} networkConfig  - structured as network store: src/store/reducers/network.js
+   * @param {String} networkConfig.name
+   * @param {String} networkConfig.networks.LSK.nethash - if name is "Custom node"
+   * @return {String} lisk-service URL
+   */
+  getLiskServiceUrl: (networkConfig) => {
+    try {
+      return getServerUrl(networkConfig);
+    } catch (e) {
+      return null;
+    }
+  },
+
   getNextForgers: async ({ networkConfig }, searchParams) => liskServiceGet({
     networkConfig,
     path: '/api/v1/delegates/next_forgers',
