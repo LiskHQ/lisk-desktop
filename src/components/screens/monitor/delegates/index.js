@@ -40,6 +40,7 @@ const ComposedDelegates = compose(
         autoload: true,
         transformResponse,
       },
+
       [standByDelegatesKey]: {
         apiUtil: liskService.getStandbyDelegates,
         defaultData: [],
@@ -47,29 +48,29 @@ const ComposedDelegates = compose(
         transformResponse,
       },
 
-      chartsActiveAndStandby: {
+      chartActiveAndStandbyData: {
         apiUtil: liskService.getActiveAndStandByDelegates,
         defaultData: [],
         autoload: true,
         transformResponse: response => response.total,
       },
 
-      chartsRegisteredDelegates: {
+      chartRegisteredDelegatesData: {
         apiUtil: liskService.getRegisteredDelegates,
         defaultData: [],
         autoload: true,
         transformResponse: (response) => {
-          const result = response.reduce((acc, delegate) => {
-            const newObj = { ...delegate, timestamp: moment(delegate.timestamp * 1000).format('MMM YY') };
+          const responseFormatted = response.reduce((acc, delegate) => {
+            const newDelegate = { ...delegate, timestamp: moment(delegate.timestamp * 1000).format('MMM YY') };
             return {
               ...acc,
-              [newObj.timestamp]: ((acc[newObj.timestamp] || 0) + 1),
+              [newDelegate.timestamp]: ((acc[newDelegate.timestamp] || 0) + 1),
             };
           }, {});
 
-          return Object.entries(result)
-            .map(coordenate => ({ x: coordenate[0], y: coordenate[1] }))
-            .sort((categoryA, categoryB) => categoryB - categoryA)
+          return Object.entries(responseFormatted)
+            .map(delegate => ({ x: delegate[0], y: delegate[1] }))
+            .sort((dateA, dateB) => dateB - dateA)
             .slice(-4);
         },
       },

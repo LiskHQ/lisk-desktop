@@ -45,9 +45,21 @@ describe('Delegates monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      chartsActiveAndStandby: {
+      chartActiveAndStandbyData: {
         isLoading: true,
-        data: [588, 101],
+        data: 589,
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      chartRegisteredDelegatesData: {
+        isLoading: true,
+        data: [
+          { x: 'Aug', y: 4 },
+          { x: 'Sep', y: 1 },
+          { x: 'Oct', y: 8 },
+          { x: 'Nov', y: 4 },
+        ],
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
