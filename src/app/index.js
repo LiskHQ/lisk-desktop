@@ -6,6 +6,7 @@ import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styles from './app.css';
+import './variables.css';
 import Toaster from '../components/shared/toaster';
 import LoadingBar from '../components/shared/loadingBar';
 import OfflineWrapper from '../components/shared/offlineWrapper';

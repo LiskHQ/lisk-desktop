@@ -1,5 +1,3 @@
-@import '../../../app/variables.css';
-
 .track,
 .bar {
   transform: rotate(-90deg);
