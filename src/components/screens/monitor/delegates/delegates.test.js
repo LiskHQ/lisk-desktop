@@ -6,6 +6,7 @@ import delegates from '../../../../../test/constants/delegates';
 const transformToLiskServiceFormat = ({ account, ...delegate }) => ({
   ...delegate,
   ...account,
+  status: 'forgedThisRound',
 });
 const delegatesApiResponse = delegates.map(transformToLiskServiceFormat);
 
@@ -46,14 +47,14 @@ describe('Delegates monitor page', () => {
         urlSearchParams: {},
       },
       chartActiveAndStandbyData: {
-        isLoading: true,
-        data: 589,
+        isLoading: false,
+        data: '589',
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
       },
       chartRegisteredDelegatesData: {
-        isLoading: true,
+        isLoading: false,
         data: [
           { x: 'Aug', y: 4 },
           { x: 'Sep', y: 1 },
@@ -74,6 +75,7 @@ describe('Delegates monitor page', () => {
       ...props.delegates,
       isLoading: false,
       data: delegatesApiResponse,
+      status: 'forgedThisRound',
     };
     wrapper = setup(props);
   });

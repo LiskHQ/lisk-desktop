@@ -33,48 +33,6 @@ const Overview = ({
     return labels;
   };
 
-  const activeAndStandby = {
-    labels: [t('Standby delegates'), t('Active delegates')],
-    datasets: [
-      {
-        label: 'delegates',
-        data: typeof chartActiveAndStandby.data === 'number'
-          ? [chartActiveAndStandby.data - 101, 101]
-          : [],
-      },
-    ],
-  };
-
-  const delegateForgingStatus = {
-    labels: delegatesForgedLabels,
-    datasets: [
-      {
-        data: chartDelegatesForging.data.length
-          ? Object.values(chartDelegatesForging.data.reduce((acc, delegate) => {
-            acc[delegate.status] += 1;
-            return acc;
-          }, {
-            forgedThisRound: 0,
-            forgedLastRound: 0,
-            notForging: 0,
-            missedLastRound: 0,
-          }))
-          : [],
-      },
-    ],
-  };
-
-  const registeredDelegates = {
-    labels: getAmountOfDelegatesLabels(),
-    datasets: [
-      {
-        data: chartRegisteredDelegates.data.length
-          ? getAmountOfDelegatesInTime()
-          : [],
-      },
-    ],
-  };
-
   return (
     <Box>
       <BoxHeader>
@@ -83,14 +41,22 @@ const Overview = ({
       <div className={styles.container}>
         <div className={styles.graphContainer}>
           {
-            activeAndStandby.datasets[0].data.length
+            typeof chartActiveAndStandby.data === 'number'
               ? (
                 <div className={styles.chartBox}>
                   <h1 className={styles.chartTitle}>{t('Delegates')}</h1>
                   <div className={styles.chart}>
                     <Chart
                       type={typeDoughnut}
-                      data={activeAndStandby}
+                      data={{
+                        labels: [t('Standby delegates'), t('Active delegates')],
+                        datasets: [
+                          {
+                            label: 'delegates',
+                            data: [chartActiveAndStandby.data - 101, 101],
+                          },
+                        ],
+                      }}
                       options={{
                         tooltips: {
                           callbacks: {
@@ -117,7 +83,24 @@ const Overview = ({
                   <div className={styles.chart}>
                     <Chart
                       type={typeDoughnut}
-                      data={delegateForgingStatus}
+                      data={{
+                        labels: delegatesForgedLabels,
+                        datasets: [
+                          {
+                            label: 'status',
+                            data: Object.values(chartDelegatesForging.data
+                              .reduce((acc, delegate) => {
+                                acc[delegate.status] += 1;
+                                return acc;
+                              }, {
+                                forgedThisRound: 0,
+                                forgedLastRound: 0,
+                                notForging: 0,
+                                missedLastRound: 0,
+                              })),
+                          },
+                        ],
+                      }}
                       options={{
                         tooltips: {
                           callbacks: {
@@ -144,7 +127,14 @@ const Overview = ({
                   <div className={styles.chart}>
                     <Chart
                       type={typeLine}
-                      data={registeredDelegates}
+                      data={{
+                        labels: getAmountOfDelegatesLabels(),
+                        datasets: [
+                          {
+                            data: getAmountOfDelegatesInTime(),
+                          },
+                        ],
+                      }}
                       options={{ legend: { display: false } }}
                     />
                   </div>
