@@ -68,7 +68,7 @@ describe('Delegates monitor page', () => {
       filters: {
         tab: 'active',
       },
-      applyFilters: jest.fn(),
+      applyFilters: jest.fn(filters => wrapper.setProps({ filters })),
     };
 
     delegatesWithData = {
@@ -109,6 +109,7 @@ describe('Delegates monitor page', () => {
   });
 
   it('allows to filter delegates by name and clear the filter', () => {
+    wrapper = setup({ ...props, delegates: delegatesWithData });
     wrapper.find('input.filter-by-name').simulate('change', { target: { value: name } });
     expect(props.applyFilters).toHaveBeenCalledWith({ search: name, tab: props.filters.tab });
     wrapper.find('input.filter-by-name').simulate('change', { target: { value: '' } });

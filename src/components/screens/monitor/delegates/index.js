@@ -60,6 +60,9 @@ const ComposedDelegates = compose(
         defaultData: [],
         autoload: true,
         transformResponse: (response) => {
+          // This function is to iterate over the list of delegates and GROUP BY
+          // timestamp (Month and Year) and count how many users reegistered as
+          // delegate in the month
           const responseFormatted = response.reduce((acc, delegate) => {
             const newDelegate = { ...delegate, timestamp: moment(delegate.timestamp * 1000).startOf('month').toISOString() };
             return {
@@ -71,7 +74,8 @@ const ComposedDelegates = compose(
           return Object.entries(responseFormatted)
             .map(delegate => ({ x: delegate[0], y: delegate[1] }))
             .sort((dateA, dateB) => (dateB.x > dateA.x ? -1 : 1))
-            .slice(-4);
+            .slice(-4)
+            .map(delegate => ({ ...delegate, x: moment(delegate.x).format('MMM YY') }));
         },
       },
     },

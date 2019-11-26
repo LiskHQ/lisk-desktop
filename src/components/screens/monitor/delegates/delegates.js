@@ -51,9 +51,9 @@ const Delegates = ({
       /* eslint-disable-next-line react/display-name */
       getValue: ({ address }) => <AccountVisualWithAddress {...{ address, isMediumViewPort }} />,
       className: (activeTab === 'active'
-        ? [grid['col-xs-3'], grid['col-md-3']]
-        : [grid['col-xs-5'], grid['col-md-6']]
-      ).join(' '),
+        ? `${grid['col-xs-3']} ${grid['col-md-3']}`
+        : `${grid['col-xs-5']} ${grid['col-md-6']}`
+      ),
     },
     ...(activeTab === 'active' ? [{
       id: 'forgingTime',
@@ -63,7 +63,7 @@ const Delegates = ({
       getValue: ({ forgingTime }) => (forgingTime
         ? moment(forgingTime.diff(moment())).format(t('m [min] s [sec]'))
         : '-'),
-      className: ['hidden-m', grid['col-md-2']].join(' '),
+      className: `hidden-m ${grid['col-md-2']}`,
     },
     {
       id: 'status',
@@ -75,7 +75,7 @@ const Delegates = ({
           title={getForgingTitle(status)}
           className="showOnBottom"
           size="s"
-          content={(<div className={[styles.status, styles[status]].join(' ')} />)}
+          content={(<div className={`${styles.status} ${styles[status]}`} />)}
           footer={(
             <p>{lastBlock && moment(getUnixTimestampFromValue(lastBlock.timestamp)).fromNow()}</p>
           )}
@@ -85,7 +85,7 @@ const Delegates = ({
           </p>
         </Tooltip>
       ),
-      className: [grid['col-xs-2'], grid['col-md-1'], styles.statusTitle].join(' '),
+      className: `${grid['col-xs-2']} ${grid['col-md-1']} ${styles.statusTitle}`,
     },
     ] : []),
     {
@@ -98,7 +98,7 @@ const Delegates = ({
       headerTooltip: t('Percentage of total supply voting for a delegate.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ approval }) => <strong>{`${formatAmountBasedOnLocale({ value: approval })} %`}</strong>,
-      className: [grid['col-xs-2'], grid['col-md-1'], styles.approvalTitle].join(' '),
+      className: `${grid['col-xs-2']} ${grid['col-md-1']} ${styles.approvalTitle}`,
     },
   ];
 
@@ -129,7 +129,9 @@ const Delegates = ({
   delegates = activeTab === 'active'
     ? {
       ...delegates,
-      data: delegates.data.filter(d => d.username.includes(filters.search || '')),
+      data: filters.search
+        ? delegates.data.filter(delegate => delegate.username.includes(filters.search))
+        : delegates.data,
     }
     : standByDelegates;
 

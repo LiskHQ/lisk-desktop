@@ -1,6 +1,5 @@
 // istanbul ignore file
 import React from 'react';
-import moment from 'moment';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
@@ -29,7 +28,7 @@ const Overview = ({
   };
 
   const getAmountOfDelegatesLabels = () => {
-    const labels = chartRegisteredDelegates.data.map(date => moment(date.x).format('MMM YY'));
+    const labels = chartRegisteredDelegates.data.map(date => date.x);
     labels.push('Now');
     return labels;
   };
