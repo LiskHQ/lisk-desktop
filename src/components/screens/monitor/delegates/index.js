@@ -61,7 +61,7 @@ const ComposedDelegates = compose(
         autoload: true,
         transformResponse: (response) => {
           const responseFormatted = response.reduce((acc, delegate) => {
-            const newDelegate = { ...delegate, timestamp: moment(delegate.timestamp * 1000).format('MMM YY') };
+            const newDelegate = { ...delegate, timestamp: moment(delegate.timestamp * 1000).startOf('month').toISOString() };
             return {
               ...acc,
               [newDelegate.timestamp]: ((acc[newDelegate.timestamp] || 0) + 1),
@@ -70,7 +70,7 @@ const ComposedDelegates = compose(
 
           return Object.entries(responseFormatted)
             .map(delegate => ({ x: delegate[0], y: delegate[1] }))
-            .sort((dateA, dateB) => dateB - dateA)
+            .sort((dateA, dateB) => (dateB.x > dateA.x ? -1 : 1))
             .slice(-4);
         },
       },

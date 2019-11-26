@@ -13,7 +13,6 @@ import routes from '../../../../constants/routes';
 import Overview from './overview';
 import styles from './delegates.css';
 
-// eslint-disable-next-line max-statements
 const Delegates = ({
   applyFilters,
   changeSort,
@@ -125,6 +124,8 @@ const Delegates = ({
 
   const getRowLink = delegate => `${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.address}`;
 
+  const chartDelegatesForging = delegates;
+
   delegates = activeTab === 'active'
     ? {
       ...delegates,
@@ -137,7 +138,7 @@ const Delegates = ({
       <MonitorHeader />
       <Overview
         chartActiveAndStandby={chartActiveAndStandbyData}
-        chartDelegatesForging={delegates}
+        chartDelegatesForging={chartDelegatesForging}
         chartRegisteredDelegates={chartRegisteredDelegatesData}
         delegatesForgedLabels={Object.values(statuses)}
         t={t}
