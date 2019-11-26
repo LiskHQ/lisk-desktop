@@ -83,15 +83,21 @@ const baseOptions = {
 
   tooltips: {
     enabled: true,
+    callbacks: {
+      title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+      label(tooltipItem, data) {
+        return data.datasets[0].data[tooltipItem.index];
+      },
+    },
     mode: 'index',
     backgroundColor: chartStyles.whiteColor,
-    bodyFontColor: chartStyles.maastrichtBlue,
+    bodyFontColor: chartStyles.slateGray,
     bodyFontFamily: chartStyles.contentFontFamily,
-    bodyFontSize: 11,
-    bodyFontStyle: 'bold',
+    bodyFontSize: 13,
+    bodyFontStyle: 'normal',
     borderColor: chartStyles.platinumColor,
     borderWidth: 1,
-    titleFontColor: chartStyles.slateGray,
+    titleFontColor: chartStyles.maastrichtBlue,
     titleFontFamily: chartStyles.contentFontFamily,
     titleFontSize: chartStyles.fontSize,
     titleFontStyle: 'semi-bold',
@@ -203,7 +209,7 @@ export const barChartOptions = {
 
 
 export const doughnutChartOptions = {
-  cutoutPercentage: 60,
+  cutoutPercentage: 65,
 
   elements: {
     arc: {

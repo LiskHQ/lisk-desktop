@@ -1,14 +1,22 @@
 @import '../../../../../app/mixins.css';
 
-.cell {
-  height: 190px;
-  margin-bottom: 20px;
+.row {
+  height: 275px;
+}
+
+.chartBox {
+  height: 100%;
 
   & h2 {
     margin: 0;
   }
-}
 
-.cellHeader {
-  @mixin contentLargest bold;
+  & .chartTitle {
+    @mixin contentLargest bold;
+  }
+
+  & > .chart {
+    position: relative;
+    height: calc(100% - 20px);
+  }
 }

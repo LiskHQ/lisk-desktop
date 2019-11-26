@@ -528,6 +528,8 @@
   "m [min] s [sec]": "m [min] s [sec]",
   "secondPassphraseInfoParagraph": "After registration, your second passphrase will be <strong>required</strong> when <strong>confirming every transaction</strong> and every vote. You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk. Once activated a second passphrase <strong>can’t be turned off.</strong>",
   "to": "to",
+  "{{ blocks }} Blocks": "{{ blocks }} Blocks",
+  "{{ transactions }} Transacitons": "{{ transactions }} Transacitons",
   "{{deviceModel}} connected! Open the Lisk app on the device": "{{deviceModel}} connected! Open the Lisk app on the device",
   "{{deviceModel}} connected! Please provide a PIN number": "{{deviceModel}} connected! Please provide a PIN number",
   "{{hours}}h ago": "{{hours}}h ago",
