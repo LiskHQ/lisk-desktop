@@ -2,21 +2,26 @@
 
 .row {
   height: 275px;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 .chartBox {
   height: 100%;
-
-  & h2 {
-    margin: 0;
-  }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 
   & .chartTitle {
     @mixin contentLargest bold;
+
+    margin: 0;
+    padding: 0;
   }
 
   & > .chart {
     position: relative;
-    height: calc(100% - 20px);
+    height: calc(100% - 23px);
   }
 }
