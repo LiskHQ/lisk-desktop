@@ -83,6 +83,9 @@ class BlocksOverview extends React.Component {
                       xAxes: [{
                         ticks: {
                           display: false,
+                          gridLines: {
+                            drawTicks: false,
+                          },
                         },
                         scaleLabel: {
                           display: true,
@@ -130,6 +133,7 @@ class BlocksOverview extends React.Component {
                     }],
                   }}
                   options={{
+                    cutoutPercentage: 65,
                     tooltips: {
                       callbacks: {
                         // istanbul ignore next

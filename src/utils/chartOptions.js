@@ -139,7 +139,6 @@ export const lineChartOptions = {
         fontColor: chartStyles.slateGray,
         fontSize: chartStyles.fontSize,
         fontFamily: chartStyles.contentFontFamily,
-        beginAtZero: true,
       },
     }],
   },
@@ -164,10 +163,8 @@ export const barChartOptions = {
       position: 'bottom',
       stacked: true,
       gridLines: {
-        display: true,
-        lineWidth: 0,
-        zeroLineWidth: 1,
-        drawTicks: false,
+        display: false,
+        offsetGridLines: true,
       },
       ticks: {
         fontColor: chartStyles.slateGray,
@@ -210,13 +207,14 @@ export const barChartOptions = {
 
 
 export const doughnutChartOptions = {
-  cutoutPercentage: 65,
+  cutoutPercentage: 60,
 
   elements: {
     arc: {
       backgroundColor: chartStyles.ultramarineBlue,
       borderAlign: 'center',
-      borderWidth: 0,
+      borderColor: chartStyles.whiteColor,
+      borderWidth: 1,
     },
   },
 };
