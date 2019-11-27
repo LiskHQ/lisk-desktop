@@ -13,7 +13,6 @@ const RequestWrapper = ({
 }) => {
   const [expanded, setExpanded] = useState(false);
   const darkMode = useSelector(state => state.settings.DarkMode);
-  console.log();
 
   return (
     <div className={`${styles.container}`}>

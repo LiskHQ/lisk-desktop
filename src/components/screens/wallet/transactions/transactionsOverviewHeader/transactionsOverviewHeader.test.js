@@ -1,9 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import TransactionHeader from './transactionsOverviewHeader';
 import accounts from '../../../../../../test/constants/accounts';
 import routes from '../../../../../constants/routes';
+
+const fakeStore = configureStore();
 
 describe('Transactions Overview Header', () => {
   let wrapper;
@@ -21,8 +25,14 @@ describe('Transactions Overview Header', () => {
   };
 
   describe('Current user wallet', () => {
+    const store = fakeStore({
+      settings: {
+        DarkMode: false,
+      },
+    });
+
     beforeEach(() => {
-      wrapper = mount(<TransactionHeader {...props} />);
+      wrapper = mount(<Provider store={store}><TransactionHeader {...props} /></Provider>);
     });
 
     it('Should render header and Request and Send LSK buttons', () => {
