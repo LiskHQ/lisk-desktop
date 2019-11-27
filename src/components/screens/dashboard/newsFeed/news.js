@@ -25,7 +25,7 @@ class News extends React.Component {
 
   render() {
     const {
-      source, content, timestamp, url, t,
+      source, content, timestamp, url, t, darkMode,
     } = this.props;
     const date = this.formatDate(t, timestamp);
 
@@ -34,7 +34,7 @@ class News extends React.Component {
     return (
       <a href={url} target="_blank" rel="noopener noreferrer" className={`${styles.news} news-item`}>
         <div className={styles.header}>
-          <Icon name="newsFeedAvatar" />
+          <Icon name={darkMode ? 'newsFeedAvatarDark' : 'newsFeedAvatar'} />
           <div>
             <span className={styles.title}>{sourceName}</span>
             <span className={styles.subtitle}>{date}</span>

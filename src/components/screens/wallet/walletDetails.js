@@ -83,7 +83,7 @@ class WalletDetails extends React.Component {
           </div>
         </BoxRow>
         <BoxRow className={styles.row}>
-          <Icon name="balance" />
+          <Icon name={darkMode ? 'balanceDark' : 'balance'} />
           <div>
             <label>{t('Balance')}</label>
             <DiscreetMode shouldEvaluateForOtherAccounts>

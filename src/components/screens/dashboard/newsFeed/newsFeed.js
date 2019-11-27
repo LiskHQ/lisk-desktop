@@ -14,6 +14,7 @@ class NewsFeed extends React.Component {
       channels,
       newsFeed,
       t,
+      darkMode,
     } = this.props;
 
     const filteredNewsFeed = newsFeed.data.filter(feed => channels[feed.source]) || [];
@@ -31,6 +32,7 @@ class NewsFeed extends React.Component {
                     <News
                       t={t}
                       {...news}
+                      darkMode={darkMode}
                     />
                   </BoxRow>
                 ))

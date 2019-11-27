@@ -10,6 +10,7 @@ import arrowLeftInactive from '../../../assets/images/icons/arrow-left-inactive.
 import arrowRightActive from '../../../assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '../../../assets/images/icons/arrow-right-inactive.svg';
 import balance from '../../../assets/images/icons/balance.svg';
+import balanceDark from '../../../assets/images/icons/balance-dark.svg';
 import bookmarksIconEmptyState from '../../../assets/images/icons/bookmarks-empty-state.svg';
 import btcIcon from '../../../assets/images/icons/icon-btc.svg';
 import checkboxFilled from '../../../assets/images/icons/checkmark-filled.svg';
@@ -51,6 +52,7 @@ import lskIcon from '../../../assets/images/icons/icon-lsk.svg';
 import monitorIcon from '../../../assets/images/icons/monitor.svg';
 import monitorIconActive from '../../../assets/images/icons/monitorActive.svg';
 import newsFeedAvatar from '../../../assets/images/icons/news-feed-avatar.svg';
+import newsFeedAvatarDark from '../../../assets/images/icons/news-feed-avatar-dark.svg';
 import noTweetsIcon from '../../../assets/images/icons/no-tweets.svg';
 import okIcon from '../../../assets/images/icons/icon-checkmark.svg';
 import outgoing from '../../../assets/images/icons/outgoing.svg';
@@ -179,6 +181,8 @@ export const icons = {
   copyActive,
   verifyWalletAddressActive,
   liskLogoDark,
+  balanceDark,
+  newsFeedAvatarDark,
 };
 
 
