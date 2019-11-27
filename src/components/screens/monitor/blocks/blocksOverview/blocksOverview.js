@@ -81,6 +81,11 @@ class BlocksOverview extends React.Component {
                     },
                     scales: {
                       xAxes: [{
+                        gridLines: {
+                          display: true,
+                          offsetGridLines: true,
+                          lineWidth: 0,
+                        },
                         ticks: {
                           display: false,
                           gridLines: {
@@ -95,6 +100,13 @@ class BlocksOverview extends React.Component {
                         },
                       }],
                       yAxes: [{
+                        gridLines: {
+                          display: true,
+                          offsetGridLines: false,
+                          lineWidth: 0,
+                          zeroLineWidth: 1,
+                          drawTicks: false,
+                        },
                         ticks: {
                           padding: 15,
                           fontSize: chartStyles.fontSize,

@@ -180,9 +180,7 @@ export const barChartOptions = {
       stacked: true,
       gridLines: {
         display: true,
-        lineWidth: 0,
-        zeroLineWidth: 1,
-        drawTicks: false,
+        offsetGridLines: true,
       },
       ticks: {
         display: true,
