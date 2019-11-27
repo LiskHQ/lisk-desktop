@@ -19,7 +19,7 @@
 
   &.isLoading {
     & .loadingOverlay {
-      background: rgba(255, 255, 255, 0.8);
+      background: var(--overlay-color);
       bottom: 0;
       position: absolute;
       top: 0;
