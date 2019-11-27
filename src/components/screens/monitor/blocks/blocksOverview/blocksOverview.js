@@ -45,12 +45,17 @@ class BlocksOverview extends React.Component {
       <Box>
         <BoxHeader className="box-header">
           <h2>{t('Overview')}</h2>
-          <BoxTabs tabs={tabs} active={activeTab} onClick={this.changeTab} />
+          <BoxTabs
+            tabs={tabs}
+            active={activeTab}
+            onClick={this.changeTab}
+            className="box-tabs"
+          />
         </BoxHeader>
         <BoxContent>
           <div className={`${grid.row} ${styles.row}`}>
 
-            <div className={`${grid['col-sm-8']} ${styles.chartBox}`}>
+            <div className={`${grid['col-sm-8']} ${grid['col-xs-7']} ${styles.chartBox}`}>
               <h2 className={styles.chartTitle}>{t('Transactions per block')}</h2>
               <div className={styles.chart}>
                 <Chart
@@ -95,7 +100,9 @@ class BlocksOverview extends React.Component {
                     },
                     tooltips: {
                       callbacks: {
+                        // istanbul ignore next
                         title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+                        // istanbul ignore next
                         label(tooltipItem, data) {
                           return t('{{ transactions }} Transacitons', { transactions: data.datasets[0].data[tooltipItem.index] });
                         },
@@ -106,7 +113,7 @@ class BlocksOverview extends React.Component {
               </div>
             </div>
 
-            <div className={`${grid['col-sm-4']} ${styles.chartBox}`}>
+            <div className={`${grid['col-sm-4']} ${grid['col-xs-5']} ${styles.chartBox}`}>
               <h2 className={styles.chartTitle}>{t('Empty/Not empty')}</h2>
               <div className={styles.chart}>
                 <Chart
@@ -115,8 +122,8 @@ class BlocksOverview extends React.Component {
                     labels: ['Empty', 'Not Empty'],
                     datasets: [{
                       backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
-                      data: blocks.data.reduce((acc, item) => {
-                        if (item.numberOfTransactions) acc[1]++;
+                      data: blocks.data.reduce((acc, block) => {
+                        if (block.numberOfTransactions) acc[1]++;
                         else acc[0]++;
                         return acc;
                       }, [0, 0]),
@@ -125,7 +132,9 @@ class BlocksOverview extends React.Component {
                   options={{
                     tooltips: {
                       callbacks: {
+                        // istanbul ignore next
                         title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+                        // istanbul ignore next
                         label(tooltipItem, data) {
                           return t('{{ blocks }} Blocks', { blocks: data.datasets[0].data[tooltipItem.index] });
                         },

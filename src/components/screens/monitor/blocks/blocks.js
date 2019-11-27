@@ -47,7 +47,7 @@ const Blocks = ({
       <BlocksOverview t={t} />
       <Box isLoading={blocks.isLoading} width="full" main>
         <BoxHeader>
-          <h2>{t('All blocks')}</h2>
+          <h2 className="blocks-header-title">{t('All blocks')}</h2>
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
         </BoxHeader>
         <FilterBar {...{
