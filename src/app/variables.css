@@ -112,7 +112,7 @@ or "warn/action" ineastd of "red/green"
   --light-border-color: rgba(255, 255, 255, 0.24);
   --overlay-color: rgba(255, 255, 255, 0.8);
   --dark-border-color: rgba(0, 0, 0, 0.08);
-  --primary-background-color: color(var(--color-ultramarine-blue) a(8%));
+  --primary-background-color: rgba(64, 112, 244, 0.08);
   --error-background-color: var(--color-burnt-sienna);
   --color-dialog-mask: color(var(--color-maastricht-blue) a(52%));
   --color-primary-standard: var(--color-ultramarine-blue);
@@ -134,7 +134,7 @@ or "warn/action" ineastd of "red/green"
   --color-link-active: #4070f4;
   --color-title-header-box: #4c4c4c;
   --color-link: var(--color-primary-standard);
-  --color-rows-hover: var(--primary-background-color);
+  --color-rows-hover: rgba(64, 112, 244, 0.08);
   --color-highlight-checkboxes: rgba(64, 112, 244, 0.08);
   --color-onboarding-bg: var(--color-maastricht-blue);
   --color-strong-white: var(--color-white);
@@ -197,4 +197,7 @@ or "warn/action" ineastd of "red/green"
   --color-mystic: #4d4d50;
   --color-budy-bg: #000;
   --color-onboarding-bg: #1c1c1e;
+  --color-rows-hover: #1c1c1e;
+  --overlay-color: rgba(28, 28, 30, 0.8);
+  --color-content-light: #fff;
 }
