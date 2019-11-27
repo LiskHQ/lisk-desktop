@@ -1,7 +1,7 @@
 @import '../../../app/mixins.css';
 
 .onboarding {
-  background-color: var(--color-maastricht-blue);
+  background-color: var(--color-onboarding-bg);
   border-radius: var(--border-radius-standard);
   box-sizing: border-box;
   color: var(--color-white);
@@ -92,7 +92,7 @@
 
     &::before,
     &::after {
-      background-color: var(--color-white);
+      background-color: var(--color-strong-white);
       content: '';
       height: 11px;
       position: absolute;
@@ -159,12 +159,14 @@
 
       line-height: 25px;
       margin: 0;
+      color: var(--color-strong-white);
     }
 
     & h1 {
       @mixin headingLarge;
 
       margin: 30px 0;
+      color: var(--color-strong-white);
     }
   }
 

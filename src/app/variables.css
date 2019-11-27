@@ -136,6 +136,8 @@ or "warn/action" ineastd of "red/green"
   --color-link: var(--color-primary-standard);
   --color-rows-hover: var(--primary-background-color);
   --color-highlight-checkboxes: rgba(64, 112, 244, 0.08);
+  --color-onboarding-bg: var(--color-maastricht-blue);
+  --color-strong-white: var(--color-white);
 
   /*************************
         Box
@@ -194,4 +196,5 @@ or "warn/action" ineastd of "red/green"
   --dark-border-color: #373739;
   --color-mystic: #4d4d50;
   --color-budy-bg: #000;
+  --color-onboarding-bg: #1c1c1e;
 }
