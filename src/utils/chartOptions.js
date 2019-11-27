@@ -193,6 +193,7 @@ export const barChartOptions = {
         fontColor: chartStyles.slateGray,
         fontSize: chartStyles.fontSize,
         fontFamily: chartStyles.contentFontFamily,
+        beginAtZero: true,
       },
     }],
   },
