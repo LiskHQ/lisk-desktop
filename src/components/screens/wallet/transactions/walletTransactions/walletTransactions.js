@@ -137,7 +137,7 @@ class WalletTransactions extends React.Component {
     };
 
     const {
-      t, account, activeToken, isDiscreetMode,
+      t, account, activeToken, isDiscreetMode, settings,
     } = this.props;
 
     return (
@@ -155,6 +155,7 @@ class WalletTransactions extends React.Component {
             tabName={t('Wallet')}
             {...overviewProps}
             isDiscreetMode={isDiscreetMode}
+            darkMode={settings.DarkMode}
           />
           {this.props.activeToken !== 'BTC' ? (
             <VotesTab

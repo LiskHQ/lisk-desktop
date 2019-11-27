@@ -1,7 +1,5 @@
 import React from 'react';
-
 import RequestWrapper from './requestWrapper';
-
 import styles from './request.css';
 
 const RequestBtc = ({
