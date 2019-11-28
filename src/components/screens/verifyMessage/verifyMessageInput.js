@@ -51,7 +51,7 @@ export default class VerifyMessageInput extends React.Component {
           feedback: '',
         },
       }), {}),
-      isInputsView: true,
+      isInputsView: false,
     };
 
     this.goNext = this.goNext.bind(this);
@@ -152,14 +152,15 @@ export default class VerifyMessageInput extends React.Component {
           <div className={styles.inputViewSwitcher}>
             {t('Input view')}
             <Icon
-              className="inputs-view-icon"
-              name={`verifyMessageInputsView${!isInputsView ? '' : 'Active'}`}
-              onClick={this.changeViewToInputs}
-            />
-            <Icon
               className="textarea-view-icon"
               name={`verifyMessageTextareaView${isInputsView ? '' : 'Active'}`}
               onClick={this.changeViewToTextarea}
+            />
+
+            <Icon
+              className="inputs-view-icon"
+              name={`verifyMessageInputsView${!isInputsView ? '' : 'Active'}`}
+              onClick={this.changeViewToInputs}
             />
           </div>
           {this.activeViewInputs.map(({
