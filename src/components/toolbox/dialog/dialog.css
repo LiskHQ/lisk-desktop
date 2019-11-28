@@ -45,7 +45,7 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   align-items: center;
-  background-color: var(--color-dialog-mask);
+  background-color: var(--color-dialog-bg);
   bottom: 0;
   display: flex;
   justify-content: center;
@@ -85,6 +85,7 @@
   animation-timing-function: linear;
   background-color: var(--color-white);
   border-radius: var(--border-radius-box);
+  border: solid 1px var(--dark-border-color);
   box-shadow: var(--box-shadow-dialog);
   box-sizing: border-box;
   display: flex;
