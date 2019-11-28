@@ -219,7 +219,7 @@ class Header extends React.Component {
       <header className={`${styles.wrapper} mainHeader ${dark ? 'dark' : ''}`}>
         <div className={`${styles.headerContent}`}>
           <div className={`${styles.logo}`}>
-            <Icon name={dark ? 'liskLogoWhite' : 'liskLogo'} className="topbar-logo" />
+            <Icon noTheme name="liskLogo" className="topbar-logo" />
           </div>
           <div className={`${styles.buttonsHolder}`}>
             {

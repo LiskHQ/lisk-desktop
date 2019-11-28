@@ -187,9 +187,9 @@ export const icons = {
   fileOutlineDark,
 };
 
-const Icon = ({ name, ...props }) => {
+const Icon = ({ name, noTheme, ...props }) => {
   const darkMode = useSelector(state => state.settings.DarkMode);
-  const src = darkMode && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
+  const src = darkMode && !noTheme && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
   return <img src={src} {...props} />;
 };
 
