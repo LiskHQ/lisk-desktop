@@ -100,7 +100,7 @@ const baseOptions = {
     titleFontColor: chartStyles.maastrichtBlue,
     titleFontFamily: chartStyles.contentFontFamily,
     titleFontSize: chartStyles.fontSize,
-    titleFontStyle: 'semi-bold',
+    titleFontStyle: 'bold',
     displayColors: false,
     xPadding: 10,
     yPadding: 10,
@@ -147,7 +147,7 @@ export const lineChartOptions = {
     point: {
       radius: 2,
       hoverRadius: 2,
-      hitRadius: 1,
+      hitRadius: 10,
     },
     line: {
       tension: 0,

@@ -1,5 +1,5 @@
 import { withTranslation } from 'react-i18next';
-import React from 'react';
+import React, { useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import moment from 'moment';
 import { DEFAULT_LIMIT } from '../../../../constants/monitor';
@@ -10,22 +10,35 @@ import DelegatesTable from '../../../shared/delegatesTable';
 import MonitorHeader from '../header';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
+import Overview from './overview';
 import styles from './delegates.css';
 
 const Delegates = ({
-  delegates, t, filters, applyFilters, changeSort, sort, isMediumViewPort,
+  applyFilters,
+  changeSort,
+  chartActiveAndStandbyData,
+  chartRegisteredDelegatesData,
+  delegates,
+  filters,
+  isMediumViewPort,
+  sort,
+  standByDelegates,
+  t,
 }) => {
-  const getForgingTitle = status => ({
+  const [activeTab, setActiveTab] = useState('active');
+  const statuses = {
     forgedThisRound: t('Forging'),
     forgedLastRound: t('Awaiting slot'),
     notForging: t('Not forging'),
     missedLastRound: t('Missed block'),
-  }[status] || t('Loading'));
+  };
+
+  const getForgingTitle = status => statuses[status] || t('Loading');
 
   const columns = [
     {
       id: 'rank',
-      isSortable: filters.tab === 'active',
+      isSortable: activeTab === 'active',
     },
     {
       id: 'username',
@@ -37,12 +50,12 @@ const Delegates = ({
       header: t('Address'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ address }) => <AccountVisualWithAddress {...{ address, isMediumViewPort }} />,
-      className: (filters.tab === 'active'
-        ? [grid['col-xs-3'], grid['col-md-3']]
-        : [grid['col-xs-5'], grid['col-md-6']]
-      ).join(' '),
+      className: (activeTab === 'active'
+        ? `${grid['col-xs-3']} ${grid['col-md-3']}`
+        : `${grid['col-xs-5']} ${grid['col-md-6']}`
+      ),
     },
-    ...(filters.tab === 'active' ? [{
+    ...(activeTab === 'active' ? [{
       id: 'forgingTime',
       header: t('Forging time'),
       headerTooltip: t('Time until next forging slot of a delegate.'),
@@ -50,7 +63,7 @@ const Delegates = ({
       getValue: ({ forgingTime }) => (forgingTime
         ? moment(forgingTime.diff(moment())).format(t('m [min] s [sec]'))
         : '-'),
-      className: ['hidden-m', grid['col-md-2']].join(' '),
+      className: `hidden-m ${grid['col-md-2']}`,
     },
     {
       id: 'status',
@@ -62,7 +75,7 @@ const Delegates = ({
           title={getForgingTitle(status)}
           className="showOnBottom"
           size="s"
-          content={(<div className={[styles.status, styles[status]].join(' ')} />)}
+          content={(<div className={`${styles.status} ${styles[status]}`} />)}
           footer={(
             <p>{lastBlock && moment(getUnixTimestampFromValue(lastBlock.timestamp)).fromNow()}</p>
           )}
@@ -72,12 +85,12 @@ const Delegates = ({
           </p>
         </Tooltip>
       ),
-      className: [grid['col-xs-2'], grid['col-md-1'], styles.statusTitle].join(' '),
+      className: `${grid['col-xs-2']} ${grid['col-md-1']} ${styles.statusTitle}`,
     },
     ] : []),
     {
       id: 'productivity',
-      isSortable: filters.tab === 'active',
+      isSortable: activeTab === 'active',
     },
     {
       id: 'approval',
@@ -85,7 +98,7 @@ const Delegates = ({
       headerTooltip: t('Percentage of total supply voting for a delegate.'),
       /* eslint-disable-next-line react/display-name */
       getValue: ({ approval }) => <strong>{`${formatAmountBasedOnLocale({ value: approval })} %`}</strong>,
-      className: [grid['col-xs-2'], grid['col-md-1'], styles.approvalTitle].join(' '),
+      className: `${grid['col-xs-2']} ${grid['col-md-1']} ${styles.approvalTitle}`,
     },
   ];
 
@@ -101,19 +114,37 @@ const Delegates = ({
         className: 'standby',
       },
     ],
-    active: filters.tab,
-    onClick: ({ value }) => applyFilters({ ...filters, tab: value }),
+    active: activeTab,
+    onClick: ({ value }) => setActiveTab(value),
   };
 
-  const canLoadMore = filters.tab === 'active'
+  const canLoadMore = activeTab === 'active'
     ? false
-    : !!delegates.data.length && delegates.data.length % DEFAULT_LIMIT === 0;
+    : !!standByDelegates.data.length && standByDelegates.data.length % DEFAULT_LIMIT === 0;
 
   const getRowLink = delegate => `${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.address}`;
+
+  const chartDelegatesForging = delegates;
+
+  delegates = activeTab === 'active'
+    ? {
+      ...delegates,
+      data: filters.search
+        ? delegates.data.filter(delegate => delegate.username.includes(filters.search))
+        : delegates.data,
+    }
+    : standByDelegates;
 
   return (
     <div>
       <MonitorHeader />
+      <Overview
+        chartActiveAndStandby={chartActiveAndStandbyData}
+        chartDelegatesForging={chartDelegatesForging}
+        chartRegisteredDelegates={chartRegisteredDelegatesData}
+        delegatesForgedLabels={Object.values(statuses)}
+        t={t}
+      />
       <DelegatesTable {...{
         columns,
         delegates,
