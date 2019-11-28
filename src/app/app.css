@@ -43,7 +43,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow: auto;
-    background-color: var(--color-budy-bg);
+    background-color: var(--color-body-bg);
   }
 
   &.loaded > section {
