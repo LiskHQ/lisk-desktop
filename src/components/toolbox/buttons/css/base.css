@@ -94,11 +94,11 @@
 
 @define-mixin buttonWarning {
   background-color: var(--color-burnt-sienna) !important;
-  color: var(--color-white) !important;
+  color: var(--color-strong-white) !important;
 
   &:focus,
   &:hover {
-    background: color(var(--color-burnt-sienna) l(+4%)) !important;
+    /* background: color(var(--color-burnt-sienna) l(+4%)) !important; */
     box-shadow: 3px 3px 10px 0 rgba(236, 104, 104, 0.36) !important;
   }
 }
