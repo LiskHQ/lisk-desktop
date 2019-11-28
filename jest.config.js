@@ -13,7 +13,6 @@ module.exports = {
     'src/components/screens/register/register.test.js',
     'src/components/screens/delegates/voting/voteUrlProcessor/index.test.js',
     'src/store/reducers/liskService.test.js',
-    'src/store/middlewares/socket.test.js',
     'src/components/screens/register/register.test.js',
     'src/components/shared/header/signInHeader/signInHeader.test.js',
   ],
