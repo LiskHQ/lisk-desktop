@@ -84,6 +84,7 @@
       padding-left: 15px;
       border-right: solid 1px var(--color-platinum);
       width: calc(100% - 20px);
+      color: var(--color-content-light);
     }
 
     & > .subTitle {
