@@ -12,33 +12,36 @@ class Onboarding extends React.Component {
     this.state = {
       currentSlide: 0,
     };
-
-    this.setCurrent = this.setCurrent.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleFinalCallback = this.handleFinalCallback.bind(this);
   }
 
-  handleClose() {
+  handleClose = () => {
     const { name } = this.props;
     localStorage.setItem(name, true);
     this.forceUpdate();
   }
 
-  handleFinalCallback() {
+  handleDiscard = () => {
+    this.handleClose();
+    const { onDiscard } = this.props;
+    if (typeof onDiscard === 'function') {
+      onDiscard();
+    }
+  }
+
+  handleFinalCallback = () => {
     const { finalCallback } = this.props;
     if (typeof finalCallback === 'function') finalCallback();
     this.handleClose();
   }
 
-  handleButtonClick({ target: { name } }) {
+  handleButtonClick = ({ target: { name } }) => {
     const { currentSlide } = this.state;
     return name === 'next'
       ? this.setCurrent(currentSlide + 1)
       : this.setCurrent(currentSlide - 1);
   }
 
-  setCurrent(index) {
+  setCurrent = (index) => {
     const { slides: { length } } = this.props;
     const currentSlide = index >= 0 && index < length
       ? index : this.state.currentSlide;
@@ -56,7 +59,7 @@ class Onboarding extends React.Component {
 
     return slides.length && !closedBefore ? (
       <div className={`${styles.onboarding} ${className}`}>
-        <span className={styles.closeBtn} onClick={this.handleClose} />
+        <span className={`closeOnboarding ${styles.closeBtn}`} onClick={this.handleDiscard} />
         <div className={styles.illustrations}>
           {slides.map(({ illustration }, i) => (
             <Illustration

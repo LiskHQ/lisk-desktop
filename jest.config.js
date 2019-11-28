@@ -13,7 +13,6 @@ module.exports = {
     'src/components/screens/register/register.test.js',
     'src/components/screens/delegates/voting/voteUrlProcessor/index.test.js',
     'src/store/reducers/liskService.test.js',
-    'src/store/middlewares/socket.test.js',
     'src/components/screens/register/register.test.js',
     'src/components/shared/header/signInHeader/signInHeader.test.js',
   ],
@@ -64,6 +63,7 @@ module.exports = {
     'src/utils/api/btc/',
     'src/utils/applyDeviceClass.js',
     'src/utils/ledger.js',
+    'src/utils/theme.js',
     'src/components/screens/registerDelegate/registerDelegate.js',
     'src/components/wallet/transactions/transactionsOverview.js',
     'src/components/screens/delegates/voting/voting.js',
@@ -81,6 +81,7 @@ module.exports = {
     'src/components/shared/header/signInHeader/signInHeader.js',
     'src/components/screens/register/register.js',
     'src/components/toolbox/demoRenderer.js',
+    'src/components/screens/delegates/votingHeader.js',
   ],
   coverageThreshold: {
     global: {

@@ -30,7 +30,6 @@ const DelegatesTable = ({
         <VoteCheckbox {...{
           delegate,
           votingModeEnabled,
-          toggle: voteToggled,
           className: styles.checkbox,
           accent: firstTimeVotingActive,
         }}
@@ -53,8 +52,8 @@ const DelegatesTable = ({
         </Link>
       ),
       className: shouldShowVoteColumn
-        ? [grid['col-xs-4'], grid['col-md-5']].join(' ')
-        : [grid['col-xs-5'], grid['col-md-6']].join(' '),
+        ? [grid['col-xs-4'], grid['col-md-4']].join(' ')
+        : [grid['col-xs-5'], grid['col-md-5']].join(' '),
     },
     { id: 'rewards' },
     { id: 'productivity' },

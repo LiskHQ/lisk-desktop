@@ -15,6 +15,7 @@ import btcIcon from '../../../assets/images/icons/icon-btc.svg';
 import checkboxFilled from '../../../assets/images/icons/checkmark-filled.svg';
 import checkmark from '../../../assets/images/icons/checkmark.svg';
 import copy from '../../../assets/images/icons/copy.svg';
+import copyActive from '../../../assets/images/icons/copy-active.svg';
 import dashboardIcon from '../../../assets/images/icons/dashboard.svg';
 import dashboardIconActive from '../../../assets/images/icons/dashboard-active.svg';
 import delegatesIcon from '../../../assets/images/icons/delegates.svg';
@@ -43,6 +44,7 @@ import iconWarning from '../../../assets/images/icons/icon-warning.svg';
 import incoming from '../../../assets/images/icons/incoming.svg';
 import liskChat from '../../../assets/images/icons/lisk-chat.svg';
 import liskLogo from '../../../assets/images/lisk-logo-v2.svg';
+import liskLogoDark from '../../../assets/images/lisk-logo-dark.svg';
 import liskLogoWhite from '../../../assets/images/lisk-logo-white-v2.svg';
 import logout from '../../../assets/images/icons/logout.svg';
 import logoutActive from '../../../assets/images/icons/logout-active.svg';
@@ -71,16 +73,23 @@ import tx2ndPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg'
 import txDefault from '../../../assets/images/icons/tx-default.svg';
 import txDelegate from '../../../assets/images/icons/tx-delegate.svg';
 import txVote from '../../../assets/images/icons/tx-vote.svg';
+import addedVotes from '../../../assets/images/icons/added-votes.svg';
+import removedVotes from '../../../assets/images/icons/removed-votes.svg';
+import totalVotes from '../../../assets/images/icons/total-votes.svg';
 import user from '../../../assets/images/icons/user.svg';
 import userActive from '../../../assets/images/icons/user-active.svg';
 import verifyMessageInputsView from '../../../assets/images/icons/verify-message-inputs-view.svg';
 import verifyMessageInputsViewActive from '../../../assets/images/icons/verify-message-inputs-view-active.svg';
 import verifyMessageTextareaView from '../../../assets/images/icons/verify-message-textarea-view.svg';
 import verifyMessageTextareaViewActive from '../../../assets/images/icons/verify-message-textarea-view-active.svg';
+import verifyWalletAddress from '../../../assets/images/icons/verify-icon.svg';
+import verifyWalletAddressActive from '../../../assets/images/icons/verify-icon-active.svg';
 import walletIcon from '../../../assets/images/icons/wallet.svg';
 import walletIconActive from '../../../assets/images/icons/wallet-active.svg';
 import warningIcon from '../../../assets/images/icons/warning-icon.svg';
 import warningRound from '../../../assets/images/icons/warning-round.svg';
+import qrCode from '../../../assets/images/icons/qr-code.svg';
+import qrCodeActive from '../../../assets/images/icons/qr-code-active.svg';
 
 export const icons = {
   academy,
@@ -159,10 +168,19 @@ export const icons = {
   verifyMessageInputsViewActive,
   verifyMessageTextareaView,
   verifyMessageTextareaViewActive,
+  verifyWalletAddress,
   walletIcon,
   walletIconActive,
   warningIcon,
   warningRound,
+  addedVotes,
+  removedVotes,
+  totalVotes,
+  qrCode,
+  qrCodeActive,
+  copyActive,
+  verifyWalletAddressActive,
+  liskLogoDark,
 };
 
 

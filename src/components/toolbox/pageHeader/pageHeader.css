@@ -11,6 +11,7 @@
 
     margin-bottom: -4px;
     margin-top: 0;
+    color: var(--color-maastricht-blue);
   }
 
   & .subtitle {

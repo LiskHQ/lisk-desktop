@@ -80,6 +80,29 @@ const getPublicKey = async (transporter, { device, data }) => {
   });
 };
 
+const getAddress = async (transporter, { device, data }) => {
+  const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
+  if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
+
+  return new Promise((resolve, reject) => {
+    trezorDevice.waitForSessionAndRun(async (session) => {
+      try {
+        const { message } = await session.typedCall(
+          'LiskGetAddress',
+          'LiskAddress',
+          {
+            address_n: getHardenedPath(data.index),
+            show_display: data.showOnDevice,
+          },
+        );
+        return resolve(message.public_key);
+      } catch (err) {
+        return reject();
+      }
+    });
+  });
+};
+
 const signTransaction = (transporter, { device, data }) => {
   const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
   if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
@@ -107,6 +130,7 @@ const checkIfInsideLiskApp = async ({ device }) => device;
 
 export default {
   checkIfInsideLiskApp,
+  getAddress,
   getPublicKey,
   listener,
   signTransaction,

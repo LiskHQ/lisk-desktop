@@ -15,19 +15,28 @@ export const Header = ({ t, history }) => {
         subtitle={t('Track the latest activity on the Lisk blockchain.')}
       />
       <Switcher
-        options={[{
-          value: routes.monitorTransactions.path,
-          name: t('Transactions'),
-          className: 'transactions',
-        }, {
-          value: routes.blocks.path,
-          name: t('Blocks'),
-          className: 'blocks',
-        }, {
-          value: routes.delegatesMonitor.path,
-          name: t('Delegates'),
-          className: 'delegates',
-        }]}
+        options={[
+          {
+            value: routes.monitorTransactions.path,
+            name: t('Transactions'),
+            className: 'transactions',
+          },
+          {
+            value: routes.blocks.path,
+            name: t('Blocks'),
+            className: 'blocks',
+          },
+          {
+            value: routes.delegatesMonitor.path,
+            name: t('Delegates'),
+            className: 'delegates',
+          },
+          {
+            value: routes.monitorAccounts.path,
+            name: t('Accounts'),
+            className: 'accounts',
+          },
+        ]}
         active={history.location.pathname}
         onClick={setActiveTab}
       />

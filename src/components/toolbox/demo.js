@@ -3,8 +3,6 @@ import AccountVisualDemo from './accountVisual/demo';
 import AnimationDemo from './animation/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
 import CalendarDemo from './calendar/demo';
-import DropdownButtonDemo from './dropdownButton/demo';
-import DropdownDemo from './dropdown/demo';
 import HardwareWalletIllustrationDemo from './hardwareWalletIllustration/demo';
 import IllustrationDemo from './illustration/demo';
 import OnboardingDemo from './onboarding/demo';
@@ -12,7 +10,6 @@ import PageHeaderDemo from './pageHeader/demo';
 import PassphraseInputDemo from './passphraseInput/demo';
 import SpinnerDemo from './spinner/demo';
 import SwitcherDemo from './switcher/demo';
-import TableDemo from './table/demo';
 import styles from './demo.css';
 
 const getName = child => child.type.name.replace('Demo', '');
@@ -43,8 +40,6 @@ const ToolboxDemo = () => (
     <AnimationDemo />
     <AutoSuggestDemo />
     <CalendarDemo />
-    <DropdownDemo />
-    <DropdownButtonDemo />
     <IllustrationDemo />
     <HardwareWalletIllustrationDemo />
     <OnboardingDemo />
@@ -52,7 +47,6 @@ const ToolboxDemo = () => (
     <PassphraseInputDemo />
     <SpinnerDemo />
     <SwitcherDemo />
-    <TableDemo />
   </WithTableOfContents>
 );
 

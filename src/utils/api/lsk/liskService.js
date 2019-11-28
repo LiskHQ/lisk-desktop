@@ -28,7 +28,7 @@ const getServerUrl = (networkConfig) => {
   if (liskServiceDevnetUrl) {
     return liskServiceDevnetUrl;
   }
-  throw new Error(i18n.t('This feature is supported only for mainnet and testnet.'));
+  throw new Error(i18n.t('This feature can be accessed through Mainet and Testnet.'));
 };
 
 const formatDate = (value, options) => getTimestampFromFirstBlock(value, 'DD.MM.YY', options);
@@ -102,35 +102,43 @@ const liskServiceApi = {
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
   }),
 
-  getDelegates: async (network, { tab, ...rest }) => {
-    const tabOptions = {
-      active: ({ networkConfig }, { search = '', ...searchParams }) => liskServiceGet({
-        networkConfig,
-        path: '/api/v1/delegates/active',
-        transformResponse: response => response.data.filter(
-          delegate => delegate.username.includes(search),
-        ),
-        searchParams: {
-          limit: voting.numberOfActiveDelegates,
-          ...searchParams,
-        },
-      }),
-      standby: ({ networkConfig }, { offset = 0, ...searchParams }) => liskServiceGet({
-        networkConfig,
-        path: '/api/v1/delegates',
-        transformResponse: response => response.data.filter(
-          delegate => delegate.rank > voting.numberOfActiveDelegates,
-        ),
-        searchParams: {
-          offset: offset + (Object.keys(searchParams).length ? 0 : voting.numberOfActiveDelegates),
-          limit: DEFAULT_LIMIT,
-          ...searchParams,
-        },
-      }),
-    };
-    return tabOptions[tab](network, rest);
-  },
+  getStandbyDelegates: async ({ networkConfig }, {
+    offset = 0, tab, ...searchParams
+  }) => liskServiceGet({
+    networkConfig,
+    path: '/api/v1/delegates',
+    transformResponse: response => response.data.filter(
+      delegate => delegate.rank > voting.numberOfActiveDelegates,
+    ),
+    searchParams: {
+      offset: offset + (Object.keys(searchParams).length ? 0 : voting.numberOfActiveDelegates),
+      limit: DEFAULT_LIMIT,
+      ...searchParams,
+    },
+  }),
 
+  getActiveDelegates: async ({ networkConfig }, { search = '', tab, ...searchParams }) => liskServiceGet({
+    networkConfig,
+    path: '/api/v1/delegates/active',
+    transformResponse: response => response.data.filter(
+      delegate => delegate.username.includes(search),
+    ),
+    searchParams: {
+      limit: voting.numberOfActiveDelegates,
+      ...searchParams,
+    },
+  }),
+
+  /**
+   * Returns lisk-service URL based on network name and nethash
+   *
+   * In particular it resolves mainnet/testnet nethash to coresponding lisk-service instance
+   *
+   * @param {Object} networkConfig  - structured as network store: src/store/reducers/network.js
+   * @param {String} networkConfig.name
+   * @param {String} networkConfig.networks.LSK.nethash - if name is "Custom node"
+   * @return {String} lisk-service URL
+   */
   getLiskServiceUrl: (networkConfig) => {
     try {
       return getServerUrl(networkConfig);
@@ -139,11 +147,43 @@ const liskServiceApi = {
     }
   },
 
+  getActiveAndStandByDelegates: async ({ networkConfig }) => liskServiceGet({
+    networkConfig,
+    path: '/api/v1/delegates',
+    searchParams: { limit: 1 },
+    transformResponse: response => response.meta,
+  }),
+
+  getRegisteredDelegates: async ({ networkConfig }) => liskServiceGet({
+    networkConfig,
+    path: '/api/v1/transactions',
+    searchParams: {
+      limit: 100,
+      type: 2,
+      sort: 'timestamp:desc',
+    },
+    transformResponse: response => response.data,
+  }),
+
   getNextForgers: async ({ networkConfig }, searchParams) => liskServiceGet({
     networkConfig,
     path: '/api/v1/delegates/next_forgers',
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
     transformResponse: response => response.data,
+  }),
+
+  getTopAccounts: async ({ networkConfig }, searchParams) => liskServiceGet({
+    networkConfig,
+    path: '/api/v1/accounts/top',
+    searchParams: {
+      limit: DEFAULT_LIMIT,
+      ...searchParams,
+    },
+  }),
+
+  getNetworkStatus: async ({ networkConfig }) => liskServiceGet({
+    networkConfig,
+    path: '/api/v1/network/status',
   }),
 };
 

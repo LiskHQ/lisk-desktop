@@ -1,5 +1,3 @@
-@import '../../../../app/variables.css';
-
 .container {
   display: flex;
   flex-direction: column;

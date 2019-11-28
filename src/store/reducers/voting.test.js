@@ -55,6 +55,22 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
 
   const delegateList1 = [{ username: 'username1', ...delegate1 }, { username: 'username2', ...delegate2 }];
   const delegateList2 = [{ username: 'username3', ...delegate3 }, { username: 'username4', ...delegate4 }];
+  const delegateList3 = [
+    {
+      username: 'username1',
+      account: { address: delegate1.address, publicKey: delegate1.publicKey },
+      productivity: delegate1.productivity,
+      rank: delegate1.rank,
+      unconfirmed: delegate1.unconfirmed,
+    },
+    {
+      username: 'username2',
+      account: { address: delegate2.address, publicKey: delegate2.publicKey },
+      productivity: delegate2.productivity,
+      rank: delegate2.rank,
+      unconfirmed: delegate2.unconfirmed,
+    },
+  ];
   const fullDelegates = [...delegateList1, ...delegateList2];
 
   it('should return default state if action does not match', () => {
@@ -128,7 +144,7 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
   it('should toggle unconfirmed state, with action: voteToggled', () => {
     const action = {
       type: actionTypes.voteToggled,
-      data: delegateList1[0],
+      data: delegateList3[0],
     };
     const state = { votes: cleanVotes };
     const expectedState = {
@@ -142,11 +158,11 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
   it('should add to votes dictionary in not exist, with action: voteToggled', () => {
     const action = {
       type: actionTypes.voteToggled,
-      data: delegateList1[0],
+      data: delegateList3[0],
     };
     const expectedState = {
       votes: {
-        [delegateList1[0].username]: dirtyVotes[delegateList1[0].username],
+        [delegateList3[0].username]: dirtyVotes[delegateList3[0].username],
       },
       delegates: [],
     };

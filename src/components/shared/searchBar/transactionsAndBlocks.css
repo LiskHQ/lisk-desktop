@@ -1,5 +1,3 @@
-@import '../../../app/variables.css';
-
 .wrapper {
   width: 100%;
   height: auto;
@@ -20,6 +18,12 @@
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 8px;
+
+  & label {
+    @mixin contentLargest bold;
+
+    color: var(--color-maastricht-blue);
+  }
 }
 
 .subTitles {
@@ -29,12 +33,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  & > label {
-    @mixin contentLargest bold;
-
-    color: var(--color-maastricht-blue);
-  }
 }
 
 .content {
@@ -50,7 +48,7 @@
   align-items: flex-start;
   margin: 0 -20px;
 
-  & .transactionRow {
+  & .resultRow {
     width: 100%;
     height: auto;
     min-height: 53px;
@@ -67,7 +65,7 @@
     }
   }
 
-  & .transactionRow > img {
+  & .resultRow > img {
     margin: 10px 20px 10px 0;
   }
 
