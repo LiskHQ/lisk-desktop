@@ -8,7 +8,6 @@ import NewsFeed from './newsFeed';
 
 const mapStateToProps = state => ({
   channels: (state.settings && state.settings.channels) || channels,
-  darkMode: state.settings.DarkMode,
 });
 
 export default connect(mapStateToProps)(withData({
