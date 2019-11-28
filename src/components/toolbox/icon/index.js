@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { useSelector } from 'react-redux';
 import academy from '../../../assets/images/icons/academy.svg';
 import academyActive from '../../../assets/images/icons/academy-active.svg';
 import alertIcon from '../../../assets/images/icons/icon-alert.svg';
@@ -28,6 +28,7 @@ import discreetModeOn from '../../../assets/images/icons/discreet-mode-on.svg';
 import feedback from '../../../assets/images/icons/feedback.svg';
 import feedbackActive from '../../../assets/images/icons/feedback-active.svg';
 import fileOutline from '../../../assets/images/icons/icon-file-outline.svg';
+import fileOutlineDark from '../../../assets/images/icons/icon-file-outline-dark.svg';
 import help from '../../../assets/images/icons/help.svg';
 import helpActive from '../../../assets/images/icons/help-active.svg';
 import helpCenter from '../../../assets/images/icons/help-center.svg';
@@ -183,12 +184,14 @@ export const icons = {
   liskLogoDark,
   balanceDark,
   newsFeedAvatarDark,
+  fileOutlineDark,
 };
 
-
-const Icon = ({ name, ...props }) => (
-  <img src={icons[name]} {...props} />
-);
+const Icon = ({ name, ...props }) => {
+  const darkMode = useSelector(state => state.settings.DarkMode);
+  const src = darkMode && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
+  return <img src={src} {...props} />;
+};
 
 Icon.propTypes = {
   name: PropTypes.oneOf(Object.keys(icons)).isRequired,
