@@ -12,6 +12,7 @@ import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
 import ReactRouterDom from 'react-router-dom';
 import * as ReactRedux from 'react-redux';
+import { deepMergeObj } from '../src/utils/helpers';
 // TODO remove next line after upgrading node version to at least 7
 import 'es7-object-polyfill';
 import defaultState from '../test/constants/defaultState';
@@ -77,6 +78,16 @@ ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => ((Com
   }
   return MockConnect;
 }));
+
+ReactRedux.useSelector = jest.fn((filter) => {
+  let result;
+  try {
+    result = filter(deepMergeObj(defaultState, ReactRedux.useStore().getState()));
+  } catch (e) {
+    result = filter(defaultState);
+  }
+  return result;
+});
 
 jest.mock('i18next', () => {
   function t(key, o) {
