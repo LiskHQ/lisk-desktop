@@ -141,11 +141,13 @@ or "warn/action" ineastd of "red/green"
   --color-flash-message: var(--color-maastricht-blue);
   --color-strong-mystic: var(--color-mystic);
   --color-passphrase-bg: var(--color-white);
+  --color-shadow-word-option: var(--color-ultramarine-blue);
 
   /*************************
         Box
   *************************/
   --box-shadow-standard: 0 2px 4px 0 rgba(6, 22, 48, 0.06);
+  --box-shadow-word-option: 0 2px 4px 0 rgba(6, 22, 48, 0.1);
   --box-shadow-button: var(--box-shadow-standard), 0px 0px 12px 0 rgba(72, 77, 97, 0.05);
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
   --box-shadow-avatar: var(--box-shadow-standard);
@@ -192,6 +194,8 @@ or "warn/action" ineastd of "red/green"
 }
 
 :root [data-theme="dark"] {
+  --box-shadow-standard: 0 2px 4px 0 rgba(6, 22, 48, 0.06);
+  --box-shadow-word-option: 0 0 1px 0 #fff;
   --color-dialog-bg: rgba(28, 28, 30, 0.8);
   --color-white: #111112;
   --color-platinum: #4d4d50;
@@ -208,4 +212,5 @@ or "warn/action" ineastd of "red/green"
   --color-strong-mystic: #edf0f5;
   --color-passphrase-bg: #000;
   --color-dark-blue: var(--color-ultramarine-blue);
+  --color-shadow-word-option: var(--color-strong-white);
 }
