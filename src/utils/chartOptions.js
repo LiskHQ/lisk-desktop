@@ -83,6 +83,12 @@ const baseOptions = {
 
   tooltips: {
     enabled: true,
+    callbacks: {
+      // istanbul ignore next
+      title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+      // istanbul ignore next
+      label(tooltipItem, data) { return data.datasets[0].data[tooltipItem.index]; },
+    },
     mode: 'index',
     backgroundColor: chartStyles.whiteColor,
     bodyFontColor: chartStyles.slateGray,
@@ -182,6 +188,7 @@ export const barChartOptions = {
         fontColor: chartStyles.slateGray,
         fontSize: chartStyles.fontSize,
         fontFamily: chartStyles.contentFontFamily,
+        beginAtZero: true,
       },
     }],
   },
