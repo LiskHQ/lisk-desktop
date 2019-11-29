@@ -18,6 +18,7 @@ export default {
       active: 'LSK',
       list: [],
     },
+    DarkMode: false,
   },
   network: {
     name: 'Testnet',
