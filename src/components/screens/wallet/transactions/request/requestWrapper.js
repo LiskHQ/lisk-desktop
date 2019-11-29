@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import QRCode from 'qrcode.react';
 import CopyToClipboard from '../../../../toolbox/copyToClipboard';
 import { PrimaryButton } from '../../../../toolbox/buttons/button';
@@ -12,8 +11,6 @@ const RequestWrapper = ({
   copyValue,
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const darkMode = useSelector(state => state.settings.DarkMode);
-
   return (
     <div className={`${styles.container}`}>
       <section className={`${styles.formSection}`}>
@@ -44,12 +41,7 @@ const RequestWrapper = ({
           {t('Simply scan the QR code using the Lisk Mobile app or any other QR code reader')}
         </span>
         <div className={`${styles.qrCodeContainer}`}>
-          <QRCode
-            value={copyValue}
-            size={235}
-            fgColor={darkMode ? '#fff' : '#000'}
-            bgColor={darkMode ? '#111112' : '#fff'}
-          />
+          <QRCode value={copyValue} size={235} />
         </div>
         <footer className={`${styles.sectionFooter}`}>
           <span

@@ -13,7 +13,6 @@ const WalletTab = ({ ...props }) => (
           address={props.address}
           activeToken={props.activeToken}
           account={props.account}
-          darkMode={props.darkMode}
         />
       </div>
       <div className={`${grid['col-xs-5']} ${grid['col-md-6']} ${grid['col-lg-7']}`}>

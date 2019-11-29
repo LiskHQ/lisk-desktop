@@ -16,7 +16,7 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 class WalletDetails extends React.Component {
   render() {
     const {
-      balance, t, address, activeToken, account, darkMode,
+      balance, t, address, activeToken, account,
     } = this.props;
 
     return (
@@ -50,12 +50,7 @@ class WalletDetails extends React.Component {
                 title={t('Scan address')}
                 content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
               >
-                <QRCode
-                  value={address}
-                  size={154}
-                  bgColor={darkMode ? '#111112' : '#fff'}
-                  fgColor={darkMode ? '#fff' : '#000'}
-                />
+                <QRCode value={address} size={154} />
               </Tooltip>
             </div>
             {

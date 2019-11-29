@@ -70,6 +70,7 @@
     font-size: var(--font-size-small-secondary);
     font-weight: var(--font-weight-semi-bold);
     margin-left: 5px;
+    color: var(--color-maastricht-blue);
   }
 }
 
