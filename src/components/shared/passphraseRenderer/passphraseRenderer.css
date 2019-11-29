@@ -113,14 +113,16 @@
   justify-content: left;
 
   & div {
+    @mixin contentLarge bold;
+
     cursor: pointer;
     margin-top: 20px;
     padding: 8px 26px;
     background-color: var(--color-white);
     font-weight: var(--font-weight-bold);
-    color: var(--color-ultramarine-blue);
+    color: var(--color-shadow-word-option);
     margin-right: 20px;
-    box-shadow: var(--box-shadow-standard);
+    box-shadow: var(--box-shadow-word-option);
   }
 }
 
