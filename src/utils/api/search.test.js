@@ -73,6 +73,7 @@ describe('Utils: Search', () => {
   it('should search {addresses,delegates} when only address pattern matched', () =>
     expect(searchAll(liskAPIClient, { searchTerm: '1337L' })).to.eventually.deep.equal({
       addresses: [accountsResponse],
+      blocks: [],
       transactions: [],
       delegates: delegatesResponseOrderedAddressMatch.delegates,
     }));
@@ -89,6 +90,7 @@ describe('Utils: Search', () => {
       .returnsPromise().rejects({ success: false });
     return expect(searchAll(liskAPIClient, { searchTerm: '1337L' })).to.eventually.deep.equal({
       addresses: [accountsResponse],
+      blocks: [],
       transactions: [],
       delegates: [],
     });
@@ -99,6 +101,7 @@ describe('Utils: Search', () => {
     const result = await searchAll(liskAPIClient, { searchTerm: '1337L' });
     expect(result).to.deep.equal({
       addresses: [],
+      blocks: [],
       transactions: [],
       delegates: delegatesResponseOrderedAddressMatch.delegates,
     });

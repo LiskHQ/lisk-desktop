@@ -59,7 +59,7 @@ class Onboarding extends React.Component {
 
     return slides.length && !closedBefore ? (
       <div className={`${styles.onboarding} ${className}`}>
-        <span className={styles.closeBtn} onClick={this.handleDiscard} />
+        <span className={`closeOnboarding ${styles.closeBtn}`} onClick={this.handleDiscard} />
         <div className={styles.illustrations}>
           {slides.map(({ illustration }, i) => (
             <Illustration

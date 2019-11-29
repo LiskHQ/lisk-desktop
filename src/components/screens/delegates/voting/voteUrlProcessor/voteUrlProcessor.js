@@ -48,7 +48,14 @@ export default class VoteUrlProcessor extends React.Component {
   componentDidUpdate() {
     if (filterObjectPropsWithValue(this.state.voteLookupStatus, 'pending').length === 0
         && this.state.pendingVotes.length > 0) {
-      this.state.pendingVotes.map(v => this.props.voteToggled(v));
+      this.state.pendingVotes.forEach(v => this.props.voteToggled({
+        account: {
+          address: v.address,
+          publicKey: v.publicKey,
+        },
+        username: v.username,
+        rank: v.rank,
+      }));
       this.setState({
         pendingVotes: [],
       });

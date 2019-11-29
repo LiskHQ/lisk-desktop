@@ -32,7 +32,7 @@ describe('Blocks page', () => {
 
   it('renders a page with header', () => {
     const wrapper = mount(<Blocks {...props} />);
-    expect(wrapper.find('h2')).toHaveText('All blocks');
+    expect(wrapper.find('.blocks-header-title')).toHaveText('All blocks');
   });
 
   it('renders table with blocks', () => {

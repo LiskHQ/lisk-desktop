@@ -34,7 +34,7 @@ const IconOnly = ({
   copied,
 }) => (
   <ReactCopyToClipboard text={value} onCopy={onCopy}>
-    <Icon name={copied ? 'transaction-status-approved' : 'copy'} className={`${styles.icon} ${copyClassName}`} />
+    <Icon name={copied ? 'transactionApproved' : 'copy'} className={`${styles.icon} ${copyClassName}`} />
   </ReactCopyToClipboard>
 );
 

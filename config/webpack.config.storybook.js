@@ -36,7 +36,9 @@ module.exports = {
                 require('postcss-partial-import')({}),
                 require('postcss-mixins')({}),
                 require('postcss-nesting')({}),
-                require('postcss-cssnext')({}),
+                require('postcss-preset-env')({
+                  stage: 0,
+                }),
                 require('postcss-functions')({
                   functions: {
                     rem: px => `${(px / 10)}rem`,

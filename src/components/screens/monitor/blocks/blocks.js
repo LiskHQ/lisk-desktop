@@ -19,6 +19,7 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
 import styles from './blocks.css';
 import withFilters from '../../../../utils/withFilters';
+import BlocksOverview from './blocksOverview';
 
 const Blocks = ({
   t, blocks,
@@ -43,9 +44,10 @@ const Blocks = ({
   return (
     <div>
       <MonitorHeader />
+      <BlocksOverview t={t} />
       <Box isLoading={blocks.isLoading} width="full" main>
         <BoxHeader>
-          <h2>{t('All blocks')}</h2>
+          <h2 className="blocks-header-title">{t('All blocks')}</h2>
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
         </BoxHeader>
         <FilterBar {...{

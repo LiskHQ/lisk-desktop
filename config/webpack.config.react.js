@@ -65,9 +65,10 @@ const cssLoadersConfig = [
         require('postcss-partial-import')({}),
         require('postcss-mixins')({}),
         require('postcss-nesting')({}),
-        require('postcss-cssnext')({
+        require('postcss-preset-env')({
+          stage: 0,
           features: {
-            customProperties: {
+            'custom-properties': {
               variables: reactToolboxVariables,
             },
           },

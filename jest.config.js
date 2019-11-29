@@ -63,6 +63,7 @@ module.exports = {
     'src/utils/api/btc/',
     'src/utils/applyDeviceClass.js',
     'src/utils/ledger.js',
+    'src/utils/theme.js',
     'src/components/screens/registerDelegate/registerDelegate.js',
     'src/components/wallet/transactions/transactionsOverview.js',
     'src/components/screens/delegates/voting/voting.js',

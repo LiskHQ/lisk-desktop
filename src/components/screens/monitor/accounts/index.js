@@ -1,11 +1,14 @@
 /* istanbul ignore file */
+import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import withData from '../../../../utils/withData';
 import MonitorAccounts from './accounts';
 import liskServiceApi from '../../../../utils/api/lsk/liskService';
+import NotAvailable from '../notAvailable';
 
-export default compose(
+const ComposedAccounts = compose(
   withData(
     {
       accounts: {
@@ -28,3 +31,15 @@ export default compose(
   ),
   withTranslation(),
 )(MonitorAccounts);
+
+const AccountsMonitor = () => {
+  const network = useSelector(state => state.network);
+
+  return (
+    liskServiceApi.getLiskServiceUrl(network) === null
+      ? <NotAvailable />
+      : <ComposedAccounts />
+  );
+};
+
+export default AccountsMonitor;

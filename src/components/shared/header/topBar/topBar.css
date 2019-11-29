@@ -1,5 +1,3 @@
-@import '../../../../app/variables.css';
-
 .wrapper {
   align-items: center;
   background: var(--color-white-smoke);

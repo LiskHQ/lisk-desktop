@@ -6,6 +6,7 @@ import delegates from '../../../../../test/constants/delegates';
 const transformToLiskServiceFormat = ({ account, ...delegate }) => ({
   ...delegate,
   ...account,
+  status: 'forgedThisRound',
 });
 const delegatesApiResponse = delegates.map(transformToLiskServiceFormat);
 
@@ -38,16 +39,43 @@ describe('Delegates monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
+      standByDelegates: {
+        isLoading: true,
+        data: [],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      chartActiveAndStandbyData: {
+        isLoading: false,
+        data: '589',
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      chartRegisteredDelegatesData: {
+        isLoading: false,
+        data: [
+          { x: 'Aug', y: 4 },
+          { x: 'Sep', y: 1 },
+          { x: 'Oct', y: 8 },
+          { x: 'Nov', y: 4 },
+        ],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
       filters: {
         tab: 'active',
       },
-      applyFilters: jest.fn(),
+      applyFilters: jest.fn(filters => wrapper.setProps({ filters })),
     };
 
     delegatesWithData = {
       ...props.delegates,
       isLoading: false,
       data: delegatesApiResponse,
+      status: 'forgedThisRound',
     };
     wrapper = setup(props);
   });
@@ -81,6 +109,7 @@ describe('Delegates monitor page', () => {
   });
 
   it('allows to filter delegates by name and clear the filter', () => {
+    wrapper = setup({ ...props, delegates: delegatesWithData });
     wrapper.find('input.filter-by-name').simulate('change', { target: { value: name } });
     expect(props.applyFilters).toHaveBeenCalledWith({ search: name, tab: props.filters.tab });
     wrapper.find('input.filter-by-name').simulate('change', { target: { value: '' } });
@@ -95,7 +124,7 @@ describe('Delegates monitor page', () => {
 
   it('allows to load more standby delegates', () => {
     const tab = 'standby';
-    wrapper = setup({ ...props, delegates: delegatesWithData });
+    wrapper = setup({ ...props, standByDelegates: delegatesWithData });
     switchTab(tab);
     wrapper.find('button.loadMore').simulate('click');
     expect(props.delegates.loadData).toHaveBeenCalledWith({
