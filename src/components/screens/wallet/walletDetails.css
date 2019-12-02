@@ -37,7 +37,7 @@
     width: 196px;
     height: 227px;
 
-    canvas {
+    & canvas {
       box-shadow: 0 0 1px 0 var(--color-strong-white);
     }
   }
