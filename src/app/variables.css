@@ -142,6 +142,7 @@ or "warn/action" ineastd of "red/green"
   --color-strong-mystic: var(--color-mystic);
   --color-passphrase-bg: var(--color-white);
   --color-shadow-word-option: var(--color-ultramarine-blue);
+  --color-request-textarea: transparent;
 
   /*************************
         Box
@@ -213,4 +214,5 @@ or "warn/action" ineastd of "red/green"
   --color-passphrase-bg: #000;
   --color-dark-blue: var(--color-ultramarine-blue);
   --color-shadow-word-option: var(--color-strong-white);
+  --color-request-extarea: #2e2e30;
 }
