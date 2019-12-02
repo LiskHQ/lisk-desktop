@@ -12,6 +12,11 @@
   & .emptyState {
     min-height: 430px;
 
+    & img {
+      width: 285px;
+      height: auto;
+    }
+
     & > p {
       @mixin headingNormal bold;
 
