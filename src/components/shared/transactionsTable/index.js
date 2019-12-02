@@ -84,7 +84,7 @@ class TransactionsTable extends React.Component {
         {transactions.error ? (
           <BoxContent>
             <BoxEmptyState>
-              <Illustration name="emptyWallet" />
+              <Illustration name="emptyWallet" style={styles.noTransaction} />
               <h3>{emptyStateMessage || `${transactions.error}`}</h3>
             </BoxEmptyState>
           </BoxContent>

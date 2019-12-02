@@ -2,6 +2,10 @@
 
 .emptyState {
   height: 300px;
+
+  & img {
+    width: 284px;
+  }
 }
 
 .results {
