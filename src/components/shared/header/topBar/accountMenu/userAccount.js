@@ -135,6 +135,28 @@ class UserAccount extends React.Component {
           <span>{t('Settings')}</span>
         </Link>
 
+        <Link
+          id="signMessage"
+          to={routes.signMessage.path}
+          className={styles.dropdownOption}
+          onClick={this.toggleDropdown}
+        >
+          <Icon name="sign" className={styles.defaultIcon} />
+          <Icon name="signActive" className={styles.activeIcon} />
+          <span>{t('Sign Message')}</span>
+        </Link>
+
+        <Link
+          id="verifyMessage"
+          to={routes.verifyMMessage.path}
+          className={styles.dropdownOption}
+          onClick={this.toggleDropdown}
+        >
+          <Icon name="verify" className={styles.defaultIcon} />
+          <Icon name="verifyActive" className={styles.activeIcon} />
+          <span>{t('Verify Message')}</span>
+        </Link>
+
         <Dropdown.Separator className={styles.separator} />
 
         {
