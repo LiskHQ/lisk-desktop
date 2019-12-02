@@ -83,18 +83,24 @@ const baseOptions = {
 
   tooltips: {
     enabled: true,
+    callbacks: {
+      // istanbul ignore next
+      title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+      // istanbul ignore next
+      label(tooltipItem, data) { return data.datasets[0].data[tooltipItem.index]; },
+    },
     mode: 'index',
     backgroundColor: chartStyles.whiteColor,
-    bodyFontColor: chartStyles.maastrichtBlue,
+    bodyFontColor: chartStyles.slateGray,
     bodyFontFamily: chartStyles.contentFontFamily,
-    bodyFontSize: 11,
-    bodyFontStyle: 'bold',
+    bodyFontSize: 13,
+    bodyFontStyle: 'normal',
     borderColor: chartStyles.platinumColor,
     borderWidth: 1,
-    titleFontColor: chartStyles.slateGray,
+    titleFontColor: chartStyles.maastrichtBlue,
     titleFontFamily: chartStyles.contentFontFamily,
     titleFontSize: chartStyles.fontSize,
-    titleFontStyle: 'semi-bold',
+    titleFontStyle: 'bold',
     displayColors: false,
     xPadding: 10,
     yPadding: 10,
@@ -141,7 +147,7 @@ export const lineChartOptions = {
     point: {
       radius: 2,
       hoverRadius: 2,
-      hitRadius: 1,
+      hitRadius: 10,
     },
     line: {
       tension: 0,
@@ -182,6 +188,7 @@ export const barChartOptions = {
         fontColor: chartStyles.slateGray,
         fontSize: chartStyles.fontSize,
         fontFamily: chartStyles.contentFontFamily,
+        beginAtZero: true,
       },
     }],
   },

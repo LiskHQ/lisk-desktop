@@ -42,7 +42,7 @@ describe('UserAccount', () => {
     wrapper = mount(<UserAccount {...myProps} />);
     expect(wrapper).toContainExactlyOneMatchingElement('Dropdown');
     expect(wrapper).toContainExactlyOneMatchingElement('span.dropdownOption');
-    expect(wrapper).toContainMatchingElements(3, 'a.dropdownOption');
+    expect(wrapper).toContainMatchingElements(5, 'a.dropdownOption');
   });
 
   it('called properly onLogout when user click it', () => {
