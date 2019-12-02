@@ -141,8 +141,8 @@ class UserAccount extends React.Component {
           className={styles.dropdownOption}
           onClick={this.toggleDropdown}
         >
-          <Icon name="settings" className={styles.defaultIcon} />
-          <Icon name="settingsActive" className={styles.activeIcon} />
+          <Icon name="sign" className={styles.defaultIcon} />
+          <Icon name="signActive" className={styles.activeIcon} />
           <span>{t('Sign Message')}</span>
         </Link>
 
@@ -152,8 +152,8 @@ class UserAccount extends React.Component {
           className={styles.dropdownOption}
           onClick={this.toggleDropdown}
         >
-          <Icon name="settings" className={styles.defaultIcon} />
-          <Icon name="settingsActive" className={styles.activeIcon} />
+          <Icon name="verify" className={styles.defaultIcon} />
+          <Icon name="verifyActive" className={styles.activeIcon} />
           <span>{t('Verify Message')}</span>
         </Link>
 
