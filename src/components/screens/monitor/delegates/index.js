@@ -78,12 +78,14 @@ const ComposedDelegates = compose(
             .map(delegate => ({ ...delegate, x: moment(delegate.x).format('MMM YY') }));
         },
       },
+
       networkStatus: {
         apiUtil: liskService.getNetworkStatus,
         defaultData: {},
         autoload: true,
       },
     },
+  ),
   withResizeValues,
   withFilters(standByDelegatesKey, defaultUrlSearchParams),
   connect(mapStateToProps),

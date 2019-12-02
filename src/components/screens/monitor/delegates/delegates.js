@@ -23,8 +23,8 @@ const Delegates = ({
   filters,
   isMediumViewPort,
   networkStatus,
-  latestBlock
-  nextForgers
+  latestBlock,
+  nextForgers,
   sort,
   standByDelegates,
   t,
@@ -142,18 +142,18 @@ const Delegates = ({
   return (
     <div>
       <MonitorHeader />
-      <ForgingDetails
-        t={t}
-        latestBlock={latestBlock}
-        networkStatus={networkStatus}
-        nextForgers={nextForgers}
-      />
       <Overview
         chartActiveAndStandby={chartActiveAndStandbyData}
         chartDelegatesForging={chartDelegatesForging}
         chartRegisteredDelegates={chartRegisteredDelegatesData}
         delegatesForgedLabels={Object.values(statuses)}
         t={t}
+      />
+      <ForgingDetails
+        t={t}
+        latestBlock={latestBlock}
+        networkStatus={networkStatus}
+        nextForgers={nextForgers}
       />
       <DelegatesTable {...{
         columns,
