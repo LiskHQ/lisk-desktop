@@ -143,6 +143,10 @@
     padding: 8px 10px;
   }
 
+  & .sharingLink {
+    background-color: var(--color-request-extarea);
+  }
+
   & .sectionFooter {
     margin-top: 20px;
 
