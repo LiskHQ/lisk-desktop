@@ -1,5 +1,6 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
+import { sizeOf } from '../../../../../utils/helpers';
 import AccountInfo from './accountInfo';
 import BoxRow from '../../../../toolbox/box/row';
 import TransactionTypeFigure from '../../../wallet/transactions/typeFigure/TransactionTypeFigure';
@@ -76,11 +77,17 @@ class TransactionDetailView extends React.Component {
         {children}
         { transaction.type === transactionTypes.send
           && (transaction.asset && transaction.asset.data) ? (
-            <BoxRow>
-              <div className={styles.detailsWrapper}>
+            <BoxRow className={styles.message}>
+              <div className={`${styles.detailsWrapper}`}>
                 <span className={styles.label}>{t('Message')}</span>
-                <div className={`${styles.message} tx-reference`}>
+                <div className={`${styles.value} tx-reference`}>
                   {transaction.asset.data}
+                </div>
+              </div>
+              <div className={`${styles.detailsWrapper}`}>
+                <span className={styles.label}>{t('Size')}</span>
+                <div className={`${styles.value} tx-size`}>
+                  {`${sizeOf(transaction.asset.data)} bytes`}
                 </div>
               </div>
             </BoxRow>

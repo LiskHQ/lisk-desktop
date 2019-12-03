@@ -17,10 +17,38 @@
   }
 }
 
+.message {
+  & .detailsWrapper {
+    flex-grow: 1;
+    width: 50%;
+    box-sizing: border-box;
+
+    &:first-child {
+      padding-right: 64px;
+      position: relative;
+
+      &::after {
+        background-color: var(--color-platinum);
+        content: '';
+        height: calc(100% - 13px);
+        position: absolute;
+        right: 0;
+        width: 1px;
+        top: 8px;
+      }
+    }
+
+    &:last-child {
+      padding-left: 64px;
+    }
+  }
+}
+
 .detailsWrapper {
   flex-direction: column;
   display: 100%;
   text-align: left;
+  flex-grow: 1;
 
   & .accountInfo {
     display: flex;
@@ -64,11 +92,8 @@
     }
   }
 
-  & .message {
-    @mixin contentLargest;
-
+  & .value {
     color: var(--color-maastricht-blue);
-    text-align: left;
   }
 
   & .votesContainer {
