@@ -45,7 +45,7 @@ class App extends React.Component {
 
     return (
       <ThemeContext.Provider value={theme}>
-        <OfflineWrapper theme={routeObj.isSigninFlow ? '' : theme}>
+        <OfflineWrapper isSigninFlow={routeObj.isSigninFlow}>
           <DialogHolder />
           <Header
             isSigninFlow={routeObj.isSigninFlow}
