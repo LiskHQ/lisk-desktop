@@ -1,5 +1,6 @@
 import React from 'react';
 import { tokenMap } from '../../../constants/tokens';
+import { isEmpty } from '../../../utils/helpers';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
@@ -169,7 +170,7 @@ class Settings extends React.Component {
                 </div>
               </label>
               {
-                !isHardwareWalletAccount
+                !isHardwareWalletAccount && !isEmpty(account)
                   ? (
                     <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
                       <CheckBox
