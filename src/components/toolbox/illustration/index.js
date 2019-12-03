@@ -82,7 +82,7 @@ export const illustrations = {
 };
 
 const Illustration = ({ name, className, noTheme }) => {
-  const darkMode = useSelector(state => state.settings.DarkMode);
+  const darkMode = useSelector(state => state.settings.darkMode);
   const themed = darkMode && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
   return <img src={illustrations[themed]} className={className} />;
 };

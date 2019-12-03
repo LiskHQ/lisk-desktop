@@ -106,9 +106,9 @@ class Settings extends React.Component {
               <h2>{t('Appearances')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
-                  name="DarkMode"
-                  className={`${styles.checkbox} DarkMode`}
-                  checked={settings.DarkMode}
+                  name="darkMode"
+                  className={`${styles.checkbox} darkMode`}
+                  checked={settings.darkMode}
                   onChange={this.handleCheckboxChange}
                 />
                 <div>

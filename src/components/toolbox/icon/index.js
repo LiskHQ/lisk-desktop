@@ -188,7 +188,7 @@ export const icons = {
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
-  const darkMode = useSelector(state => state.settings.DarkMode);
+  const darkMode = useSelector(state => state.settings.darkMode);
   const src = darkMode && !noTheme && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
   return <img src={src} {...props} />;
 };

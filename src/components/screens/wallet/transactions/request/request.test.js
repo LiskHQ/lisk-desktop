@@ -21,7 +21,7 @@ describe('Request', () => {
   };
   const store = fakeStore({
     settings: {
-      DarkMode: false,
+      darkMode: false,
     },
   });
 

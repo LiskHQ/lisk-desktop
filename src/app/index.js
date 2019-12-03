@@ -35,7 +35,7 @@ class App extends React.Component {
 
   render() {
     const { location, history, settings } = this.props;
-    const theme = settings.DarkMode ? 'dark' : 'light';
+    const theme = settings.darkMode ? 'dark' : 'light';
     const allRoutes = Object.values(routes);
     const mainClassNames = [
       styles.bodyWrapper,

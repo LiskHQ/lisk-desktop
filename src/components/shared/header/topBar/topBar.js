@@ -88,7 +88,7 @@ class TopBar extends React.Component {
       <div className={`${styles.wrapper} top-bar`}>
         <div>
           <div className={styles.logo}>
-            <Icon name="liskLogoDark" className="topbar-logo" />
+            <Icon name="liskLogo" className="topbar-logo" />
           </div>
 
           <NavigationButtons

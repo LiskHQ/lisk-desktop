@@ -17,7 +17,7 @@ describe('Icon', () => {
   it('should not render dark icons available', () => {
     const store = fakeStore({
       settings: {
-        DarkMode: true,
+        darkMode: true,
       },
     });
     const wrapper = mount(<Provider store={store}><Icon name="fileOutline" /></Provider>);

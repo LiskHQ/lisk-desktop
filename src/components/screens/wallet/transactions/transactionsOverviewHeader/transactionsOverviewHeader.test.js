@@ -27,7 +27,7 @@ describe('Transactions Overview Header', () => {
   describe('Current user wallet', () => {
     const store = fakeStore({
       settings: {
-        DarkMode: false,
+        darkMode: false,
       },
     });
 
