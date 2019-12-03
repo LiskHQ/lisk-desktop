@@ -140,9 +140,9 @@ describe('Setting', () => {
           settings={settingsToExpireTime}
         />,
       );
-  
+
       wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
-  
+
       const timeNow = Date.now();
       const expectedCallToAccountUpdated = {
         expireTime: timeNow,
