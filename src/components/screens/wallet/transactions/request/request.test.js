@@ -1,11 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
 import Request from '.';
 import accounts from '../../../../../../test/constants/accounts';
-
-const fakeStore = configureStore();
 
 jest.mock('../../../../shared/converter', () => (
   function ConverterMock() {
@@ -19,14 +15,9 @@ describe('Request', () => {
   const props = {
     address: accounts.genesis.address,
   };
-  const store = fakeStore({
-    settings: {
-      darkMode: false,
-    },
-  });
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><Request {...props} /></Provider>);
+    wrapper = mount(<Request {...props} />);
   });
 
   it('Should render without showing QRCode', () => {
@@ -139,7 +130,7 @@ describe('Request', () => {
     });
 
     it('Should render BTC reqest if props.token is BTC', () => {
-      wrapper = mount(<Provider store={store}><Request {...props} token="BTC" /></Provider>);
+      wrapper = mount(<Request {...props} token="BTC" />);
       expect(wrapper.find('.copy-button button').text()).toMatch('Copy address');
     });
   });
