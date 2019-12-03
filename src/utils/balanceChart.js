@@ -77,7 +77,7 @@ export const graphOptions = ({
       },
     }],
     yAxes: [{
-      position: 'right',
+      position: 'left',
       type: 'linear',
       ticks: {
         display: !isDiscreetMode,
@@ -90,8 +90,8 @@ export const graphOptions = ({
   },
   layout: {
     padding: {
-      left: 20,
-      right: 8,
+      left: 10,
+      right: 20,
       top: 20,
     },
   },

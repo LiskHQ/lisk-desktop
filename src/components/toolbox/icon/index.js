@@ -91,6 +91,10 @@ import walletIconActive from '../../../assets/images/icons/wallet-active.svg';
 import warningIcon from '../../../assets/images/icons/warning-icon.svg';
 import warningRound from '../../../assets/images/icons/warning-round.svg';
 import qrCode from '../../../assets/images/icons/qr-code.svg';
+import sign from '../../../assets/images/icons/sign.svg';
+import signActive from '../../../assets/images/icons/signActive.svg';
+import verify from '../../../assets/images/icons/verify.svg';
+import verifyActive from '../../../assets/images/icons/verifyActive.svg';
 import qrCodeActive from '../../../assets/images/icons/qr-code-active.svg';
 
 export const icons = {
@@ -185,6 +189,10 @@ export const icons = {
   balanceDark,
   newsFeedAvatarDark,
   fileOutlineDark,
+  sign,
+  signActive,
+  verify,
+  verifyActive,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

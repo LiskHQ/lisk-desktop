@@ -30,6 +30,7 @@ const shouldUpdateBtc = (state) => {
 
 // eslint-disable-next-line max-statements
 const socketSetup = (store) => {
+  closeConnection();
   let windowIsFocused = true;
   const { ipc } = window;
   if (ipc && ipc.on) {
@@ -59,17 +60,14 @@ const socketSetup = (store) => {
 
 const socketMiddleware = store => (
   next => (action) => {
+    next(action);
     switch (action.type) {
-      case actionTypes.accountLoggedIn:
+      case actionTypes.networkSet:
         socketSetup(store, action);
-        break;
-      case actionTypes.accountLoggedOut:
-        closeConnection();
         break;
       /* istanbul ignore next */
       default: break;
     }
-    next(action);
   });
 
 export default socketMiddleware;
