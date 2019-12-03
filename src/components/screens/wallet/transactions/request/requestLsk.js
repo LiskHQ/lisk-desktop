@@ -175,7 +175,7 @@ class RequestLsk extends React.Component {
           <AutoresizeTextarea
             name="shareLink"
             value={shareLink}
-            className={`${styles.textarea} request-link`}
+            className={`${styles.textarea} ${styles.sharingLink} request-link`}
             readOnly
           />
         </label>

@@ -103,7 +103,7 @@
 
     &.selected,
     &:not(:disabled):hover {
-      color: var(--color-white);
+      color: var(--color-strong-white);
 
       &::before {
         opacity: 1;

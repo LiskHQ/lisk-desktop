@@ -17,7 +17,7 @@
 
   & > li {
     align-items: center;
-    color: var(--color-content-light);
+    color: var(--color-maastricht-blue);
     display: flex;
     font-family: var(--content-font);
     font-size: var(--paragraph-font-size-l);

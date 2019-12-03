@@ -56,11 +56,10 @@
 
 @define-mixin buttonPrimary {
   background-color: var(--color-ultramarine-blue) !important;
-  color: var(--color-white) !important;
+  color: var(--color-strong-white) !important;
 
   &:focus,
   &:hover {
-    background: color(var(--color-ultramarine-blue) l(+4%)) !important;
     box-shadow: 3px 3px 10px 0 rgba(61, 113, 255, 0.36) !important;
   }
 }
@@ -71,14 +70,8 @@
   color: var(--color-maastricht-blue) !important;
 
   &:global(.light) {
-    color: var(--color-white) !important;
+    color: var(--color-strong-white) !important;
     border-color: var(--light-border-color) !important;
-
-    &:focus,
-    &:hover {
-      border-color: color(var(--light-border-color) a(58%)) !important;
-      color: var(--color-white) !important;
-    }
   }
 
   &:focus,
@@ -101,11 +94,11 @@
 
 @define-mixin buttonWarning {
   background-color: var(--color-burnt-sienna) !important;
-  color: var(--color-white) !important;
+  color: var(--color-strong-white) !important;
 
   &:focus,
   &:hover {
-    background: color(var(--color-burnt-sienna) l(+4%)) !important;
+    /* background: color(var(--color-burnt-sienna) l(+4%)) !important; */
     box-shadow: 3px 3px 10px 0 rgba(236, 104, 104, 0.36) !important;
   }
 }

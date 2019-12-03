@@ -52,11 +52,15 @@ class CopyToClipboard extends React.Component {
     this.setState({
       copied: true,
     });
-    setTimeout(() => {
+    this.timeout = setTimeout(() => {
       this.setState({
         copied: false,
       });
     }, 3000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
   }
 
   render() {

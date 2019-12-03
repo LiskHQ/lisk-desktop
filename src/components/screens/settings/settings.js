@@ -103,6 +103,21 @@ class Settings extends React.Component {
               <LanguageSelect t={t} />
             </section>
             <section>
+              <h2>{t('Appearances')}</h2>
+              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <CheckBox
+                  name="darkMode"
+                  className={`${styles.checkbox} darkMode`}
+                  checked={settings.darkMode}
+                  onChange={this.handleCheckboxChange}
+                />
+                <div>
+                  <span className={styles.labelName}>{t('Dark Mode')}</span>
+                  <p>{t('Switch to the dark mode.')}</p>
+                </div>
+              </label>
+            </section>
+            <section>
               <h2>{t('Security')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
@@ -138,20 +153,6 @@ class Settings extends React.Component {
                   <p>{t('Hide balance and transactions amounts')}</p>
                 </div>
               </label>
-              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <CheckBox
-                  name="DarkMode"
-                  className={`${styles.checkbox} DarkMode`}
-                  checked={settings.DarkMode}
-                  onChange={this.handleCheckboxChange}
-                />
-                <div>
-                  <span className={styles.labelName}>Dark Mode</span>
-                  <p>Hide balance and transactions amounts</p>
-                </div>
-              </label>
-
-
             </section>
             <section>
               <h2>{t('Advanced')}</h2>

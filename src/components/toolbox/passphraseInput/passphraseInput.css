@@ -12,7 +12,7 @@
   flex-direction: row;
   border: 1px solid var(--dark-border-color);
   border-radius: 3px;
-  background-color: var(--color-white);
+  background-color: var(--color-passphrase-bg);
   padding: 0px 24px;
   box-sizing: border-box;
   outline: none;
@@ -51,6 +51,7 @@
       padding: 0 2px 1px !important;
       height: 20px !important;
       box-sizing: border-box;
+      background-color: var(--color-passphrase-bg);
 
       &:focus {
         color: var(--color-ultramarine-blue);

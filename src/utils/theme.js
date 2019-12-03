@@ -7,7 +7,7 @@ export default function (WrappedComponent) {
   return function (props) {
     const theme = useTheme();
     return (
-      <div data-theme={theme}>
+      <div data-theme={!props.isSigninFlow ? theme : ''}>
         <WrappedComponent
           {...props}
           theme={theme}

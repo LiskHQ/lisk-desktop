@@ -41,7 +41,7 @@
     color: var(--color-maastricht-blue);
 
     &:not(:first-child) {
-      border-top: 1px solid rgba(111, 114, 118, 0.1);
+      border-top: 1px solid var(--color-platinum);
     }
 
     & > label {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { useTheme } from '../../../utils/theme';
 import academy from '../../../assets/images/icons/academy.svg';
 import academyActive from '../../../assets/images/icons/academy-active.svg';
 import alertIcon from '../../../assets/images/icons/icon-alert.svg';
@@ -10,6 +10,7 @@ import arrowLeftInactive from '../../../assets/images/icons/arrow-left-inactive.
 import arrowRightActive from '../../../assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '../../../assets/images/icons/arrow-right-inactive.svg';
 import balance from '../../../assets/images/icons/balance.svg';
+import balanceDark from '../../../assets/images/icons/balance-dark.svg';
 import bookmarksIconEmptyState from '../../../assets/images/icons/bookmarks-empty-state.svg';
 import btcIcon from '../../../assets/images/icons/icon-btc.svg';
 import checkboxFilled from '../../../assets/images/icons/checkmark-filled.svg';
@@ -27,6 +28,7 @@ import discreetModeOn from '../../../assets/images/icons/discreet-mode-on.svg';
 import feedback from '../../../assets/images/icons/feedback.svg';
 import feedbackActive from '../../../assets/images/icons/feedback-active.svg';
 import fileOutline from '../../../assets/images/icons/icon-file-outline.svg';
+import fileOutlineDark from '../../../assets/images/icons/icon-file-outline-dark.svg';
 import help from '../../../assets/images/icons/help.svg';
 import helpActive from '../../../assets/images/icons/help-active.svg';
 import helpCenter from '../../../assets/images/icons/help-center.svg';
@@ -51,6 +53,7 @@ import lskIcon from '../../../assets/images/icons/icon-lsk.svg';
 import monitorIcon from '../../../assets/images/icons/monitor.svg';
 import monitorIconActive from '../../../assets/images/icons/monitorActive.svg';
 import newsFeedAvatar from '../../../assets/images/icons/news-feed-avatar.svg';
+import newsFeedAvatarDark from '../../../assets/images/icons/news-feed-avatar-dark.svg';
 import noTweetsIcon from '../../../assets/images/icons/no-tweets.svg';
 import okIcon from '../../../assets/images/icons/icon-checkmark.svg';
 import outgoing from '../../../assets/images/icons/outgoing.svg';
@@ -183,16 +186,20 @@ export const icons = {
   copyActive,
   verifyWalletAddressActive,
   liskLogoDark,
+  balanceDark,
+  newsFeedAvatarDark,
+  fileOutlineDark,
   sign,
   signActive,
   verify,
   verifyActive,
 };
 
-
-const Icon = ({ name, ...props }) => (
-  <img src={icons[name]} {...props} />
-);
+const Icon = ({ name, noTheme, ...props }) => {
+  const theme = useTheme();
+  const src = theme === 'dark' && !noTheme && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
+  return <img src={src} {...props} />;
+};
 
 Icon.propTypes = {
   name: PropTypes.oneOf(Object.keys(icons)).isRequired,

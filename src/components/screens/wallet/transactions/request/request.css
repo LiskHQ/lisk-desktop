@@ -143,6 +143,10 @@
     padding: 8px 10px;
   }
 
+  & .sharingLink {
+    background-color: var(--color-request-extarea);
+  }
+
   & .sectionFooter {
     margin-top: 20px;
 
@@ -171,6 +175,10 @@
     margin: 24px 0 0;
     width: 100%;
     padding: 33px 0;
+
+    & canvas {
+      box-shadow: 0 0 1px 0 var(--color-strong-white);
+    }
   }
 }
 

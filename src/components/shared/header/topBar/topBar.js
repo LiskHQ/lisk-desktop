@@ -78,7 +78,6 @@ class TopBar extends React.Component {
       history,
       network,
       token,
-      theme,
       settingsUpdated,
       resetTimer,
     } = this.props;
@@ -89,11 +88,7 @@ class TopBar extends React.Component {
       <div className={`${styles.wrapper} top-bar`}>
         <div>
           <div className={styles.logo}>
-            {
-              theme === 'dark'
-                ? <Icon name="liskLogoDark" className="topbar-logo" />
-                : <Icon name="liskLogo" className="topbar-logo" />
-            }
+            <Icon name="liskLogo" className="topbar-logo" />
           </div>
 
           <NavigationButtons

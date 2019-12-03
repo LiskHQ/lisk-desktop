@@ -32,7 +32,7 @@
     }
 
     &:hover {
-      background-color: var(--primary-background-color);
+      background-color: var(--color-rows-hover);
       text-decoration: none;
 
       &::before {

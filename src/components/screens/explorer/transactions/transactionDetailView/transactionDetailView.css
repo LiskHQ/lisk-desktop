@@ -106,7 +106,7 @@
       align-items: center;
       background-color: var(--color-slate-gray);
       border-radius: var(--border-radius-standard);
-      color: var(--color-white);
+      color: var(--color-strong-white);
       display: flex;
       height: 18px;
       margin-right: 10px;

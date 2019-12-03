@@ -17,6 +17,7 @@
     @mixin headingLarge;
 
     margin: 43px 0 20px;
+    color: var(--color-maastricht-blue);
   }
 
   & p {

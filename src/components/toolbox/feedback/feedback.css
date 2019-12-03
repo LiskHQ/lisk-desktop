@@ -26,7 +26,7 @@
 
   &.error:not(:empty) {
     background: var(--error-background-color);
-    color: var(--color-white);
+    color: var(--color-strong-white);
     animation: fadeIn var(--animation-speed-fastest) forwards;
     transform-origin: top;
     display: inline-block;

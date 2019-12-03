@@ -35,7 +35,7 @@ class App extends React.Component {
 
   render() {
     const { location, history, settings } = this.props;
-    const theme = settings.DarkMode ? 'dark' : 'light';
+    const theme = settings.darkMode ? 'dark' : 'light';
     const allRoutes = Object.values(routes);
     const mainClassNames = [
       styles.bodyWrapper,
@@ -45,7 +45,7 @@ class App extends React.Component {
 
     return (
       <ThemeContext.Provider value={theme}>
-        <OfflineWrapper>
+        <OfflineWrapper isSigninFlow={routeObj.isSigninFlow}>
           <DialogHolder />
           <Header
             isSigninFlow={routeObj.isSigninFlow}
@@ -55,7 +55,7 @@ class App extends React.Component {
             className={mainClassNames}
             ref={(el) => { this.main = el; }}
           >
-            <section data-theme={routeObj.isSigninFlow ? '' : theme}>
+            <section>
               <FlashMessageHolder />
               <InitializationMessage history={history} />
               <div className={`${styles.mainContent} ${!routeObj.isSigninFlow ? styles.mainBox : ''}`}>

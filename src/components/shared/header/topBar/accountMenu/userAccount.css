@@ -84,7 +84,7 @@
     align-items: center;
     background: var(--color-ultramarine-blue);
     border-radius: var(--border-radius-standard);
-    color: var(--color-white);
+    color: var(--color-strong-white);
     display: flex;
     margin-left: auto;
     padding: 0 8px;
