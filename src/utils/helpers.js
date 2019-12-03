@@ -73,3 +73,42 @@ export const flattenArray = arr =>
     (Array.isArray(item)
       ? [...acc, ...flattenArray(item)]
       : [...acc, item]), []).filter(item => !!item);
+
+// eslint-disable-next-line
+const sizeOfObject = (object, size) => {
+  if (object === null) {
+    return 0;
+  }
+
+  return Object.keys(object).reduce((bytes, key) => {
+    bytes += size(key);
+    try {
+      bytes += size(object[key]);
+    } catch (ex) {
+      if (ex instanceof RangeError) {
+        // circular reference detected, final result might be incorrect
+        // but we don't need to throw error
+        bytes = 0;
+      }
+    }
+
+    return bytes;
+  }, 0);
+};
+
+export const sizeOf = (object) => {
+  const sizes = {
+    string: 2,
+    boolean: 4,
+    number: 8,
+  };
+
+  if (typeof object === 'string') return object.length * sizes.string;
+  if (typeof object === 'boolean') return sizes.boolean;
+  if (typeof object === 'number') return sizes.number;
+  if (Array.isArray(object)) {
+    return object.map(sizeOf).reduce((acc, curr) => acc + curr, 0);
+  }
+  if (typeof object === 'object') return sizeOfObject(object, sizeOf);
+  return 0;
+};
