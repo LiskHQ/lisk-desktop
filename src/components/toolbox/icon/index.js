@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useTheme } from '../../../utils/theme';
 import academy from '../../../assets/images/icons/academy.svg';
 import academyActive from '../../../assets/images/icons/academy-active.svg';
 import alertIcon from '../../../assets/images/icons/icon-alert.svg';
@@ -196,8 +196,8 @@ export const icons = {
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
-  const darkMode = useSelector(state => state.settings.darkMode);
-  const src = darkMode && !noTheme && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
+  const theme = useTheme();
+  const src = theme === 'dark' && !noTheme && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
   return <img src={src} {...props} />;
 };
 

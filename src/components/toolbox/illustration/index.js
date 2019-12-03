@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useTheme } from '../../../utils/theme';
 import welcomeLiskDelegates from '../../../assets/images/illustrations/illustration-welcome-to-lisk-delegates-dark.svg';
 import yourVoiceMatters from '../../../assets/images/illustrations/illustration-your-voice-matters-dark.svg';
 import getRewarded from '../../../assets/images/illustrations/illustration-get-rewarded-dark.svg';
@@ -82,8 +82,8 @@ export const illustrations = {
 };
 
 const Illustration = ({ name, className, noTheme }) => {
-  const darkMode = useSelector(state => state.settings.darkMode);
-  const themed = darkMode && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
+  const theme = useTheme();
+  const themed = theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
   return <img src={illustrations[themed]} className={className} />;
 };
 
