@@ -14,7 +14,7 @@ describe('Icon', () => {
     expect(wrapper.find('img').props().customprop).to.be.equal('customValue');
   });
 
-  it('should not render dark icons available', () => {
+  it('should render dark icons if available', () => {
     const store = fakeStore({
       settings: {
         darkMode: true,
