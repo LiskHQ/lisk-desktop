@@ -41,7 +41,7 @@ describe('TransactionDetail ', () => {
     expect(wrapper).to.have.text(newProps.transaction.asset.delegate.username);
   });
 
-  it('should render upvotes and downvotes count if type=3', () => {
+  it('should render votes and unvotes count if type=3', () => {
     const newProps = {
       transaction: {
         asset: { votes: ['+12345L', '+123456789L', '-123L'] },
@@ -50,6 +50,6 @@ describe('TransactionDetail ', () => {
     };
     wrapper.setProps(newProps);
     expect(wrapper.find('.txDetails')).to.have.className('delegateVote');
-    expect(wrapper).to.have.text('↑ 2 Upvotes, ↓ 1 Downvotes');
+    expect(wrapper).to.have.text('↑ 2 Votes, ↓ 1 Unvotes');
   });
 });
