@@ -9,10 +9,10 @@ const generateVotes = (asset, t) => {
   return (
     <React.Fragment>
       <span>
-        {`↑ ${votes.upvotes} ${t('Upvotes')},`}
+        {`↑ ${votes.upvotes} ${t('Votes')},`}
       </span>
       <span>
-        {` ↓ ${votes.downvotes} ${t('Downvotes')}`}
+        {` ↓ ${votes.downvotes} ${t('Unvotes')}`}
       </span>
     </React.Fragment>
   );
