@@ -44,7 +44,7 @@ const Overview = ({
             typeof chartActiveAndStandby.data === 'number'
               ? (
                 <div className={styles.chartBox}>
-                  <h1 className={styles.chartTitle}>{t('Delegates')}</h1>
+                  <h2 className={styles.chartTitle}>{t('Delegates')}</h2>
                   <div className={styles.chart}>
                     <Chart
                       type={typeDoughnut}
@@ -79,7 +79,7 @@ const Overview = ({
             chartDelegatesForging.data.length
               ? (
                 <div className={styles.chartBox}>
-                  <h1 className={styles.chartTitle}>{t('Delegates Forging Status')}</h1>
+                  <h2 className={styles.chartTitle}>{t('Delegates Forging Status')}</h2>
                   <div className={styles.chart}>
                     <Chart
                       type={typeDoughnut}
@@ -123,7 +123,7 @@ const Overview = ({
             chartRegisteredDelegates.data.length
               ? (
                 <div className={styles.chartBox}>
-                  <h1 className={styles.chartTitle}>{t('Registered Delegates')}</h1>
+                  <h2 className={styles.chartTitle}>{t('Registered Delegates')}</h2>
                   <div className={styles.chart}>
                     <Chart
                       type={typeLine}

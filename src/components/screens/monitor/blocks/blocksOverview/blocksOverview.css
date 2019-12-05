@@ -1,5 +1,11 @@
 @import '../../../../../app/mixins.css';
 
+.wrapper {
+  & h2 {
+    color: var(--color-maastricht-blue);
+  }
+}
+
 .row {
   height: 275px;
   box-sizing: border-box;
