@@ -56,7 +56,7 @@ export const doughnutChartData = data => merge({
 }, data);
 
 
-const baseOptions = {
+const baseOptions = (theme = 'light') => ({
   maintainAspectRatio: false,
 
   legend: {
@@ -90,14 +90,14 @@ const baseOptions = {
       label(tooltipItem, data) { return data.datasets[0].data[tooltipItem.index]; },
     },
     mode: 'index',
-    backgroundColor: chartStyles.whiteColor,
-    bodyFontColor: chartStyles.slateGray,
+    backgroundColor: chartStyles.backgroundColor[theme],
+    bodyFontColor: chartStyles.textColor[theme],
     bodyFontFamily: chartStyles.contentFontFamily,
     bodyFontSize: 13,
     bodyFontStyle: 'normal',
-    borderColor: chartStyles.platinumColor,
+    borderColor: chartStyles.borderColor[theme],
     borderWidth: 1,
-    titleFontColor: chartStyles.maastrichtBlue,
+    titleFontColor: chartStyles.titleColor[theme],
     titleFontFamily: chartStyles.contentFontFamily,
     titleFontSize: chartStyles.fontSize,
     titleFontStyle: 'bold',
@@ -108,7 +108,7 @@ const baseOptions = {
     cornerRadius: 3,
     caretSize: 10,
   },
-};
+});
 
 
 export const lineChartOptions = {
@@ -234,8 +234,10 @@ const typeData = {
  * based on the selected chart type.
  * @param {string} type - can be line, bar or doughnut
  * @param {object} options - More options that can be pass to the chart
+ * @param {string} theme - The global app theme: either dark or light
  */
-export const optionsByChart = (type, options) => merge(typeOptions[type], baseOptions, options);
+export const optionsByChart = (type, options, theme) =>
+  merge(typeOptions[type], baseOptions(theme), options);
 
 /**
  * Function that return the corresponding data object
