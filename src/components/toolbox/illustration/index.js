@@ -37,7 +37,9 @@ import emptyWalletDark from '../../../assets/images/illustrations/empty-wallet-d
 import diveIntoDetails from '../../../assets/images/illustrations/diveIntoDetails.svg';
 import manageYourLSK from '../../../assets/images/illustrations/manageYourLSK.svg';
 import verifyMessageError from '../../../assets/images/illustrations/verify-message-error.svg';
+import verifyMessageErrorDark from '../../../assets/images/illustrations/verify-message-error-dark.svg';
 import verifyMessageSuccess from '../../../assets/images/illustrations/verify-message-success.svg';
+import verifyMessageSuccessDark from '../../../assets/images/illustrations/verify-message-success-dark.svg';
 import registrationSuccess from '../../../assets/images/illustrations/registration-success.svg';
 
 export const illustrations = {
@@ -79,6 +81,8 @@ export const illustrations = {
   transactionErrorDark,
   emptyBookmarksListDark,
   emptyBookmarkFilerDark,
+  verifyMessageErrorDark,
+  verifyMessageSuccessDark,
 };
 
 const Illustration = ({ name, className, noTheme }) => {
