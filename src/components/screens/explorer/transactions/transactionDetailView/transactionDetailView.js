@@ -76,12 +76,12 @@ class TransactionDetailView extends React.Component {
         }
         {children}
         { transaction.type === transactionTypes.send
-          && (transaction.asset && transaction.asset.data) ? (
+          ? (
             <BoxRow className={styles.message}>
               <div className={`${styles.detailsWrapper}`}>
                 <span className={styles.label}>{t('Message')}</span>
                 <div className={`${styles.value} tx-reference`}>
-                  {transaction.asset.data}
+                  {transaction.asset && transaction.asset.data ? transaction.asset.data : '-'}
                 </div>
               </div>
               <div className={`${styles.detailsWrapper}`}>
