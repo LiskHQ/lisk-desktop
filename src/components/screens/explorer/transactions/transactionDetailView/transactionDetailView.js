@@ -1,6 +1,6 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
-import { sizeOf } from '../../../../../utils/helpers';
+import { sizeOfString } from '../../../../../utils/helpers';
 import AccountInfo from './accountInfo';
 import BoxRow from '../../../../toolbox/box/row';
 import TransactionTypeFigure from '../../../wallet/transactions/typeFigure/TransactionTypeFigure';
@@ -87,7 +87,7 @@ class TransactionDetailView extends React.Component {
               <div className={`${styles.detailsWrapper}`}>
                 <span className={styles.label}>{t('Size')}</span>
                 <div className={`${styles.value} tx-size`}>
-                  {`${sizeOf(transaction.asset.data)} bytes`}
+                  {`${sizeOfString(transaction.asset.data)} bytes`}
                 </div>
               </div>
             </BoxRow>
