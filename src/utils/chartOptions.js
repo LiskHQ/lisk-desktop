@@ -205,14 +205,26 @@ export const barChartOptions = {
 
 
 export const doughnutChartOptions = {
-  cutoutPercentage: 60,
-
-  elements: {
-    arc: {
-      backgroundColor: chartStyles.ultramarineBlue,
-      borderAlign: 'center',
-      borderColor: chartStyles.whiteColor,
-      borderWidth: 1,
+  light: {
+    cutoutPercentage: 60,
+    elements: {
+      arc: {
+        backgroundColor: chartStyles.backgroundColor.light,
+        borderColor: chartStyles.borderColor.light,
+        borderAlign: 'center',
+        borderWidth: 1,
+      },
+    },
+  },
+  dark: {
+    cutoutPercentage: 60,
+    elements: {
+      arc: {
+        backgroundColor: chartStyles.backgroundColor.dark,
+        borderColor: chartStyles.borderColor.dark,
+        borderAlign: 'center',
+        borderWidth: 1,
+      },
     },
   },
 };
@@ -237,7 +249,7 @@ const typeData = {
  * @param {string} theme - The global app theme: either dark or light
  */
 export const optionsByChart = (type, options, theme) =>
-  merge(typeOptions[type], baseOptions(theme), options);
+  merge(typeOptions[type][theme], baseOptions(theme), options);
 
 /**
  * Function that return the corresponding data object

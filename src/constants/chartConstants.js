@@ -25,7 +25,7 @@ export const chartStyles = {
   linthPink: '#f8d2d2',
   mystic: '#edf0f5',
   transparent: 'rgba(0, 0, 0, 0)',
-  fontFamily: '\'basier-circle\', sans-serif',
+  contentFontFamily: '\'basier-circle\', sans-serif',
   fontSize: 13,
 };
 
