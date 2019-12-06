@@ -56,7 +56,7 @@ export const doughnutChartData = data => merge({
 }, data);
 
 
-const baseOptions = (theme = 'light') => ({
+export const baseOptions = (theme = 'light') => ({
   maintainAspectRatio: false,
 
   legend: {
@@ -111,7 +111,7 @@ const baseOptions = (theme = 'light') => ({
 });
 
 
-export const lineChartOptions = {
+export const lineChartOptions = () => ({
   scales: {
     xAxes: [{
       display: true,
@@ -153,10 +153,10 @@ export const lineChartOptions = {
       tension: 0,
     },
   },
-};
+});
 
 
-export const barChartOptions = {
+export const barChartOptions = () => ({
   scales: {
     xAxes: [{
       display: true,
@@ -201,33 +201,20 @@ export const barChartOptions = {
       borderSkipped: 'bottom',
     },
   },
-};
+});
 
 
-export const doughnutChartOptions = {
-  light: {
-    cutoutPercentage: 60,
-    elements: {
-      arc: {
-        backgroundColor: chartStyles.backgroundColor.light,
-        borderColor: chartStyles.borderColor.light,
-        borderAlign: 'center',
-        borderWidth: 1,
-      },
+export const doughnutChartOptions = (theme = 'light') => ({
+  cutoutPercentage: 60,
+  elements: {
+    arc: {
+      backgroundColor: chartStyles.backgroundColor[theme],
+      borderColor: chartStyles.borderColor[theme],
+      borderAlign: 'center',
+      borderWidth: 1,
     },
   },
-  dark: {
-    cutoutPercentage: 60,
-    elements: {
-      arc: {
-        backgroundColor: chartStyles.backgroundColor.dark,
-        borderColor: chartStyles.borderColor.dark,
-        borderAlign: 'center',
-        borderWidth: 1,
-      },
-    },
-  },
-};
+});
 
 const typeOptions = {
   [typeLine]: lineChartOptions,
@@ -249,7 +236,7 @@ const typeData = {
  * @param {string} theme - The global app theme: either dark or light
  */
 export const optionsByChart = (type, options, theme) =>
-  merge(typeOptions[type][theme], baseOptions(theme), options);
+  merge(typeOptions[type](theme), baseOptions(theme), options);
 
 /**
  * Function that return the corresponding data object
