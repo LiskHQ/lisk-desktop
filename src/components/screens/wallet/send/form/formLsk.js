@@ -7,6 +7,7 @@ import FormBase from './formBase';
 import Icon from '../../../../toolbox/icon';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
+import { sizeOfString } from '../../../../../utils/helpers';
 
 export default class FormLsk extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export default class FormLsk extends React.Component {
 
   onReferenceChange({ target: { name, value } }) {
     const { t } = this.props;
-    const byteCount = encodeURI(value).split(/%..|./).length - 1;
+    const byteCount = sizeOfString(value);
 
     this.setState(({ fields }) => ({
       fields: {
@@ -51,7 +52,7 @@ export default class FormLsk extends React.Component {
   render() {
     const { fields } = this.state;
     const { t } = this.props;
-    const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
+    const byteCount = sizeOfString(fields.reference.value);
     return (
       <FormBase
         {...this.props}
