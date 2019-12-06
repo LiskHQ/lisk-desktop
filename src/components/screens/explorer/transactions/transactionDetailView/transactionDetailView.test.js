@@ -29,12 +29,6 @@ describe('Transaction Detail View', () => {
       expect(wrapper.find('.accountInfo .receiver-address').text()).toBe(transaction.recipientId);
       expect(wrapper).toContainExactlyOneMatchingElement('.tx-reference');
     });
-
-    it('Should render transfer transaction without message', () => {
-      props.transaction.asset = {};
-      wrapper = mount(<TransactionDetailView {...props} />);
-      expect(wrapper).not.toContainMatchingElement('.tx-reference');
-    });
   });
 
   describe('Delegate vote transaction', () => {
