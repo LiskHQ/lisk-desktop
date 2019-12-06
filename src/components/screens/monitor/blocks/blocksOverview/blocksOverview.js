@@ -42,7 +42,7 @@ class BlocksOverview extends React.Component {
 
 
     return (
-      <Box>
+      <Box className={styles.wrapper}>
         <BoxHeader className="box-header">
           <h2>{t('Overview')}</h2>
           <BoxTabs
