@@ -93,6 +93,8 @@
   }
 
   & .value {
+    @mixin contentLargest;
+
     color: var(--color-maastricht-blue);
   }
 
