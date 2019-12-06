@@ -74,7 +74,6 @@ export const flattenArray = arr =>
       ? [...acc, ...flattenArray(item)]
       : [...acc, item]), []).filter(item => !!item);
 
-// eslint-disable-next-line
 const sizeOfObject = (object, size) => {
   if (object === null) {
     return 0;
