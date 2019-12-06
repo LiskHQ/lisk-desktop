@@ -65,11 +65,11 @@ describe('helpers', () => {
   });
   describe('sizeOfString', () => {
     it('should calculate the size of a string', () => {
-      expect(sizeOfString('random string')).toEqual(26);
+      expect(sizeOfString('random string')).toEqual(13);
     });
 
     it('should calculate the size of null', () => {
-      expect(sizeOfString()).toEqual(0);
+      expect(sizeOfString()).toEqual(9);
     });
   });
 });
