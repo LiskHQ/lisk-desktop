@@ -10,6 +10,7 @@ import externalLinks from '../../../../../constants/externalLinks';
 import DropdownButton from '../../../../toolbox/dropdownButton';
 import { SecondaryButton } from '../../../../toolbox/buttons/button';
 import AccountInfo from './accountInfo';
+import { loginType } from '../../../../../constants/hwConstants';
 
 class UserAccount extends React.Component {
   constructor(props) {
@@ -135,16 +136,21 @@ class UserAccount extends React.Component {
           <span>{t('Settings')}</span>
         </Link>
 
-        <Link
-          id="signMessage"
-          to={routes.signMessage.path}
-          className={styles.dropdownOption}
-          onClick={this.toggleDropdown}
-        >
-          <Icon name="sign" className={styles.defaultIcon} />
-          <Icon name="signActive" className={styles.activeIcon} />
-          <span>{t('Sign Message')}</span>
-        </Link>
+        {
+          (typeof account.loginType === 'number' && account.loginType === loginType.normal)
+            ? (
+              <Link
+                id="signMessage"
+                to={routes.signMessage.path}
+                className={styles.dropdownOption}
+                onClick={this.toggleDropdown}
+              >
+                <Icon name="sign" className={styles.defaultIcon} />
+                <Icon name="signActive" className={styles.activeIcon} />
+                <span>{t('Sign Message')}</span>
+              </Link>
+            ) : null
+        }
 
         <Link
           id="verifyMessage"
