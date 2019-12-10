@@ -29,27 +29,43 @@ describe('UserAccount', () => {
     t: val => val,
   };
 
-  beforeEach(() => {
-    wrapper = mount(<UserAccount {...myProps} />);
-  });
-
   it('renders <UserAccount /> component', () => {
+    wrapper = mount(<UserAccount {...myProps} />);
     expect(wrapper).toContainMatchingElement('.user-account');
   });
 
-  it('called properly dropdown component', () => {
+  it('renders 4 menu items', () => {
     myProps.isDropdownEnable = true;
     wrapper = mount(<UserAccount {...myProps} />);
     expect(wrapper).toContainExactlyOneMatchingElement('Dropdown');
     expect(wrapper).toContainExactlyOneMatchingElement('span.dropdownOption');
-    expect(wrapper).toContainMatchingElements(5, 'a.dropdownOption');
+    expect(wrapper).toContainMatchingElements(4, 'a.dropdownOption');
   });
 
-  it('called properly onLogout when user click it', () => {
+  it('renders the sign message option if signed in using passphrase', () => {
     myProps.isDropdownEnable = true;
-    wrapper = mount(<UserAccount {...myProps} />);
-    wrapper.find('span.dropdownOption').simulate('click');
-    expect(myProps.onLogout).toHaveBeenCalled();
+    const account = {
+      info: {
+        LSK: {},
+      },
+      loginType: 0,
+    };
+    const signedInProps = { ...myProps, account };
+    wrapper = mount(<UserAccount {...signedInProps} />);
+    expect(wrapper.find('#signMessage').exists()).toEqual(true);
+  });
+
+  it('renders the no sign message option if signed in using HW', () => {
+    myProps.isDropdownEnable = true;
+    const account = {
+      info: {
+        LSK: {},
+      },
+      loginType: 1,
+    };
+    const signedInProps = { ...myProps, account };
+    wrapper = mount(<UserAccount {...signedInProps} />);
+    expect(wrapper.find('#signMessage').exists()).toEqual(false);
   });
 
   it('should not render if no info in accounts', () => {

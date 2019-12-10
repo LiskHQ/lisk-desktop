@@ -4,6 +4,7 @@ import React from 'react';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import BoxFooter from '../../toolbox/box/footer';
 import Illustration from '../../toolbox/illustration';
+import styles from './verifyMessage.css';
 
 export default function Result({
   finalCallback, inputs, prevStep, t,
@@ -16,7 +17,7 @@ export default function Result({
   }
 
   return (
-    <div>
+    <div className={styles.result}>
       <h1>{isCorrect ? t('The signature is correct') : t('The signature is incorrect')}</h1>
       <Illustration name={isCorrect ? 'verifyMessageSuccess' : 'verifyMessageError'} />
       <BoxFooter>

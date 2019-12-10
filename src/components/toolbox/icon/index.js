@@ -12,6 +12,7 @@ import arrowRightInactive from '../../../assets/images/icons/arrow-right-inactiv
 import balance from '../../../assets/images/icons/balance.svg';
 import balanceDark from '../../../assets/images/icons/balance-dark.svg';
 import bookmarksIconEmptyState from '../../../assets/images/icons/bookmarks-empty-state.svg';
+import bookmarksIconEmptyStateDark from '../../../assets/images/icons/bookmarks-empty-state-dark.svg';
 import btcIcon from '../../../assets/images/icons/icon-btc.svg';
 import checkboxFilled from '../../../assets/images/icons/checkmark-filled.svg';
 import checkmark from '../../../assets/images/icons/checkmark.svg';
@@ -37,6 +38,7 @@ import hidePassphraseIcon from '../../../assets/images/icons/icon-hide-passphras
 import hwWalletIcon from '../../../assets/images/icons/hw-wallet.svg';
 import iconEdit from '../../../assets/images/icons/icon-edit.svg';
 import iconEmptyRecentTransactions from '../../../assets/images/icons/empty-recent-transactions.svg';
+import iconEmptyRecentTransactionsDark from '../../../assets/images/icons/empty-recent-transactions-dark.svg';
 import iconFilter from '../../../assets/images/icons/icon-filter.svg';
 import iconLedgerDevice from '../../../assets/images/icons/icon-ledger-device.svg';
 import iconLoader from '../../../assets/images/icons/icon-loader.svg';
@@ -193,6 +195,8 @@ export const icons = {
   signActive,
   verify,
   verifyActive,
+  iconEmptyRecentTransactionsDark,
+  bookmarksIconEmptyStateDark,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

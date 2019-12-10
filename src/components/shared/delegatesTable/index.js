@@ -109,7 +109,7 @@ const DelegatesTable = ({
         : (
           <BoxContent>
             <BoxEmptyState>
-              <Illustration name="emptyWallet" className={styles.emptyVotes} />
+              <Illustration name="emptyWallet" />
               <h3>{`${delegates.error || t('No delegates found.')}`}</h3>
             </BoxEmptyState>
           </BoxContent>

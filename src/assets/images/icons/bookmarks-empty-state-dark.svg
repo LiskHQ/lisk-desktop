@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="47px" height="40px" viewBox="0 0 47 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 54.1 (76490) - https://sketchapp.com -->
+    <title>4699FD9C-30DB-4610-BE50-67A24F73C2ED</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <polygon id="path-1" points="0 40 47 40 47 0 0 0"></polygon>
+    </defs>
+    <g id="🏡--1.0-Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.1.2-Dashboard---Empty" transform="translate(-1158.000000, -254.000000)">
+            <g id="Group-15" transform="translate(1021.000000, 180.000000)">
+                <g id="Group-4">
+                    <g id="Followed-Accounts--Empty---5-Col">
+                        <g id="Group-13" transform="translate(137.000000, 74.000000)">
+                            <g id="Group-12">
+                                <polygon id="Fill-1" fill="#3B3B41" stroke="#4E4E53" points="0 33.4883721 47 33.4883721 47 0 0 0"></polygon>
+                                <g id="Group-11">
+                                    <path d="M24.1875,29.3023256 C24.1875,29.815814 23.7395,30.2325581 23.1875,30.2325581 C22.6355,30.2325581 22.1875,29.815814 22.1875,29.3023256 C22.1875,28.7888372 22.6355,28.372093 23.1875,28.372093 C23.7395,28.372093 24.1875,28.7888372 24.1875,29.3023256" id="Fill-2" fill="#4070F4"></path>
+                                    <path d="M24.1875,29.3023256 C24.1875,29.815814 23.7395,30.2325581 23.1875,30.2325581 C22.6355,30.2325581 22.1875,29.815814 22.1875,29.3023256 C22.1875,28.7888372 22.6355,28.372093 23.1875,28.372093 C23.7395,28.372093 24.1875,28.7888372 24.1875,29.3023256 Z" id="Stroke-4" stroke="#4070F4" stroke-linecap="round"></path>
+                                    <path d="M46.5,25.1162791 L0.5,25.1162791" id="Stroke-6" stroke="#4070F4" stroke-width="1.5"></path>
+                                    <mask id="mask-2" fill="white">
+                                        <use xlink:href="#path-1"></use>
+                                    </mask>
+                                    <g id="Clip-9"></g>
+                                    <polygon id="Fill-8" fill="#3B3B41" mask="url(#mask-2)" points="20.312 40 26.312 40 26.312 34.4186047 20.312 34.4186047"></polygon>
+                                    <polygon id="Fill-10" fill="#3B3B41" mask="url(#mask-2)" points="17.812 40 28.812 40 28.812 39.0697674 17.812 39.0697674"></polygon>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

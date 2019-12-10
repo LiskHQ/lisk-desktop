@@ -35,17 +35,17 @@ class App extends React.Component {
 
   render() {
     const { location, history, settings } = this.props;
-    const theme = settings.darkMode ? 'dark' : 'light';
     const allRoutes = Object.values(routes);
     const mainClassNames = [
       styles.bodyWrapper,
       (this.state.loaded ? `${styles.loaded} appLoaded` : ''),
     ].join(' ');
     const routeObj = Object.values(routes).find(r => r.path === location.pathname) || {};
+    const theme = settings.darkMode && !routeObj.isSigninFlow ? 'dark' : 'light';
 
     return (
       <ThemeContext.Provider value={theme}>
-        <OfflineWrapper isSigninFlow={routeObj.isSigninFlow}>
+        <OfflineWrapper>
           <DialogHolder />
           <Header
             isSigninFlow={routeObj.isSigninFlow}
