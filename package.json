@@ -23,7 +23,7 @@
     "test-live": "npm test -- --watch",
     "bundlesize": "bundlesize",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
-    "start": "electron ./app/",
+    "start": "LISK_HUB_URL='http://localhost:8080' DEBUG=true electron ./app/",
     "dist": "electron-builder --ia32 --x64 --publish onTag",
     "dist:win": "electron-builder --win --ia32 --x64 --publish onTag",
     "dist:mac": "electron-builder --mac",
@@ -47,8 +47,8 @@
     "url": "https://github.com/LiskHQ/lisk-desktop"
   },
   "dependencies": {
-    "@ledgerhq/hw-transport-node-hid": "4.73.2",
-    "@ledgerhq/hw-transport-u2f": "4.73.2",
+    "@ledgerhq/hw-transport-node-hid": "4.78.0",
+    "@ledgerhq/hw-transport-u2f": "4.78.0",
     "@liskhq/lisk-client": "2.0.0",
     "@liskhq/lisk-transactions": "2.0.0",
     "await-to-js": "2.1.1",
