@@ -37,6 +37,7 @@ module.exports = {
     'app/src/ledger.js',
     'src/actions/liskService.js',
     'src/actions/transactions.js',
+    'src/actions/blocks.js',
     'src/components/screens/wallet/balanceChart.js', // This should be unskipped in issue #1499
     'src/utils/balanceChart.js', // This should be unskipped in issue #1499
     'src/components/shared/errorBoundary/index.js',
@@ -82,6 +83,7 @@ module.exports = {
     'src/components/screens/register/register.js',
     'src/components/toolbox/demoRenderer.js',
     'src/components/screens/delegates/votingHeader.js',
+    'src/components/screens/monitor/delegate/delegate.js',
   ],
   coverageThreshold: {
     global: {
