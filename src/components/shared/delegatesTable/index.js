@@ -39,7 +39,7 @@ const DelegatesTable = ({
       className: [grid['col-xs-2'], grid['col-md-2'], grid['col-lg-2']].join(' '),
     },
   };
-  columns = columns.map(column => ({
+  const columnsComponent = columns.map(column => ({
     ...columnDefaults[column.id],
     ...column,
   })).map(({ headerTooltip, ...column }, i) => ({
@@ -97,7 +97,7 @@ const DelegatesTable = ({
         ? (
           <BoxContent className={styles.content}>
             <Table {...{
-              columns,
+              columns: columnsComponent,
               data: delegates.data,
               rowKey: 'username',
               rowClassName: 'delegate-row',
