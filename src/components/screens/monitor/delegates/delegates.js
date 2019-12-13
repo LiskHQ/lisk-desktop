@@ -1,10 +1,9 @@
 import { withTranslation } from 'react-i18next';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import moment from 'moment';
 import { DEFAULT_LIMIT } from '../../../../constants/monitor';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
-import { getUnixTimestampFromValue } from '../../../../utils/datetime';
 import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import DelegatesTable from '../../../shared/delegatesTable';
 import MonitorHeader from '../header';
@@ -12,7 +11,21 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
 import Overview from './overview';
 import styles from './delegates.css';
+import { forgingDataDisplayed, forgingDataConcealed } from '../../../../actions/blocks';
 
+const getForgingTime = (data) => {
+  if (!data || data.time === -1) return '-';
+  if (data.time === 0) return 'now';
+  const { time, tense } = data;
+  const minutes = time / 60 >= 1 ? `${Math.floor(time / 60)}m ` : '';
+  const seconds = time % 60 >= 1 ? `${time % 60}s` : '';
+  if (tense === 'future') {
+    return `in ${minutes}${seconds}`;
+  }
+  return `${minutes}${seconds} ago`;
+};
+
+// eslint-disable-next-line max-statements
 const Delegates = ({
   applyFilters,
   changeSort,
@@ -26,14 +39,14 @@ const Delegates = ({
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
+  const dispatch = useDispatch();
   const statuses = {
-    forgedThisRound: t('Forging'),
-    forgedLastRound: t('Awaiting slot'),
+    forging: t('Forging'),
+    awaitingSlot: t('Awaiting slot'),
     notForging: t('Not forging'),
-    missedLastRound: t('Missed block'),
+    missedBlock: t('Missed block'),
   };
-
-  const getForgingTitle = status => statuses[status] || t('Loading');
+  const forgingTimes = useSelector(state => state.blocks.forgingTimes);
 
   const columns = [
     {
@@ -60,9 +73,7 @@ const Delegates = ({
       header: t('Forging time'),
       headerTooltip: t('Time until next forging slot of a delegate.'),
       /* eslint-disable-next-line react/display-name */
-      getValue: ({ forgingTime }) => (forgingTime
-        ? moment(forgingTime.diff(moment())).format(t('m [min] s [sec]'))
-        : '-'),
+      getValue: data => getForgingTime(forgingTimes[data.publicKey]),
       className: `hidden-m ${grid['col-md-2']}`,
     },
     {
@@ -70,18 +81,27 @@ const Delegates = ({
       header: t('Status'),
       headerTooltip: t('Current status of a delegate: forging, not forging, awaiting slot or missed block.'),
       /* eslint-disable-next-line react/display-name */
-      getValue: ({ status, lastBlock }) => (
+      getValue: data => (
         <Tooltip
-          title={getForgingTitle(status)}
+          title={forgingTimes[data.publicKey]
+            ? statuses[forgingTimes[data.publicKey].status]
+            : statuses.notForging}
           className="showOnBottom"
           size="s"
-          content={(<div className={`${styles.status} ${styles[status]}`} />)}
+          content={(
+            <div className={`${styles.status} ${
+              styles[forgingTimes[data.publicKey]
+                ? forgingTimes[data.publicKey].status
+                : 'notForging']}`
+              }
+            />
+          )}
           footer={(
-            <p>{lastBlock && moment(getUnixTimestampFromValue(lastBlock.timestamp)).fromNow()}</p>
+            <p>{getForgingTime(forgingTimes[data.publicKey], data)}</p>
           )}
         >
           <p className={styles.statusToolip}>
-            {lastBlock && t('Last block forged @{{height}}', lastBlock)}
+            {data.lastBlock && t('Last block forged @{{height}}', data.lastBlock)}
           </p>
         </Tooltip>
       ),
@@ -124,8 +144,6 @@ const Delegates = ({
 
   const getRowLink = delegate => `${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.address}`;
 
-  const chartDelegatesForging = delegates;
-
   delegates = activeTab === 'active'
     ? {
       ...delegates,
@@ -135,12 +153,17 @@ const Delegates = ({
     }
     : standByDelegates;
 
+  useEffect(() => {
+    dispatch(forgingDataDisplayed());
+    return () => dispatch(forgingDataConcealed());
+  }, []);
+
   return (
     <div>
       <MonitorHeader />
       <Overview
         chartActiveAndStandby={chartActiveAndStandbyData}
-        chartDelegatesForging={chartDelegatesForging}
+        chartDelegatesForging={forgingTimes}
         chartRegisteredDelegates={chartRegisteredDelegatesData}
         delegatesForgedLabels={Object.values(statuses)}
         t={t}
