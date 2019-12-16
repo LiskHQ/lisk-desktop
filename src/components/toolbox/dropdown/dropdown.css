@@ -99,12 +99,12 @@
         background: var(--color-maastricht-blue);
 
         &.active {
-          background-color: var(--color-maastricht-blue);
+          background-color: var(--color-rows-hover);
           color: #4070f4;
         }
 
         &:hover {
-          background-color: rgba(64, 112, 244, 0.24);
+          background-color: var(--color-rows-hover);
           color: #4070f4;
         }
       }
@@ -138,7 +138,7 @@
     width: 100%;
 
     &:hover {
-      background-color: var(--primary-background-color);
+      background-color: var(--color-rows-hover);
       color: var(--color-ultramarine-blue);
     }
 
