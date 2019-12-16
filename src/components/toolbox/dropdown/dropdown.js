@@ -58,7 +58,7 @@ Dropdown.defaultProps = {
   showDropdown: false,
   className: '',
   showArrow: true,
-  active: 0,
+  active: -1,
   align: 'right',
 };
 

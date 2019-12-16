@@ -88,7 +88,7 @@ describe('TopBar', () => {
   it('logout user when user do a click on logout function', () => {
     wrapper.find('.accountInfo').at(0).simulate('click');
     wrapper.update();
-    wrapper.find('.logout').simulate('click');
+    wrapper.find('span.logout').simulate('click');
     wrapper.update();
     expect(props.logOut).toHaveBeenCalled();
   });

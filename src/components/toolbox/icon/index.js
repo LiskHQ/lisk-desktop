@@ -23,8 +23,8 @@ import dashboardIconActive from '../../../assets/images/icons/dashboard-active.s
 import delegatesIcon from '../../../assets/images/icons/delegates.svg';
 import delegatesIconActive from '../../../assets/images/icons/delegates-active.svg';
 import delegatesIconActiveDark from '../../../assets/images/icons/delegates-active-dark.svg';
-import discordIcon from '../../../assets/images/icons/discord.svg';
-import discordIconActive from '../../../assets/images/icons/discord-active.svg';
+import discord from '../../../assets/images/icons/discord.svg';
+import discordActive from '../../../assets/images/icons/discord-active.svg';
 import discreetModeOff from '../../../assets/images/icons/discreet-mode-off.svg';
 import discreetModeOn from '../../../assets/images/icons/discreet-mode-on.svg';
 import feedback from '../../../assets/images/icons/feedback.svg';
@@ -68,8 +68,8 @@ import searchInput from '../../../assets/images/icons/search-input.svg';
 import settings from '../../../assets/images/icons/settings.svg';
 import settingsActive from '../../../assets/images/icons/settings-active.svg';
 import showPassphraseIcon from '../../../assets/images/icons/icon-show-passphrase.svg';
-import signin from '../../../assets/images/icons/signin.svg';
-import signinActive from '../../../assets/images/icons/signin-active.svg';
+import signIn from '../../../assets/images/icons/signin.svg';
+import signInActive from '../../../assets/images/icons/signin-active.svg';
 import tooltipQuestionMark from '../../../assets/images/icons/tooltip-question-icon.svg';
 import transactionApproved from '../../../assets/images/icons/transaction-status-approved.svg';
 import transactionError from '../../../assets/images/icons/transaction-error.svg';
@@ -95,10 +95,10 @@ import walletIconActive from '../../../assets/images/icons/wallet-active.svg';
 import warningIcon from '../../../assets/images/icons/warning-icon.svg';
 import warningRound from '../../../assets/images/icons/warning-round.svg';
 import qrCode from '../../../assets/images/icons/qr-code.svg';
-import sign from '../../../assets/images/icons/sign.svg';
-import signActive from '../../../assets/images/icons/signActive.svg';
-import verify from '../../../assets/images/icons/verify.svg';
-import verifyActive from '../../../assets/images/icons/verifyActive.svg';
+import signMessage from '../../../assets/images/icons/sign.svg';
+import signMessageActive from '../../../assets/images/icons/signActive.svg';
+import verifyMessage from '../../../assets/images/icons/verify.svg';
+import verifyMessageActive from '../../../assets/images/icons/verifyActive.svg';
 import qrCodeActive from '../../../assets/images/icons/qr-code-active.svg';
 
 export const icons = {
@@ -120,8 +120,8 @@ export const icons = {
   dashboardIconActive,
   delegatesIcon,
   delegatesIconActive,
-  discordIcon,
-  discordIconActive,
+  discord,
+  discordActive,
   discreetModeOff,
   discreetModeOn,
   feedback,
@@ -160,8 +160,8 @@ export const icons = {
   settings,
   settingsActive,
   showPassphraseIcon,
-  signin,
-  signinActive,
+  signIn,
+  signInActive,
   tooltipQuestionMark,
   transactionApproved,
   transactionError,
@@ -193,10 +193,10 @@ export const icons = {
   balanceDark,
   newsFeedAvatarDark,
   fileOutlineDark,
-  sign,
-  signActive,
-  verify,
-  verifyActive,
+  signMessage,
+  signMessageActive,
+  verifyMessage,
+  verifyMessageActive,
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
   monitorIconActiveDark,
