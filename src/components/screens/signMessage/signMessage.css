@@ -49,6 +49,11 @@
     display: block;
     margin-bottom: 12px;
   }
+
+  & .textarea {
+    resize: none;
+    line-height: 28px;
+  }
 }
 
 .result {
@@ -58,10 +63,6 @@
     background: #08223c !important;
     color: #9bf436 !important;
   }
-}
-
-.textarea {
-  resize: none;
 }
 
 .buttonsHolder {
