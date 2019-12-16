@@ -120,21 +120,18 @@ class UserAccount extends React.Component {
           this.renderTokens()
         }
         <MenuItem
-          t={t}
           name="discord"
           title={t('Discord')}
           href={externalLinks.discord}
           onClick={this.toggleDropdown}
         />
         <MenuItem
-          t={t}
           name="feedback"
           title={t('Give Feedback')}
           href={feedbackLinks.general}
           onClick={this.toggleDropdown}
         />
         <MenuItem
-          t={t}
           name="settings"
           title={t('Settings')}
           to={routes.settings.path}
@@ -147,7 +144,6 @@ class UserAccount extends React.Component {
           )
             ? (
               <MenuItem
-                t={t}
                 name="signMessage"
                 title={t('Sign Message')}
                 to={routes.signMessage.path}
@@ -159,7 +155,6 @@ class UserAccount extends React.Component {
           token.active !== 'BTC'
             ? (
               <MenuItem
-                t={t}
                 name="verifyMessage"
                 title={t('Verify Message')}
                 to={routes.verifyMMessage.path}
@@ -172,7 +167,6 @@ class UserAccount extends React.Component {
           isUserLogout
             ? (
               <MenuItem
-                t={t}
                 className="signIn"
                 name="signIn"
                 title={t('Sign in')}
@@ -182,7 +176,6 @@ class UserAccount extends React.Component {
             )
             : (
               <MenuItem
-                t={t}
                 className="logout"
                 name="logout"
                 title={t('Sign out')}

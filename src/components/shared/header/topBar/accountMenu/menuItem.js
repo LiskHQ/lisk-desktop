@@ -4,7 +4,7 @@ import styles from './userAccount.css';
 import Icon from '../../../../toolbox/icon';
 
 const MenuItem = ({
-  name, title, t, onClick, href, to, className,
+  name, title, onClick, href, to, className,
 }) => {
   let Element = Link;
   if (!to && href) {
