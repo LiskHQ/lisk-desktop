@@ -93,6 +93,7 @@ class TransactionsList extends React.Component {
           : (
             <EmptyState className={styles.emptyState}>
               <Illustration name="emptyWallet" />
+              <h3>{t('No transactions found.')}</h3>
             </EmptyState>
           )
       }

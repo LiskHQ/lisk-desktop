@@ -12,6 +12,8 @@ import LiskAmount from '../liskAmount';
 import routes from '../../../constants/routes';
 import styles from './votesTab.css';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
+import BoxEmptyState from '../../toolbox/box/emptyState';
+import Illustration from '../../toolbox/illustration';
 
 class VotesTab extends React.Component {
   constructor(props) {
@@ -176,12 +178,16 @@ class VotesTab extends React.Component {
                 </div>
               </TableRow>
             )) : (
-              <p className={`${styles.empty} empty-message`}>
-                {filterValue === ''
-                  ? t('This account doesn’t have any votes.')
-                  : t('There are no results matching this filter.')
-                }
-              </p>
+              <BoxEmptyState>
+                <Illustration name="emptyWallet" />
+                <h3 className="empty-message">
+                  {
+                    filterValue === ''
+                      ? t('This account doesn’t have any votes.')
+                      : t('There are no results matching this filter.')
+                  }
+                </h3>
+              </BoxEmptyState>
             )}
         </main>
         {canLoadMore && (

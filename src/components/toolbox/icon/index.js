@@ -22,6 +22,7 @@ import dashboardIcon from '../../../assets/images/icons/dashboard.svg';
 import dashboardIconActive from '../../../assets/images/icons/dashboard-active.svg';
 import delegatesIcon from '../../../assets/images/icons/delegates.svg';
 import delegatesIconActive from '../../../assets/images/icons/delegates-active.svg';
+import delegatesIconActiveDark from '../../../assets/images/icons/delegates-active-dark.svg';
 import discordIcon from '../../../assets/images/icons/discord.svg';
 import discordIconActive from '../../../assets/images/icons/discord-active.svg';
 import discreetModeOff from '../../../assets/images/icons/discreet-mode-off.svg';
@@ -54,6 +55,7 @@ import logoutActive from '../../../assets/images/icons/logout-active.svg';
 import lskIcon from '../../../assets/images/icons/icon-lsk.svg';
 import monitorIcon from '../../../assets/images/icons/monitor.svg';
 import monitorIconActive from '../../../assets/images/icons/monitorActive.svg';
+import monitorIconActiveDark from '../../../assets/images/icons/monitorActiveDark.svg';
 import newsFeedAvatar from '../../../assets/images/icons/news-feed-avatar.svg';
 import newsFeedAvatarDark from '../../../assets/images/icons/news-feed-avatar-dark.svg';
 import noTweetsIcon from '../../../assets/images/icons/no-tweets.svg';
@@ -197,6 +199,8 @@ export const icons = {
   verifyActive,
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
+  monitorIconActiveDark,
+  delegatesIconActiveDark,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
