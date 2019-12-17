@@ -18,12 +18,12 @@ const MenuItems = ({
           to={item.path}
           className={[
             styles.item,
-            isUserLogout && routes[item.id].isPrivate && styles.notActive,
+            isUserLogout && routes[item.id].isPrivate && styles.disabled,
           ].filter(Boolean).join(' ')}
           id={item.id}
           activeClassName={styles.selected}
         >
-          <Icon name={`${item.icon}${pathname.startsWith(item.path) ? 'Active' : ''}`} />
+          <Icon name={`${item.icon}${pathname.startsWith(item.path) ? 'Active' : ''}`} className={styles.icon} />
           <span className={styles.label}>{item.label}</span>
         </NavLink>
       ))

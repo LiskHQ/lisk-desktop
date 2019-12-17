@@ -61,7 +61,7 @@
 .signInHolder {
   width: 100%;
   height: 100%;
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -72,7 +72,7 @@
   align-items: center;
   justify-content: space-between;
   min-width: 280px;
-  padding: 5px 0;
+  border-bottom: 1px solid var(--color-platinum);
 
   & .accountInfo {
     padding: 0;
@@ -89,6 +89,30 @@
     margin-left: auto;
     padding: 0 8px;
   }
+
+  & + a {
+    margin-top: 15px;
+  }
+}
+
+.accountHolder,
+.signInOut {
+  padding: 15px 0px !important;
+  width: calc(100% - 40px) !important;
+  margin-right: 20px !important;
+  margin-left: 20px !important;
+
+  &:hover {
+    padding: 15px 20px !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+.signInOut {
+  border-top: 1px solid var(--color-platinum);
+  margin-top: 15px !important;
 }
 
 .dropdown {
