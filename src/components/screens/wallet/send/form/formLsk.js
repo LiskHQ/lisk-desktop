@@ -21,11 +21,10 @@ const FormLsk = (props) => {
     messageMaxLength,
   );
 
-  const fields = { reference };
   return (
     <FormBase
       {...props}
-      extraFields={fields}
+      extraFields={{ reference }}
       fee={Fees.send}
     >
       <label className={`${styles.fieldGroup} reference`}>
@@ -36,22 +35,22 @@ const FormLsk = (props) => {
             spellCheck={false}
             onChange={onReferenceChange}
             name="reference"
-            value={fields.reference.value}
+            value={reference.value}
             placeholder={t('Write message')}
-            className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`}
+            className={`${styles.textarea} ${reference.error ? 'error' : ''} message`}
           />
           <CircularProgress
             max={messageMaxLength}
             value={reference.byteCount}
-            className={`${styles.byteCounter} ${fields.reference.error ? styles.hide : ''}`}
+            className={`${styles.byteCounter} ${reference.error ? styles.hide : ''}`}
           />
           <Icon
-            className={`${styles.status} ${styles.referenceStatus} ${!fields.reference.value ? styles.hide : styles.show}`}
-            name={fields.reference.error ? 'alertIcon' : 'okIcon'}
+            className={`${styles.status} ${styles.referenceStatus} ${!reference.value ? styles.hide : styles.show}`}
+            name={reference.error ? 'alertIcon' : 'okIcon'}
           />
         </span>
-        <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - reference.byteCount < 10 ? 'error' : ''} ${styles.show}`}>
-          {fields.reference.feedback}
+        <span className={`${styles.feedback} ${reference.error || messageMaxLength - reference.byteCount < 10 ? 'error' : ''} ${styles.show}`}>
+          {reference.feedback}
           <Tooltip
             className="showOnTop"
             title={t('Bytes counter')}
