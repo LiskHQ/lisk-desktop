@@ -47,10 +47,10 @@ describe('MenuItems', () => {
     wrapper = mount(<MenuItems {...myProps} />);
 
     expect(wrapper).toContainMatchingElements(4, 'a');
-    expect(wrapper).toContainExactlyOneMatchingElement('a.notActive');
-    expect(wrapper.find('a').at(0)).not.toHaveClassName('notActive');
-    expect(wrapper.find('a').at(1)).toHaveClassName('notActive');
-    expect(wrapper.find('a').at(2)).not.toHaveClassName('notActive');
-    expect(wrapper.find('a').at(3)).not.toHaveClassName('notActive');
+    expect(wrapper).toContainExactlyOneMatchingElement('a.disabled');
+    expect(wrapper.find('a').at(0)).not.toHaveClassName('disabled');
+    expect(wrapper.find('a').at(1)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(2)).not.toHaveClassName('disabled');
+    expect(wrapper.find('a').at(3)).not.toHaveClassName('disabled');
   });
 });
