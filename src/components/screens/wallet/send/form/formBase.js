@@ -46,7 +46,7 @@ const FormBase = ({
   };
 
   const handleAmountChange = ({ target }) => {
-    onInputChange({ target }, target.value);
+    onInputChange({ target }, { value: target.value });
     onAmountChange({ target });
   };
 

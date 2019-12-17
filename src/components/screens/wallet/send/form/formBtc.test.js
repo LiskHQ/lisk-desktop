@@ -97,8 +97,7 @@ describe('FormBtc', () => {
       expect(props.dynamicFeesRetrieved).toHaveBeenCalled();
     });
 
-    // TODO fix this feature
-    it.skip('should allow to set entire balance', () => {
+    it('should allow to set entire balance', () => {
       wrapper.find('button.send-entire-balance-button').simulate('click');
       act(() => { jest.runAllTimers(); });
       wrapper.update();
