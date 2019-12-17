@@ -10,7 +10,7 @@ import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
 
 const AmountField = ({
-  t, amount, setEntireBalance, fee, onAmountChange, isLoading,
+  t, amount, setEntireBalance, fee, onAmountChange,
 }) => (
   <label className={[
     styles.fieldGroup, amount.error && styles.error,
@@ -34,7 +34,7 @@ const AmountField = ({
         value={amount.value}
         placeholder={t('Insert the amount of transaction')}
         className={`${styles.input} ${amount.error ? 'error' : ''}`}
-        isLoading={isLoading}
+        isLoading={amount.isLoading}
         status={amount.error ? 'error' : 'ok'}
         feedback={amount.feedback}
       />
