@@ -55,17 +55,12 @@ const useAmountField = (initialValue, fee, account) => {
     }, 300);
   };
 
-  const setEntireBalance = (shouldCallAgain = true) => {
+  const setEntireBalance = () => {
     const value = formatAmountBasedOnLocale({
       value: getMaxAmount(),
       format: '0.[00000000]',
     });
     onAmountInputChange({ target: { value } });
-    setTimeout(() => {
-      if (shouldCallAgain) { // Because fee can change based on amount
-        setEntireBalance(false);
-      }
-    }, 1);
   };
 
   return [amountField, onAmountInputChange, setEntireBalance];
