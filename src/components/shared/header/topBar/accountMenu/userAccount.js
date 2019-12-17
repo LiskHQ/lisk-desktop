@@ -1,5 +1,4 @@
 import React from 'react';
-import Dropdown from '../../../../toolbox/dropdown/dropdown';
 import styles from './userAccount.css';
 import Icon from '../../../../toolbox/icon';
 import { tokenKeys } from '../../../../../constants/tokens';
