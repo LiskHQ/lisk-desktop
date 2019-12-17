@@ -69,7 +69,6 @@ class UserAccount extends React.Component {
                 : null
             }
           </span>,
-          <Dropdown.Separator key={`separator-${tokenKey}`} className={styles.separator} />,
         ])
         : null
       ))
