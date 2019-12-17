@@ -82,8 +82,7 @@ describe('FormBtc', () => {
       expect(wrapper).not.toContainMatchingElement('label.reference');
     });
 
-    // TODO fix this feature
-    it.skip('should update processingSpeed fee when "High" is selected', () => {
+    it('should update processingSpeed fee when "High" is selected', () => {
       wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '0.0012' } });
       expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.Low));
       wrapper.find('label.option-High input[type="radio"]').simulate('click').simulate('change');

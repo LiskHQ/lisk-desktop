@@ -20,7 +20,7 @@ const FormBase = ({
     recipient: initialRecipient = '',
     amount: initialAmount,
   } = parseSearchParams(history.location.search);
-  const [amount, onAmountChange, _setEntireBalance] = useAmount(
+  const [amount, _onAmountChange, _setEntireBalance] = useAmount(
     prevState && prevState.fields ? prevState.fields.amount.value : initialAmount,
     fee,
     account,
@@ -47,6 +47,11 @@ const FormBase = ({
 
   const setEntireBalance = () => {
     _setEntireBalance(fee);
+  };
+
+  const onAmountChange = ({ target }) => {
+    onInputChange({ target }, target.value);
+    _onAmountChange({ target });
   };
 
   const isSubmitButtonDisabled = !!(amount.isLoading
