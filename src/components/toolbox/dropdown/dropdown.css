@@ -134,7 +134,6 @@
     color: var(--color-slate-gray);
     cursor: pointer;
     padding: 5px 20px;
-    transition: background var(--animation-speed-fast) linear, color var(--animation-speed-fast) linear;
     width: 100%;
 
     &:hover {
