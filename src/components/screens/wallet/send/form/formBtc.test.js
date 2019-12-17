@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import { tokenMap } from '../../../../../constants/tokens';
@@ -99,7 +100,7 @@ describe('FormBtc', () => {
     // TODO fix this feature
     it.skip('should allow to set entire balance', () => {
       wrapper.find('button.send-entire-balance-button').simulate('click');
-      jest.runAllTimers();
+      act(() => { jest.runAllTimers(); });
       wrapper.update();
       expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(props.account.balance - dynamicFees.Low));
     });
