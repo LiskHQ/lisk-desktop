@@ -61,7 +61,7 @@
 .signInHolder {
   width: 100%;
   height: 100%;
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   cursor: pointer;
