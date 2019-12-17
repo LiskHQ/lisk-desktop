@@ -112,7 +112,7 @@ class VotingHeader extends React.Component {
                     <h2>
                       {`${t('Delegates')}`}
                     </h2>
-                    <span className={styles.subTitle}>{t('All important information about delegates.')}</span>
+                    <span className={styles.subTitle}>{t('Vote for who secures the network or becomes a delegate.')}</span>
                   </div>
                 </Fragment>
               )
