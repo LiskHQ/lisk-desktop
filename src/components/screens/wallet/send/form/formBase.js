@@ -9,7 +9,7 @@ import BoxFooter from '../../../../toolbox/box/footer';
 import BoxHeader from '../../../../toolbox/box/header';
 import Piwik from '../../../../../utils/piwik';
 import styles from './form.css';
-import useAmount from './useAmount';
+import useAmountField from './useAmountField';
 import useRecipientField from './useRecipientField';
 
 const FormBase = ({
@@ -20,7 +20,7 @@ const FormBase = ({
     recipient: initialRecipient = '',
     amount: initialAmount,
   } = parseSearchParams(history.location.search);
-  const [amount, _onAmountChange, _setEntireBalance] = useAmount(
+  const [amount, _onAmountChange, _setEntireBalance] = useAmountField(
     prevState && prevState.fields ? prevState.fields.amount.value : initialAmount,
     fee,
     account,

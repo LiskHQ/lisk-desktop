@@ -9,7 +9,7 @@ import { validateAmountFormat } from '../../../../../utils/validators';
 import i18n from '../../../../../i18n';
 import regex from '../../../../../utils/regex';
 
-const useAmount = (initialValue, fee, account) => {
+const useAmountField = (initialValue, fee, account) => {
   const {
     settings: { token: { active: token } },
   } = useSelector(state => state);
@@ -71,4 +71,4 @@ const useAmount = (initialValue, fee, account) => {
   return [amountField, onAmountInputChange, setEntireBalance];
 };
 
-export default useAmount;
+export default useAmountField;
