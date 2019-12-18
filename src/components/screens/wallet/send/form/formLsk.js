@@ -2,33 +2,26 @@ import React from 'react';
 import { AutoresizeTextarea } from '../../../../toolbox/inputs';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import { messageMaxLength } from '../../../../../constants/transactions';
-import { parseSearchParams } from '../../../../../utils/searchParams';
 import CircularProgress from '../../../../toolbox/circularProgress/circularProgress';
 import Fees from '../../../../../constants/fees';
 import FormBase from './formBase';
 import Icon from '../../../../toolbox/icon';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
-import useCommonFields from './useCommonFields';
+import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
+import useRecipientField from './useRecipientField';
 
 const FormLsk = (props) => {
-  const {
-    account, prevState, t, history,
-  } = props;
+  const { account, t, getInitialValue } = props;
 
-  const { reference: referenceFromUrl } = parseSearchParams(history.location.search);
-
-  const [reference, onReferenceChange] = useMessageField(
-    prevState && prevState.fields ? prevState.fields.reference.value : referenceFromUrl || '',
-  );
   const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - Fees.send));
 
-  const {
-    fields: { amount, recipient },
-    fieldUpdateFunctions,
-  } = useCommonFields(prevState, history, getMaxAmount);
+  const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), getMaxAmount);
+  const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
+  const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
     amount,
     recipient,
@@ -84,10 +77,6 @@ const FormLsk = (props) => {
       </label>
     </FormBase>
   );
-};
-
-FormLsk.defaultProps = {
-  prevState: {},
 };
 
 export default FormLsk;

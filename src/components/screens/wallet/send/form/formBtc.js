@@ -8,13 +8,14 @@ import Selector from '../../../../toolbox/selector/selector';
 import Spinner from '../../../../toolbox/spinner';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
-import useCommonFields from './useCommonFields';
+import useAmountField from './useAmountField';
 import useDynamicFeeCalculation from './useDynamicFeeCalculation';
 import useProcessingSpeed from './useProcessingSpeed';
+import useRecipientField from './useRecipientField';
 
 const FormBtc = (props) => {
   const {
-    t, account, token, prevState, history,
+    t, account, token, getInitialValue,
   } = props;
 
   const getCalculatedDynamicFee = useDynamicFeeCalculation(account);
@@ -28,11 +29,10 @@ const FormBtc = (props) => {
     ))
   );
 
-  const {
-    fields: { amount, recipient },
-    fieldUpdateFunctions,
-  } = useCommonFields(prevState, history, getMaxAmount);
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), getMaxAmount);
+  const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
+  const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
     amount,
     recipient,
@@ -98,10 +98,6 @@ const FormBtc = (props) => {
       </div>
     </FormBase>
   );
-};
-
-FormBtc.defaultProps = {
-  prevState: {},
 };
 
 export default FormBtc;
