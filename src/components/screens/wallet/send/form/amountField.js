@@ -12,12 +12,13 @@ import styles from './form.css';
 const AmountField = ({
   t, amount, getMaxAmount, fee, onAmountChange,
 }) => {
+  const name = 'amount';
   const setEntireBalance = () => {
     const value = formatAmountBasedOnLocale({
       value: getMaxAmount(),
       format: '0.[00000000]',
     });
-    onAmountChange({ target: { value }, name: 'amount' });
+    onAmountChange({ target: { value, name } });
   };
 
   return (
@@ -39,7 +40,7 @@ const AmountField = ({
         <Input
           autoComplete="off"
           onChange={onAmountChange}
-          name="amount"
+          name={name}
           value={amount.value}
           placeholder={t('Insert the amount of transaction')}
           className={`${styles.input} ${amount.error ? 'error' : ''}`}
