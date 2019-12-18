@@ -29,6 +29,9 @@ describe('Summary', () => {
         reference: {
           value: 1,
         },
+        fee: {
+          value: 0.1e8,
+        },
         isLoading: false,
         isHardwareWalletConnected: false,
       },
