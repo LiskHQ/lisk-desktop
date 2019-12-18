@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dynamicFeesRetrieved } from '../../../../../actions/service';
 
-const useProcessingSpeed = (amount, getCalculatedDynamicFee) => {
+const useProcessingSpeed = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -15,7 +15,6 @@ const useProcessingSpeed = (amount, getCalculatedDynamicFee) => {
   const [processingSpeedState, setProcessingSpeedState] = useState({
     value: 0,
     isLoading: true,
-    txFee: 0,
     selectedIndex: 0,
   });
 
@@ -25,7 +24,6 @@ const useProcessingSpeed = (amount, getCalculatedDynamicFee) => {
       ...item,
       selectedIndex: index,
       isLoading: false,
-      txFee: getCalculatedDynamicFee(item.value, amount.value),
     });
   };
 
@@ -42,7 +40,7 @@ const useProcessingSpeed = (amount, getCalculatedDynamicFee) => {
       },
       index: processingSpeedState.selectedIndex,
     });
-  }, [dynamicFees, amount]);
+  }, [dynamicFees]);
 
   return [processingSpeedState, selectProcessingSpeed, feeOptions];
 };

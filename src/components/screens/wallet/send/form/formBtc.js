@@ -8,34 +8,37 @@ import Selector from '../../../../toolbox/selector/selector';
 import Spinner from '../../../../toolbox/spinner';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
+import useCommonFields from './useCommonFields';
 import useDynamicFeeCalculation from './useDynamicFeeCalculation';
 import useProcessingSpeed from './useProcessingSpeed';
 
 const FormBtc = (props) => {
   const {
-    t, account, token,
+    t, account, token, prevState, history,
   } = props;
 
-  // TODO change something so that amount state is not needed here
-  const [amount, setAmount] = React.useState({ value: '' });
-
   const getCalculatedDynamicFee = useDynamicFeeCalculation(account);
-  const [
-    processingSpeed, selectProcessingSpeed, feeOptions,
-  ] = useProcessingSpeed(amount, getCalculatedDynamicFee);
 
-  const onInputChange = ({ target }, newAmountState) => {
-    /* istanbul ignore else */
-    if (target.name === 'amount') {
-      setAmount(newAmountState);
-    }
-  };
+  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
+
+  const getMaxAmount = () => (
+    fromRawLsk(Math.max(
+      0,
+      account.balance - getCalculatedDynamicFee(processingSpeed.value, account.balance),
+    ))
+  );
+
+  const {
+    fields: { amount, recipient },
+    fieldUpdateFunctions,
+  } = useCommonFields(prevState, history, getMaxAmount);
 
   const fields = {
     amount,
+    recipient,
     processingSpeed,
     fee: {
-      value: 0,
+      value: getCalculatedDynamicFee(processingSpeed.value, amount.value),
     },
   };
 
@@ -56,25 +59,18 @@ const FormBtc = (props) => {
         </React.Fragment>
       );
     }
-    const fee = formatAmountBasedOnLocale({ value: fromRawLsk(processingSpeed.txFee) });
+    const fee = formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) });
 
     return !amount.error
       ? `${fee} ${token}`
       : t('Invalid amount');
   };
 
-  const getMaxAmount = () => (
-    fromRawLsk(Math.max(
-      0,
-      account.balance - getCalculatedDynamicFee(processingSpeed.value, account.balance),
-    ))
-  );
-
   return (
     <FormBase
       {...props}
       extraFields={fields}
-      onInputChange={onInputChange}
+      fieldUpdateFunctions={fieldUpdateFunctions}
       getMaxAmount={getMaxAmount}
     >
       <div className={`${styles.fieldGroup} processing-speed`}>
@@ -102,6 +98,10 @@ const FormBtc = (props) => {
       </div>
     </FormBase>
   );
+};
+
+FormBtc.defaultProps = {
+  prevState: {},
 };
 
 export default FormBtc;

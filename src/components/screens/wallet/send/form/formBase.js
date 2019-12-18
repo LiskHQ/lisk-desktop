@@ -8,19 +8,15 @@ import BoxFooter from '../../../../toolbox/box/footer';
 import BoxHeader from '../../../../toolbox/box/header';
 import Piwik from '../../../../../utils/piwik';
 import styles from './form.css';
-import useCommonFields from './useCommonFields';
 
 const FormBase = ({
   t, token, children, extraFields, fee, networkConfig, getMaxAmount,
-  bookmarks, history, nextStep, prevState, onInputChange,
+  bookmarks, nextStep, fieldUpdateFunctions,
 }) => {
-  const {
-    fields,
-    fieldUpdateFunctions: { setAmountField, setRecipientField },
-  } = useCommonFields(prevState, history, getMaxAmount);
+  const { setAmountField, setRecipientField } = fieldUpdateFunctions;
+  const fields = { amount: extraFields.amount, recipient: extraFields.recipient };
 
   const handleRecipientChange = (name, value) => {
-    onInputChange({ target: { name, value: value.value } }, value);
     setRecipientField({
       ...fields.recipient,
       ...value,
@@ -35,9 +31,7 @@ const FormBase = ({
   };
 
   const handleAmountChange = ({ target }) => {
-    const value = { value: target.value };
-    onInputChange({ target }, value);
-    setAmountField(value);
+    setAmountField(target);
   };
 
   const isSubmitButtonDisabled = !!(fields.amount.isLoading
@@ -87,7 +81,6 @@ const FormBase = ({
 FormBase.defaultProps = {
   extraFields: {},
   prevState: {},
-  onInputChange: () => {},
 };
 
 export default FormBase;

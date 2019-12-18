@@ -5,7 +5,7 @@ import useRecipientField from './useRecipientField';
 const useCommonFields = (prevState, history, getMaxAmount) => {
   const searchParams = parseSearchParams(history.location.search);
   const initialValues = {
-    amount: (prevState.fields && prevState.fields.amount.value) || searchParams.amount,
+    amount: (prevState.fields && prevState.fields.amount.value) || searchParams.amount || '',
     recipient: (prevState.fields && prevState.fields.recipient.value) || searchParams.recipient || '',
   };
 

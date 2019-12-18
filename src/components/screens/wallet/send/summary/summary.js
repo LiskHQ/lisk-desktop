@@ -76,7 +76,7 @@ class Summary extends React.Component {
     const amount = fields.amount.value;
     const fee = token === tokenMap.LSK.key
       ? fromRawLsk(fees.send)
-      : fromRawLsk(fields.processingSpeed.txFee);
+      : fromRawLsk(fields.fee.value);
 
     return (
       <TransactionSummary

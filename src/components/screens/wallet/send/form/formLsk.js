@@ -8,12 +8,15 @@ import FormBase from './formBase';
 import Icon from '../../../../toolbox/icon';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
+import useCommonFields from './useCommonFields';
 import useMessageField from './useMessageField';
 
 const FormLsk = (props) => {
-  const { account, prevState, t } = props;
+  const {
+    account, prevState, t, history,
+  } = props;
 
-  const { reference: referenceFromUrl } = parseSearchParams(props.history.location.search);
+  const { reference: referenceFromUrl } = parseSearchParams(history.location.search);
 
   const messageMaxLength = 64;
 
@@ -23,11 +26,13 @@ const FormLsk = (props) => {
   );
   const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - Fees.send));
 
+  const { fields, fieldUpdateFunctions } = useCommonFields(prevState, history, getMaxAmount);
   return (
     <FormBase
       {...props}
-      extraFields={{ reference }}
+      extraFields={{ reference, ...fields }}
       fee={Fees.send}
+      fieldUpdateFunctions={fieldUpdateFunctions}
       getMaxAmount={getMaxAmount}
     >
       <label className={`${styles.fieldGroup} reference`}>
@@ -70,6 +75,10 @@ const FormLsk = (props) => {
       </label>
     </FormBase>
   );
+};
+
+FormLsk.defaultProps = {
+  prevState: {},
 };
 
 export default FormLsk;
