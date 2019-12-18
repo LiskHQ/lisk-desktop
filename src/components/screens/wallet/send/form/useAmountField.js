@@ -38,7 +38,7 @@ const useAmountField = (initialValue, fee, account) => {
       value: '',
     });
 
-  const onAmountInputChange = ({ target: { value } }) => {
+  const onAmountInputChange = ({ value }) => {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
     clearTimeout(loaderTimeout);
@@ -61,7 +61,7 @@ const useAmountField = (initialValue, fee, account) => {
       value: getMaxAmount(),
       format: '0.[00000000]',
     });
-    onAmountInputChange({ target: { value } });
+    onAmountInputChange({ value });
   };
 
   return [amountField, onAmountInputChange, setEntireBalance];

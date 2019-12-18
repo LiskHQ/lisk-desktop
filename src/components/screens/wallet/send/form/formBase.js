@@ -20,19 +20,18 @@ const FormBase = ({
     recipient: initialRecipient = '',
     amount: initialAmount,
   } = parseSearchParams(history.location.search);
-  const [amount, onAmountChange, _setEntireBalance] = useAmountField(
+  const [amount, setAmountField, _setEntireBalance] = useAmountField(
     prevState && prevState.fields ? prevState.fields.amount.value : initialAmount,
     fee,
     account,
   );
-  const [recipient, onRecipientChange] = useRecipientField(
+  const [recipient, setRecipientField] = useRecipientField(
     prevState && prevState.fields ? prevState.fields.recipient.value : initialRecipient,
   );
 
-  const updateField = (name, value) => {
-    // TODO change this function to accept the params in same format as onAmountChange function
+  const handleRecipientChange = (name, value) => {
     onInputChange({ target: { name, value: value.value } }, value);
-    onRecipientChange({
+    setRecipientField({
       ...recipient,
       ...value,
     });
@@ -46,8 +45,9 @@ const FormBase = ({
   };
 
   const handleAmountChange = ({ target }) => {
-    onInputChange({ target }, { value: target.value });
-    onAmountChange({ target });
+    const value = { value: target.value };
+    onInputChange({ target }, value);
+    setAmountField(value);
   };
 
   const setEntireBalance = () => {
@@ -73,7 +73,7 @@ const FormBase = ({
             recipient={recipient}
             t={t}
             token={token}
-            updateField={updateField}
+            updateField={handleRecipientChange}
           />
         </span>
         <AmountField
