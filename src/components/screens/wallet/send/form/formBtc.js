@@ -10,7 +10,6 @@ import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
 import useProcessingSpeed from './useProcessingSpeed';
 
-// eslint-disable-next-line max-statements
 const FormBtc = (props) => {
   const {
     t, dynamicFees, dynamicFeesRetrieved, account, token,
@@ -32,24 +31,20 @@ const FormBtc = (props) => {
     { title: t('High'), value: dynamicFees.High },
   ];
 
-  const updateProcessingSpeed = (amountState) => {
+  React.useEffect(() => {
     selectProcessingSpeed({
       item: {
         ...processingSpeed,
         ...feeOptions[processingSpeed.selectedIndex],
       },
       index: processingSpeed.selectedIndex,
-    }, amountState);
-  };
-
-  React.useEffect(() => {
-    updateProcessingSpeed(amount);
-  }, [dynamicFees]);
+    }, amount);
+  }, [dynamicFees, amount]);
 
   const onInputChange = ({ target }, newAmountState) => {
+    /* istanbul ignore else */
     if (target.name === 'amount') {
       setAmount(newAmountState);
-      updateProcessingSpeed(newAmountState);
     }
   };
 
@@ -62,7 +57,7 @@ const FormBtc = (props) => {
   };
 
   /**
-   * Get status of processing soeed fetch based on state of component
+   * Get status of processing speed fetch based on state of component
    * @returns {Node} - Text to display to the user or loader
    */
   const getProcessingSpeedStatus = () => {
