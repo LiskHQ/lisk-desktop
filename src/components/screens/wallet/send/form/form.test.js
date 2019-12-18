@@ -43,8 +43,6 @@ describe('Form', () => {
         },
       },
       bookmarks,
-      dynamicFees: {},
-      dynamicFeesRetrieved: jest.fn(),
       networkConfig: {
         name: 'Mainnet',
       },
