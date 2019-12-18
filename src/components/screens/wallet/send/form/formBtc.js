@@ -43,6 +43,8 @@ const FormBtc = (props) => {
    * Get status of processing speed fetch based on state of component
    * @returns {Node} - Text to display to the user or loader
    */
+  // TODO fix the test coverage
+  /* istanbul ignore next */
   const getProcessingSpeedStatus = () => {
     if (amount.value === '') return '-';
     if (processingSpeed.isLoading) {
