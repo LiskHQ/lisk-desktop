@@ -55,7 +55,7 @@ class App extends React.Component {
             className={mainClassNames}
             ref={(el) => { this.main = el; }}
           >
-            <section>
+            <section className="scrollContainer">
               <FlashMessageHolder />
               <InitializationMessage history={history} />
               <div className={`${styles.mainContent} ${!routeObj.isSigninFlow ? styles.mainBox : ''}`}>
