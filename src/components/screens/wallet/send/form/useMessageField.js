@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { sizeOfString } from '../../../../../utils/helpers';
 
-const useMessage = (initialValue, messageMaxLength) => {
+const useMessageField = (initialValue, messageMaxLength) => {
   const { t } = useTranslation();
   const [messageField, setMessage] = useState({
     error: false,
@@ -24,4 +24,4 @@ const useMessage = (initialValue, messageMaxLength) => {
   return [messageField, onMessageInputChange];
 };
 
-export default useMessage;
+export default useMessageField;

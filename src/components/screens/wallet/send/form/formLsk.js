@@ -7,7 +7,7 @@ import FormBase from './formBase';
 import Icon from '../../../../toolbox/icon';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
-import useMessage from './useMessage';
+import useMessageField from './useMessageField';
 
 const FormLsk = (props) => {
   const { prevState, t } = props;
@@ -16,7 +16,7 @@ const FormLsk = (props) => {
 
   const messageMaxLength = 64;
 
-  const [reference, onReferenceChange] = useMessage(
+  const [reference, onReferenceChange] = useMessageField(
     prevState && prevState.fields ? prevState.fields.reference.value : referenceFromUrl || '',
     messageMaxLength,
   );
