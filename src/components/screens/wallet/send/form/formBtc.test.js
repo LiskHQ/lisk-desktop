@@ -27,24 +27,17 @@ jest.mock('../../../../../utils/api/btc/transactions', () => ({
 describe('FormBtc', () => {
   let wrapper;
   let props;
-  let bookmarks;
-  let dynamicFees = {};
+  const dynamicFees = {
+    Low: 156,
+    High: 51,
+  };
 
   beforeEach(() => {
-    dynamicFees = {
-      Low: 156,
-      High: 51,
-    };
-
     useSelector.mockImplementation(selectorFn => selectorFn({
       ...defaultState,
       service: { dynamicFees },
     }));
     jest.spyOn(serviceActions, 'dynamicFeesRetrieved');
-    bookmarks = {
-      LSK: [],
-      BTC: [],
-    };
 
     props = {
       token: tokenMap.BTC.key,
@@ -58,7 +51,10 @@ describe('FormBtc', () => {
           },
         },
       },
-      bookmarks,
+      bookmarks: {
+        LSK: [],
+        BTC: [],
+      },
       networkConfig: {
         name: 'Mainnet',
       },
@@ -88,13 +84,6 @@ describe('FormBtc', () => {
       expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.Low));
       wrapper.find('label.option-High input[type="radio"]').simulate('click').simulate('change');
       expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.High));
-    });
-
-    it('should call serviceActions.dynamicFeesRetrieved if props.dynamicFees is empty object', () => {
-      wrapper.setProps({
-        dynamicFees: {},
-      });
-      expect(serviceActions.dynamicFeesRetrieved).toHaveBeenCalled();
     });
 
     it('should allow to set entire balance', () => {
