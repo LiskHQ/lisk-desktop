@@ -69,7 +69,7 @@ const FormBtc = (props) => {
   return (
     <FormBase
       {...props}
-      extraFields={fields}
+      fields={fields}
       fieldUpdateFunctions={fieldUpdateFunctions}
       getMaxAmount={getMaxAmount}
     >

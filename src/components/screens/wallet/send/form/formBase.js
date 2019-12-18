@@ -10,11 +10,10 @@ import Piwik from '../../../../../utils/piwik';
 import styles from './form.css';
 
 const FormBase = ({
-  t, token, children, extraFields, fee, networkConfig, getMaxAmount,
+  t, token, children, fields, showFee, networkConfig, getMaxAmount,
   bookmarks, nextStep, fieldUpdateFunctions,
 }) => {
   const { setAmountField, setRecipientField } = fieldUpdateFunctions;
-  const fields = { amount: extraFields.amount, recipient: extraFields.recipient };
 
   const handleRecipientChange = (name, value) => {
     setRecipientField({
@@ -23,20 +22,18 @@ const FormBase = ({
     });
   };
 
-  const allFields = { ...extraFields, ...fields };
-
-  const onGoNext = () => {
-    Piwik.trackingEvent('Send_Form', 'button', 'Next step');
-    nextStep({ fields: allFields });
-  };
-
   const handleAmountChange = ({ target }) => {
     setAmountField(target);
   };
 
+  const onGoNext = () => {
+    Piwik.trackingEvent('Send_Form', 'button', 'Next step');
+    nextStep({ fields });
+  };
+
   const isSubmitButtonDisabled = !!(fields.amount.isLoading
-      || Object.values(fields).find(({ value }) => value === '')
-      || Object.values(allFields).find(({ error }) => error)
+      || [fields.amount, fields.recipient].find(({ value }) => value === '')
+      || Object.values(fields).find(({ error }) => error)
   );
   return (
     <Box className={styles.wrapper} width="medium">
@@ -58,8 +55,7 @@ const FormBase = ({
         <AmountField
           t={t}
           amount={fields.amount}
-          extraFields={extraFields}
-          fee={fee}
+          fee={showFee ? fields.fee.value : null}
           getMaxAmount={getMaxAmount}
           onAmountChange={handleAmountChange}
         />
@@ -76,11 +72,6 @@ const FormBase = ({
       </BoxFooter>
     </Box>
   );
-};
-
-FormBase.defaultProps = {
-  extraFields: {},
-  prevState: {},
 };
 
 export default FormBase;

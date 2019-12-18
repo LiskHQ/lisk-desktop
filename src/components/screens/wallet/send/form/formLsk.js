@@ -26,12 +26,23 @@ const FormLsk = (props) => {
   );
   const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - Fees.send));
 
-  const { fields, fieldUpdateFunctions } = useCommonFields(prevState, history, getMaxAmount);
+  const {
+    fields: { amount, recipient },
+    fieldUpdateFunctions,
+  } = useCommonFields(prevState, history, getMaxAmount);
+
+  const fields = {
+    amount,
+    recipient,
+    reference,
+    fee: { value: Fees.send },
+  };
+
   return (
     <FormBase
       {...props}
-      extraFields={{ reference, ...fields }}
-      fee={Fees.send}
+      fields={fields}
+      showFee
       fieldUpdateFunctions={fieldUpdateFunctions}
       getMaxAmount={getMaxAmount}
     >
