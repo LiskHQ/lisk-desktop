@@ -5,6 +5,7 @@ import { fromRawLsk } from '../../../../../utils/lsk';
 import { tokenMap } from '../../../../../constants/tokens';
 import Form from './form';
 import accounts from '../../../../../../test/constants/accounts';
+import * as serviceActions from '../../../../../actions/service';
 
 jest.mock('../../../../../utils/api/btc/transactions', () => ({
   getUnspentTransactionOutputs: jest.fn(() => Promise.resolve([{
@@ -27,6 +28,7 @@ describe('FormBtc', () => {
   let bookmarks;
 
   beforeEach(() => {
+    jest.spyOn(serviceActions, 'dynamicFeesRetrieved');
     bookmarks = {
       LSK: [],
       BTC: [],
@@ -46,7 +48,6 @@ describe('FormBtc', () => {
       },
       bookmarks,
       dynamicFees: {},
-      dynamicFeesRetrieved: jest.fn(),
       networkConfig: {
         name: 'Mainnet',
       },
@@ -90,11 +91,11 @@ describe('FormBtc', () => {
       expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.High));
     });
 
-    it('should call props.dynamicFeesRetrieved if props.dynamicFees is empty object', () => {
+    it('should call serviceActions.dynamicFeesRetrieved if props.dynamicFees is empty object', () => {
       wrapper.setProps({
         dynamicFees: {},
       });
-      expect(props.dynamicFeesRetrieved).toHaveBeenCalled();
+      expect(serviceActions.dynamicFeesRetrieved).toHaveBeenCalled();
     });
 
     it('should allow to set entire balance', () => {

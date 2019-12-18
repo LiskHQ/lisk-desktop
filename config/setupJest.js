@@ -88,6 +88,7 @@ ReactRedux.useSelector = jest.fn((filter) => {
   }
   return result;
 });
+ReactRedux.useDispatch = jest.fn(() => () => {});
 
 jest.mock('i18next', () => {
   function t(key, o) {

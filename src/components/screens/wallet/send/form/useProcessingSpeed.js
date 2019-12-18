@@ -1,9 +1,11 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { dynamicFeesRetrieved } from '../../../../../actions/service';
 import { toRawLsk } from '../../../../../utils/lsk';
 import * as btcTransactionsAPI from '../../../../../utils/api/btc/transactions';
 
-const useProcessingSpeed = (account, dynamicFeesRetrieved) => {
+const useProcessingSpeed = (account) => {
+  const dispatch = useDispatch();
   const {
     settings: { token: { active: token } },
     network: networkConfig,
@@ -18,7 +20,7 @@ const useProcessingSpeed = (account, dynamicFeesRetrieved) => {
   });
 
   useEffect(() => {
-    dynamicFeesRetrieved();
+    dispatch(dynamicFeesRetrieved());
     btcTransactionsAPI
       .getUnspentTransactionOutputs(account.info[token].address, networkConfig)
       .then(data => setUnspentTransactionOutputs(data));
