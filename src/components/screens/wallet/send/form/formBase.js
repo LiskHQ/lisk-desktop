@@ -22,10 +22,6 @@ const FormBase = ({
     });
   };
 
-  const handleAmountChange = ({ target }) => {
-    setAmountField(target);
-  };
-
   const onGoNext = () => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     nextStep({ fields });
@@ -53,11 +49,10 @@ const FormBase = ({
           />
         </span>
         <AmountField
-          t={t}
           amount={fields.amount}
           fee={showFee ? fields.fee.value : null}
           getMaxAmount={getMaxAmount}
-          onAmountChange={handleAmountChange}
+          setAmountField={setAmountField}
         />
         { children }
       </BoxContent>

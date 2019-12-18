@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { Input } from '../../../../toolbox/inputs';
 import { TertiaryButton } from '../../../../toolbox/buttons/button';
@@ -10,15 +11,20 @@ import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
 
 const AmountField = ({
-  t, amount, getMaxAmount, fee, onAmountChange,
+  amount, getMaxAmount, fee, setAmountField,
 }) => {
+  const { t } = useTranslation();
   const name = 'amount';
   const setEntireBalance = () => {
     const value = formatAmountBasedOnLocale({
       value: getMaxAmount(),
       format: '0.[00000000]',
     });
-    onAmountChange({ target: { value, name } });
+    setAmountField({ value });
+  };
+
+  const handleAmountChange = ({ target }) => {
+    setAmountField(target);
   };
 
   return (
@@ -39,7 +45,7 @@ const AmountField = ({
       <span className={`${styles.amountField} amount`}>
         <Input
           autoComplete="off"
-          onChange={onAmountChange}
+          onChange={handleAmountChange}
           name={name}
           value={amount.value}
           placeholder={t('Insert the amount of transaction')}
