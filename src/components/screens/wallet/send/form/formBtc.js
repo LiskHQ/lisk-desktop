@@ -12,34 +12,13 @@ import useProcessingSpeed from './useProcessingSpeed';
 
 const FormBtc = (props) => {
   const {
-    t, dynamicFees, dynamicFeesRetrieved, account, token,
+    t, account, token,
   } = props;
 
   // TODO change something so that amount state is not needed here
   const [amount, setAmount] = React.useState({ value: '' });
 
-  const [processingSpeed, selectProcessingSpeed] = useProcessingSpeed(
-    account, dynamicFeesRetrieved, dynamicFees,
-  );
-
-  const setProcessingSpeed = (item) => {
-    selectProcessingSpeed(item, amount);
-  };
-
-  const feeOptions = [
-    { title: t('Low'), value: dynamicFees.Low },
-    { title: t('High'), value: dynamicFees.High },
-  ];
-
-  React.useEffect(() => {
-    selectProcessingSpeed({
-      item: {
-        ...processingSpeed,
-        ...feeOptions[processingSpeed.selectedIndex],
-      },
-      index: processingSpeed.selectedIndex,
-    }, amount);
-  }, [dynamicFees, amount]);
+  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed(account, amount);
 
   const onInputChange = ({ target }, newAmountState) => {
     /* istanbul ignore else */
@@ -98,7 +77,7 @@ const FormBtc = (props) => {
         </span>
         <Selector
           className={styles.selector}
-          onSelectorChange={setProcessingSpeed}
+          onSelectorChange={selectProcessingSpeed}
           name="speedSelector"
           selectedIndex={fields.processingSpeed.selectedIndex}
           options={feeOptions}

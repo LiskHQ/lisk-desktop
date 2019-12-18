@@ -11,6 +11,7 @@ export default {
         USD: 1,
       },
     },
+    dynamicFees: {},
   },
   settings: {
     currency: 'USD',

@@ -1,17 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { dynamicFeesRetrieved } from '../../../../../actions/service';
-import { toRawLsk } from '../../../../../utils/lsk';
-import * as btcTransactionsAPI from '../../../../../utils/api/btc/transactions';
+import useDynamicFeeCalculation from './useDynamicFeeCalculation';
 
-const useProcessingSpeed = (account) => {
+const useProcessingSpeed = (account, amount) => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
-  const {
-    settings: { token: { active: token } },
-    network: networkConfig,
-  } = useSelector(state => state);
+  const { dynamicFees } = useSelector(state => state.service);
+  useEffect(() => {
+    dispatch(dynamicFeesRetrieved());
+  }, []);
 
-  const [unspentTransactionOutputs, setUnspentTransactionOutputs] = useState([]);
+  const getCalculatedDynamicFee = useDynamicFeeCalculation(account);
   const [processingSpeedState, setProcessingSpeedState] = useState({
     value: 0,
     isLoading: true,
@@ -19,32 +21,32 @@ const useProcessingSpeed = (account) => {
     selectedIndex: 0,
   });
 
-  useEffect(() => {
-    dispatch(dynamicFeesRetrieved());
-    btcTransactionsAPI
-      .getUnspentTransactionOutputs(account.info[token].address, networkConfig)
-      .then(data => setUnspentTransactionOutputs(data));
-  }, []);
-
-  const getCalculatedDynamicFee = (dynamicFeePerByte, amount) => (
-    btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
-      unspentTransactionOutputs,
-      satoshiValue: toRawLsk(amount.value),
-      dynamicFeePerByte,
-    })
-  );
-
-  const selectProcessingSpeed = ({ item, index }, amount) => {
+  const selectProcessingSpeed = ({ item, index }) => {
     setProcessingSpeedState({
       ...processingSpeedState,
       ...item,
       selectedIndex: index,
       isLoading: false,
-      txFee: getCalculatedDynamicFee(item.value, amount),
+      txFee: getCalculatedDynamicFee(item.value, amount.value),
     });
   };
 
-  return [processingSpeedState, selectProcessingSpeed];
+  const feeOptions = [
+    { title: t('Low'), value: dynamicFees.Low },
+    { title: t('High'), value: dynamicFees.High },
+  ];
+
+  useEffect(() => {
+    selectProcessingSpeed({
+      item: {
+        ...processingSpeedState,
+        ...feeOptions[processingSpeedState.selectedIndex],
+      },
+      index: processingSpeedState.selectedIndex,
+    }, amount);
+  }, [dynamicFees, amount]);
+
+  return [processingSpeedState, selectProcessingSpeed, feeOptions];
 };
 
 export default useProcessingSpeed;

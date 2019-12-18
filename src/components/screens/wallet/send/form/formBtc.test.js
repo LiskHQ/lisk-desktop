@@ -1,10 +1,12 @@
-import React from 'react';
 import { act } from 'react-dom/test-utils';
+import { useSelector } from 'react-redux';
+import React from 'react';
 import { mount } from 'enzyme';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import { tokenMap } from '../../../../../constants/tokens';
 import Form from './form';
 import accounts from '../../../../../../test/constants/accounts';
+import defaultState from '../../../../../../test/constants/defaultState';
 import * as serviceActions from '../../../../../actions/service';
 
 jest.mock('../../../../../utils/api/btc/transactions', () => ({
@@ -26,8 +28,18 @@ describe('FormBtc', () => {
   let wrapper;
   let props;
   let bookmarks;
+  let dynamicFees = {};
 
   beforeEach(() => {
+    dynamicFees = {
+      Low: 156,
+      High: 51,
+    };
+
+    useSelector.mockImplementation(selectorFn => selectorFn({
+      ...defaultState,
+      service: { dynamicFees },
+    }));
     jest.spyOn(serviceActions, 'dynamicFeesRetrieved');
     bookmarks = {
       LSK: [],
@@ -35,7 +47,7 @@ describe('FormBtc', () => {
     };
 
     props = {
-      token: tokenMap.LSK.key,
+      token: tokenMap.BTC.key,
       t: v => v,
       account: {
         balance: 12300000,
@@ -47,7 +59,6 @@ describe('FormBtc', () => {
         },
       },
       bookmarks,
-      dynamicFees: {},
       networkConfig: {
         name: 'Mainnet',
       },
@@ -65,18 +76,6 @@ describe('FormBtc', () => {
   });
 
   describe('shold work with props.token BTC', () => {
-    const dynamicFees = {
-      Low: 156,
-      High: 51,
-    };
-
-    beforeEach(() => {
-      wrapper.setProps({
-        token: tokenMap.BTC.key,
-        dynamicFees,
-      });
-    });
-
     it('should re-render properly if props.token', () => {
       expect(wrapper).toContainMatchingElement('span.recipient');
       expect(wrapper).toContainMatchingElement('span.amount');
