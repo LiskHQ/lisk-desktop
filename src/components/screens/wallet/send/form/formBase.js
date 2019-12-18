@@ -21,7 +21,7 @@ const FormBase = ({
     amount: initialAmount,
   } = parseSearchParams(history.location.search);
 
-  const [amount, setAmountField, _setEntireBalance] = useAmountField(
+  const [amount, setAmountField, setEntireBalance] = useAmountField(
     prevState && prevState.fields ? prevState.fields.amount.value : initialAmount,
     getMaxAmount,
   );
@@ -48,11 +48,6 @@ const FormBase = ({
     const value = { value: target.value };
     onInputChange({ target }, value);
     setAmountField(value);
-  };
-
-  const setEntireBalance = () => {
-    _setEntireBalance();
-    setTimeout(_setEntireBalance, 1); // Because fee can change based on amount
   };
 
   const isSubmitButtonDisabled = !!(amount.isLoading

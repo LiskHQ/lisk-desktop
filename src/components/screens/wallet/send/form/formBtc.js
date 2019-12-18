@@ -8,6 +8,7 @@ import Selector from '../../../../toolbox/selector/selector';
 import Spinner from '../../../../toolbox/spinner';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
+import useDynamicFeeCalculation from './useDynamicFeeCalculation';
 import useProcessingSpeed from './useProcessingSpeed';
 
 const FormBtc = (props) => {
@@ -18,7 +19,10 @@ const FormBtc = (props) => {
   // TODO change something so that amount state is not needed here
   const [amount, setAmount] = React.useState({ value: '' });
 
-  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed(account, amount);
+  const getCalculatedDynamicFee = useDynamicFeeCalculation(account);
+  const [
+    processingSpeed, selectProcessingSpeed, feeOptions,
+  ] = useProcessingSpeed(amount, getCalculatedDynamicFee);
 
   const onInputChange = ({ target }, newAmountState) => {
     /* istanbul ignore else */
@@ -58,7 +62,10 @@ const FormBtc = (props) => {
   };
 
   const getMaxAmount = () => (
-    fromRawLsk(Math.max(0, account.balance - fields.processingSpeed.value))
+    fromRawLsk(Math.max(
+      0,
+      account.balance - getCalculatedDynamicFee(processingSpeed.value, account.balance),
+    ))
   );
 
   return (

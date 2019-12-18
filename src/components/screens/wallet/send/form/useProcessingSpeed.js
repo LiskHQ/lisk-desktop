@@ -2,9 +2,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dynamicFeesRetrieved } from '../../../../../actions/service';
-import useDynamicFeeCalculation from './useDynamicFeeCalculation';
 
-const useProcessingSpeed = (account, amount) => {
+const useProcessingSpeed = (amount, getCalculatedDynamicFee) => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -13,7 +12,6 @@ const useProcessingSpeed = (account, amount) => {
     dispatch(dynamicFeesRetrieved());
   }, []);
 
-  const getCalculatedDynamicFee = useDynamicFeeCalculation(account);
   const [processingSpeedState, setProcessingSpeedState] = useState({
     value: 0,
     isLoading: true,
