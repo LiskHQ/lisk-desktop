@@ -24,11 +24,13 @@ const useAmountField = (initialValue, getMaxAmount) => {
     ? {
       ...getAmountFeedbackAndError(initialValue),
       value: initialValue,
+      required: true,
     }
     : {
       error: false,
       feedback: '',
       value: '',
+      required: true,
     });
 
   const onAmountInputChange = ({ value }) => {

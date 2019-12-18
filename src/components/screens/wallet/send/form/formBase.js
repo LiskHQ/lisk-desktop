@@ -18,9 +18,8 @@ const FormBase = ({
     nextStep({ fields });
   };
 
-  const isSubmitButtonDisabled = !!(
-    [fields.amount, fields.recipient].find(({ value }) => value === '')
-      || Object.values(fields).find(({ error }) => error)
+  const isSubmitButtonDisabled = Object.values(fields).some(
+    ({ error, required, value }) => error || (required && value === ''),
   );
   return (
     <Box className={styles.wrapper} width="medium">
