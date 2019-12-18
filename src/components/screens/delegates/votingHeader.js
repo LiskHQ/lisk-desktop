@@ -31,7 +31,9 @@ class VotingHeader extends React.Component {
 
   componentDidMount() {
     this.scrollContainer = document.querySelector('.scrollContainer');
-    this.scrollContainer.addEventListener('scroll', this.locateHeader);
+    if (this.scrollContainer) {
+      this.scrollContainer.addEventListener('scroll', this.locateHeader);
+    }
 
     // Didn't bind it to state, since there's not need to re-render
     // THe fixed amount is related to the design specifications
@@ -41,7 +43,9 @@ class VotingHeader extends React.Component {
   }
 
   componentWillUnmount() {
-    this.scrollContainer.removeEventListener('scroll', this.locateHeader);
+    if (this.scrollContainer) {
+      this.scrollContainer.removeEventListener('scroll', this.locateHeader);
+    }
   }
 
   componentDidUpdate(newProps) {
