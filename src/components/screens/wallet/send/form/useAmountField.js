@@ -19,7 +19,6 @@ const useAmountField = (initialValue, getMaxAmount) => {
     }
     return { error: !!feedback, feedback };
   };
-  let loaderTimeout = null;
 
   const [amountField, setAmountField] = useState(initialValue
     ? {
@@ -35,19 +34,11 @@ const useAmountField = (initialValue, getMaxAmount) => {
   const onAmountInputChange = ({ value }) => {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
-    clearTimeout(loaderTimeout);
     setAmountField({
       ...amountField,
       value,
-      isLoading: true,
+      ...getAmountFeedbackAndError(value),
     });
-    loaderTimeout = setTimeout(() => {
-      setAmountField({
-        value,
-        ...getAmountFeedbackAndError(value),
-        isLoading: false,
-      });
-    }, 300);
   };
 
   return [amountField, onAmountInputChange];

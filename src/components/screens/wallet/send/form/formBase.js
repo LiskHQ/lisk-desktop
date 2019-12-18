@@ -18,8 +18,8 @@ const FormBase = ({
     nextStep({ fields });
   };
 
-  const isSubmitButtonDisabled = !!(fields.amount.isLoading
-      || [fields.amount, fields.recipient].find(({ value }) => value === '')
+  const isSubmitButtonDisabled = !!(
+    [fields.amount, fields.recipient].find(({ value }) => value === '')
       || Object.values(fields).find(({ error }) => error)
   );
   return (
