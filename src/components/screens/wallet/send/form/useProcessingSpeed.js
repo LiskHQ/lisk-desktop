@@ -41,7 +41,7 @@ const useProcessingSpeed = (amount, getCalculatedDynamicFee) => {
         ...feeOptions[processingSpeedState.selectedIndex],
       },
       index: processingSpeedState.selectedIndex,
-    }, amount);
+    });
   }, [dynamicFees, amount]);
 
   return [processingSpeedState, selectProcessingSpeed, feeOptions];

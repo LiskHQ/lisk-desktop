@@ -21,7 +21,7 @@ const FormBase = ({
     amount: initialAmount,
   } = parseSearchParams(history.location.search);
 
-  const [amount, setAmountField, setEntireBalance] = useAmountField(
+  const [amount, setAmountField] = useAmountField(
     prevState && prevState.fields ? prevState.fields.amount.value : initialAmount,
     getMaxAmount,
   );
@@ -76,7 +76,7 @@ const FormBase = ({
           amount={amount}
           extraFields={extraFields}
           fee={fee}
-          setEntireBalance={setEntireBalance}
+          getMaxAmount={getMaxAmount}
           onAmountChange={handleAmountChange}
         />
         { children }

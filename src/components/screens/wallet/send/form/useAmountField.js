@@ -2,9 +2,6 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
-import {
-  formatAmountBasedOnLocale,
-} from '../../../../../utils/formattedNumber';
 import { validateAmountFormat } from '../../../../../utils/validators';
 import regex from '../../../../../utils/regex';
 
@@ -53,15 +50,7 @@ const useAmountField = (initialValue, getMaxAmount) => {
     }, 300);
   };
 
-  const setEntireBalance = () => {
-    const value = formatAmountBasedOnLocale({
-      value: getMaxAmount(),
-      format: '0.[00000000]',
-    });
-    onAmountInputChange({ value });
-  };
-
-  return [amountField, onAmountInputChange, setEntireBalance];
+  return [amountField, onAmountInputChange];
 };
 
 export default useAmountField;
