@@ -11,10 +11,11 @@ const useProcessingSpeed = () => {
   useEffect(() => {
     dispatch(dynamicFeesRetrieved());
   }, []);
+  const isLoading = Object.keys(dynamicFees).length === 0;
 
   const [processingSpeedState, setProcessingSpeedState] = useState({
     value: 0,
-    isLoading: true,
+    isLoading,
     selectedIndex: 0,
   });
 
@@ -23,7 +24,7 @@ const useProcessingSpeed = () => {
       ...processingSpeedState,
       ...item,
       selectedIndex: index,
-      isLoading: false,
+      isLoading,
     });
   };
 

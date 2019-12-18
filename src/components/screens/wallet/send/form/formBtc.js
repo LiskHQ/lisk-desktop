@@ -42,27 +42,11 @@ const FormBtc = (props) => {
     },
   };
 
-  /**
-   * Get status of processing speed fetch based on state of component
-   * @returns {Node} - Text to display to the user or loader
-   */
-  // TODO fix the test coverage
-  /* istanbul ignore next */
   const getProcessingSpeedStatus = () => {
     if (amount.value === '') return '-';
-    if (processingSpeed.isLoading) {
-      return (
-        <React.Fragment>
-          {t('Loading')}
-          {' '}
-          <Spinner className={styles.loading} />
-        </React.Fragment>
-      );
-    }
-    const fee = formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) });
-
     return !amount.error
-      ? `${fee} ${token}`
+      ? `${formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) })} ${token}`
+      /* istanbul ignore next */
       : t('Invalid amount');
   };
 
@@ -93,7 +77,18 @@ const FormBtc = (props) => {
         />
         <span className={styles.processingInfo}>
           {`${t('Transaction fee')}: `}
-          <span>{getProcessingSpeedStatus()}</span>
+          <span>
+            { processingSpeed.isLoading
+              ? (
+                <React.Fragment>
+                  {t('Loading')}
+                  {' '}
+                  <Spinner className={styles.loading} />
+                </React.Fragment>
+              )
+              : getProcessingSpeedStatus()
+            }
+          </span>
         </span>
       </div>
     </FormBase>
