@@ -1,15 +1,16 @@
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 import {
   formatAmountBasedOnLocale,
 } from '../../../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import { validateAmountFormat } from '../../../../../utils/validators';
-import i18n from '../../../../../i18n';
 import regex from '../../../../../utils/regex';
 
 const useAmountField = (initialValue, fee, account) => {
+  const { t, i18n } = useTranslation();
   const {
     settings: { token: { active: token } },
   } = useSelector(state => state);
@@ -20,7 +21,7 @@ const useAmountField = (initialValue, fee, account) => {
     let { message: feedback } = validateAmountFormat({ value, token });
 
     if (!feedback && parseFloat(getMaxAmount()) < numeral(value).value()) {
-      feedback = i18n.t('Provided amount is higher than your current balance.');
+      feedback = t('Provided amount is higher than your current balance.');
     }
     return { error: !!feedback, feedback };
   };
