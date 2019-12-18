@@ -57,12 +57,16 @@ const FormBtc = (props) => {
       : t('Invalid amount');
   };
 
+  const getMaxAmount = () => (
+    fromRawLsk(Math.max(0, account.balance - fields.processingSpeed.value))
+  );
+
   return (
     <FormBase
       {...props}
       extraFields={fields}
       onInputChange={onInputChange}
-      fee={fields.processingSpeed.value}
+      getMaxAmount={getMaxAmount}
     >
       <div className={`${styles.fieldGroup} processing-speed`}>
         <span className={`${styles.fieldLabel}`}>

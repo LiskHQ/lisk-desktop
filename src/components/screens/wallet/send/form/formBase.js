@@ -13,17 +13,17 @@ import useAmountField from './useAmountField';
 import useRecipientField from './useRecipientField';
 
 const FormBase = ({
-  t, token, children, extraFields, fee, networkConfig,
-  bookmarks, history, nextStep, prevState, onInputChange, account,
+  t, token, children, extraFields, fee, networkConfig, getMaxAmount,
+  bookmarks, history, nextStep, prevState, onInputChange,
 }) => {
   const {
     recipient: initialRecipient = '',
     amount: initialAmount,
   } = parseSearchParams(history.location.search);
+
   const [amount, setAmountField, _setEntireBalance] = useAmountField(
     prevState && prevState.fields ? prevState.fields.amount.value : initialAmount,
-    fee,
-    account,
+    getMaxAmount,
   );
   const [recipient, setRecipientField] = useRecipientField(
     prevState && prevState.fields ? prevState.fields.recipient.value : initialRecipient,
@@ -80,7 +80,7 @@ const FormBase = ({
           t={t}
           amount={amount}
           extraFields={extraFields}
-          fee={extraFields.processingSpeed ? null : fee}
+          fee={fee}
           setEntireBalance={setEntireBalance}
           onAmountChange={handleAmountChange}
         />

@@ -5,17 +5,14 @@ import numeral from 'numeral';
 import {
   formatAmountBasedOnLocale,
 } from '../../../../../utils/formattedNumber';
-import { fromRawLsk } from '../../../../../utils/lsk';
 import { validateAmountFormat } from '../../../../../utils/validators';
 import regex from '../../../../../utils/regex';
 
-const useAmountField = (initialValue, fee, account) => {
+const useAmountField = (initialValue, getMaxAmount) => {
   const { t, i18n } = useTranslation();
   const {
     settings: { token: { active: token } },
   } = useSelector(state => state);
-
-  const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - fee));
 
   const getAmountFeedbackAndError = (value) => {
     let { message: feedback } = validateAmountFormat({ value, token });

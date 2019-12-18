@@ -1,5 +1,6 @@
 import React from 'react';
 import { AutoresizeTextarea } from '../../../../toolbox/inputs';
+import { fromRawLsk } from '../../../../../utils/lsk';
 import { parseSearchParams } from '../../../../../utils/searchParams';
 import CircularProgress from '../../../../toolbox/circularProgress/circularProgress';
 import Fees from '../../../../../constants/fees';
@@ -10,7 +11,7 @@ import styles from './form.css';
 import useMessageField from './useMessageField';
 
 const FormLsk = (props) => {
-  const { prevState, t } = props;
+  const { account, prevState, t } = props;
 
   const { reference: referenceFromUrl } = parseSearchParams(props.history.location.search);
 
@@ -20,12 +21,14 @@ const FormLsk = (props) => {
     prevState && prevState.fields ? prevState.fields.reference.value : referenceFromUrl || '',
     messageMaxLength,
   );
+  const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - Fees.send));
 
   return (
     <FormBase
       {...props}
       extraFields={{ reference }}
       fee={Fees.send}
+      getMaxAmount={getMaxAmount}
     >
       <label className={`${styles.fieldGroup} reference`}>
         <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
