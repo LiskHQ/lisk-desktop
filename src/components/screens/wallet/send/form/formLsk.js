@@ -1,6 +1,7 @@
 import React from 'react';
 import { AutoresizeTextarea } from '../../../../toolbox/inputs';
 import { fromRawLsk } from '../../../../../utils/lsk';
+import { messageMaxLength } from '../../../../../constants/transactions';
 import { parseSearchParams } from '../../../../../utils/searchParams';
 import CircularProgress from '../../../../toolbox/circularProgress/circularProgress';
 import Fees from '../../../../../constants/fees';
@@ -18,11 +19,8 @@ const FormLsk = (props) => {
 
   const { reference: referenceFromUrl } = parseSearchParams(history.location.search);
 
-  const messageMaxLength = 64;
-
   const [reference, onReferenceChange] = useMessageField(
     prevState && prevState.fields ? prevState.fields.reference.value : referenceFromUrl || '',
-    messageMaxLength,
   );
   const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - Fees.send));
 

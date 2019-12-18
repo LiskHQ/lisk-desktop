@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input, AutoresizeTextarea } from '../../../../toolbox/inputs';
+import { messageMaxLength } from '../../../../../constants/transactions';
 import CircularProgress from '../../../../toolbox/circularProgress/circularProgress';
 import Converter from '../../../../shared/converter';
 import RequestWrapper from './requestWrapper';
@@ -9,8 +10,6 @@ import { validateAmountFormat } from '../../../../../utils/validators';
 import i18n from '../../../../../i18n';
 import regex from '../../../../../utils/regex';
 import { sizeOfString } from '../../../../../utils/helpers';
-
-const messageMaxLength = 64;
 
 class RequestLsk extends React.Component {
   constructor(props) {
