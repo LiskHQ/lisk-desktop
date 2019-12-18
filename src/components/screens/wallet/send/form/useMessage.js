@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { sizeOfString } from '../../../../../utils/helpers';
-import i18n from '../../../../../i18n';
 
 const useMessage = (initialValue, messageMaxLength) => {
+  const { t } = useTranslation();
   const [messageField, setMessage] = useState({
     error: false,
     value: initialValue,
-    feedback: i18n.t('64 bytes left'),
+    feedback: t('64 bytes left'),
     byteCount: sizeOfString(initialValue),
   });
 
@@ -16,7 +17,7 @@ const useMessage = (initialValue, messageMaxLength) => {
       byteCount,
       error: byteCount > messageMaxLength,
       value,
-      feedback: i18n.t('{{length}} bytes left', { length: messageMaxLength - byteCount }),
+      feedback: t('{{length}} bytes left', { length: messageMaxLength - byteCount }),
     });
   };
 
