@@ -9,7 +9,14 @@ const useRecipientField = (initialValue) => {
     selected: false,
     title: '',
   });
-  return [recipientField, setRecipientField];
+
+  const handleRecipientChange = (newValues) => {
+    setRecipientField({
+      ...recipientField,
+      ...newValues,
+    });
+  };
+  return [recipientField, handleRecipientChange];
 };
 
 export default useRecipientField;

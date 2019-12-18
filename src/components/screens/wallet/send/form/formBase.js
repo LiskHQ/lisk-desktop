@@ -13,15 +13,6 @@ const FormBase = ({
   t, token, children, fields, showFee, networkConfig, getMaxAmount,
   bookmarks, nextStep, fieldUpdateFunctions,
 }) => {
-  const { setAmountField, setRecipientField } = fieldUpdateFunctions;
-
-  const handleRecipientChange = (name, value) => {
-    setRecipientField({
-      ...fields.recipient,
-      ...value,
-    });
-  };
-
   const onGoNext = () => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     nextStep({ fields });
@@ -45,14 +36,14 @@ const FormBase = ({
             recipient={fields.recipient}
             t={t}
             token={token}
-            updateField={handleRecipientChange}
+            updateField={fieldUpdateFunctions.setRecipientField}
           />
         </span>
         <AmountField
           amount={fields.amount}
           fee={showFee ? fields.fee.value : null}
           getMaxAmount={getMaxAmount}
-          setAmountField={setAmountField}
+          setAmountField={fieldUpdateFunctions.setAmountField}
         />
         { children }
       </BoxContent>
