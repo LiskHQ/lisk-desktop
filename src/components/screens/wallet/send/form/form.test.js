@@ -89,6 +89,7 @@ describe('Form', () => {
     const { address } = accounts.genesis;
     wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
     wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '12' } });
+    act(() => { jest.advanceTimersByTime(300); });
     wrapper.update();
     expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     wrapper.find('button.btn-submit').simulate('click');
@@ -139,6 +140,7 @@ describe('Form', () => {
       let amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField).not.toContainMatchingElement('.converted-price');
       amountField.find('input').simulate('change', evt);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField).toContainMatchingElement('.converted-price');
@@ -148,6 +150,7 @@ describe('Form', () => {
       const evt = { target: { name: 'amount', value: '.1' } };
       let amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', evt);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('input').prop('value')).toEqual('0.1');
@@ -156,18 +159,21 @@ describe('Form', () => {
     it('Should show error feedback if wrong data is inserted', () => {
       let amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', { target: { name: 'amount', value: 'abc' } });
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
       expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
       amountField.find('input').simulate('change', { target: { name: 'amount', value: '1.1.' } });
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
       expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
       amountField.find('input').simulate('change', { target: { name: 'amount', value: props.account.balance + 2 } });
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
     });
@@ -184,6 +190,7 @@ describe('Form', () => {
       };
       referenceField.find('AutoresizeTextarea').simulate('focus');
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       referenceField = wrapper.find('.fieldGroup').at(2);
       expect(referenceField.find('.feedback.error')).toHaveClassName('show error');
