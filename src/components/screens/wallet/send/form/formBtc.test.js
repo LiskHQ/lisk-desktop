@@ -14,12 +14,12 @@ jest.mock('../../../../../utils/api/btc/transactions', () => ({
     height: 1575216,
     tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',
     tx_pos: 0,
-    value: 1,
+    value: 413,
   }, {
     height: 1575216,
     tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',
     tx_pos: 1,
-    value: 397040,
+    value: 12299844,
   }])),
   getTransactionFeeFromUnspentOutputs: jest.fn(({ dynamicFeePerByte }) => dynamicFeePerByte),
 }));
@@ -90,7 +90,7 @@ describe('FormBtc', () => {
       wrapper.find('button.send-entire-balance-button').simulate('click');
       act(() => { jest.runAllTimers(); });
       wrapper.update();
-      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(props.account.balance - dynamicFees.Low));
+      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(12299844 + 413 - dynamicFees.Low));
     });
   });
 });

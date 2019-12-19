@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { toRawLsk } from '../../../../../utils/lsk';
+import { fromRawLsk, toRawLsk } from '../../../../../utils/lsk';
 import * as btcTransactionsAPI from '../../../../../utils/api/btc/transactions';
 
-const useDynamicFeeCalculation = (account) => {
+const useDynamicFeeCalculation = (account, dynamicFeePerByte) => {
   const {
     settings: { token: { active: token } },
     network: networkConfig,
@@ -15,14 +15,27 @@ const useDynamicFeeCalculation = (account) => {
       .then(data => setUnspentTransactionOutputs(data));
   }, []);
 
-  const getCalculatedDynamicFee = (dynamicFeePerByte, txAmount) => (
+  const getDynamicFee = txAmount => (
     btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
       unspentTransactionOutputs,
       satoshiValue: toRawLsk(txAmount),
       dynamicFeePerByte,
     })
   );
-  return getCalculatedDynamicFee;
+
+  const getMaxAmount = () => {
+    const unspentTxOutsTotal = unspentTransactionOutputs.reduce((total, tx) => {
+      total += tx.value;
+      return total;
+    }, 0);
+
+    return fromRawLsk(Math.max(
+      0,
+      unspentTxOutsTotal - getDynamicFee(unspentTxOutsTotal),
+    ));
+  };
+
+  return [getDynamicFee, getMaxAmount];
 };
 
 export default useDynamicFeeCalculation;

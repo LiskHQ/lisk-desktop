@@ -18,17 +18,9 @@ const FormBtc = (props) => {
     t, account, token, getInitialValue,
   } = props;
 
-  const getCalculatedDynamicFee = useDynamicFeeCalculation(account);
 
   const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
-
-  const getMaxAmount = () => (
-    fromRawLsk(Math.max(
-      0,
-      account.balance - getCalculatedDynamicFee(processingSpeed.value, account.balance),
-    ))
-  );
-
+  const [getDynamicFee, getMaxAmount] = useDynamicFeeCalculation(account, processingSpeed.value);
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), getMaxAmount);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
@@ -38,7 +30,7 @@ const FormBtc = (props) => {
     recipient,
     processingSpeed,
     fee: {
-      value: getCalculatedDynamicFee(processingSpeed.value, amount.value),
+      value: getDynamicFee(processingSpeed.value, amount.value),
     },
   };
 
