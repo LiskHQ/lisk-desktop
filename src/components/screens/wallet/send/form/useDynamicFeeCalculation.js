@@ -28,7 +28,7 @@ const useDynamicFeeCalculation = (account, dynamicFeePerByte) => {
     const unspentTxOutsTotal = unspentTransactionOutputs.reduce((total, tx) => {
       total += tx.value;
       return total;
-    }, 0);
+    }, 0) || /* fallback before unspentTransactionOutputs are loaded */ account.info[token].balance;
 
     return fromRawLsk(Math.max(
       0,
