@@ -142,6 +142,9 @@
       & .subTitle {
         padding: 0;
         width: auto;
+        line-height: 20px;
+        height: 20px;
+        padding-top: 7px;
       }
     }
   }

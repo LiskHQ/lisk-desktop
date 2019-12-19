@@ -3,6 +3,11 @@
 .dataContainer {
   box-sizing: border-box;
   width: calc(100% / 5);
+  color: var(--color-maastricht-blue);
+}
+
+h1 {
+  color: var(--color-maastricht-blue);
 }
 
 @media (--medium-viewport) {
