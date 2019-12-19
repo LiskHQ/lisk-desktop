@@ -1,4 +1,4 @@
-import merge from 'lodash.merge';
+import lodashMerge from 'lodash.merge';
 import {
   typeLine,
   typeBar,
@@ -7,6 +7,8 @@ import {
   colorPallete,
 } from '../constants/chartConstants';
 
+
+const merge = (...args) => lodashMerge({}, ...args);
 
 /**
  * data ONLY for Line chart
