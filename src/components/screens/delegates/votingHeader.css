@@ -144,6 +144,7 @@
         width: auto;
         line-height: 20px;
         height: 20px;
+        padding-top: 7px;
       }
     }
   }
@@ -181,7 +182,6 @@
 
     margin: 0 0 -4px;
     color: var(--color-maastricht-blue);
-    padding-top: 7px;
   }
 
   & h3 {
