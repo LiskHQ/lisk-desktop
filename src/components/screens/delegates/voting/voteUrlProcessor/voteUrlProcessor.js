@@ -141,11 +141,11 @@ export default class VoteUrlProcessor extends React.Component {
       list: filterObjectPropsWithValue(this.state.voteLookupStatus, 'pending'),
     }, {
       key: 'notFound',
-      title: t('Check spelling – delegate name does not exist'),
+      title: t('Check spelling – delegate name does not exist.'),
       list: filterObjectPropsWithValue(this.state.voteLookupStatus, 'notFound'),
     }, {
       key: 'alreadyVoted',
-      title: t('Nothing to change – already voted/unvoted'),
+      title: t('Nothing to change – already voted/unvoted.'),
       list: filterObjectPropsWithValue(this.state.voteLookupStatus, 'alreadyVoted'),
     }];
 

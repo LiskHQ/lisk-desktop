@@ -28,15 +28,15 @@ class BlocksOverview extends React.Component {
     const tabs = [
       {
         value: 10,
-        name: ('Last 10 Blocks'),
+        name: t('Last {{num}} blocks', { num: 10 }),
       },
       {
         value: 50,
-        name: ('Last 50 Blocks'),
+        name: t('Last {{num}} blocks', { num: 50 }),
       },
       {
         value: 100,
-        name: ('Last 100 Blocks'),
+        name: t('Last {{num}} blocks', { num: 100 }),
       },
     ];
 
@@ -63,7 +63,7 @@ class BlocksOverview extends React.Component {
                   data={{
                     labels: blocks.data.map(block => block.id),
                     datasets: [{
-                      label: 'block',
+                      label: t('block'),
                       data: blocks.data.map(block => block.numberOfTransactions),
                       backgroundColor: chartStyles.ultramarineBlue,
                     }],
@@ -94,7 +94,7 @@ class BlocksOverview extends React.Component {
                         },
                         scaleLabel: {
                           display: true,
-                          labelString: `Last ${activeTab} blocks`,
+                          labelString: t('Last {{num}} blocks', { num: activeTab }),
                           lineHeight: 2,
                           fontSize: chartStyles.fontSize,
                         },
@@ -119,7 +119,7 @@ class BlocksOverview extends React.Component {
                         title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
                         // istanbul ignore next
                         label(tooltipItem, data) {
-                          return t('{{ transactions }} Transacitons', { transactions: data.datasets[0].data[tooltipItem.index] });
+                          return t('{{transactions}} transactions', { transactions: data.datasets[0].data[tooltipItem.index] });
                         },
                       },
                     },
@@ -134,7 +134,7 @@ class BlocksOverview extends React.Component {
                 <Chart
                   type={typeDoughnut}
                   data={{
-                    labels: ['Empty', 'Not Empty'],
+                    labels: [t('Empty'), t('Not Empty')],
                     datasets: [{
                       backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
                       data: blocks.data.reduce((acc, block) => {
