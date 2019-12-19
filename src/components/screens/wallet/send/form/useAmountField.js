@@ -20,18 +20,22 @@ const useAmountField = (initialValue, getMaxAmount) => {
     return { error: !!feedback, feedback };
   };
   let loaderTimeout = null;
+  const baseState = {
+    required: true,
+    isLoading: false,
+  };
 
   const [amountField, setAmountField] = useState(initialValue
     ? {
+      ...baseState,
       ...getAmountFeedbackAndError(initialValue),
       value: initialValue,
-      required: true,
     }
     : {
+      ...baseState,
       error: false,
       feedback: '',
       value: '',
-      required: true,
     });
 
   const onAmountInputChange = ({ value }) => {
@@ -39,15 +43,16 @@ const useAmountField = (initialValue, getMaxAmount) => {
     value = leadingPoint.test(value) ? `0${value}` : value;
     clearTimeout(loaderTimeout);
     setAmountField({
+      ...baseState,
       ...amountField,
       value,
       isLoading: true,
     });
     loaderTimeout = setTimeout(() => {
       setAmountField({
+        ...baseState,
         value,
         ...getAmountFeedbackAndError(value),
-        isLoading: false,
       });
     }, 300);
   };
