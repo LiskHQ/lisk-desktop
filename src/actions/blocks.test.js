@@ -1,16 +1,19 @@
-import { olderBlocksRetrieved } from './blocks';
+import {
+  forgingDataDisplayed,
+  forgingDataConcealed,
+} from './blocks';
 import actionTypes from '../constants/actions';
-import blocks from '../../test/constants/blocks';
-
 
 describe('actions: blocks', () => {
-  describe('olderBlocksRetrieved', () => {
-    it('should create an action to store olderBlocks', () => {
-      const expectedAction = {
-        blocks,
-        type: actionTypes.olderBlocksRetrieved,
-      };
-      expect(olderBlocksRetrieved({ blocks })).toEqual(expectedAction);
+  describe('forgingDataDisplayed', () => {
+    it('should return a pure action object', () => {
+      expect(forgingDataDisplayed()).toEqual({ type: actionTypes.forgingDataDisplayed });
+    });
+  });
+
+  describe('forgingDataConcealed', () => {
+    it('should return a pure action object', () => {
+      expect(forgingDataConcealed()).toEqual({ type: actionTypes.forgingDataConcealed });
     });
   });
 });

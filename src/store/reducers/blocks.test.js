@@ -30,18 +30,35 @@ describe('Reducer: blocks(state, action)', () => {
     });
   });
 
-  it('should action.blocks to state.latestBlocks  if action.type = actionTypes.olderBlocksRetrieved', () => {
+  it('should action.blocks to state.latestBlocks if action.type = actionTypes.olderBlocksRetrieved', () => {
     const state = {
       latestBlocks: [blocks[0]],
     };
 
     const action = {
       type: actionTypes.olderBlocksRetrieved,
-      blocks,
+      data: blocks,
     };
     const changedBlocks = blocksReducer(state, action);
     expect(changedBlocks).to.deep.equal({
       latestBlocks: blocks,
+    });
+  });
+
+  it('stores forgingTimes in the event of forgingTimesRetrieved', () => {
+    const state = {
+      latestBlocks: [],
+      forgingTimes: {},
+    };
+
+    const action = {
+      type: actionTypes.forgingTimesRetrieved,
+      data: ['12345678', { time: 0, status: 'forging', tense: 'past' }],
+    };
+    const changedBlocks = blocksReducer(state, action);
+    expect(changedBlocks).to.deep.equal({
+      latestBlocks: [],
+      forgingTimes: action.data,
     });
   });
 });

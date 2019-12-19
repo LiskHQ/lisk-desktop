@@ -2,7 +2,10 @@ import io from 'socket.io-client';
 import actionTypes from '../../constants/actions';
 import { networkStatusUpdated } from '../../actions/network';
 import { getAPIClient } from '../../utils/api/network';
+import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
 
+const intervalTime = 5000;
+let interval;
 let connection;
 let forcedClosing = false;
 
@@ -63,9 +66,19 @@ const socketMiddleware = store => (
     next(action);
     switch (action.type) {
       case actionTypes.networkSet:
+        store.dispatch(olderBlocksRetrieved());
         socketSetup(store, action);
         break;
-      /* istanbul ignore next */
+      case actionTypes.forgingDataDisplayed:
+        if (!interval) {
+          interval = setInterval(() => {
+            store.dispatch(forgingTimesRetrieved());
+          }, intervalTime);
+        }
+        break;
+      case actionTypes.forgingDataConcealed:
+        clearInterval(interval);
+        break;
       default: break;
     }
   });

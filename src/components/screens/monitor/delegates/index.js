@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React from 'react';
 import { compose } from 'redux';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
@@ -9,7 +9,6 @@ import Delegates from './delegates';
 import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
-import withForgingStatus from './withForgingStatus';
 import withLocalSort from '../../../../utils/withLocalSort';
 import withResizeValues from '../../../../utils/withResizeValues';
 import NotAvailable from '../notAvailable';
@@ -17,10 +16,6 @@ import NotAvailable from '../notAvailable';
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
 const standByDelegatesKey = 'standByDelegates';
-
-const mapStateToProps = ({ blocks: { latestBlocks } }) => ({
-  latestBlocks,
-});
 
 const transformResponse = (response, oldData, urlSearchParams) => (
   urlSearchParams.offset
@@ -82,8 +77,6 @@ const ComposedDelegates = compose(
   ),
   withResizeValues,
   withFilters(standByDelegatesKey, defaultUrlSearchParams),
-  connect(mapStateToProps),
-  withForgingStatus(delegatesKey),
   withLocalSort(delegatesKey, 'rank:asc'),
   withTranslation(),
 )(Delegates);

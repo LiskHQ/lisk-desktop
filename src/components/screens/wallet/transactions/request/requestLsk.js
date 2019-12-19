@@ -8,6 +8,7 @@ import Icon from '../../../../toolbox/icon';
 import { validateAmountFormat } from '../../../../../utils/validators';
 import i18n from '../../../../../i18n';
 import regex from '../../../../../utils/regex';
+import { sizeOfString } from '../../../../../utils/helpers';
 
 const messageMaxLength = 64;
 
@@ -51,7 +52,7 @@ class RequestLsk extends React.Component {
   // eslint-disable-next-line max-statements
   handleFieldChange({ target }) {
     const { t } = this.props;
-    const byteCount = encodeURI(target.value).split(/%..|./).length - 1;
+    const byteCount = sizeOfString(target.value);
     const error = target.name === 'amount'
       ? validateAmountFormat({ value: target.value, locale: i18n.language }).message
       : byteCount > messageMaxLength;
@@ -115,7 +116,7 @@ class RequestLsk extends React.Component {
   render() {
     const { t } = this.props;
     const { fields, shareLink } = this.state;
-    const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
+    const byteCount = sizeOfString(fields.reference.value);
 
     return (
       <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t}>

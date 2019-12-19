@@ -73,3 +73,11 @@ export const flattenArray = arr =>
     (Array.isArray(item)
       ? [...acc, ...flattenArray(item)]
       : [...acc, item]), []).filter(item => !!item);
+
+/**
+ * Returns the size of a given string in bytes
+ *
+ * @param {string} str - a random string
+ * @returns {number} - string size in bytes
+ */
+export const sizeOfString = str => encodeURI(str).split(/%..|./).length - 1;

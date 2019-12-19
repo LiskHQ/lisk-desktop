@@ -28,4 +28,8 @@
     text-align: center;
     margin: 20px 0;
   }
+
+  & img {
+    max-width: 245px;
+  }
 }

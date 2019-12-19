@@ -3,6 +3,7 @@ import {
   removeUndefinedKeys,
   isEmpty,
   filterObjectPropsWithValue,
+  sizeOfString,
 } from './helpers';
 
 
@@ -60,6 +61,15 @@ describe('helpers', () => {
         genesis_16: 'unvotes',
         genesis_17: 'votes',
       }, 'unvotes')).toEqual(['genesis_15', 'genesis_16']);
+    });
+  });
+  describe('sizeOfString', () => {
+    it('should calculate the size of a string', () => {
+      expect(sizeOfString('random string')).toEqual(13);
+    });
+
+    it('should calculate the size of null', () => {
+      expect(sizeOfString()).toEqual(9);
     });
   });
 });

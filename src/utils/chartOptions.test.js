@@ -1,5 +1,6 @@
 import merge from 'lodash.merge';
 import {
+  baseOptions,
   lineChartOptions,
   barChartOptions,
   doughnutChartOptions,
@@ -67,7 +68,7 @@ describe('Chart Setting', () => {
   });
 
   describe('Options', () => {
-    const extaOptions = {
+    const extraOptions = {
       title: {
         display: true,
         text: 'Custom Chart Title',
@@ -75,18 +76,21 @@ describe('Chart Setting', () => {
     };
 
     it('Options for LINE chart', () => {
-      const options = optionsByChart('line', extaOptions);
-      expect(options).toEqual(merge(lineChartOptions, extaOptions));
+      const options = optionsByChart('line', extraOptions, 'light');
+      const expectedKeys = Object.keys(merge(lineChartOptions(), baseOptions(), extraOptions));
+      expect(Object.keys(options)).toEqual(expectedKeys);
     });
 
     it('Options for BAR chart', () => {
-      const options = optionsByChart('bar', extaOptions);
-      expect(options).toEqual(merge(barChartOptions, extaOptions));
+      const options = optionsByChart('bar', extraOptions, 'light');
+      const expectedKeys = Object.keys(merge(barChartOptions(), baseOptions(), extraOptions));
+      expect(Object.keys(options)).toEqual(expectedKeys);
     });
 
     it('Options for DOUGGNUT chart', () => {
-      const options = optionsByChart('doughnut', extaOptions);
-      expect(options).toEqual(merge(doughnutChartOptions, extaOptions));
+      const options = optionsByChart('doughnut', extraOptions, 'light');
+      const expectedKeys = Object.keys(merge(doughnutChartOptions(), baseOptions(), extraOptions));
+      expect(Object.keys(options)).toEqual(expectedKeys);
     });
   });
 });

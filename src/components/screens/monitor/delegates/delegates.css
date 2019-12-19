@@ -5,12 +5,12 @@
   border-radius: 50%;
   border: 1px solid var(--color-light-gray);
 
-  &.forgedThisRound {
+  &.forging {
     border-color: var(--color-deep-green);
     background-color: var(--color-deep-green);
   }
 
-  &.forgedLastRound {
+  &.awaitingSlot {
     border-color: var(--color-deep-green);
   }
 
@@ -19,7 +19,7 @@
     background-color: var(--color-burnt-sienna);
   }
 
-  &.missedLastRound {
+  &.missedBlock {
     border-color: var(--color-burnt-sienna);
   }
 }

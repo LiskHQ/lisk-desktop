@@ -39,7 +39,7 @@ const DelegatesTable = ({
       className: [grid['col-xs-2'], grid['col-md-2'], grid['col-lg-2']].join(' '),
     },
   };
-  columns = columns.map(column => ({
+  const columnsComponent = columns.map(column => ({
     ...columnDefaults[column.id],
     ...column,
   })).map(({ headerTooltip, ...column }, i) => ({
@@ -97,7 +97,7 @@ const DelegatesTable = ({
         ? (
           <BoxContent className={styles.content}>
             <Table {...{
-              columns,
+              columns: columnsComponent,
               data: delegates.data,
               rowKey: 'username',
               rowClassName: 'delegate-row',
@@ -109,7 +109,7 @@ const DelegatesTable = ({
         : (
           <BoxContent>
             <BoxEmptyState>
-              <Illustration name="emptyWallet" className={styles.emptyVotes} />
+              <Illustration name="emptyWallet" />
               <h3>{`${delegates.error || t('No delegates found.')}`}</h3>
             </BoxEmptyState>
           </BoxContent>

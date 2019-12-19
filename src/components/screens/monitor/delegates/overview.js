@@ -7,6 +7,20 @@ import Chart from '../../../toolbox/charts';
 import { typeLine, typeDoughnut } from '../../../../constants/chartConstants';
 import styles from './overview.css';
 
+const getForgingStats = (data) => {
+  const statuses = {
+    forging: 0,
+    awaitingSlot: 0,
+    notForging: 0,
+    missedBlock: 0,
+  };
+  Object.values(data)
+    .forEach((item) => {
+      statuses[item.status]++;
+    });
+  return Object.values(statuses);
+};
+
 const Overview = ({
   chartActiveAndStandby,
   chartDelegatesForging,
@@ -44,7 +58,7 @@ const Overview = ({
             typeof chartActiveAndStandby.data === 'number'
               ? (
                 <div className={styles.chartBox}>
-                  <h1 className={styles.chartTitle}>{t('Delegates')}</h1>
+                  <h2 className={styles.chartTitle}>{t('Delegates')}</h2>
                   <div className={styles.chart}>
                     <Chart
                       type={typeDoughnut}
@@ -76,10 +90,10 @@ const Overview = ({
         </div>
         <div className={styles.graphContainer}>
           {
-            chartDelegatesForging.data.length
+            Object.keys(chartDelegatesForging).length
               ? (
                 <div className={styles.chartBox}>
-                  <h1 className={styles.chartTitle}>{t('Delegates Forging Status')}</h1>
+                  <h2 className={styles.chartTitle}>{t('Delegates Forging Status')}</h2>
                   <div className={styles.chart}>
                     <Chart
                       type={typeDoughnut}
@@ -88,16 +102,7 @@ const Overview = ({
                         datasets: [
                           {
                             label: 'status',
-                            data: Object.values(chartDelegatesForging.data
-                              .reduce((acc, delegate) => {
-                                acc[delegate.status] += 1;
-                                return acc;
-                              }, {
-                                forgedThisRound: 0,
-                                forgedLastRound: 0,
-                                notForging: 0,
-                                missedLastRound: 0,
-                              })),
+                            data: getForgingStats(chartDelegatesForging),
                           },
                         ],
                       }}
@@ -123,7 +128,7 @@ const Overview = ({
             chartRegisteredDelegates.data.length
               ? (
                 <div className={styles.chartBox}>
-                  <h1 className={styles.chartTitle}>{t('Registered Delegates')}</h1>
+                  <h2 className={styles.chartTitle}>{t('Registered Delegates')}</h2>
                   <div className={styles.chart}>
                     <Chart
                       type={typeLine}

@@ -2,6 +2,7 @@
 
 .signedMessage {
   min-height: 278px;
+  resize: none;
 }
 
 .inputViewSwitcher {
@@ -16,5 +17,11 @@
     cursor: pointer;
     margin-left: 5px;
     vertical-align: middle;
+  }
+}
+
+.result {
+  & h1 {
+    color: var(--color-maastricht-blue);
   }
 }
