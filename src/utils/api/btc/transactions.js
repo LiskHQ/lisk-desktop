@@ -165,7 +165,7 @@ export const create = ({
     let sumOfConsumedOutputs = 0;
     const txOutsToConsume = [];
 
-    while (sumOfConsumedOutputs <= estimatedTotal) {
+    while (sumOfConsumedOutputs < estimatedTotal) {
       const tx = unspentTxOuts[txOutIndex];
       txOutsToConsume.push(tx);
       txOutIndex += 1;
