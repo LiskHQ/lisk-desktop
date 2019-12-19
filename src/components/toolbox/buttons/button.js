@@ -1,30 +1,25 @@
-import { themr } from 'react-css-themr';
 import PropTypes from 'prop-types';
 import React from 'react';
 import primaryButtonTheme from './css/primaryButton.css';
 import secondaryButtonTheme from './css/secondaryButton.css';
+import styles from './css/size.css';
 import tertiaryButtonTheme from './css/tertiaryButton.css';
 import warningButtonTheme from './css/warningButton.css';
-import styles from './css/size.css';
+import withTheme from '../../../utils/withTheme';
 
-class TBButton extends React.Component {
-  render() {
-    const {
-      theme, className, size, ...props
-    } = this.props;
-    return (
-      <button
-        {...props}
-        className={[
-          theme.button,
-          className,
-          styles.button,
-          styles[size],
-        ].join(' ')}
-      />
-    );
-  }
-}
+const TBButton = ({
+  theme, className, size, ...props
+}) => (
+  <button
+    {...props}
+    className={[
+      theme.button,
+      className,
+      styles.button,
+      styles[size],
+    ].join(' ')}
+  />
+);
 
 TBButton.propTypes = {
   className: PropTypes.string,
@@ -36,11 +31,13 @@ TBButton.defaultProps = {
   size: 'l',
 };
 
-const PrimaryButton = themr('primaryButton', primaryButtonTheme)(TBButton);
-const SecondaryButton = themr('secondarytButton', secondaryButtonTheme)(TBButton);
-const TertiaryButton = themr('tertiaryButton', tertiaryButtonTheme)(TBButton);
-const WarningButton = themr('tertiaryButton', warningButtonTheme)(TBButton);
-const Button = themr('button', primaryButtonTheme)(TBButton);
+TBButton.displayName = 'Button';
+
+const PrimaryButton = withTheme('PrimaryButton', primaryButtonTheme)(TBButton);
+const SecondaryButton = withTheme('SecondarytButton', secondaryButtonTheme)(TBButton);
+const TertiaryButton = withTheme('TertiaryButton', tertiaryButtonTheme)(TBButton);
+const WarningButton = withTheme('WarningButton', warningButtonTheme)(TBButton);
+const Button = withTheme('Button', primaryButtonTheme)(TBButton);
 
 export {
   Button,
