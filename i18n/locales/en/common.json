@@ -150,6 +150,7 @@
   "Edit votes": "Edit votes",
   "Edit voting": "Edit voting",
   "Eg. {{value}}": "Eg. {{value}}",
+  "Empty": "Empty",
   "Empty/Not empty": "Empty/Not empty",
   "Enable BTC": "Enable BTC",
   "Enable a network switcher that lets you select testnet or custom node when logging in.": "Enable a network switcher that lets you select testnet or custom node when logging in.",
@@ -229,6 +230,7 @@
   "Language": "Language",
   "Last Forged Block": "Last Forged Block",
   "Last block forged @{{height}}": "Last block forged @{{height}}",
+  "Last {{num}} blocks": "Last {{num}} blocks",
   "Later": "Later",
   "Less filters": "Less filters",
   "Like almost all blockchains Lisk has transparency at it’s core. This means that anyone can view everything that happens on the Lisk network, including the holdings of each account.": "Like almost all blockchains Lisk has transparency at it’s core. This means that anyone can view everything that happens on the Lisk network, including the holdings of each account.",
@@ -287,6 +289,7 @@
   "No delegates information": "No delegates information",
   "No search results in given criteria.": "No search results in given criteria.",
   "No transactions found.": "No transactions found.",
+  "Not Empty": "Not Empty",
   "Not enough LSK to pay for the transaction.": "Not enough LSK to pay for the transaction.",
   "Not forging": "Not forging",
   "Not voted": "Not voted",
@@ -535,6 +538,7 @@
   "[Today], hh:mm A": "[Today], hh:mm A",
   "[Tomorrow], hh:mm A": "[Tomorrow], hh:mm A",
   "[Yesterday], hh:mm A": "[Yesterday], hh:mm A",
+  "block": "block",
   "from": "from",
   "i.e. {{value1}} or {{value2}}": "i.e. {{value1}} or {{value2}}",
   "i.e. {{value}}": "i.e. {{value}}",
@@ -545,7 +549,6 @@
   "to": "to",
   "unknown": "unknown",
   "{{ blocks }} Blocks": "{{ blocks }} Blocks",
-  "{{ transactions }} Transacitons": "{{ transactions }} Transacitons",
   "{{deviceModel}} connected! Open the Lisk app on the device": "{{deviceModel}} connected! Open the Lisk app on the device",
   "{{deviceModel}} connected! Please provide a PIN number": "{{deviceModel}} connected! Please provide a PIN number",
   "{{hours}}h ago": "{{hours}}h ago",
@@ -554,5 +557,6 @@
   "{{length}} out of {{maxLength}} characters left": "{{length}} out of {{maxLength}} characters left",
   "{{passphraseName}} paper wallet": "{{passphraseName}} paper wallet",
   "{{token}} Wallet": "{{token}} Wallet",
-  "{{token}} balance": "{{token}} balance"
+  "{{token}} balance": "{{token}} balance",
+  "{{transactions}} transactions": "{{transactions}} transactions"
 }
