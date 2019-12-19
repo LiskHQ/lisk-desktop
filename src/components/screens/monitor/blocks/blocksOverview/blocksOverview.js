@@ -32,11 +32,11 @@ class BlocksOverview extends React.Component {
       },
       {
         value: 50,
-        name: t('Last {{num}} blocks', { num: 10 }),
+        name: t('Last {{num}} blocks', { num: 50 }),
       },
       {
         value: 100,
-        name: t('Last {{num}} blocks', { num: 10 }),
+        name: t('Last {{num}} blocks', { num: 100 }),
       },
     ];
 
