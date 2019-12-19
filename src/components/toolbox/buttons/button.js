@@ -1,4 +1,3 @@
-import { Button as ToolBoxButton } from 'react-toolbox/lib/button';
 import { themr } from 'react-css-themr';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -14,14 +13,14 @@ class TBButton extends React.Component {
       theme, className, size, ...props
     } = this.props;
     return (
-      <ToolBoxButton
+      <button
         {...props}
         className={[
+          theme.button,
           className,
           styles.button,
           styles[size],
         ].join(' ')}
-        theme={theme}
       />
     );
   }

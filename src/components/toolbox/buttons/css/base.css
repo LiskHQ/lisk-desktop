@@ -9,6 +9,18 @@
   outline: none;
   text-transform: none;
   transition: var(--transition-button) !important;
+  cursor: pointer;
+  display: inline-block;
+  flex-direction: row;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+  text-size-adjust: 100%;
 
   &.l {
     height: 48px;
@@ -57,6 +69,7 @@
 @define-mixin buttonPrimary {
   background-color: var(--color-ultramarine-blue) !important;
   color: var(--color-strong-white) !important;
+  border: none;
 
   &:focus,
   &:hover {
