@@ -5,6 +5,8 @@ import numeral from 'numeral';
 import { validateAmountFormat } from '../../../../../utils/validators';
 import regex from '../../../../../utils/regex';
 
+let loaderTimeout = null;
+
 const useAmountField = (initialValue, getMaxAmount) => {
   const { t, i18n } = useTranslation();
   const {
@@ -19,10 +21,11 @@ const useAmountField = (initialValue, getMaxAmount) => {
     }
     return { error: !!feedback, feedback };
   };
-  let loaderTimeout = null;
   const baseState = {
     required: true,
     isLoading: false,
+    error: false,
+    feedback: '',
   };
 
   const [amountField, setAmountField] = useState(initialValue
@@ -33,8 +36,6 @@ const useAmountField = (initialValue, getMaxAmount) => {
     }
     : {
       ...baseState,
-      error: false,
-      feedback: '',
       value: '',
     });
 
