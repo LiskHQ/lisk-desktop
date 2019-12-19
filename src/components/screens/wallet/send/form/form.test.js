@@ -188,8 +188,8 @@ describe('Form', () => {
           value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.',
         },
       };
-      referenceField.find('AutoresizeTextarea').simulate('focus');
-      referenceField.find('AutoresizeTextarea').simulate('change', evt);
+      referenceField.find('AutoResizeTextarea').simulate('focus');
+      referenceField.find('AutoResizeTextarea').simulate('change', evt);
       act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       referenceField = wrapper.find('.fieldGroup').at(2);

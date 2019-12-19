@@ -79,13 +79,13 @@ describe('Request', () => {
       const referenceField = wrapper.find('.fieldGroup').at(1);
       let evt = { target: { name: 'reference', value: 'test' } };
       expect(wrapper.find('.fieldGroup .feedback.show')).not.toExist();
-      referenceField.find('AutoresizeTextarea').simulate('change', evt);
+      referenceField.find('AutoResizeTextarea').simulate('change', evt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback')).toExist();
       expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
 
       evt = { target: { name: 'reference', value: '' } };
-      referenceField.find('AutoresizeTextarea').simulate('change', evt);
+      referenceField.find('AutoResizeTextarea').simulate('change', evt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback.show')).not.toExist();
     });
@@ -98,7 +98,7 @@ describe('Request', () => {
           value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.',
         },
       };
-      referenceField.find('AutoresizeTextarea').simulate('change', evt);
+      referenceField.find('AutoResizeTextarea').simulate('change', evt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback')).toExist();
       expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
@@ -112,7 +112,7 @@ describe('Request', () => {
       expect(wrapper.find('.request-link').first().html()).toMatch(shareLink);
 
       evt = { target: { name: 'reference', value: 'test' } };
-      wrapper.find('.fieldGroup').at(1).find('AutoresizeTextarea').simulate('change', evt);
+      wrapper.find('.fieldGroup').at(1).find('AutoResizeTextarea').simulate('change', evt);
       expect(wrapper.find('.request-link').first().html()).toContain(`${evt.target.name}=${evt.target.value}`);
 
       evt = { target: { name: 'amount', value: 1 } };

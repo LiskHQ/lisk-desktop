@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, AutoresizeTextarea } from '../../../../toolbox/inputs';
+import { Input, AutoResizeTextarea } from '../../../../toolbox/inputs';
 import { messageMaxLength } from '../../../../../constants/transactions';
 import CircularProgress from '../../../../toolbox/circularProgress/circularProgress';
 import Converter from '../../../../shared/converter';
@@ -147,7 +147,7 @@ class RequestLsk extends React.Component {
         <label className={`${styles.fieldGroup} reference`}>
           <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
           <span className={`${styles.referenceField}`}>
-            <AutoresizeTextarea
+            <AutoResizeTextarea
               maxLength={100}
               spellCheck={false}
               onChange={this.handleFieldChange}
@@ -172,7 +172,7 @@ class RequestLsk extends React.Component {
         </label>
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>
-          <AutoresizeTextarea
+          <AutoResizeTextarea
             name="shareLink"
             value={shareLink}
             className={`${styles.textarea} ${styles.sharingLink} request-link`}

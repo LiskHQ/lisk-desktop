@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Lisk from '@liskhq/lisk-client';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styles from './signMessage.css';
-import { AutoresizeTextarea } from '../../toolbox/inputs';
+import { AutoResizeTextarea } from '../../toolbox/inputs';
 import { SecondaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import routes from '../../../constants/routes';
 
@@ -53,7 +53,7 @@ class ConfirmMessage extends React.Component {
           <h1>{t('Your signed message')}</h1>
         </div>
         <div className={styles.result}>
-          <AutoresizeTextarea
+          <AutoResizeTextarea
             className={`${styles.textarea} result`}
             value={result}
             readOnly

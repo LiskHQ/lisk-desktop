@@ -1,7 +1,7 @@
 import React from 'react';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Piwik from '../../../utils/piwik';
-import { AutoresizeTextarea } from '../../toolbox/inputs';
+import { AutoResizeTextarea } from '../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import styles from './signMessage.css';
 
@@ -46,7 +46,7 @@ class SignMessageInput extends React.Component {
         <div>
           <label className={styles.fieldGroup}>
             <span>{t('Message')}</span>
-            <AutoresizeTextarea
+            <AutoResizeTextarea
               className={styles.textarea}
               name="message"
               onChange={this.handleChange}

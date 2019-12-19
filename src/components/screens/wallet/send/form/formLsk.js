@@ -1,5 +1,5 @@
 import React from 'react';
-import { AutoresizeTextarea } from '../../../../toolbox/inputs';
+import { AutoResizeTextarea } from '../../../../toolbox/inputs';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import { messageMaxLength } from '../../../../../constants/transactions';
 import CircularProgress from '../../../../toolbox/circularProgress/circularProgress';
@@ -40,7 +40,7 @@ const FormLsk = (props) => {
       <label className={`${styles.fieldGroup} reference`}>
         <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
         <span className={styles.referenceField}>
-          <AutoresizeTextarea
+          <AutoResizeTextarea
             maxLength={100}
             spellCheck={false}
             onChange={onReferenceChange}
