@@ -1,22 +1,23 @@
 import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import usePromise from 'react-use-promise';
 import { fromRawLsk, toRawLsk } from '../../../../../utils/lsk';
-import * as btcTransactionsAPI from '../../../../../utils/api/btc/transactions';
+import {
+  getTransactionFeeFromUnspentOutputs,
+  getUnspentTransactionOutputs,
+} from '../../../../../utils/api/btc/transactions';
 
 const useDynamicFeeCalculation = (account, dynamicFeePerByte) => {
   const {
     settings: { token: { active: token } },
     network: networkConfig,
   } = useSelector(state => state);
-  const [unspentTransactionOutputs, setUnspentTransactionOutputs] = useState([]);
-  useEffect(() => {
-    btcTransactionsAPI
-      .getUnspentTransactionOutputs(account.info[token].address, networkConfig)
-      .then(data => setUnspentTransactionOutputs(data));
-  }, []);
+  const [unspentTransactionOutputs = []] = usePromise(
+    () => getUnspentTransactionOutputs(account.info[token].address, networkConfig),
+    [account.info[token].address],
+  );
 
   const getDynamicFee = txAmount => (
-    btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
+    getTransactionFeeFromUnspentOutputs({
       unspentTransactionOutputs,
       satoshiValue: toRawLsk(txAmount),
       dynamicFeePerByte,
