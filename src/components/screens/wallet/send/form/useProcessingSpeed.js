@@ -37,7 +37,7 @@ const useProcessingSpeed = () => {
       },
       index: processingSpeedState.selectedIndex,
     });
-  }, [dynamicFees.Low, dynamicFees.Height]);
+  }, [isLoading]);
 
   return [processingSpeedState, selectProcessingSpeed, feeOptions];
 };

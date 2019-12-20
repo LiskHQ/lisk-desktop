@@ -29,18 +29,12 @@ const FormBtc = (props) => {
     amount,
     recipient,
     processingSpeed,
-    fee: {
-      value: getDynamicFee(processingSpeed.value, amount.value),
-    },
+    fee: getDynamicFee(amount.value),
   };
 
-  const getProcessingSpeedStatus = () => {
-    if (amount.value === '') return '-';
-    return !amount.error
-      ? `${formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) })} ${token}`
-      /* istanbul ignore next */
-      : t('Invalid amount');
-  };
+  const getProcessingSpeedStatus = () => (!fields.fee.error
+    ? `${formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) })} ${token}`
+    : fields.fee.feedback);
 
   return (
     <FormBase
