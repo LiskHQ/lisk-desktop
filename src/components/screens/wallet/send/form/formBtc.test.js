@@ -3,26 +3,37 @@ import { useSelector } from 'react-redux';
 import React from 'react';
 import { mount } from 'enzyme';
 import { fromRawLsk } from '../../../../../utils/lsk';
+import {
+  getUnspentTransactionOutputs,
+  getTransactionFeeFromUnspentOutputs,
+} from '../../../../../utils/api/btc/transactions';
 import { tokenMap } from '../../../../../constants/tokens';
 import Form from './form';
 import accounts from '../../../../../../test/constants/accounts';
 import defaultState from '../../../../../../test/constants/defaultState';
 import * as serviceActions from '../../../../../actions/service';
 
-jest.mock('../../../../../utils/api/btc/transactions', () => ({
-  getUnspentTransactionOutputs: jest.fn(() => Promise.resolve([{
-    height: 1575216,
-    tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',
-    tx_pos: 0,
-    value: 413,
-  }, {
-    height: 1575216,
-    tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',
-    tx_pos: 1,
-    value: 12299844,
-  }])),
-  getTransactionFeeFromUnspentOutputs: jest.fn(({ dynamicFeePerByte }) => dynamicFeePerByte),
-}));
+jest.mock('../../../../../utils/api/btc/transactions');
+
+const unspendTransactionOutputs = [{
+  height: 1575216,
+  tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',
+  tx_pos: 0,
+  value: 413,
+}, {
+  height: 1575216,
+  tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',
+  tx_pos: 1,
+  value: 12299844,
+}];
+const balance = unspendTransactionOutputs[0].value + unspendTransactionOutputs[1].value;
+
+getUnspentTransactionOutputs.mockImplementation(
+  () => Promise.resolve(unspendTransactionOutputs),
+);
+getTransactionFeeFromUnspentOutputs.mockImplementation(
+  ({ dynamicFeePerByte }) => dynamicFeePerByte,
+);
 
 describe('FormBtc', () => {
   let wrapper;
@@ -43,7 +54,7 @@ describe('FormBtc', () => {
       token: tokenMap.BTC.key,
       t: v => v,
       account: {
-        balance: 12300000,
+        balance,
         info: {
           LSK: accounts.genesis,
           BTC: {
@@ -90,7 +101,7 @@ describe('FormBtc', () => {
       wrapper.find('button.send-entire-balance-button').simulate('click');
       act(() => { jest.runAllTimers(); });
       wrapper.update();
-      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(12299844 + 413 - dynamicFees.Low));
+      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(balance - dynamicFees.Low));
     });
   });
 });
