@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { Time, TooltipTime, TooltipWrapper } from './index';
+import { Time } from './index';
 
 sinon.useFakeTimers({
   now: new Date(2017, 1, 15).getTime(),
@@ -15,35 +15,5 @@ describe('Time', () => {
     const wrapper = mount(<Time label={inputValue} />);
     // const html = wrapper.find('span').text();
     expect(wrapper.find('span').text()).to.be.equal(expectedValue);
-  });
-});
-
-describe('TooltipWrapper', () => {
-  it('simulates mouseenter events with tooltip', () => {
-    const onMouseEnter = sinon.spy();
-    const wrapper = mount((
-      <TooltipWrapper onMouseEnter={onMouseEnter} tooltip="text" />
-    ));
-    wrapper.find(TooltipWrapper).simulate('mouseEnter');
-    expect(onMouseEnter.callCount).to.be.equal(1);
-  });
-
-  it('simulates mouseenter events without tooltip', () => {
-    const onMouseEnter = sinon.spy();
-    const wrapper = mount((
-      <TooltipWrapper />
-    ));
-    wrapper.find(TooltipWrapper).simulate('mouseEnter');
-    expect(onMouseEnter.callCount).to.be.equal(0);
-  });
-});
-
-describe('TooltipTime', () => {
-  it('has innerHTML equal to "<span>5 months</span>" for equivalent timestamp (35929631)', () => {
-    const inputValue = 35929631;
-    const expectedValue = '<span>5 months</span>';
-    const wrapper = mount(<TooltipTime label={inputValue} />);
-    // const html = wrapper.find('span').text();
-    expect(wrapper.find(Time).html()).to.be.equal(expectedValue);
   });
 });
