@@ -21,6 +21,7 @@
   white-space: nowrap;
   box-sizing: border-box;
   text-size-adjust: 100%;
+  min-width: 90px;
 
   &.l {
     height: 48px;
