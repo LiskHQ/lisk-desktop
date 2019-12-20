@@ -1,19 +1,31 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
-import { Time } from './index';
+import { Time, DateFromTimestamp, TimeFromTimestamp } from './index';
 
-sinon.useFakeTimers({
-  now: new Date(2017, 1, 15).getTime(),
-  toFake: ['setTimeout', 'clearTimeout', 'Date'],
-});
-describe('Time', () => {
-  it('shows "5 months" for the equivalent timestamp (35929631)', () => {
-    const inputValue = 35929631;
-    const expectedValue = '5 months';
-    const wrapper = mount(<Time label={inputValue} />);
-    // const html = wrapper.find('span').text();
-    expect(wrapper.find('span').text()).to.be.equal(expectedValue);
+describe('components/toolbox/timestamp', () => {
+  const inputValue = 35929631;
+
+  describe('<Time label={35929631} />', () => {
+    it('renders "5 months" if today is 2017-01-15', () => {
+      jest.spyOn(global.Date, 'now').mockImplementation(() =>
+        Date.UTC(2017, 1, 15));
+
+      const wrapper = mount(<Time label={inputValue} />);
+      expect(wrapper).toHaveText('5 months');
+    });
+  });
+
+  describe('<DateFromTimestamp time={35929631} />', () => {
+    it('renders "Jul 14, 2017"', () => {
+      const wrapper = mount(<DateFromTimestamp time={inputValue} />);
+      expect(wrapper).toHaveText('Jul 14, 2017');
+    });
+  });
+
+  describe('<TimeFromTimestamp time={35929631} />', () => {
+    it('renders text matching /\\d{1,2}:27:11 [AP]M/', () => {
+      const wrapper = mount(<TimeFromTimestamp time={inputValue} />);
+      expect(wrapper.text()).toMatch(/\d{1,2}:27:11 [AP]M/);
+    });
   });
 });
