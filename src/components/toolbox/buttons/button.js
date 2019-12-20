@@ -5,39 +5,39 @@ import secondaryButtonTheme from './css/secondaryButton.css';
 import styles from './css/size.css';
 import tertiaryButtonTheme from './css/tertiaryButton.css';
 import warningButtonTheme from './css/warningButton.css';
-import withTheme from '../../../utils/withTheme';
 
-const TBButton = ({
-  theme, className, size, ...props
-}) => (
-  <button
-    {...props}
-    className={[
-      theme.button,
-      className,
-      styles.button,
-      styles[size],
-    ].join(' ')}
-  />
-);
+const getButonWithTheme = (theme) => {
+  const Button = ({
+    className, size, ...props
+  }) => (
+    <button
+      {...props}
+      className={[
+        theme.button,
+        className,
+        styles.button,
+        styles[size],
+      ].join(' ')}
+    />
+  );
 
-TBButton.propTypes = {
-  className: PropTypes.string,
-  size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
+  Button.propTypes = {
+    className: PropTypes.string,
+    size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
+  };
+
+  Button.defaultProps = {
+    className: '',
+    size: 'l',
+  };
+  return Button;
 };
 
-TBButton.defaultProps = {
-  className: '',
-  size: 'l',
-};
-
-TBButton.displayName = 'Button';
-
-const PrimaryButton = withTheme('PrimaryButton', primaryButtonTheme)(TBButton);
-const SecondaryButton = withTheme('SecondarytButton', secondaryButtonTheme)(TBButton);
-const TertiaryButton = withTheme('TertiaryButton', tertiaryButtonTheme)(TBButton);
-const WarningButton = withTheme('WarningButton', warningButtonTheme)(TBButton);
-const Button = withTheme('Button', primaryButtonTheme)(TBButton);
+const Button = getButonWithTheme(primaryButtonTheme);
+const PrimaryButton = getButonWithTheme(primaryButtonTheme);
+const SecondaryButton = getButonWithTheme(secondaryButtonTheme);
+const TertiaryButton = getButonWithTheme(tertiaryButtonTheme);
+const WarningButton = getButonWithTheme(warningButtonTheme);
 
 export {
   Button,
