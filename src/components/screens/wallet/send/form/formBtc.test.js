@@ -7,6 +7,9 @@ import {
   getUnspentTransactionOutputs,
   getTransactionFeeFromUnspentOutputs,
 } from '../../../../../utils/api/btc/transactions';
+import {
+  getDynamicFees,
+} from '../../../../../utils/api/btc/service';
 import { tokenMap } from '../../../../../constants/tokens';
 import Form from './form';
 import accounts from '../../../../../../test/constants/accounts';
@@ -28,20 +31,21 @@ const unspendTransactionOutputs = [{
 }];
 const balance = unspendTransactionOutputs[0].value + unspendTransactionOutputs[1].value;
 
-getUnspentTransactionOutputs.mockImplementation(
-  () => Promise.resolve(unspendTransactionOutputs),
-);
+getUnspentTransactionOutputs.mockResolvedValue(unspendTransactionOutputs);
 getTransactionFeeFromUnspentOutputs.mockImplementation(
   ({ dynamicFeePerByte }) => dynamicFeePerByte,
 );
 
+jest.mock('../../../../../utils/api/btc/service');
+const dynamicFees = {
+  Low: 156,
+  High: 51,
+};
+getDynamicFees.mockResolvedValue(dynamicFees);
+
 describe('FormBtc', () => {
   let wrapper;
   let props;
-  const dynamicFees = {
-    Low: 156,
-    High: 51,
-  };
 
   beforeEach(() => {
     useSelector.mockImplementation(selectorFn => selectorFn({

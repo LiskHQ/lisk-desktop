@@ -1,17 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux';
+import usePromise from 'react-use-promise';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { dynamicFeesRetrieved } from '../../../../../actions/service';
+import { getDynamicFees } from '../../../../../utils/api/btc/service';
 
 const useProcessingSpeed = () => {
   const { t } = useTranslation();
-
-  const dispatch = useDispatch();
-  const { dynamicFees } = useSelector(state => state.service);
-  useEffect(() => {
-    dispatch(dynamicFeesRetrieved());
-  }, []);
-  const isLoading = Object.keys(dynamicFees).length === 0;
+  const [dynamicFees = {}, error, status] = usePromise(getDynamicFees, []);
+  const isLoading = status === 'pending';
 
   const [processingSpeedState, setProcessingSpeedState] = useState({
     value: 0,
@@ -25,6 +20,7 @@ const useProcessingSpeed = () => {
       ...item,
       selectedIndex: index,
       isLoading,
+      error: !!error,
     });
   };
 
@@ -41,7 +37,7 @@ const useProcessingSpeed = () => {
       },
       index: processingSpeedState.selectedIndex,
     });
-  }, [dynamicFees]);
+  }, [dynamicFees.Low, dynamicFees.Height]);
 
   return [processingSpeedState, selectProcessingSpeed, feeOptions];
 };
