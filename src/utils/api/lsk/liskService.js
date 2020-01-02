@@ -13,7 +13,7 @@ const isStaging = () => (
     ? '-staging' : ''
 );
 
-const liskServiceUrl = 'https://service.lisk.io'; // TODO use isStaging() here once the server is available
+const liskServiceUrl = `https://mainnet-service${isStaging()}.lisk.io`;
 const liskServiceTestnetUrl = `https://testnet-service${isStaging()}.lisk.io`;
 
 const getServerUrl = (networkConfig) => {
