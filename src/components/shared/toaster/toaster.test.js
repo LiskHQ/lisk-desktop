@@ -17,7 +17,7 @@ describe('Toaster', () => {
 
   const hideToastSpy = sinon.spy(toasterProps, 'hideToast');
 
-  it('renders toast component from-toolbox', () => {
+  it('renders Toast component from-toolbox', () => {
     const wrapper = mount(<Toaster {...toasterProps} />);
     expect(wrapper.find('Toast')).to.have.length(1);
   });

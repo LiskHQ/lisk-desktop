@@ -6,6 +6,11 @@
   right: 20px;
   background-color: var(--color-maastricht-blue);
   white-space: normal;
+  transition: bottom var(--animation-speed-standard) ease-in !important;
+
+  &.hidden {
+    bottom: -50px;
+  }
 }
 
 /* stylelint-disable */
@@ -21,7 +26,7 @@
   }
 
   .index-$i {
-    animation: move-$i 500ms ease-in;
+    animation: move-$i var(--animation-speed-standard) ease-in;
     bottom: calc($(i) * 50px + 10px);
   }
 }

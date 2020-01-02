@@ -1,15 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../../toolbox/buttons/button';
+import styles from './toast.css';
 
 const Toast = ({
-  label, className, timeout, onTimeout,
+  toast, timeout, hideToast,
 }) => {
+  const [hidden, setHidden] = useState(false);
   useEffect(() => {
-    const timer = setTimeout(onTimeout, timeout);
+    let timer = setTimeout(() => {
+      setHidden(true);
+      timer = setTimeout(() => {
+        hideToast(toast);
+      }, 500);
+    }, timeout);
     return () => clearTimeout(timer);
   }, []);
+
   return (
-    <Button size="m" className={className}>{label}</Button>
+    <Button
+      size="m"
+      className={[
+        'toast',
+        styles[`index-${toast.index}`],
+        styles.toast,
+        styles[toast.type],
+        hidden && styles.hidden,
+      ].join(' ')}
+    >
+      {toast.label}
+    </Button>
   );
 };
 
