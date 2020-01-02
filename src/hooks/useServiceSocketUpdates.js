@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import io from 'socket.io-client';
 import liskService from '../utils/api/lsk/liskService';
 
 const useServiceSocketUpdates = (event, initialState = false) => {
@@ -9,15 +8,13 @@ const useServiceSocketUpdates = (event, initialState = false) => {
   const reset = () => setUpdateAvailable(initialState);
 
   useEffect(() => {
-    const socket = io(
-      `${liskService.getLiskServiceUrl(networkConfig)}/blockchain`,
-      { transports: ['websocket'] },
-    );
-    socket.on(event, () => setUpdateAvailable(true));
+    const cleanUp = liskService.listenToBlockchainEvents({
+      networkConfig,
+      event,
+      callback: () => setUpdateAvailable(true),
+    });
 
-    return function cleanUp() {
-      socket.close();
-    };
+    return cleanUp;
   }, [networkConfig.name]);
 
   return [isUpdateAvailable, reset];
