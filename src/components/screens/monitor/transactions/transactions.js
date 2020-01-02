@@ -1,5 +1,4 @@
 import React from 'react';
-import LoadLatestButton from '../../../shared/loadLatestButton';
 import MonitorHeader from '../header';
 import TransactionsTable from '../../../shared/transactionsTable';
 
@@ -51,18 +50,9 @@ const Transactions = ({ t, transactions }) => {
     sender: '',
   };
 
-  const loadLastTransactions = () => transactions.loadData();
-
   return (
     <div>
       <MonitorHeader />
-      {/* TODO position LoadLatestButton to be inside the box */}
-      <LoadLatestButton
-        event="update.transactions.confirmed"
-        onClick={loadLastTransactions}
-      >
-        {t('Load latest transactions')}
-      </LoadLatestButton>
       <TransactionsTable isLoadMoreEnabled filters={filters} fields={fields} title={t('All transactions')} transactions={transactions} />
     </div>
   );

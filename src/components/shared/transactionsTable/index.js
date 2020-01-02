@@ -1,27 +1,28 @@
-import React from 'react';
 import { withTranslation } from 'react-i18next';
+import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { DEFAULT_LIMIT } from '../../../constants/monitor';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import { tokenMap } from '../../../constants/tokens';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import BoxFooterButton from '../../toolbox/box/footerButton';
-import BoxEmptyState from '../../toolbox/box/emptyState';
-import Icon from '../../toolbox/icon';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import LiskAmount from '../liskAmount';
-import Illustration from '../../toolbox/illustration';
-import styles from './transactionsTable.css';
-import FilterDropdownButton from '../filterDropdownButton';
-import withResizeValues from '../../../utils/withResizeValues';
-import withFilters from '../../../utils/withFilters';
-import FilterBar from '../filterBar';
-import routes from '../../../constants/routes';
-import Table from '../../toolbox/table';
-import AccountVisualWithAddress from '../accountVisualWithAddress';
-import { DEFAULT_LIMIT } from '../../../constants/monitor';
 import { transactionNames } from '../../../constants/transactionTypes';
+import AccountVisualWithAddress from '../accountVisualWithAddress';
+import Box from '../../toolbox/box';
+import BoxContent from '../../toolbox/box/content';
+import BoxEmptyState from '../../toolbox/box/emptyState';
+import BoxFooterButton from '../../toolbox/box/footerButton';
+import BoxHeader from '../../toolbox/box/header';
+import FilterBar from '../filterBar';
+import FilterDropdownButton from '../filterDropdownButton';
+import Icon from '../../toolbox/icon';
+import Illustration from '../../toolbox/illustration';
+import LiskAmount from '../liskAmount';
+import LoadLatestButton from '../loadLatestButton';
+import Table from '../../toolbox/table';
+import Tooltip from '../../toolbox/tooltip/tooltip';
+import routes from '../../../constants/routes';
+import styles from './transactionsTable.css';
+import withFilters from '../../../utils/withFilters';
+import withResizeValues from '../../../utils/withResizeValues';
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -77,6 +78,16 @@ class TransactionsTable extends React.Component {
             applyFilters={applyFilters}
           />
         </BoxHeader>
+        {isLoadMoreEnabled
+          && (
+          <LoadLatestButton
+            event="update.transactions.confirmed"
+            onClick={transactions.loadData}
+          >
+            {t('New transactions')}
+          </LoadLatestButton>
+          )
+        }
         <FilterBar {...{
           clearFilter, clearAllFilters, filters, formatters, t,
         }}
