@@ -13,11 +13,9 @@ const useServiceSocketUpdates = (event, initialState = false) => {
       `${liskService.getLiskServiceUrl(networkConfig)}/blockchain`,
       { transports: ['websocket'] },
     );
-    console.log('listen to', event, 'on', liskService.getLiskServiceUrl(networkConfig));
-    socket.on(event, () => console.log('on event', event) || setUpdateAvailable(true));
+    socket.on(event, () => setUpdateAvailable(true));
 
     return function cleanUp() {
-      console.log('close', event);
       socket.close();
     };
   }, [networkConfig.name]);
