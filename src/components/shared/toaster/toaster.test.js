@@ -17,9 +17,9 @@ describe('Toaster', () => {
 
   const hideToastSpy = sinon.spy(toasterProps, 'hideToast');
 
-  it('renders <Snackbar /> component from react-toolbox', () => {
+  it('renders toast component from-toolbox', () => {
     const wrapper = mount(<Toaster {...toasterProps} />);
-    expect(wrapper.find('Snackbar')).to.have.length(1);
+    expect(wrapper.find('Toast')).to.have.length(1);
   });
 
   it('hides the toast and after the animation ends calls this.props.hideToast()', () => {

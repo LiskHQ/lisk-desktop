@@ -1,7 +1,13 @@
 .toast {
-  color: white;
+  @mixin contentLarge;
+
   left: initial;
+  position: fixed;
+  right: 20px;
+  background-color: var(--color-maastricht-blue);
+  white-space: normal;
 }
+
 /* stylelint-disable */
 @for $i from 0 to 10 {
   @keyframes move-$i {

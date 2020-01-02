@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Snackbar from 'react-toolbox/lib/snackbar';
+import Toast from './toast';
 import styles from './toaster.css';
 
 class Toaster extends Component {
@@ -22,7 +22,7 @@ class Toaster extends Component {
     return (
       <span>
         {this.props.toasts.map(toast => (
-          <Snackbar
+          <Toast
             active={!!toast.label && !this.state.hidden[toast.index]}
             key={toast.index}
             label={toast.label}
