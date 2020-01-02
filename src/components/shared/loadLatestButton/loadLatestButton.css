@@ -1,0 +1,21 @@
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+
+  to {
+    opacity: 1;
+    max-height: 50px;
+  }
+}
+
+.button {
+  animation: slideDown var(--animation-speed-fast) ease-in;
+  border-radius: initial;
+
+  & .icon {
+    vertical-align: bottom;
+    padding-right: 12px;
+  }
+}

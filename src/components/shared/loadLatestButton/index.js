@@ -1,6 +1,8 @@
 import React from 'react';
 import { PrimaryButton } from '../../toolbox/buttons/button';
+import Icon from '../../toolbox/icon';
 import useServiceSocketUpdates from '../../../hooks/useServiceSocketUpdates';
+import styles from './loadLatestButton.css';
 
 const LoadLatestButton = ({ children, onClick, event }) => {
   const [isUpdateAvailable, hideUpdateButton] = useServiceSocketUpdates(event);
@@ -11,8 +13,12 @@ const LoadLatestButton = ({ children, onClick, event }) => {
   };
 
   return (isUpdateAvailable
-    // TODO apply custom style and show animation of the button
-    ? <PrimaryButton onClick={handleClick}>{children}</PrimaryButton>
+    ? (
+      <PrimaryButton onClick={handleClick} className={styles.button}>
+        <Icon name="arrowUpCircle" className={styles.icon} />
+        {children}
+      </PrimaryButton>
+    )
     : null);
 };
 

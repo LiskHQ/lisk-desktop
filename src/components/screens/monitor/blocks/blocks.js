@@ -57,7 +57,7 @@ const Blocks = ({
           event="update.block"
           onClick={loadLastBlocks}
         >
-          {t('Load latest blocks')}
+          {t('New blocks')}
         </LoadLatestButton>
         <FilterBar {...{
           clearFilter, clearAllFilters, filters, formatters, t,
