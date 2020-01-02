@@ -104,7 +104,6 @@
     "react-router": "5.0.1",
     "react-router-dom": "5.0.1",
     "react-swipe": "6.0.3",
-    "react-toolbox": "2.0.0-beta.12",
     "react-waypoint": "8.1.0",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
