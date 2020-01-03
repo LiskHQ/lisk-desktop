@@ -25,6 +25,7 @@ describe('Account middleware', () => {
   let getAutoLogInDataMock;
   let networkSetMock;
   let accountDataUpdatedSpy;
+  let windowNotificationSpy;
   const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
   const storeCreatedAction = {
     type: actionTypes.storeCreated,
@@ -32,7 +33,22 @@ describe('Account middleware', () => {
 
   const { passphrase } = accounts.genesis;
 
-  const transactions = { transactions: [{ senderId: 'sample_address', receiverId: 'some_address' }] };
+  const block = {
+    transactions: [
+      {
+        senderId: 'some_address',
+        recipientId: 'sample_address',
+        asset: { data: 'Message' },
+        amount: 10e8,
+      },
+      {
+        senderId: 'some_address',
+        recipientId: 'sample_address',
+        asset: { data: '' },
+        amount: 10e8,
+      },
+    ],
+  };
 
   const transactionsUpdatedAction = {
     type: actionTypes.updateTransactions,
@@ -48,7 +64,7 @@ describe('Account middleware', () => {
     type: actionTypes.newBlockCreated,
     data: {
       windowIsFocused: true,
-      block: transactions,
+      block,
     },
   };
 
@@ -85,7 +101,7 @@ describe('Account middleware', () => {
         account: { address: 'test_address', balance: 0 },
       },
       delegate: {},
-      settings: { token: {}, statistics: false },
+      settings: { token: { active: 'LSK' }, statistics: false },
     };
     store.getState = () => (state);
 
@@ -98,6 +114,8 @@ describe('Account middleware', () => {
     getAutoLogInDataMock.withArgs().returns({ });
     networkSetMock = stub(networkActions, 'networkSet').returns(liskAPIClientMock);
     accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
+    window.Notification = () => { };
+    windowNotificationSpy = spy(window, 'Notification');
   });
 
   afterEach(() => {
@@ -109,6 +127,7 @@ describe('Account middleware', () => {
     getAutoLogInDataMock.restore();
     networkSetMock.restore();
     accountDataUpdatedSpy.restore();
+    windowNotificationSpy.restore();
   });
 
   it('should pass the action to next middleware', () => {
@@ -182,6 +201,11 @@ describe('Account middleware', () => {
 
     clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith();
+  });
+
+  it('should show Notification on incoming transaction', () => {
+    middleware(store)(next)(newBlockCreated);
+    expect(windowNotificationSpy).to.have.been.calledWith('10 LSK Recieved');
   });
 
   it(`should dispatch ${actionTypes.loadVotes} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
