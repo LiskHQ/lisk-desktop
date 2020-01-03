@@ -8,12 +8,14 @@ import {
   getTransactions,
   updateTransactions,
 } from '../../actions/transactions';
+import { fromRawLsk } from '../../utils/lsk';
 import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
 import { loadVotes } from '../../actions/voting';
 import { networkSet, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
 import analytics from '../../utils/analytics';
+import i18n from '../../i18n';
 import localJSONStorage from '../../utils/localJSONStorage';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
@@ -67,6 +69,23 @@ const votePlaced = (store, action) => {
   }
 };
 
+const filterIncommingTransactions = (transactions, account) => transactions.filter(transaction => (
+  transaction && transaction.recipientId === account.address
+));
+
+const showNotificationsForIncomingTransactions = (transactions, account, token) => {
+  filterIncommingTransactions(transactions, account).forEach((transaction) => {
+    const amount = fromRawLsk(transaction.amount);
+    const message = transaction.asset && transaction.asset.data
+      ? i18n.t('with message {{message}}', { message: transaction.asset.data })
+      : '';
+    // eslint-disable-next-line no-new
+    new Notification(i18n.t('{{amount}} {{token}} Recieved', { amount, token }), {
+      body: i18n.t('Your account just received {{amount}} {{token}} {{message}}', { amount, token, message }),
+    });
+  });
+};
+
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
   const { transactions, settings: { token } } = state;
@@ -78,6 +97,8 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     const recipient = transaction ? transaction.recipientId : null;
     return account.address === recipient || account.address === sender;
   }).length > 0;
+
+  showNotificationsForIncomingTransactions(txs, account, token.active);
 
   const recentBtcTransaction = token.active === 'BTC'
     && transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
