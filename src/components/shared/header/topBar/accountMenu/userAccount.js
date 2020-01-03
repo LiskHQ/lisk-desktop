@@ -52,24 +52,26 @@ class UserAccount extends React.Component {
 
     return (
       isUserDataFetched && enabledTokens.map(tokenKey => (account.info[tokenKey]
-        ? ([
-          <span
-            className={`${styles.accountHolder} ${tokenKey} token`}
-            key={tokenKey}
-            onClick={() => this.handleTokenSelect(tokenKey)}
-          >
-            <AccountInfo
-              account={account.info[tokenKey]}
-              token={tokenKey}
-              t={t}
-            />
-            {
+        ? (
+          <React.Fragment key={tokenKey}>
+            <span
+              className={`${styles.accountHolder} ${tokenKey} token`}
+              onClick={() => this.handleTokenSelect(tokenKey)}
+            >
+              <AccountInfo
+                account={account.info[tokenKey]}
+                token={tokenKey}
+                t={t}
+              />
+              {
               tokenKey === token.active
                 ? <span className={styles.activeLabel}>{t('Active')}</span>
                 : null
             }
-          </span>,
-        ])
+            </span>
+            <Separator />
+          </React.Fragment>
+        )
         : null
       ))
     );
