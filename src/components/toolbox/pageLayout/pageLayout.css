@@ -4,6 +4,7 @@
   align-items: center;
   text-align: center;
   width: 100%;
+  flex-grow: 1;
 
   &.top {
     justify-content: flex-start;
