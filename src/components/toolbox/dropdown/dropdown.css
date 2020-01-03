@@ -115,7 +115,7 @@
     background: var(--color-mystic);
     display: block;
     height: 1px;
-    margin: 0 auto;
+    margin: 12px auto;
     width: calc(100% - 40px);
   }
 }
