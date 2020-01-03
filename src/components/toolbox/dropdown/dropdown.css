@@ -139,6 +139,7 @@
     &:hover {
       background-color: var(--color-rows-hover);
       color: var(--color-ultramarine-blue);
+      text-decoration: none;
     }
 
     &.active {
