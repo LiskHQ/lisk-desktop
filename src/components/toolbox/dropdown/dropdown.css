@@ -100,12 +100,12 @@
 
         &.active {
           background-color: var(--color-rows-hover);
-          color: #4070f4;
+          color: var(--color-ultramarine-blue);
         }
 
         &:hover {
           background-color: var(--color-rows-hover);
-          color: #4070f4;
+          color: var(--color-ultramarine-blue);
         }
       }
     }
