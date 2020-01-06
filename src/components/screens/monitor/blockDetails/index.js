@@ -28,11 +28,12 @@ const ComposedBlockDetails = compose(
       defaultData: [],
       autoload: true,
       getApiParams: (state, ownProps) => ({ id: ownProps.id }),
-      transformResponse: (response, oldData) => [
-        ...oldData,
-        ...response.data.filter(transaction =>
-          !oldData.find(({ id }) => id === transaction.id)),
-      ],
+      transformResponse: (response, oldData, urlSearchParams) => (
+        urlSearchParams.offset
+          ? [...oldData, ...response.data.filter(block =>
+            !oldData.find(({ id }) => id === block.id))]
+          : response.data
+      ),
     },
   }),
   withTranslation(),
