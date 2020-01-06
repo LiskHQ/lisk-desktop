@@ -27,6 +27,8 @@ describe('LoadLatestButton', () => {
   });
 
   it('shows button on websocket event and hides the button on click', () => {
+    jest.useFakeTimers();
+
     const wrapper = render();
     expect(wrapper).toBeEmptyRender();
 
@@ -37,6 +39,16 @@ describe('LoadLatestButton', () => {
 
     wrapper.find('button').simulate('click');
     expect(props.onClick).toHaveBeenCalledWith();
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
     expect(wrapper).toBeEmptyRender();
+  });
+
+  it('clears the timeout before unmounting', () => {
+    jest.useFakeTimers();
+    const wrapper = render();
+    wrapper.unmount();
+    expect(clearTimeout).toHaveBeenCalledTimes(1);
   });
 });
