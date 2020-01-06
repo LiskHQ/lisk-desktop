@@ -15,11 +15,8 @@ const blocks = (state = { latestBlocks: [], forgingTimes: {} }, action) => {
       return {
         ...state,
         latestBlocks: [
-          ...state.latestBlocks,
-          ...action.data.filter(block => (
-            block.height < Math.min(...state.latestBlocks.map(b => b.height))
-          )),
-        ].slice(0, voting.numberOfActiveDelegates * 2),
+          ...action.data,
+        ],
       };
     case actionTypes.forgingTimesRetrieved:
       return {
