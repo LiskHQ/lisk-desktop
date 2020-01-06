@@ -34,24 +34,22 @@ const BalanceGraph = ({
         <h1>{t('{{token}} balance', { token: tokenMap[token].label })}</h1>
       </BoxHeader>
       <div className={styles.content}>
-        <div className={`${styles.graphHolder}`}>
-          { transactions.length
-            ? (
-              <Chart
-                data={data}
-                options={options}
-                type="line"
-              />
-            )
-            : (
-              <BoxEmptyState>
-                <p>
-                  {t('There are no transactions.')}
-                </p>
-              </BoxEmptyState>
-            )
+        { transactions.length
+          ? (
+            <Chart
+              data={data}
+              options={options}
+              type="line"
+            />
+          )
+          : (
+            <BoxEmptyState>
+              <p>
+                {t('There are no transactions.')}
+              </p>
+            </BoxEmptyState>
+          )
           }
-        </div>
       </div>
     </Box>
   );

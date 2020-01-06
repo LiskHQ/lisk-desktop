@@ -1,15 +1,16 @@
 import React from 'react';
-import styles from './userAccount.css';
-import Icon from '../../../../toolbox/icon';
-import { tokenKeys } from '../../../../../constants/tokens';
-import routes from '../../../../../constants/routes';
-import feedbackLinks from '../../../../../constants/feedbackLinks';
-import externalLinks from '../../../../../constants/externalLinks';
-import DropdownButton from '../../../../toolbox/dropdownButton';
 import { SecondaryButton } from '../../../../toolbox/buttons/button';
-import AccountInfo from './accountInfo';
 import { loginType } from '../../../../../constants/hwConstants';
+import { tokenKeys } from '../../../../../constants/tokens';
+import AccountInfo from './accountInfo';
+import DropdownButton from '../../../../toolbox/dropdownButton';
+import Icon from '../../../../toolbox/icon';
 import MenuItem from './menuItem';
+import Separator from '../../../../toolbox/dropdown/separator';
+import externalLinks from '../../../../../constants/externalLinks';
+import feedbackLinks from '../../../../../constants/feedbackLinks';
+import routes from '../../../../../constants/routes';
+import styles from './userAccount.css';
 
 class UserAccount extends React.Component {
   constructor(props) {
@@ -51,24 +52,26 @@ class UserAccount extends React.Component {
 
     return (
       isUserDataFetched && enabledTokens.map(tokenKey => (account.info[tokenKey]
-        ? ([
-          <span
-            className={`${styles.accountHolder} ${tokenKey} token`}
-            key={tokenKey}
-            onClick={() => this.handleTokenSelect(tokenKey)}
-          >
-            <AccountInfo
-              account={account.info[tokenKey]}
-              token={tokenKey}
-              t={t}
-            />
-            {
+        ? (
+          <React.Fragment key={tokenKey}>
+            <span
+              className={`${styles.accountHolder} ${tokenKey} token`}
+              onClick={() => this.handleTokenSelect(tokenKey)}
+            >
+              <AccountInfo
+                account={account.info[tokenKey]}
+                token={tokenKey}
+                t={t}
+              />
+              {
               tokenKey === token.active
                 ? <span className={styles.activeLabel}>{t('Active')}</span>
                 : null
             }
-          </span>,
-        ])
+            </span>
+            <Separator />
+          </React.Fragment>
+        )
         : null
       ))
     );
@@ -160,11 +163,12 @@ class UserAccount extends React.Component {
               />
             ) : null
         }
+        <Separator />
         {
           isUserLogout
             ? (
               <MenuItem
-                className={`${styles.signInOut} signIn`}
+                className="signIn"
                 name="signIn"
                 title={t('Sign in')}
                 to={routes.login.path}
@@ -173,7 +177,7 @@ class UserAccount extends React.Component {
             )
             : (
               <MenuItem
-                className={`${styles.signInOut} logout`}
+                className="logout"
                 name="logout"
                 title={t('Sign out')}
                 onClick={this.handleLogout}

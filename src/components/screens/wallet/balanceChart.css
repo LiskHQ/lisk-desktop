@@ -13,10 +13,3 @@
   border-bottom-left-radius: var(--border-radius-box);
   border-bottom-right-radius: var(--border-radius-box);
 }
-
-.graphHolder {
-  flex-grow: 1;
-  overflow: hidden;
-  position: relative;
-  height: 100%;
-}

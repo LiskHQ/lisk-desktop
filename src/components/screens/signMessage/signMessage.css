@@ -1,25 +1,7 @@
 @import '../../../app/mixins.css';
 
-.wrapper {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-  min-height: 100%;
-}
-
 .header {
   text-align: center;
-
-  & > .step {
-    @mixin contentNormal semi-bold;
-
-    color: var(--color-slate-gray);
-    height: 18px;
-    letter-spacing: 0.4px;
-    line-height: 1.8;
-    text-transform: uppercase;
-  }
 
   & > h1 {
     @mixin headingLarge;
@@ -28,13 +10,6 @@
     justify-content: center;
     margin: 10px 0 15px;
     color: var(--color-maastricht-blue);
-  }
-
-  & > p {
-    @mixin contentLargest;
-
-    color: var(--color-slate-gray);
-    margin: 0;
   }
 }
 
@@ -48,6 +23,7 @@
     color: var(--color-maastricht-blue);
     display: block;
     margin-bottom: 12px;
+    text-align: left;
   }
 
   & .textarea {
