@@ -2,14 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import { advanceBy, clear } from 'jest-date-mock';
 import { mount } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
 import DialogHolder from '../components/toolbox/dialog/holder';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import analyticsUtil from './analytics';
 
 describe('Analytics Util', () => {
   let props;
-  let store;
 
   beforeEach(() => {
     props = {
@@ -21,20 +19,10 @@ describe('Analytics Util', () => {
           ...data,
         };
       }),
-      toastDisplayed: jest.fn(),
     };
-
-    store = configureMockStore()({
-      settings: { statistics: false },
-      settingsUpdated: props.settingsUpdated,
-      toastDisplayed: jest.fn(),
-    });
-
-    store.dispatch = jest.fn();
   });
 
   afterEach(() => {
-    store.dispatch.mockRestore();
     clear();
   });
 
