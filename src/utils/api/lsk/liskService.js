@@ -1,14 +1,21 @@
-import * as popsicle from 'popsicle';
 import { utils } from '@liskhq/lisk-transactions';
+import io from 'socket.io-client';
+import * as popsicle from 'popsicle';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
 import { getNetworkNameBasedOnNethash } from '../../getNetwork';
 import { getTimestampFromFirstBlock } from '../../datetime';
+import { version } from '../../../../package.json';
 import i18n from '../../../i18n';
 import networks from '../../../constants/networks';
 import voting from '../../../constants/voting';
 
-const liskServiceUrl = 'https://service.lisk.io';
-const liskServiceTestnetUrl = 'https://testnet-service.lisk.io';
+const isStaging = () => (
+  localStorage.getItem('useLiskServiceStaging') || version.includes('beta') || version.includes('rc')
+    ? '-staging' : ''
+);
+
+const liskServiceUrl = `https://mainnet-service${isStaging()}.lisk.io`;
+const liskServiceTestnetUrl = `https://testnet-service${isStaging()}.lisk.io`;
 
 const getServerUrl = (networkConfig) => {
   const name = getNetworkNameBasedOnNethash(networkConfig);
@@ -179,6 +186,18 @@ const liskServiceApi = {
     networkConfig,
     path: '/api/v1/network/status',
   }),
+
+  listenToBlockchainEvents: ({ networkConfig, event, callback }) => {
+    const socket = io(
+      `${liskServiceApi.getLiskServiceUrl(networkConfig)}/blockchain`,
+      { transports: ['websocket'] },
+    );
+    socket.on(event, callback);
+
+    return function cleanUp() {
+      socket.close();
+    };
+  },
 };
 
 export default liskServiceApi;

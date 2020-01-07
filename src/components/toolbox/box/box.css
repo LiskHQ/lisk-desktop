@@ -120,6 +120,7 @@
     margin: 0;
     padding: 16px 20px;
     width: 100%;
+    z-index: 3;
 
     & h1,
     & h2 {

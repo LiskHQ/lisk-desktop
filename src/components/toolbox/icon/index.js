@@ -9,6 +9,7 @@ import arrowLeftActive from '../../../assets/images/icons/arrow-left-active.svg'
 import arrowLeftInactive from '../../../assets/images/icons/arrow-left-inactive.svg';
 import arrowRightActive from '../../../assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '../../../assets/images/icons/arrow-right-inactive.svg';
+import arrowUpCircle from '../../../assets/images/icons/click-to-update.svg';
 import balance from '../../../assets/images/icons/balance.svg';
 import balanceDark from '../../../assets/images/icons/balance-dark.svg';
 import bookmarksIconEmptyState from '../../../assets/images/icons/bookmarks-empty-state.svg';
@@ -110,6 +111,7 @@ export const icons = {
   arrowLeftInactive,
   arrowRightActive,
   arrowRightInactive,
+  arrowUpCircle,
   balance,
   bookmarksIconEmptyState,
   btcIcon,
