@@ -134,9 +134,9 @@
 
   & .hasErrors {
     & .choice {
-      border: solid 1px var(--color-error);
+      border: solid 1px var(--color-burnt-sienna);
       box-shadow: var(--box-shadow-standard);
-      color: var(--color-error);
+      color: var(--color-burnt-sienna);
       cursor: initial;
       transition: background var(--animation-speed-fast) linear var(--animation-delay-standard), box-shadow var(--animation-speed-fast) linear var(--animation-delay-standard);
     }
@@ -195,7 +195,7 @@
     }
 
     & > span {
-      color: var(--color-error);
+      color: var(--color-burnt-sienna);
       font-family: var(--content-font);
       font-size: var(--paragraph-font-size-l);
       line-height: 1.47;

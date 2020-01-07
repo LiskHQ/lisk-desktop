@@ -95,7 +95,7 @@
 
   & .correct,
   & .correct::before {
-    color: var(--color-ufo-green);
+    color: var(--color-deep-green);
     font-weight: var(--font-weight-bold);
   }
 
