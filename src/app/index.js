@@ -5,6 +5,8 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from './app.css';
 import './variables.css';
 import Toaster from '../components/shared/toaster';
@@ -47,6 +49,7 @@ class App extends React.Component {
       <ThemeContext.Provider value={theme}>
         <OfflineWrapper>
           <DialogHolder />
+          <ToastContainer />
           <Header
             isSigninFlow={routeObj.isSigninFlow}
             location={location}
