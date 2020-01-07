@@ -53,7 +53,7 @@ export const votePlaced = ({
 
     const label = getVotingError(votes, account);
     if (label) {
-      toast.error({ label });
+      toast.error(label);
       return;
     }
 
