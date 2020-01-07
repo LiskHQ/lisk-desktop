@@ -24,7 +24,6 @@ const network = (state = { status: {}, networks: {} }, action) => {
         ...state,
         status: action.data,
       };
-    /* istanbul ignore next */
     default:
       return state;
   }

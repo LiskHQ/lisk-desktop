@@ -56,6 +56,7 @@ module.exports = {
     'src/i18n-scanner.js',
     'src/main.js',
     'src/store/middlewares/login.js',
+    'src/store/index.js',
     'src/store/reducers/liskService.js',
     'src/store/reducers/filters.js', // To be removed in #2175
     'src/tests.js',
