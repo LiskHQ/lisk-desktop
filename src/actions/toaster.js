@@ -1,13 +1,17 @@
+import { toast } from 'react-toastify';
 import actionTypes from '../constants/actions';
 
 /**
  * An action to dispatch to display a toast
  *
  */
-export const toastDisplayed = data => ({
-  data,
-  type: actionTypes.toastDisplayed,
-});
+export const toastDisplayed = (data) => {
+  (toast[data.type] || toast)(data.label);
+  return ({
+    data,
+    type: actionTypes.toastDisplayed,
+  });
+};
 
 /**
  * An action to dispatch to display a success toast

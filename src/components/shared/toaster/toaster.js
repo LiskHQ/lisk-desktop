@@ -1,3 +1,5 @@
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, Slide } from 'react-toastify';
 import React from 'react';
 import Toast from './toast';
 
@@ -11,6 +13,15 @@ const Toaster = ({ hideToast, toasts }) => (
         hideToast={hideToast}
       />
     ))}
+    <ToastContainer
+      position="bottom-right"
+      newestOnTop
+      autoClose={4000}
+      hideProgressBar
+      draggable={false}
+      pauseOnHover
+      transition={Slide}
+    />
   </span>
 );
 
