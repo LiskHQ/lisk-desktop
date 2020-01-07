@@ -10,6 +10,7 @@ const path = require('path');
 const reactToolboxVariables = require('./reactToolbox.config');
 const I18nScannerPlugin = require('../src/i18n-scanner');
 const bundleVersion = require('../package.json').version;
+const stylelintrc = require('../.stylelintrc.json');
 
 const getLocales = (url) => {
   const file = fs.readFileSync(path.join(__dirname, url));
@@ -109,17 +110,7 @@ module.exports = {
     new StyleLintPlugin({
       context: `${resolve(__dirname, '../src')}/`,
       files: '**/*.css',
-      config: {
-        extends: 'stylelint-config-standard',
-        rules: {
-          'selector-pseudo-class-no-unknown': null,
-          'unit-whitelist': ['px', 'deg', '%', 'ms', 's'],
-          'length-zero-no-unit': null,
-          'at-rule-no-unknown': null,
-          'selector-no-vendor-prefix': true,
-          'no-descending-specificity': null,
-        },
-      },
+      config: stylelintrc,
     }),
     // new MiniCssExtractPlugin({
     //   filename: 'head.css',

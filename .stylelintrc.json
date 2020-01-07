@@ -1,0 +1,11 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "selector-pseudo-class-no-unknown": null,
+    "unit-whitelist": ["px", "deg", "%", "ms", "s"],
+    "length-zero-no-unit": null,
+    "at-rule-no-unknown": null,
+    "selector-no-vendor-prefix": true,
+    "no-descending-specificity": null
+  }
+}
