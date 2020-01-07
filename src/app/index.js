@@ -52,10 +52,11 @@ class App extends React.Component {
             position="bottom-right"
             hideProgressBar
             draggable
+            newestOnTop
             closeButton={false}
             className={styles.toastContainer}
-            toastClassName={styles.toastText}
-            bodyClassName={styles.toastBody}
+            toastClassName={styles.toastBody}
+            bodyClassName={styles.toastText}
           />
           <Header
             isSigninFlow={routeObj.isSigninFlow}
