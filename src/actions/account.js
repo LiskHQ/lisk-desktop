@@ -1,6 +1,6 @@
 import { to } from 'await-to-js';
 import i18next from 'i18next';
-import { errorToastDisplayed } from './toaster';
+import { toast } from 'react-toastify';
 import { extractAddress } from '../utils/account';
 import { getAPIClient } from '../utils/api/network';
 import { getAccount, setSecondPassphrase } from '../utils/api/account';
@@ -146,7 +146,7 @@ export const updateEnabledTokenAccount = token => async (dispatch, getState) => 
       passphrase: account.passphrase,
     }));
     if (error) {
-      dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
+      toast.error(getConnectionErrorMessage(error));
     } else {
       dispatch(accountUpdated(result));
     }
@@ -176,7 +176,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
   }));
 
   if (error) {
-    dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
+    toast.error(getConnectionErrorMessage(error));
     dispatch(accountLoggedOut());
   } else {
     dispatch(accountLoggedIn({

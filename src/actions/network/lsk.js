@@ -1,10 +1,9 @@
 import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
-
+import { toast } from 'react-toastify';
 import actionTypes from '../../constants/actions';
 import { tokenMap } from '../../constants/tokens';
 import networks from '../../constants/networks';
-import { errorToastDisplayed } from '../toaster';
 
 const generateAction = (data, config) => ({
   data: {
@@ -46,7 +45,7 @@ export const networkSet = data => async (dispatch) => {
         custom: data.network.custom,
         code: data.network.code,
       }));
-      dispatch(errorToastDisplayed({ label: error }));
+      toast.error(error);
     });
   } else if (data.name === networks.testnet.name
     || data.name === networks.mainnet.name) {

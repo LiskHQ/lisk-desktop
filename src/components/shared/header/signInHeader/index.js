@@ -2,7 +2,6 @@
 import { connect } from 'react-redux';
 import Header from './signInHeader';
 import { networkSet } from '../../../../actions/network';
-import { errorToastDisplayed } from '../../../../actions/toaster';
 import { settingsUpdated } from '../../../../actions/settings';
 import networks from '../../../../constants/networks';
 import { tokenMap } from '../../../../constants/tokens';
@@ -23,7 +22,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  errorToastDisplayed,
   networkSet,
   settingsUpdated,
 };
