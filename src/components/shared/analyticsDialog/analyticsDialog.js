@@ -19,7 +19,7 @@ class AnalyticsDialog extends React.Component {
   handleClickAccept() {
     const { settingsUpdated, t } = this.props;
     settingsUpdated({ statistics: true });
-    toast(t('Settings saved!'));
+    toast.info(t('Settings saved!'));
     FlashMessageHolder.deleteMessage('Analytics');
   }
 
