@@ -1,5 +1,4 @@
 import React from 'react';
-import { toast } from 'react-toastify';
 import styles from './navigationButtons.css';
 import Icon from '../../../toolbox/icon';
 
@@ -25,7 +24,6 @@ class NavigationButtons extends React.Component {
       counter: this.props.history.length,
       mounted: true,
     });
-    toast.error('Ali messages');
   }
 
   resetNavigationValues() {

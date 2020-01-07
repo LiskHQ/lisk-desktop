@@ -9,7 +9,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './app.css';
 import './variables.css';
-import Toaster from '../components/shared/toaster';
 import LoadingBar from '../components/shared/loadingBar';
 import OfflineWrapper from '../components/shared/offlineWrapper';
 import CustomRoute from '../components/shared/customRoute';
@@ -88,7 +87,6 @@ class App extends React.Component {
                 </Switch>
               </div>
             </section>
-            <Toaster />
           </main>
           <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
         </OfflineWrapper>
