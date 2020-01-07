@@ -52,38 +52,46 @@ const headCssLoader = {
 };
 // const headCssLoadersConfig = { ...headCssLoader };
 
-const cssLoadersConfig = [
-  cssLoader,
-  {
-    loader: 'postcss-loader',
-    options: {
-      ident: 'postcss',
-      sourceMap: true,
-      sourceComments: true,
-      plugins: [
-        /* eslint-disable import/no-extraneous-dependencies */
-        require('postcss-partial-import')({}),
-        require('postcss-mixins')({}),
-        require('postcss-nesting')({}),
-        require('postcss-preset-env')({
-          stage: 0,
-          features: {
-            'custom-properties': {
-              variables: reactToolboxVariables,
-            },
-          },
-        }),
-        require('postcss-functions')({
-          functions: {
-            rem: px => `${(px / 10)}rem`,
-          },
-        }),
-        require('postcss-for')({}),
-        /* eslint-enable import/no-extraneous-dependencies */
-      ],
+const reactToastifyLoader = {
+  loader: 'css-loader',
+  options: {
+    sourceMap: true,
+    modules: {
+      mode: 'local',
+      localIdentName: '[local]',
     },
   },
-];
+};
+
+const postCssLoader = {
+  loader: 'postcss-loader',
+  options: {
+    ident: 'postcss',
+    sourceMap: true,
+    sourceComments: true,
+    plugins: [
+      /* eslint-disable import/no-extraneous-dependencies */
+      require('postcss-partial-import')({}),
+      require('postcss-mixins')({}),
+      require('postcss-nesting')({}),
+      require('postcss-preset-env')({
+        stage: 0,
+        features: {
+          'custom-properties': {
+            variables: reactToolboxVariables,
+          },
+        },
+      }),
+      require('postcss-functions')({
+        functions: {
+          rem: px => `${(px / 10)}rem`,
+        },
+      }),
+      require('postcss-for')({}),
+      /* eslint-enable import/no-extraneous-dependencies */
+    ],
+  },
+};
 
 module.exports = {
   entry: entries,
@@ -156,8 +164,13 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, headCssLoader],
       },
       {
-        test: /^((?!styles\.head).)*\.css$/,
-        use: [MiniCssExtractPlugin.loader, ...cssLoadersConfig],
+        test: /ReactToastify\.css$/,
+        use: [MiniCssExtractPlugin.loader, reactToastifyLoader, postCssLoader],
+      },
+      {
+        test: /^((?!(styles\.head|ReactToastify)).)*\.css$/,
+
+        use: [MiniCssExtractPlugin.loader, cssLoader, postCssLoader],
       },
     ],
   },
