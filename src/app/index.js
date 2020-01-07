@@ -48,7 +48,15 @@ class App extends React.Component {
       <ThemeContext.Provider value={theme}>
         <OfflineWrapper>
           <DialogHolder />
-          <ToastContainer />
+          <ToastContainer
+            position="bottom-right"
+            hideProgressBar
+            draggable
+            closeButton={false}
+            className={styles.toastContainer}
+            toastClassName={styles.toastText}
+            bodyClassName={styles.toastBody}
+          />
           <Header
             isSigninFlow={routeObj.isSigninFlow}
             location={location}

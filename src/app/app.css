@@ -73,6 +73,31 @@ body {
   max-width: var(--main-box-width);
 }
 
+.toastContainer > div {
+  min-height: 30px;
+  float: right;
+  clear: both;
+  background-color: #1c1c1c;
+
+  &[class*="success"] {
+    background-color: #00a04b;
+  }
+
+  &[class*="error"] {
+    background-color: var(--color-burnt-sienna);
+  }
+}
+
+.toastText {
+  color: var(--color-strong-mystic);
+}
+
+.toastBody {
+  min-height: 30px;
+  line-height: 30px;
+  margin: 0;
+}
+
 :global(.offlineWrapper) {
   display: flex;
   flex-direction: column;
