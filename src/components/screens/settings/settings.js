@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 import { tokenMap } from '../../../constants/tokens';
 import { isEmpty } from '../../../utils/helpers';
 import Box from '../../toolbox/box';
@@ -59,10 +60,10 @@ class Settings extends React.Component {
   }
 
   onUpdateSettings(newSettings) {
-    const { settingsUpdated, toastDisplayed, t } = this.props;
+    const { settingsUpdated, t } = this.props;
     Piwik.trackingEvent('Settings', 'button', 'Update settings');
     settingsUpdated(newSettings);
-    toastDisplayed({ label: t('Settings saved!') });
+    toast(t('Settings saved!'));
   }
 
   render() {

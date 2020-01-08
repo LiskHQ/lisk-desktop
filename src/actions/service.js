@@ -1,7 +1,7 @@
 import i18next from 'i18next';
+import { toast } from 'react-toastify';
 import actionTypes from '../constants/actions';
 import serviceAPI from '../utils/api/service';
-import { errorToastDisplayed } from './toaster';
 
 export const pricesRetrieved = () => (dispatch, getState) => {
   const { settings: { token } } = getState();
@@ -25,7 +25,7 @@ export const pricesRetrieved = () => (dispatch, getState) => {
         },
       });
     })
-    .catch(() => dispatch(errorToastDisplayed(i18next.t('Error retrieving conversion rates.'))));
+    .catch(() => toast.error(i18next.t('Error retrieving conversion rates.')));
 };
 
 export const dynamicFeesRetrieved = () => (dispatch, getState) => {
@@ -37,5 +37,5 @@ export const dynamicFeesRetrieved = () => (dispatch, getState) => {
       type: actionTypes.dynamicFeesRetrieved,
       dynamicFees,
     }))
-    .catch(() => dispatch(errorToastDisplayed(i18next.t('Error retrieving dynamic fees.'))));
+    .catch(() => toast.error(i18next.t('Error retrieving dynamic fees.')));
 };

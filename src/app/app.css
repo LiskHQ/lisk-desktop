@@ -73,6 +73,29 @@ body {
   max-width: var(--main-box-width);
 }
 
+.toastBody {
+  float: right;
+  clear: both;
+  background-color: #1c1c1c;
+  border-radius: var(--border-radius-standard);
+  min-height: 30px;
+  line-height: 30px;
+  padding: 8px 16px;
+
+  &[class*="success"] {
+    background-color: var(--color-ufo-green);
+  }
+
+  &[class*="error"] {
+    background-color: var(--color-burnt-sienna);
+  }
+}
+
+.toastText {
+  color: var(--color-strong-mystic);
+  font-family: var(--content-font);
+}
+
 :global(.offlineWrapper) {
   display: flex;
   flex-direction: column;

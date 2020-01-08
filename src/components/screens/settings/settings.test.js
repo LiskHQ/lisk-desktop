@@ -45,7 +45,6 @@ describe('Setting', () => {
     location: {
       pathname: '/settings',
     },
-    toastDisplayed: jest.fn(),
   };
 
   describe('With no transaction in guest mode', () => {

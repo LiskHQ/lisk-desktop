@@ -42,7 +42,6 @@ const bookmarks = (state = getBookmarksFromLocalStorage(), action) => {
         [action.data.token]:
           state[action.data.token].filter(bookmark => bookmark.address !== action.data.address),
       };
-
     default:
       return state;
   }

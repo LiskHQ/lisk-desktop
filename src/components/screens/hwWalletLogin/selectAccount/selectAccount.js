@@ -1,5 +1,6 @@
 import { to } from 'await-to-js';
 import React from 'react';
+import { toast } from 'react-toastify';
 import { TertiaryButton } from '../../../toolbox/buttons/button';
 import { getAccountsFromDevice } from '../../../../utils/hwManager';
 import AccountCard from './accountCard';
@@ -51,10 +52,10 @@ class SelectAccount extends React.Component {
   }
 
   async getAccountsFromDevice() {
-    const { device, networkConfig, errorToastDisplayed } = this.props;
+    const { device, networkConfig } = this.props;
     const [error, accounts] = await to(getAccountsFromDevice({ device, networkConfig }));
     if (error) {
-      errorToastDisplayed({ label: `Error retrieving accounts from device: ${error}` });
+      toast.error(`Error retrieving accounts from device: ${error}`);
     } else {
       const hwAccounts = accounts.map((account, index) => ({
         ...account,
@@ -89,10 +90,7 @@ class SelectAccount extends React.Component {
   }
 
   onAddNewAccount() {
-    const {
-      errorToastDisplayed,
-      t,
-    } = this.props;
+    const { t } = this.props;
     const { hwAccounts } = this.state;
     const lastAccount = hwAccounts[hwAccounts.length - 1];
 
@@ -104,7 +102,7 @@ class SelectAccount extends React.Component {
       this.setState({ hwAccounts });
     } else {
       const label = t('Please use the last not-initialized account before creating a new one!');
-      errorToastDisplayed({ label });
+      toast.error(label);
     }
   }
 

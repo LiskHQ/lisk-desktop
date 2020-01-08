@@ -1,4 +1,5 @@
 import to from 'await-to-js';
+import { toast } from 'react-toastify';
 import {
   getVotes,
   getDelegates,
@@ -9,7 +10,6 @@ import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
 import { passphraseUsed } from './account';
 import { addNewPendingTransaction } from './transactions';
-import { errorToastDisplayed } from './toaster';
 import actionTypes from '../constants/actions';
 import { getAPIClient } from '../utils/api/network';
 import { tokenMap } from '../constants/tokens';
@@ -53,7 +53,7 @@ export const votePlaced = ({
 
     const label = getVotingError(votes, account);
     if (label) {
-      dispatch(errorToastDisplayed({ label }));
+      toast.error(label);
       return;
     }
 

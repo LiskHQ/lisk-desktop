@@ -136,7 +136,6 @@ const voting = (state = { // eslint-disable-line complexity
           return votesDict;
         }, {}),
       };
-
     default:
       return state;
   }

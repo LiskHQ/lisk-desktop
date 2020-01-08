@@ -1,9 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { setDefaults, withTranslation } from 'react-i18next';
-
 import { getAPIClient } from '../../../utils/api/network';
-import { errorToastDisplayed } from '../../../actions/toaster';
 import { getActiveTokenAccount } from '../../../utils/account';
 import { login } from '../../../actions/account';
 import { settingsUpdated } from '../../../actions/settings';
@@ -28,7 +26,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   login,
   settingsUpdated,
-  errorToastDisplayed,
 };
 
 export default connect(

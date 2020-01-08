@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { toast } from 'react-toastify';
 import actionTypes from '../constants/actions';
 import {
   voteToggled,
@@ -115,6 +116,7 @@ describe('actions: voting', () => {
     });
 
     it('should dispatch error toast if not enought balance', async () => {
+      toast.error = sinon.spy();
       await votePlaced({
         account: {
           ...account,
@@ -124,9 +126,7 @@ describe('actions: voting', () => {
         secondSecret,
         callback,
       })(dispatch, getState);
-      expect(dispatch).to.have.been.calledWith(sinon.match({
-        type: actionTypes.toastDisplayed,
-      }));
+      expect(toast.error).to.have.been.calledWith();
     });
   });
 

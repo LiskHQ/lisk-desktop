@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import actionTypes from '../constants/actions';
 import {
   accountUpdated,
@@ -270,12 +271,11 @@ describe('actions: account', () => {
       }));
     });
 
-    it('should dispatch errorToastDisplayed if getAccount fails ', async () => {
+    it('should fire an error toast if getAccount fails ', async () => {
+      jest.spyOn(toast, 'error');
       accountApi.getAccount.mockRejectedValue({ error: 'custom error' });
       await login({ passphrase })(dispatch, getState);
-      expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
-        type: actionTypes.toastDisplayed,
-      }));
+      expect(toast.error).toHaveBeenNthCalledWith(1, 'Unable to connect to the node, no response from the server.');
     });
   });
 
@@ -317,12 +317,11 @@ describe('actions: account', () => {
       });
     });
 
-    it('should dispatch errorToastDisplayed if getAccount fails ', async () => {
+    it('should fire an error toast if getAccount fails ', async () => {
+      jest.spyOn(toast, 'error');
       accountApi.getAccount.mockRejectedValue({ error: 'custom error' });
       await updateEnabledTokenAccount('BTC')(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
-        type: actionTypes.toastDisplayed,
-      }));
+      expect(toast.error).toHaveBeenCalled();
     });
   });
 });

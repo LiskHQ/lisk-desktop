@@ -1,3 +1,50 @@
 .linear {
-  background: yellow;
+  background: transparent;
+  display: inline-block;
+  height: 3px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  &.indeterminate .value {
+    animation: linear-indeterminate-bar 1s linear infinite;
+    transform-origin: center center;
+  }
+}
+
+.value,
+.buffer {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition-duration: 100ms;
+  transition-timing-function: lienar;
+}
+
+.value {
+  background-color: var(--color-ultramarine-blue);
+}
+
+.buffer {
+  background-image:
+    linear-gradient(to right, var(--progress-secondary-color), var(--progress-secondary-color)),
+    linear-gradient(to right, var(--progress-main-color), var(--progress-main-color));
+}
+
+@keyframes linear-indeterminate-bar {
+  0% {
+    transform: translate(-50%) scaleX(0);
+  }
+
+  50% {
+    transform: translate(-0%) scaleX(0.3);
+  }
+
+  100% {
+    transform: translate(50%) scaleX(0);
+  }
 }

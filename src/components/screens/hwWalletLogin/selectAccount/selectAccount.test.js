@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { toast } from 'react-toastify';
 import SelectAccount from './selectAccount';
 import * as hwManager from '../../../../utils/hwManager';
 
@@ -72,8 +73,8 @@ describe('Select Account', () => {
       prevStep: jest.fn(),
       login: jest.fn(),
       settingsUpdated: jest.fn(),
-      errorToastDisplayed: jest.fn(),
     };
+    jest.spyOn(toast, 'error');
 
     wrapper = mount(<SelectAccount {...props} />);
   });
@@ -121,7 +122,7 @@ describe('Select Account', () => {
     expect(wrapper).toContainMatchingElements(4, '.hw-account');
     wrapper.find('.create-account').at(0).simulate('click');
     wrapper.update();
-    expect(props.errorToastDisplayed).toBeCalled();
+    expect(toast.error).toBeCalled();
   });
 
   it('Should call login function after click on a select account button', () => {
