@@ -43,8 +43,6 @@ const actionTypes = {
   showEmptyNewsFeed: 'SHOW_EMPTY_NEWS_FEED',
   storeCreated: 'STORE_CREATED',
   switchChannel: 'SWITCH_CHANNEL',
-  toastDisplayed: 'TOAST_DISPLAYED',
-  toastHidden: 'TOAST_HIDDEN',
   transactionAddDelegateName: 'TRANSACTION_ADD_DELEGATE_NAME',
   transactionCleared: 'TRANSACTION_CLEARED',
   transactionFailed: 'TRANSACTION_FAILED',

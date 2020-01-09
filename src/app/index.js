@@ -5,9 +5,10 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from './app.css';
 import './variables.css';
-import Toaster from '../components/shared/toaster';
 import LoadingBar from '../components/shared/loadingBar';
 import OfflineWrapper from '../components/shared/offlineWrapper';
 import CustomRoute from '../components/shared/customRoute';
@@ -47,6 +48,16 @@ class App extends React.Component {
       <ThemeContext.Provider value={theme}>
         <OfflineWrapper>
           <DialogHolder />
+          <ToastContainer
+            position="bottom-right"
+            hideProgressBar
+            draggable
+            newestOnTop
+            closeButton={false}
+            className={styles.toastContainer}
+            toastClassName={styles.toastBody}
+            bodyClassName={styles.toastText}
+          />
           <Header
             isSigninFlow={routeObj.isSigninFlow}
             location={location}
@@ -55,7 +66,7 @@ class App extends React.Component {
             className={mainClassNames}
             ref={(el) => { this.main = el; }}
           >
-            <section>
+            <section className="scrollContainer">
               <FlashMessageHolder />
               <InitializationMessage history={history} />
               <div className={`${styles.mainContent} ${!routeObj.isSigninFlow ? styles.mainBox : ''}`}>
@@ -85,7 +96,6 @@ class App extends React.Component {
                 </Switch>
               </div>
             </section>
-            <Toaster />
           </main>
           <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
         </OfflineWrapper>

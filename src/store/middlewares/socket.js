@@ -72,12 +72,17 @@ const socketMiddleware = store => (
       case actionTypes.forgingDataDisplayed:
         if (!interval) {
           interval = setInterval(() => {
-            store.dispatch(forgingTimesRetrieved());
+            // if user refreshes the page, we might have a race condition here.
+            // I'll skip the first retrieval since it is useless without the blocks list
+            if (store.getState().blocks.latestBlocks.length) {
+              store.dispatch(forgingTimesRetrieved());
+            }
           }, intervalTime);
         }
         break;
       case actionTypes.forgingDataConcealed:
         clearInterval(interval);
+        interval = null;
         break;
       default: break;
     }

@@ -30,7 +30,10 @@ class VotingHeader extends React.Component {
   headerTopEdge = 15;
 
   componentDidMount() {
-    window.addEventListener('scroll', this.locateHeader);
+    this.scrollContainer = document.querySelector('.scrollContainer');
+    if (this.scrollContainer) {
+      this.scrollContainer.addEventListener('scroll', this.locateHeader);
+    }
 
     // Didn't bind it to state, since there's not need to re-render
     // THe fixed amount is related to the design specifications
@@ -40,7 +43,9 @@ class VotingHeader extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.locateHeader);
+    if (this.scrollContainer) {
+      this.scrollContainer.removeEventListener('scroll', this.locateHeader);
+    }
   }
 
   componentDidUpdate(newProps) {
@@ -51,8 +56,8 @@ class VotingHeader extends React.Component {
     }
   }
 
-  locateHeader = ({ target }) => {
-    this.isAboveHeader = target.documentElement.scrollTop >= this.headerTopEdge;
+  locateHeader = () => {
+    this.isAboveHeader = this.scrollContainer.scrollTop >= this.headerTopEdge;
     if (this.isAboveHeader && !this.state.isHeaderSticky) {
       this.setState({ isHeaderSticky: true });
     } else if (!this.isAboveHeader && this.state.isHeaderSticky) {
@@ -112,7 +117,7 @@ class VotingHeader extends React.Component {
                     <h2>
                       {`${t('Delegates')}`}
                     </h2>
-                    <span className={styles.subTitle}>{t('All important information about delegates.')}</span>
+                    <span className={styles.subTitle}>{t('Vote for who secures the network or becomes a delegate.')}</span>
                   </div>
                 </Fragment>
               )

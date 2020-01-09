@@ -1,5 +1,6 @@
 // istanbul ignore file
 import React from 'react';
+import { toast } from 'react-toastify';
 import { PrimaryButton } from '../../components/toolbox/buttons/button';
 import { accountLoggedOut, login } from '../../actions/account';
 import {
@@ -7,7 +8,6 @@ import {
   getPublicKey,
 } from '../../../libs/hwManager/communication';
 import { subscribeToDeviceConnceted, subscribeToDeviceDisonnceted } from '../../utils/hwManager';
-import { successToastDisplayed } from '../../actions/toaster';
 import Dialog from '../../components/toolbox/dialog/dialog';
 import DialogHolder from '../../components/toolbox/dialog/holder';
 import actionTypes from '../../constants/actions';
@@ -65,7 +65,7 @@ const hwWalletMiddleware = store => next => (action) => {
      * @param {fn} function - callback function to execute toast dispatch after receive the data
      */
     subscribeToDeviceConnceted((response) => {
-      store.dispatch(successToastDisplayed({ label: `${response.model} connected` }));
+      toast.success(`${response.model} connected`);
     });
 
     /**
@@ -88,7 +88,7 @@ const hwWalletMiddleware = store => next => (action) => {
         store.dispatch(accountLoggedOut());
       }
 
-      store.dispatch(successToastDisplayed({ label: `${response.model} disconnected` }));
+      toast.error(`${response.model} disconnected`);
     });
   }
 

@@ -1,6 +1,6 @@
 import i18next from 'i18next';
+import { toast } from 'react-toastify';
 import actionsType from '../../constants/actions';
-import { successToastDisplayed, errorToastDisplayed } from '../../actions/toaster';
 import { loadingStarted, loadingFinished } from '../../actions/loading';
 import { tokenMap } from '../../constants/tokens';
 
@@ -26,10 +26,10 @@ const offlineMiddleware = store => next => (action) => {
       if (action.data.online === false && network.status.online === true) {
         const address = state.network.networks[settings.token.active || tokenMap.LSK.key].nodeUrl;
         const label = getErrorMessage(action.data.code, address);
-        store.dispatch(errorToastDisplayed({ label }));
+        toast.error(label);
         store.dispatch(loadingStarted('offline'));
       } else if (action.data.online === true && network.status.online === false) {
-        store.dispatch(successToastDisplayed({ label: i18next.t('Connection re-established') }));
+        toast.success(i18next.t('Connection re-established'));
         store.dispatch(loadingFinished('offline'));
       }
       if (action.data.online !== network.status.online) {

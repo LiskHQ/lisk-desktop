@@ -1,10 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { toast } from 'react-toastify';
 import newReleaseUtil from './newRelease';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import DialogHolder from '../components/toolbox/dialog/holder';
-import { toastDisplayed } from '../actions/toaster';
-import store from '../store';
 
 jest.mock('../store');
 
@@ -17,13 +16,11 @@ describe('new release util', () => {
 
   beforeEach(() => {
     ipc.send.mockClear();
-    store.dispatch = jest.fn();
     window.ipc = ipc;
   });
 
   afterEach(() => {
     delete window.ipc;
-    store.dispatch.mockRestore();
   });
 
   it('Should return undefined if no ipc on window', () => {
@@ -31,11 +28,12 @@ describe('new release util', () => {
     expect(newReleaseUtil.init()).toEqual(undefined);
   });
 
-  it('Should dispatch toaster when ipc receives update:downloading', () => {
+  it('Should fire success toaster when ipc receives update:downloading', () => {
+    jest.spyOn(toast, 'success');
     const expectedAction = { label: 'Download started!' };
     newReleaseUtil.init();
     callbacks['update:downloading']({}, expectedAction);
-    expect(store.dispatch).toBeCalledWith(toastDisplayed(expectedAction));
+    expect(toast.success).toBeCalledWith('Download started!');
   });
 
   it('Should call FlashMessageHolder.addMessage when ipc receives update:available', () => {

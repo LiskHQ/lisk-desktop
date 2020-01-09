@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import Dialog from '../../toolbox/dialog/dialog';
 import FlashMessageHolder from '../../toolbox/flashMessage/holder';
@@ -16,9 +17,9 @@ class AnalyticsDialog extends React.Component {
   }
 
   handleClickAccept() {
-    const { toastDisplayed, settingsUpdated, t } = this.props;
+    const { settingsUpdated, t } = this.props;
     settingsUpdated({ statistics: true });
-    toastDisplayed({ label: t('Settings saved!') });
+    toast.info(t('Settings saved!'));
     FlashMessageHolder.deleteMessage('Analytics');
   }
 

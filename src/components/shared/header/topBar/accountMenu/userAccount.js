@@ -1,5 +1,4 @@
 import React from 'react';
-import Dropdown from '../../../../toolbox/dropdown/dropdown';
 import styles from './userAccount.css';
 import Icon from '../../../../toolbox/icon';
 import { tokenKeys } from '../../../../../constants/tokens';
@@ -69,7 +68,6 @@ class UserAccount extends React.Component {
                 : null
             }
           </span>,
-          <Dropdown.Separator key={`separator-${tokenKey}`} className={styles.separator} />,
         ])
         : null
       ))
@@ -162,12 +160,11 @@ class UserAccount extends React.Component {
               />
             ) : null
         }
-        <Dropdown.Separator className={styles.separator} />
         {
           isUserLogout
             ? (
               <MenuItem
-                className="signIn"
+                className={`${styles.signInOut} signIn`}
                 name="signIn"
                 title={t('Sign in')}
                 to={routes.login.path}
@@ -176,7 +173,7 @@ class UserAccount extends React.Component {
             )
             : (
               <MenuItem
-                className="logout"
+                className={`${styles.signInOut} logout`}
                 name="logout"
                 title={t('Sign out')}
                 onClick={this.handleLogout}

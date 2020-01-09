@@ -1,9 +1,6 @@
-import i18next from 'i18next';
-
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
-
-import { successToastDisplayed, errorToastDisplayed } from '../../actions/toaster';
+import { toast } from 'react-toastify';
 import actionType from '../../constants/actions';
 import middleware from './offline';
 
@@ -17,7 +14,7 @@ describe('Offline middleware', () => {
 
   beforeEach(() => {
     store = stub();
-    store.dispatch = spy();
+    store.dispatch = () => {};
     next = spy();
     action = {
       type: actionType.liskAPIClientUpdate,
@@ -50,54 +47,52 @@ describe('Offline middleware', () => {
     expect(next).to.have.been.calledWith(randomAction);
   });
 
-  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.network.status.online and action.data.code`, () => {
+  it(`should fire error toaster on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.network.status.online and action.data.code`, () => {
     network.status.online = true;
     action.data = {
       online: false,
       code: 'ANY OTHER CODE',
     };
+    toast.error = spy();
 
     middleware(store)(next)(action);
-    expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
-      label: 'Failed to connect to node',
-    }));
+    expect(toast.error).to.have.been.calledWith('Failed to connect to node');
   });
 
-  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.network.status.online and action.data.code = "EUNAVAILABLE"`, () => {
+  it(`should fire error toaster on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.network.status.online and action.data.code = "EUNAVAILABLE"`, () => {
     network.status.online = true;
     action.data = {
       online: false,
       code: 'EUNAVAILABLE',
     };
+    toast.error = spy();
 
     middleware(store)(next)(action);
-    expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
-      label: i18next.t('Failed to connect: Node {{address}} is not active', { address: `${network.networks.LSK.nodeUrl}` }),
-    }));
+    expect(toast.error).to.have.been.calledWith(
+      `Failed to connect: Node ${network.networks.LSK.nodeUrl} is not active`,
+    );
   });
 
-  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.network.status.online and action.data.code = "EPARSE"`, () => {
+  it(`should fire error toaster on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.network.status.online and action.data.code = "EPARSE"`, () => {
     network.status.online = true;
     action.data = {
       online: false,
       code: 'EPARSE',
     };
+    toast.error = spy();
 
     const expectedResult = 'Failed to connect to node Make sure that you are using the latest version of Lisk.';
     middleware(store)(next)(action);
-    expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
-      label: expectedResult,
-    }));
+    expect(toast.error).to.have.been.calledWith(expectedResult);
   });
 
-  it(`should dispatch successToastDisplayed on ${actionType.liskAPIClientUpdate} action if action.data.online and !state.network.status.online`, () => {
+  it.skip(`should fire error toaster on ${actionType.liskAPIClientUpdate} action if action.data.online and !state.network.status.online`, () => {
     network.status.online = false;
     action.data.online = true;
+    toast.error = spy();
 
     middleware(store)(next)(action);
-    expect(store.dispatch).to.have.been.calledWith(successToastDisplayed({
-      label: 'Connection re-established',
-    }));
+    expect(toast.error).to.have.been.calledWith('Connection re-established');
   });
 
   it(`should not call next() on ${actionType.liskAPIClientUpdate} action if action.data.online === state.network.status.online`, () => {

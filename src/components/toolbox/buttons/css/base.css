@@ -9,6 +9,19 @@
   outline: none;
   text-transform: none;
   transition: var(--transition-button) !important;
+  cursor: pointer;
+  display: inline-block;
+  flex-direction: row;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+  text-size-adjust: 100%;
+  min-width: 90px;
 
   &.l {
     height: 48px;
@@ -55,35 +68,36 @@
 }
 
 @define-mixin buttonPrimary {
-  background-color: var(--color-ultramarine-blue) !important;
-  color: var(--color-strong-white) !important;
+  background-color: var(--color-ultramarine-blue);
+  color: var(--color-strong-white);
+  border: none;
 
   &:focus,
   &:hover {
-    box-shadow: 3px 3px 10px 0 rgba(61, 113, 255, 0.36) !important;
+    box-shadow: 3px 3px 10px 0 rgba(61, 113, 255, 0.36);
   }
 }
 
 @define-mixin buttonSecondary {
-  background-color: transparent !important;
+  background-color: transparent;
   border: solid 1px var(--dark-border-color);
-  color: var(--color-maastricht-blue) !important;
+  color: var(--color-maastricht-blue);
 
   &:global(.light) {
-    color: var(--color-strong-white) !important;
-    border-color: var(--light-border-color) !important;
+    color: var(--color-strong-white);
+    border-color: var(--light-border-color);
   }
 
   &:focus,
   &:hover {
-    color: var(--color-ultramarine-blue) !important;
+    color: var(--color-ultramarine-blue);
   }
 }
 
 @define-mixin buttonTertiary {
-  background-color: transparent !important;
-  border: none !important;
-  color: var(--color-ultramarine-blue) !important;
+  background-color: transparent;
+  border: none;
+  color: var(--color-ultramarine-blue);
   text-decoration: none;
 
   &:focus,
@@ -93,12 +107,13 @@
 }
 
 @define-mixin buttonWarning {
-  background-color: var(--color-burnt-sienna) !important;
-  color: var(--color-strong-white) !important;
+  background-color: var(--color-burnt-sienna);
+  color: var(--color-strong-white);
+  border: none;
 
   &:focus,
   &:hover {
-    /* background: color(var(--color-burnt-sienna) l(+4%)) !important; */
-    box-shadow: 3px 3px 10px 0 rgba(236, 104, 104, 0.36) !important;
+    /* background: color(var(--color-burnt-sienna) l(+4%)); */
+    box-shadow: 3px 3px 10px 0 rgba(236, 104, 104, 0.36);
   }
 }

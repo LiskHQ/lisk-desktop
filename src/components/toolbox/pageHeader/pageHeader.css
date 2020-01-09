@@ -3,7 +3,7 @@
 .wrapper {
   display: flex;
   justify-content: space-between;
-  padding-top: 32px;
+  padding-top: 25px;
   text-align: initial;
 
   & h1 {
@@ -12,6 +12,7 @@
     margin-bottom: -4px;
     margin-top: 0;
     color: var(--color-maastricht-blue);
+    padding-bottom: 7px;
   }
 
   & .subtitle {

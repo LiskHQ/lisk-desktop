@@ -25,7 +25,6 @@ const service = (state = INITIAL_STATE, action = {}) => {
         ...state,
         dynamicFees: action.dynamicFees,
       });
-
     default:
       return state;
   }
