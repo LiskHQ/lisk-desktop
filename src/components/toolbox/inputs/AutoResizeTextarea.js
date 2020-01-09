@@ -24,7 +24,8 @@ class AutoResizeTextarea extends React.Component {
     if (nextProps.value !== this.props.value) {
       this.textRef.style.height = `${this.height}px`;
       return true;
-    } if (!deepEquals(this.props, nextProps)) {
+    }
+    if (!deepEquals(this.props, nextProps)) {
       return true;
     }
     return false;
