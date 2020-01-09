@@ -11,7 +11,7 @@
 
   &:not(.header) {
     &::before,
-    &:not(:last-child)::after {
+    &:not(:last-of-type)::after {
       background-color: var(--color-platinum);
       content: '';
       height: 1px;
@@ -125,4 +125,38 @@
 
 .clickable {
   cursor: pointer;
+}
+
+.loadingRow {
+  height: 40px;
+  padding: 0px 0 20px;
+  display: flex;
+
+  & .loadingColumn {
+    height: 40px;
+    border: solid 10px transparent;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: var(--color-platinum);
+      background: linear-gradient(90deg, transparent 0%, var(--color-platinum) 50%, transparent 100%);
+      animation: glare 1s infinite linear;
+      animation-direction: alternate;
+    }
+  }
+}
+
+@keyframes glare {
+  0% {
+    transform: translateX(-101%);
+  }
+
+  100% {
+    transform: translateX(101%);
+  }
 }
