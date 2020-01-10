@@ -1,7 +1,6 @@
 import React from 'react';
 import { fromRawLsk, toRawLsk } from '../../../../../utils/lsk';
 import { loginType } from '../../../../../constants/hwConstants';
-import { tokenMap } from '../../../../../constants/tokens';
 import AccountVisual from '../../../../toolbox/accountVisual';
 import Converter from '../../../../shared/converter';
 import Piwik from '../../../../../utils/piwik';
@@ -74,9 +73,6 @@ class Summary extends React.Component {
       fields, t, token, account,
     } = this.props;
     const amount = fields.amount.value;
-    const fee = token === tokenMap.LSK.key
-      ? fromRawLsk(fees.send)
-      : fromRawLsk(fields.processingSpeed.txFee);
 
     return (
       <TransactionSummary
@@ -91,7 +87,7 @@ class Summary extends React.Component {
           label: t('Edit transaction'),
           onClick: this.prevStep,
         }}
-        fee={fee}
+        fee={fromRawLsk(fields.fee.value)}
         token={token}
       >
         <section>

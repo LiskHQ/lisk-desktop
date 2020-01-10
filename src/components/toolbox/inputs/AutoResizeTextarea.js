@@ -4,7 +4,7 @@ import Textarea from './textarea';
 import styles from './input.css';
 import { deepEquals } from '../../../utils/polyfills';
 
-class AutoresizeTextarea extends React.Component {
+class AutoResizeTextarea extends React.Component {
   constructor() {
     super();
 
@@ -24,7 +24,8 @@ class AutoresizeTextarea extends React.Component {
     if (nextProps.value !== this.props.value) {
       this.textRef.style.height = `${this.height}px`;
       return true;
-    } if (!deepEquals(this.props, nextProps)) {
+    }
+    if (!deepEquals(this.props, nextProps)) {
       return true;
     }
     return false;
@@ -52,14 +53,14 @@ class AutoresizeTextarea extends React.Component {
   }
 }
 
-AutoresizeTextarea.propTypes = {
+AutoResizeTextarea.propTypes = {
   className: PropTypes.string,
   size: PropTypes.oneOf(['xs', 's', 'm', 'l']),
 };
 
-AutoresizeTextarea.defaultProps = {
+AutoResizeTextarea.defaultProps = {
   className: '',
   size: 'l',
 };
 
-export default AutoresizeTextarea;
+export default AutoResizeTextarea;

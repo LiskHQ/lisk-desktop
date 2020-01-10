@@ -1,188 +1,84 @@
 import React from 'react';
-import * as btcTransactionsAPI from '../../../../../utils/api/btc/transactions';
-import { fromRawLsk, toRawLsk } from '../../../../../utils/lsk';
-import { formatAmountBasedOnLocale } from '../../../../../utils/formattedNumber';
+import {
+  formatAmountBasedOnLocale,
+} from '../../../../../utils/formattedNumber';
+import { fromRawLsk } from '../../../../../utils/lsk';
 import FormBase from './formBase';
 import Selector from '../../../../toolbox/selector/selector';
 import Spinner from '../../../../toolbox/spinner';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
+import useAmountField from './useAmountField';
+import useDynamicFeeCalculation from './useDynamicFeeCalculation';
+import useProcessingSpeed from './useProcessingSpeed';
+import useRecipientField from './useRecipientField';
 
-function getInitialState() {
-  return {
-    isLoading: false,
-    fields: {
-      processingSpeed: {
-        value: 0,
-        loaded: false,
-        txFee: 0,
-        selectedIndex: 0,
-      },
-      amount: {
-        value: '',
-      },
-      fee: {
-        value: 0,
-      },
-    },
-    unspentTransactionOutputs: [],
+const FormBtc = (props) => {
+  const {
+    t, account, token, getInitialValue,
+  } = props;
+
+
+  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
+  const [getDynamicFee, getMaxAmount] = useDynamicFeeCalculation(account, processingSpeed.value);
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), getMaxAmount);
+  const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
+
+  const fieldUpdateFunctions = { setAmountField, setRecipientField };
+  const fields = {
+    amount,
+    recipient,
+    processingSpeed,
+    fee: getDynamicFee(amount.value),
   };
-}
 
-export default class FormBtc extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = getInitialState();
+  const getProcessingSpeedStatus = () => (!fields.fee.error
+    ? `${formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) })} ${token}`
+    : fields.fee.feedback);
 
-    this.getProcessingSpeedStatus = this.getProcessingSpeedStatus.bind(this);
-    this.selectProcessingSpeed = this.selectProcessingSpeed.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.dynamicFeesRetrieved();
-  }
-
-  componentDidUpdate() {
-    const { fields, unspentTransactionOutputs } = this.state;
-    const {
-      token, account, dynamicFees, networkConfig,
-    } = this.props;
-    if (!Object.keys(dynamicFees).length) this.props.dynamicFeesRetrieved();
-    if (account && account.info[token]
-        && !unspentTransactionOutputs.length) {
-      btcTransactionsAPI
-        .getUnspentTransactionOutputs(account.info[token].address, networkConfig)
-        .then(data => this.setState(() => ({ unspentTransactionOutputs: data })))
-        .catch(() => this.setState(() => ({ unspentTransactionOutputs: [] })));
-    }
-
-    if (!fields.processingSpeed.loaded && dynamicFees.Low) {
-      this.setState(() => ({
-        fields: {
-          ...fields,
-          processingSpeed: {
-            value: dynamicFees.Low,
-            loaded: true,
-            txFee: this.getCalculatedDynamicFee(dynamicFees.Low),
-          },
-        },
-      }));
-    }
-  }
-
-  updateFee() {
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        processingSpeed: {
-          ...fields.processingSpeed,
-          txFee: this.getCalculatedDynamicFee(fields.processingSpeed.value),
-        },
-      },
-    }));
-  }
-
-  onInputChange({ target }, newState) {
-    if (target.name === 'amount') {
-      this.setState(({ fields }) => ({
-        fields: {
-          ...fields,
-          [target.name]: newState,
-        },
-      }), this.updateFee);
-    }
-  }
-
-  /**
-   * Get status of processing soeed fetch based on state of component
-   * @returns {Node} - Text to display to the user or loader
-   */
-  getProcessingSpeedStatus() {
-    const { token, t } = this.props;
-    const { fields, isLoading } = this.state;
-    const { amount } = fields;
-    if (amount.value === '') return '-';
-    if (isLoading) {
-      return (
-        <React.Fragment>
-          {t('Loading')}
-          {' '}
-          <Spinner className={styles.loading} />
-        </React.Fragment>
-      );
-    }
-    const fee = formatAmountBasedOnLocale({ value: fromRawLsk(fields.processingSpeed.txFee) });
-
-    return !amount.error
-      ? `${fee} ${token}`
-      : t('Invalid amount');
-  }
-
-  getCalculatedDynamicFee(dynamicFeePerByte) {
-    const { fields: { amount }, unspentTransactionOutputs } = this.state;
-    return amount.error
-      ? 0
-      : btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
-        unspentTransactionOutputs,
-        satoshiValue: toRawLsk(amount.value),
-        dynamicFeePerByte,
-      });
-  }
-
-  selectProcessingSpeed({ item, index }) {
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        processingSpeed: {
-          ...fields.processingSpeed,
-          ...item,
-          selectedIndex: index,
-          txFee: this.getCalculatedDynamicFee(item.value),
-        },
-      },
-    }));
-  }
-
-  render() {
-    const {
-      t, dynamicFees,
-    } = this.props;
-    const { fields } = this.state;
-    return (
-      <FormBase
-        {...this.props}
-        extraFields={fields}
-        onInputChange={this.onInputChange}
-        fee={fields.processingSpeed.value}
-      >
-        <div className={`${styles.fieldGroup} processing-speed`}>
-          <span className={`${styles.fieldLabel}`}>
-            {t('Processing Speed')}
-            <Tooltip>
-              <p className={styles.tooltipText}>
-                {
+  return (
+    <FormBase
+      {...props}
+      fields={fields}
+      fieldUpdateFunctions={fieldUpdateFunctions}
+      getMaxAmount={getMaxAmount}
+    >
+      <div className={`${styles.fieldGroup} processing-speed`}>
+        <span className={`${styles.fieldLabel}`}>
+          {t('Processing Speed')}
+          <Tooltip>
+            <p className={styles.tooltipText}>
+              {
                     t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')
                   }
-              </p>
-            </Tooltip>
+            </p>
+          </Tooltip>
+        </span>
+        <Selector
+          className={styles.selector}
+          onSelectorChange={selectProcessingSpeed}
+          name="speedSelector"
+          selectedIndex={fields.processingSpeed.selectedIndex}
+          options={feeOptions}
+        />
+        <span className={styles.processingInfo}>
+          {`${t('Transaction fee')}: `}
+          <span>
+            { processingSpeed.isLoading
+              ? (
+                <React.Fragment>
+                  {t('Loading')}
+                  {' '}
+                  <Spinner className={styles.loading} />
+                </React.Fragment>
+              )
+              : getProcessingSpeedStatus()
+            }
           </span>
-          <Selector
-            className={styles.selector}
-            onSelectorChange={this.selectProcessingSpeed}
-            name="speedSelector"
-            selectedIndex={fields.processingSpeed.selectedIndex}
-            options={[
-              { title: t('Low'), value: dynamicFees.Low },
-              { title: t('High'), value: dynamicFees.High },
-            ]}
-          />
-          <span className={styles.processingInfo}>
-            {`${t('Transaction fee')}: `}
-            <span>{this.getProcessingSpeedStatus()}</span>
-          </span>
-        </div>
-      </FormBase>
-    );
-  }
-}
+        </span>
+      </div>
+    </FormBase>
+  );
+};
+
+export default FormBtc;

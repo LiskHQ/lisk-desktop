@@ -88,6 +88,7 @@ ReactRedux.useSelector = jest.fn((filter) => {
   }
   return result;
 });
+ReactRedux.useDispatch = jest.fn(() => () => {});
 
 jest.mock('i18next', () => {
   function t(key, o) {
@@ -108,24 +109,40 @@ jest.mock('i18next', () => {
   };
 });
 
-jest.mock('react-i18next', () => ({
-  withTranslation: jest.fn(() => (Component => (
-  // eslint-disable-next-line react/display-name
-    props => (
-      <Component {...{
-        ...props,
-        t(key, o) {
-          return key.replace(/{{([^{}]*)}}/g, (a, b) => {
-            const r = o[b];
-            return typeof r === 'string' || typeof r === 'number' ? r : a;
-          });
-        },
-      }}
-      />
-    )
-  ))),
-  setDefaults: jest.fn(),
-}));
+jest.mock('react-i18next', () => {
+  function t(key, o) {
+    return key.replace(/{{([^{}]*)}}/g, (a, b) => {
+      const r = o[b];
+      return typeof r === 'string' || typeof r === 'number' ? r : a;
+    });
+  }
+  return {
+    withTranslation: jest.fn(() => (Component => (
+      // eslint-disable-next-line react/display-name
+      props => (
+        <Component {...{
+          ...props,
+          t,
+        }}
+        />
+      )
+    ))),
+    setDefaults: jest.fn(),
+    useTranslation: jest.fn(() => ({
+      t: key => key,
+      i18n: {
+        t,
+        changeLanguage: jest.fn(),
+        language: 'en',
+        init: () => ({
+          t,
+          language: 'en',
+          changeLanguage: jest.fn(),
+        }),
+      },
+    })),
+  };
+});
 
 const localStorageMock = (() => {
   let store = {};

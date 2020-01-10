@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { tokenMap } from '../../../../../constants/tokens';
 import Form from './form';
@@ -42,8 +43,6 @@ describe('Form', () => {
         },
       },
       bookmarks,
-      dynamicFees: {},
-      dynamicFeesRetrieved: jest.fn(),
       networkConfig: {
         name: 'Mainnet',
       },
@@ -90,7 +89,7 @@ describe('Form', () => {
     const { address } = accounts.genesis;
     wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
     wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '12' } });
-    jest.advanceTimersByTime(310);
+    act(() => { jest.advanceTimersByTime(300); });
     wrapper.update();
     expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     wrapper.find('button.btn-submit').simulate('click');
@@ -101,7 +100,7 @@ describe('Form', () => {
     it('should validate bookmark', () => {
       const evt = { target: { name: 'recipient', value: '123456L' } };
       wrapper.find('input.recipient').simulate('change', evt);
-      jest.advanceTimersByTime(300);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
     });
@@ -114,7 +113,7 @@ describe('Form', () => {
       />, options);
       const evt = { target: { name: 'recipient', value: '123456l' } };
       wrapper.find('input.recipient').simulate('change', evt);
-      jest.advanceTimersByTime(300);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
     });
@@ -141,7 +140,7 @@ describe('Form', () => {
       let amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField).not.toContainMatchingElement('.converted-price');
       amountField.find('input').simulate('change', evt);
-      jest.advanceTimersByTime(300);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField).toContainMatchingElement('.converted-price');
@@ -151,7 +150,7 @@ describe('Form', () => {
       const evt = { target: { name: 'amount', value: '.1' } };
       let amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', evt);
-      jest.advanceTimersByTime(300);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('input').prop('value')).toEqual('0.1');
@@ -160,21 +159,21 @@ describe('Form', () => {
     it('Should show error feedback if wrong data is inserted', () => {
       let amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', { target: { name: 'amount', value: 'abc' } });
-      jest.advanceTimersByTime(300);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
       expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
       amountField.find('input').simulate('change', { target: { name: 'amount', value: '1.1.' } });
-      jest.advanceTimersByTime(300);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
       expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
       amountField.find('input').simulate('change', { target: { name: 'amount', value: props.account.balance + 2 } });
-      jest.advanceTimersByTime(300);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
     });
@@ -189,9 +188,9 @@ describe('Form', () => {
           value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.',
         },
       };
-      referenceField.find('AutoresizeTextarea').simulate('focus');
-      referenceField.find('AutoresizeTextarea').simulate('change', evt);
-      jest.advanceTimersByTime(300);
+      referenceField.find('AutoResizeTextarea').simulate('focus');
+      referenceField.find('AutoResizeTextarea').simulate('change', evt);
+      act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       referenceField = wrapper.find('.fieldGroup').at(2);
       expect(referenceField.find('.feedback.error')).toHaveClassName('show error');

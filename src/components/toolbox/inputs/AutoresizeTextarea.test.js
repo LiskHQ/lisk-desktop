@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import AutoresizeTextarea from './AutoresizeTextarea';
+import AutoResizeTextarea from './AutoResizeTextarea';
 
-describe('AutoresizeTextarea', () => {
+describe('AutoResizeTextarea', () => {
   let wrapper;
   const props = {
     className: 'test',
@@ -12,7 +12,7 @@ describe('AutoresizeTextarea', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<AutoresizeTextarea {...props} />);
+    wrapper = mount(<AutoResizeTextarea {...props} />);
   });
 
   it('should render with passed props', () => {

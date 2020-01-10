@@ -116,7 +116,7 @@ export const calculateTransactionFee = ({
  */
 export const getUnspentTransactionOutputs = (address, networkConfig) =>
   new Promise(async (resolve, reject) => {
-    getAPIClient(networkConfig).get(`utxo/${address}`)
+    getAPIClient(networkConfig).get(`utxo/${address}?limit=100`)
       .then((response) => {
         resolve(response.body.data);
       })
@@ -165,7 +165,7 @@ export const create = ({
     let sumOfConsumedOutputs = 0;
     const txOutsToConsume = [];
 
-    while (sumOfConsumedOutputs <= estimatedTotal) {
+    while (sumOfConsumedOutputs < estimatedTotal) {
       const tx = unspentTxOuts[txOutIndex];
       txOutsToConsume.push(tx);
       txOutIndex += 1;

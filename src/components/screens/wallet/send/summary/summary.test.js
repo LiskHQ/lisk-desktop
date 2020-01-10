@@ -29,6 +29,9 @@ describe('Summary', () => {
         reference: {
           value: 1,
         },
+        fee: {
+          value: 0.1e8,
+        },
         isLoading: false,
         isHardwareWalletConnected: false,
       },
@@ -132,14 +135,16 @@ describe('Summary', () => {
   });
 
 
-  it('should show props.fields.processingSpeed.txFee and use it in transactionCreated if props.token is not LSK', () => {
+  it('should show props.fields.fee.value and use it in transactionCreated if props.token is not LSK', () => {
     const txFee = '12451';
     wrapper.setProps({
       token: 'BTC',
       fields: {
         ...props.fields,
         processingSpeed: {
-          txFee,
+          value: txFee,
+        },
+        fee: {
           value: txFee,
         },
         reference: undefined,

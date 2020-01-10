@@ -1,9 +1,9 @@
 import Input from './input';
 import Textarea from './textarea';
-import AutoresizeTextarea from './AutoresizeTextarea';
+import AutoResizeTextarea from './AutoResizeTextarea';
 
 export {
   Input,
   Textarea,
-  AutoresizeTextarea,
+  AutoResizeTextarea,
 };

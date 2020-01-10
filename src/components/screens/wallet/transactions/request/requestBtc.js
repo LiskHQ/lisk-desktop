@@ -1,5 +1,5 @@
 import React from 'react';
-import { AutoresizeTextarea } from '../../../../toolbox/inputs';
+import { AutoResizeTextarea } from '../../../../toolbox/inputs';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
 
@@ -12,7 +12,7 @@ const RequestBtc = ({
     </span>
     <label className={`${styles.fieldGroup}`}>
       <span className={`${styles.fieldLabel}`}>{t('BTC Address')}</span>
-      <AutoresizeTextarea
+      <AutoResizeTextarea
         name="shareLink"
         value={address}
         className={`${styles.textarea} ${styles.sharingLink} request-link`}
