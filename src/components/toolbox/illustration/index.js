@@ -5,8 +5,10 @@ import welcomeLiskDelegates from '../../../assets/images/illustrations/illustrat
 import yourVoiceMatters from '../../../assets/images/illustrations/illustration-your-voice-matters-dark.svg';
 import getRewarded from '../../../assets/images/illustrations/illustration-get-rewarded-dark.svg';
 import expandYourKnowledge from '../../../assets/images/illustrations/illustration-expand-your-knowledge-dark.svg';
-import ledgerNanoLight from '../../../assets/images/illustrations/illustration-ledger-nano-light.svg';
-import trezorLight from '../../../assets/images/illustrations/illustration-trezor-confirm-light.svg';
+import ledgerNano from '../../../assets/images/illustrations/illustration-ledger-nano-light.svg';
+import ledgerNanoDark from '../../../assets/images/illustrations/illustration-ledger-nano-dark.svg';
+import trezor from '../../../assets/images/illustrations/illustration-trezor-confirm-light.svg';
+import trezorDark from '../../../assets/images/illustrations/illustration-trezor-confirm-dark.svg';
 import transactionSuccess from '../../../assets/images/illustrations/transaction-success.svg';
 import transactionSuccessDark from '../../../assets/images/illustrations/transaction-success-dark.svg';
 import transactionError from '../../../assets/images/illustrations/transaction-error.svg';
@@ -47,8 +49,10 @@ export const illustrations = {
   yourVoiceMatters,
   getRewarded,
   expandYourKnowledge,
-  ledgerNanoLight,
-  trezorLight,
+  ledgerNano,
+  ledgerNanoDark,
+  trezor,
+  trezorDark,
   transactionSuccess,
   transactionError,
   votingSuccess,

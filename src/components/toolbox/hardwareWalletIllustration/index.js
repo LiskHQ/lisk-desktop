@@ -5,8 +5,8 @@ import Illustration from '../illustration';
 import styles from './hardwareWalletIllustration.css';
 
 const illustrationMapping = {
-  [loginType.trezor]: 'trezorLight',
-  [loginType.ledger]: 'ledgerNanoLight',
+  [loginType.trezor]: 'trezor',
+  [loginType.ledger]: 'ledgerNano',
 };
 
 const HardwareWalletIllustration = ({ account, size }) => (

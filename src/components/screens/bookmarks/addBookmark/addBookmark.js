@@ -224,15 +224,15 @@ class AddBookmark extends React.Component {
                   </span>
                 </label>
               ))}
-              <BoxFooter>
-                <PrimaryButton
-                  disabled={isDisabled}
-                  onClick={this.handleAddBookmark}
-                >
-                  {t('Add bookmark')}
-                </PrimaryButton>
-              </BoxFooter>
             </BoxContent>
+            <BoxFooter>
+              <PrimaryButton
+                disabled={isDisabled}
+                onClick={this.handleAddBookmark}
+              >
+                {t('Add bookmark')}
+              </PrimaryButton>
+            </BoxFooter>
           </Box>
         </div>
       </div>

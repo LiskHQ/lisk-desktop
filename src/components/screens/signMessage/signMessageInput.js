@@ -1,8 +1,13 @@
 import React from 'react';
-import { parseSearchParams } from '../../../utils/searchParams';
-import Piwik from '../../../utils/piwik';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { parseSearchParams } from '../../../utils/searchParams';
+import Box from '../../toolbox/box';
+import BoxContent from '../../toolbox/box/content';
+import BoxFooter from '../../toolbox/box/footer';
+import BoxHeader from '../../toolbox/box/header';
+import BoxInfoText from '../../toolbox/box/infoText';
+import Piwik from '../../../utils/piwik';
 import styles from './signMessage.css';
 
 class SignMessageInput extends React.Component {
@@ -37,13 +42,12 @@ class SignMessageInput extends React.Component {
     const { t, history } = this.props;
     const { message } = this.state;
     return (
-      <section>
-        <div className={styles.header}>
-          <span className={styles.step}>{t('Step {{current}} / {{total}}', { current: 1, total: 2 })}</span>
+      <Box>
+        <BoxHeader>
           <h1>{t('Sign a message')}</h1>
-          <p>{t('You can use your passphrase to sign a message. This signed message can prove that you are the owner of the account, since only your passphrase can produce it. We recommend including date & time or a specific keyword.')}</p>
-        </div>
-        <div>
+        </BoxHeader>
+        <BoxContent>
+          <BoxInfoText>{t('You can use your passphrase to sign a message. This signed message can prove that you are the owner of the account, since only your passphrase can produce it. We recommend including date & time or a specific keyword.')}</BoxInfoText>
           <label className={styles.fieldGroup}>
             <span>{t('Message')}</span>
             <AutoResizeTextarea
@@ -53,25 +57,16 @@ class SignMessageInput extends React.Component {
               value={message.value}
             />
           </label>
-        </div>
-        <div className={styles.buttonsHolder}>
-          <PrimaryButton
-            className="next"
-            onClick={this.nextStep}
-          >
-            {
-            t('Continue')
-          }
+        </BoxContent>
+        <BoxFooter>
+          <PrimaryButton className="next" onClick={this.nextStep}>
+            {t('Continue')}
           </PrimaryButton>
-          <TertiaryButton
-            onClick={history.goBack}
-          >
-            {
-            t('Go back')
-          }
+          <TertiaryButton onClick={history.goBack}>
+            {t('Go back')}
           </TertiaryButton>
-        </div>
-      </section>
+        </BoxFooter>
+      </Box>
     );
   }
 }
