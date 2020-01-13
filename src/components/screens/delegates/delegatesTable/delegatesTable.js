@@ -1,13 +1,6 @@
-import { Link } from 'react-router-dom';
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { getTotalVotesCount } from '../../../../utils/voting';
-import { tokenMap } from '../../../../constants/tokens';
-import AvatarWithNameAndAddress from '../../../shared/avatarWithNameAndAddress';
 import FirstTimeVotingOverlay from './firstTimeVotingOverlay';
-import LiskAmount from '../../../shared/liskAmount';
-import VoteCheckbox from './voteCheckbox';
-import routes from '../../../../constants/routes';
 import styles from './delegatesTable.css';
 import voteFilters from '../../../../constants/voteFilters';
 import votingConst from '../../../../constants/voting';
@@ -18,85 +11,8 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxTabs from '../../../toolbox/tabs';
 import { Input } from '../../../toolbox/inputs';
 import Table from '../../../toolbox/list';
-import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
-
-const DelegateRow = React.memo(({
-  data, className, shouldShowVoteColumn, firstTimeVotingActive,
-}) => (
-  <div
-    key={data.id}
-    className={`${grid.row} ${className}`}
-  >
-    <span className={`${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'}`}>
-      <VoteCheckbox
-        delegate={data}
-        votingModeEnabled={shouldShowVoteColumn}
-        className={styles.checkbox}
-        accent={firstTimeVotingActive}
-      />
-    </span>
-    <span className={grid['col-xs-1']}>
-      {`#${data.rank}`}
-    </span>
-    <span className={`${grid['col-xs-4']} ${grid['col-md-4']}`}>
-      <Link
-        className={styles.delegateLink}
-        to={shouldShowVoteColumn
-          ? routes.delegates.path
-          : `${routes.accounts.pathPrefix}${routes.accounts.path}/${data.account.address}`}
-      >
-        <AvatarWithNameAndAddress {...data} />
-      </Link>
-    </span>
-    <span className={grid['col-md-2']}>
-      <LiskAmount val={data.rewards} token={tokenMap.LSK.key} />
-    </span>
-    <span className={grid['col-xs-2']}>
-      {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
-    </span>
-    <span className={grid['col-md-2']}>
-      <strong><LiskAmount val={data.vote} roundTo={0} token={tokenMap.LSK.key} /></strong>
-    </span>
-  </div>
-));
-
-const header = shouldShowVoteColumn => ([
-  {
-    title: 'Vote',
-    classList: `${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'}`,
-  },
-  {
-    title: 'Rank',
-    classList: grid['col-md-1'],
-  },
-  {
-    title: 'Delegate',
-    classList: `${shouldShowVoteColumn ? grid['col-xs-4'] : grid['col-xs-5']}`,
-  },
-  {
-    title: 'Forged',
-    classList: `${grid['col-md-2']}`,
-    tooltip: {
-      title: 'forged',
-      message: 'Total amount of LSK forged by a delegate.',
-    },
-  },
-  {
-    title: 'Productivity',
-    classList: grid['col-xs-2'],
-    tooltip: {
-      message: 'Percentage of successfully forged blocks in relation to all blocks (forged and missed).'
-    },
-  },
-  {
-    title: 'Vote weight',
-    classList: grid['col-md-2'],
-    tooltip: {
-      title: 'Vote Weight',
-      message: 'Sum of LSK in all accounts who have voted for this delegate.',
-    },
-  },
-]);
+import DelegateRow from './delegateRow';
+import header from './tableHeader';
 
 const DelegatesTableMain = ({
   delegates, tabs, t, filters, applyFilters, firstTimeVotingActive, shouldShowVoteColumn,
