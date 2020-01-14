@@ -10,7 +10,7 @@ import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import BoxTabs from '../../../toolbox/tabs';
-import Table from '../../../toolbox/list';
+import Table from '../../../toolbox/table';
 import styles from './delegates.css';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';

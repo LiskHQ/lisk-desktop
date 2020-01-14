@@ -1,12 +1,12 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
-import TableRow from '../../../toolbox/table/tableRow';
+import tableStyles from '../../../toolbox/table/table.css';
 
 const TransactionsHeader = ({
   t, isSmallScreen, columnClassNames,
 }) => (
-  <TableRow isHeader className={`${grid.row}`} id="transactionsHeader">
+  <div className={`${tableStyles.row} ${tableStyles.header} ${grid.row}`} id="transactionsHeader">
     <div className={`${columnClassNames.transaction} transactions-header`}>
       {t('Transaction')}
     </div>
@@ -22,7 +22,7 @@ const TransactionsHeader = ({
     <div className={`${columnClassNames.amount} transactions-header`}>
       {t('Amount')}
     </div>
-  </TableRow>
+  </div>
 );
 
 export default withTranslation()(TransactionsHeader);

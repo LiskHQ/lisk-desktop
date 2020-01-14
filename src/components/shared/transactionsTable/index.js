@@ -6,7 +6,7 @@ import BoxHeader from '../../toolbox/box/header';
 import FilterBar from '../filterBar';
 import FilterDropdownButton from '../filterDropdownButton';
 import LoadLatestButton from '../loadLatestButton';
-import Table from '../../toolbox/list';
+import Table from '../../toolbox/table';
 import styles from './transactionsTable.css';
 import withFilters from '../../../utils/withFilters';
 import withResizeValues from '../../../utils/withResizeValues';

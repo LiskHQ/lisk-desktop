@@ -4,7 +4,7 @@ import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import withResizeValues from '../../../../utils/withResizeValues';
-import Table from '../../../toolbox/list';
+import Table from '../../../toolbox/table';
 import styles from './accountsTable.css';
 import header from './tableHeader';
 import AccountRow from './accountRow';

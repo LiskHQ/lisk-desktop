@@ -6,7 +6,7 @@ import BoxHeader from '../../toolbox/box/header';
 import BoxFooterButton from '../../toolbox/box/footerButton';
 import AccountVisual from '../../toolbox/accountVisual';
 import VotesTableHeader from './votesTableHeader';
-import TableRow from '../../toolbox/table/tableRow';
+import tableStyles from '../../toolbox/table/table.css';
 import { Input } from '../../toolbox/inputs';
 import LiskAmount from '../liskAmount';
 import routes from '../../../constants/routes';
@@ -131,7 +131,7 @@ class VotesTab extends React.Component {
           <VotesTableHeader t={t} />
           {filteredVotes.length
             ? filteredVotes.slice(0, this.state.showing).map(vote => (
-              <TableRow className={`${styles.row} vote-row`} onClick={() => this.onRowClick(vote.address)} key={vote.address}>
+              <div className={`${tableStyles.row} ${styles.row} vote-row`} onClick={() => this.onRowClick(vote.address)} key={vote.address}>
                 <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
                   {(vote.rank && +vote.rank < 10 ? `0${vote.rank}` : vote.rank) || '-'}
                 </div>
@@ -176,7 +176,7 @@ class VotesTab extends React.Component {
                     )
                     : '-'}
                 </div>
-              </TableRow>
+              </div>
             )) : (
               <BoxEmptyState>
                 <Illustration name="emptyWallet" />

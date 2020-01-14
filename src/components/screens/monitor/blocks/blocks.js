@@ -8,7 +8,7 @@ import BoxContent from '../../../toolbox/box/content';
 import FilterBar from '../../../shared/filterBar';
 import LoadLatestButton from '../../../shared/loadLatestButton';
 import MonitorHeader from '../header';
-import Table from '../../../toolbox/list';
+import Table from '../../../toolbox/table';
 import styles from './blocks.css';
 import withFilters from '../../../../utils/withFilters';
 import BlocksOverview from './blocksOverview';

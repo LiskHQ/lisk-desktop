@@ -1,11 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import TableRow from '../../toolbox/table/tableRow';
+import tableStyles from '../../toolbox/table/table.css';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './votesTab.css';
 
 const VotesTableHeader = ({ t }) => (
-  <TableRow isHeader>
+  <div className={`${tableStyles.row} ${tableStyles.header}`}>
     <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>{t('Rank')}</div>
     <div className={`${grid['col-sm-3']} ${grid['col-lg-6']}`}>{t('Delegate')}</div>
     <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`}>
@@ -26,7 +26,7 @@ const VotesTableHeader = ({ t }) => (
         <p>{t('Sum of LSK in all accounts who have voted for this delegate.')}</p>
       </Tooltip>
     </div>
-  </TableRow>
+  </div>
 );
 
 export default VotesTableHeader;

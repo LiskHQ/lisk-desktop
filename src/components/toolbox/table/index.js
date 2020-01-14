@@ -1,95 +1,65 @@
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import TableRow from './tableRow';
+import React, { Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
+import { DEFAULT_LIMIT } from '../../../constants/monitor';
 import styles from './table.css';
+import Header from './header';
+import Loading from './loading';
+import Empty from './empty';
+import FooterButton from '../box/footerButton';
+
+const LoadMoreButton = withTranslation()(
+  ({ t, children, onClick }) => <FooterButton onClick={onClick}>{t(children)}</FooterButton>,
+);
+
+const getUniqueKey = (data, index, key) => {
+  if (typeof key === 'string' && !(/\./.test(key))) {
+    return `table-row-${data[key]}`;
+  }
+  if (typeof key === 'function') {
+    return `table-row-${key(data)}`;
+  }
+  return `table-row-${index}`;
+};
 
 const Table = ({
-  data, columns, onSortChange, sort, getRowLink, rowClassName, onRowClick, rowKey,
+  data,
+  loadData,
+  header,
+  row,
+  currentSort,
+  loadingState,
+  isLoading,
+  emptyState,
+  key,
+  canLoadMore,
 }) => {
-  const onHeaderClick = ({ id, isSortable }) => {
-    if (isSortable) {
-      onSortChange(id);
-    }
-  };
-
-  const getSortClass = ({ id, isSortable }) => {
-    if (isSortable) {
-      const className = ['sort-by', id];
-      if (sort.includes(id) && sort.includes('asc')) {
-        className.push(styles.sortAsc);
-      } else if (sort.includes(id) && sort.includes('desc')) {
-        className.push(styles.sortDesc);
-      } else {
-        className.push(styles.sortInactive);
-      }
-      return className.join(' ');
-    }
-
-    return '';
-  };
-
+  const Row = row;
   return (
-    <React.Fragment>
-      {!!data.length && (
-      <TableRow isHeader className={grid.row}>
-        {columns.map(({
-          className, header, id, isSortable,
-        }) => (
-          <div key={id} className={className} onClick={() => onHeaderClick({ id, isSortable })}>
-            <span className={styles.titleWrapper}>
-              <span className={getSortClass({ id, isSortable })}>
-                {header}
-              </span>
-            </span>
-          </div>
-        ))}
-      </TableRow>
-      )}
-      {data.map(row => (
-        <TableRow
-          key={row[rowKey]}
-          {...(getRowLink(row) && {
-            Container: Link,
-            to: getRowLink(row),
-          })}
-          onClick={onRowClick && onRowClick.bind(null, row)}
-          className={[
-            grid.row,
-            onRowClick && styles.clickable,
-            rowClassName,
-          ].join(' ')}
-        >
-          {columns.map(({ className, id, getValue }) => (
-            <span className={className} key={id}>
-              {typeof getValue === 'function' ? getValue(row) : row[id]}
-            </span>
-          ))}
-        </TableRow>
-      ))}
-    </React.Fragment>
+    <Fragment>
+      {
+        data.length
+          ? (
+            <Fragment>
+              <Header data={header} currentSort={currentSort} />
+              {data.map((item, index) =>
+                <Row key={getUniqueKey(item, index, key)} data={item} className={styles.row} />)}
+            </Fragment>
+          ) : null
+      }
+      {
+        isLoading ? <Loading data={loadingState} headerInfo={header} /> : null
+      }
+      {
+        !isLoading && data.length === 0 ? <Empty data={emptyState} /> : null
+      }
+      {
+        data.length >= DEFAULT_LIMIT
+        && data.length % DEFAULT_LIMIT === 0
+        && canLoadMore
+          ? <LoadMoreButton onClick={loadData}>Load more</LoadMoreButton> : null
+      }
+    </Fragment>
   );
-};
-
-Table.propTypes = {
-  data: PropTypes.array.isRequired,
-  columns: PropTypes.array.isRequired,
-  onSortChange: PropTypes.func,
-  getRowLink: PropTypes.func,
-  rowClassName: PropTypes.string,
-  sort: PropTypes.string,
-  onRowClick: PropTypes.func,
-};
-
-const noop = () => null;
-
-Table.defaultProps = {
-  getRowLink: noop,
-  onSortChange: noop,
-  rowClassName: '',
-  rowKey: 'id',
-  sort: '',
 };
 
 export default Table;
