@@ -122,7 +122,7 @@ const DelegatesTable = ({
             loadData={handleLoadMore}
             header={header(activeTab, changeSort, t)}
             currentSort={sort}
-            loadMoreButton={canLoadMore}
+            canLoadMore={canLoadMore}
           />
         </BoxContent>
       </Box>

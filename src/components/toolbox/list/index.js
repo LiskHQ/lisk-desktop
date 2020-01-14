@@ -31,6 +31,7 @@ const Table = ({
   isLoading,
   emptyState,
   key,
+  canLoadMore,
 }) => {
   const Row = row;
   return (
@@ -52,8 +53,9 @@ const Table = ({
         !isLoading && data.length === 0 ? <Empty data={emptyState} /> : null
       }
       {
-        // @todo What if we hit end of the list?
         data.length >= DEFAULT_LIMIT
+        && data.length % DEFAULT_LIMIT === 0
+        && canLoadMore
           ? <LoadMoreButton onClick={loadData}>Load more</LoadMoreButton> : null
       }
     </Fragment>
