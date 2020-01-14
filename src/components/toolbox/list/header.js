@@ -8,6 +8,7 @@ const Tip = ({ data }) => (
   data ? (
     <Tooltip
       title={data.title}
+      className={data.position}
     >
       <p>{data.message}</p>
     </Tooltip>

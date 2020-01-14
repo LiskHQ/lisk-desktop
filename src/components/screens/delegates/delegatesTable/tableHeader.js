@@ -26,6 +26,7 @@ export default (shouldShowVoteColumn, t) => ([
     classList: grid['col-xs-2'],
     tooltip: {
       message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
+      position: 'showOnLeft',
     },
   },
   {
@@ -34,6 +35,7 @@ export default (shouldShowVoteColumn, t) => ([
     tooltip: {
       title: t('Vote Weight'),
       message: t('Sum of LSK in all accounts who have voted for this delegate.'),
+      position: 'showOnLeft',
     },
   },
 ]);
