@@ -43,7 +43,7 @@ const DelegateRow = ({
       <AccountVisualWithAddress address={data.address} />
     </span>
     {
-      data.rank < 101 ? (
+      data.rank <= 101 ? (
         <Fragment>
           <span className={grid['col-md-2']}>
             {getForgingTime(forgingTime)}
