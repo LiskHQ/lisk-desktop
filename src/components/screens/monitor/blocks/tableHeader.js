@@ -4,7 +4,10 @@ export default changeSort => ([
   {
     title: 'Height',
     classList: `${grid['col-md-1']}`,
-    sort: () => changeSort('height'),
+    sort: {
+      fn: changeSort,
+      key: 'height',
+    },
   },
   {
     title: 'Date',

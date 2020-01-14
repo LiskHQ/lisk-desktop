@@ -11,15 +11,26 @@ const LoadMoreButton = withTranslation()(
   ({ t, children, onClick }) => <FooterButton onClick={onClick}>{t(children)}</FooterButton>,
 );
 
-const Table = React.memo(({
+const getUniqueKey = (data, index, key) => {
+  if (typeof key === 'string' && !(/\./.test(key))) {
+    return `table-row-${data[key]}`;
+  }
+  if (typeof key === 'function') {
+    return `table-row-${key(data)}`;
+  }
+  return `table-row-${index}`;
+};
+
+const Table = ({
   data,
   loadData,
   header,
   row,
-  sort,
+  currentSort,
   loadingState,
   isLoading,
   emptyState,
+  key,
 }) => {
   const Row = row;
   return (
@@ -28,9 +39,9 @@ const Table = React.memo(({
         data.length
           ? (
             <Fragment>
-              <Header data={header} sort={sort} />
+              <Header data={header} currentSort={currentSort} />
               {data.map((item, index) =>
-                <Row key={`table-row-${index}`} data={item} className={styles.row} />)}
+                <Row key={getUniqueKey(item, index, key)} data={item} className={styles.row} />)}
             </Fragment>
           ) : null
       }
@@ -47,6 +58,6 @@ const Table = React.memo(({
       }
     </Fragment>
   );
-});
+};
 
 export default Table;

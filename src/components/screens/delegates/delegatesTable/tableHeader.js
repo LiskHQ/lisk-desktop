@@ -25,7 +25,7 @@ export default shouldShowVoteColumn => ([
     title: 'Productivity',
     classList: grid['col-xs-2'],
     tooltip: {
-      message: 'Percentage of successfully forged blocks in relation to all blocks (forged and missed).'
+      message: 'Percentage of successfully forged blocks in relation to all blocks (forged and missed).',
     },
   },
   {

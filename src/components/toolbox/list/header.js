@@ -14,9 +14,11 @@ const Tip = ({ data }) => (
   ) : null
 );
 
-const Sort = ({ fn, currentSort, children }) => {
-  if (typeof fn === 'function') {
-    const [title, direction] = currentSort ? currentSort.split(':') : [null, 'inactive'];
+const Sort = ({
+  data, currentSort, children,
+}) => {
+  if (data && typeof data.fn === 'function') {
+    const [currentKey, direction] = currentSort ? currentSort.split(':') : [null, 'inactive'];
     const directions = {
       desc: styles.sortDesc,
       asc: styles.sortAsc,
@@ -25,8 +27,8 @@ const Sort = ({ fn, currentSort, children }) => {
 
     return (
       <span
-        onClick={fn}
-        className={`${styles.titleWrapper} sort-by ${title} ${directions[direction]}`}
+        onClick={() => data.fn(data.key)}
+        className={`${styles.titleWrapper} sort-by ${currentKey === data.key ? directions[direction] : directions.inactive}`}
       >
         {children}
       </span>
@@ -50,7 +52,10 @@ const Header = ({ data, currentSort }) => {
               {
                 (typeof item === 'object')
                   ? (
-                    <Sort fn={item.sort} currentSort={currentSort}>
+                    <Sort
+                      data={item.sort}
+                      currentSort={currentSort}
+                    >
                       <span>{item.title}</span>
                       <Tip data={item.tooltip} />
                     </Sort>
