@@ -1,24 +1,24 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-export default [
+export default t => ([
   {
-    title: 'Rank',
+    title: t('Rank'),
     classList: `${grid['col-xs-1']} ${grid['col-md-1']}`,
   },
   {
-    title: 'Address',
+    title: t('Address'),
     classList: `${grid['col-xs-3']} ${grid['col-md-5']}`,
   },
   {
-    title: 'Balance',
+    title: t('Balance'),
     classList: `${grid['col-xs-3']} ${grid['col-md-3']}`,
   },
   {
-    title: 'Supply',
+    title: t('Supply'),
     classList: `${grid['col-xs-2']} ${grid['col-md-1']}`,
   },
   {
-    title: 'Owner',
+    title: t('Owner'),
     classList: `${grid['col-xs-3']} ${grid['col-md-2']}`,
   },
-];
+]);

@@ -26,7 +26,9 @@ const getForgingTime = (data) => {
   return `${minutes}${seconds} ago`;
 };
 
-const DelegateRow = React.memo(({ data, className, forgingTime }) => (
+const DelegateRow = ({
+  data, className, forgingTime, t,
+}) => (
   <Link
     className={`${grid.row} ${className}`}
     to={`${routes.blocks.path}/${data.id}`}
@@ -49,8 +51,8 @@ const DelegateRow = React.memo(({ data, className, forgingTime }) => (
           <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
             <Tooltip
               title={forgingTime
-                ? statuses[forgingTime.status]
-                : statuses.notForging}
+                ? t(statuses[forgingTime.status])
+                : t(statuses.notForging)}
               className="showOnBottom"
               size="s"
               content={(
@@ -80,6 +82,6 @@ const DelegateRow = React.memo(({ data, className, forgingTime }) => (
       {data.productivity}
     </span>
   </Link>
-));
+);
 
-export default DelegateRow;
+export default React.memo(DelegateRow);

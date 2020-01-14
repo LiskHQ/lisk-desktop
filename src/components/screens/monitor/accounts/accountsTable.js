@@ -1,4 +1,5 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -12,6 +13,7 @@ const AccountsTable = ({
   accounts,
   networkStatus,
   title,
+  t,
 }) => {
   const handleLoadMore = () => {
     accounts.loadData({ offset: accounts.data.length });
@@ -29,7 +31,7 @@ const AccountsTable = ({
           isLoading={accounts.isLoading}
           row={props => <AccountRow {...props} supply={supply} />}
           loadData={handleLoadMore}
-          header={header}
+          header={header(t)}
         />
       </BoxContent>
     </Box>
@@ -40,4 +42,4 @@ AccountsTable.defaultProps = {
   title: '',
 };
 
-export default withResizeValues(AccountsTable);
+export default withTranslation()(withResizeValues(AccountsTable));

@@ -15,13 +15,6 @@ import styles from './delegates.css';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
 
-const statuses = {
-  forging: 'Forging',
-  awaitingSlot: 'Awaiting slot',
-  notForging: 'Not forging',
-  missedBlock: 'Missed block',
-};
-
 // eslint-disable-next-line max-statements
 const DelegatesTable = ({
   chartActiveAndStandbyData,
@@ -67,6 +60,13 @@ const DelegatesTable = ({
     ],
     active: activeTab,
     onClick: ({ value }) => setActiveTab(value),
+  };
+
+  const statuses = {
+    forging: t('Forging'),
+    awaitingSlot: t('Awaiting slot'),
+    notForging: t('Not forging'),
+    missedBlock: t('Missed block'),
   };
 
   const canLoadMore = activeTab === 'active'
@@ -118,9 +118,9 @@ const DelegatesTable = ({
             data={delegates.data}
             isLoading={delegates.isLoading}
             row={props =>
-              <DelegateRow {...props} forgingTime={forgingTimes[props.data.publicKey]} />}
+              <DelegateRow {...props} t={t} forgingTime={forgingTimes[props.data.publicKey]} />}
             loadData={handleLoadMore}
-            header={header(activeTab, changeSort)}
+            header={header(activeTab, changeSort, t)}
             currentSort={sort}
             loadMoreButton={canLoadMore}
           />

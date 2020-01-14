@@ -1,9 +1,9 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './delegates.css';
 
-export default (activeTab, changeSort) => ([
+export default (activeTab, changeSort, t) => ([
   {
-    title: 'Rank',
+    title: t('Rank'),
     classList: grid['col-md-1'],
     sort: {
       fn: changeSort,
@@ -11,47 +11,47 @@ export default (activeTab, changeSort) => ([
     },
   },
   {
-    title: 'Name',
+    title: t('Name'),
     classList: grid['col-md-2'],
   },
   {
-    title: 'Address',
+    title: t('Address'),
     classList: activeTab === 'active'
       ? grid['col-md-3']
       : `${grid['col-xs-5']} ${grid['col-md-6']}`,
   },
   {
-    title: 'Forging time',
+    title: t('Forging time'),
     classList: activeTab === 'active' ? grid['col-md-2'] : 'hidden',
     tooltip: {
-      title: 'Forging time',
-      message: 'Time until next forging slot of a delegate.',
+      title: t('Forging time'),
+      message: t('Time until next forging slot of a delegate.'),
     },
   },
   {
-    title: 'Status',
+    title: t('Status'),
     classList: activeTab === 'active'
       ? `${grid['col-xs-2']} ${grid['col-md-1']} ${styles.statusTitle}`
       : 'hidden',
     tooltip: {
-      title: 'Status',
-      message: 'Current status of a delegate: forging, not forging, awaiting slot or missed block.',
+      title: t('Status'),
+      message: t('Current status of a delegate: forging, not forging, awaiting slot or missed block.'),
     },
   },
   {
-    title: 'Productivity',
+    title: t('Productivity'),
     classList: `${grid['col-xs-2']} ${grid['col-md-2']} ${grid['col-lg-2']}`,
     tooltip: {
-      title: 'Productivity',
-      message: 'Percentage of successfully forged blocks in relation to all blocks (forged and missed).',
+      title: t('Productivity'),
+      message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
     },
   },
   {
-    title: 'Approval',
+    title: t('Approval'),
     classList: `${grid['col-xs-2']} ${grid['col-md-1']} ${styles.approvalTitle}`,
     tooltip: {
-      title: 'Approval',
-      message: 'Percentage of total supply voting for a delegate.',
+      title: t('Approval'),
+      message: t('Percentage of total supply voting for a delegate.'),
     },
   },
 ]);

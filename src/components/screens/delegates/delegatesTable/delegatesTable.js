@@ -62,7 +62,7 @@ const DelegatesTableMain = ({
             />
           )}
           loadData={handleLoadMore}
-          header={header(shouldShowVoteColumn)}
+          header={header(shouldShowVoteColumn, t)}
         />
       </BoxContent>
     </Box>

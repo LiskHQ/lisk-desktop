@@ -73,7 +73,7 @@ const TransactionsTable = ({
           isLoading={transactions.isLoading}
           row={props => <TransactionRow t={t} {...props} />}
           loadData={handleLoadMore}
-          header={header(changeSort)}
+          header={header(changeSort, t)}
           currentSort={sort}
         />
       </BoxContent>
@@ -101,6 +101,8 @@ const defaultFilters = {
 
 const defaultSort = 'timestamp:desc';
 
-export default withFilters('transactions', defaultFilters, defaultSort)(
-  withResizeValues(withTranslation()(TransactionsTable)),
+export default withTranslation()(
+  withFilters('transactions', defaultFilters, defaultSort)(
+    withResizeValues(TransactionsTable),
+  ),
 );

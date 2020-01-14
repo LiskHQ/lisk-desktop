@@ -1,16 +1,16 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-export default changeSort => ([
+export default (changeSort, t) => ([
   {
-    title: 'Sender',
+    title: t('Sender'),
     classList: grid['col-xs-3'],
   },
   {
-    title: 'Recipient',
+    title: t('Recipient'),
     classList: grid['col-xs-3'],
   },
   {
-    title: 'Date',
+    title: t('Date'),
     classList: grid['col-xs-2'],
     sort: {
       fn: changeSort,
@@ -18,7 +18,7 @@ export default changeSort => ([
     },
   },
   {
-    title: 'Amount',
+    title: t('Amount'),
     classList: grid['col-xs-2'],
     sort: {
       fn: changeSort,
@@ -26,11 +26,11 @@ export default changeSort => ([
     },
   },
   {
-    title: 'Fee',
+    title: t('Fee'),
     classList: grid['col-xs-1'],
   },
   {
-    title: 'Status',
+    title: t('Status'),
     classList: grid['col-xs-1'],
   },
 ]);

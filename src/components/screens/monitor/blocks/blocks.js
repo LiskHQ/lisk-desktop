@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import BlockFilterDropdown from './blockFilterDropdown';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
@@ -66,7 +67,7 @@ const Blocks = ({
             isLoading={blocks.isLoading}
             row={BlockRow}
             loadData={handleLoadMore}
-            header={header(changeSort)}
+            header={header(changeSort, t)}
             currentSort={sort}
           />
         </BoxContent>
@@ -91,4 +92,4 @@ const defaultFilters = {
 };
 const defaultSort = 'height:desc';
 
-export default withFilters('blocks', defaultFilters, defaultSort)(Blocks);
+export default withTranslation()(withFilters('blocks', defaultFilters, defaultSort)(Blocks));
