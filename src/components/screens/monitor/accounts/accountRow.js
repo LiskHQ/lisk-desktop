@@ -29,9 +29,8 @@ const BalanceShare = ({ balance, supply }) => {
   );
 };
 
-const AccountRow = React.memo(({ data, className, supply }) => (
+const AccountRow = ({ data, className, supply }) => (
   <Link
-    key={data.id}
     className={`${grid.row} ${className}`}
     to={`${routes.accounts.path}/${data.address}`}
   >
@@ -55,6 +54,8 @@ const AccountRow = React.memo(({ data, className, supply }) => (
       {getOwnerName(data)}
     </span>
   </Link>
-));
+);
 
-export default AccountRow;
+const areEqual = (prevProps, nextProps) => (prevProps.data.id === nextProps.data.id);
+
+export default React.memo(AccountRow, areEqual);

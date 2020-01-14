@@ -28,7 +28,6 @@ const getForgingTime = (data) => {
 
 const DelegateRow = React.memo(({ data, className, forgingTime }) => (
   <Link
-    key={data.id}
     className={`${grid.row} ${className}`}
     to={`${routes.blocks.path}/${data.id}`}
   >

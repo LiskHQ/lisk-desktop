@@ -5,9 +5,8 @@ import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import LiskAmount from '../../../shared/liskAmount';
 import routes from '../../../../constants/routes';
 
-const BlockRow = React.memo(({ data, className }) => (
+const BlockRow = ({ data, className }) => (
   <Link
-    key={data.id}
     className={`${grid.row} ${className}`}
     to={`${routes.blocks.path}/${data.id}`}
   >
@@ -30,6 +29,8 @@ const BlockRow = React.memo(({ data, className }) => (
       <LiskAmount val={data.totalForged} token="LSK" />
     </span>
   </Link>
-));
+);
 
-export default BlockRow;
+const areEqual = (prevProps, nextProps) => (prevProps.data.id === nextProps.data.id);
+
+export default React.memo(BlockRow, areEqual);

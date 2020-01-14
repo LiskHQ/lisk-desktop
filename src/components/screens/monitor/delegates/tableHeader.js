@@ -5,7 +5,10 @@ export default (activeTab, changeSort) => ([
   {
     title: 'Rank',
     classList: grid['col-md-1'],
-    sort: () => changeSort('rank'),
+    sort: {
+      fn: changeSort,
+      key: 'rank',
+    },
   },
   {
     title: 'Name',
