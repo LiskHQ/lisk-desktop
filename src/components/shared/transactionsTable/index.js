@@ -75,6 +75,8 @@ const TransactionsTable = ({
           loadData={handleLoadMore}
           header={header(changeSort, t)}
           currentSort={sort}
+          canLoadMore
+          error={transactions.error}
         />
       </BoxContent>
     </Box>
