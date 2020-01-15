@@ -69,6 +69,8 @@ const Blocks = ({
             loadData={handleLoadMore}
             header={header(changeSort, t)}
             currentSort={sort}
+            canLoadMore
+            error={blocks.error}
           />
         </BoxContent>
       </Box>
