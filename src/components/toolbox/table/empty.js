@@ -3,7 +3,10 @@ import styles from '../box/emptyState.css';
 import { isReactComponent } from '../../../utils/helpers';
 import Illustration from '../illustration';
 
-const Empty = ({ data }) => {
+const Empty = ({
+  isListEmpty, isLoading, data, error,
+}) => {
+  if (isLoading || error || !isListEmpty) return null;
   if (isReactComponent(data)) {
     const Element = data;
     return (<Element />);

@@ -29,7 +29,7 @@ const Sort = ({
     return (
       <span
         onClick={() => data.fn(data.key)}
-        className={`${styles.titleWrapper} sort-by ${currentKey === data.key ? directions[direction] : directions.inactive}`}
+        className={`${styles.titleWrapper} sort-by ${data.key} ${currentKey === data.key ? directions[direction] : directions.inactive}`}
       >
         {children}
       </span>
