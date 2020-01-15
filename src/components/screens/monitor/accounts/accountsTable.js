@@ -32,6 +32,7 @@ const AccountsTable = ({
           row={props => <AccountRow {...props} supply={supply} />}
           loadData={handleLoadMore}
           header={header(t)}
+          error={accounts.error}
         />
       </BoxContent>
     </Box>

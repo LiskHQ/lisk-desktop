@@ -31,7 +31,7 @@ const BalanceShare = ({ balance, supply }) => {
 
 const AccountRow = ({ data, className, supply }) => (
   <Link
-    className={`${grid.row} ${className}`}
+    className={`${grid.row} ${className} accounts-row`}
     to={`${routes.accounts.path}/${data.address}`}
   >
     <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}>
