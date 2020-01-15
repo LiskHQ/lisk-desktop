@@ -69,15 +69,14 @@ describe('BlockDetails page', () => {
 
   it('renders a page with transaction list', () => {
     wrapper = mount(<BlockDetails {...props} />);
-    expect(wrapper.find('TableRow.row')).toHaveLength(0);
+    expect(wrapper.find('TransactionRow')).toHaveLength(0);
     wrapper.setProps({
       blockTransactions: {
-        ...props.blockTransactions,
         isLoading: false,
         data: transactions,
       },
     });
-    expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length + 1);
+    expect(wrapper.find('TransactionRow')).toHaveLength(transactions.length);
   });
 
   it('shows a message when empty transactions response', () => {
@@ -89,6 +88,6 @@ describe('BlockDetails page', () => {
       },
     };
     wrapper = mount(<BlockDetails {...newProps} />);
-    expect(wrapper.find('.transactions-box h3')).toIncludeText('There are no transactions for this block.');
+    expect(wrapper.find('Empty')).toHaveLength(1);
   });
 });

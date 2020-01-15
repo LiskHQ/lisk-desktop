@@ -5,8 +5,6 @@ import DelegatesTable from './delegatesTable';
 import accounts from '../../../../../test/constants/accounts';
 import delegates from '../../../../../test/constants/delegates';
 
-jest.mock('../../../../constants/voting', () => ({ numberOfActiveDelegates: 6 }));
-
 describe('DelegatesTable page', () => {
   let props;
 
@@ -60,11 +58,17 @@ describe('DelegatesTable page', () => {
   });
 
   it('allows to load more delegates', () => {
-    const wrapper = mount(<DelegatesTable {...{ ...props, delegates }} />);
-    wrapper.find('button.loadMore').simulate('click');
+    const standByDelegates = delegates.filter((item, index) => index < 30);
+    const wrapper = mount(<DelegatesTable {...{ ...props, delegates: standByDelegates }} />);
+    wrapper.find('button.load-more').simulate('click');
     expect(props.loadDelegates).toHaveBeenCalledWith(
-      expect.objectContaining({ offset: delegates.length }),
+      expect.objectContaining({ offset: standByDelegates.length }),
     );
+  });
+
+  it('dose not show load more for active delegates', () => {
+    const wrapper = mount(<DelegatesTable {...{ ...props }} />);
+    expect(wrapper.find('button.load-more')).toHaveLength(0);
   });
 
   it('allows to filter delegates by by name', () => {

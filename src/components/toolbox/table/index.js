@@ -40,7 +40,7 @@ const Table = ({
         isLoading={isLoading}
         isListEmpty={data.length === 0}
       />
-      <Error message={error} isLoading={isLoading} />
+      <Error data={error} isLoading={isLoading} />
       <LoadMoreButton
         onClick={loadData}
         dataLength={data.length}

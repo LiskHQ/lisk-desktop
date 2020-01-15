@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import { tokenMap } from '../../../../constants/tokens';
 import Box from '../../../toolbox/box';
@@ -19,18 +18,6 @@ import styles from './blockDetails.css';
 const BlockDetails = ({
   t, blockDetails, blockTransactions, isMediumViewPort,
 }) => {
-  const columns = [
-    { header: t('Sender'), className: `${grid['col-xs-3']}`, key: 'senderId' },
-    { header: t('Recipient'), className: `${grid['col-xs-3']}`, key: 'recipientId' },
-    {
-      header: t('Date'), className: `${grid['col-xs-2']}`, key: 'timestamp', isSortingColumn: true, defaultSort: true,
-    },
-    {
-      header: t('Amount'), className: `${grid['col-xs-2']}`, key: 'amount', isSortingColumn: true,
-    },
-    { header: t('Fee'), className: `${grid['col-xs-1']}  hidden-m`, key: 'fee' },
-    { header: t('Status'), className: `${grid['col-xs-1']}`, key: 'confirmations' },
-  ];
   const token = tokenMap.LSK.key;
 
   const fields = Object.entries({
@@ -135,7 +122,6 @@ const BlockDetails = ({
       </Box>
 
       <TransactionsTable
-        columns={columns}
         title={t('Transactions')}
         transactions={blockTransactions}
         emptyStateMessage={t('There are no transactions for this block.')}

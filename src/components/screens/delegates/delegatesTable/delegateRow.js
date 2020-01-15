@@ -12,7 +12,7 @@ import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 const DelegateRow = React.memo(({
   data, className, shouldShowVoteColumn, firstTimeVotingActive,
 }) => (
-  <div className={`${grid.row} ${className}`}>
+  <div className={`${grid.row} ${className} delegate-row`}>
     <span className={`${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'}`}>
       <VoteCheckbox
         delegate={data}

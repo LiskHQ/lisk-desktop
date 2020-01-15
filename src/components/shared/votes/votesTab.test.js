@@ -29,7 +29,7 @@ describe('Votes Tab Component', () => {
 
   it('Should render with empty state', () => {
     wrapper = setup(props);
-    expect(wrapper.find('.empty-message')).toIncludeText('This account doesn’t have any votes.');
+    expect(wrapper.find('.empty-state')).toIncludeText('Nothing found.');
   });
 
   it('Should show loading state', () => {
@@ -49,9 +49,9 @@ describe('Votes Tab Component', () => {
     wrapper = setup({ ...props });
     wrapper.setProps({ votes: { ...props.votes, data: votes } });
     wrapper.update();
-    expect(wrapper).toContainMatchingElements(31, 'TableRow');
-    wrapper.find('button.show-votes').simulate('click');
-    expect(wrapper).toContainMatchingElements(61, 'TableRow');
+    expect(wrapper).toContainMatchingElements(30, 'VoteRow');
+    wrapper.find('button.load-more').simulate('click');
+    expect(wrapper).toContainMatchingElements(60, 'VoteRow');
   });
 
   it('Should go to account page on clicking row', () => {
@@ -66,7 +66,7 @@ describe('Votes Tab Component', () => {
     wrapper = setup({ ...props });
     wrapper.setProps({ votes: { ...props.votes, data: votes } });
     wrapper.update();
-    wrapper.find('TableRow').at(1).simulate('click');
+    wrapper.find('VoteRow').at(0).simulate('click');
     expect(props.history.push).toBeCalledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/0L`);
   });
 
@@ -84,8 +84,9 @@ describe('Votes Tab Component', () => {
     wrapper.update();
     wrapper.find('.filterHolder input').simulate('change', { target: { value: 'user_100' } });
     jest.advanceTimersByTime(300);
-    expect(wrapper).toContainMatchingElements(2, 'TableRow');
+    expect(wrapper).toContainMatchingElements(1, 'VoteRow');
     wrapper.find('.filterHolder input').simulate('change', { target: { value: 'not user name' } });
-    expect(wrapper.find('.empty-message')).toIncludeText('There are no results matching this filter');
+    jest.advanceTimersByTime(300);
+    expect(wrapper).toContainMatchingElements(1, 'Empty');
   });
 });

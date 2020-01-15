@@ -63,6 +63,8 @@ const DelegatesTableMain = ({
           )}
           loadData={handleLoadMore}
           header={header(shouldShowVoteColumn, t)}
+          canLoadMore
+          error={delegates.error}
         />
       </BoxContent>
     </Box>
