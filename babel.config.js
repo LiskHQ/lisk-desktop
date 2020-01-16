@@ -14,6 +14,7 @@ module.exports = {
       regenerator: true,
     }],
     'transform-class-properties',
+    'react-hot-loader/babel',
   ],
   env: {
     test: {
