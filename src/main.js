@@ -43,7 +43,7 @@ ReactDOM.render(renderWithRouter(App), rootElement);
 
 if (module.hot) {
   module.hot.accept('./app', () => {
-    const NextRootContainer = require('./app').default;
+    const NextRootContainer = require('./app').DevApp;
     ReactDOM.render(renderWithRouter(NextRootContainer), rootElement);
   });
 }

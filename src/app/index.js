@@ -7,6 +7,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { hot } from 'react-hot-loader/root';//eslint-disable-line
 import styles from './app.css';
 import './variables.css';
 import LoadingBar from '../components/shared/loadingBar';
@@ -108,3 +109,4 @@ const mapStateToProps = state => ({
   settings: state.settings,
 });
 export default withRouter(connect(mapStateToProps)(App));
+export const DevApp = hot(withRouter(connect(mapStateToProps)(App)));
