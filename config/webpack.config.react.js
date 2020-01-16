@@ -53,6 +53,16 @@ const headCssLoader = {
 };
 // const headCssLoadersConfig = { ...headCssLoader };
 
+const MiniCssExtractPluginLoader = {
+  loader: MiniCssExtractPlugin.loader,
+  options: {
+    // only enable hot in development
+    hmr: process.env.DEBUG,
+    // if hmr does not work, this is a forceful method.
+    reloadAll: false,
+  },
+};
+
 const reactToastifyLoader = {
   loader: 'css-loader',
   options: {
@@ -152,16 +162,15 @@ module.exports = {
     rules: [
       {
         test: /styles\.head\.css$/,
-        use: [MiniCssExtractPlugin.loader, headCssLoader],
+        use: [MiniCssExtractPluginLoader, headCssLoader],
       },
       {
         test: /ReactToastify\.css$/,
-        use: [MiniCssExtractPlugin.loader, reactToastifyLoader, postCssLoader],
+        use: [MiniCssExtractPluginLoader, reactToastifyLoader, postCssLoader],
       },
       {
         test: /^((?!(styles\.head|ReactToastify)).)*\.css$/,
-
-        use: [MiniCssExtractPlugin.loader, cssLoader, postCssLoader],
+        use: [MiniCssExtractPluginLoader, cssLoader, postCssLoader],
       },
     ],
   },
