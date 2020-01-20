@@ -64,7 +64,7 @@ const DelegateRow = ({
                 />
               )}
               footer={(
-                <p>{getForgingTime(forgingTime, data)}</p>
+                <p>{getForgingTime(forgingTime)}</p>
               )}
             >
               <p className={styles.statusToolip}>
