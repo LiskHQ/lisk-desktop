@@ -14,7 +14,7 @@ const Table = ({
   loadingState,
   isLoading,
   emptyState,
-  key,
+  iterationKey,
   canLoadMore,
   error,
 }) => {
@@ -25,7 +25,7 @@ const Table = ({
         data={data}
         header={header}
         currentSort={currentSort}
-        key={key}
+        iterationKey={iterationKey}
         Row={Row}
         error={error}
       />

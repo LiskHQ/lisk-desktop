@@ -9,14 +9,20 @@ import routes from '../../../../constants/routes';
 import styles from './delegatesTable.css';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 
-const DelegateRow = React.memo(({
+const DelegateRow = ({
   data, className, shouldShowVoteColumn, firstTimeVotingActive,
+  votingModeEnabled, onRowClick,
 }) => (
-  <div className={`${grid.row} ${className} delegate-row`}>
-    <span className={`${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'}`}>
+  <div
+    className={`${grid.row} ${className} delegate-row`}
+    onClick={() => onRowClick(data)}
+  >
+    <span
+      className={`${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'}`}
+    >
       <VoteCheckbox
         delegate={data}
-        votingModeEnabled={shouldShowVoteColumn}
+        votingModeEnabled={votingModeEnabled}
         className={styles.checkbox}
         accent={firstTimeVotingActive}
       />
@@ -44,6 +50,8 @@ const DelegateRow = React.memo(({
       <strong><LiskAmount val={data.vote} roundTo={0} token={tokenMap.LSK.key} /></strong>
     </span>
   </div>
-));
+);
 
-export default DelegateRow;
+const areEqual = (prevProps, nextProps) => (prevProps.data.username === nextProps.data.username);
+
+export default React.memo(DelegateRow, areEqual);

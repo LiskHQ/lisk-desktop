@@ -15,7 +15,7 @@ const votingPage = {
   alreadyVotedPreselection: '.alreadyVoted-message .vote',
   addedVotesContainer: '.added-votes',
   becomeDelegateLink: '.register-delegate',
-  loadMoreButton: '.loadMore',
+  loadMoreButton: '.load-more',
 };
 
 const secondPassphraseRegistrationPage = {
@@ -55,7 +55,7 @@ const ss = {
   votedAddress: '.votes .voter-address',
   voteRow: '.vote-row',
   accountAddress: '.account-address',
-  showMoreVotesBtn: '.show-votes',
+  showMoreVotesBtn: '.load-more',
   leftBlockAccountExplorer: '.explorer-account-left-block',
   amountInput: '.amount input',
   bookmarkInput: '#bookmark-input',

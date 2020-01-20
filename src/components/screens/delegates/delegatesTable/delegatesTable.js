@@ -15,7 +15,8 @@ import DelegateRow from './delegateRow';
 import header from './tableHeader';
 
 const DelegatesTableMain = ({
-  delegates, tabs, t, filters, applyFilters, firstTimeVotingActive, shouldShowVoteColumn,
+  delegates, tabs, t, filters, applyFilters, firstTimeVotingActive,
+  shouldShowVoteColumn, votingModeEnabled, onRowClick,
 }) => {
   const handleLoadMore = () => {
     delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
@@ -59,12 +60,15 @@ const DelegatesTableMain = ({
               {...props}
               firstTimeVotingActive={firstTimeVotingActive}
               shouldShowVoteColumn={shouldShowVoteColumn}
+              votingModeEnabled={votingModeEnabled}
+              onRowClick={onRowClick}
             />
           )}
           loadData={handleLoadMore}
           header={header(shouldShowVoteColumn, t)}
           canLoadMore
           error={delegates.error}
+          iterationKey="username"
         />
       </BoxContent>
     </Box>
@@ -112,6 +116,7 @@ const DelegatesTable = ({
         t,
         firstTimeVotingActive,
         shouldShowVoteColumn,
+        votingModeEnabled,
       }}
       />
     </FirstTimeVotingOverlay>
