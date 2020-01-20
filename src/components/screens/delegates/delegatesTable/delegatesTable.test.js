@@ -87,6 +87,16 @@ describe('DelegatesTable page', () => {
     expect(wrapper.find('CheckBox')).toHaveLength(delegates.length);
   });
 
+  it('calls voteToggled when clicked on rows', () => {
+    const wrapper = mount(<DelegatesTable
+      {...{
+        ...props, delegates, votingModeEnabled: true,
+      }}
+    />);
+    wrapper.find('DelegateRow').at(0).simulate('click');
+    expect(props.voteToggled).toHaveBeenCalled();
+  });
+
   it('doesn\'t show tabs if not logged in', () => {
     const wrapper = mount(<DelegatesTable {...{ ...props, account: {} }} />);
     expect(wrapper.find('.tab')).toHaveLength(0);

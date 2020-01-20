@@ -65,6 +65,7 @@ const TransactionRow = ({ data, className, t }) => (
   </Link>
 );
 
+/* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
   (prevProps.data.id === nextProps.data.id
   && prevProps.data.confirmations === nextProps.data.confirmations);

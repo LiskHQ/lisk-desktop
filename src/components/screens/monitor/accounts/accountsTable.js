@@ -15,6 +15,7 @@ const AccountsTable = ({
   title,
   t,
 }) => {
+  /* istanbul ignore next */
   const handleLoadMore = () => {
     accounts.loadData({ offset: accounts.data.length });
   };

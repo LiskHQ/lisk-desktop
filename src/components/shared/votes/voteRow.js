@@ -11,7 +11,10 @@ const VoteRow = ({
 }) => (
   <div className={`${tableStyles.row} ${styles.row} vote-row`} onClick={() => onRowClick(data.address)}>
     <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
-      {(data.rank && +data.rank < 10 ? `0${data.rank}` : data.rank) || '-'}
+      {
+        /* istanbul ignore next */
+        (data.rank && +data.rank < 10 ? `0${data.rank}` : data.rank) || '-'
+      }
     </div>
     <div className={`${grid['col-sm-3']} ${grid['col-lg-6']}`}>
       <div className={`${styles.info}`}>
@@ -35,11 +38,13 @@ const VoteRow = ({
             {t('LSK')}
           </span>
         )
+        /* istanbul ignore next */
         : '-'}
     </div>
     <div className={`${grid['col-sm-2']} ${grid['col-lg-1']}`}>
       {data.productivity !== undefined
         ? `${formatAmountBasedOnLocale({ value: data.productivity })}%`
+        /* istanbul ignore next */
         : '-'
       }
     </div>
@@ -52,11 +57,13 @@ const VoteRow = ({
             {t('LSK')}
           </span>
         )
+        /* istanbul ignore next */
         : '-'}
     </div>
   </div>
 );
 
+/* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
   (prevProps.data.address === nextProps.data.address);
 

@@ -30,7 +30,7 @@ const Table = ({
         error={error}
       />
       <Loading
-        data={loadingState}
+        Element={loadingState}
         headerInfo={header}
         isLoading={isLoading}
       />

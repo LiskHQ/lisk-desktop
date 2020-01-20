@@ -126,7 +126,7 @@ class VotesTab extends React.Component {
             data={filteredVotes.slice(0, this.state.showing)}
             canLoadMore={canLoadMore}
             isLoading={isLoading}
-            key="address"
+            iterationKey="address"
             row={props => <VoteRow {...props} t={t} onRowClick={this.onRowClick.bind(this)} />}
             loadData={this.onShowMore.bind(this)}
             header={header(t)}

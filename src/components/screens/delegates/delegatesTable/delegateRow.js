@@ -52,6 +52,7 @@ const DelegateRow = ({
   </div>
 );
 
+/* istanbul ignore next */
 const areEqual = (prevProps, nextProps) => (prevProps.data.username === nextProps.data.username);
 
 export default React.memo(DelegateRow, areEqual);

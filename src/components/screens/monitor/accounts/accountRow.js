@@ -56,6 +56,7 @@ const AccountRow = ({ data, className, supply }) => (
   </Link>
 );
 
+/* istanbul ignore next */
 const areEqual = (prevProps, nextProps) => (prevProps.data.id === nextProps.data.id);
 
 export default React.memo(AccountRow, areEqual);

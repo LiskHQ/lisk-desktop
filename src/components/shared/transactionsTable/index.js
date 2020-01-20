@@ -36,6 +36,7 @@ const TransactionsTable = ({
     }));
   };
 
+  /* istanbul ignore next */
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
     type: value => `${t('Type')}: ${value}`,

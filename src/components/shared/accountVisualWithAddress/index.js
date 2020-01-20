@@ -20,6 +20,7 @@ class AccountVisualWithAddress extends React.Component {
       if (bookmarkedAddress) return bookmarkedAddress.title;
     }
 
+    /* istanbul ignore next */
     if (isMediumViewPort) {
       return address.replace(regex.lskAddressTrunk, '$1...$3');
     }

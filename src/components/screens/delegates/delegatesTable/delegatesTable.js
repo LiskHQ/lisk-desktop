@@ -18,6 +18,7 @@ const DelegatesTableMain = ({
   delegates, tabs, t, filters, applyFilters, firstTimeVotingActive,
   shouldShowVoteColumn, votingModeEnabled, onRowClick,
 }) => {
+  console.log('----------', onRowClick);
   const handleLoadMore = () => {
     delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
       ...acc,

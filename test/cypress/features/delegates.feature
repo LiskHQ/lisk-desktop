@@ -7,48 +7,6 @@ Feature: Delegate
     When I click load more button
     And I see 202 delegates on page
 
-  @ignore
-  Scenario: Unvote and Vote
-    Given I autologin as genesis to devnet
-    Given I am on Delegates page
-    When I start voting
-    Then Added votes counter shows 0
-    Then Total voting number shows 101
-    When I choose the 1 delegate
-    Then Removed votes counter shows 1
-    Then Total voting number shows 100
-    And I go to confirmation
-    And I see 1 removed vote
-    And I confirm transaction
-    And I go back to delegates
-    Then I see pending votes
-    When I start voting
-    And Voted delegate become unchecked
-    When I choose the 1 delegate
-    Then Added votes counter shows 1
-    Then Total voting number shows 101
-    And I go to confirmation
-    Then I see 1 added vote
-    And I confirm transaction
-    And I go back to delegates
-    Then I see pending votes
-    When I start voting
-    And Voted delegate become checked
-    Given I am on Wallet page
-    Then The latest transaction is Delegate vote
-
-  @ignore
-  Scenario: Vote with second passphrase
-    Given I autologin as second_passphrase_account to devnet
-    Given I am on Delegates page
-    When I start voting
-    When I choose the 1 delegate
-    And I go to confirmation
-    And I enter second passphrase of second_passphrase_account
-    And I confirm transaction
-    And I go back to delegates
-    Then I see pending votes
-
   Scenario: Bulk vote/unvote delegates by URL
     Given I autologin as delegate_candidate to devnet
     When I use launch protocol link to vote
