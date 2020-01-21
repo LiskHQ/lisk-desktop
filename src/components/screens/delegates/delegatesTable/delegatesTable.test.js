@@ -21,7 +21,6 @@ describe('DelegatesTable page', () => {
         },
       },
       loadVotes: jest.fn(),
-      voteToggled: jest.fn(),
       account: accounts.genesis,
       votingModeEnabled: false,
     };
@@ -85,16 +84,6 @@ describe('DelegatesTable page', () => {
     expect(wrapper.find('CheckBox')).toHaveLength(0);
     wrapper.setProps({ votingModeEnabled: true });
     expect(wrapper.find('CheckBox')).toHaveLength(delegates.length);
-  });
-
-  it('calls voteToggled when clicked on rows', () => {
-    const wrapper = mount(<DelegatesTable
-      {...{
-        ...props, delegates, votingModeEnabled: true,
-      }}
-    />);
-    wrapper.find('DelegateRow').at(0).simulate('click');
-    expect(props.voteToggled).toHaveBeenCalled();
   });
 
   it('doesn\'t show tabs if not logged in', () => {

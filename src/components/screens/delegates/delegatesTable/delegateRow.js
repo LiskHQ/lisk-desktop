@@ -29,7 +29,7 @@ const DelegateRow = (props) => {
       }}
     >
       <span
-        className={`${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'}`}
+        className={`${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'} checkbox-column`}
       >
         <VoteCheckbox
           voteStatus={voteStatus || {}}
