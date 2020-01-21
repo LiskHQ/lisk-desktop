@@ -30,9 +30,10 @@ const AccountsTable = ({
         <Table
           data={accounts.data}
           isLoading={accounts.isLoading}
-          row={props => <AccountRow {...props} supply={supply} />}
+          row={AccountRow}
           loadData={handleLoadMore}
           header={header(t)}
+          additionalRowProps={{ supply }}
           error={accounts.error}
         />
       </BoxContent>
