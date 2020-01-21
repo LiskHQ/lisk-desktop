@@ -6,3 +6,7 @@
   z-index: calc(var(--overlay-index) + 2);
   pointer-events: none;
 }
+
+.content {
+  padding: 0 !important;
+}

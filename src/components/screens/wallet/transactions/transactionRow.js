@@ -9,8 +9,8 @@ import styles from './transactionRow.css';
 import Spinner from '../../../toolbox/spinner';
 import LiskAmount from '../../../shared/liskAmount';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
-import TableRow from '../../../toolbox/table/tableRow';
 import Icon from '../../../toolbox/icon';
+import tableStyles from '../../../toolbox/table/table.css';
 
 class TransactionRow extends React.Component {
   constructor() {
@@ -65,7 +65,7 @@ class TransactionRow extends React.Component {
     const hasConfirmations = value.confirmations && value.confirmations > 0;
 
     return (
-      <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(this.props)}>
+      <div className={`${tableStyles.row} ${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(this.props)}>
         <div className={`${columnClassNames.transaction} transactions-cell`}>
           <Icon name={address === value.recipientId ? 'incoming' : 'outgoing'} className={styles.inOutIcon} />
           <TransactionTypeFigure
@@ -102,7 +102,7 @@ class TransactionRow extends React.Component {
             transaction={value}
           />
         </div>
-      </TableRow>
+      </div>
     );
   }
 }

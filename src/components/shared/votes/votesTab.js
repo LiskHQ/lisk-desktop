@@ -1,19 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
-import BoxFooterButton from '../../toolbox/box/footerButton';
-import AccountVisual from '../../toolbox/accountVisual';
-import VotesTableHeader from './votesTableHeader';
-import TableRow from '../../toolbox/table/tableRow';
 import { Input } from '../../toolbox/inputs';
-import LiskAmount from '../liskAmount';
 import routes from '../../../constants/routes';
 import styles from './votesTab.css';
-import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
-import BoxEmptyState from '../../toolbox/box/emptyState';
-import Illustration from '../../toolbox/illustration';
+import Table from '../../toolbox/table';
+import VoteRow from './voteRow';
+import header from './votesTableHeader';
 
 class VotesTab extends React.Component {
   constructor(props) {
@@ -128,74 +122,16 @@ class VotesTab extends React.Component {
           </div>
         </BoxHeader>
         <main className={`${styles.results} ${canLoadMore ? styles.hasMore : ''}`}>
-          <VotesTableHeader t={t} />
-          {filteredVotes.length
-            ? filteredVotes.slice(0, this.state.showing).map(vote => (
-              <TableRow className={`${styles.row} vote-row`} onClick={() => this.onRowClick(vote.address)} key={vote.address}>
-                <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
-                  {(vote.rank && +vote.rank < 10 ? `0${vote.rank}` : vote.rank) || '-'}
-                </div>
-                <div className={`${grid['col-sm-3']} ${grid['col-lg-6']}`}>
-                  <div className={`${styles.info}`}>
-                    <AccountVisual
-                      className={`${styles.avatar}`}
-                      address={vote.address}
-                      size={36}
-                    />
-                    <div className={styles.accountInfo}>
-                      <span className={`${styles.title} vote-username`}>{vote.username}</span>
-                      <span>{vote.address}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`}>
-                  {vote.rewards
-                    ? (
-                      <span>
-                        <LiskAmount val={vote.rewards} />
-                        {' '}
-                        {t('LSK')}
-                      </span>
-                    )
-                    : '-'}
-                </div>
-                <div className={`${grid['col-sm-2']} ${grid['col-lg-1']}`}>
-                  {vote.productivity !== undefined
-                    ? `${formatAmountBasedOnLocale({ value: vote.productivity })}%`
-                    : '-'
-                  }
-                </div>
-                <div className={`${grid['col-sm-4']} ${grid['col-lg-2']}`}>
-                  {vote.vote
-                    ? (
-                      <span className={styles.votes}>
-                        <LiskAmount val={vote.vote} />
-                        {' '}
-                        {t('LSK')}
-                      </span>
-                    )
-                    : '-'}
-                </div>
-              </TableRow>
-            )) : (
-              <BoxEmptyState>
-                <Illustration name="emptyWallet" />
-                <h3 className="empty-message">
-                  {
-                    filterValue === ''
-                      ? t('This account doesn’t have any votes.')
-                      : t('There are no results matching this filter.')
-                  }
-                </h3>
-              </BoxEmptyState>
-            )}
+          <Table
+            data={filteredVotes.slice(0, this.state.showing)}
+            canLoadMore={canLoadMore}
+            isLoading={isLoading}
+            iterationKey="address"
+            row={props => <VoteRow {...props} t={t} onRowClick={this.onRowClick.bind(this)} />}
+            loadData={this.onShowMore.bind(this)}
+            header={header(t)}
+          />
         </main>
-        {canLoadMore && (
-          <BoxFooterButton onClick={this.onShowMore} className="show-votes">
-            {t('Load more')}
-          </BoxFooterButton>
-        )
-        }
       </Box>
     );
   }

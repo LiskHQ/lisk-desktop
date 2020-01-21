@@ -81,3 +81,19 @@ export const flattenArray = arr =>
  * @returns {number} - string size in bytes
  */
 export const sizeOfString = str => encodeURI(str).split(/%..|./).length - 1;
+
+/**
+ * Checks if a given parameter is a React component
+ *
+ * @param {any} component - the target to test
+ * @returns {string|boolean} - Component type or false
+ */
+export const isReactComponent = (component) => {
+  if (typeof component === 'function' && component.prototype.isReactComponent) {
+    return 'class';
+  }
+  if (typeof component === 'function' && typeof component().$$typeof === 'symbol') {
+    return 'function';
+  }
+  return false;
+};

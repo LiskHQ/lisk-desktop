@@ -34,7 +34,7 @@ Then(/^Total voting number shows (\d+)$/, function (number) {
 });
 
 Then(/^I choose the (\d+) delegate$/, function (number) {
-  cy.get(ss.delegateRow).eq(number - 1).as('dg');
+  cy.get(ss.delegateRow).eq(number).as('dg');
   cy.get('@dg').click();
 });
 
@@ -55,8 +55,7 @@ Then(/^I go back to delegates$/, function () {
 });
 
 Then(/^I see pending votes$/, function () {
-  cy.get(ss.delegateRow).eq(0).as('dg');
-  cy.get('@dg').find(ss.spinner);
+  cy.get(ss.spinner).should('have.length', 1);
 });
 
 Then(/^I wait for pending vote to be approved$/, function () {
@@ -77,15 +76,15 @@ Then(/^Added votes counter shows (\d+)$/, function (number) {
   cy.get(ss.addedVotesCount).should('have.text', '1');
 });
 
-Then(/^I use launch protokol link to vote$/, function () {
+Then(/^I use launch protocol link to vote$/, function () {
   cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);
 });
 
-Then(/^I use launch protokol link to unvote$/, function () {
+Then(/^I use launch protocol link to unvote$/, function () {
   cy.visit(`${urls.delegatesVote}?unvotes=genesis_12`);
 });
 
-Then(/^I use launch protokol link to vote for already voted$/, function () {
+Then(/^I use launch protocol link to vote for already voted$/, function () {
   cy.visit(`${urls.delegatesVote}?votes=genesis_14,genesis_16`);
 });
 

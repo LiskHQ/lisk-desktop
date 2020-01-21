@@ -3,6 +3,12 @@ import Spinner from '../../../toolbox/spinner';
 import CheckBox from '../../../toolbox/checkBox';
 import Icon from '../../../toolbox/icon';
 
+/**
+ * This component those not implement onChange method,
+ * though CheckBox expects to receive it.
+ * We are handling the onChange via the VoteRow component
+ * and using the CheckBox as static.
+ */
 const VoteCheckbox = ({
   delegate, votingModeEnabled, accent, className,
 }) => {

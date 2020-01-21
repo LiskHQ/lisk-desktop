@@ -1,95 +1,54 @@
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import TableRow from './tableRow';
-import styles from './table.css';
+import React, { Fragment } from 'react';
+import Loading from './loading';
+import Empty from './empty';
+import Error from './error';
+import List from './list';
+import LoadMoreButton from './loadMoreButton';
 
 const Table = ({
-  data, columns, onSortChange, sort, getRowLink, rowClassName, onRowClick, rowKey,
+  data,
+  loadData,
+  header,
+  row,
+  currentSort,
+  loadingState,
+  isLoading,
+  emptyState,
+  iterationKey,
+  canLoadMore,
+  error,
 }) => {
-  const onHeaderClick = ({ id, isSortable }) => {
-    if (isSortable) {
-      onSortChange(id);
-    }
-  };
-
-  const getSortClass = ({ id, isSortable }) => {
-    if (isSortable) {
-      const className = ['sort-by', id];
-      if (sort.includes(id) && sort.includes('asc')) {
-        className.push(styles.sortAsc);
-      } else if (sort.includes(id) && sort.includes('desc')) {
-        className.push(styles.sortDesc);
-      } else {
-        className.push(styles.sortInactive);
-      }
-      return className.join(' ');
-    }
-
-    return '';
-  };
-
+  const Row = row;
   return (
-    <React.Fragment>
-      {!!data.length && (
-      <TableRow isHeader className={grid.row}>
-        {columns.map(({
-          className, header, id, isSortable,
-        }) => (
-          <div key={id} className={className} onClick={() => onHeaderClick({ id, isSortable })}>
-            <span className={styles.titleWrapper}>
-              <span className={getSortClass({ id, isSortable })}>
-                {header}
-              </span>
-            </span>
-          </div>
-        ))}
-      </TableRow>
-      )}
-      {data.map(row => (
-        <TableRow
-          key={row[rowKey]}
-          {...(getRowLink(row) && {
-            Container: Link,
-            to: getRowLink(row),
-          })}
-          onClick={onRowClick && onRowClick.bind(null, row)}
-          className={[
-            grid.row,
-            onRowClick && styles.clickable,
-            rowClassName,
-          ].join(' ')}
-        >
-          {columns.map(({ className, id, getValue }) => (
-            <span className={className} key={id}>
-              {typeof getValue === 'function' ? getValue(row) : row[id]}
-            </span>
-          ))}
-        </TableRow>
-      ))}
-    </React.Fragment>
+    <Fragment>
+      <List
+        data={data}
+        header={header}
+        currentSort={currentSort}
+        iterationKey={iterationKey}
+        Row={Row}
+        error={error}
+      />
+      <Loading
+        Element={loadingState}
+        headerInfo={header}
+        isLoading={isLoading}
+      />
+      <Empty
+        data={emptyState}
+        error={error}
+        isLoading={isLoading}
+        isListEmpty={data.length === 0}
+      />
+      <Error data={error} isLoading={isLoading} />
+      <LoadMoreButton
+        onClick={loadData}
+        dataLength={data.length}
+        canLoadMore={canLoadMore}
+        error={error}
+      />
+    </Fragment>
   );
-};
-
-Table.propTypes = {
-  data: PropTypes.array.isRequired,
-  columns: PropTypes.array.isRequired,
-  onSortChange: PropTypes.func,
-  getRowLink: PropTypes.func,
-  rowClassName: PropTypes.string,
-  sort: PropTypes.string,
-  onRowClick: PropTypes.func,
-};
-
-const noop = () => null;
-
-Table.defaultProps = {
-  getRowLink: noop,
-  onSortChange: noop,
-  rowClassName: '',
-  rowKey: 'id',
-  sort: '',
 };
 
 export default Table;

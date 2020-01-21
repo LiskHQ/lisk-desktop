@@ -3,8 +3,6 @@ import { mount } from 'enzyme';
 import Transactions from './transactions';
 import transactions from '../../../../../test/constants/transactions';
 
-jest.mock('../../../../constants/monitor', () => ({ DEFAULT_LIMIT: 4 }));
-
 describe('Transactions monitor page', () => {
   const props = {
     t: key => key,
@@ -26,12 +24,12 @@ describe('Transactions monitor page', () => {
 
   it('should render transactions list', () => {
     const wrapper = mount(<Transactions {...props} />);
-    expect(wrapper.find('TableRow.row')).toHaveLength(0);
+    expect(wrapper.find('TransactionRow')).toHaveLength(0);
     wrapper.setProps({
       transactions: transactionsWithData,
     });
     wrapper.update();
-    expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length + 1);
+    expect(wrapper.find('TransactionRow')).toHaveLength(transactions.length);
   });
 
   it('allows to load more transactions', () => {
@@ -100,7 +98,8 @@ describe('Transactions monitor page', () => {
     expect(props.transactions.loadData).toHaveBeenCalled();
   });
 
-  it('should modify address value on window resize', () => {
+  // This should be handled using css
+  it.skip('should modify address value on window resize', () => {
     const resizeWindow = (x, y) => {
       window.innerWidth = x;
       window.innerHeight = y;

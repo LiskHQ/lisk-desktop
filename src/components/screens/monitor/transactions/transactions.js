@@ -53,7 +53,13 @@ const Transactions = ({ t, transactions }) => {
   return (
     <div>
       <MonitorHeader />
-      <TransactionsTable isLoadMoreEnabled filters={filters} fields={fields} title={t('All transactions')} transactions={transactions} />
+      <TransactionsTable
+        isLoadMoreEnabled
+        filters={filters}
+        fields={fields}
+        title={t('All transactions')}
+        transactions={transactions}
+      />
     </div>
   );
 };
