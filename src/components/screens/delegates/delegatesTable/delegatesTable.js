@@ -16,9 +16,8 @@ import header from './tableHeader';
 
 const DelegatesTableMain = ({
   delegates, tabs, t, filters, applyFilters, firstTimeVotingActive,
-  shouldShowVoteColumn, votingModeEnabled, onRowClick,
+  shouldShowVoteColumn, votingModeEnabled,
 }) => {
-  console.log('----------', onRowClick);
   const handleLoadMore = () => {
     delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
       ...acc,
@@ -56,15 +55,12 @@ const DelegatesTableMain = ({
         <Table
           data={delegates.data}
           isLoading={delegates.isLoading}
-          row={props => (
-            <DelegateRow
-              {...props}
-              firstTimeVotingActive={firstTimeVotingActive}
-              shouldShowVoteColumn={shouldShowVoteColumn}
-              votingModeEnabled={votingModeEnabled}
-              onRowClick={onRowClick}
-            />
-          )}
+          additionalRowProps={{
+            firstTimeVotingActive,
+            shouldShowVoteColumn,
+            votingModeEnabled,
+          }}
+          row={DelegateRow}
           loadData={handleLoadMore}
           header={header(shouldShowVoteColumn, t)}
           canLoadMore
@@ -77,7 +73,7 @@ const DelegatesTableMain = ({
 };
 
 const DelegatesTable = ({
-  t, delegates, filters, applyFilters, votingModeEnabled, votes, voteToggled, account,
+  t, delegates, filters, applyFilters, votingModeEnabled, votes, account,
 }) => {
   const shouldShowVoteColumn = votingModeEnabled || getTotalVotesCount(votes) > 0;
   const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
@@ -102,7 +98,6 @@ const DelegatesTable = ({
     onClick: ({ value }) => applyFilters({ tab: value }),
   };
 
-  const onRowClick = votingModeEnabled ? voteToggled : undefined;
   const canLoadMore = delegates.data.length >= votingConst.numberOfActiveDelegates;
 
   return (
@@ -112,7 +107,6 @@ const DelegatesTable = ({
         tabs,
         applyFilters,
         filters,
-        onRowClick,
         canLoadMore,
         t,
         firstTimeVotingActive,
