@@ -13,14 +13,20 @@ const getUniqueKey = (data, index, key) => {
 };
 
 const List = ({
-  data, header, currentSort, iterationKey, Row, error,
+  data, header, currentSort, iterationKey, Row, error, additionalRowProps,
 }) => {
   if (data.length === 0 || error) return null;
   return (
     <Fragment>
       <Header data={header} currentSort={currentSort} />
-      {data.map((item, index) =>
-        <Row key={getUniqueKey(item, index, iterationKey)} data={item} className={styles.row} />)}
+      {data.map((item, index) => (
+        <Row
+          key={getUniqueKey(item, index, iterationKey)}
+          data={item}
+          className={styles.row}
+          {...additionalRowProps}
+        />
+      ))}
     </Fragment>
   );
 };
