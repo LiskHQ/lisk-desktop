@@ -31,7 +31,7 @@ const DelegateRow = ({
 }) => (
   <Link
     className={`${grid.row} ${className} delegate-row`}
-    to={`${routes.blocks.path}/${data.id}`}
+    to={`${routes.accounts.path}/${data.address}`}
   >
     <span className={grid['col-md-1']}>
       {`#${data.rank}`}
