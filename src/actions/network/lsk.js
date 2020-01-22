@@ -23,7 +23,7 @@ export const getConnectionErrorMessage = error => (
 const getNethash = async nodeUrl => (
   new Promise(async (resolve, reject) => {
     new Lisk.APIClient([nodeUrl], {}).node.getConstants().then((response) => {
-      resolve(response.data.nethash);
+      resolve(response.data);
     }).catch((error) => {
       reject(getConnectionErrorMessage(error));
     });
@@ -31,24 +31,23 @@ const getNethash = async nodeUrl => (
 );
 
 export const networkSet = data => async (dispatch) => {
-  if (data.name === networks.customNode.name) {
-    await getNethash(data.network.address).then((nethash) => {
-      dispatch(generateAction(data, {
-        nodeUrl: data.network.address,
-        custom: data.network.custom,
-        code: data.network.code,
-        nethash,
-      }));
-    }).catch((error) => {
-      dispatch(generateAction(data, {
-        nodeUrl: data.network.address,
-        custom: data.network.custom,
-        code: data.network.code,
-      }));
-      toast.error(error);
-    });
-  } else if (data.name === networks.testnet.name
-    || data.name === networks.mainnet.name) {
-    dispatch(generateAction(data, data.network));
-  }
+  const nodeUrl = data.name === networks.customNode.name
+    ? data.network.address
+    : networks[data.name.toLowerCase()].nodes[0];
+  await getNethash(nodeUrl).then(({ nethash, version }) => {
+    dispatch(generateAction(data, {
+      nodeUrl,
+      custom: data.network.custom,
+      code: data.network.code,
+      nethash,
+      apiVersion: version.substring(0, 1),
+    }));
+  }).catch((error) => {
+    dispatch(generateAction(data, {
+      nodeUrl: data.network.address,
+      custom: data.network.custom,
+      code: data.network.code,
+    }));
+    toast.error(error);
+  });
 };
