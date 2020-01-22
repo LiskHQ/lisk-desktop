@@ -4,7 +4,7 @@ import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import Fees from '../constants/fees';
 import { tokenMap } from '../constants/tokens';
-import transactionTypes, { createTransactionType } from '../constants/transactionTypes';
+import transactionTypes from '../constants/transactionTypes';
 import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
@@ -191,7 +191,7 @@ export const sent = data => async (dispatch, getState) => {
 
   try {
     if (account.loginType === loginType.normal) {
-      tx = await transactionsAPI.create(activeToken, txData, createTransactionType.transaction);
+      tx = await transactionsAPI.create(activeToken, txData, transactionTypes().send.key);
     } else {
       [fail, tx] = await (signSendTransaction(account, data));
 
@@ -208,7 +208,7 @@ export const sent = data => async (dispatch, getState) => {
       recipientId: txData.recipientId,
       senderId,
       senderPublicKey: account.publicKey,
-      type: transactionTypes.send,
+      type: transactionTypes().send.code,
     }));
 
     dispatch(passphraseUsed(txData.passphrase));

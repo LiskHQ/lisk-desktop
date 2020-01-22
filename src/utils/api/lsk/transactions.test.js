@@ -11,7 +11,7 @@ import accounts from '../../../../test/constants/accounts';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
 import txFilters from '../../../constants/transactionFilters';
-import { createTransactionType } from '../../../constants/transactionTypes';
+import transactionTypes from '../../../constants/transactionTypes';
 import { getTimestampFromFirstBlock } from '../../datetime';
 
 jest.mock('./network');
@@ -143,7 +143,7 @@ describe('Utils: Transactions API', () => {
         secondPassphrase: null,
         timeOffset: 0,
       };
-      const txResult = await create(tx, createTransactionType.transaction);
+      const txResult = await create(tx, transactionTypes().send.key);
       expect(txResult.recipientId).toEqual(tx.recipientId);
       expect(txResult.amount).toEqual(tx.amount);
       expect(txResult.signature).not.toBeNull();
@@ -165,7 +165,7 @@ describe('Utils: Transactions API', () => {
         timeOffset: 0,
       };
       try {
-        await create(tx, createTransactionType.transaction);
+        await create(tx, transactionTypes().send.key);
       } catch (e) {
         expect(e).toBeInstanceOf(Error);
         expect(e.message).toEqual('sample error message');

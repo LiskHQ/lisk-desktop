@@ -10,7 +10,7 @@ import TransactionsHeader from './transactionsHeader';
 import actionTypes from '../../../../constants/actions';
 import styles from './transactionsList.css';
 import txFilters from '../../../../constants/transactionFilters';
-import txTypes from '../../../../constants/transactionTypes';
+import transactionTypes from '../../../../constants/transactionTypes';
 
 class TransactionsList extends React.Component {
   render() {
@@ -29,9 +29,9 @@ class TransactionsList extends React.Component {
 
     const tabObj = this.props.filter;
     const fixIncomingFilter = (transaction) => {
-      const isTypeNonSend = transaction.type !== txTypes.send;
+      const isTypeNonSend = transaction.type !== transactionTypes().send.code;
       const isFilterIncoming = tabObj && tabObj.value === txFilters.incoming;
-      const isAccountInit = transaction.type === txTypes.send
+      const isAccountInit = transaction.type === transactionTypes().send.code
         && transaction.senderId === transaction.recipientId;
 
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));

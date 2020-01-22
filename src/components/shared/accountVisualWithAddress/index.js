@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styles from './accountVisualWithAddress.css';
 import Icon from '../../toolbox/icon';
 import transactionTypeIcons from '../../../constants/transactionTypeIcons';
-import transactionTypes, { transactionNames } from '../../../constants/transactionTypes';
+import transactionTypes from '../../../constants/transactionTypes';
 import AccountVisual from '../../toolbox/accountVisual';
 import regex from '../../../utils/regex';
 
@@ -34,13 +34,15 @@ class AccountVisualWithAddress extends React.Component {
     } = this.props;
     return (
       <div className={`${styles.address}`}>
-        {transactionType !== transactionTypes.send && transactionSubject === 'recipientId' ? (
+        {transactionType !== transactionTypes().send.code && transactionSubject === 'recipientId' ? (
           <React.Fragment>
             <Icon
               className={styles.txIcon}
               name={transactionTypeIcons[transactionType] || transactionTypeIcons.default}
             />
-            <span className={styles.addressValue}>{transactionNames(t)[transactionType]}</span>
+            <span className={styles.addressValue}>
+              {transactionTypes.getByCode(transactionType).title}
+            </span>
           </React.Fragment>
         ) : (
           <React.Fragment>
@@ -61,7 +63,7 @@ AccountVisualWithAddress.propTypes = {
   t: PropTypes.func.isRequired,
   token: PropTypes.shape().isRequired,
   transactionSubject: PropTypes.string,
-  transactionType: PropTypes.oneOf(Object.keys(transactionNames(x => x)).map(Number)),
+  transactionType: PropTypes.oneOf(transactionTypes.getListOf('code')),
 };
 
 AccountVisualWithAddress.defaultProps = {
@@ -69,7 +71,7 @@ AccountVisualWithAddress.defaultProps = {
   size: 32,
   sizeM: 24,
   transactionSubject: '',
-  transactionType: transactionTypes.send,
+  transactionType: transactionTypes().send.code,
 };
 
 const mapStateToProps = state => ({

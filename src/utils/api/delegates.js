@@ -18,7 +18,7 @@ export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
       updateDelegateCache(response.data, liskAPIClient.networkConfig);
       if (delegate) {
         const txDelegateRegister = (await getTransactions({
-          liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+          liskAPIClient, address, limit: 1, type: transactionTypes().registerDelegate.code,
         })).data[0];
         const blocks = await getBlocks(liskAPIClient, {
           generatorPublicKey: publicKey, limit: 1,

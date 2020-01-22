@@ -1,7 +1,7 @@
 import React from 'react';
 import { tokenMap } from '../../../constants/tokens';
 import regex from '../../../utils/regex';
-import transactionTypes, { transactionNames } from '../../../constants/transactionTypes';
+import transactionTypes from '../../../constants/transactionTypes';
 import styles from './transactionAddress.css';
 
 const TransactionAddress = ({
@@ -18,8 +18,8 @@ const TransactionAddress = ({
   return (
     <div className={`${styles.wrapper} transaction-address`}>
       <span>
-        {transactionType !== transactionTypes.send
-          ? transactionNames(t)[transactionType]
+        {transactionType !== transactionTypes().send.code
+          ? transactionTypes.getByCode(transactionType).title
           : renderAddress()}
       </span>
       {account.length ? (

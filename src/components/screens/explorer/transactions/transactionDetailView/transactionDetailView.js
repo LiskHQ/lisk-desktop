@@ -23,15 +23,15 @@ class TransactionDetailView extends React.Component {
       t,
     } = this.props;
     const { senderLabel, title } = {
-      [transactionTypes.setSecondPassphrase]: {
+      [transactionTypes().setSecondPassphrase.code]: {
         title: t('2nd passphrase registration'),
         senderLabel: t('Account'),
       },
-      [transactionTypes.registerDelegate]: {
+      [transactionTypes().registerDelegate.code]: {
         title: t('Delegate registration'),
         senderLabel: t('Account nickname'),
       },
-      [transactionTypes.vote]: {
+      [transactionTypes().vote.code]: {
         title: t('Delegate vote'),
         senderLabel: t('Voter'),
       },

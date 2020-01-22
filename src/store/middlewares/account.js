@@ -56,7 +56,10 @@ const getRecentTransactionOfType = (transactionsList, type) => (
 );
 
 const votePlaced = (store, action) => {
-  const voteTransaction = getRecentTransactionOfType(action.data.confirmed, transactionTypes.vote);
+  const voteTransaction = getRecentTransactionOfType(
+    action.data.confirmed,
+    transactionTypes().vote.code,
+  );
 
   if (voteTransaction) {
     const state = store.getState();

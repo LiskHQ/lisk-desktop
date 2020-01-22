@@ -54,7 +54,7 @@ describe('Account middleware', () => {
     type: actionTypes.updateTransactions,
     data: {
       confirmed: [{
-        type: transactionTypes.registerDelegate,
+        type: transactionTypes().registerDelegate.code,
         confirmations: 1,
       }],
     },
@@ -210,7 +210,7 @@ describe('Account middleware', () => {
 
   it(`should dispatch ${actionTypes.loadVotes} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
     const actionSpy = spy(votingActions, 'loadVotes');
-    transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.vote;
+    transactionsUpdatedAction.data.confirmed[0].type = transactionTypes().vote.code;
     middleware(store)(next)(transactionsUpdatedAction);
     expect(actionSpy).to.have.been.calledWith({
       address: state.account.address,

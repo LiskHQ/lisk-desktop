@@ -18,7 +18,7 @@ const TransactionTypeFigure = ({
   return (
     <div className={`${styles.wrapper} ${className} transaction-image`}>
       {
-        transactionType === transactionTypes.send
+        transactionType === transactionTypes().send.code
           ? renderAvatar()
           : <Icon name={transactionTypeIcons[transactionType] || transactionTypeIcons.default} />
       }
