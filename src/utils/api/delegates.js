@@ -7,8 +7,10 @@ import { loginType } from '../../constants/hwConstants';
 import { splitVotesIntoRounds } from '../voting';
 import transactionTypes from '../../constants/transactionTypes';
 import { signVoteTransaction } from '../hwManager';
+import { adaptDelegateQueryParams } from './lsk/adapters';
 
-export const getDelegates = (liskAPIClient, options) => liskAPIClient.delegates.get(options);
+export const getDelegates = (liskAPIClient, options) =>
+  liskAPIClient.delegates.get(adaptDelegateQueryParams(options));
 
 export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
   new Promise(async (resolve, reject) => {
