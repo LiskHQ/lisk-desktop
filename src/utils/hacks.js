@@ -11,8 +11,8 @@ import Lisk from '@liskhq/lisk-client-Edge';
 // https://github.com/LiskHQ/lisk-desktop/issues/1277
 //
 // eslint-disable-next-line import/prefer-default-export
-export const getTimeOffset = state => (
-  state.blocks && state.blocks.latestBlocks[0] && state.blocks.latestBlocks[0].timestamp
-    ? state.blocks.latestBlocks[0].timestamp - Lisk.transaction.utils.getTimeFromBlockchainEpoch()
+export const getTimeOffset = latestBlocks => (
+  latestBlocks.length && latestBlocks[0].timestamp
+    ? latestBlocks[0].timestamp - Lisk.transaction.utils.getTimeFromBlockchainEpoch()
     : 0
 );
