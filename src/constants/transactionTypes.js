@@ -1,40 +1,30 @@
-import store from '../store';
-
-const ApiTxTypes = {
-  '2.x': [0, 1, 2, 3, 4],
-  '3.x': [8, 9, 10, 11, 12],
-};
-
-const transactionTypes = (t = str => str) => {
-  const ApiVersion = store.getState().network.apiVersion;
-  return {
-    send: {
-      code: ApiTxTypes[ApiVersion][0],
-      title: t('Send'),
-      key: 'transfer',
-    },
-    setSecondPassphrase: {
-      code: ApiTxTypes[ApiVersion][1],
-      title: t('Second passphrase registration'),
-      key: 'secondPassphrase',
-    },
-    registerDelegate: {
-      code: ApiTxTypes[ApiVersion][2],
-      title: t('Delegate registration'),
-      key: 'registerDelegate',
-    },
-    vote: {
-      code: ApiTxTypes[ApiVersion][3],
-      title: t('Delegate vote'),
-      key: 'vote',
-    },
-    createMultiSig: {
-      code: ApiTxTypes[ApiVersion][4],
-      title: t('Multisignature creation'),
-      key: 'createMultiSig',
-    },
-  };
-};
+const transactionTypes = (t = str => str) => ({
+  send: {
+    code: 0,
+    title: t('Send'),
+    key: 'transfer',
+  },
+  setSecondPassphrase: {
+    code: 1,
+    title: t('Second passphrase registration'),
+    key: 'secondPassphrase',
+  },
+  registerDelegate: {
+    code: 2,
+    title: t('Delegate registration'),
+    key: 'registerDelegate',
+  },
+  vote: {
+    code: 3,
+    title: t('Delegate vote'),
+    key: 'vote',
+  },
+  createMultiSig: {
+    code: 4,
+    title: t('Multisignature creation'),
+    key: 'createMultiSig',
+  },
+});
 
 /**
  * To get the transaction config for a given transaction code.
