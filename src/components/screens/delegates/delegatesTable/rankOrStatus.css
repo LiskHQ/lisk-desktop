@@ -1,0 +1,12 @@
+.status {
+  & span {
+    display: inline-block;
+    background-color: blue;
+    color: white;
+  }
+}
+.rank {
+  & span {
+    display: inline;
+  }
+}
