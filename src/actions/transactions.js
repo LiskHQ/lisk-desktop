@@ -247,7 +247,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
     ? await to(transactionsAPI.create(
       activeToken,
       { ...data, timeOffset, network },
-      createTransactionType.transaction,
+      transactionTypes().send.key,
     ))
     : await to(signSendTransaction(account, { ...data, timeOffset }));
 
