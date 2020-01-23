@@ -8,7 +8,7 @@ import actionTypes from '../../constants/actions';
  *
  * @returns {Object} - Next state object
  */
-const network = (state = { status: {}, networks: {} }, action) => {
+const network = (state = { status: {}, networks: {}, apiVersion: '3.x' }, action) => {
   switch (action.type) {
     case actionTypes.networkSet:
       return {
@@ -18,6 +18,7 @@ const network = (state = { status: {}, networks: {} }, action) => {
           ...state.networks,
           [action.data.token]: action.data.network || {},
         },
+        apiVersion: '3.x',
       };
     case actionTypes.networkStatusUpdated:
       return {
