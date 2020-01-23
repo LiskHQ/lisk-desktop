@@ -5,6 +5,7 @@
     color: white;
   }
 }
+
 .rank {
   & span {
     display: inline;
