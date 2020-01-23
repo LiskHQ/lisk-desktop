@@ -60,7 +60,7 @@ class TransactionDetailView extends React.Component {
             label={senderLabel}
           />
         </BoxRow>
-        {transaction.type === transactionTypes.send
+        {transaction.type === transactionTypes().send.code
           ? (
             <BoxRow className={styles.detailsWrapper}>
               <AccountInfo
@@ -75,7 +75,7 @@ class TransactionDetailView extends React.Component {
           : null
         }
         {children}
-        { transaction.type === transactionTypes.send
+        { transaction.type === transactionTypes().send.code
           ? (
             <BoxRow className={styles.message}>
               <div className={`${styles.detailsWrapper}`}>
@@ -93,7 +93,7 @@ class TransactionDetailView extends React.Component {
             </BoxRow>
           ) : null
         }
-        { transaction.type === transactionTypes.vote && transaction.votesName ? (
+        { transaction.type === transactionTypes().vote.code && transaction.votesName ? (
           <TransactionVotes votes={transaction.votesName} />
         ) : null
         }
