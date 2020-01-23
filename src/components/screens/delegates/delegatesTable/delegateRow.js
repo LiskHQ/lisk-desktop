@@ -7,11 +7,13 @@ import LiskAmount from '../../../shared/liskAmount';
 import VoteCheckbox from './voteCheckbox';
 import routes from '../../../../constants/routes';
 import styles from './delegatesTable.css';
+import RankOrStatus from './rankOrStatus';
+import VoteWeight from './voteWeight';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 
 const DelegateRow = ({
   data, className, shouldShowVoteColumn, firstTimeVotingActive,
-  votingModeEnabled, onRowClick,
+  votingModeEnabled, onRowClick, index,
 }) => (
   <div
     className={`${grid.row} ${className} delegate-row`}
@@ -28,7 +30,7 @@ const DelegateRow = ({
       />
     </span>
     <span className={grid['col-xs-1']}>
-      {`#${data.rank}`}
+      <RankOrStatus data={data} index={index} />
     </span>
     <span className={`${shouldShowVoteColumn ? grid['col-xs-4'] : grid['col-xs-5']}`}>
       <Link
@@ -47,7 +49,7 @@ const DelegateRow = ({
       {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
     </span>
     <span className={grid['col-md-2']}>
-      <strong><LiskAmount val={data.vote} roundTo={0} token={tokenMap.LSK.key} /></strong>
+      <VoteWeight data={data} />
     </span>
   </div>
 );
