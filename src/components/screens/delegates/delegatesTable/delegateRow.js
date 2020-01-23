@@ -13,7 +13,7 @@ import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 
 const DelegateRow = ({
   data, className, shouldShowVoteColumn, firstTimeVotingActive,
-  votingModeEnabled, onRowClick, index,
+  votingModeEnabled, onRowClick,
 }) => (
   <div
     className={`${grid.row} ${className} delegate-row`}
@@ -30,7 +30,7 @@ const DelegateRow = ({
       />
     </span>
     <span className={grid['col-xs-1']}>
-      <RankOrStatus data={data} index={index} />
+      <RankOrStatus data={data} />
     </span>
     <span className={`${shouldShowVoteColumn ? grid['col-xs-4'] : grid['col-xs-5']}`}>
       <Link
