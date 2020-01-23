@@ -30,7 +30,7 @@ class AccountVisualWithAddress extends React.Component {
 
   render() {
     const {
-      address, transactionSubject, transactionType, t, size, sizeM,
+      address, transactionSubject, transactionType, size, sizeM,
     } = this.props;
     return (
       <div className={`${styles.address}`}>

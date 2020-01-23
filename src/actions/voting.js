@@ -47,9 +47,11 @@ export const votePlaced = ({
   account, votes, secondPassphrase, callback,
 }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
-    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
+    const state = getState();
+    const { networkIdentifier } = state.network;
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, state);
     const { votedList, unvotedList } = getVotingLists(votes);
-    const timeOffset = getTimeOffset(getState());
+    const timeOffset = getTimeOffset(state.blocks.latestBlocks);
 
     const label = getVotingError(votes, account);
     if (label) {
@@ -64,6 +66,7 @@ export const votePlaced = ({
       unvotedList,
       secondPassphrase,
       timeOffset,
+      networkIdentifier,
     }));
 
     if (error) {

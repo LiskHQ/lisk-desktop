@@ -67,6 +67,7 @@ const signVoteTransaction = async (
   votedList,
   unvotedList,
   timeOffset,
+  networkIdentifier,
 ) => {
   const signedTransactions = [];
   const votesChunks = splitVotesIntoRounds({ votes: [...votedList], unvotes: [...unvotedList] });
@@ -74,7 +75,7 @@ const signVoteTransaction = async (
   try {
     for (let i = 0; i < votesChunks.length; i++) {
       const transactionObject = {
-        ...castVotes({ ...votesChunks[i], timeOffset }),
+        ...castVotes({ ...votesChunks[i], timeOffset, networkIdentifier }),
         senderPublicKey: account.publicKey,
         recipientId: account.address, // @todo should we remove this?
       };

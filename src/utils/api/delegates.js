@@ -85,6 +85,7 @@ const voteWithPassphrase = (
   unvotes,
   secondPassphrase,
   timeOffset,
+  networkIdentifier,
 ) => (Promise.all(splitVotesIntoRounds({ votes: [...votes], unvotes: [...unvotes] })
   // eslint-disable-next-line no-shadow
   .map(({ votes, unvotes }) => {
@@ -96,6 +97,7 @@ const voteWithPassphrase = (
         passphrase,
         secondPassphrase,
         timeOffset,
+        networkIdentifier,
       },
     ));
   }))
@@ -108,6 +110,7 @@ export const castVotes = async ({
   unvotedList,
   secondPassphrase,
   timeOffset,
+  networkIdentifier,
 }) => {
   const signedTransactions = account.loginType === loginType.normal
     ? await voteWithPassphrase(
@@ -116,8 +119,9 @@ export const castVotes = async ({
       unvotedList,
       secondPassphrase,
       timeOffset,
+      networkIdentifier,
     )
-    : await signVoteTransaction(account, votedList, unvotedList, timeOffset);
+    : await signVoteTransaction(account, votedList, unvotedList, timeOffset, networkIdentifier);
 
   return Promise.all(signedTransactions.map(transaction => (
     new Promise((resolve, reject) => {
