@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Lisk from '@liskhq/lisk-client';
+import Lisk from '@liskhq/lisk-client-Edge';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styles from './signMessage.css';
 import { AutoResizeTextarea } from '../../toolbox/inputs';

@@ -1,4 +1,4 @@
-import { castVotes, transfer, utils } from '@liskhq/lisk-transactions';
+import { castVotes, transfer, utils } from '@liskhq/lisk-transactions-Edge';
 import i18next from 'i18next';
 import { getAccount } from './api/lsk/account';
 import {
@@ -76,7 +76,7 @@ const signVoteTransaction = async (
       const transactionObject = {
         ...castVotes({ ...votesChunks[i], timeOffset }),
         senderPublicKey: account.publicKey,
-        recipientId: account.address,
+        recipientId: account.address, // @todo should we remove this?
       };
 
       // eslint-disable-next-line no-await-in-loop
@@ -89,6 +89,7 @@ const signVoteTransaction = async (
       signedTransactions.push({
         ...transactionObject,
         signature,
+        // @ todo core 3.x getId
         id: utils.getTransactionId({ ...transactionObject, signature }),
       });
     }

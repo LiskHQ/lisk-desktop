@@ -1,5 +1,5 @@
 import * as bitcoin from 'bitcoinjs-lib';
-import Lisk from '@liskhq/lisk-client';
+import Lisk from '@liskhq/lisk-client-Edge';
 import bip32 from 'bip32';
 import { getAPIClient } from './network';
 import { tokenMap } from '../../../constants/tokens';
