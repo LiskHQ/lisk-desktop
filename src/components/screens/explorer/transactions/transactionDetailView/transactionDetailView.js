@@ -22,23 +22,7 @@ class TransactionDetailView extends React.Component {
       netCode,
       t,
     } = this.props;
-    const { senderLabel, title } = {
-      [transactionTypes().setSecondPassphrase.code]: {
-        title: t('2nd passphrase registration'),
-        senderLabel: t('Account'),
-      },
-      [transactionTypes().registerDelegate.code]: {
-        title: t('Delegate registration'),
-        senderLabel: t('Account nickname'),
-      },
-      [transactionTypes().vote.code]: {
-        title: t('Delegate vote'),
-        senderLabel: t('Voter'),
-      },
-    }[transaction.type] || {
-      senderLabel: t('Sender'),
-    };
-
+    const { senderLabel, title } = transactionTypes.getByCode(transaction.type || 0);
     return (transaction.id ? (
       <React.Fragment>
         {title ? (

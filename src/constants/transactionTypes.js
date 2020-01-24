@@ -2,26 +2,34 @@ const transactionTypes = (t = str => str) => ({
   send: {
     code: 0,
     title: t('Send'),
+    senderLabel: t('Sender'),
     key: 'transfer',
   },
   setSecondPassphrase: {
     code: 1,
     title: t('Second passphrase registration'),
+    senderLabel: t('Account'),
     key: 'secondPassphrase',
+    icon: 'tx2ndPassphrase',
   },
   registerDelegate: {
     code: 2,
     title: t('Delegate registration'),
+    senderLabel: t('Account nickname'),
     key: 'registerDelegate',
+    icon: 'txDelegate',
   },
   vote: {
     code: 3,
     title: t('Delegate vote'),
+    senderLabel: t('Voter'),
     key: 'vote',
+    icon: 'txVote',
   },
   createMultiSig: {
     code: 4,
     title: t('Multisignature creation'),
+    senderLabel: t('Registrant'),
     key: 'createMultiSig',
   },
 });
