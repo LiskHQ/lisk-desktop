@@ -141,6 +141,7 @@ export const registerDelegate = (
   passphrase,
   secondPassphrase = null,
   timeOffset,
+  networkIdentifier,
 ) => {
   const data = { username, passphrase, timeOffset };
   if (secondPassphrase) {
@@ -148,7 +149,7 @@ export const registerDelegate = (
   }
   return new Promise((resolve, reject) => {
     const Lisk = liskClient();
-    const transaction = Lisk.transaction.registerDelegate({ ...data });
+    const transaction = Lisk.transaction.registerDelegate({ ...data, networkIdentifier });
     liskAPIClient.transactions
       .broadcast(transaction)
       .then(() => {

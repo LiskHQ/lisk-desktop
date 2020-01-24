@@ -100,7 +100,9 @@ export const getSingleTransaction = ({
 
 export const create = (transaction, transactionType) => new Promise((resolve, reject) => {
   try {
-    const tx = Lisk.transaction[transactionType](transaction);
+    const tx = Lisk.transaction[transactionType]({
+      ...transaction,
+    });
     resolve(tx);
   } catch (error) {
     reject(error);
