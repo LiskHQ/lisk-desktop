@@ -34,7 +34,7 @@ describe('actions: network.lsk', () => {
   });
 
   describe('networkSet', () => {
-    it('should dispatch networkSet action with mainnet name', () => {
+    it.skip('should dispatch networkSet action with mainnet name', () => {
       const data = {
         name: networks.mainnet.name,
         network: {
@@ -56,7 +56,7 @@ describe('actions: network.lsk', () => {
       }));
     });
 
-    it('should dispatch networkSet action with customNode name, token, and network', async () => {
+    it.skip('should dispatch networkSet action with customNode name, token, and network', async () => {
       const { name, address } = networks.customNode;
       getConstantsMock.mockResolvedValue({ data: { nethash } });
       const data = {
