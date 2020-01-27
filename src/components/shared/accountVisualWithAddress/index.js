@@ -61,7 +61,6 @@ AccountVisualWithAddress.propTypes = {
   bookmarks: PropTypes.shape().isRequired,
   showBookmarkedAddress: PropTypes.bool,
   size: PropTypes.number,
-  t: PropTypes.func.isRequired,
   token: PropTypes.shape().isRequired,
   transactionSubject: PropTypes.string,
   transactionType: PropTypes.oneOf(transactionTypes.getListOf('code')),
