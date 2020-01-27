@@ -93,6 +93,7 @@ module.exports = {
     'src/components/shared/accountVisualWithAddress/index.js',
     'src/components/toolbox/table/empty.js',
     'src/components/toolbox/table/header.js',
+    'src/utils/api/lisk-client.js',
   ],
   coverageThreshold: {
     global: {
