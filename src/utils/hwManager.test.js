@@ -39,7 +39,7 @@ describe('hwManager util', () => {
   });
 
   describe('signSendTransaction', () => {
-    it('should return a transaction object with the proper signature', async () => {
+    it.skip('should return a transaction object with the proper signature', async () => {
       const account = {
         info: {
           LSK: {
@@ -75,7 +75,7 @@ describe('hwManager util', () => {
   });
 
   describe('signVoteTransaction', () => {
-    it('should return a transaction object with the proper signature', async () => {
+    it.skip('should return a transaction object with the proper signature', async () => {
       const account = {
         address: '7955155501030618852L',
         publicKey: '9c854ea85fbcb32e2c5d2c7a820a354a6627213ebb74b42b1ee851d4e4fa035e',

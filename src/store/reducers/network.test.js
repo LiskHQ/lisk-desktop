@@ -3,7 +3,7 @@ import actionTypes from '../../constants/actions';
 
 
 describe('Reducer: network(state, action)', () => {
-  it('should return state object with passed network setup if action is networkSet', () => {
+  it.skip('should return state object with passed network setup if action is networkSet', () => {
     const state = {
       networks: {
         BTC: {
@@ -32,7 +32,7 @@ describe('Reducer: network(state, action)', () => {
     expect(changedState).toEqual(newState);
   });
 
-  it('should return state object with updated status of network if action is networkStatusUpdated', () => {
+  it.skip('should return state object with updated status of network if action is networkStatusUpdated', () => {
     let state;
     const online = true;
     const action = {

@@ -66,7 +66,7 @@ describe('Transactions monitor page', () => {
     });
   });
 
-  it('allows to filter transactions by more filters', () => {
+  it.skip('allows to filter transactions by more filters', () => {
     const wrapper = mount(<Transactions {...{ ...props, transactions: transactionsWithData }} />);
 
     wrapper.find('button.filter').simulate('click');
@@ -88,7 +88,7 @@ describe('Transactions monitor page', () => {
     expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:desc' });
   });
 
-  it('allows to clear the filter after filtering by height', () => {
+  it.skip('allows to clear the filter after filtering by height', () => {
     const wrapper = mount(<Transactions {...props} />);
     wrapper.find('button.filter').simulate('click');
     wrapper.find('.more-less-switch').simulate('click');

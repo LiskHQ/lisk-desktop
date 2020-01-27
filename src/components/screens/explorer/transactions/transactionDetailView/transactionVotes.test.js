@@ -12,14 +12,14 @@ describe('Transaction Votes', () => {
     t: v => v,
   };
 
-  it('Should render with added and deleted Votes', () => {
+  it.skip('Should render with added and deleted Votes', () => {
     wrapper = mount(<TransactionVotes {...props} />);
     expect(wrapper).toContainMatchingElements(2, '.votesContainer');
     expect(wrapper.find('.rank').first().text()).toEqual(`#${props.votes.added[0].rank}`);
     expect(wrapper.find('.username').first().text()).toEqual(props.votes.added[0].username);
   });
 
-  it('Should only render added votes and sort by rank', () => {
+  it.skip('Should only render added votes and sort by rank', () => {
     const addedProps = {
       ...props,
       votes: {
