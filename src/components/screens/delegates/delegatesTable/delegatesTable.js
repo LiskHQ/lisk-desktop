@@ -16,7 +16,7 @@ import header from './tableHeader';
 
 const DelegatesTableMain = ({
   delegates, tabs, t, filters, applyFilters, firstTimeVotingActive,
-  shouldShowVoteColumn, votingModeEnabled, onRowClick,
+  shouldShowVoteColumn, votingModeEnabled, onRowClick, apiVersion,
 }) => {
   console.log('----------', onRowClick);
   const handleLoadMore = () => {
@@ -63,10 +63,11 @@ const DelegatesTableMain = ({
               shouldShowVoteColumn={shouldShowVoteColumn}
               votingModeEnabled={votingModeEnabled}
               onRowClick={onRowClick}
+              apiVersion={apiVersion}
             />
           )}
           loadData={handleLoadMore}
-          header={header(shouldShowVoteColumn, t)}
+          header={header(shouldShowVoteColumn, t, apiVersion)}
           canLoadMore
           error={delegates.error}
           iterationKey="username"
@@ -77,7 +78,7 @@ const DelegatesTableMain = ({
 };
 
 const DelegatesTable = ({
-  t, delegates, filters, applyFilters, votingModeEnabled, votes, voteToggled, account,
+  t, delegates, filters, applyFilters, votingModeEnabled, votes, voteToggled, account, apiVersion,
 }) => {
   const shouldShowVoteColumn = votingModeEnabled || getTotalVotesCount(votes) > 0;
   const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
@@ -118,6 +119,7 @@ const DelegatesTable = ({
         firstTimeVotingActive,
         shouldShowVoteColumn,
         votingModeEnabled,
+        apiVersion,
       }}
       />
     </FirstTimeVotingOverlay>

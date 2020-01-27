@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   votes: state.voting.votes,
   delegates: state.voting.delegates,
+  apiVersion: state.network.networks.LSK.apiVersion,
 });
 
 const mapDispatchToProps = {
