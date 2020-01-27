@@ -1,5 +1,5 @@
 import { to } from 'await-to-js';
-import Lisk from '@liskhq/lisk-client';
+import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import { getBlocks } from './blocks';
 import { getTransactions } from './transactions';
 import { loadDelegateCache, updateDelegateCache } from '../delegates';
@@ -85,15 +85,18 @@ const voteWithPassphrase = (
   timeOffset,
 ) => (Promise.all(splitVotesIntoRounds({ votes: [...votes], unvotes: [...unvotes] })
   // eslint-disable-next-line no-shadow
-  .map(({ votes, unvotes }) => (Lisk.transaction.castVotes(
-    {
-      votes,
-      unvotes,
-      passphrase,
-      secondPassphrase,
-      timeOffset,
-    },
-  ))))
+  .map(({ votes, unvotes }) => {
+    const Lisk = liskClient();
+    return (Lisk.transaction.castVotes(
+      {
+        votes,
+        unvotes,
+        passphrase,
+        secondPassphrase,
+        timeOffset,
+      },
+    ));
+  }))
 );
 
 export const castVotes = async ({
@@ -138,6 +141,7 @@ export const registerDelegate = (
     data.secondPassphrase = secondPassphrase;
   }
   return new Promise((resolve, reject) => {
+    const Lisk = liskClient();
     const transaction = Lisk.transaction.registerDelegate({ ...data });
     liskAPIClient.transactions
       .broadcast(transaction)

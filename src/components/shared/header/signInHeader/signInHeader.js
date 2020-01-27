@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import { toast } from 'react-toastify';
-import Lisk from '@liskhq/lisk-client';
+import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { to } from 'await-to-js';
@@ -142,6 +142,7 @@ class Header extends React.Component {
     const newNetwork = this.getNetwork(network);
 
     if (network === networks.customNode.code) {
+      const Lisk = liskClient();
       const liskAPIClient = new Lisk.APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
         .then((res) => {

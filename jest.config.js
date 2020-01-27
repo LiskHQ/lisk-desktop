@@ -1,3 +1,5 @@
+const { join } = require('path');
+
 module.exports = {
   modulePaths: ['src/components'],
   testMatch: [
@@ -22,6 +24,7 @@ module.exports = {
   moduleNameMapper: {
     '^.+\\.css$': 'identity-obj-proxy',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
+    '^Utils/lisk-client': join(__dirname, '.', 'src/utils/api/lisk-client.js'),
   },
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
@@ -90,6 +93,7 @@ module.exports = {
     'src/components/shared/accountVisualWithAddress/index.js',
     'src/components/toolbox/table/empty.js',
     'src/components/toolbox/table/header.js',
+    'src/utils/api/lisk-client.js',
   ],
   coverageThreshold: {
     global: {
