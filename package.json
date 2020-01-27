@@ -139,7 +139,7 @@
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-polyfill": "6.26.0",
     "babel-standalone": "6.26.0",
-    "bundlesize": "0.17.0",
+    "bundlesize": "0.18.0",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-enzyme": "1.0.0-beta.1",
@@ -268,7 +268,7 @@
     }
   ],
   "engines": {
-    "node": ">=v8.14.0 <=v10.0.0"
+    "node": ">=v12.7.0"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true
