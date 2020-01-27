@@ -45,7 +45,7 @@ class RegisterDelegate extends React.Component {
           <Summary
             t={t}
             account={account}
-            networkIdentifier={network.networkIdentifier}
+            networkIdentifier={network.networks.LSK.networkIdentifier}
           />
           <Status
             t={t}
