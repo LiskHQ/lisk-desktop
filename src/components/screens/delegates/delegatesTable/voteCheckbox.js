@@ -10,11 +10,9 @@ import Icon from '../../../toolbox/icon';
  * and using the CheckBox as static.
  */
 const VoteCheckbox = ({
-  delegate, votingModeEnabled, accent, className,
+  delegate, votingModeEnabled, accent, className, voteStatus,
 }) => {
-  const {
-    account, voteStatus = {},
-  } = delegate;
+  const { account } = delegate;
   const removed = voteStatus.confirmed && !voteStatus.unconfirmed;
   const added = !voteStatus.confirmed && voteStatus.unconfirmed;
   return voteStatus.pending
