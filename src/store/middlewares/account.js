@@ -113,7 +113,6 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // https://github.com/LiskHQ/lisk-desktop/pull/1609
     setTimeout(() => {
       updateAccountData(store);
-
       store.dispatch(updateTransactions({
         pendingTransactions: transactions.pending,
         address: account.address,
@@ -136,7 +135,7 @@ const getNetworkFromLocalStorage = () => {
 };
 
 // eslint-disable-next-line max-statements
-const checkNetworkToConnet = (storeSettings) => {
+const checkNetworkToConnect = (storeSettings) => {
   const autologinData = getAutoLogInData();
   let loginNetwork = findMatchingLoginNetwork();
 
@@ -190,7 +189,7 @@ const autoLogInIfNecessary = async (store) => {
   const actualSettings = store && store.getState().settings;
   const autologinData = getAutoLogInData();
 
-  const loginNetwork = checkNetworkToConnet(actualSettings);
+  const loginNetwork = checkNetworkToConnect(actualSettings);
 
   store.dispatch(await networkSet(loginNetwork));
   store.dispatch(networkStatusUpdated({ online: true }));

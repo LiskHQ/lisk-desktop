@@ -11,6 +11,7 @@ import { networkStatusUpdated } from './network';
 import accountConfig from '../constants/account';
 import actionTypes from '../constants/actions';
 import { tokenMap } from '../constants/tokens';
+import { txAdapter } from '../utils/api/lsk/adapters';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -87,10 +88,10 @@ export const secondPassphraseRegistered = ({
     ).then((transaction) => {
       dispatch({
         type: actionTypes.addNewPendingTransaction,
-        data: {
+        data: txAdapter({
           ...transaction,
           senderId: extractAddress(transaction.senderPublicKey),
-        },
+        }),
       });
       callback({
         success: true,
