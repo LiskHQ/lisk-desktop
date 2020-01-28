@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import { tokenMap } from '../../../constants/tokens';
-import { transactionNames } from '../../../constants/transactionTypes';
+import transactionTypes from '../../../constants/transactionTypes';
 import AccountVisualWithAddress from '../accountVisualWithAddress';
 import Icon from '../../toolbox/icon';
 import LiskAmount from '../liskAmount';
@@ -48,7 +48,7 @@ const TransactionRow = ({ data, className, t }) => (
         content={<LiskAmount val={data.fee} token={tokenMap.LSK.key} />}
         size="s"
       >
-        <p>{`${data.type} - ${transactionNames(t)[data.type]}`}</p>
+        <p>{`${data.type} - ${transactionTypes.getByCode(data.type).title}`}</p>
       </Tooltip>
     </span>
     <span className={grid['col-md-1']}>

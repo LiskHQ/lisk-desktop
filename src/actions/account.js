@@ -66,7 +66,6 @@ export const passphraseUsed = data => ({
   data,
 });
 
-
 // TODO delete this action and use setSecondPassphrase with withData HOC
 // directly in the Second passphrase registration component
 export const secondPassphraseRegistered = ({
@@ -74,29 +73,36 @@ export const secondPassphraseRegistered = ({
 }) =>
 /* istanbul ignore next */
   (dispatch, getState) => {
-    const { settings: { token: { active } } } = getState();
+    const { settings: { token: { active } }, network } = getState();
+    const { networkIdentifier } = network.networks.LSK;
     const liskAPIClient = getAPIClient(active, getState());
     const timeOffset = getTimeOffset(getState());
-    setSecondPassphrase(liskAPIClient, secondPassphrase, account.publicKey, passphrase, timeOffset)
-      .then((transaction) => {
-        dispatch({
-          type: actionTypes.addNewPendingTransaction,
-          data: {
-            ...transaction,
-            senderId: extractAddress(transaction.senderPublicKey),
-          },
-        });
-        callback({
-          success: true,
-          transaction,
-        });
-      }).catch((error) => {
-        callback({
-          success: false,
-          error,
-          message: (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.'),
-        });
+    setSecondPassphrase(
+      liskAPIClient,
+      secondPassphrase,
+      account.publicKey,
+      passphrase,
+      timeOffset,
+      networkIdentifier,
+    ).then((transaction) => {
+      dispatch({
+        type: actionTypes.addNewPendingTransaction,
+        data: {
+          ...transaction,
+          senderId: extractAddress(transaction.senderPublicKey),
+        },
       });
+      callback({
+        success: true,
+        transaction,
+      });
+    }).catch((error) => {
+      callback({
+        success: false,
+        error,
+        message: (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.'),
+      });
+    });
     dispatch(passphraseUsed(passphrase));
   };
 

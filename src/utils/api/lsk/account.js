@@ -52,10 +52,16 @@ export const setSecondPassphrase = (
   publicKey,
   passphrase,
   timeOffset,
+  networkIdentifier,
 ) =>
   new Promise((resolve, reject) => {
     const transaction = liskClient().transaction
-      .registerSecondPassphrase({ passphrase, secondPassphrase, timeOffset });
+      .registerSecondPassphrase({
+        passphrase,
+        secondPassphrase,
+        timeOffset,
+        networkIdentifier,
+      });
     liskAPIClient.transactions.broadcast(transaction).then(() => {
       resolve(transaction);
     }).catch(reject);

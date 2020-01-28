@@ -22,7 +22,7 @@ describe('Single Transaction Component', () => {
     timestamp: Date.now(),
   };
   const voteTransaction = {
-    type: transactionTypes.vote,
+    type: transactionTypes().vote.code,
     amount: '0',
     fee: Lisk.transaction.constants.VOTE_FEE.toString(),
     senderId: accounts.genesis.address,

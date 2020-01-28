@@ -22,6 +22,7 @@ export const getAPIClient = (network) => {
         nodes: [network.networks[tokenMap.LSK.key] && network.networks[tokenMap.LSK.key].nodeUrl],
       },
     }[network.name] || {};
+    // @todo if we delete nethash it will work just fine
     apiClients[network.name] = new Lisk.APIClient(nodes, { nethash });
     apiClients[network.name].networkConfig = network;
   }

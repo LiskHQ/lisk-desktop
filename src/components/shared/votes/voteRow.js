@@ -7,10 +7,10 @@ import styles from './votesTab.css';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 
 const VoteRow = ({
-  data, onRowClick, t,
+  data, onRowClick, t, apiVersion,
 }) => (
   <div className={`${tableStyles.row} ${styles.row} vote-row`} onClick={() => onRowClick(data.address)}>
-    <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
+    <div className={apiVersion === '3' ? 'hidden' : grid['col-sm-1']}>
       {
         /* istanbul ignore next */
         (data.rank && +data.rank < 10 ? `0${data.rank}` : data.rank) || '-'
@@ -29,7 +29,7 @@ const VoteRow = ({
         </div>
       </div>
     </div>
-    <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`}>
+    <div className={grid['col-sm-2']}>
       {data.rewards
         ? (
           <span>
@@ -41,7 +41,7 @@ const VoteRow = ({
         /* istanbul ignore next */
         : '-'}
     </div>
-    <div className={`${grid['col-sm-2']} ${grid['col-lg-1']}`}>
+    <div className={`${grid['col-sm-2']} ${grid[apiVersion === '3' ? 'col-lg-2' : 'col-lg-1']}`}>
       {data.productivity !== undefined
         ? `${formatAmountBasedOnLocale({ value: data.productivity })}%`
         /* istanbul ignore next */

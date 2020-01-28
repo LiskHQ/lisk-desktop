@@ -7,11 +7,13 @@ import LiskAmount from '../../../shared/liskAmount';
 import VoteCheckbox from './voteCheckbox';
 import routes from '../../../../constants/routes';
 import styles from './delegatesTable.css';
+import RankOrStatus from './rankOrStatus';
+import VoteWeight from './voteWeight';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 
 const DelegateRow = ({
   data, className, shouldShowVoteColumn, firstTimeVotingActive,
-  votingModeEnabled, onRowClick,
+  votingModeEnabled, onRowClick, apiVersion,
 }) => (
   <div
     className={`${grid.row} ${className} delegate-row`}
@@ -27,8 +29,8 @@ const DelegateRow = ({
         accent={firstTimeVotingActive}
       />
     </span>
-    <span className={grid['col-xs-1']}>
-      {`#${data.rank}`}
+    <span className={apiVersion === '3' ? 'hidden' : grid['col-xs-1']}>
+      <RankOrStatus data={data} />
     </span>
     <span className={`${shouldShowVoteColumn ? grid['col-xs-4'] : grid['col-xs-5']}`}>
       <Link
@@ -40,14 +42,14 @@ const DelegateRow = ({
         <AvatarWithNameAndAddress {...data} />
       </Link>
     </span>
-    <span className={grid['col-md-2']}>
+    <span className={apiVersion === '3' ? grid['col-md-3'] : grid['col-md-2']}>
       <LiskAmount val={data.rewards} token={tokenMap.LSK.key} />
     </span>
     <span className={grid['col-xs-2']}>
       {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
     </span>
     <span className={grid['col-md-2']}>
-      <strong><LiskAmount val={data.vote} roundTo={0} token={tokenMap.LSK.key} /></strong>
+      <VoteWeight data={data} />
     </span>
   </div>
 );

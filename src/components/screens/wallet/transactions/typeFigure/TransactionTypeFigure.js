@@ -3,13 +3,13 @@ import AccountVisual from '../../../../toolbox/accountVisual';
 import Icon from '../../../../toolbox/icon';
 import reg from '../../../../../utils/regex';
 import styles from './transactionTypeFigure.css';
-import transactionTypeIcons from '../../../../../constants/transactionTypeIcons';
 import transactionTypes from '../../../../../constants/transactionTypes';
 
 const TransactionTypeFigure = ({
   transactionType, address, avatarSize = 40, className = '',
 }) => {
   const validateAddress = () => !!reg.address.test(address);
+  const txType = transactionTypes.getByCode(transactionType);
 
   const renderAvatar = () => (validateAddress()
     ? <AccountVisual address={address} size={avatarSize} />
@@ -18,9 +18,9 @@ const TransactionTypeFigure = ({
   return (
     <div className={`${styles.wrapper} ${className} transaction-image`}>
       {
-        transactionType === transactionTypes.send
+        transactionType === transactionTypes().send.code
           ? renderAvatar()
-          : <Icon name={transactionTypeIcons[transactionType] || transactionTypeIcons.default} />
+          : <Icon name={txType ? txType.icon : 'txDefault'} />
       }
     </div>
   );

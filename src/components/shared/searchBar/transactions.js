@@ -9,21 +9,21 @@ const Transactions = ({
 }) => {
   function selectTransactionType() {
     return {
-      [transactionTypes.send]: {
+      [transactionTypes().send.code]: {
         subTitle: t('Amount'),
         value: transactions[0].amount,
       },
-      [transactionTypes.setSecondPassphrase]: {
+      [transactionTypes().setSecondPassphrase.code]: {
         icon: 'tx2ndPassphrase',
         subTitle: t('Fee'),
         value: transactions[0].fee,
       },
-      [transactionTypes.registerDelegate]: {
+      [transactionTypes().registerDelegate.code]: {
         icon: 'txDelegate',
         subTitle: t('Fee'),
         value: transactions[0].fee,
       },
-      [transactionTypes.vote]: {
+      [transactionTypes().vote.code]: {
         icon: 'txVote',
         subTitle: t('Fee'),
         value: transactions[0].fee,

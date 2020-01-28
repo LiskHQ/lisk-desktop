@@ -1,13 +1,13 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-export default (shouldShowVoteColumn, t) => ([
+export default (shouldShowVoteColumn, t, apiVersion) => ([
   {
     title: t('Vote'),
     classList: `${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'}`,
   },
   {
     title: t('Rank'),
-    classList: grid['col-md-1'],
+    classList: apiVersion === '3' ? 'hidden' : grid['col-md-1'],
   },
   {
     title: t('Delegate'),
@@ -15,7 +15,7 @@ export default (shouldShowVoteColumn, t) => ([
   },
   {
     title: t('Forged'),
-    classList: `${grid['col-md-2']}`,
+    classList: apiVersion === '3' ? grid['col-md-3'] : grid['col-md-2'],
     tooltip: {
       title: t('forged'),
       message: t('Total amount of LSK forged by a delegate.'),

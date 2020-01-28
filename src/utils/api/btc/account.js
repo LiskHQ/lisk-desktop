@@ -1,10 +1,11 @@
 import * as bitcoin from 'bitcoinjs-lib';
-import Lisk from '@liskhq/lisk-client';
+import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import bip32 from 'bip32';
 import { getAPIClient } from './network';
 import { tokenMap } from '../../../constants/tokens';
 
 export const getDerivedPathFromPassphrase = (passphrase, config) => {
+  const Lisk = liskClient();
   const seed = Lisk.passphrase.Mnemonic.mnemonicToSeed(passphrase);
   return bip32.fromSeed(seed, config.network).derivePath(config.derivationPath);
 };

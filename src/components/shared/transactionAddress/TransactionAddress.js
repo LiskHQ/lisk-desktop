@@ -1,11 +1,11 @@
 import React from 'react';
 import { tokenMap } from '../../../constants/tokens';
 import regex from '../../../utils/regex';
-import transactionTypes, { transactionNames } from '../../../constants/transactionTypes';
+import transactionTypes from '../../../constants/transactionTypes';
 import styles from './transactionAddress.css';
 
 const TransactionAddress = ({
-  address, bookmarks, transactionType, t, token,
+  address, bookmarks, transactionType, token,
 }) => {
   const account = [...bookmarks.LSK, ...bookmarks.BTC].filter(acc => acc.address === address);
 
@@ -18,8 +18,8 @@ const TransactionAddress = ({
   return (
     <div className={`${styles.wrapper} transaction-address`}>
       <span>
-        {transactionType !== transactionTypes.send
-          ? transactionNames(t)[transactionType]
+        {transactionType !== transactionTypes().send.code
+          ? transactionTypes.getByCode(transactionType).title
           : renderAddress()}
       </span>
       {account.length ? (

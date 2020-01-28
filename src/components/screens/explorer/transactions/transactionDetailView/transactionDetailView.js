@@ -22,23 +22,7 @@ class TransactionDetailView extends React.Component {
       netCode,
       t,
     } = this.props;
-    const { senderLabel, title } = {
-      [transactionTypes.setSecondPassphrase]: {
-        title: t('2nd passphrase registration'),
-        senderLabel: t('Account'),
-      },
-      [transactionTypes.registerDelegate]: {
-        title: t('Delegate registration'),
-        senderLabel: t('Account nickname'),
-      },
-      [transactionTypes.vote]: {
-        title: t('Delegate vote'),
-        senderLabel: t('Voter'),
-      },
-    }[transaction.type] || {
-      senderLabel: t('Sender'),
-    };
-
+    const { senderLabel, title } = transactionTypes.getByCode(transaction.type || 0);
     return (transaction.id ? (
       <React.Fragment>
         {title ? (
@@ -60,7 +44,7 @@ class TransactionDetailView extends React.Component {
             label={senderLabel}
           />
         </BoxRow>
-        {transaction.type === transactionTypes.send
+        {transaction.type === transactionTypes().send.code
           ? (
             <BoxRow className={styles.detailsWrapper}>
               <AccountInfo
@@ -75,7 +59,7 @@ class TransactionDetailView extends React.Component {
           : null
         }
         {children}
-        { transaction.type === transactionTypes.send
+        { transaction.type === transactionTypes().send.code
           ? (
             <BoxRow className={styles.message}>
               <div className={`${styles.detailsWrapper}`}>
@@ -93,7 +77,7 @@ class TransactionDetailView extends React.Component {
             </BoxRow>
           ) : null
         }
-        { transaction.type === transactionTypes.vote && transaction.votesName ? (
+        { transaction.type === transactionTypes().vote.code && transaction.votesName ? (
           <TransactionVotes votes={transaction.votesName} />
         ) : null
         }

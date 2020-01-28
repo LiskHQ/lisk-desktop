@@ -11,11 +11,11 @@ const TransactionAmount = ({
   const isRecieve = address === transaction.recipientId;
   // e.g. account initialization
   const isSentToSelf = transaction.recipientId === transaction.senderId
-    && transaction.type === transactionTypes.send;
+    && transaction.type === transactionTypes().send.code;
 
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
-      { transaction.type === transactionTypes.send
+      { transaction.type === transactionTypes().send.code
         ? (
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <span className={isRecieve && !isSentToSelf ? styles.recieve : ''}>

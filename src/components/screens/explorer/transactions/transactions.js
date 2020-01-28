@@ -138,7 +138,7 @@ class Transactions extends React.Component {
                   </div>
                 </BoxRow>
                 <BoxRow>
-                  { transaction.type === transactionTypes.send
+                  { transaction.type === transactionTypes().send.code
                     ? (
                       <div className={styles.value}>
                         <span className={styles.label}>
