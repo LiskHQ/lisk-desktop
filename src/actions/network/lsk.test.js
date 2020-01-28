@@ -1,4 +1,4 @@
-import Lisk from '@liskhq/lisk-client-Edge';
+import Lisk from '@liskhq/lisk-client';
 import { toast } from 'react-toastify';
 import { networkSet } from './lsk';
 import networks from '../../constants/networks';

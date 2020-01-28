@@ -1,4 +1,4 @@
-import Lisk from '@liskhq/lisk-client-Edge';
+import Lisk from '@liskhq/lisk-client';
 
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';

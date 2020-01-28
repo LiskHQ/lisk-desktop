@@ -1,4 +1,4 @@
-import Lisk from '@liskhq/lisk-client-Edge';
+import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import networks from '../constants/networks';
 

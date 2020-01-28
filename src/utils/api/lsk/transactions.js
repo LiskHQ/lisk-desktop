@@ -1,4 +1,4 @@
-import Lisk from '@liskhq/lisk-client-Edge';
+import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import { getAPIClient } from './network';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import { toRawLsk } from '../../lsk';
@@ -17,6 +17,7 @@ export const send = (
   timeOffset,
 ) =>
   new Promise((resolve, reject) => {
+    const Lisk = liskClient();
     const txId = Lisk.transaction.transfer({
       amount,
       data,
@@ -100,8 +101,11 @@ export const getSingleTransaction = ({
 
 export const create = (transaction, transactionType) => new Promise((resolve, reject) => {
   try {
+    const Lisk = liskClient();
+    const { networkIdentifier } = transaction.network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
       ...transaction,
+      networkIdentifier,
     });
     resolve(tx);
   } catch (error) {
