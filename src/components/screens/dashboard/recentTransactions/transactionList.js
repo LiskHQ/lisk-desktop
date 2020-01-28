@@ -41,10 +41,14 @@ const TransactionList = ({
             />
           </div>
           <TransactionAmount
-            address={account.address}
+            host={account.address}
             token={activeToken}
             transaction={tx}
+            sender={tx.senderId}
+            type={tx.type}
+            recipient={tx.recipientId || tx.asset.recipientId}
             roundTo={2}
+            amount={tx.amount || tx.asset.amount}
           />
         </Link>
       ))
