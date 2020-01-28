@@ -48,11 +48,11 @@ export const adaptTransactions = (res) => { // eslint-disable-line import/prefer
 };
 
 export const adaptDelegateQueryParams = (params) => {
-  const apiVersion = store.getState().network.apiVersion;
+  const { apiVersion } = store.getState().network.networks.LSK;
   if (apiVersion === defaultApiVersion) return params;
   const morphedParams = {
     ...params,
-    sort: 'voteWeight:asc',
+    sort: apiVersion === '3' ? 'voteWeight:asc' : 'rank:asc',
   };
   return morphedParams;
 };
