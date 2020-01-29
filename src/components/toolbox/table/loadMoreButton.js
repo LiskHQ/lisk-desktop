@@ -7,7 +7,8 @@ const LoadMoreButton = ({
 }) => {
   if (
     error
-    || dataLength === 0
+    || dataLength < 30
+    || dataLength % 30 === 0
     || !canLoadMore
   ) return null;
   return (<FooterButton className="load-more" onClick={onClick}>{t('Load more')}</FooterButton>);

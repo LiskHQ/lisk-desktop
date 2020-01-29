@@ -15,13 +15,15 @@ export const txAdapter = (data) => { // eslint-disable-line import/prefer-defaul
   const apiVersion = store.getState().network.apiVersion;
   if (apiVersion === defaultApiVersion) return data;
   const morphedData = { ...data };
+  const { type } = data;
 
-  if (data.type === 8) {
+  if (type === 8) {
     morphedData.recipientId = data.asset.recipientId;
     morphedData.amount = data.asset.amount;
   }
-
-  morphedData.type -= 8;
+  if (type >= 8) {
+    morphedData.type -= 8;
+  }
   return morphedData;
 };
 

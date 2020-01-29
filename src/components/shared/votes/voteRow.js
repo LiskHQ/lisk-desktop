@@ -65,6 +65,7 @@ const VoteRow = ({
 
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
-  (prevProps.data.address === nextProps.data.address);
+  (prevProps.data.address === nextProps.data.address
+    && prevProps.data.rewards === nextProps.data.rewards);
 
 export default React.memo(VoteRow, areEqual);

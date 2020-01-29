@@ -14,6 +14,20 @@ import VoteWeight from './voteWeight';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 import { voteToggled } from '../../../../actions/voting';
 
+const AddressWrapper = ({ votingModeEnabled, address, children }) => {
+  if (votingModeEnabled) {
+    return (<div className={styles.delegateLink}>{children}</div>);
+  }
+  return (
+    <Link
+      className={styles.delegateLink}
+      to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${address}`}
+    >
+      {children}
+    </Link>
+  );
+};
+
 const DelegateRow = (props) => {
   const {
     data, className, shouldShowVoteColumn, firstTimeVotingActive,
@@ -45,14 +59,12 @@ const DelegateRow = (props) => {
         <RankOrStatus data={data} />
       </span>
       <span className={`${shouldShowVoteColumn ? grid['col-xs-4'] : grid['col-xs-5']}`}>
-        <Link
-          className={styles.delegateLink}
-          to={shouldShowVoteColumn
-            ? routes.delegates.path
-            : `${routes.accounts.pathPrefix}${routes.accounts.path}/${data.account.address}`}
+        <AddressWrapper
+          address={data.account.address}
+          votingModeEnabled={votingModeEnabled}
         >
           <AvatarWithNameAndAddress {...data} />
-        </Link>
+        </AddressWrapper>
       </span>
       <span className={apiVersion === '3' ? grid['col-md-3'] : grid['col-md-2']}>
         <LiskAmount val={data.rewards} token={tokenMap.LSK.key} />

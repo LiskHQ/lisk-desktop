@@ -12,6 +12,7 @@ import { getTimeOffset } from '../utils/hacks';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI } from '../utils/api';
 import { signSendTransaction } from '../utils/hwManager';
+import { txAdapter } from '../utils/api/lsk/adapters';
 
 // ========================================= //
 //            ACTION CREATORS
@@ -32,10 +33,10 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
  */
 export const addNewPendingTransaction = data => ({
   type: actionTypes.addNewPendingTransaction,
-  data: {
+  data: txAdapter({
     ...data,
     senderId: extractAddress(data.senderPublicKey),
-  },
+  }),
 });
 
 // ========================================= //

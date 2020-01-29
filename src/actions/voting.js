@@ -13,6 +13,7 @@ import { addNewPendingTransaction } from './transactions';
 import actionTypes from '../constants/actions';
 import { getAPIClient } from '../utils/api/network';
 import { tokenMap } from '../constants/tokens';
+import { txAdapter } from '../utils/api/lsk/adapters';
 
 /**
  * Add data to the list of all delegates
@@ -76,7 +77,8 @@ export const votePlaced = ({
       });
     } else {
       dispatch({ type: actionTypes.pendingVotesAdded });
-      callResult.map(transaction => dispatch(addNewPendingTransaction(transaction)));
+      callResult.map(transaction =>
+        dispatch(addNewPendingTransaction(txAdapter(transaction))));
       dispatch(passphraseUsed(account.passphrase));
       callback({ success: true });
     }

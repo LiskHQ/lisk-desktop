@@ -102,8 +102,12 @@ const VotesTab = ({
           canLoadMore={canLoadMore}
           isLoading={areLoading}
           iterationKey="address"
-          row={props =>
-            <VoteRow {...props} t={t} onRowClick={onRowClick} apiVersion={apiVersion} />}
+          row={VoteRow}
+          additionalRowProps={{
+            t,
+            apiVersion,
+            onRowClick,
+          }}
           loadData={onShowMore}
           header={header(t, apiVersion)}
         />

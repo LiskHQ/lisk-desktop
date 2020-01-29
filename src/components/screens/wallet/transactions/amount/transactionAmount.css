@@ -7,7 +7,7 @@
   margin-left: 8px;
   font-weight: var(--font-weight-bold);
 
-  & .recieve {
+  & .receive {
     border-radius: var(--border-radius-standard);
     display: inline-block;
     padding: 6px 12px;
