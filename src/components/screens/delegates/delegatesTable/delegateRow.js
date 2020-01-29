@@ -21,9 +21,7 @@ const AddressWrapper = ({ votingModeEnabled, address, children }) => {
   return (
     <Link
       className={styles.delegateLink}
-      to={votingModeEnabled
-        ? routes.delegates.path
-        : `${routes.accounts.pathPrefix}${routes.accounts.path}/${address}`}
+      to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${address}`}
     >
       {children}
     </Link>
