@@ -163,6 +163,11 @@ describe('Utils: Transactions API', () => {
         recipientId: '123L',
         secondPassphrase: null,
         timeOffset: 0,
+        network: {
+          networks: {
+            LSK: { networkIdentifier: 'sample_identifier' },
+          },
+        },
       };
       try {
         await create(tx, transactionTypes().send.key);
