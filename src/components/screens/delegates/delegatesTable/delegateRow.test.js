@@ -20,7 +20,7 @@ describe('DelegateRow', () => {
       account: {
         address: '6356913781456505636L',
         publicKey: 'b3953cb16e2457b9be78ad8c8a2985435dedaed5f0dd63443bdfbccc92d09f2d',
-        secondPublicKey: '69c9c77e900320dae8efc1396b97206ba7bec409f9a83c765f62ac40f58768bd'
+        secondPublicKey: '69c9c77e900320dae8efc1396b97206ba7bec409f9a83c765f62ac40f58768bd',
       },
       approval: 46.33,
     },
