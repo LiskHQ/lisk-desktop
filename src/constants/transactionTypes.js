@@ -1,12 +1,14 @@
 const transactionTypes = (t = str => str) => ({
   send: {
     code: 0,
+    apiSpecificCode: 8,
     title: t('Send'),
     senderLabel: t('Sender'),
     key: 'transfer',
   },
   setSecondPassphrase: {
     code: 1,
+    apiSpecificCode: 9,
     title: t('Second passphrase registration'),
     senderLabel: t('Account'),
     key: 'secondPassphrase',
@@ -14,6 +16,7 @@ const transactionTypes = (t = str => str) => ({
   },
   registerDelegate: {
     code: 2,
+    apiSpecificCode: 10,
     title: t('Delegate registration'),
     senderLabel: t('Account nickname'),
     key: 'registerDelegate',
@@ -21,6 +24,7 @@ const transactionTypes = (t = str => str) => ({
   },
   vote: {
     code: 3,
+    apiSpecificCode: 11,
     title: t('Delegate vote'),
     senderLabel: t('Voter'),
     key: 'vote',
@@ -28,6 +32,7 @@ const transactionTypes = (t = str => str) => ({
   },
   createMultiSig: {
     code: 4,
+    apiSpecificCode: 12,
     title: t('Multisignature creation'),
     senderLabel: t('Registrant'),
     key: 'createMultiSig',
