@@ -17,7 +17,7 @@ export const txAdapter = (data) => { // eslint-disable-line import/prefer-defaul
   const morphedData = { ...data };
   const { type } = data;
 
-  if (type === 8) {
+  if (type === 8 && data.asset.recipientId && data.asset.amount) {
     morphedData.recipientId = data.asset.recipientId;
     morphedData.amount = data.asset.amount;
   }
