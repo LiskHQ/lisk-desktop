@@ -21,7 +21,7 @@ class Summary extends React.Component {
       account,
       nextStep,
       nickname,
-      networkIdentifier,
+      network,
     } = this.props;
 
     const data = {
@@ -29,7 +29,7 @@ class Summary extends React.Component {
       username: nickname,
       passphrase: account.passphrase,
       secondPassphrase,
-      networkIdentifier,
+      network,
     };
 
     const [error, tx] = await to(create(data, transactionTypes().registerDelegate.key));

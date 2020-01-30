@@ -9,6 +9,12 @@ import Summary from './summary';
 describe('Delegate Registration Summary', () => {
   let wrapper;
 
+  const network = {
+    networks: {
+      LSK: { networkIdentifier: 'sample_identifier' },
+    },
+  };
+
   const props = {
     account: {
       address: '123456789L',
@@ -21,6 +27,7 @@ describe('Delegate Registration Summary', () => {
     nextStep: jest.fn(),
     prevStep: jest.fn(),
     t: key => key,
+    network,
   };
 
   const response = {
@@ -66,6 +73,7 @@ describe('Delegate Registration Summary', () => {
       username: props.nickname,
       passphrase: props.account.passphrase,
       secondPassphrase: null,
+      network,
     };
 
     expect(props.nextStep).not.toBeCalled();
@@ -85,6 +93,7 @@ describe('Delegate Registration Summary', () => {
       account: props.account,
       passphrase: props.account.passphrase,
       secondPassphrase: null,
+      networkIdentifier: 'sample_identifier',
     };
 
     expect(props.nextStep).toBeCalled();
