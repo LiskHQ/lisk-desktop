@@ -8,6 +8,7 @@ import { version } from '../../../../package.json';
 import i18n from '../../../i18n';
 import networks from '../../../constants/networks';
 import voting from '../../../constants/voting';
+import { adaptTransactions } from './adapters';
 
 const isStaging = () => (
   localStorage.getItem('useLiskServiceStaging') || version.includes('beta') || version.includes('rc')
@@ -16,20 +17,21 @@ const isStaging = () => (
 
 const liskServiceUrl = `https://mainnet-service${isStaging()}.lisk.io`;
 const liskServiceTestnetUrl = `https://testnet-service${isStaging()}.lisk.io`;
+const liskServiceBetanetUrl = 'https://betanet-service.lisk.io';
 
 const getServerUrl = (networkConfig) => {
   const name = getNetworkNameBasedOnNethash(networkConfig);
-  if (name === networks.mainnet.name) {
-    return liskServiceUrl;
+  switch (name) {
+    case networks.mainnet.name:
+      return liskServiceUrl;
+    case networks.testnet.name:
+      return liskServiceTestnetUrl;
+    default:
+      if (networkConfig.networks.LSK.nodeUrl.indexOf('betanet') > 0) {
+        return liskServiceBetanetUrl;
+      }
+      throw new Error(i18n.t('This feature can be accessed through Mainet and Testnet.'));
   }
-  if (name === networks.testnet.name) {
-    return liskServiceTestnetUrl;
-  }
-  const liskServiceDevnetUrl = localStorage.getItem('liskServiceUrl');
-  if (liskServiceDevnetUrl) {
-    return liskServiceDevnetUrl;
-  }
-  throw new Error(i18n.t('This feature can be accessed through Mainet and Testnet.'));
 };
 
 const formatDate = (value, options) => getTimestampFromFirstBlock(value, 'DD.MM.YY', options);
@@ -86,7 +88,7 @@ const liskServiceApi = {
   }) => liskServiceGet({
     networkConfig,
     path: '/api/v1/transactions',
-    transformResponse: response => response.data,
+    transformResponse: response => adaptTransactions(response).data,
     searchParams: {
       limit: DEFAULT_LIMIT,
       ...(dateFrom && { from: formatDate(dateFrom) }),
