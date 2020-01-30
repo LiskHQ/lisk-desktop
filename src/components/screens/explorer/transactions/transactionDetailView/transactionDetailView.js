@@ -23,17 +23,21 @@ class TransactionDetailView extends React.Component {
       t,
     } = this.props;
     const { senderLabel, title } = transactionTypes.getByCode(transaction.type || 0);
+    const isTransferTransaction = transaction.type === transactionTypes().send.code;
     return (transaction.id ? (
       <React.Fragment>
-        {title ? (
-          <div className={styles.summaryHeader}>
-            <TransactionTypeFigure
-              address={transaction.senderId}
-              transactionType={transaction.type}
-            />
-            <h2 className="tx-header">{title}</h2>
-          </div>
-        ) : null}
+        { isTransferTransaction
+          ? null
+          : (
+            <div className={styles.summaryHeader}>
+              <TransactionTypeFigure
+                address={transaction.senderId}
+                transactionType={transaction.type}
+              />
+              <h2 className="tx-header">{title}</h2>
+            </div>
+          )
+        }
         <BoxRow className={styles.detailsWrapper}>
           <AccountInfo
             name={getDelegateName(transaction)}
@@ -44,7 +48,7 @@ class TransactionDetailView extends React.Component {
             label={senderLabel}
           />
         </BoxRow>
-        {transaction.type === transactionTypes().send.code
+        { isTransferTransaction
           ? (
             <BoxRow className={styles.detailsWrapper}>
               <AccountInfo
@@ -59,7 +63,7 @@ class TransactionDetailView extends React.Component {
           : null
         }
         {children}
-        { transaction.type === transactionTypes().send.code
+        { isTransferTransaction
           ? (
             <BoxRow className={styles.message}>
               <div className={`${styles.detailsWrapper}`}>
@@ -77,7 +81,7 @@ class TransactionDetailView extends React.Component {
             </BoxRow>
           ) : null
         }
-        { transaction.type === transactionTypes().vote.code && transaction.votesName ? (
+        { isTransferTransaction && transaction.votesName ? (
           <TransactionVotes votes={transaction.votesName} />
         ) : null
         }
