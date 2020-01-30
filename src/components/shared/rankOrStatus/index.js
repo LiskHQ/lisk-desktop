@@ -7,9 +7,9 @@ import styles from './rankOrStatus.css';
  * @param {String} className custom class names
  */
 const RankOrStatus = ({ data, className }) => {
-  const apiVersion = useSelector(state => state.network.apiVersion);
+  const apiVersion = useSelector(state => state.network.networks.LSK.apiVersion);
   return (
-    (apiVersion === '2.x')
+    (apiVersion === '2')
       ? (
         <span className={`${styles.rank} ${className}`}>
           {`#${data.rank}`}
