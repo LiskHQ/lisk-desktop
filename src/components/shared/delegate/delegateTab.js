@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import voting from '../../../constants/voting';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
+import VoteWeight from '../voteWeight';
+import RankOrStatus from '../rankOrStatus';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { getUnixTimestampFromValue } from '../../../utils/datetime';
 import { tokenMap } from '../../../constants/tokens';
@@ -14,6 +17,7 @@ import i18n from '../../../i18n';
 import styles from './delegateTab.css';
 
 const DelegateTab = ({ delegate, account, t }) => {
+  const { apiVersion } = useSelector(state => state.network.networks.LSK);
   moment.locale(i18n.language);
   delegate = {
     ...account.delegate,
@@ -34,13 +38,11 @@ const DelegateTab = ({ delegate, account, t }) => {
       </BoxHeader>
       <BoxContent className={styles.wrapper}>
         <ul className={styles.delegateStats}>
-          <li className="rank">
-            <span className={styles.label}>{t('Rank')}</span>
-            {delegate.rank}
-          </li>
           <li className="status">
-            <span className={styles.label}>{t('Status')}</span>
-            {status}
+            <span className={styles.label}>
+              {apiVersion === '2' ? t('Rank') : t('Status') }
+            </span>
+            <RankOrStatus data={delegate} />
           </li>
           <li className="delegate-since">
             <span className={styles.label}>{t('Delegate since')}</span>
@@ -48,9 +50,7 @@ const DelegateTab = ({ delegate, account, t }) => {
           </li>
           <li className="vote">
             <span className={styles.label}>{t('Vote weight')}</span>
-            <span>
-              <LiskAmount val={delegate.vote} token={tokenMap.LSK.key} />
-            </span>
+            <VoteWeight data={delegate} />
           </li>
           <li className="approval">
             <span className={styles.label}>{t('Approval')}</span>
