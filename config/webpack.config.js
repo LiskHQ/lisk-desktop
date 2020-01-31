@@ -1,4 +1,5 @@
 const { resolve } = require('path');
+const webpack = require('webpack'); // eslint-disable-line
 
 module.exports = {
   node: {
@@ -106,4 +107,10 @@ module.exports = {
       },
     },
   },
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      NACL_FAST: 'disable',
+      DEBUG: true,
+    }),
+  ],
 };
