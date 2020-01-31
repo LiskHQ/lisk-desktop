@@ -1,7 +1,15 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import * as reactRedux from 'react-redux';
 import TransactionVotes from './transactionVotes';
 
+const network = {
+  network: {
+    networks: {
+      LSK: { apiVersion: '2' },
+    },
+  },
+};
 describe('Transaction Votes', () => {
   let wrapper;
   const props = {
@@ -11,6 +19,7 @@ describe('Transaction Votes', () => {
     },
     t: v => v,
   };
+  reactRedux.useSelector = jest.fn().mockImplementation(() => network);
 
   it.skip('Should render with added and deleted Votes', () => {
     wrapper = mount(<TransactionVotes {...props} />);
