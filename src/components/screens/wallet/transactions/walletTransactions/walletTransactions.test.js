@@ -7,13 +7,15 @@ import accounts from '../../../../../../test/constants/accounts';
 import routes from '../../../../../constants/routes';
 import store from '../../../../../store';
 
-const fakeStore = configureStore()({
+const network = {
   network: {
     networks: {
       LSK: { apiVersion: '2' },
     },
   },
-});
+};
+
+const fakeStore = configureStore()(network);
 
 describe('WalletTransactions Component', () => {
   const transactions = [{
@@ -57,13 +59,7 @@ describe('WalletTransactions Component', () => {
     },
   };
 
-  store.getState = jest.fn().mockImplementation(() => ({
-    network: {
-      networks: {
-        LSK: { apiVersion: '2' },
-      },
-    },
-  }));
+  store.getState = jest.fn().mockImplementation(() => network);
 
   const mountWithProps = props =>
     mount(<Provider store={fakeStore}><WalletTransactions {...props} /></Provider>);

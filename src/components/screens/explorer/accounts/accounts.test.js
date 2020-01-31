@@ -12,22 +12,18 @@ jest.mock('../../../../utils/hwManager.js', () => ({
   getAddress: jest.fn(),
 }));
 
-store.getState = jest.fn().mockImplementation(() => ({
+const network = {
   network: {
     networks: {
       LSK: { apiVersion: '2' },
     },
   },
-}));
+};
+
+store.getState = jest.fn().mockImplementation(() => network);
 
 describe('Accounts Component', () => {
-  const fakeStore = configureStore()({
-    network: {
-      networks: {
-        LSK: { apiVersion: '2' },
-      },
-    },
-  });
+  const fakeStore = configureStore()(network);
 
   const transactions = [{
     id: '11327666066806006572',
