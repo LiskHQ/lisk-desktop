@@ -57,6 +57,14 @@ describe('WalletTransactions Component', () => {
     },
   };
 
+  store.getState = jest.fn().mockImplementation(() => ({
+    network: {
+      networks: {
+        LSK: { apiVersion: '2' },
+      },
+    },
+  }));
+
   const mountWithProps = props =>
     mount(<Provider store={fakeStore}><WalletTransactions {...props} /></Provider>);
 
