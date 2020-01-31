@@ -1,4 +1,4 @@
-import { constants } from '@liskhq/lisk-client-Edge';
+import { constants } from '@liskhq/lisk-client';
 import networks from '../constants/networks';
 import getNetwork, { getNetworkIdentifier } from './getNetwork';
 

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { utils } from '@liskhq/lisk-transactions-Edge';
+import { utils } from '@liskhq/lisk-transactions';
 import Fees from '../../../constants/fees';
 import Spinner from '../../toolbox/spinner';
 import routes from '../../../constants/routes';

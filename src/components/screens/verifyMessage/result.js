@@ -1,4 +1,4 @@
-import { cryptography } from '@liskhq/lisk-client-Edge';
+import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';

@@ -1,4 +1,4 @@
-import { utils } from '@liskhq/lisk-transactions-Edge';
+import { utils } from '@liskhq/lisk-transactions';
 import io from 'socket.io-client';
 import * as popsicle from 'popsicle';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
