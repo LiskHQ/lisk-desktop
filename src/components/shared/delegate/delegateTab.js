@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import voting from '../../../constants/voting';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
@@ -23,7 +22,6 @@ const DelegateTab = ({ delegate, account, t }) => {
     ...account.delegate,
     ...delegate.data,
   };
-  const status = delegate && delegate.rank && delegate.rank <= voting.maxCountOfVotes ? t('Active') : t('Standby');
   const timeFromLastBlock = delegate.lastBlock !== '-'
     ? moment(getUnixTimestampFromValue(delegate.lastBlock)).format(t('DD MMM YY, HH:mm'))
     : '-';
