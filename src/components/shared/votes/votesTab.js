@@ -19,7 +19,7 @@ const VotesTab = ({
   const [showing, setShowing] = useState(30);
   const [filterValue, setFilterValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const apiVersion = useSelector(state => state.network.networks.LSK.apiVersion);
+  const { apiVersion } = useSelector(state => state.network.networks.LSK);
 
   const fetchDelegateWhileNeeded = () => {
     const delegatesData = delegates.data;

@@ -13,6 +13,13 @@ function getDelegateName(transaction) {
   return transaction.asset && transaction.asset.delegate && transaction.asset.delegate.username;
 }
 
+const getTxAsset = (tx) => {
+  if (typeof tx.asset === 'object' && tx.asset !== null && typeof tx.asset.data === 'string') {
+    return tx.asset.data;
+  }
+  return '-';
+};
+
 class TransactionDetailView extends React.Component {
   render() {
     const {
@@ -69,7 +76,7 @@ class TransactionDetailView extends React.Component {
               <div className={`${styles.detailsWrapper}`}>
                 <span className={styles.label}>{t('Message')}</span>
                 <div className={`${styles.value} tx-reference`}>
-                  {transaction.asset && transaction.asset.data ? transaction.asset.data : '-'}
+                  {getTxAsset(transaction)}
                 </div>
               </div>
               <div className={`${styles.detailsWrapper}`}>

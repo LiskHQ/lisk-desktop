@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import BoxRow from '../../../../toolbox/box/row';
 import styles from './transactionDetailView.css';
 import routes from '../../../../../constants/routes';
-import RankOrStatus from '../../../delegates/delegatesTable/rankOrStatus';
+import RankOrStatus from '../../../../shared/rankOrStatus';
 
 const transactionVotes = ({ votes, t }) => {
   const accountPath = `${routes.accounts.pathPrefix}${routes.accounts.path}`;

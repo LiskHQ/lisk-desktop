@@ -1,7 +1,15 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import * as reactRedux from 'react-redux';
 import TransactionVotes from './transactionVotes';
 
+const store = {
+  network: {
+    networks: {
+      LSK: { apiVersion: '2' },
+    },
+  },
+};
 describe('Transaction Votes', () => {
   let wrapper;
   const props = {
@@ -11,15 +19,16 @@ describe('Transaction Votes', () => {
     },
     t: v => v,
   };
+  reactRedux.useSelector = jest.fn().mockImplementation(filter => filter(store));
 
-  it.skip('Should render with added and deleted Votes', () => {
+  it('Should render with added and deleted Votes', () => {
     wrapper = mount(<TransactionVotes {...props} />);
     expect(wrapper).toContainMatchingElements(2, '.votesContainer');
     expect(wrapper.find('.rank').first().text()).toEqual(`#${props.votes.added[0].rank}`);
     expect(wrapper.find('.username').first().text()).toEqual(props.votes.added[0].username);
   });
 
-  it.skip('Should only render added votes and sort by rank', () => {
+  it('Should only render added votes and sort by rank', () => {
     const addedProps = {
       ...props,
       votes: {
@@ -31,7 +40,7 @@ describe('Transaction Votes', () => {
     };
     wrapper = mount(<TransactionVotes {...addedProps} />);
     expect(wrapper).toContainMatchingElements(1, '.votesContainer.added');
-    expect(wrapper.find('.rank').at(1).text()).toBe(`#${addedProps.votes.added[0].rank}`);
+    expect(wrapper.find('.rank').at(1).text()).toBe(`#${addedProps.votes.added[1].rank}`);
   });
 
   it('Should only render removed votes', () => {

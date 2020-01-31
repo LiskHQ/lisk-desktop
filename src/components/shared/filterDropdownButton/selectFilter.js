@@ -7,7 +7,7 @@ import Select from '../../toolbox/select';
 const SelectFilter = ({
   label, placeholder, filters, name, updateCustomFilters,
 }) => {
-  const options = [...transactionTypes];
+  const options = [...transactionTypes.getListOf('code')];
   if (placeholder) {
     options.unshift({ value: '', label: placeholder });
   }

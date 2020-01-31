@@ -39,7 +39,7 @@ describe('RegisterDelegate', () => {
     wrapper = mount(<RegisterDelegate {...props} />);
   });
 
-  it.skip('renders properly SelectName component', () => {
+  it('renders properly SelectName component', () => {
     expect(wrapper).toContainMatchingElement('.select-name-container');
     expect(wrapper).toContainMatchingElements(2, '.select-name-text-description');
     expect(wrapper).toContainMatchingElement('.select-name-input');

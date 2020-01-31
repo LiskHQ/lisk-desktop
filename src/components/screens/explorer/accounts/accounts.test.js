@@ -1,16 +1,29 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import Accounts from './accounts';
 import accounts from '../../../../../test/constants/accounts';
 import routes from '../../../../constants/routes';
 import * as hwManager from '../../../../utils/hwManager';
+import store from '../../../../store';
 
 jest.mock('../../../../utils/hwManager.js', () => ({
   getAddress: jest.fn(),
 }));
 
+const network = {
+  network: {
+    networks: {
+      LSK: { apiVersion: '2' },
+    },
+  },
+};
+
+store.getState = jest.fn().mockImplementation(() => network);
+
 describe('Accounts Component', () => {
-  let wrapper;
+  const fakeStore = configureStore()(network);
 
   const transactions = [{
     id: '11327666066806006572',
@@ -26,7 +39,7 @@ describe('Accounts Component', () => {
     token: 'LSK',
   }];
 
-  const props = {
+  const defaultProps = {
     accounts: {
       [accounts.genesis.address]: accounts.genesis,
     },
@@ -72,40 +85,43 @@ describe('Accounts Component', () => {
     activeToken: 'LSK',
   };
 
-  describe('Another account', () => {
-    beforeEach(() => {
-      wrapper = mount(<Accounts {...props} />);
-    });
+  const mountWithProps = props =>
+    mount(<Provider store={fakeStore}><Accounts {...props} /></Provider>);
 
+  describe('Another account', () => {
     it('renders Accounts Component and loads account transactions', () => {
+      const wrapper = mountWithProps(defaultProps);
       const renderedWalletTransactions = wrapper.find(Accounts);
       expect(renderedWalletTransactions).toExist();
       expect(wrapper).toContainExactlyOneMatchingElement('div.transactions-row');
     });
 
     it('click on row transaction', () => {
+      const wrapper = mountWithProps(defaultProps);
       const transactionPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${transactions[0].id}`;
       wrapper.find('.transactions-row').first().simulate('click');
-      expect(props.history.push).toBeCalledWith(transactionPath);
+      expect(defaultProps.history.push).toBeCalledWith(transactionPath);
     });
 
     it('click on load more', () => {
+      const wrapper = mountWithProps(defaultProps);
       expect(wrapper).toContainMatchingElement('.show-more-button');
       wrapper.find('.show-more-button').simulate('click');
-      expect(props.transactions.loadData).toBeCalled();
+      expect(defaultProps.transactions.loadData).toBeCalled();
     });
 
     it('Should change filters on click', () => {
+      const wrapper = mountWithProps(defaultProps);
       expect(wrapper).toContainMatchingElement('.transaction-filter-item');
       wrapper.find('.transaction-filter-item').at(1).simulate('click');
-      expect(props.transactions.loadData).toBeCalled();
+      expect(defaultProps.transactions.loadData).toBeCalled();
     });
 
     it('click verify address when user use hardware wallet', () => {
       const newProps = {
-        ...props,
+        ...defaultProps,
         account: {
-          ...props.account,
+          ...defaultProps.account,
           loginType: 1,
           hwInfo: {
             deviceId: 'abc123',
@@ -113,7 +129,7 @@ describe('Accounts Component', () => {
           },
         },
       };
-      wrapper = mount(<Accounts {...newProps} />);
+      const wrapper = mountWithProps(newProps);
       expect(wrapper).toContainMatchingElement('.verify-address');
       wrapper.find('.verify-address').at(0).simulate('click');
       expect(hwManager.getAddress).toBeCalled();
@@ -122,7 +138,7 @@ describe('Accounts Component', () => {
 
   describe('Delegate account', () => {
     const delegateProps = {
-      ...props,
+      ...defaultProps,
       accounts: {
         [accounts.delegate.address]: accounts.delegate,
       },
@@ -131,7 +147,7 @@ describe('Accounts Component', () => {
       match: { params: { address: accounts.delegate.address } },
       balance: accounts.delegate.balance,
       detailAccount: {
-        ...props.detailAccount,
+        ...defaultProps.detailAccount,
         data: {
           ...accounts.delegate,
           delegate: {
@@ -156,11 +172,8 @@ describe('Accounts Component', () => {
       },
     };
 
-    beforeEach(() => {
-      wrapper = mount(<Accounts {...delegateProps} />);
-    });
-
     it('Should render delegate Tab', () => {
+      const wrapper = mountWithProps(delegateProps);
       expect(wrapper).toContainExactlyOneMatchingElement('TabsContainer');
       expect(wrapper.find('TabsContainer')).toContainMatchingElement('.delegateStats');
     });
@@ -168,7 +181,7 @@ describe('Accounts Component', () => {
 
   describe('BTC account', () => {
     it('should not render VotesTab', () => {
-      wrapper = mount(<Accounts {...{ ...props, activeToken: 'BTC' }} />);
+      const wrapper = mountWithProps({ ...defaultProps, activeToken: 'BTC' });
       expect(wrapper).toContainExactlyOneMatchingElement('TabsContainer');
       expect(wrapper.find('TabsContainer')).not.toContainMatchingElement('VotesTab');
     });

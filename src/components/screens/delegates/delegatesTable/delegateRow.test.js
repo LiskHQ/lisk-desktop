@@ -1,11 +1,30 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
+import * as reactRedux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import DelegateRow from './delegateRow';
 import * as votingActions from '../../../../actions/voting';
 
+const { Provider } = reactRedux;
 const fakeStore = configureStore();
+const voting = {
+  votes: {
+    rooney: {
+      confirmed: true,
+      unconfirmed: true,
+      publicKey: 'b3953cb16e2457b9be78ad8c8a2985435dedaed5f0dd63443bdfbccc92d09f2d',
+      address: '6356913781456505636L',
+    },
+  },
+};
+reactRedux.useSelector = jest.fn().mockImplementation(filter => filter({
+  network: {
+    networks: {
+      LSK: { apiVersion: '2' },
+    },
+  },
+  voting,
+}));
 
 describe('DelegateRow', () => {
   const props = {
@@ -51,17 +70,6 @@ describe('DelegateRow', () => {
   });
 
   describe('Vote checkbox', () => {
-    const voting = {
-      votes: {
-        rooney: {
-          confirmed: true,
-          unconfirmed: true,
-          publicKey: 'b3953cb16e2457b9be78ad8c8a2985435dedaed5f0dd63443bdfbccc92d09f2d',
-          address: '6356913781456505636L',
-        },
-      },
-    };
-
     it('shows checkmark when votingModeEnabled is false', () => {
       const store = fakeStore({ voting });
       const wrapper = mount(

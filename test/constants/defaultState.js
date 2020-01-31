@@ -23,7 +23,12 @@ export default {
   },
   network: {
     name: 'Testnet',
-    networks: {},
+    networks: {
+      LSK: {
+        networkIdentifier: 'sample_identifier',
+        apiVersion: '2',
+      },
+    },
   },
   voting: {
     delegates: [],

@@ -9,8 +9,8 @@ import LiskAmount from '../../../shared/liskAmount';
 import VoteCheckbox from './voteCheckbox';
 import routes from '../../../../constants/routes';
 import styles from './delegatesTable.css';
-import RankOrStatus from './rankOrStatus';
-import VoteWeight from './voteWeight';
+import RankOrStatus from '../../../shared/rankOrStatus';
+import VoteWeight from '../../../shared/voteWeight';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 import { voteToggled } from '../../../../actions/voting';
 
