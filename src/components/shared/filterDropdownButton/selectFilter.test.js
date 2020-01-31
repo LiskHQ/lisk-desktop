@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import SelectFilter from './selectFilter';
 
-describe.skip('SelectFilter', () => {
+describe('SelectFilter', () => {
   const props = {
     t: v => v,
     filters: {
