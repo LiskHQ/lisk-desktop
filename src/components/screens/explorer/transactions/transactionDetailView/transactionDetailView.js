@@ -65,7 +65,7 @@ class TransactionDetailView extends React.Component {
               <div className={`${styles.detailsWrapper}`}>
                 <span className={styles.label}>{t('Message')}</span>
                 <div className={`${styles.value} tx-reference`}>
-                  {transaction.asset && transaction.asset.data ? transaction.asset.data : '-'}
+                  {transaction.asset && typeof transaction.asset.data === 'string' ? transaction.asset.data : '-'}
                 </div>
               </div>
               <div className={`${styles.detailsWrapper}`}>
