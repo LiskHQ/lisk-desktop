@@ -11,5 +11,9 @@ const languages = {
     name: t('German'),
     common: require('./locales/de/common.json'),
   },
+  pl: {
+    name: t('Polski'),
+    common: require('./locales/pl/common.json'),
+  },
 };
 export default languages;
