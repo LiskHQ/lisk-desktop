@@ -12,9 +12,9 @@ const setup = () => {
 
   return i18n
     .init({
-      fallbackLng: 'en',
+      fallbackLng: 'pl',
       resources,
-      lang: 'en',
+      lang: 'pl',
       ns: ['common'],
       defaultNS: 'common',
       saveMissing: true,
