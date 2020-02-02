@@ -23,7 +23,7 @@ export default {
       if (language) {
         i18n.changeLanguage(language);
       } else {
-        i18n.changeLanguage('pl');
+        i18n.changeLanguage('en');
       }
 
       i18n.on('languageChanged', (locale) => {
