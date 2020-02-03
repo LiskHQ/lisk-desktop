@@ -102,6 +102,7 @@ const VotesTab = ({
           canLoadMore={canLoadMore}
           isLoading={areLoading}
           iterationKey="address"
+          emptyState={{ message: t('This account doesn’t have any votes.') }}
           row={VoteRow}
           additionalRowProps={{
             t,
