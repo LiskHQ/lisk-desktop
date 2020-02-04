@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "1.24.0",
+  "version": "1.25.0-beta.0",
   "description": "Lisk",
   "homepage": "https://github.com/LiskHQ/lisk-desktop",
   "bugs": "https://github.com/LiskHQ/lisk-desktop/issues",
@@ -23,7 +23,7 @@
     "test-live": "npm test -- --watch",
     "bundlesize": "bundlesize",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
-    "start": "LISK_HUB_URL='http://localhost:8080' DEBUG=true electron ./app/",
+    "start": "electron ./app/",
     "dist": "electron-builder --ia32 --x64 --publish onTag",
     "dist:win": "electron-builder --win --ia32 --x64 --publish onTag",
     "dist:mac": "electron-builder --mac",
