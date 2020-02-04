@@ -183,8 +183,10 @@ const handleSentError = ({
 export const sent = data => async (dispatch, getState) => {
   let tx;
   let fail;
-  const { account, network, settings } = getState();
-  const timeOffset = getTimeOffset(getState().blocks.latestBlocks);
+  const {
+    account, network, settings, blocks,
+  } = getState();
+  const timeOffset = getTimeOffset(blocks.latestBlocks);
   const activeToken = settings.token.active;
   const senderId = account.info[activeToken].address;
 

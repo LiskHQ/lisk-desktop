@@ -1,3 +1,4 @@
+import Lisk from '@liskhq/lisk-client-old';
 import actionTypes from '../constants/actions';
 import txFilters from '../constants/transactionFilters';
 import {
@@ -34,6 +35,11 @@ describe('actions: transactions', () => {
       token: {
         active: 'LSK',
       },
+    },
+    blocks: {
+      latestBlocks: [{
+        timestamp: Lisk.transaction.utils.getTimeFromBlockchainEpoch() - 12,
+      }],
     },
   });
 
@@ -131,6 +137,11 @@ describe('actions: transactions', () => {
           },
         },
         account: data.account,
+        blocks: {
+          latestBlocks: [{
+            timestamp: Lisk.transaction.utils.getTimeFromBlockchainEpoch() - 12,
+          }],
+        },
       });
     });
 
