@@ -184,7 +184,7 @@ export const sent = data => async (dispatch, getState) => {
   let tx;
   let fail;
   const { account, network, settings } = getState();
-  const timeOffset = getTimeOffset(getState());
+  const timeOffset = getTimeOffset(getState().blocks.latestBlocks);
   const activeToken = settings.token.active;
   const senderId = account.info[activeToken].address;
 
@@ -241,7 +241,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
   const {
     account, settings, network, ...state
   } = getState();
-  const timeOffset = getTimeOffset(state);
+  const timeOffset = getTimeOffset(state.blocks.latestBlocks);
   const activeToken = settings.token.active;
 
   const [error, tx] = account.loginType === loginType.normal

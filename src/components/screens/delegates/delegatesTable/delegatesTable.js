@@ -67,6 +67,7 @@ const DelegatesTableMain = ({
           canLoadMore
           error={delegates.error}
           iterationKey="username"
+          emptyState={{ message: t('No delegates found.') }}
         />
       </BoxContent>
     </Box>

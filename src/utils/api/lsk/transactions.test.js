@@ -1,5 +1,5 @@
 import { to } from 'await-to-js';
-import Lisk from '@liskhq/lisk-client';
+import Lisk from '@liskhq/lisk-client-old';
 import {
   send,
   getTransactions,

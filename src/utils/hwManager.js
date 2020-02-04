@@ -1,4 +1,4 @@
-import { castVotes, transfer, utils } from '@liskhq/lisk-transactions-Edge';
+import { castVotes, transfer, utils } from '@liskhq/lisk-transactions';
 import i18next from 'i18next';
 import { getAccount } from './api/lsk/account';
 import {

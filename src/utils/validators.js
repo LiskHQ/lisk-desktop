@@ -1,6 +1,6 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import numeral from 'numeral';
-import { cryptography } from '@liskhq/lisk-client-Edge';
+import { cryptography } from '@liskhq/lisk-client';
 import { tokenMap } from '../constants/tokens';
 import getBtcConfig from './api/btc/config';
 import i18n from '../i18n';

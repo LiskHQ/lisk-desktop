@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Lisk from '@liskhq/lisk-client';
+import Lisk from '@liskhq/lisk-client-old';
 import to from 'await-to-js';
 import { create } from '../../../../utils/api/lsk/transactions';
 import accounts from '../../../../../test/constants/accounts';

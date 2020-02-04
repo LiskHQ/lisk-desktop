@@ -1,5 +1,5 @@
-import Lisk2x from '@liskhq/lisk-client';
-import Lisk3x from '@liskhq/lisk-client-Edge';
+import Lisk2x from '@liskhq/lisk-client-old';
+import Lisk3x from '@liskhq/lisk-client';
 import store from '../../store/index';
 
 export default function () {
