@@ -110,7 +110,6 @@ module.exports = {
   plugins: [
     new webpack.EnvironmentPlugin({
       NACL_FAST: 'disable',
-      DEBUG: true,
     }),
   ],
 };
