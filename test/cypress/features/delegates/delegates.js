@@ -13,6 +13,7 @@ Then(/^I see (\d+) delegates on page$/, function (number) {
 });
 
 Then(/^I click load more button$/, function (number) {
+  cy.wait(300);
   cy.get(ss.loadMoreButton).click();
 });
 

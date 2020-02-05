@@ -44,7 +44,7 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
     case 'devnet':
       cy.get(ss.networkDropdown).click();
       cy.get(ss.networkOptions).eq(2).click();
-      cy.get(ss.addressInput).type(networks.devnet.node);
+      cy.get(ss.addressInput).clear().type(networks.devnet.node);
       cy.get(ss.connectButton).click();
       break;
     case 'invalid':
