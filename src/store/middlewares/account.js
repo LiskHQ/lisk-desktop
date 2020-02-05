@@ -21,6 +21,7 @@ import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import txFilters from '../../constants/transactionFilters';
+import { txAdapter } from '../../utils/api/lsk/adapters';
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -96,8 +97,9 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
 
   const txs = action.data.block.transactions || [];
   const blockContainsRelevantTransaction = txs.filter((transaction) => {
-    const sender = transaction ? transaction.senderId : null;
-    const recipient = transaction ? transaction.recipientId : null;
+    const morphedTx = txAdapter(transaction);
+    const sender = morphedTx ? morphedTx.senderId : null;
+    const recipient = morphedTx ? morphedTx.recipientId : null;
     return account.address === recipient || account.address === sender;
   }).length > 0;
 
