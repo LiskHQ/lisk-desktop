@@ -20,23 +20,24 @@ const VotesTab = ({
   const [filterValue, setFilterValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { apiVersion } = useSelector(state => state.network.networks.LSK);
+  const votesKey = apiVersion === '2' ? 'vote' : 'voteWeight';
 
   const fetchDelegateWhileNeeded = () => {
     const delegatesData = delegates.data;
     const filteredVotes = votes.data.filter(vote => RegExp(filterValue, 'i').test(vote.username));
-    const votes2 = filteredVotes.map((vote) => {
+    const mVotes = filteredVotes.map((vote) => {
       const delegate = delegatesData[vote.username] || {};
       return { ...vote, ...delegate };
     }).sort((a, b) => {
-      if (!a.rank && !b.rank) return 0;
-      if (!a.rank || +a.rank > +b.rank) return 1;
+      if (!a[votesKey] && !b[votesKey]) return 0;
+      if (!a[votesKey] || +a[votesKey] > +b[votesKey]) return 1;
       return -1;
     });
-    if (votes.length && !(votes.slice(0, showing).slice(-1)[0] || {}).rank) {
+    if (mVotes.length && !(mVotes.slice(0, showing).slice(-1)[0] || {})[votesKey]) {
       const offset = Object.keys(delegatesData).length;
       delegates.loadData({ offset, limit: 101 });
     }
-    setMergedVotes(votes2);
+    setMergedVotes(mVotes);
   };
 
   const onShowMore = () => {
