@@ -13,12 +13,12 @@ export const InitializationMessageRenderer = ({
   pendingTransactions,
 }) => {
   const shouldShowInitialization = (
-    !!(account.info
-      && !(account.info.LSK.serverPublicKey
+    settings.token.active === 'LSK'
+    && account.info
+    && account.info.LSK
+    && !(account.info.LSK.serverPublicKey
       || account.info.LSK.balance === 0
-      || pendingTransactions.length > 0
-      || settings.token.active === 'BTC')
-    )
+      || pendingTransactions.length > 0)
   );
 
   const onButtonClick = () => {
