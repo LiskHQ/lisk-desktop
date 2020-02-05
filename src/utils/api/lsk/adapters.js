@@ -56,6 +56,5 @@ export const adaptDelegateQueryParams = (params) => {
     ...params,
   };
   delete morphedParams.sort;
-  console.log('PARAMS >> ', params, morphedParams);
   return morphedParams;
 };
