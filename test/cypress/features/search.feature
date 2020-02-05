@@ -7,14 +7,6 @@ Feature: Search
     And I open transaction suggestion
     Then I should be on Tx Details page of 881002485778658401
 
-  Scenario: Search for Transaction in devnet, signed in
-    Given I autologin as genesis to devnet
-    Given I am on Dashboard page
-    Then I open search
-    When I search for transaction 18173130528211925456
-    And I open transaction suggestion
-    Then I should be on Tx Details page of 18173130528211925456
-
   Scenario: Search for Delegate in testnet, signed in
     Given I autologin as genesis to testnet
     Given I am on Dashboard page
