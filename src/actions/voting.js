@@ -111,7 +111,7 @@ export const loadDelegates = ({
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     let params = {
       offset,
-      limit: '101',
+      limit: '90',
       sort: 'rank:asc',
     };
     params = q ? { ...params, search: q } : params;
