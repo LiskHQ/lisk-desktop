@@ -30,16 +30,11 @@ const VoteRow = ({
       </div>
     </div>
     <div className={grid['col-sm-2']}>
-      {data.rewards
-        ? (
-          <span>
-            <LiskAmount val={data.rewards} />
-            {' '}
-            {t('LSK')}
-          </span>
-        )
-        /* istanbul ignore next */
-        : '-'}
+      <span>
+        <LiskAmount val={data.rewards} />
+        {' '}
+        {t('LSK')}
+      </span>
     </div>
     <div className={`${grid['col-sm-2']} ${grid[apiVersion === '3' ? 'col-lg-2' : 'col-lg-1']}`}>
       {data.productivity !== undefined
@@ -49,16 +44,11 @@ const VoteRow = ({
       }
     </div>
     <div className={`${grid['col-sm-4']} ${grid['col-lg-2']}`}>
-      {data.vote
-        ? (
-          <span className={styles.votes}>
-            <LiskAmount val={data.vote} />
-            {' '}
-            {t('LSK')}
-          </span>
-        )
-        /* istanbul ignore next */
-        : '-'}
+      <span className={styles.votes}>
+        <LiskAmount val={data.vote || data.voteWeight} token="LSK" />
+        {' '}
+        {t('LSK')}
+      </span>
     </div>
   </div>
 );
