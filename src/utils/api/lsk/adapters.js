@@ -54,7 +54,8 @@ export const adaptDelegateQueryParams = (params) => {
   if (apiVersion === defaultApiVersion) return params;
   const morphedParams = {
     ...params,
-    sort: apiVersion === '3' ? 'voteWeight:asc' : 'rank:asc',
   };
+  delete morphedParams.sort;
+  console.log('PARAMS >> ', params, morphedParams);
   return morphedParams;
 };

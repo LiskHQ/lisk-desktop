@@ -112,7 +112,6 @@ export const loadDelegates = ({
     let params = {
       offset,
       limit: '101',
-      sort: 'rank:asc',
     };
     params = q ? { ...params, search: q } : params;
     getDelegates(liskAPIClient, params)
