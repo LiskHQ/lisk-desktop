@@ -51,9 +51,8 @@ const withDelegatesData = () => (ChildComponent) => {
           offset,
           q: '',
           refresh: false,
-          callback: (...rest) => {
+          callback: () => {
             this.isFillingDelegates = false;
-            this.getDelegatesData.bind(this, ...rest);
           },
         });
       }
