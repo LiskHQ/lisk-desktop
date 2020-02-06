@@ -8,10 +8,8 @@ import { networkSet } from '../../../actions/network';
 import { getActiveTokenAccount } from '../../../utils/account';
 
 const mapStateToProps = state => ({
-  hasSecondPassphrase: !!(state.account.info && state.account.info.LSK.secondPublicKey),
   settings: state.settings,
   account: getActiveTokenAccount(state),
-  isAuthenticated: !!state.account.info,
   transactions: state.transactions,
 });
 

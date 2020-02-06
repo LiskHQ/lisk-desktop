@@ -69,8 +69,6 @@ class Settings extends React.Component {
   render() {
     const {
       t, settings,
-      hasSecondPassphrase,
-      isAuthenticated,
       transactions: { pending },
       account,
     } = this.props;
@@ -133,11 +131,11 @@ class Settings extends React.Component {
                   <p>{t('Log out automatically after 10 minutes.')}</p>
                 </div>
               </label>
-              {isAuthenticated && settings.token.active !== tokenMap.BTC.key
+              {!account.afterLogout && account.token === tokenMap.LSK.key
                 ? (
                   <SecondPassphraseSetting
                     {...{
-                      account, hasSecondPassphrase, isHwWalletClass, t, hasPendingSecondPassphrase,
+                      account, isHwWalletClass, t, hasPendingSecondPassphrase,
                     }}
                   />
                 )
