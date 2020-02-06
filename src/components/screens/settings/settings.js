@@ -74,8 +74,7 @@ class Settings extends React.Component {
     } = this.props;
     const { currencies } = this.state;
 
-    const isHardwareWalletAccount = account.hwInfo && account.hwInfo.deviceId;
-    const isHwWalletClass = isHardwareWalletAccount ? `${styles.disabled} disabled` : '';
+    const isHardwareWalletAccount = account.hwInfo && !!account.hwInfo.deviceId;
     const activeCurrency = currencies.indexOf(settings.currency || settingsConst.currencies[0]);
     const hasPendingSecondPassphrase = pending.find(element =>
       element.type === txTypes.setSecondPassphrase) !== undefined;
@@ -134,9 +133,10 @@ class Settings extends React.Component {
               {!account.afterLogout && account.token === tokenMap.LSK.key
                 ? (
                   <SecondPassphraseSetting
-                    {...{
-                      account, isHwWalletClass, t, hasPendingSecondPassphrase,
-                    }}
+                    account={account}
+                    t={t}
+                    isHardwareWalletAccount={isHardwareWalletAccount}
+                    hasPendingSecondPassphrase={hasPendingSecondPassphrase}
                   />
                 )
                 : null}

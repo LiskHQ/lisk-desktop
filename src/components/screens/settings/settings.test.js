@@ -36,7 +36,7 @@ describe('Setting', () => {
 
   const props = {
     transactions: { pending: [] },
-    account: {},
+    account: { token: 'LSK' },
     settingsUpdated: jest.fn(),
     accountUpdated: jest.fn(),
     settings,
@@ -104,7 +104,7 @@ describe('Setting', () => {
 
   describe('With specific properties', () => {
     it('should disable 2nd passphrase when hardwareWallet', () => {
-      const newProps = { ...props, account: { hwInfo: { deviceId: '123' } } };
+      const newProps = { ...props, account: { hwInfo: { deviceId: '123' }, token: 'LSK' } };
       wrapper = mount(
         <Settings {...newProps} />,
       );
@@ -118,7 +118,7 @@ describe('Setting', () => {
     });
 
     it('should render 2nd passphrase as active', () => {
-      const account2ndPassphrase = { info: { LSK: accounts.second_passphrase_account } };
+      const account2ndPassphrase = { secondPublicKey: 'sample_public_key', token: 'LSK' };
       const newProps = { ...props, account: account2ndPassphrase, hasSecondPassphrase: true };
       wrapper = mount(
         <Settings {...newProps} />,
