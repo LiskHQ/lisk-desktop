@@ -4,7 +4,6 @@ import { withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '../../../utils/account';
 import {
   voteToggled,
-  loadVotes,
   loadDelegates,
   clearVotes,
 } from '../../../actions/voting';
@@ -19,7 +18,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   clearVotes,
   voteToggled,
-  loadVotes,
   loadDelegates,
 };
 
