@@ -10,9 +10,9 @@ const languages = {
     name: t('German'),
     common: require('./locales/de/common.json'),
   },
-  nl: {
+  "nl-NL": {
     name: t('Dutch'),
-    common: require('./locales/nl/common.json'),
+    common: require('./locales/nl-NL/common.json'),
   },
 };
 
