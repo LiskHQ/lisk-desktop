@@ -1,6 +1,6 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
-import { getDelegateInfo } from '../../../utils/api/delegates';
+import { getDelegateInfo, getNextForgers } from '../../../utils/api/delegates';
 import DelegateTab from './delegateTab';
 import withData from '../../../utils/withData';
 
@@ -13,6 +13,14 @@ const apis = {
       publicKey: ownProps.account.publicKey,
     }),
     autoload: true,
+  },
+  nextForgers: {
+    apiUtil: getNextForgers,
+    defaultData: [],
+    autoload: true,
+    getApiParams: () => ({
+      limit: 101,
+    }),
   },
 };
 
