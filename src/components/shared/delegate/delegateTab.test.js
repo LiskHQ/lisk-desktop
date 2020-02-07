@@ -24,6 +24,9 @@ describe('Delegate Tab', () => {
     },
     account: delegate,
     t: v => v,
+    nextForgers: {
+      data: [{ username: delegate.username }],
+    },
   };
   reactRedux.useSelector = jest.fn().mockImplementation(() => '2');
 
@@ -32,7 +35,7 @@ describe('Delegate Tab', () => {
   });
 
   it('Should render active delegate with passed props', () => {
-    expect(wrapper.find('.status')).toIncludeText(props.delegate.data.rank);
+    expect(wrapper.find('.rank')).toIncludeText(props.delegate.data.rank);
     expect(wrapper.find('.delegate-since')).toIncludeText('24 May 2016');
     expect(wrapper.find('.vote')).toIncludeText('98,769,657 LSK');
     expect(wrapper.find('.approval')).toIncludeText(`${props.delegate.data.approval}%`);
