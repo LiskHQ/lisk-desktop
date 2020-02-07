@@ -331,7 +331,7 @@
   "Processing Speed": "Verwerkingssnelheid",
   "Processing...": "Verwerken...",
   "Productivity": "Productiviteit",
-  "Provide a correct amount of {{token}}": "Geef een juiste hoeveelheid {{{token}} op",
+  "Provide a correct amount of {{token}}": "Geef een juiste hoeveelheid {{token}} op",
   "Provide a correct wallet address or a name of a bookmarked account": "Geef een correct portemonnee-adres of een naam op van een account opgeslagen als bladwijzer",
   "Provided amount is higher than your current balance.": "Het ingevoerde bedrag is hoger dan je huidige saldo.",
   "Public key": "Publieke sleutel",
