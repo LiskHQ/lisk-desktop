@@ -160,3 +160,13 @@ export const registerDelegate = (
       .catch(reject);
   });
 };
+
+export const getNextForgers = (liskAPIClient, params) => (
+  new Promise((resolve, reject) => {
+    liskAPIClient.delegates.getForgers(params)
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch(reject);
+  })
+);
