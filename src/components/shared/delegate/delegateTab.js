@@ -7,7 +7,6 @@ import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
 import VoteWeight from '../voteWeight';
-import RankOrStatus from '../rankOrStatus';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { getUnixTimestampFromValue } from '../../../utils/datetime';
 import { tokenMap } from '../../../constants/tokens';
@@ -15,7 +14,9 @@ import LiskAmount from '../liskAmount';
 import i18n from '../../../i18n';
 import styles from './delegateTab.css';
 
-const DelegateTab = ({ delegate, account, t }) => {
+const DelegateTab = ({
+  delegate, account, t, nextForgers,
+}) => {
   const { apiVersion } = useSelector(state => state.network.networks.LSK);
   moment.locale(i18n.language);
   delegate = {
@@ -28,6 +29,7 @@ const DelegateTab = ({ delegate, account, t }) => {
   const delegateSince = delegate.txDelegateRegister
     ? getUnixTimestampFromValue(delegate.txDelegateRegister.timestamp)
     : '-';
+  const isActive = nextForgers.data.filter(item => (item.username === delegate.username)).length;
 
   return (
     <Box>
@@ -36,11 +38,21 @@ const DelegateTab = ({ delegate, account, t }) => {
       </BoxHeader>
       <BoxContent className={styles.wrapper}>
         <ul className={styles.delegateStats}>
+          <li className={apiVersion === '2' ? '' : 'hidden'}>
+            <span className={styles.label}>
+              {t('Rank')}
+            </span>
+            <span className={`${styles.rank} rank`}>
+              {`#${delegate.rank}`}
+            </span>
+          </li>
           <li className="status">
             <span className={styles.label}>
-              {apiVersion === '2' ? t('Rank') : t('Status') }
+              {t('Status')}
             </span>
-            <RankOrStatus data={delegate} />
+            <span className={styles.status}>
+              {isActive ? t('Active') : t('Stand by')}
+            </span>
           </li>
           <li className="delegate-since">
             <span className={styles.label}>{t('Delegate since')}</span>
