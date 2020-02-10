@@ -23,7 +23,7 @@ class Delegates extends React.Component {
     this.setState({ votingModeEnabled: !this.state.votingModeEnabled });
   }
 
-  obBoardingDiscarded = () => {
+  onBoardingDiscarded = () => {
     this.setState({ onBoardingDiscarded: true });
   }
 
@@ -52,7 +52,6 @@ class Delegates extends React.Component {
     const {
       account,
       loadDelegates,
-      loadVotes,
       t,
       votes,
     } = this.props;
@@ -64,7 +63,7 @@ class Delegates extends React.Component {
             <Onboarding
               slides={this.getOnboardingSlides()}
               finalCallback={this.toggleVotingMode}
-              onDiscard={this.obBoardingDiscarded}
+              onDiscard={this.onBoardingDiscarded}
               actionButtonLabel={t('Start voting')}
               name="delegateOnboarding"
             />
@@ -82,7 +81,6 @@ class Delegates extends React.Component {
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
           <DelegatesTable
             account={account}
-            loadVotes={loadVotes}
             loadDelegates={loadDelegates}
             votingModeEnabled={votingModeEnabled}
           />
