@@ -1,43 +1,50 @@
-const transactionTypes = (t = str => str) => ({
-  send: {
-    code: 0,
-    apiSpecificCode: 8,
-    title: t('Send'),
-    senderLabel: t('Sender'),
-    key: 'transfer',
-  },
-  setSecondPassphrase: {
-    code: 1,
-    apiSpecificCode: 9,
-    title: t('Second passphrase registration'),
-    senderLabel: t('Account'),
-    key: 'secondPassphrase',
-    icon: 'tx2ndPassphrase',
-  },
-  registerDelegate: {
-    code: 2,
-    apiSpecificCode: 10,
-    title: t('Delegate registration'),
-    senderLabel: t('Account nickname'),
-    key: 'registerDelegate',
-    icon: 'txDelegate',
-  },
-  vote: {
-    code: 3,
-    apiSpecificCode: 11,
-    title: t('Delegate vote'),
-    senderLabel: t('Voter'),
-    key: 'vote',
-    icon: 'txVote',
-  },
-  createMultiSig: {
-    code: 4,
-    apiSpecificCode: 12,
-    title: t('Multisignature creation'),
-    senderLabel: t('Registrant'),
-    key: 'createMultiSig',
-  },
-});
+import store from '../store';
+
+const defaultApiVersion = '2';
+
+const transactionTypes = (t = str => str) => {
+  const apiVersion = store.getState().network.apiVersion;
+  return {
+    send: {
+      code: 0,
+      outgoingCode: apiVersion === defaultApiVersion ? 0 : 8,
+      title: t('Send'),
+      senderLabel: t('Sender'),
+      key: 'transfer',
+    },
+    setSecondPassphrase: {
+      code: 1,
+      outgoingCode: apiVersion === defaultApiVersion ? 1 : 9,
+      title: t('Second passphrase registration'),
+      senderLabel: t('Account'),
+      key: 'secondPassphrase',
+      icon: 'tx2ndPassphrase',
+    },
+    registerDelegate: {
+      code: 2,
+      outgoingCode: apiVersion === defaultApiVersion ? 2 : 10,
+      title: t('Delegate registration'),
+      senderLabel: t('Account nickname'),
+      key: 'registerDelegate',
+      icon: 'txDelegate',
+    },
+    vote: {
+      code: 3,
+      outgoingCode: apiVersion === defaultApiVersion ? 3 : 11,
+      title: t('Delegate vote'),
+      senderLabel: t('Voter'),
+      key: 'vote',
+      icon: 'txVote',
+    },
+    createMultiSig: {
+      code: 4,
+      outgoingCode: apiVersion === defaultApiVersion ? 4 : 12,
+      title: t('Multisignature creation'),
+      senderLabel: t('Registrant'),
+      key: 'createMultiSig',
+    },
+  };
+};
 
 /**
  * To get the transaction config for a given transaction code.
