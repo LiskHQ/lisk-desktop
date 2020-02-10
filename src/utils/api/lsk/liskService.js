@@ -21,17 +21,19 @@ const liskServiceBetanetUrl = 'https://betanet-service.lisk.io';
 
 const getServerUrl = (networkConfig) => {
   const name = getNetworkNameBasedOnNethash(networkConfig);
-  switch (name) {
-    case networks.mainnet.name:
-      return liskServiceUrl;
-    case networks.testnet.name:
-      return liskServiceTestnetUrl;
-    default:
-      if (networkConfig.networks.LSK.nodeUrl.indexOf('betanet') > 0) {
-        return liskServiceBetanetUrl;
-      }
-      throw new Error(i18n.t('This feature can be accessed through Mainet and Testnet.'));
+  if (name === networks.mainnet.name) {
+    return liskServiceUrl;
   }
+  if (name === networks.testnet.name) {
+    return liskServiceTestnetUrl;
+  }
+  if (networkConfig.networks.LSK.nodeUrl.indexOf('betanet') > 0) {
+    return liskServiceBetanetUrl;
+  }
+  if (networkConfig.networks.LSK.nodeUrl.indexOf('devnet') > 0) {
+    return networkConfig.networks.LSK.nodeUrl.replace(/:\d{2,4}/, ':9901');
+  }
+  throw new Error(i18n.t('This feature can be accessed through Mainet and Testnet.'));
 };
 
 const formatDate = (value, options) => getTimestampFromFirstBlock(value, 'DD.MM.YY', options);
