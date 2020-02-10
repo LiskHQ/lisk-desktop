@@ -10,7 +10,7 @@ const transactionVotes = ({ votes, t }) => {
   const accountPath = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
   return (
     <React.Fragment>
-      {votes.added
+      {votes.added && votes.added.length > 0
         ? (
           <BoxRow>
             <div className={styles.detailsWrapper}>
@@ -32,7 +32,7 @@ const transactionVotes = ({ votes, t }) => {
             </div>
           </BoxRow>
         ) : null}
-      {votes.deleted
+      {votes.deleted && votes.deleted.length > 0
         ? (
           <BoxRow>
             <div className={styles.detailsWrapper}>
