@@ -34,7 +34,7 @@ export default (t, apiVersion) => ([
     tooltip: {
       title: t('Productivity'),
       message: t('Sum of LSK in all accounts who have voted for this delegate.'),
-      position: 'showOnBottom',
+      position: 'showOnLeft',
     },
   },
 ]);
