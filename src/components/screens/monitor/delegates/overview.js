@@ -67,7 +67,7 @@ const Overview = ({
                         datasets: [
                           {
                             label: 'delegates',
-                            data: [chartActiveAndStandby.data - 101, 101],
+                            data: [Math.max(0, chartActiveAndStandby.data - 101), 101],
                           },
                         ],
                       }}
