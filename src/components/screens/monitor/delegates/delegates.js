@@ -87,6 +87,12 @@ const DelegatesTable = ({
     return () => dispatch(forgingDataConcealed());
   }, []);
 
+  useEffect(() => {
+    if (activeTab === 'standby') {
+      delegates.loadData();
+    }
+  }, [activeTab]);
+
   return (
     <div>
       <MonitorHeader />
