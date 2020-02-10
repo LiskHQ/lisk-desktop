@@ -10,10 +10,10 @@ import Icon from '../../toolbox/icon';
 const fee = utils.convertBeddowsToLSK(`${Fees.setSecondPassphrase}`);
 
 const SecondPassphraseSetting = ({
-  account, hasSecondPassphrase, isHwWalletClass, t, hasPendingSecondPassphrase,
+  account, t, hasPendingSecondPassphrase, isHardwareWalletAccount,
 }) => (
   <div className={`${styles.fieldGroup} ${styles.checkboxField} second-passphrase`}>
-    {hasSecondPassphrase
+    {account.secondPublicKey
       ? (
         <Icon
           className={`${styles.checkmark} second-passphrase-registered`}
@@ -22,12 +22,12 @@ const SecondPassphraseSetting = ({
       )
       : null
     }
-    <div className={isHwWalletClass}>
+    <div className={isHardwareWalletAccount ? `${styles.disabled} disabled` : ''}>
       <span className={styles.labelName}>{t('Second passphrase')}</span>
       <p>
         {t('Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.')}
       </p>
-      {!hasSecondPassphrase
+      {!account.secondPublicKey
         ? (
           <React.Fragment>
             {account.balance < Fees.setSecondPassphrase
