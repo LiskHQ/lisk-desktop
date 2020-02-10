@@ -227,7 +227,7 @@
     "webpack-dev-server": "3.8.2"
   },
   "build": {
-    "appId": "io.lisk.hub",
+    "appId": "io.lisk.desktop",
     "productName": "Lisk",
     "protocols": {
       "name": "lisk",
