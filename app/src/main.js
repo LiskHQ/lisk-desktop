@@ -51,6 +51,9 @@ const createWindow = () => {
 app.on('ready', () => {
   appIsReady = true;
   createWindow();
+  if (process.platform === 'win32') {
+    app.setAppUserModelId('io.lisk.desktop');
+  }
 });
 
 app.on('window-all-closed', () => {
