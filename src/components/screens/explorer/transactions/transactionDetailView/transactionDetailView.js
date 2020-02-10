@@ -88,7 +88,7 @@ class TransactionDetailView extends React.Component {
             </BoxRow>
           ) : null
         }
-        { isTransferTransaction && transaction.votesName ? (
+        { !isTransferTransaction && transaction.votesName ? (
           <TransactionVotes votes={transaction.votesName} />
         ) : null
         }
