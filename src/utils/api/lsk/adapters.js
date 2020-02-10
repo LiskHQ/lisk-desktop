@@ -1,6 +1,6 @@
 import store from '../../../store';
 
-const defaultApiVersion = '2.x';
+const defaultApiVersion = '2';
 /**
  * Transforms transactions of Core 3.x to the shape of
  * transactions in Core 2.x

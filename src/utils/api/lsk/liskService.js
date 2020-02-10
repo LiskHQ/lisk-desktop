@@ -9,6 +9,7 @@ import i18n from '../../../i18n';
 import networks from '../../../constants/networks';
 import voting from '../../../constants/voting';
 import { adaptTransactions } from './adapters';
+import transactionTypes from '../../../constants/transactionTypes';
 
 const isStaging = () => (
   localStorage.getItem('useLiskServiceStaging') || version.includes('beta') || version.includes('rc')
@@ -164,7 +165,7 @@ const liskServiceApi = {
     path: '/api/v1/transactions',
     searchParams: {
       limit: 100,
-      type: 2,
+      type: transactionTypes().registerDelegate.outgoingCode,
       sort: 'timestamp:desc',
     },
     transformResponse: response => response.data,
