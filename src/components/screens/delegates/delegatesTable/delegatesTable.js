@@ -45,7 +45,7 @@ const DelegatesTableMain = ({
           <Input
             onChange={handleFilter}
             value={filters.search}
-            className="filter-by-name"
+            className={`${styles.searchInput} filter-by-name`}
             size="xs"
             placeholder={t('Filter by name...')}
           />
