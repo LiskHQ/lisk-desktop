@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './delegates.css';
 import DelegatesTable from './delegatesTable';
-import VotingHeader from './votingHeader';
+import Header from './header';
 import Onboarding from '../../toolbox/onboarding/onboarding';
 import { getTotalActions } from '../../../utils/voting';
 
@@ -65,7 +65,7 @@ class Delegates extends React.Component {
           actionButtonLabel={t('Start voting')}
           name="delegateOnboarding"
         />
-        <VotingHeader
+        <Header
           t={t}
           votingModeEnabled={votingModeEnabled}
           toggleVotingMode={this.toggleVotingMode}

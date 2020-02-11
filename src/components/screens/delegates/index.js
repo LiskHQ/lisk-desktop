@@ -1,24 +1,23 @@
-/* istanbul ignore file */
-import { connect } from 'react-redux';
+// istanbul ignore file
 import { withTranslation } from 'react-i18next';
-import { getActiveTokenAccount } from '../../../utils/account';
-import {
-  voteToggled,
-  loadDelegates,
-  clearVotes,
-} from '../../../actions/voting';
+import { getVotes, getDelegates } from '../../../utils/api/delegates';
+import withData from '../../../utils/withData';
 import Delegates from './delegates';
 
-const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
-  delegates: state.voting.delegates,
-  votes: state.voting.votes,
-});
-
-const mapDispatchToProps = {
-  clearVotes,
-  voteToggled,
-  loadDelegates,
+const apis = {
+  votes: {
+    apiUtil: getVotes,
+    defaultData: [],
+    transformResponse: response => response.data.votes,
+  },
+  delegates: {
+    apiUtil: getDelegates,
+    defaultData: {},
+    transformResponse: (response, oldData) => ({
+      ...oldData,
+      ...response.data.reduce((acc, item) => ({ ...acc, [item.username]: item }), {}),
+    }),
+  },
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Delegates));
+export default withData(apis)(withTranslation()(Delegates));

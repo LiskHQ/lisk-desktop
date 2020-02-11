@@ -14,7 +14,7 @@ import {
   getTotalActions,
 } from '../../../utils/voting';
 
-import styles from './votingHeader.css';
+import styles from './header.css';
 
 function shouldShowRegisterDelagteButton(account) {
   return account.address
