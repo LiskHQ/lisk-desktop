@@ -2,17 +2,17 @@
 import { withTranslation } from 'react-i18next';
 import { getVotes, getDelegates } from '../../../utils/api/delegates';
 import withData from '../../../utils/withData';
-import Delegates from './delegates';
+import DelegatesList from './delegates';
 
 const apis = {
   votes: {
     apiUtil: getVotes,
-    defaultData: [],
+    defaultData: {},
     transformResponse: response => response.data.votes,
   },
   delegates: {
     apiUtil: getDelegates,
-    defaultData: {},
+    defaultData: [],
     transformResponse: (response, oldData) => ({
       ...oldData,
       ...response.data.reduce((acc, item) => ({ ...acc, [item.username]: item }), {}),
@@ -20,4 +20,4 @@ const apis = {
   },
 };
 
-export default withData(apis)(withTranslation()(Delegates));
+export default withData(apis)(withTranslation()(DelegatesList));
