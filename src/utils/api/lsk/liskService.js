@@ -31,7 +31,7 @@ const getServerUrl = (networkConfig) => {
   if (networkConfig.networks.LSK.nodeUrl.indexOf('betanet') > 0) {
     return liskServiceBetanetUrl;
   }
-  if (networkConfig.networks.LSK.nodeUrl.indexOf('devnet') > 0) {
+  if (networkConfig.networks.LSK.nodeUrl.indexOf('liskdev.net') > 0) {
     return networkConfig.networks.LSK.nodeUrl.replace(/:\d{2,4}/, ':9901');
   }
   throw new Error(i18n.t('This feature can be accessed through Mainet and Testnet.'));
