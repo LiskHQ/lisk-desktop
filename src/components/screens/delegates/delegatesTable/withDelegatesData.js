@@ -37,10 +37,26 @@ const withDelegatesData = () => (ChildComponent) => {
     }
 
     getDelegatesData() {
-      return this.props.delegates.map(delegate => ({
+      const filteredDelegates = this.props.delegates.map(delegate => ({
         ...delegate,
         voteStatus: this.props.votes[delegate.username],
       })).filter(this.tabFilters[this.state.filters.tab]);
+
+      if (filteredDelegates.length < Object.keys(this.props.votes).length
+      && !this.isFillingDelegates) {
+        this.isFillingDelegates = true;
+        const offset = this.props.delegates.length;
+        // this.props.delegates.loadData({ offset, limit: 101 });
+        this.props.loadDelegates({
+          offset,
+          q: '',
+          refresh: false,
+          callback: () => {
+            this.isFillingDelegates = false;
+          },
+        });
+      }
+      return filteredDelegates;
     }
 
     loadDelegates({ q = '', offset = 0 }) {
