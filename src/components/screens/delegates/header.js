@@ -32,12 +32,12 @@ let scrollContainer = null;
 // eslint-disable-next-line max-statements
 const VotingHeader = ({
   t,
-  votes,
   onBoardingDiscarded,
   toggleVotingMode,
   votingModeEnabled,
 }) => {
   const account = useSelector(state => state.account);
+  const { votes } = useSelector(state => state.voting);
   const [isHeaderSticky, setIsHeaderSticky] = useState(false);
   // eslint-disable-next-line prefer-const
   let wrapper = React.createRef();
