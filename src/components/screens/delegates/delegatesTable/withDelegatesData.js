@@ -1,5 +1,4 @@
 import React from 'react';
-import { getPendingVotesList } from '../../../../utils/voting';
 import voteFilters from '../../../../constants/voteFilters';
 
 const withDelegatesData = () => (ChildComponent) => {
@@ -17,26 +16,47 @@ const withDelegatesData = () => (ChildComponent) => {
       this.loadDelegates = this.loadDelegates.bind(this);
       this.loadDelegatesFinished = this.loadDelegatesFinished.bind(this);
       this.applyFilters = this.applyFilters.bind(this);
+      this.tabFilters = {
+        [voteFilters.all]: () => true,
+        [voteFilters.voted]: ({ voteStatus }) => voteStatus && voteStatus.confirmed,
+        [voteFilters.notVoted]: ({ voteStatus }) => !voteStatus || !voteStatus.confirmed,
+      };
     }
 
     componentDidMount() {
+      this.mounted = true;
       const { account: { serverPublicKey, address }, votes, loadVotes } = this.props;
-      if (serverPublicKey && getPendingVotesList(votes).length === 0) {
+      if (serverPublicKey && Object.keys(votes).length === 0) {
         loadVotes({ address });
       }
       this.loadDelegates({});
     }
 
+    componentWillUnmount() {
+      this.mounted = false;
+    }
+
     getDelegatesData() {
-      const tabFilters = {
-        [voteFilters.all]: () => true,
-        [voteFilters.voted]: ({ voteStatus }) => voteStatus && voteStatus.confirmed,
-        [voteFilters.notVoted]: ({ voteStatus }) => !voteStatus || !voteStatus.confirmed,
-      };
-      return this.props.delegates.map(delegate => ({
+      const filteredDelegates = this.props.delegates.map(delegate => ({
         ...delegate,
         voteStatus: this.props.votes[delegate.username],
-      })).filter(tabFilters[this.state.filters.tab]);
+      })).filter(this.tabFilters[this.state.filters.tab]);
+
+      if (filteredDelegates.length < Object.keys(this.props.votes).length
+      && !this.isFillingDelegates) {
+        this.isFillingDelegates = true;
+        const offset = this.props.delegates.length;
+        // this.props.delegates.loadData({ offset, limit: 101 });
+        this.props.loadDelegates({
+          offset,
+          q: '',
+          refresh: false,
+          callback: () => {
+            this.isFillingDelegates = false;
+          },
+        });
+      }
+      return filteredDelegates;
     }
 
     loadDelegates({ q = '', offset = 0 }) {
@@ -51,7 +71,7 @@ const withDelegatesData = () => (ChildComponent) => {
     }
 
     loadDelegatesFinished() {
-      if (this.state.isLoading) {
+      if (this.state.isLoading && this.mounted) {
         this.setState({ isLoading: false });
       }
     }

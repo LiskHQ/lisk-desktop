@@ -6,23 +6,17 @@ import styles from './transactionAmount.css';
 import transactionTypes from '../../../../../constants/transactionTypes';
 
 const TransactionAmount = ({
-  address, transaction, token, roundTo,
+  sender, recipient, type, token, roundTo, host, amount,
 }) => {
-  const isRecieve = address === transaction.recipientId;
-  // e.g. account initialization
-  const isSentToSelf = transaction.recipientId === transaction.senderId
-    && transaction.type === transactionTypes.send;
-
+  const isIncoming = host === recipient && sender !== recipient;
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
-      { transaction.type === transactionTypes.send
+      { type === transactionTypes().send.code
         ? (
           <DiscreetMode shouldEvaluateForOtherAccounts>
-            <span className={isRecieve && !isSentToSelf ? styles.recieve : ''}>
-              {isRecieve ? '' : '- '}
-              <LiskAmount val={transaction.amount} roundTo={roundTo} />
-              {' '}
-              {token}
+            <span className={isIncoming ? styles.receive : ''}>
+              {isIncoming ? '' : '- '}
+              <LiskAmount val={amount} roundTo={roundTo} token={token} />
             </span>
           </DiscreetMode>
         )
@@ -33,13 +27,12 @@ const TransactionAmount = ({
 };
 
 TransactionAmount.propTypes = {
-  address: PropTypes.string.isRequired,
+  host: PropTypes.string,
+  sender: PropTypes.string.isRequired,
+  recipient: PropTypes.string,
   token: PropTypes.string.isRequired,
-  transaction: PropTypes.shape({
-    type: PropTypes.number.isRequired,
-    amount: PropTypes.string.isRequired,
-    recipientId: PropTypes.string.isRequired,
-  }),
+  type: PropTypes.number.isRequired,
+  amount: PropTypes.string,
   roundTo: PropTypes.number,
 };
 

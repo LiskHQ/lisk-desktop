@@ -1,5 +1,10 @@
 import actionTypes from '../../constants/actions';
 
+const initialState = {
+  status: {},
+  networks: {},
+};
+
 /**
  * The reducer for maintaining connected networks
  *
@@ -8,7 +13,7 @@ import actionTypes from '../../constants/actions';
  *
  * @returns {Object} - Next state object
  */
-const network = (state = { status: {}, networks: {} }, action) => {
+const network = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.networkSet:
       return {

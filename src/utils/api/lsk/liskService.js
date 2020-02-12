@@ -8,6 +8,8 @@ import { version } from '../../../../package.json';
 import i18n from '../../../i18n';
 import networks from '../../../constants/networks';
 import voting from '../../../constants/voting';
+import { adaptTransactions } from './adapters';
+import transactionTypes from '../../../constants/transactionTypes';
 
 const isStaging = () => (
   localStorage.getItem('useLiskServiceStaging') || version.includes('beta') || version.includes('rc')
@@ -16,6 +18,7 @@ const isStaging = () => (
 
 const liskServiceUrl = `https://mainnet-service${isStaging()}.lisk.io`;
 const liskServiceTestnetUrl = `https://testnet-service${isStaging()}.lisk.io`;
+const liskServiceBetanetUrl = 'https://betanet-service.lisk.io';
 
 const getServerUrl = (networkConfig) => {
   const name = getNetworkNameBasedOnNethash(networkConfig);
@@ -25,9 +28,11 @@ const getServerUrl = (networkConfig) => {
   if (name === networks.testnet.name) {
     return liskServiceTestnetUrl;
   }
-  const liskServiceDevnetUrl = localStorage.getItem('liskServiceUrl');
-  if (liskServiceDevnetUrl) {
-    return liskServiceDevnetUrl;
+  if (networkConfig.networks.LSK.nodeUrl.indexOf('betanet') > 0) {
+    return liskServiceBetanetUrl;
+  }
+  if (networkConfig.networks.LSK.nodeUrl.indexOf('liskdev.net') > 0) {
+    return networkConfig.networks.LSK.nodeUrl.replace(/:\d{2,4}/, ':9901');
   }
   throw new Error(i18n.t('This feature can be accessed through Mainet and Testnet.'));
 };
@@ -86,7 +91,7 @@ const liskServiceApi = {
   }) => liskServiceGet({
     networkConfig,
     path: '/api/v1/transactions',
-    transformResponse: response => response.data,
+    transformResponse: response => adaptTransactions(response).data,
     searchParams: {
       limit: DEFAULT_LIMIT,
       ...(dateFrom && { from: formatDate(dateFrom) }),
@@ -160,7 +165,7 @@ const liskServiceApi = {
     path: '/api/v1/transactions',
     searchParams: {
       limit: 100,
-      type: 2,
+      type: transactionTypes().registerDelegate.outgoingCode,
       sort: 'timestamp:desc',
     },
     transformResponse: response => response.data,

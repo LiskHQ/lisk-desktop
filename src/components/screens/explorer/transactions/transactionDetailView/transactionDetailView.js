@@ -13,6 +13,13 @@ function getDelegateName(transaction) {
   return transaction.asset && transaction.asset.delegate && transaction.asset.delegate.username;
 }
 
+const getTxAsset = (tx) => {
+  if (typeof tx.asset === 'object' && tx.asset !== null && typeof tx.asset.data === 'string') {
+    return tx.asset.data;
+  }
+  return '-';
+};
+
 class TransactionDetailView extends React.Component {
   render() {
     const {
@@ -22,34 +29,22 @@ class TransactionDetailView extends React.Component {
       netCode,
       t,
     } = this.props;
-    const { senderLabel, title } = {
-      [transactionTypes.setSecondPassphrase]: {
-        title: t('2nd passphrase registration'),
-        senderLabel: t('Account'),
-      },
-      [transactionTypes.registerDelegate]: {
-        title: t('Delegate registration'),
-        senderLabel: t('Account nickname'),
-      },
-      [transactionTypes.vote]: {
-        title: t('Delegate vote'),
-        senderLabel: t('Voter'),
-      },
-    }[transaction.type] || {
-      senderLabel: t('Sender'),
-    };
-
+    const { senderLabel, title } = transactionTypes.getByCode(transaction.type || 0);
+    const isTransferTransaction = transaction.type === transactionTypes().send.code;
     return (transaction.id ? (
       <React.Fragment>
-        {title ? (
-          <div className={styles.summaryHeader}>
-            <TransactionTypeFigure
-              address={transaction.senderId}
-              transactionType={transaction.type}
-            />
-            <h2 className="tx-header">{title}</h2>
-          </div>
-        ) : null}
+        { isTransferTransaction
+          ? null
+          : (
+            <div className={styles.summaryHeader}>
+              <TransactionTypeFigure
+                address={transaction.senderId}
+                transactionType={transaction.type}
+              />
+              <h2 className="tx-header">{title}</h2>
+            </div>
+          )
+        }
         <BoxRow className={styles.detailsWrapper}>
           <AccountInfo
             name={getDelegateName(transaction)}
@@ -60,7 +55,7 @@ class TransactionDetailView extends React.Component {
             label={senderLabel}
           />
         </BoxRow>
-        {transaction.type === transactionTypes.send
+        { isTransferTransaction
           ? (
             <BoxRow className={styles.detailsWrapper}>
               <AccountInfo
@@ -75,13 +70,13 @@ class TransactionDetailView extends React.Component {
           : null
         }
         {children}
-        { transaction.type === transactionTypes.send
+        { isTransferTransaction
           ? (
             <BoxRow className={styles.message}>
               <div className={`${styles.detailsWrapper}`}>
                 <span className={styles.label}>{t('Message')}</span>
                 <div className={`${styles.value} tx-reference`}>
-                  {transaction.asset && transaction.asset.data ? transaction.asset.data : '-'}
+                  {getTxAsset(transaction)}
                 </div>
               </div>
               <div className={`${styles.detailsWrapper}`}>
@@ -93,7 +88,7 @@ class TransactionDetailView extends React.Component {
             </BoxRow>
           ) : null
         }
-        { transaction.type === transactionTypes.vote && transaction.votesName ? (
+        { !isTransferTransaction && transaction.votesName ? (
           <TransactionVotes votes={transaction.votesName} />
         ) : null
         }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Lisk from '@liskhq/lisk-client';
+import Lisk from '@liskhq/lisk-client-old';
 import to from 'await-to-js';
 import { create } from '../../../../utils/api/lsk/transactions';
 import accounts from '../../../../../test/constants/accounts';
@@ -8,6 +8,12 @@ import Summary from './summary';
 
 describe('Delegate Registration Summary', () => {
   let wrapper;
+
+  const network = {
+    networks: {
+      LSK: { networkIdentifier: 'sample_identifier' },
+    },
+  };
 
   const props = {
     account: {
@@ -21,6 +27,7 @@ describe('Delegate Registration Summary', () => {
     nextStep: jest.fn(),
     prevStep: jest.fn(),
     t: key => key,
+    network,
   };
 
   const response = {
@@ -66,6 +73,7 @@ describe('Delegate Registration Summary', () => {
       username: props.nickname,
       passphrase: props.account.passphrase,
       secondPassphrase: null,
+      network,
     };
 
     expect(props.nextStep).not.toBeCalled();
@@ -85,6 +93,7 @@ describe('Delegate Registration Summary', () => {
       account: props.account,
       passphrase: props.account.passphrase,
       secondPassphrase: null,
+      networkIdentifier: 'sample_identifier',
     };
 
     expect(props.nextStep).toBeCalled();

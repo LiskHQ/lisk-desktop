@@ -1,3 +1,6 @@
+const { resolve } = require('path');
+const webpack = require('webpack'); // eslint-disable-line
+
 module.exports = {
   node: {
     fs: 'empty',
@@ -20,6 +23,12 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+        resolve: {
+          alias: {
+            Utils: resolve(__dirname, '../src/utils/api/'),
+          },
+          extensions: ['.js'],
+        },
         options: {
           presets: [
             [
@@ -98,4 +107,9 @@ module.exports = {
       },
     },
   },
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      NACL_FAST: 'disable',
+    }),
+  ],
 };

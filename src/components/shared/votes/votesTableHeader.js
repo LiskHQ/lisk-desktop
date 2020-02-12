@@ -1,10 +1,10 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votesTab.css';
 
-export default t => ([
+export default (t, apiVersion) => ([
   {
     title: t('Rank'),
-    classList: grid['col-sm-1'],
+    classList: apiVersion === '3' ? 'hidden' : grid['col-sm-1'],
   },
   {
     title: t('Delegate'),
@@ -12,7 +12,7 @@ export default t => ([
   },
   {
     title: t('Forged'),
-    classList: `${grid['col-sm-2']} ${grid['col-lg-2']}`,
+    classList: grid['col-sm-2'],
     tooltip: {
       title: t('Forged'),
       message: t('Sum of all LSK awarded to a delegate for each block successfully generated on the blockchain.'),
@@ -21,7 +21,7 @@ export default t => ([
   },
   {
     title: t('Productivity'),
-    classList: `${grid['col-sm-2']} ${grid['col-lg-1']}`,
+    classList: `${grid['col-sm-2']} ${grid[apiVersion === '3' ? 'col-lg-2' : 'col-lg-1']}`,
     tooltip: {
       title: t('Productivity'),
       message: t('% of successfully forged blocks in relation to total blocks that were available for this particular delegate to forge'),
@@ -34,7 +34,7 @@ export default t => ([
     tooltip: {
       title: t('Productivity'),
       message: t('Sum of LSK in all accounts who have voted for this delegate.'),
-      position: 'showOnBottom',
+      position: 'showOnLeft',
     },
   },
 ]);

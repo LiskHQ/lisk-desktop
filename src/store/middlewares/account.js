@@ -21,6 +21,7 @@ import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import txFilters from '../../constants/transactionFilters';
+import { txAdapter } from '../../utils/api/lsk/adapters';
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -56,7 +57,10 @@ const getRecentTransactionOfType = (transactionsList, type) => (
 );
 
 const votePlaced = (store, action) => {
-  const voteTransaction = getRecentTransactionOfType(action.data.confirmed, transactionTypes.vote);
+  const voteTransaction = getRecentTransactionOfType(
+    action.data.confirmed,
+    transactionTypes().vote.code,
+  );
 
   if (voteTransaction) {
     const state = store.getState();
@@ -93,8 +97,9 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
 
   const txs = action.data.block.transactions || [];
   const blockContainsRelevantTransaction = txs.filter((transaction) => {
-    const sender = transaction ? transaction.senderId : null;
-    const recipient = transaction ? transaction.recipientId : null;
+    const morphedTx = txAdapter(transaction);
+    const sender = morphedTx ? morphedTx.senderId : null;
+    const recipient = morphedTx ? morphedTx.recipientId : null;
     return account.address === recipient || account.address === sender;
   }).length > 0;
 
@@ -110,7 +115,6 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // https://github.com/LiskHQ/lisk-desktop/pull/1609
     setTimeout(() => {
       updateAccountData(store);
-
       store.dispatch(updateTransactions({
         pendingTransactions: transactions.pending,
         address: account.address,
@@ -133,7 +137,7 @@ const getNetworkFromLocalStorage = () => {
 };
 
 // eslint-disable-next-line max-statements
-const checkNetworkToConnet = (storeSettings) => {
+const checkNetworkToConnect = (storeSettings) => {
   const autologinData = getAutoLogInData();
   let loginNetwork = findMatchingLoginNetwork();
 
@@ -187,7 +191,7 @@ const autoLogInIfNecessary = async (store) => {
   const actualSettings = store && store.getState().settings;
   const autologinData = getAutoLogInData();
 
-  const loginNetwork = checkNetworkToConnet(actualSettings);
+  const loginNetwork = checkNetworkToConnect(actualSettings);
 
   store.dispatch(await networkSet(loginNetwork));
   store.dispatch(networkStatusUpdated({ online: true }));

@@ -45,6 +45,7 @@ class RegisterDelegate extends React.Component {
           <Summary
             t={t}
             account={account}
+            network={network}
           />
           <Status
             t={t}

@@ -4,7 +4,7 @@ import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import Fees from '../constants/fees';
 import { tokenMap } from '../constants/tokens';
-import transactionTypes, { createTransactionType } from '../constants/transactionTypes';
+import transactionTypes from '../constants/transactionTypes';
 import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
@@ -12,6 +12,7 @@ import { getTimeOffset } from '../utils/hacks';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI } from '../utils/api';
 import { signSendTransaction } from '../utils/hwManager';
+import { txAdapter } from '../utils/api/lsk/adapters';
 
 // ========================================= //
 //            ACTION CREATORS
@@ -32,10 +33,10 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
  */
 export const addNewPendingTransaction = data => ({
   type: actionTypes.addNewPendingTransaction,
-  data: {
+  data: txAdapter({
     ...data,
     senderId: extractAddress(data.senderPublicKey),
-  },
+  }),
 });
 
 // ========================================= //
@@ -182,8 +183,10 @@ const handleSentError = ({
 export const sent = data => async (dispatch, getState) => {
   let tx;
   let fail;
-  const { account, network, settings } = getState();
-  const timeOffset = getTimeOffset(getState());
+  const {
+    account, network, settings, blocks,
+  } = getState();
+  const timeOffset = getTimeOffset(blocks.latestBlocks);
   const activeToken = settings.token.active;
   const senderId = account.info[activeToken].address;
 
@@ -191,7 +194,7 @@ export const sent = data => async (dispatch, getState) => {
 
   try {
     if (account.loginType === loginType.normal) {
-      tx = await transactionsAPI.create(activeToken, txData, createTransactionType.transaction);
+      tx = await transactionsAPI.create(activeToken, txData, transactionTypes().send.key);
     } else {
       [fail, tx] = await (signSendTransaction(account, data));
 
@@ -208,7 +211,7 @@ export const sent = data => async (dispatch, getState) => {
       recipientId: txData.recipientId,
       senderId,
       senderPublicKey: account.publicKey,
-      type: transactionTypes.send,
+      type: transactionTypes().send.code,
     }));
 
     dispatch(passphraseUsed(txData.passphrase));
@@ -240,14 +243,14 @@ export const transactionCreated = data => async (dispatch, getState) => {
   const {
     account, settings, network, ...state
   } = getState();
-  const timeOffset = getTimeOffset(state);
+  const timeOffset = getTimeOffset(state.blocks.latestBlocks);
   const activeToken = settings.token.active;
 
   const [error, tx] = account.loginType === loginType.normal
     ? await to(transactionsAPI.create(
       activeToken,
       { ...data, timeOffset, network },
-      createTransactionType.transaction,
+      transactionTypes().send.key,
     ))
     : await to(signSendTransaction(account, { ...data, timeOffset }));
 

@@ -106,7 +106,7 @@ describe('actions: account', () => {
         senderId: accounts.second_passphrase_account.address,
         amount: 0,
         fee: Fees.setSecondPassphrase,
-        type: transactionTypes.setSecondPassphrase,
+        type: transactionTypes().setSecondPassphrase.code,
         token: 'LSK',
       };
       accountApi.setSecondPassphrase.mockResolvedValue(transaction);

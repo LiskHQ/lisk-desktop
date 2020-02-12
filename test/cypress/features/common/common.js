@@ -159,6 +159,7 @@ Then(/^I click on recent transaction$/, function () {
 });
 
 Then(/^I click on recent bookmark$/, function () {
+  cy.wait(300);
   cy.get(ss.bookmarkAccount).eq(0).click();
 });
 

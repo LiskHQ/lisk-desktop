@@ -72,8 +72,9 @@ const TransactionsTable = ({
         <Table
           data={transactions.data}
           isLoading={transactions.isLoading}
-          row={props => <TransactionRow t={t} {...props} />}
+          row={TransactionRow}
           loadData={handleLoadMore}
+          additionalRowProps={{ t }}
           header={header(changeSort, t)}
           currentSort={sort}
           canLoadMore

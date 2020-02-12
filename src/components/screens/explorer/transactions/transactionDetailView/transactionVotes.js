@@ -4,12 +4,13 @@ import { withTranslation } from 'react-i18next';
 import BoxRow from '../../../../toolbox/box/row';
 import styles from './transactionDetailView.css';
 import routes from '../../../../../constants/routes';
+import RankOrStatus from '../../../../shared/rankOrStatus';
 
 const transactionVotes = ({ votes, t }) => {
   const accountPath = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
   return (
     <React.Fragment>
-      {votes.added
+      {votes.added && votes.added.length > 0
         ? (
           <BoxRow>
             <div className={styles.detailsWrapper}>
@@ -23,9 +24,7 @@ const transactionVotes = ({ votes, t }) => {
                     to={`${accountPath}/${vote.account.address}`}
                     className={`${styles.voteTag} voter-address`}
                   >
-                    <span className={styles.rank}>
-                      {`#${vote.rank}`}
-                    </span>
+                    <RankOrStatus data={vote} className={styles.rank} />
                     <span className={styles.username}>{vote.username}</span>
                   </Link>
                 ))}
@@ -33,7 +32,7 @@ const transactionVotes = ({ votes, t }) => {
             </div>
           </BoxRow>
         ) : null}
-      {votes.deleted
+      {votes.deleted && votes.deleted.length > 0
         ? (
           <BoxRow>
             <div className={styles.detailsWrapper}>
@@ -47,9 +46,7 @@ const transactionVotes = ({ votes, t }) => {
                     to={`${accountPath}/${vote.account.address}`}
                     className={`${styles.voteTag} voter-address`}
                   >
-                    <span className={styles.rank}>
-                      {`#${vote.rank}`}
-                    </span>
+                    <RankOrStatus data={vote} className={styles.rank} />
                     <span className={styles.username}>{vote.username}</span>
                   </Link>
                 ))}

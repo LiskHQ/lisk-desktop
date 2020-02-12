@@ -1,5 +1,5 @@
 import { ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
-import Lisk from '@liskhq/lisk-client'; // eslint-disable-line import/no-extraneous-dependencies
+import Lisk from '@liskhq/lisk-client-old'; // eslint-disable-line
 
 export const createCommand = (command, fn) => {
   ipcMain.on(`${command}.request`, (event, ...args) => {
@@ -14,5 +14,5 @@ export const isValidAddress = address => address.length > 2 && address.length < 
 
 export const getBufferToHex = buffer => Lisk.cryptography.bufferToHex(buffer);
 
-// eslint-disable-next-line max-len
-export const getTransactionBytes = transaction => Lisk.transaction.utils.getTransactionBytes(transaction);
+export const getTransactionBytes = transaction =>
+  Lisk.transaction.utils.getTransactionBytes(transaction);

@@ -117,7 +117,8 @@ class Login extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t } = this.props;
+    const { t, network } = this.props;
+    const canHWSignIn = !network.networks.LSK || network.networks.LSK.apiVersion === '2';
 
     return (
       <React.Fragment>
@@ -161,14 +162,18 @@ class Login extends React.Component {
                 >
                   {t('Sign in')}
                 </PrimaryButton>
-
-                <Link
-                  className={`${styles.hwLink} signin-hwWallet-button`}
-                  to={(routes.hwWallet.path)}
-                >
-                  <Icon name="hwWalletIcon" className={styles.hwWalletIcon} />
-                  {t('Sign in with a hardware wallet')}
-                </Link>
+                {
+                  canHWSignIn
+                    ? (
+                      <Link
+                        className={`${styles.hwLink} signin-hwWallet-button`}
+                        to={(routes.hwWallet.path)}
+                      >
+                        <Icon name="hwWalletIcon" className={styles.hwWalletIcon} />
+                        {t('Sign in with a hardware wallet')}
+                      </Link>
+                    ) : null
+                }
 
               </div>
             </form>

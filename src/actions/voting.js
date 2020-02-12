@@ -13,6 +13,7 @@ import { addNewPendingTransaction } from './transactions';
 import actionTypes from '../constants/actions';
 import { getAPIClient } from '../utils/api/network';
 import { tokenMap } from '../constants/tokens';
+import { txAdapter } from '../utils/api/lsk/adapters';
 
 /**
  * Add data to the list of all delegates
@@ -47,9 +48,11 @@ export const votePlaced = ({
   account, votes, secondPassphrase, callback,
 }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
-    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
+    const state = getState();
+    const { networkIdentifier } = state.network.networks.LSK;
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, state);
     const { votedList, unvotedList } = getVotingLists(votes);
-    const timeOffset = getTimeOffset(getState());
+    const timeOffset = getTimeOffset(state.blocks.latestBlocks);
 
     const label = getVotingError(votes, account);
     if (label) {
@@ -64,6 +67,7 @@ export const votePlaced = ({
       unvotedList,
       secondPassphrase,
       timeOffset,
+      networkIdentifier,
     }));
 
     if (error) {
@@ -73,7 +77,8 @@ export const votePlaced = ({
       });
     } else {
       dispatch({ type: actionTypes.pendingVotesAdded });
-      callResult.map(transaction => dispatch(addNewPendingTransaction(transaction)));
+      callResult.map(transaction =>
+        dispatch(addNewPendingTransaction(txAdapter(transaction))));
       dispatch(passphraseUsed(account.passphrase));
       callback({ success: true });
     }
@@ -106,8 +111,7 @@ export const loadDelegates = ({
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     let params = {
       offset,
-      limit: '101',
-      sort: 'rank:asc',
+      limit: '90',
     };
     params = q ? { ...params, search: q } : params;
     getDelegates(liskAPIClient, params)

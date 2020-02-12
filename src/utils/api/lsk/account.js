@@ -1,5 +1,5 @@
 
-import Lisk from '@liskhq/lisk-client';
+import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import api from '..';
 import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';
@@ -52,10 +52,16 @@ export const setSecondPassphrase = (
   publicKey,
   passphrase,
   timeOffset,
+  networkIdentifier,
 ) =>
   new Promise((resolve, reject) => {
-    const transaction = Lisk.transaction
-      .registerSecondPassphrase({ passphrase, secondPassphrase, timeOffset });
+    const transaction = liskClient().transaction
+      .registerSecondPassphrase({
+        passphrase,
+        secondPassphrase,
+        timeOffset,
+        networkIdentifier,
+      });
     liskAPIClient.transactions.broadcast(transaction).then(() => {
       resolve(transaction);
     }).catch(reject);

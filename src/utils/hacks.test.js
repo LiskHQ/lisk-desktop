@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Lisk from '@liskhq/lisk-client';
+import Lisk from '@liskhq/lisk-client-old';
 import { getTimeOffset } from './hacks';
 
 describe('hack utils', () => {
@@ -13,7 +13,7 @@ describe('hack utils', () => {
           }],
         },
       };
-      expect(getTimeOffset(state)).to.equal(-offset);
+      expect(getTimeOffset(state.blocks.latestBlocks)).to.equal(-offset);
     });
   });
 });

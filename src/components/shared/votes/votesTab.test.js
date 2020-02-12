@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import * as reactRedux from 'react-redux';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
 import VotesTab from './votesTab';
@@ -20,6 +21,16 @@ describe('Votes Tab Component', () => {
     t: v => v,
   };
 
+  const network = {
+    network: {
+      networks: {
+        LSK: { apiVersion: '2' },
+      },
+    },
+  };
+
+  reactRedux.useSelector = jest.fn().mockImplementation(() => network);
+
   afterEach(() => {
     props.votes.loadData.mockRestore();
     props.delegates.loadData.mockRestore();
@@ -29,7 +40,7 @@ describe('Votes Tab Component', () => {
 
   it('Should render with empty state', () => {
     wrapper = setup(props);
-    expect(wrapper.find('.empty-state')).toIncludeText('Nothing found.');
+    expect(wrapper.find('.empty-state')).toIncludeText('This account doesn’t have any votes.');
   });
 
   it('Should show loading state', () => {

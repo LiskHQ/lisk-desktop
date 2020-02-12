@@ -1,4 +1,4 @@
-import Lisk from '@liskhq/lisk-client';
+import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import i18next from 'i18next';
 import { toast } from 'react-toastify';
 import actionTypes from '../../constants/actions';
@@ -20,10 +20,11 @@ export const getConnectionErrorMessage = error => (
     : i18next.t('Unable to connect to the node, no response from the server.')
 );
 
-const getNethash = async nodeUrl => (
+const getNetworkInfo = async nodeUrl => (
   new Promise(async (resolve, reject) => {
+    const Lisk = liskClient();
     new Lisk.APIClient([nodeUrl], {}).node.getConstants().then((response) => {
-      resolve(response.data.nethash);
+      resolve(response.data);
     }).catch((error) => {
       reject(getConnectionErrorMessage(error));
     });
@@ -31,24 +32,24 @@ const getNethash = async nodeUrl => (
 );
 
 export const networkSet = data => async (dispatch) => {
-  if (data.name === networks.customNode.name) {
-    await getNethash(data.network.address).then((nethash) => {
-      dispatch(generateAction(data, {
-        nodeUrl: data.network.address,
-        custom: data.network.custom,
-        code: data.network.code,
-        nethash,
-      }));
-    }).catch((error) => {
-      dispatch(generateAction(data, {
-        nodeUrl: data.network.address,
-        custom: data.network.custom,
-        code: data.network.code,
-      }));
-      toast.error(error);
-    });
-  } else if (data.name === networks.testnet.name
-    || data.name === networks.mainnet.name) {
-    dispatch(generateAction(data, data.network));
-  }
+  const nodeUrl = data.name === networks.customNode.name
+    ? data.network.address
+    : networks[data.name.toLowerCase()].nodes[0];
+  await getNetworkInfo(nodeUrl).then(({ nethash, version, networkId }) => {
+    dispatch(generateAction(data, {
+      nodeUrl,
+      custom: data.network.custom,
+      code: data.network.code,
+      apiVersion: version.substring(0, 1),
+      nethash,
+      networkIdentifier: networkId,
+    }));
+  }).catch((error) => {
+    dispatch(generateAction(data, {
+      nodeUrl: data.network.address,
+      custom: data.network.custom,
+      code: data.network.code,
+    }));
+    toast.error(error);
+  });
 };

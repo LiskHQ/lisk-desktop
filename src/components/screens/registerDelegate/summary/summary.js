@@ -6,7 +6,7 @@ import AccountVisual from '../../../toolbox/accountVisual';
 import { fromRawLsk } from '../../../../utils/lsk';
 import Fees from '../../../../constants/fees';
 import { create } from '../../../../utils/api/lsk/transactions';
-import { createTransactionType } from '../../../../constants/transactionTypes';
+import transactionTypes from '../../../../constants/transactionTypes';
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -21,6 +21,7 @@ class Summary extends React.Component {
       account,
       nextStep,
       nickname,
+      network,
     } = this.props;
 
     const data = {
@@ -28,9 +29,10 @@ class Summary extends React.Component {
       username: nickname,
       passphrase: account.passphrase,
       secondPassphrase,
+      network,
     };
 
-    const [error, tx] = await to(create(data, createTransactionType.delegate_registration));
+    const [error, tx] = await to(create(data, transactionTypes().registerDelegate.key));
     if (!error) nextStep({ transactionInfo: tx });
   }
 

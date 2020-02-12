@@ -17,6 +17,10 @@
   justify-content: center;
   align-items: center;
 
+  & img {
+    height: 300px;
+  }
+
   & > h1 {
     @mixin headingLarge bold;
 

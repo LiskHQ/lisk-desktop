@@ -20,10 +20,10 @@ const BlockRow = ({ data, className }) => (
       {data.numberOfTransactions}
     </span>
     <span className={grid['col-md-2']}>
-      {data.totalAmount}
+      {data.generatorUsername}
     </span>
     <span className={grid['col-md-2']}>
-      {data.generatorUsername}
+      <LiskAmount val={data.totalAmount} token="LSK" />
     </span>
     <span className={grid['col-md-2']}>
       <LiskAmount val={data.totalForged} token="LSK" />

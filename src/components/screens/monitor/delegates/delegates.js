@@ -87,6 +87,12 @@ const DelegatesTable = ({
     return () => dispatch(forgingDataConcealed());
   }, []);
 
+  useEffect(() => {
+    if (activeTab === 'standby') {
+      delegates.loadData();
+    }
+  }, [activeTab]);
+
   return (
     <div>
       <MonitorHeader />
@@ -117,9 +123,12 @@ const DelegatesTable = ({
           <Table
             data={delegates.data}
             isLoading={delegates.isLoading}
-            row={props =>
-              <DelegateRow {...props} t={t} forgingTime={forgingTimes[props.data.publicKey]} />}
+            row={DelegateRow}
             loadData={handleLoadMore}
+            additionalRowProps={{
+              t,
+              forgingTimes,
+            }}
             header={header(activeTab, changeSort, t)}
             currentSort={sort}
             canLoadMore={canLoadMore}

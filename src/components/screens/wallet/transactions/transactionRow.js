@@ -97,9 +97,12 @@ class TransactionRow extends React.Component {
         </div>
         <div className={`${columnClassNames.amount} transactions-cell`}>
           <TransactionAmount
-            address={address}
+            host={address}
             token={token}
-            transaction={value}
+            sender={value.senderId}
+            recipient={value.recipientId || value.asset.recipientId}
+            type={value.type}
+            amount={value.amount || value.asset.amount}
           />
         </div>
       </div>

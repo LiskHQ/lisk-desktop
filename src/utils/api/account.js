@@ -9,7 +9,3 @@ export const setSecondPassphrase = ssp;
 export const getAccount = async ({ token, ...params }) => (
   api[token || getTokenFromAddress(params.address)].account.getAccount(params)
 );
-export default {
-  setSecondPassphrase,
-  getAccount,
-};

@@ -27,61 +27,65 @@ const getForgingTime = (data) => {
 };
 
 const DelegateRow = ({
-  data, className, forgingTime, t,
-}) => (
-  <Link
-    className={`${grid.row} ${className} delegate-row`}
-    to={`${routes.blocks.path}/${data.id}`}
-  >
-    <span className={grid['col-md-1']}>
-      {`#${data.rank}`}
-    </span>
-    <span className={grid['col-md-2']}>
-      {data.username}
-    </span>
-    <span className={data.rank > 101 ? `${grid['col-xs-5']} ${grid['col-md-6']}` : grid['col-md-3']}>
-      <AccountVisualWithAddress address={data.address} />
-    </span>
-    {
-      data.rank <= 101 ? (
-        <Fragment>
-          <span className={grid['col-md-2']}>
-            {getForgingTime(forgingTime)}
-          </span>
-          <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
-            <Tooltip
-              title={forgingTime
-                ? t(statuses[forgingTime.status])
-                : t(statuses.notForging)}
-              className="showOnBottom"
-              size="s"
-              content={(
-                <div className={`${styles.status} ${
-                  styles[forgingTime
-                    ? forgingTime.status
-                    : 'notForging']}`
-                  }
-                />
-              )}
-              footer={(
-                <p>{getForgingTime(forgingTime)}</p>
-              )}
-            >
-              <p className={styles.statusToolip}>
-                {data.lastBlock && `Last block forged ${data.lastBlock}`}
-              </p>
-            </Tooltip>
-          </span>
-        </Fragment>
-      ) : null
-    }
-    <span className={`${grid['col-xs-2']} ${grid['col-md-2']} ${grid['col-lg-2']}`}>
-      {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
-    </span>
-    <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
-      {data.productivity}
-    </span>
-  </Link>
-);
+  data, className, forgingTimes, t,
+}) => {
+  const forgingTime = forgingTimes[data.publicKey];
+  const formattedForgingTime = getForgingTime(forgingTime);
+  return (
+    <Link
+      className={`${grid.row} ${className} delegate-row`}
+      to={`${routes.accounts.path}/${data.address}`}
+    >
+      <span className={grid['col-md-1']}>
+        {`#${data.rank}`}
+      </span>
+      <span className={grid['col-md-2']}>
+        {data.username}
+      </span>
+      <span className={data.rank > 101 ? `${grid['col-xs-5']} ${grid['col-md-6']}` : grid['col-md-3']}>
+        <AccountVisualWithAddress address={data.address} />
+      </span>
+      {
+        data.rank <= 101 ? (
+          <Fragment>
+            <span className={grid['col-md-2']}>
+              {formattedForgingTime}
+            </span>
+            <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
+              <Tooltip
+                title={forgingTime
+                  ? t(statuses[forgingTime.status])
+                  : t(statuses.notForging)}
+                className="showOnBottom"
+                size="s"
+                content={(
+                  <div className={`${styles.status} ${
+                    styles[forgingTime
+                      ? forgingTime.status
+                      : 'notForging']}`
+                    }
+                  />
+                )}
+                footer={(
+                  <p>{formattedForgingTime}</p>
+                )}
+              >
+                <p className={styles.statusToolip}>
+                  {data.lastBlock && `Last block forged ${data.lastBlock}`}
+                </p>
+              </Tooltip>
+            </span>
+          </Fragment>
+        ) : null
+      }
+      <span className={`${grid['col-xs-2']} ${grid['col-md-2']} ${grid['col-lg-2']}`}>
+        {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
+      </span>
+      <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
+        {data.productivity}
+      </span>
+    </Link>
+  );
+};
 
 export default React.memo(DelegateRow);

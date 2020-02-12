@@ -1,4 +1,4 @@
-import Lisk from '@liskhq/lisk-client';
+import Lisk from '@liskhq/lisk-client-old';
 import React from 'react';
 import { mount } from 'enzyme';
 import Transactions from './transactions';
@@ -22,7 +22,7 @@ describe('Single Transaction Component', () => {
     timestamp: Date.now(),
   };
   const voteTransaction = {
-    type: transactionTypes.vote,
+    type: transactionTypes().vote.code,
     amount: '0',
     fee: Lisk.transaction.constants.VOTE_FEE.toString(),
     senderId: accounts.genesis.address,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import AccountVisual from '../../../../toolbox/accountVisual';
 import { getIndexOfBookmark } from '../../../../../utils/bookmarks';
@@ -13,12 +14,17 @@ const headerAccountInfo = ({
   t,
   token,
 }) => {
+  const { apiVersion } = useSelector(state => state.network.networks.LSK);
   const index = getIndexOfBookmark(bookmarks, { address, token });
   const accounts = bookmarks[token];
   const accountTitle = delegate.username
     || (index > -1 && accounts[index] && accounts[index].title);
-  const label = (address === account.address && t('My Account'))
-    || (delegate.username && t('Delegate #{{rank}}', { rank: delegate.rank }));
+  let label = '';
+  if (address === account.address) {
+    label = t('My Account');
+  } else if (delegate.username) {
+    label = apiVersion === '2' ? t('Delegate #{{rank}}', { rank: delegate.rank }) : t('Delegate');
+  }
 
   return (
     <div className={`${styles.account}`}>

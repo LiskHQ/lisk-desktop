@@ -7,10 +7,10 @@ import styles from './votesTab.css';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 
 const VoteRow = ({
-  data, onRowClick, t,
+  data, onRowClick, t, apiVersion,
 }) => (
   <div className={`${tableStyles.row} ${styles.row} vote-row`} onClick={() => onRowClick(data.address)}>
-    <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
+    <div className={apiVersion === '3' ? 'hidden' : grid['col-sm-1']}>
       {
         /* istanbul ignore next */
         (data.rank && +data.rank < 10 ? `0${data.rank}` : data.rank) || '-'
@@ -29,19 +29,14 @@ const VoteRow = ({
         </div>
       </div>
     </div>
-    <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`}>
-      {data.rewards
-        ? (
-          <span>
-            <LiskAmount val={data.rewards} />
-            {' '}
-            {t('LSK')}
-          </span>
-        )
-        /* istanbul ignore next */
-        : '-'}
+    <div className={grid['col-sm-2']}>
+      <span>
+        <LiskAmount val={data.rewards} />
+        {' '}
+        {t('LSK')}
+      </span>
     </div>
-    <div className={`${grid['col-sm-2']} ${grid['col-lg-1']}`}>
+    <div className={`${grid['col-sm-2']} ${grid[apiVersion === '3' ? 'col-lg-2' : 'col-lg-1']}`}>
       {data.productivity !== undefined
         ? `${formatAmountBasedOnLocale({ value: data.productivity })}%`
         /* istanbul ignore next */
@@ -49,22 +44,16 @@ const VoteRow = ({
       }
     </div>
     <div className={`${grid['col-sm-4']} ${grid['col-lg-2']}`}>
-      {data.vote
-        ? (
-          <span className={styles.votes}>
-            <LiskAmount val={data.vote} />
-            {' '}
-            {t('LSK')}
-          </span>
-        )
-        /* istanbul ignore next */
-        : '-'}
+      <span className={styles.votes}>
+        <LiskAmount val={data.vote || data.voteWeight} token="LSK" />
+      </span>
     </div>
   </div>
 );
 
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
-  (prevProps.data.address === nextProps.data.address);
+  (prevProps.data.address === nextProps.data.address
+    && prevProps.data.rewards === nextProps.data.rewards);
 
 export default React.memo(VoteRow, areEqual);

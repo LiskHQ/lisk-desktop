@@ -1,8 +1,9 @@
-import Lisk from '@liskhq/lisk-client';
+import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import { getAPIClient } from './network';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import { toRawLsk } from '../../lsk';
 import txFilters from '../../../constants/transactionFilters';
+import { adaptTransactions, adaptTransaction } from './adapters';
 
 // TODO remove this function as is replaced right now by Create and Broadcast functions
 // Issue ticket #2046
@@ -16,6 +17,7 @@ export const send = (
   timeOffset,
 ) =>
   new Promise((resolve, reject) => {
+    const Lisk = liskClient();
     const txId = Lisk.transaction.transfer({
       amount,
       data,
@@ -71,7 +73,7 @@ export const getTransactions = ({
 
   return new Promise((resolve, reject) => {
     (liskAPIClient || getAPIClient(networkConfig)).transactions.get(params).then(response => (
-      resolve(response)
+      resolve(adaptTransactions(response))
     )).catch(reject);
   });
 };
@@ -84,11 +86,11 @@ export const getSingleTransaction = ({
   apiClient.transactions.get({ id })
     .then((response) => {
       if (response.data.length !== 0) {
-        resolve(response);
+        resolve(adaptTransaction(response));
       } else {
         apiClient.node.getTransactions('ready', { id }).then((unconfirmedRes) => {
           if (unconfirmedRes.data.length !== 0) {
-            resolve(unconfirmedRes);
+            resolve(adaptTransaction(unconfirmedRes));
           } else {
             reject(new Error(`Transaction with id "${id}" not found`));
           }
@@ -99,7 +101,12 @@ export const getSingleTransaction = ({
 
 export const create = (transaction, transactionType) => new Promise((resolve, reject) => {
   try {
-    const tx = Lisk.transaction[transactionType](transaction);
+    const Lisk = liskClient();
+    const { networkIdentifier } = transaction.network.networks.LSK;
+    const tx = Lisk.transaction[transactionType]({
+      ...transaction,
+      networkIdentifier,
+    });
     resolve(tx);
   } catch (error) {
     reject(error);

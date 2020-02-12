@@ -14,7 +14,7 @@ import accountConfig from '../../../constants/account';
 import links from '../../../constants/externalLinks';
 import settingsConst from '../../../constants/settings';
 import styles from './settings.css';
-import txTypes from '../../../constants/transactionTypes';
+import transactionTypes from '../../../constants/transactionTypes';
 
 class Settings extends React.Component {
   constructor() {
@@ -77,7 +77,7 @@ class Settings extends React.Component {
     const isHardwareWalletAccount = account.hwInfo && !!account.hwInfo.deviceId;
     const activeCurrency = currencies.indexOf(settings.currency || settingsConst.currencies[0]);
     const hasPendingSecondPassphrase = pending.find(element =>
-      element.type === txTypes.setSecondPassphrase) !== undefined;
+      element.type === transactionTypes().setSecondPassphrase.code) !== undefined;
 
     return (
       <div className={styles.settingsHolder}>
