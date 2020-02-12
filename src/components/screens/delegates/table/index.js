@@ -3,7 +3,6 @@ import { withTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTotalVotesCount } from '../../../../utils/voting';
 import styles from './delegatesTable.css';
-import { loadDelegates, loadVotes } from '../../../../actions/voting';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -19,6 +18,8 @@ const tabsData = (t = str => str) => ([
     value: 0,
     className: 'all-delegates',
     filter: list => list,
+    trigger: data => data.length % 30 === 0,
+    data: [],
   },
   {
     name: t('Voted'),
@@ -26,6 +27,8 @@ const tabsData = (t = str => str) => ([
     className: 'voted',
     filter: (delegates, votes) =>
       delegates.filter(({ username }) => votes[username] && votes[username].confirmed),
+    trigger: (data, votes) => data.length < votes.length,
+    data: [],
   },
   {
     name: t('Not voted'),
@@ -33,6 +36,8 @@ const tabsData = (t = str => str) => ([
     className: 'not-voted',
     filter: (delegates, votes) =>
       delegates.filter(({ username }) => !votes[username] || !votes[username].confirmed),
+    data: [],
+    trigger: data => data.length % 30 === 0,
   },
 ]);
 
@@ -51,25 +56,21 @@ const Tabs = ({ t, onTabChange, isSignedIn }) => {
   return (
     isSignedIn
       ? <BoxTabs {...data} />
-      : <h2>{data.tabs[0].name}</h2>
+      : <h2>{tabs[0].name}</h2>
   );
 };
 
 // eslint-disable-next-line max-statements
 const DelegatesTable = ({
-  t, votingModeEnabled,
+  t, votingModeEnabled, isSignedIn,
 }) => {
-  const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const [params, setParams] = useState({ tab: 0, q: '' });
-  const { votes, delegates } = useSelector(state => state.voting);
-  const account = useSelector(state => state.account);
+  const activeTab = tabsData(t)[params.tab];
+  const { votes } = useSelector(state => state.voting);
   const { apiVersion } = useSelector(state => state.network.networks.LSK);
   const shouldShowVoteColumn = votingModeEnabled || getTotalVotesCount(votes) > 0;
   const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
-  const canLoadMore = delegates.length >= 90;
-  const activeTab = tabsData(t)[params.tab];
-  const isSignedIn = account.info && account.info.LSK;
 
   const applyFilters = (filter) => {
     // eslint-disable-next-line prefer-object-spread
@@ -79,28 +80,16 @@ const DelegatesTable = ({
   const loadDelegatesData = () => {
     if (!isLoading) {
       setLoading(true);
-      dispatch(loadDelegates({
-        offset: delegates.length,
-        refresh: false,
-        q: '',
-        callback: () => {
-          setLoading(false);
-        },
-      }));
-    }
-  };
 
-  const loadVotesData = () => {
-    dispatch(loadVotes({
-      address: account.info.LSK.address,
-    }));
+      // api call
+      // filter the results
+      // negate the isLoading
+      // check the trigger condition to call recursively
+    }
   };
 
   useEffect(() => {
     loadDelegatesData();
-    if (isSignedIn) {
-      loadVotesData();
-    }
   }, []);
 
   return (
@@ -119,7 +108,7 @@ const DelegatesTable = ({
       </BoxHeader>
       <BoxContent className={styles.content}>
         <Table
-          data={activeTab.filter(delegates, votes)}
+          data={activeTab.data}
           isLoading={isLoading}
           additionalRowProps={{
             firstTimeVotingActive,
@@ -130,7 +119,7 @@ const DelegatesTable = ({
           row={DelegateRow}
           loadData={loadDelegatesData}
           header={header(shouldShowVoteColumn, t, apiVersion)}
-          canLoadMore={canLoadMore}
+          canLoadMore
           error={false}
           iterationKey="username"
           emptyState={{ message: t('No delegates found.') }}

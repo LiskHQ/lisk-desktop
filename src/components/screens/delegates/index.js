@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import styles from './delegates.css';
 import DelegatesTable from './table';
 import Header from './header';
 import Onboarding from '../../toolbox/onboarding/onboarding';
-import { clearVotes } from '../../../actions/voting';
+import { clearVotes, loadVotes } from '../../../actions/voting';
 
 const getOnboardingSlides = t => (
   [{
@@ -33,9 +33,11 @@ const Delegates = ({
 }) => {
   const [votingMode, setVotingMode] = useState(false);
   const [onBoardingToggled, setOnBoardingToggled] = useState(false);
+  const account = useSelector(state => state.account);
   const dispatch = useDispatch();
   // eslint-disable-next-line prefer-const
   let wrapper = React.createRef();
+  const isSignedIn = account.info && account.info.LSK;
 
   const toggleVotingMode = () => {
     if (votingMode) {
@@ -47,6 +49,14 @@ const Delegates = ({
   const onBoardingDiscarded = () => {
     setOnBoardingToggled(!onBoardingToggled);
   };
+
+  useEffect(() => {
+    if (isSignedIn) {
+      dispatch(loadVotes({
+        address: account.info.LSK.address,
+      }));
+    }
+  }, []);
 
   return (
     <div className={`${grid.row} ${styles.wrapper}`} ref={wrapper}>
@@ -66,6 +76,7 @@ const Delegates = ({
       <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
         <DelegatesTable
           votingModeEnabled={votingMode}
+          isSignedIn={isSignedIn}
         />
       </section>
     </div>
