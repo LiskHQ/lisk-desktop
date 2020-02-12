@@ -160,7 +160,7 @@ const VotingHeader = ({
               <SecondaryButton onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
                 {t('Cancel')}
               </SecondaryButton>
-              <Link to={totalActions !== 0 ? routes.voting.path : routes.delegates.path}>
+              <Link to={totalActions !== 0 ? routes.votingSummary.path : routes.delegates.path}>
                 <PrimaryButton className={`${styles.btn} go-to-confirmation-button`} disabled={totalActions === 0}>
                   {t('Confirm')}
                 </PrimaryButton>
