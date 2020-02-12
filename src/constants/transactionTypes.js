@@ -3,7 +3,10 @@ import store from '../store';
 const defaultApiVersion = '2';
 
 const transactionTypes = (t = str => str) => {
-  const apiVersion = store.getState().network.apiVersion;
+  const { network } = store.getState();
+  const apiVersion = network.networks && network.networks.LSK
+    ? network.networks.LSK.apiVersion
+    : defaultApiVersion;
   return {
     send: {
       code: 0,
