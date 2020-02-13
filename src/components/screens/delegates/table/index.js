@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getTotalVotesCount } from '../../../../utils/voting';
 import styles from './delegatesTable.css';
 import Box from '../../../toolbox/box';
@@ -11,35 +11,49 @@ import { Input } from '../../../toolbox/inputs';
 import Table from '../../../toolbox/table';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
+import { loadDelegates } from '../../../../actions/voting';
 
-const tabsData = (t = str => str) => ([
-  {
-    name: t('All delegates'),
-    value: 0,
-    className: 'all-delegates',
-    filter: list => list,
-    trigger: data => data.length % 30 === 0,
-    data: [],
-  },
-  {
-    name: t('Voted'),
-    value: 1,
-    className: 'voted',
-    filter: (delegates, votes) =>
-      delegates.filter(({ username }) => votes[username] && votes[username].confirmed),
-    trigger: (data, votes) => data.length < votes.length,
-    data: [],
-  },
-  {
-    name: t('Not voted'),
-    value: 2,
-    className: 'not-voted',
-    filter: (delegates, votes) =>
-      delegates.filter(({ username }) => !votes[username] || !votes[username].confirmed),
-    data: [],
-    trigger: data => data.length % 30 === 0,
-  },
-]);
+const tabsData = (t = str => str) => {
+  const [data, setData] = useState([[], [], []]);
+  const save = (list, reset, tabIndex) => {
+    setData(data.map((item, index) => {
+      if (index !== tabIndex) return item;
+      if (reset) return list.concat(data[tabIndex]);
+      return list;
+    }));
+  };
+  return [
+    {
+      name: t('All delegates'),
+      value: 0,
+      className: 'all-delegates',
+      filter: list => list,
+      trigger: list => list.length % 30 === 0,
+      data: data[0],
+      save: (list, reset) => save(list, reset, 0),
+    },
+    {
+      name: t('Voted'),
+      value: 1,
+      className: 'voted',
+      filter: (delegates, votes) =>
+        delegates.filter(({ username }) => votes[username] && votes[username].confirmed),
+      trigger: (list, votes) => list.length < votes.length,
+      data: data[1],
+      save: (list, reset) => save(list, reset, 1),
+    },
+    {
+      name: t('Not voted'),
+      value: 2,
+      className: 'not-voted',
+      filter: (delegates, votes) =>
+        delegates.filter(({ username }) => !votes[username] || !votes[username].confirmed),
+      trigger: list => list.length % 30 === 0,
+      data: data[2],
+      save: (list, reset) => save(list, reset, 2),
+    },
+  ];
+};
 
 const Tabs = ({ t, onTabChange, isSignedIn }) => {
   const tabs = tabsData(t);
@@ -68,6 +82,7 @@ const DelegatesTable = ({
   const [params, setParams] = useState({ tab: 0, q: '' });
   const activeTab = tabsData(t)[params.tab];
   const { votes } = useSelector(state => state.voting);
+  const network = useSelector(state => state.network);
   const { apiVersion } = useSelector(state => state.network.networks.LSK);
   const shouldShowVoteColumn = votingModeEnabled || getTotalVotesCount(votes) > 0;
   const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
@@ -77,20 +92,29 @@ const DelegatesTable = ({
     setParams(Object.assign({}, params, filter));
   };
 
-  const loadDelegatesData = () => {
+  const loadDelegatesData = (reset) => {
     if (!isLoading) {
       setLoading(true);
-
-      // api call
-      // filter the results
-      // negate the isLoading
-      // check the trigger condition to call recursively
+      loadDelegates({ ...params, network })
+        .then(({ data }) => {
+          activeTab.save(activeTab.filter(data, votes), reset);
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
     }
   };
 
   useEffect(() => {
-    loadDelegatesData();
+    loadDelegatesData(true);
   }, []);
+
+  useEffect(() => {
+    if (activeTab.data.length === 0) {
+      loadDelegatesData(true);
+    }
+  }, [params.tab]);
 
   return (
     <Box main isLoading={false}>
