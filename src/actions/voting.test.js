@@ -6,7 +6,7 @@ import {
   voteToggled,
   votePlaced,
   loadVotes,
-  loadDelegates,
+  delegatesLoaded,
   delegatesAdded,
 } from './voting';
 import Fees from '../constants/fees';
@@ -175,14 +175,14 @@ describe('actions: voting', () => {
     });
   });
 
-  describe('loadDelegates', () => {
+  describe('delegatesLoaded', () => {
     const data = {
       q: '',
       offset: 0,
       refresh: true,
     };
     const delegates = delegateList;
-    const actionFunction = loadDelegates(data);
+    const actionFunction = delegatesLoaded(data);
 
     it('should create an action function', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');

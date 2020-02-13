@@ -77,7 +77,7 @@ export const secondPassphraseRegistered = ({
   (dispatch, getState) => {
     const { settings: { token: { active } }, network } = getState();
     const { networkIdentifier } = network.networks.LSK;
-    const liskAPIClient = getAPIClient(active, getState());
+    const liskAPIClient = getAPIClient(active, network);
     const timeOffset = getTimeOffset(getState().blocks.latestBlocks);
     setSecondPassphrase(
       liskAPIClient,

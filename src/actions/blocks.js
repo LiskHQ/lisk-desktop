@@ -48,7 +48,7 @@ export const forgingDataConcealed = () => ({
 });
 
 const retrieveNextForgers = async (getState, forgedInRound) => {
-  const apiClient = getAPIClient(tokenMap.LSK.key, getState());
+  const apiClient = getAPIClient(tokenMap.LSK.key, getState().network);
 
   const numberOfRemainingBlocksInRound = voting.numberOfActiveDelegates
     - forgedInRound;

@@ -132,7 +132,7 @@ function withData(apis = {}) {
     const keys = Object.keys(apis);
 
     const mapStateToProps = (state, ownProps) => ({
-      apiClient: getAPIClient(state.settings.token.active, state),
+      apiClient: getAPIClient(state.settings.token.active, state.network),
       apiParams: keys.reduce((acc, key) => {
         acc[key] = apis[key].getApiParams ? apis[key].getApiParams(state, ownProps) : {};
         return acc;

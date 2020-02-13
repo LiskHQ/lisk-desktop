@@ -50,7 +50,7 @@ export const votePlaced = ({
   async (dispatch, getState) => { // eslint-disable-line max-statements
     const state = getState();
     const { networkIdentifier } = state.network.networks.LSK;
-    const liskAPIClient = getAPIClient(tokenMap.LSK.key, state);
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, state.network);
     const { votedList, unvotedList } = getVotingLists(votes);
     const timeOffset = getTimeOffset(state.blocks.latestBlocks);
 
@@ -90,7 +90,7 @@ export const votePlaced = ({
  */
 export const loadVotes = ({ address, type, callback = () => null }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState().network);
     getVotes(liskAPIClient, { address })
       .then((response) => {
         dispatch({
@@ -105,16 +105,23 @@ export const loadVotes = ({ address, type, callback = () => null }) =>
  * Gets list of all delegates
  */
 export const loadDelegates = ({
+  offset = 0, q, network,
+}) => {
+  console.log('in loadDelegates Network', network);
+  const liskAPIClient = getAPIClient(tokenMap.LSK.key, network);
+  let params = {
+    offset,
+    limit: '90',
+  };
+  params = q ? { ...params, search: q } : params;
+  return getDelegates(liskAPIClient, params);
+};
+
+export const delegatesLoaded = ({
   offset = 0, refresh, q, callback = () => {},
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
-    let params = {
-      offset,
-      limit: '90',
-    };
-    params = q ? { ...params, search: q } : params;
-    getDelegates(liskAPIClient, params)
+    loadDelegates({ offset, q, network: getState().network })
       .then((response) => {
         updateDelegateCache(response.data, getState().network);
         dispatch(delegatesAdded({
