@@ -10,8 +10,3 @@
 .content {
   padding: 0 !important;
 }
-
-.searchInput {
-  opacity: 0;
-  pointer-events: none;
-}
