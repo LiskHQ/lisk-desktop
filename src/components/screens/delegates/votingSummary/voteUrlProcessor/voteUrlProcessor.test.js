@@ -17,7 +17,7 @@ describe('VoteUrlProcessor', () => {
     const account = accounts.delegate;
     const location = {
       search: '',
-      pathname: routes.voting.path,
+      pathname: routes.votingSummary.path,
     };
 
     unlistenSpy = jest.fn();
@@ -26,7 +26,7 @@ describe('VoteUrlProcessor', () => {
       account,
       delegates: [],
       loadVotes: jest.fn(({ callback }) => callback(votes.slice(0, 3))),
-      loadDelegates: jest.fn(({ callback }) => callback()),
+      delegatesLoaded: jest.fn(({ callback }) => callback()),
       voteToggled: jest.fn(),
       history: {
         location,
@@ -42,11 +42,6 @@ describe('VoteUrlProcessor', () => {
 
   afterEach(() => {
     delegateApi.getDelegateByName.mockReset();
-  });
-
-  it('does not call props.loadVotes if URL does not contain votes or unvotes search param', () => {
-    wrapper = mount(<VoteUrlProcessor {...props} />);
-    expect(props.loadVotes).not.toHaveBeenCalled();
   });
 
   it('removes history listener on unmount', () => {
