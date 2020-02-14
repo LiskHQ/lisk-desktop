@@ -132,7 +132,7 @@
 .loadingRow {
   height: 40px;
   padding: 0px 0 20px;
-  display: flex;
+  display: none;
 
   & .loadingColumn {
     height: 40px;

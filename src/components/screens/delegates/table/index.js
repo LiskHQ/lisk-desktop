@@ -125,7 +125,7 @@ const DelegatesTable = ({
   }, [activeTab.data, isLoading]);
 
   return (
-    <Box main isLoading={false}>
+    <Box main isLoading={isLoading}>
       <BoxHeader className="delegates-table">
         <Tabs t={t} onTabChange={applyFilters} isSignedIn={isSignedIn} />
         <span>
