@@ -71,7 +71,7 @@ const Onboarding = ({
             </span>
           ) : null
         }
-        <div className={styles.slides}>
+        <div className={`${styles.slides} slides`}>
           {slides.map((slide, index) => (
             <section
               key={`slides-${index}`}
