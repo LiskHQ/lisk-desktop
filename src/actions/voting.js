@@ -107,7 +107,6 @@ export const loadVotes = ({ address, type, callback = () => null }) =>
 export const loadDelegates = ({
   offset = 0, q, network,
 }) => {
-  console.log('in loadDelegates Network', network);
   const liskAPIClient = getAPIClient(tokenMap.LSK.key, network);
   let params = {
     offset,

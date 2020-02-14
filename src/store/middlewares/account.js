@@ -63,8 +63,7 @@ const votePlaced = (store, action) => {
   );
 
   if (voteTransaction) {
-    const state = store.getState();
-    const { account } = state;
+    const { account } = store.getState();
 
     store.dispatch(loadVotes({
       address: account.info.LSK.address,
