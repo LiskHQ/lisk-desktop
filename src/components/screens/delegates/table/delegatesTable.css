@@ -10,3 +10,16 @@
 .content {
   padding: 0 !important;
 }
+
+
+.highlight {
+  position: absolute;
+  height: 100%;
+  width: 40px;
+  left: 11px;
+  background-color: var(--color-highlight-checkboxes);
+
+  & ~ span:not(.checkboxWrapper) {
+    opacity: 0.2;
+  }
+}

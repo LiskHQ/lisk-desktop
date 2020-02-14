@@ -44,8 +44,11 @@ const DelegateRow = (props) => {
         }
       }}
     >
+      {
+        firstTimeVotingActive ? <div className={styles.highlight} /> : null
+      }
       <span
-        className={`${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'} checkbox-column`}
+        className={`${styles.checkboxWrapper} ${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'} checkbox-column`}
       >
         <VoteCheckbox
           voteStatus={voteStatus || {}}
