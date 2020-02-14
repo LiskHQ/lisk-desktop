@@ -17,8 +17,9 @@ const tabsData = (t = str => str) => {
   const [data, setData] = useState([[], [], []]);
   const save = (list, reset, tabIndex) => {
     setData(data.map((item, index) => {
-      if (index !== tabIndex) return item;
-      if (reset) return list.concat(data[tabIndex]);
+      if (index !== tabIndex && !reset) return item;
+      if (index !== tabIndex && reset) return [];
+      if (!reset) return data[tabIndex].concat(list);
       return list;
     }));
   };
@@ -28,7 +29,6 @@ const tabsData = (t = str => str) => {
       value: 0,
       className: 'all-delegates',
       filter: list => list,
-      trigger: list => list.length % 30 === 0,
       data: data[0],
       save: (list, reset) => save(list, reset, 0),
     },
@@ -38,7 +38,6 @@ const tabsData = (t = str => str) => {
       className: 'voted',
       filter: (delegates, votes) =>
         delegates.filter(({ username }) => votes[username] && votes[username].confirmed),
-      trigger: (list, votes) => list.length < votes.length,
       data: data[1],
       save: (list, reset) => save(list, reset, 1),
     },
@@ -48,7 +47,6 @@ const tabsData = (t = str => str) => {
       className: 'not-voted',
       filter: (delegates, votes) =>
         delegates.filter(({ username }) => !votes[username] || !votes[username].confirmed),
-      trigger: list => list.length % 30 === 0,
       data: data[2],
       save: (list, reset) => save(list, reset, 2),
     },
@@ -79,7 +77,7 @@ const DelegatesTable = ({
   t, votingModeEnabled, isSignedIn,
 }) => {
   const [isLoading, setLoading] = useState(false);
-  const [params, setParams] = useState({ tab: 0, q: '' });
+  const [params, setParams] = useState({ tab: 0, q: '', offset: 0 });
   const activeTab = tabsData(t)[params.tab];
   const { votes } = useSelector(state => state.voting);
   const network = useSelector(state => state.network);
@@ -89,15 +87,19 @@ const DelegatesTable = ({
 
   const applyFilters = (filter) => {
     // eslint-disable-next-line prefer-object-spread
-    setParams(Object.assign({}, params, filter));
+    setParams(Object.assign({}, params, { offset: 0 }, filter));
   };
 
   const loadDelegatesData = (reset) => {
     if (!isLoading) {
       setLoading(true);
-      loadDelegates({ ...params, network })
+      loadDelegates({
+        ...params,
+        network,
+      })
         .then(({ data }) => {
-          activeTab.save(activeTab.filter(data, votes), reset);
+          applyFilters({ offset: params.offset + data.length });
+          activeTab.save(activeTab.filter(data, votes), reset === true);
           setLoading(false);
         })
         .catch(() => {
@@ -107,14 +109,20 @@ const DelegatesTable = ({
   };
 
   useEffect(() => {
-    loadDelegatesData(true);
+    loadDelegatesData();
   }, []);
-
   useEffect(() => {
-    if (activeTab.data.length === 0) {
-      loadDelegatesData(true);
+    loadDelegatesData(true);
+  }, [params.q, params.tab]);
+  useEffect(() => {
+    if (activeTab.value === 1
+      && Object.keys(votes).length > 0
+      && params.offset > 0
+      && !isLoading
+      && activeTab.data.length < Object.keys(votes).length) {
+      loadDelegatesData();
     }
-  }, [params.tab]);
+  }, [activeTab.data, isLoading]);
 
   return (
     <Box main isLoading={false}>
