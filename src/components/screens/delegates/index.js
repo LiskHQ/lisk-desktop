@@ -32,7 +32,6 @@ const Delegates = ({
   t,
 }) => {
   const [votingMode, setVotingMode] = useState(false);
-  const [onBoardingToggled, setOnBoardingToggled] = useState(false);
   const account = useSelector(state => state.account);
   const dispatch = useDispatch();
   // eslint-disable-next-line prefer-const
@@ -44,10 +43,6 @@ const Delegates = ({
       dispatch(clearVotes());
     }
     setVotingMode(!votingMode);
-  };
-
-  const onBoardingDiscarded = () => {
-    setOnBoardingToggled(!onBoardingToggled);
   };
 
   useEffect(() => {
@@ -63,7 +58,6 @@ const Delegates = ({
       <Onboarding
         slides={getOnboardingSlides(t)}
         finalCallback={toggleVotingMode}
-        onDiscard={onBoardingDiscarded}
         actionButtonLabel={t('Start voting')}
         name="delegateOnboarding"
       />
@@ -71,7 +65,6 @@ const Delegates = ({
         t={t}
         votingModeEnabled={votingMode}
         toggleVotingMode={toggleVotingMode}
-        onBoardingDiscarded={onBoardingDiscarded}
       />
       <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
         <DelegatesTable

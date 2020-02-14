@@ -1,6 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Waypoint from 'react-waypoint';
 import { loginType } from '../../../constants/hwConstants';
 import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons/button';
 import Tooltip from '../../toolbox/tooltip/tooltip';
@@ -24,70 +25,26 @@ function shouldShowRegisterDelegateButton(account) {
     && !Object.keys(account.hwInfo).length;
 }
 
-// This is equal to the header margin top
-let headerTopEdge = 15;
-let isAboveHeader = false;
-let scrollContainer = null;
-
 // eslint-disable-next-line max-statements
 const VotingHeader = ({
   t,
-  onBoardingDiscarded,
   toggleVotingMode,
   votingModeEnabled,
 }) => {
   const account = useSelector(state => state.account);
   const { votes } = useSelector(state => state.voting);
   const [isHeaderSticky, setIsHeaderSticky] = useState(false);
-  // eslint-disable-next-line prefer-const
-  let wrapper = React.createRef();
-  const locateHeader = () => {
-    isAboveHeader = scrollContainer.scrollTop >= headerTopEdge;
-    if (isAboveHeader && !isHeaderSticky) {
-      setIsHeaderSticky(true);
-    } else if (!isAboveHeader && isHeaderSticky) {
-      setIsHeaderSticky(false);
-    }
-  };
-
-  useEffect(() => {
-    scrollContainer = document.querySelector('.scrollContainer');
-    if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', locateHeader);
-    }
-
-    // Didn't bind it to state, since there's not need to re-render
-    // THe fixed amount is related to the design specifications
-    setTimeout(() => {
-      headerTopEdge = wrapper.getBoundingClientRect().y - 58;
-    }, 1);
-
-    return () => {
-      if (scrollContainer) {
-        scrollContainer.removeEventListener('scroll', locateHeader);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      headerTopEdge = wrapper.getBoundingClientRect().y - 58;
-    }, 1);
-  }, [onBoardingDiscarded]);
-
-
   const voteList = getVoteList(votes);
   const unvoteList = getUnvoteList(votes);
   const totalActions = getTotalActions(votes);
-  const {
-    maxCountOfVotes,
-    fee,
-  } = votingConst;
+  const { maxCountOfVotes, fee } = votingConst;
+
   return (
-    <div
-      className={`${styles.wrapper} voting-header ${isHeaderSticky ? `${styles.sticky} sticky` : ''}`}
-      ref={wrapper}
-    >
+    <div className={`${styles.wrapper} voting-header ${isHeaderSticky ? `${styles.sticky} sticky` : ''}`}>
+      <Waypoint
+        onEnter={() => setIsHeaderSticky(false)}
+        onLeave={() => setIsHeaderSticky(true)}
+      />
       <div className={styles.bg} />
       <div className={styles.stickyContent}>
         <div className={styles.info}>
