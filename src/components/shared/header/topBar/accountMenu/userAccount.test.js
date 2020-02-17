@@ -27,6 +27,10 @@ describe('UserAccount', () => {
     settingsUpdated: jest.fn(),
     setDropdownRef: () => {},
     t: val => val,
+    history: {
+      location: { path: '/wallet' },
+      push: jest.fn(),
+    }
   };
 
   it('renders <UserAccount /> component', () => {
