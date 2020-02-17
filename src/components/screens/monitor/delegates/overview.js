@@ -31,14 +31,16 @@ const Overview = ({
   const getAmountOfDelegatesInTime = () => {
     const totalDelegates = chartActiveAndStandby.data;
     const final = [totalDelegates];
+    let allPositiveValues = true;
     chartRegisteredDelegates.data
       .map(delegate => (delegate.y))
       .reduce((amountOfDelegates, amountOfDelegatesByMonth) => {
         final.unshift(amountOfDelegates - amountOfDelegatesByMonth);
+        allPositiveValues = allPositiveValues && amountOfDelegates - amountOfDelegatesByMonth > 0;
         return amountOfDelegates - amountOfDelegatesByMonth;
       }, totalDelegates);
 
-    return final;
+    return allPositiveValues ? final : [];
   };
 
   const getAmountOfDelegatesLabels = () => {
