@@ -1,9 +1,16 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-export default (shouldShowVoteColumn, t, apiVersion) => ([
+export default (shouldShowVoteColumn, t, apiVersion, firstTimeVotingActive) => ([
   {
     title: t('Vote'),
     classList: `${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'}`,
+    tooltip: firstTimeVotingActive ? {
+      title: t('Selecting Delegates'),
+      message: t('Start by Selecting the delegates you’d like to vote for.'),
+      className: 'showOnRight',
+      alwaysShow: true,
+
+    } : null,
   },
   {
     title: t('Rank'),
