@@ -59,6 +59,7 @@
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+    color: var(--color-maastricht-blue);
 
     &:hover {
       background-color: var(--primary-background-color);
