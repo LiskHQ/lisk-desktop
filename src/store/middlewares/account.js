@@ -95,11 +95,10 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   const { transactions, settings: { token } } = state;
   const account = getActiveTokenAccount(store.getState());
 
-  const txs = action.data.block.transactions || [];
+  const txs = (action.data.block.transactions || []).map(txAdapter);
   const blockContainsRelevantTransaction = txs.filter((transaction) => {
-    const morphedTx = txAdapter(transaction);
-    const sender = morphedTx ? morphedTx.senderId : null;
-    const recipient = morphedTx ? morphedTx.recipientId : null;
+    const sender = transaction ? transaction.senderId : null;
+    const recipient = transaction ? transaction.recipientId : null;
     return account.address === recipient || account.address === sender;
   }).length > 0;
 
