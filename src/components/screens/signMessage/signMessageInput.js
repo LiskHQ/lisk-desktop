@@ -3,6 +3,7 @@ import { AutoResizeTextarea } from '../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
+import Tooltip from '../../toolbox/tooltip/tooltip';
 import BoxContent from '../../toolbox/box/content';
 import BoxFooter from '../../toolbox/box/footer';
 import BoxHeader from '../../toolbox/box/header';
@@ -47,7 +48,12 @@ class SignMessageInput extends React.Component {
           <h1>{t('Sign a message')}</h1>
         </BoxHeader>
         <BoxContent>
-          <BoxInfoText>{t('You can use your passphrase to sign a message. This signed message can prove that you are the owner of the account, since only your passphrase can produce it. We recommend including date & time or a specific keyword.')}</BoxInfoText>
+          <BoxInfoText>
+            <span>{t('The sign message tool allows you to prove ownership of a transaction')}</span>
+            <Tooltip className={`${styles.tooltip} showOnBottom`}>
+              <p>{t('Recipients will be able to confirm the transfer  by viewing the signature which verifies the ownership without exposing any sensitive account information.')}</p>
+            </Tooltip>
+          </BoxInfoText>
           <label className={styles.fieldGroup}>
             <span>{t('Message')}</span>
             <AutoResizeTextarea
