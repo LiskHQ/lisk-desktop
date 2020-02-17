@@ -25,6 +25,10 @@ class UserAccount extends React.Component {
   handleTokenSelect(token) {
     this.props.settingsUpdated({ token: { active: token } });
     this.toggleDropdown();
+    const { location, push } = this.props.history;
+    if (location.pathname !== routes.wallet.path) {
+      push(routes.wallet.path);
+    }
   }
 
   handleLogout() {
