@@ -84,7 +84,8 @@ const DelegateRow = (props) => {
 
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) => (
-  prevProps.data.username === nextProps.data.username
+  prevProps.firstTimeVotingActive === nextProps.firstTimeVotingActive
+  && prevProps.data.username === nextProps.data.username
   && prevProps.shouldShowVoteColumn === nextProps.shouldShowVoteColumn
   && prevProps.votingModeEnabled === nextProps.votingModeEnabled
   && isEqual(prevProps.voteStatus, nextProps.voteStatus)
