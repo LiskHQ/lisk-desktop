@@ -77,7 +77,8 @@ const DelegatesTable = ({
   t, votingModeEnabled, isSignedIn,
 }) => {
   const [isLoading, setLoading] = useState(false);
-  const [params, setParams] = useState({ tab: 0, q: '', offset: 0 });
+  const [params, setParams] = useState({ tab: 0, q: '' });
+  const [offset, setOffset] = useState(0);
   const activeTab = tabsData(t)[params.tab];
   const { votes } = useSelector(state => state.voting);
   const network = useSelector(state => state.network);
@@ -87,7 +88,8 @@ const DelegatesTable = ({
 
   const applyFilters = (filter) => {
     // eslint-disable-next-line prefer-object-spread
-    setParams(Object.assign({}, params, { offset: 0 }, filter));
+    setParams(Object.assign({}, params, filter));
+    setOffset(0);
   };
 
   const loadDelegatesData = (reset) => {
@@ -95,10 +97,11 @@ const DelegatesTable = ({
       setLoading(true);
       loadDelegates({
         ...params,
+        offset,
         network,
       })
         .then(({ data }) => {
-          applyFilters({ offset: params.offset + data.length });
+          setOffset(offset + data.length);
           activeTab.save(activeTab.filter(data, votes), reset === true);
           setLoading(false);
         })
@@ -113,11 +116,11 @@ const DelegatesTable = ({
   }, []);
   useEffect(() => {
     loadDelegatesData(true);
-  }, [params.q, params.tab]);
+  }, [params]);
   useEffect(() => {
     if (activeTab.value === 1
       && Object.keys(votes).length > 0
-      && params.offset > 0
+      && offset > 0
       && !isLoading
       && activeTab.data.length < Object.keys(votes).length) {
       loadDelegatesData();
@@ -150,7 +153,7 @@ const DelegatesTable = ({
           }}
           row={DelegateRow}
           loadData={loadDelegatesData}
-          header={header(shouldShowVoteColumn, t, apiVersion)}
+          header={header(shouldShowVoteColumn, t, apiVersion, firstTimeVotingActive)}
           canLoadMore
           error={false}
           iterationKey="username"
