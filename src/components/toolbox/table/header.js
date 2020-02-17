@@ -6,10 +6,7 @@ import { isReactComponent } from '../../../utils/helpers';
 
 const Tip = ({ data }) => (
   data ? (
-    <Tooltip
-      title={data.title}
-      className={data.position}
-    >
+    <Tooltip {...data}>
       <p>{data.message}</p>
     </Tooltip>
   ) : null

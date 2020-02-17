@@ -16,7 +16,7 @@ export default (t, apiVersion) => ([
     tooltip: {
       title: t('Forged'),
       message: t('Sum of all LSK awarded to a delegate for each block successfully generated on the blockchain.'),
-      position: 'showOnBottom',
+      className: 'showOnBottom',
     },
   },
   {
@@ -25,7 +25,7 @@ export default (t, apiVersion) => ([
     tooltip: {
       title: t('Productivity'),
       message: t('% of successfully forged blocks in relation to total blocks that were available for this particular delegate to forge'),
-      position: 'showOnBottom',
+      className: 'showOnBottom',
     },
   },
   {
@@ -34,7 +34,7 @@ export default (t, apiVersion) => ([
     tooltip: {
       title: t('Productivity'),
       message: t('Sum of LSK in all accounts who have voted for this delegate.'),
-      position: 'showOnLeft',
+      className: 'showOnLeft',
     },
   },
 ]);
