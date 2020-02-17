@@ -30,7 +30,7 @@ describe('UserAccount', () => {
     history: {
       location: { path: '/wallet' },
       push: jest.fn(),
-    }
+    },
   };
 
   it('renders <UserAccount /> component', () => {
