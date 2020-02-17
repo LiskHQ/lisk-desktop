@@ -1,44 +1,36 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as reactRedux from 'react-redux';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import { getTotalVotesCount } from '../../../../utils/voting';
-import DelegatesTable from './delegatesTable';
-import accounts from '../../../../../test/constants/accounts';
+import * as votingActions from '../../../../actions/voting';
+import DelegatesTable from './index';
 import delegates from '../../../../../test/constants/delegates';
-import store from '../../../../store';
 
-const network = {
+const mockStore = {
   network: {
     networks: {
       LSK: { apiVersion: '2' },
     },
   },
+  voting: { votes: {} },
 };
+const fakeStore = configureStore()(mockStore);
 
-store.getState = jest.fn().mockImplementation(() => network);
-reactRedux.useSelector = jest.fn().mockImplementation(() => network);
+votingActions.loadDelegates = jest.fn()
+  .mockImplementation(() => new Promise(resolve => resolve({ data: delegates })));
 
 describe('DelegatesTable page', () => {
   const mountWithProps = props =>
-    mount(<DelegatesTable {...props} />);
+    mount(<Provider store={fakeStore}><DelegatesTable {...props} /></Provider>);
 
   const defaultProps = {
     t: key => key,
-    delegates: [],
-    loadDelegates: jest.fn(({ callback }) => callback()),
-    votes: {
-      [delegates[0].username]: {
-        confirmed: true,
-        unconfirmed: true,
-        address: delegates[0].address,
-      },
-    },
-    loadVotes: jest.fn(),
-    account: accounts.genesis,
     votingModeEnabled: false,
+    isSignedIn: true,
   };
 
-  it('renders DelegatesTable with header tabs', () => {
+  it.only('renders DelegatesTable with header tabs', () => {
     const wrapper = mountWithProps(defaultProps);
     expect(wrapper.find('header')).toIncludeText('All delegates');
     expect(wrapper.find('header')).toIncludeText('Voted');
@@ -47,9 +39,8 @@ describe('DelegatesTable page', () => {
 
   it('renders table with delegates', () => {
     const wrapper = mountWithProps(defaultProps);
-    expect(wrapper.find('.delegate-row')).toHaveLength(0);
-    wrapper.setProps({ delegates });
-    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(delegates.length);
+    wrapper.update();
+    expect(wrapper.find('.delegate-row')).toHaveLength(delegates.length);
   });
 
   it('allows to switch to "Voted" tab', () => {
