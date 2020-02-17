@@ -144,7 +144,7 @@
   }
 
   & .sharingLink {
-    background-color: var(--color-request-extarea);
+    background-color: var(--color-request-textarea);
   }
 
   & .sectionFooter {
