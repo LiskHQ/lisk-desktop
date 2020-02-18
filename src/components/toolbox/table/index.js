@@ -76,6 +76,8 @@ const Table = ({
   additionalRowProps,
 }) => {
   const Row = row;
+  console.log('--> Table', data.length);
+
   return (
     <Fragment>
       <List

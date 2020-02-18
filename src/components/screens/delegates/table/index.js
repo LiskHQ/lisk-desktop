@@ -111,21 +111,26 @@ const DelegatesTable = ({
     }
   };
 
+  // useEffect(() => {
+  //   console.log('--! Mount');
+  //   loadDelegatesData();
+  // }, []);
   useEffect(() => {
-    loadDelegatesData();
-  }, []);
-  useEffect(() => {
+    console.log('--! Reset', params.q, params.tab);
     loadDelegatesData(true);
-  }, [params]);
+  }, [params.q, params.tab]);
   useEffect(() => {
     if (activeTab.value === 1
       && Object.keys(votes).length > 0
       && offset > 0
       && !isLoading
       && activeTab.data.length < Object.keys(votes).length) {
+      console.log('--! Load more');
       loadDelegatesData();
     }
   }, [activeTab.data, isLoading]);
+
+  console.log('--! Render', params.q, params.tab, isLoading, activeTab.data.length);
 
   return (
     <Box main isLoading={isLoading}>

@@ -30,16 +30,17 @@ describe('DelegatesTable page', () => {
     isSignedIn: true,
   };
 
-  it.only('renders DelegatesTable with header tabs', () => {
+  it('renders DelegatesTable with header tabs', () => {
     const wrapper = mountWithProps(defaultProps);
     expect(wrapper.find('header')).toIncludeText('All delegates');
     expect(wrapper.find('header')).toIncludeText('Voted');
     expect(wrapper.find('header')).toIncludeText('Not voted');
   });
 
-  it('renders table with delegates', () => {
+  it.only('renders table with delegates', () => {
     const wrapper = mountWithProps(defaultProps);
-    wrapper.update();
+    // wrapper.update();
+    console.log(wrapper.html());
     expect(wrapper.find('.delegate-row')).toHaveLength(delegates.length);
   });
 
