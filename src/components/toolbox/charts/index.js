@@ -30,7 +30,6 @@ Chart.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   options: PropTypes.object,
-  customOptions: PropTypes.object,
 };
 
 Chart.defaultProps = {
