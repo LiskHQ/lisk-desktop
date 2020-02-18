@@ -6,7 +6,7 @@ export const Element = ({ children, type, ...rest }) => {
   }
   try {
     // eslint-disable-next-line import/no-unresolved
-    const { View } = typeof document === 'undefined' && require('react-native');
+    const { View } = require('react-native');
     const Type = type || View;
     return <Type {...rest}>{children}</Type>;
   } catch (e) {
