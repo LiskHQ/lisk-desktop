@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { getTotalVotesCount } from '../../../../utils/voting';
 import * as votingActions from '../../../../actions/voting';
 import DelegatesTable from './index';
 import delegates from '../../../../../test/constants/delegates';
@@ -13,13 +12,24 @@ const mockStore = {
       LSK: { apiVersion: '2' },
     },
   },
-  voting: { votes: {} },
+  voting: {
+    votes: {
+      genesis_1: {
+        confirmed: true,
+        unconfirmed: true,
+        pending: false,
+        publicKey: '3ff32442bb6da7d60c1b7752b24e6467813c9b698e0f278d48c43580da9721',
+        address: '14018336151296112011L',
+      },
+    },
+  },
 };
 const fakeStore = configureStore()(mockStore);
 
-votingActions.loadDelegates = jest.fn()
-  .mockImplementation(() => new Promise(resolve => resolve({ data: delegates })));
+const topDelegates = delegates.filter((item, index) => index < 30);
 
+votingActions.loadDelegates = jest.fn()
+  .mockImplementation(() => new Promise(resolve => resolve({ data: topDelegates })));
 
 const updateWrapperAsync = async wrapper => new Promise((resolve) => {
   setImmediate(() => {
@@ -45,60 +55,60 @@ describe('DelegatesTable page', () => {
     expect(wrapper.find('header')).toIncludeText('Not voted');
   });
 
-  it.only('renders table with delegates', async () => {
+  it('renders table with delegates', async () => {
     const wrapper = mountWithProps(defaultProps);
     await updateWrapperAsync(wrapper);
-    expect(wrapper.find('.delegate-row')).toHaveLength(delegates.length);
+    expect(wrapper.find('.delegate-row')).toHaveLength(topDelegates.length);
   });
 
-  it('allows to switch to "Voted" tab', () => {
-    const wrapper = mountWithProps({ ...defaultProps, delegates });
+  it('allows to switch to "Voted" tab', async () => {
+    const wrapper = mountWithProps(defaultProps);
+    await updateWrapperAsync(wrapper);
     expect(wrapper.find('.tab.voted')).not.toHaveClassName('active');
     wrapper.find('.tab.voted').simulate('click');
+    await updateWrapperAsync(wrapper);
     expect(wrapper.find('.tab.voted')).toHaveClassName('active');
-    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(getTotalVotesCount(defaultProps.votes));
+    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(1);
   });
 
-  it('allows to switch to "Not voted" tab', () => {
-    const wrapper = mountWithProps({ ...defaultProps, delegates });
+  it('allows to switch to "Not voted" tab', async () => {
+    const wrapper = mountWithProps(defaultProps);
+    await updateWrapperAsync(wrapper);
     expect(wrapper.find('.tab.not-voted')).not.toHaveClassName('active');
     wrapper.find('.tab.not-voted').simulate('click');
+    await updateWrapperAsync(wrapper);
     expect(wrapper.find('.tab.not-voted')).toHaveClassName('active');
-    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(delegates.length - getTotalVotesCount(defaultProps.votes));
+    expect(wrapper.find('.delegate-row').hostNodes()).toHaveLength(topDelegates.length - 1);
   });
 
-  it('allows to load more delegates', () => {
-    const standByDelegates = delegates.filter((item, index) => index < 30);
-    const wrapper = mountWithProps({ ...defaultProps, delegates: standByDelegates });
-    wrapper.find('button.load-more').simulate('click');
-    expect(defaultProps.loadDelegates).toHaveBeenCalledWith(
-      expect.objectContaining({ offset: standByDelegates.length }),
+  it('allows to load more delegates', async () => {
+    const wrapper = mountWithProps(defaultProps);
+    await updateWrapperAsync(wrapper);
+    wrapper.find('.load-more').at(0).simulate('click');
+    await updateWrapperAsync(wrapper);
+    expect(votingActions.loadDelegates).toHaveBeenCalledWith(
+      expect.objectContaining({ offset: topDelegates.length }),
     );
   });
 
   it('dose not show load more for active delegates', () => {
     const wrapper = mountWithProps(defaultProps);
-    expect(wrapper.find('button.load-more')).toHaveLength(0);
+    expect(wrapper.find('.load-more')).toHaveLength(0);
   });
 
-  it('allows to filter delegates by by name', () => {
+  it('allows to filter delegates by by name', async () => {
     const { username } = delegates[0];
-    const wrapper = mountWithProps({ ...defaultProps, delegates });
+    const wrapper = mountWithProps(defaultProps);
+    await updateWrapperAsync(wrapper);
     wrapper.find('input.filter-by-name').simulate('change', { target: { value: username } });
-    expect(defaultProps.loadDelegates).toHaveBeenCalledWith(
+    await updateWrapperAsync(wrapper);
+    expect(votingActions.loadDelegates).toHaveBeenCalledWith(
       expect.objectContaining({ q: username }),
     );
   });
 
-  it('shows vote checkboxes if props.votingModeEnabled', () => {
-    const wrapper = mountWithProps({ ...defaultProps, delegates, votes: {} });
-    expect(wrapper.find('CheckBox')).toHaveLength(0);
-    wrapper.setProps({ votingModeEnabled: true });
-    expect(wrapper.find('CheckBox')).toHaveLength(delegates.length);
-  });
-
   it('doesn\'t show tabs if not logged in', () => {
-    const wrapper = mountWithProps({ ...defaultProps, account: {} });
+    const wrapper = mountWithProps({ ...defaultProps, isSignedIn: false });
     expect(wrapper.find('.tab')).toHaveLength(0);
     expect(wrapper.find('header h2')).toHaveText('All delegates');
   });

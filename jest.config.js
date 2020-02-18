@@ -106,9 +106,12 @@ module.exports = {
     'src/components/shared/votes/voteRow.js',
     'src/components/shared/votes/votesTableHeader.js',
     'src/components/screens/dashboard/recentTransactions/transactionList.js',
-    'src/components/screens/delegates/delegatesTable/delegateRow.js',
-    'src/components/screens/delegates/delegatesTable/tableHeader.js',
+    'src/components/screens/delegates/table/delegateRow.js',
+    'src/components/screens/delegates/table/tableHeader.js',
+    'src/components/shared/voteWeight/index.js',
     'src/store/reducers/network.js',
+    'src/components/shared/rankOrStatus/index.js',
+    'src/components/screens/delegates/index.js',
   ],
   coverageThreshold: {
     global: {
