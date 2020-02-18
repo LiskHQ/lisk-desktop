@@ -87,7 +87,7 @@ class FilterDropdownButton extends React.Component {
   }
 
   extendFilters() {
-    this.setState({ areFiltersExtended: !this.state.areFiltersExtended });
+    this.setState(({ areFiltersExtended }) => ({ areFiltersExtended: !areFiltersExtended }));
   }
 
   renderFields({
