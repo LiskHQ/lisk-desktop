@@ -35,7 +35,7 @@ Go to [issues tab](https://github.com/LiskHQ/lisk-desktop/issues) and look for
  * Provide OS and browser version
 
 ##### Example
-![Alt text](./docs/assets/issue.png?raw=true "Perfect Issue")
+![Alt text](./assets/issue.png?raw=true "Perfect Issue")
 
 :heavy_exclamation_mark: Issues created that are not relevant to this project will be closed immediately.
 
@@ -82,7 +82,7 @@ ex. `git checkout -b 123-create-docs`
  * Remember to delete branch after successfully merging the PR.
 
 ##### Example
-![Alt text](./docs/assets/pr.png?raw=true "Perfect PR")
+![Alt text](./assets/pr.png?raw=true "Perfect PR")
 
 ### Creating branch
 We use naming convention `[issue number]-[what-the-ticket-is-about]`.
