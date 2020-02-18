@@ -29,12 +29,6 @@ class Select extends React.Component {
     this.setState({ isOpen: false });
   }
 
-  componentWillUnmount() {
-    this.setState({
-      isOpen: false,
-    });
-  }
-
   render() {
     const {
       options, size, className, placeholder,

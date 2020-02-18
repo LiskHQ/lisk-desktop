@@ -187,7 +187,7 @@ const checkNetworkToConnect = (storeSettings) => {
 
 // eslint-disable-next-line max-statements
 const autoLogInIfNecessary = async (store) => {
-  const actualSettings = store && store.getState().settings;
+  const actualSettings = store.getState().settings;
   const autologinData = getAutoLogInData();
 
   const loginNetwork = checkNetworkToConnect(actualSettings);
