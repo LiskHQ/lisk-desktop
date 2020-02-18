@@ -48,7 +48,7 @@ export const getNetworkNameBasedOnNethash = (network, token = 'LSK') => {
   }
 
   if (network.name === networks.customNode.name && token === 'BTC') {
-    activeNetwork = token === 'BTC' ? networks.testnet.name : network.name;
+    activeNetwork = networks.testnet.name;
   }
   return activeNetwork;
 };
