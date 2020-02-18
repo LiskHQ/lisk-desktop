@@ -144,15 +144,11 @@ class HwManager {
    */
   configure() {
     Object.keys(this.transports).forEach((key) => {
-      try {
-        manufacturers[key].listener(this.transports[key], {
-          add: data => this.addDevice(data),
-          remove: data => this.removeDevice(data),
-          pinCallback: (type, callback) => this.pinCallback(type, callback),
-        });
-      } catch (e) {
-        throw e;
-      }
+      manufacturers[key].listener(this.transports[key], {
+        add: data => this.addDevice(data),
+        remove: data => this.removeDevice(data),
+        pinCallback: (type, callback) => this.pinCallback(type, callback),
+      });
     });
   }
 }
