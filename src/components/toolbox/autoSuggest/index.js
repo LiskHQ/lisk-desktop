@@ -56,25 +56,27 @@ class AutoSuggest extends React.Component {
 
   onKeyPressDownOrUp(action) {
     const rowHeight = 44;
-    const { dropdownIndex } = this.state;
     const filteredItemsLength = this.getFilterList().length;
 
-    // istanbul ignore else
-    if (action === 'down' && dropdownIndex < filteredItemsLength - 1) {
-      if (dropdownIndex + 1 >= 4) {
-        this.listContainerRef.scrollTop = this.listContainerRef.scrollTop + rowHeight;
+    this.setState(({ dropdownIndex }) => {
+      // istanbul ignore else
+      if (action === 'down' && dropdownIndex < filteredItemsLength - 1) {
+        if (dropdownIndex + 1 >= 4) {
+          this.listContainerRef.scrollTop = this.listContainerRef.scrollTop + rowHeight;
+        }
+        dropdownIndex += 1;
       }
-      this.setState({ dropdownIndex: dropdownIndex + 1 });
-    }
 
-    // istanbul ignore else
-    if (action === 'up' && dropdownIndex > 0) {
-      this.listContainerRef.scrollTop = this.listContainerRef.scrollTop > 0
+      // istanbul ignore else
+      if (action === 'up' && dropdownIndex > 0) {
+        this.listContainerRef.scrollTop = this.listContainerRef.scrollTop > 0
         && (dropdownIndex - 1) * rowHeight < this.listContainerRef.scrollTop
-        ? this.listContainerRef.scrollTop - rowHeight
-        : this.listContainerRef.scrollTop;
-      this.setState({ dropdownIndex: dropdownIndex - 1 });
-    }
+          ? this.listContainerRef.scrollTop - rowHeight
+          : this.listContainerRef.scrollTop;
+        dropdownIndex -= 1;
+      }
+      return { dropdownIndex };
+    });
   }
 
   handleUpdateIndex(dropdownIndex) {
