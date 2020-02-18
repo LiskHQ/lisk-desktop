@@ -8,7 +8,7 @@ const getNetwork = (networkName) => {
     if (networks[key].name === networkName) {
       network = networks[key];
     }
-  }, this);
+  });
   return network;
 };
 
