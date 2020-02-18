@@ -45,7 +45,7 @@ class RequestPin extends React.Component {
   onButtonClicked(e) {
     e.stopPropagation();
     if (this.state.error) this.checkDeviceUnlocked();
-    this.setState({ pin: `${this.state.pin}${e.target.value}` });
+    this.setState(({ pin }) => ({ pin: `${pin}${e.target.value}` }));
   }
 
   onInputChange({ target: { value } }) {
