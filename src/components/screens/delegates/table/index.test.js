@@ -20,6 +20,14 @@ const fakeStore = configureStore()(mockStore);
 votingActions.loadDelegates = jest.fn()
   .mockImplementation(() => new Promise(resolve => resolve({ data: delegates })));
 
+
+const updateWrapperAsync = async wrapper => new Promise((resolve) => {
+  setImmediate(() => {
+    resolve();
+    wrapper.update();
+  });
+});
+
 describe('DelegatesTable page', () => {
   const mountWithProps = props =>
     mount(<Provider store={fakeStore}><DelegatesTable {...props} /></Provider>);
@@ -37,13 +45,10 @@ describe('DelegatesTable page', () => {
     expect(wrapper.find('header')).toIncludeText('Not voted');
   });
 
-  it.only('renders table with delegates', (done) => {
+  it.only('renders table with delegates', async () => {
     const wrapper = mountWithProps(defaultProps);
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.find('.delegate-row')).toHaveLength(delegates.length);
-      done();
-    });
+    await updateWrapperAsync(wrapper);
+    expect(wrapper.find('.delegate-row')).toHaveLength(delegates.length);
   });
 
   it('allows to switch to "Voted" tab', () => {
