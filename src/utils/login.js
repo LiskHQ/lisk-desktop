@@ -26,7 +26,7 @@ export const validateUrl = (value) => {
   const errorMessage = i18next.t('Please check the address');
   try {
     url = new URL(addHttp(value));
-    addressValidity = url && value.indexOf(' ') === -1 && isValidIp(url) ? '' : errorMessage;
+    addressValidity = value.indexOf(' ') === -1 && isValidIp(url) ? '' : errorMessage;
   } catch (e) {
     addressValidity = errorMessage;
   }
