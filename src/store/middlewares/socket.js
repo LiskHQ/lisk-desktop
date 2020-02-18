@@ -67,7 +67,7 @@ const socketMiddleware = store => (
     switch (action.type) {
       case actionTypes.networkSet:
         store.dispatch(olderBlocksRetrieved());
-        socketSetup(store, action);
+        socketSetup(store);
         break;
       case actionTypes.forgingDataDisplayed:
         if (!interval) {
