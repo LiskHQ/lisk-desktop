@@ -37,11 +37,13 @@ describe('DelegatesTable page', () => {
     expect(wrapper.find('header')).toIncludeText('Not voted');
   });
 
-  it.only('renders table with delegates', () => {
+  it.only('renders table with delegates', (done) => {
     const wrapper = mountWithProps(defaultProps);
-    // wrapper.update();
-    console.log(wrapper.html());
-    expect(wrapper.find('.delegate-row')).toHaveLength(delegates.length);
+    setImmediate(() => {
+      wrapper.update();
+      expect(wrapper.find('.delegate-row')).toHaveLength(delegates.length);
+      done();
+    });
   });
 
   it('allows to switch to "Voted" tab', () => {
