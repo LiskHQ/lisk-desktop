@@ -15,7 +15,7 @@ export const getTokenFromAddress = address => (
 );
 
 const getTokenFromTransactionId = id => (
-  (id && id.length === 64 ? tokenMap.BTC.key : tokenMap.LSK.key)
+  id && id.length === 64 ? tokenMap.BTC.key : tokenMap.LSK.key
 );
 
 export const getTransactions = ({
