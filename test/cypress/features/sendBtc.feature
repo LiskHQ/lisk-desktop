@@ -3,8 +3,7 @@ Feature: Send Btc
   Scenario: Enable and Transfer btc
     Given I autologin as genesis to testnet
     And I change active token to BTC
-    Given I am on wallet page
-    And I click on Send
+    And I click on send
     And I fill mkakDp2f31btaXdATtAogoqwXcdx1PqqFo in recipient
     And I fill 0.00000001 in amount
     And I go to transfer confirmation

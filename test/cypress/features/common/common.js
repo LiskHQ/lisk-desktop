@@ -154,6 +154,10 @@ Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
   }
 });
 
+Then(/^I click on send$/, function () {
+  cy.get(ss.transactionSendButton).eq(0).click();
+});
+
 Then(/^I click on recent transaction$/, function () {
   cy.get(ss.transactionRow).eq(0).click();
 });
