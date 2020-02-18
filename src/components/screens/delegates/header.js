@@ -8,6 +8,7 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 import Icon from '../../toolbox/icon';
 import SignInTooltipWrapper from '../../shared/signInTooltipWrapper';
 import routes from '../../../constants/routes';
+import { fromRawLsk } from '../../../utils/lsk';
 import votingConst from '../../../constants/voting';
 import {
   getTotalVotesCount,
@@ -118,7 +119,10 @@ const VotingHeader = ({
                 {t('Cancel')}
               </SecondaryButton>
               <Link to={totalActions !== 0 ? routes.votingSummary.path : routes.delegates.path}>
-                <PrimaryButton className={`${styles.btn} go-to-confirmation-button`} disabled={totalActions === 0}>
+                <PrimaryButton
+                  className={`${styles.btn} go-to-confirmation-button`}
+                  disabled={totalActions === 0 || fromRawLsk(account.info.LSK.balance) < fee}
+                >
                   {t('Confirm')}
                 </PrimaryButton>
               </Link>

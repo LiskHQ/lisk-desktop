@@ -4,6 +4,7 @@ import Empty from './empty';
 import Error from './error';
 import List from './list';
 import LoadMoreButton from './loadMoreButton';
+import styles from './table.css';
 
 /**
  * The Table component is designed to make creating tables easy and centralized
@@ -76,8 +77,6 @@ const Table = ({
   additionalRowProps,
 }) => {
   const Row = row;
-  console.log('--> Table', data.length);
-
   return (
     <Fragment>
       <List
@@ -99,6 +98,7 @@ const Table = ({
         error={error}
         isLoading={isLoading}
         isListEmpty={data.length === 0}
+        className={styles.emptyState}
       />
       <Error data={error} isLoading={isLoading} />
       <LoadMoreButton

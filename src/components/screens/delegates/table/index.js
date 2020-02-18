@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { getTotalVotesCount } from '../../../../utils/voting';
+import { getTotalVotesCount, getVotedList } from '../../../../utils/voting';
 import styles from './delegatesTable.css';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
@@ -111,26 +111,18 @@ const DelegatesTable = ({
     }
   };
 
-  // useEffect(() => {
-  //   console.log('--! Mount');
-  //   loadDelegatesData();
-  // }, []);
   useEffect(() => {
-    console.log('--! Reset', params.q, params.tab);
     loadDelegatesData(true);
   }, [params.q, params.tab]);
   useEffect(() => {
     if (activeTab.value === 1
-      && Object.keys(votes).length > 0
+      && getVotedList(votes).length > 0
       && offset > 0
       && !isLoading
-      && activeTab.data.length < Object.keys(votes).length) {
-      console.log('--! Load more');
+      && activeTab.data.length < getVotedList(votes).length) {
       loadDelegatesData();
     }
   }, [activeTab.data, isLoading]);
-
-  console.log('--! Render', params.q, params.tab, isLoading, activeTab.data.length);
 
   return (
     <Box main isLoading={isLoading}>
