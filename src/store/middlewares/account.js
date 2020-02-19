@@ -210,7 +210,7 @@ const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.storeCreated:
-      autoLogInIfNecessary(store, next, action);
+      autoLogInIfNecessary(store);
       break;
     case actionTypes.newBlockCreated:
       checkTransactionsAndUpdateAccount(store, action);
