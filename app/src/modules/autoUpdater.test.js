@@ -101,7 +101,7 @@ describe('autoUpdater', () => {
     clock.tick(24 * 60 * 60 * 1000);
     expect(params.autoUpdater.checkForUpdates).to.have.callCount(3);
 
-    params.autoUpdater.checkForUpdates.reset();
+    params.autoUpdater.checkForUpdates.resetHistory();
     params.process.platform = 'linux';
     autoUpdater(params);
     expect(params.autoUpdater.checkForUpdates).to.have.callCount(0);
@@ -140,7 +140,7 @@ describe('autoUpdater', () => {
     callbacks['update-not-available']({ version });
     expect(dialogSpy).to.have.been.calledWith({ title: 'No Updates', message: 'Current version is up-to-date.' });
 
-    dialogSpy.reset();
+    dialogSpy.resetHistory();
     callbacks['update-not-available']({ version });
     expect(dialogSpy).to.have.not.been.calledWith();
   });
