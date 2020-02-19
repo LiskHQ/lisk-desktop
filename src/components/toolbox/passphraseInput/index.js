@@ -118,8 +118,7 @@ class passphraseInput extends React.Component {
   }
 
   handleToggleShowPassphrase() {
-    const showPassphrase = !this.state.showPassphrase;
-    this.setState({ showPassphrase });
+    this.setState(({ showPassphrase }) => ({ showPassphrase: !showPassphrase }));
   }
 
   render() {

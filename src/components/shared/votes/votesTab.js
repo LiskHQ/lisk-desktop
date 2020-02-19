@@ -123,12 +123,7 @@ VotesTab.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  loading: PropTypes.array,
   t: PropTypes.func.isRequired,
-};
-
-VotesTab.defaultProps = {
-  loading: [],
 };
 
 export default VotesTab;

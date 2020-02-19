@@ -14,12 +14,11 @@ class OutsideClickHandler extends React.Component {
     if (!disabled) this.addEventListeners({ capture });
   }
 
-  shouldComponentUpdate(nextProps) {
-    const { disabled: wasDisabled } = this.props;
-    const { disabled, useCapture: capture } = nextProps;
+  componentDidUpdate(prevProps) {
+    const { disabled: wasDisabled } = prevProps;
+    const { disabled, useCapture: capture } = this.props;
     if (disabled && !wasDisabled) this.removeEventListeners({ capture });
     if (wasDisabled && !disabled) this.addEventListeners({ capture });
-    return true;
   }
 
   componentWillUnmount() {

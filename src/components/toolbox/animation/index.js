@@ -56,17 +56,13 @@ class Animation extends React.Component {
     this.anim = null;
   }
 
-  shouldComponentUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     const { name } = this.props;
-    const nextName = nextProps.name;
-    if (name !== nextName) {
+    const prevName = prevProps.name;
+    if (name !== prevName) {
       this.unbindListeners();
     }
     this.destroy();
-    return true;
-  }
-
-  componentDidUpdate() {
     this.loadAnimation();
     this.bindListeners();
   }

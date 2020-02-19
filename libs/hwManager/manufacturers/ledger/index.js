@@ -54,18 +54,14 @@ const removeDevice = async (transport, { remove }) => {
  * @param {function} actions.remove - Function for remove a device from the main list.
  */
 const listener = (transport, actions) => {
-  try {
-    transport.listen({
-      next: ({ type, deviceModel, descriptor }) => {
-        if (deviceModel && descriptor) {
-          if (type === ADD_DEVICE) addDevice(deviceModel, descriptor, actions);
-          removeDevice(transport, actions);
-        }
-      },
-    });
-  } catch (e) {
-    throw e;
-  }
+  transport.listen({
+    next: ({ type, deviceModel, descriptor }) => {
+      if (deviceModel && descriptor) {
+        if (type === ADD_DEVICE) addDevice(deviceModel, descriptor, actions);
+        removeDevice(transport, actions);
+      }
+    },
+  });
 };
 
 /**
