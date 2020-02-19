@@ -91,7 +91,7 @@ describe('voting middleware', () => {
     let getDelegatesMock;
 
     beforeEach(() => {
-      getDelegatesMock = mock(delegateApi).expects('getDelegates').returnsPromise();
+      getDelegatesMock = mock(delegateApi, 'getDelegates');
       store.getState = () => (state);
     });
 

@@ -49,9 +49,9 @@ describe('Utils: Delegate', () => {
     liskTransactionsRegisterDelegateStub = sinon.stub(Lisk.transaction, 'registerDelegate');
     liskAPIClientMockDelegates = sinon.mock(liskAPIClient.delegates);
     liskAPIClientMockVotes = sinon.mock(liskAPIClient.votes);
-    liskAPIClientMockTransations = sinon.stub(liskAPIClient.transactions, 'broadcast').returnsPromise().resolves({ id: '1234' });
-    sinon.stub(liskAPIClient.transactions, 'get').returnsPromise();
-    signVoteTransaction = sinon.stub(hwManager, 'signVoteTransaction').returnsPromise().resolves([{ id: '1234' }]);
+    liskAPIClientMockTransations = sinon.stub(liskAPIClient.transactions, 'broadcast').resolves({ id: '1234' });
+    sinon.stub(liskAPIClient.transactions, 'get');
+    signVoteTransaction = sinon.stub(hwManager, 'signVoteTransaction').resolves([{ id: '1234' }]);
   });
 
   afterEach(() => {
@@ -75,7 +75,7 @@ describe('Utils: Delegate', () => {
     it.skip('should return getDelegates(liskAPIClient, options) if options = {}', () => {
       const options = {};
       const response = { data: [] };
-      liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
+      liskAPIClientMockDelegates.expects('get').withArgs(options).resolves(response);
 
       const returnedPromise = getDelegates(liskAPIClient, options);
       expect(returnedPromise).to.eventually.equal(response);
@@ -84,7 +84,7 @@ describe('Utils: Delegate', () => {
     it.skip('should return getDelegates(liskAPIClient, options) if options.q is set', () => {
       const options = { q: 'genesis_1' };
       const response = { data: [] };
-      liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
+      liskAPIClientMockDelegates.expects('get').withArgs(options).resolves(response);
 
       const returnedPromise = getDelegates(liskAPIClient, options);
       return expect(returnedPromise).to.eventually.equal(response);
@@ -96,7 +96,7 @@ describe('Utils: Delegate', () => {
       const delegate = delegates[0];
       const { address } = delegate.account;
       liskAPIClientMockDelegates.expects('get').withArgs({ address })
-        .returnsPromise().resolves({ data: [delegate] });
+        .resolves({ data: [delegate] });
 
       const txDelegateRegister = { id: '091241204970', timestamp: '14023472398' };
       liskAPIClient.transactions.get.resolves({ data: [txDelegateRegister] });
@@ -111,7 +111,7 @@ describe('Utils: Delegate', () => {
     it.skip('should reject if delegate not found', () => {
       const { address } = accounts.genesis;
       liskAPIClientMockDelegates.expects('get').withArgs({ address })
-        .returnsPromise().resolves({ data: [] });
+        .resolves({ data: [] });
 
       return expect(getDelegateInfo(liskAPIClient, { address })).to.eventually.be.rejectedWith(
         `"${address}" is not a delegate`,
@@ -125,7 +125,7 @@ describe('Utils: Delegate', () => {
       const { publicKey } = delegates[0].account;
       liskAPIClientMockDelegates.expects('get').withArgs({
         publicKey,
-      }).returnsPromise().resolves({ data: [delegates[0]] });
+      }).resolves({ data: [delegates[0]] });
 
       const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, networkConfig });
       expect(resolved).to.equal(delegates[0]);
@@ -135,7 +135,7 @@ describe('Utils: Delegate', () => {
       const { publicKey } = delegates[0].account;
       liskAPIClientMockDelegates.expects('get').withArgs({
         publicKey,
-      }).returnsPromise().resolves({ data: [delegates[0]] });
+      }).resolves({ data: [delegates[0]] });
 
       await getDelegateWithCache(liskAPIClient, { publicKey, networkConfig });
       const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, networkConfig });
@@ -146,7 +146,7 @@ describe('Utils: Delegate', () => {
       const { publicKey } = delegates[0].account;
       liskAPIClientMockDelegates.expects('get').withArgs({
         publicKey,
-      }).returnsPromise().resolves({ data: [] });
+      }).resolves({ data: [] });
 
       const [error] = await to(getDelegateWithCache(liskAPIClient, { publicKey, networkConfig }));
       expect(error.message).to.equal(`No delegate with publicKey ${publicKey} found.`);
@@ -157,7 +157,7 @@ describe('Utils: Delegate', () => {
       const { publicKey } = delegates[0].account;
       liskAPIClientMockDelegates.expects('get').withArgs({
         publicKey,
-      }).returnsPromise().rejects(error);
+      }).rejects(error);
 
       expect(await to(
         getDelegateWithCache(liskAPIClient, { publicKey, networkConfig }),
@@ -170,7 +170,7 @@ describe('Utils: Delegate', () => {
       const name = delegates[0].username;
       liskAPIClientMockDelegates.expects('get').withArgs({
         search: name, limit: 101,
-      }).returnsPromise().resolves({ data: delegates });
+      }).resolves({ data: delegates });
 
       const returnedPromise = getDelegateByName(liskAPIClient, name);
       expect(returnedPromise).to.eventually.equal(delegates[0]);
@@ -180,7 +180,7 @@ describe('Utils: Delegate', () => {
       const name = `${delegates[0].username}_not_exist`;
       liskAPIClientMockDelegates.expects('get').withArgs({
         search: name, limit: 101,
-      }).returnsPromise().resolves({ data: [] });
+      }).resolves({ data: [] });
 
       const returnedPromise = getDelegateByName(liskAPIClient, name);
       expect(returnedPromise).to.be.rejectedWith();

@@ -53,15 +53,15 @@ describe('Utils: Search', () => {
     getSingleTransactionStub = stub(transactionsAPI, 'getSingleTransaction');
 
     // address match
-    getAccountStub.withArgs({ liskAPIClient, address: '1337L' }).returnsPromise().resolves(accountsResponse);
+    getAccountStub.withArgs({ liskAPIClient, address: '1337L' }).resolves(accountsResponse);
     getDelegatesStub.withArgs(liskAPIClient, delegatesUrlParams)
-      .returnsPromise().resolves(delegatesResponse);
-    getSingleTransactionStub.returnsPromise().resolves(transactionsResponse);
+      .resolves(delegatesResponse);
+    getSingleTransactionStub.resolves(transactionsResponse);
 
     // txSearch match
-    getAccountStub.withArgs({ liskAPIClient, address: '1337' }).returnsPromise().resolves(accountsResponse);
+    getAccountStub.withArgs({ liskAPIClient, address: '1337' }).resolves(accountsResponse);
     getDelegatesStub.withArgs(liskAPIClient, delegatesUrlParamsTxMatch)
-      .returnsPromise().resolves(delegatesResponse);
+      .resolves(delegatesResponse);
   });
 
   afterEach(() => {
@@ -87,7 +87,7 @@ describe('Utils: Search', () => {
 
   it('should still search for {addresses} when failing {delegates} request', () => {
     getDelegatesStub.withArgs(liskAPIClient, delegatesUrlParams)
-      .returnsPromise().rejects({ success: false });
+      .rejects({ success: false });
     return expect(searchAll(liskAPIClient, { searchTerm: '1337L' })).to.eventually.deep.equal({
       addresses: [accountsResponse],
       blocks: [],
@@ -97,7 +97,7 @@ describe('Utils: Search', () => {
   });
 
   it('should still search for {delegates} when failing {addresses} request', async () => {
-    getAccountStub.withArgs({ liskAPIClient, address: '1337L' }).returnsPromise().rejects({ success: false });
+    getAccountStub.withArgs({ liskAPIClient, address: '1337L' }).rejects({ success: false });
     const result = await searchAll(liskAPIClient, { searchTerm: '1337L' });
     expect(result).to.deep.equal({
       addresses: [],
@@ -108,7 +108,7 @@ describe('Utils: Search', () => {
   });
 
   it('should still search for {delegates} when failing {transactions} request', () => {
-    getSingleTransactionStub.returnsPromise().rejects({ success: false });
+    getSingleTransactionStub.rejects({ success: false });
     return expect(searchAll(liskAPIClient, { searchTerm: '1337' })).to.eventually.deep.equal({
       addresses: [],
       transactions: [],

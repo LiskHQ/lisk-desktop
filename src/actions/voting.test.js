@@ -99,7 +99,7 @@ describe('actions: voting', () => {
         type: 3,
         token: 'LSK',
       };
-      delegateApiMock.returnsPromise().resolves([transaction]);
+      delegateApiMock.resolves([transaction]);
 
       await actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
@@ -108,7 +108,7 @@ describe('actions: voting', () => {
 
     it.skip('should call callback with "success: false" if caught an error', async () => {
       const error = { message: 'sample message' };
-      delegateApiMock.returnsPromise().rejects(error);
+      delegateApiMock.rejects(error);
 
       await actionFunction(dispatch, getState);
       const expectedAction = { success: false, error };
@@ -138,7 +138,7 @@ describe('actions: voting', () => {
     const delegates = delegateList;
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'getVotes').returnsPromise();
+      delegateApiMock = sinon.stub(delegateApi, 'getVotes');
     });
 
     afterEach(() => {
@@ -151,17 +151,17 @@ describe('actions: voting', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch votesAdded action when resolved if type !== \'update\'', () => {
+    it('should dispatch votesAdded action when resolved if type !== \'update\'', async () => {
       const dispatch = sinon.spy();
 
       delegateApiMock.resolves({ data: { votes: delegates } });
       const expectedAction = { list: delegates };
 
-      loadVotes(data)(dispatch, getState);
+      await loadVotes(data)(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });
 
-    it('should dispatch votesUpdated action when resolved if type === \'update\'', () => {
+    it('should dispatch votesUpdated action when resolved if type === \'update\'', async () => {
       const dispatch = sinon.spy();
 
       delegateApiMock.resolves({ data: { votes: delegates } });
@@ -170,7 +170,7 @@ describe('actions: voting', () => {
         data: { list: delegates },
       };
 
-      loadVotes({ ...data, type: 'update' })(dispatch, getState);
+      await loadVotes({ ...data, type: 'update' })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });
@@ -188,7 +188,7 @@ describe('actions: voting', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch delegatesAdded action if resolved', () => {
+    it('should dispatch delegatesAdded action if resolved', async () => {
       const delegateApiMock = sinon.stub(delegateApi, 'getDelegates');
       const dispatch = sinon.spy();
       getState = () => ({
@@ -204,10 +204,10 @@ describe('actions: voting', () => {
         },
       });
 
-      delegateApiMock.returnsPromise().resolves({ data: delegates });
+      delegateApiMock.resolves({ data: delegates });
       const expectedAction = { list: delegates, refresh: true };
 
-      actionFunction(dispatch, getState);
+      await actionFunction(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));
       delegateApiMock.restore();
     });
