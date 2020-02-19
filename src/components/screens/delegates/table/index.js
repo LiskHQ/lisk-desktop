@@ -71,6 +71,8 @@ const Tabs = ({ t, onTabChange, isSignedIn }) => {
       : <h2>{tabs[0].name}</h2>
   );
 };
+// eslint-disable-next-line prefer-object-spread
+const merge = (...rest) => Object.assign({}, ...rest);
 
 // eslint-disable-next-line max-statements
 const DelegatesTable = ({
@@ -82,13 +84,13 @@ const DelegatesTable = ({
   const activeTab = tabsData(t)[params.tab];
   const { votes } = useSelector(state => state.voting);
   const network = useSelector(state => state.network);
-  const { apiVersion } = useSelector(state => state.network.networks.LSK);
+  const { apiVersion } = network.networks.LSK;
   const shouldShowVoteColumn = votingModeEnabled || getTotalVotesCount(votes) > 0;
   const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
 
   const applyFilters = (filter) => {
     // eslint-disable-next-line prefer-object-spread
-    setParams(Object.assign({}, params, filter));
+    setParams(merge(params, filter));
     setOffset(0);
   };
 
