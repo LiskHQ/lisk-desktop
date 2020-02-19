@@ -1,9 +1,16 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-export default (shouldShowVoteColumn, t, apiVersion) => ([
+export default (shouldShowVoteColumn, t, apiVersion, firstTimeVotingActive) => ([
   {
     title: t('Vote'),
     classList: `${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'}`,
+    tooltip: firstTimeVotingActive ? {
+      title: t('Selecting Delegates'),
+      message: t('Start by Selecting the delegates you’d like to vote for.'),
+      className: 'showOnRight',
+      alwaysShow: true,
+
+    } : null,
   },
   {
     title: t('Rank'),
@@ -26,7 +33,7 @@ export default (shouldShowVoteColumn, t, apiVersion) => ([
     classList: grid['col-xs-2'],
     tooltip: {
       message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
-      position: 'showOnLeft',
+      className: 'showOnLeft',
     },
   },
   {
@@ -35,7 +42,7 @@ export default (shouldShowVoteColumn, t, apiVersion) => ([
     tooltip: {
       title: t('Vote Weight'),
       message: t('Sum of LSK in all accounts who have voted for this delegate.'),
-      position: 'showOnLeft',
+      className: 'showOnLeft',
     },
   },
 ]);

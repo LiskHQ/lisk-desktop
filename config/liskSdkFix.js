@@ -12,6 +12,7 @@ finder.on('file', (file) => {
       if (data.match(/process\.env\.NACL_FAST\s=\s'disable';/)) {
         newData = data
           .replace(/process.env.NACL_FAST = 'disable';/, fix);
+        /* eslint-disable-next-line no-console */
         console.log(`Fix the LiskSDK bug in ${file} `);
         fs.writeFileSync(file, newData, { encoding: 'utf8', flag: 'w' });
       }

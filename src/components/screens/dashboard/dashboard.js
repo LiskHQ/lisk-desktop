@@ -81,17 +81,11 @@ class Dashboard extends React.Component {
     return (
       <React.Fragment>
         <div className={`${styles.wrapper} dashboard-container`}>
-          {
-            isLoggedIn
-              ? (
-                <Onboarding
-                  slides={this.getOnboardingSlides()}
-                  actionButtonLabel={t('Got it, thanks!')}
-                  name="dashboardOnboarding"
-                />
-              )
-              : null
-          }
+          <Onboarding
+            slides={this.getOnboardingSlides()}
+            actionButtonLabel={t('Got it, thanks!')}
+            name="dashboardOnboarding"
+          />
           <PageHeader
             title={t('Dashboard')}
             subtitle={t('All important information at a glance')}

@@ -44,8 +44,11 @@ const DelegateRow = (props) => {
         }
       }}
     >
+      {
+        firstTimeVotingActive ? <div className={styles.highlight} /> : null
+      }
       <span
-        className={`${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'} checkbox-column`}
+        className={`${styles.checkboxWrapper} ${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'} checkbox-column`}
       >
         <VoteCheckbox
           voteStatus={voteStatus || {}}
@@ -81,7 +84,8 @@ const DelegateRow = (props) => {
 
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) => (
-  prevProps.data.username === nextProps.data.username
+  prevProps.firstTimeVotingActive === nextProps.firstTimeVotingActive
+  && prevProps.data.username === nextProps.data.username
   && prevProps.shouldShowVoteColumn === nextProps.shouldShowVoteColumn
   && prevProps.votingModeEnabled === nextProps.votingModeEnabled
   && isEqual(prevProps.voteStatus, nextProps.voteStatus)

@@ -39,7 +39,7 @@ describe('Utils: network API', () => {
           },
         },
       };
-      getAPIClient(tokenMap.LSK.key, state);
+      getAPIClient(tokenMap.LSK.key, state.network);
       expect(constructorSpy).toHaveBeenCalledWith([nodeUrl], { nethash });
     });
   });

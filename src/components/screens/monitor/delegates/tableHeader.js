@@ -44,7 +44,7 @@ export default (activeTab, changeSort, t) => ([
     tooltip: {
       title: t('Productivity'),
       message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
-      position: 'showOnLeft',
+      className: 'showOnLeft',
     },
   },
   {
@@ -53,7 +53,7 @@ export default (activeTab, changeSort, t) => ([
     tooltip: {
       title: t('Approval'),
       message: t('Percentage of total supply voting for a delegate.'),
-      position: 'showOnLeft',
+      className: 'showOnLeft',
     },
   },
 ]);

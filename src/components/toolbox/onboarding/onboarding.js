@@ -1,138 +1,122 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import styles from './onboarding.css';
 import { PrimaryButton, SecondaryButton } from '../buttons/button';
 import Illustration from '../illustration';
 
-class Onboarding extends React.Component {
-  constructor() {
-    super();
+const Onboarding = ({
+  onDiscard, name, finalCallback, slides, actionButtonLabel, className, t,
+}) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [visibility, setVisibility] = useState(!localStorage.getItem(name) ? 'visible' : 'hidden');
+  const isLoggedIn = useSelector(state => (state.account && state.account.passphrase));
 
-    this.state = {
-      currentSlide: 0,
-    };
-  }
-
-  handleClose = () => {
-    const { name } = this.props;
+  const handleClose = () => {
     localStorage.setItem(name, true);
-    this.forceUpdate();
-  }
+    setVisibility('hidden');
+  };
 
-  handleDiscard = () => {
-    this.handleClose();
-    const { onDiscard } = this.props;
+  const handleDiscard = () => {
+    handleClose();
     if (typeof onDiscard === 'function') {
       onDiscard();
     }
-  }
+  };
 
-  handleFinalCallback = () => {
-    const { finalCallback } = this.props;
+  const handleFinalCallback = () => {
     if (typeof finalCallback === 'function') finalCallback();
-    this.handleClose();
-  }
+    handleClose();
+  };
 
-  handleButtonClick = ({ target: { name } }) => {
-    const { currentSlide } = this.state;
-    return name === 'next'
-      ? this.setCurrent(currentSlide + 1)
-      : this.setCurrent(currentSlide - 1);
-  }
+  const setCurrent = (index) => {
+    const nextSlide = index >= 0 && index < slides.length
+      ? index : currentSlide;
+    setCurrentSlide(nextSlide);
+  };
 
-  setCurrent = (index) => {
-    const { slides: { length } } = this.props;
-    const currentSlide = index >= 0 && index < length
-      ? index : this.state.currentSlide;
-    this.setState({
-      currentSlide,
-    });
-  }
+  const handleButtonClick = ({ target }) => {
+    if (target.name === 'next') return setCurrent(currentSlide + 1);
+    return setCurrent(currentSlide - 1);
+  };
 
-  render() {
-    const {
-      slides, actionButtonLabel, className, t, name,
-    } = this.props;
-    const { currentSlide } = this.state;
-    const closedBefore = !!localStorage.getItem(name);
+  if (visibility === 'hidden' || !slides.length || !isLoggedIn) return null;
+  return (
+    <div className={`${styles.onboarding} ${className}`}>
+      <span className={`closeOnboarding ${styles.closeBtn}`} onClick={handleDiscard} />
+      <div className={styles.illustrations}>
+        {slides.map(({ illustration }, i) => (
+          <Illustration
+            className={`${i === currentSlide ? styles.active : ''}`}
+            key={`illustration-${i}`}
+            name={illustration}
+          />
+        ))
+        }
+      </div>
 
-    return slides.length && !closedBefore ? (
-      <div className={`${styles.onboarding} ${className}`}>
-        <span className={`closeOnboarding ${styles.closeBtn}`} onClick={this.handleDiscard} />
-        <div className={styles.illustrations}>
-          {slides.map(({ illustration }, i) => (
-            <Illustration
-              className={`${i === currentSlide ? styles.active : ''}`}
-              key={`illustration-${i}`}
-              name={illustration}
-            />
-          ))
-          }
+      <div className={styles.content}>
+        {slides.length > 1
+          ? (
+            <span className={styles.bullets}>
+              {slides.map((_, i) => (
+                <span
+                  key={`bullet-${i}`}
+                  data-index={i}
+                  className={i === currentSlide ? styles.active : ''}
+                />
+              ))
+            }
+            </span>
+          ) : null
+        }
+        <div className={`${styles.slides} slides`}>
+          {slides.map((slide, index) => (
+            <section
+              key={`slides-${index}`}
+              className={`${slide.className || ''} ${index === currentSlide ? styles.active : ''}`}
+            >
+              <h1 className={styles.title}>{slide.title}</h1>
+              <p>{slide.content}</p>
+            </section>
+          ))}
         </div>
-
-        <div className={styles.content}>
-          {slides.length > 1
+        <div className={styles.buttonsHolder}>
+          {currentSlide !== 0
             ? (
-              <span className={styles.bullets}>
-                {slides.map((_, i) => (
-                  <span
-                    key={`bullet-${i}`}
-                    data-index={i}
-                    className={i === currentSlide ? styles.active : ''}
-                  />
-                ))
-              }
-              </span>
+              <SecondaryButton
+                className="light"
+                size="m"
+                name="prev"
+                onClick={handleButtonClick}
+              >
+                {t('Previous')}
+              </SecondaryButton>
             ) : null
           }
-          <div className={styles.slides}>
-            {slides.map((slide, index) => (
-              <section
-                key={`slides-${index}`}
-                className={`${slide.className || ''} ${index === currentSlide ? styles.active : ''}`}
+          {(currentSlide !== slides.length - 1 && actionButtonLabel !== '')
+            ? (
+              <PrimaryButton
+                size="m"
+                name="next"
+                onClick={handleButtonClick}
               >
-                <h1 className={styles.title}>{slide.title}</h1>
-                <p>{slide.content}</p>
-              </section>
-            ))}
-          </div>
-          <div className={styles.buttonsHolder}>
-            {currentSlide !== 0
-              ? (
-                <SecondaryButton
-                  className="light"
-                  size="m"
-                  name="prev"
-                  onClick={this.handleButtonClick}
-                >
-                  {t('Previous')}
-                </SecondaryButton>
-              ) : null
-            }
-            {(currentSlide !== slides.length - 1 && actionButtonLabel !== '')
-              ? (
-                <PrimaryButton
-                  size="m"
-                  name="next"
-                  onClick={this.handleButtonClick}
-                >
-                  {t('Next')}
-                </PrimaryButton>
-              ) : (
-                <PrimaryButton
-                  size="m"
-                  onClick={this.handleFinalCallback}
-                >
-                  {actionButtonLabel}
-                </PrimaryButton>
-              )}
-          </div>
+                {t('Next')}
+              </PrimaryButton>
+            ) : (
+              <PrimaryButton
+                size="m"
+                onClick={handleFinalCallback}
+              >
+                {actionButtonLabel}
+              </PrimaryButton>
+            )}
         </div>
       </div>
-    ) : null;
-  }
-}
+    </div>
+  );
+};
 
 Onboarding.propTypes = {
   slides: PropTypes.arrayOf(PropTypes.shape({

@@ -1,29 +1,36 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import Onboarding from './onboarding';
 
 describe('Onboarding component', () => {
-  let props;
+  const props = {
+    slides: [{
+      title: 'Title',
+      content: 'content',
+      illustration: 'test.svg',
+    }],
+    actionButtonLabel: 'cta label',
+    finalCallback: jest.fn(),
+    onClose: jest.fn(),
+    name: 'onboaring name',
+    className: '',
+    t: v => v,
+  };
+  const store = configureStore()({ account: { passphrase: 'test' } });
+  const mountWithProps = (extraProps = {}) => {
+    // eslint-disable-next-line prefer-object-spread
+    const mergedProps = Object.assign({}, props, extraProps);
+    return mount(<Provider store={store}><Onboarding {...mergedProps} /></Provider>);
+  };
 
   beforeEach(() => {
-    props = {
-      slides: [{
-        title: 'Title',
-        content: 'content',
-        illustration: 'test.svg',
-      }],
-      actionButtonLabel: 'cta label',
-      finalCallback: jest.fn(),
-      onClose: jest.fn(),
-      name: 'onboaring name',
-      className: '',
-      t: v => v,
-    };
     localStorage.removeItem(props.name);
   });
 
   it('Should render without bullet if only one slide and button call final Callback', () => {
-    const wrapper = mount(<Onboarding {...props} />);
+    const wrapper = mountWithProps();
     expect(wrapper).toContainMatchingElement('.slides');
     expect(wrapper).not.toContainMatchingElement('.bullets');
     expect(wrapper.find('button').last()).toHaveText(props.actionButtonLabel);
@@ -32,8 +39,8 @@ describe('Onboarding component', () => {
   });
 
   it('Should call onClose when clicking close button', () => {
-    const wrapper = mount(<Onboarding {...props} />);
-    wrapper.find('.closeBtn').simulate('click');
+    const wrapper = mountWithProps();
+    wrapper.find('.closeOnboarding').simulate('click');
     expect(localStorage.getItem(props.name)).toBeTruthy();
   });
 
@@ -47,12 +54,8 @@ describe('Onboarding component', () => {
       content: 'content',
       illustration: 'test.svg',
     }];
-    const newProps = {
-      ...props,
-      slides,
-    };
 
-    const wrapper = mount(<Onboarding {...newProps} />);
+    const wrapper = mountWithProps({ slides });
     expect(wrapper.find('.slides')).toContainMatchingElements(2, 'section');
     expect(wrapper.find('button').first()).not.toHaveText('Previous');
     expect(wrapper.find('button').last()).toHaveText('Next');
@@ -70,7 +73,7 @@ describe('Onboarding component', () => {
 
   it('Should not render if was closed before', () => {
     localStorage.setItem(props.name, true);
-    const wrapper = mount(<Onboarding {...props} />);
+    const wrapper = mountWithProps();
     expect(wrapper).not.toContainMatchingElement('.onboarding');
   });
 });
