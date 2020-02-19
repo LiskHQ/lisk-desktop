@@ -22,7 +22,7 @@
   }
 
   & .loadingOverlay {
-    background: var(--overlay-color);
+    background: transparent;
     bottom: 0;
     position: absolute;
     top: 0;
