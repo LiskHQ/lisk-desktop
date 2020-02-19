@@ -120,6 +120,7 @@ const DelegatesTable = ({
     if (activeTab.value === 1
       && getVotedList(votes).length > 0
       && offset > 0
+      && offset % 30 === 0
       && !isLoading
       && activeTab.data.length < getVotedList(votes).length) {
       loadDelegatesData();
