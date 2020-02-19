@@ -26,7 +26,97 @@ function shouldShowRegisterDelegateButton(account) {
     && !Object.keys(account.hwInfo).length;
 }
 
-// eslint-disable-next-line max-statements
+const VotesNumber = ({ t, number, type }) => (
+  <div className={`${styles.infoItem} ${styles[type]}`}>
+    <figure className={styles.icon}>
+      <Icon name={type} />
+    </figure>
+    <h5 className="added-votes-count">{number}</h5>
+    <span className={styles.subTitle}>
+      {
+        type === 'addedVotes' ? t('Added') : t('Removed')
+      }
+    </span>
+  </div>
+);
+
+const TotalActions = ({ t, number, fee }) => (
+  <div className={`${styles.infoItem} ${styles.fee}`}>
+    <figure className={styles.icon}>
+      <Icon name="walletIcon" />
+    </figure>
+    <h5>
+      <span>{`${number} LSK`}</span>
+      <Tooltip className={`${styles.tooltip} showOnBottom`}>
+        <p>{t('Each time you add or remove a vote it is counted as an action. There\'s {{fee}} LSK fee per every 33 actions.', { fee })}</p>
+      </Tooltip>
+    </h5>
+    <span className={styles.subTitle}>{t('Transaction fee')}</span>
+  </div>
+);
+
+const TotalVotes = ({
+  t, votes, maxCountOfVotes,
+}) => (
+  <div className={`${styles.infoItem} ${styles.total}`}>
+    <figure className={styles.icon}>
+      <Icon name="totalVotes" />
+    </figure>
+    <h5>
+      <span className="total-voting-number">{votes}</span>
+      {`/${maxCountOfVotes}`}
+    </h5>
+    <span className={styles.subTitle}>{t('Total')}</span>
+  </div>
+);
+
+const VotingActionBar = ({
+  account, totalActions, toggleVotingMode, votes, t,
+}) => {
+  const { fee } = votingConst;
+  return (
+    <div className={styles.actionBar}>
+      <SecondaryButton onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
+        {t('Cancel')}
+      </SecondaryButton>
+      <Link to={totalActions !== 0 ? routes.votingSummary.path : routes.delegates.path}>
+        <PrimaryButton
+          className={`${styles.btn} go-to-confirmation-button`}
+          disabled={
+            totalActions === 0
+            || fromRawLsk(account.info.LSK.balance) < fee
+            || getTotalVotesCount(votes) > 101
+          }
+        >
+          {t('Confirm')}
+        </PrimaryButton>
+      </Link>
+    </div>
+  );
+};
+
+const NonVotingActionBar = ({
+  account, toggleVotingMode, votes, t,
+}) => (
+  <div className={styles.actionBar}>
+    { shouldShowRegisterDelegateButton(account)
+      ? (
+        <Link to={routes.registerDelegate.path}>
+          <SecondaryButton className={`register-delegate ${styles.btn}`}>
+            {t('Register as a Delegate')}
+          </SecondaryButton>
+        </Link>
+      )
+      : null
+    }
+    <SignInTooltipWrapper>
+      <PrimaryButton onClick={toggleVotingMode} className={`start-voting-button ${styles.btn}`}>
+        {Object.keys(votes).length ? t('Edit votes') : t('Start voting')}
+      </PrimaryButton>
+    </SignInTooltipWrapper>
+  </div>
+);
+
 const VotingHeader = ({
   t,
   toggleVotingMode,
@@ -52,100 +142,47 @@ const VotingHeader = ({
           { votingModeEnabled
             ? (
               <Fragment>
-                <div className={`${styles.infoItem} ${styles.total}`}>
-                  <figure className={styles.icon}>
-                    <Icon name="totalVotes" />
-                  </figure>
-                  <h5>
-                    <span className="total-voting-number">{getTotalVotesCount(votes)}</span>
-                    {`/${maxCountOfVotes}`}
-                  </h5>
-                  <span className={styles.subTitle}>{t('Total')}</span>
-                </div>
-                <div className={`${styles.infoItem} ${styles.addedVotes}`}>
-                  <figure className={styles.icon}>
-                    <Icon name="addedVotes" />
-                  </figure>
-                  <h5 className="added-votes-count">{voteList.length}</h5>
-                  <span className={styles.subTitle}>{t('Added')}</span>
-                </div>
+                <TotalVotes
+                  t={t}
+                  votes={getTotalVotesCount(votes)}
+                  maxCountOfVotes={maxCountOfVotes}
+                />
+                <VotesNumber t={t} number={voteList.length} type="addedVotes" />
               </Fragment>
             )
             : (
-              <Fragment>
-                <div className={`${styles.box} ${styles.signedOut}`}>
-                  <h2>
-                    {`${t('Delegates')}`}
-                  </h2>
-                  <span className={styles.subTitle}>{t('Vote for who secures the network or becomes a delegate.')}</span>
-                </div>
-              </Fragment>
-            )
-          }
-          { unvoteList.length
-            ? (
-              <div className={`${styles.infoItem} ${styles.removedVotes}`}>
-                <figure className={styles.icon}>
-                  <Icon name="removedVotes" />
-                </figure>
-                <h5 className="removed-votes-count">{unvoteList.length}</h5>
-                <span className={styles.subTitle}>{t('Removed')}</span>
+              <div className={`${styles.box} ${styles.signedOut}`}>
+                <h2>
+                  {`${t('Delegates')}`}
+                </h2>
+                <span className={styles.subTitle}>{t('Vote for who secures the network or becomes a delegate.')}</span>
               </div>
             )
-            : null
           }
-          { votingModeEnabled
-            ? (
-              <div className={`${styles.infoItem} ${styles.fee}`}>
-                <figure className={styles.icon}>
-                  <Icon name="walletIcon" />
-                </figure>
-                <h5>
-                  <span>{`${totalActions} LSK`}</span>
-                  <Tooltip className={`${styles.tooltip} showOnBottom`}>
-                    <p>{t('Each time you add or remove a vote it is counted as an action. There\'s {{fee}} LSK fee per every 33 actions.', { fee })}</p>
-                  </Tooltip>
-                </h5>
-                <span className={styles.subTitle}>{t('Transaction fee')}</span>
-              </div>
-            )
-            : null
+          {
+            unvoteList.length ? <VotesNumber number={unvoteList.length} t={t} type="removedVotes" /> : null
+          }
+          {
+            votingModeEnabled ? <TotalActions number={maxCountOfVotes} t={t} fee={fee} /> : null
           }
         </div>
         { votingModeEnabled
           ? (
-            <div className={styles.actionBar}>
-              <SecondaryButton onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
-                {t('Cancel')}
-              </SecondaryButton>
-              <Link to={totalActions !== 0 ? routes.votingSummary.path : routes.delegates.path}>
-                <PrimaryButton
-                  className={`${styles.btn} go-to-confirmation-button`}
-                  disabled={totalActions === 0 || fromRawLsk(account.info.LSK.balance) < fee}
-                >
-                  {t('Confirm')}
-                </PrimaryButton>
-              </Link>
-            </div>
+            <VotingActionBar
+              votes={votes}
+              account={account}
+              totalActions={totalActions}
+              toggleVotingMode={toggleVotingMode}
+              t={t}
+            />
           )
           : (
-            <div className={styles.actionBar}>
-              { shouldShowRegisterDelegateButton(account)
-                ? (
-                  <Link to={routes.registerDelegate.path}>
-                    <SecondaryButton className={`register-delegate ${styles.btn}`}>
-                      {t('Register as a Delegate')}
-                    </SecondaryButton>
-                  </Link>
-                )
-                : null
-              }
-              <SignInTooltipWrapper>
-                <PrimaryButton onClick={toggleVotingMode} className={`start-voting-button ${styles.btn}`}>
-                  {Object.keys(votes).length ? t('Edit votes') : t('Start voting')}
-                </PrimaryButton>
-              </SignInTooltipWrapper>
-            </div>
+            <NonVotingActionBar
+              account={account}
+              toggleVotingMode={toggleVotingMode}
+              votes={votes}
+              t={t}
+            />
           )
         }
       </div>
