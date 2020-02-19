@@ -7,6 +7,7 @@ import DelegatesTable from './table';
 import Header from './header';
 import Onboarding from '../../toolbox/onboarding/onboarding';
 import { clearVotes, loadVotes } from '../../../actions/voting';
+import { getUnvoteList, getVoteList } from '../../../utils/voting';
 
 const getOnboardingSlides = t => (
   [{
@@ -31,7 +32,10 @@ const getOnboardingSlides = t => (
 const Delegates = ({
   t,
 }) => {
-  const [votingMode, setVotingMode] = useState(false);
+  const votes = useSelector(state => state.voting.votes);
+  const [votingMode, setVotingMode] = useState(
+    getUnvoteList(votes).length + getVoteList(votes).length > 0,
+  );
   const account = useSelector(state => state.account);
   const dispatch = useDispatch();
   // eslint-disable-next-line prefer-const
@@ -46,7 +50,7 @@ const Delegates = ({
   };
 
   useEffect(() => {
-    if (isSignedIn) {
+    if (isSignedIn && !Object.keys(votes).length) {
       dispatch(loadVotes({
         address: account.info.LSK.address,
       }));
