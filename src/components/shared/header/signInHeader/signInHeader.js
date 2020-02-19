@@ -236,7 +236,7 @@ class Header extends React.Component {
                     ref={(node) => { this.childRef = node; }}
                   >
                     {
-                      networkList && networkList.map((network, key) => {
+                      networkList.map((network, key) => {
                         const isActiveItem = activeNetwork === networks.customNode.code;
 
                         if (network.value === networks.customNode.code) {

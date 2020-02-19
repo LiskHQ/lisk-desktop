@@ -8,7 +8,7 @@ const getNetwork = (networkName) => {
     if (networks[key].name === networkName) {
       network = networks[key];
     }
-  }, this);
+  });
   return network;
 };
 
@@ -42,16 +42,13 @@ export const getNetworksList = () =>
 export const getNetworkNameBasedOnNethash = (network, token = 'LSK') => {
   let activeNetwork = network.name;
   if (network.name === networks.customNode.name && token !== 'BTC') {
-    activeNetwork = network.networks[token].nethash === Lisk.constants.MAINNET_NETHASH
-      ? networks.mainnet.name
-      : network.name;
     activeNetwork = network.networks[token].nethash === Lisk.constants.TESTNET_NETHASH
       ? networks.testnet.name
       : network.name;
   }
 
   if (network.name === networks.customNode.name && token === 'BTC') {
-    activeNetwork = token === 'BTC' ? networks.testnet.name : network.name;
+    activeNetwork = networks.testnet.name;
   }
   return activeNetwork;
 };

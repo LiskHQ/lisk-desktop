@@ -53,13 +53,13 @@ class NavigationButtons extends React.Component {
 
   onGoBack(e) {
     e.preventDefault();
-    this.setState({ counter: this.state.counter - 1 });
+    this.setState(({ counter }) => ({ counter: counter - 1 }));
     this.props.history.goBack();
   }
 
   onGoForward(e) {
     e.preventDefault();
-    this.setState({ counter: this.state.counter + 1 });
+    this.setState(({ counter }) => ({ counter: counter + 1 }));
     this.props.history.goForward();
   }
 
