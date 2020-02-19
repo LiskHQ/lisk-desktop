@@ -17,6 +17,7 @@ export const getAccount = ({
     const apiClient = liskAPIClient || getAPIClient(networkConfig);
     if (!apiClient) {
       reject();
+      return;
     }
     publicKey = publicKey || (passphrase && extractPublicKey(passphrase));
     address = address || extractAddress(passphrase || publicKey);

@@ -88,7 +88,7 @@ const VotesTab = ({
         <div className={`${styles.filterHolder}`}>
           <Input
             className="search"
-            disabled={mergedVotes && !votes.data.length}
+            disabled={!votes.data.length}
             name="filter"
             value={filterValue}
             placeholder={t('Filter by name')}
