@@ -129,6 +129,7 @@ class TopBar extends React.Component {
             onLogout={this.onLogout}
             settingsUpdated={settingsUpdated}
             isUserLogout={isUserLogout}
+            history={this.props.history}
             t={t}
           />
 

@@ -20,7 +20,7 @@ const CustomRoute = ({
   Piwik.tracking(rest.history, settings);
 
   if (forbiddenTokens.indexOf(settings.token.active) !== -1) {
-    return <Redirect to={`${routes.dashboard.path}`} />;
+    return <Redirect to={`${routes.wallet.path}`} />;
   }
 
   return ((isPrivate && isAuthenticated) || !isPrivate
