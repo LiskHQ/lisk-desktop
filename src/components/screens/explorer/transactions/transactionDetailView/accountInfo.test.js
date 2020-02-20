@@ -18,8 +18,8 @@ describe('TxDetail AccountInfo', () => {
   });
 
   it('Should render with invalid address and label passed as props', () => {
-    const neweProps = { ...props, address: 'sdfsdf67565' };
-    const wrapper = mount(<AccountInfo {...neweProps} />);
+    const newProps = { ...props, address: 'sdfsdf67565' };
+    const wrapper = mount(<AccountInfo {...newProps} />);
     expect(wrapper.find('.label').text()).toEqual('Label test');
     expect(wrapper.find('.address').first().text()).toEqual('sdfsdf67565');
   });
