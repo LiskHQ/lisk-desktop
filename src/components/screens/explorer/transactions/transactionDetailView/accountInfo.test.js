@@ -23,4 +23,10 @@ describe('TxDetail AccountInfo', () => {
     expect(wrapper.find('.label').text()).toEqual('Label test');
     expect(wrapper.find('.address').first().text()).toEqual('sdfsdf67565');
   });
+
+  it('Should render the name if passed', () => {
+    const namedProps = { ...props, address: 'sdfsdf67565', name: 'genesis' };
+    const wrapper = mount(<AccountInfo {...namedProps} />);
+    expect(wrapper.text().indexOf('genesis')).not.toEqual(-1);
+  });
 });

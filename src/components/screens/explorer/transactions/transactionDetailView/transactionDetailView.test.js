@@ -22,12 +22,35 @@ describe('Transaction Detail View', () => {
       t: v => v,
     };
 
-    it('Should render transfer transaction with message', () => {
-      wrapper = mount(<TransactionDetailView {...props} />);
+    it('Should render transfer transaction with message (LSK)', () => {
+      wrapper = mount(<TransactionDetailView {...props} activeToken="LSK" />);
       expect(wrapper).toContainMatchingElements(2, '.accountInfo');
       expect(wrapper.find('.accountInfo .sender-address').text()).toBe(transaction.senderId);
       expect(wrapper.find('.accountInfo .receiver-address').text()).toBe(transaction.recipientId);
       expect(wrapper).toContainExactlyOneMatchingElement('.tx-reference');
+    });
+    it('Should not render transfer transaction with message (BTC)', () => {
+      wrapper = mount(<TransactionDetailView {...props} activeToken="BTC" />);
+      expect(wrapper).not.toContain('.tx-reference');
+    });
+    it('Should show the delegate name if the sender is a Lisk delegate', () => {
+      const delegateTransaction = {
+        type: 3,
+        senderId: accounts.genesis.address,
+        recipientId: '',
+        amount: 0,
+        id: 123,
+        asset: {
+          delegate: { username: 'genesis' },
+        },
+      };
+      const newProps = {
+        activeToken: 'BTC',
+        t: v => v,
+        transaction: delegateTransaction,
+      };
+      wrapper = mount(<TransactionDetailView {...newProps} />);
+      expect(wrapper).not.toContain('genesis');
     });
   });
 
