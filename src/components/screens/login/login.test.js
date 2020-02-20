@@ -122,7 +122,7 @@ describe('Login', () => {
     });
 
     it('calls this.props.history.replace with referrer address', () => {
-      props.history.replace.reset();
+      props.history.replace.resetHistory();
       history.location.search = `?referrer=${routes.delegates.path}`;
       wrapper.setProps({
         history, account: { address: 'dummy' },
@@ -131,7 +131,7 @@ describe('Login', () => {
     });
 
     // it('shows network options when url param showNetwork is true', () => {
-    //   props.history.replace.reset();
+    //   props.history.replace.resetHistory();
     //   history.location.search = '?showNetwork=true';
     //   wrapper.setProps({ history });
     //   expect(wrapper.find('Header')).to.have.prop('showNetwork');

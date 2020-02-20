@@ -31,7 +31,7 @@ describe('Notification', () => {
       notify.isFocused = false;
       notify.about('deposit', amount);
       expect(mockNotification).to.have.been.calledWith('LSK received', { body: msg });
-      mockNotification.reset();
+      mockNotification.resetHistory();
     });
 
     it('should not call window.Notification if app is focused', () => {
@@ -39,14 +39,14 @@ describe('Notification', () => {
       callbacks.focus();
       notify.about('deposit', amount);
       expect(mockNotification).to.have.been.not.calledWith();
-      mockNotification.reset();
+      mockNotification.resetHistory();
     });
 
     it('should do nothing if an unhandled notification is supplied', () => {
       callbacks.blur();
       notify.about('unhandled_notification');
       expect(mockNotification).to.have.been.not.calledWith();
-      mockNotification.reset();
+      mockNotification.resetHistory();
     });
   });
 });

@@ -108,8 +108,8 @@ describe('Account middleware', () => {
     next = spy();
     spy(transactionsActions, 'updateTransactions');
     spy(accountActions, 'updateEnabledTokenAccount');
-    stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
-    stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
+    stubGetAccount = stub(accountApi, 'getAccount');
+    stubTransactions = stub(transactionsApi, 'getTransactions').resolves(true);
     getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
     getAutoLogInDataMock.withArgs().returns({ });
     networkSetMock = stub(networkActions, 'networkSet').returns(liskAPIClientMock);

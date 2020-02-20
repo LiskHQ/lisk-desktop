@@ -26,7 +26,7 @@ describe('ipcLocale', () => {
 
     afterEach(() => {
       localStorageStub.restore();
-      ipc.send.reset();
+      ipc.send.resetHistory();
     });
 
     describe('Without ipc on window', () => {
