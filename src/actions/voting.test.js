@@ -6,7 +6,7 @@ import {
   voteToggled,
   votePlaced,
   loadVotes,
-  loadDelegates,
+  delegatesLoaded,
   delegatesAdded,
 } from './voting';
 import Fees from '../constants/fees';
@@ -99,25 +99,27 @@ describe('actions: voting', () => {
         type: 3,
         token: 'LSK',
       };
-      delegateApiMock.returnsPromise().resolves([transaction]);
+      delegateApiMock.resolves([transaction]);
 
-      await actionFunction(dispatch, getState);
+      actionFunction(dispatch, getState);
+      await Promise.resolve('This await ensures that the async logic in the action is executed before the assertion');
       expect(dispatch).to.have.been
         .calledWith({ data: transaction, type: actionTypes.addNewPendingTransaction });
     });
 
     it.skip('should call callback with "success: false" if caught an error', async () => {
       const error = { message: 'sample message' };
-      delegateApiMock.returnsPromise().rejects(error);
+      delegateApiMock.rejects(error);
 
-      await actionFunction(dispatch, getState);
+      actionFunction(dispatch, getState);
+      await Promise.resolve('This await ensures that the async logic in the action is executed before the assertion');
       const expectedAction = { success: false, error };
       expect(callback).to.have.been.calledWith(expectedAction);
     });
 
     it.skip('should dispatch error toast if not enought balance', async () => {
       toast.error = sinon.spy();
-      await votePlaced({
+      votePlaced({
         account: {
           ...account,
           balance: 0,
@@ -126,6 +128,7 @@ describe('actions: voting', () => {
         secondSecret,
         callback,
       })(dispatch, getState);
+      await Promise.resolve('This await ensures that the async logic in the action is executed before the assertion');
       expect(toast.error).to.have.been.calledWith();
     });
   });
@@ -138,7 +141,7 @@ describe('actions: voting', () => {
     const delegates = delegateList;
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'getVotes').returnsPromise();
+      delegateApiMock = sinon.stub(delegateApi, 'getVotes');
     });
 
     afterEach(() => {
@@ -151,17 +154,18 @@ describe('actions: voting', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch votesAdded action when resolved if type !== \'update\'', () => {
+    it('should dispatch votesAdded action when resolved if type !== \'update\'', async () => {
       const dispatch = sinon.spy();
 
       delegateApiMock.resolves({ data: { votes: delegates } });
       const expectedAction = { list: delegates };
 
       loadVotes(data)(dispatch, getState);
+      await Promise.resolve('This await ensures that the async logic in the action is executed before the assertion');
       expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });
 
-    it('should dispatch votesUpdated action when resolved if type === \'update\'', () => {
+    it('should dispatch votesUpdated action when resolved if type === \'update\'', async () => {
       const dispatch = sinon.spy();
 
       delegateApiMock.resolves({ data: { votes: delegates } });
@@ -171,24 +175,25 @@ describe('actions: voting', () => {
       };
 
       loadVotes({ ...data, type: 'update' })(dispatch, getState);
+      await Promise.resolve('This await ensures that the async logic in the action is executed before the assertion');
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });
 
-  describe('loadDelegates', () => {
+  describe('delegatesLoaded', () => {
     const data = {
       q: '',
       offset: 0,
       refresh: true,
     };
     const delegates = delegateList;
-    const actionFunction = loadDelegates(data);
+    const actionFunction = delegatesLoaded(data);
 
     it('should create an action function', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch delegatesAdded action if resolved', () => {
+    it('should dispatch delegatesAdded action if resolved', async () => {
       const delegateApiMock = sinon.stub(delegateApi, 'getDelegates');
       const dispatch = sinon.spy();
       getState = () => ({
@@ -204,10 +209,11 @@ describe('actions: voting', () => {
         },
       });
 
-      delegateApiMock.returnsPromise().resolves({ data: delegates });
+      delegateApiMock.resolves({ data: delegates });
       const expectedAction = { list: delegates, refresh: true };
 
       actionFunction(dispatch, getState);
+      await Promise.resolve('This await ensures that the async logic in the action is executed before the assertion');
       expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));
       delegateApiMock.restore();
     });

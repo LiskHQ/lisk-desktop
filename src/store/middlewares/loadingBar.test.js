@@ -1,17 +1,14 @@
 import { expect } from 'chai';
-import { spy, stub } from 'sinon';
+import { spy } from 'sinon';
 import middleware from './loadingBar';
 import actionType from '../../constants/actions';
 
 
 describe('LoadingBar middleware', () => {
-  let store;
   let next;
   const ignoredLoadingActionKeys = ['transactions'];
 
   beforeEach(() => {
-    store = stub();
-    store.dispatch = spy();
     next = spy();
   });
 
@@ -20,7 +17,7 @@ describe('LoadingBar middleware', () => {
       type: 'TEST_ACTION',
     };
 
-    middleware(store)(next)(randomAction);
+    middleware()(next)(randomAction);
     expect(next).to.have.been.calledWith(randomAction);
   });
 
@@ -30,7 +27,7 @@ describe('LoadingBar middleware', () => {
       data: ignoredLoadingActionKeys[0],
     };
 
-    middleware(store)(next)(action);
+    middleware()(next)(action);
     expect(next).not.to.have.been.calledWith(action);
   });
 
@@ -40,7 +37,7 @@ describe('LoadingBar middleware', () => {
       data: ignoredLoadingActionKeys[0],
     };
 
-    middleware(store)(next)(action);
+    middleware()(next)(action);
     expect(next).not.to.have.been.calledWith(action);
   });
 
@@ -50,7 +47,7 @@ describe('LoadingBar middleware', () => {
       data: 'something/else',
     };
 
-    middleware(store)(next)(action);
+    middleware()(next)(action);
     expect(next).to.have.been.calledWith(action);
   });
 
@@ -60,7 +57,7 @@ describe('LoadingBar middleware', () => {
       data: 'something/else',
     };
 
-    middleware(store)(next)(action);
+    middleware()(next)(action);
     expect(next).to.have.been.calledWith(action);
   });
 });

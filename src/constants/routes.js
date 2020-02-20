@@ -22,7 +22,7 @@ import TermsOfUse from '../components/screens/termsOfUse';
 import TransactionDashboard from '../components/shared/transactionDashboard';
 import Transactions from '../components/screens/explorer/transactions';
 import VerifyMessage from '../components/screens/verifyMessage';
-import Voting from '../components/screens/delegates/voting';
+import VotingSummary from '../components/screens/delegates/votingSummary';
 
 export default {
   dashboard: {
@@ -72,9 +72,9 @@ export default {
     component: TransactionDashboard,
     isPrivate: true,
   },
-  voting: {
+  votingSummary: {
     path: '/delegates/vote',
-    component: Voting,
+    component: VotingSummary,
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },

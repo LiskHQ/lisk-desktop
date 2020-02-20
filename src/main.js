@@ -48,4 +48,4 @@ if (module.hot) {
   });
 }
 
-applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
+applyDeviceClass(document.getElementsByTagName('html')[0]);

@@ -548,7 +548,6 @@
   "ie. peter_pan": "ie. peter_pan",
   "secondPassphraseInfoParagraph": "After registration, your second passphrase will be <strong>required</strong> when <strong>confirming every transaction</strong> and every vote. You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk. Once activated a second passphrase <strong>can’t be turned off.</strong>",
   "to": "to",
-  "unknown": "unknown",
   "with message {{message}}": "with message {{message}}",
   "{{ blocks }} Blocks": "{{ blocks }} Blocks",
   "{{amount}} {{token}} Recieved": "{{amount}} {{token}} Recieved",

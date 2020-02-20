@@ -9,7 +9,7 @@ describe('Piwik tracking', () => {
   };
 
   afterEach(() => {
-    ReactPiwik.prototype.connectToHistory.reset();
+    ReactPiwik.prototype.connectToHistory.resetHistory();
   });
 
   it('connect to router history to piwik, with Tracking Mode DISABLED', () => {
@@ -27,7 +27,7 @@ describe('Piwik tracking', () => {
   it('connect to router history to piwik, with Tracking Mode ENABLED then DISABLED', () => {
     piwik.tracking(history, { statistics: true });
     expect(ReactPiwik.prototype.connectToHistory).to.be.calledWith(history);
-    ReactPiwik.prototype.connectToHistory.reset();
+    ReactPiwik.prototype.connectToHistory.resetHistory();
     piwik.tracking(history, { statistics: false });
     expect(ReactPiwik.prototype.connectToHistory).to.not.be.calledWith(history);
   });

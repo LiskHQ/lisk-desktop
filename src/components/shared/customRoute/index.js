@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import CustomRoute from './customRoute';
 
 const mapStateToProps = state => ({
-  isAuthenticated: !!state.account.info,
+  isAuthenticated: state.account && !!state.account.info,
   settings: state.settings,
   networkIsSet: !!state.network.name,
   accountLoading: state.account && state.account.loading,

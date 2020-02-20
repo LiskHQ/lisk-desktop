@@ -41,7 +41,7 @@ const socketSetup = (store) => {
     ipc.on('focus', () => { windowIsFocused = true; });
   }
   const state = store.getState();
-  const liskAPIClient = getAPIClient(state.settings.token.active, state);
+  const liskAPIClient = getAPIClient(state.settings.token.active, state.network);
   connection = io.connect(liskAPIClient.currentNode);
   connection.on('blocks/change', (block) => {
     if (shouldUpdateBtc(store.getState())) {
@@ -67,7 +67,7 @@ const socketMiddleware = store => (
     switch (action.type) {
       case actionTypes.networkSet:
         store.dispatch(olderBlocksRetrieved());
-        socketSetup(store, action);
+        socketSetup(store);
         break;
       case actionTypes.forgingDataDisplayed:
         if (!interval) {

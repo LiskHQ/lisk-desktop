@@ -274,7 +274,6 @@ class Bookmark extends React.Component {
 
 Bookmark.propTypes = {
   address: PropTypes.string.isRequired,
-  accounts: PropTypes.object.isRequired,
   isBookmark: PropTypes.bool.isRequired,
   bookmarks: PropTypes.object.isRequired,
   bookmarkAdded: PropTypes.func.isRequired,
@@ -286,7 +285,6 @@ Bookmark.propTypes = {
 /* istanbul ignore next */
 Bookmark.defaultProps = {
   address: '',
-  accounts: {},
   isBookmark: false,
   bookmarkAdded: () => null,
   bookmarkRemoved: () => null,

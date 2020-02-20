@@ -62,7 +62,6 @@ class TopBar extends React.Component {
 
     return autoLogout
       && account.expireTime
-      && account.expireTime !== 0
       && account.passphrase
       && account.passphrase.length > 0;
   }
@@ -130,6 +129,7 @@ class TopBar extends React.Component {
             onLogout={this.onLogout}
             settingsUpdated={settingsUpdated}
             isUserLogout={isUserLogout}
+            history={this.props.history}
             t={t}
           />
 

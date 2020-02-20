@@ -12,52 +12,51 @@ import { adaptTransactions } from './adapters';
 import transactionTypes from '../../../constants/transactionTypes';
 
 const isStaging = () => (
-  localStorage.getItem('useLiskServiceStaging') || version.includes('beta') || version.includes('rc')
-    ? '-staging' : ''
-);
-
-const liskServiceUrl = `https://mainnet-service${isStaging()}.lisk.io`;
-const liskServiceTestnetUrl = `https://testnet-service${isStaging()}.lisk.io`;
-const liskServiceBetanetUrl = 'https://betanet-service.lisk.io';
+  localStorage.getItem('useLiskServiceStaging')
+  || version.includes('beta')
+  || version.includes('rc')
+    ? '-staging' : '');
 
 const getServerUrl = (networkConfig) => {
   const name = getNetworkNameBasedOnNethash(networkConfig);
-  if (name === networks.mainnet.name) {
-    return liskServiceUrl;
+  const { nodeUrl } = networkConfig.networks.LSK;
+  if (name === networks.mainnet.name || name === networks.testnet.name) {
+    return `https://${name.toLowerCase()}-service${isStaging()}.lisk.io`;
   }
-  if (name === networks.testnet.name) {
-    return liskServiceTestnetUrl;
+  if (/liskdev.net:\d{2,4}$/.test(nodeUrl)) {
+    return nodeUrl.replace(/:\d{2,4}/, ':9901');
   }
-  if (networkConfig.networks.LSK.nodeUrl.indexOf('betanet') > 0) {
-    return liskServiceBetanetUrl;
+  if (/\.(liskdev.net|lisk.io)$/.test(nodeUrl)) {
+    return nodeUrl.replace(/\.(liskdev.net|lisk.io)$/, $1 => `-service${$1}`);
   }
-  if (networkConfig.networks.LSK.nodeUrl.indexOf('liskdev.net') > 0) {
-    return networkConfig.networks.LSK.nodeUrl.replace(/:\d{2,4}/, ':9901');
-  }
-  throw new Error(i18n.t('This feature can be accessed through Mainet and Testnet.'));
+  return null;
 };
 
 const formatDate = (value, options) => getTimestampFromFirstBlock(value, 'DD.MM.YY', options);
 
 const liskServiceGet = ({
-  path, transformResponse = x => x, searchParams = {}, serverUrl = liskServiceUrl, networkConfig,
+  path, transformResponse = x => x, searchParams = {}, networkConfig,
 }) => new Promise((resolve, reject) => {
-  serverUrl = networkConfig ? getServerUrl(networkConfig) : serverUrl;
-  popsicle.get(`${serverUrl}${path}?${new URLSearchParams(searchParams)}`)
-    .use(popsicle.plugins.parse('json'))
-    .then((response) => {
-      if (response.statusType() === 2) {
-        resolve(transformResponse(response.body));
-      } else {
-        reject(new Error(response.body.message || response.body.error));
-      }
-    }).catch((error) => {
-      if (error.code === 'EUNAVAILABLE') {
-        const networkName = getNetworkNameBasedOnNethash(networkConfig);
-        error = new Error(i18n.t('Unable to connect to {{networkName}}', { networkName }));
-      }
-      reject(error);
-    });
+  const serverUrl = getServerUrl(networkConfig);
+  if (!serverUrl) {
+    reject(new Error('Lisk Service is not available for this network.'));
+  } else {
+    popsicle.get(`${serverUrl}${path}?${new URLSearchParams(searchParams)}`)
+      .use(popsicle.plugins.parse('json'))
+      .then((response) => {
+        if (response.statusType() === 2) {
+          resolve(transformResponse(response.body));
+        } else {
+          reject(new Error(response.body.message || response.body.error));
+        }
+      }).catch((error) => {
+        if (error.code === 'EUNAVAILABLE') {
+          const networkName = getNetworkNameBasedOnNethash(networkConfig);
+          error = new Error(i18n.t('Unable to connect to {{networkName}}', { networkName }));
+        }
+        reject(error);
+      });
+  }
 });
 
 const liskServiceApi = {
@@ -145,13 +144,7 @@ const liskServiceApi = {
    * @param {String} networkConfig.networks.LSK.nethash - if name is "Custom node"
    * @return {String} lisk-service URL
    */
-  getLiskServiceUrl: (networkConfig) => {
-    try {
-      return getServerUrl(networkConfig);
-    } catch (e) {
-      return null;
-    }
-  },
+  getLiskServiceUrl: networkConfig => getServerUrl(networkConfig),
 
   getActiveAndStandByDelegates: async ({ networkConfig }) => liskServiceGet({
     networkConfig,

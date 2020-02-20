@@ -94,7 +94,7 @@ describe('Select Account', () => {
   });
 
   it('Should change name "label" of one account', async () => {
-    await hwManager.getAccountsFromDevice();
+    await hwManager.getAccountsFromDevice({});
     wrapper.update();
     expect(wrapper.find('.hw-container')).toContainMatchingElement('.hw-account');
     wrapper.simulate('mouseover');

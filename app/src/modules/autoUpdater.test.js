@@ -132,7 +132,7 @@ describe('autoUpdater', () => {
     callbacks['update-not-available']({ version });
     expect(dialogSpy).to.have.been.calledWith({ title: 'No Updates', message: 'Current version is up-to-date.' });
 
-    dialogSpy.reset();
+    dialogSpy.resetHistory();
     callbacks['update-not-available']({ version });
     expect(dialogSpy).to.have.not.been.calledWith();
   });

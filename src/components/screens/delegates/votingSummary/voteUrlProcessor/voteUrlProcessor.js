@@ -116,7 +116,7 @@ export default class VoteUrlProcessor extends React.Component {
         pendingVotes: [],
       });
 
-      this.props.loadDelegates({
+      this.props.delegatesLoaded({
         callback: () => {
           this.props.loadVotes({
             address: this.props.account.address,

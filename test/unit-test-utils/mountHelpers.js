@@ -9,7 +9,7 @@ import i18n from '../../src/i18n';
 // eslint-disable-next-line import/prefer-default-export
 export const mountWithContext = (
   component,
-  { storeState = {}, location = {}, middlewares = [] },
+  { storeState = {}, location = {}, middlewares = [] } = {},
 ) => {
   const store = configureMockStore(middlewares)(storeState);
   const history = {

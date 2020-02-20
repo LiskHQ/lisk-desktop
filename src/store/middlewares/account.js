@@ -63,8 +63,7 @@ const votePlaced = (store, action) => {
   );
 
   if (voteTransaction) {
-    const state = store.getState();
-    const { account } = state;
+    const { account } = store.getState();
 
     store.dispatch(loadVotes({
       address: account.info.LSK.address,
@@ -95,11 +94,10 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   const { transactions, settings: { token } } = state;
   const account = getActiveTokenAccount(store.getState());
 
-  const txs = action.data.block.transactions || [];
+  const txs = (action.data.block.transactions || []).map(txAdapter);
   const blockContainsRelevantTransaction = txs.filter((transaction) => {
-    const morphedTx = txAdapter(transaction);
-    const sender = morphedTx ? morphedTx.senderId : null;
-    const recipient = morphedTx ? morphedTx.recipientId : null;
+    const sender = transaction ? transaction.senderId : null;
+    const recipient = transaction ? transaction.recipientId : null;
     return account.address === recipient || account.address === sender;
   }).length > 0;
 
@@ -188,7 +186,7 @@ const checkNetworkToConnect = (storeSettings) => {
 
 // eslint-disable-next-line max-statements
 const autoLogInIfNecessary = async (store) => {
-  const actualSettings = store && store.getState().settings;
+  const actualSettings = store.getState().settings;
   const autologinData = getAutoLogInData();
 
   const loginNetwork = checkNetworkToConnect(actualSettings);
@@ -211,7 +209,7 @@ const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.storeCreated:
-      autoLogInIfNecessary(store, next, action);
+      autoLogInIfNecessary(store);
       break;
     case actionTypes.newBlockCreated:
       checkTransactionsAndUpdateAccount(store, action);

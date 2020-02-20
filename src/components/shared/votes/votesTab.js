@@ -88,7 +88,7 @@ const VotesTab = ({
         <div className={`${styles.filterHolder}`}>
           <Input
             className="search"
-            disabled={mergedVotes && !votes.data.length}
+            disabled={!votes.data.length}
             name="filter"
             value={filterValue}
             placeholder={t('Filter by name')}
@@ -123,12 +123,7 @@ VotesTab.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  loading: PropTypes.array,
   t: PropTypes.func.isRequired,
-};
-
-VotesTab.defaultProps = {
-  loading: [],
 };
 
 export default VotesTab;

@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   network: state.network,
   settings: state.settings,
-  liskAPIClient: getAPIClient(state.settings.token.active, state),
+  liskAPIClient: getAPIClient(state.settings.token.active, state.network),
 });
 
 const mapDispatchToProps = {
