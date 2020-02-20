@@ -9,8 +9,11 @@ import styles from './transactionDetailView.css';
 import transactionTypes from '../../../../../constants/transactionTypes';
 
 
-function getDelegateName(transaction) {
-  return transaction.asset && transaction.asset.delegate && transaction.asset.delegate.username;
+function getDelegateName(transaction, activeToken) {
+  return (activeToken === 'LSK'
+    && transaction.asset
+    && transaction.asset.delegate
+    && transaction.asset.delegate.username) ? transaction.asset.delegate.username : null;
 }
 
 const getTxAsset = (tx) => {
@@ -47,7 +50,7 @@ class TransactionDetailView extends React.Component {
         }
         <BoxRow className={styles.detailsWrapper}>
           <AccountInfo
-            name={getDelegateName(transaction)}
+            name={getDelegateName(transaction, activeToken)}
             token={activeToken}
             netCode={netCode}
             address={transaction.senderId}
@@ -70,7 +73,7 @@ class TransactionDetailView extends React.Component {
           : null
         }
         {children}
-        { isTransferTransaction
+        { isTransferTransaction && activeToken === 'LSK'
           ? (
             <BoxRow className={styles.message}>
               <div className={`${styles.detailsWrapper}`}>
