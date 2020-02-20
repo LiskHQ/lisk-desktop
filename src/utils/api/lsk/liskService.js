@@ -124,7 +124,7 @@ const liskServiceApi = {
 
   getActiveDelegates: async ({ networkConfig }, { search = '', tab, ...searchParams }) => liskServiceGet({
     networkConfig,
-    path: '/api/v1/delegates/active',
+    path: '/api/v1/delegates/next_forgers',
     transformResponse: response => response.data.filter(
       delegate => delegate.username.includes(search),
     ),
