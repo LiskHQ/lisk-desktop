@@ -17,7 +17,7 @@ import api from '.';
  * @param {String} tokenType
  * @returns {Promise<PriceTicker>}
  */
-const getPriceTicker = tokenType => api[tokenType].service.getPriceTicker();
+const getPriceTicker = (network, tokenType) => api[tokenType].service.getPriceTicker(network);
 
 /**
  * Contains dynamic fee rates for a token to indicate processing speed on the blockchain.
