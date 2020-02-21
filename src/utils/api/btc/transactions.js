@@ -17,7 +17,6 @@ import networks from '../../../constants/networks';
  */
 const normalizeTransactionsResponse = ({
   networkConfig,
-  address,
   list,
   // eslint-disable-next-line max-statements
 }) => list.map(({
@@ -33,27 +32,12 @@ const normalizeTransactionsResponse = ({
     explorerLink: `${getAPIClient(networkConfig).config.transactionExplorerURL}/${tx.txid}`,
   };
 
-  const ownedInput = tx.inputs.find(i => i.txDetail.scriptPubKey.addresses.includes(address));
   const networkCode = getNetworkCode(networkConfig);
-  address = address || tx.outputs.slice(-1).reduce((addr, o) => o.scriptPubKey.addresses[0], '');
-
-  if (ownedInput) {
-    data.senderId = address;
-    const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
-    data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0
-      ? extractedAddress : 'Unparsed Address';
-    data.amount = tx.outputs[0].satoshi;
-  } else {
-    const output = tx.outputs.find(o => o.scriptPubKey.addresses.includes(address));
-    const extractedAddress = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
-    const recipientAddress = address;
-    data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress) === 0 ? extractedAddress : 'Unparsed Address';
-    data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0
-      ? extractedAddress : 'Unparsed Address';
-    data.recipientId = validateAddress(tokenMap.BTC.key, recipientAddress, networkCode) === 0
-      ? recipientAddress : 'Unparsed Address';
-    data.amount = output.satoshi;
-  }
+  data.senderId = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
+  const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
+  data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0
+    ? extractedAddress : 'Unparsed Address';
+  data.amount = tx.outputs[0].satoshi.toString();
 
   return data;
 });
@@ -73,7 +57,6 @@ export const getTransactions = ({
       resolve({
         data: normalizeTransactionsResponse({
           networkConfig,
-          address,
           list: response.body.data,
         }),
         meta: response.body.meta ? { ...meta, count: response.body.meta.total } : meta,
