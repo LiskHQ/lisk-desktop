@@ -18,9 +18,15 @@ describe('TxDetail AccountInfo', () => {
   });
 
   it('Should render with invalid address and label passed as props', () => {
-    const neweProps = { ...props, address: 'sdfsdf67565' };
-    const wrapper = mount(<AccountInfo {...neweProps} />);
+    const newProps = { ...props, address: 'sdfsdf67565' };
+    const wrapper = mount(<AccountInfo {...newProps} />);
     expect(wrapper.find('.label').text()).toEqual('Label test');
     expect(wrapper.find('.address').first().text()).toEqual('sdfsdf67565');
+  });
+
+  it('Should render the name if passed', () => {
+    const namedProps = { ...props, address: 'sdfsdf67565', name: 'genesis' };
+    const wrapper = mount(<AccountInfo {...namedProps} />);
+    expect(wrapper.text().indexOf('genesis')).not.toEqual(-1);
   });
 });
