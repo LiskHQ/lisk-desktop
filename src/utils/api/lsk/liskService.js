@@ -60,12 +60,16 @@ const liskServiceGet = ({
 });
 
 const liskServiceApi = {
-  getPriceTicker: () => liskServiceGet({
-    path: '/api/v1/market/prices',
-    transformResponse: response => response.data,
-  }),
+  getPriceTicker: networkConfig =>
+    liskServiceGet({
+      path: '/api/v1/market/prices',
+      networkConfig,
+      transformResponse: response => response.data,
+    }),
 
-  getNewsFeed: () => liskServiceGet({ path: '/api/newsfeed' }),
+  getNewsFeed: ({ networkConfig }) =>
+    liskServiceGet({ path: '/api/newsfeed', networkConfig }),
+
   getLastBlocks: async (
     { networkConfig }, { dateFrom, dateTo, ...searchParams },
   ) => liskServiceGet({
