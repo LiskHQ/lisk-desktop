@@ -40,12 +40,14 @@ describe('Account middleware', () => {
         recipientId: 'sample_address',
         asset: { data: 'Message' },
         amount: 10e8,
+        type: 0,
       },
       {
         senderId: 'some_address',
         recipientId: 'sample_address',
         asset: { data: '' },
         amount: 10e8,
+        type: 0,
       },
     ],
   };
