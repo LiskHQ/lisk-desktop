@@ -7,9 +7,10 @@ Feature: Send
     When I fill random recipient
     And I fill random amount
     And I go to transfer confirmation
-    And I confirm transfer
-    And I go back to wallet
-    And I dismiss the onboarding
+    And I click on sendButton
+    Then submittedTransactionMessage should be visible
+    And I click on okayButton
+    And I click on closeOnboardingButton
     Then I should see pending transaction
     Then The latest transaction is transfer to random
     Then I should not see pending transaction
@@ -22,8 +23,9 @@ Feature: Send
     And I fill random amount
     And I go to transfer confirmation
     And I enter second passphrase of second_passphrase_account
-    And I confirm transfer
-    And I go back to wallet
+    And I click on sendButton
+    Then submittedTransactionMessage should be visible
+    And I click on okayButton
     Then The latest transaction is transfer to random
 
   Scenario: Launch protocol prefills fields  - from logged in state
@@ -44,7 +46,8 @@ Feature: Send
     When I fill random recipient
     And I fill random amount
     And I go to transfer confirmation
-    And I confirm transfer
+    And I click on sendButton
+    Then submittedTransactionMessage should be visible
     Then I see error message
 
 

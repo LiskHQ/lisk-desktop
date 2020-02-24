@@ -5,7 +5,7 @@ Feature: Register delegate
     Given I am on Register delegate page
     When I enter the delegate name
     And I go to confirmation
-    And I confirm transaction
+    And I click on confirmButton
     Then I see successful message
     When I am on Wallet page
     Then The latest transaction is Delegate registration
@@ -16,7 +16,7 @@ Feature: Register delegate
     When I enter the delegate name
     And I go to confirmation
     And I enter second passphrase of second_passphrase_account
-    And I confirm transaction
+    And I click on confirmButton
     Then I see successful message
     When I am on Wallet page
     Then The latest transaction is Delegate registration

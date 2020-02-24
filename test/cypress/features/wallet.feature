@@ -10,7 +10,7 @@ Feature: Wallet
   Scenario: Click leads to tx details
     Given I autologin as genesis to devnet
     Given I am on Wallet page
-    When I click on recent transaction
+    When I click on transactionRow
     Then I should be on Tx Details page
 
   Scenario: Incoming/Outgoing/All filtering works

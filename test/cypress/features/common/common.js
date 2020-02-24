@@ -154,21 +154,14 @@ Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
   }
 });
 
-Then(/^I click on send$/, function () {
-  cy.get(ss.transactionSendButton).eq(0).click();
+Then(/^I click on (.*?)$/, function (elementName) {
+  cy.wait(100);
+  cy.get(ss[elementName]).eq(0).click();
 });
 
-Then(/^I click on recent transaction$/, function () {
-  cy.get(ss.transactionRow).eq(0).click();
-});
-
-Then(/^I click on recent bookmark$/, function () {
-  cy.wait(300);
-  cy.get(ss.bookmarkAccount).eq(0).click();
-});
-
-Given(/^I confirm transaction$/, function () {
-  cy.get(ss.confirmButton).click();
+Given(/^I click on (.*?)$/, function (elementName) {
+  cy.wait(100);
+  cy.get(ss[elementName]).eq(0).click();
 });
 
 Then(/^I fill ([^s]+) in recipient$/, function (address) {
@@ -184,15 +177,6 @@ Then(/^I go to transfer confirmation$/, function () {
   cy.get(ss.nextTransferBtn).click();
 });
 
-Then(/^I confirm transfer$/, function () {
-  cy.get(ss.sendBtn).click();
-  cy.get(ss.submittedTransactionMessage).should('be.visible');
-});
-
-Then(/^I go back to wallet$/, function () {
-  cy.get(ss.okayBtn).click();
-});
-
-Then(/^I dismiss the onboarding$/, function () {
-  cy.get(ss.closeOnboardingBtn).click();
+Then(/^(.*?) should be visible$/, function (elementName) {
+  cy.get(ss[elementName]).should('be.visible');
 });

@@ -12,7 +12,7 @@ Feature: Delegate
     When I use launch protocol link to vote
     Then I see 3 added vote
     Then I see 0 removed vote
-    And I confirm transaction
+    And I click on confirmButton
     And I go back to delegates
     And I wait for pending vote to be approved
     When I use launch protocol link to unvote
