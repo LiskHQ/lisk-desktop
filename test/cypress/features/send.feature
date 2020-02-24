@@ -4,29 +4,29 @@ Feature: Send
     Given I autologin as genesis to devnet
     Given I am on Send page
     And I remember my balance
-    When I fill random recipient
-    And I fill random amount
+    When I fill 1234567890L in recipientInput field
+    And I fill 2 in amountInput field
     And I go to transfer confirmation
     And I click on sendButton
     Then submittedTransactionMessage should be visible
     And I click on okayButton
     And I click on closeOnboardingButton
     Then I should see pending transaction
-    Then The latest transaction is transfer to random
+    Then The latest transaction is transfer to 1234567890L
     Then I should not see pending transaction
     Then The balance is subtracted
 
   Scenario: Transfer tx with second passphrase
     Given I autologin as second_passphrase_account to devnet
     Given I am on Send page
-    When I fill random recipient
-    And I fill random amount
+    When I fill 1234567890L in recipientInput field
+    And I fill 3 in amountInput field
     And I go to transfer confirmation
     And I enter second passphrase of second_passphrase_account
     And I click on sendButton
     Then submittedTransactionMessage should be visible
     And I click on okayButton
-    Then The latest transaction is transfer to random
+    Then The latest transaction is transfer to 1234567890L
 
   Scenario: Launch protocol prefills fields  - from logged in state
     Given I autologin as genesis to devnet
@@ -43,8 +43,8 @@ Feature: Send
     Given I mock api /transactions
     Given I autologin as genesis to devnet
     Given I am on Send page
-    When I fill random recipient
-    And I fill random amount
+    When I fill 1234567890L in recipientInput field
+    And I fill 4 in amountInput
     And I go to transfer confirmation
     And I click on sendButton
     Then submittedTransactionMessage should be visible

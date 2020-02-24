@@ -164,12 +164,8 @@ Given(/^I click on (.*?)$/, function (elementName) {
   cy.get(ss[elementName]).eq(0).click();
 });
 
-Then(/^I fill ([^s]+) in recipient$/, function (address) {
-  cy.get(ss.recipientInput).type(address);
-});
-
-Then(/^I fill ([^s]+) in amount$/, function (amount) {
-  cy.get(ss.amountInput).click().type(amount);
+Then(/^I fill ([^s]+) in ([^s]+) field$/, function (value, field) {
+  cy.get(ss[field]).type(value);
 });
 
 Then(/^I go to transfer confirmation$/, function () {
