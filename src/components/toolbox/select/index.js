@@ -22,21 +22,22 @@ class Select extends React.Component {
     this.setState({ isOpen: !isOpen });
   }
 
-  setSelected({ target: { dataset: { index } } }) {
-    const { options, onChange } = this.props;
-    const selected = Number(index);
-    onChange(options[selected]);
+  setSelected({ target }) {
+    const { onChange } = this.props;
+    const value = target.getAttribute('value');
+
+    onChange(value);
     this.setState({ isOpen: false });
   }
 
   render() {
     const {
-      options, size, className, placeholder,
+      options, size, className, placeholder, selected,
     } = this.props;
     const { isOpen } = this.state;
-    const selected = placeholder && this.props.selected
-      ? Number(this.props.selected) + 1
-      : this.props.selected;
+    // eslint-disable-next-line eqeqeq
+    const { value, label } = options.filter(item => item.value == selected)[0];
+
 
     return (
       <OutsideClickHandler
@@ -48,10 +49,10 @@ class Select extends React.Component {
           <Input
             readOnly
             className={
-              typeof selected === 'number' && options[selected].label !== placeholder && styles.selectedInput
+              value !== placeholder.value ? styles.selectedInput : null
             }
             placeholder={placeholder}
-            value={typeof selected === 'number' ? options[selected].label : ''}
+            value={label}
             onClick={this.toggleIsOpen}
             size={size}
           />
@@ -60,12 +61,13 @@ class Select extends React.Component {
           className={styles.dropdown}
           showArrow={false}
           showDropdown={isOpen}
-          active={!selected && placeholder ? 0 : selected}
+          active={value || placeholder.value}
         >
           {options.map((option, index) => (
             <span
               className={`${styles.option} ${styles[size]} option`}
               data-index={index}
+              value={option.value}
               onClick={this.setSelected}
               key={`option-${index}`}
             >
