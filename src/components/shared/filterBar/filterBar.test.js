@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import FilterBar from '.';
 
 describe('FilterBar', () => {
@@ -18,21 +18,16 @@ describe('FilterBar', () => {
   };
 
   beforeEach(() => {
-    wrapper = shallow(<FilterBar {...props} />);
+    wrapper = mount(<FilterBar {...props} />);
   });
 
   it('Shows 5 filters and clearAll', () => {
-    expect(wrapper).toContainMatchingElements(5, '.filter');
+    expect(wrapper).toContainMatchingElements(5, 'FilterButton');
     expect(wrapper).toContainMatchingElement('.clear-all-filters');
   });
 
-  it('Call clearFilter on clearFilter click', () => {
-    wrapper.find('.clearBtn').first().simulate('click');
-    expect(props.clearFilter).toBeCalledWith('dateFrom');
-  });
-
   it('Call clearAllFilters on clearAll click', () => {
-    wrapper.find('.clear-all-filters').simulate('click');
+    wrapper.find('.clear-all-filters').at(0).simulate('click');
     expect(props.clearAllFilters).toBeCalled();
   });
 });
