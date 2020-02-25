@@ -82,7 +82,8 @@ class Select extends React.Component {
 
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
+    value: PropTypes.any,
   })).isRequired,
   size: PropTypes.oneOf([
     'l', 'm', 's', 'xs',

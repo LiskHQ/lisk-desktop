@@ -10,9 +10,7 @@ const SelectFilter = ({
   const txTypes = transactionTypes();
   const options = Object.keys(txTypes)
     .map(key => ({ value: txTypes[key].code, label: txTypes[key].title }));
-  if (placeholder) {
-    options.unshift({ value: '', label: placeholder });
-  }
+  options.unshift({ value: '', label: placeholder });
 
   const onChange = (value) => {
     updateCustomFilters({
