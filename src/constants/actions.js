@@ -28,6 +28,7 @@ const actionTypes = {
   loadingFinished: 'LOADING_FINISHED',
   loadingStarted: 'LOADING_STARTED',
   networkSet: 'NETWORK_SET',
+  serviceUrlSet: 'SERVICE_URL_SET',
   networkStatusUpdated: 'NETWORK_STATUS_UPDATED',
   newBlockCreated: 'NEW_BLOCK_CREATED',
   olderBlocksRetrieved: 'OLDER_BLOCKS_RETRIEVED',
