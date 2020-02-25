@@ -4,7 +4,7 @@ import actionTypes from '../constants/actions';
 import serviceAPI from '../utils/api/service';
 
 export const pricesRetrieved = () => (dispatch, getState) => {
-  const { settings: { token } } = getState();
+  const { settings: { token }, network } = getState();
   const activeToken = token.active;
   const tickerReducer = (acc, key) => ({
     ...acc,
@@ -14,7 +14,7 @@ export const pricesRetrieved = () => (dispatch, getState) => {
     },
   });
 
-  serviceAPI.getPriceTicker(activeToken)
+  serviceAPI.getPriceTicker(network, activeToken)
     .then((priceTicker) => {
       const priceTickerReduced = priceTicker.reduce(tickerReducer, {});
       dispatch({
