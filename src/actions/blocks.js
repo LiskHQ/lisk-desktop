@@ -14,7 +14,7 @@ import { getAPIClient } from '../utils/api/network';
  * @param {Object} networkConfig - Network configuration for mainnet/testnet/devnet
  * @returns {Array} - the list of blocks
  */
-const loadLastBlocks = async (params, networkConfig) => {  
+const loadLastBlocks = async (params, networkConfig) => {
   let blocks = await liskServiceApi.getLastBlocks({ networkConfig }, params);
   blocks = blocks.map(block => ({
     ...block,
