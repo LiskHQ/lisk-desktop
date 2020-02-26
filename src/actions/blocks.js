@@ -14,7 +14,7 @@ import { getAPIClient } from '../utils/api/network';
  * @param {Object} networkConfig - Network configuration for mainnet/testnet/devnet
  * @returns {Array} - the list of blocks
  */
-const loadLastBlocks = async (params, networkConfig) => {
+const loadLastBlocks = async (params, networkConfig) => {  
   let blocks = await liskServiceApi.getLastBlocks({ networkConfig }, params);
   blocks = blocks.map(block => ({
     ...block,
@@ -61,7 +61,7 @@ const retrieveNextForgers = async (getState, forgedInRound) => {
 
 // eslint-disable-next-line max-statements
 export const forgingTimesRetrieved = () => async (dispatch, getState) => {
-  const latestBlocks = getState().blocks.latestBlocks;
+  const { latestBlocks } = getState().blocks;
   const forgedInRoundNum = latestBlocks[0].height % voting.numberOfActiveDelegates;
   const awaitingForgers = await retrieveNextForgers(getState, forgedInRoundNum);
 
