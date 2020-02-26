@@ -82,7 +82,7 @@ const DelegateRow = ({
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>
       <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
-        {data.productivity}
+        {`${data.approval} %`}
       </span>
     </Link>
   );
