@@ -80,7 +80,7 @@ export const flattenArray = arr =>
  * @param {string} str - a random string
  * @returns {number} - string size in bytes
  */
-export const sizeOfString = str => encodeURI(str).split(/%..|./).length - 1;
+export const sizeOfString = (str = '') => encodeURI(str).split(/%..|./).length - 1;
 
 /**
  * Checks if a given parameter is a React component
