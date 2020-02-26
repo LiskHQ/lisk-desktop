@@ -1,10 +1,10 @@
 import liskClient from 'Utils/lisk-client'; // eslint-disable-line
+import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import { toast } from 'react-toastify';
 import actionTypes from '../../constants/actions';
 import { tokenMap } from '../../constants/tokens';
 import networks from '../../constants/networks';
-import { getNetworkNameBasedOnNethash } from '../../utils/getNetwork';
 import { version as AppVersion } from '../../../package.json';
 
 const isStaging = () => (
@@ -14,11 +14,12 @@ const isStaging = () => (
     ? '-staging' : '');
 
 const getServerUrl = (networkConfig) => {
-  console.log('>getServerUrl>>', networkConfig);
-  const name = getNetworkNameBasedOnNethash(networkConfig);
-  const { nodeUrl } = networkConfig.networks.LSK;
-  if (name === networks.mainnet.name || name === networks.testnet.name) {
-    return `https://${name.toLowerCase()}-service${isStaging()}.lisk.io`;
+  const { nodeUrl } = networkConfig;
+  if (networkConfig.nethash === Lisk.constants.MAINNET_NETHASH) {
+    return `https://mainnet-service${isStaging()}.lisk.io`;
+  }
+  if (networkConfig.nethash === Lisk.constants.TESTNET_NETHASH) {
+    return `https://testnet-service${isStaging()}.lisk.io`;
   }
   if (/liskdev.net:\d{2,4}$/.test(nodeUrl)) {
     return nodeUrl.replace(/:\d{2,4}/, ':9901');
@@ -46,8 +47,8 @@ export const getConnectionErrorMessage = error => (
 
 const getNetworkInfo = async nodeUrl => (
   new Promise(async (resolve, reject) => {
-    const Lisk = liskClient();
-    new Lisk.APIClient([nodeUrl], {}).node.getConstants().then((response) => {
+    const Client = liskClient();
+    new Client.APIClient([nodeUrl], {}).node.getConstants().then((response) => {
       resolve(response.data);
     }).catch((error) => {
       reject(getConnectionErrorMessage(error));
@@ -70,7 +71,7 @@ export const networkSet = data => async (dispatch) => {
     };
     dispatch(generateAction(data, networkConfig));
     dispatch({
-      data: getServerUrl({ networks: { LSK: networkConfig } }),
+      data: getServerUrl(networkConfig),
       type: actionTypes.serviceUrlSet,
     });
   }).catch((error) => {
