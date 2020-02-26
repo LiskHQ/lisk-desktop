@@ -77,6 +77,7 @@ import transactionError from '../../../assets/images/icons/transaction-error.svg
 import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
 import transactionSuccess from '../../../assets/images/icons/transaction-success.svg';
 import tx2ndPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
+import multiSignature from '../../../assets/images/icons/multiSignature.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
 import txDelegate from '../../../assets/images/icons/tx-delegate.svg';
 import txVote from '../../../assets/images/icons/tx-vote.svg';
@@ -203,6 +204,7 @@ export const icons = {
   bookmarksIconEmptyStateDark,
   monitorIconActiveDark,
   delegatesIconActiveDark,
+  multiSignature,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
