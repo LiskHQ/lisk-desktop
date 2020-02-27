@@ -6,14 +6,16 @@ describe('SelectFilter', () => {
   const props = {
     t: v => v,
     filters: {
-      type: '',
+      type: 1,
     },
+    placeholder: 'Sample title',
     name: 'type',
     updateCustomFilters: jest.fn(),
+    label: 'Type',
   };
-  const wrapper = mount(<SelectFilter {...props} />);
 
   it('should handle input selection', () => {
+    const wrapper = mount(<SelectFilter {...props} />);
     wrapper.find('Select.input').simulate('click');
     wrapper.find('span.option').at(0).simulate('click');
     expect(props.updateCustomFilters).toBeCalled();

@@ -51,7 +51,7 @@ class Settings extends React.Component {
 
   setCurrency(currency) {
     const { settings } = this.props;
-    if (settings.currency !== currency.value) this.onUpdateSettings({ currency: currency.value });
+    if (settings.currency !== currency) this.onUpdateSettings({ currency });
   }
 
   handleCheckboxChange({ target: { name } }) {
@@ -75,7 +75,7 @@ class Settings extends React.Component {
     const { currencies } = this.state;
 
     const isHardwareWalletAccount = account.hwInfo && !!account.hwInfo.deviceId;
-    const activeCurrency = currencies.indexOf(settings.currency || settingsConst.currencies[0]);
+    const activeCurrency = settings.currency || settingsConst.currencies[0];
     const hasPendingSecondPassphrase = pending.find(element =>
       element.type === transactionTypes().setSecondPassphrase.code) !== undefined;
 
@@ -97,6 +97,7 @@ class Settings extends React.Component {
                   selected={activeCurrency}
                   onChange={this.setCurrency}
                   className="currency"
+                  placeholder="Currency"
                 />
               </div>
               <LanguageSelect t={t} />

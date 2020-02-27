@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Waypoint from 'react-waypoint';
-import { loginType } from '../../../constants/hwConstants';
 import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons/button';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import Icon from '../../toolbox/icon';
@@ -20,10 +19,8 @@ import {
 import styles from './header.css';
 
 function shouldShowRegisterDelegateButton(account) {
-  return account.address
-    && !account.delegate
-    && account.loginType === loginType.normal
-    && !Object.keys(account.hwInfo).length;
+  return account.passphrase
+    && !account.info.LSK.delegate;
 }
 
 const VotesNumber = ({ t, number, type }) => (

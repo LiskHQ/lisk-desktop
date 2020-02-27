@@ -4,6 +4,7 @@ import Box from '../../toolbox/box';
 import BoxContent from '../../toolbox/box/content';
 import BoxHeader from '../../toolbox/box/header';
 import FilterBar from '../filterBar';
+import transactionTypes from '../../../constants/transactionTypes';
 import FilterDropdownButton from '../filterDropdownButton';
 import LoadLatestButton from '../loadLatestButton';
 import Table from '../../toolbox/table';
@@ -27,19 +28,20 @@ const TransactionsTable = ({
   sort,
 }) => {
   const handleLoadMore = () => {
-    transactions.loadData(Object.keys(filters).reduce((acc, key) => ({
+    const params = Object.keys(filters).reduce((acc, key) => ({
       ...acc,
-      ...(filters[key] && { [key]: filters[key] }),
+      ...(filters[key] && { [key]: key === 'type' ? transactionTypes.getByCode(Number(filters[key])).outgoingCode : filters[key] }),
     }), {
       offset: transactions.data.length,
       sort,
-    }));
+    });
+    transactions.loadData(params);
   };
 
   /* istanbul ignore next */
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
-    type: value => `${t('Type')}: ${value}`,
+    type: value => `${t('Type')}: ${transactionTypes.getByCode(Number(value)).title}`,
     sender: value => `${t('Sender')}: ${value}`,
     recipient: value => `${t('Recipient')}: ${value}`,
   };

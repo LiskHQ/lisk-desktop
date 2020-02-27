@@ -65,7 +65,7 @@ const socketMiddleware = store => (
   next => (action) => {
     next(action);
     switch (action.type) {
-      case actionTypes.networkSet:
+      case actionTypes.serviceUrlSet:
         store.dispatch(olderBlocksRetrieved());
         socketSetup(store);
         break;
