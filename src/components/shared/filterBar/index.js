@@ -3,7 +3,28 @@ import moment from 'moment';
 import { SecondaryButton } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
 import i18n from '../../../i18n';
+
 import styles from './filterBar.css';
+
+const FilterButton = ({
+  filter, clearFilter, filters, formatters,
+}) => {
+  if (filters[filter] === '') return null;
+  const label = (formatters[filter] || (x => x))(filters[filter]);
+  return (
+    <div
+      className={`${styles.filter} filter`}
+    >
+      <p className={styles.label}>
+        {label}
+      </p>
+      <span
+        className={`${styles.clearBtn} clear-filter`}
+        onClick={() => clearFilter(filter)}
+      />
+    </div>
+  );
+};
 
 const FilterBar = ({
   t, clearFilter, clearAllFilters, filters, results, formatters,
@@ -26,23 +47,15 @@ const FilterBar = ({
         {t('Filtered results: {{results}}', { results })}
       </span>
       <div className={`${styles.labelsHolder}`}>
-        {Object.keys(filters).map((filter, index) => {
-          let label = filters[filter];
-          if (label === '') return null;
-          label = (formatters[filter] || (x => x))(label);
-          return (
-            <div
-              className={`${styles.filter} filter`}
-              key={filter + index}
-            >
-              <p className={styles.label}>{label}</p>
-              <span
-                className={`${styles.clearBtn} clear-filter`}
-                onClick={() => clearFilter(filter)}
-              />
-            </div>
-          );
-        })
+        {Object.keys(filters).map((filter, index) => (
+          <FilterButton
+            filter={filter}
+            key={filter + index}
+            clearFilter={clearFilter}
+            filters={filters}
+            formatters={formatters}
+          />
+        ))
         }
         <SecondaryButton
           className="clear-all-filters"

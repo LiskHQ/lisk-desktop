@@ -112,6 +112,7 @@ module.exports = {
     'src/store/reducers/network.js',
     'src/components/shared/rankOrStatus/index.js',
     'src/components/screens/delegates/index.js',
+    'src/components/screens/settings/languageSelect.js',
   ],
   coverageThreshold: {
     global: {

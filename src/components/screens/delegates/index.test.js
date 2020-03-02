@@ -62,7 +62,7 @@ describe('Delegates', () => {
   it('should show onboarding if not in guest mode', () => {
     const wrapper = mountWithProps(
       { ...defaultProps },
-      { ...mockStore, account: accounts.genesis },
+      { ...mockStore, account: { info: { LSK: { ...accounts.genesis } } } },
     );
     expect(wrapper.find('Onboarding')).to.have.lengthOf(1);
   });

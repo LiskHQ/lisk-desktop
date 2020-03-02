@@ -61,7 +61,7 @@ const retrieveNextForgers = async (getState, forgedInRound) => {
 
 // eslint-disable-next-line max-statements
 export const forgingTimesRetrieved = () => async (dispatch, getState) => {
-  const latestBlocks = getState().blocks.latestBlocks;
+  const { latestBlocks } = getState().blocks;
   const forgedInRoundNum = latestBlocks[0].height % voting.numberOfActiveDelegates;
   const awaitingForgers = await retrieveNextForgers(getState, forgedInRoundNum);
 

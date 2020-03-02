@@ -29,6 +29,11 @@ const network = (state = initialState, action) => {
         ...state,
         status: action.data,
       };
+    case actionTypes.serviceUrlSet:
+      return {
+        ...state,
+        serviceUrl: action.data,
+      };
     default:
       return state;
   }

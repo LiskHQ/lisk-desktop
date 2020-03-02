@@ -9,8 +9,7 @@ export default function LanguageSelect({ t }) {
     value: key,
     label: t(languages[key].name),
   }));
-  const activeLanguage = Math.max(0,
-    languageList.map(({ value }) => value).indexOf(i18n.language));
+  const activeLanguage = i18n.language || 'en';
 
   return (
     <div className={styles.fieldGroup}>
@@ -18,7 +17,8 @@ export default function LanguageSelect({ t }) {
       <Select
         options={languageList}
         selected={activeLanguage}
-        onChange={({ value }) => i18n.changeLanguage(value)}
+        placeholder="Language"
+        onChange={value => i18n.changeLanguage(value)}
         className="language"
       />
     </div>
