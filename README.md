@@ -40,7 +40,7 @@ Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for more information.
 │   │   ├── middlewares/           # All the Redux middlewares are places here and have their dedicated script files based on the system entities.
 │   │   ├── reducers/              # Redux reducers are located here. similar to actions and reducers, they are placed in script files named after the entity they represent.
 │   ├── utils/                     # Utility functions
-└──test/                           # SSL certificates for connecting to Cloud SQL instance
+└──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit test that live in /src
 ```
 
 ## Development
@@ -206,4 +206,3 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the [GNU General Public License](https://github.com/LiskHQ/lisk-desktop/tree/master/LICENSE) along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
