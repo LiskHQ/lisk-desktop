@@ -11,39 +11,11 @@
 ## For Contributors
 Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for more information.
 
-#### Directory Layout
-
-```
-├── __mocks__/                     # Modules used to mock dependencies for testing purpose.
-├── .storybook/                    # React storybooks reside here.
-├── app/                           # Electron based application that launces the react app.
-├── build/                         # Build specific materials.
-├── config/                        # Automation scripts (Webpack configurations, i18n scanner, etc)
-├── coverage/                      # Results of Jest test coverage.
-├── dist/                          # Platform specific built outputs.
-├── docs/                          # Project documentations such as contribution guides and development guidelines.
-├── i18n/                          # Localization files inluding setup scripts and translation json files.
-├── libs/                          # Modules which can be consumed individually in other projects.
-├── node_modules/                  # 3rd-party libraries and utilities.
-├── src/                           # Application source code.
-│   ├── actions/                   # Store actions reside here and are broken into script files dedicated to each system entity.
-│   ├── app/                       # The bootstrap React application
-│   ├── assets/                    # Static files (images, fonts, etc)
-│   ├── components/                # React presentational components are located here.
-│   │   ├── screens/               # These are the component that represent screens with dedicated URL.
-│   │   ├── shared/                # These are the React components used at least in 2 other components (calendar, liskAmount, etc)
-│   │   └── toolbox/               # Basic elements with basic styles and functionality which are used in numerous places (button, input, etc)
-│   ├── constants/                 # Names, addresses, static configurations and other values used throughout the application
-│   ├── context/                   # React context configuration files
-│   ├── hooks/                     # React custom hooks
-│   ├── store/                     # Redux store resides here.
-│   │   ├── middlewares/           # All the Redux middlewares are places here and have their dedicated script files based on the system entities.
-│   │   ├── reducers/              # Redux reducers are located here. similar to actions and reducers, they are placed in script files named after the entity they represent.
-│   ├── utils/                     # Utility functions
-└──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit test that live in /src
-```
-
 ## Development
+
+### Setup environemnt
+
+#### Clone and install depdendencies
 
 ```
 git clone https://github.com/LiskHQ/lisk-desktop.git
@@ -51,6 +23,8 @@ cd lisk-desktop
 npm install
 npm run dev
 ```
+
+#### Run on Browser
 
 Open http://localhost:8080
 
@@ -72,20 +46,24 @@ localStorage.setItem('liskCoreUrl', 'http://localhost:4000') // desired node to 
 localStorage.setItem('hwWalletAutoLogin', true);
 ```
 
-#### Build
+### Build
+
+#### Production build
+
+To build the project simply run
 
 ```
 npm run build
 ```
 
-#### Using Commercial Fonts
+##### Using Commercial Fonts
 Since some of the fonts used in the production version are commercial, this repository only contains open source fonts and uses `Open Sans` as a replacement for the commercial ones.
 
 If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to [fonts folder](./src/assets/fonts) to replace the empty files that are there so that webpack build doesn't fail if the fonts are not present.
 
-## Electron
+#### Electron
 
-#### Start
+##### Run using Electron
 
 
 Start the Electron client. Before staring you need to make sure the application is built. If you need to build the entire application, run
@@ -95,6 +73,8 @@ npm run build
 ```
 
 as mentioned before. And if you want to solely build electron app, run
+
+##### Build the electron app
 
 ```
 npm run build-electron
@@ -142,7 +122,9 @@ Build package for Linux (on Linux).
 npm run pack 
 ```
 
-## Run unit tests
+## Testing
+
+### Unit tests
 
 #### Single run
 ```
@@ -154,7 +136,7 @@ npm run test
 npm run test-live
 ```
 
-## Run end-to-end tests
+### E2E tests
 In order to run e2e tests you need to install [lisk-core](https://github.com/LiskHQ/lisk)
 
 #### Setup core
@@ -182,7 +164,7 @@ Run e2e tests
 npm run cypress:run
 ```
 
-## Launch React Storybook
+### React Storybook
 
 To launch storybook sandbox with components run
 ```
@@ -192,6 +174,37 @@ and navigate to
 
 http://localhost:6006/
 
+## Directory Layout
+
+```
+├── __mocks__/                     # Modules used to mock dependencies for testing purpose.
+├── .storybook/                    # React storybooks reside here.
+├── app/                           # Electron based application that launces the react app.
+├── build/                         # Build specific materials.
+├── config/                        # Automation scripts (Webpack configurations, i18n scanner, etc)
+├── coverage/                      # Results of Jest test coverage.
+├── dist/                          # Platform specific built outputs.
+├── docs/                          # Project documentations such as contribution guides and development guidelines.
+├── i18n/                          # Localization files inluding setup scripts and translation json files.
+├── libs/                          # Modules which can be consumed individually in other projects.
+├── node_modules/                  # 3rd-party libraries and utilities.
+├── src/                           # Application source code.
+│   ├── actions/                   # Store actions reside here and are broken into script files dedicated to each system entity.
+│   ├── app/                       # The bootstrap React application
+│   ├── assets/                    # Static files (images, fonts, etc)
+│   ├── components/                # React presentational components are located here.
+│   │   ├── screens/               # These are the component that represent screens with dedicated URL.
+│   │   ├── shared/                # These are the React components used at least in 2 other components (calendar, liskAmount, etc)
+│   │   └── toolbox/               # Basic elements with basic styles and functionality which are used in numerous places (button, input, etc)
+│   ├── constants/                 # Names, addresses, static configurations and other values used throughout the application
+│   ├── context/                   # React context configuration files
+│   ├── hooks/                     # React custom hooks
+│   ├── store/                     # Redux store resides here.
+│   │   ├── middlewares/           # All the Redux middlewares are places here and have their dedicated script files based on the system entities.
+│   │   ├── reducers/              # Redux reducers are located here. similar to actions and reducers, they are placed in script files named after the entity they represent.
+│   ├── utils/                     # Utility functions
+└──test/                           # E2E tests written with Cypress.io and Cucumber; also some helpers used by unit test that live in /src
+```
 
 
 ## Contributors
