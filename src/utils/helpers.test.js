@@ -70,7 +70,7 @@ describe('helpers', () => {
     });
 
     it('should calculate the size of null', () => {
-      expect(sizeOfString()).toEqual(9);
+      expect(sizeOfString()).toEqual(0);
     });
   });
   describe('isReactComponent', () => {
