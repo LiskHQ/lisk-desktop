@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Settings from './settings';
 import accounts from '../../../../test/constants/accounts';
-import i18n from '../../../i18n';
 
 describe('Setting', () => {
   const settings = {
@@ -92,12 +91,6 @@ describe('Setting', () => {
         currency: 'EUR',
       };
       expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
-    });
-
-    it('should allow to change active language setting to German', () => {
-      wrapper.find('.language input').simulate('focus');
-      wrapper.find('.language .options span').at(1).simulate('click', { target: { getAttribute: () => 'de' } });
-      expect(i18n.changeLanguage).toBeCalledWith('de');
     });
   });
 
