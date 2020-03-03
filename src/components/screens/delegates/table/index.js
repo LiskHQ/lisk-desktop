@@ -117,12 +117,13 @@ const DelegatesTable = ({
     loadDelegatesData(true);
   }, [params.q, params.tab]);
   useEffect(() => {
+    const votesFilteredByQ = getVotedList(votes).filter(item => item.includes(params.q));
     if (activeTab.value === 1
-      && getVotedList(votes).length > 0
+      && votesFilteredByQ.length > 0
       && offset > 0
       && offset % 30 === 0
       && !isLoading
-      && activeTab.data.length < getVotedList(votes).length) {
+      && activeTab.data.length < votesFilteredByQ.length) {
       loadDelegatesData();
     }
   }, [activeTab.data, isLoading]);

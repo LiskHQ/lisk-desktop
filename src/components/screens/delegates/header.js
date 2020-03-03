@@ -160,7 +160,7 @@ const VotingHeader = ({
             unvoteList.length ? <VotesNumber number={unvoteList.length} t={t} type="removedVotes" /> : null
           }
           {
-            votingModeEnabled ? <TotalActions number={maxCountOfVotes} t={t} fee={fee} /> : null
+            votingModeEnabled ? <TotalActions number={totalActions} t={t} fee={fee} /> : null
           }
         </div>
         { votingModeEnabled
