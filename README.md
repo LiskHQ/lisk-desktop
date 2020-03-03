@@ -11,7 +11,7 @@
 ## For Contributors
 Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for more information.
 
-## Directory Layout
+#### Directory Layout
 
 ```
 ├── __mocks__/                     # Modules used to mock dependencies for testing purpose.
