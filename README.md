@@ -10,6 +10,39 @@
 
 ## For Contributors
 Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for more information.
+
+## Directory Layout
+
+```
+├── __mocks__/                     # Modules used to mock dependencies for testing purpose.
+├── .storybook/                    # React storybooks reside here.
+├── app/                           # Electron based application that launces the react app.
+├── build/                         # Build specific materials.
+├── config/                        # Automation scripts (Webpack configurations, i18n scanner, etc)
+├── coverage/                      # Results of Jest test coverage.
+├── dist/                          # Platform specific built outputs.
+├── docs/                          # Project documentations such as contribution guides and development guidelines.
+├── i18n/                          # Localization files inluding setup scripts and translation json files.
+├── libs/                          # Modules which can be consumed individually in other projects.
+├── node_modules/                  # 3rd-party libraries and utilities.
+├── src/                           # Application source code.
+│   ├── actions/                   # Store actions reside here and are broken into script files dedicated to each system entity.
+│   ├── app/                       # The bootstrap React application
+│   ├── assets/                    # Static files (images, fonts, etc)
+│   ├── components/                # React presentational components are located here.
+│   │   ├── screens/               # These are the component that represent screens with dedicated URL.
+│   │   ├── shared/                # These are the React components used at least in 2 other components (calendar, liskAmount, etc)
+│   │   └── toolbox/               # Basic elements with basic styles and functionality which are used in numerous places (button, input, etc)
+│   ├── constants/                 # Names, addresses, static configurations and other values used throughout the application
+│   ├── context/                   # React context configuration files
+│   ├── hooks/                     # React custom hooks
+│   ├── store/                     # Redux store resides here.
+│   │   ├── middlewares/           # All the Redux middlewares are places here and have their dedicated script files based on the system entities.
+│   │   ├── reducers/              # Redux reducers are located here. similar to actions and reducers, they are placed in script files named after the entity they represent.
+│   ├── utils/                     # Utility functions
+└──test/                           # SSL certificates for connecting to Cloud SQL instance
+```
+
 ## Development
 
 ```
