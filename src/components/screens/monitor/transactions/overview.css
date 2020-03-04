@@ -1,0 +1,60 @@
+@import '../../../../app/mixins.css';
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: 293px;
+}
+
+.column {
+  flex-grow: 1;
+  width: calc(100% / 3);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.title {
+  @mixin contentLargest bold;
+
+  width: 100%;
+  padding: 0 20px;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: var(--color-maastricht-blue);
+  padding-top: 30px;
+}
+
+.list {
+  padding: 25px 10px 0;
+  font-size: var(--font-size-h6);
+
+  & > a,
+  & > span {
+    display: inline-block;
+    padding-left: 10px;
+  }
+
+  & > span {
+    color: var(--color-maastricht-blue);
+  }
+}
+
+.chartBox {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+
+  & > .chart {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 51px);
+  }
+}
