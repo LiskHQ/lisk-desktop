@@ -15,8 +15,6 @@ Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for more information.
 
 ### Setup environemnt
 
-#### Clone and install depdendencies
-
 ```
 git clone https://github.com/LiskHQ/lisk-desktop.git
 cd lisk-desktop
@@ -24,7 +22,7 @@ npm install
 npm run dev
 ```
 
-#### Run on Browser
+### Run on browser
 
 Open http://localhost:8080
 
@@ -33,17 +31,25 @@ For ease of development, you can set the following query string to see network o
 http://localhost:8080/#/?showNetwork=true
 ```
 
-If you are actively developing in a specific route, and want to be autologged in everytime you reload the page, please add the following to localStorage:
+If you are actively developing in a specific route, and want to be automatically signed in every time you reload the page, please add the following input pairs to your localStorage:
+
+_loginKey_: _a valid passphrase_
+
+Add the above pair using the storage tab in your dev tools or via JavaScript command: 
 
 ```
-localStorage.setItem('liskCoreUrl', 'http://localhost:4000') // desired node to log in into
 localStorage.setItem('loginKey', 'wagon stock borrow episode laundry kitten salute link globe zero feed marble') // desired account passphrase
 ```
 
-When developing with hardware wallet, this will log you into to first account on the first connected hardware wallet:
+
+When developing with hardware wallet, this will sign you in using the first account on the first connected hardware wallet:
+```
+localStorage.setItem('hwWalletAutoLogin', true);
+```
+You can use the same approach to define a desired network to which Lisk Desktop connects:
+
 ```
 localStorage.setItem('liskCoreUrl', 'http://localhost:4000') // desired node to log in into
-localStorage.setItem('hwWalletAutoLogin', true);
 ```
 
 ### Build
@@ -55,48 +61,47 @@ To build the project simply run
 ```
 npm run build
 ```
-
-##### Using Commercial Fonts
-Since some of the fonts used in the production version are commercial, this repository only contains open source fonts and uses `Open Sans` as a replacement for the commercial ones.
-
-If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to [fonts folder](./src/assets/fonts) to replace the empty files that are there so that webpack build doesn't fail if the fonts are not present.
-
-#### Electron
-
-##### Run using Electron
-
-
-Start the Electron client. Before staring you need to make sure the application is built. If you need to build the entire application, run
+Under the hood, this script runs
 
 ```
-npm run build
+npm run build-prod
 ```
-
-as mentioned before. And if you want to solely build electron app, run
-
-##### Build the electron app
+to build the React app under `src/` and
 
 ```
 npm run build-electron
 ```
+to build the electron app under `app/` using webpack. You can run the above scripts individually if you're looking to see the changes solely on one of the two said applications.
 
-Then, in order to launch electron, you can run
+
+#### Using Commercial Fonts
+`Basier Circle` and `Gilroy` used in the production version are commercial fonts. This repository only contains open fonts and uses `Open Sans` as a replacement for the commercial ones.
+
+If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to [fonts folder](./src/assets/fonts) to replace the empty files that are there so that webpack build doesn't fail if the fonts are not present.
+
+### Run Electron
+If you have already built the application as described above, you can launch Electron using
 
 ```
 npm run start
 ```
 
-Then, in order to launch version with hardware wallet, you can run
+#### Run with parameters
+
+To launch a version which supports hardware wallets, you can run
 
 ```
 npm run dev-hardware-wallet
 ```
 
-In order to launch electron that gets live updates from already running webpack-dev-server on port 8080 and with react/redux dev tools, you can run
+or to launch electron and receive live updates from already running `webpack-dev-server` on port `8080` and you can run
 
 ```
 LISK_HUB_URL="http://localhost:8080" DEBUG=true npm run start
 ```
+This comes with Redux dev tools.
+
+### Distribution
 
 #### Windows
 
