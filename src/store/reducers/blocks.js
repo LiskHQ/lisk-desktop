@@ -1,7 +1,7 @@
 import actionTypes from '../../constants/actions';
 import voting from '../../constants/voting';
 
-const blocks = (state = { latestBlocks: [], forgingTimes: {} }, action) => {
+const blocks = (state = { latestBlocks: [], forgingTimes: {}, awaitingForgers: [] }, action) => {
   switch (action.type) {
     case actionTypes.newBlockCreated:
       return {
@@ -21,7 +21,8 @@ const blocks = (state = { latestBlocks: [], forgingTimes: {} }, action) => {
     case actionTypes.forgingTimesRetrieved:
       return {
         ...state,
-        forgingTimes: action.data,
+        forgingTimes: action.data.forgingTimes,
+        awaitingForgers: action.data.awaitingForgers,
       };
     default:
       return state;
