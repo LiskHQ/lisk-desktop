@@ -104,7 +104,7 @@ const liskServiceApi = {
       delegate => delegate.username.includes(search),
     ),
     searchParams: {
-      limit: voting.numberOfActiveDelegates - 1,
+      limit: voting.numberOfActiveDelegates,
       ...searchParams,
     },
   }),
