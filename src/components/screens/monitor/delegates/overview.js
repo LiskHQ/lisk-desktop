@@ -3,8 +3,7 @@ import React from 'react';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
-import Chart from '../../../toolbox/charts';
-import { typeLine, typeDoughnut } from '../../../../constants/chartConstants';
+import { DoughnutChart, LineChart } from '../../../toolbox/charts';
 import styles from './overview.css';
 
 const getForgingStats = (data) => {
@@ -62,8 +61,7 @@ const Overview = ({
                 <div className={styles.chartBox}>
                   <h2 className={styles.chartTitle}>{t('Delegates')}</h2>
                   <div className={styles.chart}>
-                    <Chart
-                      type={typeDoughnut}
+                    <DoughnutChart
                       data={{
                         labels: [t('Standby delegates'), t('Active delegates')],
                         datasets: [
@@ -97,8 +95,7 @@ const Overview = ({
                 <div className={styles.chartBox}>
                   <h2 className={styles.chartTitle}>{t('Delegates Forging Status')}</h2>
                   <div className={styles.chart}>
-                    <Chart
-                      type={typeDoughnut}
+                    <DoughnutChart
                       data={{
                         labels: delegatesForgedLabels,
                         datasets: [
@@ -132,8 +129,7 @@ const Overview = ({
                 <div className={styles.chartBox}>
                   <h2 className={styles.chartTitle}>{t('Registered Delegates')}</h2>
                   <div className={styles.chart}>
-                    <Chart
-                      type={typeLine}
+                    <LineChart
                       data={{
                         labels: getAmountOfDelegatesLabels(),
                         datasets: [
