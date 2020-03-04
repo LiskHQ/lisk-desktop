@@ -9,7 +9,7 @@
 [![devDependencies Status](https://david-dm.org/liskHQ/lisk-desktop/dev-status.svg)](https://david-dm.org/liskHQ/lisk-desktop?type=dev)
 
 ## For Contributors
-Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for more information.
+Please see [CONTRIBUTING_GUIDE.md](/docs/CONTRIBUTING_GUIDE.md) for more information.
 
 ## Development
 
