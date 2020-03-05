@@ -53,12 +53,16 @@ describe('Reducer: blocks(state, action)', () => {
 
     const action = {
       type: actionTypes.forgingTimesRetrieved,
-      data: ['12345678', { time: 0, status: 'forging', tense: 'past' }],
+      data: {
+        forgingTimes: ['12345678', { time: 0, status: 'forging', tense: 'past' }],
+        awaitingForgers: [{ address: '12345678', publicKey: '12345678', username: 'test' }],
+      },
     };
     const changedBlocks = blocksReducer(state, action);
     expect(changedBlocks).to.deep.equal({
       latestBlocks: [],
-      forgingTimes: action.data,
+      forgingTimes: action.data.forgingTimes,
+      awaitingForgers: action.data.awaitingForgers,
     });
   });
 });
