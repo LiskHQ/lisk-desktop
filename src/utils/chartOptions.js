@@ -1,12 +1,8 @@
 import lodashMerge from 'lodash.merge';
 import {
-  typeLine,
-  typeBar,
-  typeDoughnut,
   chartStyles,
   colorPallete,
 } from '../constants/chartConstants';
-
 
 const merge = (...args) => lodashMerge({}, ...args);
 
@@ -27,7 +23,6 @@ export const lineChartData = data => merge({
   })),
 }, data);
 
-
 /**
  * data ONLY for Bar chart
  * @param {object} data - More data that can be pass to the chart
@@ -44,7 +39,6 @@ export const barChartData = data => merge({
   })),
 }, data);
 
-
 /**
  * data ONLY for Doughnut chart
  * @param {object} data - More data that can be pass to the chart
@@ -56,7 +50,6 @@ export const doughnutChartData = data => merge({
     },
   ],
 }, data);
-
 
 export const baseOptions = (theme = 'light') => ({
   maintainAspectRatio: false,
@@ -112,144 +105,116 @@ export const baseOptions = (theme = 'light') => ({
   },
 });
 
-
-export const lineChartOptions = () => ({
-  scales: {
-    xAxes: [{
-      display: true,
-      distribution: 'linear',
-      gridLines: {
-        display: false,
-      },
-      ticks: {
-        fontColor: chartStyles.slateGray,
-        fontSize: chartStyles.fontSize,
-        fontFamily: chartStyles.contentFontFamily,
-        maxRotation: 0,
-      },
-    }],
-
-    yAxes: [{
-      position: 'left',
-      type: 'linear',
-      gridLines: {
+export const lineChartOptions = (theme, options) => (
+  merge({
+    scales: {
+      xAxes: [{
         display: true,
+        distribution: 'linear',
+        gridLines: {
+          display: false,
+        },
+        ticks: {
+          fontColor: chartStyles.slateGray,
+          fontSize: chartStyles.fontSize,
+          fontFamily: chartStyles.contentFontFamily,
+          maxRotation: 0,
+        },
+      }],
+      yAxes: [{
+        position: 'left',
+        type: 'linear',
+        gridLines: {
+          display: true,
+        },
+        ticks: {
+          display: true,
+          maxTicksLimit: 5,
+          fontColor: chartStyles.slateGray,
+          fontSize: chartStyles.fontSize,
+          fontFamily: chartStyles.contentFontFamily,
+        },
+      }],
+    },
+    elements: {
+      point: {
+        radius: 2,
+        hoverRadius: 2,
+        hitRadius: 10,
       },
-      ticks: {
+      line: {
+        tension: 0,
+      },
+    },
+  }, baseOptions(theme), options)
+);
+
+export const barChartOptions = (theme, options) => {
+  console.log('Option', options);
+  return merge({
+    scales: {
+      xAxes: [{
         display: true,
-        maxTicksLimit: 5,
-        fontColor: chartStyles.slateGray,
-        fontSize: chartStyles.fontSize,
-        fontFamily: chartStyles.contentFontFamily,
-      },
-    }],
-  },
-
-  elements: {
-    point: {
-      radius: 2,
-      hoverRadius: 2,
-      hitRadius: 10,
-    },
-    line: {
-      tension: 0,
-    },
-  },
-});
-
-
-export const barChartOptions = () => ({
-  scales: {
-    xAxes: [{
-      display: true,
-      position: 'bottom',
-      stacked: true,
-      gridLines: {
-        display: false,
-        offsetGridLines: true,
-      },
-      ticks: {
-        fontColor: chartStyles.slateGray,
-        fontSize: chartStyles.fontSize,
-        fontFamily: chartStyles.contentFontFamily,
-        maxRotation: 0,
-      },
-    }],
-
-    yAxes: [{
-      display: true,
-      position: 'left',
-      stacked: true,
-      gridLines: {
+        position: 'bottom',
+        stacked: true,
+        gridLines: {
+          display: false,
+          offsetGridLines: true,
+        },
+        ticks: {
+          fontColor: chartStyles.slateGray,
+          fontSize: chartStyles.fontSize,
+          fontFamily: chartStyles.contentFontFamily,
+          maxRotation: 0,
+        },
+      }],
+      yAxes: [{
         display: true,
-        offsetGridLines: true,
-      },
-      ticks: {
-        display: true,
-        maxTicksLimit: 5,
-        fontColor: chartStyles.slateGray,
-        fontSize: chartStyles.fontSize,
-        fontFamily: chartStyles.contentFontFamily,
-        beginAtZero: true,
-      },
-    }],
-  },
-
-  elements: {
-    rectangle: {
-      backgroundColor: chartStyles.ultramarineBlue,
-      borderWidth: '0',
-      borderColor: '',
-      borderSkipped: 'bottom',
+        position: 'left',
+        stacked: true,
+        gridLines: {
+          display: true,
+          offsetGridLines: true,
+        },
+        ticks: {
+          display: true,
+          maxTicksLimit: 5,
+          fontColor: chartStyles.slateGray,
+          fontSize: chartStyles.fontSize,
+          fontFamily: chartStyles.contentFontFamily,
+          beginAtZero: true,
+        },
+      }],
     },
-  },
-});
-
-
-export const doughnutChartOptions = (theme = 'light') => ({
-  cutoutPercentage: 60,
-  elements: {
-    arc: {
-      backgroundColor: chartStyles.backgroundColor[theme],
-      borderColor: chartStyles.borderColor[theme],
-      borderAlign: 'center',
-      borderWidth: 1,
+    elements: {
+      rectangle: {
+        backgroundColor: chartStyles.ultramarineBlue,
+        borderWidth: '0',
+        borderColor: '',
+        borderSkipped: 'bottom',
+      },
     },
-  },
-});
-
-const typeOptions = {
-  [typeLine]: lineChartOptions,
-  [typeBar]: barChartOptions,
-  [typeDoughnut]: doughnutChartOptions,
+  }, baseOptions(theme), options);
 };
 
-const typeData = {
-  [typeLine]: lineChartData,
-  [typeBar]: barChartData,
-  [typeDoughnut]: doughnutChartData,
-};
-
-/**
- * Function that return the corresponding options object
- * based on the selected chart type.
- * @param {string} type - can be line, bar or doughnut
- * @param {object} options - More options that can be pass to the chart
- * @param {string} theme - The global app theme: either dark or light
- */
-export const optionsByChart = (type, options, theme) =>
-  merge(typeOptions[type](theme), baseOptions(theme), options);
-
-/**
- * Function that return the corresponding data object
- * based on the selected chart type.
- * @param {string} type - can be line, bar or doughnut
- * @param {object} data - More data that can be pass to the chart
- */
-export const dataByChart = (type, data) => typeData[type](data);
-
+export const doughnutChartOptions = (theme, options) =>
+  merge({
+    cutoutPercentage: 60,
+    elements: {
+      arc: {
+        backgroundColor: chartStyles.backgroundColor[theme],
+        borderColor: chartStyles.borderColor[theme],
+        borderAlign: 'center',
+        borderWidth: 1,
+      },
+    },
+  }, baseOptions(theme), options);
 
 export default {
-  dataByChart,
-  optionsByChart,
+  lineChartData,
+  barChartData,
+  doughnutChartData,
+  lineChartOptions,
+  barChartOptions,
+  doughnutChartOptions,
 };
