@@ -99,15 +99,18 @@ export const isReactComponent = (component) => {
 };
 
 /**
- * Replaces 000 of 4-6 digit numbers with K
+ * Uses M and K to define million and thousand.
  *
  * @param {Number} num - Given number like 2500
  * @param {Number} precision - The number of floating digits
  * @returns {String} Stringified number like 2.5K
  */
 export const kFormatter = (num, precision = 0) => {
-  if (Math.abs(Number(num)) > 999) {
-    return `${(Math.abs(Number(num)) / 1000).toFixed(precision)}K`;
+  if (Number(num) > 999999) {
+    return `${(Number(num) / 1000000).toFixed(precision)}M`;
+  }
+  if ((Number(num)) > 999) {
+    return `${(Number(num) / 1000).toFixed(precision)}K`;
   }
   return num;
 };
