@@ -118,7 +118,7 @@ const Overview = ({ t, txStats }) => {
           </div>
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
-          <h2 className={styles.title}>{t('No transactions / volume (LSK)')}</h2>
+          <h2 className={styles.title}>{t('Transactions number / volume (LSK)')}</h2>
           <div className={styles.graph}>
             <BarChart
               data={{
