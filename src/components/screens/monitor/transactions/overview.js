@@ -95,7 +95,6 @@ const Overview = ({ t, txStats }) => {
                     .replace('Multisignature creation', 'Multisig. creation')),
                 datasets: [
                   {
-                    label: 'ABC',
                     data: Object.values(distributionByType),
                   },
                 ],
@@ -111,7 +110,6 @@ const Overview = ({ t, txStats }) => {
                 labels: Object.keys(distributionByAmount),
                 datasets: [
                   {
-                    label: 'ABC',
                     data: Object.values(distributionByAmount),
                   },
                 ],
