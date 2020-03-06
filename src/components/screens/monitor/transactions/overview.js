@@ -13,6 +13,7 @@ import { fromRawLsk } from '../../../../utils/lsk';
 import { chartStyles } from '../../../../constants/chartConstants';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
+import { kFormatter } from '../../../../utils/helpers';
 
 const options = {
   responsive: true,
@@ -57,6 +58,11 @@ const tabs = (t = str => str) => [
     name: t('{{num}} year', { num: 1 }),
   },
 ];
+
+const formatNumberRange = (range) => {
+  const [start, end] = range.split('_');
+  return `${kFormatter(start)} < ${kFormatter(end)}`;
+};
 
 const Overview = ({ t, txStats }) => {
   const distributionByType = txStats.data.distributionByType;
@@ -107,7 +113,7 @@ const Overview = ({ t, txStats }) => {
           <div className={styles.graph}>
             <DoughnutChart
               data={{
-                labels: Object.keys(distributionByAmount),
+                labels: Object.keys(distributionByAmount).map(range => formatNumberRange(range)),
                 datasets: [
                   {
                     data: Object.values(distributionByAmount),
