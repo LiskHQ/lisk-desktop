@@ -130,19 +130,19 @@ const Overview = ({ t, txStats }) => {
           <div className={styles.graph}>
             <BarChart
               data={{
-                labels: txDateList,
+                labels: txDateList.reverse(),
                 datasets: [
                   {
                     label: 'Number',
                     yAxisID: 'Number',
-                    data: txCountList,
+                    data: txCountList.reverse(),
                     categoryPercentage: 0.5,
                     barPercentage: 0.8,
                   },
                   {
                     label: 'Volume',
                     yAxisID: 'Volume',
-                    data: txVolumeList,
+                    data: txVolumeList.reverse(),
                     categoryPercentage: 0.5,
                     barPercentage: 0.8,
                   },
