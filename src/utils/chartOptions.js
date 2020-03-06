@@ -207,12 +207,3 @@ export const doughnutChartOptions = (theme, options) =>
       },
     },
   }, baseOptions(theme), options);
-
-export default {
-  lineChartData,
-  barChartData,
-  doughnutChartData,
-  lineChartOptions,
-  barChartOptions,
-  doughnutChartOptions,
-};
