@@ -24,6 +24,7 @@ const options = {
       position: 'left',
       ticks: {
         fontColor: chartStyles.ultramarineBlue,
+        callback: value => kFormatter(value),
       },
       gridLines: false,
     }, {
@@ -32,6 +33,7 @@ const options = {
       position: 'left',
       ticks: {
         fontColor: chartStyles.ufoGreen,
+        callback: value => kFormatter(value),
       },
       gridLines: false,
     }],
