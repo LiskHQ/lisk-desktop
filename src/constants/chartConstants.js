@@ -1,15 +1,3 @@
-import { Line, Bar, Doughnut } from 'react-chartjs-2';
-
-export const typeLine = 'line';
-export const typeBar = 'bar';
-export const typeDoughnut = 'doughnut';
-
-export const CHART_TYPES = {
-  [typeLine]: Line,
-  [typeBar]: Bar,
-  [typeDoughnut]: Doughnut,
-};
-
 export const chartStyles = {
   borderColor: { dark: '#4d4d50', light: '#e1e3eb' },
   backgroundColor: { dark: '#111112', light: '#ffffff' },

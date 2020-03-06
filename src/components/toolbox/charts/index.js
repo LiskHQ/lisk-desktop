@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import { useTheme } from '../../../utils/theme';
-import { CHART_TYPES } from '../../../constants/chartConstants';
 import {
   lineChartData,
   barChartData,
@@ -23,57 +23,42 @@ export const LineChart = ({
   width,
   height,
   options,
-}) => {
-  const Graph = CHART_TYPES.line;
-  const theme = useTheme();
-
-  return (
-    <Graph
-      data={lineChartData(data)}
-      width={width}
-      height={height}
-      options={lineChartOptions(theme, options)}
-    />
-  );
-};
+}) => (
+  <Line
+    data={lineChartData(data)}
+    width={width}
+    height={height}
+    options={lineChartOptions(useTheme(), options)}
+  />
+);
 
 export const BarChart = ({
   data,
   width,
   height,
   options,
-}) => {
-  const Graph = CHART_TYPES.bar;
-  const theme = useTheme();
-
-  return (
-    <Graph
-      data={barChartData(data)}
-      width={width}
-      height={height}
-      options={barChartOptions(theme, options)}
-    />
-  );
-};
+}) => (
+  <Bar
+    data={barChartData(data)}
+    width={width}
+    height={height}
+    options={barChartOptions(useTheme(), options)}
+  />
+);
 
 export const DoughnutChart = ({
   data,
   width,
   height,
   options,
-}) => {
-  const Graph = CHART_TYPES.doughnut;
-  const theme = useTheme();
-
-  return (
-    <Graph
-      data={doughnutChartData(data)}
-      width={width}
-      height={height}
-      options={doughnutChartOptions(theme, options)}
-    />
-  );
-};
+}) => (
+  <Doughnut
+    data={doughnutChartData(data)}
+    width={width}
+    height={height}
+    options={doughnutChartOptions(useTheme(), options)}
+  />
+);
 
 LineChart.propTypes = propTypes;
 BarChart.propTypes = propTypes;
