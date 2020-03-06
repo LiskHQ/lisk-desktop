@@ -149,9 +149,8 @@ export const lineChartOptions = (theme, options) => (
   }, baseOptions(theme), options)
 );
 
-export const barChartOptions = (theme, options) => {
-  console.log('Option', options);
-  return merge({
+export const barChartOptions = (theme, options) =>
+  merge({
     scales: {
       xAxes: [{
         display: true,
@@ -195,7 +194,6 @@ export const barChartOptions = (theme, options) => {
       },
     },
   }, baseOptions(theme), options);
-};
 
 export const doughnutChartOptions = (theme, options) =>
   merge({
