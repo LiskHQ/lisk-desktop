@@ -1,10 +1,11 @@
 // istanbul ignore file
-import React from 'react';
+import React, { useState } from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withData from '../../../../utils/withData';
 import liskService from '../../../../utils/api/lsk/liskService';
 import Box from '../../../toolbox/box';
+import BoxTabs from '../../../toolbox/tabs';
 import BoxHeader from '../../../toolbox/box/header';
 import transactionTypes from '../../../../constants/transactionTypes';
 import { DoughnutChart, BarChart } from '../../../toolbox/charts';
@@ -42,17 +43,44 @@ const options = {
   },
 };
 
+const tabs = (t = str => str) => [
+  {
+    value: 'week',
+    name: t('{{num}} week', { num: 1 }),
+  },
+  {
+    value: 'month',
+    name: t('{{num}} month', { num: 6 }),
+  },
+  {
+    value: 'year',
+    name: t('{{num}} year', { num: 1 }),
+  },
+];
+
 const Overview = ({ t, txStats }) => {
   const distributionByType = txStats.data.distributionByType;
   const distributionByAmount = txStats.data.distributionByAmount;
   const txCountList = txStats.data.timeline.map(item => item.transactionCount);
   const txVolumeList = txStats.data.timeline.map(item => fromRawLsk(item.volume));
   const txDateList = txStats.data.timeline.map(item => item.date.replace(/^\d{4}-/, ''));
+  const [activeTab, setActiveTab] = useState('week');
+
+  const changeTab = (tab) => {
+    setActiveTab(tab.value);
+    txStats.loadData({ period: tab.value });
+  };
 
   return (
     <Box>
       <BoxHeader>
-        <h1>{t('Overview')}</h1>
+        <h2>{t('Overview')}</h2>
+        <BoxTabs
+          tabs={tabs(t)}
+          active={activeTab}
+          onClick={changeTab}
+          className="box-tabs"
+        />
       </BoxHeader>
       <div className={styles.container}>
         <div className={`${styles.column} ${styles.pie}`}>
@@ -137,7 +165,7 @@ const Overview = ({ t, txStats }) => {
   );
 };
 
-const ComposedOverview = compose(
+export default compose(
   withData(
     {
       txStats: {
@@ -148,12 +176,10 @@ const ComposedOverview = compose(
           timeline: [],
         },
         autoload: true,
-        defaultUrlSearchParams: { period: 'day' },
+        defaultUrlSearchParams: { period: 'week' },
         transformResponse: response => response.data,
       },
     },
   ),
   withTranslation(),
 )(Overview);
-
-export default ComposedOverview;
