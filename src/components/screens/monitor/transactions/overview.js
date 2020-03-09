@@ -158,6 +158,7 @@ const Overview = ({ t, txStats }) => {
                     data: txCountList.reverse(),
                     categoryPercentage: 0.5,
                     barPercentage: 0.8,
+                    backgroundColor: chartStyles.ultramarineBlue,
                   },
                   {
                     label: 'Volume',
@@ -165,22 +166,23 @@ const Overview = ({ t, txStats }) => {
                     data: txVolumeList.reverse(),
                     categoryPercentage: 0.5,
                     barPercentage: 0.8,
+                    backgroundColor: chartStyles.ufoGreen,
                   },
                 ],
               }}
               options={options}
             />
             <aside className={styles.legends}>
-              <h5 className={`${styles.legend} ${styles.number}`}>
-                <span>{t('Number')}</span>
-                <Tooltip className={`${styles.tooltip} showOnLeft`}>
-                  <p>{t('The number of transactions submitted on the given time period.')}</p>
-                </Tooltip>
-              </h5>
               <h5 className={`${styles.legend} ${styles.volume}`}>
                 <span>{t('Volume')}</span>
                 <Tooltip className={`${styles.tooltip} showOnLeft`}>
                   <p>{t('The aggregated of LSK volume transferred on the given time period.')}</p>
+                </Tooltip>
+              </h5>
+              <h5 className={`${styles.legend} ${styles.number}`}>
+                <span>{t('Number')}</span>
+                <Tooltip className={`${styles.tooltip} showOnLeft`}>
+                  <p>{t('The number of transactions submitted on the given time period.')}</p>
                 </Tooltip>
               </h5>
             </aside>
