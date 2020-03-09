@@ -91,9 +91,23 @@ const tabs = (t = str => str) => [
   },
 ];
 
-const formatNumberRange = (range) => {
-  const [start, end] = range.split('_');
-  return `${kFormatter(start)} < ${kFormatter(end)}`;
+const normalizeNumberRange = (distributions) => {
+  const values = {
+    '0.1_1': '< 10',
+    '1_10': '< 10',
+    '10_100': '10 < 100',
+    '100_1000': '100 < 1K',
+    '1000_10000': '1K < 10K',
+    '10000_100000': '10K <',
+    '100000_1000000': '10K <',
+    '1000000_10000000': '10K <',
+    '10000000_100000000': '10K <',
+    '100000000_1000000000': '10K <',
+  };
+  return Object.keys(distributions).reduce((acc, item) => {
+    acc[values[item]] = (acc[values[item]] || 0) + distributions[item];
+    return acc;
+  }, {});
 };
 
 const formatDates = (date, period) => {
@@ -112,7 +126,7 @@ const formatDistributionBValues = distributions => [0, 1, 2, 3, 4].map(item =>
 const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
   const distributionByType = formatDistributionBValues(txStats.data.distributionByType);
-  const distributionByAmount = txStats.data.distributionByAmount;
+  const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
   const txCountList = txStats.data.timeline.map(item => item.transactionCount);
   const txVolumeList = txStats.data.timeline.map(item => fromRawLsk(item.volume));
   const txDateList = txStats.data.timeline.map(item => formatDates(item.date, activeTab));
@@ -158,7 +172,7 @@ const Overview = ({ t, txStats }) => {
           <div className={styles.graph}>
             <DoughnutChart
               data={{
-                labels: Object.keys(distributionByAmount).map(range => formatNumberRange(range)),
+                labels: Object.keys(distributionByAmount),
                 datasets: [
                   {
                     data: Object.values(distributionByAmount),
