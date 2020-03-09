@@ -16,9 +16,18 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
 import { kFormatter } from '../../../../utils/helpers';
 
+const gridLines = {
+  display: true,
+  drawBorder: true,
+  drawOnChartArea: false,
+};
+
 const options = {
   responsive: true,
   scales: {
+    xAxes: {
+      gridLines,
+    },
     yAxes: [{
       id: 'Number',
       type: 'linear',
@@ -27,7 +36,7 @@ const options = {
         fontColor: chartStyles.ultramarineBlue,
         callback: value => kFormatter(value),
       },
-      gridLines: false,
+      gridLines,
     }, {
       id: 'Volume',
       type: 'linear',
@@ -38,9 +47,6 @@ const options = {
       },
       gridLines: false,
     }],
-    xAxes: {
-      gridLines: false,
-    },
   },
   legend: {
     display: false,
@@ -101,7 +107,7 @@ const Overview = ({ t, txStats }) => {
           tabs={tabs(t)}
           active={activeTab}
           onClick={changeTab}
-          className="box-tabs"
+          className={`box-tabs ${styles.tabs}`}
         />
       </BoxHeader>
       <div className={styles.container}>
