@@ -16,28 +16,38 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
 import { kFormatter } from '../../../../utils/helpers';
 
-const gridLines = {
-  display: true,
-  drawBorder: true,
-  drawOnChartArea: false,
-};
-
 const options = {
   responsive: true,
-  scales: {
-    xAxes: {
-      gridLines,
+  layout: {
+    padding: {
+      left: 0,
+      right: 0,
+      bottom: 0,
     },
+  },
+  scales: {
     yAxes: [{
       id: 'Number',
       type: 'linear',
       position: 'left',
       ticks: {
         fontColor: chartStyles.ultramarineBlue,
+        fontSize: chartStyles.fontSize,
         callback: value => kFormatter(value),
+        gridLines: {
+          drawTicks: false,
+        },
+        padding: 15,
       },
-      gridLines,
-    }, {
+      gridLines: {
+        display: true,
+        offsetGridLines: false,
+        lineWidth: 0,
+        zeroLineWidth: 1,
+        drawTicks: false,
+      },
+    },
+    {
       id: 'Volume',
       type: 'linear',
       position: 'left',
@@ -46,6 +56,19 @@ const options = {
         callback: value => kFormatter(value),
       },
       gridLines: false,
+    }],
+    xAxes: [{
+      gridLines: {
+        display: true,
+        offsetGridLines: true,
+        lineWidth: 0,
+      },
+      ticks: {
+        display: true,
+        gridLines: {
+          drawTicks: false,
+        },
+      },
     }],
   },
   legend: {

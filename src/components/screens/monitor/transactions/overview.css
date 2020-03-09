@@ -21,6 +21,8 @@
 
   &.bar {
     width: 40%;
+    padding-right: 20px;
+    box-sizing: border-box;
   }
 
   & .graph {
