@@ -563,7 +563,7 @@
   "{{length}} bytes left": "{{length}} bytes left",
   "{{length}} extra characters": "{{length}} extra characters",
   "{{length}} out of {{maxLength}} characters left": "{{length}} out of {{maxLength}} characters left",
-  "{{num}} month": "{{num}} month",
+  "{{num}} months": "{{num}} months",
   "{{num}} week": "{{num}} week",
   "{{num}} year": "{{num}} year",
   "{{passphraseName}} paper wallet": "{{passphraseName}} paper wallet",

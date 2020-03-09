@@ -83,7 +83,7 @@ const tabs = (t = str => str) => [
   },
   {
     value: 'month',
-    name: t('{{num}} month', { num: 6 }),
+    name: t('{{num}} months', { num: 6 }),
   },
   {
     value: 'year',
