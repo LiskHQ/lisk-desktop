@@ -213,7 +213,7 @@ const Overview = ({ t, txStats }) => {
               <h5 className={`${styles.legend} ${styles.volume}`}>
                 <span>{t('Volume')}</span>
                 <Tooltip className={`${styles.tooltip} showOnLeft`}>
-                  <p>{t('The aggregated of LSK volume transferred on the given time period.')}</p>
+                  <p>{t('The aggregated LSK volume transferred on the given time period.')}</p>
                 </Tooltip>
               </h5>
               <h5 className={`${styles.legend} ${styles.number}`}>
