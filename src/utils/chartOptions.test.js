@@ -1,14 +1,12 @@
 import merge from 'lodash.merge';
 import {
   baseOptions,
-  lineChartOptions,
-  barChartOptions,
-  doughnutChartOptions,
-  optionsByChart,
   lineChartData,
   barChartData,
   doughnutChartData,
-  dataByChart,
+  lineChartOptions,
+  barChartOptions,
+  doughnutChartOptions,
 } from './chartOptions';
 
 
@@ -49,19 +47,19 @@ describe('Chart Setting', () => {
     };
 
     it('Data for LINE chart', () => {
-      const options = dataByChart('line', lineData);
+      const options = lineChartData(lineData);
       const lineOptions = lineChartData(lineData);
       expect(options).toEqual(lineOptions);
     });
 
     it('Data for BAR chart', () => {
-      const options = dataByChart('bar', barData);
+      const options = barChartData(barData);
       const barOptions = barChartData(barData);
       expect(options).toEqual(barOptions);
     });
 
     it('Data for DOUGGNUT chart', () => {
-      const options = dataByChart('doughnut', dougjnutData);
+      const options = doughnutChartData(dougjnutData);
       const doughnutOptions = doughnutChartData(dougjnutData);
       expect(options).toEqual(doughnutOptions);
     });
@@ -76,19 +74,19 @@ describe('Chart Setting', () => {
     };
 
     it('Options for LINE chart', () => {
-      const options = optionsByChart('line', extraOptions, 'light');
+      const options = lineChartOptions('light', extraOptions);
       const expectedKeys = Object.keys(merge(lineChartOptions(), baseOptions(), extraOptions));
       expect(Object.keys(options)).toEqual(expectedKeys);
     });
 
     it('Options for BAR chart', () => {
-      const options = optionsByChart('bar', extraOptions, 'light');
+      const options = barChartOptions('light', extraOptions);
       const expectedKeys = Object.keys(merge(barChartOptions(), baseOptions(), extraOptions));
       expect(Object.keys(options)).toEqual(expectedKeys);
     });
 
     it('Options for DOUGGNUT chart', () => {
-      const options = optionsByChart('doughnut', extraOptions, 'light');
+      const options = doughnutChartOptions('light', extraOptions);
       const expectedKeys = Object.keys(merge(doughnutChartOptions(), baseOptions(), extraOptions));
       expect(Object.keys(options)).toEqual(expectedKeys);
     });

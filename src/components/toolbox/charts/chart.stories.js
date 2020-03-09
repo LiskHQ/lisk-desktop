@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
 import Box from '../box';
 import BoxHeader from '../box/header';
-import Chart from './index';
+import { LineChart, BarChart, DoughnutChart } from './index';
 import style from './chart.stories.css';
 
 storiesOf('Toolbox', module)
@@ -12,8 +12,7 @@ storiesOf('Toolbox', module)
       <Box className={style.wrapper}>
         <BoxHeader><h1>Line Chart</h1></BoxHeader>
         <div className={style.container}>
-          <Chart
-            type="line"
+          <LineChart
             data={{
               labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', 'Nov', 'Dec'],
               datasets: [
@@ -30,8 +29,7 @@ storiesOf('Toolbox', module)
       <Box className={style.wrapper}>
         <BoxHeader><h1>Bar Chart</h1></BoxHeader>
         <div className={style.container}>
-          <Chart
-            type="bar"
+          <BarChart
             data={{
               labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Oug', 'Sep', 'Oct', 'Nov', 'Dec'],
               datasets: [
@@ -52,8 +50,7 @@ storiesOf('Toolbox', module)
       <Box className={style.wrapper}>
         <BoxHeader><h1>Doughnut Chart</h1></BoxHeader>
         <div className={style.container}>
-          <Chart
-            type="doughnut"
+          <DoughnutChart
             data={{
               labels: ['0 < 1', '1 < 100', '100 < 1K', '> 1K'],
               datasets: [

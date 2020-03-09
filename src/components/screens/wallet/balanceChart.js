@@ -6,7 +6,7 @@ import BoxEmptyState from '../../toolbox/box/emptyState';
 import * as ChartUtils from '../../../utils/balanceChart';
 import { tokenMap } from '../../../constants/tokens';
 import i18n from '../../../i18n';
-import Chart from '../../toolbox/charts';
+import { LineChart } from '../../toolbox/charts';
 import styles from './balanceChart.css';
 
 const BalanceGraph = ({
@@ -36,10 +36,9 @@ const BalanceGraph = ({
       <div className={styles.content}>
         { transactions.length
           ? (
-            <Chart
+            <LineChart
               data={data}
               options={options}
-              type="line"
             />
           )
           : (

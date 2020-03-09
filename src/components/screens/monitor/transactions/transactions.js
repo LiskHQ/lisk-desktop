@@ -1,5 +1,6 @@
 import React from 'react';
 import MonitorHeader from '../header';
+import Overview from './overview';
 import TransactionsTable from '../../../shared/transactionsTable';
 
 const Transactions = ({ t, transactions }) => {
@@ -53,6 +54,7 @@ const Transactions = ({ t, transactions }) => {
   return (
     <div>
       <MonitorHeader />
+      <Overview />
       <TransactionsTable
         isLoadMoreEnabled
         filters={filters}

@@ -167,6 +167,18 @@ const liskServiceApi = {
       socket.close();
     };
   },
+
+  getTxStats: (networkConfig, searchParams) => {
+    const config = {
+      week: { path: 'day', limit: 7 },
+      month: { path: 'month', limit: 6 },
+      year: { path: 'month', limit: 12 },
+    };
+    return liskServiceGet({
+      path: `/api/v1/transactions/statistics/${config[searchParams.period].path}`,
+      searchParams: { limit: config[searchParams.period].limit },
+    });
+  },
 };
 
 export default liskServiceApi;
