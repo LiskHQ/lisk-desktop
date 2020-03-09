@@ -14,8 +14,10 @@ const ForgingDetails = ({
   const latestBlocks = useSelector(state => state.blocks.latestBlocks);
   const lastForger = awaitingForgers
     .filter(forger =>
-      forger.publicKey === latestBlocks[0].generatorPublicKey
-      || forger.publicKey === latestBlocks[1].generatorPublicKey);
+      forger.publicKey === latestBlocks[0].generatorPublicKey);
+  const next10Forgers = awaitingForgers.filter((item, index) => (
+    index < 10 && item.publicKey !== latestBlocks[0].generatorPublicKey
+  ));
 
   return (
     <Box>
@@ -33,8 +35,8 @@ const ForgingDetails = ({
           <h2 className={styles.title}>{t('Next forgers')}</h2>
           <nav className={styles.list}>
             {
-              awaitingForgers
-                .filter((item, index) => index < 9)
+              next10Forgers
+                .filter((item, index) => (index < 9))
                 .map(forger => (
                   <Link
                     key={forger.address}

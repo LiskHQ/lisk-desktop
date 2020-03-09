@@ -53,7 +53,7 @@ const retrieveNextForgers = async (getState, forgedInRound) => {
   const numberOfRemainingBlocksInRound = voting.numberOfActiveDelegates
     - forgedInRound;
   const nextForgers = await liskServiceApi.getNextForgers(apiClient, {
-    limit: Math.min(numberOfRemainingBlocksInRound, 100),
+    limit: Math.min(numberOfRemainingBlocksInRound, 101),
   });
 
   return nextForgers.slice(0, numberOfRemainingBlocksInRound);
