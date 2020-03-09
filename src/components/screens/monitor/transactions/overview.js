@@ -120,12 +120,12 @@ const formatDates = (date, period) => {
   return date.replace(/^\d{4}-/, '');
 };
 
-const formatDistributionBValues = distributions => [0, 1, 2, 3, 4].map(item =>
+const formatDistributionByValues = distributions => [0, 1, 2, 3, 4].map(item =>
   (distributions[item] || 0) + (distributions[item + 8] || 0));
 
 const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
-  const distributionByType = formatDistributionBValues(txStats.data.distributionByType);
+  const distributionByType = formatDistributionByValues(txStats.data.distributionByType);
   const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
   const txCountList = txStats.data.timeline.map(item => item.transactionCount);
   const txVolumeList = txStats.data.timeline.map(item => fromRawLsk(item.volume));
