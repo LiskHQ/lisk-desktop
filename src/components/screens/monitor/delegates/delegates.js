@@ -14,6 +14,7 @@ import Table from '../../../toolbox/table';
 import styles from './delegates.css';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
+import ForgingDetails from './forgingDetails';
 
 // eslint-disable-next-line max-statements
 const DelegatesTable = ({
@@ -103,6 +104,7 @@ const DelegatesTable = ({
         delegatesForgedLabels={Object.values(statuses)}
         t={t}
       />
+      <ForgingDetails t={t} />
       <Box main isLoading={delegates.isLoading}>
         <BoxHeader className="delegates-table">
           {tabs.tabs.length === 1

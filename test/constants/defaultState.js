@@ -36,5 +36,7 @@ export default {
   },
   blocks: {
     latestBlocks: [],
+    awaitingForgers: [],
+    forgingTimes: {},
   },
 };

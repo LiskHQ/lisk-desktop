@@ -53,13 +53,13 @@ const Overview = ({
       <BoxHeader>
         <h1>{t('Overview')}</h1>
       </BoxHeader>
-      <div className={styles.container}>
-        <div className={styles.graphContainer}>
+      <div className={`${styles.container} ${styles.overview}`}>
+        <div className={styles.column}>
           {
             typeof chartActiveAndStandby.data === 'number'
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.chartTitle}>{t('Delegates')}</h2>
+                  <h2 className={styles.title}>{t('Delegates')}</h2>
                   <div className={styles.chart}>
                     <DoughnutChart
                       data={{
@@ -88,12 +88,12 @@ const Overview = ({
               : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
           }
         </div>
-        <div className={styles.graphContainer}>
+        <div className={styles.column}>
           {
             Object.keys(chartDelegatesForging).length
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.chartTitle}>{t('Delegates Forging Status')}</h2>
+                  <h2 className={styles.title}>{t('Delegates Forging Status')}</h2>
                   <div className={styles.chart}>
                     <DoughnutChart
                       data={{
@@ -122,12 +122,12 @@ const Overview = ({
               : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
           }
         </div>
-        <div className={styles.graphContainer}>
+        <div className={styles.column}>
           {
             chartRegisteredDelegates.data.length
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.chartTitle}>{t('Registered Delegates')}</h2>
+                  <h2 className={styles.title}>{t('Registered Delegates')}</h2>
                   <div className={styles.chart}>
                     <LineChart
                       data={{

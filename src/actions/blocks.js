@@ -53,7 +53,7 @@ const retrieveNextForgers = async (getState, forgedInRound) => {
   const numberOfRemainingBlocksInRound = voting.numberOfActiveDelegates
     - forgedInRound;
   const nextForgers = await liskServiceApi.getNextForgers(apiClient, {
-    limit: Math.min(numberOfRemainingBlocksInRound, 100),
+    limit: Math.min(numberOfRemainingBlocksInRound, 101),
   });
 
   return nextForgers.slice(0, numberOfRemainingBlocksInRound);
@@ -63,7 +63,7 @@ const retrieveNextForgers = async (getState, forgedInRound) => {
 export const forgingTimesRetrieved = () => async (dispatch, getState) => {
   const { latestBlocks } = getState().blocks;
   const forgedInRoundNum = latestBlocks[0].height % voting.numberOfActiveDelegates;
-  const awaitingForgers = await retrieveNextForgers(getState, forgedInRoundNum);
+  const awaitingForgers = await retrieveNextForgers(getState, 0);
 
   // First I define the delegates who forged in this round.
   // Their status is forging with no doubt
@@ -99,7 +99,7 @@ export const forgingTimesRetrieved = () => async (dispatch, getState) => {
   });
   // now from the list of forgers, they're all awaiting slot,
   // unless they didn't forge for in the last 2 rounds.
-  awaitingForgers.forEach((item, index) => {
+  awaitingForgers.filter((item, index) => index < forgedInRoundNum).forEach((item, index) => {
     if (forgingTimes[item.publicKey]) {
       forgingTimes[item.publicKey] = {
         time: index * 10,
@@ -117,6 +117,9 @@ export const forgingTimesRetrieved = () => async (dispatch, getState) => {
 
   dispatch({
     type: actionTypes.forgingTimesRetrieved,
-    data: forgingTimes,
+    data: {
+      forgingTimes,
+      awaitingForgers,
+    },
   });
 };
