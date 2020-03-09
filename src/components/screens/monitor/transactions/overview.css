@@ -30,6 +30,10 @@
   }
 }
 
+.tabs:last-child {
+  border-radius: 0 var(--border-radius-standard) 0 0;
+}
+
 .title {
   @mixin contentLargest bold;
 
@@ -80,7 +84,7 @@
 
   & .legend {
     color: var(--color-slate-gray);
-    font-size: var(--font-size-con);
+    font-size: var(--font-size-content);
     margin: 0;
     margin-right: 0px;
     display: inline-block;
@@ -105,7 +109,7 @@
 
     &.number {
       &::before {
-        background-color: var(--color-ufo-green);
+        background-color: var(--color-deep-green);
       }
     }
   }
