@@ -84,7 +84,7 @@
 
   & .legend {
     color: var(--color-slate-gray);
-    font-size: var(--font-size-content);
+    font-size: var(--font-size-small-secondary);
     margin: 0;
     margin-right: 0px;
     display: inline-block;
@@ -103,13 +103,13 @@
 
     &.volume {
       &::before {
-        background-color: var(--color-ultramarine-blue);
+        background-color: var(--color-deep-green);
       }
     }
 
     &.number {
       &::before {
-        background-color: var(--color-deep-green);
+        background-color: var(--color-ultramarine-blue);
       }
     }
   }
