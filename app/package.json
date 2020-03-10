@@ -1,6 +1,6 @@
 {
   "name": "lisk-desktop",
-  "version": "1.25.0-rc.0",
+  "version": "1.25.0",
   "description": "Lisk",
   "main": "./build/main.js",
   "author": {
