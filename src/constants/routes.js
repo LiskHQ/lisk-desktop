@@ -11,7 +11,7 @@ import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
 import Monitor from '../components/screens/monitor';
 import MonitorAccounts from '../components/screens/monitor/accounts';
-import MonitorNetwork from '../components/screens/monitor/netowrk';
+import MonitorNetwork from '../components/screens/monitor/network';
 import MonitorTransactions from '../components/screens/monitor/transactions';
 import Register from '../components/screens/register';
 import RegisterDelegate from '../components/screens/registerDelegate';
