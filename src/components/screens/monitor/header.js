@@ -36,6 +36,11 @@ export const Header = ({ t, history }) => {
             name: t('Accounts'),
             className: 'accounts',
           },
+          {
+            value: routes.monitorNetwork.path,
+            name: t('Network'),
+            className: 'network',
+          },
         ]}
         active={history.location.pathname}
         onClick={setActiveTab}
