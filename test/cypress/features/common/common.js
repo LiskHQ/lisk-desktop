@@ -8,7 +8,7 @@ import urls from '../../../constants/urls';
 
 const txConfirmationTimeout = 15000;
 
-Given(/^I autologin as ([^\s]+) to ([^\s]+)$/, function (account, network) {
+Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
   cy.autologin(accounts[account].passphrase, networks[network].node);
 });
 

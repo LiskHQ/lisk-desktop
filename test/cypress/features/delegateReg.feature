@@ -1,7 +1,7 @@
 Feature: Register delegate
 
   Scenario: Register delegate + Header balance is affected
-    Given I autologin as delegate_candidate to devnet
+    Given I login as delegate_candidate on devnet
     Given I am on Register delegate page
     When I enter the delegate name
     And I go to confirmation
@@ -11,7 +11,7 @@ Feature: Register delegate
     Then The latest transaction is Delegate registration
 
   Scenario: Register delegate with second passphrase
-    Given I autologin as second_passphrase_account to devnet
+    Given I login as second_passphrase_account on devnet
     Given I am on Register delegate page
     When I enter the delegate name
     And I go to confirmation

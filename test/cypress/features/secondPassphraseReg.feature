@@ -1,7 +1,7 @@
 Feature: Second Passphrase Registration
 
   Scenario: Register second passphrase
-    Given I autologin as second_passphrase_candidate to devnet
+    Given I login as second_passphrase_candidate on devnet
     Given I am on Second passphrase registration page
     And I remember my passphrase
     And I confirm my passphrase

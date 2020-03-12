@@ -8,7 +8,7 @@ Feature: Search
     Then I should be on Tx Details page of 881002485778658401
 
   Scenario: Search for Delegate in testnet, signed in
-    Given I autologin as genesis to testnet
+    Given I login as genesis to testnet
     Given I am on Dashboard page
     Then I open search
     When I search for delegate zero

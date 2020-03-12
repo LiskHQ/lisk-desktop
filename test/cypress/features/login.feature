@@ -22,7 +22,7 @@ Feature: Login
     When I login
     Then I should be connected to testnet
 
-  Scenario: Log in to Devnet
+  Scenario: Log in on devnet
     Given showNetwork setting is true
     Given I am on Login page
     When I choose devnet
@@ -49,7 +49,7 @@ Feature: Login
     When I explore as guest
     Then I should be connected to network testnet
 
-  Scenario: Log in to Devnet
+  Scenario: Log in to devnet
     Given showNetwork setting is true
     Given I am on Login page
     When I choose devnet

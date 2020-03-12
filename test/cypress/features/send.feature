@@ -1,7 +1,7 @@
 Feature: Send
 
   Scenario: Transfer tx + Header balance is affected
-    Given I autologin as genesis to devnet
+    Given I login as genesis on devnet
     Given I am on Send page
     And I remember my balance
     When I fill 1234567890L in recipientInput field
@@ -17,7 +17,7 @@ Feature: Send
     Then The balance is subtracted
 
   Scenario: Transfer tx with second passphrase
-    Given I autologin as second_passphrase_account to devnet
+    Given I login as second_passphrase_account on devnet
     Given I am on Send page
     When I fill 1234567890L in recipientInput field
     And I fill 3 in amountInput field
@@ -29,7 +29,7 @@ Feature: Send
     Then The latest transaction is transfer to 1234567890L
 
   Scenario: Launch protocol prefills fields  - from logged in state
-    Given I autologin as genesis to devnet
+    Given I login as genesis on devnet
     When I follow the launch protokol link
     Then Send form fields are prefilled
 
@@ -41,7 +41,7 @@ Feature: Send
 
   Scenario: Error message is shown if transfer tx fails
     Given I mock api /transactions
-    Given I autologin as genesis to devnet
+    Given I login as genesis on devnet
     Given I am on Send page
     When I fill 1234567890L in recipientInput field
     And I fill 4 in amountInput
