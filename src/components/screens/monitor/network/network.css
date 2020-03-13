@@ -17,5 +17,28 @@
     height: 100%;
     background-color: var(--color-platinum);
     border-radius: var(--border-radius-box);
+    overflow: hidden;
+
+    & > div {
+      width: 100%;
+      height: 100%;
+    }
   }
+}
+
+:global .markerCluster {
+  display: block;
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
+  border: 0;
+  background: url(/assets/images/marker-group.svg);
+  text-align: center;
+  color: var(--color-strong-mystic);
+  font-size: 13px;
+}
+
+:global .leaflet-marker-icon {
+  border: 0;
+  background: transparent;
 }

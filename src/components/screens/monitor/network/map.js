@@ -1,78 +1,63 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import L from 'leaflet';
 import styles from './network.css';
+import 'leaflet.markercluster/dist/leaflet.markercluster';
 
-const setCenter = (google, position) => new google.LatLng(position.lat, position.lng);
-
-const createMap = (google, center, container) => {
-  const options = {
-    zoom: 16,
-    draggable: true,
-    zoomControl: true,
-    streetViewControl: false,
-    mapTypeControl: false,
-    panControl: false,
-    fullscreenControl: false,
-    center,
-  };
-
-  return new google.Map(container, options);
-};
-
-const createMarker = (google, center, map, name) => {
-  const marker = new google.Marker({
-    position: center,
-    animation: google.Animation.DROP,
-    title: typeof name === 'string' && name.length ? name : null,
+const createMarkers = (peers) => {
+  const icon = L.icon({
+    iconUrl: '/assets/images/marker.svg',
+    iconSize: [42, 42],
   });
-  return marker.setMap(map);
+
+  const markers = L.markerClusterGroup({
+    iconCreateFunction: cluster =>
+      L.divIcon({ html: `<b class="markerCluster">${cluster.getChildCount()}</b>` }),
+  });
+
+  peers.forEach((peer) => {
+    if (peer.location.latitude) {
+      markers.addLayer(
+        L.marker([peer.location.latitude, peer.location.longitude], { icon }),
+      );
+    }
+  });
+
+  return markers;
 };
 
-const mountGoogleMap = (position, container, name) => {
-  const google = window.google.maps;
-  const center = setCenter(google, position);
-  const map = createMap(google, center, container);
-  const marker = createMarker(google, center, map, name);
-  return {
-    google, center, map, marker,
-  };
-};
+const getTiles = () =>
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+  });
 
-const Map = ({ peers }) => {
-  if (!peers.length) return null;
-
-  const position = {
-    lat: peers[0].location.latitude,
-    lng: peers[0].location.longitude,
-  };
-  let container;
-  let mapInfo = {};
+const FullMap = ({ peers }) => {
+  const ref = useRef();
 
   useEffect(() => {
-    if (window && window.google) {
-      mapInfo = mountGoogleMap(position, container);
-    }
+    if (peers.length && !ref.map) {
+      const networkMap = L.map('mapContainer').setView([36.414203, 11.250000], 2);
 
-    return () => {
-      delete mapInfo.marker;
-      delete mapInfo.center;
-      delete mapInfo.map;
-      delete mapInfo.google;
-    };
-  }, [position]);
+      const tiles = getTiles();
+      tiles.addTo(networkMap);
+
+      networkMap.addLayer(createMarkers(peers));
+      ref.current = networkMap;
+    }
+  }, [peers]);
+
+  useEffect(() => () => {
+    ref.current.remove();
+  }, []);
 
   return (
     <div className={styles.map}>
       <div className={styles.wrapper}>
-        <div
-          className={styles.container}
-          id="map-container"
-          ref={(el) => {
-            container = el;
-          }}
-        />
+        <div id="mapContainer" />
       </div>
     </div>
   );
 };
 
-export default Map;
+export default FullMap;
