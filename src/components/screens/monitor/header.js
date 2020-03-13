@@ -17,6 +17,11 @@ export const Header = ({ t, history }) => {
       <Switcher
         options={[
           {
+            value: routes.monitorNetwork.path,
+            name: t('Network'),
+            className: 'network',
+          },
+          {
             value: routes.monitorTransactions.path,
             name: t('Transactions'),
             className: 'transactions',
@@ -35,11 +40,6 @@ export const Header = ({ t, history }) => {
             value: routes.monitorAccounts.path,
             name: t('Accounts'),
             className: 'accounts',
-          },
-          {
-            value: routes.monitorNetwork.path,
-            name: t('Network'),
-            className: 'network',
           },
         ]}
         active={history.location.pathname}
