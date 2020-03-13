@@ -6,9 +6,12 @@ import Table from '../../../toolbox/table';
 import styles from './network.css';
 import header from './tableHeader';
 import MonitorHeader from '../header';
+import Map from './map';
 import PeerRow from './peerRow';
 
-const Network = ({ peers, t }) => {
+const Network = ({
+  peers, t, changeSort, sort,
+}) => {
   const handleLoadMore = () => {
     peers.loadData({ offset: peers.data.length });
   };
@@ -22,12 +25,14 @@ const Network = ({ peers, t }) => {
           <h1>{t('Connected peers')}</h1>
         </BoxHeader>
         <BoxContent className={styles.content}>
+          <Map peers={peers.data} />
           <Table
             data={peers.data}
             isLoading={peers.isLoading}
             row={PeerRow}
             loadData={handleLoadMore}
-            header={header(() => null, t)}
+            header={header(changeSort, t)}
+            currentSort={sort}
             error={peers.error}
             canLoadMore={canLoadMore}
           />
