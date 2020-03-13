@@ -1,3 +1,21 @@
 .content {
   padding: 0 !important;
 }
+
+.height {
+  padding-right: 20px;
+}
+
+.map {
+  width: 100%;
+  height: 285px;
+  padding: var(--horizontal-padding-l);
+  box-sizing: border-box;
+
+  & .wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-platinum);
+    border-radius: var(--border-radius-box);
+  }
+}
