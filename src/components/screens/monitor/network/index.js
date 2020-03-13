@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Network from './network';
+import withLocalSort from '../../../../utils/withLocalSort';
 import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
 import NotAvailable from '../notAvailable';
@@ -17,6 +18,7 @@ const ComposedNetwork = compose(
       transformResponse: response => response.data,
     },
   }),
+  withLocalSort('peers', 'height:asc'),
   withTranslation(),
 )(Network);
 
