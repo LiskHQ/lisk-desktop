@@ -1,6 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './network.css';
+import Flag from './flag';
 
 const PeerRow = ({ data, className }) => (
   <div className={`${grid.row} ${className} peer-row`}>
@@ -11,7 +12,7 @@ const PeerRow = ({ data, className }) => (
       {data.wsPort}
     </span>
     <span className={grid['col-xs-2']}>
-      {data.location.countryCode}
+      <Flag code={data.location.countryCode} />
     </span>
     <span className={grid['col-xs-2']}>
       {data.version}
