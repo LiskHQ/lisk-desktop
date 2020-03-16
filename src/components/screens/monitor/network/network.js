@@ -12,6 +12,7 @@ import PeerRow from './peerRow';
 const Network = ({
   peers, t, changeSort, sort,
 }) => {
+  /* istanbul ignore next */
   const handleLoadMore = () => {
     peers.loadData({ offset: peers.data.length });
   };
