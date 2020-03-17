@@ -29,8 +29,3 @@ Given(/^I confirm my passphrase$/, function () {
   });
   cy.get(ss.passphraseConfirmButton).click();
 });
-
-Given(/^I confirm transaction$/, function () {
-  cy.get(ss.confirmationCheckbox).click();
-  cy.get(ss.confirmButton).click();
-});
