@@ -236,6 +236,7 @@ const ss = {
   coinRow: '.coin-row',
   closeOnboardingButton: '.closeOnboarding',
   goBack: '.go-back',
+  sendLink: '.tx-send-bt',
 };
 
 export default ss;
