@@ -12,6 +12,6 @@ describe('sortByVersion', () => {
       ['1.2.3-beta.1', '1.2.3-beta.0'],
       ['1.2.3-rc.1', '1.2.3-rc.0'],
     ].map(versions =>
-      expect(sortByVersion(versions[0], versions[1])).toEqual(1));
+      expect(sortByVersion({ version: versions[0] }, { version: versions[1] })).toEqual(-1));
   });
 });
