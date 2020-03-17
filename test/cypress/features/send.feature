@@ -44,7 +44,7 @@ Feature: Send
     Given I login as genesis on devnet
     Given I am on Send page
     When I fill 1234567890L in recipientInput field
-    And I fill 4 in amountInput
+    And I fill 4 in amountInput field
     And I go to transfer confirmation
     And I click on sendButton
     Then submittedTransactionMessage should be visible
