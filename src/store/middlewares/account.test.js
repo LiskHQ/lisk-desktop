@@ -207,7 +207,7 @@ describe('Account middleware', () => {
 
   it('should show Notification on incoming transaction', () => {
     middleware(store)(next)(newBlockCreated);
-    expect(windowNotificationSpy).to.have.been.calledWith('10 LSK Recieved');
+    expect(windowNotificationSpy).to.have.been.calledWith('10 LSK Received');
   });
 
   it(`should dispatch ${actionTypes.loadVotes} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
