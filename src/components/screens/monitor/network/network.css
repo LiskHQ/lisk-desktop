@@ -32,7 +32,7 @@
   height: 42px;
   line-height: 42px;
   border: 0;
-  background: url(/assets/images/marker-group.svg);
+  background-image: url(../../../../assets/images/marker-group.svg);
   text-align: center;
   color: var(--color-strong-mystic);
   font-size: 13px;
@@ -41,4 +41,9 @@
 :global .leaflet-marker-icon {
   border: 0;
   background: transparent;
+}
+
+:global .leaflet-bar {
+  box-shadow: none !important;
+  border: 0 !important;
 }
