@@ -7,7 +7,7 @@ export default function WalletOnboarding({
   function getOnboardingSlides() {
     return [{
       title: t('Manage your LSK with ease'),
-      content: t('Send, request and receive LSK tokens in one place! You can even attach personal message to each outgoing transaction.'),
+      content: t('Send, request and receive LSK in one place! You can even attach personal message to each outgoing transaction.'),
       illustration: 'manageYourLSK',
     }, {
       title: t('Dive into the details'),

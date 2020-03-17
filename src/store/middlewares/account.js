@@ -85,7 +85,7 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
       ? i18n.t('with message {{message}}', { message: transaction.asset.data })
       : '';
     // eslint-disable-next-line no-new
-    new Notification(i18n.t('{{amount}} {{token}} Recieved', { amount, token }), {
+    new Notification(i18n.t('{{amount}} {{token}} Received', { amount, token }), {
       body: i18n.t('Your account just received {{amount}} {{token}} {{message}}', { amount, token, message }),
     });
   });
