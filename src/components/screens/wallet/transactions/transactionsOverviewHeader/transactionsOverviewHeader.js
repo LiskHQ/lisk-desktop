@@ -42,7 +42,7 @@ class transactionsHeader extends React.Component {
         <PageHeader
           className="wallet-header"
           title={t('{{token}} Wallet', { token: tokenMap[activeToken].label })}
-          subtitle={t('Send, request and manage your LSK tokens.')}
+          subtitle={t('Send, request and manage your LSK.')}
         >
           <div className={`${styles.buttonsHolder}`}>
             <DropdownButton
