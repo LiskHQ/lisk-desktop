@@ -4,7 +4,7 @@ import React from 'react';
 import routes from '../../../constants/routes';
 
 const Monitor = () => (
-  <Redirect to={routes.monitorTransactions.path} />
+  <Redirect to={routes.monitorNetwork.path} />
 );
 
 export default withRouter(Monitor);

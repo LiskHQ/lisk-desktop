@@ -179,6 +179,12 @@ const liskServiceApi = {
       searchParams: { limit: config[searchParams.period].limit },
     });
   },
+
+  getConnectedPeers: (networkConfig, searchParams) =>
+    liskServiceGet({
+      path: '/api/v1/peers/connected/',
+      searchParams,
+    }),
 };
 
 export default liskServiceApi;
