@@ -5,7 +5,7 @@ Feature: Send
     Given I am on Send page
     And I remember my balance
     When I fill 1234567890L in recipientInput field
-    And I fill 2 in amountInput field
+    And I fill 5 in amountInput field
     And I go to transfer confirmation
     And I click on sendButton
     Then submittedTransactionMessage should be visible
