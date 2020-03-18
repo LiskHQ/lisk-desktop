@@ -1,7 +1,7 @@
 Feature: Wallet Votes
 
   Background:
-    Given I autologin as genesis to devnet
+    Given I login as genesis on devnet
     Given I am on Wallet page
     Given I open votes tab
 
@@ -15,7 +15,7 @@ Feature: Wallet Votes
     Then I see 1 delegates in table
 
   Scenario: Click on voted delegate leads to account page
-    When I click on delegate
+    When I click on voteRow
     Then I should be on Account page
 
 

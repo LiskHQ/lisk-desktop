@@ -61,7 +61,7 @@ const ss = {
   bookmarkInput: '#bookmark-input',
   bookmarkList: '.bookmarkList',
   nextTransferBtn: '.send-next-button',
-  sendBtn: '.confirm-button',
+  sendButton: '.confirm-button',
   transactionAddress: '.transaction-address span',
   chooseDelegateName: '.confirm-btn',
   delegateNameInput: '.select-name-input',
@@ -128,7 +128,7 @@ const ss = {
   secondPassphraseInput: '.second-passphrase input',
   secondPassphraseNextBtn: '.second-passphrase-next',
   resultMessage: '.result-box-message',
-  okayBtn: '.okay-button',
+  okayButton: '.okay-button',
   initializeBanner: '.initialize-banner',
   accountInitializationMsg: '.account-initialization',
   accountInitializationBtn: '.account-init-button',
@@ -234,7 +234,9 @@ const ss = {
   toast: '.toast',
   confirmButton: '.confirm-button',
   coinRow: '.coin-row',
-  closeOnboardingBtn: '.closeOnboarding',
+  closeOnboardingButton: '.closeOnboarding',
+  goBack: '.go-back',
+  sendLink: '.tx-send-bt',
 };
 
 export default ss;
