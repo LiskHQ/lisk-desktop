@@ -146,7 +146,7 @@ In order to run e2e tests you need to install [lisk-core](https://github.com/Lis
 
 #### Setup core
 
-Setup a lisk test node as described in [https://github.com/LiskHQ/lisk-sdk/tree/development/framework#tests](Lisk Framework README under Preparing Node section of tests).
+Setup a lisk test node as described in Preparing Node headline under [the tests section of Lisk Framework README](https://github.com/LiskHQ/lisk-sdk/tree/development/framework).
 
 Run lisk test node with [pm2](http://pm2.keymetrics.io/)  on `localhost:4000`
 
