@@ -74,6 +74,8 @@ const DelegatesTable = ({
     ? false
     : !!standByDelegates.data.length && standByDelegates.data.length % DEFAULT_LIMIT === 0;
 
+  console.log('....', delegates);
+
   delegates = activeTab === 'active'
     ? {
       ...delegates,
