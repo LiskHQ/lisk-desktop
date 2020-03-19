@@ -41,4 +41,5 @@
   color: var(--color-slate-gray);
   text-align: justify;
   box-sizing: border-box;
+  word-break: break-all;
 }
