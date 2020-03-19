@@ -157,6 +157,7 @@
     "electron-devtools-installer": "2.2.4",
     "electron-ipc-mock": "0.0.3",
     "electron-json-storage": "4.1.5",
+    "electron-notarize": "0.2.1",
     "electron-updater": "4.0.6",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",
@@ -229,6 +230,7 @@
   "build": {
     "appId": "io.lisk.desktop",
     "productName": "Lisk",
+    "afterSign": "build/notarize.js",
     "protocols": {
       "name": "lisk",
       "schemes": [
@@ -252,7 +254,13 @@
       "target": "nsis"
     },
     "mac": {
-      "hardenedRuntime": false
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "dmg": {
+      "sign": false
     }
   },
   "bundlesize": [
