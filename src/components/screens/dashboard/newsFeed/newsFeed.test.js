@@ -7,35 +7,51 @@ describe('NewsFeed', () => {
   const timestampNow = 1483228800000;
   const newsFeed = {
     data: [{
-      source: 'test',
+      source: 'test1',
+      sourceId: 'test1',
       content: 'test',
       timestamp: new Date(timestampNow),
       url: 'test',
+      author: 'liskHQ',
+      title: '',
     },
     {
-      source: 'test',
+      source: 'test2',
+      sourceId: 'test2',
       content: 'test',
       timestamp: new Date(),
       url: 'test',
+      author: 'liskHQ',
+      title: '',
     },
     {
       source: 'test3',
+      sourceId: 'test3',
       content: 'test',
       timestamp: new Date(),
       url: 'test',
+      author: 'liskHQ',
+      title: '',
     },
     {
       source: 'test4',
+      sourceId: 'test4',
       content: 'test',
       timestamp: new Date(),
       url: 'test',
+      author: 'liskHQ',
+      title: '',
     },
     {
       source: 'test5',
+      sourceId: 'test5',
       content: 'test',
       timestamp: new Date(),
       url: 'test',
+      author: 'liskHQ',
+      title: '',
     }],
+    error: '',
   };
 
   const props = {
@@ -61,6 +77,6 @@ describe('NewsFeed', () => {
   it('should render News', () => {
     const wrapper = mount(<NewsFeed {...props} />);
 
-    expect(wrapper).toContainMatchingElements(2, '.news-item');
+    expect(wrapper.find('.news-item')).toHaveLength(5);
   });
 });

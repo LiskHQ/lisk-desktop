@@ -44,8 +44,12 @@ const liskServiceApi = {
       transformResponse: response => response.data,
     }),
 
-  getNewsFeed: () =>
-    liskServiceGet({ path: '/api/newsfeed' }),
+  getNewsFeed: ({ source = 'twitter_lisk' }) =>
+    liskServiceGet({
+      path: '/api/v1/market/newsfeed',
+      searchParams: { source },
+      transformResponse: response => response.data,
+    }),
 
   getLastBlocks: async (
     networkConfig, { dateFrom, dateTo, ...searchParams },
