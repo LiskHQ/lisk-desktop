@@ -7,8 +7,7 @@ const News = ({
   content, timestamp, url, title, author,
 }) => {
   const date = moment.unix(timestamp).format('DD MMM YYYY');
-  // Makes first letter capital
-  const newsTitle = title.length === 0 ? author : title;
+  const newsTitle = title || author;
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" className={`${styles.news} news-item`}>
       <div className={styles.header}>
