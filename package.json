@@ -155,7 +155,6 @@
     "electron-devtools-installer": "2.2.4",
     "electron-ipc-mock": "0.0.3",
     "electron-json-storage": "4.1.5",
-    "electron-notarize": "0.2.1",
     "electron-updater": "4.0.6",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",
