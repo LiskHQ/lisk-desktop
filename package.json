@@ -1,18 +1,15 @@
 {
   "name": "Lisk",
   "version": "1.25.0",
+  "productName": "Lisk",
   "description": "Lisk",
   "homepage": "https://github.com/LiskHQ/lisk-desktop",
   "bugs": "https://github.com/LiskHQ/lisk-desktop/issues",
   "main": "main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps && node ./config/liskSdkFix.js",
-    "check-node-version": "node ./config/checkNodeVersion.js",
     "install-electron-dependencies": "cd ./app && npm install && cd ..",
     "build": "npm-run-all clean-build copy-files build-prod build-electron",
-    "build:testnet": "npm run build:testnet:pre",
-    "build:testnet:pre": "cpx \"./app/build/**\" ./app/build-testnet && npm run build:testnet:post",
-    "build:testnet:post": "replace '\"mainnet\";//defaultNetwork' '\"testnet\";//defaultNetwork' ./app/build-testnet/index.html ",
     "dev": "DEBUG=true NACL_FAST=disable && webpack-dev-server --config ./config/webpack.config.dev --hot",
     "dev-hardware-wallet": " DEBUG=true webpack-dev-server --config ./config/webpack.config.dev --hot --https",
     "build-prod": "webpack --config ./config/webpack.config.prod",
@@ -154,6 +151,7 @@
     "del-cli": "1.1.0",
     "electron": "4.2.4",
     "electron-builder": "22.3.5",
+    "electron-builder-notarize": "1.1.2",
     "electron-devtools-installer": "2.2.4",
     "electron-ipc-mock": "0.0.3",
     "electron-json-storage": "4.1.5",
@@ -228,9 +226,10 @@
     "webpack-dev-server": "3.8.2"
   },
   "build": {
+    "asar": true,
     "appId": "io.lisk.desktop",
-    "productName": "Lisk",
-    "afterSign": "build/notarize.js",
+    "copyright": "Copyright © 2017-2020 Lisk",
+    "afterSign": "electron-builder-notarize",
     "protocols": {
       "name": "lisk",
       "schemes": [
@@ -256,11 +255,28 @@
     "mac": {
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
-      "entitlements": "build/entitlements.mac.plist",
-      "entitlementsInherit": "build/entitlements.mac.plist"
+      "entitlements": "build/entitlements.plist",
+      "entitlementsInherit": "build/entitlements.plist"
     },
     "dmg": {
-      "sign": false
+      "background": "./build/background@2x.png",
+      "contents": [
+        {
+          "x": 396,
+          "y": 345,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 396,
+          "y": 90,
+          "type": "file"
+        }
+      ],
+      "window": {
+        "width": 660,
+        "height": 480
+      }
     }
   },
   "bundlesize": [
