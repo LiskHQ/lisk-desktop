@@ -226,7 +226,7 @@
   },
   "build": {
     "asar": true,
-    "appId": "io.lisk.desktop",
+    "appId": "io.lisk.hub",
     "copyright": "Copyright © 2017-2020 Lisk",
     "afterSign": "electron-builder-notarize",
     "protocols": {

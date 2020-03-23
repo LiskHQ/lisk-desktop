@@ -52,7 +52,7 @@ app.on('ready', () => {
   appIsReady = true;
   createWindow();
   if (process.platform === 'win32') {
-    app.setAppUserModelId('io.lisk.desktop');
+    app.setAppUserModelId('io.lisk.hub');
   }
 });
 
