@@ -72,6 +72,10 @@ const BlockDetails = ({
     [id]: <LabeledValue label={label} className={styles.dataContainer}>{value}</LabeledValue>,
   }), {});
 
+  const canLoadMore = blockTransactions.meta
+    ? blockTransactions.data.length < blockTransactions.meta.total
+    : false;
+
   return (
     <PageLayout>
       <Box isLoading={blockDetails.isLoading} width="full">
@@ -124,7 +128,8 @@ const BlockDetails = ({
       <TransactionsTable
         title={t('Transactions')}
         transactions={blockTransactions}
-        emptyStateMessage={t('There are no transactions for this block.')}
+        emptyState={{ message: t('There are no transactions for this block.') }}
+        canLoadMore={canLoadMore}
       />
     </PageLayout>
   );

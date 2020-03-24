@@ -20,6 +20,7 @@ const AccountsTable = ({
     accounts.loadData({ offset: accounts.data.length });
   };
   const supply = networkStatus.data.supply;
+  const canLoadMore = accounts.meta ? accounts.meta.count === 30 : false;
 
   return (
     <Box main isLoading={accounts.isLoading} className="accounts-box">
@@ -35,7 +36,7 @@ const AccountsTable = ({
           header={header(t)}
           additionalRowProps={{ supply }}
           error={accounts.error}
-          canLoadMore
+          canLoadMore={canLoadMore}
         />
       </BoxContent>
     </Box>

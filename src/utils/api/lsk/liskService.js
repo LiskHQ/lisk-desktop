@@ -55,7 +55,6 @@ const liskServiceApi = {
     networkConfig, { dateFrom, dateTo, ...searchParams },
   ) => liskServiceGet({
     path: '/api/v1/blocks',
-    transformResponse: response => response.data,
     searchParams: {
       limit: DEFAULT_LIMIT,
       ...searchParams,
@@ -72,7 +71,10 @@ const liskServiceApi = {
     dateFrom, dateTo, amountFrom, amountTo, ...searchParams
   }) => liskServiceGet({
     path: '/api/v1/transactions',
-    transformResponse: response => adaptTransactions(response).data,
+    transformResponse: response => ({
+      data: adaptTransactions(response).data,
+      meta: response.meta,
+    }),
     searchParams: {
       limit: DEFAULT_LIMIT,
       ...(dateFrom && { from: formatDate(dateFrom) }),
@@ -92,9 +94,12 @@ const liskServiceApi = {
     offset = 0, tab, ...searchParams
   }) => liskServiceGet({
     path: '/api/v1/delegates',
-    transformResponse: response => response.data.filter(
-      delegate => delegate.rank > voting.numberOfActiveDelegates,
-    ),
+    transformResponse: response => ({
+      data: response.data.filter(
+        delegate => delegate.rank > voting.numberOfActiveDelegates,
+      ),
+      meta: response.meta,
+    }),
     searchParams: {
       offset: offset + (Object.keys(searchParams).length ? 0 : voting.numberOfActiveDelegates),
       limit: DEFAULT_LIMIT,
@@ -104,9 +109,12 @@ const liskServiceApi = {
 
   getActiveDelegates: async (networkConfig, { search = '', tab, ...searchParams }) => liskServiceGet({
     path: '/api/v1/delegates/next_forgers',
-    transformResponse: response => response.data.filter(
-      delegate => delegate.username.includes(search),
-    ),
+    transformResponse: response => ({
+      data: response.data.filter(
+        delegate => delegate.username.includes(search),
+      ),
+      meta: response.meta,
+    }),
     searchParams: {
       limit: voting.numberOfActiveDelegates,
       ...searchParams,
@@ -128,7 +136,6 @@ const liskServiceApi = {
   getActiveAndStandByDelegates: async () => liskServiceGet({
     path: '/api/v1/delegates',
     searchParams: { limit: 1 },
-    transformResponse: response => response.meta,
   }),
 
   getRegisteredDelegates: async () => liskServiceGet({
@@ -138,7 +145,6 @@ const liskServiceApi = {
       type: transactionTypes().registerDelegate.outgoingCode,
       sort: 'timestamp:desc',
     },
-    transformResponse: response => response.data,
   }),
 
   getNextForgers: async (networkConfig, searchParams) => liskServiceGet({

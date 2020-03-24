@@ -20,6 +20,7 @@ describe('Top Accounts Monitor Page', () => {
       accounts: {
         isLoading: true,
         data: [],
+        meta: null,
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
@@ -47,6 +48,11 @@ describe('Top Accounts Monitor Page', () => {
         },
         ...accountsApiResponse,
       ],
+      meta: {
+        count: accountsApiResponse.length + 1,
+        offset: 0,
+        total: accountsApiResponse.length * 3,
+      },
     };
 
     wrapper = setup(props);

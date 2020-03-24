@@ -51,6 +51,10 @@ const Transactions = ({ t, transactions }) => {
     sender: '',
   };
 
+  const canLoadMore = transactions.meta
+    ? transactions.data.length < transactions.meta.total
+    : false;
+
   return (
     <div>
       <MonitorHeader />
@@ -61,6 +65,7 @@ const Transactions = ({ t, transactions }) => {
         fields={fields}
         title={t('All transactions')}
         transactions={transactions}
+        canLoadMore={canLoadMore}
       />
     </div>
   );

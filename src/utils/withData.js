@@ -98,6 +98,7 @@ function withData(apis = {}) {
               [key]: {
                 ...this.defaultState[key],
                 data: transformResponse(data, this.state[key].data, urlSearchParams),
+                meta: data.meta,
                 urlSearchParams,
               },
             });

@@ -17,6 +17,7 @@ describe('Blocks page', () => {
       blocks: {
         isLoading: true,
         data: [],
+        meta: null,
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
@@ -27,6 +28,11 @@ describe('Blocks page', () => {
       ...props.blocks,
       isLoading: false,
       data: blocks,
+      meta: {
+        count: blocks.length,
+        total: blocks.length * 3,
+        offset: 0,
+      },
     };
   });
 
