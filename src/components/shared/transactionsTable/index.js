@@ -27,6 +27,7 @@ const TransactionsTable = ({
   changeSort,
   sort,
   canLoadMore,
+  emptyState,
 }) => {
   const handleLoadMore = () => {
     const params = Object.keys(filters).reduce((acc, key) => ({
@@ -82,6 +83,7 @@ const TransactionsTable = ({
           currentSort={sort}
           canLoadMore={canLoadMore}
           error={transactions.error}
+          emptyState={emptyState}
         />
       </BoxContent>
     </Box>
