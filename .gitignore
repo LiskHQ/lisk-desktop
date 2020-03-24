@@ -21,5 +21,5 @@ test/cypress/videos/
 storybook-static
 
 ## Commercial fonts
-src/assets/fonts/basier-circle/*
-src/assets/fonts/gilroy/*
+src/assets/fonts/basier-circle/
+src/assets/fonts/gilroy/
