@@ -16,7 +16,7 @@ import { getAPIClient } from '../utils/api/network';
  */
 const loadLastBlocks = async (params, networkConfig) => {
   let blocks = await liskServiceApi.getLastBlocks({ networkConfig }, params);
-  blocks = blocks.map(block => ({
+  blocks = blocks.data.map(block => ({
     ...block,
     timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
   }));

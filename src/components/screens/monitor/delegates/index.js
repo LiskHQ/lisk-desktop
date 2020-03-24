@@ -19,10 +19,10 @@ const standByDelegatesKey = 'standByDelegates';
 
 const transformResponse = (response, oldData, urlSearchParams) => (
   urlSearchParams.offset
-    ? [...oldData, ...response.filter(
+    ? [...oldData, ...response.data.filter(
       delegate => !oldData.find(({ username }) => username === delegate.username),
     )]
-    : response
+    : response.data
 );
 
 const ComposedDelegates = compose(
@@ -47,7 +47,7 @@ const ComposedDelegates = compose(
         apiUtil: liskService.getActiveAndStandByDelegates,
         defaultData: [],
         autoload: true,
-        transformResponse: response => response.total,
+        transformResponse: response => response.meta.total,
       },
 
       chartRegisteredDelegatesData: {
@@ -58,7 +58,7 @@ const ComposedDelegates = compose(
           // This function is to iterate over the list of delegates and GROUP BY
           // timestamp (Month and Year) and count how many users reegistered as
           // delegate in the month
-          const responseFormatted = response.reduce((acc, delegate) => {
+          const responseFormatted = response.data.reduce((acc, delegate) => {
             const newDelegate = { ...delegate, timestamp: moment(delegate.timestamp * 1000).startOf('month').toISOString() };
             return {
               ...acc,
