@@ -13,6 +13,11 @@ Please see [CONTRIBUTING_GUIDE.md](/docs/CONTRIBUTING_GUIDE.md) for more informa
 
 ## Development
 
+### Using Commercial Fonts
+`Basier Circle` and `Gilroy` used in the production version are commercial fonts. This repository only contains open fonts and uses `Open Sans` as a replacement for the commercial ones.
+
+If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to [fonts folder](./src/assets/fonts). If you don't have the fonts, you need to remove lines 25 - 81 of [type.css](./src/components/app/type.css). After that, the `build` and `dev` npm scripts run without any errors.
+
 ### Setup environemnt
 
 ```
@@ -73,11 +78,6 @@ npm run build-electron
 ```
 to build the electron app under `app/` using webpack. You can run the above scripts individually if you're looking to see the changes solely on one of the two said applications.
 
-
-#### Using Commercial Fonts
-`Basier Circle` and `Gilroy` used in the production version are commercial fonts. This repository only contains open fonts and uses `Open Sans` as a replacement for the commercial ones.
-
-If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to [fonts folder](./src/assets/fonts) to replace the empty files that are there so that webpack build doesn't fail if the fonts are not present.
 
 ### Run Electron
 If you have already built the application as described above, you can launch Electron using
