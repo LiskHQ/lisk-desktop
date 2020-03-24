@@ -39,7 +39,7 @@ const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) =>
 const signSendTransaction = async (account, data) => {
   const transactionObject = {
     ...transfer(data),
-    senderPublicKey: account.info.LSK.publicKey,
+    senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,
   };
 
   const transaction = {
