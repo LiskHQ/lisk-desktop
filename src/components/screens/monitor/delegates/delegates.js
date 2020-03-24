@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import MonitorHeader from '../header';
 import Overview from './overview';
-import { DEFAULT_LIMIT } from '../../../../constants/monitor';
+import voting from '../../../../constants/voting';
 import { forgingDataDisplayed, forgingDataConcealed } from '../../../../actions/blocks';
 import { Input } from '../../../toolbox/inputs';
 import Box from '../../../toolbox/box';
@@ -70,11 +70,9 @@ const DelegatesTable = ({
     missedBlock: t('Missed block'),
   };
 
-  const canLoadMore = activeTab === 'active'
+  const canLoadMore = activeTab === 'active' || !standByDelegates.meta
     ? false
-    : !!standByDelegates.data.length && standByDelegates.data.length % DEFAULT_LIMIT === 0;
-
-  console.log('....', delegates);
+    : standByDelegates.data.length < (standByDelegates.meta.total - voting.numberOfActiveDelegates);
 
   delegates = activeTab === 'active'
     ? {

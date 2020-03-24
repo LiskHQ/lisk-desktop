@@ -125,6 +125,7 @@ const BlockDetails = ({
         title={t('Transactions')}
         transactions={blockTransactions}
         emptyStateMessage={t('There are no transactions for this block.')}
+        canLoadMore={false}
       />
     </PageLayout>
   );
