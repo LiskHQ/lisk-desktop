@@ -22,6 +22,7 @@ const win = {
         backgroundThrottling: false,
         // Specifies a script that will be loaded before other scripts run in the page.
         preload: path.resolve(__dirname, '../src/ipc.js'),
+        nodeIntegration: true,
       },
     });
 

@@ -1,6 +1,7 @@
 {
   "name": "lisk-desktop",
   "version": "1.25.0",
+  "productName": "Lisk",
   "description": "Lisk",
   "main": "./build/main.js",
   "author": {
@@ -10,7 +11,7 @@
   "dependencies": {
     "get-port": "^4.1.0",
     "node-abi": "^2.7.1",
-    "node-hid": "0.7.9",
+    "node-hid": "^1.2.0",
     "usb": "^1.6.2"
   }
 }
