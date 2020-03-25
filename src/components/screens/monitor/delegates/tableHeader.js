@@ -36,6 +36,7 @@ export default (activeTab, changeSort, t) => ([
     tooltip: {
       title: t('Status'),
       message: t('Current status of a delegate: forging, not forging, awaiting slot or missed block.'),
+      className: 'showOnLeft',
     },
   },
   {
