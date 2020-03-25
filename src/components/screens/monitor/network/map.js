@@ -2,10 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import styles from './network.css';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
+import markerIcon from '../../../../assets/images/marker.svg';
 
 const createMarkers = (peers) => {
   const icon = L.icon({
-    iconUrl: '/assets/images/marker.svg',
+    iconUrl: markerIcon,
     iconSize: [42, 42],
   });
 
