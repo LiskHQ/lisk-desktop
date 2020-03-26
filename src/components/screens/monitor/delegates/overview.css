@@ -30,6 +30,7 @@
       padding-bottom: 15px;
     }
   }
+
   &:not(.nextForgers) {
     width: 25%;
   }
@@ -45,6 +46,7 @@
         padding-bottom: 15px;
       }
     }
+
     &:not(.nextForgers) {
       width: 20%;
     }
