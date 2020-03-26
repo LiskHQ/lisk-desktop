@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   box-sizing: border-box;
 
   &.overview {
@@ -13,15 +13,44 @@
   }
 
   &.forgingDetails {
-    height: 180px;
+    min-height: 180px;
   }
 }
 
 .column {
   flex-grow: 1;
-  width: calc(100% / 3);
   height: 100%;
   box-sizing: border-box;
+
+  &.nextForgers {
+    width: 50%;
+
+    & .forger {
+      width: 33.33%;
+      padding-bottom: 15px;
+    }
+  }
+
+  &:not(.nextForgers) {
+    width: 25%;
+  }
+}
+
+@media (--medium-viewport) {
+  .column {
+    &.nextForgers {
+      width: 60%;
+
+      & .forger {
+        width: 50%;
+        padding-bottom: 15px;
+      }
+    }
+
+    &:not(.nextForgers) {
+      width: 20%;
+    }
+  }
 }
 
 .title {
@@ -35,21 +64,37 @@
   align-items: flex-start;
   color: var(--color-maastricht-blue);
   padding-top: 30px;
+  box-sizing: border-box;
 }
 
 .list {
-  padding: 25px 10px 0;
+  padding: 18px 10px 0;
   font-size: var(--font-size-h6);
 
-  & > a,
-  & > span {
+  & .forger {
     display: inline-block;
-    padding-left: 10px;
-  }
 
-  & > span {
-    color: var(--color-maastricht-blue);
+    & > div,
+    & > span {
+      display: inline-block;
+      padding-left: 10px;
+      vertical-align: middle;
+    }
+
+    & > span {
+      color: var(--color-maastricht-blue);
+      font-size: var(--font-size-small-secondary);
+      padding-left: 15px;
+      font-weight: 400;
+    }
   }
+}
+
+.totalForged {
+  font-size: var(--font-size-h4);
+  padding-left: 10px;
+  padding-top: 5px;
+  display: inline-block;
 }
 
 .chartBox {

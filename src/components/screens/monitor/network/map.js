@@ -4,6 +4,13 @@ import styles from './network.css';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
 import markerIcon from '../../../../assets/images/marker.svg';
 
+const mapOptions = {
+  minZoom: 2,
+  maxZoom: 12,
+  zoom: 2,
+  zoomControl: true,
+};
+
 const createMarkers = (peers) => {
   const icon = L.icon({
     iconUrl: markerIcon,
@@ -38,7 +45,7 @@ const FullMap = ({ peers }) => {
 
   useEffect(() => {
     if (peers.length && !ref.map) {
-      const networkMap = L.map('mapContainer').setView([36.414203, 11.250000], 2);
+      const networkMap = L.map('mapContainer', mapOptions).setView([36.414203, 11.250000], 2);
 
       const tiles = getTiles();
       tiles.addTo(networkMap);

@@ -2,10 +2,21 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import AccountVisual from '../../../toolbox/accountVisual';
 import routes from '../../../../constants/routes';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import styles from './overview.css';
+
+const Forger = ({ forger }) => (
+  <Link
+    className={`${styles.forger} forger-item`}
+    to={`${routes.accounts.path}/${forger.address}`}
+  >
+    <AccountVisual size={36} address={forger.address} />
+    <span>{forger.username}</span>
+  </Link>
+);
 
 const ForgingDetails = ({
   t,
@@ -16,7 +27,7 @@ const ForgingDetails = ({
     .filter(forger =>
       forger.publicKey === latestBlocks[0].generatorPublicKey);
   const next10Forgers = awaitingForgers.filter((item, index) => (
-    index < 10 && item.publicKey !== latestBlocks[0].generatorPublicKey
+    index < 7 && item.publicKey !== latestBlocks[0].generatorPublicKey
   ));
 
   return (
@@ -26,42 +37,31 @@ const ForgingDetails = ({
       </BoxHeader>
       <div className={`${styles.container} ${styles.forgingDetails}`}>
         <div className={styles.column}>
-          <h2 className={styles.title}>{t('Total forged')}</h2>
-          <div className={styles.list}>
-            <span>31,122,324</span>
-          </div>
-        </div>
-        <div className={styles.column}>
-          <h2 className={styles.title}>{t('Next forgers')}</h2>
-          <nav className={styles.list}>
-            {
-              next10Forgers
-                .filter((item, index) => (index < 9))
-                .map(forger => (
-                  <Link
-                    key={forger.address}
-                    className="forger-item"
-                    to={`${routes.accounts.path}/${forger.address}`}
-                  >
-                    {forger.username}
-                  </Link>
-                ))
-            }
-          </nav>
-        </div>
-        <div className={styles.column}>
           <h2 className={styles.title}>{t('Last forger')}</h2>
           <nav className={styles.list}>
             {
               lastForger.length
                 ? (
-                  <Link
-                    className="last-forger"
-                    to={`${routes.accounts.path}/${lastForger[0].address}`}
-                  >
-                    {lastForger[0].username}
-                  </Link>
+                  <Forger key={lastForger[0].username} forger={lastForger[0]} />
                 ) : null
+            }
+          </nav>
+        </div>
+        <div className={styles.column}>
+          <h2 className={styles.title}>{t('Total forged')}</h2>
+          <div className={styles.list}>
+            <span className={styles.totalForged}>31,122,324</span>
+          </div>
+        </div>
+        <div className={`${styles.column} ${styles.nextForgers}`}>
+          <h2 className={styles.title}>{t('Next forgers')}</h2>
+          <nav className={styles.list}>
+            {
+              next10Forgers
+                .filter((item, index) => (index < 6))
+                .map(forger => (
+                  <Forger key={forger.address} forger={forger} />
+                ))
             }
           </nav>
         </div>
