@@ -5,7 +5,7 @@ import Flag from './flag';
 describe('Flag', () => {
   it('renders a flag for each existing code', () => {
     const wrapper = mount(<Flag code="PL" />);
-    expect(wrapper.html().match(/poland/gm)).toHaveLength(1);
+    expect(wrapper.html().match(/PL/gm)).toHaveLength(1);
   });
 
   it('renders a hyphen if code not passed', () => {
