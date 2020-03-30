@@ -6,13 +6,13 @@ import styles from './news.css';
 
 const News = ({
   // eslint-disable-next-line camelcase
-  content, timestamp, url, title, author, image_url, source,
+  content, timestamp, url, title, author, image_url, source, t,
 }) => {
   const date = moment.unix(timestamp).format('DD MMM YYYY');
   const newsTitle = title || author;
   const authorText = author === 'LiskHQ' ? null
     // eslint-disable-next-line react/jsx-one-expression-per-line
-    : <span> written by : <b className={styles.author}>{author}</b></span>;
+    : <span> {t('written by')} <b className={styles.author}>{author}</b></span>;
   const iconSource = source === 'twitter_lisk' ? 'newsFeedTwitter' : 'newsFeedBlog';
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" className={`${styles.news} news-item`}>
