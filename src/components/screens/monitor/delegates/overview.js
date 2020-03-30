@@ -24,9 +24,14 @@ const Overview = ({
   chartActiveAndStandby,
   chartDelegatesForging,
   chartRegisteredDelegates,
-  delegatesForgedLabels,
   t,
 }) => {
+  const delegatesForgedLabels = [
+    t('Forging'),
+    t('Awaiting slot'),
+    t('Not forging'),
+    t('Missed block'),
+  ];
   const getAmountOfDelegatesInTime = () => {
     const totalDelegates = chartActiveAndStandby.data;
     const final = [totalDelegates];
