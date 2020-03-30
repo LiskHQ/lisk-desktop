@@ -43,3 +43,26 @@
   box-sizing: border-box;
   word-break: break-all;
 }
+
+.img {
+  width: calc(100% - 55px);
+  margin: 10px 0 0 auto;
+  border-radius: 5px;
+  display: block;
+}
+
+.author {
+  color: var(--color-maastricht-blue);
+
+  &::after {
+    display: inline-block;
+    position: relative;
+    top: -2px;
+    width: 4px;
+    height: 4px;
+    content: '';
+    background-color: var(--color-maastricht-blue);
+    margin: 0 5px;
+    border-radius: 50%;
+  }
+}
