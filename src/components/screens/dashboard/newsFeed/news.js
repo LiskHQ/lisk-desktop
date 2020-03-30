@@ -28,7 +28,7 @@ const News = ({
       </div>
       <div className={styles.description}>
         <TweetParser>
-          {url ? content.replace(url, '') : url}
+          {content.replace(/<br \/>/g, '').replace(url, '')}
         </TweetParser>
       </div>
       {
