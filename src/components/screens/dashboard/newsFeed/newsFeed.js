@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './newsFeed.css';
 import News from './news';
@@ -6,6 +6,7 @@ import Box from '../../../toolbox/box';
 import BoxRow from '../../../toolbox/box/row';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
+import BoxTabs from '../../../toolbox/tabs';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import Icon from '../../../toolbox/icon';
 
@@ -16,20 +17,44 @@ const NewsFeed = (props) => {
   } = props;
   const filteredNewsFeed = newsFeed.data || [];
   const serviceUrl = useSelector(state => state.network.serviceUrl);
-
+  const sources = ['twitter_lisk', 'drupal_lisk_general'];
+  const [source, setSource] = useState(sources.join(','));
   useEffect(
     () => {
       if (newsFeed && (newsFeed.error.length === 0 && newsFeed.data.length === 0)) {
-        newsFeed.loadData();
+        newsFeed.loadData({ source });
       }
     },
     [serviceUrl],
   );
-
+  const tabs = [
+    {
+      value: sources.join(','),
+      name: t('All'),
+    },
+    {
+      value: sources[0],
+      name: t('Twitter'),
+    },
+    {
+      value: sources[1],
+      name: t('Blog'),
+    },
+  ];
+  const changeSource = (tab) => {
+    setSource(tab.value);
+    newsFeed.loadData({ source: tab.value });
+  };
   return (
     <Box className="newsFeed-box">
       <BoxHeader>
         <h1>{t('News feed')}</h1>
+        <BoxTabs
+          tabs={tabs}
+          active={source}
+          onClick={changeSource}
+          className={`box-tabs ${styles.tabs}`}
+        />
       </BoxHeader>
       <BoxContent className={styles.container}>
         {
