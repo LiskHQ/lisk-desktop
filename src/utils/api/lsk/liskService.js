@@ -236,22 +236,21 @@ const liskServiceApi = {
         params: { address },
       })));
 
-    const acountsMap = accounts.reduce((accumulator, { result: { data } }) => ({
+    const accountsMap = accounts.reduce((accumulator, { result: { data } }) => ({
       ...accumulator,
       [data[0].address]: data[0],
     }), {});
 
-    // TODO compute 'round' based on last block height and 'confirmations' of each transaction
-    const result = voteTransactions.data.map(({ asset, ...tx }) => ({
+    const data = voteTransactions.data.map(({ asset, ...tx }) => ({
       ...tx,
-      balance: acountsMap[tx.senderId] && acountsMap[tx.senderId].balance,
+      balance: accountsMap[tx.senderId] && accountsMap[tx.senderId].balance,
       votes: asset.votes.map(vote => ({
         status: vote.substr(0, 1),
-        ...acountsMap[cryptography.getAddressFromPublicKey(vote.substr(1))],
+        ...accountsMap[cryptography.getAddressFromPublicKey(vote.substr(1))],
       })),
     }));
 
-    return result;
+    return { data, meta: voteTransactions.meta };
   },
 };
 

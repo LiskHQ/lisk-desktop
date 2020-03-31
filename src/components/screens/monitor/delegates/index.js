@@ -76,8 +76,9 @@ const ComposedDelegates = compose(
 
       votes: {
         apiUtil: liskService.getLatestVotes,
-        autoload: false,
+        autoload: true,
         defaultData: [],
+        transformResponse: response => response.data,
       },
     },
   ),
