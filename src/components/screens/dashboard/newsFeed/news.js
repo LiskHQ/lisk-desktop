@@ -12,12 +12,12 @@ const News = ({
   const newsTitle = title || author;
   const authorText = author === 'LiskHQ' ? null
     // eslint-disable-next-line react/jsx-one-expression-per-line
-    : <span> {t('written by')} <b className={styles.author}>{author}</b></span>;
+    : <span> {t('Written by')} <b className={styles.author}>{author}</b></span>;
   const iconSource = source === 'twitter_lisk' ? 'newsFeedTwitter' : 'newsFeedBlog';
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" className={`${styles.news} news-item`}>
       <div className={styles.header}>
-        <Icon name={iconSource} />
+        <Icon name={iconSource} className={styles.icon} />
         <div>
           <span className={styles.title}>{newsTitle}</span>
           <span className={styles.subtitle}>
