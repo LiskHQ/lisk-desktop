@@ -85,7 +85,7 @@ const DelegatesMonitor = ({
             <Input
               onChange={handleFilter}
               value={filters.search}
-              className="filter-by-name"
+              className={`${activeTab === 'votes' ? 'hidden' : ''} filter-by-name`}
               size="xs"
               placeholder={t('Filter by name...')}
             />
