@@ -73,6 +73,12 @@ const ComposedDelegates = compose(
             .map(delegate => ({ ...delegate, x: moment(delegate.x).format('MMM YY') }));
         },
       },
+
+      votes: {
+        apiUtil: liskService.getLatestVotes,
+        autoload: false,
+        defaultData: [],
+      },
     },
   ),
   withResizeValues,
