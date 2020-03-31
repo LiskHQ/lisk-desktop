@@ -1,4 +1,5 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import styles from '../delegates.css';
 
 export default t => ([
   {
@@ -15,10 +16,10 @@ export default t => ([
   },
   {
     title: t('Round'),
-    classList: grid['col-md-2'],
+    classList: grid['col-md-1'],
   },
   {
     title: t('Votes'),
-    classList: grid['col-md-3'],
+    classList: `${grid['col-md-4']} ${styles.votesColumnTitle}`,
   },
 ]);
