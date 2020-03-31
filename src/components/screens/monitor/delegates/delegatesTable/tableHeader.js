@@ -1,5 +1,5 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from './delegates.css';
+import styles from '../delegates.css';
 
 export default (activeTab, changeSort, t) => ([
   {
