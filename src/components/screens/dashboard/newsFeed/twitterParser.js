@@ -3,7 +3,7 @@ import reactStringReplace from 'react-string-replace';
 
 const TweetParser = ({ children }) => {
   const REGEX_USER = /\B(@[a-zA-Z0-9_]+)/g; // regex for @users
-  const REGEX_HASHTAG = /\B(#[Ã¡-ÃºÃ-ÃÃ¤-Ã¼Ã-Ãa-zA-Z0-9_]+)/g; // regex for #hashtags
+  const REGEX_HASHTAG = /\B(#[A-Za-z0-9-_]+)/g; // regex for #hashtags
   const textWithHashtag = reactStringReplace(children, REGEX_HASHTAG, (hashtag, i) => (
     <a
       key={hashtag + i}
