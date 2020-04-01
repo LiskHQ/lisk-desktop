@@ -37,7 +37,7 @@ const VoteRow = ({
         <LiskAmount val={data.balance} token="LSK" />
       </span>
       <span className={`${grid['col-lg-1']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}>
-        <span>{data.height}</span>
+        <span>{Math.ceil(data.height / 101)}</span>
       </span>
       <span className={`${grid['col-sm-5']} ${grid['col-lg-4']} ${styles.votesColumn}`}>
         {
