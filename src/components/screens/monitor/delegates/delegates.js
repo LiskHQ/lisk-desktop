@@ -75,17 +75,17 @@ const DelegatesMonitor = ({
         t={t}
       />
       <ForgingDetails t={t} />
-      <Box main isLoading={false}>
+      <Box main isLoading={delegates.isLoading || standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className="delegates-table">
           {tabs.tabs.length === 1
             ? <h2>{tabs.tabs[0].name}</h2>
             : <BoxTabs {...tabs} />
           }
-          <span>
+          <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
               onChange={handleFilter}
               value={filters.search}
-              className={`${activeTab === 'votes' ? 'hidden' : ''} filter-by-name`}
+              className="filter-by-name"
               size="xs"
               placeholder={t('Filter by name...')}
             />
