@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
 import routes from '../../../../../constants/routes';
 import { DateTimeFromTimestamp } from '../../../../toolbox/timestamp';
 import LiskAmount from '../../../../shared/liskAmount';
@@ -21,7 +22,7 @@ const VoteRow = ({
       className={`${grid.row} ${className} ${styles.voteRow} vote-row`}
       to={`${routes.transactions.path}/${data.id}`}
     >
-      <span className={grid['col-md-3']}>
+      <span className={grid['col-sm-3']}>
         <AccountVisualWithAddress
           address={data.senderId}
           transactionSubject="senderId"
@@ -29,16 +30,16 @@ const VoteRow = ({
           showBookmarkedAddress
         />
       </span>
-      <span className={grid['col-md-2']}>
+      <span className={grid['col-sm-2']}>
         <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
       </span>
-      <span className={grid['col-md-2']}>
+      <span className={grid['col-sm-2']}>
         <LiskAmount val={data.balance} token="LSK" />
       </span>
-      <span className={grid['col-md-1']}>
+      <span className={`${grid['col-lg-1']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}>
         <span>{data.height}</span>
       </span>
-      <span className={`${grid['col-md-4']} ${styles.votesColumn}`}>
+      <span className={`${grid['col-sm-5']} ${grid['col-lg-4']} ${styles.votesColumn}`}>
         {
           votes.length ? (
             <span className={styles.vote}>
@@ -64,4 +65,7 @@ const VoteRow = ({
   );
 };
 
-export default React.memo(VoteRow);
+/* istanbul ignore next */
+const areEqual = (prevProps, nextProps) => (prevProps.data.id === nextProps.data.id);
+
+export default React.memo(VoteRow, areEqual);
