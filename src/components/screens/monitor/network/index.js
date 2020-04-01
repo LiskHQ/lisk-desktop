@@ -52,6 +52,12 @@ export const sortByVersion = (a, b, direction = 'desc') => {
 
 const ComposedNetwork = compose(
   withData({
+    networkStatistics: {
+      apiUtil: liskService.getNetworkStatistics,
+      defaultData: {},
+      autoload: true,
+      transformResponse: response => response.data,
+    },
     peers: {
       apiUtil: liskService.getConnectedPeers,
       defaultData: [],
