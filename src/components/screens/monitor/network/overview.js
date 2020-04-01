@@ -8,17 +8,22 @@ import styles from './overview.css';
 
 const createOthers = (data) => {
   const list = {};
+  const keys = Object.keys(data);
   let Others = 0;
-  Object.keys(data).forEach((item) => {
-    if (data[item] > 1) {
+  const sortedKeys = Object.entries(data)
+    .sort((a, b) => a[1] - b[1])
+    .reverse()
+    .map(item => item[0]);
+  sortedKeys.forEach((item, index) => {
+    if (index < 3) {
       list[item] = data[item];
     } else {
-      Others++;
+      Others = data[item] + Others;
     }
   });
-  return Others > 0
-    ? { ...list, Others }
-    : list;
+  return keys.length <= 2
+    ? data
+    : { ...list, Others };
 };
 const Overview = ({
   networkStatus,
