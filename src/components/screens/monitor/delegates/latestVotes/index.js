@@ -6,7 +6,11 @@ import header from './tableHeader';
 const LatestVotes = ({
   votes, t,
 }) => {
-  const canLoadMore = false;
+  const canLoadMore = votes.meta ? votes.data.length < votes.meta.total : false;
+
+  const handleLoadMore = () => {
+    votes.loadData({ offset: votes.data.length });
+  };
 
   return (
     <Table
@@ -17,6 +21,7 @@ const LatestVotes = ({
         t,
       }}
       header={header(t)}
+      loadData={handleLoadMore}
       canLoadMore={canLoadMore}
     />
   );

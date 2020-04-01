@@ -38,12 +38,11 @@ const liskServiceGet = ({
   }
 });
 
-const liskServiceSocketGet = (networkConfig, request) => new Promise((resolve, reject) => {
+const liskServiceSocketGet = request => new Promise((resolve, reject) => {
   const { network } = store.getState();
   const socket = io(`${network.serviceUrl}/rpc`, { transports: ['websocket'] });
   socket.emit('request', request, (response) => {
     if (Array.isArray(response)) {
-      // TODO figure out how to handle errors when response isArray
       resolve(response);
     } else if (response.error) {
       reject(response.error);
@@ -212,8 +211,8 @@ const liskServiceApi = {
       searchParams,
     }),
 
-  getLatestVotes: async ({ networkConfig }, params = {}) => {
-    const voteTransactions = await liskServiceSocketGet(networkConfig, {
+  getLatestVotes: async (networkConfig, params = {}) => {
+    const voteTransactions = await liskServiceSocketGet({
       method: 'get.transactions',
       params: {
         limit: DEFAULT_LIMIT,
@@ -230,11 +229,11 @@ const liskServiceApi = {
       ]), []),
     ];
 
-    const accounts = await liskServiceSocketGet(networkConfig,
-      [...new Set(addresses)].map(address => ({
-        method: 'get.accounts',
-        params: { address },
-      })));
+
+    const accounts = await liskServiceSocketGet([...new Set(addresses)].map(address => ({
+      method: 'get.accounts',
+      params: { address },
+    })));
 
     const accountsMap = accounts.reduce((accumulator, { result: { data } }) => ({
       ...accumulator,
@@ -249,6 +248,8 @@ const liskServiceApi = {
         ...accountsMap[cryptography.getAddressFromPublicKey(vote.substr(1))],
       })),
     }));
+
+    console.log('Received', { data, meta: voteTransactions.meta });
 
     return { data, meta: voteTransactions.meta };
   },
