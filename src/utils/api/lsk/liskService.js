@@ -1,4 +1,5 @@
 import { utils } from '@liskhq/lisk-transactions';
+import { cryptography } from '@liskhq/lisk-client';
 import io from 'socket.io-client';
 import * as popsicle from 'popsicle';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
@@ -35,6 +36,20 @@ const liskServiceGet = ({
         reject(error);
       });
   }
+});
+
+const liskServiceSocketGet = request => new Promise((resolve, reject) => {
+  const { network } = store.getState();
+  const socket = io(`${network.serviceUrl}/rpc`, { transports: ['websocket'] });
+  socket.emit('request', request, (response) => {
+    if (Array.isArray(response)) {
+      resolve(response);
+    } else if (response.error) {
+      reject(response.error);
+    } else {
+      resolve(response.result);
+    }
+  });
 });
 
 const liskServiceApi = {
@@ -194,6 +209,47 @@ const liskServiceApi = {
       path: '/api/v1/peers/connected/',
       searchParams,
     }),
+
+  getLatestVotes: async (networkConfig, params = {}) => {
+    const voteTransactions = await liskServiceSocketGet({
+      method: 'get.transactions',
+      params: {
+        limit: DEFAULT_LIMIT,
+        type: transactionTypes().vote.outgoingCode,
+        ...params,
+      },
+    });
+
+    const addresses = [
+      ...voteTransactions.data.map(({ senderId }) => senderId),
+      ...voteTransactions.data.reduce((accumulator, { asset: { votes } }) => ([
+        ...accumulator,
+        ...votes.map(v => cryptography.getAddressFromPublicKey(v.substr(1))),
+      ]), []),
+    ];
+
+
+    const accounts = await liskServiceSocketGet([...new Set(addresses)].map(address => ({
+      method: 'get.accounts',
+      params: { address },
+    })));
+
+    const accountsMap = accounts.reduce((accumulator, { result: { data } }) => ({
+      ...accumulator,
+      [data[0].address]: data[0],
+    }), {});
+
+    const data = voteTransactions.data.map(({ asset, ...tx }) => ({
+      ...tx,
+      balance: accountsMap[tx.senderId] && accountsMap[tx.senderId].balance,
+      votes: asset.votes.map(vote => ({
+        status: vote.substr(0, 1),
+        ...accountsMap[cryptography.getAddressFromPublicKey(vote.substr(1))],
+      })),
+    }));
+
+    return { data, meta: voteTransactions.meta };
+  },
 };
 
 export default liskServiceApi;

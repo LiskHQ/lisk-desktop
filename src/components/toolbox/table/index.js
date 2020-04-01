@@ -103,6 +103,7 @@ const Table = ({
       <Error data={error} isLoading={isLoading} />
       <LoadMoreButton
         onClick={loadData}
+        isLoading={isLoading}
         dataLength={data.length}
         canLoadMore={canLoadMore}
         error={error}

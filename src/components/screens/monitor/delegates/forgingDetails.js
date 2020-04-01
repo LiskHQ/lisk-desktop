@@ -9,13 +9,16 @@ import BoxHeader from '../../../toolbox/box/header';
 import styles from './overview.css';
 
 const Forger = ({ forger }) => (
-  <Link
-    className={`${styles.forger} forger-item`}
-    to={`${routes.accounts.path}/${forger.address}`}
-  >
-    <AccountVisual size={36} address={forger.address} />
-    <span>{forger.username}</span>
-  </Link>
+  <div className={`${styles.forger} forger-item`}>
+    <Link to={`${routes.accounts.path}/${forger.address}`}>
+      <AccountVisual
+        size={36}
+        address={forger.address}
+        className={styles.accountVisual}
+      />
+      <span>{forger.username}</span>
+    </Link>
+  </div>
 );
 
 const ForgingDetails = ({

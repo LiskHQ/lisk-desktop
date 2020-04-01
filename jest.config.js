@@ -91,6 +91,8 @@ module.exports = {
     'src/components/screens/monitor/delegates/delegateRow.js',
     'src/components/screens/monitor/delegates/delegates.js',
     'src/components/screens/monitor/network/map.js',
+    'src/components/screens/monitor/delegates/latestVotes',
+    'src/components/screens/monitor/delegates/delegatesTable/index.js',
     'src/components/shared/accountVisualWithAddress/index.js',
     'src/components/toolbox/table/empty.js',
     'src/components/toolbox/table/header.js',
