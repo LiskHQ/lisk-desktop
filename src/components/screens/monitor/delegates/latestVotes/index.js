@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from '../../../../toolbox/table';
-import VotesRow from './voteRow';
+import VoteRow from './voteRow';
 import header from './tableHeader';
 
 const LatestVotes = ({
@@ -16,7 +16,7 @@ const LatestVotes = ({
     <Table
       data={votes.data}
       isLoading={votes.isLoading}
-      row={VotesRow}
+      row={VoteRow}
       additionalRowProps={{
         t,
       }}
