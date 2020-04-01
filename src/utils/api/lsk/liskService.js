@@ -249,8 +249,6 @@ const liskServiceApi = {
       })),
     }));
 
-    console.log('Received', { data, meta: voteTransactions.meta });
-
     return { data, meta: voteTransactions.meta };
   },
 };
