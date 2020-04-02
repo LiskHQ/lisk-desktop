@@ -8,7 +8,6 @@ import styles from './overview.css';
 
 const createOthers = (data) => {
   const list = {};
-  const keys = Object.keys(data);
   let Others = 0;
   const sortedKeys = Object.entries(data)
     .sort((a, b) => a[1] - b[1])
@@ -21,7 +20,7 @@ const createOthers = (data) => {
       Others = data[item] + Others;
     }
   });
-  return keys.length <= 2
+  return Others === 0
     ? data
     : { ...list, Others };
 };
@@ -43,7 +42,7 @@ const Overview = ({
             versionsDistribution
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.title}>{t('Height distribution')}</h2>
+                  <h2 className={styles.title}>{t('Versions distribution')}</h2>
                   <div className={styles.chart}>
                     <DoughnutChart
                       data={{
@@ -76,7 +75,7 @@ const Overview = ({
             heightDistribution
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.title}>{t('Versions distribution')}</h2>
+                  <h2 className={styles.title}>{t('Height distribution')}</h2>
                   <div className={styles.chart}>
                     <DoughnutChart
                       data={{
