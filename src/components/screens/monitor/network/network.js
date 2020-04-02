@@ -8,22 +8,23 @@ import header from './tableHeader';
 import MonitorHeader from '../header';
 import Map from './map';
 import PeerRow from './peerRow';
+import Overview from './overview';
 
 const Network = ({
-  peers, t, changeSort, sort,
+  peers, t, changeSort, sort, networkStatistics,
 }) => {
   /* istanbul ignore next */
   const handleLoadMore = () => {
     peers.loadData({ offset: peers.data.length });
   };
   const canLoadMore = peers.meta ? peers.data.length < peers.meta.total : false;
-
   return (
     <div>
       <MonitorHeader />
+      <Overview networkStatus={networkStatistics.data} t={t} />
       <Box main isLoading={peers.isLoading} className="peers-box">
         <BoxHeader>
-          <h1>{t('Connected peers')}</h1>
+          <h1 className="contentHeader">{t('Connected peers')}</h1>
         </BoxHeader>
         <BoxContent className={styles.content}>
           <Map peers={peers.data} />

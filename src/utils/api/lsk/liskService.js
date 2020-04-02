@@ -179,6 +179,10 @@ const liskServiceApi = {
     path: '/api/v1/network/status',
   }),
 
+  getNetworkStatistics: () => liskServiceGet({
+    path: '/api/v1/network/statistics',
+  }),
+
   listenToBlockchainEvents: ({ event, callback }) => {
     const { network } = store.getState();
     const socket = io(
