@@ -1,33 +1,45 @@
 // istanbul ignore file
 import React from 'react';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxEmptyState from '../../../toolbox/box/emptyState';
-import { DoughnutChart } from '../../../toolbox/charts';
+import Box from '../../../../toolbox/box';
+import BoxHeader from '../../../../toolbox/box/header';
+import BoxEmptyState from '../../../../toolbox/box/emptyState';
+import { DoughnutChart } from '../../../../toolbox/charts';
+import OthersTooltip from './othersTooltip';
 import styles from './overview.css';
 
-const createOthers = (data) => {
-  const list = {};
-  let Others = 0;
-  const sortedKeys = Object.entries(data)
-    .sort((a, b) => a[1] - b[1])
-    .reverse()
-    .map(item => item[0]);
-  sortedKeys.forEach((item, index) => {
-    if (index < 3) {
-      list[item] = data[item];
-    } else {
-      Others = data[item] + Others;
-    }
-  });
-  return Others === 0
-    ? data
-    : { ...list, Others };
-};
 const Overview = ({
   networkStatus,
   t,
 }) => {
+  const createOthers = (data) => {
+    const list = {
+      labels: [],
+      values: [],
+      others: [],
+    };
+    let Others = 0;
+    const sortedKeys = Object.entries(data)
+      .sort((a, b) => a[1] - b[1])
+      .reverse()
+      .map(item => item[0]);
+    sortedKeys.forEach((item, index) => {
+      if (index < 3) {
+        list.labels.push(item);
+        list.values.push(data[item]);
+      } else {
+        list.others.push({
+          label: item,
+          value: data[item],
+        });
+        Others = data[item] + Others;
+      }
+    });
+    if (Others > 0) {
+      list.labels.push(t('Others'));
+      list.values.push(Others);
+    }
+    return list;
+  };
   const { basic, coreVer, height } = networkStatus;
   const versionsDistribution = coreVer ? createOthers(coreVer) : null;
   const heightDistribution = height ? createOthers(height) : null;
@@ -46,10 +58,10 @@ const Overview = ({
                   <div className={styles.chart}>
                     <DoughnutChart
                       data={{
-                        labels: Object.keys(versionsDistribution),
+                        labels: versionsDistribution.labels,
                         datasets: [
                           {
-                            data: Object.values(versionsDistribution),
+                            data: versionsDistribution.values,
                           },
                         ],
                       }}
@@ -64,6 +76,11 @@ const Overview = ({
                         },
                       }}
                     />
+                    {
+                      versionsDistribution.others.length
+                        ? <OthersTooltip title={t('Version')} data={versionsDistribution.others} />
+                        : null
+                    }
                   </div>
                 </div>
               )
@@ -79,10 +96,10 @@ const Overview = ({
                   <div className={styles.chart}>
                     <DoughnutChart
                       data={{
-                        labels: Object.keys(heightDistribution),
+                        labels: heightDistribution.labels,
                         datasets: [
                           {
-                            data: Object.values(heightDistribution),
+                            data: heightDistribution.values,
                           },
                         ],
                       }}
@@ -97,6 +114,11 @@ const Overview = ({
                         },
                       }}
                     />
+                    {
+                      heightDistribution.others.length
+                        ? <OthersTooltip title={t('Height')} data={heightDistribution.others} />
+                        : null
+                    }
                   </div>
                 </div>
               )
@@ -112,7 +134,7 @@ const Overview = ({
                   <div className={styles.chart}>
                     <DoughnutChart
                       data={{
-                        labels: [t('Connected'), t('Dsconnected')],
+                        labels: [t('Connected'), t('Disconnected')],
                         datasets: [
                           {
                             label: 'delegates',
