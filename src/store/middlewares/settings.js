@@ -1,7 +1,7 @@
 import actionsType from '../../constants/actions';
 import { pricesRetrieved } from '../../actions/service';
 import { emptyTransactionsData } from '../../actions/transactions';
-import { setSettingsInLocalStorage } from '../../utils/settings';
+import { setInStorage } from '../../utils/localJSONStorage';
 
 const settings = store => next => (action) => {
   const { token } = store.getState().settings;
@@ -12,7 +12,7 @@ const settings = store => next => (action) => {
         store.dispatch(pricesRetrieved());
         store.dispatch(emptyTransactionsData());
       }
-      setSettingsInLocalStorage(store.getState().settings);
+      setInStorage('settings', store.getState().settings);
       break;
     default:
       next(action);
