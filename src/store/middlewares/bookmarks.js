@@ -1,5 +1,5 @@
 import actionsType from '../../constants/actions';
-import { setBookmarksInLocalStorage } from '../../utils/bookmarks';
+import { setInStorage } from '../../utils/localJSONStorage';
 
 const bookmarks = store => next => (action) => {
   switch (action.type) {
@@ -7,7 +7,7 @@ const bookmarks = store => next => (action) => {
     case actionsType.bookmarkRemoved:
     case actionsType.bookmarkAdded:
       next(action);
-      setBookmarksInLocalStorage(store.getState().bookmarks);
+      setInStorage('bookmarks', store.getState().bookmarks);
       break;
     default:
       next(action);

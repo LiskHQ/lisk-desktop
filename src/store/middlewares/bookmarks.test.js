@@ -1,9 +1,9 @@
 import bookmarksMiddleware from './bookmarks';
 import actionTypes from '../../constants/actions';
 import accounts from '../../../test/constants/accounts';
-import * as bookmarksUtils from '../../utils/bookmarks';
+import * as localJSONStorage from '../../utils/localJSONStorage';
 
-jest.mock('../../utils/bookmarks');
+jest.mock('../../utils/localJSONStorage');
 
 describe('Middleware: Bookmarks', () => {
   const next = jest.fn();
@@ -38,7 +38,7 @@ describe('Middleware: Bookmarks', () => {
 
     actions.forEach((action, index) => {
       bookmarksMiddleware(store)(next)(action);
-      expect(bookmarksUtils.setBookmarksInLocalStorage).toBeCalledTimes(index + 1);
+      expect(localJSONStorage.setInStorage).toBeCalledTimes(index + 1);
     });
   });
 });
