@@ -23,7 +23,7 @@
     "test": "jest --config ./jest.config.js",
     "test-live": "npm test -- --watch",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
-    "start": "electron ./app/",
+    "start": "npm run rebuild && electron ./app/",
     "dist": "electron-builder --ia32 --x64 --publish onTag",
     "dist:win": "electron-builder --win --ia32 --x64 --publish onTag",
     "dist:mac": "electron-builder --mac",
