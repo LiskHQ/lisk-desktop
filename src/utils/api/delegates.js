@@ -43,42 +43,46 @@ export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
 
 export const getDelegateWithCache = (liskAPIClient, { publicKey }) => (
   new Promise(async (resolve, reject) => {
-    const storedDelegate = loadDelegateCache(liskAPIClient.networkConfig)[publicKey];
-    if (storedDelegate) {
-      resolve(storedDelegate);
-    } else {
-      const [error, response] = await to(getDelegates(liskAPIClient, { publicKey }));
-      if (error) {
-        reject(error);
-      } else if (response.data[0]) {
-        updateDelegateCache(response.data, liskAPIClient.networkConfig);
-        resolve(response.data[0]);
+    loadDelegateCache(liskAPIClient.networkConfig, async (data) => {
+      const storedDelegate = data[publicKey];
+      if (storedDelegate) {
+        resolve(storedDelegate);
       } else {
-        reject(new Error(`No delegate with publicKey ${publicKey} found.`));
+        const [error, response] = await to(getDelegates(liskAPIClient, { publicKey }));
+        if (error) {
+          reject(error);
+        } else if (response.data[0]) {
+          updateDelegateCache(response.data, liskAPIClient.networkConfig);
+          resolve(response.data[0]);
+        } else {
+          reject(new Error(`No delegate with publicKey ${publicKey} found.`));
+        }
       }
-    }
+    });
   })
 );
 
-// eslint-disable-next-line max-statements
 export const getDelegateByName = (liskAPIClient, name) => new Promise(async (resolve, reject) => {
-  const storedDelegate = loadDelegateCache(liskAPIClient.networkConfig)[name];
-  if (storedDelegate) {
-    resolve(storedDelegate);
-  } else {
-    const [error, response] = await to(liskAPIClient.delegates.get({ search: name, limit: 101 }));
-    if (error) {
-      reject(error);
+  // eslint-disable-next-line max-statements
+  loadDelegateCache(liskAPIClient.networkConfig, async (data) => {
+    const storedDelegate = data[name];
+    if (storedDelegate) {
+      resolve(storedDelegate);
     } else {
-      const delegate = response.data.find(({ username }) => username === name);
-      if (delegate) {
-        resolve(delegate);
+      const [error, response] = await to(liskAPIClient.delegates.get({ search: name, limit: 101 }));
+      if (error) {
+        reject(error);
       } else {
-        reject(new Error(`No delegate with name ${name} found.`));
+        const delegate = response.data.find(({ username }) => username === name);
+        if (delegate) {
+          resolve(delegate);
+        } else {
+          reject(new Error(`No delegate with name ${name} found.`));
+        }
+        updateDelegateCache(response.data, liskAPIClient.networkConfig);
       }
-      updateDelegateCache(response.data, liskAPIClient.networkConfig);
     }
-  }
+  });
 });
 
 const voteWithPassphrase = (

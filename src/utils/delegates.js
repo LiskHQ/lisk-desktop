@@ -23,5 +23,5 @@ export const updateDelegateCache = (delegates, network) => {
   });
 };
 
-export const loadDelegateCache = network =>
-  getFromStorage(getNetworkKey(network), {});
+export const loadDelegateCache = (network, cb) =>
+  getFromStorage(getNetworkKey(network), {}, cb);
