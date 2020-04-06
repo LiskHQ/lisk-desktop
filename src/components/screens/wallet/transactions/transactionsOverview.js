@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import txFilters from '../../../../constants/transactionFilters';
 import Piwik from '../../../../utils/piwik';
 import FilterContainer from './filters/filterContainer';
@@ -8,108 +8,92 @@ import TransactionsList from './transactionsList';
 import Tabs from '../../../toolbox/tabs';
 import styles from './transactions.css';
 
-class TransactionsOverview extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.props.onInit();
-    this.isActiveFilter = this.isActiveFilter.bind(this);
-    this.setTransactionsFilter = this.setTransactionsFilter.bind(this);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  isSmallScreen() {
-    return window.innerWidth <= 1024;
-  }
-
-  isActiveFilter(filter) {
-    const { activeFilter } = this.props;
+const TransactionsOverview = (props) => {
+  useEffect(() => {
+    props.onInit();
+    return () => {
+      props.onFilterSet(txFilters.all);
+    };
+  }, []);
+  const isActiveFilter = (filter) => {
+    const { activeFilter } = props;
     return (!activeFilter && filter === txFilters.all)
       || (activeFilter === filter);
-  }
-
-  setTransactionsFilter(filter) {
+  };
+  const setTransactionsFilter = (filter) => {
     Piwik.trackingEvent('TransactionsOverview', 'button', 'Set transactions filter');
-    this.props.onFilterSet(filter.value);
-  }
-
-  generateFilters() {
-    return [
+    props.onFilterSet(filter.value);
+  };
+  const { bookmarks } = useSelector(state => ({
+    bookmarks: state.bookmarks,
+  }));
+  const filters = [
+    {
+      name: props.t('All transactions'),
+      value: txFilters.all,
+      className: 'filter-all',
+    },
+    ...(props.activeToken !== 'BTC' ? [
       {
-        name: this.props.t('All transactions'),
-        value: txFilters.all,
-        className: 'filter-all',
+        name: props.t('Incoming transactions'),
+        value: txFilters.incoming,
+        className: 'filter-in',
       },
-      ...(this.props.activeToken !== 'BTC' ? [
-        {
-          name: this.props.t('Incoming transactions'),
-          value: txFilters.incoming,
-          className: 'filter-in',
-        },
-        {
-          name: this.props.t('Outgoing transactions'),
-          value: txFilters.outgoing,
-          className: 'filter-out',
-        },
-      ] : []),
-    ];
-  }
+      {
+        name: props.t('Outgoing transactions'),
+        value: txFilters.outgoing,
+        className: 'filter-out',
+      },
+    ] : []),
+  ];
+  const isSmallScreen = window.innerWidth <= 1024;
 
-  render() {
-    const isSmallScreen = this.isSmallScreen();
-    const filters = this.generateFilters();
-
-    return (
-      <div className={`${styles.transactions} transactions`}>
-        <div className={styles.container}>
-          <Tabs
-            tabs={filters}
-            className="transaction-filter-item"
-            isActive={this.isActiveFilter}
-            onClick={this.setTransactionsFilter}
-          />
-          {this.props.activeToken !== 'BTC'
-            ? (
-              <div className={styles.items}>
-                <FilterContainer
-                  saveFilters={this.props.saveFilters}
-                  customFilters={this.props.activeCustomFilters}
-                />
-              </div>
-            )
-            : null}
-        </div>
-        {this.props.activeCustomFilters
-          && Object.values(this.props.activeCustomFilters).find(filter => filter) ? (
-            <FilterBar
-              clearFilter={this.props.clearFilter}
-              clearAllFilters={this.props.clearAllFilters}
-              filters={this.props.activeCustomFilters}
-              results={this.props.count}
-              t={this.props.t}
-            />
-          ) : null}
-        <TransactionsList
-          bookmarks={this.props.bookmarks}
-          canLoadMore={this.props.canLoadMore}
-          transactions={this.props.transactions}
-          filter={filters[this.props.activeFilter]}
-          address={this.props.address}
-          publicKey={this.props.publicKey}
-          history={this.props.history}
-          onClick={props => this.props.onTransactionRowClick(props)}
-          loading={this.props.loading}
-          onLoadMore={this.props.onLoadMore}
-          isSmallScreen={isSmallScreen}
-          activeToken={this.props.activeToken}
+  return (
+    <div className={`${styles.transactions} transactions`}>
+      <div className={styles.container}>
+        <Tabs
+          tabs={filters}
+          className="transaction-filter-item"
+          isActive={filter => isActiveFilter(filter)}
+          onClick={filter => setTransactionsFilter(filter)}
         />
+        {props.activeToken !== 'BTC'
+          ? (
+            <div className={styles.items}>
+              <FilterContainer
+                saveFilters={props.saveFilters}
+                customFilters={props.activeCustomFilters}
+              />
+            </div>
+          )
+          : null}
       </div>
-    );
-  }
-}
-const mapStateToProps = state => ({
-  bookmarks: state.bookmarks,
-  account: state.account,
-});
+      {props.activeCustomFilters
+        && Object.values(props.activeCustomFilters).find(filter => filter) ? (
+          <FilterBar
+            clearFilter={props.clearFilter}
+            clearAllFilters={props.clearAllFilters}
+            filters={props.activeCustomFilters}
+            results={props.count}
+            t={props.t}
+          />
+        ) : null}
+      <TransactionsList
+        bookmarks={bookmarks}
+        canLoadMore={props.canLoadMore}
+        transactions={props.transactions}
+        filter={filters[props.activeFilter]}
+        address={props.address}
+        publicKey={props.publicKey}
+        history={props.history}
+        onClick={value => props.onTransactionRowClick(value)}
+        loading={props.loading}
+        onLoadMore={props.onLoadMore}
+        isSmallScreen={isSmallScreen}
+        activeToken={props.activeToken}
+      />
+    </div>
+  );
+};
 
-export default connect(mapStateToProps)(TransactionsOverview);
+export default TransactionsOverview;
