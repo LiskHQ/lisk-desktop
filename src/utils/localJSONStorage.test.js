@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import localJSONStorage from './localJSONStorage';
+import { setInStorage, getFromStorage, removeStorage } from './localJSONStorage';
 
 describe('localJSONStorage', () => {
   const storage = {};
@@ -13,19 +13,19 @@ describe('localJSONStorage', () => {
   const item = { test: 'test' };
 
   it('sets and gets the item', () => {
-    localJSONStorage.set('item', item);
-    expect(localJSONStorage.get('item')).to.eql(item);
+    setInStorage('item', item);
+    expect(getFromStorage('item')).to.eql(item);
   });
 
   it('returns the backup in case of no result', () => {
-    localJSONStorage.set('existingButNull', null);
-    expect(localJSONStorage.get('existingButNull', [])).to.eql([]);
-    expect(localJSONStorage.get('notExisting', '')).to.eql('');
+    setInStorage('existingButNull', null);
+    expect(getFromStorage('existingButNull', [])).to.eql([]);
+    expect(getFromStorage('notExisting', '')).to.eql('');
   });
 
   it('sets and deletes the item', () => {
-    localJSONStorage.set('item', item);
-    localJSONStorage.remove('item');
+    setInStorage('item', item);
+    removeStorage('item');
     expect(storage.getItem).to.equal(undefined);
   });
 });
