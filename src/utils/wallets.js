@@ -1,8 +1,8 @@
-import localJSONStorage from './localJSONStorage';
+import { setInStorage, getFromStorage } from './localJSONStorage';
 
-export const getWalletsFromLocalStorage = () => localJSONStorage.get('wallets', {});
+export const getWalletsFromLocalStorage = () => getFromStorage('wallets', {});
 
-export const setWalletsInLocalStorage = wallets => localJSONStorage.set('wallets', {
+export const setWalletsInLocalStorage = wallets => setInStorage('wallets', {
   ...getWalletsFromLocalStorage(),
   ...wallets,
 });
