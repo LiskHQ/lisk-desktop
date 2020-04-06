@@ -14,7 +14,7 @@ export const getFromStorage = (key, backup, cb) => {
       info = data[key];
       cb(info);
     });
-    ipc.send('retrieveConfig', { key });
+    ipc.send('retrieveConfig');
   } catch (e) {
     cb(backup);
   }

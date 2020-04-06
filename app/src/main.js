@@ -118,6 +118,6 @@ ipcMain.on('storeConfig', (event, data) => {
   setConfig(data);
 });
 
-ipcMain.on('retrieveConfig', (event, key) => {
-  readConfig(key);
+ipcMain.on('retrieveConfig', () => {
+  readConfig();
 });
