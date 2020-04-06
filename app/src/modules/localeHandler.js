@@ -9,9 +9,7 @@ const handler = {
     // change locale
     i18n.changeLanguage(langCode);
     // write selected lang on JSON file
-    storage.set('config', { lang: langCode }, (error) => {
-      if (error) throw error;
-    });
+    storage.set('config.lang', langCode);
 
     // rebuild menu
     const { Menu } = electron;
@@ -20,11 +18,8 @@ const handler = {
   },
 
   send: ({ storage }) => {
-    storage.get('config', (error, data) => {
-      if (!error) {
-        win.send({ event: 'detectedLocale', value: data.lang || 'en' });
-      }
-    });
+    const value = storage.get('config.lang', 'en');
+    win.send({ event: 'detectedLocale', value });
   },
 };
 
