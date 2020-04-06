@@ -20,6 +20,8 @@ import Header from '../components/shared/header/header';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import DialogHolder from '../components/toolbox/dialog/holder';
 import ThemeContext from '../contexts/theme';
+import { settingsRetrieved } from '../actions/settings';
+import { bookmarksRetrieved } from '../actions/bookmarks';
 
 class App extends React.Component {
   constructor() {
@@ -33,6 +35,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.markAsLoaded();
+    this.props.bookmarksRetrieved();
+    this.props.settingsRetrieved();
   }
 
   render() {
@@ -108,5 +112,6 @@ class App extends React.Component {
 const mapStateToProps = state => ({
   settings: state.settings,
 });
-export default withRouter(connect(mapStateToProps)(App));
-export const DevApp = hot(withRouter(connect(mapStateToProps)(App)));
+const mapDispatchToProps = { settingsRetrieved, bookmarksRetrieved };
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export const DevApp = hot(withRouter(connect(mapStateToProps, mapDispatchToProps)(App)));
