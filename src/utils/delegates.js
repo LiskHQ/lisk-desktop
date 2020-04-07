@@ -11,15 +11,16 @@ const getNetworkKey = network => (
 );
 
 export const updateDelegateCache = (delegates, network) => {
-  const savedDelegates = getFromStorage(getNetworkKey(network), {});
+  getFromStorage(getNetworkKey(network), {}, (savedDelegates) => {
 
-  setInStorage(getNetworkKey(network), {
-    ...savedDelegates,
-    ...delegates.reduce((newDelegates, delegate) => ({
-      ...newDelegates,
-      [delegate.username]: delegate,
-      ...(delegate.account ? { [delegate.account.publicKey]: delegate } : {}),
-    }), {}),
+    setInStorage(getNetworkKey(network), {
+      ...savedDelegates,
+      ...delegates.reduce((newDelegates, delegate) => ({
+        ...newDelegates,
+        [delegate.username]: delegate,
+        ...(delegate.account ? { [delegate.account.publicKey]: delegate } : {}),
+      }), {}),
+    });
   });
 };
 
