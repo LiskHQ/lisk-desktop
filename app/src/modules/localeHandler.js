@@ -18,8 +18,9 @@ const handler = {
   },
 
   send: ({ storage }) => {
-    const value = storage.get('config.lang', 'en');
-    win.send({ event: 'detectedLocale', value });
+    storage.get('config.lang', 'en', (value) => {
+      win.send({ event: 'detectedLocale', value });
+    });
   },
 };
 
