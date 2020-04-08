@@ -120,7 +120,7 @@ describe('Electron Browser Window Wrapper', () => {
       expect(events[1].event).to.equal('blur');
     });
 
-    it('Creates the window with menu when platform is "darwin"', () => {
+    it.skip('Creates the window with menu when platform is "darwin"', () => {
       processMock.expects('isPlatform').atLeast(2).withArgs('linux').returns(false);
       processMock.expects('isPlatform').atLeast(2).withArgs('darwin').returns(true);
 
@@ -156,7 +156,7 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser).to.equal(null);
     });
 
-    it('Creates the window with menu when platform is not "darwin"', () => {
+    it.skip('Creates the window with menu when platform is not "darwin"', () => {
       processMock.expects('isPlatform').atLeast(2).withArgs('darwin').returns(false);
       processMock.expects('isPlatform').atLeast(2).withArgs('linux').returns(true);
       processMock.expects('getArgv').atLeast(2).withArgs().returns([]);

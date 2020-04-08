@@ -14,18 +14,26 @@ describe('localJSONStorage', () => {
 
   it('sets and gets the item', () => {
     setInStorage('item', item);
-    expect(getFromStorage('item')).to.eql(item);
+    getFromStorage('item', null, (data) => {
+      expect(data).to.eql(item);
+    });
   });
 
   it('returns the backup in case of no result', () => {
     setInStorage('existingButNull', null);
-    expect(getFromStorage('existingButNull', [])).to.eql([]);
-    expect(getFromStorage('notExisting', '')).to.eql('');
+    getFromStorage('existingButNull', [], (data) => {
+      expect(data).to.eql([]);
+    });
+    getFromStorage('notExisting', '', (data) => {
+      expect(data).to.eql('');
+    });
   });
 
   it('sets and deletes the item', () => {
     setInStorage('item', item);
     removeStorage('item');
-    expect(storage.getItem).to.equal(undefined);
+    getFromStorage('item', undefined, (data) => {
+      expect(data).to.equal(undefined);
+    });
   });
 });
