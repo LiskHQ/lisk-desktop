@@ -10,7 +10,6 @@ export const validateBookmarks = (data) => {
     return flag;
   }, true);
 
-  console.log('Were bookmarks valid?', isValid);
   return isValid ? data : emptyBookmarks;
 };
 

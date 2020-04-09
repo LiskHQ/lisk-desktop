@@ -3,7 +3,6 @@ import win from './win';
 
 export const storage = new Storage();
 
-
 export const setConfig = ({
   value, key,
 }) => {
