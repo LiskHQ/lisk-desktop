@@ -3,11 +3,6 @@ import { tokenMap, tokenKeys } from '../../constants/tokens';
 import api from '.';
 import networks from '../../constants/networks';
 
-// TODO these imports are temporary until api is implemented for them
-import { send as ss } from './lsk/transactions';
-
-export const send = ss;
-
 export const getTokenFromAddress = address => (
   [networks.mainnet.code, networks.testnet.code]
     .map(code => tokenKeys.find(tokenKey => validateAddress(tokenKey, address, code) === 0))
@@ -57,5 +52,4 @@ export default {
   getSingleTransaction,
   getTokenFromAddress,
   getTransactions,
-  send,
 };
