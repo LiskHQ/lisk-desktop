@@ -96,6 +96,7 @@ app.on('will-finish-launching', () => {
   // Protocol handler for MacOS
   app.on('open-url', (event, url) => {
     event.preventDefault();
+    win.browser.show();
     win.send({ event: 'openUrl', value: url });
   });
 });
