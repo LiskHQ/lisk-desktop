@@ -22,7 +22,7 @@ Feature: Wallet
     Then I should see incoming transaction in table
     Then I should not see outgoing transaction in table
     Then I click filter outgoing
-    Then I should see outgoing transaction in table
+    Then I should not see outgoing transaction in table
     Then I should not see incoming transaction in table
 
   Scenario: Send LSK to this account
