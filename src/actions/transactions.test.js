@@ -150,7 +150,6 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch addNewPendingTransaction action if resolved', async () => {
-      transactionsApi.send.mockResolvedValue({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: 'test_public-key',
