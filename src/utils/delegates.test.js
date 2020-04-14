@@ -20,9 +20,11 @@ describe('Delegates Utils', () => {
   };
 
   it('sets and gets the delegate item with mainnet', () => {
-    const networkConfig = { options: networks.mainnet };
+    const networkConfig = networks.mainnet;
     updateDelegateCache([delegate], networkConfig);
-    expect(loadDelegateCache(networkConfig)).toEqual(itemExpected);
+    loadDelegateCache(networkConfig, (data) => {
+      expect(data).toEqual(itemExpected);
+    });
   });
 
   it('sets and gets the delegate item with customNode', () => {
@@ -36,6 +38,8 @@ describe('Delegates Utils', () => {
       name: networks.customNode.name,
     };
     updateDelegateCache([delegate], networkConfig);
-    expect(loadDelegateCache(networkConfig)).toEqual(itemExpected);
+    loadDelegateCache(networkConfig, (data) => {
+      expect(data).toEqual(itemExpected);
+    });
   });
 });

@@ -75,7 +75,7 @@ describe('ipcLocale', () => {
     });
 
     describe('With ipc on window', () => {
-      it('Makes a request for locale when there is no locale in i18n', () => {
+      it.skip('Makes a request for locale when there is no locale in i18n', () => {
         window.ipc = ipc;
         i18n.language = 'en';
         ipcLocale.init(i18n);
