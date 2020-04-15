@@ -1,3 +1,4 @@
+import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './network.css';
 
@@ -13,6 +14,21 @@ export default (changeSort, t) => ([
   {
     title: t('Country'),
     classList: grid['col-xs-2'],
+    tooltip: {
+      title: t('Country'),
+      message: () => (
+        <p>
+          <span>
+            Lisk Desktop determines the country names using
+            GeoLite2 data created by
+          </span>
+          &nbsp;
+          <a href="http://www.maxmind.com">Maxmind</a>
+          .
+        </p>
+      ),
+      className: 'showOnBottom',
+    },
   },
   {
     title: t('Version'),
