@@ -1,13 +1,11 @@
 import { to } from 'await-to-js';
 import Lisk from '@liskhq/lisk-client-old';
 import {
-  send,
   getTransactions,
   getSingleTransaction,
   create,
   broadcast,
 } from './transactions';
-import accounts from '../../../../test/constants/accounts';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
 import txFilters from '../../../constants/transactionFilters';
@@ -44,17 +42,6 @@ describe('Utils: Transactions API', () => {
     apiClient.node.getTransactions.mockResolvedValue({ data: [] });
 
     getAPIClient.mockReturnValue(apiClient);
-  });
-
-  // TODO: fix these tests for assert more than just a promise is returned
-  describe('send', () => {
-    it.skip('should broadcast a transaction and return a promise', async () => {
-      await send(amount, {}, apiClient, accounts.genesis.passphrase, recipientId, null, 0);
-      expect(apiClient.transactions.broadcast).toHaveBeenCalledWith(expect.objectContaining({
-        amount,
-        recipientId,
-      }));
-    });
   });
 
   describe('getTransactions', () => {
