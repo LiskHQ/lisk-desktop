@@ -14,7 +14,7 @@ import './modules/hwManager';
 
 i18nSetup();
 
-const defaultServerPort = 3000;
+const defaultServerPort = 5659;
 let serverUrl;
 const startServer = () => getPort({ port: defaultServerPort })
   .then((port) => {
