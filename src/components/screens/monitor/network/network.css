@@ -26,6 +26,11 @@
   }
 }
 
+:global .mapboxWatermark {
+  width: 40px;
+  margin-bottom: -2px;
+}
+
 :global .markerCluster {
   display: block;
   width: 42px;

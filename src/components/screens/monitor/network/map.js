@@ -3,6 +3,7 @@ import L from 'leaflet';
 import styles from './network.css';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
 import markerIcon from '../../../../assets/images/marker.svg';
+import mapboxWatermarkImage from '../../../../assets/images/mapbox.png';
 
 const mapOptions = {
   minZoom: 2,
@@ -33,6 +34,15 @@ const createMarkers = (peers) => {
   return markers;
 };
 
+const getAttributionLinks = () => {
+  const openStreetMap = '<span>© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors</span>';
+  const mapBox = '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a>';
+  const improveThisMap = '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" target="_blank">Improve this map</a>';
+  const watermark = `<a href="http://mapbox.com/about/maps" target="_blank"><img src="${mapboxWatermarkImage}" class="mapboxWatermark" /></a>`;
+
+  return `${openStreetMap} ${mapBox} ${improveThisMap} ${watermark}`;
+};
+
 const getTiles = () =>
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
     id: 'mapbox/streets-v11',
@@ -51,6 +61,8 @@ const FullMap = ({ peers }) => {
       tiles.addTo(networkMap);
 
       networkMap.addLayer(createMarkers(peers));
+      networkMap.attributionControl.addAttribution(getAttributionLinks());
+
       ref.current = networkMap;
     }
   }, [peers]);
