@@ -37,8 +37,9 @@ const getAttributionLinks = () => {
   const openStreetMap = '<span>© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors</span>';
   const mapBox = '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a>';
   const improveThisMap = '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" target="_blank">Improve this map</a>';
+  const watermark = '<a href="http://mapbox.com/about/maps" target="_blank"><img src="/assets/images/mapbox.png" class="mapboxWatermark" /></a>';
 
-  return `${openStreetMap} ${mapBox} ${improveThisMap}`;
+  return `${openStreetMap} ${mapBox} ${improveThisMap} ${watermark}`;
 };
 
 const getTiles = () =>
