@@ -68,12 +68,14 @@ export const graphOptions = ({
       ticks: {
         callback: (value) => {
           moment.locale(locale);
-          return moment(value, format).format('MMM YY');
+          return moment(value, format).format('MMM YYYY');
         },
         fontColor: styles.slateGray,
         fontSize: styles.fontSize,
         fontFamily: styles.contentFontFamily,
         maxRotation: 0,
+        autoSkip: true,
+        maxTicksLimit: 5,
       },
     }],
     yAxes: [{
