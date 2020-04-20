@@ -16,11 +16,11 @@ import MonitorTransactions from '../components/screens/monitor/transactions';
 import Register from '../components/screens/register';
 import RegisterDelegate from '../components/screens/registerDelegate';
 import SecondPassphrase from '../components/screens/secondPassphrase';
-import Send from '../components/screens/wallet/send/send';
+import Send from '../components/screens/wallet3/send/send';
 import Settings from '../components/screens/settings';
 import SignMessage from '../components/screens/signMessage';
 import TermsOfUse from '../components/screens/termsOfUse';
-import TransactionDashboard from '../components/shared/transactionDashboard';
+import Wallet from '../components/screens/wallet';
 import Transactions from '../components/screens/explorer/transactions';
 import VerifyMessage from '../components/screens/verifyMessage';
 import VotingSummary from '../components/screens/delegates/votingSummary';
@@ -70,7 +70,7 @@ export default {
   wallet: {
     path: '/wallet',
     pathSuffix: '/:token?',
-    component: TransactionDashboard,
+    component: Wallet,
     isPrivate: true,
   },
   votingSummary: {
