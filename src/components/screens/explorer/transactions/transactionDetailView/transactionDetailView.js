@@ -3,7 +3,7 @@ import React from 'react';
 import { sizeOfString } from '../../../../../utils/helpers';
 import AccountInfo from './accountInfo';
 import BoxRow from '../../../../toolbox/box/row';
-import TransactionTypeFigure from '../../../wallet/transactions/typeFigure/TransactionTypeFigure';
+import TransactionTypeFigure from '../../../wallet3/transactions/typeFigure/TransactionTypeFigure';
 import TransactionVotes from './transactionVotes';
 import styles from './transactionDetailView.css';
 import transactionTypes from '../../../../../constants/transactionTypes';

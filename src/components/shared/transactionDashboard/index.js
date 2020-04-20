@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import WalletTransactions from '../../screens/wallet/transactions/walletTransactions';
+import WalletTransactions from '../../screens/wallet3/transactions/walletTransactions';
 import { tokenMap } from '../../../constants/tokens';
 
 import styles from './transactionDasboard.css';

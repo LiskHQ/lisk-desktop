@@ -1,9 +1,9 @@
 import React from 'react';
 import DelegateTab from '../../../shared/delegate';
 import TabsContainer from '../../../toolbox/tabsContainer/tabsContainer';
-import TransactionsOverviewHeader from '../../wallet/transactions/transactionsOverviewHeader/transactionsOverviewHeader';
+import TransactionsOverviewHeader from '../../wallet3/transactions/transactionsOverviewHeader/transactionsOverviewHeader';
 import VotesTab from '../../../shared/votes';
-import WalletTab from '../../wallet/walletTab';
+import WalletTab from '../../wallet3/walletTab';
 import actionTypes from '../../../../constants/actions';
 import routes from '../../../../constants/routes';
 
