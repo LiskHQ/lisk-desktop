@@ -10,14 +10,14 @@ import { LineChart } from '../../../../toolbox/charts';
 import styles from './balanceChart.css';
 
 const BalanceGraph = ({
-  t, transactions, token, balance, address, isDiscreetMode,
+  t, transactions, token, isDiscreetMode, account,
 }) => {
   const format = ChartUtils.getChartDateFormat(transactions);
 
   const data = ChartUtils.getBalanceData({
     transactions,
-    balance,
-    address,
+    balance: account.balance,
+    address: account.address,
     format,
   });
 

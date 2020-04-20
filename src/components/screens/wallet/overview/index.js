@@ -1,16 +1,29 @@
 import React from 'react';
-// import BalanceChart from './balanceChart';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import BalanceChart from './balanceChart';
 import WalletDetails from './walletDetails';
 
-const Overview = ({ t, account, activeToken }) => {
+const Overview = ({
+  t, account, activeToken, transactions, discreetMode,
+}) => {
   return (
-    <section>
-      <WalletDetails
-        t={t}
-        activeToken={activeToken}
-        account={account || {}}
-      />
-      {/* <BalanceChart /> */}
+    <section className={`${grid.row}`}>
+      <div className={`${grid['col-xs-7']} ${grid['col-md-6']} ${grid['col-lg-5']}`}>
+        <WalletDetails
+          t={t}
+          activeToken={activeToken}
+          account={account || {}}
+        />
+      </div>
+      <div className={`${grid['col-xs-5']} ${grid['col-md-6']} ${grid['col-lg-7']}`}>
+        <BalanceChart
+          t={t}
+          transactions={transactions}
+          token={activeToken}
+          isDiscreetMode={discreetMode}
+          account={account}
+        />
+      </div>
     </section>
   );
 };

@@ -11,6 +11,7 @@ import liskServiceApi from '../../../utils/api/lsk/liskService';
 const Wallet = ({ transactions, t }) => {
   const account = useSelector(state => state.account);
   const activeToken = useSelector(state => state.settings.token.active);
+  const { discreetMode } = useSelector(state => state.settings);
 
   return (
     <section>
@@ -18,8 +19,13 @@ const Wallet = ({ transactions, t }) => {
         t={t}
         account={account.info[activeToken]}
         activeToken={activeToken}
+        transactions={transactions.data}
+        discreetMode={discreetMode}
       />
-      <Transactions transactions={transactions} t={t} />
+      <Transactions
+        transactions={transactions}
+        t={t}
+      />
     </section>
   );
 };
