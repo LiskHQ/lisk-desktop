@@ -1,0 +1,15 @@
+.wrapper {
+  display: flex;
+  height: calc(100% - 12px);
+  overflow: initial;
+  padding: 0;
+}
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
+  border-bottom-left-radius: var(--border-radius-box);
+  border-bottom-right-radius: var(--border-radius-box);
+}
