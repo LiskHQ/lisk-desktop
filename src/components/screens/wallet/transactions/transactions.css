@@ -1,62 +1,34 @@
-@import '../../../../app/mixins.css';
+.sortingColumn {
+  cursor: pointer;
+}
 
-.transactions {
-  background: var(--color-white);
-  border: 1px solid var(--color-platinum);
-  border-radius: var(--border-radius-box);
+.arrow {
+  width: 0;
+  height: 0;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+
+  &.arrowUp {
+    border-bottom: 4px solid black;
+  }
+
+  &.arrowDown {
+    border-top: 4px solid black;
+  }
+}
+
+.tooltip {
   display: flex;
   flex-direction: column;
-  height: auto;
-  margin-bottom: 40px;
-  min-height: 371px;
-  padding: 0;
+  justify-content: center;
 }
 
-.container {
-  align-items: center;
-  border-radius: var(--border-radius-box) var(--border-radius-box) 0 0;
-  display: flex;
-  background: var(--color-white-smoke);
-  justify-content: space-between;
-  border-bottom: 1px solid var(--color-platinum);
-  padding-left: 20px;
-
-  & .items {
-    padding: 0px 10px;
-  }
+.content {
+  padding: 0 !important;
 }
 
-.topHeader {
-  display: flex;
-}
-
-.txDetails {
-  word-break: break-word;
-
-  &.delegateVote {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-
-    & > span {
-      display: inline-block;
-      margin-right: 5px;
-    }
-  }
-
-  & .label {
-    display: inline;
-  }
-}
-
-.amountLabel {
-  @mixin contentNormal bold;
-
-  &.greyLabel {
-    color: var(--color-content-light);
-  }
-
-  &.greenLabel {
-    color: #00b262;
-  }
+.tooltipOffset {
+  left: -8px;
 }
