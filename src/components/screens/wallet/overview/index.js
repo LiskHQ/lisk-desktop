@@ -1,12 +1,16 @@
 import React from 'react';
-import BalanceChart from './balanceChart';
-import walletDetails from './walletDetails';
+// import BalanceChart from './balanceChart';
+import WalletDetails from './walletDetails';
 
-const Overview = () => {
+const Overview = ({ t, account, activeToken }) => {
   return (
     <section>
-      <walletDetails />
-      <BalanceChart />
+      <WalletDetails
+        t={t}
+        activeToken={activeToken}
+        account={account || {}}
+      />
+      {/* <BalanceChart /> */}
     </section>
   );
 };
