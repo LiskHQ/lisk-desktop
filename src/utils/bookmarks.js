@@ -1,18 +1,16 @@
-import localJSONStorage from './localJSONStorage';
 import { tokenKeys, tokenMap } from '../constants/tokens';
 
-export const setBookmarksInLocalStorage = data => localJSONStorage.set('bookmarks', data);
+export const emptyBookmarks = tokenKeys.reduce((acc, token) => ({ ...acc, [token]: [] }), {});
 
-export const getBookmarksFromLocalStorage = () => {
-  const bookmarksObj = tokenKeys.reduce((acc, token) => ({ ...acc, [token]: [] }), {});
-  const localStorageBookmarks = localJSONStorage.get('bookmarks', localJSONStorage.get('followedAccounts', bookmarksObj));
-  const bookmarks = Array.isArray(localStorageBookmarks)
-    ? { ...bookmarksObj, LSK: localStorageBookmarks }
-    : localStorageBookmarks;
-  localStorage.removeItem('followedAccounts');
-  setBookmarksInLocalStorage(bookmarks);
+export const validateBookmarks = (data) => {
+  if (!!data && typeof data !== 'object') return emptyBookmarks;
 
-  return bookmarks;
+  const isValid = tokenKeys.reduce((flag, token) => {
+    flag = flag && Array.isArray(data[token]);
+    return flag;
+  }, true);
+
+  return isValid ? data : emptyBookmarks;
 };
 
 export const getIndexOfBookmark = (bookmarks, { address, token = tokenMap.LSK.key }) =>
