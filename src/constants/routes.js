@@ -16,7 +16,7 @@ import MonitorTransactions from '../components/screens/monitor/transactions';
 import Register from '../components/screens/register';
 import RegisterDelegate from '../components/screens/registerDelegate';
 import SecondPassphrase from '../components/screens/secondPassphrase';
-import Send from '../components/screens/wallet3/send/send';
+import Send from '../components/screens/send/send';
 import Settings from '../components/screens/settings';
 import SignMessage from '../components/screens/signMessage';
 import TermsOfUse from '../components/screens/termsOfUse';
