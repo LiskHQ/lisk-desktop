@@ -5,19 +5,27 @@ import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import withData from '../../../utils/withData';
 import Overview from './overview';
+import Header from './header';
 import Transactions from './transactions';
 import { getAccount } from '../../../utils/api/account';
 import { getTransactions } from '../../../utils/api/transactions';
 import txFilters from '../../../constants/transactionFilters';
 
-const Wallet = ({ transactions, t }) => {
+const Wallet = ({ transactions, t, match }) => {
   const account = useSelector(state => state.account);
   const activeToken = useSelector(state => state.settings.token.active);
+  const bookmarks = useSelector(state => state.bookmarks);
   const { discreetMode } = useSelector(state => state.settings);
-  console.log('transactions', transactions);
 
   return (
     <section>
+      <Header
+        bookmarks={bookmarks}
+        address={account.info[activeToken].address}
+        match={match}
+        account={account}
+        activeToken={activeToken}
+      />
       <Overview
         t={t}
         account={account.info[activeToken]}
