@@ -6,12 +6,15 @@ import { withTranslation } from 'react-i18next';
 import withData from '../../../utils/withData';
 import Overview from './overview';
 import Transactions from './transactions';
-import liskServiceApi from '../../../utils/api/lsk/liskService';
+import { getAccount } from '../../../utils/api/account';
+import { getTransactions } from '../../../utils/api/transactions';
+import txFilters from '../../../constants/transactionFilters';
 
 const Wallet = ({ transactions, t }) => {
   const account = useSelector(state => state.account);
   const activeToken = useSelector(state => state.settings.token.active);
   const { discreetMode } = useSelector(state => state.settings);
+  console.log('transactions', transactions);
 
   return (
     <section>
@@ -30,20 +33,40 @@ const Wallet = ({ transactions, t }) => {
   );
 };
 
-const ComposedWallet = compose(
-  withData({
-    transactions: {
-      apiUtil: liskServiceApi.getTransactions,
-      defaultData: [],
-      autoload: true,
-      transformResponse: (response, oldData, urlSearchParams) => (
-        urlSearchParams.offset
-          ? [...oldData, ...response.data.filter(block =>
-            !oldData.find(({ id }) => id === block.id))]
-          : response.data
-      ),
+const apis = {
+  detailAccount: {
+    apiUtil: (liskAPIClient, params) => getAccount({ liskAPIClient, ...params }),
+    autoload: true,
+    getApiParams: state => ({
+      token: state.settings.token.active,
+      address: state.account.info[state.settings.token.active].address,
+      networkConfig: state.network,
+    }),
+  },
+  transactions: {
+    apiUtil: (apiClient, params) => getTransactions(params),
+    autoload: true,
+    getApiParams: state => ({
+      token: state.settings.token.active,
+      address: state.account.info[state.settings.token.active].address,
+      networkConfig: state.network,
+    }),
+    defaultData: [],
+    defaultUrlSearchParams: {
+      filters: {
+        direction: txFilters.all,
+      },
     },
-  }),
+    transformResponse: (response, oldData, urlSearchParams) => (
+      urlSearchParams.offset
+        ? [...oldData, ...response.data]
+        : response.data
+    ),
+  },
+};
+
+const ComposedWallet = compose(
+  withData(apis),
   withTranslation(),
 )(Wallet);
 
