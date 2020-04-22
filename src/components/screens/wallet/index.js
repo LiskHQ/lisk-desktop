@@ -43,6 +43,7 @@ const Wallet = ({ transactions, t, match }) => {
         match={match}
         account={account}
         activeToken={activeToken}
+        t={t}
       />
       <Overview
         t={t}
