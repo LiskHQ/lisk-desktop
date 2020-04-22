@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import Box from '../../../../toolbox/box';
 import BoxHeader from '../../../../toolbox/box/header';
@@ -12,21 +12,33 @@ import styles from './balanceChart.css';
 const BalanceGraph = ({
   t, transactions, token, isDiscreetMode, account,
 }) => {
-  const format = ChartUtils.getChartDateFormat(transactions);
+  const [data, setData] = useState(null);
+  const [options, setOptions] = useState({});
 
-  const data = ChartUtils.getBalanceData({
-    transactions,
-    balance: account.balance,
-    address: account.address,
-    format,
-  });
+  useEffect(() => {
+    if (data) {
+      setData(null);
+    }
+  }, [token]);
 
-  const options = ChartUtils.graphOptions({
-    format,
-    token,
-    isDiscreetMode,
-    locale: i18n.language,
-  });
+  useEffect(() => {
+    if (!data && transactions.length) {
+      const format = ChartUtils.getChartDateFormat(transactions);
+      setOptions(ChartUtils.graphOptions({
+        format,
+        token,
+        isDiscreetMode,
+        locale: i18n.language,
+      }));
+
+      setData(ChartUtils.getBalanceData({
+        transactions,
+        balance: account.balance,
+        address: account.address,
+        format,
+      }));
+    }
+  }, [transactions]);
 
   return (
     <Box className={`${styles.wrapper}`}>
@@ -34,7 +46,7 @@ const BalanceGraph = ({
         <h1>{t('{{token}} balance', { token: tokenMap[token].label })}</h1>
       </BoxHeader>
       <div className={styles.content}>
-        { transactions.length
+        { data
           ? (
             <LineChart
               data={data}
