@@ -54,6 +54,7 @@ const Wallet = ({ transactions, t, match }) => {
       />
       <Transactions
         transactions={transactions}
+        activeToken={activeToken}
         t={t}
       />
     </section>
