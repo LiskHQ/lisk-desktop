@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { withTranslation } from 'react-i18next';
 import React from 'react';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../../utils/bookmarks';
