@@ -7,7 +7,7 @@ import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
 import DropdownButton from '../../../toolbox/dropdownButton';
 import HeaderAccountInfo from './accountInfo';
 import PageHeader from '../../../toolbox/pageHeader';
-// import Request from '../request';
+import Request from './request';
 import routes from '../../../../constants/routes';
 import styles from './header.css';
 
@@ -49,7 +49,7 @@ class transactionsHeader extends React.Component {
               buttonClassName="tx-receive-bt"
               buttonLabel={t('Request {{token}}', { token: activeToken })}
             >
-              {/* <Request address={address} token={activeToken} t={t} /> */}
+              <Request address={address} token={activeToken} t={t} />
             </DropdownButton>
             <Link to={`${routes.send.path}?wallet`} className="tx-send-bt">
               <PrimaryButton>
