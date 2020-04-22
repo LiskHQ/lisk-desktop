@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
 import TransactionTypeFigure from './typeFigure/TransactionTypeFigure';
-import TransactionAddress from '../../../shared/transactionAddress/TransactionAddress';
+import TransactionAddress from '../../../shared/transactionAddress';
 import TransactionAmount from './amount/TransactionAmount';
 import TransactionDetail from './transactionDetail';
 import styles from './transactionRow.css';
