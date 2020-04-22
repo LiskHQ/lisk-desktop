@@ -11,6 +11,24 @@ import { getAccount } from '../../../utils/api/account';
 import { getTransactions } from '../../../utils/api/transactions';
 import txFilters from '../../../constants/transactionFilters';
 
+const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
+/**
+ * The implementation of this API endpoint and the ones implemented for Lisk Service
+ * are different. this transformer adapts params temporarily before all the APIs
+ * are unified. then we can remove this.
+ *
+ * @param {Object} params - All params and filters provided by WithFilters HOC
+ */
+const transformParams = params => Object.keys(params)
+  .reduce((acc, item) => {
+    if (filterNames.includes(item)) acc.filters[item] = params[item];
+    else acc[item] = params[item];
+
+    if (typeof params.tab === 'number') acc.filters.direction = params.tab;
+    return acc;
+  }, { filters: {} });
+
+
 const Wallet = ({ transactions, t, match }) => {
   const account = useSelector(state => state.account);
   const activeToken = useSelector(state => state.settings.token.active);
@@ -25,6 +43,7 @@ const Wallet = ({ transactions, t, match }) => {
         match={match}
         account={account}
         activeToken={activeToken}
+        t={t}
       />
       <Overview
         t={t}
@@ -35,6 +54,7 @@ const Wallet = ({ transactions, t, match }) => {
       />
       <Transactions
         transactions={transactions}
+        activeToken={activeToken}
         t={t}
       />
     </section>
@@ -52,7 +72,7 @@ const apis = {
     }),
   },
   transactions: {
-    apiUtil: (apiClient, params) => getTransactions(params),
+    apiUtil: (apiClient, params) => getTransactions(transformParams(params)),
     autoload: true,
     getApiParams: state => ({
       token: state.settings.token.active,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
@@ -55,6 +55,7 @@ const Tabs = ({ t, onTabChange }) => {
 
 const Transactions = ({
   transactions,
+  activeToken,
   filters,
   applyFilters,
   clearFilter,
@@ -73,16 +74,25 @@ const Transactions = ({
   const formatters = {
     dateFrom: value => `${t('From')}: ${value}`,
     dateTo: value => `${t('To')}: ${value}`,
-    amountFrom: value => `> ${value}`,
-    amountTo: value => `< ${value}`,
+    amountFrom: value => `> ${value} ${activeToken}`,
+    amountTo: value => `< ${value} ${activeToken}`,
     message: value => `${t('Message')}: ${value}`,
   };
+
+  useEffect(() => {
+    // This will automatically load the new data too.
+    clearAllFilters();
+  }, [activeToken]);
 
   return (
     <Box main isLoading={transactions.isLoading} className="transactions-box">
       <BoxHeader>
         <Tabs t={t} onTabChange={applyFilters} />
-        <FilterDropdown filters={filters} applyFilters={applyFilters} />
+        {
+          activeToken === 'LSK' ? (
+            <FilterDropdown filters={filters} applyFilters={applyFilters} />
+          ) : null
+        }
       </BoxHeader>
       <FilterBar {...{
         clearFilter, clearAllFilters, filters, formatters, t,

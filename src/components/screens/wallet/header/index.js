@@ -103,4 +103,4 @@ class transactionsHeader extends React.Component {
   }
 }
 
-export default withTranslation()(transactionsHeader);
+export default transactionsHeader;
