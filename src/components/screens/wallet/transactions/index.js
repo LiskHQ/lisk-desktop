@@ -73,8 +73,8 @@ const Transactions = ({
   const formatters = {
     dateFrom: value => `${t('From')}: ${value}`,
     dateTo: value => `${t('To')}: ${value}`,
-    amountFrom: value => `> ${value}`,
-    amountTo: value => `< ${value}`,
+    amountFrom: value => `> ${value} LSK`,
+    amountTo: value => `< ${value} LSK`,
     message: value => `${t('Message')}: ${value}`,
   };
 
