@@ -11,17 +11,16 @@ import TransactionAddress from '../../../shared/transactionAddress';
 import TransactionAmount from '../../../shared/transactionAmount';
 import TransactionAsset from './txAsset';
 
-const TransactionRow = ({ data, className, t }) => {
+const TransactionRow = ({
+  data, className, t, host,
+}) => {
   const {
-    accounts,
     bookmarks,
     activeToken,
   } = useSelector(state => ({
-    accounts: state.account.info,
     bookmarks: state.bookmarks,
     activeToken: state.settings.token.active,
   }));
-  const { address } = accounts[activeToken];
   const isLSK = activeToken === tokenMap.LSK.key;
   const dateClass = isLSK ? 'col-xs-2' : 'col-xs-3';
   const addressClass = isLSK ? 'col-xs-4' : 'col-xs-5';
@@ -32,12 +31,12 @@ const TransactionRow = ({ data, className, t }) => {
     >
       <span className={grid[addressClass]}>
         <TransactionTypeFigure
-          icon={address === data.recipientId ? 'incoming' : 'outgoing'}
-          address={address === data.recipientId ? data.senderId : data.recipientId}
+          icon={host === data.recipientId ? 'incoming' : 'outgoing'}
+          address={host === data.recipientId ? data.senderId : data.recipientId}
           transactionType={data.type}
         />
         <TransactionAddress
-          address={address === data.recipientId ? data.senderId : data.recipientId}
+          address={host === data.recipientId ? data.senderId : data.recipientId}
           bookmarks={bookmarks}
           t={t}
           token={activeToken}
@@ -45,7 +44,7 @@ const TransactionRow = ({ data, className, t }) => {
         />
       </span>
       <span className={grid[dateClass]}>
-        <DateTimeFromTimestamp time={data.timestamp} token="LSK" />
+        <DateTimeFromTimestamp time={data.timestamp} token={tokenMap.LSK.key} />
       </span>
       <span className={grid['col-xs-2']}>
         <LiskAmount val={data.fee} token={tokenMap[activeToken].key} />
@@ -61,7 +60,7 @@ const TransactionRow = ({ data, className, t }) => {
       }
       <span className={grid['col-xs-2']}>
         <TransactionAmount
-          host={address}
+          host={host}
           token={activeToken}
           sender={data.senderId}
           recipient={data.recipientId || data.asset.recipientId}

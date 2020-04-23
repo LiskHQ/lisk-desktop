@@ -60,6 +60,7 @@ const Transactions = ({
   applyFilters,
   clearFilter,
   clearAllFilters,
+  host,
   t,
 }) => {
   /* istanbul ignore next */
@@ -107,7 +108,7 @@ const Transactions = ({
           header={header(t, activeToken)}
           error={transactions.error}
           canLoadMore={canLoadMore}
-          additionalRowProps={{ t, activeToken }}
+          additionalRowProps={{ t, activeToken, host }}
         />
       </BoxContent>
     </Box>
