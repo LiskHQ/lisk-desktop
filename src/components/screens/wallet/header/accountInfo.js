@@ -7,7 +7,6 @@ import styles from './header.css';
 
 // eslint-disable-next-line complexity
 const headerAccountInfo = ({
-  account,
   address,
   bookmarks,
   delegate,
@@ -15,12 +14,13 @@ const headerAccountInfo = ({
   token,
 }) => {
   const { apiVersion } = useSelector(state => state.network.networks.LSK);
+  const myAddress = useSelector(state => state.account.info[token].address);
   const index = getIndexOfBookmark(bookmarks, { address, token });
   const accounts = bookmarks[token];
   const accountTitle = delegate.username
     || (index > -1 && accounts[index] && accounts[index].title);
   let label = '';
-  if (address === account.address) {
+  if (address === myAddress) {
     label = t('My Account');
   } else if (delegate.username) {
     label = apiVersion === '2' ? t('Delegate #{{rank}}', { rank: delegate.rank }) : t('Delegate');
