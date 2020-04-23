@@ -13,7 +13,7 @@ import styles from './walletDetails.css';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 
 const WalletDetails = ({
-  account, t, activeToken, hwInfo,
+  address, t, activeToken, hwInfo, balance,
 }) => (
   <Box className={styles.wrapper}>
     <BoxHeader>
@@ -21,19 +21,19 @@ const WalletDetails = ({
     </BoxHeader>
     <BoxRow className={styles.row}>
       <AccountVisual
-        address={account.address}
+        address={address}
         size={40}
       />
       <div>
         <label>{t('Address')}</label>
         <div className={styles.value}>
-          <span className="account-address">{account.address}</span>
+          <span className="account-address">{address}</span>
         </div>
       </div>
       <div className={styles.addressIcons}>
         <div className={styles.helperIcon}>
           <CopyToClipboard
-            value={account.address}
+            value={address}
             type="icon"
             copyClassName={styles.copyIcon}
           />
@@ -45,7 +45,7 @@ const WalletDetails = ({
             title={t('Scan address')}
             content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
           >
-            <QRCode value={account.address} size={154} />
+            <QRCode value={address} size={154} />
           </Tooltip>
         </div>
         {
@@ -78,7 +78,7 @@ const WalletDetails = ({
         <label>{t('Balance')}</label>
         <DiscreetMode shouldEvaluateForOtherAccounts>
           <div className={styles.value}>
-            <LiskAmount val={account.balance} />
+            <LiskAmount val={balance} />
             {' '}
             {activeToken}
           </div>

@@ -4,7 +4,7 @@ import BalanceChart from './balanceChart';
 import WalletDetails from './walletDetails';
 
 const Overview = ({
-  t, account, activeToken, transactions, discreetMode,
+  t, address, balance, activeToken, transactions, discreetMode,
 }) => {
   return (
     <section className={`${grid.row}`}>
@@ -12,7 +12,8 @@ const Overview = ({
         <WalletDetails
           t={t}
           activeToken={activeToken}
-          account={account || {}}
+          address={address}
+          balance={balance}
         />
       </div>
       <div className={`${grid['col-xs-5']} ${grid['col-md-6']} ${grid['col-lg-7']}`}>
@@ -21,7 +22,8 @@ const Overview = ({
           transactions={transactions}
           token={activeToken}
           isDiscreetMode={discreetMode}
-          account={account}
+          balance={balance}
+          address={address}
         />
       </div>
     </section>
