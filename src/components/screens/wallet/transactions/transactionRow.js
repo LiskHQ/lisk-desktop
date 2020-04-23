@@ -45,7 +45,7 @@ const TransactionRow = ({ data, className, t }) => {
         <DateTimeFromTimestamp time={data.timestamp} token="LSK" />
       </span>
       <span className={grid['col-xs-2']}>
-        <LiskAmount val={data.fee} token={tokenMap.LSK.key} />
+        <LiskAmount val={data.fee} token={tokenMap[token].key} />
       </span>
       <span className={`${grid['col-xs-3']} ${grid['col-md-2']}`}>
         <TransactionAsset t={t} transaction={data} />
