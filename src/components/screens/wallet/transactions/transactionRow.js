@@ -15,19 +15,22 @@ const TransactionRow = ({ data, className, t }) => {
   const {
     accounts,
     bookmarks,
-    token,
+    activeToken,
   } = useSelector(state => ({
     accounts: state.account.info,
     bookmarks: state.bookmarks,
-    token: state.settings.token.active,
+    activeToken: state.settings.token.active,
   }));
-  const { address } = accounts[token];
+  const { address } = accounts[activeToken];
+  const isLSK = activeToken === tokenMap.LSK.key;
+  const dateClass = isLSK ? 'col-xs-2' : 'col-xs-3';
+  const addressClass = isLSK ? 'col-xs-4' : 'col-xs-5';
   return (
     <Link
       className={`${grid.row} ${className}`}
       to={`${routes.transactions.path}/${data.id}`}
     >
-      <span className={`${grid['col-xs-5']} ${grid['col-md-4']}`}>
+      <span className={grid[addressClass]}>
         <TransactionTypeFigure
           icon={address === data.recipientId ? 'incoming' : 'outgoing'}
           address={address === data.recipientId ? data.senderId : data.recipientId}
@@ -37,23 +40,29 @@ const TransactionRow = ({ data, className, t }) => {
           address={address === data.recipientId ? data.senderId : data.recipientId}
           bookmarks={bookmarks}
           t={t}
-          token={token}
+          token={activeToken}
           transactionType={data.type}
         />
       </span>
-      <span className={grid['col-xs-2']}>
+      <span className={grid[dateClass]}>
         <DateTimeFromTimestamp time={data.timestamp} token="LSK" />
       </span>
       <span className={grid['col-xs-2']}>
         <LiskAmount val={data.fee} token={tokenMap[token].key} />
       </span>
-      <span className={`${grid['col-xs-3']} ${grid['col-md-2']}`}>
-        <TransactionAsset t={t} transaction={data} />
-      </span>
+      {
+        isLSK
+          ? (
+            <span className={`${grid['col-xs-3']} ${grid['col-md-2']}`}>
+              <TransactionAsset t={t} transaction={data} />
+            </span>
+          )
+          : null
+      }
       <span className={grid['col-xs-2']}>
         <TransactionAmount
           host={address}
-          token={token}
+          token={activeToken}
           sender={data.senderId}
           recipient={data.recipientId || data.asset.recipientId}
           type={data.type}
