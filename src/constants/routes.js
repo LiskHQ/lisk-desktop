@@ -21,6 +21,7 @@ import Settings from '../components/screens/settings';
 import SignMessage from '../components/screens/signMessage';
 import TermsOfUse from '../components/screens/termsOfUse';
 import Wallet from '../components/screens/wallet';
+import Explorer from '../components/screens/wallet/explorer';
 import Transactions from '../components/screens/explorer/transactions';
 import VerifyMessage from '../components/screens/verifyMessage';
 import VotingSummary from '../components/screens/delegates/votingSummary';
@@ -123,7 +124,7 @@ export default {
     pathPrefix: '',
     path: '/explorer/accounts',
     pathSuffix: '/:address?',
-    component: Accounts,
+    component: Explorer,
     isPrivate: false,
   },
   transactions: {
