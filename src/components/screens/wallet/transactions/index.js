@@ -107,7 +107,7 @@ const Transactions = ({
           header={header(t, activeToken)}
           error={transactions.error}
           canLoadMore={canLoadMore}
-          additionalRowProps={{ t }}
+          additionalRowProps={{ t, activeToken }}
         />
       </BoxContent>
     </Box>
