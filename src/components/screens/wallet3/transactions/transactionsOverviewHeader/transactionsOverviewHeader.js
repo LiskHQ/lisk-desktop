@@ -91,7 +91,7 @@ class transactionsHeader extends React.Component {
                 token={activeToken}
                 delegate={delegate}
                 address={address}
-                detailAccount={detailAccount}
+                publicKey={detailAccount.publicKey}
                 isBookmark={isBookmark}
                 onSubmitClick={this.toggleDropdown}
               />
