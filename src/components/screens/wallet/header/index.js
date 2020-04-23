@@ -28,7 +28,7 @@ class transactionsHeader extends React.Component {
 
   render() {
     const {
-      bookmarks, address, t, delegate = {}, activeToken, detailAccount,
+      bookmarks, address, t, delegate = {}, activeToken, publicKey,
     } = this.props;
 
     const isBookmark = getIndexOfBookmark(bookmarks, {
@@ -66,7 +66,6 @@ class transactionsHeader extends React.Component {
             bookmarks={bookmarks}
             address={address}
             delegate={delegate}
-            account={this.props.account}
             toggleActiveToken={this.props.toggleActiveToken}
           />
           <div className={`${styles.buttonsHolder}`}>
@@ -90,7 +89,7 @@ class transactionsHeader extends React.Component {
                 token={activeToken}
                 delegate={delegate}
                 address={address}
-                detailAccount={detailAccount}
+                publicKey={publicKey}
                 isBookmark={isBookmark}
                 onSubmitClick={this.toggleDropdown}
               />
