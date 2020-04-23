@@ -154,7 +154,7 @@ class TransactionStatus extends React.Component {
                     <BookmarkDropdown
                       delegate={recipientAccount.data.delegate || {}}
                       address={fields.recipient.address}
-                      detailAccount={this.props.recipientAccount.data}
+                      publicKey={this.props.recipientAccount.data.publicKey}
                       isBookmark={isBookmarked}
                       token={token}
                     />
