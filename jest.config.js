@@ -51,7 +51,6 @@ module.exports = {
     'src/components/screens/register/register.js',
     'src/components/screens/wallet/transactions/request/index.js',
     'src/components/screens/wallet/transactions/request/requestWrapper.js',
-    'src/components/shared/transactionDashboard/index.js',
     'src/components/screens/wallet/transactions/transactions.js',
     'src/components/screens/explorer/transactions/transactions.js',
     'src/components/screens/delegates/votingSummary/voteUrlProcessor/index.js',

@@ -1,12 +1,12 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
-import { sizeOfString } from '../../../../../utils/helpers';
+import { sizeOfString } from '../../../../utils/helpers';
 import AccountInfo from './accountInfo';
-import BoxRow from '../../../../toolbox/box/row';
-import TransactionTypeFigure from '../../../wallet3/transactions/typeFigure/TransactionTypeFigure';
+import BoxRow from '../../../toolbox/box/row';
+import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
 import TransactionVotes from './transactionVotes';
 import styles from './transactionDetailView.css';
-import transactionTypes from '../../../../../constants/transactionTypes';
+import transactionTypes from '../../../../constants/transactionTypes';
 
 
 function getDelegateName(transaction, activeToken) {
