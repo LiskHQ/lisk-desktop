@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import TransactionDetailView from './transactionDetailView';
-import accounts from '../../../../../../test/constants/accounts';
+import accounts from '../../../../../test/constants/accounts';
 
 describe('Transaction Detail View', () => {
   let wrapper;

@@ -2,9 +2,9 @@ import Lisk from '@liskhq/lisk-client-old';
 import React from 'react';
 import { mount } from 'enzyme';
 import Transactions from './transactions';
-import accounts from '../../../../../test/constants/accounts';
-import fees from '../../../../constants/fees';
-import transactionTypes from '../../../../constants/transactionTypes';
+import accounts from '../../../../test/constants/accounts';
+import fees from '../../../constants/fees';
+import transactionTypes from '../../../constants/transactionTypes';
 
 describe('Single Transaction Component', () => {
   let wrapper;

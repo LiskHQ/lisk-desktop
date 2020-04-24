@@ -21,7 +21,7 @@ import SignMessage from '../components/screens/signMessage';
 import TermsOfUse from '../components/screens/termsOfUse';
 import Wallet from '../components/screens/wallet';
 import Explorer from '../components/screens/wallet/explorer';
-import Transactions from '../components/screens/explorer/transactions';
+import TransactionDetails from '../components/screens/transactionDetails';
 import VerifyMessage from '../components/screens/verifyMessage';
 import VotingSummary from '../components/screens/delegates/votingSummary';
 
@@ -130,7 +130,7 @@ export default {
     pathPrefix: '',
     path: '/explorer/transactions',
     pathSuffix: '/:id?',
-    component: Transactions,
+    component: TransactionDetails,
     isPrivate: false,
   },
   hwWallet: {
