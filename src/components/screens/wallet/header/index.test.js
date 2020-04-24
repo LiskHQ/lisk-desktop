@@ -18,6 +18,7 @@ describe('Transactions Overview Header', () => {
     match: { url: routes.wallet.path },
     balance: accounts.genesis.balance,
     activeToken: 'LSK',
+    t: str => str,
   };
 
   describe('Current user wallet', () => {
