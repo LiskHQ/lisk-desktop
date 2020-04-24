@@ -193,7 +193,7 @@ const autoLogInIfNecessary = async (store) => {
 
   const loginNetwork = checkNetworkToConnect(actualSettings);
 
-  store.dispatch(await networkSet(loginNetwork));
+  store.dispatch(networkSet(loginNetwork));
   store.dispatch(networkStatusUpdated({ online: true }));
 
   if (shouldAutoLogIn(autologinData)) {
