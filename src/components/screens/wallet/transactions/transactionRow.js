@@ -9,8 +9,11 @@ import routes from '../../../../constants/routes';
 import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
 import TransactionAddress from '../../../shared/transactionAddress';
 import TransactionAmount from '../../../shared/transactionAmount';
+import Spinner from '../../../toolbox/spinner';
 import TransactionAsset from './txAsset';
+import styles from './transactions.css';
 
+// eslint-disable-next-line complexity
 const TransactionRow = ({
   data, className, t, host,
 }) => {
@@ -22,14 +25,13 @@ const TransactionRow = ({
     activeToken: state.settings.token.active,
   }));
   const isLSK = activeToken === tokenMap.LSK.key;
-  const dateClass = isLSK ? 'col-xs-2' : 'col-xs-3';
-  const addressClass = isLSK ? 'col-xs-4' : 'col-xs-5';
+  const isConfirmed = data.confirmations > 0;
   return (
     <Link
-      className={`${grid.row} ${className}`}
+      className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending}`}
       to={`${routes.transactions.path}/${data.id}`}
     >
-      <span className={grid[addressClass]}>
+      <span className={grid[isLSK ? 'col-xs-4' : 'col-xs-5']}>
         <TransactionTypeFigure
           icon={host === data.recipientId ? 'incoming' : 'outgoing'}
           address={host === data.recipientId ? data.senderId : data.recipientId}
@@ -43,8 +45,12 @@ const TransactionRow = ({
           transactionType={data.type}
         />
       </span>
-      <span className={grid[dateClass]}>
-        <DateTimeFromTimestamp time={data.timestamp} token={tokenMap.LSK.key} />
+      <span className={grid[isLSK ? 'col-xs-2' : 'col-xs-3']}>
+        {
+          isConfirmed
+            ? <DateTimeFromTimestamp time={data.timestamp} token={tokenMap.LSK.key} />
+            : <Spinner completed={isConfirmed} label={t('Pending...')} />
+        }
       </span>
       <span className={grid['col-xs-2']}>
         <LiskAmount val={data.fee} token={tokenMap[activeToken].key} />
