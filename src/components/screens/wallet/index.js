@@ -45,11 +45,13 @@ const Wallet = ({ t, match }) => {
   };
 
   useEffect(() => {
-    transactions.loadData({
-      offset: 0,
-      limit: 30,
-      direction: txFilters.all,
-    });
+    if (!confirmed.length) {
+      transactions.loadData({
+        offset: 0,
+        limit: 30,
+        direction: txFilters.all,
+      });
+    }
   }, []);
 
   return (
@@ -71,6 +73,7 @@ const Wallet = ({ t, match }) => {
         discreetMode={discreetMode}
       />
       <Transactions
+        pending={pending}
         transactions={transactions}
         host={account.info[activeToken].address}
         activeToken={activeToken}
