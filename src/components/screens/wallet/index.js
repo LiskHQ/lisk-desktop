@@ -2,11 +2,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import Overview from './overview';
 import Header from './header';
-import Transactions from './transactions';
 import { getTransactions } from '../../../actions/transactions';
 import txFilters from '../../../constants/transactionFilters';
+import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
+import DelegateTab from '../../shared/delegate';
+import VotesTab from '../../shared/votes';
+import WalletTab from './walletTab';
 
 const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
 /**
@@ -26,7 +28,7 @@ const transformParams = params => Object.keys(params)
   }, { filters: {} });
 
 
-const Wallet = ({ t, match }) => {
+const Wallet = ({ t, match, history }) => {
   const dispatch = useDispatch();
   const account = useSelector(state => state.account);
   const activeToken = useSelector(state => state.settings.token.active);
@@ -64,21 +66,34 @@ const Wallet = ({ t, match }) => {
         activeToken={activeToken}
         t={t}
       />
-      <Overview
-        t={t}
-        address={account.info[activeToken].address}
-        balance={account.info[activeToken].balance || 0}
-        activeToken={activeToken}
-        transactions={confirmed}
-        discreetMode={discreetMode}
-      />
-      <Transactions
-        pending={pending}
-        transactions={transactions}
-        host={account.info[activeToken].address}
-        activeToken={activeToken}
-        t={t}
-      />
+      <TabsContainer>
+        <WalletTab
+          t={t}
+          host={account.info[activeToken].address}
+          activeToken={activeToken}
+          transactions={transactions}
+          discreetMode={discreetMode}
+          account={account.info[activeToken]}
+          tabName={t('Wallet')}
+          pending={pending}
+        />
+        {activeToken !== 'BTC' ? (
+          <VotesTab
+            history={history}
+            address={account.info[activeToken].address}
+            tabName={t('Votes')}
+          />
+        ) : null}
+        {account.info[activeToken].delegate
+          ? (
+            <DelegateTab
+              tabClassName="delegate-statistics"
+              tabName={t('Delegate')}
+              account={account.info[activeToken]}
+            />
+          )
+          : null}
+      </TabsContainer>
     </section>
   );
 };
