@@ -4,12 +4,15 @@ import { compose } from 'redux';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import withData from '../../../utils/withData';
-import Overview from './overview';
 import Header from './header';
-import Transactions from './transactions';
 import { getAccount } from '../../../utils/api/account';
 import { getTransactions } from '../../../utils/api/transactions';
 import txFilters from '../../../constants/transactionFilters';
+import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
+import DelegateTab from '../../shared/delegate';
+import VotesTab from '../../shared/votes';
+import WalletTab from './walletTab';
+
 
 const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
 /**
@@ -30,7 +33,7 @@ const transformParams = params => Object.keys(params)
 
 
 const Wallet = ({
-  transactions, t, match, account,
+  transactions, t, match, account, history,
 }) => {
   const activeToken = useSelector(state => state.settings.token.active);
   const bookmarks = useSelector(state => state.bookmarks);
@@ -46,20 +49,33 @@ const Wallet = ({
         activeToken={activeToken}
         t={t}
       />
-      <Overview
-        t={t}
-        address={match.params.address}
-        balance={account.data ? account.data.balance : 0}
-        activeToken={activeToken}
-        transactions={transactions.data}
-        discreetMode={discreetMode}
-      />
-      <Transactions
-        transactions={transactions}
-        host={match.params.address}
-        activeToken={activeToken}
-        t={t}
-      />
+      <TabsContainer>
+        <WalletTab
+          t={t}
+          host={match.params.address}
+          activeToken={activeToken}
+          transactions={transactions}
+          discreetMode={discreetMode}
+          account={account.data}
+          tabName={t('Wallet')}
+        />
+        {activeToken !== 'BTC' ? (
+          <VotesTab
+            history={history}
+            address={match.params.address}
+            tabName={t('Votes')}
+          />
+        ) : null}
+        {account.data.delegate
+          ? (
+            <DelegateTab
+              tabClassName="delegate-statistics"
+              tabName={t('Delegate')}
+              account={match.params.address}
+            />
+          )
+          : null}
+      </TabsContainer>
     </section>
   );
 };
