@@ -1,5 +1,4 @@
 import { tokenMap } from './tokens';
-import Accounts from '../components/screens/explorer/accounts';
 import AddBookmark from '../components/screens/bookmarks/addBookmark';
 import BlockDetails from '../components/screens/monitor/blockDetails';
 import Blocks from '../components/screens/monitor/blocks';
