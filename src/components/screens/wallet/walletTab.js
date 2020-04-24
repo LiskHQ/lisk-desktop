@@ -9,6 +9,7 @@ const WalletTab = ({
   activeToken,
   discreetMode,
   transactions,
+  pending,
 }) => (
   <>
     <Overview
@@ -24,6 +25,7 @@ const WalletTab = ({
       host={host}
       activeToken={activeToken}
       t={t}
+      pending={pending || []}
     />
   </>
 );
