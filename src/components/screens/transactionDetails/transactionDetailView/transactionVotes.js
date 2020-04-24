@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-import BoxRow from '../../../../toolbox/box/row';
+import BoxRow from '../../../toolbox/box/row';
 import styles from './transactionDetailView.css';
-import routes from '../../../../../constants/routes';
-import RankOrStatus from '../../../../shared/rankOrStatus';
+import routes from '../../../../constants/routes';
+import RankOrStatus from '../../../shared/rankOrStatus';
 
 const transactionVotes = ({ votes, t }) => {
   const accountPath = `${routes.accounts.pathPrefix}${routes.accounts.path}`;

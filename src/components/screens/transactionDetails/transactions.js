@@ -1,22 +1,22 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
-import { SecondaryButton } from '../../../toolbox/buttons/button';
-import { tokenMap } from '../../../../constants/tokens';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxRow from '../../../toolbox/box/row';
-import CopyToClipboard from '../../../toolbox/copyToClipboard';
-import DiscreetMode from '../../../shared/discreetMode';
-import LiskAmount from '../../../shared/liskAmount';
-import NotFound from '../../../shared/notFound';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
+import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
+import { SecondaryButton } from '../../toolbox/buttons/button';
+import { tokenMap } from '../../../constants/tokens';
+import Box from '../../toolbox/box';
+import BoxHeader from '../../toolbox/box/header';
+import BoxContent from '../../toolbox/box/content';
+import BoxRow from '../../toolbox/box/row';
+import CopyToClipboard from '../../toolbox/copyToClipboard';
+import DiscreetMode from '../../shared/discreetMode';
+import LiskAmount from '../../shared/liskAmount';
+import NotFound from '../../shared/notFound';
+import Tooltip from '../../toolbox/tooltip/tooltip';
 import TransactionDetailView from './transactionDetailView/transactionDetailView';
-import routes from '../../../../constants/routes';
+import routes from '../../../constants/routes';
 import styles from './transactions.css';
-import transactionTypes from '../../../../constants/transactionTypes';
+import transactionTypes from '../../../constants/transactionTypes';
 
 function addVotesWithDelegateNames(transaction, delegates, t) {
   const getVotesStartingWith = sign => (
