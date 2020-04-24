@@ -66,7 +66,7 @@ const Wallet = ({
             tabName={t('Votes')}
           />
         ) : null}
-        {account.data.delegate
+        {account.data && account.data.delegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
