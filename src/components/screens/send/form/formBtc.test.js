@@ -16,7 +16,7 @@ import accounts from '../../../../../test/constants/accounts';
 import defaultState from '../../../../../test/constants/defaultState';
 import * as serviceActions from '../../../../actions/service';
 
-jest.mock('../../../../../utils/api/btc/transactions');
+jest.mock('../../../../utils/api/btc/transactions');
 
 const unspendTransactionOutputs = [{
   height: 1575216,
@@ -36,7 +36,7 @@ getTransactionFeeFromUnspentOutputs.mockImplementation(
   ({ dynamicFeePerByte }) => dynamicFeePerByte,
 );
 
-jest.mock('../../../../../utils/api/btc/service');
+jest.mock('../../../../utils/api/btc/service');
 const dynamicFees = {
   Low: 156,
   High: 51,
