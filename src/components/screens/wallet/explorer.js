@@ -55,6 +55,7 @@ const Wallet = ({
         discreetMode={discreetMode}
       />
       <Transactions
+        pending={[]}
         transactions={transactions}
         host={match.params.address}
         activeToken={activeToken}
