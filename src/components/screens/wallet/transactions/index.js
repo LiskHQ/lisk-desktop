@@ -54,6 +54,7 @@ const Tabs = ({ t, onTabChange }) => {
 };
 
 const Transactions = ({
+  pending,
   transactions,
   activeToken,
   filters,
@@ -101,7 +102,7 @@ const Transactions = ({
       />
       <BoxContent className={styles.content}>
         <Table
-          data={transactions.data}
+          data={pending.concat(transactions.data)}
           isLoading={transactions.isLoading}
           row={TransactionRow}
           loadData={handleLoadMore}

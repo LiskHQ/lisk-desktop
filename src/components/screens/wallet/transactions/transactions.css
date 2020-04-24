@@ -32,3 +32,57 @@
 .tooltipOffset {
   left: -8px;
 }
+
+.pending {
+  animation-delay: var(--animation-speed-slowest);
+  animation-duration: var(--animation-speed-slow);
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-name: appear;
+  animation-timing-function: linear;
+
+  & :global(.tx-avatar),
+  & :global(.tx-icon) {
+    animation-delay: calc(var(--animation-speed-slowest) + calc(var(--animation-speed-slow) / 1.5));
+    animation-duration: var(--animation-speed-standard);
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+    animation-name: showIcons;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes appear {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+
+  40% {
+    height: 85px;
+    opacity: 0;
+  }
+  70% { height: 80px; }
+
+  100% {
+    height: 80px;
+    opacity: 1;
+  }
+}
+
+@keyframes showIcons {
+  0% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+
+  70% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

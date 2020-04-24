@@ -34,7 +34,7 @@ const Wallet = ({ t, match, history }) => {
   const activeToken = useSelector(state => state.settings.token.active);
   const bookmarks = useSelector(state => state.bookmarks);
   const { discreetMode } = useSelector(state => state.settings);
-  const { confirmed } = useSelector(state => state.transactions);
+  const { confirmed, pending } = useSelector(state => state.transactions);
   const transactions = {
     data: confirmed,
     loadData: (params) => {
@@ -47,11 +47,13 @@ const Wallet = ({ t, match, history }) => {
   };
 
   useEffect(() => {
-    transactions.loadData({
-      offset: 0,
-      limit: 30,
-      direction: txFilters.all,
-    });
+    if (!confirmed.length) {
+      transactions.loadData({
+        offset: 0,
+        limit: 30,
+        direction: txFilters.all,
+      });
+    }
   }, []);
 
   return (
@@ -73,6 +75,7 @@ const Wallet = ({ t, match, history }) => {
           discreetMode={discreetMode}
           account={account.info[activeToken]}
           tabName={t('Wallet')}
+          pending={pending}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
