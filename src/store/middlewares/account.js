@@ -16,7 +16,7 @@ import { networkSet, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
 import analytics from '../../utils/analytics';
 import i18n from '../../i18n';
-import localJSONStorage from '../../utils/localJSONStorage';
+import { getFromStorage } from '../../utils/localJSONStorage';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
@@ -126,7 +126,10 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
 
 // istanbul ignore next
 const getNetworkFromLocalStorage = () => {
-  const mySettings = localJSONStorage.get('settings', {});
+  let mySettings = {};
+  getFromStorage('settings', {}, (data) => {
+    mySettings = data;
+  });
   if (!mySettings.network) return networks.mainnet;
   return {
     ...Object.values(networks).find(
@@ -193,7 +196,7 @@ const autoLogInIfNecessary = async (store) => {
 
   const loginNetwork = checkNetworkToConnect(actualSettings);
 
-  store.dispatch(networkSet(loginNetwork));
+  store.dispatch(await networkSet(loginNetwork));
   store.dispatch(networkStatusUpdated({ online: true }));
 
   if (shouldAutoLogIn(autologinData)) {

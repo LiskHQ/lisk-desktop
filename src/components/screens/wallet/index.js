@@ -34,7 +34,7 @@ const Wallet = ({ t, match, history }) => {
   const activeToken = useSelector(state => state.settings.token.active);
   const bookmarks = useSelector(state => state.bookmarks);
   const { discreetMode } = useSelector(state => state.settings);
-  const { confirmed, pending } = useSelector(state => state.transactions);
+  const { confirmed, pending, count } = useSelector(state => state.transactions);
   const transactions = {
     data: confirmed,
     loadData: (params) => {
@@ -44,6 +44,9 @@ const Wallet = ({ t, match, history }) => {
     },
     isLoading: false,
     error: false,
+    meta: {
+      count,
+    },
   };
 
   useEffect(() => {

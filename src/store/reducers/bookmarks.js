@@ -1,8 +1,10 @@
-import { getIndexOfBookmark, getBookmarksFromLocalStorage } from '../../utils/bookmarks';
+import { getIndexOfBookmark, validateBookmarks, emptyBookmarks } from '../../utils/bookmarks';
 import actionTypes from '../../constants/actions';
 
-const bookmarks = (state = getBookmarksFromLocalStorage(), action) => {
+const bookmarks = (state = emptyBookmarks, action) => {
   switch (action.type) {
+    case actionTypes.bookmarksRetrieved:
+      return validateBookmarks(action.data);
     case actionTypes.bookmarkAdded:
       return {
         ...state,

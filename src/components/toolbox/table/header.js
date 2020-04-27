@@ -4,13 +4,18 @@ import Tooltip from '../tooltip/tooltip';
 import styles from './table.css';
 import { isReactComponent } from '../../../utils/helpers';
 
-const Tip = ({ data }) => (
-  data ? (
+const Tip = ({ data }) => {
+  if (!data || !(typeof data === 'string' || isReactComponent(data.message))) return null;
+
+  const Message = typeof data === 'string'
+    ? () => <p>{data.message}</p>
+    : data.message;
+  return (
     <Tooltip {...data}>
-      <p>{data.message}</p>
+      <Message />
     </Tooltip>
-  ) : null
-);
+  );
+};
 
 const Sort = ({
   data, currentSort, children,
