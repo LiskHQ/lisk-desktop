@@ -28,7 +28,7 @@ const TransactionRow = ({
   const isConfirmed = data.confirmations > 0;
   return (
     <Link
-      className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending}`}
+      className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending} transactions-row`}
       to={`${routes.transactions.path}/${data.id}`}
     >
       <span className={grid[isLSK ? 'col-xs-4' : 'col-xs-5']}>

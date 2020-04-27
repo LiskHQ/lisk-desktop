@@ -100,7 +100,7 @@ const Transactions = ({
         clearFilter, clearAllFilters, filters, formatters, t,
       }}
       />
-      <BoxContent className={styles.content}>
+      <BoxContent className={`${styles.content} transaction-results`}>
         <Table
           data={pending.concat(transactions.data)}
           isLoading={transactions.isLoading}
