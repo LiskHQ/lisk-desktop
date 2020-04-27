@@ -64,6 +64,7 @@
     "cheerio": "1.0.0-rc.2",
     "dpos-ledger-api": "2.0.0",
     "electron-localshortcut": "3.1.0",
+    "electron-store": "5.1.1",
     "express": "4.16.4",
     "flexboxgrid": "=6.3.1",
     "flexboxgrid-helpers": "1.1.3",

@@ -1,17 +1,31 @@
-export default {
-  set(key, value) {
+export const setInStorage = (key, value) => {
+  const { ipc } = window;
+  if (ipc) {
+    ipc.send('storeConfig', { key, value });
+  } else {
     window.localStorage.setItem(key, JSON.stringify(value));
-  },
+  }
+};
 
-  get(key, backup) {
+export const getFromStorage = (key, backup, cb) => {
+  let info = null;
+  const { ipc } = window;
+  if (ipc) {
+    ipc.on('configRetrieved', (action, data) => {
+      info = data[key];
+      cb(info);
+    });
+    ipc.send('retrieveConfig');
+  } else {
     try {
-      return JSON.parse(window.localStorage.getItem(key)) || backup;
+      const value = JSON.parse(window.localStorage.getItem(key));
+      cb(value);
     } catch (e) {
-      return backup;
+      cb(backup);
     }
-  },
+  }
+};
 
-  remove(key) {
-    window.localStorage.removeItem(key);
-  },
+export const removeStorage = (key) => {
+  window.localStorage.removeItem(key);
 };

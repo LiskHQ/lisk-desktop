@@ -4,12 +4,12 @@ import electronLocalshortcut from 'electron-localshortcut';
 import getPort from 'get-port';
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import path from 'path';
-import storage from 'electron-json-storage';
 import win from './modules/win';
 import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
 import server from '../server';
 import i18nSetup from '../../i18n/i18n-setup';
+import { storage, setConfig, readConfig } from './modules/storage';
 import './modules/hwManager';
 
 i18nSetup();
@@ -113,4 +113,12 @@ ipcMain.on('set-locale', (event, locale) => {
 
 ipcMain.on('request-locale', () => {
   localeHandler.send({ storage });
+});
+
+ipcMain.on('storeConfig', (event, data) => {
+  setConfig(data);
+});
+
+ipcMain.on('retrieveConfig', () => {
+  readConfig();
 });

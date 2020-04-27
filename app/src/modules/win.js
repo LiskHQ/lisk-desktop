@@ -35,7 +35,6 @@ const win = {
     win.browser.loadURL(serverUrl);
   },
 
-
   create: ({ // eslint-disable-line max-statements
     electron, path, electronLocalshortcut, storage, checkForUpdates, serverUrl,
   }) => {

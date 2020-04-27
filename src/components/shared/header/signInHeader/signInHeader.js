@@ -34,7 +34,7 @@ class Header extends React.Component {
     this.state = {
       address,
       showDropdown: false,
-      showSettingDrowdown: false,
+      showSettingDropdown: false,
       network: loginNetwork.code,
       isFirstTime: true,
       activeNetwork: 0,
@@ -182,7 +182,7 @@ class Header extends React.Component {
   }
 
   handleSettingsToggle() {
-    this.setState({ showSettingDrowdown: !this.state.showSettingDrowdown });
+    this.setState({ showSettingDropdown: !this.state.showSettingDropdown });
   }
 
   onConnectToCustomNode(e) {
@@ -209,7 +209,7 @@ class Header extends React.Component {
       connected,
       validationError,
     } = this.state;
-    const { showSettingDrowdown, activeNetwork } = this.state;
+    const { showSettingDropdown, activeNetwork } = this.state;
     const showNetworkOptions = !hideNetwork && this.showNetworkOptions();
     const networkList = getNetworksList();
     const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
@@ -317,7 +317,7 @@ class Header extends React.Component {
               token={settings.token}
               signInHolderClassName={styles.settings}
               account={account}
-              isDropdownEnable={showSettingDrowdown}
+              isDropdownEnable={showSettingDropdown}
               onDropdownToggle={this.handleSettingsToggle}
               onLogout={this.onLogout}
               settingsUpdated={settingsUpdated}
