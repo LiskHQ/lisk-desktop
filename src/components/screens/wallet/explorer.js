@@ -45,6 +45,7 @@ const Wallet = ({
         bookmarks={bookmarks}
         address={match.params.address}
         match={match}
+        delegate={account.data ? account.data.delegate : {}}
         publicKey={account.data ? account.data.publicKey : ''}
         activeToken={activeToken}
         t={t}
@@ -71,7 +72,7 @@ const Wallet = ({
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate')}
-              account={match.params.address}
+              account={account.data}
             />
           )
           : null}

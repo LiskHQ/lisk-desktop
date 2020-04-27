@@ -6,7 +6,7 @@ import { getIndexOfBookmark } from '../../../../utils/bookmarks';
 import styles from './header.css';
 
 // eslint-disable-next-line complexity
-const headerAccountInfo = ({
+const HeaderAccountInfo = ({
   address,
   bookmarks,
   delegate,
@@ -14,13 +14,13 @@ const headerAccountInfo = ({
   token,
 }) => {
   const { apiVersion } = useSelector(state => state.network.networks.LSK);
-  const myAddress = useSelector(state => state.account.info[token].address);
+  const myAccount = useSelector(state => state.account.info);
   const index = getIndexOfBookmark(bookmarks, { address, token });
   const accounts = bookmarks[token];
   const accountTitle = delegate.username
     || (index > -1 && accounts[index] && accounts[index].title);
   let label = '';
-  if (address === myAddress) {
+  if (myAccount && myAccount[token] && address === myAccount[token].address) {
     label = t('My Account');
   } else if (delegate.username) {
     label = apiVersion === '2' ? t('Delegate #{{rank}}', { rank: delegate.rank }) : t('Delegate');
@@ -46,4 +46,4 @@ const headerAccountInfo = ({
   );
 };
 
-export default withTranslation()(headerAccountInfo);
+export default withTranslation()(HeaderAccountInfo);
