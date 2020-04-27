@@ -1,5 +1,9 @@
 export default {
   account: {
+    info: {
+      LSK: {},
+      BTC: {},
+    },
   },
   bookmarks: {
     LSK: [],
