@@ -52,7 +52,7 @@ class transactionsHeader extends React.Component {
               <Request address={address} token={activeToken} t={t} />
             </DropdownButton>
             <Link to={`${routes.send.path}?wallet`} className="tx-send-bt">
-              <PrimaryButton>
+              <PrimaryButton className="send-to-address">
                 {t('Send {{token}}', { token: activeToken })}
               </PrimaryButton>
             </Link>
