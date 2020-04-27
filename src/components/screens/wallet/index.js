@@ -65,6 +65,7 @@ const Wallet = ({ t, match, history }) => {
         bookmarks={bookmarks}
         address={account.info[activeToken].address}
         match={match}
+        delegate={account.info[activeToken].delegate}
         publicKey={account.info[activeToken].publicKey || ''}
         activeToken={activeToken}
         t={t}
