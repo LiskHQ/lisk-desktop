@@ -186,7 +186,7 @@ const ss = {
   delegateStatsSince: '.delegate-since',
   bookmarkAccountBtn: '.bookmark-account-button',
   bookmarkedAccountTitle: '.transactions .account-title',
-  showMoreButton: '.show-more-button',
+  showMoreButton: '.load-more',
   chooseAvatar: '.choose-avatar span',
   copyPassphrase: '.passphrase .word',
   passphraseWordConfirm: '.word-options .option',
