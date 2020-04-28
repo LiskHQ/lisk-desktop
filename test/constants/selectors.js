@@ -55,7 +55,7 @@ const ss = {
   votedAddress: '.votes .voter-address',
   voteRow: '.vote-row',
   accountAddress: '.account-address',
-  showMoreVotesBtn: '.load-more',
+  showMoreVotesBtn: '.votes-tab .load-more',
   leftBlockAccountExplorer: '.explorer-account-left-block',
   amountInput: '.amount input',
   bookmarkInput: '#bookmark-input',

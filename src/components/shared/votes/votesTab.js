@@ -97,7 +97,7 @@ const VotesTab = ({
           />
         </div>
       </BoxHeader>
-      <main className={`${styles.results} ${canLoadMore ? styles.hasMore : ''}`}>
+      <main className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} votes-tab`}>
         <Table
           data={filteredVotes.slice(0, showing)}
           canLoadMore={canLoadMore}
