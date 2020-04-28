@@ -77,6 +77,7 @@ const Wallet = ({ t, match, history }) => {
           activeToken={activeToken}
           transactions={transactions}
           discreetMode={discreetMode}
+          hwInfo={account.hwInfo}
           account={account.info[activeToken]}
           tabName={t('Wallet')}
           pending={pending}

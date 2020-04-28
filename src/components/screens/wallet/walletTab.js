@@ -10,11 +10,13 @@ const WalletTab = ({
   discreetMode,
   transactions,
   pending,
+  hwInfo,
 }) => (
   <>
     <Overview
       t={t}
       address={host}
+      hwInfo={hwInfo}
       balance={account ? account.balance : 0}
       activeToken={activeToken}
       transactions={transactions.data}
