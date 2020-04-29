@@ -12,7 +12,6 @@ import FilterBar from '../../../shared/filterBar';
 import withFilters from '../../../../utils/withFilters';
 import TransactionRow from './transactionRow';
 import FilterDropdown from './filterDropdown';
-import { deepMergeObj } from '../../../../utils/helpers';
 
 const tabsData = (t, activeToken) => {
   const all = {
