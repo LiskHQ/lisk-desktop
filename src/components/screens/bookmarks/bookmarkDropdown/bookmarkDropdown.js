@@ -85,14 +85,14 @@ class Bookmark extends React.Component {
   handleBookmark() {
     const {
       address, bookmarks, delegate, bookmarkAdded, bookmarkUpdated,
-      token, detailAccount, onSubmitClick,
+      token, publicKey, onSubmitClick,
     } = this.props;
     const title = this.state.fields.accountName.value;
     const account = {
       address,
       title,
       isDelegate: !!(delegate && delegate.username),
-      publicKey: (detailAccount && detailAccount.publicKey) || null,
+      publicKey,
     };
     const accounts = bookmarks[token];
     const bookmarkAlreadyExists = this.props.bookmarks[token].some(

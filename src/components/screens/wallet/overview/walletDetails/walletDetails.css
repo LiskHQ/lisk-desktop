@@ -1,0 +1,73 @@
+@import '../../../../../app/mixins.css';
+
+.wrapper {
+  & .row {
+    position: relative;
+    margin: 0;
+    padding: 20px;
+
+    & > * {
+      margin-right: 15px;
+      margin-left: -2px;
+    }
+  }
+
+  & label {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  & .value {
+    @mixin headingNormal bold;
+
+    color: var(--color-maastricht-blue);
+    word-break: break-all;
+    margin-bottom: -4px;
+  }
+
+  & .copyIcon {
+    height: 18px;
+    vertical-align: middle;
+  }
+
+  & .qrCodeWrapper {
+    width: 196px;
+    height: 227px;
+
+    & canvas {
+      box-shadow: 0 0 1px 0 var(--color-strong-white);
+    }
+  }
+
+  & .qrCodeIcon {
+    cursor: pointer;
+  }
+}
+
+.addressIcons {
+  width: auto;
+  height: 100%;
+  max-width: 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin: 0 0 0 auto !important;
+  position: relative;
+
+  & .helperIcon {
+    cursor: pointer;
+    line-height: 0;
+    margin-left: 18px;
+
+    & img {
+      filter: grayscale(100%) brightness(130%);
+
+      &:hover {
+        filter: grayscale(0) brightness(100%);
+      }
+    }
+  }
+}

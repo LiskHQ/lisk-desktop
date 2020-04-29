@@ -1,0 +1,73 @@
+@import '../../../app/mixins.css';
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+
+  & .mainContent {
+    margin-bottom: 20px;
+    min-height: 400px;
+  }
+
+  & .txLink {
+    align-items: center;
+    display: flex !important;
+    justify-content: center;
+  }
+
+  & .txIcon {
+    box-sizing: border-box;
+    height: 24px;
+    margin-top: 20px;
+    width: 24px;
+  }
+
+  & .copyIcon {
+    vertical-align: -3px;
+  }
+
+  & .label {
+    @mixin contentNormal bold;
+
+    align-items: center;
+    color: var(--color-maastricht-blue);
+    display: flex;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  & .value {
+    @mixin contentLargest;
+
+    align-items: flex-start;
+    color: var(--color-maastricht-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding-left: 64px;
+    width: 100%;
+    word-break: break-all;
+    text-align: left;
+
+    &:first-child {
+      padding-left: 0;
+      position: relative;
+    }
+
+    &:not(:last-child) {
+      padding-right: 64px;
+
+      &::after {
+        background-color: var(--color-platinum);
+        content: '';
+        height: calc(100% - 13px);
+        position: absolute;
+        right: 0;
+        width: 1px;
+      }
+    }
+  }
+}

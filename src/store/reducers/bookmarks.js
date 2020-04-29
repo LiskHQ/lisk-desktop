@@ -4,7 +4,6 @@ import actionTypes from '../../constants/actions';
 const bookmarks = (state = emptyBookmarks, action) => {
   switch (action.type) {
     case actionTypes.bookmarksRetrieved:
-      console.log('Reducer bookmarks', action.data);
       return validateBookmarks(action.data);
     case actionTypes.bookmarkAdded:
       return {

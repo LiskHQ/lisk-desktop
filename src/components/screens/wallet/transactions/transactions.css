@@ -1,62 +1,88 @@
-@import '../../../../app/mixins.css';
+.sortingColumn {
+  cursor: pointer;
+}
 
-.transactions {
-  background: var(--color-white);
-  border: 1px solid var(--color-platinum);
-  border-radius: var(--border-radius-box);
+.arrow {
+  width: 0;
+  height: 0;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+
+  &.arrowUp {
+    border-bottom: 4px solid black;
+  }
+
+  &.arrowDown {
+    border-top: 4px solid black;
+  }
+}
+
+.tooltip {
   display: flex;
   flex-direction: column;
-  height: auto;
-  margin-bottom: 40px;
-  min-height: 371px;
-  padding: 0;
+  justify-content: center;
 }
 
-.container {
-  align-items: center;
-  border-radius: var(--border-radius-box) var(--border-radius-box) 0 0;
-  display: flex;
-  background: var(--color-white-smoke);
-  justify-content: space-between;
-  border-bottom: 1px solid var(--color-platinum);
-  padding-left: 20px;
+.content {
+  padding: 0 !important;
+}
 
-  & .items {
-    padding: 0px 10px;
+.tooltipOffset {
+  left: -8px;
+}
+
+.pending {
+  animation-delay: var(--animation-speed-slowest);
+  animation-duration: var(--animation-speed-slow);
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-name: appear;
+  animation-timing-function: linear;
+
+  & :global(.tx-avatar),
+  & :global(.tx-icon) {
+    animation-delay: calc(var(--animation-speed-slowest) + calc(var(--animation-speed-slow) / 1.5));
+    animation-duration: var(--animation-speed-standard);
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+    animation-name: showIcons;
+    animation-timing-function: linear;
   }
 }
 
-.topHeader {
-  display: flex;
-}
-
-.txDetails {
-  word-break: break-word;
-
-  &.delegateVote {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-
-    & > span {
-      display: inline-block;
-      margin-right: 5px;
-    }
+@keyframes appear {
+  0% {
+    height: 0;
+    opacity: 0;
   }
 
-  & .label {
-    display: inline;
+  40% {
+    height: 85px;
+    opacity: 0;
+  }
+  70% { height: 80px; }
+
+  100% {
+    height: 80px;
+    opacity: 1;
   }
 }
 
-.amountLabel {
-  @mixin contentNormal bold;
-
-  &.greyLabel {
-    color: var(--color-content-light);
+@keyframes showIcons {
+  0% {
+    opacity: 0;
+    transform: scale(1.6);
   }
 
-  &.greenLabel {
-    color: #00b262;
+  70% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }

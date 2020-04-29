@@ -46,13 +46,10 @@ export const initialState = {
 const settings = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.settingsRetrieved:
-      console.log(state.token, action.data);
       return validateToken(action.data);
     case actionTypes.settingsUpdated:
-      console.log(state.token);
       return validateToken(deepMergeObj(state, action.data));
     case actionTypes.settingsReset:
-      console.log(state.token);
       return {
         ...state,
         autoLog: true,

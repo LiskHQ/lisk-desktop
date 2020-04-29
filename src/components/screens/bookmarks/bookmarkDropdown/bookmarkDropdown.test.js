@@ -14,7 +14,7 @@ describe('Bookmark Component', () => {
     bookmarkAdded: jest.fn(),
     bookmarkRemoved: jest.fn(),
     token: 'LSK',
-    detailAccount: accounts.genesis,
+    publicKey: accounts.genesis.publicKey,
     t: v => v,
   };
 
