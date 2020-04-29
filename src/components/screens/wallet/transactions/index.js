@@ -12,6 +12,7 @@ import FilterBar from '../../../shared/filterBar';
 import withFilters from '../../../../utils/withFilters';
 import TransactionRow from './transactionRow';
 import FilterDropdown from './filterDropdown';
+import { deepMergeObj } from '../../../../utils/helpers';
 
 const tabsData = (t, activeToken) => {
   const all = {
@@ -86,10 +87,14 @@ const Transactions = ({
     clearAllFilters();
   }, [activeToken]);
 
+  const onTabChange = ({ tab }) => {
+    applyFilters({ ...filters, tab });
+  };
+
   return (
     <Box main isLoading={transactions.isLoading} className="transactions-box">
       <BoxHeader>
-        <Tabs t={t} onTabChange={applyFilters} />
+        <Tabs t={t} onTabChange={onTabChange} />
         {
           activeToken === 'LSK' ? (
             <FilterDropdown filters={filters} applyFilters={applyFilters} />
