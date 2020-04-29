@@ -10,7 +10,6 @@ Feature: Send
     And I click on sendButton
     Then submittedTransactionMessage should be visible
     And I click on okayButton
-    And I click on closeOnboardingButton
     Then I should see pending transaction
     Then The latest transaction is transfer to 1234567890L
     Then I should not see pending transaction
