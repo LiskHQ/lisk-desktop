@@ -12,7 +12,7 @@ const FilterButton = ({
   const label = (formatters[filter.key] || (x => x))(filter.value);
   return (
     <div
-      className={`${styles.filter.key} filter`}
+      className={`${styles.filter} filter`}
     >
       <p className={styles.label}>
         {label}
