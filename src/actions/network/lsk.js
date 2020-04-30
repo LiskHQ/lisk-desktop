@@ -5,21 +5,21 @@ import { toast } from 'react-toastify';
 import actionTypes from '../../constants/actions';
 import { tokenMap } from '../../constants/tokens';
 import networks from '../../constants/networks';
-import { version as AppVersion } from '../../../package.json';
+// import { version as AppVersion } from '../../../package.json';
 
-const isStaging = () => (
-  localStorage.getItem('useLiskServiceStaging')
-  || AppVersion.includes('beta')
-  || AppVersion.includes('rc')
-    ? '-staging' : '');
+// const isStaging = () => (
+//   localStorage.getItem('useLiskServiceStaging')
+//   || AppVersion.includes('beta')
+//   || AppVersion.includes('rc')
+//     ? '-staging' : '');
 
 const getServerUrl = (networkConfig) => {
   const { nodeUrl } = networkConfig;
   if (networkConfig.nethash === Lisk.constants.MAINNET_NETHASH) {
-    return `https://mainnet-service${isStaging()}.lisk.io`;
+    return 'https://mainnet-service.lisk.io';
   }
   if (networkConfig.nethash === Lisk.constants.TESTNET_NETHASH) {
-    return `https://testnet-service${isStaging()}.lisk.io`;
+    return 'https://testnet-service.lisk.io';
   }
   if (/liskdev.net:\d{2,4}$/.test(nodeUrl)) {
     return nodeUrl.replace(/:\d{2,4}/, ':9901');
