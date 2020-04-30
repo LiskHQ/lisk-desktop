@@ -22,5 +22,5 @@ storybook-static
 .env
 
 ## Commercial fonts
-src/assets/fonts/basier-circle/*
-src/assets/fonts/gilroy/*
+src/assets/fonts/basier-circle/
+src/assets/fonts/gilroy/

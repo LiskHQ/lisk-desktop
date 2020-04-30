@@ -7,10 +7,9 @@ import i18n from '../../../i18n';
 import styles from './filterBar.css';
 
 const FilterButton = ({
-  filter, clearFilter, filters, formatters,
+  filter, clearFilter, formatters,
 }) => {
-  if (filters[filter] === '') return null;
-  const label = (formatters[filter] || (x => x))(filters[filter]);
+  const label = (formatters[filter.key] || (x => x))(filter.value);
   return (
     <div
       className={`${styles.filter} filter`}
@@ -20,7 +19,7 @@ const FilterButton = ({
       </p>
       <span
         className={`${styles.clearBtn} clear-filter`}
-        onClick={() => clearFilter(filter)}
+        onClick={() => clearFilter(filter.key)}
       />
     </div>
   );
@@ -30,8 +29,14 @@ const FilterBar = ({
   t, clearFilter, clearAllFilters, filters, results, formatters,
 }) => {
   moment.locale(i18n.language);
-
-  const getNonEmptyFilters = fs => Object.values(fs).filter(Boolean);
+  const nonEmptyFilters = Object.keys(filters)
+    .reduce((acc, key) => {
+      const value = filters[key];
+      if (key !== 'tab' && value !== '' && value !== undefined) {
+        acc.push({ key, value });
+      }
+      return acc;
+    }, []);
 
   formatters = {
     dateFrom: value => `${t('from')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
@@ -41,18 +46,17 @@ const FilterBar = ({
     ...formatters,
   };
 
-  return !!getNonEmptyFilters(filters).length && (
+  return nonEmptyFilters.length ? (
     <div className={`${styles.container} filterBar`}>
       <span className={styles.label}>
         {t('Filtered results: {{results}}', { results })}
       </span>
       <div className={`${styles.labelsHolder}`}>
-        {Object.keys(filters).map((filter, index) => (
+        {nonEmptyFilters.map(filter => (
           <FilterButton
             filter={filter}
-            key={filter + index}
+            key={filter.key}
             clearFilter={clearFilter}
-            filters={filters}
             formatters={formatters}
           />
         ))
@@ -66,7 +70,7 @@ const FilterBar = ({
         </SecondaryButton>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 FilterBar.defaultProps = {

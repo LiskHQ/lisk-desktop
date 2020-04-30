@@ -57,8 +57,10 @@ import lskIcon from '../../../assets/images/icons/icon-lsk.svg';
 import monitorIcon from '../../../assets/images/icons/monitor.svg';
 import monitorIconActive from '../../../assets/images/icons/monitorActive.svg';
 import monitorIconActiveDark from '../../../assets/images/icons/monitorActiveDark.svg';
-import newsFeedAvatar from '../../../assets/images/icons/news-feed-avatar.svg';
-import newsFeedAvatarDark from '../../../assets/images/icons/news-feed-avatar-dark.svg';
+import newsFeedTwitter from '../../../assets/images/icons/news-feed-twitter.svg';
+import newsFeedTwitterDark from '../../../assets/images/icons/news-feed-twitter-dark.svg';
+import newsFeedBlog from '../../../assets/images/icons/news-feed-blog.svg';
+import newsFeedBlogDark from '../../../assets/images/icons/news-feed-blog-dark.svg';
 import noTweetsIcon from '../../../assets/images/icons/no-tweets.svg';
 import okIcon from '../../../assets/images/icons/icon-checkmark.svg';
 import outgoing from '../../../assets/images/icons/outgoing.svg';
@@ -152,7 +154,7 @@ export const icons = {
   lskIcon,
   monitorIcon,
   monitorIconActive,
-  newsFeedAvatar,
+  newsFeedTwitter,
   noTweetsIcon,
   okIcon,
   outgoing,
@@ -194,7 +196,7 @@ export const icons = {
   verifyWalletAddressActive,
   liskLogoDark,
   balanceDark,
-  newsFeedAvatarDark,
+  newsFeedTwitterDark,
   fileOutlineDark,
   signMessage,
   signMessageActive,
@@ -205,6 +207,8 @@ export const icons = {
   monitorIconActiveDark,
   delegatesIconActiveDark,
   multiSignature,
+  newsFeedBlog,
+  newsFeedBlogDark,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

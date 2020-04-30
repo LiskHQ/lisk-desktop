@@ -1,5 +1,4 @@
 import { tokenMap } from './tokens';
-import Accounts from '../components/screens/explorer/accounts';
 import AddBookmark from '../components/screens/bookmarks/addBookmark';
 import BlockDetails from '../components/screens/monitor/blockDetails';
 import Blocks from '../components/screens/monitor/blocks';
@@ -11,16 +10,18 @@ import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
 import Monitor from '../components/screens/monitor';
 import MonitorAccounts from '../components/screens/monitor/accounts';
+import MonitorNetwork from '../components/screens/monitor/network';
 import MonitorTransactions from '../components/screens/monitor/transactions';
 import Register from '../components/screens/register';
 import RegisterDelegate from '../components/screens/registerDelegate';
 import SecondPassphrase from '../components/screens/secondPassphrase';
-import Send from '../components/screens/wallet/send/send';
+import Send from '../components/screens/send/send';
 import Settings from '../components/screens/settings';
 import SignMessage from '../components/screens/signMessage';
 import TermsOfUse from '../components/screens/termsOfUse';
-import TransactionDashboard from '../components/shared/transactionDashboard';
-import Transactions from '../components/screens/explorer/transactions';
+import Wallet from '../components/screens/wallet';
+import Explorer from '../components/screens/wallet/explorer';
+import TransactionDetails from '../components/screens/transactionDetails';
 import VerifyMessage from '../components/screens/verifyMessage';
 import VotingSummary from '../components/screens/delegates/votingSummary';
 
@@ -69,7 +70,7 @@ export default {
   wallet: {
     path: '/wallet',
     pathSuffix: '/:token?',
-    component: TransactionDashboard,
+    component: Wallet,
     isPrivate: true,
   },
   votingSummary: {
@@ -122,14 +123,14 @@ export default {
     pathPrefix: '',
     path: '/explorer/accounts',
     pathSuffix: '/:address?',
-    component: Accounts,
+    component: Explorer,
     isPrivate: false,
   },
   transactions: {
     pathPrefix: '',
     path: '/explorer/transactions',
     pathSuffix: '/:id?',
-    component: Transactions,
+    component: TransactionDetails,
     isPrivate: false,
   },
   hwWallet: {
@@ -173,6 +174,12 @@ export default {
   monitorAccounts: {
     path: '/monitor/accounts',
     component: MonitorAccounts,
+    isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  monitorNetwork: {
+    path: '/monitor/network',
+    component: MonitorNetwork,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },

@@ -1,0 +1,24 @@
+
+.tooltip {
+  display: inline-block;
+  vertical-align: middle;
+  position: absolute;
+  left: 86px;
+  top: 148px;
+}
+
+.row {
+  margin-bottom: 6px;
+
+  & h4 {
+    color: var(--color-maastricht-blue);
+    font-size: 13px;
+    margin: 0;
+    display: inline-block;
+    font-weight: 600;
+  }
+
+  & .count {
+    float: right;
+  }
+}

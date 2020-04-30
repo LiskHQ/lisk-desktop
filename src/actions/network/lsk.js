@@ -5,6 +5,13 @@ import { toast } from 'react-toastify';
 import actionTypes from '../../constants/actions';
 import { tokenMap } from '../../constants/tokens';
 import networks from '../../constants/networks';
+// import { version as AppVersion } from '../../../package.json';
+
+// const isStaging = () => (
+//   localStorage.getItem('useLiskServiceStaging')
+//   || AppVersion.includes('beta')
+//   || AppVersion.includes('rc')
+//     ? '-staging' : '');
 
 const getServerUrl = (networkConfig) => {
   const { nodeUrl } = networkConfig;

@@ -44,6 +44,8 @@ const Blocks = ({
   /* istanbul ignore next */
   const loadLastBlocks = () => applyFilters(filters);
 
+  const canLoadMore = blocks.meta ? blocks.meta.count === 30 : false;
+
   return (
     <div>
       <MonitorHeader />
@@ -71,7 +73,7 @@ const Blocks = ({
             loadData={handleLoadMore}
             header={header(changeSort, t)}
             currentSort={sort}
-            canLoadMore
+            canLoadMore={canLoadMore}
             error={blocks.error}
           />
         </BoxContent>

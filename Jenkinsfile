@@ -34,12 +34,8 @@ pipeline {
 						withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
 							nvm(getNodejsVersion()) {
 								sh '''
-								if stat /home/lisk/fonts/basier-circle/* > /dev/null ; then
-									cp /home/lisk/fonts/basier-circle/* src/assets/fonts/basier-circle/
-								fi
-								if stat /home/lisk/fonts/gilroy/* > /dev/null ; then
-									cp /home/lisk/fonts/gilroy/* src/assets/fonts/gilroy/
-								fi
+								cp -R /home/lisk/fonts/basier-circle src/assets/fonts
+								cp -R /home/lisk/fonts/gilroy src/assets/fonts
 								npm run --silent build
 								npm run --silent build:testnet
 

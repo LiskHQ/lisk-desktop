@@ -1,33 +1,34 @@
 Feature: Send
 
   Scenario: Transfer tx + Header balance is affected
-    Given I autologin as genesis to devnet
+    Given I login as genesis on devnet
     Given I am on Send page
     And I remember my balance
-    When I fill random recipient
-    And I fill random amount
+    When I fill 1234567890L in recipientInput field
+    And I fill 5 in amountInput field
     And I go to transfer confirmation
-    And I confirm transfer
-    And I go back to wallet
-    And I dismiss the onboarding
+    And I click on sendButton
+    Then submittedTransactionMessage should be visible
+    And I click on okayButton
     Then I should see pending transaction
-    Then The latest transaction is transfer to random
+    Then The latest transaction is transfer to 1234567890L
     Then I should not see pending transaction
     Then The balance is subtracted
 
   Scenario: Transfer tx with second passphrase
-    Given I autologin as second_passphrase_account to devnet
+    Given I login as second_passphrase_account on devnet
     Given I am on Send page
-    When I fill random recipient
-    And I fill random amount
+    When I fill 1234567890L in recipientInput field
+    And I fill 3 in amountInput field
     And I go to transfer confirmation
     And I enter second passphrase of second_passphrase_account
-    And I confirm transfer
-    And I go back to wallet
-    Then The latest transaction is transfer to random
+    And I click on sendButton
+    Then submittedTransactionMessage should be visible
+    And I click on okayButton
+    Then The latest transaction is transfer to 1234567890L
 
   Scenario: Launch protocol prefills fields  - from logged in state
-    Given I autologin as genesis to devnet
+    Given I login as genesis on devnet
     When I follow the launch protokol link
     Then Send form fields are prefilled
 
@@ -39,12 +40,13 @@ Feature: Send
 
   Scenario: Error message is shown if transfer tx fails
     Given I mock api /transactions
-    Given I autologin as genesis to devnet
+    Given I login as genesis on devnet
     Given I am on Send page
-    When I fill random recipient
-    And I fill random amount
+    When I fill 1234567890L in recipientInput field
+    And I fill 4 in amountInput field
     And I go to transfer confirmation
-    And I confirm transfer
+    And I click on sendButton
+    Then submittedTransactionMessage should be visible
     Then I see error message
 
 

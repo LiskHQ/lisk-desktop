@@ -12,7 +12,7 @@ import { getUnvoteList, getVoteList } from '../../../utils/voting';
 const getOnboardingSlides = t => (
   [{
     title: t('Welcome to Lisk Delegates!'),
-    content: t('Lisk\'s blockchain is based on the Delegated Proof of Stake (DPoS) consensus algorithm, in which 101 delegates are voted in by token holders to secure the network.'),
+    content: t('Lisk\'s blockchain is based on the Delegated Proof of Stake (DPoS) consensus algorithm, in which 101 delegates are voted in by LSK holders to secure the network.'),
     illustration: 'welcomeLiskDelegates',
   }, {
     title: t('Your voice matters'),

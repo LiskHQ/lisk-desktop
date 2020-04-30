@@ -8,29 +8,9 @@ import compareBalances from '../../utils/compareBalances';
 
 const transactionFee = 0.1;
 
-const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000) + 1000000)}L`;
-const getRandomAmount = () => Math.floor((Math.random() * 10) + 1);
-const getRandomReference = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 const errorMessage = 'Test error';
 
-let randomAddress;
-let randomAmount;
-let randomReference;
 
-Then(/^I fill random recipient$/, function () {
-  this.randomAddress = getRandomAddress();
-  cy.get(ss.recipientInput).type(this.randomAddress);
-});
-
-Then(/^I fill random amount$/, function () {
-  randomAmount = getRandomAmount();
-  cy.get(ss.amountInput).click().type(randomAmount);
-});
-
-Then(/^I fill random message$/, function () {
-  randomReference = getRandomReference();
-  cy.get(ss.sendReferenceText).click().type(randomReference);
-});
 
 Then(/^I follow the launch protokol link$/, function () {
   cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
@@ -61,7 +41,7 @@ Given(/^I remember my balance$/, function () {
 
 Then(/^The balance is subtracted$/, function () {
   cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
-    compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
+    compareBalances(this.balanceBefore, this.balanceAfter, 5 + transactionFee);
   });
 });
 

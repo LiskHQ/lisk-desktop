@@ -127,7 +127,7 @@ class SelectName extends React.Component {
 
           <p className={`${styles.description} select-name-text-description`}>
             {
-              t('The top 101 delegates are able to forge new blocks and recieve forging rewards.')
+              t('The top 101 delegates are able to forge new blocks and receive forging rewards.')
             }
           </p>
 

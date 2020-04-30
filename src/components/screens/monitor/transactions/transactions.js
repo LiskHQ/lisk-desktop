@@ -1,5 +1,6 @@
 import React from 'react';
 import MonitorHeader from '../header';
+import Overview from './overview';
 import TransactionsTable from '../../../shared/transactionsTable';
 
 const Transactions = ({ t, transactions }) => {
@@ -50,15 +51,21 @@ const Transactions = ({ t, transactions }) => {
     sender: '',
   };
 
+  const canLoadMore = transactions.meta
+    ? transactions.data.length < transactions.meta.total
+    : false;
+
   return (
     <div>
       <MonitorHeader />
+      <Overview />
       <TransactionsTable
         isLoadMoreEnabled
         filters={filters}
         fields={fields}
         title={t('All transactions')}
         transactions={transactions}
+        canLoadMore={canLoadMore}
       />
     </div>
   );

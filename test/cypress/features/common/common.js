@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
+import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps';
 import accounts from '../../../constants/accounts';
 import ss from '../../../constants/selectors';
 import networks from '../../../constants/networks';
@@ -8,7 +8,7 @@ import urls from '../../../constants/urls';
 
 const txConfirmationTimeout = 15000;
 
-Given(/^I autologin as ([^\s]+) to ([^\s]+)$/, function (account, network) {
+Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
   cy.autologin(accounts[account].passphrase, networks[network].node);
 });
 
@@ -154,29 +154,23 @@ Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
   }
 });
 
-Then(/^I click on send$/, function () {
-  cy.get(ss.transactionSendButton).eq(0).click();
+Then(/^I click on (.*?)$/, function (elementName) {
+  cy.wait(100);
+  cy.get(ss[elementName]).eq(0).click();
 });
 
-Then(/^I click on recent transaction$/, function () {
-  cy.get(ss.transactionRow).eq(0).click();
+Given(/^I click on (.*?)$/, function (elementName) {
+  cy.wait(100);
+  cy.get(ss[elementName]).eq(0).click();
 });
 
-Then(/^I click on recent bookmark$/, function () {
-  cy.wait(300);
-  cy.get(ss.bookmarkAccount).eq(0).click();
+When(/^I click on (.*?)$/, function (elementName) {
+  cy.wait(100);
+  cy.get(ss[elementName]).eq(0).click();
 });
 
-Given(/^I confirm transaction$/, function () {
-  cy.get(ss.confirmButton).click();
-});
-
-Then(/^I fill ([^s]+) in recipient$/, function (address) {
-  cy.get(ss.recipientInput).type(address);
-});
-
-Then(/^I fill ([^s]+) in amount$/, function (amount) {
-  cy.get(ss.amountInput).click().type(amount);
+Then(/^I fill ([^s]+) in ([^s]+) field$/, function (value, field) {
+  cy.get(ss[field]).type(value);
 });
 
 Then(/^I go to transfer confirmation$/, function () {
@@ -184,15 +178,6 @@ Then(/^I go to transfer confirmation$/, function () {
   cy.get(ss.nextTransferBtn).click();
 });
 
-Then(/^I confirm transfer$/, function () {
-  cy.get(ss.sendBtn).click();
-  cy.get(ss.submittedTransactionMessage).should('be.visible');
-});
-
-Then(/^I go back to wallet$/, function () {
-  cy.get(ss.okayBtn).click();
-});
-
-Then(/^I dismiss the onboarding$/, function () {
-  cy.get(ss.closeOnboardingBtn).click();
+Then(/^(.*?) should be visible$/, function (elementName) {
+  cy.get(ss[elementName]).should('be.visible');
 });

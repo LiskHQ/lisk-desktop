@@ -14,7 +14,7 @@ import './modules/hwManager';
 
 i18nSetup();
 
-const defaultServerPort = 3000;
+const defaultServerPort = 5659;
 let serverUrl;
 const startServer = () => getPort({ port: defaultServerPort })
   .then((port) => {
@@ -96,6 +96,7 @@ app.on('will-finish-launching', () => {
   // Protocol handler for MacOS
   app.on('open-url', (event, url) => {
     event.preventDefault();
+    win.browser.show();
     win.send({ event: 'openUrl', value: url });
   });
 });

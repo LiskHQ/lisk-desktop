@@ -27,7 +27,3 @@ Then(/^I filter votes$/, function () {
 Then(/^I see (\d+) delegates in table$/, function (number) {
   cy.get(ss.voteRow).should('have.length', number);
 });
-
-Then(/^I click on delegate$/, function () {
-  cy.get(ss.voteRow).eq(0).click();
-});

@@ -6,7 +6,7 @@ import Illustration from '../illustration';
 const Empty = ({
   isListEmpty, isLoading, data, error, className,
 }) => {
-  if (isLoading || !isListEmpty || (error && error.message !== 'Not found')) return null;
+  if (isLoading || !isListEmpty || (error && error.message !== 'Not found.')) return null;
   if (isReactComponent(data)) {
     const Element = data;
     return (<Element />);

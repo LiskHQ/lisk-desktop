@@ -4,9 +4,9 @@ import Box from '../../../../toolbox/box';
 import BoxHeader from '../../../../toolbox/box/header';
 import BoxContent from '../../../../toolbox/box/content';
 import BoxTabs from '../../../../toolbox/tabs';
-import Chart from '../../../../toolbox/charts';
+import { DoughnutChart, BarChart } from '../../../../toolbox/charts';
 import styles from './blocksOverview.css';
-import { chartStyles, typeBar, typeDoughnut } from '../../../../../constants/chartConstants';
+import { chartStyles } from '../../../../../constants/chartConstants';
 
 class BlocksOverview extends React.Component {
   constructor(props) {
@@ -58,8 +58,7 @@ class BlocksOverview extends React.Component {
             <div className={`${grid['col-sm-8']} ${grid['col-xs-7']} ${styles.chartBox}`}>
               <h2 className={styles.chartTitle}>{t('Transactions per block')}</h2>
               <div className={styles.chart}>
-                <Chart
-                  type={typeBar}
+                <BarChart
                   data={{
                     labels: blocks.data.map(block => block.id),
                     datasets: [{
@@ -131,8 +130,7 @@ class BlocksOverview extends React.Component {
             <div className={`${grid['col-sm-4']} ${grid['col-xs-5']} ${styles.chartBox}`}>
               <h2 className={styles.chartTitle}>{t('Empty/Not empty')}</h2>
               <div className={styles.chart}>
-                <Chart
-                  type={typeDoughnut}
+                <DoughnutChart
                   data={{
                     labels: [t('Empty'), t('Not Empty')],
                     datasets: [{

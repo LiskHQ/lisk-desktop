@@ -2,39 +2,109 @@
 
 .container {
   width: 100%;
-  height: 293px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+
+  &.overview {
+    height: 293px;
+  }
+
+  &.forgingDetails {
+    min-height: 180px;
+  }
+}
+
+.column {
+  flex-grow: 1;
+  height: 100%;
+  box-sizing: border-box;
+
+  &.nextForgers {
+    width: 50%;
+
+    & .forger {
+      width: 33.33%;
+    }
+  }
+
+  &:not(.nextForgers) {
+    width: 25%;
+  }
+}
+
+@media (--medium-viewport) {
+  .column {
+    &.nextForgers {
+      width: 60%;
+
+      & .forger {
+        width: 50%;
+      }
+    }
+
+    &:not(.nextForgers) {
+      width: 20%;
+    }
+  }
+}
+
+.title {
+  @mixin contentLargest bold;
+
+  width: 100%;
+  padding: 0 20px;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: var(--color-maastricht-blue);
+  padding-top: 30px;
   box-sizing: border-box;
 }
 
-.graphContainer {
-  flex-grow: 1;
-  width: calc(100% / 3);
-  height: 100%;
-  box-sizing: border-box;
+.list {
+  padding: 18px 10px 0;
+  font-size: var(--font-size-h6);
+
+  & .forger {
+    display: inline-block;
+    padding-bottom: 15px;
+
+    & a {
+      & > div,
+      & > span {
+        display: inline-block;
+        padding-left: 10px;
+        vertical-align: middle;
+      }
+
+      & > span {
+        color: var(--color-maastricht-blue);
+        font-size: var(--font-size-small-secondary);
+        padding-left: 15px;
+        line-height: 35px;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.totalForged {
+  font-size: var(--font-size-h4);
+  padding-left: 10px;
+  padding-top: 5px;
+  display: inline-block;
 }
 
 .chartBox {
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 30px 0 10px;
+  padding-bottom: 10px;
   box-sizing: border-box;
-
-  & > .chartTitle {
-    @mixin contentLargest bold;
-
-    width: 100%;
-    padding: 0 20px;
-    margin: 0;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    color: var(--color-maastricht-blue);
-  }
 
   & > .chart {
     position: relative;

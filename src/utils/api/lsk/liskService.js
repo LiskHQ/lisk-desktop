@@ -1,4 +1,5 @@
 import { utils } from '@liskhq/lisk-transactions';
+import { cryptography } from '@liskhq/lisk-client';
 import io from 'socket.io-client';
 import * as popsicle from 'popsicle';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
@@ -37,6 +38,20 @@ const liskServiceGet = ({
   }
 });
 
+const liskServiceSocketGet = request => new Promise((resolve, reject) => {
+  const { network } = store.getState();
+  const socket = io(`${network.serviceUrl}/rpc`, { transports: ['websocket'] });
+  socket.emit('request', request, (response) => {
+    if (Array.isArray(response)) {
+      resolve(response);
+    } else if (response.error) {
+      reject(response.error);
+    } else {
+      resolve(response.result);
+    }
+  });
+});
+
 const liskServiceApi = {
   getPriceTicker: () =>
     liskServiceGet({
@@ -44,14 +59,16 @@ const liskServiceApi = {
       transformResponse: response => response.data,
     }),
 
-  getNewsFeed: () =>
-    liskServiceGet({ path: '/api/newsfeed' }),
+  getNewsFeed: (networkConfig, searchParams) => liskServiceGet({
+    path: '/api/v1/market/newsfeed',
+    searchParams,
+    transformResponse: response => response.data,
+  }),
 
   getLastBlocks: async (
     networkConfig, { dateFrom, dateTo, ...searchParams },
   ) => liskServiceGet({
     path: '/api/v1/blocks',
-    transformResponse: response => response.data,
     searchParams: {
       limit: DEFAULT_LIMIT,
       ...searchParams,
@@ -68,7 +85,10 @@ const liskServiceApi = {
     dateFrom, dateTo, amountFrom, amountTo, ...searchParams
   }) => liskServiceGet({
     path: '/api/v1/transactions',
-    transformResponse: response => adaptTransactions(response).data,
+    transformResponse: response => ({
+      data: adaptTransactions(response).data,
+      meta: response.meta,
+    }),
     searchParams: {
       limit: DEFAULT_LIMIT,
       ...(dateFrom && { from: formatDate(dateFrom) }),
@@ -88,9 +108,12 @@ const liskServiceApi = {
     offset = 0, tab, ...searchParams
   }) => liskServiceGet({
     path: '/api/v1/delegates',
-    transformResponse: response => response.data.filter(
-      delegate => delegate.rank > voting.numberOfActiveDelegates,
-    ),
+    transformResponse: response => ({
+      data: response.data.filter(
+        delegate => delegate.rank > voting.numberOfActiveDelegates,
+      ),
+      meta: response.meta,
+    }),
     searchParams: {
       offset: offset + (Object.keys(searchParams).length ? 0 : voting.numberOfActiveDelegates),
       limit: DEFAULT_LIMIT,
@@ -99,10 +122,13 @@ const liskServiceApi = {
   }),
 
   getActiveDelegates: async (networkConfig, { search = '', tab, ...searchParams }) => liskServiceGet({
-    path: '/api/v1/delegates/active',
-    transformResponse: response => response.data.filter(
-      delegate => delegate.username.includes(search),
-    ),
+    path: '/api/v1/delegates/next_forgers',
+    transformResponse: response => ({
+      data: response.data.filter(
+        delegate => delegate.username.includes(search),
+      ),
+      meta: response.meta,
+    }),
     searchParams: {
       limit: voting.numberOfActiveDelegates,
       ...searchParams,
@@ -124,7 +150,6 @@ const liskServiceApi = {
   getActiveAndStandByDelegates: async () => liskServiceGet({
     path: '/api/v1/delegates',
     searchParams: { limit: 1 },
-    transformResponse: response => response.meta,
   }),
 
   getRegisteredDelegates: async () => liskServiceGet({
@@ -134,7 +159,6 @@ const liskServiceApi = {
       type: transactionTypes().registerDelegate.outgoingCode,
       sort: 'timestamp:desc',
     },
-    transformResponse: response => response.data,
   }),
 
   getNextForgers: async (networkConfig, searchParams) => liskServiceGet({
@@ -155,6 +179,10 @@ const liskServiceApi = {
     path: '/api/v1/network/status',
   }),
 
+  getNetworkStatistics: () => liskServiceGet({
+    path: '/api/v1/network/statistics',
+  }),
+
   listenToBlockchainEvents: ({ event, callback }) => {
     const { network } = store.getState();
     const socket = io(
@@ -166,6 +194,65 @@ const liskServiceApi = {
     return function cleanUp() {
       socket.close();
     };
+  },
+
+  getTxStats: (networkConfig, searchParams) => {
+    const config = {
+      week: { path: 'day', limit: 7 },
+      month: { path: 'month', limit: 6 },
+      year: { path: 'month', limit: 12 },
+    };
+    return liskServiceGet({
+      path: `/api/v1/transactions/statistics/${config[searchParams.period].path}`,
+      searchParams: { limit: config[searchParams.period].limit },
+    });
+  },
+
+  getConnectedPeers: (networkConfig, searchParams) =>
+    liskServiceGet({
+      path: '/api/v1/peers/connected/',
+      searchParams,
+    }),
+
+  getLatestVotes: async (networkConfig, params = {}) => {
+    const voteTransactions = await liskServiceSocketGet({
+      method: 'get.transactions',
+      params: {
+        limit: DEFAULT_LIMIT,
+        type: transactionTypes().vote.outgoingCode,
+        ...params,
+      },
+    });
+
+    const addresses = [
+      ...voteTransactions.data.map(({ senderId }) => senderId),
+      ...voteTransactions.data.reduce((accumulator, { asset: { votes } }) => ([
+        ...accumulator,
+        ...votes.map(v => cryptography.getAddressFromPublicKey(v.substr(1))),
+      ]), []),
+    ];
+
+
+    const accounts = await liskServiceSocketGet([...new Set(addresses)].map(address => ({
+      method: 'get.accounts',
+      params: { address },
+    })));
+
+    const accountsMap = accounts.reduce((accumulator, { result: { data } }) => ({
+      ...accumulator,
+      [data[0].address]: data[0],
+    }), {});
+
+    const data = voteTransactions.data.map(({ asset, ...tx }) => ({
+      ...tx,
+      balance: accountsMap[tx.senderId] && accountsMap[tx.senderId].balance,
+      votes: asset.votes.map(vote => ({
+        status: vote.substr(0, 1),
+        ...accountsMap[cryptography.getAddressFromPublicKey(vote.substr(1))],
+      })),
+    }));
+
+    return { data, meta: voteTransactions.meta };
   },
 };
 

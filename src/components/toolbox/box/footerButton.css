@@ -19,4 +19,15 @@
   &:hover {
     color: var(--color-ultramarine-blue);
   }
+
+  &:disabled {
+    animation: wave infinite 700ms;
+    cursor: default;
+  }
+}
+
+@keyframes wave {
+  0% { color: var(--color-ghost); }
+  50% { color: var(--color-blue-gray); }
+  100% { color: var(--color-ghost); }
 }

@@ -14,7 +14,7 @@ const AccountCreated = ({ t }) => (
       <h1>
         {t('Perfect! You\'re all set')}
       </h1>
-      <p className={styles.text}>{t('You can now start sending and receiving LSK tokens')}</p>
+      <p className={styles.text}>{t('You can now start sending and receiving LSK')}</p>
     </div>
 
     <Illustration className={styles.illustration} name="registrationSuccess" />

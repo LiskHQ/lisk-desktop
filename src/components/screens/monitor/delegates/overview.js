@@ -3,8 +3,7 @@ import React from 'react';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
-import Chart from '../../../toolbox/charts';
-import { typeLine, typeDoughnut } from '../../../../constants/chartConstants';
+import { DoughnutChart, LineChart } from '../../../toolbox/charts';
 import styles from './overview.css';
 
 const getForgingStats = (data) => {
@@ -25,9 +24,14 @@ const Overview = ({
   chartActiveAndStandby,
   chartDelegatesForging,
   chartRegisteredDelegates,
-  delegatesForgedLabels,
   t,
 }) => {
+  const delegatesForgedLabels = [
+    t('Forging'),
+    t('Awaiting slot'),
+    t('Not forging'),
+    t('Missed block'),
+  ];
   const getAmountOfDelegatesInTime = () => {
     const totalDelegates = chartActiveAndStandby.data;
     const final = [totalDelegates];
@@ -54,16 +58,15 @@ const Overview = ({
       <BoxHeader>
         <h1>{t('Overview')}</h1>
       </BoxHeader>
-      <div className={styles.container}>
-        <div className={styles.graphContainer}>
+      <div className={`${styles.container} ${styles.overview}`}>
+        <div className={styles.column}>
           {
             typeof chartActiveAndStandby.data === 'number'
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.chartTitle}>{t('Delegates')}</h2>
+                  <h2 className={styles.title}>{t('Delegates')}</h2>
                   <div className={styles.chart}>
-                    <Chart
-                      type={typeDoughnut}
+                    <DoughnutChart
                       data={{
                         labels: [t('Standby delegates'), t('Active delegates')],
                         datasets: [
@@ -90,15 +93,14 @@ const Overview = ({
               : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
           }
         </div>
-        <div className={styles.graphContainer}>
+        <div className={styles.column}>
           {
             Object.keys(chartDelegatesForging).length
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.chartTitle}>{t('Delegates Forging Status')}</h2>
+                  <h2 className={styles.title}>{t('Delegates Forging Status')}</h2>
                   <div className={styles.chart}>
-                    <Chart
-                      type={typeDoughnut}
+                    <DoughnutChart
                       data={{
                         labels: delegatesForgedLabels,
                         datasets: [
@@ -125,15 +127,14 @@ const Overview = ({
               : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
           }
         </div>
-        <div className={styles.graphContainer}>
+        <div className={styles.column}>
           {
             chartRegisteredDelegates.data.length
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.chartTitle}>{t('Registered Delegates')}</h2>
+                  <h2 className={styles.title}>{t('Registered Delegates')}</h2>
                   <div className={styles.chart}>
-                    <Chart
-                      type={typeLine}
+                    <LineChart
                       data={{
                         labels: getAmountOfDelegatesLabels(),
                         datasets: [

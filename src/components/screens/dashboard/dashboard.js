@@ -52,7 +52,7 @@ class Dashboard extends React.Component {
     const { t } = this.props;
     return [{
       title: t('Ready to go!'),
-      content: t('The ultimate gateway to the ecosystem. Lisk’s new design lets you easily manage your tokens (and much, much more).'),
+      content: t('The ultimate gateway to the ecosystem. Lisk’s new design lets you easily manage your LSK (and much, much more).'),
       illustration: 'hubReadyToGo',
     }, {
       title: t('Stay Informed'),

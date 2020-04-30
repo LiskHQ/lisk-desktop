@@ -38,6 +38,55 @@
   padding: 0 !important;
 }
 
+.voteRow {
+  align-items: flex-start;
+}
+
+.votesColumnTitle {
+  justify-content: flex-start !important;
+}
+
+.votesColumn {
+  display: inline-block;
+
+  & .vote,
+  & .unVote {
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    padding-bottom: var(--vertical-padding-l);
+  }
+
+  & .icon {
+    display: inline-block;
+    vertical-align: top;
+    width: 20px;
+  }
+
+  & .vote {
+    & .icon {
+      color: var(--color-deep-green);
+    }
+  }
+
+  & .delegatesList {
+    display: inline-block;
+    width: calc(100% - 20px);
+    vertical-align: top;
+    word-break: break-word;
+
+    & span {
+      display: inline;
+
+      &:not(:last-child)::after {
+        content: '•';
+        display: inline-block;
+        padding: 0 5px;
+      }
+    }
+  }
+}
+
 @media (--large-viewport) {
   .statusTitle {
     padding-right: 0;

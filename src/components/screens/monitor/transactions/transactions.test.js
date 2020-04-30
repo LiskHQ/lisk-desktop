@@ -8,6 +8,7 @@ describe('Transactions monitor page', () => {
     t: key => key,
     transactions: {
       data: [],
+      meta: null,
       isLoading: true,
       loadData: jest.fn(),
       clearData: jest.fn(),
@@ -20,6 +21,11 @@ describe('Transactions monitor page', () => {
     ...props.transactions,
     isLoading: false,
     data: transactions,
+    meta: {
+      count: transactions.length,
+      offset: 0,
+      total: transactions.length * 3,
+    },
   };
 
   it('should render transactions list', () => {

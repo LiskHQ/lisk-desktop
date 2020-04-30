@@ -6,6 +6,7 @@ import {
   filterObjectPropsWithValue,
   sizeOfString,
   isReactComponent,
+  kFormatter,
 } from './helpers';
 
 describe('helpers', () => {
@@ -70,7 +71,7 @@ describe('helpers', () => {
     });
 
     it('should calculate the size of null', () => {
-      expect(sizeOfString()).toEqual(9);
+      expect(sizeOfString()).toEqual(0);
     });
   });
   describe('isReactComponent', () => {
@@ -89,6 +90,27 @@ describe('helpers', () => {
     it('detects class components', () => {
       const NoComponent = () => 'some_other_value';
       expect(isReactComponent(NoComponent)).toEqual(false);
+    });
+  });
+  describe('kFormatter', () => {
+    it('uses K notation for numbers in thousands range', () => {
+      expect(kFormatter(1000)).toEqual('1K');
+      expect(kFormatter(1100)).toEqual('1K');
+      expect(kFormatter(1100, 1)).toEqual('1.1K');
+      expect(kFormatter(81000)).toEqual('81K');
+      expect(kFormatter(81000, 1)).toEqual('81.0K');
+    });
+    it('uses M notation for numbers in millions range', () => {
+      expect(kFormatter(1000000)).toEqual('1M');
+      expect(kFormatter(1100000)).toEqual('1M');
+      expect(kFormatter(1100000, 1)).toEqual('1.1M');
+      expect(kFormatter(81000000)).toEqual('81M');
+      expect(kFormatter(81000000, 1)).toEqual('81.0M');
+    });
+    it('returns numbers under 1K unchanged', () => {
+      expect(kFormatter(999)).toEqual(999);
+      expect(kFormatter(0)).toEqual(0);
+      expect(kFormatter(1, 1)).toEqual(1);
     });
   });
 });

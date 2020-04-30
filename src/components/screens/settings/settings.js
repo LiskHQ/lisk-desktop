@@ -6,7 +6,6 @@ import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
 import CheckBox from '../../toolbox/checkBox';
-import LanguageSelect from './languageSelect';
 import Piwik from '../../../utils/piwik';
 import SecondPassphraseSetting from './secondPassphrase';
 import Select from '../../toolbox/select';
@@ -100,7 +99,6 @@ class Settings extends React.Component {
                   placeholder="Currency"
                 />
               </div>
-              <LanguageSelect t={t} />
             </section>
             <section>
               <h2>{t('Appearances')}</h2>

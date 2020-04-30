@@ -128,6 +128,8 @@ const DelegatesTable = ({
     }
   }, [activeTab.data, isLoading]);
 
+  const canLoadMore = activeTab.value !== 1;
+
   return (
     <Box main isLoading={isLoading}>
       <BoxHeader className="delegates-table">
@@ -155,7 +157,7 @@ const DelegatesTable = ({
           row={DelegateRow}
           loadData={loadDelegatesData}
           header={header(shouldShowVoteColumn, t, apiVersion, firstTimeVotingActive)}
-          canLoadMore
+          canLoadMore={canLoadMore}
           error={false}
           iterationKey="username"
           emptyState={{ message: t('No delegates found.') }}

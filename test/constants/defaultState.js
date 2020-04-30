@@ -1,5 +1,9 @@
 export default {
   account: {
+    info: {
+      LSK: {},
+      BTC: {},
+    },
   },
   bookmarks: {
     LSK: [],
@@ -36,5 +40,7 @@ export default {
   },
   blocks: {
     latestBlocks: [],
+    awaitingForgers: [],
+    forgingTimes: {},
   },
 };

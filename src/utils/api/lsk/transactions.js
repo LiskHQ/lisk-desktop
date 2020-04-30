@@ -3,38 +3,12 @@ import { getAPIClient } from './network';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import { toRawLsk } from '../../lsk';
 import txFilters from '../../../constants/transactionFilters';
+import transactionTypes from '../../../constants/transactionTypes';
 import { adaptTransactions, adaptTransaction } from './adapters';
 
-// TODO remove this function as is replaced right now by Create and Broadcast functions
-// Issue ticket #2046
-export const send = (
-  amount,
-  data,
-  networkConfig,
-  passphrase,
-  recipientId,
-  secondPassphrase = null,
-  timeOffset,
-) =>
-  new Promise((resolve, reject) => {
-    const Lisk = liskClient();
-    const txId = Lisk.transaction.transfer({
-      amount,
-      data,
-      passphrase,
-      recipientId,
-      secondPassphrase,
-      timeOffset,
-    });
-
-    getAPIClient(networkConfig).transactions.broadcast(txId)
-      .then(resolve(txId))
-      .catch(reject);
-  });
-
 const parseTxFilters = (filter = txFilters.all, address) => ({
-  [txFilters.incoming]: { recipientId: address },
-  [txFilters.outgoing]: { senderId: address },
+  [txFilters.incoming]: { recipientId: address, type: transactionTypes().send.outgoingCode },
+  [txFilters.outgoing]: { senderId: address, type: transactionTypes().send.outgoingCode },
   [txFilters.all]: { senderIdOrRecipientId: address },
 }[filter]);
 

@@ -18,9 +18,9 @@ const ComposedBlocks = compose(
       autoload: true,
       transformResponse: (response, oldData, urlSearchParams) => (
         urlSearchParams.offset
-          ? [...oldData, ...response.filter(block =>
+          ? [...oldData, ...response.data.filter(block =>
             !oldData.find(({ id }) => id === block.id))]
-          : response
+          : response.data
       ),
     },
   }),

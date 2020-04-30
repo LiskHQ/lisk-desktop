@@ -68,12 +68,14 @@ export const graphOptions = ({
       ticks: {
         callback: (value) => {
           moment.locale(locale);
-          return moment(value, format).format('MMM YY');
+          return moment(value, format).format('MMM YYYY');
         },
         fontColor: styles.slateGray,
         fontSize: styles.fontSize,
         fontFamily: styles.contentFontFamily,
         maxRotation: 0,
+        autoSkip: true,
+        maxTicksLimit: 5,
       },
     }],
     yAxes: [{
@@ -151,7 +153,18 @@ const getTxValue = (tx, address) => (
 );
 
 /**
- * Returs balance data grouped by an specific amount
+ * Returns balance data grouped by an specific amount
+ *
+ * Value of each data is calculated as the balance of the day before
+ * minus wheat ever spent or received today,
+ * meaning if balance today is 100 and you spent 10 LSK yesterday (-10)
+ * then your balance before that withdrawal was 110.
+ * yesterdayBalance = todayBalance - yesterdayWithdrawal
+ *
+ * balance     79   75    70     70
+ * txAmount    N    -4    -5      -
+ * Date       8.2   9.2   10.2   Now
+ *
  * @param {Object} param Object containing {
  *  @param {String} format,
  *  @param {Object[]} transactions,
@@ -161,26 +174,26 @@ const getTxValue = (tx, address) => (
  * @param {Node} canvas Canvas element to be used
  */
 export const getBalanceData = ({
-  format, transactions, balance, address,
+  transactions, balance, address,
 }) => {
-  const unit = getUnitFromFormat(format);
-  const data = transactions.reduce((balances, tx) => {
-    const txValue = getTxValue(tx, address);
-    const txDate = tx.timestamp ? moment(getNormalizedTimestamp(tx)) : moment();
-    const lastBalance = balances.slice(-1)[0];
-    const tmpBalances = balances.length > 1 && moment(lastBalance.x).isSame(txDate, unit)
-      ? balances.slice(0, -1)
-      : balances;
-    return [
-      ...tmpBalances,
-      { x: txDate, y: (parseInt(lastBalance.y, 10) - txValue) },
-    ];
-  }, [{ x: moment(), y: +balance }])
-    .reverse().map(d => ({
-      x: d.x,
-      y: fromRawLsk(d.y),
-    }));
-
+  const data = transactions.reduce((acc, item, index) => {
+    const date = moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD');
+    const tx = transactions[index - 1];
+    const txValue = tx ? parseFloat(fromRawLsk(getTxValue(tx, address))) : 0;
+    // fix for the first item in list
+    const lastBalance = acc[acc.length - 1]
+      ? acc[acc.length - 1].y
+      : parseFloat(fromRawLsk(balance));
+    if (acc[acc.length - 1] && date === acc[acc.length - 1].x) {
+      acc[acc.length - 1].y = Math.round(acc[acc.length - 1].y - txValue);
+    } else {
+      acc.push({
+        x: moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD'),
+        y: Math.round(lastBalance - txValue),
+      });
+    }
+    return acc;
+  }, []).reverse();
   return {
     datasets: [{
       data,

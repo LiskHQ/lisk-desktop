@@ -80,7 +80,7 @@ export const flattenArray = arr =>
  * @param {string} str - a random string
  * @returns {number} - string size in bytes
  */
-export const sizeOfString = str => encodeURI(str).split(/%..|./).length - 1;
+export const sizeOfString = (str = '') => encodeURI(str).split(/%..|./).length - 1;
 
 /**
  * Checks if a given parameter is a React component
@@ -96,4 +96,21 @@ export const isReactComponent = (component) => {
     return 'function';
   }
   return false;
+};
+
+/**
+ * Uses M and K to define million and thousand.
+ *
+ * @param {Number} num - Given number like 2500
+ * @param {Number} precision - The number of floating digits
+ * @returns {String} Stringified number like 2.5K
+ */
+export const kFormatter = (num, precision = 0) => {
+  if (Number(num) > 999999) {
+    return `${(Number(num) / 1000000).toFixed(precision)}M`;
+  }
+  if ((Number(num)) > 999) {
+    return `${(Number(num) / 1000).toFixed(precision)}K`;
+  }
+  return num;
 };

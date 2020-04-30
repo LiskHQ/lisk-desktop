@@ -1,4 +1,5 @@
-import { castVotes, transfer, utils } from '@liskhq/lisk-transactions';
+// eslint-disable-next-line import/no-unresolved
+import lisk from 'Utils/lisk-client';
 import i18next from 'i18next';
 import { getAccount } from './api/lsk/account';
 import {
@@ -37,9 +38,10 @@ const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) =>
  * This function is used for sign a send transaction.
  */
 const signSendTransaction = async (account, data) => {
+  const { transfer, utils } = lisk().transaction;
   const transactionObject = {
     ...transfer(data),
-    senderPublicKey: account.info.LSK.publicKey,
+    senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,
   };
 
   const transaction = {
@@ -69,6 +71,7 @@ const signVoteTransaction = async (
   timeOffset,
   networkIdentifier,
 ) => {
+  const { castVotes, utils } = lisk().transaction;
   const signedTransactions = [];
   const votesChunks = splitVotesIntoRounds({ votes: [...votedList], unvotes: [...unvotedList] });
 

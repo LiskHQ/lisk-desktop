@@ -10,6 +10,7 @@ export default compose(
   withData({
     blocks: {
       apiUtil: liskService.getLastBlocks,
+      transformResponse: response => response.data,
       defaultUrlSearchParams: { limit: '10' },
       defaultData: [],
       autoload: true,

@@ -73,7 +73,12 @@ function withData(apis = {}) {
         }
 
         componentDidMount() {
+          this.mounted = true;
           Object.keys(apis).forEach(key => apis[key].autoload && this.state[key].loadData());
+        }
+
+        componentWillUnmount() {
+          this.mounted = false;
         }
 
         clearData(key) {
@@ -82,29 +87,36 @@ function withData(apis = {}) {
 
         loadData(key, urlSearchParams = this.state[key].urlSearchParams, ...args) {
           const { apiClient, apiParams } = this.props;
-          this.setState(state => ({
-            [key]: {
-              ...state[key],
-              isLoading: true,
-              urlSearchParams,
-            },
-          }));
+          if (this.mounted) {
+            this.setState(state => ({
+              [key]: {
+                ...state[key],
+                isLoading: true,
+                urlSearchParams,
+              },
+            }));
+          }
           apis[key].apiUtil(apiClient, {
             ...apiParams[key],
             ...urlSearchParams,
           }, ...args).then((data) => {
             const transformResponse = apis[key].transformResponse || this.defaultTransformResponse;
-            this.setState({
-              [key]: {
-                ...this.defaultState[key],
-                data: transformResponse(data, this.state[key].data, urlSearchParams),
-                urlSearchParams,
-              },
-            });
+            if (this.mounted) {
+              this.setState({
+                [key]: {
+                  ...this.defaultState[key],
+                  data: transformResponse(data, this.state[key].data, urlSearchParams),
+                  meta: data.meta,
+                  urlSearchParams,
+                },
+              });
+            }
           }).catch((error) => {
-            this.setState({
-              [key]: { ...this.defaultState[key], urlSearchParams, error },
-            });
+            if (this.mounted) {
+              this.setState({
+                [key]: { ...this.defaultState[key], urlSearchParams, error },
+              });
+            }
           });
         }
 
