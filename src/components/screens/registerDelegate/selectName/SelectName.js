@@ -93,7 +93,7 @@ class SelectName extends React.Component {
     const error = this.isNameInvalid(value);
     this.debounceFetchUser(value, error);
     this.setState({
-      loading: !!value && !error,
+      loading: value && !error,
       nickname: value,
       error: error || '',
     });
