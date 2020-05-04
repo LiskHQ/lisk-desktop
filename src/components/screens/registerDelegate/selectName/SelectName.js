@@ -91,9 +91,9 @@ class SelectName extends React.Component {
 
   onChangeNickname({ target: { value } }) {
     const error = this.validateNickname(value);
-    if (value && !error) this.isNicknameFree(value);
+    if (value.length && !error) this.isNicknameFree(value);
     this.setState({
-      loading: value && !error,
+      loading: value.length && !error,
       nickname: value,
       error,
     });
