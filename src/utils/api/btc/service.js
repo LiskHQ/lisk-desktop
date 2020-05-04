@@ -32,7 +32,7 @@ export const getDynamicFees = () => new Promise(async (resolve, reject) => {
         High: body.fastestFee,
       });
     } else {
-      reject(response.body);
+      reject(response);
     }
   } catch (error) {
     reject(error);
