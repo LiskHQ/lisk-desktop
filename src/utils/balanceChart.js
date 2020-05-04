@@ -112,11 +112,10 @@ export const graphOptions = ({
     callbacks: {
       title(tooltipItem) {
         moment.locale(locale);
-        return moment(tooltipItem[0].xLabel, 'MMMM DD YYYY h:mm:ss A')
-          .format(format);
+        return moment(tooltipItem[0].xLabel).format(i18n.t('MMM DD YYYY'));
       },
       label(tooltipItem) {
-        return i18n.t('Account Balance:          {{balance}} {{token}}', { balance: tooltipItem.yLabel, token });
+        return `${i18n.t('Account Balance')}:          ${tooltipItem.yLabel} ${token}`;
       },
     },
     mode: 'index',
