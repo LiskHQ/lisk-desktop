@@ -15,7 +15,7 @@
   "Accept": "Accept",
   "Access your account by scanning the QR code below with the Lisk Mobile App:": "Access your account by scanning the QR code below with the Lisk Mobile App:",
   "Account": "Account",
-  "Account Balance:          {{balance}} {{token}}": "Account Balance:          {{balance}} {{token}}",
+  "Account Balance": "Account Balance",
   "Account name": "Account name",
   "Account nickname": "Account nickname",
   "Accounts": "Accounts",
