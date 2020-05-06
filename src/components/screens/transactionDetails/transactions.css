@@ -1,4 +1,146 @@
 @import '../../../app/mixins.css';
+:root {
+  --label-margin-bottom: 10px;
+}
+
+.summaryHeader {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+
+  & > h2 {
+    @mixin headingNormal;
+
+    color: var(--color-maastricht-blue);
+    margin: 0;
+  }
+}
+
+.message {
+  & .detailsWrapper {
+    flex-grow: 1;
+    width: 50%;
+    box-sizing: border-box;
+
+    &:first-child {
+      padding-right: 64px;
+      position: relative;
+
+      &::after {
+        background-color: var(--color-platinum);
+        content: '';
+        height: calc(100% - 13px);
+        position: absolute;
+        right: 0;
+        width: 1px;
+        top: 8px;
+      }
+    }
+
+    &:last-child {
+      padding-left: 64px;
+    }
+  }
+}
+
+.detailsWrapper {
+  flex-direction: column;
+  display: 100%;
+  text-align: left;
+  flex-grow: 1;
+
+  & .accountInfo {
+    display: flex;
+    flex-direction: column;
+
+    & .avatar {
+      margin-right: 10px;
+    }
+
+    & .addressRow {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    & .link {
+      @mixin contentLargest;
+
+      color: var(--color-maastricht-blue);
+      text-decoration: none;
+
+      &.hasName .address {
+        color: var(--color-blue-gray);
+        margin-left: 16px;
+      }
+    }
+  }
+
+  & .label {
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
+    display: block;
+    margin-top: 0;
+    margin-bottom: var(--label-margin-bottom);
+    text-align: left;
+
+    & .count {
+      font-size: var(--paragraph-font-size-l);
+      color: var(--color-content-light);
+    }
+  }
+
+  & .value {
+    @mixin contentLargest;
+
+    color: var(--color-maastricht-blue);
+  }
+
+  & .votesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:empty {
+      margin-top: -var(--label-margin-bottom);
+    }
+
+    & .voteTag {
+      @mixin contentSmall bold;
+
+      align-items: center;
+      border: 1px solid var(--dark-border-color);
+      border-radius: var(--border-radius-standard);
+      box-sizing: border-box;
+      color: var(--color-maastricht-blue);
+      display: flex;
+      height: 32px;
+      margin-bottom: 8px;
+      margin-right: 8px;
+      padding: 7px 10px;
+      text-decoration: none;
+    }
+
+    & .rank {
+      @mixin contentSmall bold;
+
+      align-items: center;
+      background-color: var(--color-slate-gray);
+      border-radius: var(--border-radius-standard);
+      color: var(--color-strong-white);
+      display: flex;
+      height: 18px;
+      margin-right: 10px;
+      padding: 0 5px;
+      text-align: center;
+    }
+  }
+}
 
 .container {
   align-items: center;
