@@ -10,7 +10,7 @@ import DiscreetMode from '../../shared/discreetMode';
 import LiskAmount from '../../shared/liskAmount';
 import transactionTypes from '../../../constants/transactionTypes';
 import BoxRow from '../../toolbox/box/row';
-import styles from './transactions.css';
+import styles from './transactionDetails.css';
 
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
