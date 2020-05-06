@@ -1,7 +1,7 @@
 import Lisk from '@liskhq/lisk-client-old';
 import React from 'react';
 import { mount } from 'enzyme';
-import Transactions from './transactions';
+import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
 import fees from '../../../constants/fees';
 import transactionTypes from '../../../constants/transactionTypes';
@@ -62,13 +62,13 @@ describe('Single Transaction Component', () => {
 
   describe('Transfer transactions', () => {
     it('Should render transaction details after transaction loaded', () => {
-      const wrapper = mount(<Transactions {...props} transaction={transaction} />);
+      const wrapper = mount(<TransactionDetails {...props} transaction={transaction} />);
       expect(wrapper.find('header h1')).toHaveText('Transaction details');
       expect(wrapper.find('.transaction-id .copy-title').first().text().trim()).toBe(`${transaction.data.id}`);
     });
 
     it('Should redirect to dashboard if activeToken changes', () => {
-      const wrapper = mount(<Transactions {...props} />);
+      const wrapper = mount(<TransactionDetails {...props} />);
       wrapper.setProps({
         ...props,
         activeToken: 'BTC',
@@ -77,21 +77,21 @@ describe('Single Transaction Component', () => {
     });
 
     it('Should load delegate names after vote transaction loading finished', () => {
-      const wrapper = mount(<Transactions {...props} />);
+      const wrapper = mount(<TransactionDetails {...props} />);
       wrapper.setProps({
         ...props,
         transaction: voteTransaction,
       });
       expect(props.delegates.loadData).toHaveBeenCalledWith({
-        publicKey: accounts.delegate.publicKey,
-      });
-      expect(props.delegates.loadData).toHaveBeenCalledWith({
-        publicKey: accounts.delegate_candidate.publicKey,
+        publicKeys: [
+          accounts.delegate.publicKey,
+          accounts.delegate_candidate.publicKey,
+        ],
       });
     });
 
     it('Should render transfer transaction with message (LSK)', () => {
-      const wrapper = mount(<Transactions {...props} transaction={transaction} />);
+      const wrapper = mount(<TransactionDetails {...props} transaction={transaction} />);
       expect(wrapper).toContainMatchingElements(2, '.accountInfo');
       expect(wrapper.find('.accountInfo .sender-address').text()).toBe(transaction.data.senderId);
       expect(wrapper.find('.accountInfo .receiver-address').text()).toBe(transaction.data.recipientId);
@@ -99,7 +99,7 @@ describe('Single Transaction Component', () => {
     });
 
     it('Should not render transfer transaction with message (BTC)', () => {
-      const wrapper = mount(<Transactions {...props} activeToken="BTC" />);
+      const wrapper = mount(<TransactionDetails {...props} activeToken="BTC" />);
       expect(wrapper).not.toContain('.tx-reference');
     });
 
@@ -121,7 +121,7 @@ describe('Single Transaction Component', () => {
         },
       };
       const wrapper = mount(
-        <Transactions
+        <TransactionDetails
           {...props}
           activeToken="BTC"
           transaction={delegateTransaction}
@@ -134,7 +134,7 @@ describe('Single Transaction Component', () => {
   describe('Delegate vote transaction', () => {
     it('Should render delegate vote details', () => {
       const wrapper = mount(
-        <Transactions
+        <TransactionDetails
           {...props}
           transaction={{
             data: {
@@ -143,6 +143,9 @@ describe('Single Transaction Component', () => {
               recipientId: '',
               amount: 0,
               id: 123,
+              asset: {
+                votes: [],
+              },
             },
           }}
         />,
@@ -155,7 +158,7 @@ describe('Single Transaction Component', () => {
   describe('2nd Passphrase transaction', () => {
     it('Should render register 2nd passphrase details', () => {
       const wrapper = mount(
-        <Transactions
+        <TransactionDetails
           {...props}
           transaction={{
             data: {
@@ -176,7 +179,7 @@ describe('Single Transaction Component', () => {
   describe('Register delegate transaction', () => {
     it('Should render register delegate details', () => {
       const wrapper = mount(
-        <Transactions
+        <TransactionDetails
           {...props}
           transaction={{
             data: {
@@ -196,7 +199,7 @@ describe('Single Transaction Component', () => {
 
   describe('No results', () => {
     it('Should render no result screen', () => {
-      const wrapper = mount(<Transactions {...{
+      const wrapper = mount(<TransactionDetails {...{
         ...props,
         transaction: {
           error: 'INVALID_REQUEST_PARAMETER',
