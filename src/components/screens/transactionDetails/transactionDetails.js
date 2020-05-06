@@ -13,43 +13,12 @@ import {
   DateAndConfirmation, FeeAndAmount, TransactionId,
   Sender, Recipient, Message, Illustration,
 } from './dataRows';
-import styles from './transactions.css';
-
-function addVotesWithDelegateNames(transaction, delegates, t) {
-  const getVotesStartingWith = sign => (
-    transaction.asset.votes
-      .filter(item => item.startsWith(sign))
-      .map(item => item.replace(sign, ''))
-  );
-
-  const getDelegate = publicKey => (
-    delegates[publicKey] || { username: t('Loading name...'), account: {} }
-  );
-
-  if (transaction.asset && transaction.asset.votes) {
-    transaction.votesName = {
-      added: getVotesStartingWith('+').map(getDelegate),
-      deleted: getVotesStartingWith('-').map(getDelegate),
-    };
-  }
-  return transaction;
-}
+import styles from './transactionDetails.css';
 
 class Transactions extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.activeToken !== prevProps.activeToken) {
       this.props.history.push(routes.dashboard.path);
-    }
-    if (prevProps.transaction.isLoading && !this.props.transaction.isLoading) {
-      this.fetchDelegates();
-    }
-  }
-
-  fetchDelegates() {
-    const { transaction, delegates } = this.props;
-    if (transaction.data.asset && transaction.data.asset.votes) {
-      transaction.data.asset.votes
-        .forEach(publicKey => delegates.loadData({ publicKey: publicKey.substring(1) }));
     }
   }
 
@@ -62,11 +31,10 @@ class Transactions extends React.Component {
 
   render() {
     const {
-      t, activeToken, delegates, netCode,
+      t, activeToken, netCode, transaction, delegates,
     } = this.props;
-    const transaction = addVotesWithDelegateNames(this.props.transaction.data, delegates.data, t);
-    const { error, isLoading } = this.props.transaction;
-    const addresses = transaction && [transaction.recipientId, transaction.senderId];
+    const { error, isLoading, data } = transaction;
+    const addresses = data && [data.recipientId, data.senderId];
 
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
@@ -83,33 +51,33 @@ class Transactions extends React.Component {
               />
             </BoxHeader>
             <BoxContent className={styles.mainContent}>
-              <Illustration transaction={transaction} />
+              <Illustration transaction={data} />
               <Sender
-                transaction={transaction}
+                transaction={data}
                 activeToken={activeToken}
                 netCode={netCode}
               />
               <Recipient
-                transaction={transaction}
+                transaction={data}
                 activeToken={activeToken}
                 netCode={netCode}
                 t={t}
               />
               <DateAndConfirmation
-                transaction={transaction}
+                transaction={data}
                 activeToken={activeToken}
                 addresses={addresses}
                 t={t}
               />
-              <TransactionId t={t} id={transaction.id} />
+              <TransactionId t={t} id={data.id} />
               <FeeAndAmount
-                transaction={transaction}
+                transaction={data}
                 activeToken={activeToken}
                 addresses={addresses}
                 t={t}
               />
-              <Message activeToken={activeToken} transaction={transaction} t={t} />
-              <TransactionVotes transaction={transaction} t={t} />
+              <Message activeToken={activeToken} transaction={data} t={t} />
+              <TransactionVotes transaction={data} t={t} delegates={delegates} />
             </BoxContent>
           </Box>
         ) : (
