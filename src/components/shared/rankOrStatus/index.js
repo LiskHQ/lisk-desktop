@@ -12,7 +12,7 @@ const RankOrStatus = ({ data, className }) => {
     (apiVersion === '2')
       ? (
         <span className={`${styles.rank} ${className}`}>
-          {`#${data.rank}`}
+          {`#${data.rank || '-'}`}
         </span>
       )
       : (
