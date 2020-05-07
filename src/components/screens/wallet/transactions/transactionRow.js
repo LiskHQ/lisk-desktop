@@ -48,12 +48,12 @@ const TransactionRow = ({
       <span className={grid[isLSK ? 'col-xs-2' : 'col-xs-3']}>
         {
           isConfirmed
-            ? <DateTimeFromTimestamp time={data.timestamp} token={tokenMap.LSK.key} />
+            ? <DateTimeFromTimestamp time={data.timestamp} token={activeToken} />
             : <Spinner completed={isConfirmed} label={t('Pending...')} />
         }
       </span>
       <span className={grid['col-xs-2']}>
-        <LiskAmount val={data.fee} token={tokenMap[activeToken].key} />
+        <LiskAmount val={data.fee} token={activeToken} />
       </span>
       {
         isLSK
