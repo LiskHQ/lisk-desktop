@@ -2,6 +2,10 @@
   padding: 0 !important;
 }
 
+.contentHeader {
+  display: inline-block;
+}
+
 .height {
   padding-right: 20px;
 }
