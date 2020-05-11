@@ -65,7 +65,7 @@ const ComposedNetwork = compose(
       transformResponse: response => response.data,
     },
   }),
-  withLocalSort('peers', 'height:asc', { version: sortByVersion }),
+  withLocalSort('peers', 'height:desc', { version: sortByVersion }),
   withTranslation(),
 )(Network);
 
