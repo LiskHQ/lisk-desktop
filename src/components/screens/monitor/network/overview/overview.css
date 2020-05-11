@@ -17,6 +17,10 @@
   }
 }
 
+.boxHeading {
+  display: inline-block;
+}
+
 .column {
   flex-grow: 1;
   height: 100%;
