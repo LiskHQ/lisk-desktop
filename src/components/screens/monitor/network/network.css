@@ -2,6 +2,10 @@
   padding: 0 !important;
 }
 
+.contentHeader {
+  display: inline-block;
+}
+
 .height {
   padding-right: 20px;
 }
@@ -11,6 +15,8 @@
   height: 285px;
   padding: var(--horizontal-padding-l);
   box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 
   & .wrapper {
     width: 100%;

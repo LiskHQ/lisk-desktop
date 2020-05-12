@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 import Table from '../../../toolbox/table';
 import styles from './network.css';
 import header from './tableHeader';
@@ -24,7 +25,14 @@ const Network = ({
       <Overview networkStatus={networkStatistics.data} t={t} />
       <Box main isLoading={peers.isLoading} className="peers-box">
         <BoxHeader>
-          <h1 className="contentHeader">{t('Connected peers')}</h1>
+          <div>
+            <h1 className={`${styles.contentHeader} contentHeader`}>
+              {t('Connected peers')}
+            </h1>
+            <Tooltip>
+              <p>{t('The current list only reflects the peers connected to the Lisk Service node.')}</p>
+            </Tooltip>
+          </div>
         </BoxHeader>
         <BoxContent className={styles.content}>
           <Map peers={peers.data} />
