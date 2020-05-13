@@ -67,7 +67,7 @@
   & > span,
   & .tooltip {
     vertical-align: middle;
-    line-height: 1em;
+    line-height: 1em; /* stylelint-disable-line unit-whitelist */
   }
 }
 
