@@ -31,6 +31,7 @@ const DelegatesMonitor = ({
   const [activeTab, setActiveTab] = useState('active');
   const dispatch = useDispatch();
   const forgingTimes = useSelector(state => state.blocks.forgingTimes);
+  const network = useSelector(state => state.network);
 
   const handleFilter = ({ target: { value } }) => {
     applyFilters({
@@ -75,7 +76,11 @@ const DelegatesMonitor = ({
         chartRegisteredDelegates={chartRegisteredDelegatesData}
         t={t}
       />
-      <ForgingDetails t={t} networkStatus={networkStatus} />
+      <ForgingDetails
+        t={t}
+        networkStatus={networkStatus}
+        network={network}
+      />
       <Box main isLoading={delegates.isLoading || standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className="delegates-table">
           {tabs.tabs.length === 1

@@ -20,12 +20,14 @@ const networks = {
       'https://hub37.lisk.io',
       'https://hub38.lisk.io',
     ],
+    initialSupply: 10000000000000000,
   },
   testnet: { // network name translation t('Testnet');
     name: 'Testnet',
     testnet: true,
     code: 1,
     nodes: ['https://testnet.lisk.io'],
+    initialSupply: 10000000000000000,
   },
   customNode: { // network name translation t('Custom Node');
     name: 'Custom Node',

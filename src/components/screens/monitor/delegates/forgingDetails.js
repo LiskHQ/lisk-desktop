@@ -9,6 +9,7 @@ import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import styles from './overview.css';
 import LiskAmount from '../../../shared/liskAmount';
+import networks from '../../../../constants/networks';
 
 const Forger = ({ forger }) => (
   <div className={`${styles.forger} forger-item`}>
@@ -24,11 +25,10 @@ const Forger = ({ forger }) => (
 );
 
 const ForgingDetails = ({
-  t, networkStatus,
+  t, networkStatus, network,
 }) => {
-  const initialSupply = 10000000000000000;
   const supply = networkStatus.data.supply;
-  const totalForged = supply - initialSupply;
+  const totalForged = supply - networks[network.name.toLowerCase()].initialSupply;
   const awaitingForgers = useSelector(state => state.blocks.awaitingForgers);
   const latestBlocks = useSelector(state => state.blocks.latestBlocks);
   const lastForger = awaitingForgers
