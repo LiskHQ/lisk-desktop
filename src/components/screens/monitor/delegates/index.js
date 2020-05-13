@@ -88,6 +88,13 @@ const ComposedDelegates = compose(
         defaultData: [],
         transformResponse: transformVotesResponse,
       },
+
+      networkStatus: {
+        apiUtil: liskService.getNetworkStatus,
+        defaultData: {},
+        autoload: true,
+        transformResponse: response => response,
+      },
     },
   ),
   withResizeValues,
