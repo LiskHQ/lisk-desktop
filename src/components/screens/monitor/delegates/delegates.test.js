@@ -86,6 +86,11 @@ describe('Delegates monitor page', () => {
         tab: 'active',
       },
       applyFilters: jest.fn(filters => wrapper.setProps({ filters })),
+      networkStatus: {
+        data: {
+          supply: 13963011200000000,
+        },
+      },
     };
   });
 
