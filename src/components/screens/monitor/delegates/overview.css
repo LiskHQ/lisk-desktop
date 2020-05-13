@@ -63,6 +63,12 @@
   color: var(--color-maastricht-blue);
   padding-top: 30px;
   box-sizing: border-box;
+
+  & > span,
+  & .tooltip {
+    vertical-align: middle;
+    line-height: 1em;
+  }
 }
 
 .list {
