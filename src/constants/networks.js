@@ -34,6 +34,7 @@ const networks = {
     custom: true,
     address: 'http://localhost:4000',
     code: 2,
+    initialSupply: 10000000000000000,
   },
 };
 

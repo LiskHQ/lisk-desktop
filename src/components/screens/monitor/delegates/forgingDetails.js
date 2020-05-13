@@ -28,7 +28,8 @@ const ForgingDetails = ({
   t, networkStatus, network,
 }) => {
   const supply = networkStatus.data.supply;
-  const totalForged = supply - networks[network.name.toLowerCase()].initialSupply;
+  const { initialSupply } = Object.values(networks).find(item => (item.name === network.name));
+  const totalForged = supply - initialSupply;
   const awaitingForgers = useSelector(state => state.blocks.awaitingForgers);
   const latestBlocks = useSelector(state => state.blocks.latestBlocks);
   const lastForger = awaitingForgers
