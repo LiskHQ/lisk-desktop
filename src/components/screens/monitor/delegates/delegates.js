@@ -19,6 +19,7 @@ const DelegatesMonitor = ({
   chartActiveAndStandbyData,
   chartRegisteredDelegatesData,
   standByDelegates,
+  networkStatus,
   applyFilters,
   changeSort,
   delegates,
@@ -74,7 +75,7 @@ const DelegatesMonitor = ({
         chartRegisteredDelegates={chartRegisteredDelegatesData}
         t={t}
       />
-      <ForgingDetails t={t} />
+      <ForgingDetails t={t} networkStatus={networkStatus} />
       <Box main isLoading={delegates.isLoading || standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className="delegates-table">
           {tabs.tabs.length === 1

@@ -7,6 +7,7 @@ import routes from '../../../../constants/routes';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import styles from './overview.css';
+import LiskAmount from '../../../shared/liskAmount';
 
 const Forger = ({ forger }) => (
   <div className={`${styles.forger} forger-item`}>
@@ -22,8 +23,11 @@ const Forger = ({ forger }) => (
 );
 
 const ForgingDetails = ({
-  t,
+  t, networkStatus,
 }) => {
+  const initialSupply = 10000000000000000;
+  const supply = networkStatus.data.supply;
+  const totalForged = supply - initialSupply;
   const awaitingForgers = useSelector(state => state.blocks.awaitingForgers);
   const latestBlocks = useSelector(state => state.blocks.latestBlocks);
   const lastForger = awaitingForgers
@@ -53,7 +57,9 @@ const ForgingDetails = ({
         <div className={styles.column}>
           <h2 className={styles.title}>{t('Total forged')}</h2>
           <div className={styles.list}>
-            <span className={styles.totalForged}>31,122,324</span>
+            <span className={styles.totalForged}>
+              <LiskAmount token="LSK" val={totalForged} />
+            </span>
           </div>
         </div>
         <div className={`${styles.column} ${styles.nextForgers}`}>
