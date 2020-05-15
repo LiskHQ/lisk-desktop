@@ -165,7 +165,7 @@ export const getBalanceData = ({
   transactions, balance, address,
 }) => {
   const data = transactions
-    .sort((a, b) => (a.timestamp - b.timestamp))
+    .sort((a, b) => (b.timestamp - a.timestamp))
     .reduce((acc, item, index) => {
       const date = moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD');
       const tx = transactions[index - 1];
