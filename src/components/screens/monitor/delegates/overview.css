@@ -63,6 +63,12 @@
   color: var(--color-maastricht-blue);
   padding-top: 30px;
   box-sizing: border-box;
+
+  & > span,
+  & .tooltip {
+    vertical-align: middle;
+    line-height: 1em; /* stylelint-disable-line unit-whitelist */
+  }
 }
 
 .list {
@@ -97,6 +103,7 @@
   padding-left: 10px;
   padding-top: 5px;
   display: inline-block;
+  color: var(--color-maastricht-blue);
 }
 
 .chartBox {

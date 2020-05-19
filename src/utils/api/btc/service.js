@@ -23,16 +23,16 @@ export const getDynamicFees = () => new Promise(async (resolve, reject) => {
     const config = getBtcConfig(0);
     const response = await popsicle.get(config.minerFeesURL)
       .use(popsicle.plugins.parse('json'));
-    const json = response.body;
 
     if (response) {
+      const { body } = response;
       resolve({
-        Low: json.hourFee,
-        Medium: json.halfHourFee,
-        High: json.fastestFee,
+        Low: body.hourFee,
+        Medium: body.halfHourFee,
+        High: body.fastestFee,
       });
     } else {
-      reject(json);
+      reject(response);
     }
   } catch (error) {
     reject(error);

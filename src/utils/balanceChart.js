@@ -10,7 +10,8 @@ const formats = {
   minute: i18n.t('MMM DD YYYY hh:mm'),
   hour: i18n.t('MMM DD YYYY hh[h]'),
   day: i18n.t('MMM DD YYYY'),
-  month: i18n.t('MMM YYYY'),
+  month: i18n.t('MMM DD YYYY'),
+  quarter: i18n.t('MMM YYYY'),
   year: i18n.t('YYYY'),
 };
 
@@ -54,7 +55,6 @@ export const graphOptions = ({
       type: 'time',
       time: {
         unit: getUnitFromFormat(format),
-        displayFormats: formats,
         parser: (value) => {
           moment.locale(locale);
           return moment(value);
@@ -64,16 +64,7 @@ export const graphOptions = ({
       gridLines: {
         display: false,
       },
-      distribution: 'linear',
       ticks: {
-        callback: (value) => {
-          moment.locale(locale);
-          return moment(value, format).format('MMM YYYY');
-        },
-        fontColor: styles.slateGray,
-        fontSize: styles.fontSize,
-        fontFamily: styles.contentFontFamily,
-        maxRotation: 0,
         autoSkip: true,
         maxTicksLimit: 5,
       },
@@ -84,9 +75,7 @@ export const graphOptions = ({
       ticks: {
         display: !isDiscreetMode,
         maxTicksLimit: 5,
-        fontColor: styles.slateGray,
-        fontSize: styles.fontSize,
-        fontFamily: styles.contentFontFamily,
+        min: 0,
       },
     }],
   },
@@ -100,8 +89,8 @@ export const graphOptions = ({
   elements: {
     point: {
       radius: 2,
-      hoverRadius: 2,
-      hitRadius: 1,
+      hoverRadius: 3,
+      hitRadius: 3,
     },
     line: {
       tension: 0,
@@ -112,11 +101,10 @@ export const graphOptions = ({
     callbacks: {
       title(tooltipItem) {
         moment.locale(locale);
-        return moment(tooltipItem[0].xLabel, 'MMMM DD YYYY h:mm:ss A')
-          .format(format);
+        return moment(tooltipItem[0].xLabel).format(i18n.t('MMM DD YYYY'));
       },
       label(tooltipItem) {
-        return i18n.t('Account Balance:          {{balance}} {{token}}', { balance: tooltipItem.yLabel, token });
+        return `${i18n.t('Account Balance')}:          ${tooltipItem.yLabel} ${token}`;
       },
     },
     mode: 'index',
@@ -176,35 +164,31 @@ const getTxValue = (tx, address) => (
 export const getBalanceData = ({
   transactions, balance, address,
 }) => {
-  const data = transactions.reduce((acc, item, index) => {
-    const date = moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD');
-    const tx = transactions[index - 1];
-    const txValue = tx ? parseFloat(fromRawLsk(getTxValue(tx, address))) : 0;
-    // fix for the first item in list
-    const lastBalance = acc[acc.length - 1]
-      ? acc[acc.length - 1].y
-      : parseFloat(fromRawLsk(balance));
-    if (acc[acc.length - 1] && date === acc[acc.length - 1].x) {
-      acc[acc.length - 1].y = Math.round(acc[acc.length - 1].y - txValue);
-    } else {
-      acc.push({
-        x: moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD'),
-        y: Math.round(lastBalance - txValue),
-      });
-    }
-    return acc;
-  }, []).reverse();
+  const data = transactions
+    .sort((a, b) => (b.timestamp - a.timestamp))
+    .reduce((acc, item, index) => {
+      const date = moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD');
+      const tx = transactions[index - 1];
+      const txValue = tx ? parseFloat(fromRawLsk(getTxValue(tx, address))) : 0;
+      // fix for the first item in list
+      const lastBalance = acc[acc.length - 1]
+        ? acc[acc.length - 1].y
+        : parseFloat(fromRawLsk(balance));
+      if (acc[acc.length - 1] && date === acc[acc.length - 1].x) {
+        acc[acc.length - 1].y = acc[acc.length - 1].y - txValue;
+      } else {
+        acc.push({
+          x: moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD'),
+          y: lastBalance - txValue,
+        });
+      }
+      return acc;
+    }, []).reverse();
   return {
     datasets: [{
       data,
-      backgroundColor: styles.transparent,
       borderColor: styles.borderColor,
       pointBorderColor: styles.borderColor,
-      pointBackgroundColor: styles.whiteColor,
-      pointHoverBackgroundColor: styles.whiteColor,
-      pointHoverBorderColor: styles.ultramarineBlue,
-      pointHoverBorderWidth: 4,
-      borderWidth: 2,
     }],
   };
 };

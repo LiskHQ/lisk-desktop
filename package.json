@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "1.26.0-beta.0",
+  "version": "1.26.0-rc.0",
   "productName": "Lisk",
   "description": "Lisk",
   "homepage": "https://github.com/LiskHQ/lisk-desktop",
@@ -170,7 +170,7 @@
     "glob": "7.1.3",
     "html-webpack-inline-source-plugin": "0.0.10",
     "html-webpack-plugin": "3.2.0",
-    "http-server": "0.12.1",
+    "http-server": "0.12.3",
     "i18next-scanner": "2.9.0",
     "identity-obj-proxy": "3.0.0",
     "imports-loader": "0.8.0",

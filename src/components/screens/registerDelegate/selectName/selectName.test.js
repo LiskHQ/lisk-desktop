@@ -59,7 +59,8 @@ describe('RegisterDelegate', () => {
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate' } });
-    expect(apiClient.delegates.get).toBeCalled();
+    jest.advanceTimersByTime(1000);
+    expect(apiClient.delegates.get).toHaveBeenCalledTimes(1);
     // TODO investigate why even when the state is update, the test fails - in PR #2199
     wrapper.setState({ loading: false });
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();

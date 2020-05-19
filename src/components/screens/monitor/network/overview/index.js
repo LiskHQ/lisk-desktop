@@ -4,6 +4,7 @@ import Box from '../../../../toolbox/box';
 import BoxHeader from '../../../../toolbox/box/header';
 import BoxEmptyState from '../../../../toolbox/box/emptyState';
 import { DoughnutChart } from '../../../../toolbox/charts';
+import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './overview.css';
 
@@ -46,7 +47,14 @@ const Overview = ({
   return (
     <Box>
       <BoxHeader>
-        <h1>{t('Statistics')}</h1>
+        <div>
+          <h1 className={styles.boxHeading}>
+            {t('Statistics')}
+          </h1>
+          <Tooltip>
+            <p>{t('Statistics shown only reflect the peers connected to the Lisk Service node.')}</p>
+          </Tooltip>
+        </div>
       </BoxHeader>
       <div className={`${styles.container} ${styles.overview}`}>
         <div className={styles.column}>

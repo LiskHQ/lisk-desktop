@@ -3,10 +3,10 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getActiveTokenAccount } from '../../../utils/account';
-import { getDelegateWithCache } from '../../../utils/api/delegates';
+import liskService from '../../../utils/api/lsk/liskService';
 import { getSingleTransaction } from '../../../utils/api/transactions';
 import withData from '../../../utils/withData';
-import Transactions from './transactions';
+import TransactionDetails from './transactionDetails';
 
 const mapStateToProps = (state, ownProps) => ({
   address: getActiveTokenAccount(state).address,
@@ -26,12 +26,13 @@ const apis = {
     transformResponse: response => response.data[0] || {},
     autoload: true,
   },
+
   delegates: {
-    apiUtil: getDelegateWithCache,
+    apiUtil: liskService.getVoteNames,
+    autoload: false,
     defaultData: {},
-    transformResponse: (response, oldData) => ({
-      ...oldData,
-      [response.account.publicKey]: response,
+    getApiParams: (state, ownProps) => ({
+      transactionId: ownProps.id,
     }),
   },
 };
@@ -40,4 +41,4 @@ export default compose(
   withRouter,
   connect(mapStateToProps),
   withData(apis),
-)(Transactions);
+)(TransactionDetails);

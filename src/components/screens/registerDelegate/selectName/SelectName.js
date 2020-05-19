@@ -1,5 +1,4 @@
 import React from 'react';
-import debounce from 'lodash.debounce';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -19,13 +18,13 @@ class SelectName extends React.Component {
 
     this.state = {
       nickname: '',
-      error: false,
+      error: '',
       inputDisabled: false,
       loading: false,
     };
 
     this.onChangeNickname = this.onChangeNickname.bind(this);
-    this.debounceFetchUser = debounce(this.onUserFetch, 1000);
+    this.validateNickname = this.validateNickname.bind(this);
   }
 
   componentDidMount() {
@@ -62,40 +61,41 @@ class SelectName extends React.Component {
     }
   }
 
-  isNameInvalid(nickname) {
+  validateNickname(nickname) {
     const { t } = this.props;
     if (nickname.length > 20) return t('Nickname is too long.');
     const hasInvalidChars = nickname.replace(regex.delegateSpecialChars, '');
     if (hasInvalidChars) return t(`Invalid character ${hasInvalidChars.trim()}`);
-    return false;
+    return '';
   }
 
-  onUserFetch(username, error) {
-    const { t, network } = this.props;
+  isNicknameFree(username) {
+    clearTimeout(this.timeout);
 
-    if (!error && username.length) {
+    this.timeout = setTimeout(() => {
+      const { t, network } = this.props;
       getAPIClient(network).delegates.get({ username })
         .then((response) => {
           if (response.data.length) {
             this.setState({
               loading: false,
-              error: t('Name is already taken!'),
+              error: t('"{{username}}" is already taken.', { username }),
             });
           } else {
             this.setState({ loading: false });
           }
         })
         .catch(() => this.setState({ loading: false }));
-    }
+    }, 1000);
   }
 
   onChangeNickname({ target: { value } }) {
-    const error = this.isNameInvalid(value);
-    this.debounceFetchUser(value, error);
+    const error = this.validateNickname(value);
+    if (value.length && !error) this.isNicknameFree(value);
     this.setState({
-      loading: !!value && !error,
+      loading: value.length && !error,
       nickname: value,
-      error: error || '',
+      error,
     });
   }
 

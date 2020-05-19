@@ -3,10 +3,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AccountVisual from '../../../toolbox/accountVisual';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import styles from './overview.css';
+import LiskAmount from '../../../shared/liskAmount';
+import networks from '../../../../constants/networks';
 
 const Forger = ({ forger }) => (
   <div className={`${styles.forger} forger-item`}>
@@ -22,8 +25,11 @@ const Forger = ({ forger }) => (
 );
 
 const ForgingDetails = ({
-  t,
+  t, networkStatus, network,
 }) => {
+  const supply = networkStatus.data.supply;
+  const { initialSupply } = Object.values(networks).find(item => (item.name === network.name));
+  const totalForged = supply - initialSupply;
   const awaitingForgers = useSelector(state => state.blocks.awaitingForgers);
   const latestBlocks = useSelector(state => state.blocks.latestBlocks);
   const lastForger = awaitingForgers
@@ -51,9 +57,16 @@ const ForgingDetails = ({
           </nav>
         </div>
         <div className={styles.column}>
-          <h2 className={styles.title}>{t('Total forged')}</h2>
+          <h2 className={styles.title}>
+            <span>{t('Total forged')}</span>
+            <Tooltip className={`${styles.tooltip} showOnBottom`}>
+              <span>{t('This is an estimated value.')}</span>
+            </Tooltip>
+          </h2>
           <div className={styles.list}>
-            <span className={styles.totalForged}>31,122,324</span>
+            <span className={styles.totalForged}>
+              <LiskAmount token="LSK" val={totalForged} />
+            </span>
           </div>
         </div>
         <div className={`${styles.column} ${styles.nextForgers}`}>

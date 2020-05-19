@@ -7,12 +7,8 @@ import { getBlocks } from './blocks';
 const filterAndOrderByMatch = (searchTerm, delegates) =>
   [...delegates].filter(result =>
     result.username.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0).sort((first, second) => {
-    if (first.username < second.username) {
-      return -1;
-    } if (first.username > second.username) {
-      return 1;
-    }
-    return 0;
+    if (first.username === second.username) return 0;
+    return first.username > second.username ? 1 : -1;
   });
 
 /* eslint-disable prefer-promise-reject-errors */
