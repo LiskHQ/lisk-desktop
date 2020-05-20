@@ -6,7 +6,7 @@ import styles from './transactionAmount.css';
 import transactionTypes from '../../../constants/transactionTypes';
 
 const TransactionAmount = ({
-  sender, recipient, type, token, roundTo, host, amount,
+  sender, recipient, type, token, showRounded, showInt, host, amount,
 }) => {
   const isIncoming = host === recipient && sender !== recipient;
   return (
@@ -16,7 +16,12 @@ const TransactionAmount = ({
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <span className={isIncoming ? styles.receive : ''}>
               {isIncoming ? '' : '- '}
-              <LiskAmount val={amount} roundTo={roundTo} token={token} />
+              <LiskAmount
+                val={amount}
+                showRounded={showRounded}
+                showInt={showInt}
+                token={token}
+              />
             </span>
           </DiscreetMode>
         )
