@@ -38,11 +38,8 @@ TransactionAmount.propTypes = {
   token: PropTypes.string.isRequired,
   type: PropTypes.number.isRequired,
   amount: PropTypes.string,
-  roundTo: PropTypes.number,
-};
-
-TransactionAmount.defaultProps = {
-  roundTo: 8,
+  showInt: PropTypes.bool,
+  showRounded: PropTypes.bool,
 };
 
 export default TransactionAmount;
