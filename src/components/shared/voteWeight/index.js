@@ -13,8 +13,8 @@ const VoteWeight = ({ data }) => {
     <strong>
       <LiskAmount
         val={apiVersion === '2' ? data.vote : data.voteWeight}
-        roundTo={0}
         token={tokenMap.LSK.key}
+        showInt
       />
     </strong>
   );
