@@ -45,7 +45,8 @@ NewReleaseMessage.propTypes = {
     PropTypes.string,
     PropTypes.element,
   ]).isRequired,
-  onClick: PropTypes.func.isRequired,
+  updateNow: PropTypes.func.isRequired,
+  readMore: PropTypes.func.isRequired,
 };
 
 export default withTranslation()(NewReleaseMessage);
