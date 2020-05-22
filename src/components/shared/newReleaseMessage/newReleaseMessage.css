@@ -1,4 +1,5 @@
 .button {
   height: auto !important;
   padding: 0 !important;
+  min-width: 0;
 }
