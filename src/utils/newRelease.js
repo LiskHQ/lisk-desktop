@@ -27,6 +27,9 @@ export default {
 
       const updateNow = () => {
         ipc.send('update:started');
+        setTimeout(() => {
+          FlashMessageHolder.deleteMessage('NewRelease');
+        }, 500);
       };
 
       FlashMessageHolder.addMessage(
