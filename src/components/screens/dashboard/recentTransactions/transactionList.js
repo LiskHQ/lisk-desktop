@@ -47,7 +47,7 @@ const TransactionList = ({
             sender={tx.senderId}
             type={tx.type}
             recipient={tx.recipientId || tx.asset.recipientId}
-            roundTo={2}
+            roundTo={4}
             amount={tx.amount || tx.asset.amount}
           />
         </Link>
