@@ -48,7 +48,7 @@ describe('new release util', () => {
     callbacks['update:available']({}, { version, releaseNotes });
     wrapper.update();
     expect(wrapper).toIncludeText('dummy text');
-    wrapper.find('button').simulate('click');
+    wrapper.find('button').at(1).simulate('click');
     dialogWrapper.update();
     expect(dialogWrapper).toIncludeText('dummy text');
   });
