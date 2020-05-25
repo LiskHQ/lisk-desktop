@@ -49,8 +49,6 @@ const RecentTransactions = ({ className, t, transactions }) => {
     }
   }, [account]);
 
-  console.log(transactions.data.length, transactions.isLoading);
-
   return (
     <Box
       isLoading={transactions.isLoading}
