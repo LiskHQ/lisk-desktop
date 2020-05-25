@@ -104,7 +104,7 @@ const bookmarks = {
       title: 'saved account',
       amount: '0.001',
       type: 0,
-    }
+    },
   ],
 };
 
