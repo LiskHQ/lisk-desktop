@@ -15,7 +15,7 @@ export default {
     ipc.on('update:available', (action, { version, releaseNotes }) => {
       const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
 
-      const onClick = () => {
+      const readMore = () => {
         DialogHolder.showDialog(
           <NewReleaseDialog
             version={version}
@@ -25,12 +25,20 @@ export default {
         );
       };
 
+      const updateNow = () => {
+        ipc.send('update:started');
+        setTimeout(() => {
+          FlashMessageHolder.deleteMessage('NewRelease');
+        }, 500);
+      };
+
       FlashMessageHolder.addMessage(
         <NewReleaseMessage
           version={version}
           releaseNotes={releaseNotes}
           releaseSummary={htmlStringToReact(releaseSummary)}
-          onClick={onClick}
+          readMore={readMore}
+          updateNow={updateNow}
         />,
         'NewRelease',
       );

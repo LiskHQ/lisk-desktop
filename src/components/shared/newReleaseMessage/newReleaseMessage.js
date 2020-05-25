@@ -9,7 +9,8 @@ const NewReleaseMessage = ({
   t,
   version,
   releaseSummary,
-  onClick,
+  updateNow,
+  readMore,
   ...props
 }) => (
   <FlashMessage shouldShow {...props}>
@@ -17,13 +18,23 @@ const NewReleaseMessage = ({
       <strong>{t('Lisk {{version}}', { version })}</strong>
       {t(' is out. ')}
       {releaseSummary}
+      <span> </span>
       <TertiaryButton
         className={styles.button}
         size="s"
-        onClick={onClick}
+        onClick={updateNow}
+      >
+        {t('Update now')}
+      </TertiaryButton>
+      <span>{` ${t('or')} `}</span>
+      <TertiaryButton
+        className={styles.button}
+        size="s"
+        onClick={readMore}
       >
         {t('Read more')}
       </TertiaryButton>
+      <span>.</span>
     </FlashMessage.Content>
   </FlashMessage>
 );
@@ -34,7 +45,8 @@ NewReleaseMessage.propTypes = {
     PropTypes.string,
     PropTypes.element,
   ]).isRequired,
-  onClick: PropTypes.func.isRequired,
+  updateNow: PropTypes.func.isRequired,
+  readMore: PropTypes.func.isRequired,
 };
 
 export default withTranslation()(NewReleaseMessage);

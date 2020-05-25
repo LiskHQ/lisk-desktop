@@ -48,8 +48,23 @@ describe('new release util', () => {
     callbacks['update:available']({}, { version, releaseNotes });
     wrapper.update();
     expect(wrapper).toIncludeText('dummy text');
-    wrapper.find('button').simulate('click');
+    wrapper.find('button').at(1).simulate('click');
     dialogWrapper.update();
     expect(dialogWrapper).toIncludeText('dummy text');
+  });
+
+  it('Should initiate the update process if clicked on updateNow', () => {
+    const spy = jest.spyOn(FlashMessageHolder, 'deleteMessage');
+    const wrapper = mount(<FlashMessageHolder />);
+    const dialogWrapper = mount(<DialogHolder />);
+    const version = '1.20.1';
+    const releaseNotes = '<h4>dummy text</h4><h3>Fixed bugs</h3>';
+    callbacks['update:available']({}, { version, releaseNotes });
+    wrapper.update();
+    wrapper.find('button').at(0).simulate('click');
+    jest.runAllTimers();
+    dialogWrapper.update();
+    expect(ipc.send).toHaveBeenCalledWith('update:started');
+    expect(spy).toHaveBeenCalledWith('NewRelease');
   });
 });
