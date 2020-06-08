@@ -2,6 +2,7 @@
 import React from 'react';
 import Box from '../../../../toolbox/box';
 import BoxHeader from '../../../../toolbox/box/header';
+import BoxContent from '../../../../toolbox/box/content';
 import BoxEmptyState from '../../../../toolbox/box/emptyState';
 import { DoughnutChart } from '../../../../toolbox/charts';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
@@ -45,7 +46,7 @@ const Overview = ({
   const versionsDistribution = coreVer ? createOthers(coreVer) : null;
   const heightDistribution = height ? createOthers(height) : null;
   return (
-    <Box>
+    <Box className={styles.wrapper}>
       <BoxHeader>
         <div>
           <h1 className={styles.boxHeading}>
@@ -56,7 +57,7 @@ const Overview = ({
           </Tooltip>
         </div>
       </BoxHeader>
-      <div className={`${styles.container} ${styles.overview}`}>
+      <BoxContent className={styles.content}>
         <div className={styles.column}>
           {
             versionsDistribution
@@ -167,7 +168,7 @@ const Overview = ({
               : <BoxEmptyState><p>{t('No peers information')}</p></BoxEmptyState>
           }
         </div>
-      </div>
+      </BoxContent>
     </Box>
   );
 };
