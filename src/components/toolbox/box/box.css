@@ -1,13 +1,7 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
-  --header-height: 48px;
-
   align-items: inherit;
-  background: var(--color-white);
-  border: 1px solid var(--color-platinum);
-  border-radius: var(--border-radius-box);
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   height: auto;
@@ -44,6 +38,8 @@
     width: 100%;
     box-sizing: border-box;
     padding: 20px;
+    border-radius: var(--border-radius-box);
+    overflow: hidden;
 
     & > section,
     & .row {
@@ -108,17 +104,13 @@
   & > header,
   & > .header {
     align-items: center;
-    background-color: var(--color-white-smoke);
-    border-bottom: 1px solid var(--color-platinum);
-    border-top-left-radius: var(--border-radius-box);
-    border-top-right-radius: var(--border-radius-box);
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     height: var(--header-height);
     justify-content: space-between;
     margin: 0;
-    padding: 16px 20px;
+    padding: 15px 20px;
     width: 100%;
     z-index: 3;
 
