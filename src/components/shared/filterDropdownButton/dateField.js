@@ -63,7 +63,7 @@ class DateField extends React.Component {
             className={`${styles.input} ${name}Input`}
             isLoading={fields[name].loading}
             status={fields[name].error ? 'error' : 'ok'}
-            size="xs"
+            size="m"
           />
         </label>
         <Dropdown

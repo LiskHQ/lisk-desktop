@@ -92,7 +92,7 @@ const DelegatesMonitor = ({
               onChange={handleFilter}
               value={filters.search}
               className="filter-by-name"
-              size="xs"
+              size="m"
               placeholder={t('Filter by name...')}
             />
           </span>

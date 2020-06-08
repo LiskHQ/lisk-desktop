@@ -104,7 +104,7 @@ class AmountFieldGroup extends React.Component {
           className={`${styles.input} ${field.error ? 'error' : ''} ${name}Input`}
           isLoading={field.loading}
           status={field.error ? 'error' : 'ok'}
-          size="xs"
+          size="m"
         />
       </label>
     );

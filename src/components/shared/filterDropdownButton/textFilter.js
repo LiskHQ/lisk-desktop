@@ -21,7 +21,7 @@ const TextFilter = ({
       {...inputProps}
       value={filters[name]}
       className={name}
-      size="xs"
+      size="m"
     />
   );
 };
