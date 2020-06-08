@@ -110,7 +110,7 @@
     height: var(--header-height);
     justify-content: space-between;
     margin: 0;
-    padding: 15px 20px;
+    padding: 15px 0;
     width: 100%;
     z-index: 3;
 
