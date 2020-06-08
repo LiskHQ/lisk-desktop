@@ -139,7 +139,7 @@ const DelegatesTable = ({
             onChange={({ target }) => applyFilters({ q: target.value })}
             value={params.q}
             className={`${styles.searchInput} filter-by-name`}
-            size="xs"
+            size="m"
             placeholder={t('Filter by name...')}
           />
         </span>

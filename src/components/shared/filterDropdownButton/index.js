@@ -144,7 +144,7 @@ class FilterDropdownButton extends React.Component {
             <Icon className="button-icon" name="iconFilter" />
           </React.Fragment>
         )}
-        size="xs"
+        size="l"
         ButtonComponent={SecondaryButton}
         align="right"
         ref={this.setChildRef}

@@ -85,7 +85,7 @@ class AddressFilter extends React.Component {
         className={`${styles.input} ${fields.error ? 'error' : ''}`}
         isLoading={fields.loading}
         status={fields.error ? 'error' : 'ok'}
-        size="xs"
+        size="m"
         feedback={this.state.feedback}
       />
     );

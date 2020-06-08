@@ -129,7 +129,7 @@
   @mixin contentLargest;
 
   background-color: var(--color-white);
-  border: 1px solid var(--dark-border-color);
+  border: 1px solid var(--color-body-bg);
   border-radius: var(--border-radius-standard);
   box-sizing: border-box;
   color: var(--color-maastricht-blue);
