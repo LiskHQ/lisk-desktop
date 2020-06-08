@@ -1,4 +1,5 @@
 @import '../../../../../app/mixins.css';
+
 .wrapper {
   & .content {
     width: 100%;
