@@ -142,6 +142,7 @@ or "warn/action" ineastd of "red/green"
   --color-passphrase-bg: var(--color-white);
   --color-shadow-word-option: var(--color-ultramarine-blue);
   --color-request-textarea: var(--color-white-smoke);
+  --color-active-tab: rgba(64, 112, 244, 0.1);
 
   /*************************
         Box
