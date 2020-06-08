@@ -29,12 +29,4 @@
       border-radius: 18px;
     }
   }
-
-  &:first-child {
-    margin-left: -20px;
-  }
-
-  &:last-child {
-    margin-right: -20px;
-  }
 }
