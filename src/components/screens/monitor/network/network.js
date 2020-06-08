@@ -34,8 +34,10 @@ const Network = ({
             </Tooltip>
           </div>
         </BoxHeader>
-        <BoxContent className={styles.content}>
+        <BoxContent className={styles.mapWrapper}>
           <Map peers={peers.data} />
+        </BoxContent>
+        <BoxContent className={styles.content}>
           <Table
             data={peers.data}
             isLoading={peers.isLoading}

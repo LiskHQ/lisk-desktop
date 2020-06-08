@@ -40,6 +40,7 @@
     padding: 20px;
     border-radius: var(--border-radius-box);
     overflow: hidden;
+    background-color: var(--color-white);
 
     & > section,
     & .row {

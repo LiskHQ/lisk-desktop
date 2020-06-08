@@ -7,6 +7,7 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
 import styles from './overview.css';
 import LiskAmount from '../../../shared/liskAmount';
 import networks from '../../../../constants/networks';
@@ -40,11 +41,11 @@ const ForgingDetails = ({
   ));
 
   return (
-    <Box>
+    <Box className={styles.wrapper}>
       <BoxHeader>
         <h1>{t('Forging details')}</h1>
       </BoxHeader>
-      <div className={`${styles.container} ${styles.forgingDetails}`}>
+      <BoxContent className={styles.content}>
         <div className={styles.column}>
           <h2 className={styles.title}>{t('Last forger')}</h2>
           <nav className={styles.list}>
@@ -81,7 +82,7 @@ const ForgingDetails = ({
             }
           </nav>
         </div>
-      </div>
+      </BoxContent>
     </Box>
   );
 };

@@ -93,7 +93,7 @@ const VotesTab = ({
             value={filterValue}
             placeholder={t('Filter by name')}
             onChange={handleFilter}
-            size="xs"
+            size="m"
           />
         </div>
       </BoxHeader>

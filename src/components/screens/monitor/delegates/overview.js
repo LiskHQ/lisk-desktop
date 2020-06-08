@@ -2,6 +2,7 @@
 import React from 'react';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import { DoughnutChart, LineChart } from '../../../toolbox/charts';
 import styles from './overview.css';
@@ -54,11 +55,11 @@ const Overview = ({
   };
 
   return (
-    <Box>
+    <Box className={styles.wrapper}>
       <BoxHeader>
         <h1>{t('Overview')}</h1>
       </BoxHeader>
-      <div className={`${styles.container} ${styles.overview}`}>
+      <BoxContent className={styles.content}>
         <div className={styles.column}>
           {
             typeof chartActiveAndStandby.data === 'number'
@@ -151,7 +152,7 @@ const Overview = ({
               : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
           }
         </div>
-      </div>
+      </BoxContent>
     </Box>
   );
 };
