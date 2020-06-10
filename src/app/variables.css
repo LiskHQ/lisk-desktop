@@ -143,6 +143,7 @@ or "warn/action" ineastd of "red/green"
   --color-shadow-word-option: var(--color-ultramarine-blue);
   --color-request-textarea: var(--color-white-smoke);
   --color-active-tab: rgba(64, 112, 244, 0.1);
+  --color-btc: #f7931a;
 
   /*************************
         Box
