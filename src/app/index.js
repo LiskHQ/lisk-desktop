@@ -16,7 +16,7 @@ import CustomRoute from '../components/shared/customRoute';
 import NotFound from '../components/shared/notFound';
 import InitializationMessage from '../components/shared/initializationMessage';
 import routes from '../constants/routes';
-import Header from '../components/shared/header/header';
+import NavigationBars from '../components/shared/navigationBars';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import DialogHolder from '../components/toolbox/dialog/holder';
 import ThemeContext from '../contexts/theme';
@@ -63,7 +63,7 @@ class App extends React.Component {
             toastClassName={styles.toastBody}
             bodyClassName={styles.toastText}
           />
-          <Header
+          <NavigationBars
             isSigninFlow={routeObj.isSigninFlow}
             location={location}
           />
