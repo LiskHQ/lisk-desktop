@@ -29,11 +29,13 @@
 
       & span:first-child {
         @mixin headingNormalIntermediate semi-bold;
+
         display: block;
       }
 
       & span:last-child {
         @mixin contentLargest normal;
+
         opacity: 0.7;
       }
     }
@@ -68,7 +70,7 @@
     & .copyIcon,
     & .qrCode,
     & .bookmark,
-    & .verify  {
+    & .verify {
       filter: brightness(100);
     }
 

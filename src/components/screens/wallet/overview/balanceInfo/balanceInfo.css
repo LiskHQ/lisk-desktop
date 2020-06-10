@@ -35,11 +35,13 @@
 
   & .cryptoValue {
     @mixin headingNormalIntermediate normal;
+
     color: var(--color-ink-blue);
   }
 
   & .fiatValue {
     @mixin contentLargest normal;
+
     color: var(--color-ink-blue);
     opacity: 0.8;
     padding: 4px 0;
