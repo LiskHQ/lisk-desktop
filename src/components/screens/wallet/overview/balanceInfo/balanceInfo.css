@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  overflow: initial;
+  padding: 0;
+
+  & .content {
+    display: flex;
+    height: 200px;
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    border-bottom-left-radius: var(--border-radius-box);
+    border-bottom-right-radius: var(--border-radius-box);
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.title {
+  @mixin contentLargest semi-bold;
+
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: var(--color-maastricht-blue);
+  padding: 0 20px 10px;
+}
