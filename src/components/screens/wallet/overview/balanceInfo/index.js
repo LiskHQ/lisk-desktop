@@ -6,11 +6,12 @@ import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
 import LiskAmount from '../../../../shared/liskAmount';
 import DiscreetMode from '../../../../shared/discreetMode';
+import Converter from '../../../../shared/converter';
 import routes from '../../../../../constants/routes';
 import styles from './balanceInfo.css';
 
 const BalanceInfo = ({
-  t, activeToken, isDiscreetMode, balance, isWalletRoute, address,
+  t, activeToken, balance, isWalletRoute, address,
 }) => {
   const sendUrl = isWalletRoute
     ? `${routes.send.path}?wallet`
@@ -18,22 +19,30 @@ const BalanceInfo = ({
 
   const sendTitle = isWalletRoute
     ? t('Send {{token}}', { token: activeToken })
-    : t('Send {{token}} here', { token: activeToken })
+    : t('Send {{token}} here', { token: activeToken });
   return (
     <Box className={`${styles.wrapper}`}>
       <BoxContent className={styles.content}>
         <h2 className={styles.title}>{t('Balance')}</h2>
-        <div>
+        <div className={styles.valuesRow}>
           <DiscreetMode shouldEvaluateForOtherAccounts>
-            <div className={styles.value}>
+            <div className={styles.cryptoValue}>
               <LiskAmount val={balance} />
               <span>{activeToken}</span>
             </div>
+            <Converter
+              className={styles.fiatValue}
+              value={balance}
+              error=""
+            />
           </DiscreetMode>
         </div>
-        <div>
-          <Link to={sendUrl} className="tx-send-bt">
-            <PrimaryButton className="send-to-address">
+        <div className={styles.actionRow}>
+          <Link to={sendUrl} className={`${styles.button} tx-send-bt`}>
+            <PrimaryButton
+              className="send-to-address"
+              size="m"
+            >
               {sendTitle}
             </PrimaryButton>
           </Link>
