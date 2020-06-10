@@ -1,0 +1,64 @@
+.wrapper {
+  display: flex;
+  overflow: initial;
+  padding: 0;
+
+  & .content {
+    display: flex;
+    height: 200px;
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    border-bottom-left-radius: var(--border-radius-box);
+    border-bottom-right-radius: var(--border-radius-box);
+    padding-left: 0;
+    padding-right: 0;
+    background-image: url(../../../../../assets/images/waves.png);
+    background-size: 100%;
+  }
+}
+
+.title {
+  @mixin contentLargest semi-bold;
+
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0 20px 10px;
+  color: var(--color-ink-blue);
+}
+
+.valuesRow {
+  padding: 0 var(--horizontal-padding-l);
+
+  & .cryptoValue {
+    @mixin headingNormalIntermediate normal;
+
+    color: var(--color-ink-blue);
+  }
+
+  & .fiatValue {
+    @mixin contentLargest normal;
+
+    color: var(--color-ink-blue);
+    opacity: 0.8;
+    padding: 4px 0;
+  }
+}
+
+.actionRow {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 26px var(--horizontal-padding-l) 0;
+  justify-content: center;
+
+  & .button {
+    flex-grow: 1;
+
+    & button {
+      width: 100%;
+    }
+  }
+}

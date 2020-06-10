@@ -2,7 +2,6 @@
 
 .row {
   align-items: center;
-  background-color: var(--color-white);
   display: flex;
   flex-wrap: nowrap;
   padding: 0 var(--vertical-padding-l);
@@ -66,7 +65,6 @@
 }
 
 .header {
-  background-color: var(--color-white);
   padding: 0 var(--vertical-padding-l);
   margin: 0 !important;
 

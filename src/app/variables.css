@@ -97,6 +97,7 @@ or "warn/action" ineastd of "red/green"
   --color-slate-gray: #70778b;
   --color-blue-gray: #8a8ca2;
   --color-dark-blue: #19224d;
+  --color-ink-blue: #254898;
   --color-ghost: #bec1cd;
   --color-platinum: #e1e3eb;
   --color-mystic: #edf0f5;
@@ -143,6 +144,7 @@ or "warn/action" ineastd of "red/green"
   --color-shadow-word-option: var(--color-ultramarine-blue);
   --color-request-textarea: var(--color-white-smoke);
   --color-active-tab: rgba(64, 112, 244, 0.1);
+  --color-btc: #f7931a;
 
   /*************************
         Box
@@ -210,6 +212,7 @@ or "warn/action" ineastd of "red/green"
   --color-rows-hover: #1c1c1e;
   --overlay-color: rgba(28, 28, 30, 0.8);
   --color-content-light: #fff;
+  --color-ink-blue: #fff;
   --color-flash-message: var(--color-white-smoke);
   --color-strong-mystic: #edf0f5;
   --color-passphrase-bg: #000;

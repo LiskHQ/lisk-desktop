@@ -104,6 +104,9 @@ import signMessageActive from '../../../assets/images/icons/signActive.svg';
 import verifyMessage from '../../../assets/images/icons/verify.svg';
 import verifyMessageActive from '../../../assets/images/icons/verifyActive.svg';
 import qrCodeActive from '../../../assets/images/icons/qr-code-active.svg';
+import bookmark from '../../../assets/images/icons/icon-bookmark.svg';
+import bookmarkActive from '../../../assets/images/icons/icon-bookmark-active.svg';
+import bitcoinLogo from '../../../assets/images/bitcoin-logo.svg';
 
 export const icons = {
   academy,
@@ -209,6 +212,9 @@ export const icons = {
   multiSignature,
   newsFeedBlog,
   newsFeedBlogDark,
+  bookmark,
+  bookmarkActive,
+  bitcoinLogo,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
