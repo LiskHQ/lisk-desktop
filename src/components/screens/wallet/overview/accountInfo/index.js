@@ -12,11 +12,19 @@ import { getAddress } from '../../../../../utils/hwManager';
 import styles from './accountInfo.css';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 
+const BookmarkIcon = ({ isBookmark }) => (
+  <Icon
+    name={isBookmark ? 'bookmark' : 'bookmarkActive'}
+    className={styles.bookmark}
+  />
+);
+
 const AccountInfo = ({
   address, t, activeToken, hwInfo, delegate, isBookmark, publicKey,
 }) => {
-  const primaryValue = delegate.username ? delegate.username : address;
-  const secondaryValue = delegate.username ? address : '';
+  const primaryValue = delegate && delegate.username ? delegate.username : address;
+  const secondaryValue = delegate && delegate.username ? address : '';
+
   return (
     <Box className={styles.wrapper}>
       <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
@@ -41,12 +49,13 @@ const AccountInfo = ({
               value={address}
               type="icon"
               copyClassName={styles.copyIcon}
+              className={styles.copyIcon}
             />
           </div>
           <div className={styles.helperIcon}>
             <Tooltip
               tooltipClassName={styles.qrCodeWrapper}
-              className="showOnBottom"
+              className={`${styles.qrCode} showOnBottom`}
               title={t('Scan address')}
               content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
             >
@@ -57,7 +66,7 @@ const AccountInfo = ({
             <DropdownButton
               buttonClassName="bookmark-account-button"
               className={`${styles.bookmarkDropdown} bookmark-account`}
-              buttonLabel={isBookmark ? t('Edit bookmark') : t('Bookmark')}
+              buttonLabel={<BookmarkIcon isBookmark={isBookmark} />}
               ButtonComponent={PrimaryButton}
               align="right"
             >
@@ -83,7 +92,7 @@ const AccountInfo = ({
                   })}
                 >
                   <Tooltip
-                    className="showOnBottom"
+                    className={`${styles.verify} showOnBottom`}
                     title={t('Verify address')}
                     content={<Icon name="verifyWalletAddressActive" className={styles.qrCodeIcon} />}
                   >
@@ -94,6 +103,10 @@ const AccountInfo = ({
               : null
           }
         </footer>
+        <Icon
+          name={activeToken === 'LSK' ? 'liskLogo' : 'bitcoinLogo'}
+          className={styles.watermarkLogo}
+        />
       </BoxContent>
     </Box>
   );
