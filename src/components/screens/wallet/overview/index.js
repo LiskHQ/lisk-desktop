@@ -6,6 +6,7 @@ import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
 import { getIndexOfBookmark } from '../../../../utils/bookmarks';
 import { isEmpty } from '../../../../utils/helpers';
+import styles from './overview.css';
 
 const getProp = (dic, prop, defaultValue) => {
   if (!dic || isEmpty(dic)) {
@@ -21,16 +22,15 @@ const Overview = ({
   const address = getProp(account, 'address', '');
   const delegate = getProp(account, 'delegate', {});
   const publicKey = getProp(account, 'publicKey', '');
-  const hwInfo = getProp(account, 'hwInfo', {});
+  const hwInfo = getProp(account, 'hwInfo', false);
   const balance = getProp(account, 'balance', 0);
   const bookmarks = useSelector(state => state.bookmarks);
   const isBookmark = getIndexOfBookmark(bookmarks, {
     address, token: activeToken,
   }) !== -1;
-  console.log(address, delegate, balance, hwInfo);
 
   return (
-    <section className={`${grid.row}`}>
+    <section className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-xs-4']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
         <AccountInfo
           t={t}
