@@ -65,7 +65,7 @@ const Wallet = ({ t, history }) => {
         activeToken={activeToken}
         transactions={transactions.data}
         discreetMode={discreetMode}
-        account={account.data}
+        account={account && account.info ? account.info[activeToken] : {}}
         t={t}
       />
       <TabsContainer>
