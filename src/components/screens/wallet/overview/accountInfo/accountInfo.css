@@ -1,0 +1,67 @@
+@import '../../../../../app/mixins.css';
+
+.wrapper {
+  & .content {
+    padding-top: 0;
+
+    &.LSK {
+      background-color: var(--color-ultramarine-blue);
+    }
+
+    &.BTC {
+      background-color: var(--color-btc);
+    }
+  }
+
+  & .title {
+    @mixin contentLargest semi-bold;
+
+    color: var(--color-white);
+  }
+
+  & .info {
+    display: flex;
+    flex-flow: row nowrap;
+
+    & .text {
+      position: relative;
+      color: var(--color-white);
+      padding-left: 10px;
+
+      & span:first-child {
+        @mixin headingNormalIntermediate semi-bold;
+        display: block;
+      }
+
+      & span:last-child {
+        @mixin contentLargest normal;
+        opacity: 0.7;
+      }
+    }
+  }
+
+  & footer {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 30px 0 0;
+    justify-content: center;
+
+    & .helperIcon {
+      width: 40px;
+      height: 40px;
+      border: solid 1px var(--color-white);
+      border-radius: var(--border-radius-standard);
+      margin: 0 15px;
+    }
+
+    & .copyIcon {
+      position: relative;
+      color: var(--color-white);
+
+      & img {
+        filter: brightness(100%);
+      }
+    }
+  }
+
+}
