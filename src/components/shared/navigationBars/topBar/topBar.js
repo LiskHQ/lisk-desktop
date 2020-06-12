@@ -1,27 +1,42 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import routes from '../../../../constants/routes';
-import MenuItems from './menuItems';
-import UserAccount from './accountMenu/userAccount';
 import NavigationButtons from './navigationButtons';
 import Piwik from '../../../../utils/piwik';
-import menuLinks from './constants';
-import SearchBar from '../../searchBar';
 import Network from './network';
 import networks from '../../../../constants/networks';
-import DropdownButton from '../../../toolbox/dropdownButton';
-import { SecondaryButton } from '../../../toolbox/buttons/button';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
-import Autologout from './autologout/autologout';
+import { settingsUpdated } from '../../../../actions/settings';
+
+/**
+ * Toggles boolean values on store.settings
+ *
+ * @param {String} setting The key to update in store.settings
+ * @param {Array} icons [activeIconName, normalIconName]
+ */
+const Toggle = ({
+  setting, icons,
+}) => {
+  const dispatch = useDispatch();
+  const value = useSelector(state => state.settings[setting]);
+
+  const toggle = () => {
+    dispatch(settingsUpdated({ [setting]: !value }));
+  };
+
+  return (
+    <Icon
+      name={value ? icons[0] : icons[1]}
+      className={styles.toggle}
+      onClick={toggle}
+    />
+  );
+};
 
 class TopBar extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      openDropdown: '',
-    };
-
     this.searchInput = null;
 
     this.onLogout = this.onLogout.bind(this);
@@ -77,82 +92,37 @@ class TopBar extends React.Component {
       history,
       network,
       token,
-      settingsUpdated,
-      resetTimer,
     } = this.props;
-    const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
-    const items = menuLinks(t);
-    const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
     return (
       <div className={`${styles.wrapper} top-bar`}>
-        <div>
-          <div className={styles.logo}>
-            <Icon name="liskLogo" className="topbar-logo" />
-          </div>
-
+        <div className={styles.group}>
+          <Icon
+            name="liskLogo"
+            className={`${styles.logo} topbar-logo`}
+          />
           <NavigationButtons
             account={account}
             history={history}
           />
-
-          <MenuItems
-            token={token}
-            isUserLogout={isUserLogout}
-            items={items}
-            location={this.props.location}
+          <Toggle
+            setting="sideBarExpanded"
+            icons={['toggleSidebarActive', 'toggleSidebar']}
           />
         </div>
-        <div>
+        <div className={styles.group}>
+          <Toggle
+            setting="darkMode"
+            icons={['lightMode', 'darkMode']}
+          />
+          <Toggle
+            setting="discreetMode"
+            icons={['discreetModeActive', 'discreetMode']}
+          />
           <Network
             token={token.active}
             network={network}
             t={t}
           />
-
-          {this.isTimerEnabled() ? (
-            <div className={styles.timer}>
-              <Autologout
-                onCountdownComplete={this.onCountdownComplete}
-                account={account}
-                history={history}
-                resetTimer={resetTimer}
-                t={t}
-              />
-            </div>
-          ) : null}
-
-
-          <UserAccount
-            token={token}
-            className={styles.userAccount}
-            account={account}
-            onLogout={this.onLogout}
-            settingsUpdated={settingsUpdated}
-            isUserLogout={isUserLogout}
-            history={this.props.history}
-            t={t}
-          />
-
-          {token.active !== 'BTC'
-            ? (
-              <DropdownButton
-                buttonClassName={`${styles.searchButton} search-icon`}
-                className={`${styles.searchDropdown} search-section`}
-                buttonLabel={(
-                  <Icon name={`searchIcon${isSearchActive === 'search' ? 'Active' : 'Inactive'}`} />
-                )}
-                ButtonComponent={SecondaryButton}
-                align="right"
-                ref={this.setChildRef}
-              >
-                <SearchBar
-                  setSearchBarRef={(node) => { this.searchInput = node; }}
-                  history={this.props.history}
-                  onSearchClick={this.handleSeachDropdownToggle}
-                />
-              </DropdownButton>
-            )
-            : null }
         </div>
       </div>
     );
