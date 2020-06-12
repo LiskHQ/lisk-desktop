@@ -9,7 +9,7 @@
   position: absolute;
   top: 0;
   width: 100%;
-  z-index: var(--normal-index);
+  z-index: calc(var(--normal-index) + 1);
 
   &:global(.dark) {
     background: var(--color-maastricht-blue) !important;

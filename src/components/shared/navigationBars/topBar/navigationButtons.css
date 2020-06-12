@@ -1,22 +1,37 @@
+:root {
+  --item-width: 40px;
+}
+
 .wrapper {
-  width: 90px;
+  width: calc(var(--item-width) * 2);
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   height: 100%;
-  padding: 0 15px;
+  padding: 0;
 
-  & > button {
+  & button {
     cursor: pointer;
     background: transparent;
     border: none;
     outline: none;
+    width: var(--item-width);
+    height: var(--header-height);
+    display: block;
 
     &:disabled {
       cursor: default;
       opacity: 0.4;
+    }
+
+    &:first-child {
+      padding: 0 0 0 10px;
+    }
+
+    &:last-child {
+      padding: 0 10px 0 0;
     }
   }
 }

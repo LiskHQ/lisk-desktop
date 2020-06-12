@@ -40,13 +40,3 @@
 .offline {
   background-color: red;
 }
-
-@media (max-width: 1200px) {
-  .wrapper {
-    & > p {
-      & > span:first-child {
-        display: none;
-      }
-    }
-  }
-}
