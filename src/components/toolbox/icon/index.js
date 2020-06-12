@@ -26,8 +26,8 @@ import delegatesIconActive from '../../../assets/images/icons/delegates-active.s
 import delegatesIconActiveDark from '../../../assets/images/icons/delegates-active-dark.svg';
 import discord from '../../../assets/images/icons/discord.svg';
 import discordActive from '../../../assets/images/icons/discord-active.svg';
-import discreetModeOff from '../../../assets/images/icons/discreet-mode-off.svg';
-import discreetModeOn from '../../../assets/images/icons/discreet-mode-on.svg';
+import discreetMode from '../../../assets/images/icons/discreet-mode.svg';
+import discreetModeActive from '../../../assets/images/icons/discreet-mode-active.svg';
 import feedback from '../../../assets/images/icons/feedback.svg';
 import feedbackActive from '../../../assets/images/icons/feedback-active.svg';
 import fileOutline from '../../../assets/images/icons/icon-file-outline.svg';
@@ -107,6 +107,10 @@ import qrCodeActive from '../../../assets/images/icons/qr-code-active.svg';
 import bookmark from '../../../assets/images/icons/icon-bookmark.svg';
 import bookmarkActive from '../../../assets/images/icons/icon-bookmark-active.svg';
 import bitcoinLogo from '../../../assets/images/bitcoin-logo.svg';
+import toggleSidebar from '../../../assets/images/icons/toggle-sidebar.svg';
+import toggleSidebarActive from '../../../assets/images/icons/toggle-sidebar-active.svg';
+import darkMode from '../../../assets/images/icons/dark-mode.svg';
+import lightMode from '../../../assets/images/icons/light-mode.svg';
 
 export const icons = {
   academy,
@@ -130,8 +134,8 @@ export const icons = {
   delegatesIconActive,
   discord,
   discordActive,
-  discreetModeOff,
-  discreetModeOn,
+  discreetMode,
+  discreetModeActive,
   feedback,
   feedbackActive,
   fileOutline,
@@ -215,6 +219,10 @@ export const icons = {
   bookmark,
   bookmarkActive,
   bitcoinLogo,
+  toggleSidebar,
+  toggleSidebarActive,
+  darkMode,
+  lightMode,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
