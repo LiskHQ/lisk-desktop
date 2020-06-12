@@ -64,7 +64,7 @@ class App extends React.Component {
             bodyClassName={styles.toastText}
           />
           <NavigationBars
-            isSigninFlow={routeObj.isSigninFlow}
+            isSignInFlow={routeObj.isSigninFlow}
             location={location}
           />
           <main
