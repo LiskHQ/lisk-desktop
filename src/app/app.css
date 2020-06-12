@@ -31,15 +31,16 @@ body {
   align-items: center;
   flex-direction: column;
   z-index: 0;
+  padding-left: 50px;
 
   & > section {
-    margin-top: 73px;
+    margin-top: var(--header-height);
     width: 100%;
     opacity: 0;
     transition: all ease 250ms;
     position: relative;
     z-index: -1;
-    height: calc(100% - 73px);
+    height: calc(100% - var(--header-height));
     display: flex;
     flex-direction: column;
     overflow: auto;
