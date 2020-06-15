@@ -1,5 +1,4 @@
 /* istanbul ignore file */
-import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';

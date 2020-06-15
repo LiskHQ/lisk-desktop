@@ -73,7 +73,7 @@
   & .label {
     @mixin contentLargest normal;
 
-    color: #c5cFe4;
+    color: #c5cfe4;
     line-height: var(--item-size);
     padding-left: 5px;
   }
@@ -99,7 +99,7 @@
 
 .selected {
   background: var(--color-strong-ink-blue);
-  
+
   & img {
     filter: brightness(100);
   }
@@ -108,4 +108,3 @@
     color: #fff;
   }
 }
-

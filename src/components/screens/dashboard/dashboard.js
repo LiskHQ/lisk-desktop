@@ -4,7 +4,6 @@ import throttle from 'lodash.throttle';
 import BookmarksList from '../bookmarks/bookmarksList';
 import NewsFeed from './newsFeed';
 import WalletDetails from '../../shared/walletDetails';
-import PageHeader from '../../toolbox/pageHeader';
 import breakpoints from '../../../constants/breakpoints';
 import RecentTransactions from './recentTransactions';
 import styles from './dashboard.css';
