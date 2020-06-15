@@ -86,10 +86,6 @@ class Dashboard extends React.Component {
             actionButtonLabel={t('Got it, thanks!')}
             name="dashboardOnboarding"
           />
-          <PageHeader
-            title={t('Dashboard')}
-            subtitle={t('All important information at a glance')}
-          />
           <div className={`${styles.main}`}>
             <div className={styles.subContainer}>
               {
