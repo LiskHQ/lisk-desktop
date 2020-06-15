@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Transactions from './transactions';
+import Transactions from './index';
 import transactions from '../../../../../test/constants/transactions';
 
 describe('Transactions monitor page', () => {

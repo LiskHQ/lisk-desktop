@@ -1,14 +1,79 @@
-/* istanbul ignore file */
 import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import Overview from './overview';
+import TransactionsTable from '../../../shared/transactionsTable';
 import withData from '../../../../utils/withData';
-import Transactions from './transactions';
 import liskServiceApi from '../../../../utils/api/lsk/liskService';
-import NotAvailable from '../notAvailable';
 
-const ComposedTransactions = compose(
+const Transactions = ({ t, transactions }) => {
+  const fields = [{
+    label: t('Date Range'),
+    name: 'date',
+    type: 'date-range',
+  }, {
+    label: t('Amount Range'),
+    name: 'amount',
+    type: 'number-range',
+  }, {
+    label: t('Sender'),
+    placeholder: t('Address or Public key'),
+    name: 'sender',
+    type: 'address',
+  }, {
+    label: t('Message'),
+    placeholder: t('Your message'),
+    name: 'message',
+    type: 'text',
+  }, {
+    label: t('Recipient'),
+    placeholder: t('Address or Public key'),
+    name: 'recipient',
+    type: 'address',
+  }, {
+    label: t('Type'),
+    placeholder: t('All types'),
+    name: 'type',
+    type: 'select',
+  }, {
+    label: t('Height'),
+    placeholder: t('Eg. {{value}}', { value: '10180477' }),
+    name: 'height',
+    type: 'integer',
+  }];
+
+  const filters = {
+    dateFrom: '',
+    dateTo: '',
+    message: '',
+    amountFrom: '',
+    amountTo: '',
+    type: '',
+    height: '',
+    recipient: '',
+    sender: '',
+  };
+
+  const canLoadMore = transactions.meta
+    ? transactions.data.length < transactions.meta.total
+    : false;
+
+  return (
+    <div>
+      <Overview />
+      <TransactionsTable
+        isLoadMoreEnabled
+        filters={filters}
+        fields={fields}
+        title={t('All transactions')}
+        transactions={transactions}
+        canLoadMore={canLoadMore}
+      />
+    </div>
+  );
+};
+
+export default compose(
   withData({
     transactions: {
       apiUtil: liskServiceApi.getTransactions,
@@ -24,15 +89,3 @@ const ComposedTransactions = compose(
   }),
   withTranslation(),
 )(Transactions);
-
-const TransactionsMonitor = () => {
-  const network = useSelector(state => state.network);
-
-  return (
-    liskServiceApi.getLiskServiceUrl(network) === null
-      ? <NotAvailable />
-      : <ComposedTransactions />
-  );
-};
-
-export default TransactionsMonitor;
