@@ -43,9 +43,11 @@
     flex-direction: column;
     justify-content: flex-end;
   }
+}
 
-  &.expanded {
-    width: 260px;
+:global(.expanded) {
+  & .menuGroup {
+    width: var(--side-bar-expanded-size);
   }
 }
 

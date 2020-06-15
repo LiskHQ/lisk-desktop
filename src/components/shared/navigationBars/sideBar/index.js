@@ -36,12 +36,12 @@ const SideBar = ({
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
 
   return (
-    <nav className={styles.wrapper}>
+    <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
       <div className={`${styles.container} menu-items`}>
         {
           items.map((group, i) => (
             <div
-              className={`${styles.menuGroup} ${sideBarExpanded ? styles.expanded : ''}`}
+              className={styles.menuGroup}
               key={`group-${i}`}
             >
               {

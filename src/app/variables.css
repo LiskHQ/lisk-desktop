@@ -75,6 +75,8 @@ or "warn/action" ineastd of "red/green"
   --main-box-width: 1318px;
   --medium-box-width: 720px;
   --dialog-box-width: 650px;
+  --side-bar-shrunk-size: 60px;
+  --side-bar-expanded-size: 260px;
 
   /*************************
         Padding
