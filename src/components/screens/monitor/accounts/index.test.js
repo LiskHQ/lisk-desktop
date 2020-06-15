@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Delegates from './accounts';
+import Delegates from './index';
 import accounts from '../../../../../test/constants/accounts';
 
 jest.mock('../../../../constants/monitor', () => ({ DEFAULT_LIMIT: 4 }));

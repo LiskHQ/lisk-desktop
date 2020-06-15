@@ -7,7 +7,7 @@ import LiskAmount from '../../../shared/liskAmount';
 import routes from '../../../../constants/routes';
 import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
-import styles from './accountsTable.css';
+import styles from './accounts.css';
 
 const getOwnerName = (account) => {
   const delegateUsername = account.delegate ? account.delegate.username : '';
