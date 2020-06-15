@@ -4,7 +4,7 @@ import BlockDetails from '../components/screens/monitor/blockDetails';
 import Blocks from '../components/screens/monitor/blocks';
 import Bookmarks from '../components/screens/bookmarks';
 import Dashboard from '../components/screens/dashboard';
-import Delegates from '../components/screens/delegates';
+import Voting from '../components/screens/voting';
 import DelegatesMonitor from '../components/screens/monitor/delegates';
 import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
@@ -22,7 +22,7 @@ import Wallet from '../components/screens/wallet';
 import Explorer from '../components/screens/wallet/explorer';
 import TransactionDetails from '../components/screens/transactionDetails';
 import VerifyMessage from '../components/screens/verifyMessage';
-import VotingSummary from '../components/screens/delegates/votingSummary';
+import VotingSummary from '../components/screens/voting/votingSummary';
 
 export default {
   dashboard: {
@@ -57,9 +57,9 @@ export default {
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  delegates: {
+  voting: {
     path: '/delegates',
-    component: Delegates,
+    component: Voting,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },

@@ -17,7 +17,7 @@ class RegisterDelegate extends React.Component {
   // TODO update test coverage in PR #2199
   // istanbul ignore next
   goBackToDelegates() {
-    this.props.history.push(routes.delegates.path);
+    this.props.history.push(routes.voting.path);
   }
 
   render() {
