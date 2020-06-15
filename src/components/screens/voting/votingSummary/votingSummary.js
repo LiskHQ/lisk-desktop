@@ -45,7 +45,7 @@ const VotingSummary = ({
                     title: t('Back to Delegates'),
                     className: 'back-to-delegates-button',
                     onClick: () => {
-                      history.push(routes.delegates.path);
+                      history.push(routes.voting.path);
                     },
                   },
                 } : {
@@ -55,7 +55,7 @@ const VotingSummary = ({
                   primaryButon: {
                     title: t('Back to Voting Table'),
                     onClick: () => {
-                      history.push(routes.delegates.path);
+                      history.push(routes.voting.path);
                     },
                   },
                   error,
@@ -68,7 +68,7 @@ const VotingSummary = ({
       cancelButton={{
         label: t('Edit voting'),
         onClick: () => {
-          history.push(routes.delegates.path);
+          history.push(routes.voting.path);
         },
       }}
       fee={fee * totalActions}

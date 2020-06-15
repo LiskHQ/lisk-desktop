@@ -76,7 +76,7 @@ const VotingActionBar = ({
       <SecondaryButton onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
         {t('Cancel')}
       </SecondaryButton>
-      <Link to={totalActions !== 0 ? routes.votingSummary.path : routes.delegates.path}>
+      <Link to={totalActions !== 0 ? routes.votingSummary.path : routes.voting.path}>
         <PrimaryButton
           className={`${styles.btn} go-to-confirmation-button`}
           disabled={

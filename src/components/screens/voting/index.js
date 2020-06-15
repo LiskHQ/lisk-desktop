@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
-import styles from './delegates.css';
+import styles from './voting.css';
 import DelegatesTable from './table';
 import Header from './header';
 import Onboarding from '../../toolbox/onboarding/onboarding';
