@@ -140,7 +140,7 @@ const Overview = ({ t, txStats }) => {
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
-        <h2>{t('Overview')}</h2>
+        <h2>{t('Transactions overview')}</h2>
         <BoxTabs
           tabs={tabs(t)}
           active={activeTab}

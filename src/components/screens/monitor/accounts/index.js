@@ -15,7 +15,6 @@ import liskServiceApi from '../../../../utils/api/lsk/liskService';
 const Accounts = ({
   accounts,
   networkStatus,
-  title,
   t,
 }) => {
   /* istanbul ignore next */
@@ -28,7 +27,7 @@ const Accounts = ({
   return (
     <Box main isLoading={accounts.isLoading} className="accounts-box">
       <BoxHeader>
-        <h1>{title}</h1>
+        <h1>{t('All accounts')}</h1>
       </BoxHeader>
       <BoxContent className={styles.content}>
         <Table
@@ -44,10 +43,6 @@ const Accounts = ({
       </BoxContent>
     </Box>
   );
-};
-
-Accounts.defaultProps = {
-  title: '',
 };
 
 export default compose(

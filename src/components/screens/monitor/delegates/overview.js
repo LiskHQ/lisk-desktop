@@ -57,7 +57,7 @@ const Overview = ({
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
-        <h1>{t('Overview')}</h1>
+        <h1>{t('Delegates overview')}</h1>
       </BoxHeader>
       <BoxContent className={styles.content}>
         <div className={styles.column}>

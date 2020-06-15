@@ -50,7 +50,7 @@ const Overview = ({
       <BoxHeader>
         <div>
           <h1 className={styles.boxHeading}>
-            {t('Statistics')}
+            {t('Network statistics')}
           </h1>
           <Tooltip>
             <p>{t('Statistics shown only reflect the peers connected to the Lisk Service node.')}</p>

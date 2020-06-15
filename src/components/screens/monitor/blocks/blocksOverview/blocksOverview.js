@@ -44,7 +44,7 @@ class BlocksOverview extends React.Component {
     return (
       <Box className={styles.wrapper}>
         <BoxHeader className="box-header">
-          <h2>{t('Overview')}</h2>
+          <h2>{t('Blocks overview')}</h2>
           <BoxTabs
             tabs={tabs}
             active={activeTab}
