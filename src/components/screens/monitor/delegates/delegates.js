@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import MonitorHeader from '../header';
 import Overview from './overview';
 import { forgingDataDisplayed, forgingDataConcealed } from '../../../../actions/blocks';
 import { Input } from '../../../toolbox/inputs';
@@ -69,7 +68,6 @@ const DelegatesMonitor = ({
 
   return (
     <div>
-      <MonitorHeader />
       <Overview
         chartActiveAndStandby={chartActiveAndStandbyData}
         chartDelegatesForging={forgingTimes}
