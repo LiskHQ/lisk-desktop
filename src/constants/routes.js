@@ -142,6 +142,14 @@ export default {
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
+  blocks: {
+    pathPrefix: '',
+    path: '/monitor/blocks',
+    component: Blocks,
+    isPrivate: false,
+    exact: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
   blockDetails: {
     path: '/monitor/blocks',
     pathSuffix: '/:id?',
@@ -159,14 +167,6 @@ export default {
     path: '/monitor/network',
     component: MonitorNetwork,
     isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
-  blocks: {
-    pathPrefix: '',
-    path: '/monitor/blocks',
-    component: Blocks,
-    isPrivate: false,
-    exact: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   delegatesMonitor: {
