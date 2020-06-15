@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import Network from './network';
+import Network from './index';
 import peers from '../../../../../test/constants/peers';
 
 describe('Network Monitor Page', () => {
