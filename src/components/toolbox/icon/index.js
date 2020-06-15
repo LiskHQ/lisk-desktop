@@ -21,9 +21,6 @@ import copy from '../../../assets/images/icons/copy.svg';
 import copyActive from '../../../assets/images/icons/copy-active.svg';
 import dashboardIcon from '../../../assets/images/icons/dashboard.svg';
 import dashboardIconActive from '../../../assets/images/icons/dashboard-active.svg';
-import delegatesIcon from '../../../assets/images/icons/delegates.svg';
-import delegatesIconActive from '../../../assets/images/icons/delegates-active.svg';
-import delegatesIconActiveDark from '../../../assets/images/icons/delegates-active-dark.svg';
 import discord from '../../../assets/images/icons/discord.svg';
 import discordActive from '../../../assets/images/icons/discord-active.svg';
 import discreetMode from '../../../assets/images/icons/discreet-mode.svg';
@@ -54,9 +51,6 @@ import liskLogoWhite from '../../../assets/images/lisk-logo-white-v2.svg';
 import logout from '../../../assets/images/icons/logout.svg';
 import logoutActive from '../../../assets/images/icons/logout-active.svg';
 import lskIcon from '../../../assets/images/icons/icon-lsk.svg';
-import monitorIcon from '../../../assets/images/icons/monitor.svg';
-import monitorIconActive from '../../../assets/images/icons/monitorActive.svg';
-import monitorIconActiveDark from '../../../assets/images/icons/monitorActiveDark.svg';
 import newsFeedTwitter from '../../../assets/images/icons/news-feed-twitter.svg';
 import newsFeedTwitterDark from '../../../assets/images/icons/news-feed-twitter-dark.svg';
 import newsFeedBlog from '../../../assets/images/icons/news-feed-blog.svg';
@@ -111,6 +105,18 @@ import toggleSidebar from '../../../assets/images/icons/toggle-sidebar.svg';
 import toggleSidebarActive from '../../../assets/images/icons/toggle-sidebar-active.svg';
 import darkMode from '../../../assets/images/icons/dark-mode.svg';
 import lightMode from '../../../assets/images/icons/light-mode.svg';
+import blocksMonitor from '../../../assets/images/icons/blocks.svg';
+import blocksMonitorActive from '../../../assets/images/icons/blocksActive.svg';
+import accountsMonitor from '../../../assets/images/icons/accountsMonitor.svg';
+import accountsMonitorActive from '../../../assets/images/icons/accountsMonitorActive.svg';
+import transactionsMonitor from '../../../assets/images/icons/transactionsMonitor.svg';
+import transactionsMonitorActive from '../../../assets/images/icons/transactionsMonitorActive.svg';
+import delegatesMonitor from '../../../assets/images/icons/delegatesMonitor.svg';
+import delegatesMonitorActive from '../../../assets/images/icons/delegatesMonitorActive.svg';
+import networkMonitor from '../../../assets/images/icons/networkMonitor.svg';
+import networkMonitorActive from '../../../assets/images/icons/networkMonitorActive.svg';
+import voting from '../../../assets/images/icons/voting.svg';
+import votingActive from '../../../assets/images/icons/votingActive.svg';
 
 export const icons = {
   academy,
@@ -130,8 +136,6 @@ export const icons = {
   copy,
   dashboardIcon,
   dashboardIconActive,
-  delegatesIcon,
-  delegatesIconActive,
   discord,
   discordActive,
   discreetMode,
@@ -159,8 +163,6 @@ export const icons = {
   logout,
   logoutActive,
   lskIcon,
-  monitorIcon,
-  monitorIconActive,
   newsFeedTwitter,
   noTweetsIcon,
   okIcon,
@@ -211,8 +213,6 @@ export const icons = {
   verifyMessageActive,
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
-  monitorIconActiveDark,
-  delegatesIconActiveDark,
   multiSignature,
   newsFeedBlog,
   newsFeedBlogDark,
@@ -223,6 +223,18 @@ export const icons = {
   toggleSidebarActive,
   darkMode,
   lightMode,
+  blocksMonitor,
+  blocksMonitorActive,
+  accountsMonitor,
+  accountsMonitorActive,
+  transactionsMonitor,
+  transactionsMonitorActive,
+  delegatesMonitor,
+  delegatesMonitorActive,
+  networkMonitor,
+  networkMonitorActive,
+  voting,
+  votingActive,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
