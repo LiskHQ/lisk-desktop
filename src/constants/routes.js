@@ -8,7 +8,6 @@ import Delegates from '../components/screens/delegates';
 import DelegatesMonitor from '../components/screens/monitor/delegates';
 import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
-import Monitor from '../components/screens/monitor';
 import MonitorAccounts from '../components/screens/monitor/accounts';
 import MonitorNetwork from '../components/screens/monitor/network';
 import MonitorTransactions from '../components/screens/monitor/transactions';
@@ -35,27 +34,6 @@ export default {
     path: '/bookmarks/add-bookmark',
     component: AddBookmark,
     isPrivate: false,
-  },
-  monitor: {
-    path: '/monitor',
-    component: Monitor,
-    isPrivate: false,
-    exact: true,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
-  blocks: {
-    pathPrefix: '',
-    path: '/monitor/blocks',
-    component: Blocks,
-    isPrivate: false,
-    exact: true,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
-  delegatesMonitor: {
-    path: '/monitor/delegates',
-    component: DelegatesMonitor,
-    exact: true,
-    forbiddenTokens: [tokenMap.BTC.key],
   },
   bookmarks: {
     path: '/bookmarks',
@@ -181,6 +159,20 @@ export default {
     path: '/monitor/network',
     component: MonitorNetwork,
     isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  blocks: {
+    pathPrefix: '',
+    path: '/monitor/blocks',
+    component: Blocks,
+    isPrivate: false,
+    exact: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  delegatesMonitor: {
+    path: '/monitor/delegates',
+    component: DelegatesMonitor,
+    exact: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
 };
