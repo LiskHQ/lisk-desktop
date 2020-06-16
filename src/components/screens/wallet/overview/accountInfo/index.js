@@ -35,10 +35,10 @@ const AccountInfo = ({
             size={40}
           />
           <div className={styles.text}>
-            <span className="account-primary">{primaryValue}</span>
+            <span className={`${styles.primary} account-primary`}>{primaryValue}</span>
             {
               secondaryValue
-                ? <span className="delegate-secondary">{secondaryValue}</span>
+                ? <span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>
                 : null
             }
           </div>
