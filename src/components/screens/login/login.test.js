@@ -123,11 +123,11 @@ describe('Login', () => {
 
     it('calls this.props.history.replace with referrer address', () => {
       props.history.replace.resetHistory();
-      history.location.search = `?referrer=${routes.delegates.path}`;
+      history.location.search = `?referrer=${routes.voting.path}`;
       wrapper.setProps({
         history, account: { address: 'dummy' },
       });
-      expect(props.history.replace).to.have.been.calledWith(`${routes.delegates.path}`);
+      expect(props.history.replace).to.have.been.calledWith(`${routes.voting.path}`);
     });
 
     // it('shows network options when url param showNetwork is true', () => {

@@ -68,13 +68,15 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --border-radius-standard: 3px;
   --border-radius-box: 6px;
-  --header-height: 73px;
+  --header-height: 50px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
   --footer-button-width: 400px;
   --main-box-width: 1318px;
   --medium-box-width: 720px;
   --dialog-box-width: 650px;
+  --side-bar-shrunk-size: 60px;
+  --side-bar-expanded-size: 260px;
 
   /*************************
         Padding
@@ -145,6 +147,7 @@ or "warn/action" ineastd of "red/green"
   --color-request-textarea: var(--color-white-smoke);
   --color-active-tab: rgba(64, 112, 244, 0.1);
   --color-btc: #f7931a;
+  --color-strong-ink-blue: var(--color-ink-blue);
 
   /*************************
         Box
@@ -219,4 +222,5 @@ or "warn/action" ineastd of "red/green"
   --color-dark-blue: var(--color-ultramarine-blue);
   --color-shadow-word-option: var(--color-strong-white);
   --color-request-textarea: #2e2e30;
+  --color-strong-ink-blue: #254898;
 }

@@ -1,7 +1,5 @@
 /* istanbul ignore file */
-import React from 'react';
 import { compose } from 'redux';
-import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
@@ -11,7 +9,6 @@ import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
 import withLocalSort from '../../../../utils/withLocalSort';
 import withResizeValues from '../../../../utils/withResizeValues';
-import NotAvailable from '../notAvailable';
 
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
@@ -103,14 +100,4 @@ const ComposedDelegates = compose(
   withTranslation(),
 )(Delegates);
 
-const DelegatesMonitor = () => {
-  const network = useSelector(state => state.network);
-
-  return (
-    liskService.getLiskServiceUrl(network) === null
-      ? <NotAvailable />
-      : <ComposedDelegates />
-  );
-};
-
-export default DelegatesMonitor;
+export default ComposedDelegates;

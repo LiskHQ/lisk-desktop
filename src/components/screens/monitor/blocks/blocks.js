@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
 import BlockFilterDropdown from './blockFilterDropdown';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import FilterBar from '../../../shared/filterBar';
 import LoadLatestButton from '../../../shared/loadLatestButton';
-import MonitorHeader from '../header';
 import Table from '../../../toolbox/table';
 import styles from './blocks.css';
 import withFilters from '../../../../utils/withFilters';
@@ -48,7 +46,6 @@ const Blocks = ({
 
   return (
     <div>
-      <MonitorHeader />
       <BlocksOverview t={t} />
       <Box isLoading={blocks.isLoading} width="full" main>
         <BoxHeader>
@@ -98,4 +95,4 @@ const defaultFilters = {
 };
 const defaultSort = 'height:desc';
 
-export default withTranslation()(withFilters('blocks', defaultFilters, defaultSort)(Blocks));
+export default withFilters('blocks', defaultFilters, defaultSort)(Blocks);
