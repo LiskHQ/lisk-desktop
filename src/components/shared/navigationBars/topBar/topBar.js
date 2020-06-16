@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import routes from '../../../../constants/routes';
 import NavigationButtons from './navigationButtons';
 import Piwik from '../../../../utils/piwik';
+import SearchBar from '../../searchBar';
 import Network from './network';
 import networks from '../../../../constants/networks';
 import styles from './topBar.css';
@@ -30,6 +31,29 @@ const Toggle = ({
       name={value ? icons[0] : icons[1]}
       className={styles.toggle}
       onClick={toggle}
+    />
+  );
+};
+
+const TokenSelector = ({ token, history }) => {
+  const dispatch = useDispatch();
+  const activeToken = useSelector(state => state.settings.token.active);
+
+  const activateToken = () => {
+    if (activeToken !== token) {
+      dispatch(settingsUpdated({ token: { active: token } }));
+      const { location, push } = history;
+      if (location.pathname !== routes.wallet.path) {
+        push(routes.wallet.path);
+      }
+    }
+  };
+
+  return (
+    <Icon
+      name={`${token.toLowerCase()}Icon`}
+      className={`${styles.toggle} ${activeToken === token ? '' : styles.disabled}`}
+      onClick={activateToken}
     />
   );
 };
@@ -92,7 +116,11 @@ class TopBar extends React.Component {
       history,
       network,
       token,
+      settingsUpdated,
+      resetTimer,
     } = this.props;
+    const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
+    const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
     return (
       <div className={`${styles.wrapper} top-bar`}>
         <div className={styles.group}>
@@ -110,6 +138,8 @@ class TopBar extends React.Component {
           />
         </div>
         <div className={styles.group}>
+          <TokenSelector token="LSK" history={history} />
+          <TokenSelector token="BTC" history={history} />
           <Toggle
             setting="darkMode"
             icons={['lightMode', 'darkMode']}

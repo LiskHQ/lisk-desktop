@@ -26,6 +26,10 @@
   padding: 0 10px;
   box-sizing: content-box;
   cursor: pointer;
+
+  &.disabled {
+    opacity: 0.5;
+  }
 }
 
 .timer {
