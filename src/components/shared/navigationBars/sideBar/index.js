@@ -1,11 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import menuLinks from './constants';
 import routes from '../../../../constants/routes';
 import Icon from '../../../toolbox/icon';
 import styles from './sideBar.css';
+import Piwik from '../../../../utils/piwik';
+import { accountLoggedOut } from '../../../../actions/account';
 
 
 const MenuItem = ({ data, isUserLogout, pathname }) => (
@@ -27,8 +29,29 @@ const MenuItem = ({ data, isUserLogout, pathname }) => (
   </NavLink>
 );
 
+const SingOut = ({ t, history }) => {
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    Piwik.trackingEvent('Header', 'button', 'Open logout dialog');
+    dispatch(accountLoggedOut());
+    history.replace(`${routes.login.path}`);
+  };
+
+  return (
+    <div className={styles.item}>
+      <span className={styles.holder} onClick={signOut}>
+        <span className={styles.iconWrapper}>
+          <Icon name="signOut" className={styles.icon} />
+        </span>
+        <span className={styles.label}>{t('Sign out')}</span>
+      </span>
+    </div>
+  );
+};
+
 const SideBar = ({
-  t, location,
+  t, location, history,
 }) => {
   const items = menuLinks(t);
   const activeToken = useSelector(state => state.settings.token.active);
@@ -55,6 +78,13 @@ const SideBar = ({
                     data={item}
                   />
                 ))
+              }
+              {
+                (i === items.length - 1 && !isUserLogout)
+                  ? (
+                    <SingOut t={t} history={history} />
+                  )
+                  : null
               }
             </div>
           ))
