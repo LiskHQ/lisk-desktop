@@ -116,7 +116,6 @@ class TopBar extends React.Component {
       history,
       network,
       token,
-      settingsUpdated,
       resetTimer,
     } = this.props;
     const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
