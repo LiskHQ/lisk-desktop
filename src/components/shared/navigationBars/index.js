@@ -7,14 +7,15 @@ import routes from '../../../constants/routes';
 const NavigationBars = ({
   isSignInFlow,
   location,
+  history,
 }) => (
   <>
     {
       (location.pathname !== routes.termsOfUse.path && isSignInFlow)
         ? <SignInHeader hideNetwork={location.pathname === routes.hwWallet.path} showSettings />
-        : <TopBar location />
+        : <TopBar location={location} />
     }
-    <SideBar isSignInFlow={isSignInFlow} location={location} />
+    <SideBar isSignInFlow={isSignInFlow} history={history} location={location} />
   </>
 );
 
