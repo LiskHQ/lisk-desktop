@@ -33,7 +33,9 @@ body {
   z-index: 0;
   padding-left: var(--side-bar-shrunk-size);
   box-sizing: border-box;
-  transition: all 200ms ease;
+  transition: padding-left 200ms ease;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 
   & > section {
     margin-top: var(--header-height);

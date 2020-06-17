@@ -23,6 +23,9 @@
 
 .menuGroup {
   width: calc(var(--item-size) + 10px);
+  transition: width ease 200ms;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 
   &::before {
     content: '';
