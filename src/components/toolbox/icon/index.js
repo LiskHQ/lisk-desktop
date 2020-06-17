@@ -117,6 +117,7 @@ import networkMonitor from '../../../assets/images/icons/networkMonitor.svg';
 import networkMonitorActive from '../../../assets/images/icons/networkMonitorActive.svg';
 import voting from '../../../assets/images/icons/voting.svg';
 import votingActive from '../../../assets/images/icons/votingActive.svg';
+import signOut from '../../../assets/images/icons/signOut.svg';
 
 export const icons = {
   academy,
@@ -235,6 +236,7 @@ export const icons = {
   networkMonitorActive,
   voting,
   votingActive,
+  signOut,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
