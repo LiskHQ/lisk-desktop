@@ -23,17 +23,20 @@
 
 .menuGroup {
   width: calc(var(--item-size) + 10px);
-  transition: all ease 200ms;
-  
+
+  &::before {
+    content: '';
+    display: block;
+    width: calc(100% - 20px);
+    background-color: var(--color-title-header-box);
+    height: 1px;
+    margin: 10px;
+  }
+
   &:first-child,
-  &:nth-child(2) {
-    &::after {
-      content: '';
-      display: block;
-      width: calc(100% - 20px);
-      background-color: var(--color-title-header-box);
-      height: 1px;
-      margin: 10px;
+  &:last-child {
+    &::before {
+      display: none;
     }
   }
 
@@ -42,6 +45,10 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+  }
+
+  &:empty {
+    display: none;
   }
 }
 
