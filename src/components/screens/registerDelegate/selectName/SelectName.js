@@ -111,7 +111,7 @@ class SelectName extends React.Component {
     const isBtnDisabled = !!error || nickname.length === 0 || loading;
 
     return (
-      <Box width="medium">
+      <Box width="medium" className={styles.box}>
         <BoxHeader>
           <h1>{t('Become a delegate')}</h1>
         </BoxHeader>
