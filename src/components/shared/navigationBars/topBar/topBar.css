@@ -1,5 +1,5 @@
 .wrapper {
-  background: var(--color-white-smoke);
+  background: var(--color-top-bar);
   display: flex;
   height: var(--header-height);
   justify-content: space-between;
@@ -18,14 +18,18 @@
   height: 100%;
   padding: 0 0px 0 12px;
   box-sizing: content-box;
+  filter: brightness(100);
 }
 
 .toggle {
   width: 20px;
   height: 100%;
-  padding: 0 10px;
+  padding: 0 6px;
   box-sizing: content-box;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: 17px;
 
   &.disabled {
     opacity: 0.5;
@@ -62,4 +66,8 @@
   & > div {
     padding: 0;
   }
+}
+
+.signIn {
+  margin: 7px 20px 0 0;
 }

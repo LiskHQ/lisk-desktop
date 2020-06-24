@@ -1,14 +1,17 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import routes from '../../../../constants/routes';
 import NavigationButtons from './navigationButtons';
 import Piwik from '../../../../utils/piwik';
-import SearchBar from '../../searchBar';
-import Network from './network';
+import Network from './networkName';
 import networks from '../../../../constants/networks';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
+import DialogLink from '../../../toolbox/dialog/link';
 import { settingsUpdated } from '../../../../actions/settings';
+import NetworkSelector from './networkSelector';
+import { PrimaryButton } from '../../../toolbox/buttons/button';
 
 /**
  * Toggles boolean values on store.settings
@@ -114,11 +117,13 @@ class TopBar extends React.Component {
       t,
       account,
       history,
+      location,
       network,
       token,
-      resetTimer,
+      settings,
+      // resetTimer,
     } = this.props;
-    const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
+    // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
     const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
     return (
       <div className={`${styles.wrapper} top-bar`}>
@@ -135,23 +140,48 @@ class TopBar extends React.Component {
             setting="sideBarExpanded"
             icons={['toggleSidebarActive', 'toggleSidebar']}
           />
+          <DialogLink component="bookmarks" className={`${styles.toggle} bookmark-list-toggle`}>
+            <Icon name="bookmark" className={styles.bookmarksIcon} />
+          </DialogLink>
+          <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
+            <Icon name="search" className={styles.searchIcon} />
+          </DialogLink>
         </div>
         <div className={styles.group}>
-          <TokenSelector token="LSK" history={history} />
-          <TokenSelector token="BTC" history={history} />
+          { !isUserLogout ? <TokenSelector token="LSK" history={history} /> : null }
+          { !isUserLogout && token.list.BTC ? <TokenSelector token="BTC" history={history} /> : null }
           <Toggle
             setting="darkMode"
             icons={['lightMode', 'darkMode']}
           />
-          <Toggle
-            setting="discreetMode"
-            icons={['discreetModeActive', 'discreetMode']}
-          />
-          <Network
-            token={token.active}
-            network={network}
-            t={t}
-          />
+          {
+            !isUserLogout ? (
+              <Toggle
+                setting="discreetMode"
+                icons={['discreetModeActive', 'discreetMode']}
+              />
+            ) : null
+          }
+          {
+            settings.showNetwork && location.pathname === '/'
+              ? (
+                <NetworkSelector />
+              )
+              : (
+                <Network
+                  token={token.active}
+                  network={network}
+                  t={t}
+                />
+              )
+          }
+          {
+            isUserLogout && location.pathname !== '/' ? (
+              <Link to="/" className={styles.signIn}>
+                <PrimaryButton size="s">Sign in</PrimaryButton>
+              </Link>
+            ) : null
+          }
         </div>
       </div>
     );
