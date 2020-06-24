@@ -136,8 +136,8 @@ class SearchBar extends React.Component {
     return (
       <div className={`${styles.wrapper} search-bar`}>
         <Input
-          icon="searchInput"
-          size="m"
+          icon="searchActive"
+          size="l"
           data-name="searchInput"
           setRef={setSearchBarRef}
           autoComplete="off"
@@ -145,11 +145,12 @@ class SearchBar extends React.Component {
           name="searchText"
           value={searchTextValue}
           placeholder={t('Search within the network...')}
-          className={`${styles.searchInput} search-input`}
+          className={`${styles.input} search-input`}
+          iconClassName={styles.icon}
           onKeyDown={this.onHandleKeyPress}
           isLoading={suggestions.isLoading || this.timeout}
         />
-        { feedback && <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span> }
+        { feedback ? <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span> : null }
         {
           suggestions.data.addresses.length
             ? (
