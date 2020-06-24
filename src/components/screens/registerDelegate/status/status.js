@@ -2,6 +2,7 @@ import React from 'react';
 import TransactionResult from '../../../shared/transactionResult';
 import DelegateAnimation from '../animations/delegateAnimation';
 import styles from './status.css';
+import DialogHolder from '../../../toolbox/dialog/holder';
 
 class Status extends React.Component {
   constructor() {
@@ -48,7 +49,7 @@ class Status extends React.Component {
   }
 
   render() {
-    const { t, goBackToDelegates } = this.props;
+    const { t } = this.props;
     const { status } = this.state;
 
     const isTransactionSuccess = status !== 'fail';
@@ -60,9 +61,9 @@ class Status extends React.Component {
         title: t('Delegate registration submitted'),
         message: t('You will be notified when your transaction is confirmed.'),
         button: {
-          onClick: goBackToDelegates,
-          title: t('Back to delegates'),
-          className: 'go-back-to-delegates',
+          onClick: DialogHolder.hideDialog,
+          title: t('Close'),
+          className: 'close-modal',
         },
       }
       : {
