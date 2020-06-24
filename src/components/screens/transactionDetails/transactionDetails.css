@@ -4,6 +4,16 @@
   --label-margin-bottom: 10px;
 }
 
+.wrapper {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-box);
+
+  & > header {
+    padding-left: var(--horizontal-padding-l) !important;
+    padding-right: var(--horizontal-padding-l) !important;
+  }
+}
+
 .summaryHeader {
   display: flex;
   align-items: center;
@@ -144,10 +154,7 @@
 }
 
 .container {
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
-  height: 100%;
+  height: auto;
 
   & .mainContent {
     margin-bottom: 20px;

@@ -39,7 +39,7 @@ class Transactions extends React.Component {
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
         { !error ? (
-          <Box width="medium" isLoading={isLoading}>
+          <Box width="medium" isLoading={isLoading} className={styles.wrapper}>
             <BoxHeader>
               <h1>{t('Transaction details')}</h1>
               <CopyToClipboard
