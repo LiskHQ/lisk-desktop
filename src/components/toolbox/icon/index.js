@@ -35,7 +35,7 @@ import helpCenter from '../../../assets/images/icons/help-center.svg';
 import helpCenterArrow from '../../../assets/images/icons/arrow.svg';
 import hidePassphraseIcon from '../../../assets/images/icons/icon-hide-passphrase.svg';
 import hwWalletIcon from '../../../assets/images/icons/hw-wallet.svg';
-import iconEdit from '../../../assets/images/icons/icon-edit.svg';
+import edit from '../../../assets/images/icons/edit.svg';
 import iconEmptyRecentTransactions from '../../../assets/images/icons/empty-recent-transactions.svg';
 import iconEmptyRecentTransactionsDark from '../../../assets/images/icons/empty-recent-transactions-dark.svg';
 import iconFilter from '../../../assets/images/icons/icon-filter.svg';
@@ -59,9 +59,8 @@ import noTweetsIcon from '../../../assets/images/icons/no-tweets.svg';
 import okIcon from '../../../assets/images/icons/icon-checkmark.svg';
 import outgoing from '../../../assets/images/icons/outgoing.svg';
 import pending from '../../../assets/images/icons/pending.svg';
-import searchIconActive from '../../../assets/images/icons/search-active.svg';
-import searchIconInactive from '../../../assets/images/icons/search.svg';
-import searchInput from '../../../assets/images/icons/search-input.svg';
+import searchActive from '../../../assets/images/icons/search-active.svg';
+import search from '../../../assets/images/icons/search.svg';
 import settings from '../../../assets/images/icons/settings.svg';
 import settingsActive from '../../../assets/images/icons/settings-active.svg';
 import showPassphraseIcon from '../../../assets/images/icons/icon-show-passphrase.svg';
@@ -118,6 +117,9 @@ import networkMonitorActive from '../../../assets/images/icons/networkMonitorAct
 import voting from '../../../assets/images/icons/voting.svg';
 import votingActive from '../../../assets/images/icons/votingActive.svg';
 import signOut from '../../../assets/images/icons/signOut.svg';
+import plus from '../../../assets/images/icons/plus.svg';
+import plusActive from '../../../assets/images/icons/plusActive.svg';
+import remove from '../../../assets/images/icons/remove.svg';
 
 export const icons = {
   academy,
@@ -150,7 +152,7 @@ export const icons = {
   helpCenterArrow,
   hidePassphraseIcon,
   hwWalletIcon,
-  iconEdit,
+  edit,
   iconEmptyRecentTransactions,
   iconFilter,
   iconLedgerDevice,
@@ -169,9 +171,8 @@ export const icons = {
   okIcon,
   outgoing,
   pending,
-  searchIconActive,
-  searchIconInactive,
-  searchInput,
+  searchActive,
+  search,
   settings,
   settingsActive,
   showPassphraseIcon,
@@ -237,6 +238,9 @@ export const icons = {
   voting,
   votingActive,
   signOut,
+  plus,
+  plusActive,
+  remove,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
