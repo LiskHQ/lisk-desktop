@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import VoteUrlProcessor from './voteUrlProcessor';
 import accounts from '../../../../../../test/constants/accounts';
 import * as delegateApi from '../../../../../utils/api/delegates';
-import routes from '../../../../../constants/routes';
+import { modals } from '../../../../../constants/routes';
 import votes from '../../../../../../test/constants/votes';
 
 jest.mock('../../../../../utils/api/delegates');
@@ -17,7 +17,7 @@ describe('VoteUrlProcessor', () => {
     const account = accounts.delegate;
     const location = {
       search: '',
-      pathname: routes.votingSummary.path,
+      pathname: modals.votingSummary.path,
     };
 
     unlistenSpy = jest.fn();
