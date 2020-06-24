@@ -1,6 +1,6 @@
 import React from 'react';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
 import Tooltip from '../../toolbox/tooltip/tooltip';
@@ -10,6 +10,7 @@ import BoxHeader from '../../toolbox/box/header';
 import BoxInfoText from '../../toolbox/box/infoText';
 import Piwik from '../../../utils/piwik';
 import styles from './signMessage.css';
+import DialogHolder from '../../toolbox/dialog/holder';
 
 class SignMessageInput extends React.Component {
   constructor(props) {
@@ -40,14 +41,14 @@ class SignMessageInput extends React.Component {
   }
 
   render() {
-    const { t, history } = this.props;
+    const { t } = this.props;
     const { message } = this.state;
     return (
       <Box>
         <BoxHeader>
           <h1>{t('Sign a message')}</h1>
         </BoxHeader>
-        <BoxContent>
+        <BoxContent className={styles.noPadding}>
           <BoxInfoText>
             <span>{t('The sign message tool allows you to prove ownership of a transaction')}</span>
             <Tooltip className={`${styles.tooltip} showOnBottom`}>
@@ -64,13 +65,13 @@ class SignMessageInput extends React.Component {
             />
           </label>
         </BoxContent>
-        <BoxFooter>
+        <BoxFooter direction="horizontal">
+          <SecondaryButton onClick={DialogHolder.hideDialog}>
+            {t('Cancel')}
+          </SecondaryButton>
           <PrimaryButton className="next" onClick={this.nextStep}>
             {t('Continue')}
           </PrimaryButton>
-          <TertiaryButton onClick={history.goBack}>
-            {t('Go back')}
-          </TertiaryButton>
         </BoxFooter>
       </Box>
     );
