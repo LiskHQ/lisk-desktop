@@ -8,7 +8,7 @@
   position: fixed;
   width: auto;
   height: 100%;
-  background-color: var(--color-white-smoke);
+  background-color: var(--color-side-bar);
   z-index: var(--normal-index);
 }
 
