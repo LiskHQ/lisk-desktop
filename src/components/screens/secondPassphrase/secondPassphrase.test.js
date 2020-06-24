@@ -54,7 +54,7 @@ describe('SecondPassphrase', () => {
         {...props}
         account={accounts.second_passphrase_account}
       />);
-      expect(props.history.push).toHaveBeenCalledWith(routes.settings.path);
+      expect(props.history.push).toHaveBeenCalledWith('/');
     });
 
     it('should go to settings if account has not enought balance', () => {
@@ -62,7 +62,7 @@ describe('SecondPassphrase', () => {
         {...props}
         account={accounts.empty_account}
       />);
-      expect(props.history.push).toHaveBeenCalledWith(routes.settings.path);
+      expect(props.history.push).toHaveBeenCalledWith('/');
     });
 
     it('should allow to registerSecondPassphrase and go to wallet', () => {

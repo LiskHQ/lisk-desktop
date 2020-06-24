@@ -9,15 +9,6 @@
     margin-bottom: 16px;
     display: flex;
     flex-direction: column;
-
-    & > .confirmBtn {
-      width: var(--footer-button-width);
-    }
-
-    & > .editBtn {
-      width: auto !important;
-      margin-top: 5px;
-    }
   }
 }
 

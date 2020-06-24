@@ -6,7 +6,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 20px;
+  padding: 30px 0 var(--horizontal-padding-s);
+  background: var(--color-white);
+  border-radius: 0 0 var(--border-radius-box) var(--border-radius-box);
+  border-top: solid 1px var(--color-mystic);
+  margin-top: -10px;
 }
 
 .header {
@@ -18,6 +22,7 @@
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 8px;
+  padding: 2px 20px 12px;
 
   & > label {
     @mixin contentLargest bold;
@@ -27,7 +32,7 @@
 }
 
 .content {
-  width: calc(100% + 40px);
+  width: 100%;
   height: auto;
   max-height: 310px;
   box-sizing: border-box;
@@ -35,22 +40,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding-bottom: 20px;
-  margin: 0 -20px -20px -20px;
-
-  & .accountRow {
-    width: 100%;
-    padding: 8px 20px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    cursor: pointer;
-
-    &:hover {
-      background-color: var(--color-rows-hover);
-    }
-  }
+  margin: 0;
 
   & .accountInformation {
     height: auto;
@@ -71,12 +61,12 @@
   & .tag {
     @mixin contentNormal bold;
 
-    background: var(--color-slate-gray);
-    color: var(--color-strong-white);
-    padding: 3px 7px;
+    background: var(--color-white-smoke);
+    color: var(--color-ink-blue);
+    padding: 9px;
     box-sizing: border-box;
     margin-left: 7px;
-    border-radius: 3px;
+    border-radius: var(--border-radius-box);
     line-height: unset;
   }
 
@@ -109,8 +99,29 @@
     color: var(--color-maastricht-blue);
     margin-left: auto;
   }
-}
 
-.active {
-  background-color: var(--color-rows-hover);
+  & .accountRow {
+    width: 100%;
+    padding: 8px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+
+    &.active,
+    &:hover {
+      background-color: var(--color-ultramarine-blue);
+
+      & .highlight,
+      & .accountSubtitle {
+        color: var(--color-white);
+      }
+
+      & .tag {
+        background: rgba(238, 240, 247, 0.15);
+        color: var(--color-strong-white);
+      }
+    }
+  }
 }

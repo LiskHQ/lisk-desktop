@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { extractPublicKey } from '../../../utils/account';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
@@ -172,7 +171,13 @@ class TransactionSummary extends React.Component {
       isHardwareWalletConnected
         ? null
         : (
-          <BoxFooter className={`${footerClassName} summary-footer`}>
+          <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
+            <SecondaryButton
+              className={`${styles.editBtn} cancel-button`}
+              onClick={cancelButton.onClick}
+            >
+              {cancelButton.label}
+            </SecondaryButton>
             <PrimaryButton
               className={`${styles.confirmBtn} confirm-button`}
               disabled={
@@ -183,12 +188,6 @@ class TransactionSummary extends React.Component {
             >
               {confirmButton.label}
             </PrimaryButton>
-            <TertiaryButton
-              className={`${styles.editBtn} cancel-button`}
-              onClick={cancelButton.onClick}
-            >
-              {cancelButton.label}
-            </TertiaryButton>
           </BoxFooter>
         )
     }

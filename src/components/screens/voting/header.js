@@ -6,7 +6,8 @@ import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons/button';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import Icon from '../../toolbox/icon';
 import SignInTooltipWrapper from '../../shared/signInTooltipWrapper';
-import routes from '../../../constants/routes';
+import { modals } from '../../../constants/routes';
+import DialogLink from '../../toolbox/dialog/link';
 import { fromRawLsk } from '../../../utils/lsk';
 import votingConst from '../../../constants/voting';
 import {
@@ -15,7 +16,6 @@ import {
   getUnvoteList,
   getTotalActions,
 } from '../../../utils/voting';
-
 import styles from './header.css';
 
 function shouldShowRegisterDelegateButton(account) {
@@ -76,7 +76,7 @@ const VotingActionBar = ({
       <SecondaryButton onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
         {t('Cancel')}
       </SecondaryButton>
-      <Link to={totalActions !== 0 ? routes.votingSummary.path : routes.voting.path}>
+      <DialogLink component="votingSummary">
         <PrimaryButton
           className={`${styles.btn} go-to-confirmation-button`}
           disabled={
@@ -87,7 +87,7 @@ const VotingActionBar = ({
         >
           {t('Confirm')}
         </PrimaryButton>
-      </Link>
+      </DialogLink>
     </div>
   );
 };
@@ -98,7 +98,7 @@ const NonVotingActionBar = ({
   <div className={styles.actionBar}>
     { shouldShowRegisterDelegateButton(account)
       ? (
-        <Link to={routes.registerDelegate.path}>
+        <Link to={modals.registerDelegate.path}>
           <SecondaryButton className={`register-delegate ${styles.btn}`}>
             {t('Register as a Delegate')}
           </SecondaryButton>

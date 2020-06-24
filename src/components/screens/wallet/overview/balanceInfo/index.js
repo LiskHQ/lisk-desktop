@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { PrimaryButton } from '../../../../toolbox/buttons/button';
 import Box from '../../../../toolbox/box';
@@ -7,15 +6,15 @@ import BoxContent from '../../../../toolbox/box/content';
 import LiskAmount from '../../../../shared/liskAmount';
 import DiscreetMode from '../../../../shared/discreetMode';
 import Converter from '../../../../shared/converter';
-import routes from '../../../../../constants/routes';
+import DialogLink from '../../../../toolbox/dialog/link';
 import styles from './balanceInfo.css';
 
 const BalanceInfo = ({
   t, activeToken, balance, isWalletRoute, address,
 }) => {
-  const sendUrl = isWalletRoute
-    ? `${routes.send.path}?wallet`
-    : `${routes.send.path}?wallet&recipient=${address}`;
+  const initialValue = isWalletRoute
+    ? {}
+    : { recipient: address };
 
   const sendTitle = isWalletRoute
     ? t('Send {{token}}', { token: activeToken })
@@ -38,14 +37,14 @@ const BalanceInfo = ({
           </DiscreetMode>
         </div>
         <div className={styles.actionRow}>
-          <Link to={sendUrl} className={`${styles.button} tx-send-bt`}>
+          <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={{ initialValue }}>
             <PrimaryButton
               className="send-to-address"
               size="m"
             >
               {sendTitle}
             </PrimaryButton>
-          </Link>
+          </DialogLink>
         </div>
       </BoxContent>
     </Box>

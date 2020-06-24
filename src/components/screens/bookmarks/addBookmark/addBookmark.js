@@ -7,13 +7,12 @@ import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
-import { PrimaryButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons/button';
 import styles from './addBookmark.css';
 import { getIndexOfBookmark } from '../../../../utils/bookmarks';
 import { tokenMap } from '../../../../constants/tokens';
-import routes from '../../../../constants/routes';
 import AccountVisual from '../../../toolbox/accountVisual';
-import PageHeader from '../../../toolbox/pageHeader';
+import Icon from '../../../toolbox/icon';
 
 class AddBookmark extends React.Component {
   constructor(props) {
@@ -157,7 +156,7 @@ class AddBookmark extends React.Component {
   handleAddBookmark(e) {
     e.preventDefault();
     const {
-      token: { active }, bookmarkAdded, account, history,
+      token: { active }, bookmarkAdded, account, prevStep,
     } = this.props;
     const { fields: { label, address } } = this.state;
     const { publicKey, delegate } = account.data;
@@ -170,22 +169,21 @@ class AddBookmark extends React.Component {
         publicKey,
       },
     });
-    history.push(routes.bookmarks.path);
+    prevStep({});
   }
 
   render() {
-    const { t } = this.props;
+    const { t, prevStep } = this.props;
     const { fields } = this.state;
     const isDisabled = !!Object.keys(fields).find(field => fields[field].error || fields[field].value === '');
 
     return (
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <PageHeader
-            title={t('Bookmarks')}
-            subtitle={t('Manage your most used accounts')}
-          />
-          <Box width="medium">
+          <header className={styles.header}>
+            <Icon name="bookmarkActive" />
+          </header>
+          <Box className={styles.box}>
             <BoxHeader>
               <h2>
                 {t('New bookmark')}
@@ -225,12 +223,17 @@ class AddBookmark extends React.Component {
                 </label>
               ))}
             </BoxContent>
-            <BoxFooter>
+            <BoxFooter direction="horizontal">
+              <SecondaryButton
+                onClick={() => prevStep({})}
+              >
+                {t('Cancel')}
+              </SecondaryButton>
               <PrimaryButton
                 disabled={isDisabled}
                 onClick={this.handleAddBookmark}
               >
-                {t('Add bookmark')}
+                {t('Save')}
               </PrimaryButton>
             </BoxFooter>
           </Box>

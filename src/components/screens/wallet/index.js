@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import { parseSearchParams } from '../../../utils/searchParams';
 import Overview from './overview';
 import { getTransactions } from '../../../actions/transactions';
 import txFilters from '../../../constants/transactionFilters';
@@ -9,6 +10,9 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from '../../shared/delegate';
 import VotesTab from '../../shared/votes';
 import Transactions from './transactions';
+import { isEmpty } from '../../../utils/helpers';
+import Send from '../send';
+import DialogHolder from '../../toolbox/dialog/holder';
 
 const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
 /**
@@ -49,15 +53,24 @@ const Wallet = ({ t, history }) => {
   };
 
   useEffect(() => {
-    if (!confirmed.length) {
+    if (!confirmed.length && account.info && !isEmpty(account.info)) {
       transactions.loadData({
         offset: 0,
         limit: 30,
         direction: txFilters.all,
       });
     }
+  }, [account.info]);
+
+  useEffect(() => {
+    const params = parseSearchParams(history.location.search);
+    if (params.wallet !== undefined && params.recipient !== undefined) {
+      DialogHolder.showDialog(<Send initialValue={params} />);
+    }
   }, []);
 
+
+  if (!account || !account.info || isEmpty(account.info)) return (<div />);
   return (
     <section>
       <Overview
@@ -65,7 +78,7 @@ const Wallet = ({ t, history }) => {
         activeToken={activeToken}
         transactions={transactions.data}
         discreetMode={discreetMode}
-        account={account && account.info ? account.info[activeToken] : {}}
+        account={account.info[activeToken]}
         t={t}
       />
       <TabsContainer>

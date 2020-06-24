@@ -10,6 +10,8 @@ import {
 import routes from '../../../../constants/routes';
 import VoteUrlProcessor from './voteUrlProcessor';
 import VoteList from './voteList';
+import styles from './voting.css';
+import DialogHolder from '../../../toolbox/dialog/holder';
 
 const VotingSummary = ({
   t, votes, history, account, nextStep, votePlaced,
@@ -38,14 +40,14 @@ const VotingSummary = ({
               nextStep({
                 success,
                 ...(success ? {
-                  title: t('Voting submitted'),
+                  title: t('Votes submitted'),
                   illustration: 'votingSuccess',
                   message: t('You’ll see it in Delegates and it will be confirmed in a matter of minutes.'),
                   primaryButon: {
-                    title: t('Back to Delegates'),
-                    className: 'back-to-delegates-button',
+                    title: t('Close'),
+                    className: 'close-dialog-button',
                     onClick: () => {
-                      history.push(routes.voting.path);
+                      DialogHolder.hideDialog();
                     },
                   },
                 } : {
@@ -68,11 +70,12 @@ const VotingSummary = ({
       cancelButton={{
         label: t('Edit voting'),
         onClick: () => {
-          history.push(routes.voting.path);
+          DialogHolder.hideDialog();
         },
       }}
       fee={fee * totalActions}
       title={t('Voting summary')}
+      classNames={styles.box}
     >
       <VoteUrlProcessor
         account={account}

@@ -53,7 +53,7 @@ const SummaryStep = ({
     }}
     fee={fromRawLsk(Fees.setSecondPassphrase)}
     confirmation={t('I’m aware registering a 2nd passphrase is irreversible and it will be required to confirm transactions.')}
-    classNames={styles.passphraseConfirmation}
+    classNames={`${styles.box} ${styles.passphraseConfirmation}`}
     footerClassName={styles.confirmPassphraseFooter}
   >
     <section>

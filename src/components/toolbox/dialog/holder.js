@@ -10,6 +10,8 @@ class DialogHolder extends React.Component {
     };
 
     this.animationEnd = this.animationEnd.bind(this);
+    this.backdropClick = this.backdropClick.bind(this);
+    this.backdropRef = React.createRef();
 
     DialogHolder.singletonRef = this;
     DialogHolder.hideDialog = DialogHolder.hideDialog.bind(DialogHolder);
@@ -48,16 +50,32 @@ class DialogHolder extends React.Component {
     return false;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  backdropClick(e) {
+    if (e.target === this.backdropRef.current) {
+      DialogHolder.hideDialog();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      DialogHolder.hideDialog();
+    }
+  }
+
   render() {
-    const { dismissed } = this.state;
+    const { dismissed, position } = this.state;
     const ChildComponent = this.state.dialog;
     return React.isValidElement(ChildComponent) && (
       <div
         className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}
         onAnimationEnd={this.animationEnd}
+        onClick={this.backdropClick}
+        ref={this.backdropRef}
       >
         <ChildComponent.type
           {...ChildComponent.props}
+          position={position}
         />
       </div>
     );

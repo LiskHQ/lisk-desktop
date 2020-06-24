@@ -50,6 +50,7 @@ const Input = ({
   type,
   isMasked,
   feedbackType,
+  iconClassName,
   ...props
 }) => {
   status = updateStatus({
@@ -62,14 +63,14 @@ const Input = ({
       <span className={`${styles.wrapper} ${styles[size]}`}>
         { icon && (
           typeof icon === 'string'
-            ? <Icon name={icon} className={styles.icon} />
+            ? <Icon name={icon} className={`${styles.icon} ${iconClassName}`} />
             : <span className={styles.icon}>{icon}</span>
         )}
         { status === 'pending'
           && <Spinner className={`${styles.loading} ${styles.status}`} />
         }
         { statusIconNameMap[status]
-          && <Icon name={statusIconNameMap[status]} className={styles.status} />
+          && <Icon name={statusIconNameMap[status]} className={`${styles.status}`} />
         }
         <Component
           {...props}

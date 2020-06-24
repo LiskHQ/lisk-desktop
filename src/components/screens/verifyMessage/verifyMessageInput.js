@@ -2,7 +2,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Input } from '../../toolbox/inputs';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
@@ -12,6 +12,7 @@ import BoxInfoText from '../../toolbox/box/infoText';
 import Icon from '../../toolbox/icon';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './verifyMessage.css';
+import DialogHolder from '../../toolbox/dialog/holder';
 
 export default class VerifyMessageInput extends React.Component {
   constructor(props) {
@@ -134,7 +135,7 @@ export default class VerifyMessageInput extends React.Component {
   }
 
   render() {
-    const { t, history } = this.props;
+    const { t } = this.props;
     const { inputs, isInputsView } = this.state;
 
     return (
@@ -142,7 +143,7 @@ export default class VerifyMessageInput extends React.Component {
         <BoxHeader>
           <h1>{t('Verify message')}</h1>
         </BoxHeader>
-        <BoxContent>
+        <BoxContent className={styles.content}>
           <BoxInfoText>
             {t('Use this tool to verify the validity of a signed message. This allows you to ensure that the person who signed the message was in fact the account owner')}
             <Tooltip className="showOnBottom">
@@ -180,7 +181,8 @@ export default class VerifyMessageInput extends React.Component {
             />
           ))}
         </BoxContent>
-        <BoxFooter>
+        <BoxFooter direction="horizontal">
+          <SecondaryButton onClick={DialogHolder.hideDialog} className="go-back">{t('Go back')}</SecondaryButton>
           <PrimaryButton
             onClick={this.goNext}
             disabled={!this.canSubmit}
@@ -188,7 +190,6 @@ export default class VerifyMessageInput extends React.Component {
           >
             {t('Continue')}
           </PrimaryButton>
-          <TertiaryButton onClick={history.goBack} className="go-back">{t('Go back')}</TertiaryButton>
         </BoxFooter>
       </Box>
     );

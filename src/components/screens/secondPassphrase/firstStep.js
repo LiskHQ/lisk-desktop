@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
@@ -7,11 +7,12 @@ import BoxFooter from '../../toolbox/box/footer';
 import PassphraseBackup from '../../shared/passphraseBackup';
 import htmlStringToReact from '../../../utils/htmlStringToReact';
 import styles from './secondPassphrase.css';
+import DialogHolder from '../../toolbox/dialog/holder';
 
 const FirstStep = ({
-  t, goBack, nextStep, account,
+  t, nextStep, account,
 }) => (
-  <Box>
+  <Box className={styles.box}>
     <BoxHeader>
       <h2>{t('Register 2nd passphrase')}</h2>
     </BoxHeader>
@@ -26,19 +27,19 @@ const FirstStep = ({
         paperWalletName="lisk_passphrase_store_safely"
       />
     </BoxContent>
-    <BoxFooter className="summary-footer">
+    <BoxFooter className="summary-footer" direction="horizontal">
+      <SecondaryButton
+        className={`${styles.editBtn} large cancel`}
+        onClick={DialogHolder.hideDialog}
+      >
+        {t('Cancel')}
+      </SecondaryButton>
       <PrimaryButton
         className={`${styles.confirmBtn} large go-to-confirmation`}
         onClick={nextStep}
       >
         {t('Go to confirmation')}
       </PrimaryButton>
-      <TertiaryButton
-        className={`${styles.editBtn} large go-back`}
-        onClick={goBack}
-      >
-        {t('Go back')}
-      </TertiaryButton>
     </BoxFooter>
   </Box>
 );
