@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import Network from './network';
+import Network from './networkName';
 
 describe('Network', () => {
   let wrapper;

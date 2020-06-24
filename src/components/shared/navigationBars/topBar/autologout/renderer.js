@@ -3,6 +3,7 @@ import routes from '../../../../../constants/routes';
 import Piwik from '../../../../../utils/piwik';
 import DialogHolder from '../../../../toolbox/dialog/holder';
 import Dialog from '../../../../toolbox/dialog/dialog';
+import Settings from '../../../../screens/settings';
 import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons/button';
 
 
@@ -29,7 +30,6 @@ class CustomCountDown extends React.Component {
         title: t('Timeout soon'),
         description: t('You will be signed out in a minute due to no network activity. You can turn off Auto-Logout in the settings.'),
         options: [{
-          'data-path': routes.settings.path,
           onClick: this.goTo,
           children: t('Go to settings'),
         }, {
@@ -71,7 +71,11 @@ class CustomCountDown extends React.Component {
 
   /* istanbul ignore next */
   goTo({ target: { dataset: { path } } }) {
-    this.props.history.replace(path);
+    if (path) {
+      this.props.history.replace(path);
+    } else {
+      DialogHolder.showDialog(<Settings />);
+    }
   }
 
   /* istanbul ignore next */

@@ -2,7 +2,7 @@ import React from 'react';
 import 'numeral/locales';
 import FlashMessage from '../../toolbox/flashMessage/flashMessage';
 import FlashMessageHolder from '../../toolbox/flashMessage/holder';
-import routes from '../../../constants/routes';
+import { modals } from '../../../constants/routes';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 
 export const InitializationMessageRenderer = ({
@@ -23,7 +23,7 @@ export const InitializationMessageRenderer = ({
 
   const onButtonClick = () => {
     const amount = formatAmountBasedOnLocale({ value: 0.1 });
-    history.push(`${routes.send.path}?recipient=${account.address}&amount=${amount}&reference=Account initialization`);
+    history.push(`${modals.send.path}?recipient=${account.address}&amount=${amount}&reference=Account initialization`);
   };
 
   return (

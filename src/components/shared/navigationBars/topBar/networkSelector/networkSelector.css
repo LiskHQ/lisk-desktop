@@ -1,4 +1,4 @@
-@import '../../../../app/mixins.css';
+@import '../../../../../app/mixins.css';
 
 .wrapper {
   background: var(--color-white-smoke);
@@ -74,11 +74,8 @@
   @mixin contentSmall bold;
 
   align-items: center;
-  background-color: var(--color-white) !important;
-  border: 1px solid var(--color-light-gray) !important;
-  border-radius: var(--border-radius-standard) !important;
   box-sizing: border-box;
-  color: var(--color-maastricht-blue);
+  color: var(--color-strong-mystic);
   cursor: pointer;
   display: flex;
   height: 100% !important;
@@ -89,7 +86,7 @@
   width: auto;
 
   &::after {
-    border: 3px solid transparent;
+    border: 6px solid transparent;
     border-bottom: 0;
     border-top-color: var(--color-slate-gray);
     content: '';
