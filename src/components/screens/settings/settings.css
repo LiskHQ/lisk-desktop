@@ -1,12 +1,11 @@
 @import '../../../app/mixins.css';
 
 .settingsHolder {
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-  min-height: 100%;
-  margin: 20px auto;
+  max-height: calc(100% - 100px);
+  overflow-y: scroll;
+  background: var(--color-white);
+  border-radius: var(--border-radius-box);
+  padding: 0 var(--horizontal-padding-l);
 
   & .content {
     & h2 {
