@@ -58,13 +58,13 @@ const menuLinks = t => ([
       icon: 'signMessage',
       id: 'signMessage',
       label: t('Sign Message'),
-      path: routes.signMessage.path,
+      modal: 'signMessage',
     },
     {
       icon: 'verifyMessage',
-      id: 'verifyMMessage',
+      id: 'verifyMessage',
       label: t('Verify Message'),
-      path: routes.verifyMMessage.path,
+      modal: 'verifyMessage',
     },
   ],
   [
@@ -72,7 +72,7 @@ const menuLinks = t => ([
       icon: 'settings',
       id: 'settings',
       label: t('Settings'),
-      path: routes.settings.path,
+      modal: 'settings',
     },
   ],
 ]);

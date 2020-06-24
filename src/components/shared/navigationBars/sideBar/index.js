@@ -3,31 +3,48 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import menuLinks from './constants';
-import routes from '../../../../constants/routes';
+import routes, { modals } from '../../../../constants/routes';
 import Icon from '../../../toolbox/icon';
 import styles from './sideBar.css';
 import Piwik from '../../../../utils/piwik';
 import { accountLoggedOut } from '../../../../actions/account';
+import DialogLink from '../../../toolbox/dialog/link';
 
-
-const MenuItem = ({ data, isUserLogout, pathname }) => (
-  <NavLink
-    to={data.path}
-    className={[
-      styles.item,
-      isUserLogout && routes[data.id].isPrivate && styles.disabled,
-    ].filter(Boolean).join(' ')}
-    id={data.id}
-    activeClassName={styles.selected}
-  >
+const Inner = ({ data, pathname, modal }) => {
+  let status = '';
+  if (pathname && pathname.startsWith(data.path)) status = 'Active';
+  else if (modal && modal === '') status = 'Active';
+  return (
     <span className={styles.holder}>
       <span className={styles.iconWrapper}>
-        <Icon name={`${data.icon}${pathname.startsWith(data.path) ? 'Active' : ''}`} className={styles.icon} />
+        <Icon name={`${data.icon}${status}`} className={styles.icon} />
       </span>
       <span className={styles.label}>{data.label}</span>
     </span>
-  </NavLink>
-);
+  );
+};
+
+const MenuLink = ({ data, isUserLogout, pathname }) => {
+  if (data.modal) {
+    const className = `${styles.item} ${isUserLogout && modals[data.id].isPrivate ? styles.disabled : ''}`;
+    return (
+      <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${className}`}>
+        <Inner data={data} modal={data.id} />
+      </DialogLink>
+    );
+  }
+  const className = `${styles.item} ${isUserLogout && routes[data.id].isPrivate ? styles.disabled : ''}`;
+  return (
+    <NavLink
+      to={data.path}
+      className={className}
+      id={data.id}
+      activeClassName={styles.selected}
+    >
+      <Inner data={data} pathname={pathname} />
+    </NavLink>
+  );
+};
 
 const SingOut = ({ t, history }) => {
   const dispatch = useDispatch();
@@ -54,8 +71,8 @@ const SideBar = ({
   t, location, history,
 }) => {
   const items = menuLinks(t);
-  const activeToken = useSelector(state => state.settings.token.active);
-  const isUserLogout = useSelector(state => !!state.account.afterLogout);
+  const token = useSelector(state => state.settings.token.active);
+  const isLoggedOut = useSelector(state => !state.account.info || !state.account.info[token]);
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
 
   return (
@@ -69,18 +86,19 @@ const SideBar = ({
             >
               {
                 group.filter(({ id }) => (
-                  !routes[id].forbiddenTokens || !routes[id].forbiddenTokens.includes(activeToken)
+                  (routes[id] && !routes[id].forbiddenTokens.includes(token))
+                  || (modals[id] && !modals[id].forbiddenTokens.includes(token))
                 )).map(item => (
-                  <MenuItem
+                  <MenuLink
                     key={item.id}
-                    isUserLogout={isUserLogout}
+                    isUserLogout={isLoggedOut}
                     pathname={location.pathname}
                     data={item}
                   />
                 ))
               }
               {
-                (i === items.length - 1 && !isUserLogout)
+                (i === items.length - 1 && !isLoggedOut)
                   ? (
                     <SingOut t={t} history={history} />
                   )
