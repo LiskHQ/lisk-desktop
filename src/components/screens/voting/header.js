@@ -1,12 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Waypoint from 'react-waypoint';
 import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons/button';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import Icon from '../../toolbox/icon';
 import SignInTooltipWrapper from '../../shared/signInTooltipWrapper';
-import { modals } from '../../../constants/routes';
 import DialogLink from '../../toolbox/dialog/link';
 import { fromRawLsk } from '../../../utils/lsk';
 import votingConst from '../../../constants/voting';
