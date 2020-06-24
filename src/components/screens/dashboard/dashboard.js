@@ -1,7 +1,6 @@
 // istanbul ignore file
 import React from 'react';
 import throttle from 'lodash.throttle';
-import BookmarksList from '../bookmarks/bookmarksList';
 import NewsFeed from './newsFeed';
 import WalletDetails from '../../shared/walletDetails';
 import breakpoints from '../../../constants/breakpoints';
@@ -71,10 +70,8 @@ class Dashboard extends React.Component {
   render() {
     const {
       account,
-      history,
       t,
     } = this.props;
-    const { isDesktop } = this.state;
     const isLoggedIn = !!(account.address);
 
     return (
@@ -94,31 +91,11 @@ class Dashboard extends React.Component {
               }
 
               <RecentTransactions className={styles.marginFix} isLoggedIn={isLoggedIn} />
-
-              {
-                !isDesktop
-                  ? (
-                    <div className={`${styles.bookmarks} bookmarks`}>
-                      <BookmarksList history={history} limit={5} />
-                    </div>
-                  )
-                  : null
-              }
             </div>
 
             <div className={`${styles.community} community-feed`}>
               <NewsFeed />
             </div>
-
-            {
-              isDesktop
-                ? (
-                  <div className={`${styles.bookmarks} bookmarks`}>
-                    <BookmarksList history={history} limit={5} />
-                  </div>
-                )
-                : null
-            }
           </div>
         </div>
       </React.Fragment>
