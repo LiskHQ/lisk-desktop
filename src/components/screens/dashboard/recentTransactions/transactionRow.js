@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useSelector } from 'react-redux';
-import routes from '../../../../constants/routes';
 import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
 import TransactionAddress from '../../../shared/transactionAddress';
 import TransactionAmount from '../../../shared/transactionAmount';
+import DialogLink from '../../../toolbox/dialog/link';
 import styles from './recentTransactions.css';
 
 // eslint-disable-next-line complexity
@@ -21,9 +20,10 @@ const TransactionRow = ({
   }));
   const isConfirmed = data.confirmations > 0;
   return (
-    <Link
+    <DialogLink
       className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending} transactions-row`}
-      to={`${routes.transactions.path}/${data.id}`}
+      component="transactionDetails"
+      data={{ transactionId: data.id, token: activeToken }}
     >
       <span className={grid['col-xs-9']}>
         <TransactionTypeFigure
@@ -50,7 +50,7 @@ const TransactionRow = ({
           amount={data.amount || data.asset.amount}
         />
       </span>
-    </Link>
+    </DialogLink>
   );
 };
 

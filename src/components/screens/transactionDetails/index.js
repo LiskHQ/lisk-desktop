@@ -20,7 +20,7 @@ const apis = {
     apiUtil: (apiClient, params) => getSingleTransaction(params),
     getApiParams: (state, ownProps) => ({
       token: state.settings.token.active,
-      id: ownProps.id,
+      id: ownProps.transactionId,
       networkConfig: state.network,
     }),
     transformResponse: response => response.data[0] || {},
