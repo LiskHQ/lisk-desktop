@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import { tokenMap } from '../../../constants/tokens';
@@ -8,15 +7,16 @@ import AccountVisualWithAddress from '../accountVisualWithAddress';
 import Icon from '../../toolbox/icon';
 import LiskAmount from '../liskAmount';
 import Tooltip from '../../toolbox/tooltip/tooltip';
-import routes from '../../../constants/routes';
+import DialogLink from '../../toolbox/dialog/link';
 import styles from './transactionsTable.css';
 
 const roundSize = 101;
 
 const TransactionRow = ({ data, className, t }) => (
-  <Link
+  <DialogLink
     className={`${grid.row} ${className}`}
-    to={`${routes.transactions.path}/${data.id}`}
+    component="transactionDetails"
+    data={{ transactionId: data.id, token: 'LSK' }}
   >
     <span className={grid['col-xs-3']}>
       <AccountVisualWithAddress
@@ -62,7 +62,7 @@ const TransactionRow = ({ data, className, t }) => (
         <p>{`${data.confirmations}/${roundSize} ${t('Confirmations')}`}</p>
       </Tooltip>
     </span>
-  </Link>
+  </DialogLink>
 );
 
 /* istanbul ignore next */
