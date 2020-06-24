@@ -154,11 +154,12 @@
   height: 40px;
   padding: 19px 0;
 
-  & a,
+  & div,
   & button {
     height: 40px !important;
     line-height: 40px;
     margin-top: 0;
+    display: inline-block;
   }
 }
 
