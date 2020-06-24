@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '../../../../test/constants/accounts';
-import Send from './send';
+import Send from './index';
 
 describe('Send', () => {
   let wrapper;
