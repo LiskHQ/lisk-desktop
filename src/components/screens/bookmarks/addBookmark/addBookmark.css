@@ -5,6 +5,30 @@
   justify-content: center;
   width: 100%;
 
+  & .content {
+    width: 100%;
+  }
+
+  & .header {
+    border-bottom: solid 1px #dfe6f2;
+    padding: 15px 20px 11px 15px;
+  }
+
+  & .fullWidth {
+    width: 100%;
+  }
+
+  & .box {
+    & header {
+      padding-right: var(--horizontal-padding-l);
+      padding-left: var(--horizontal-padding-l);
+    }
+
+    & > div {
+      padding-top: 0;
+    }
+  }
+
   & .fieldGroup {
     display: block;
     position: relative;
