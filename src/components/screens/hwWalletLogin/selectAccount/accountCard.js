@@ -36,7 +36,7 @@ const AccountCard = ({
             <span className={`${styles.accountTitle} account-name`}>{account.name === null ? t('Unnamed account') : account.name}</span>
             <SecondaryButton className={`${styles.editBtn} edit-account`} onClick={() => onEditAccount(index)}>
               {t('Edit')}
-              <Icon name="iconEdit" />
+              <Icon name="edit" />
             </SecondaryButton>
           </React.Fragment>
         )
