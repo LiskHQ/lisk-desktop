@@ -1,5 +1,12 @@
 @import '../../../../app/mixins.css';
 
+.box {
+  & > header {
+    padding-left: var(--horizontal-padding-l) !important;
+    padding-right: var(--horizontal-padding-l) !important;
+  }
+}
+
 .container {
   & > .description {
     @mixin contentLargest;
