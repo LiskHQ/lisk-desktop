@@ -98,11 +98,11 @@ const NonVotingActionBar = ({
   <div className={styles.actionBar}>
     { shouldShowRegisterDelegateButton(account)
       ? (
-        <Link to={modals.registerDelegate.path}>
+        <DialogLink component="registerDelegate">
           <SecondaryButton className={`register-delegate ${styles.btn}`}>
             {t('Register as a Delegate')}
           </SecondaryButton>
-        </Link>
+        </DialogLink>
       )
       : null
     }
