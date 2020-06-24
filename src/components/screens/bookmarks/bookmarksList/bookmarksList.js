@@ -1,15 +1,13 @@
-import { Link } from 'react-router-dom';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Input } from '../../../toolbox/inputs';
-import Illustration from '../../../toolbox/illustration';
-import { PrimaryButton, SecondaryButton, WarningButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons/button';
 import { tokenMap } from '../../../../constants/tokens';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
-import BoxEmptyState from '../../../toolbox/box/emptyState';
+import EmptyState from './emptyState';
 import regex from '../../../../utils/regex';
 import routes from '../../../../constants/routes';
 import styles from './bookmarksList.css';
@@ -107,7 +105,8 @@ class BookmarksList extends React.Component {
 
   render() {
     const {
-      t, token, className, enableFilter, title, isEditable, bookmarks, emptyStateClassName, limit,
+      t, token, className, enableFilter, isEditable,
+      bookmarks, emptyStateClassName, limit, nextStep,
     } = this.props;
     const {
       filter, editedAddress, editedTitle, feedback,
@@ -116,168 +115,152 @@ class BookmarksList extends React.Component {
     const selectedBookmarks = this.getBookmarkListBasedOnSelectedToken();
 
     return (
-      <Box className={` ${styles.box} ${className} bookmarks-list`}>
-        <BoxHeader>
-          <h2>{title || t('Bookmarks')}</h2>
-          { enableFilter
-            ? (
+      <section className={` ${styles.wrapper} ${className} bookmarks-list`}>
+        { enableFilter
+          ? (
+            <header className={styles.header}>
               <span>
                 <Input
-                  className="bookmarks-filter-input"
-                  size="xs"
+                  className={`${styles.searchInput} bookmarks-filter-input`}
+                  icon="bookmarkActive"
+                  iconClassName={styles.icon}
+                  size="l"
                   onChange={this.onFilterChange}
                   value={filter}
-                  placeholder={t('Filter by name or address...')}
+                  placeholder={t('Search by name or address')}
                 />
               </span>
-            )
-            : null
-          }
-        </BoxHeader>
-        <BoxContent className={`${styles.bookmarkList} bookmark-list-container`}>
-          {
-          selectedBookmarks.length
-            ? selectedBookmarks.map(bookmark => (
-              <Link
-                onClick={this.onRowClick}
-                key={bookmark.address}
-                className={`${styles.row} ${editedAddress === bookmark.address ? styles.editting : ''} bookmark-list-row`}
-                to={`${routes.accounts.path}/${bookmark.address}`}
-              >
-                <div className={styles.avatarAndDescriptionWrapper}>
-                  {
-                    token.active === tokenMap.LSK.key
-                      ? (
-                        <AccountVisual
-                          className={styles.avatar}
-                          address={bookmark.address}
-                          size={40}
-                        />
-                      )
-                      : null
-                  }
-                  {
-                    editedAddress === bookmark.address
-                      ? (
-                        <Input
-                          autoComplete="off"
-                          className={`bookmarks-edit-input ${styles.editInput}`}
-                          onChange={this.onTitleChange}
-                          placeholder={t('Filter by name or address...')}
-                          setRef={(input) => { this.editInput = input; }}
-                          size="m"
-                          value={editedTitle}
-                          name="bookmarkName"
-                          error={!!feedback}
-                          feedback={feedback}
-                          status={feedback ? 'error' : 'ok'}
-                        />
-                      )
-                      : (
-                        <span className={styles.description}>
-                          <span>{bookmark.title}</span>
-                          <span>{this.displayAddressBasedOnSelectedToken(bookmark.address)}</span>
-                        </span>
-                      )
-                  }
-                </div>
-                { isEditable
-                  ? (
-                    <div className={styles.buttonContainer}>
-                      { editedAddress === bookmark.address
-                        ? (
-                          <React.Fragment>
-                            <SecondaryButton
-                              onClick={e => this.updateBookmark(e, {})}
-                              className="bookmarks-cancel-button"
-                              size="m"
-                            >
-                              {t('Cancel')}
-                            </SecondaryButton>
-                            <PrimaryButton
-                              onClick={e => this.saveChanges(e)}
-                              className="bookmarks-save-changes-button"
-                              size="m"
-                              disabled={!!feedback}
-                            >
-                              {t('Save changes')}
-                            </PrimaryButton>
-                          </React.Fragment>
-                        )
-                        : (
-                          <React.Fragment>
-                            <SecondaryButton
-                              onClick={e => this.editBookmark(e, bookmark)}
-                              className="bookmarks-edit-button"
-                              size="m"
-                              disabled={bookmark.isDelegate}
-                            >
-                              {t('Edit')}
-                            </SecondaryButton>
-                            <WarningButton
-                              onClick={e => this.deleteBookmark(e, bookmark)}
-                              className="bookmarks-delete-button"
-                              size="m"
-                            >
-                              {t('Delete')}
-                            </WarningButton>
-                          </React.Fragment>
-                        )
-                  }
-                    </div>
-                  )
-                  : null
-              }
-              </Link>
-            ))
-            : (
-              <React.Fragment>
-                { bookmarks[token.active].length
-                  ? (
-                    <BoxEmptyState className={emptyStateClassName}>
-                      <Illustration name="emptyBookmarkFiler" className="bookmark-empty-filter-illustration" />
-                      <p>{t('There are no results matching this filter.')}</p>
-                    </BoxEmptyState>
-                  )
-                  : (
-                    <BoxEmptyState className={emptyStateClassName}>
-                      { limit
-                        ? (
-                          <React.Fragment>
-                            <Icon name="bookmarksIconEmptyState" />
-                            <h1>{t('No Bookmarks added yet')}</h1>
-                            <p>{t('Start adding some addresses to bookmarks, to keep track of them.')}</p>
-                            <Link to={routes.addBookmark.path}>
-                              <SecondaryButton>{t('Add a new bookmark')}</SecondaryButton>
-                            </Link>
-                          </React.Fragment>
-                        )
-                        : (
-                          <React.Fragment>
-                            <Illustration name="emptyBookmarksList" className="bookmarks-empty-illustration" />
-                            <p>{t('You don’t have any bookmarks yet.')}</p>
-                          </React.Fragment>
-                        )
-                  }
-                    </BoxEmptyState>
-                  )
+            </header>
+          )
+          : null
+        }
+        <Box className={styles.box}>
+          <BoxHeader>
+            <h2 className={styles.heading}>{t('Bookmarks')}</h2>
+            {
+              isEditable && selectedBookmarks.length
+                ? (
+                  <PrimaryButton
+                    className={styles.addButton}
+                    onClick={() => nextStep({})}
+                    size="s"
+                  >
+                    <Icon name="plus" className={styles.plusIcon} />
+                    {t('Add new')}
+                  </PrimaryButton>
+                ) : null
             }
-              </React.Fragment>
-            )
-        }
-        </BoxContent>
-        {
-          selectedBookmarks.length && limit
-            ? (
-              <BoxFooter className={styles.footer}>
-                <Link to={routes.bookmarks.path}>
-                  <SecondaryButton size="s">{t('View All')}</SecondaryButton>
+          </BoxHeader>
+          <BoxContent className={`${styles.bookmarkList} bookmark-list-container`}>
+            {
+            selectedBookmarks.length
+              ? selectedBookmarks.map(bookmark => (
+                <Link
+                  onClick={this.onRowClick}
+                  key={bookmark.address}
+                  className={`${styles.row} ${editedAddress === bookmark.address ? styles.editting : ''} bookmark-list-row`}
+                  to={`${routes.accounts.path}/${bookmark.address}`}
+                >
+                  <div className={styles.avatarAndDescriptionWrapper}>
+                    {
+                      token.active === tokenMap.LSK.key
+                        ? (
+                          <AccountVisual
+                            className={styles.avatar}
+                            address={bookmark.address}
+                            size={40}
+                          />
+                        )
+                        : null
+                    }
+                    {
+                      editedAddress === bookmark.address
+                        ? (
+                          <Input
+                            autoComplete="off"
+                            className={`bookmarks-edit-input ${styles.editInput}`}
+                            onChange={this.onTitleChange}
+                            placeholder={t('Filter by name or address...')}
+                            setRef={(input) => { this.editInput = input; }}
+                            size="m"
+                            value={editedTitle}
+                            name="bookmarkName"
+                            error={!!feedback}
+                            feedback={feedback}
+                            status={feedback ? 'error' : 'ok'}
+                          />
+                        )
+                        : (
+                          <span className={styles.description}>
+                            <span>{bookmark.title}</span>
+                            <span>{this.displayAddressBasedOnSelectedToken(bookmark.address)}</span>
+                          </span>
+                        )
+                    }
+                  </div>
+                  { isEditable
+                    ? (
+                      <div className={styles.buttonContainer}>
+                        { editedAddress === bookmark.address
+                          ? (
+                            <React.Fragment>
+                              <TertiaryButton
+                                onClick={e => this.updateBookmark(e, {})}
+                                className="bookmarks-cancel-button"
+                                size="m"
+                              >
+                                {t('Cancel')}
+                              </TertiaryButton>
+                              <TertiaryButton
+                                onClick={e => this.saveChanges(e)}
+                                className="bookmarks-save-changes-button"
+                                size="m"
+                                disabled={!!feedback}
+                              >
+                                {t('Save changes')}
+                              </TertiaryButton>
+                            </React.Fragment>
+                          )
+                          : (
+                            <React.Fragment>
+                              <TertiaryButton
+                                onClick={e => this.editBookmark(e, bookmark)}
+                                className="bookmarks-edit-button"
+                                size="m"
+                                disabled={bookmark.isDelegate}
+                              >
+                                <Icon name="edit" />
+                              </TertiaryButton>
+                              <TertiaryButton
+                                onClick={e => this.deleteBookmark(e, bookmark)}
+                                className="bookmarks-delete-button"
+                                size="m"
+                              >
+                                <Icon name="remove" />
+                              </TertiaryButton>
+                            </React.Fragment>
+                          )
+                    }
+                      </div>
+                    )
+                    : null
+                }
                 </Link>
-              </BoxFooter>
-            )
-            : null
-        }
-      </Box>
+              ))
+              : (
+                <EmptyState
+                  bookmarks={bookmarks}
+                  token={token}
+                  emptyStateClassName={emptyStateClassName}
+                  limit={limit}
+                  t={t}
+                  nextStep={nextStep}
+                />
+              )
+          }
+          </BoxContent>
+        </Box>
+      </section>
     );
   }
 }
