@@ -1,14 +1,16 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 100%;
-  align-items: center;
-  width: 100%;
   max-width: 720px;
-  margin: auto;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-box);
+
+  & .box {
+    & > header {
+      padding-left: var(--horizontal-padding-l) !important;
+      padding-right: var(--horizontal-padding-l) !important;
+    }
+  }
 
   & .info {
     @mixin contentLargest;

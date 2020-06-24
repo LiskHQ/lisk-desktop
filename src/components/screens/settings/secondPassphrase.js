@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import React from 'react';
 import { utils } from '@liskhq/lisk-transactions';
 import Fees from '../../../constants/fees';
 import Spinner from '../../toolbox/spinner';
-import routes from '../../../constants/routes';
+import DialogLink from '../../toolbox/dialog/link';
 import styles from './settings.css';
 import Icon from '../../toolbox/icon';
 
@@ -45,12 +44,12 @@ const SecondPassphraseSetting = ({
                       label={t('Second passphrase is being activated. Almost there!')}
                     />
                   ) : (
-                    <Link
+                    <DialogLink
                       className={`register-second-passphrase ${styles.link}`}
-                      to={`${routes.secondPassphrase.path}`}
+                      component="secondPassphrase"
                     >
                       {t('Activate ({{ fee }} LSK Fee)', { fee })}
-                    </Link>
+                    </DialogLink>
                   )}
                 </React.Fragment>
               )

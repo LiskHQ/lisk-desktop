@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
-import CustomRoute from './customRoute';
+import CustomRoute from './index';
 
 const Public = () => <h1>Public</h1>;
 const Private = () => <h1>Private</h1>;
