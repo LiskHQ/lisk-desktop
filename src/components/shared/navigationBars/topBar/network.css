@@ -7,7 +7,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-right: 16px;
   padding: 0 24px;
 
   /* Message */
@@ -20,10 +19,14 @@
     /* Network name */
     & > span:last-child {
       margin-left: 5px;
-      color: var(--color-maastricht-blue);
-      font-weight: 600;
+      font-weight: var(--font-weight-very-bold);
       text-transform: capitalize;
+      display: inline-block;
     }
+  }
+
+  &:last-child {
+    margin-right: 16px;
   }
 }
 
