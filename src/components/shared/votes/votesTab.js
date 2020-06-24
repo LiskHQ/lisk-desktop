@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
+import BoxContent from '../../toolbox/box/content';
 import { Input } from '../../toolbox/inputs';
 import routes from '../../../constants/routes';
 import styles from './votesTab.css';
@@ -97,7 +98,7 @@ const VotesTab = ({
           />
         </div>
       </BoxHeader>
-      <main className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} votes-tab`}>
+      <BoxContent className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} votes-tab`}>
         <Table
           data={filteredVotes.slice(0, showing)}
           canLoadMore={canLoadMore}
@@ -113,7 +114,7 @@ const VotesTab = ({
           loadData={onShowMore}
           header={header(t, apiVersion)}
         />
-      </main>
+      </BoxContent>
     </Box>
   );
 };
