@@ -182,7 +182,7 @@ export default class VerifyMessageInput extends React.Component {
           ))}
         </BoxContent>
         <BoxFooter direction="horizontal">
-          <SecondaryButton onClick={DialogHolder.hideDialog} className="go-back">{t('Go back')}</SecondaryButton>
+          <SecondaryButton onClick={DialogHolder.hideDialog} className="go-back">{t('Close')}</SecondaryButton>
           <PrimaryButton
             onClick={this.goNext}
             disabled={!this.canSubmit}

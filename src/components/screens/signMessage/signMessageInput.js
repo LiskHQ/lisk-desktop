@@ -67,7 +67,7 @@ class SignMessageInput extends React.Component {
         </BoxContent>
         <BoxFooter direction="horizontal">
           <SecondaryButton onClick={DialogHolder.hideDialog}>
-            {t('Cancel')}
+            {t('Close')}
           </SecondaryButton>
           <PrimaryButton className="next" onClick={this.nextStep}>
             {t('Continue')}
