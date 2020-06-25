@@ -27,7 +27,10 @@ const getNormalizedTimestamp = (tx) => {
 };
 
 const styles = {
-  borderColor: 'rgba(15, 126, 255, 0.5)',
+  borderColor: {
+    LSK: '#4070f4',
+    BTC: '#f7931a',
+  },
   whiteColor: '#ffffff',
   platinumColor: '#e1e3eb',
   slateGray: '#70778b',
@@ -162,7 +165,7 @@ const getTxValue = (tx, address) => (
  * @param {Node} canvas Canvas element to be used
  */
 export const getBalanceData = ({
-  transactions, balance, address,
+  transactions, balance, address, token,
 }) => {
   const data = transactions
     .sort((a, b) => (b.timestamp - a.timestamp))
@@ -187,8 +190,8 @@ export const getBalanceData = ({
   return {
     datasets: [{
       data,
-      borderColor: styles.borderColor,
-      pointBorderColor: styles.borderColor,
+      borderColor: styles.borderColor[token],
+      pointBorderColor: styles.borderColor[token],
     }],
   };
 };
