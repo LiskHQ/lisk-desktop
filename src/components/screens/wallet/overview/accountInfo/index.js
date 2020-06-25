@@ -14,7 +14,7 @@ import Tooltip from '../../../../toolbox/tooltip/tooltip';
 
 const BookmarkIcon = ({ isBookmark }) => (
   <Icon
-    name={isBookmark ? 'bookmark' : 'bookmarkActive'}
+    name={isBookmark ? 'bookmarkActive' : 'bookmark'}
     className={styles.bookmark}
   />
 );
@@ -68,7 +68,7 @@ const AccountInfo = ({
               className={`${styles.bookmarkDropdown} bookmark-account`}
               buttonLabel={<BookmarkIcon isBookmark={isBookmark} />}
               ButtonComponent={PrimaryButton}
-              align="right"
+              align="left"
             >
               <BookmarkDropdown
                 token={activeToken}
