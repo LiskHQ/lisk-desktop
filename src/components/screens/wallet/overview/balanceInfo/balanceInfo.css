@@ -61,4 +61,14 @@
       width: 100%;
     }
   }
+
+  & .sendButton {
+    &.LSK {
+      background-color: var(--color-ultramarine-blue);
+    }
+
+    &.BTC {
+      background-color: var(--color-btc);
+    }
+  }
 }
