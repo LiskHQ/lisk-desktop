@@ -12,6 +12,7 @@ import DialogLink from '../../../toolbox/dialog/link';
 import { settingsUpdated } from '../../../../actions/settings';
 import NetworkSelector from './networkSelector';
 import { PrimaryButton } from '../../../toolbox/buttons/button';
+import { isEmpty } from '../../../../utils/helpers';
 
 /**
  * Toggles boolean values on store.settings
@@ -124,7 +125,7 @@ class TopBar extends React.Component {
       // resetTimer,
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
-    const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
+    const isUserLogout = isEmpty(account) || account.afterLogout;
     return (
       <div className={`${styles.wrapper} top-bar`}>
         <div className={styles.group}>
