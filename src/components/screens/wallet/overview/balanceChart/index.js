@@ -36,6 +36,7 @@ const BalanceGraph = ({
         balance,
         address,
         format,
+        token,
       }));
     }
   }, [transactions]);
