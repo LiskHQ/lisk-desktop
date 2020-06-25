@@ -39,7 +39,7 @@ const BalanceInfo = ({
         <div className={styles.actionRow}>
           <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={{ initialValue }}>
             <PrimaryButton
-              className="send-to-address"
+              className={`${styles.sendButton} ${styles[activeToken]} send-to-address`}
               size="m"
             >
               {sendTitle}
