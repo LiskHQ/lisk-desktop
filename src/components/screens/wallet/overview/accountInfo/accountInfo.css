@@ -61,15 +61,17 @@
       margin: 0 15px;
       box-sizing: border-box;
 
-      & button {
-        padding: 0;
-        height: auto;
-        width: auto;
-        min-width: 0;
-        background: transparent;
-        line-height: 100%;
-        min-height: 0;
-        box-sizing: border-box;
+      & > div {
+        & > button {
+          padding: 0;
+          height: auto;
+          width: auto;
+          min-width: 0;
+          background: transparent;
+          line-height: 100%;
+          min-height: 0;
+          box-sizing: border-box;
+        }
       }
     }
 
