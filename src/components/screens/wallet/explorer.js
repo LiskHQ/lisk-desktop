@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
@@ -37,6 +37,11 @@ const Wallet = ({
 }) => {
   const activeToken = useSelector(state => state.settings.token.active);
   const { discreetMode } = useSelector(state => state.settings);
+
+  useEffect(() => {
+    account.loadData();
+    transactions.loadData();
+  }, [match.url]);
 
   return (
     <section>
@@ -82,7 +87,6 @@ const Wallet = ({
 const apis = {
   account: {
     apiUtil: (liskAPIClient, params) => getAccount({ liskAPIClient, ...params }),
-    autoload: true,
     defaultData: {},
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
@@ -93,7 +97,6 @@ const apis = {
   },
   transactions: {
     apiUtil: (apiClient, params) => getTransactions(transformParams(params)),
-    autoload: true,
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
       address: props.match.params.address,
