@@ -120,6 +120,10 @@ import signOut from '../../../assets/images/icons/signOut.svg';
 import plus from '../../../assets/images/icons/plus.svg';
 import plusActive from '../../../assets/images/icons/plusActive.svg';
 import remove from '../../../assets/images/icons/remove.svg';
+import totalBlocks from '../../../assets/images/icons/total-blocks.svg';
+import blocksForged from '../../../assets/images/icons/blocks-forged.svg';
+import distribution from '../../../assets/images/icons/distribution.svg';
+import clock from '../../../assets/images/icons/clock.svg';
 
 export const icons = {
   academy,
@@ -241,6 +245,10 @@ export const icons = {
   plus,
   plusActive,
   remove,
+  totalBlocks,
+  blocksForged,
+  distribution,
+  clock,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
