@@ -10,7 +10,6 @@ import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
 import DialogLink from '../../../toolbox/dialog/link';
 import { settingsUpdated } from '../../../../actions/settings';
-import NetworkSelector from './networkSelector';
 import { PrimaryButton } from '../../../toolbox/buttons/button';
 import { isEmpty } from '../../../../utils/helpers';
 
@@ -121,7 +120,6 @@ class TopBar extends React.Component {
       location,
       network,
       token,
-      settings,
       // resetTimer,
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
@@ -163,19 +161,11 @@ class TopBar extends React.Component {
               />
             ) : null
           }
-          {
-            settings.showNetwork && location.pathname === '/'
-              ? (
-                <NetworkSelector />
-              )
-              : (
-                <Network
-                  token={token.active}
-                  network={network}
-                  t={t}
-                />
-              )
-          }
+          <Network
+            token={token.active}
+            network={network}
+            t={t}
+          />
           {
             isUserLogout && location.pathname !== '/' ? (
               <Link to="/" className={styles.signIn}>
