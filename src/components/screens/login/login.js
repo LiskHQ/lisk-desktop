@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import i18next from 'i18next';
-
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
@@ -16,6 +15,7 @@ import PassphraseInput from '../../toolbox/passphraseInput';
 import Piwik from '../../../utils/piwik';
 import DiscreetModeToggle from '../../shared/discreetModeToggle';
 import Icon from '../../toolbox/icon/index';
+import NetworkSelector from '../../shared/navigationBars/topBar/networkSelector';
 import styles from './login.css';
 
 class Login extends React.Component {
@@ -135,22 +135,27 @@ class Login extends React.Component {
                 <Link className={styles.link} to={routes.register.path}>
                   {t('Create it now')}
                 </Link>
+                {` ${t('or')} `}
+                <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
+                  {t('Explore as a guest')}
+                </Link>
               </p>
             </div>
 
             <form onSubmit={this.onFormSubmit}>
-              <div className={`${styles.inputsHolder}`}>
+              <fieldset className={`${styles.inputsHolder}`}>
+                <label>{t('Network')}</label>
+                <NetworkSelector />
+              </fieldset>
+              <fieldset className={`${styles.inputsHolder}`}>
                 <label className={styles.inputLabel}>{t('Passphrase')}</label>
-                <p className={styles.inputText}>{t('Please type in or paste your passphrase below.')}</p>
-
                 <PassphraseInput
                   inputsLength={12}
                   maxInputsLength={24}
                   onFill={this.checkPassphrase}
                 />
-
                 <DiscreetModeToggle className={styles.discreetMode} />
-              </div>
+              </fieldset>
               <div className={`${styles.buttonsHolder}`}>
                 <PrimaryButton
                   className={`${styles.button} login-button`}
@@ -177,13 +182,6 @@ class Login extends React.Component {
 
               </div>
             </form>
-
-            <p className={styles.exploreAsGuest}>
-              {t('Don’t feel like signing in now?')}
-              <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
-                {t('Explore as a guest')}
-              </Link>
-            </p>
           </div>
         </div>
       </React.Fragment>

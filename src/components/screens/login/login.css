@@ -100,50 +100,13 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  margin: 30px auto 40px;
+  margin: 30px auto 30px;
   max-width: 665px;
   width: 100%;
+  border: none;
 
-  & .customNode {
-    max-height: 0;
-    overflow: hidden;
-    transform: scale(0);
-    transform-origin: top center;
-    transition:
-      max-height var(--animation-speed-fast) linear,
-      transform var(--animation-speed-fast) linear;
-    width: 100%;
-
-    &.showInput {
-      max-height: 150px;
-      overflow: initial;
-      transform: scale(1);
-    }
-  }
-
-  & .inputLabel {
-    @mixin contentLargest bold;
-
-    color: var(--color-maastricht-blue);
-  }
-
-  & .inputText {
-    @mixin contentLargest;
-
-    color: var(--color-slate-gray);
-    margin: 8px 0 16px;
-  }
-
-  & .addressInput {
-    margin-bottom: 20px;
-    width: 100%;
-
-    & input {
-      @mixin contentLargest;
-
-      margin: 10px 0;
-      padding: 15px 20px;
-    }
+  & > label {
+    margin-bottom: 7px;
   }
 }
 
@@ -164,18 +127,4 @@
 
 .discreetMode {
   margin-top: 16px;
-}
-
-.exploreAsGuest {
-  @mixin contentLargest;
-
-  position: absolute;
-  bottom: 0;
-  color: var(--color-slate-gray);
-  margin: 0 0 32px;
-  letter-spacing: 0px;
-
-  & > a {
-    margin: 0 0 0 5px;
-  }
 }
