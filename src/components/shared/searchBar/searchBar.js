@@ -8,6 +8,8 @@ import regex from '../../../utils/regex';
 import keyCodes from '../../../constants/keyCodes';
 import styles from './searchBar.css';
 import Blocks from './blocks';
+import DialogHolder from '../../toolbox/dialog/holder';
+import TransactionDetails from '../../screens/transactionDetails';
 
 class SearchBar extends React.Component {
   constructor() {
@@ -57,9 +59,12 @@ class SearchBar extends React.Component {
   }
 
   onSelectedRow(type, value) {
-    this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}/${value}`);
+    if (type === 'transactions') {
+      DialogHolder.showDialog(<TransactionDetails transactionId={value} />);
+    } else {
+      this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}/${value}`);
+    }
     this.clearSearch();
-    this.props.onSearchClick();
   }
 
   onKeyPressDownOrUp(action, totalRows) {
