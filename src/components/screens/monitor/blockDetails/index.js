@@ -17,14 +17,12 @@ const ComposedBlockDetails = compose(
   withData({
     blockDetails: {
       apiUtil: liskService.getBlockDetails,
-      autoload: true,
       getApiParams: (state, ownProps) => ({ id: ownProps.id }),
       transformResponse: response => (response.data && response.data[0]),
     },
     blockTransactions: {
       apiUtil: liskService.getBlockTransactions,
       defaultData: [],
-      autoload: true,
       getApiParams: (state, ownProps) => ({ id: ownProps.id }),
       transformResponse: (response, oldData, urlSearchParams) => (
         urlSearchParams.offset
