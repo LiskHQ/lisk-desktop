@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 30px var(--horizontal-padding-s) 0;
+  padding: 30px 0 var(--horizontal-padding-s);
   background: var(--color-white);
   border-radius: 0 0 var(--border-radius-box) var(--border-radius-box);
   border-top: solid 1px var(--color-mystic);
@@ -85,6 +85,7 @@
     &.active,
     &:hover {
       background-color: var(--color-ultramarine-blue);
+      color: var(--color-strong-white);
 
       & .transactionId {
         color: var(--color-white);

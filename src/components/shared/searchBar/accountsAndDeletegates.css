@@ -113,6 +113,7 @@
     &:hover {
       background-color: var(--color-ultramarine-blue);
 
+      & .accountTitle,
       & .highlight,
       & .accountSubtitle {
         color: var(--color-white);
