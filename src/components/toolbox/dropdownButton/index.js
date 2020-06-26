@@ -24,12 +24,13 @@ class DropdownButton extends React.Component {
   render() {
     const { shownDropdown } = this.state;
     const {
-      ButtonComponent, buttonLabel, buttonClassName, className, children, align, size,
+      ButtonComponent, buttonLabel, children, align, size,
+      wrapperClassName, buttonClassName, className,
     } = this.props;
     return (
       <React.Fragment>
         <OutsideClickHandler
-          className={styles.wrapper}
+          className={`${styles.wrapper} ${wrapperClassName}`}
           disabled={!shownDropdown}
           onOutsideClick={this.toggleDropdown}
         >
