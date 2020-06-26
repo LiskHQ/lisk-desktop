@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import { tokenMap } from '../../../../constants/tokens';
 import Box from '../../../toolbox/box';
@@ -10,13 +10,12 @@ import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import Feedback from '../../../toolbox/feedback/feedback';
 import LabeledValue from '../../../toolbox/labeledValue';
 import LiskAmount from '../../../shared/liskAmount';
-import PageLayout from '../../../toolbox/pageLayout';
 import TransactionsTable from '../../../shared/transactionsTable';
 import routes from '../../../../constants/routes';
 import styles from './blockDetails.css';
 
 const BlockDetails = ({
-  t, blockDetails, blockTransactions, isMediumViewPort,
+  t, blockDetails, blockTransactions, isMediumViewPort, match,
 }) => {
   const token = tokenMap.LSK.key;
 
@@ -76,8 +75,13 @@ const BlockDetails = ({
     ? blockTransactions.data.length < blockTransactions.meta.total
     : false;
 
+  useEffect(() => {
+    blockDetails.loadData();
+    blockTransactions.loadData();
+  }, [match.url]);
+
   return (
-    <PageLayout>
+    <div>
       <Box isLoading={blockDetails.isLoading} width="full">
         <BoxHeader>
           <h1>{t('Block details')}</h1>
@@ -124,14 +128,13 @@ const BlockDetails = ({
           ) }
         </BoxContent>
       </Box>
-
       <TransactionsTable
         title={t('Transactions')}
         transactions={blockTransactions}
         emptyState={{ message: t('There are no transactions for this block.') }}
         canLoadMore={canLoadMore}
       />
-    </PageLayout>
+    </div>
   );
 };
 
