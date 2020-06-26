@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import routes from '../../../../constants/routes';
 import NavigationButtons from './navigationButtons';
-import Piwik from '../../../../utils/piwik';
 import Network from './networkName';
-import networks from '../../../../constants/networks';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
 import DialogLink from '../../../toolbox/dialog/link';
@@ -66,30 +64,8 @@ class TopBar extends React.Component {
     super(props);
     this.searchInput = null;
 
-    this.onLogout = this.onLogout.bind(this);
-    this.handleSeachDropdownToggle = this.handleSeachDropdownToggle.bind(this);
     this.onCountdownComplete = this.onCountdownComplete.bind(this);
     this.setChildRef = this.setChildRef.bind(this);
-  }
-
-  onLogout() {
-    const {
-      logOut, history, settings, networkSet, network,
-    } = this.props;
-
-    Piwik.trackingEvent('Header', 'button', 'Open logout dialog');
-    logOut();
-    history.replace(`${routes.dashboard.path}`);
-
-    // istanbul ignore else
-    if (!settings.showNetwork && network.name !== networks.mainnet.name) {
-      networkSet(networks.mainnet);
-    }
-  }
-
-  handleSeachDropdownToggle() {
-    setTimeout(() => this.searchInput.focus(), 150);
-    this.childRef.toggleDropdown();
   }
 
   /* istanbul ignore next */
