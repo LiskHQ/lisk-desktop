@@ -80,10 +80,9 @@
   display: flex;
   height: 100% !important;
   justify-content: space-between;
-  min-width: 241px;
   padding: 0 20px;
   position: relative;
-  width: auto;
+  width: 100%;
 
   &::after {
     border: 6px solid transparent;
@@ -93,10 +92,17 @@
   }
 }
 
-.dropdown {
-  min-width: 241px !important;
-  right: auto;
-  top: calc(100% + -10px);
+.NetworkSelector {
+  width: 100%;
+
+  & button {
+    height: 40px !important;
+    background-color: var(--color-white);
+  }
+
+  & .menu {
+    width: 100%;
+  }
 }
 
 .button {

@@ -202,7 +202,8 @@ class NetworkSelector extends React.Component {
     return (
       <DropdownButton
         buttonClassName={`${validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
-        className={`${styles.dropdown} ${dark ? 'dark' : ''} network-dropdown`}
+        wrapperClassName={styles.NetworkSelector}
+        className={`${styles.menu} ${dark ? 'dark' : ''} network-dropdown`}
         buttonLabel={(<span>{networkLabel}</span>)}
         ButtonComponent={SecondaryButton}
         align="right"
