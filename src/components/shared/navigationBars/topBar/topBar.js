@@ -143,8 +143,8 @@ class TopBar extends React.Component {
             t={t}
           />
           {
-            isUserLogout && location.pathname !== '/' ? (
-              <Link to="/" className={styles.signIn}>
+            isUserLogout && location.pathname !== routes.login.path ? (
+              <Link to={routes.login.path} className={styles.signIn}>
                 <PrimaryButton size="s">Sign in</PrimaryButton>
               </Link>
             ) : null
