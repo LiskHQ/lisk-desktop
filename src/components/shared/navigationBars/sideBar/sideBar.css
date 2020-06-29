@@ -102,6 +102,7 @@
   pointer-events: none;
   cursor: default;
 
+  & .label,
   & img {
     opacity: 0.5;
   }
