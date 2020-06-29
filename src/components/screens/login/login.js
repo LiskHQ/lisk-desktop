@@ -142,7 +142,7 @@ class Login extends React.Component {
               </p>
             </div>
 
-            <form onSubmit={this.onFormSubmit}>
+            <form>
               <fieldset className={`${styles.inputsHolder}`}>
                 <label>{t('Network')}</label>
                 <NetworkSelector />
@@ -158,6 +158,7 @@ class Login extends React.Component {
               </fieldset>
               <div className={`${styles.buttonsHolder}`}>
                 <PrimaryButton
+                  onClick={this.onFormSubmit}
                   className={`${styles.button} login-button`}
                   type="submit"
                   disabled={(this.state.network === networks.customNode.name
