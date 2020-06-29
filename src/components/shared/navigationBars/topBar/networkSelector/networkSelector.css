@@ -95,13 +95,21 @@
 .NetworkSelector {
   width: 100%;
 
-  & button {
+  & > button {
+    @mixin contentLargest;
+
     height: 40px !important;
     background-color: var(--color-white);
+    color: var(--color-slate-gray);
   }
 
   & .menu {
     width: 100%;
+    text-align: left;
+
+    & span {
+      line-height: 22px;
+    }
   }
 }
 
