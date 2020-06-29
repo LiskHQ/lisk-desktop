@@ -25,7 +25,7 @@ class SecondPassphrase extends React.Component {
     const { account } = this.props;
     document.body.classList.add('contentFocused');
     if (account.secondPublicKey || account.balance < Fees.setSecondPassphrase) {
-      this.props.history.push(`${'/'}`);
+      DialogHolder.hideDialog();
     }
   }
 
