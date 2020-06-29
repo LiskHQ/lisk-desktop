@@ -36,6 +36,7 @@ export const initialState = {
     active: tokenKeys[0],
     list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
   },
+  sideBarExpanded: true,
 };
 
 /**
