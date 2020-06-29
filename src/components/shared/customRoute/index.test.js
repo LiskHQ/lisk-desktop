@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
 import CustomRoute from './index';
+import routes from '../../../constants/routes';
 
 const Public = () => <h1>Public</h1>;
 const Private = () => <h1>Private</h1>;
@@ -27,7 +28,7 @@ describe('CustomRoute', () => {
     mount(
       <MemoryRouter initialEntries={['/private/test']}>
         <div>
-          <Route path="/" component={Public} />
+          <Route path={routes.login.path} component={Public} />
           <CustomRoute
             {...props}
             isAuthenticated={isAuthenticated}
