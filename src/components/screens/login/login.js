@@ -135,10 +135,6 @@ class Login extends React.Component {
                 <Link className={styles.link} to={routes.register.path}>
                   {t('Create it now')}
                 </Link>
-                {` ${t('or')} `}
-                <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
-                  {t('Explore as a guest')}
-                </Link>
               </p>
             </div>
 
