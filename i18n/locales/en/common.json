@@ -163,7 +163,6 @@
   "Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.": "Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.",
   "Every transaction needs to be confirmed and forged into Lisk blockchain network. \n                    Such operations require hardware resources and because of that there is a small fee for processing those.": "Every transaction needs to be confirmed and forged into Lisk blockchain network. \n                    Such operations require hardware resources and because of that there is a small fee for processing those.",
   "Expand your knowledge": "Expand your knowledge",
-  "Explore as a guest": "Explore as a guest",
   "Failed to connect to node": "Failed to connect to node",
   "Failed to connect: Node {{address}} is not active": "Failed to connect: Node {{address}} is not active",
   "Failed to load block details.": "Failed to load block details.",
