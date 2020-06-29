@@ -3,9 +3,7 @@
 // of the whole app. If anything goes wrong here, e2e tests will fail,
 // so it's covered by e2e tests.
 import React, { useEffect, useState } from 'react';
-import {
-  Route, Switch, withRouter, useLocation,
-} from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,7 +27,7 @@ const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
-  const location = useLocation();
+  // const location = useLocation();
 
   useEffect(() => {
     setLoaded(true);
@@ -38,13 +36,12 @@ const App = ({ history }) => {
   }, []);
 
   const routesList = Object.values(routes);
-
-  const routeObj = routesList.find(r => r.path === location.pathname) || {};
+  const routeObj = routesList.find(r => r.path === history.location.pathname) || {};
 
   return (
     <ThemeContext.Provider value={theme}>
       <OfflineWrapper>
-        <DialogHolder location={location} />
+        <DialogHolder location={history.location} />
         <ToastContainer
           position="bottom-right"
           hideProgressBar
@@ -57,7 +54,7 @@ const App = ({ history }) => {
         />
         <NavigationBars
           isSignInFlow={routeObj.isSigninFlow}
-          location={location}
+          location={history.location}
           history={history}
         />
         <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
@@ -91,7 +88,6 @@ const App = ({ history }) => {
     </ThemeContext.Provider>
   );
 };
-
 
 export default withRouter(App);
 export const DevApp = hot(withRouter(App));
