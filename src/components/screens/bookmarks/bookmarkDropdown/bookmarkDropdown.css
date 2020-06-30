@@ -5,13 +5,6 @@
   padding: 10px 20px;
   width: 100%;
 
-  & .fieldGroup {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 12px;
-  }
-
   & .fieldLabel {
     @mixin contentNormal bold;
 
@@ -19,15 +12,24 @@
     margin-bottom: 8px;
   }
 
+  & h6 {
+    margin: 0;
+  }
+
+  & label {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+  }
+
   & .input {
     margin-bottom: 2px;
   }
 
   & .fieldInput {
-    align-items: center;
-    display: flex;
     position: relative;
     width: 100%;
+    padding: 10px 0;
   }
 
   & button {
