@@ -5,7 +5,6 @@ import {
 } from '../../actions/account';
 import {
   emptyTransactionsData,
-  getTransactions,
   updateTransactions,
 } from '../../actions/transactions';
 import { fromRawLsk } from '../../utils/lsk';
@@ -56,14 +55,14 @@ const votePlaced = (store, action) => {
   }
 };
 
-const filterIncommingTransactions = (transactions, account) => transactions.filter(transaction => (
+const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
   transaction
   && transaction.recipientId === account.address
   && transaction.type === transactionTypes().send.code
 ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
-  filterIncommingTransactions(transactions, account).forEach((transaction) => {
+  filterIncomingTransactions(transactions, account).forEach((transaction) => {
     const amount = fromRawLsk(transaction.amount);
     const message = transaction.asset && transaction.asset.data
       ? i18n.t('with message {{message}}', { message: transaction.asset.data })
