@@ -76,11 +76,13 @@
       }
     }
 
-    & .copyIcon,
-    & .qrCode,
-    & .bookmark,
-    & .verify {
-      filter: brightness(100);
+    & img {
+      &.copyIcon,
+      &.qrCode,
+      &.bookmark,
+      &.verify {
+        filter: brightness(100) !important;
+      }
     }
 
     & .copyIcon {
