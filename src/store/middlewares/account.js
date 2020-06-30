@@ -20,7 +20,6 @@ import { getFromStorage } from '../../utils/localJSONStorage';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
-import txFilters from '../../constants/transactionFilters';
 import { txAdapter } from '../../utils/api/lsk/adapters';
 
 const updateAccountData = (store) => {
@@ -31,21 +30,6 @@ const updateAccountData = (store) => {
     transactions,
     account,
   }));
-
-  /**
-   * NOTE: dashboard transactionsList are not loaded when rendering the component,
-   *  as this component just reads transactions from state.
-   *  When autologin in, we need to explicitly request the transactions for that account.
-   *
-   *  Ignoring coverage because autologin is a development feature not accessible by end users
-   */
-  /* istanbul ignore if */
-  if (shouldAutoLogIn(getAutoLogInData())) {
-    store.dispatch(getTransactions({
-      address: account.address,
-      filter: txFilters.all,
-    }));
-  }
 };
 
 const getRecentTransactionOfType = (transactionsList, type) => (
