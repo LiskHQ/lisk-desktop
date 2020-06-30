@@ -12,7 +12,7 @@ import DialogLink from '../../../toolbox/dialog/link';
 
 const Inner = ({ data, pathname, modal }) => {
   let status = '';
-  if (pathname && pathname.startsWith(data.path)) status = 'Active';
+  if (pathname && pathname === data.path) status = 'Active';
   else if (modal && modal === '') status = 'Active';
   return (
     <span className={styles.holder}>
@@ -40,6 +40,7 @@ const MenuLink = ({ data, isUserLogout, pathname }) => {
       className={className}
       id={data.id}
       activeClassName={styles.selected}
+      exact={routes[data.id].exact}
     >
       <Inner data={data} pathname={pathname} />
     </NavLink>
