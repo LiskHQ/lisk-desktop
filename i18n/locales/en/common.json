@@ -146,6 +146,7 @@
   "Each LSK is worth one vote.": "Each LSK is worth one vote.",
   "Each time you add or remove a vote it is counted as an action. There's {{fee}} LSK fee per every 33 actions.": "Each time you add or remove a vote it is counted as an action. There's {{fee}} LSK fee per every 33 actions.",
   "Edit": "Edit",
+  "Edit bookmark": "Edit bookmark",
   "Edit transaction": "Edit transaction",
   "Edit votes": "Edit votes",
   "Edit voting": "Edit voting",
