@@ -33,12 +33,6 @@ export default {
     exact: false,
     forbiddenTokens: [],
   },
-  dashboard: {
-    path: '/dashboard',
-    component: Dashboard,
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   voting: {
     path: '/delegates',
     component: Voting,
@@ -74,7 +68,7 @@ export default {
     forbiddenTokens: [],
   },
   login: {
-    path: '/',
+    path: '/login',
     component: Login,
     isPrivate: false,
     isSigninFlow: true,
@@ -127,6 +121,13 @@ export default {
     exact: true,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
+  },
+  dashboard: {
+    path: '/',
+    component: Dashboard,
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
   },
 };
 
