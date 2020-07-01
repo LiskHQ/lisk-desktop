@@ -13,6 +13,7 @@ import {
   DateAndConfirmation, FeeAndAmount, TransactionId,
   Sender, Recipient, Message, Illustration,
 } from './dataRows';
+import { isEmpty } from '../../../utils/helpers';
 import styles from './transactionDetails.css';
 
 class Transactions extends React.Component {
@@ -35,6 +36,8 @@ class Transactions extends React.Component {
     } = this.props;
     const { error, isLoading, data } = transaction;
     const addresses = data && [data.recipientId, data.senderId];
+
+    if (isEmpty(transaction.data)) return <div />;
 
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
