@@ -63,6 +63,12 @@ export const accountLoading = () => ({
   type: actionTypes.accountLoading,
 });
 
+/**
+ * Updated Date on which passphrase was used last.
+ * We determine the inactivity duration to sign out automatically
+ *
+ * @param {Date} data - A native Javascript date object.
+ */
 export const passphraseUsed = data => ({
   type: actionTypes.passphraseUsed,
   data,
@@ -105,7 +111,7 @@ export const secondPassphraseRegistered = ({
         message: (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.'),
       });
     });
-    dispatch(passphraseUsed(passphrase));
+    dispatch(passphraseUsed(new Date()));
   };
 
 /**
