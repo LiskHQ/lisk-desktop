@@ -5,12 +5,6 @@ import styles from './discreetMode.css';
 import { getTokenFromAddress } from '../../../utils/api/transactions';
 
 class DiscreetMode extends Component {
-  handleBlurOnTransactionDetailsPage() {
-    const { account, addresses } = this.props;
-    const token = getTokenFromAddress(addresses[0]);
-    return account.info && addresses.some(address => address === account.info[token].address);
-  }
-
   handleBlurOnOtherWalletPage() {
     const { account, location } = this.props;
     const address = location.pathname.split('/').pop();
@@ -20,15 +14,11 @@ class DiscreetMode extends Component {
 
   shouldEnableDiscreetMode() {
     const {
-      addresses, location, isDiscreetMode, shouldEvaluateForOtherAccounts,
+      location, isDiscreetMode, shouldEvaluateForOtherAccounts,
     } = this.props;
     if (!isDiscreetMode) return false;
 
     if (shouldEvaluateForOtherAccounts) {
-      if (addresses.length && location.pathname.includes(routes.transactions.path)) {
-        return this.handleBlurOnTransactionDetailsPage();
-      }
-
       if (location.pathname.includes(routes.accounts.path)) {
         return this.handleBlurOnOtherWalletPage();
       }
