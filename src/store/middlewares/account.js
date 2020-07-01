@@ -123,7 +123,7 @@ const getNetworkFromLocalStorage = () => {
 };
 
 // eslint-disable-next-line max-statements
-const checkNetworkToConnect = (storeSettings) => {
+const checkNetworkToConnect = (showNetwork) => {
   const autologinData = getAutoLogInData();
   let loginNetwork = findMatchingLoginNetwork();
 
@@ -151,7 +151,7 @@ const checkNetworkToConnect = (storeSettings) => {
 
   // istanbul ignore next
   if (!loginNetwork && !autologinData.liskCoreUrl) {
-    if (storeSettings.showNetwork) {
+    if (showNetwork) {
       const currentNetwork = getNetworkFromLocalStorage();
       loginNetwork = {
         name: currentNetwork.name,
@@ -174,22 +174,25 @@ const checkNetworkToConnect = (storeSettings) => {
 
 // eslint-disable-next-line max-statements
 const autoLogInIfNecessary = async (store) => {
-  const actualSettings = store.getState().settings;
-  const autologinData = getAutoLogInData();
-
-  const loginNetwork = checkNetworkToConnect(actualSettings);
+  const {
+    showNetwork, statistics, statisticsRequest, statisticsFollowingDay,
+  } = store.getState().settings;
+  const loginNetwork = checkNetworkToConnect(showNetwork);
 
   store.dispatch(await networkSet(loginNetwork));
   store.dispatch(networkStatusUpdated({ online: true }));
 
+  const autologinData = getAutoLogInData();
   if (shouldAutoLogIn(autologinData)) {
     setTimeout(() => {
       store.dispatch(login({ passphrase: autologinData[settings.keys.loginKey] }));
     }, 500);
   }
 
-  if (!actualSettings.statistics) {
-    analytics.checkIfAnalyticsShouldBeDisplayed({ settings: actualSettings });
+  if (!statistics) {
+    analytics.checkIfAnalyticsShouldBeDisplayed({
+      statisticsRequest, statisticsFollowingDay, statistics,
+    });
   }
 };
 

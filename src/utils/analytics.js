@@ -19,17 +19,19 @@ export default {
     }
   },
 
-  checkIfAnalyticsShouldBeDisplayed({ settings, showAnalytics = false }) {
+  checkIfAnalyticsShouldBeDisplayed({
+    statistics, statisticsRequest, statisticsFollowingDay, showAnalytics = false,
+  }) {
     // showAnalytics - Trigger ONLY the first time when user is in Wallet page after SignIn
     // or show since the beginning after the user saw the banner for first time but
     // didn't took action
     if (showAnalytics
-      || (settings.statisticsRequest && settings.statisticsFollowingDay === undefined)
+      || (statisticsRequest && statisticsFollowingDay === undefined)
     ) {
       this.init();
     } else { // Will only trigger if user decline and after some days will show up again
-      const showRemain = moment().diff(settings.statisticsFollowingDay, 'days') >= 7;
-      if (!settings.statistics && showRemain) this.init();
+      const showRemain = moment().diff(statisticsFollowingDay, 'days') >= 7;
+      if (!statistics && showRemain) this.init();
     }
   },
 };

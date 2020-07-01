@@ -70,7 +70,7 @@ export const networkSet = data => async (dispatch) => {
     };
     dispatch(generateAction(data, networkConfig));
     dispatch({
-      data: getServerUrl(networkConfig),
+      data: getServerUrl(nodeUrl, nethash),
       type: actionTypes.serviceUrlSet,
     });
   }).catch((error) => {
