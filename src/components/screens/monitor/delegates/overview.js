@@ -7,6 +7,7 @@ import BoxEmptyState from '../../../toolbox/box/emptyState';
 import { DoughnutChart, LineChart } from '../../../toolbox/charts';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
+import { fromRawLsk } from '../../../../utils/lsk';
 
 const Overview = ({
   chartActiveAndStandby,
@@ -94,7 +95,7 @@ const Overview = ({
               />
               <NumericInfo
                 title="Total LSK"
-                value={supply}
+                value={fromRawLsk(supply)}
                 icon="distribution"
               />
             </div>
