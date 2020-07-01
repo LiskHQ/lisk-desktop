@@ -55,7 +55,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 0 var(--horizontal-padding-l);
+    padding: 0;
 
     & > .row {
       width: 100%;
@@ -64,7 +64,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0;
+      padding: 10px var(--horizontal-padding-l);
       cursor: pointer;
       text-decoration: none;
 
@@ -109,12 +109,17 @@
         & > button {
           min-width: initial;
           padding: 0 10px;
+          color: var(--color-white);
         }
       }
 
-      &:hover .buttonContainer,
-      &.editting .buttonContainer {
-        opacity: 1;
+      &:hover,
+      &.editting {
+        background-color: var(--color-rows-hover);
+
+        & .buttonContainer {
+          opacity: 1;
+        }
       }
     }
   }

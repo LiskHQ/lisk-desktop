@@ -84,16 +84,7 @@
 
     &.active,
     &:hover {
-      background-color: var(--color-ultramarine-blue);
-      color: var(--color-strong-white);
-
-      & .transactionId {
-        color: var(--color-white);
-      }
-
-      & .transactionMessage {
-        color: var(--color-strong-white);
-      }
+      background-color: var(--color-rows-hover);
     }
   }
 }

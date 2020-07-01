@@ -111,18 +111,7 @@
 
     &.active,
     &:hover {
-      background-color: var(--color-ultramarine-blue);
-
-      & .accountTitle,
-      & .highlight,
-      & .accountSubtitle {
-        color: var(--color-white);
-      }
-
-      & .tag {
-        background: rgba(238, 240, 247, 0.15);
-        color: var(--color-strong-white);
-      }
+      background-color: var(--color-rows-hover);
     }
   }
 }
