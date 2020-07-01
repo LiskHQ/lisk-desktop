@@ -37,6 +37,7 @@ export const initialState = {
     list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
   },
   sideBarExpanded: true,
+  currency: 'USD',
 };
 
 /**
