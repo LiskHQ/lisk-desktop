@@ -58,29 +58,21 @@ class Login extends React.Component {
     i18next.on('languageChanged', getNetworksList);
   }
 
-  componentDidUpdate(prevProps) {
-    const params = parseSearchParams(prevProps.history.location.search);
-    const showNetworkParam = params.showNetwork
-      || params.shownetwork
-      || (this.props.settings && this.props.settings.showNetwork);
-
+  componentDidUpdate() {
     if (this.props.account
-      && this.props.account.address && (showNetworkParam !== 'true' || this.secondIteration)
-      && !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.network)) {
+      && this.props.account.address) {
       this.redirectToReferrer();
     }
   }
 
   getReferrerRoute() {
     const search = parseSearchParams(this.props.history.location.search);
-    const dashboardRoute = `${routes.dashboard.path}`;
-    const referrerRoute = search.referrer ? search.referrer : dashboardRoute;
+    const referrerRoute = search.referrer ? search.referrer : routes.dashboard.path;
     return referrerRoute;
   }
 
   redirectToReferrer() {
-    const tem = this.getReferrerRoute();
-    this.props.history.replace(tem);
+    this.props.history.replace(this.getReferrerRoute());
   }
 
   alreadyLoggedWithThisAddress(address, prevNetwork) {
