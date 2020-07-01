@@ -22,7 +22,7 @@
 .container {
   @mixin customScrollBar;
 
-  min-height: calc(100vh - var(--vertical-spaces));
+  min-height: calc(100vh - var(--vertical-spaces)); /* stylelint-disable-line unit-whitelist */
 
   & > div {
     height: 100%;
