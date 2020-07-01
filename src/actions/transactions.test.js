@@ -167,7 +167,7 @@ describe('actions: transactions', () => {
 
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
-        data: data.passphrase, type: actionTypes.passphraseUsed,
+        data: new Date(), type: actionTypes.passphraseUsed,
       });
     });
 

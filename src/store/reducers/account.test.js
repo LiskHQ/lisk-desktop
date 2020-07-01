@@ -60,6 +60,7 @@ describe('Reducer: account(state, action)', () => {
     const clock = useFakeTimers(new Date('2017-12-29').getTime());
     const action = {
       type: actionTypes.passphraseUsed,
+      data: new Date(),
     };
     const changedAccount = account(state, action);
     expect(changedAccount).toEqual({

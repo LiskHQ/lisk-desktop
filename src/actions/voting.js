@@ -79,7 +79,7 @@ export const votePlaced = ({
       dispatch({ type: actionTypes.pendingVotesAdded });
       callResult.map(transaction =>
         dispatch(addNewPendingTransaction(txAdapter(transaction))));
-      dispatch(passphraseUsed(account.passphrase));
+      dispatch(passphraseUsed(new Date()));
       callback({ success: true });
     }
   };

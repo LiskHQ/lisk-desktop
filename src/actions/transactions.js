@@ -214,7 +214,7 @@ export const sent = data => async (dispatch, getState) => {
       type: transactionTypes().send.code,
     }));
 
-    dispatch(passphraseUsed(txData.passphrase));
+    dispatch(passphraseUsed(new Date()));
   } catch (error) {
     loadingFinished('sent');
     handleSentError({
@@ -305,5 +305,5 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
       dispatch(addNewPendingTransaction(transaction));
     }
 
-    return dispatch(passphraseUsed(transaction.passphrase));
+    return dispatch(passphraseUsed(new Date()));
   };
