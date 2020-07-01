@@ -1,5 +1,5 @@
 const urls = {
-  dashboard: '/dashboard',
+  dashboard: '/',
   wallet: '/wallet',
   send: '/wallet/send',
   request: '/wallet/request',
@@ -13,7 +13,7 @@ const urls = {
   delegates: '/delegates',
   delegatesVote: '/delegates/vote',
   signMessage: '/sign-message',
-  login: '/',
+  login: '/login',
 };
 
 export default urls;

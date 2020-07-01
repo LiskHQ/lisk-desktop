@@ -67,7 +67,7 @@ Given(/^I am on (.*?) page$/, function (page) {
       cy.wait('@accountBTC');
       break;
     case 'login':
-      cy.visit('/');
+      cy.visit('/login');
       break;
     default:
       cy.visit(urls[page]);
