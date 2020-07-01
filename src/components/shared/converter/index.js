@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { pricesRetrieved } from '../../../actions/service';
-import { settingsUpdated } from '../../../actions/settings';
 import Converter from './converter';
 import settings from '../../../constants/settings';
 
@@ -17,7 +16,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  settingsUpdated,
   pricesRetrieved,
 };
 
