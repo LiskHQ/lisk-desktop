@@ -8,6 +8,7 @@ import DiscreetMode from '../../../../shared/discreetMode';
 import Converter from '../../../../shared/converter';
 import DialogLink from '../../../../toolbox/dialog/link';
 import styles from './balanceInfo.css';
+import { fromRawLsk } from '../../../../../utils/lsk';
 
 const BalanceInfo = ({
   t, activeToken, balance, isWalletRoute, address,
@@ -31,7 +32,7 @@ const BalanceInfo = ({
             </div>
             <Converter
               className={styles.fiatValue}
-              value={balance}
+              value={fromRawLsk(balance)}
               error=""
             />
           </DiscreetMode>
