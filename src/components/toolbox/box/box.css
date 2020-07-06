@@ -26,7 +26,7 @@
 
   &.withHeader {
     & .loadingOverlay {
-      top: var(--header-height);
+      top: calc(var(--header-height) + 25px);
     }
   }
 
