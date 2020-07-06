@@ -1,92 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './navigationButtons.css';
 import Icon from '../../../toolbox/icon';
+import routes from '../../../../constants/routes';
 
-class NavigationButtons extends React.Component {
-  constructor(props) {
-    super(props);
+const NavigationButtons = ({ history }) => {
+  const [pageIndex, setPageIndex] = useState(history.length);
+  const [refIndex, setRefIndex] = useState(history.length);
 
-    this.state = {
-      firstPageIndex: 0,
-      userLogout: false,
-      counter: 0,
-      mounted: false,
-    };
+  const resetNavigation = () => {
+    setPageIndex(history.length);
+    setRefIndex(history.length);
+  };
 
-    this.onGoBack = this.onGoBack.bind(this);
-    this.onGoForward = this.onGoForward.bind(this);
-    this.resetNavigationValues = this.resetNavigationValues.bind(this);
-  }
+  const goBack = () => {
+    history.goBack();
+  };
 
-  componentDidMount() {
-    this.setState({
-      firstPageIndex: this.props.history.length,
-      counter: this.props.history.length,
-      mounted: true,
-    });
-  }
+  const goForward = () => {
+    history.goForward();
+  };
 
-  resetNavigationValues() {
-    this.setState({
-      firstPageIndex: this.props.history.length,
-      counter: this.props.history.length,
-      userLogout: true,
-    });
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (!!nextProps.account.afterLogout !== nextState.userLogout) {
-      this.resetNavigationValues();
-      return false;
+  useEffect(() => {
+    if (history.action === 'PUSH') {
+      setPageIndex(pageIndex + 1);
+    } else if (history.action === 'POP') {
+      setPageIndex(pageIndex - 1);
     }
 
-    if (this.props.history.action === 'PUSH' && this.state.mounted) {
-      this.props.history.action = '';
-      this.setState({
-        counter: this.state.counter + 1,
-      });
-      return false;
+    if (history.location.path === routes.login.path) {
+      resetNavigation();
     }
+  }, [history.location]);
+  console.log(history);
 
-    return true;
-  }
-
-  onGoBack(e) {
-    e.preventDefault();
-    this.setState(({ counter }) => ({ counter: counter - 1 }));
-    this.props.history.goBack();
-  }
-
-  onGoForward(e) {
-    e.preventDefault();
-    this.setState(({ counter }) => ({ counter: counter + 1 }));
-    this.props.history.goForward();
-  }
-
-  render() {
-    const { counter, firstPageIndex } = this.state;
-    const isBackActive = counter > firstPageIndex;
-    const isForwardActive = counter < this.props.history.length;
-
-    return (
-      <div className={`${styles.wrapper} navigation-buttons`}>
-        <button
-          className="go-back"
-          disabled={!isBackActive}
-          onClick={this.onGoBack}
-        >
-          <Icon name="arrowLeftActive" />
-        </button>
-        <button
-          className="go-forward"
-          disabled={!isForwardActive}
-          onClick={this.onGoForward}
-        >
-          <Icon name="arrowRightActive" />
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={`${styles.wrapper} navigation-buttons`}>
+      <button
+        className="go-back"
+        disabled={pageIndex < refIndex}
+        onClick={goBack}
+      >
+        <Icon name="arrowLeftActive" />
+      </button>
+      <button
+        className="go-forward"
+        disabled={pageIndex >= history.length}
+        onClick={goForward}
+      >
+        <Icon name="arrowRightActive" />
+      </button>
+    </div>
+  );
+};
 
 export default NavigationButtons;
