@@ -19,7 +19,7 @@
 }
 
 .title {
-  @mixin contentLargest semi-bold;
+  @mixin contentLargest normal;
 
   width: 100%;
   margin: 0;
@@ -51,8 +51,9 @@
 .actionRow {
   display: flex;
   flex-flow: row nowrap;
-  padding: 26px var(--horizontal-padding-l) 0;
+  padding: 60px var(--horizontal-padding-l) 0;
   justify-content: center;
+  font-weight: normal;
 
   & .button {
     flex-grow: 1;

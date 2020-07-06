@@ -14,7 +14,7 @@
   }
 
   & .title {
-    @mixin contentLargest semi-bold;
+    @mixin contentLargest normal;
 
     color: var(--color-strong-mystic);
     margin: 0 0 10px;
@@ -34,7 +34,7 @@
       word-wrap: break-word;
 
       & .primary {
-        @mixin headingNormalIntermediate semi-bold;
+        @mixin headingNormalIntermediate normal;
 
         display: block;
       }
