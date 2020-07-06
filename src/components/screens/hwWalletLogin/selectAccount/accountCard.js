@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import AccountVisual from '../../../toolbox/accountVisual';
 import LiskAmount from '../../../shared/liskAmount';
 import { Input } from '../../../toolbox/inputs';

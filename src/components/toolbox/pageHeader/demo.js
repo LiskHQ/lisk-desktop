@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { PrimaryButton } from '../buttons/button';
+import { PrimaryButton } from '../buttons';
 import DemoRenderer from '../demoRenderer';
 import PageHeader from '.';
 

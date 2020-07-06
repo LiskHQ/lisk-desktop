@@ -1,6 +1,6 @@
 import React from 'react';
 import Illustration from '../../../toolbox/illustration';
-import { PrimaryButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton } from '../../../toolbox/buttons';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import Icon from '../../../toolbox/icon';
 import styles from './bookmarksList.css';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SecondaryButton } from '../../../toolbox/buttons/button';
+import { SecondaryButton } from '../../../toolbox/buttons';
 import { getIndexOfBookmark } from '../../../../utils/bookmarks';
 import { getTokenFromAddress } from '../../../../utils/api/transactions';
 import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';

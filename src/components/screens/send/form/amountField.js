@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { Input } from '../../../toolbox/inputs';
-import { TertiaryButton } from '../../../toolbox/buttons/button';
+import { TertiaryButton } from '../../../toolbox/buttons';
 import {
   formatAmountBasedOnLocale,
 } from '../../../../utils/formattedNumber';

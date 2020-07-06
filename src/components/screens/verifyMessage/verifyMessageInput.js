@@ -2,7 +2,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Input } from '../../toolbox/inputs';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';

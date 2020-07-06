@@ -4,7 +4,7 @@ import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
-import { PrimaryButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton } from '../../../toolbox/buttons';
 import { fromRawLsk } from '../../../../utils/lsk';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import regex from '../../../../utils/regex';

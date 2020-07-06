@@ -1,7 +1,7 @@
 import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
 import BoxFooter from '../../toolbox/box/footer';
 import Illustration from '../../toolbox/illustration';
 import styles from './verifyMessage.css';

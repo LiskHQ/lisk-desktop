@@ -1,5 +1,5 @@
 import React from 'react';
-import { TertiaryButton } from '../../toolbox/buttons/button';
+import { TertiaryButton } from '../../toolbox/buttons';
 import { checkIfInsideLiskApp } from '../../../utils/hwManager';
 import Illustration from '../../toolbox/illustration';
 

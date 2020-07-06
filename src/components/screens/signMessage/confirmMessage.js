@@ -7,7 +7,7 @@ import BoxContent from '../../toolbox/box/content';
 import BoxFooter from '../../toolbox/box/footer';
 import BoxHeader from '../../toolbox/box/header';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
-import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons/button';
+import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons';
 
 class ConfirmMessage extends React.Component {
   constructor(props) {

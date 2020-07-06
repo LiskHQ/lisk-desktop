@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SecondaryButton } from '../buttons/button';
+import { SecondaryButton } from '../buttons';
 import styles from './flashMessage.css';
 
 const Button = ({

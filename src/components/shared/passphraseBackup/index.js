@@ -1,6 +1,6 @@
 import QRCode from 'qrcode.react';
 import React from 'react';
-import { SecondaryButton } from '../../toolbox/buttons/button';
+import { SecondaryButton } from '../../toolbox/buttons';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import Icon from '../../toolbox/icon';
 import styles from './passphraseBackup.css';

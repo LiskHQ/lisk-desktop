@@ -1,6 +1,6 @@
 import React from 'react';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
 import Tooltip from '../../toolbox/tooltip/tooltip';

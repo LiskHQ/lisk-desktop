@@ -5,7 +5,7 @@ import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { to } from 'await-to-js';
-import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
 import { Input } from '../../../../toolbox/inputs';
 import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../../../../utils/login';
 import getNetwork, { getNetworksList } from '../../../../../utils/getNetwork';

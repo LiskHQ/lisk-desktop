@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Waypoint from 'react-waypoint';
-import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons/button';
+import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import Icon from '../../toolbox/icon';
 import SignInTooltipWrapper from '../../shared/signInTooltipWrapper';

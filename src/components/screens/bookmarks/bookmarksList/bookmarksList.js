@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Input } from '../../../toolbox/inputs';
-import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import { tokenMap } from '../../../../constants/tokens';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';

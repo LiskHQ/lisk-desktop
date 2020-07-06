@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import Dialog from '../../toolbox/dialog/dialog';
 import FlashMessageHolder from '../../toolbox/flashMessage/holder';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
 import styles from './newReleaseDialog.css';
 
 class NewReleaseDialog extends React.Component {

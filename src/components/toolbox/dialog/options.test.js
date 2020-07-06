@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Options from './options';
 import DialogHolder from './holder';
-import { PrimaryButton } from '../buttons/button';
+import { PrimaryButton } from '../buttons';
 
 jest.mock('./holder');
 

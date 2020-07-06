@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimaryButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton } from '../../../toolbox/buttons';
 import AmountField from './amountField';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../../toolbox/box';
