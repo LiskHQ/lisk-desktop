@@ -93,7 +93,7 @@
   max-height: 100%;
   max-width: var(--dialog-box-width);
   opacity: 0;
-  padding: 40px;
+  padding: 0 var(--horizontal-padding-l);
   position: relative;
   transform: translateY(-50%) scale(0.9);
   visibility: hidden;
