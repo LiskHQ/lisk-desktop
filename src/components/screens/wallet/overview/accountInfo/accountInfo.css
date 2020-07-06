@@ -109,9 +109,9 @@
   & .watermarkLogo {
     opacity: 0.1;
     position: absolute;
-    top: -25px;
-    right: -30px;
-    height: 170px;
+    top: 10px;
+    right: 12px;
+    height: 114px;
     filter: brightness(100);
     z-index: 0;
   }
