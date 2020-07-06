@@ -3,7 +3,7 @@
 @keyframes show {
   from {
     opacity: 0;
-    transform: translateY(-50%) scale(0.9);
+    transform: translateY(-5%) scale(0.9);
     visibility: hidden;
   }
 
@@ -23,7 +23,7 @@
 
   to {
     opacity: 0;
-    transform: translateY(-50%) scale(0.9);
+    transform: translateY(-5%) scale(0.9);
     visibility: hidden;
   }
 }
