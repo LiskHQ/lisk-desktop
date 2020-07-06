@@ -235,13 +235,7 @@ class AccountVisual extends React.Component {
     }
 
     if (!reg.address.test(address)) {
-      return (
-        <Icon
-          name="btcIcon"
-          className={`${styles.wrapper} ${className}`}
-          style={{ height: newSize, width: newSize }}
-        />
-      );
+      return null;
     }
     const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(newSize);
 
