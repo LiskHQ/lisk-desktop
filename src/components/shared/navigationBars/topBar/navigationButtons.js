@@ -13,31 +13,30 @@ const NavigationButtons = ({ history }) => {
   };
 
   const goBack = () => {
+    setPageIndex(pageIndex - 1);
     history.goBack();
   };
 
   const goForward = () => {
+    setPageIndex(pageIndex + 1);
     history.goForward();
   };
 
   useEffect(() => {
     if (history.action === 'PUSH') {
       setPageIndex(pageIndex + 1);
-    } else if (history.action === 'POP') {
-      setPageIndex(pageIndex - 1);
     }
 
-    if (history.location.path === routes.login.path) {
+    if (history.location.pathname === routes.login.path) {
       resetNavigation();
     }
   }, [history.location]);
-  console.log(history);
 
   return (
     <div className={`${styles.wrapper} navigation-buttons`}>
       <button
         className="go-back"
-        disabled={pageIndex < refIndex}
+        disabled={pageIndex <= refIndex}
         onClick={goBack}
       >
         <Icon name="arrowLeftActive" />
