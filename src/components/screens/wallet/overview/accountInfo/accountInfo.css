@@ -44,6 +44,20 @@
 
         opacity: 0.7;
       }
+
+      & .addressTooltip {
+        font-size: 20px;
+        white-space: nowrap;
+      }
+
+      & .addressWrapper {
+        width: auto;
+        max-width: fit-content;
+      }
+
+      & .address {
+        padding: 10px;
+      }
     }
   }
 
@@ -89,14 +103,14 @@
       padding: 11px;
     }
 
-    & .qrCode, & .address {
+    & .qrCode {
       padding: 10px;
     }
 
-    & .qrCodeWrapper, & .addressWrapper {
+    & .qrCodeWrapper {
       width: auto;
     }
-
+    
     & .bookmark {
       padding: 10px;
     }
