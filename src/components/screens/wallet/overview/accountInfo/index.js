@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import QRCode from 'qrcode.react';
 import AccountVisual from '../../../../toolbox/accountVisual';
 import { PrimaryButton } from '../../../../toolbox/buttons/button';
@@ -22,8 +22,10 @@ const BookmarkIcon = ({ isBookmark }) => (
 const AccountInfo = ({
   address, t, activeToken, hwInfo, delegate, isBookmark, publicKey,
 }) => {
-  const primaryValue = delegate && delegate.username ? delegate.username : address;
-  const secondaryValue = delegate && delegate.username ? address : '';
+  const truncatedAddress = useMemo(() => address.slice(0, 10) + "..." + address.slice(-2), [address]);
+  const primaryValue = delegate && delegate.username ? delegate.username : truncatedAddress;
+  const secondaryValue = delegate && delegate.username ? truncatedAddress : '';
+  const primaryValueTypeShown = delegate && delegate.username ? "username" : "address";
 
   return (
     <Box className={styles.wrapper}>
@@ -35,11 +37,27 @@ const AccountInfo = ({
             size={40}
           />
           <div className={styles.text}>
-            <span className={`${styles.primary} account-primary`}>{primaryValue}</span>
+            <Tooltip
+              tooltipClassName={styles.addressWrapper}
+              className={`${styles.address} showOnRight`}
+              content={<span className={`${styles.primary} account-primary`}>{primaryValue}</span>}
+            >
+              <span className={`${styles.primary} account-primary`}>{address}</span>
+            </Tooltip>
+
             {
-              secondaryValue
-                ? <span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>
-                : null
+              secondaryValue ? 
+                primaryValueTypeShown === "address" ?
+                  <Tooltip
+                    tooltipClassName={styles.addressWrapper}
+                    className={`${styles.address} showOnRight`}
+                    content={<span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>}
+                  >
+                    <span className={`${styles.primary} account-primary`}>{address}</span>
+                  </Tooltip> 
+                : 
+                <span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>
+              : null
             }
           </div>
         </div>

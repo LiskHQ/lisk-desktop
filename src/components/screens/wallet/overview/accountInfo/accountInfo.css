@@ -89,11 +89,11 @@
       padding: 11px;
     }
 
-    & .qrCode {
+    & .qrCode, & .address {
       padding: 10px;
     }
 
-    & .qrCodeWrapper {
+    & .qrCodeWrapper, & .addressWrapper {
       width: auto;
     }
 
