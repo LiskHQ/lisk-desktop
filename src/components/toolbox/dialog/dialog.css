@@ -125,7 +125,8 @@
 
 .optionsHolder {
   display: flex;
-  margin: 30px auto 0;
+  box-sizing: border-box;
+  padding: 0 var(--horizontal-padding-l) var(--horizontal-padding-l);
   width: 100%;
 
   & > * {
@@ -150,10 +151,8 @@
 
   &.center {
     justify-content: center;
-    max-width: 470px;
 
     & > * {
-      flex-basis: 100%;
       max-width: var(--footer-button-width);
     }
   }
