@@ -42,7 +42,7 @@ class NewReleaseDialog extends React.Component {
           </div>
         </div>
 
-        <Dialog.Options>
+        <Dialog.Options align="center">
           <SecondaryButton onClick={() => FlashMessageHolder.deleteMessage('NewRelease')}>
             {t('Remind me later')}
           </SecondaryButton>
