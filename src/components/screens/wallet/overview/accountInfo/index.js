@@ -22,10 +22,10 @@ const BookmarkIcon = ({ isBookmark }) => (
 const AccountInfo = ({
   address, t, activeToken, hwInfo, delegate, isBookmark, publicKey,
 }) => {
-  const truncatedAddress = useMemo(() => address.slice(0, 10) + "..." + address.slice(-2), [address]);
+  const truncatedAddress = useMemo(() => address.slice(0, 10) + "..." + address.slice(-3), [address]);
   const primaryValue = delegate && delegate.username ? delegate.username : truncatedAddress;
   const secondaryValue = delegate && delegate.username ? truncatedAddress : '';
-  const primaryValueTypeShown = delegate && delegate.username ? "username" : "address";
+  const primaryValueTypeShown = delegate && delegate.username ? 'username' : 'address';
 
   return (
     <Box className={styles.wrapper}>
@@ -42,7 +42,7 @@ const AccountInfo = ({
               className={`${styles.address} showOnRight`}
               content={<span className={`${styles.primary} account-primary`}>{primaryValue}</span>}
             >
-              <span className={`${styles.primary} account-primary`}>{address}</span>
+              <span className={`${styles.primary} ${styles.addressTooltip}`}>{address}</span>
             </Tooltip>
 
             {
@@ -53,7 +53,7 @@ const AccountInfo = ({
                     className={`${styles.address} showOnRight`}
                     content={<span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>}
                   >
-                    <span className={`${styles.primary} account-primary`}>{address}</span>
+                    <span className={`${styles.primary} ${styles.addressTooltip}`}>{address}</span>
                   </Tooltip> 
                 : 
                 <span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>
