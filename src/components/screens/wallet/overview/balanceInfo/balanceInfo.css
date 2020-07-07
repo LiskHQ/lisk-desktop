@@ -31,6 +31,9 @@
 }
 
 .valuesRow {
+  display: flex;
+  flex: 1;
+
   padding: 0 var(--horizontal-padding-l);
 
   & .cryptoValue {
@@ -51,7 +54,7 @@
 .actionRow {
   display: flex;
   flex-flow: row nowrap;
-  padding: 60px var(--horizontal-padding-l) 0;
+  padding: 0 var(--horizontal-padding-l);
   justify-content: center;
   font-weight: normal;
 
