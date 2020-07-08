@@ -2,7 +2,7 @@ import React from 'react';
 import Countdown from 'react-countdown-now';
 import Renderer from './renderer';
 
-const Autologout = ({
+const AutoSingOut = ({
   account,
   onCountdownComplete,
   history,
@@ -25,4 +25,4 @@ const Autologout = ({
 );
 
 
-export default Autologout;
+export default AutoSingOut;

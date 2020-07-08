@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import account from '../../../../../constants/account';
-import Autologout from './autologout';
+import AutoSignOut from './index';
 
 describe('Autlologout component', () => {
   const props = {
@@ -16,7 +16,7 @@ describe('Autlologout component', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Autologout {...props} />);
+    wrapper = mount(<AutoSignOut {...props} />);
   });
 
   it('Should render empty component', () => {
