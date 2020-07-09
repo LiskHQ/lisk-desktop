@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { Button } from './button';
+import { Button } from './index';
 
 describe('Button wrapper', () => {
   it('Creates only one instance of the button', () => {

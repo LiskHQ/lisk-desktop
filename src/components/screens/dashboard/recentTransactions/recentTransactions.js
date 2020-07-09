@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import routes from '../../../../constants/routes';
-import { SecondaryButton } from '../../../toolbox/buttons/button';
+import { SecondaryButton } from '../../../toolbox/buttons';
 import { getActiveTokenAccount } from '../../../../utils/account';
 import { tokenMap } from '../../../../constants/tokens';
 import Box from '../../../toolbox/box';

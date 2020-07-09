@@ -2,7 +2,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Input } from '../../toolbox/inputs';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
@@ -12,7 +12,6 @@ import BoxInfoText from '../../toolbox/box/infoText';
 import Icon from '../../toolbox/icon';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './verifyMessage.css';
-import DialogHolder from '../../toolbox/dialog/holder';
 
 export default class VerifyMessageInput extends React.Component {
   constructor(props) {
@@ -182,7 +181,6 @@ export default class VerifyMessageInput extends React.Component {
           ))}
         </BoxContent>
         <BoxFooter direction="horizontal">
-          <SecondaryButton onClick={DialogHolder.hideDialog} className="go-back">{t('Close')}</SecondaryButton>
           <PrimaryButton
             onClick={this.goNext}
             disabled={!this.canSubmit}

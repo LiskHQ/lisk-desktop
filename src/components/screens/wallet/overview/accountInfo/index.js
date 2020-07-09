@@ -1,7 +1,7 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import AccountVisual from '../../../../toolbox/accountVisual';
-import { PrimaryButton } from '../../../../toolbox/buttons/button';
+import { PrimaryButton } from '../../../../toolbox/buttons';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
 import Icon from '../../../../toolbox/icon';

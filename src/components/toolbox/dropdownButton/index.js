@@ -1,5 +1,5 @@
 import React from 'react';
-import { SecondaryButton } from '../buttons/button';
+import { SecondaryButton } from '../buttons';
 import Dropdown from '../dropdown/dropdown';
 import OutsideClickHandler from '../outsideClickHandler';
 import styles from './dropdownButton.css';

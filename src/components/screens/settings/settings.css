@@ -1,13 +1,19 @@
 @import '../../../app/mixins.css';
 
-.settingsHolder {
+.dialogWrapper {
   max-height: calc(100% - 100px);
   overflow-y: scroll;
-  background: var(--color-white);
-  border-radius: var(--border-radius-box);
-  padding: 0 var(--horizontal-padding-l);
+
+  & .wrapper {
+    & > header {
+      padding-left: var(--horizontal-padding-l);
+      padding-right: var(--horizontal-padding-l);
+    }
+  }
 
   & .content {
+    padding: 0 var(--horizontal-padding-l);
+
     & h2 {
       @mixin contentLargest bold;
 

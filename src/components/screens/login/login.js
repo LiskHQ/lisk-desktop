@@ -10,7 +10,7 @@ import { extractAddress } from '../../../utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
 import { getNetworksList } from '../../../utils/getNetwork';
 import networks from '../../../constants/networks';
-import { PrimaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons';
 import PassphraseInput from '../../toolbox/passphraseInput';
 import Piwik from '../../../utils/piwik';
 import DiscreetModeToggle from '../../shared/discreetModeToggle';

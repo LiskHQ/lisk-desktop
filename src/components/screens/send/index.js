@@ -5,6 +5,7 @@ import Form from './form';
 import Summary from './summary';
 import TransactionStatus from './transactionStatus';
 import routes from '../../../constants/routes';
+import Dialog from '../../toolbox/dialog/dialog';
 import styles from './send.css';
 
 const Send = ({ initialValue }) => {
@@ -15,19 +16,17 @@ const Send = ({ initialValue }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={`${styles.wrapper} send-box`}>
-        <MultiStep
-          key="send"
-          finalCallback={backToWallet}
-          className={styles.wrapper}
-        >
-          <Form initialValue={initialValue} />
-          <Summary />
-          <TransactionStatus history={history} />
-        </MultiStep>
-      </div>
-    </div>
+    <Dialog hasClose className={styles.dialogWrapper}>
+      <MultiStep
+        key="send"
+        finalCallback={backToWallet}
+        className={styles.wrapper}
+      >
+        <Form initialValue={initialValue} />
+        <Summary />
+        <TransactionStatus history={history} />
+      </MultiStep>
+    </Dialog>
   );
 };
 

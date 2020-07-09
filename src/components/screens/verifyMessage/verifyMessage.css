@@ -5,11 +5,9 @@
 }
 
 .wrapper {
-  background: var(--color-white);
-  border-radius: var(--border-radius-box);
-  padding: 0 var(--horizontal-padding-l);
   max-width: 750px;
   width: calc(100% - var(--horizontal-margin));
+  padding: 0 var(--horizontal-padding-l);
 }
 
 .signedMessage {

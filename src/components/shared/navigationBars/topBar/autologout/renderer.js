@@ -4,7 +4,7 @@ import Piwik from '../../../../../utils/piwik';
 import DialogHolder from '../../../../toolbox/dialog/holder';
 import Dialog from '../../../../toolbox/dialog/dialog';
 import Settings from '../../../../screens/settings';
-import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
 
 
 class CustomCountDown extends React.Component {

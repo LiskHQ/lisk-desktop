@@ -4,6 +4,7 @@ import MultiStep from '../../shared/multiStep';
 import Result from './result';
 import VerifyMessageInput from './verifyMessageInput';
 import routes from '../../../constants/routes';
+import Dialog from '../../toolbox/dialog/dialog';
 import styles from './verifyMessage.css';
 
 export default function VerifyMessage({
@@ -14,12 +15,12 @@ export default function VerifyMessage({
   }
 
   return (
-    <section className={styles.wrapper}>
+    <Dialog hasClose className={styles.wrapper}>
       <MultiStep finalCallback={finalCallback}>
         <VerifyMessageInput t={t} history={history} />
         <Result t={t} />
       </MultiStep>
-    </section>
+    </Dialog>
   );
 }
 

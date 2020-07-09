@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
 import { extractPublicKey } from '../../../utils/account';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';

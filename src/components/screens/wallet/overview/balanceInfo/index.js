@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { PrimaryButton } from '../../../../toolbox/buttons/button';
+import { PrimaryButton } from '../../../../toolbox/buttons';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
 import LiskAmount from '../../../../shared/liskAmount';

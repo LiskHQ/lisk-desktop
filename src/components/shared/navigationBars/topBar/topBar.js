@@ -8,7 +8,7 @@ import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
 import DialogLink from '../../../toolbox/dialog/link';
 import { settingsUpdated } from '../../../../actions/settings';
-import { PrimaryButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton } from '../../../toolbox/buttons';
 import { isEmpty } from '../../../../utils/helpers';
 
 /**

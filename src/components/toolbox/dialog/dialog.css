@@ -3,7 +3,7 @@
 @keyframes show {
   from {
     opacity: 0;
-    transform: translateY(-50%) scale(0.9);
+    transform: translateY(-5%) scale(0.9);
     visibility: hidden;
   }
 
@@ -23,7 +23,7 @@
 
   to {
     opacity: 0;
-    transform: translateY(-50%) scale(0.9);
+    transform: translateY(-5%) scale(0.9);
     visibility: hidden;
   }
 }
@@ -93,7 +93,7 @@
   max-height: 100%;
   max-width: var(--dialog-box-width);
   opacity: 0;
-  padding: 40px;
+  padding: 0;
   position: relative;
   transform: translateY(-50%) scale(0.9);
   visibility: hidden;
@@ -125,7 +125,8 @@
 
 .optionsHolder {
   display: flex;
-  margin: 30px auto 0;
+  box-sizing: border-box;
+  padding: 0 var(--horizontal-padding-l) var(--horizontal-padding-l);
   width: 100%;
 
   & > * {
@@ -150,10 +151,8 @@
 
   &.center {
     justify-content: center;
-    max-width: 470px;
 
     & > * {
-      flex-basis: 100%;
       max-width: var(--footer-button-width);
     }
   }
@@ -161,27 +160,27 @@
 
 .closeBtn {
   align-items: center;
-  border: 1px solid var(--color-ghost);
-  border-radius: var(--border-radius-box);
   box-sizing: border-box;
-  color: var(--color-ghost);
+  color: var(--color-ultramarine-blue);
   cursor: pointer;
   display: flex;
   height: 32px;
   justify-content: center;
   position: absolute;
-  right: 30px;
-  top: 30px;
+  right: 12px;
+  top: 12px;
   width: 32px;
+  z-index: 4;
 
   &::before,
   &::after {
     background-color: currentColor;
     color: inherit;
     content: '';
-    height: 13px;
+    height: 19px;
     position: absolute;
-    width: 1px;
+    width: 3px;
+    border-radius: 3px;
   }
 
   &::before {

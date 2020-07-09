@@ -1,7 +1,5 @@
-.container {
-  background: var(--color-white);
-  border-radius: var(--border-radius-box);
-  padding: 0 var(--horizontal-padding-l);
+.dialogWrapper {
+  max-width: 760px;
 }
 
 .wrapper {
@@ -12,5 +10,6 @@
   background: transparent;
   width: 100%;
   max-width: 720px;
+  padding: 0 var(--horizontal-padding-l);
   height: auto;
 }

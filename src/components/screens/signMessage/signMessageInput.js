@@ -1,6 +1,6 @@
 import React from 'react';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
 import Tooltip from '../../toolbox/tooltip/tooltip';
@@ -10,7 +10,6 @@ import BoxHeader from '../../toolbox/box/header';
 import BoxInfoText from '../../toolbox/box/infoText';
 import Piwik from '../../../utils/piwik';
 import styles from './signMessage.css';
-import DialogHolder from '../../toolbox/dialog/holder';
 
 class SignMessageInput extends React.Component {
   constructor(props) {
@@ -66,9 +65,6 @@ class SignMessageInput extends React.Component {
           </label>
         </BoxContent>
         <BoxFooter direction="horizontal">
-          <SecondaryButton onClick={DialogHolder.hideDialog}>
-            {t('Close')}
-          </SecondaryButton>
           <PrimaryButton className="next" onClick={this.nextStep}>
             {t('Continue')}
           </PrimaryButton>
