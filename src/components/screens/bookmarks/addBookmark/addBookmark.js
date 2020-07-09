@@ -225,6 +225,7 @@ class AddBookmark extends React.Component {
             </BoxContent>
             <BoxFooter direction="horizontal">
               <SecondaryButton
+                className="cancel-button"
                 onClick={() => prevStep({})}
               >
                 {t('Cancel')}
@@ -232,6 +233,7 @@ class AddBookmark extends React.Component {
               <PrimaryButton
                 disabled={isDisabled}
                 onClick={this.handleAddBookmark}
+                className="save-button"
               >
                 {t('Save')}
               </PrimaryButton>
