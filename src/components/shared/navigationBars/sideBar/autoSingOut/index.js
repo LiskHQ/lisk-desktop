@@ -3,14 +3,14 @@ import Countdown from 'react-countdown-now';
 import Renderer from './renderer';
 
 const AutoSingOut = ({
-  account,
+  expireTime,
   onCountdownComplete,
   history,
   resetTimer,
   t,
 }) => (
   <Countdown
-    date={account.expireTime}
+    date={expireTime}
     onComplete={onCountdownComplete}
     renderer={({ minutes, seconds }) => (
       <Renderer

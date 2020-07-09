@@ -7,8 +7,9 @@ import routes, { modals } from '../../../../constants/routes';
 import Icon from '../../../toolbox/icon';
 import styles from './sideBar.css';
 import Piwik from '../../../../utils/piwik';
-import { accountLoggedOut } from '../../../../actions/account';
+import { accountLoggedOut, timerReset } from '../../../../actions/account';
 import DialogLink from '../../../toolbox/dialog/link';
+import AutoSingOut from './autoSingOut';
 
 const Inner = ({ data, pathname, modal }) => {
   let status = '';
@@ -71,9 +72,12 @@ const SingOut = ({ t, history }) => {
 const SideBar = ({
   t, location, history,
 }) => {
+  const dispatch = useDispatch();
   const items = menuLinks(t);
+  const expireTime = useSelector(state => state.account.expireTime);
   const token = useSelector(state => state.settings.token.active);
   const isLoggedOut = useSelector(state => !state.account.info || !state.account.info[token]);
+  const autoSigOut = useSelector(state => state.settings.autoLog);
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
 
   return (
@@ -104,6 +108,17 @@ const SideBar = ({
                     <SingOut t={t} history={history} />
                   )
                   : null
+              }
+              {
+                autoSigOut ? (
+                  <AutoSingOut
+                    expireTime={expireTime}
+                    onCountdownComplete={() => dispatch(accountLoggedOut())}
+                    history={history}
+                    resetTimer={() => dispatch(timerReset(new Date()))}
+                    t={t}
+                  />
+                ) : null
               }
             </div>
           ))
