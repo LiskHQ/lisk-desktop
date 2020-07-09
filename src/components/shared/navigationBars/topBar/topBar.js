@@ -74,16 +74,6 @@ class TopBar extends React.Component {
     this.props.history.replace(routes.login.path);
   }
 
-  /* istanbul ignore next */
-  isTimerEnabled() {
-    const { autoLogout, account } = this.props;
-
-    return autoLogout
-      && account.expireTime
-      && account.passphrase
-      && account.passphrase.length > 0;
-  }
-
   setChildRef(node) {
     this.childRef = node;
   }

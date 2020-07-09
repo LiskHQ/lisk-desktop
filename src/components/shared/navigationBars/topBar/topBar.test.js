@@ -33,7 +33,6 @@ describe('TopBar', () => {
 
   const props = {
     account,
-    autologout: true,
     location: { pathname: routes.dashboard.path },
     showDelegate: false,
     t: val => val,
