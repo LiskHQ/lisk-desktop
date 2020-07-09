@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import MultiStep from '../../shared/multiStep';
 import Form from './form';
 import Summary from './summary';
@@ -8,8 +8,7 @@ import routes from '../../../constants/routes';
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './send.css';
 
-const Send = ({ initialValue }) => {
-  const history = useHistory();
+const Send = ({ initialValue, history }) => {
   // istanbul ignore next
   const backToWallet = () => {
     history.push(routes.wallet.path);
@@ -30,4 +29,4 @@ const Send = ({ initialValue }) => {
   );
 };
 
-export default Send;
+export default withRouter(Send);
