@@ -83,6 +83,7 @@ describe('Reducer: account(state, action)', () => {
     const action = {
       data: {
         delegate: accounts.delegate_candidate,
+        date: new Date(),
       },
       type: actionTypes.accountLoggedIn,
     };
