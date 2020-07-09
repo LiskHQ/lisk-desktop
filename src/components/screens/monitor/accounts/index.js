@@ -12,7 +12,7 @@ import AccountRow from './accountRow';
 import withData from '../../../../utils/withData';
 import liskServiceApi from '../../../../utils/api/lsk/liskService';
 
-const Accounts = ({
+export const AccountsPure = ({
   accounts,
   networkStatus,
   t,
@@ -68,4 +68,4 @@ export default compose(
   ),
   withResizeValues,
   withTranslation(),
-)(Accounts);
+)(AccountsPure);
