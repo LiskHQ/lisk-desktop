@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import account from '../../../../../constants/account';
 import AutoSignOut from './index';
 
-describe('Autlologout component', () => {
+describe('AutoSignOut', () => {
   const props = {
     account: {
       expireTime: Date.now() + account.lockDuration,
