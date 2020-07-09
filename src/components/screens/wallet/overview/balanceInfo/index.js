@@ -28,7 +28,7 @@ const BalanceInfo = ({
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <div className={`${styles.cryptoValue} balance-value`}>
               <LiskAmount val={balance} />
-              {" "}
+              {' '}
               <span>{activeToken}</span>
             </div>
             <Converter
