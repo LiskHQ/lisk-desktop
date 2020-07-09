@@ -54,6 +54,7 @@ describe('Form', () => {
         push: jest.fn(),
       },
       nextStep: jest.fn(),
+      initialValue: {},
     };
 
     wrapper = mount(<Form {...props} />, options);
