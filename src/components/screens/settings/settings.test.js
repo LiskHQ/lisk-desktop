@@ -35,8 +35,7 @@ describe('Setting', () => {
   const props = {
     transactions: { pending: [] },
     account: { token: 'LSK' },
-    settingsUpdated: jest.fn(),
-    accountUpdated: jest.fn(),
+    timerReset: jest.fn(),
     settings,
     t,
     isAuthenticated: true,
@@ -57,7 +56,7 @@ describe('Setting', () => {
       const expectedCallToSettingsUpdated = {
         autoLog: !settings.autoLog,
       };
-      expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
+      expect(props.timerReset).toBeCalledWith(expectedCallToSettingsUpdated);
     });
 
     it('should change discreet mode setting when clicking on checkbox', () => {
@@ -134,13 +133,7 @@ describe('Setting', () => {
 
       wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
 
-      const timeNow = Date.now();
-      const expectedCallToAccountUpdated = {
-        expireTime: timeNow,
-      };
-      expect(props.accountUpdated).toBeCalled();
-      expect(props.accountUpdated.mock.calls[0][0].expireTime)
-        .toBeGreaterThan(expectedCallToAccountUpdated.expireTime);
+      expect(props.timerReset).toBeCalled();
     });
 
     it('should enable and disable BTC token', () => {

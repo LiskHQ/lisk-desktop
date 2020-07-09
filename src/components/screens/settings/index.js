@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import Settings from './settings';
 import { settingsUpdated } from '../../../actions/settings';
-import { accountUpdated } from '../../../actions/account';
+import { timerReset } from '../../../actions/account';
 import { networkSet } from '../../../actions/network';
 import { getActiveTokenAccount } from '../../../utils/account';
 
@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  accountUpdated,
+  timerReset,
   networkSet,
   settingsUpdated,
 };
