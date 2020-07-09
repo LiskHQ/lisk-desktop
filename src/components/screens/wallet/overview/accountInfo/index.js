@@ -11,6 +11,7 @@ import CopyToClipboard from '../../../../toolbox/copyToClipboard';
 import { getAddress } from '../../../../../utils/hwManager';
 import styles from './accountInfo.css';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
+import DialogLink from '../../../../toolbox/dialog/link';
 
 const BookmarkIcon = ({ isBookmark }) => (
   <Icon
@@ -22,7 +23,9 @@ const BookmarkIcon = ({ isBookmark }) => (
 const AccountInfo = ({
   address, t, activeToken, hwInfo, delegate, isBookmark, publicKey,
 }) => {
-  const truncatedAddress = useMemo(() => address.slice(0, 10) + "..." + address.slice(-3), [address]);
+  const truncatedAddress = useMemo(
+    () => `${address.slice(0, 10)}...${address.slice(-3)}`, [address],
+  );
   const primaryValue = delegate && delegate.username ? delegate.username : truncatedAddress;
   const secondaryValue = delegate && delegate.username ? truncatedAddress : '';
   const primaryValueTypeShown = delegate && delegate.username ? 'username' : 'address';
@@ -46,18 +49,18 @@ const AccountInfo = ({
             </Tooltip>
 
             {
-              secondaryValue ? 
-                primaryValueTypeShown === "address" ?
+              secondaryValue
+                ? primaryValueTypeShown === 'address' ? (
                   <Tooltip
                     tooltipClassName={styles.addressWrapper}
                     className={`${styles.address} showOnRight`}
                     content={<span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>}
                   >
                     <span className={`${styles.primary} ${styles.addressTooltip}`}>{address}</span>
-                  </Tooltip> 
-                : 
-                <span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>
-              : null
+                  </Tooltip>
+                )
+                  : <span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>
+                : null
             }
           </div>
         </div>
@@ -81,22 +84,9 @@ const AccountInfo = ({
             </Tooltip>
           </div>
           <div className={styles.helperIcon}>
-            <DropdownButton
-              buttonClassName="bookmark-account-button"
-              className={`${styles.bookmarkDropdown} bookmark-account`}
-              buttonLabel={<BookmarkIcon isBookmark={isBookmark} />}
-              ButtonComponent={PrimaryButton}
-              align="left"
-            >
-              <BookmarkDropdown
-                token={activeToken}
-                delegate={delegate}
-                address={address}
-                publicKey={publicKey}
-                isBookmark={isBookmark}
-                onSubmitClick={() => {}}
-              />
-            </DropdownButton>
+            <DialogLink component="bookmarks">
+              <BookmarkIcon isBookmark={isBookmark}/>
+            </DialogLink>
           </div>
           {
             hwInfo
