@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Delegates from './index';
+import { AccountsPure } from './index';
 import accounts from '../../../../../test/constants/accounts';
 
 jest.mock('../../../../constants/monitor', () => ({ DEFAULT_LIMIT: 4 }));
@@ -12,7 +12,7 @@ describe('Top Accounts Monitor Page', () => {
   let accountsWithData;
   let wrapper;
 
-  const setup = properties => mount(<Delegates {...properties} />);
+  const setup = properties => mount(<AccountsPure {...properties} />);
 
   beforeEach(() => {
     props = {
@@ -59,7 +59,7 @@ describe('Top Accounts Monitor Page', () => {
   });
 
   it('renders a page with header', () => {
-    expect(wrapper.find('Box header')).toIncludeText('Accounts');
+    expect(wrapper.find('Box header')).toIncludeText('All accounts');
   });
 
   it('renders table with accounts', () => {
