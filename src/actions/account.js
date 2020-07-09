@@ -9,7 +9,6 @@ import { getConnectionErrorMessage } from './network/lsk';
 import { getTimeOffset } from '../utils/hacks';
 import { loginType } from '../constants/hwConstants';
 import { networkStatusUpdated } from './network';
-import accountConfig from '../constants/account';
 import actionTypes from '../constants/actions';
 import { tokenMap } from '../constants/tokens';
 import { txAdapter } from '../utils/api/lsk/adapters';
