@@ -33,7 +33,6 @@
 .valuesRow {
   display: flex;
   flex: 1;
-
   padding: 0 var(--horizontal-padding-l);
 
   & .cryptoValue {

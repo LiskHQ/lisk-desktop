@@ -1,12 +1,9 @@
 import React, { useMemo } from 'react';
 import QRCode from 'qrcode.react';
 import AccountVisual from '../../../../toolbox/accountVisual';
-import { PrimaryButton } from '../../../../toolbox/buttons';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
 import Icon from '../../../../toolbox/icon';
-import BookmarkDropdown from '../../../bookmarks/bookmarkDropdown';
-import DropdownButton from '../../../../toolbox/dropdownButton';
 import CopyToClipboard from '../../../../toolbox/copyToClipboard';
 import { getAddress } from '../../../../../utils/hwManager';
 import styles from './accountInfo.css';
@@ -20,11 +17,14 @@ const BookmarkIcon = ({ isBookmark }) => (
   />
 );
 
+/* eslint-disable complexity */
 const AccountInfo = ({
-  address, t, activeToken, hwInfo, delegate, isBookmark, publicKey,
+  address, t, activeToken, hwInfo, delegate, isBookmark,
 }) => {
   const truncatedAddress = useMemo(
-    () => `${address.slice(0, 10)}...${address.slice(-3)}`, [address],
+    () =>
+      `${address.slice(0, 10)}...${address.slice(-3)}`,
+    [address],
   );
   const primaryValue = delegate && delegate.username ? delegate.username : truncatedAddress;
   const secondaryValue = delegate && delegate.username ? truncatedAddress : '';
@@ -50,17 +50,22 @@ const AccountInfo = ({
 
             {
               secondaryValue
-                ? primaryValueTypeShown === 'address' ? (
-                  <Tooltip
-                    tooltipClassName={styles.addressWrapper}
-                    className={`${styles.address} showOnRight`}
-                    content={<span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>}
-                  >
-                    <span className={`${styles.primary} ${styles.addressTooltip}`}>{address}</span>
-                  </Tooltip>
+                && (
+                <>
+                  {
+                    primaryValueTypeShown === 'address' ? (
+                      <Tooltip
+                        tooltipClassName={styles.addressWrapper}
+                        className={`${styles.address} showOnRight`}
+                        content={<span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>}
+                      >
+                        <span className={`${styles.primary} ${styles.addressTooltip}`}>{address}</span>
+                      </Tooltip>
+                    )
+                      : <span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>
+                  }
+                </>
                 )
-                  : <span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>
-                : null
             }
           </div>
         </div>
@@ -85,7 +90,7 @@ const AccountInfo = ({
           </div>
           <div className={styles.helperIcon}>
             <DialogLink component="bookmarks">
-              <BookmarkIcon isBookmark={isBookmark}/>
+              <BookmarkIcon isBookmark={isBookmark} />
             </DialogLink>
           </div>
           {
