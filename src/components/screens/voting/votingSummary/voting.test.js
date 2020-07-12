@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Voting from './voting';
+import DialogHolder from '../../../toolbox/dialog/holder';
 
 describe('Voting', () => {
   const votes = {
@@ -32,11 +33,12 @@ describe('Voting', () => {
   });
 
   it('should go to result box with confirm button and then back to delegates', () => {
+    DialogHolder.hideDialog = jest.fn();
     const wrapper = mount(<Voting {...{ ...props, votes }} />);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('.result-box-header')).toHaveLength(1);
-    wrapper.find('.back-to-delegates-button').at(0).simulate('click');
-    expect(props.history.push).toHaveBeenCalledWith('/delegates');
+    wrapper.find('.close-dialog-button').at(0).simulate('click');
+    expect(DialogHolder.hideDialog).toHaveBeenCalled();
   });
 
   it('should show report error link when confirm button is clicked and voting fails', () => {
@@ -47,8 +49,9 @@ describe('Voting', () => {
   });
 
   it('should go to Delegates page when cancel button is clicked', () => {
+    DialogHolder.hideDialog = jest.fn();
     const wrapper = mount(<Voting {...props} />);
     wrapper.find('.cancel-button').at(0).simulate('click');
-    expect(props.history.push).toHaveBeenCalledWith('/delegates');
+    expect(DialogHolder.hideDialog).toHaveBeenCalled();
   });
 });
