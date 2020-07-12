@@ -109,7 +109,7 @@ class TopBar extends React.Component {
             <Icon name="bookmark" className={styles.bookmarksIcon} />
           </DialogLink>
           <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
-            <Icon name="search" className={styles.searchIcon} />
+            <Icon name="search" className={`${styles.searchIcon} search-icon`} />
           </DialogLink>
         </div>
         <div className={styles.group}>
