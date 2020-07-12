@@ -6,7 +6,7 @@ import DialogHolder from '../components/toolbox/dialog/holder';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import analyticsUtil from './analytics';
 
-describe('Analytics Util', () => {
+describe.skip('Analytics Util', () => {
   let props;
 
   beforeEach(() => {
@@ -54,7 +54,7 @@ describe('Analytics Util', () => {
     expect(dialogWrapper).toIncludeText('Anonymous Data Collection');
   });
 
-  it('Should call FlashMessageHolder.addMessage after use saw the banner for first time', () => {
+  it('Should call FlashMessageHolder.addMessage after the users see the banner for the first time', () => {
     const newSettings = {
       ...props.settings,
       statisticsRequest: true,
