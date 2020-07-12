@@ -5,6 +5,7 @@ import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
 import fees from '../../../constants/fees';
 import transactionTypes from '../../../constants/transactionTypes';
+import routes from '../../../constants/routes';
 
 describe('Single Transaction Component', () => {
   const transaction = {
@@ -73,7 +74,7 @@ describe('Single Transaction Component', () => {
         ...props,
         activeToken: 'BTC',
       });
-      expect(props.history.push).toHaveBeenCalledWith('/dashboard');
+      expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
     });
 
     it('Should load delegate names after vote transaction loading finished', () => {
