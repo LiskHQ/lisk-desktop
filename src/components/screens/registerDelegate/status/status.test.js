@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '../../../../../test/constants/accounts';
 import Status from './status';
+import DialogHolder from '../../../toolbox/dialog/holder';
 
 describe('Delegate Registration Status', () => {
   let wrapper;
@@ -21,20 +22,22 @@ describe('Delegate Registration Status', () => {
       confirmed: [],
       broadcastedTransactionsError: [],
     },
-    goBackToDelegates: jest.fn(),
     transactionBroadcasted: jest.fn(),
     t: key => key,
   };
 
   beforeEach(() => {
-    wrapper = mount(<Status {...props} />);
+    DialogHolder.hideDialog = jest.fn();
+    wrapper = mount(
+        <Status {...props} />
+    );
   });
 
   it('renders properly Status component', () => {
     expect(wrapper).toContainMatchingElement('.status-container');
     expect(wrapper).toContainMatchingElement('.result-box-header');
     expect(wrapper).toContainMatchingElement('.body-message');
-    expect(wrapper).toContainMatchingElement('button.go-back-to-delegates');
+    expect(wrapper).toContainMatchingElement('button.close-modal');
     expect(wrapper).not.toContainMatchingElement('button.on-retry');
   });
 
@@ -71,7 +74,7 @@ describe('Delegate Registration Status', () => {
       },
     });
     wrapper.update();
-    wrapper.find('button.go-back-to-delegates').simulate('click');
-    expect(props.goBackToDelegates).toBeCalled();
+    wrapper.find('button.close-modal').simulate('click');
+    expect(DialogHolder.hideDialog).toHaveBeenCalled();
   });
 });
