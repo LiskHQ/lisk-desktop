@@ -46,6 +46,7 @@ describe('Send', () => {
       },
       push: jest.fn(),
     },
+    initialValue: {},
   };
 
   beforeEach(() => {
@@ -53,7 +54,7 @@ describe('Send', () => {
   });
 
   it('should render properly getting data from URL', () => {
-    expect(wrapper).toContainMatchingElement('.send-box');
+    expect(wrapper).toContainMatchingElement('Dialog');
     expect(wrapper).toContainMatchingElement('MultiStep');
     expect(wrapper).toContainMatchingElement('Form');
     expect(wrapper).not.toContainMatchingElement('Summary');
@@ -66,7 +67,7 @@ describe('Send', () => {
     newProps.history.location.search = '';
     wrapper = mount(<Send {...newProps} />);
     wrapper.update();
-    expect(wrapper).toContainMatchingElement('.send-box');
+    expect(wrapper).toContainMatchingElement('Dialog');
     expect(wrapper).toContainMatchingElement('MultiStep');
     expect(wrapper).toContainMatchingElement('Form');
   });
