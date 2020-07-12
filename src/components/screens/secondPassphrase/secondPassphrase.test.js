@@ -1,9 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-
+import DialogHolder from '../../toolbox/dialog/holder';
 import accounts from '../../../../test/constants/accounts';
 import SecondPassphrase from './secondPassphrase';
-import routes from '../../../constants/routes';
 
 describe('SecondPassphrase', () => {
   let wrapper;
@@ -14,6 +13,7 @@ describe('SecondPassphrase', () => {
       LSK: accounts.delegate,
     },
   };
+  DialogHolder.hideDialog = jest.fn();
 
   describe('Authenticated', () => {
     beforeEach(() => {
@@ -44,25 +44,20 @@ describe('SecondPassphrase', () => {
       expect(document.getElementsByClassName('contentFocused')).toHaveLength(0);
     });
 
-    it('should go back in history when back button is clicked', () => {
-      wrapper.find('.go-back').first().simulate('click');
-      expect(props.history.goBack).toHaveBeenCalledWith();
-    });
-
     it('should go to settings if account already has second passphrase', () => {
       wrapper = mount(<SecondPassphrase
         {...props}
         account={accounts.second_passphrase_account}
       />);
-      expect(props.history.push).toHaveBeenCalledWith('/');
+      expect(DialogHolder.hideDialog).toHaveBeenCalled();
     });
 
-    it('should go to settings if account has not enought balance', () => {
+    it('should go to settings if account has not enough balance', () => {
       wrapper = mount(<SecondPassphrase
         {...props}
         account={accounts.empty_account}
       />);
-      expect(props.history.push).toHaveBeenCalledWith('/');
+      expect(DialogHolder.hideDialog).toHaveBeenCalled();
     });
 
     it('should allow to registerSecondPassphrase and go to wallet', () => {
@@ -86,9 +81,6 @@ describe('SecondPassphrase', () => {
         passphrase: props.account.passphrase,
       }));
       expect(wrapper.find('h1')).toHaveText('2nd passphrase registration submitted');
-      wrapper.find('button.go-to-wallet').simulate('click');
-
-      expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
     });
 
     it('should handle registerSecondPassphrase failure', () => {
