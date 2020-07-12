@@ -7,6 +7,7 @@ import styles from './secondPassphrase.css';
 import ConfirmPassphrase from './confirmPassphrase';
 import TransactionResult from '../../shared/transactionResult';
 import MultiStep from '../../../../libs/multiStep';
+import Dialog from '../../toolbox/dialog/dialog';
 import DialogHolder from '../../toolbox/dialog/holder';
 
 class SecondPassphrase extends React.Component {
@@ -32,8 +33,8 @@ class SecondPassphrase extends React.Component {
   render() {
     const { t, account, secondPassphraseRegistered } = this.props;
     return (
-      <div className={styles.wrapper}>
-        <MultiStep finalCallback={DialogHolder.hideDialog}>
+      <Dialog hasClose className={styles.wrapper}>
+        <MultiStep>
           <FirstStep
             t={t}
             account={{
@@ -53,7 +54,7 @@ class SecondPassphrase extends React.Component {
           />
           <TransactionResult t={t} />
         </MultiStep>
-      </div>
+      </Dialog>
     );
   }
 }
