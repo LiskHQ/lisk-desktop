@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
+import { PrimaryButton } from '../../toolbox/buttons';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
@@ -7,7 +7,6 @@ import BoxFooter from '../../toolbox/box/footer';
 import PassphraseBackup from '../../shared/passphraseBackup';
 import htmlStringToReact from '../../../utils/htmlStringToReact';
 import styles from './secondPassphrase.css';
-import DialogHolder from '../../toolbox/dialog/holder';
 
 const FirstStep = ({
   t, nextStep, account,
@@ -28,12 +27,6 @@ const FirstStep = ({
       />
     </BoxContent>
     <BoxFooter className="summary-footer" direction="horizontal">
-      <SecondaryButton
-        className={`${styles.editBtn} large cancel`}
-        onClick={DialogHolder.hideDialog}
-      >
-        {t('Cancel')}
-      </SecondaryButton>
       <PrimaryButton
         className={`${styles.confirmBtn} large go-to-confirmation`}
         onClick={nextStep}
