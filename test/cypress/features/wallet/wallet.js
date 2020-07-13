@@ -45,7 +45,7 @@ Then(/^I click filter outgoing$/, function () {
 });
 
 Then(/^I send LSK$/, function () {
-  cy.get(ss.sendToThisAccountBtn).click();
+  cy.get(ss.sendLink).click();
 });
 
 Then(/^I should see ([^s]+) in recipient$/, function (accountName) {
