@@ -4,10 +4,10 @@ import account from '../../../../../constants/account';
 import AutoSignOut from './index';
 
 describe('AutoSignOut', () => {
+  const expireTime = Date.now() + account.lockDuration;
+
   const props = {
-    account: {
-      expireTime: Date.now() + account.lockDuration,
-    },
+    expireTime,
     onCountdownComplete: jest.fn(),
     history: {},
     resetTimer: jest.fn(),
@@ -21,12 +21,12 @@ describe('AutoSignOut', () => {
 
   it('Should render empty component', () => {
     expect(wrapper).toBeEmptyRender();
+
     wrapper.setProps({
-      account: {
-        expireTime: Date.now(),
-      },
+      expireTime: Date.now(),
     });
     wrapper.update();
+
     expect(props.onCountdownComplete).toBeCalled();
   });
 });
