@@ -5,7 +5,7 @@ Feature: Dashboard
     Given I am on Dashboard page
     When I click on transactionRow
     Then I see this title: Transaction details
-    Then I click on closeBookmark
+    Then I click on closeDialog
     When I click on bookmarkListToggle
     Then I click on bookmarkAccount
     Then I should be on Account page
