@@ -11,7 +11,7 @@ const Dialog = ({ children, hasClose, className }) => (
     {hasClose && (
       <span
         onClick={DialogHolder.hideDialog}
-        className={styles.closeBtn}
+        className={`${styles.closeBtn} dialog-close-button`}
       />
     )}
     {children}

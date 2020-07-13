@@ -138,7 +138,7 @@ const ss = {
   delegateList: '.delegate-list',
   delegateRank: '.delegate-rank',
   delegateName: '.delegate-name',
-  accountName: '.account-name',
+  accountName: '.account-primary',
   accountLabel: '.account-label',
   delegateId: '.delegate-id',
   delegateProductivity: '.delegate-productivity',
@@ -237,6 +237,8 @@ const ss = {
   closeOnboardingButton: '.closeOnboarding',
   goBack: '.go-back',
   sendLink: '.tx-send-bt',
+  closeBookmark: '.dialog-close-button',
+  bookmarkListToggle: '.bookmark-list-toggle',
 };
 
 export default ss;
