@@ -49,12 +49,6 @@ describe('TransactionStatus', () => {
     expect(wrapper).toContainMatchingElement('.transaction-status');
   });
 
-  it('should call finalCallback function', () => {
-    wrapper.find('.on-goToWallet').at(0).simulate('click');
-    wrapper.update();
-    expect(props.finalCallback).toBeCalled();
-  });
-
   it('should show dropdown bookmark', () => {
     expect(wrapper).toContainMatchingElement('.bookmark-container');
     expect(wrapper).toContainMatchingElement('.bookmark-btn');
@@ -80,9 +74,6 @@ describe('TransactionStatus', () => {
     newProps.transactions.broadcastedTransactionsError = [{ recipient: '123L', amount: 1, reference: 'test' }];
     wrapper = mount(<TransactionStatus {...newProps} />);
     expect(wrapper).toContainMatchingElement('.report-error-link');
-    wrapper.find('.on-goToWallet').at(0).simulate('click');
-    wrapper.update();
-    expect(props.finalCallback).toBeCalled();
   });
 
   it('should call onPrevStep function on hwWallet', () => {

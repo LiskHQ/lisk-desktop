@@ -37,8 +37,6 @@ describe('Voting', () => {
     const wrapper = mount(<Voting {...{ ...props, votes }} />);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('.result-box-header')).toHaveLength(1);
-    wrapper.find('.close-dialog-button').at(0).simulate('click');
-    expect(DialogHolder.hideDialog).toHaveBeenCalled();
   });
 
   it('should show report error link when confirm button is clicked and voting fails', () => {
