@@ -38,7 +38,6 @@ class NetworkSelector extends React.Component {
       connected: true,
     };
 
-    this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
     this.onConnectToCustomNode = this.onConnectToCustomNode.bind(this);
     this.checkNodeStatus = this.checkNodeStatus.bind(this);
     this.onChangeActiveNetwork = this.onChangeActiveNetwork.bind(this);
@@ -169,10 +168,6 @@ class NetworkSelector extends React.Component {
     this.setState({ network });
   }
 
-  handleSettingsToggle() {
-    this.setState({ showSettingDropdown: !this.state.showSettingDropdown });
-  }
-
   onConnectToCustomNode(e) {
     e.stopPropagation();
     this.setState({ isValidationLoading: true });
@@ -289,4 +284,5 @@ class NetworkSelector extends React.Component {
 }
 
 NetworkSelector.displayName = 'NetworkSelector';
+NetworkSelector.whyDidYouRender = true;
 export default withTranslation()(withRouter(NetworkSelector));
