@@ -27,7 +27,7 @@ describe('Delegate Registration Status', () => {
 
   beforeEach(() => {
     wrapper = mount(
-        <Status {...props} />
+      <Status {...props} />,
     );
   });
 

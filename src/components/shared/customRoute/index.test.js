@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
@@ -9,33 +9,31 @@ import routes from '../../../constants/routes';
 const Public = () => <h1>Public</h1>;
 const Private = () => <h1>Private</h1>;
 
-jest.mock("react-redux", () => ({
-  ...jest.requireActual("react-redux"),
-  useSelector: jest.fn()
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
 }));
 
 describe('CustomRoute', () => {
   const mockAppState = {
     settings: {
       token: {
-        active: 'LSK'
-      }
+        active: 'LSK',
+      },
     },
     account: {
       info: {
-        LSK: "some data"
-      }
+        LSK: 'some data',
+      },
     },
     network: {
       name: 'testnet',
-      serviceUrl: 'someUrl'
-    }
+      serviceUrl: 'someUrl',
+    },
   };
 
   beforeEach(() => {
-    useSelector.mockImplementation(callback => {
-      return callback(mockAppState);
-    });
+    useSelector.mockImplementation(callback => callback(mockAppState));
   });
 
   afterEach(() => {
@@ -47,7 +45,7 @@ describe('CustomRoute', () => {
     history: { location: { pathname: '' } },
     path: '/private',
     component: Private,
-    forbiddenTokens: []
+    forbiddenTokens: [],
   };
 
   const isAuth = ({ isPrivate }) => (

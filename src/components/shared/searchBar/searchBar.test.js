@@ -5,7 +5,10 @@ import SearchBar from './searchBar';
 import DialogHolder from '../../toolbox/dialog/holder';
 
 describe('SearchBar', () => {
-  let wrapper, dialaogWrapper;
+  let wrapper;
+
+  // eslint-disable-next-line no-unused-vars
+  let dialaogWrapper;
 
   const props = {
     t: v => v,
@@ -27,8 +30,9 @@ describe('SearchBar', () => {
 
   beforeEach(() => {
     wrapper = mount(
-      <SearchBar {...props} />
+      <SearchBar {...props} />,
     );
+
     dialaogWrapper = shallow(<DialogHolder />);
   });
 

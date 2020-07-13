@@ -18,7 +18,7 @@ jest.mock('../../searchBar', () => function SearchBarMock({ onSearchClick, setSe
   );
 });
 
-jest.mock('./navigationButtons', () => function() {
+jest.mock('./navigationButtons', () => function () {
   return (
     <div />
   );

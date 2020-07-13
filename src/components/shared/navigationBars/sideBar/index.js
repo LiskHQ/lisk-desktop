@@ -27,15 +27,15 @@ const Inner = ({ data, pathname, modal }) => {
 
 const MenuLink = ({ data, isUserLogout, pathname }) => {
   if (data.modal) {
-    const className = `${styles.item} ${isUserLogout && modals[data.id].isPrivate ? styles.disabled + ' disabled': ''}`;
+    const className = `${styles.item} ${isUserLogout && modals[data.id].isPrivate ? `${styles.disabled} disabled` : ''}`;
     return (
       <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${className}`}>
         <Inner data={data} modal={data.id} />
       </DialogLink>
     );
   }
-  
-  const className = `${styles.item} ${isUserLogout && routes[data.id].isPrivate ? styles.disabled + ' disabled': ''}`;
+
+  const className = `${styles.item} ${isUserLogout && routes[data.id].isPrivate ? `${styles.disabled} disabled` : ''}`;
   return (
     <NavLink
       to={data.path}

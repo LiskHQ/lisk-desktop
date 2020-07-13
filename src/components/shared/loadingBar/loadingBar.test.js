@@ -39,7 +39,7 @@ describe('LoadingBar Container', () => {
   it('should hide ProgresBar after 1 second if props.loading.length is changed to be 0', () => {
     const wrapper = mount(<LoadingBar {...props} />);
     expect(wrapper.find('ProgressBar')).not.to.be.present();
-    
+
     wrapper.setProps({ loading: ['test'] });
     wrapper.update();
     expect(wrapper.find('ProgressBar')).to.be.present();
@@ -52,7 +52,7 @@ describe('LoadingBar Container', () => {
     wrapper.setProps({ loading: [] });
     wrapper.update();
     expect(wrapper.find('ProgressBar')).to.be.present();
-    
+
     clock.tick(200);
     expect(wrapper.find('ProgressBar')).to.be.present();
 

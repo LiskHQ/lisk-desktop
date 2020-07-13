@@ -1,34 +1,32 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { useSelector } from 'react-redux';
 import SideBar from './index';
 import routes from '../../../../constants/routes';
-import { useSelector } from 'react-redux';
 
-jest.mock("react-redux", () => ({
-  ...jest.requireActual("react-redux"),
-  useSelector: jest.fn()
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
 }));
 
 describe('SideBar', () => {
   const mockAppState = {
     settings: {
       token: {
-        active: 'LSK'
-      }
+        active: 'LSK',
+      },
     },
     account: {
-      info: {}
+      info: {},
     },
     network: {
       name: 'testnet',
-      serviceUrl: 'someUrl'
-    }
+      serviceUrl: 'someUrl',
+    },
   };
 
   beforeEach(() => {
-    useSelector.mockImplementation(callback => {
-      return callback(mockAppState);
-    });
+    useSelector.mockImplementation(callback => callback(mockAppState));
   });
 
   afterEach(() => {
@@ -65,7 +63,7 @@ describe('SideBar', () => {
 
   it('renders 8 menu items but only Wallet is disabled when user is logged out', () => {
     wrapper = mount(<SideBar {...myProps} />);
-    
+
     expect(wrapper).toContainMatchingElements(8, 'a');
     expect(wrapper).toContainExactlyOneMatchingElement('a.disabled');
     expect(wrapper.find('a').at(0)).not.toHaveClassName('disabled');
