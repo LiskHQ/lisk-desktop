@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect, Route, useRouteMatch } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../../utils/piwik';
@@ -29,7 +29,7 @@ const CustomRoute = ({
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
-  const { params } = useRouteMatch();
+  const { params } = history.location;
 
   if (!networkIsSet) return null;
   Piwik.tracking(history, settings);

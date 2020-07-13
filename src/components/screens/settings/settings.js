@@ -9,7 +9,6 @@ import CheckBox from '../../toolbox/checkBox';
 import Piwik from '../../../utils/piwik';
 import SecondPassphraseSetting from './secondPassphrase';
 import Select from '../../toolbox/select';
-import accountConfig from '../../../constants/account';
 import links from '../../../constants/externalLinks';
 import settingsConst from '../../../constants/settings';
 import transactionTypes from '../../../constants/transactionTypes';
@@ -40,11 +39,10 @@ class Settings extends React.Component {
   toggleAutoLog({ target }) {
     Piwik.trackingEvent('Settings', 'button', 'Toggle autoLog');
     const {
-      account, accountUpdated,
+      account, timerReset,
     } = this.props;
     if (target && account.passphrase) {
-      const date = Date.now() + accountConfig.lockDuration;
-      accountUpdated({ expireTime: date });
+      timerReset(new Date());
     }
     this.handleCheckboxChange({ target });
   }

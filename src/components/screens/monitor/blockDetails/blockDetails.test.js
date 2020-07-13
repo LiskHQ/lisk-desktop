@@ -17,8 +17,12 @@ describe('BlockDetails page', () => {
     blockTransactions: {
       isLoading: false,
       data: [],
+      loadData: jest.fn(),
     },
     isMediumViewPort: false,
+    match: {
+      url: `/monitor/blocks/${blocks[0].id}`,
+    },
   };
 
   const resizeWindow = (x, y) => {

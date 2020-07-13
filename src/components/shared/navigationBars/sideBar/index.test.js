@@ -1,22 +1,41 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { useSelector } from 'react-redux';
 import SideBar from './index';
-import menuLinks from './constants';
 import routes from '../../../../constants/routes';
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+}));
+
 describe('SideBar', () => {
+  const mockAppState = {
+    settings: {
+      token: {
+        active: 'LSK',
+      },
+    },
+    account: {
+      info: {},
+    },
+    network: {
+      name: 'testnet',
+      serviceUrl: 'someUrl',
+    },
+  };
+
+  beforeEach(() => {
+    useSelector.mockImplementation(callback => callback(mockAppState));
+  });
+
+  afterEach(() => {
+    useSelector.mockClear();
+  });
+
   let wrapper;
 
   const myProps = {
-    token: {
-      active: 'LSK',
-      list: {
-        LSK: true,
-        BTC: true,
-      },
-    },
-    isUserLogout: false,
-    items: menuLinks(v => v),
     location: {
       pathname: routes.dashboard.path,
     },
@@ -27,26 +46,33 @@ describe('SideBar', () => {
     wrapper = mount(<SideBar {...myProps} />);
   });
 
-  it('renders 4 menu items elements', () => {
+  it('renders 8 menu items elements', () => {
     const expectedLinks = [
       'Dashboard',
       'Wallet',
+      'Voting',
+      'Network',
+      'Transactions',
+      'Blocks',
+      'Accounts',
       'Delegates',
-      'Monitor',
     ];
-    expect(wrapper).toContainMatchingElements(4, 'a');
+    expect(wrapper).toContainMatchingElements(8, 'a');
     wrapper.find('a').forEach((link, index) => expect(link).toHaveText(expectedLinks[index]));
   });
 
-  it('renders 4 menu items but only Wallet is disabled when user is logout', () => {
-    myProps.isUserLogout = true;
+  it('renders 8 menu items but only Wallet is disabled when user is logged out', () => {
     wrapper = mount(<SideBar {...myProps} />);
 
-    expect(wrapper).toContainMatchingElements(4, 'a');
+    expect(wrapper).toContainMatchingElements(8, 'a');
     expect(wrapper).toContainExactlyOneMatchingElement('a.disabled');
     expect(wrapper.find('a').at(0)).not.toHaveClassName('disabled');
     expect(wrapper.find('a').at(1)).toHaveClassName('disabled');
     expect(wrapper.find('a').at(2)).not.toHaveClassName('disabled');
     expect(wrapper.find('a').at(3)).not.toHaveClassName('disabled');
+    expect(wrapper.find('a').at(4)).not.toHaveClassName('disabled');
+    expect(wrapper.find('a').at(5)).not.toHaveClassName('disabled');
+    expect(wrapper.find('a').at(6)).not.toHaveClassName('disabled');
+    expect(wrapper.find('a').at(7)).not.toHaveClassName('disabled');
   });
 });

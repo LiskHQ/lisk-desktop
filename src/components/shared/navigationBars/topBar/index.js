@@ -11,7 +11,6 @@ const mapStateToProps = state => ({
   account: state.account,
   network: state.network,
   token: state.settings.token,
-  autoLogout: state.settings.autoLog,
   settings: state.settings,
 });
 

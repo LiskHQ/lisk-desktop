@@ -107,7 +107,7 @@ class TransactionStatus extends React.Component {
 
   render() {
     const {
-      transactions, fields, t, finalCallback, recipientAccount,
+      transactions, fields, t, recipientAccount,
     } = this.props;
     const { isBookmarked, bookmarkButtonLabel } = this.bookmarkInformation();
     const { isHardwareWalletError, messageDetails } = this.getMessagesDetails();
@@ -124,11 +124,6 @@ class TransactionStatus extends React.Component {
           illustration={success ? 'transactionSuccess' : 'transactionError'}
           message={messageDetails.paragraph}
           success={success}
-          primaryButon={{
-            title: t('Back to Wallet'),
-            className: 'on-goToWallet okay-button',
-            onClick: finalCallback,
-          }}
         >
           {
             isHardwareWalletError || transactions.broadcastedTransactionsError.length

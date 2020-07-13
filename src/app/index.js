@@ -75,6 +75,7 @@ const App = ({ history }) => {
                       pathPrefix={route.pathPrefix}
                       component={route.component}
                       key={route.path}
+                      history={history}
                     />
                   ))
                 }

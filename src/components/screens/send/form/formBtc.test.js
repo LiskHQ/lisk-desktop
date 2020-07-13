@@ -11,7 +11,7 @@ import {
   getDynamicFees,
 } from '../../../../utils/api/btc/service';
 import { tokenMap } from '../../../../constants/tokens';
-import Form from './form';
+import Form from './formBtc';
 import accounts from '../../../../../test/constants/accounts';
 import defaultState from '../../../../../test/constants/defaultState';
 import * as serviceActions from '../../../../actions/service';
@@ -81,12 +81,13 @@ describe('FormBtc', () => {
         push: jest.fn(),
       },
       nextStep: jest.fn(),
+      getInitialValue: key => ({ amount: 0.11, recipient: 'n3aZt7uZhnBeC9quq6btKyC8qXvskEiE1B' }[key]),
     };
 
     wrapper = mount(<Form {...props} />);
   });
 
-  describe('shold work with props.token BTC', () => {
+  describe('should work with props.token BTC', () => {
     it('should re-render properly if props.token', () => {
       expect(wrapper).toContainMatchingElement('span.recipient');
       expect(wrapper).toContainMatchingElement('span.amount');

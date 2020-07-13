@@ -54,6 +54,9 @@ describe('Form', () => {
         push: jest.fn(),
       },
       nextStep: jest.fn(),
+      initialValue: {
+        recipient: bookmarks.LSK[0].title,
+      },
     };
 
     wrapper = mount(<Form {...props} />, options);

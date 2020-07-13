@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import routes from '../../../constants/routes';
 import NotFound from './index';
 
 describe('notFound', () => {
@@ -24,6 +25,6 @@ describe('notFound', () => {
 
   it('should go to Dashboard on button link', () => {
     const wrapper = mount(<NotFound {...props} />);
-    expect(wrapper.find('.go-to-dashboard-button').at(0).props().to).toBe('/dashboard');
+    expect(wrapper.find('.go-to-dashboard-button').at(0).props().to).toBe(routes.dashboard.path);
   });
 });

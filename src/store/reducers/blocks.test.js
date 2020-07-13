@@ -37,11 +37,15 @@ describe('Reducer: blocks(state, action)', () => {
 
     const action = {
       type: actionTypes.olderBlocksRetrieved,
-      data: blocks,
+      data: {
+        list: blocks,
+        total: 1000,
+      },
     };
     const changedBlocks = blocksReducer(state, action);
     expect(changedBlocks).to.deep.equal({
       latestBlocks: blocks,
+      total: 1000,
     });
   });
 

@@ -34,9 +34,9 @@ describe('Setting', () => {
 
   const props = {
     transactions: { pending: [] },
-    account: { token: 'LSK' },
+    account: { token: 'LSK', passphrase: 'sample_passphrase' },
+    timerReset: jest.fn(),
     settingsUpdated: jest.fn(),
-    accountUpdated: jest.fn(),
     settings,
     t,
     isAuthenticated: true,
@@ -54,10 +54,7 @@ describe('Setting', () => {
 
     it('should change autolog setting when clicking on checkbox', () => {
       wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
-      const expectedCallToSettingsUpdated = {
-        autoLog: !settings.autoLog,
-      };
-      expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
+      expect(props.timerReset).toBeCalled();
     });
 
     it('should change discreet mode setting when clicking on checkbox', () => {
@@ -134,13 +131,7 @@ describe('Setting', () => {
 
       wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
 
-      const timeNow = Date.now();
-      const expectedCallToAccountUpdated = {
-        expireTime: timeNow,
-      };
-      expect(props.accountUpdated).toBeCalled();
-      expect(props.accountUpdated.mock.calls[0][0].expireTime)
-        .toBeGreaterThan(expectedCallToAccountUpdated.expireTime);
+      expect(props.timerReset).toBeCalled();
     });
 
     it('should enable and disable BTC token', () => {

@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
 import {
   PrimaryButton, SecondaryButton, TertiaryButton, WarningButton,
-} from './button';
+} from '.';
 
 const DarkWrapper = ({ children, display }) => (
   <span style={{

@@ -56,7 +56,7 @@ export const sortByVersion = (a, b, direction = 'desc') => {
   }, 0) * (direction === 'desc' ? -1 : 1);
 };
 
-const Network = ({
+export const NetworkPure = ({
   peers, t, changeSort, sort, networkStatistics,
 }) => {
   /* istanbul ignore next */
@@ -64,6 +64,7 @@ const Network = ({
     peers.loadData({ offset: peers.data.length });
   };
   const canLoadMore = peers.meta ? peers.data.length < peers.meta.total : false;
+
   return (
     <div>
       <Overview networkStatus={networkStatistics.data} t={t} />
@@ -115,4 +116,4 @@ export default compose(
   }),
   withLocalSort('peers', 'height:desc', { version: sortByVersion }),
   withTranslation(),
-)(Network);
+)(NetworkPure);

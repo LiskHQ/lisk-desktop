@@ -22,11 +22,11 @@ describe('Confirm Message Component', () => {
 
   it('Should handle copying result', () => {
     expect(wrapper).toContainMatchingElements(2, 'button');
-    wrapper.find('button').at(0).simulate('click');
-    expect(wrapper.find('button').at(0)).toBeDisabled();
+    wrapper.find('button').at(1).simulate('click');
+    expect(wrapper.find('button').at(1)).toBeDisabled();
     jest.advanceTimersByTime(3000);
     wrapper.update();
-    expect(wrapper.find('button').at(0)).not.toBeDisabled();
+    expect(wrapper.find('button').at(1)).not.toBeDisabled();
     wrapper.unmount();
   });
 });

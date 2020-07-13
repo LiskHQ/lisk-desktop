@@ -2,15 +2,15 @@ import React from 'react';
 import Countdown from 'react-countdown-now';
 import Renderer from './renderer';
 
-const Autologout = ({
-  account,
+const AutoSignOut = ({
+  expireTime,
   onCountdownComplete,
   history,
   resetTimer,
   t,
 }) => (
   <Countdown
-    date={account.expireTime}
+    date={expireTime}
     onComplete={onCountdownComplete}
     renderer={({ minutes, seconds }) => (
       <Renderer
@@ -25,4 +25,4 @@ const Autologout = ({
 );
 
 
-export default Autologout;
+export default AutoSignOut;

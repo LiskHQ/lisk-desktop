@@ -8,6 +8,7 @@ const actionTypes = {
   accountLoading: 'ACCOUNT_LOADING',
   accountLoggedIn: 'ACCOUNT_LOGGED_IN',
   accountLoggedOut: 'ACCOUNT_LOGGED_OUT',
+  timerReset: 'TIMER_RESET',
   accountRemoved: 'ACCOUNT_REMOVED',
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
   accountSwitched: 'ACCOUNT_SWITCHED',

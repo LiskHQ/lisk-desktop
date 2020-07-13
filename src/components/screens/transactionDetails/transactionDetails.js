@@ -37,55 +37,52 @@ class Transactions extends React.Component {
     const { error, isLoading, data } = transaction;
     const addresses = data && [data.recipientId, data.senderId];
 
-    if (isEmpty(transaction.data)) return <div />;
+    if (!error && isEmpty(transaction.data)) return <div />;
+    if (error && isEmpty(transaction.data)) return <NotFound />;
 
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
-        { !error ? (
-          <Box width="medium" isLoading={isLoading} className={styles.wrapper}>
-            <BoxHeader>
-              <h1>{t('Transaction details')}</h1>
-              <CopyToClipboard
-                value={this.getLinkToCopy()}
-                text={t('Copy link')}
-                Container={SecondaryButton}
-                containerProps={{ size: 'xs' }}
-                copyClassName={styles.copyIcon}
-              />
-            </BoxHeader>
-            <BoxContent className={styles.mainContent}>
-              <Illustration transaction={data} />
-              <Sender
-                transaction={data}
-                activeToken={activeToken}
-                netCode={netCode}
-              />
-              <Recipient
-                transaction={data}
-                activeToken={activeToken}
-                netCode={netCode}
-                t={t}
-              />
-              <DateAndConfirmation
-                transaction={data}
-                activeToken={activeToken}
-                addresses={addresses}
-                t={t}
-              />
-              <TransactionId t={t} id={data.id} />
-              <FeeAndAmount
-                transaction={data}
-                activeToken={activeToken}
-                addresses={addresses}
-                t={t}
-              />
-              <Message activeToken={activeToken} transaction={data} t={t} />
-              <TransactionVotes transaction={data} t={t} delegates={delegates} />
-            </BoxContent>
-          </Box>
-        ) : (
-          <NotFound />
-        ) }
+        <Box width="medium" isLoading={isLoading} className={styles.wrapper}>
+          <BoxHeader>
+            <h1>{t('Transaction details')}</h1>
+            <CopyToClipboard
+              value={this.getLinkToCopy()}
+              text={t('Copy link')}
+              Container={SecondaryButton}
+              containerProps={{ size: 'xs' }}
+              copyClassName={styles.copyIcon}
+            />
+          </BoxHeader>
+          <BoxContent className={styles.mainContent}>
+            <Illustration transaction={data} />
+            <Sender
+              transaction={data}
+              activeToken={activeToken}
+              netCode={netCode}
+            />
+            <Recipient
+              transaction={data}
+              activeToken={activeToken}
+              netCode={netCode}
+              t={t}
+            />
+            <DateAndConfirmation
+              transaction={data}
+              activeToken={activeToken}
+              addresses={addresses}
+              t={t}
+            />
+            <TransactionId t={t} id={data.id} />
+            <FeeAndAmount
+              transaction={data}
+              activeToken={activeToken}
+              addresses={addresses}
+              t={t}
+            />
+            <Message activeToken={activeToken} transaction={data} t={t} />
+            <TransactionVotes transaction={data} t={t} delegates={delegates} />
+          </BoxContent>
+        </Box>
       </div>
     );
   }

@@ -9,7 +9,6 @@ import { getConnectionErrorMessage } from './network/lsk';
 import { getTimeOffset } from '../utils/hacks';
 import { loginType } from '../constants/hwConstants';
 import { networkStatusUpdated } from './network';
-import accountConfig from '../constants/account';
 import actionTypes from '../constants/actions';
 import { tokenMap } from '../constants/tokens';
 import { txAdapter } from '../utils/api/lsk/adapters';
@@ -45,6 +44,15 @@ export const accountUpdated = data => ({
  */
 export const accountLoggedOut = () => ({
   type: actionTypes.accountLoggedOut,
+});
+
+/**
+ * Fires an action to reset the account automatic sign out timer
+ * @param {Date} date - Current date
+ */
+export const timerReset = date => ({
+  type: actionTypes.timerReset,
+  data: date,
 });
 
 /**
@@ -179,9 +187,6 @@ export const updateEnabledTokenAccount = token => async (dispatch, getState) => 
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
   const { network: networkConfig, settings } = getState();
   dispatch(accountLoading());
-  const expireTime = (passphrase && settings.autoLog)
-    ? Date.now() + accountConfig.lockDuration
-    : 0;
 
   const activeTokens = Object.keys(settings.token.list)
     .filter(key => settings.token.list[key]);
@@ -197,7 +202,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
       passphrase,
       loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
       hwInfo: hwInfo || {},
-      expireTime,
+      date: new Date(),
       info,
     }));
   }

@@ -25,6 +25,7 @@ describe('Add a new bookmark component', () => {
       loadData: jest.fn(),
     },
     bookmarkAdded: jest.fn(),
+    prevStep: jest.fn(),
   };
   const addresses = {
     BTC: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
@@ -47,7 +48,7 @@ describe('Add a new bookmark component', () => {
   it('Should render properly and with pristine state', () => {
     expect(wrapper).not.toContainMatchingElement('.error');
     expect(wrapper).toContainMatchingElements(2, 'Input');
-    expect(wrapper.find('button').at(0)).toBeDisabled();
+    expect(wrapper.find('button.save-button')).toBeDisabled();
   });
 
   describe('Success scenarios', () => {
@@ -68,9 +69,9 @@ describe('Add a new bookmark component', () => {
         });
         expect(wrapper).not.toContainMatchingElement('.error');
         expect(wrapper.find('button').at(0)).not.toBeDisabled();
-        wrapper.find('button').at(0).simulate('click');
+        wrapper.find('button.save-button').simulate('click');
         expect(props.bookmarkAdded).toBeCalled();
-        expect(props.history.push).toBeCalled();
+        expect(props.prevStep).toBeCalled();
       });
     });
 
@@ -103,7 +104,7 @@ describe('Add a new bookmark component', () => {
     });
 
     tokenKeys.forEach((token) => {
-      it(`should not be possible to add already bookmarkd address - ${token}`, () => {
+      it(`should not be possible to add already bookmarked address - ${token}`, () => {
         wrapper.find('input[name="address"]').first().simulate('change', {
           target: {
             value: addresses[token],
