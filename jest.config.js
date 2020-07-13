@@ -67,6 +67,7 @@ module.exports = {
     'src/components/screens/',
     'src/components/shared/errorBoundary/index.js',
     'src/components/toolbox/dialog/holder.js',
+    'src/components/toolbox/dialog/link.js',
     'src/components/shared/navigationBars/topBar/networkSelector/networkSelector.js',
     'src/components/shared/customRoute/index.js',
     'src/components/shared/navigationBars/topBar/topBar.js',
