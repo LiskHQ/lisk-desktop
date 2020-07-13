@@ -49,8 +49,8 @@ Given(/^I am on (.*?) page$/, function (page) {
       break;
     case 'delegates':
       cy.visit(urls.delegates);
-      cy.route('/api/delegates**').as('requestDelegate');
-      cy.wait('@requestDelegate');
+      // cy.route('/api/delegates**').as('requestDelegate');
+      // cy.wait('@requestDelegate');
       break;
     case 'wallet':
       cy.route('/api/transactions?*').as('transactions');
@@ -142,7 +142,7 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
 Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
   switch (pageName.toLowerCase()) {
     case 'account':
-      cy.get(ss.accountAddress).contains(identifier);
+      cy.get(ss.accountName).contains(identifier);
       break;
     case 'delegates':
       cy.get(ss.accountName).should('have.text', identifier);
