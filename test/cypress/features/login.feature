@@ -32,28 +32,28 @@ Feature: Login
 
   Scenario: Log in to Mainnet (Network switcher is not enabled)
     Given I am on Login page
-    When I explore as guest
+    When I am on dashboard page
     Then I should be connected to network mainnet
 
   Scenario: Log in to Mainnet (Network switcher is enabled)
     Given showNetwork setting is true
     Given I am on Login page
     When I choose mainnet
-    When I explore as guest
+    When I am on dashboard page
     Then I should be connected to network mainnet
 
   Scenario: Log in to Testnet
     Given showNetwork setting is true
     Given I am on Login page
     When I choose testnet
-    When I explore as guest
+    When I am on dashboard page
     Then I should be connected to network testnet
 
   Scenario: Log in to devnet
     Given showNetwork setting is true
     Given I am on Login page
     When I choose devnet
-    When I explore as guest
+    When I am on dashboard page
     Then I should be connected to network devnet
 
 

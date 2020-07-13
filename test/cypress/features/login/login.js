@@ -62,10 +62,6 @@ Given(/^showNetwork setting is true$/, function () {
   cy.addObjectToLocalStorage('settings', 'showNetwork', true);
 });
 
-When(/^I explore as guest$/, function () {
-  cy.get(ss.exploreAsGuestBtn).click();
-});
-
 Given(/^I choose ([^\s]+)$/, function (networkName) {
   switch (networkName) {
     case 'mainnet':
