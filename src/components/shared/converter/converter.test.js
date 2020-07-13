@@ -28,16 +28,6 @@ describe('Converter', () => {
     expect(wrapper.find('.price')).to.include.text(props.settings.currency);
   });
 
-  it('should use USD if no settings.currency', () => {
-    const noSettingsProps = {
-      ...props,
-      settings: {},
-    };
-    wrapper = mount(<Converter {...noSettingsProps} />);
-    expect(wrapper.find('.price')).to.include.text(props.priceTicker.LSK.USD);
-    expect(wrapper.find('.price')).to.include.text('USD');
-  });
-
   it('should render 0.00 if value is NaN and has error', () => {
     const invalidProps = {
       ...props,
