@@ -67,7 +67,7 @@ class Login extends React.Component {
 
   getReferrerRoute() {
     const search = parseSearchParams(this.props.history.location.search);
-    const queryParams = this.props.history.location.search.replace(/^\?referrer=[\w+\/]+&/, '');
+    const queryParams = this.props.history.location.search.replace(/^\?referrer=[\w+/]+&/, '');
     return search.referrer ? `${search.referrer}?${queryParams}` : routes.dashboard.path;
   }
 
