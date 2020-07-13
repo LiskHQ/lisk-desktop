@@ -17,13 +17,13 @@ Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
   );
   switch (networkName) {
     case 'mainnet':
-      cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
+      cy.get(ss.networkStatus).should('have.text', 'Connected to:mainnet');
       break;
     case 'testnet':
-      cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(accounts['testnet_guy'].balance));
+      cy.get(ss.networkStatus).should('have.text', 'Connected to:testnet');
       break;
     case 'devnet':
-      cy.get(ss.headerBalance).should('contain', castNumberToBalanceString(accounts.genesis.balance).substring(0, 3));
+      cy.get(ss.networkStatus).should('contain', 'Connected to:devnet');
       break;
     default:
       throw new Error(`Network should be one of : mainnet , testnet, devnet. Was: ${networkName}`);
