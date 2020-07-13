@@ -15,7 +15,7 @@ import PassphraseInput from '../../toolbox/passphraseInput';
 import Piwik from '../../../utils/piwik';
 import DiscreetModeToggle from '../../shared/discreetModeToggle';
 import Icon from '../../toolbox/icon/index';
-import NetworkSelector from '../../shared/navigationBars/topBar/networkSelector';
+import NetworkSelector from './networkSelector';
 import styles from './login.css';
 
 class Login extends React.Component {
