@@ -96,6 +96,10 @@ Then(/^I should not see pending transaction$/, function () {
   cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('be.not.visible');
 });
 
+Then(/^I see this title: (.*?)$/, function (title) {
+  cy.get(ss.app).contains(title);
+});
+
 Then(/^The latest transaction is (.*?)$/, function (transactionType) {
   cy.wait(1000);
   if (transactionType.toLowerCase().indexOf('transfer') > -1) {
