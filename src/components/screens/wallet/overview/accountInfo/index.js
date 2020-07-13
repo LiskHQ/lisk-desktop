@@ -1,12 +1,9 @@
 import React, { useMemo } from 'react';
 import QRCode from 'qrcode.react';
 import AccountVisual from '../../../../toolbox/accountVisual';
-import { PrimaryButton } from '../../../../toolbox/buttons/button';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
 import Icon from '../../../../toolbox/icon';
-import BookmarkDropdown from '../../../bookmarks/bookmarkDropdown';
-import DropdownButton from '../../../../toolbox/dropdownButton';
 import CopyToClipboard from '../../../../toolbox/copyToClipboard';
 import { getAddress } from '../../../../../utils/hwManager';
 import styles from './accountInfo.css';
