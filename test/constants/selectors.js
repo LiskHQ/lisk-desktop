@@ -50,7 +50,7 @@ const ss = {
   requestLink: '.request-link',
   backButton: '.back',
   walletTab: 'li[data-value=\'Wallet\']',
-  votesTab: 'li[data-value=\'Votes\']',
+  votesTab: 'li[data-value=\'Voting\']',
   delegateStatisticsTab: '.delegate-statistics ',
   votedAddress: '.votes .voter-address',
   voteRow: '.vote-row',
