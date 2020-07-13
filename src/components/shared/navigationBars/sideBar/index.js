@@ -9,7 +9,7 @@ import styles from './sideBar.css';
 import Piwik from '../../../../utils/piwik';
 import { accountLoggedOut, timerReset } from '../../../../actions/account';
 import DialogLink from '../../../toolbox/dialog/link';
-import AutoSingOut from './autoSingOut';
+import AutoSignOut from './autoSignOut';
 
 const Inner = ({ data, pathname, modal }) => {
   let status = '';
@@ -75,11 +75,12 @@ const SideBar = ({
 }) => {
   const dispatch = useDispatch();
   const items = menuLinks(t);
-  const expireTime = useSelector(state => state.account.expireTime);
   const token = useSelector(state => state.settings.token.active);
   const isLoggedOut = useSelector(state => !state.account.info || !state.account.info[token]);
-  const autoSigOut = useSelector(state => state.settings.autoLog);
+  const expireTime = useSelector(state => state.account.expireTime);
+  const autoSignOut = useSelector(state => state.settings.autoLog);
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
+  const renderAutoSignOut = autoSignOut && expireTime;
 
   return (
     <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
@@ -111,15 +112,15 @@ const SideBar = ({
                   : null
               }
               {
-                autoSigOut ? (
-                  <AutoSingOut
+                renderAutoSignOut && (
+                  <AutoSignOut
                     expireTime={expireTime}
                     onCountdownComplete={() => dispatch(accountLoggedOut())}
                     history={history}
                     resetTimer={() => dispatch(timerReset(new Date()))}
                     t={t}
                   />
-                ) : null
+                )
               }
             </div>
           ))
