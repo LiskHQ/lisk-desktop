@@ -1,4 +1,4 @@
-@import '../../../../../app/mixins.css';
+@import '../../../../app/mixins.css';
 
 .wrapper {
   background: var(--color-white-smoke);

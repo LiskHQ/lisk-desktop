@@ -1,11 +1,11 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import NetworkSelector from './networkSelector';
-import { networkSet } from '../../../../../actions/network';
-import { settingsUpdated } from '../../../../../actions/settings';
-import networks from '../../../../../constants/networks';
-import { tokenMap } from '../../../../../constants/tokens';
-import { getAPIClient } from '../../../../../utils/api/network';
+import { networkSet } from '../../../../actions/network';
+import { settingsUpdated } from '../../../../actions/settings';
+import networks from '../../../../constants/networks';
+import { tokenMap } from '../../../../constants/tokens';
+import { getAPIClient } from '../../../../utils/api/network';
 
 // eslint-disable-next-line complexity
 const mapStateToProps = state => ({
