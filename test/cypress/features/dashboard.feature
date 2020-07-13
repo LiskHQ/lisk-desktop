@@ -4,7 +4,8 @@ Feature: Dashboard
     Given I have a bookmark saved
     Given I am on Dashboard page
     When I click on transactionRow
-    Then I should be on Tx Details page
-    Then I click on goBack
-    When I click on bookmarkAccount
+    Then I see this title: Transaction details
+    Then I click on closeBookmark
+    When I click on bookmarkListToggle
+    Then I click on bookmarkAccount
     Then I should be on Account page
