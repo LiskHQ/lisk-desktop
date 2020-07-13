@@ -31,7 +31,6 @@ export default function Result({
 }
 
 Result.propTypes = {
-  finalCallback: PropTypes.func,
   inputs: PropTypes.object,
   prevStep: PropTypes.func,
   t: PropTypes.func.isRequired,
