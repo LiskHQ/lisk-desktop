@@ -53,7 +53,7 @@ const TokenSelector = ({ token, history }) => {
   return (
     <Icon
       name={`${token.toLowerCase()}Icon`}
-      className={`${styles.toggle} ${activeToken === token ? '' : styles.disabled}`}
+      className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.disabled}`}
       onClick={activateToken}
     />
   );
