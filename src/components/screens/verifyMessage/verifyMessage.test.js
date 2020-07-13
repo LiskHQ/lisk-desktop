@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import VerifyMessage from './verifyMessage';
-import routes from '../../../constants/routes';
 
 describe('VerifyMessage Component', () => {
   const props = {
@@ -36,15 +35,11 @@ ${signature}
   it('should allow to go forward and back', () => {
     const wrapper = mount(<VerifyMessage {...props} />);
     wrapper.find('img.inputs-view-icon').simulate('click');
-    wrapper.find('.continue button').simulate('click');
-    expect(wrapper).toContainExactlyOneMatchingElement('.go-to-dashboard button');
-    wrapper.find('.go-back button').simulate('click');
-    wrapper.find('img.inputs-view-icon').simulate('click');
     expect(wrapper).toContainExactlyOneMatchingElement('.continue button');
     wrapper.find('.continue button').simulate('click');
-    expect(wrapper).toContainExactlyOneMatchingElement('.go-to-dashboard button');
-    wrapper.find('.go-to-dashboard button').simulate('click');
-    expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
+    expect(wrapper).toContainExactlyOneMatchingElement('.go-back button');
+    wrapper.find('.go-back button').simulate('click');
+    expect(wrapper).toContainExactlyOneMatchingElement('.continue button');
   });
 
   it('should allow to verify valid inputs', () => {
