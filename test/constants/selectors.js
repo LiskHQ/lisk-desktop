@@ -239,6 +239,7 @@ const ss = {
   sendLink: '.tx-send-bt',
   closeBookmark: '.dialog-close-button',
   bookmarkListToggle: '.bookmark-list-toggle',
+  settingsMenu: '.settings-toggle',
 };
 
 export default ss;
