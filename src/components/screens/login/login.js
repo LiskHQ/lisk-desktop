@@ -130,7 +130,7 @@ class Login extends React.Component {
               </p>
             </div>
 
-            <form>
+            <form onSubmit={e => e.preventDefault()}>
               {
                 settings.showNetwork ? (
                   <fieldset className={`${styles.inputsHolder}`}>
