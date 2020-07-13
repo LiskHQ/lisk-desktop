@@ -26,7 +26,7 @@ const BalanceInfo = ({
         <h2 className={styles.title}>{t('Balance')}</h2>
         <div className={styles.valuesRow}>
           <DiscreetMode shouldEvaluateForOtherAccounts>
-            <div className={styles.cryptoValue}>
+            <div className={`${styles.cryptoValue} balance-value`}>
               <LiskAmount val={balance} />
               <span>{activeToken}</span>
             </div>
@@ -40,7 +40,7 @@ const BalanceInfo = ({
         <div className={styles.actionRow}>
           <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={{ initialValue }}>
             <PrimaryButton
-              className={`${styles.sendButton} ${styles[activeToken]} send-to-address`}
+              className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
               size="m"
             >
               {sendTitle}
