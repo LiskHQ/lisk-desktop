@@ -1,3 +1,6 @@
+.wrapper {
+  padding: var(--horizontal-padding-l);
+}
 
 .content {
   & > h1 {

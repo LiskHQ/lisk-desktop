@@ -1,11 +1,9 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { SecondaryButton } from '../../toolbox/buttons';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
-import CopyToClipboard from '../../toolbox/copyToClipboard';
 import NotFound from '../../shared/notFound';
 import TransactionVotes from './transactionVotes';
 import routes from '../../../constants/routes';
@@ -14,6 +12,7 @@ import {
   Sender, Recipient, Message, Illustration,
 } from './dataRows';
 import { isEmpty } from '../../../utils/helpers';
+import Dialog from '../../toolbox/dialog/dialog';
 import styles from './transactionDetails.css';
 
 class Transactions extends React.Component {
@@ -41,17 +40,10 @@ class Transactions extends React.Component {
     if (error && isEmpty(transaction.data)) return <NotFound />;
 
     return (
-      <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
+      <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
         <Box width="medium" isLoading={isLoading} className={styles.wrapper}>
           <BoxHeader>
             <h1>{t('Transaction details')}</h1>
-            <CopyToClipboard
-              value={this.getLinkToCopy()}
-              text={t('Copy link')}
-              Container={SecondaryButton}
-              containerProps={{ size: 'xs' }}
-              copyClassName={styles.copyIcon}
-            />
           </BoxHeader>
           <BoxContent className={styles.mainContent}>
             <Illustration transaction={data} />
@@ -83,7 +75,7 @@ class Transactions extends React.Component {
             <TransactionVotes transaction={data} t={t} delegates={delegates} />
           </BoxContent>
         </Box>
-      </div>
+      </Dialog>
     );
   }
 }

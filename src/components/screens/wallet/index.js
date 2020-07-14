@@ -64,7 +64,7 @@ const Wallet = ({ t, history }) => {
 
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
-    if (params.wallet !== undefined && params.recipient !== undefined) {
+    if (params.recipient !== undefined) {
       DialogHolder.showDialog(<Send initialValue={params} />);
     }
   }, []);

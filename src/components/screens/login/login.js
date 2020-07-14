@@ -15,7 +15,7 @@ import PassphraseInput from '../../toolbox/passphraseInput';
 import Piwik from '../../../utils/piwik';
 import DiscreetModeToggle from '../../shared/discreetModeToggle';
 import Icon from '../../toolbox/icon/index';
-import NetworkSelector from '../../shared/navigationBars/topBar/networkSelector';
+import NetworkSelector from './networkSelector';
 import styles from './login.css';
 
 class Login extends React.Component {
@@ -67,8 +67,8 @@ class Login extends React.Component {
 
   getReferrerRoute() {
     const search = parseSearchParams(this.props.history.location.search);
-    const referrerRoute = search.referrer ? search.referrer : routes.dashboard.path;
-    return referrerRoute;
+    const queryParams = this.props.history.location.search.replace(/^\?referrer=[\w+/]+&?/, '');
+    return search.referrer ? `${search.referrer}${queryParams ? '?' : ''}${queryParams}` : routes.dashboard.path;
   }
 
   redirectToReferrer() {
@@ -130,7 +130,7 @@ class Login extends React.Component {
               </p>
             </div>
 
-            <form>
+            <form onSubmit={e => e.preventDefault()}>
               {
                 settings.showNetwork ? (
                   <fieldset className={`${styles.inputsHolder}`}>

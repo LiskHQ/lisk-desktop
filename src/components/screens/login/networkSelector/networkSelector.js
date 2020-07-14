@@ -5,14 +5,14 @@ import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { to } from 'await-to-js';
-import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
-import { Input } from '../../../../toolbox/inputs';
-import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../../../../utils/login';
-import getNetwork, { getNetworksList } from '../../../../../utils/getNetwork';
-import networks from '../../../../../constants/networks';
+import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
+import { Input } from '../../../toolbox/inputs';
+import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../../../utils/login';
+import getNetwork, { getNetworksList } from '../../../../utils/getNetwork';
+import networks from '../../../../constants/networks';
 import styles from './networkSelector.css';
-import keyCodes from '../../../../../constants/keyCodes';
-import DropdownButton from '../../../../toolbox/dropdownButton';
+import keyCodes from '../../../../constants/keyCodes';
+import DropdownButton from '../../../toolbox/dropdownButton';
 
 class NetworkSelector extends React.Component {
   // eslint-disable-next-line max-statements
@@ -38,7 +38,6 @@ class NetworkSelector extends React.Component {
       connected: true,
     };
 
-    this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
     this.onConnectToCustomNode = this.onConnectToCustomNode.bind(this);
     this.checkNodeStatus = this.checkNodeStatus.bind(this);
     this.onChangeActiveNetwork = this.onChangeActiveNetwork.bind(this);
@@ -169,10 +168,6 @@ class NetworkSelector extends React.Component {
     this.setState({ network });
   }
 
-  handleSettingsToggle() {
-    this.setState({ showSettingDropdown: !this.state.showSettingDropdown });
-  }
-
   onConnectToCustomNode(e) {
     e.stopPropagation();
     this.setState({ isValidationLoading: true });
@@ -289,4 +284,5 @@ class NetworkSelector extends React.Component {
 }
 
 NetworkSelector.displayName = 'NetworkSelector';
+NetworkSelector.whyDidYouRender = true;
 export default withTranslation()(withRouter(NetworkSelector));

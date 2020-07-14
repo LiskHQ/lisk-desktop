@@ -5,13 +5,6 @@ import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../../utils/piwik';
 import routes from '../../../constants/routes';
-import { isEmpty } from '../../../utils/helpers';
-
-const getQueryString = (obj) => {
-  if (!obj || isEmpty(obj)) return '';
-  const keyValues = Object.keys(obj).map(key => `${key}=${obj[key]}`);
-  return encodeURIComponent(keyValues);
-};
 
 // eslint-disable-next-line max-statements
 const CustomRoute = ({
@@ -29,7 +22,7 @@ const CustomRoute = ({
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
-  const { params } = history.location;
+  const { search = '' } = history.location;
 
   if (!networkIsSet) return null;
   Piwik.tracking(history, settings);
@@ -39,7 +32,11 @@ const CustomRoute = ({
   }
 
   if (isPrivate && !isAuthenticated) {
-    return <Redirect to={`${routes.login.path}?referrer=${path}&${getQueryString(params)}`} />;
+    return (
+      <Redirect
+        to={`${routes.login.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(/^\?/, '')}`}
+      />
+    );
   }
 
   return (

@@ -36,11 +36,11 @@ Then(/^I see error message$/, function () {
 });
 
 Given(/^I remember my balance$/, function () {
-  cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
+  cy.get(ss.accountBalance).invoke('text').as('balanceBefore');
 });
 
 Then(/^The balance is subtracted$/, function () {
-  cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
+  cy.get(ss.accountBalance).invoke('text').as('balanceAfter').then(function () {
     compareBalances(this.balanceBefore, this.balanceAfter, 5 + transactionFee);
   });
 });
