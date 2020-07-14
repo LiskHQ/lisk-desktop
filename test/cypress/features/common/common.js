@@ -142,7 +142,7 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
 Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
   switch (pageName.toLowerCase()) {
     case 'account':
-      cy.get(ss.accountName).contains(identifier);
+      cy.get(ss.accountName).contains(identifier.substr(0, 10));
       break;
     case 'delegates':
       cy.get(ss.accountName).should('have.text', identifier);
