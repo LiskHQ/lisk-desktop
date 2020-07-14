@@ -22,7 +22,7 @@ const CustomRoute = ({
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
-  const { search } = history.location;
+  const { search = '' } = history.location;
 
   if (!networkIsSet) return null;
   Piwik.tracking(history, settings);
