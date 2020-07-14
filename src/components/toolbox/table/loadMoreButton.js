@@ -13,7 +13,7 @@ const LoadMoreButton = ({
   ) return null;
   return (
     <FooterButton
-      className={styles.loadMore}
+      className={`${styles.loadMore} load-more`}
       onClick={onClick}
       disabled={isLoading}
     >
