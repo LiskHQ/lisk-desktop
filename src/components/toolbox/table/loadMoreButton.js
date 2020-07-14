@@ -1,6 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import FooterButton from '../box/footerButton';
+import styles from './table.css';
 
 const LoadMoreButton = ({
   t, onClick, error, dataLength, canLoadMore, isLoading,
@@ -12,7 +13,7 @@ const LoadMoreButton = ({
   ) return null;
   return (
     <FooterButton
-      className="load-more"
+      className={`${styles.loadMore} load-more`}
       onClick={onClick}
       disabled={isLoading}
     >

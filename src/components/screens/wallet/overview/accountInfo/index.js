@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import QRCode from 'qrcode.react';
 import AccountVisual from '../../../../toolbox/accountVisual';
-import { PrimaryButton } from '../../../../toolbox/buttons';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
 import Icon from '../../../../toolbox/icon';
-import BookmarkDropdown from '../../../bookmarks/bookmarkDropdown';
-import DropdownButton from '../../../../toolbox/dropdownButton';
 import CopyToClipboard from '../../../../toolbox/copyToClipboard';
 import { getAddress } from '../../../../../utils/hwManager';
 import styles from './accountInfo.css';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
+import DialogLink from '../../../../toolbox/dialog/link';
 
 const BookmarkIcon = ({ isBookmark }) => (
   <Icon
@@ -19,11 +17,18 @@ const BookmarkIcon = ({ isBookmark }) => (
   />
 );
 
+/* eslint-disable complexity */
 const AccountInfo = ({
-  address, t, activeToken, hwInfo, delegate, isBookmark, publicKey,
+  address, t, activeToken, hwInfo, delegate, isBookmark,
 }) => {
-  const primaryValue = delegate && delegate.username ? delegate.username : address;
-  const secondaryValue = delegate && delegate.username ? address : '';
+  const truncatedAddress = useMemo(
+    () =>
+      `${address.slice(0, 10)}...${address.slice(-3)}`,
+    [address],
+  );
+  const primaryValue = delegate && delegate.username ? delegate.username : truncatedAddress;
+  const secondaryValue = delegate && delegate.username ? truncatedAddress : '';
+  const primaryValueTypeShown = delegate && delegate.username ? 'username' : 'address';
 
   return (
     <Box className={styles.wrapper}>
@@ -35,11 +40,32 @@ const AccountInfo = ({
             size={40}
           />
           <div className={styles.text}>
-            <span className={`${styles.primary} account-primary`}>{primaryValue}</span>
+            <Tooltip
+              tooltipClassName={styles.addressWrapper}
+              className={`${styles.address} showOnRight`}
+              content={<span className={`${styles.primary} account-primary`}>{primaryValue}</span>}
+            >
+              <span className={`${styles.primary} ${styles.addressTooltip}`}>{address}</span>
+            </Tooltip>
+
             {
               secondaryValue
-                ? <span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>
-                : null
+                && (
+                <>
+                  {
+                    primaryValueTypeShown === 'address' ? (
+                      <Tooltip
+                        tooltipClassName={styles.addressWrapper}
+                        className={`${styles.address} showOnRight`}
+                        content={<span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>}
+                      >
+                        <span className={`${styles.primary} ${styles.addressTooltip}`}>{address}</span>
+                      </Tooltip>
+                    )
+                      : <span className={`${styles.secondary} delegate-secondary`}>{secondaryValue}</span>
+                  }
+                </>
+                )
             }
           </div>
         </div>
@@ -63,22 +89,9 @@ const AccountInfo = ({
             </Tooltip>
           </div>
           <div className={styles.helperIcon}>
-            <DropdownButton
-              buttonClassName="bookmark-account-button"
-              className={`${styles.bookmarkDropdown} bookmark-account`}
-              buttonLabel={<BookmarkIcon isBookmark={isBookmark} />}
-              ButtonComponent={PrimaryButton}
-              align="left"
-            >
-              <BookmarkDropdown
-                token={activeToken}
-                delegate={delegate}
-                address={address}
-                publicKey={publicKey}
-                isBookmark={isBookmark}
-                onSubmitClick={() => {}}
-              />
-            </DropdownButton>
+            <DialogLink component="bookmarks">
+              <BookmarkIcon isBookmark={isBookmark} />
+            </DialogLink>
           </div>
           {
             hwInfo

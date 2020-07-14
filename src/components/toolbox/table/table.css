@@ -157,6 +157,12 @@
   animation-fill-mode: forwards;
 }
 
+.loadMore {
+  background-color: white !important;
+  color: var(--color-link-active) !important;
+  font-weight: var(--font-weight-semi-bold) !important;
+}
+
 @keyframes glare {
   0% {
     transform: translateX(-101%);

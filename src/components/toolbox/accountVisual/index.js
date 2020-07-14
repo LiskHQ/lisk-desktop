@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
 import { Gradients, gradientSchemes } from './gradients';
-import Icon from '../icon';
 import generateUniqueId from '../../../utils/generateUniqueId';
 import reg from '../../../utils/regex';
 import styles from './accountVisual.css';
@@ -235,13 +234,7 @@ class AccountVisual extends React.Component {
     }
 
     if (!reg.address.test(address)) {
-      return (
-        <Icon
-          name="btcIcon"
-          className={`${styles.wrapper} ${className}`}
-          style={{ height: newSize, width: newSize }}
-        />
-      );
+      return null;
     }
     const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(newSize);
 

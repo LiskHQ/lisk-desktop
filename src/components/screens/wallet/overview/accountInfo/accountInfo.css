@@ -14,7 +14,7 @@
   }
 
   & .title {
-    @mixin contentLargest semi-bold;
+    @mixin contentLargest normal;
 
     color: var(--color-strong-mystic);
     margin: 0 0 10px;
@@ -34,7 +34,7 @@
       word-wrap: break-word;
 
       & .primary {
-        @mixin headingNormalIntermediate semi-bold;
+        @mixin headingNormalIntermediate normal;
 
         display: block;
       }
@@ -43,6 +43,20 @@
         @mixin contentLargest normal;
 
         opacity: 0.7;
+      }
+
+      & .addressTooltip {
+        font-size: 20px;
+        white-space: nowrap;
+      }
+
+      & .addressWrapper {
+        width: auto;
+        max-width: fit-content;
+      }
+
+      & .address {
+        padding: 10px;
       }
     }
   }
@@ -109,9 +123,9 @@
   & .watermarkLogo {
     opacity: 0.1;
     position: absolute;
-    top: -25px;
-    right: -30px;
-    height: 170px;
+    top: 10px;
+    right: 12px;
+    height: 114px;
     filter: brightness(100);
     z-index: 0;
   }
