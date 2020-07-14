@@ -149,7 +149,7 @@ describe('actions: transactions', () => {
       expect(typeof actionFunction).toBe('function');
     });
 
-    it('should dispatch addNewPendingTransaction action if resolved', async () => {
+    it.skip('should dispatch addNewPendingTransaction action if resolved', async () => {
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: 'test_public-key',
