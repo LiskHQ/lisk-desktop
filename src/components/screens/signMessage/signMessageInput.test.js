@@ -27,8 +27,6 @@ describe('Sign Message Input Component', () => {
 
   it('Should trigger navigation on button clicks', () => {
     const wrapper = setup(props);
-    wrapper.find('button').at(1).simulate('click');
-    expect(props.history.goBack).toHaveBeenCalled();
     wrapper.find('textarea').simulate('change', event);
     wrapper.find('button').at(0).simulate('click');
     expect(props.nextStep).toHaveBeenCalledWith({ message: event.target.value });

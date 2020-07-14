@@ -1,6 +1,6 @@
 import React from 'react';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
 import Tooltip from '../../toolbox/tooltip/tooltip';
@@ -40,14 +40,14 @@ class SignMessageInput extends React.Component {
   }
 
   render() {
-    const { t, history } = this.props;
+    const { t } = this.props;
     const { message } = this.state;
     return (
       <Box>
         <BoxHeader>
           <h1>{t('Sign a message')}</h1>
         </BoxHeader>
-        <BoxContent>
+        <BoxContent className={styles.noPadding}>
           <BoxInfoText>
             <span>{t('The sign message tool allows you to prove ownership of a transaction')}</span>
             <Tooltip className={`${styles.tooltip} showOnBottom`}>
@@ -64,13 +64,10 @@ class SignMessageInput extends React.Component {
             />
           </label>
         </BoxContent>
-        <BoxFooter>
+        <BoxFooter direction="horizontal">
           <PrimaryButton className="next" onClick={this.nextStep}>
             {t('Continue')}
           </PrimaryButton>
-          <TertiaryButton onClick={history.goBack}>
-            {t('Go back')}
-          </TertiaryButton>
         </BoxFooter>
       </Box>
     );

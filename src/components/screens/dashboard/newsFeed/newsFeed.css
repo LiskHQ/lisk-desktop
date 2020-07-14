@@ -1,5 +1,9 @@
 @import '../../../../app/mixins.css';
 
+:root {
+  --vertical-spaces: calc(var(--header-height) + var(--horizontal-padding-l) + 75px);
+}
+
 .emptyNews {
   height: 100%;
   display: flex;
@@ -18,8 +22,7 @@
 .container {
   @mixin customScrollBar;
 
-  min-height: 578px;
-  height: 693px;
+  min-height: calc(100vh - var(--vertical-spaces)); /* stylelint-disable-line unit-whitelist */
 
   & > div {
     height: 100%;

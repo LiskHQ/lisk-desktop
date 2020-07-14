@@ -2,8 +2,6 @@ import { useFakeTimers } from 'sinon';
 import account from './account';
 import accounts from '../../../test/constants/accounts';
 import actionTypes from '../../constants/actions';
-import accountConst from '../../constants/account';
-
 
 describe('Reducer: account(state, action)', () => {
   let state;
@@ -60,11 +58,12 @@ describe('Reducer: account(state, action)', () => {
     const clock = useFakeTimers(new Date('2017-12-29').getTime());
     const action = {
       type: actionTypes.passphraseUsed,
+      data: new Date('2017-12-29T00:00:00.000Z'),
     };
     const changedAccount = account(state, action);
     expect(changedAccount).toEqual({
       ...state,
-      expireTime: clock.now + accountConst.lockDuration,
+      expireTime: new Date('2017-12-29T00:10:00.000Z'),
     });
     clock.restore();
   });
@@ -82,6 +81,7 @@ describe('Reducer: account(state, action)', () => {
     const action = {
       data: {
         delegate: accounts.delegate_candidate,
+        date: new Date(),
       },
       type: actionTypes.accountLoggedIn,
     };

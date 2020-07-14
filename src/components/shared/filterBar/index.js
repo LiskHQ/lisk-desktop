@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { SecondaryButton } from '../../toolbox/buttons/button';
+import { SecondaryButton } from '../../toolbox/buttons';
 import { tokenMap } from '../../../constants/tokens';
 import i18n from '../../../i18n';
 

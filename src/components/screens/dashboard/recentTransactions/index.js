@@ -1,25 +1,23 @@
 // istanbul ignore file
-import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { getActiveTokenAccount } from '../../../../utils/account';
-import { getTransactions } from '../../../../actions/transactions';
-import RecentTransactions from './recentTransactions';
-import removeDuplicateTransactions from '../../../../utils/transactions';
+import { getTransactions } from '../../../../utils/api/transactions';
+import withData from '../../../../utils/withData';
+import RecentTransaction from './recentTransactions';
 
-
-const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
-  bookmarks: state.bookmarks,
-  settings: state.settings,
-  transactions:
-    removeDuplicateTransactions(
-      state.transactions.pending,
-      state.transactions.confirmed,
-    ).slice(0, 5),
-});
-
-const mapDispatchToProps = {
-  getTransactions,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(RecentTransactions));
+export default withData({
+  transactions: {
+    apiUtil: (liskAPIClient, params) => getTransactions(params),
+    getApiParams: (state) => {
+      const token = state.settings.token.active;
+      const address = state.account.info && state.account.info[token]
+        ? state.account.info[token].address : '';
+      return {
+        token,
+        address,
+        networkConfig: state.network,
+      };
+    },
+    defaultData: [],
+    transformResponse: response => response.data.splice(0, 5),
+  },
+})(withTranslation()(RecentTransaction));

@@ -7,7 +7,7 @@ import TransactionSummary from '../../shared/transactionSummary';
 import styles from './secondPassphrase.css';
 
 const SummaryStep = ({
-  t, account, prevStep, nextStep, secondPassphrase, secondPassphraseRegistered, finalCallback,
+  t, account, prevStep, nextStep, secondPassphrase, secondPassphraseRegistered,
 }) => (
   <TransactionSummary
     title={t('Register 2nd passphrase summary')}
@@ -27,19 +27,10 @@ const SummaryStep = ({
                 illustration: 'secondPassphraseSuccess',
                 title: t('2nd passphrase registration submitted'),
                 message: t('You will be notified when your transaction is confirmed.'),
-                primaryButon: {
-                  title: t('Go to wallet'),
-                  className: 'go-to-wallet',
-                  onClick: finalCallback,
-                },
               } : {
                 illustration: 'secondPassphraseError',
                 title: t('2nd passphrase registration failed'),
                 message: t('There was an error on the transaction.'),
-                primaryButon: {
-                  title: t('Go to wallet'),
-                  onClick: finalCallback,
-                },
                 error,
               }),
             });
@@ -53,7 +44,7 @@ const SummaryStep = ({
     }}
     fee={fromRawLsk(Fees.setSecondPassphrase)}
     confirmation={t('I’m aware registering a 2nd passphrase is irreversible and it will be required to confirm transactions.')}
-    classNames={styles.passphraseConfirmation}
+    classNames={`${styles.box} ${styles.passphraseConfirmation}`}
     footerClassName={styles.confirmPassphraseFooter}
   >
     <section>

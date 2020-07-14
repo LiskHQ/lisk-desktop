@@ -1,11 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styles from './signMessage.css';
+import Box from '../../toolbox/box';
+import BoxContent from '../../toolbox/box/content';
+import BoxFooter from '../../toolbox/box/footer';
+import BoxHeader from '../../toolbox/box/header';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
-import { SecondaryButton, TertiaryButton } from '../../toolbox/buttons/button';
-import routes from '../../../constants/routes';
+import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons';
 
 class ConfirmMessage extends React.Component {
   constructor(props) {
@@ -44,37 +46,35 @@ class ConfirmMessage extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, prevStep } = this.props;
     const { copied } = this.state;
     const result = this.sign();
     return (
-      <section>
-        <div className={styles.header}>
-          <h1>{t('Your signed message')}</h1>
-        </div>
-        <div className={styles.result}>
+      <Box>
+        <BoxHeader>
+          <h1>{t('Sign a message')}</h1>
+        </BoxHeader>
+        <BoxContent className={styles.noPadding}>
           <AutoResizeTextarea
-            className={`${styles.textarea} result`}
+            className={`${styles.result} result`}
             value={result}
             readOnly
           />
-        </div>
-        <div className={styles.buttonsHolder}>
+        </BoxContent>
+        <BoxFooter direction="horizontal">
+          <SecondaryButton onClick={prevStep} className={styles.button}>
+            {t('Go back')}
+          </SecondaryButton>
           <CopyToClipboard
             onCopy={this.copy}
             text={result}
           >
-            <SecondaryButton disabled={copied}>
+            <PrimaryButton disabled={copied} className={styles.button}>
               {copied ? t('Copied!') : t('Copy to clipboard')}
-            </SecondaryButton>
+            </PrimaryButton>
           </CopyToClipboard>
-          <Link to={routes.dashboard.path}>
-            <TertiaryButton>
-              {t('Go to Dashboard')}
-            </TertiaryButton>
-          </Link>
-        </div>
-      </section>
+        </BoxFooter>
+      </Box>
     );
   }
 }

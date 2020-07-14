@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import Network from './network';
+import { NetworkPure } from './index';
 import peers from '../../../../../test/constants/peers';
 
 describe('Network Monitor Page', () => {
@@ -11,7 +11,7 @@ describe('Network Monitor Page', () => {
     clearData: jest.fn(),
     urlSearchParams: {},
   };
-  const setup = properties => mount(<Network {...properties} />);
+  const setup = properties => mount(<NetworkPure {...properties} />);
   const emptyPeers = {
     isLoading: false,
     data: [],
@@ -35,13 +35,13 @@ describe('Network Monitor Page', () => {
   });
 
   it('renders the empty state if no peers passed', () => {
-    const wrapper = shallow(<Network {...{ t, peers: emptyPeers, networkStatistics }} />);
+    const wrapper = shallow(<NetworkPure {...{ t, peers: emptyPeers, networkStatistics }} />);
     expect(wrapper.html().match(/empty-state/gm)).toHaveLength(4);
   });
 
   it('shows loading overlay while the API call is being processed', () => {
     const wrapper = shallow(
-      <Network
+      <NetworkPure
         t={t}
         networkStatistics={networkStatistics}
         peers={{
@@ -60,7 +60,7 @@ describe('Network Monitor Page', () => {
   });
 
   it('renders 20 peers', () => {
-    const wrapper = shallow(<Network {...{ t, peers: fullPeers, networkStatistics }} />);
+    const wrapper = shallow(<NetworkPure {...{ t, peers: fullPeers, networkStatistics }} />);
     expect(wrapper.html().match(/peer-row/gm)).toHaveLength(20);
   });
 });

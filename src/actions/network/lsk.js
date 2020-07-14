@@ -13,12 +13,11 @@ import networks from '../../constants/networks';
 //   || AppVersion.includes('rc')
 //     ? '-staging' : '');
 
-const getServerUrl = (networkConfig) => {
-  const { nodeUrl } = networkConfig;
-  if (networkConfig.nethash === Lisk.constants.MAINNET_NETHASH) {
+const getServerUrl = (nodeUrl, nethash) => {
+  if (nethash === Lisk.constants.MAINNET_NETHASH) {
     return 'https://mainnet-service.lisk.io';
   }
-  if (networkConfig.nethash === Lisk.constants.TESTNET_NETHASH) {
+  if (nethash === Lisk.constants.TESTNET_NETHASH) {
     return 'https://testnet-service.lisk.io';
   }
   if (/liskdev.net:\d{2,4}$/.test(nodeUrl)) {
@@ -27,7 +26,7 @@ const getServerUrl = (networkConfig) => {
   if (/\.(liskdev.net|lisk.io)$/.test(nodeUrl)) {
     return nodeUrl.replace(/\.(liskdev.net|lisk.io)$/, $1 => `-service${$1}`);
   }
-  return null;
+  return 'unavailable';
 };
 
 const generateAction = (data, config) => ({
@@ -71,7 +70,7 @@ export const networkSet = data => async (dispatch) => {
     };
     dispatch(generateAction(data, networkConfig));
     dispatch({
-      data: getServerUrl(networkConfig),
+      data: getServerUrl(nodeUrl, nethash),
       type: actionTypes.serviceUrlSet,
     });
   }).catch((error) => {

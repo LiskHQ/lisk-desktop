@@ -4,7 +4,7 @@ import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
-import { PrimaryButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton } from '../../../toolbox/buttons';
 import { fromRawLsk } from '../../../../utils/lsk';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import regex from '../../../../utils/regex';
@@ -111,11 +111,10 @@ class SelectName extends React.Component {
     const isBtnDisabled = !!error || nickname.length === 0 || loading;
 
     return (
-      <Box width="medium">
+      <Box width="medium" className={styles.box}>
         <BoxHeader>
           <h1>{t('Become a delegate')}</h1>
         </BoxHeader>
-
         <BoxContent className={`${styles.container} select-name-container`}>
           <p className={`${styles.description} select-name-text-description`}>
             {
@@ -124,20 +123,17 @@ class SelectName extends React.Component {
             network.`)
             }
           </p>
-
           <p className={`${styles.description} select-name-text-description`}>
             {
               t('The top 101 delegates are able to forge new blocks and receive forging rewards.')
             }
           </p>
-
           <label className={styles.nicknameLabel}>
             {t('Your nickname')}
             <Tooltip>
               <p>{t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}</p>
             </Tooltip>
           </label>
-
           <div>
             <Input
               data-name="delegate-nickname"
@@ -154,16 +150,16 @@ class SelectName extends React.Component {
               feedback={error}
             />
           </div>
-          <BoxFooter>
-            <PrimaryButton
-              onClick={() => nextStep({ nickname })}
-              disabled={isBtnDisabled}
-              className={`${styles.confirmBtn} confirm-btn`}
-            >
-              {t('Go to confirmation')}
-            </PrimaryButton>
-          </BoxFooter>
         </BoxContent>
+        <BoxFooter>
+          <PrimaryButton
+            onClick={() => nextStep({ nickname })}
+            disabled={isBtnDisabled}
+            className={`${styles.confirmBtn} confirm-btn`}
+          >
+            {t('Go to confirmation')}
+          </PrimaryButton>
+        </BoxFooter>
       </Box>
     );
   }

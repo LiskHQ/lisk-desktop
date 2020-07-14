@@ -7,7 +7,7 @@ import LiskAmount from '../../../shared/liskAmount';
 import routes from '../../../../constants/routes';
 import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
-import styles from './accountsTable.css';
+import styles from './accounts.css';
 
 const getOwnerName = (account) => {
   const delegateUsername = account.delegate ? account.delegate.username : '';
@@ -45,7 +45,7 @@ const AccountRow = ({ data, className, supply }) => (
       />
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-3']}`}>
-      <LiskAmount val={data.balance} roundTo={0} token={tokenMap.LSK.key} />
+      <LiskAmount val={data.balance} showInt token={tokenMap.LSK.key} />
     </span>
     <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
       <BalanceShare balance={data.balance} supply={supply} />

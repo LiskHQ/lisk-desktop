@@ -1,13 +1,20 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 444px);
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  position: absolute;
+  top: 0px;
+  left: 222px;
+
+  & .icon {
+    left: 10px;
+  }
+
+  & input {
+    border-width: 0 !important;
+    border-radius: var(--border-radius-box) !important;
+  }
 }
 
 .linear {
@@ -23,8 +30,14 @@
 }
 
 .searchFeedback {
-  @mixin contentNormal;
+  @mixin contentLargest;
 
+  display: block;
+  width: 100%;
   color: var(--color-slate-gray);
-  margin-top: 20px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-box);
+  padding: 30px var(--horizontal-padding-s) var(--horizontal-padding-s);
+  box-sizing: border-box;
+  margin: -10px 0 0;
 }

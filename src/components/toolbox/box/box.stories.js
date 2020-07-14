@@ -6,7 +6,7 @@ import Box from './index';
 import BoxContent from './content';
 import BoxHeader from './header';
 import BoxFooter from './footer';
-import { PrimaryButton, TertiaryButton } from '../buttons/button';
+import { PrimaryButton, TertiaryButton } from '../buttons';
 import BoxTabs from '../tabs';
 import BoxRow from './row';
 import BoxFooterButton from './footerButton';

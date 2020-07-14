@@ -2,13 +2,17 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import Header from './header';
+import { parseSearchParams } from '../../../utils/searchParams';
+import Overview from './overview';
 import { getTransactions } from '../../../actions/transactions';
 import txFilters from '../../../constants/transactionFilters';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from '../../shared/delegate';
 import VotesTab from '../../shared/votes';
-import WalletTab from './walletTab';
+import Transactions from './transactions';
+import { isEmpty } from '../../../utils/helpers';
+import Send from '../send';
+import DialogHolder from '../../toolbox/dialog/holder';
 
 const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
 /**
@@ -28,11 +32,10 @@ const transformParams = params => Object.keys(params)
   }, { filters: {} });
 
 
-const Wallet = ({ t, match, history }) => {
+const Wallet = ({ t, history }) => {
   const dispatch = useDispatch();
   const account = useSelector(state => state.account);
   const activeToken = useSelector(state => state.settings.token.active);
-  const bookmarks = useSelector(state => state.bookmarks);
   const { discreetMode } = useSelector(state => state.settings);
   const { confirmed, pending, count } = useSelector(state => state.transactions);
   const transactions = {
@@ -50,50 +53,56 @@ const Wallet = ({ t, match, history }) => {
   };
 
   useEffect(() => {
-    if (!confirmed.length) {
+    if (!confirmed.length && account.info && !isEmpty(account.info)) {
       transactions.loadData({
         offset: 0,
         limit: 30,
         direction: txFilters.all,
       });
     }
+  }, [account.info]);
+
+  useEffect(() => {
+    const params = parseSearchParams(history.location.search);
+    if (params.recipient !== undefined) {
+      DialogHolder.showDialog(<Send initialValue={params} />);
+    }
   }, []);
 
+
+  if (!account || !account.info || isEmpty(account.info)) return (<div />);
   return (
     <section>
-      <Header
-        bookmarks={bookmarks}
-        address={account.info[activeToken].address}
-        match={match}
-        delegate={account.info[activeToken].delegate}
-        publicKey={account.info[activeToken].publicKey || ''}
+      <Overview
+        isWalletRoute
         activeToken={activeToken}
+        transactions={transactions.data}
+        discreetMode={discreetMode}
+        account={account.info[activeToken]}
         t={t}
       />
       <TabsContainer>
-        <WalletTab
-          t={t}
+        <Transactions
+          transactions={transactions}
+          pending={pending || []}
           host={account.info[activeToken].address}
           activeToken={activeToken}
-          transactions={transactions}
           discreetMode={discreetMode}
-          hwInfo={account.hwInfo}
-          account={account.info[activeToken]}
-          tabName={t('Wallet')}
-          pending={pending}
+          tabName={t('Transactions')}
+          t={t}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
             address={account.info[activeToken].address}
-            tabName={t('Votes')}
+            tabName={t('Voting')}
           />
         ) : null}
         {account.info[activeToken].delegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
-              tabName={t('Delegate')}
+              tabName={t('Delegate profile')}
               account={account.info[activeToken]}
             />
           )

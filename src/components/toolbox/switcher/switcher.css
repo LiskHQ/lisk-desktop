@@ -6,39 +6,43 @@
 
 .options {
   align-self: flex-start;
-  border: 1px solid var(--color-platinum);
-  border-radius: var(--border-radius-standard);
   display: flex;
-  margin: 0 0 32px;
+  margin: 0 0 15px;
   overflow: hidden;
   padding: 0;
 
   & > li {
-    @mixin contentNormal bold;
+    @mixin contentLargest semi-bold;
 
-    align-items: center;
+    align-items: left;
     box-sizing: border-box;
-    background: var(--color-white-smoke);
-    border-left: 1px solid var(--color-platinum);
-    color: var(--color-slate-gray);
+    color: var(--color-blue-gray);
     cursor: pointer;
     display: block;
     list-style: none;
-    padding: 8px 16px;
+    padding: 10px 33px 10px 0;
     text-align: center;
-    min-width: 113px;
     position: relative;
-    transition:
-      background-color var(--animation-speed-fast) linear,
-      color var(--animation-speed-fast) linear;
+    transition: color var(--animation-speed-fast) linear;
 
-    &:first-child {
-      border-left: 0 none;
+    &::after {
+      content: '';
+      display: block;
+      width: 0px;
+      height: 2px;
+      background-color: var(--color-dark-blue);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transition: all var(--animation-speed-fast) linear;
     }
   }
 
   & > .active {
-    background-color: var(--color-white);
-    color: var(--color-ultramarine-blue);
+    color: var(--color-dark-blue);
+
+    &::after {
+      width: 30px;
+    }
   }
 }

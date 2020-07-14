@@ -8,6 +8,8 @@ import regex from '../../../utils/regex';
 import keyCodes from '../../../constants/keyCodes';
 import styles from './searchBar.css';
 import Blocks from './blocks';
+import DialogHolder from '../../toolbox/dialog/holder';
+import TransactionDetails from '../../screens/transactionDetails';
 
 class SearchBar extends React.Component {
   constructor() {
@@ -57,9 +59,12 @@ class SearchBar extends React.Component {
   }
 
   onSelectedRow(type, value) {
-    this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}/${value}`);
+    if (type === 'transactions') {
+      DialogHolder.showDialog(<TransactionDetails transactionId={value} />);
+    } else {
+      this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}/${value}`);
+    }
     this.clearSearch();
-    this.props.onSearchClick();
   }
 
   onKeyPressDownOrUp(action, totalRows) {
@@ -136,8 +141,8 @@ class SearchBar extends React.Component {
     return (
       <div className={`${styles.wrapper} search-bar`}>
         <Input
-          icon="searchInput"
-          size="m"
+          icon="searchActive"
+          size="l"
           data-name="searchInput"
           setRef={setSearchBarRef}
           autoComplete="off"
@@ -145,11 +150,12 @@ class SearchBar extends React.Component {
           name="searchText"
           value={searchTextValue}
           placeholder={t('Search within the network...')}
-          className={`${styles.searchInput} search-input`}
+          className={`${styles.input} search-input`}
+          iconClassName={styles.icon}
           onKeyDown={this.onHandleKeyPress}
           isLoading={suggestions.isLoading || this.timeout}
         />
-        { feedback && <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span> }
+        { feedback ? <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span> : null }
         {
           suggestions.data.addresses.length
             ? (

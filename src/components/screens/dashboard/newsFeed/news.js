@@ -15,7 +15,10 @@ const News = ({
     : <span> {t('Written by')} <b className={styles.author}>{author}</b></span>;
   const iconSource = source === 'twitter_lisk' ? 'newsFeedTwitter' : 'newsFeedBlog';
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className={`${styles.news} news-item`}>
+    <div
+      className={`${styles.news} news-item`}
+      onClick={() => (window.open(url, '_blank', 'rel="noopener noreferrer'))}
+    >
       <div className={styles.header}>
         <Icon name={iconSource} className={styles.icon} />
         <div>
@@ -35,7 +38,7 @@ const News = ({
         // eslint-disable-next-line camelcase
         image_url ? <img className={styles.img} src={image_url} alt={title} /> : null
       }
-    </a>
+    </div>
   );
 };
 

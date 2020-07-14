@@ -45,7 +45,11 @@ const VoteRow = ({
     </div>
     <div className={`${grid['col-sm-4']} ${grid['col-lg-2']}`}>
       <span className={styles.votes}>
-        <LiskAmount val={data.vote || data.voteWeight} token="LSK" roundTo={0} />
+        <LiskAmount
+          val={data.vote || data.voteWeight}
+          token="LSK"
+          showInt
+        />
       </span>
     </div>
   </div>

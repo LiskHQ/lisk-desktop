@@ -9,7 +9,6 @@ import compareBalances from '../../utils/compareBalances';
 const transactionFee = 0.1;
 
 Then(/^I change active token to ([^s]+)$/, function (token) {
-  cy.get(ss.userAccount).click();
   switch (token) {
     case 'LSK':
       cy.get(ss.lskToken).click();

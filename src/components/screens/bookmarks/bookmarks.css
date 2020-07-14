@@ -1,17 +1,19 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+  width: 630px;
+  height: 423px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-box);
+  position: absolute;
+  top: 0;
+  left: 168px;
 
   & .content {
-    width: var(--medium-box-width);
+    width: 100%;
   }
 
   & .emptyState {
-    min-height: 430px;
-
     & > p {
       @mixin headingNormal bold;
 

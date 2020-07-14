@@ -1,14 +1,19 @@
 @import '../../../app/mixins.css';
 
-.settingsHolder {
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-  min-height: 100%;
-  margin: 20px auto;
+.dialogWrapper {
+  max-height: calc(100% - 100px);
+  overflow-y: scroll;
+
+  & .wrapper {
+    & > header {
+      padding-left: var(--horizontal-padding-l);
+      padding-right: var(--horizontal-padding-l);
+    }
+  }
 
   & .content {
+    padding: 0 var(--horizontal-padding-l);
+
     & h2 {
       @mixin contentLargest bold;
 
@@ -34,6 +39,7 @@
   & .link {
     display: inline-block;
     margin-top: 10px;
+    color: var(--color-ultramarine-blue);
   }
 }
 

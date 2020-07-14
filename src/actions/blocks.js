@@ -15,12 +15,15 @@ import { getAPIClient } from '../utils/api/network';
  * @returns {Array} - the list of blocks
  */
 const loadLastBlocks = async (params, networkConfig) => {
-  let blocks = await liskServiceApi.getLastBlocks({ networkConfig }, params);
-  blocks = blocks.data.map(block => ({
-    ...block,
-    timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
-  }));
-  return blocks;
+  const blocks = await liskServiceApi.getLastBlocks({ networkConfig }, params);
+  const total = blocks.meta.total;
+  return {
+    total,
+    list: blocks.data.map(block => ({
+      ...block,
+      timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
+    })),
+  };
 };
 
 // eslint-disable-next-line import/prefer-default-export
@@ -28,14 +31,20 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
   const blocksFetchLimit = 100;
   const networkConfig = getState().network;
 
+  const batch1 = await loadLastBlocks({ limit: blocksFetchLimit }, networkConfig);
+  const batch2 = await loadLastBlocks({
+    offset: blocksFetchLimit, limit: blocksFetchLimit,
+  }, networkConfig);
+
   return dispatch({
     type: actionTypes.olderBlocksRetrieved,
-    data: [
-      ...await loadLastBlocks({ limit: blocksFetchLimit }, networkConfig),
-      ...await loadLastBlocks({
-        offset: blocksFetchLimit, limit: blocksFetchLimit,
-      }, networkConfig),
-    ],
+    data: {
+      list: [
+        ...batch1.list,
+        ...batch2.list,
+      ],
+      total: batch1.total,
+    },
   });
 };
 

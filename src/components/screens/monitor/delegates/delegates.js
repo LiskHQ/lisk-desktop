@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import MonitorHeader from '../header';
 import Overview from './overview';
 import { forgingDataDisplayed, forgingDataConcealed } from '../../../../actions/blocks';
 import { Input } from '../../../toolbox/inputs';
@@ -31,7 +30,7 @@ const DelegatesMonitor = ({
   const [activeTab, setActiveTab] = useState('active');
   const dispatch = useDispatch();
   const forgingTimes = useSelector(state => state.blocks.forgingTimes);
-  const network = useSelector(state => state.network);
+  const totalBlocks = useSelector(state => state.blocks.total);
 
   const handleFilter = ({ target: { value } }) => {
     applyFilters({
@@ -69,17 +68,16 @@ const DelegatesMonitor = ({
 
   return (
     <div>
-      <MonitorHeader />
       <Overview
         chartActiveAndStandby={chartActiveAndStandbyData}
-        chartDelegatesForging={forgingTimes}
         chartRegisteredDelegates={chartRegisteredDelegatesData}
         t={t}
+        totalBlocks={totalBlocks}
+        supply={networkStatus.data.supply}
       />
       <ForgingDetails
         t={t}
-        networkStatus={networkStatus}
-        network={network}
+        chartDelegatesForging={forgingTimes}
       />
       <Box main isLoading={delegates.isLoading || standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className="delegates-table">
@@ -92,7 +90,7 @@ const DelegatesMonitor = ({
               onChange={handleFilter}
               value={filters.search}
               className="filter-by-name"
-              size="xs"
+              size="m"
               placeholder={t('Filter by name...')}
             />
           </span>

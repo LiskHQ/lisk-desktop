@@ -1,0 +1,6 @@
+.wrapper {
+  position: relative;
+  z-index: var(--overlay-index);
+  padding-bottom: var(--horizontal-padding-l);
+  padding-top: 20px;
+}

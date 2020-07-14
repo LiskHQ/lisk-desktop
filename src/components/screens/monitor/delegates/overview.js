@@ -2,36 +2,20 @@
 import React from 'react';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import { DoughnutChart, LineChart } from '../../../toolbox/charts';
+import NumericInfo from './numericInfo';
 import styles from './overview.css';
-
-const getForgingStats = (data) => {
-  const statuses = {
-    forging: 0,
-    awaitingSlot: 0,
-    notForging: 0,
-    missedBlock: 0,
-  };
-  Object.values(data)
-    .forEach((item) => {
-      statuses[item.status]++;
-    });
-  return Object.values(statuses);
-};
+import { fromRawLsk } from '../../../../utils/lsk';
 
 const Overview = ({
   chartActiveAndStandby,
-  chartDelegatesForging,
   chartRegisteredDelegates,
   t,
+  totalBlocks,
+  supply,
 }) => {
-  const delegatesForgedLabels = [
-    t('Forging'),
-    t('Awaiting slot'),
-    t('Not forging'),
-    t('Missed block'),
-  ];
   const getAmountOfDelegatesInTime = () => {
     const totalDelegates = chartActiveAndStandby.data;
     const final = [totalDelegates];
@@ -54,17 +38,17 @@ const Overview = ({
   };
 
   return (
-    <Box>
+    <Box className={styles.wrapper}>
       <BoxHeader>
-        <h1>{t('Overview')}</h1>
+        <h1>{t('Delegates overview')}</h1>
       </BoxHeader>
-      <div className={`${styles.container} ${styles.overview}`}>
+      <BoxContent className={styles.content}>
         <div className={styles.column}>
           {
             typeof chartActiveAndStandby.data === 'number'
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.title}>{t('Delegates')}</h2>
+                  <h2 className={styles.title}>{t('Total')}</h2>
                   <div className={styles.chart}>
                     <DoughnutChart
                       data={{
@@ -94,38 +78,28 @@ const Overview = ({
           }
         </div>
         <div className={styles.column}>
-          {
-            Object.keys(chartDelegatesForging).length
-              ? (
-                <div className={styles.chartBox}>
-                  <h2 className={styles.title}>{t('Delegates Forging Status')}</h2>
-                  <div className={styles.chart}>
-                    <DoughnutChart
-                      data={{
-                        labels: delegatesForgedLabels,
-                        datasets: [
-                          {
-                            label: 'status',
-                            data: getForgingStats(chartDelegatesForging),
-                          },
-                        ],
-                      }}
-                      options={{
-                        tooltips: {
-                          callbacks: {
-                            title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
-                            label(tooltipItem, data) {
-                              return data.datasets[0].data[tooltipItem.index];
-                            },
-                          },
-                        },
-                      }}
-                    />
-                  </div>
-                </div>
-              )
-              : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
-          }
+          <div className={styles.centered}>
+            <h2 className={styles.title}>
+              <span>{t('Forging totals')}</span>
+            </h2>
+            <div className={styles.list}>
+              <NumericInfo
+                title="Total blocks"
+                value={totalBlocks}
+                icon="totalBlocks"
+              />
+              <NumericInfo
+                title="Total transactions"
+                value="1272556"
+                icon="transactionsMonitor"
+              />
+              <NumericInfo
+                title="Total LSK"
+                value={fromRawLsk(supply)}
+                icon="distribution"
+              />
+            </div>
+          </div>
         </div>
         <div className={styles.column}>
           {
@@ -151,7 +125,7 @@ const Overview = ({
               : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
           }
         </div>
-      </div>
+      </BoxContent>
     </Box>
   );
 };

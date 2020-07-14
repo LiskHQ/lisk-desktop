@@ -9,11 +9,11 @@ import CheckBox from '../../toolbox/checkBox';
 import Piwik from '../../../utils/piwik';
 import SecondPassphraseSetting from './secondPassphrase';
 import Select from '../../toolbox/select';
-import accountConfig from '../../../constants/account';
 import links from '../../../constants/externalLinks';
 import settingsConst from '../../../constants/settings';
-import styles from './settings.css';
 import transactionTypes from '../../../constants/transactionTypes';
+import Dialog from '../../toolbox/dialog/dialog';
+import styles from './settings.css';
 
 class Settings extends React.Component {
   constructor() {
@@ -39,11 +39,10 @@ class Settings extends React.Component {
   toggleAutoLog({ target }) {
     Piwik.trackingEvent('Settings', 'button', 'Toggle autoLog');
     const {
-      account, accountUpdated,
+      account, timerReset,
     } = this.props;
     if (target && account.passphrase) {
-      const date = Date.now() + accountConfig.lockDuration;
-      accountUpdated({ expireTime: date });
+      timerReset(new Date());
     }
     this.handleCheckboxChange({ target });
   }
@@ -79,8 +78,8 @@ class Settings extends React.Component {
       element.type === transactionTypes().setSecondPassphrase.code) !== undefined;
 
     return (
-      <div className={styles.settingsHolder}>
-        <Box className={styles.wrapper} width="medium">
+      <Dialog hasClose className={styles.dialogWrapper}>
+        <Box className={styles.wrapper}>
           <BoxHeader>
             <h1>{t('Settings')}</h1>
           </BoxHeader>
@@ -208,7 +207,7 @@ class Settings extends React.Component {
             </section>
           </BoxContent>
         </Box>
-      </div>
+      </Dialog>
     );
   }
 }

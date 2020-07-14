@@ -1,16 +1,17 @@
 import React from 'react';
 import ConfirmMessage from './confirmMessage';
 import MultiStep from '../../shared/multiStep';
-import PageLayout from '../../toolbox/pageLayout';
 import SignMessageInput from './signMessageInput';
+import Dialog from '../../toolbox/dialog/dialog';
+import styles from './signMessage.css';
 
 const SignMessage = ({ account, t, history }) => (
-  <PageLayout width="medium" verticalAlign="middle">
+  <Dialog hasClose className={styles.wrapper}>
     <MultiStep>
       <SignMessageInput t={t} history={history} />
       <ConfirmMessage t={t} account={account} />
     </MultiStep>
-  </PageLayout>
+  </Dialog>
 );
 
 export default SignMessage;

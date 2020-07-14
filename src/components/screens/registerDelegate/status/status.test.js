@@ -21,20 +21,20 @@ describe('Delegate Registration Status', () => {
       confirmed: [],
       broadcastedTransactionsError: [],
     },
-    goBackToDelegates: jest.fn(),
     transactionBroadcasted: jest.fn(),
     t: key => key,
   };
 
   beforeEach(() => {
-    wrapper = mount(<Status {...props} />);
+    wrapper = mount(
+      <Status {...props} />,
+    );
   });
 
   it('renders properly Status component', () => {
     expect(wrapper).toContainMatchingElement('.status-container');
     expect(wrapper).toContainMatchingElement('.result-box-header');
     expect(wrapper).toContainMatchingElement('.body-message');
-    expect(wrapper).toContainMatchingElement('button.go-back-to-delegates');
     expect(wrapper).not.toContainMatchingElement('button.on-retry');
   });
 
@@ -55,23 +55,5 @@ describe('Delegate Registration Status', () => {
     wrapper = mount(<Status {...newProps} />);
 
     expect(props.transactionBroadcasted).toBeCalled();
-    wrapper.setProps({
-      transactions: {
-        confirmed: [{
-          id: 1,
-          account: accounts.genesis,
-          username: 'my_delegate_account',
-          passphrase: accounts.genesis.passphrase,
-          secondPassphrase: null,
-          recipientId: '123123L',
-          amount: 0,
-          timeOffset: 0,
-        }],
-        broadcastedTransactionsError: [],
-      },
-    });
-    wrapper.update();
-    wrapper.find('button.go-back-to-delegates').simulate('click');
-    expect(props.goBackToDelegates).toBeCalled();
   });
 });

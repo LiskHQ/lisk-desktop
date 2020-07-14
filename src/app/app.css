@@ -31,15 +31,20 @@ body {
   align-items: center;
   flex-direction: column;
   z-index: 0;
+  padding-left: var(--side-bar-shrunk-size);
+  box-sizing: border-box;
+  transition: padding-left 200ms ease;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 
   & > section {
-    margin-top: 73px;
+    margin-top: var(--header-height);
     width: 100%;
     opacity: 0;
     transition: all ease 250ms;
     position: relative;
     z-index: -1;
-    height: calc(100% - 73px);
+    height: calc(100% - var(--header-height));
     display: flex;
     flex-direction: column;
     overflow: auto;
@@ -48,6 +53,12 @@ body {
 
   &.loaded > section {
     opacity: 1;
+  }
+}
+
+:global(.expanded) {
+  & + .bodyWrapper {
+    padding-left: var(--side-bar-expanded-size);
   }
 }
 

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import MultiStep from '../../shared/multiStep';
-import PageLayout from '../../toolbox/pageLayout';
 import Result from './result';
 import VerifyMessageInput from './verifyMessageInput';
 import routes from '../../../constants/routes';
+import Dialog from '../../toolbox/dialog/dialog';
+import styles from './verifyMessage.css';
 
 export default function VerifyMessage({
   t, history,
@@ -14,12 +15,12 @@ export default function VerifyMessage({
   }
 
   return (
-    <PageLayout width="medium" verticalAlign="middle">
+    <Dialog hasClose className={styles.wrapper}>
       <MultiStep finalCallback={finalCallback}>
         <VerifyMessageInput t={t} history={history} />
         <Result t={t} />
       </MultiStep>
-    </PageLayout>
+    </Dialog>
   );
 }
 

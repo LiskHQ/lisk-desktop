@@ -10,7 +10,6 @@ describe('LoadingBar Container', () => {
   const props = {
     loading: [],
     markAsLoaded: sinon.spy(),
-    network: {},
     liskAPIClient: '',
   };
 
@@ -28,6 +27,7 @@ describe('LoadingBar Container', () => {
   it('should show ProgresBar if props.loading.length is changed not to be 0', () => {
     const wrapper = mount(<LoadingBar {...props} />);
     wrapper.setProps({ loading: ['test'] });
+    wrapper.update();
     expect(wrapper.find('ProgressBar')).to.be.present();
   });
 
@@ -39,15 +39,23 @@ describe('LoadingBar Container', () => {
   it('should hide ProgresBar after 1 second if props.loading.length is changed to be 0', () => {
     const wrapper = mount(<LoadingBar {...props} />);
     expect(wrapper.find('ProgressBar')).not.to.be.present();
+
     wrapper.setProps({ loading: ['test'] });
+    wrapper.update();
     expect(wrapper.find('ProgressBar')).to.be.present();
+
     wrapper.setProps({ loading: ['test', 'test2'] });
+    wrapper.update();
     expect(wrapper.find('ProgressBar')).to.be.present();
+
     clock.tick(200);
     wrapper.setProps({ loading: [] });
+    wrapper.update();
     expect(wrapper.find('ProgressBar')).to.be.present();
+
     clock.tick(200);
     expect(wrapper.find('ProgressBar')).to.be.present();
+
     clock.tick(650);
     wrapper.update();
     expect(wrapper.find('ProgressBar')).not.to.be.present();

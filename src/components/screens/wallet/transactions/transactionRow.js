@@ -1,16 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useSelector } from 'react-redux';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import { tokenMap } from '../../../../constants/tokens';
 import LiskAmount from '../../../shared/liskAmount';
-import routes from '../../../../constants/routes';
 import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
 import TransactionAddress from '../../../shared/transactionAddress';
 import TransactionAmount from '../../../shared/transactionAmount';
 import Spinner from '../../../toolbox/spinner';
 import TransactionAsset from './txAsset';
+import DialogLink from '../../../toolbox/dialog/link';
 import styles from './transactions.css';
 
 // eslint-disable-next-line complexity
@@ -27,9 +26,10 @@ const TransactionRow = ({
   const isLSK = activeToken === tokenMap.LSK.key;
   const isConfirmed = data.confirmations > 0;
   return (
-    <Link
+    <DialogLink
       className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending} transactions-row`}
-      to={`${routes.transactions.path}/${data.id}`}
+      component="transactionDetails"
+      data={{ transactionId: data.id, token: activeToken }}
     >
       <span className={grid[isLSK ? 'col-xs-4' : 'col-xs-5']}>
         <TransactionTypeFigure
@@ -68,13 +68,14 @@ const TransactionRow = ({
         <TransactionAmount
           host={host}
           token={activeToken}
+          showRounded
           sender={data.senderId}
           recipient={data.recipientId || data.asset.recipientId}
           type={data.type}
           amount={data.amount || data.asset.amount}
         />
       </span>
-    </Link>
+    </DialogLink>
   );
 };
 

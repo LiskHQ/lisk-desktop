@@ -1,0 +1,132 @@
+@import '../../../../../app/mixins.css';
+
+.wrapper {
+  & .content {
+    height: 200px;
+
+    &.LSK {
+      background-color: var(--color-ultramarine-blue);
+    }
+
+    &.BTC {
+      background-color: var(--color-btc);
+    }
+  }
+
+  & .title {
+    @mixin contentLargest normal;
+
+    color: var(--color-strong-mystic);
+    margin: 0 0 10px;
+  }
+
+  & .info {
+    display: flex;
+    flex-flow: row nowrap;
+
+    & .text {
+      position: relative;
+      color: var(--color-strong-mystic);
+      padding-left: 10px;
+      padding-top: 4px;
+      min-height: 53px;
+      max-width: calc(100% - 40px);
+      word-wrap: break-word;
+
+      & .primary {
+        @mixin headingNormalIntermediate normal;
+
+        display: block;
+      }
+
+      & .secondary {
+        @mixin contentLargest normal;
+
+        opacity: 0.7;
+      }
+
+      & .addressTooltip {
+        font-size: 20px;
+        white-space: nowrap;
+      }
+
+      & .addressWrapper {
+        width: auto;
+        max-width: fit-content;
+      }
+
+      & .address {
+        padding: 10px;
+      }
+    }
+  }
+
+  & footer {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 30px 0 0;
+    justify-content: center;
+
+    & .helperIcon {
+      width: 40px;
+      height: 40px;
+      border: solid 1px var(--color-strong-mystic);
+      border-radius: var(--border-radius-standard);
+      margin: 0 15px;
+      box-sizing: border-box;
+      cursor: pointer;
+
+      & > div {
+        & > button {
+          padding: 0;
+          height: auto;
+          width: auto;
+          min-width: 0;
+          background: transparent;
+          line-height: 100%;
+          min-height: 0;
+          box-sizing: border-box;
+        }
+      }
+    }
+
+    & img {
+      &.copyIcon,
+      &.qrCode,
+      &.bookmark,
+      &.verify {
+        filter: brightness(100) !important;
+      }
+    }
+
+    & .copyIcon {
+      padding: 11px;
+    }
+
+    & .qrCode {
+      padding: 10px;
+    }
+
+    & .qrCodeWrapper {
+      width: auto;
+    }
+
+    & .bookmark {
+      padding: 10px;
+    }
+
+    & .verify {
+      padding: 9px 13px 6px;
+    }
+  }
+
+  & .watermarkLogo {
+    opacity: 0.1;
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    height: 114px;
+    filter: brightness(100);
+    z-index: 0;
+  }
+}

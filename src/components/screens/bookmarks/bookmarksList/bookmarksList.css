@@ -1,7 +1,51 @@
 @import '../../../../app/mixins.css';
 
-.box {
+.wrapper {
   width: 100%;
+  display: block !important;
+  padding: 0 !important;
+  border-radius: 6px;
+  overflow: hidden;
+
+  & .header {
+    height: auto;
+    padding: 0;
+
+    & .searchInput {
+      width: 100%;
+      height: 53px;
+      border-radius: 0;
+      border-bottom: solid 1px var(--color-platinum);
+      padding-left: 45px;
+
+      &::placeholder {
+        color: #8a8ca2;
+        font-size: 16px;
+      }
+    }
+
+    & .icon {
+      left: 14px;
+      top: 25px;
+    }
+  }
+
+  & .box {
+    max-height: 370px;
+    overflow-y: scroll;
+    margin-bottom: 0;
+
+    & header {
+      padding-left: var(--horizontal-padding-l);
+      padding-right: var(--horizontal-padding-l);
+    }
+
+    & .plusIcon {
+      filter: brightness(100);
+      vertical-align: middle;
+      margin-right: 7px;
+    }
+  }
 
   & .bookmarkList {
     width: 100%;
@@ -11,7 +55,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 0 20px;
+    padding: 0;
 
     & > .row {
       width: 100%;
@@ -20,16 +64,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 0;
+      padding: 10px var(--horizontal-padding-l);
       cursor: pointer;
       text-decoration: none;
 
-      &:not(:last-child) {
-        border-bottom: 1px solid var(--color-mystic);
-      }
-
       & .editInput {
-        width: 224px;
+        width: 244px;
         padding-right: 40px;
       }
 
@@ -67,14 +107,18 @@
         transition: opacity var(--animation-speed-fast) ease;
 
         & > button {
-          margin-left: 20px;
           min-width: initial;
+          padding: 0 10px;
         }
       }
 
-      &:hover .buttonContainer,
-      &.editting .buttonContainer {
-        opacity: 1;
+      &:hover,
+      &.editting {
+        background-color: var(--color-rows-hover);
+
+        & .buttonContainer {
+          opacity: 1;
+        }
       }
     }
   }

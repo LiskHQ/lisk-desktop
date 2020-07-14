@@ -49,8 +49,8 @@ Given(/^I am on (.*?) page$/, function (page) {
       break;
     case 'delegates':
       cy.visit(urls.delegates);
-      cy.route('/api/delegates**').as('requestDelegate');
-      cy.wait('@requestDelegate');
+      // cy.route('/api/delegates**').as('requestDelegate');
+      // cy.wait('@requestDelegate');
       break;
     case 'wallet':
       cy.route('/api/transactions?*').as('transactions');
@@ -67,7 +67,7 @@ Given(/^I am on (.*?) page$/, function (page) {
       cy.wait('@accountBTC');
       break;
     case 'login':
-      cy.visit('/');
+      cy.visit('/login');
       break;
     default:
       cy.visit(urls[page]);
@@ -94,6 +94,10 @@ Then(/^I should see pending transaction$/, function () {
 
 Then(/^I should not see pending transaction$/, function () {
   cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('be.not.visible');
+});
+
+Then(/^I see this title: (.*?)$/, function (title) {
+  cy.get(ss.app).contains(title);
 });
 
 Then(/^The latest transaction is (.*?)$/, function (transactionType) {
@@ -138,7 +142,7 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
 Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
   switch (pageName.toLowerCase()) {
     case 'account':
-      cy.get(ss.accountAddress).contains(identifier);
+      cy.get(ss.accountName).contains(identifier.substr(0, 10));
       break;
     case 'delegates':
       cy.get(ss.accountName).should('have.text', identifier);

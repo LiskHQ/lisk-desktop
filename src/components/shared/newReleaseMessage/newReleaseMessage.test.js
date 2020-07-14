@@ -8,7 +8,8 @@ describe('New release message banner', () => {
     version: '1.20.1',
     releaseSummary: 'Release Summary',
     releaseNotes: '<h3>Fixed bugs</h3>',
-    onClick: jest.fn(),
+    readMore: jest.fn(),
+    updateNow: jest.fn(),
   };
   let wrapper;
 
@@ -19,7 +20,9 @@ describe('New release message banner', () => {
   it('Should render correctly with all passed props', () => {
     expect(wrapper).not.toIncludeText('Fixed bugs');
     expect(wrapper).toIncludeText('Release Summary');
-    wrapper.find('button').simulate('click');
-    expect(props.onClick).toHaveBeenCalled();
+    wrapper.find('button').at(0).simulate('click');
+    expect(props.updateNow).toHaveBeenCalled();
+    wrapper.find('button').at(1).simulate('click');
+    expect(props.readMore).toHaveBeenCalled();
   });
 });

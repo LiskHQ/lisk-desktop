@@ -1,12 +1,5 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center;
-  height: 100%;
-  align-items: center;
-  overflow: initial;
-  width: 100%;
+.dialogWrapper {
+  max-width: 760px;
 }
 
 .wrapper {
@@ -17,5 +10,6 @@
   background: transparent;
   width: 100%;
   max-width: 720px;
+  padding: 0 var(--horizontal-padding-l);
   height: auto;
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { parseSearchParams } from '../../../../utils/searchParams';
 import FormBtc from './formBtc';
 import FormLsk from './formLsk';
 
@@ -9,12 +8,11 @@ const TokenSpecificFormMap = {
 };
 
 export default function Form(props) {
-  const { token, prevState, history } = props;
+  const { token, prevState, initialValue } = props;
 
-  const getInitialValue = (fieldName) => {
-    const searchParams = parseSearchParams(history.location.search);
-    return prevState && prevState.fields ? prevState.fields[fieldName].value : searchParams[fieldName] || '';
-  };
+  const getInitialValue = fieldName => (
+    prevState && prevState.fields ? prevState.fields[fieldName].value : initialValue[fieldName] || ''
+  );
 
   const TokenSpecificForm = TokenSpecificFormMap[token];
   return <TokenSpecificForm {...props} key={token} getInitialValue={getInitialValue} />;
@@ -22,4 +20,5 @@ export default function Form(props) {
 
 Form.defaultProps = {
   prevState: {},
+  data: {},
 };

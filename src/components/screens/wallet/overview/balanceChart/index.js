@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import Box from '../../../../toolbox/box';
-import BoxHeader from '../../../../toolbox/box/header';
+import BoxContent from '../../../../toolbox/box/content';
 import BoxEmptyState from '../../../../toolbox/box/emptyState';
 import * as ChartUtils from '../../../../../utils/balanceChart';
 import { tokenMap } from '../../../../../constants/tokens';
@@ -36,16 +36,15 @@ const BalanceGraph = ({
         balance,
         address,
         format,
+        token,
       }));
     }
   }, [transactions]);
 
   return (
     <Box className={`${styles.wrapper}`}>
-      <BoxHeader>
-        <h1>{t('{{token}} balance', { token: tokenMap[token].label })}</h1>
-      </BoxHeader>
-      <div className={styles.content}>
+      <BoxContent className={styles.content}>
+        <h2 className={styles.title}>{t('{{token}} balance', { token: tokenMap[token].label })}</h2>
         { data
           ? (
             <LineChart
@@ -61,7 +60,7 @@ const BalanceGraph = ({
             </BoxEmptyState>
           )
           }
-      </div>
+      </BoxContent>
     </Box>
   );
 };

@@ -1,0 +1,45 @@
+@import '../../../../app/mixins.css';
+
+.wrapper {
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 24px;
+
+  /* Message */
+  & > p {
+    @mixin contentNormal semi-bold;
+
+    color: var(--color-blue-gray);
+    margin-left: 8px;
+
+    /* Network name */
+    & > span:last-child {
+      margin-left: 5px;
+      font-weight: var(--font-weight-very-bold);
+      text-transform: capitalize;
+      display: inline-block;
+    }
+  }
+
+  &:last-child {
+    margin-right: 16px;
+  }
+}
+
+.status {
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+}
+
+.online {
+  background-color: #25ca95;
+}
+
+.offline {
+  background-color: red;
+}

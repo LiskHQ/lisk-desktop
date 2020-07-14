@@ -1,13 +1,16 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  height: 100%;
-  justify-content: center;
-  width: 100%;
+  max-width: 720px;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-box);
+
+  & .box {
+    & > header {
+      padding-left: var(--horizontal-padding-l) !important;
+      padding-right: var(--horizontal-padding-l) !important;
+    }
+  }
 
   & > div {
     width: 100%;

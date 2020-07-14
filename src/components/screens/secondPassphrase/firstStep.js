@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
@@ -9,9 +9,9 @@ import htmlStringToReact from '../../../utils/htmlStringToReact';
 import styles from './secondPassphrase.css';
 
 const FirstStep = ({
-  t, goBack, nextStep, account,
+  t, nextStep, account,
 }) => (
-  <Box>
+  <Box className={styles.box}>
     <BoxHeader>
       <h2>{t('Register 2nd passphrase')}</h2>
     </BoxHeader>
@@ -26,19 +26,13 @@ const FirstStep = ({
         paperWalletName="lisk_passphrase_store_safely"
       />
     </BoxContent>
-    <BoxFooter className="summary-footer">
+    <BoxFooter className="summary-footer" direction="horizontal">
       <PrimaryButton
         className={`${styles.confirmBtn} large go-to-confirmation`}
         onClick={nextStep}
       >
         {t('Go to confirmation')}
       </PrimaryButton>
-      <TertiaryButton
-        className={`${styles.editBtn} large go-back`}
-        onClick={goBack}
-      >
-        {t('Go back')}
-      </TertiaryButton>
     </BoxFooter>
   </Box>
 );

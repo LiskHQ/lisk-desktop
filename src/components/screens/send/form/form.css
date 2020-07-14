@@ -12,6 +12,8 @@
 }
 
 .formSection {
+  padding: 0 !important;
+
   & .fieldGroup {
     align-items: flex-start;
     display: flex;

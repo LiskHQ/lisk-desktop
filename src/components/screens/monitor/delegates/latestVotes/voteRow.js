@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
-import routes from '../../../../../constants/routes';
 import { DateTimeFromTimestamp } from '../../../../toolbox/timestamp';
 import LiskAmount from '../../../../shared/liskAmount';
 import AccountVisualWithAddress from '../../../../shared/accountVisualWithAddress';
+import DialogLink from '../../../../toolbox/dialog/link';
 import styles from '../delegates.css';
 
 const VoteRow = ({
@@ -18,9 +17,10 @@ const VoteRow = ({
     .filter(vote => vote.status === '-')
     .map(vote => vote.delegate.username);
   return (
-    <Link
+    <DialogLink
       className={`${grid.row} ${className} ${styles.voteRow} vote-row`}
-      to={`${routes.transactions.path}/${data.id}`}
+      component="transactionDetails"
+      data={{ transactionId: data.id, token: 'LSK' }}
     >
       <span className={grid['col-sm-3']}>
         <AccountVisualWithAddress
@@ -61,7 +61,7 @@ const VoteRow = ({
           ) : null
         }
       </span>
-    </Link>
+    </DialogLink>
   );
 };
 

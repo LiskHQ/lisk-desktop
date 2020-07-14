@@ -17,7 +17,7 @@ const liskServiceGet = ({
   path, transformResponse = x => x, searchParams = {},
 }) => new Promise((resolve, reject) => {
   const { network } = store.getState();
-  if (!network.serviceUrl) {
+  if (network.serviceUrl === 'unavailable') {
     reject(new Error('Lisk Service is not available for this network.'));
   } else {
     popsicle.get(`${network.serviceUrl}${path}?${new URLSearchParams(searchParams)}`)

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Transactions from './transactions';
+import { TransactionsPure } from './index';
 import transactions from '../../../../../test/constants/transactions';
 
 describe('Transactions monitor page', () => {
@@ -29,7 +29,7 @@ describe('Transactions monitor page', () => {
   };
 
   it('should render transactions list', () => {
-    const wrapper = mount(<Transactions {...props} />);
+    const wrapper = mount(<TransactionsPure {...props} />);
     expect(wrapper.find('TransactionRow')).toHaveLength(0);
     wrapper.setProps({
       transactions: transactionsWithData,
@@ -39,7 +39,9 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to load more transactions', () => {
-    const wrapper = mount(<Transactions {... { ...props, transactions: transactionsWithData }} />);
+    const wrapper = mount(<TransactionsPure
+      {... { ...props, transactions: transactionsWithData }}
+    />);
     wrapper.find('button.load-more').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith(
       { offset: transactionsWithData.data.length, sort },
@@ -48,7 +50,7 @@ describe('Transactions monitor page', () => {
 
   it('shows error if API failed', () => {
     const error = 'Loading failed';
-    const wrapper = mount(<Transactions {...props} />);
+    const wrapper = mount(<TransactionsPure {...props} />);
     wrapper.setProps({
       transactions: {
         ...props.transactions,
@@ -60,7 +62,9 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to load more transactions when filtered', () => {
-    const wrapper = mount(<Transactions {...{ ...props, transactions: transactionsWithData }} />);
+    const wrapper = mount(<TransactionsPure
+      {...{ ...props, transactions: transactionsWithData }}
+    />);
 
     wrapper.find('button.filter').simulate('click');
     wrapper.find('input.amountFromInput').simulate('change', { target: { value: amountFrom, name: 'amountFrom' } });
@@ -73,7 +77,9 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to filter transactions by more filters', () => {
-    const wrapper = mount(<Transactions {...{ ...props, transactions: transactionsWithData }} />);
+    const wrapper = mount(<TransactionsPure
+      {...{ ...props, transactions: transactionsWithData }}
+    />);
 
     wrapper.find('button.filter').simulate('click');
     wrapper.find('.more-less-switch').simulate('click');
@@ -87,7 +93,9 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to reverse sort by clicking "Date" header', () => {
-    const wrapper = mount(<Transactions {...{ ...props, transactions: transactionsWithData }} />);
+    const wrapper = mount(<TransactionsPure
+      {...{ ...props, transactions: transactionsWithData }}
+    />);
     wrapper.find('.sort-by.timestamp').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:asc' });
     wrapper.find('.sort-by.timestamp').simulate('click');
@@ -95,27 +103,12 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to clear the filter after filtering by height', () => {
-    const wrapper = mount(<Transactions {...props} />);
+    const wrapper = mount(<TransactionsPure {...props} />);
     wrapper.find('button.filter').simulate('click');
     wrapper.find('.more-less-switch').simulate('click');
     wrapper.find('input.height').simulate('change', { target: { value: height } });
     wrapper.find('form.filter-container').simulate('submit');
     wrapper.find('span.clear-filter').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalled();
-  });
-
-  // This should be handled using css
-  it.skip('should modify address value on window resize', () => {
-    const resizeWindow = (x, y) => {
-      window.innerWidth = x;
-      window.innerHeight = y;
-      window.dispatchEvent(new Event('resize'));
-    };
-
-    const wrapper = mount(<Transactions {...{ ...props, transactions: transactionsWithData }} />);
-    resizeWindow(600, 600);
-    expect(wrapper.find('.addressValue').at(0)).toHaveText('60766...51L');
-    resizeWindow(1500, 800);
-    expect(wrapper.find('.addressValue').at(0)).toHaveText('6076671634347365051L');
   });
 });

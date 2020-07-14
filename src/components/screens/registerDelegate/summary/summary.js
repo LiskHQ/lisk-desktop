@@ -61,7 +61,7 @@ class Summary extends React.Component {
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}
         fee={fromRawLsk(Fees.registerDelegate)}
-        classNames={styles.summaryContainer}
+        classNames={`${styles.box} ${styles.summaryContainer}`}
       >
         <section className="summary-container">
           <label className="nickname-label">{t('Your nickname')}</label>

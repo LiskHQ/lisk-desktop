@@ -3,19 +3,18 @@ import { generatePassphrase } from '../../../utils/passphrase';
 import Fees from '../../../constants/fees';
 import FirstStep from './firstStep';
 import SummaryStep from './summaryStep';
-import routes from '../../../constants/routes';
 import styles from './secondPassphrase.css';
 import ConfirmPassphrase from './confirmPassphrase';
 import TransactionResult from '../../shared/transactionResult';
 import MultiStep from '../../../../libs/multiStep';
+import Dialog from '../../toolbox/dialog/dialog';
+import DialogHolder from '../../toolbox/dialog/holder';
 
 class SecondPassphrase extends React.Component {
   constructor() {
     super();
 
     this.secondPassphrase = generatePassphrase();
-    this.backToPreviousPage = this.backToPreviousPage.bind(this);
-    this.goToWallet = this.goToWallet.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -27,26 +26,17 @@ class SecondPassphrase extends React.Component {
     const { account } = this.props;
     document.body.classList.add('contentFocused');
     if (account.secondPublicKey || account.balance < Fees.setSecondPassphrase) {
-      this.props.history.push(`${routes.settings.path}`);
+      DialogHolder.hideDialog();
     }
-  }
-
-  backToPreviousPage() {
-    this.props.history.goBack();
-  }
-
-  goToWallet() {
-    this.props.history.push(routes.wallet.path);
   }
 
   render() {
     const { t, account, secondPassphraseRegistered } = this.props;
     return (
-      <div className={styles.wrapper}>
-        <MultiStep finalCallback={this.goToWallet}>
+      <Dialog hasClose className={styles.wrapper}>
+        <MultiStep>
           <FirstStep
             t={t}
-            goBack={this.backToPreviousPage}
             account={{
               ...account,
               passphrase: this.secondPassphrase,
@@ -64,7 +54,7 @@ class SecondPassphrase extends React.Component {
           />
           <TransactionResult t={t} />
         </MultiStep>
-      </div>
+      </Dialog>
     );
   }
 }

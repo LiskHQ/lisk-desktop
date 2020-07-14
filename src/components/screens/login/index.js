@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { setDefaults, withTranslation } from 'react-i18next';
-import { getAPIClient } from '../../../utils/api/network';
 import { getActiveTokenAccount } from '../../../utils/account';
 import { login } from '../../../actions/account';
 import { settingsUpdated } from '../../../actions/settings';
@@ -20,7 +19,6 @@ const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   network: state.network,
   settings: state.settings,
-  liskAPIClient: getAPIClient(state.settings.token.active, state.network),
 });
 
 const mapDispatchToProps = {

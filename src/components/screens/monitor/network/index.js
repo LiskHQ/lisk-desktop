@@ -1,13 +1,19 @@
-/* istanbul ignore file */
 import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import Network from './network';
+import Box from '../../../toolbox/box';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
+import Table from '../../../toolbox/table';
+import styles from './network.css';
+import header from './tableHeader';
+import Map from './map';
+import PeerRow from './peerRow';
+import Overview from './overview';
 import withLocalSort from '../../../../utils/withLocalSort';
 import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
-import NotAvailable from '../notAvailable';
 
 /**
  * Compares two version values to and returns
@@ -50,7 +56,50 @@ export const sortByVersion = (a, b, direction = 'desc') => {
   }, 0) * (direction === 'desc' ? -1 : 1);
 };
 
-const ComposedNetwork = compose(
+export const NetworkPure = ({
+  peers, t, changeSort, sort, networkStatistics,
+}) => {
+  /* istanbul ignore next */
+  const handleLoadMore = () => {
+    peers.loadData({ offset: peers.data.length });
+  };
+  const canLoadMore = peers.meta ? peers.data.length < peers.meta.total : false;
+
+  return (
+    <div>
+      <Overview networkStatus={networkStatistics.data} t={t} />
+      <Box main isLoading={peers.isLoading} className="peers-box">
+        <BoxHeader>
+          <div>
+            <h1 className={`${styles.contentHeader} contentHeader`}>
+              {t('Connected peers')}
+            </h1>
+            <Tooltip>
+              <p>{t('The current list only reflects the peers connected to the Lisk Service node.')}</p>
+            </Tooltip>
+          </div>
+        </BoxHeader>
+        <BoxContent className={styles.mapWrapper}>
+          <Map peers={peers.data} />
+        </BoxContent>
+        <BoxContent className={styles.content}>
+          <Table
+            data={peers.data}
+            isLoading={peers.isLoading}
+            row={PeerRow}
+            loadData={handleLoadMore}
+            header={header(changeSort, t)}
+            currentSort={sort}
+            error={peers.error}
+            canLoadMore={canLoadMore}
+          />
+        </BoxContent>
+      </Box>
+    </div>
+  );
+};
+
+export default compose(
   withData({
     networkStatistics: {
       apiUtil: liskService.getNetworkStatistics,
@@ -67,16 +116,4 @@ const ComposedNetwork = compose(
   }),
   withLocalSort('peers', 'height:desc', { version: sortByVersion }),
   withTranslation(),
-)(Network);
-
-const NetworkMonitor = () => {
-  const network = useSelector(state => state.network);
-
-  return (
-    liskService.getLiskServiceUrl(network) === null
-      ? <NotAvailable />
-      : <ComposedNetwork />
-  );
-};
-
-export default NetworkMonitor;
+)(NetworkPure);

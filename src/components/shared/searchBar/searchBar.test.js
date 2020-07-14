@@ -1,10 +1,14 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import keyCodes from '../../../constants/keyCodes';
 import SearchBar from './searchBar';
+import DialogHolder from '../../toolbox/dialog/holder';
 
 describe('SearchBar', () => {
   let wrapper;
+
+  // eslint-disable-next-line no-unused-vars
+  let dialaogWrapper;
 
   const props = {
     t: v => v,
@@ -22,11 +26,14 @@ describe('SearchBar', () => {
       clearData: jest.fn(),
     },
     setSearchBarRef: jest.fn(),
-    onSearchClick: jest.fn(),
   };
 
   beforeEach(() => {
-    wrapper = mount(<SearchBar {...props} />);
+    wrapper = mount(
+      <SearchBar {...props} />,
+    );
+
+    dialaogWrapper = shallow(<DialogHolder />);
   });
 
   it('should render properly SearchBar', () => {
@@ -137,6 +144,5 @@ describe('SearchBar', () => {
     wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
     wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.enter });
     expect(props.suggestions.clearData).toBeCalled();
-    expect(props.onSearchClick).toBeCalled();
   });
 });

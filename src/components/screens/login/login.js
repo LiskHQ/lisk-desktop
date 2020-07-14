@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import i18next from 'i18next';
-
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
@@ -11,11 +10,12 @@ import { extractAddress } from '../../../utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
 import { getNetworksList } from '../../../utils/getNetwork';
 import networks from '../../../constants/networks';
-import { PrimaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons';
 import PassphraseInput from '../../toolbox/passphraseInput';
 import Piwik from '../../../utils/piwik';
 import DiscreetModeToggle from '../../shared/discreetModeToggle';
 import Icon from '../../toolbox/icon/index';
+import NetworkSelector from './networkSelector';
 import styles from './login.css';
 
 class Login extends React.Component {
@@ -58,29 +58,21 @@ class Login extends React.Component {
     i18next.on('languageChanged', getNetworksList);
   }
 
-  componentDidUpdate(prevProps) {
-    const params = parseSearchParams(prevProps.history.location.search);
-    const showNetworkParam = params.showNetwork
-      || params.shownetwork
-      || (this.props.settings && this.props.settings.showNetwork);
-
+  componentDidUpdate() {
     if (this.props.account
-      && this.props.account.address && (showNetworkParam !== 'true' || this.secondIteration)
-      && !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.network)) {
+      && this.props.account.address) {
       this.redirectToReferrer();
     }
   }
 
   getReferrerRoute() {
     const search = parseSearchParams(this.props.history.location.search);
-    const dashboardRoute = `${routes.dashboard.path}`;
-    const referrerRoute = search.referrer ? search.referrer : dashboardRoute;
-    return referrerRoute;
+    const queryParams = this.props.history.location.search.replace(/^\?referrer=[\w+/]+&?/, '');
+    return search.referrer ? `${search.referrer}${queryParams ? '?' : ''}${queryParams}` : routes.dashboard.path;
   }
 
   redirectToReferrer() {
-    const tem = this.getReferrerRoute();
-    this.props.history.replace(tem);
+    this.props.history.replace(this.getReferrerRoute());
   }
 
   alreadyLoggedWithThisAddress(address, prevNetwork) {
@@ -117,7 +109,7 @@ class Login extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t, network } = this.props;
+    const { t, network, settings } = this.props;
     const canHWSignIn = !network.networks.LSK || network.networks.LSK.apiVersion === '2';
 
     return (
@@ -138,21 +130,27 @@ class Login extends React.Component {
               </p>
             </div>
 
-            <form onSubmit={this.onFormSubmit}>
-              <div className={`${styles.inputsHolder}`}>
+            <form onSubmit={e => e.preventDefault()}>
+              {
+                settings.showNetwork ? (
+                  <fieldset className={`${styles.inputsHolder}`}>
+                    <label>{t('Network')}</label>
+                    <NetworkSelector />
+                  </fieldset>
+                ) : null
+              }
+              <fieldset className={`${styles.inputsHolder}`}>
                 <label className={styles.inputLabel}>{t('Passphrase')}</label>
-                <p className={styles.inputText}>{t('Please type in or paste your passphrase below.')}</p>
-
                 <PassphraseInput
                   inputsLength={12}
                   maxInputsLength={24}
                   onFill={this.checkPassphrase}
                 />
-
                 <DiscreetModeToggle className={styles.discreetMode} />
-              </div>
+              </fieldset>
               <div className={`${styles.buttonsHolder}`}>
                 <PrimaryButton
+                  onClick={this.onFormSubmit}
                   className={`${styles.button} login-button`}
                   type="submit"
                   disabled={(this.state.network === networks.customNode.name
@@ -177,13 +175,6 @@ class Login extends React.Component {
 
               </div>
             </form>
-
-            <p className={styles.exploreAsGuest}>
-              {t('Don’t feel like signing in now?')}
-              <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
-                {t('Explore as a guest')}
-              </Link>
-            </p>
           </div>
         </div>
       </React.Fragment>

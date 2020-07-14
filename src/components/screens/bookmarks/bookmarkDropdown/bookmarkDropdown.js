@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getIndexOfBookmark } from '../../../../utils/bookmarks';
 import { Input } from '../../../toolbox/inputs';
-import { PrimaryButton, WarningButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton, WarningButton } from '../../../toolbox/buttons';
 import styles from './bookmarkDropdown.css';
 
 const bookmarkCharLength = 20;
@@ -217,26 +217,25 @@ class Bookmark extends React.Component {
 
     return (
       <section className={`${styles.wrapper}`}>
-        <label className={`${styles.fieldGroup}`}>
-          <span className={`${styles.fieldLabel}`}>{t('Account name')}</span>
-          <span className={`${styles.fieldInput} account-title`}>
-            <Input
-              maxLength={40}
-              autoComplete="off"
-              onChange={this.handleAccountNameChange}
-              name="accountName"
-              value={fields.accountName.value || ''}
-              placeholder={t('ie. Lisker123')}
-              onClick={this.handleInputClick}
-              readOnly={fields.accountName.isReadOnly}
-              className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`}
-              feedback={accountName.feedback}
-              isLoading={accountName.loading}
-              size="xs"
-              status={accountName.error ? 'error' : 'ok'}
-            />
-          </span>
-        </label>
+        <h6>{isBookmark ? t('Edit bookmark') : t('Add bookmark')}</h6>
+        <div className={`${styles.fieldInput} account-title`}>
+          <label className={`${styles.fieldGroup}`}>{t('Account name')}</label>
+          <Input
+            maxLength={40}
+            autoComplete="off"
+            onChange={this.handleAccountNameChange}
+            name="accountName"
+            value={fields.accountName.value || ''}
+            placeholder={t('ie. Lisker123')}
+            onClick={this.handleInputClick}
+            readOnly={fields.accountName.isReadOnly}
+            className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`}
+            feedback={accountName.feedback}
+            isLoading={accountName.loading}
+            size="xs"
+            status={accountName.error ? 'error' : 'ok'}
+          />
+        </div>
         {isBookmark ? (
           <React.Fragment>
             <div className={`${styles.editButtonContainer} ${hasValueChanged ? styles.show : styles.hide}`}>

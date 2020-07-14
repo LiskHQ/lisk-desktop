@@ -5,7 +5,6 @@ import {
 } from '../../actions/account';
 import {
   emptyTransactionsData,
-  getTransactions,
   updateTransactions,
 } from '../../actions/transactions';
 import { fromRawLsk } from '../../utils/lsk';
@@ -20,7 +19,6 @@ import { getFromStorage } from '../../utils/localJSONStorage';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
-import txFilters from '../../constants/transactionFilters';
 import { txAdapter } from '../../utils/api/lsk/adapters';
 
 const updateAccountData = (store) => {
@@ -31,21 +29,6 @@ const updateAccountData = (store) => {
     transactions,
     account,
   }));
-
-  /**
-   * NOTE: dashboard transactionsList are not loaded when rendering the component,
-   *  as this component just reads transactions from state.
-   *  When autologin in, we need to explicitly request the transactions for that account.
-   *
-   *  Ignoring coverage because autologin is a development feature not accessible by end users
-   */
-  /* istanbul ignore if */
-  if (shouldAutoLogIn(getAutoLogInData())) {
-    store.dispatch(getTransactions({
-      address: account.address,
-      filter: txFilters.all,
-    }));
-  }
 };
 
 const getRecentTransactionOfType = (transactionsList, type) => (
@@ -72,14 +55,14 @@ const votePlaced = (store, action) => {
   }
 };
 
-const filterIncommingTransactions = (transactions, account) => transactions.filter(transaction => (
+const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
   transaction
   && transaction.recipientId === account.address
   && transaction.type === transactionTypes().send.code
 ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
-  filterIncommingTransactions(transactions, account).forEach((transaction) => {
+  filterIncomingTransactions(transactions, account).forEach((transaction) => {
     const amount = fromRawLsk(transaction.amount);
     const message = transaction.asset && transaction.asset.data
       ? i18n.t('with message {{message}}', { message: transaction.asset.data })
@@ -140,7 +123,7 @@ const getNetworkFromLocalStorage = () => {
 };
 
 // eslint-disable-next-line max-statements
-const checkNetworkToConnect = (storeSettings) => {
+const checkNetworkToConnect = (showNetwork) => {
   const autologinData = getAutoLogInData();
   let loginNetwork = findMatchingLoginNetwork();
 
@@ -168,7 +151,7 @@ const checkNetworkToConnect = (storeSettings) => {
 
   // istanbul ignore next
   if (!loginNetwork && !autologinData.liskCoreUrl) {
-    if (storeSettings.showNetwork) {
+    if (showNetwork) {
       const currentNetwork = getNetworkFromLocalStorage();
       loginNetwork = {
         name: currentNetwork.name,
@@ -191,22 +174,25 @@ const checkNetworkToConnect = (storeSettings) => {
 
 // eslint-disable-next-line max-statements
 const autoLogInIfNecessary = async (store) => {
-  const actualSettings = store.getState().settings;
-  const autologinData = getAutoLogInData();
-
-  const loginNetwork = checkNetworkToConnect(actualSettings);
+  const {
+    showNetwork, statistics, statisticsRequest, statisticsFollowingDay,
+  } = store.getState().settings;
+  const loginNetwork = checkNetworkToConnect(showNetwork);
 
   store.dispatch(await networkSet(loginNetwork));
   store.dispatch(networkStatusUpdated({ online: true }));
 
+  const autologinData = getAutoLogInData();
   if (shouldAutoLogIn(autologinData)) {
     setTimeout(() => {
       store.dispatch(login({ passphrase: autologinData[settings.keys.loginKey] }));
     }, 500);
   }
 
-  if (!actualSettings.statistics) {
-    analytics.checkIfAnalyticsShouldBeDisplayed({ settings: actualSettings });
+  if (!statistics) {
+    analytics.checkIfAnalyticsShouldBeDisplayed({
+      statisticsRequest, statisticsFollowingDay, statistics,
+    });
   }
 };
 

@@ -68,13 +68,15 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --border-radius-standard: 3px;
   --border-radius-box: 6px;
-  --header-height: 73px;
+  --header-height: 50px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
   --footer-button-width: 400px;
   --main-box-width: 1318px;
   --medium-box-width: 720px;
   --dialog-box-width: 650px;
+  --side-bar-shrunk-size: 60px;
+  --side-bar-expanded-size: 260px;
 
   /*************************
         Padding
@@ -97,6 +99,7 @@ or "warn/action" ineastd of "red/green"
   --color-slate-gray: #70778b;
   --color-blue-gray: #8a8ca2;
   --color-dark-blue: #19224d;
+  --color-ink-blue: #254898;
   --color-ghost: #bec1cd;
   --color-platinum: #e1e3eb;
   --color-mystic: #edf0f5;
@@ -133,7 +136,7 @@ or "warn/action" ineastd of "red/green"
   --color-link-active: #4070f4;
   --color-title-header-box: #4c4c4c;
   --color-link: var(--color-primary-standard);
-  --color-rows-hover: rgba(64, 112, 244, 0.08);
+  --color-rows-hover: var(--color-white-smoke);
   --color-highlight-checkboxes: rgba(64, 112, 244, 0.08);
   --color-onboarding-bg: var(--color-maastricht-blue);
   --color-strong-white: var(--color-white);
@@ -142,6 +145,11 @@ or "warn/action" ineastd of "red/green"
   --color-passphrase-bg: var(--color-white);
   --color-shadow-word-option: var(--color-ultramarine-blue);
   --color-request-textarea: var(--color-white-smoke);
+  --color-active-tab: rgba(64, 112, 244, 0.1);
+  --color-btc: #f7931a;
+  --color-strong-ink-blue: var(--color-ink-blue);
+  --color-top-bar: #101c3d;
+  --color-side-bar: var(--color-maastricht-blue);
 
   /*************************
         Box
@@ -209,10 +217,14 @@ or "warn/action" ineastd of "red/green"
   --color-rows-hover: #1c1c1e;
   --overlay-color: rgba(28, 28, 30, 0.8);
   --color-content-light: #fff;
+  --color-ink-blue: #fff;
   --color-flash-message: var(--color-white-smoke);
   --color-strong-mystic: #edf0f5;
   --color-passphrase-bg: #000;
   --color-dark-blue: var(--color-ultramarine-blue);
   --color-shadow-word-option: var(--color-strong-white);
   --color-request-textarea: #2e2e30;
+  --color-strong-ink-blue: #254898;
+  --color-top-bar: #232325;
+  --color-side-bar: #1c1c1e;
 }

@@ -1,13 +1,10 @@
 /* istanbul ignore file */
-import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Blocks from './blocks';
 import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
-import NotAvailable from '../notAvailable';
 
 const ComposedBlocks = compose(
   withRouter,
@@ -27,14 +24,4 @@ const ComposedBlocks = compose(
   withTranslation(),
 )(Blocks);
 
-const BlocksMonitor = () => {
-  const network = useSelector(state => state.network);
-
-  return (
-    liskService.getLiskServiceUrl(network) === null
-      ? <NotAvailable />
-      : <ComposedBlocks />
-  );
-};
-
-export default BlocksMonitor;
+export default ComposedBlocks;

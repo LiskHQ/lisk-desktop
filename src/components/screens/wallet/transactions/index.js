@@ -15,18 +15,18 @@ import FilterDropdown from './filterDropdown';
 
 const tabsData = (t, activeToken) => {
   const all = {
-    name: t('All transactions'),
+    name: t('All'),
     value: txFilters.all,
     className: 'filter-all',
   };
   const filtered = [
     {
-      name: t('Incoming transactions'),
+      name: t('Incoming'),
       value: txFilters.incoming,
       className: 'filter-in',
     },
     {
-      name: t('Outgoing transactions'),
+      name: t('Outgoing'),
       value: txFilters.outgoing,
       className: 'filter-out',
     },

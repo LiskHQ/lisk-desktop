@@ -6,12 +6,12 @@ import Description from './description';
 import Options from './options';
 import styles from './dialog.css';
 
-const Dialog = ({ children, hasClose }) => (
-  <div className={styles.wrapper}>
+const Dialog = ({ children, hasClose, className }) => (
+  <div className={`${styles.wrapper} ${className}`}>
     {hasClose && (
       <span
         onClick={DialogHolder.hideDialog}
-        className={styles.closeBtn}
+        className={`${styles.closeBtn} dialog-close-button`}
       />
     )}
     {children}

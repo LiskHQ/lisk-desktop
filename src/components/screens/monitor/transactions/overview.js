@@ -8,6 +8,7 @@ import liskService from '../../../../utils/api/lsk/liskService';
 import Box from '../../../toolbox/box';
 import BoxTabs from '../../../toolbox/tabs';
 import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
 import transactionTypes from '../../../../constants/transactionTypes';
 import { DoughnutChart, BarChart } from '../../../toolbox/charts';
 import { fromRawLsk } from '../../../../utils/lsk';
@@ -137,9 +138,9 @@ const Overview = ({ t, txStats }) => {
   };
 
   return (
-    <Box>
+    <Box className={styles.wrapper}>
       <BoxHeader>
-        <h2>{t('Overview')}</h2>
+        <h2>{t('Transactions overview')}</h2>
         <BoxTabs
           tabs={tabs(t)}
           active={activeTab}
@@ -147,7 +148,7 @@ const Overview = ({ t, txStats }) => {
           className={`box-tabs ${styles.tabs}`}
         />
       </BoxHeader>
-      <div className={styles.container}>
+      <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Distribution of transaction types')}</h2>
           <div className={styles.graph}>
@@ -225,7 +226,7 @@ const Overview = ({ t, txStats }) => {
             </aside>
           </div>
         </div>
-      </div>
+      </BoxContent>
     </Box>
   );
 };

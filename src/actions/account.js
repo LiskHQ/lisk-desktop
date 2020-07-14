@@ -9,7 +9,6 @@ import { getConnectionErrorMessage } from './network/lsk';
 import { getTimeOffset } from '../utils/hacks';
 import { loginType } from '../constants/hwConstants';
 import { networkStatusUpdated } from './network';
-import accountConfig from '../constants/account';
 import actionTypes from '../constants/actions';
 import { tokenMap } from '../constants/tokens';
 import { txAdapter } from '../utils/api/lsk/adapters';
@@ -48,6 +47,15 @@ export const accountLoggedOut = () => ({
 });
 
 /**
+ * Fires an action to reset the account automatic sign out timer
+ * @param {Date} date - Current date
+ */
+export const timerReset = date => ({
+  type: actionTypes.timerReset,
+  data: date,
+});
+
+/**
  * Trigger this action to login to an account
  * The login middleware triggers this action
  *
@@ -63,6 +71,12 @@ export const accountLoading = () => ({
   type: actionTypes.accountLoading,
 });
 
+/**
+ * Updated Date on which passphrase was used last.
+ * We determine the inactivity duration to sign out automatically
+ *
+ * @param {Date} data - A native Javascript date object.
+ */
 export const passphraseUsed = data => ({
   type: actionTypes.passphraseUsed,
   data,
@@ -105,7 +119,7 @@ export const secondPassphraseRegistered = ({
         message: (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.'),
       });
     });
-    dispatch(passphraseUsed(passphrase));
+    dispatch(passphraseUsed(new Date()));
   };
 
 /**
@@ -173,9 +187,6 @@ export const updateEnabledTokenAccount = token => async (dispatch, getState) => 
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
   const { network: networkConfig, settings } = getState();
   dispatch(accountLoading());
-  const expireTime = (passphrase && settings.autoLog)
-    ? Date.now() + accountConfig.lockDuration
-    : 0;
 
   const activeTokens = Object.keys(settings.token.list)
     .filter(key => settings.token.list[key]);
@@ -191,7 +202,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
       passphrase,
       loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
       hwInfo: hwInfo || {},
-      expireTime,
+      date: new Date(),
       info,
     }));
   }

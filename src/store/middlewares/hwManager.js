@@ -1,7 +1,7 @@
 // istanbul ignore file
 import React from 'react';
 import { toast } from 'react-toastify';
-import { PrimaryButton } from '../../components/toolbox/buttons/button';
+import { PrimaryButton } from '../../components/toolbox/buttons';
 import { accountLoggedOut, login } from '../../actions/account';
 import {
   getDeviceList,

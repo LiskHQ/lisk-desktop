@@ -8,7 +8,7 @@ import styles from './secondPassphrase.css';
 const ConfirmPassphrase = ({
   t, passphrase, nextStep, prevStep,
 }) => (
-  <Box className={styles.passphraseConfirmation}>
+  <Box className={`${styles.box} ${styles.passphraseConfirmation}`}>
     <BoxHeader>
       <h2>{t('Confirm your 2nd passphrase')}</h2>
     </BoxHeader>
