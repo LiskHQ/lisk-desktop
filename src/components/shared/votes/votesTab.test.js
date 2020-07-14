@@ -65,7 +65,7 @@ describe('Votes Tab Component', () => {
     expect(wrapper).toContainMatchingElements(60, 'VoteRow');
   });
 
-  it('Should go to account page on clicking row', () => {
+  it.skip('Should go to account page on clicking row', () => {
     const votes = [...Array(101)].map((_, i) => ({
       username: `user_${i}`,
       address: `${i}L`,
