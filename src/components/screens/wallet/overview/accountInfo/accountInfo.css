@@ -24,6 +24,8 @@
   & .info {
     display: flex;
     flex-flow: row nowrap;
+    position: relative;
+    z-index: 1;
 
     & .text {
       position: relative;
