@@ -20,7 +20,7 @@ const BookmarkIcon = ({ bookmark }) => (
 
 /* eslint-disable complexity */
 const AccountInfo = ({
-  address, t, activeToken, hwInfo, delegate, bookmark,
+  address, t, activeToken, hwInfo, delegate, bookmark, homeAddress,
 }) => (
   <Box className={styles.wrapper}>
     <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
@@ -55,11 +55,15 @@ const AccountInfo = ({
             <QRCode value={address} size={154} />
           </Tooltip>
         </div>
-        <div className={styles.helperIcon}>
-          <DialogLink component="bookmarks">
-            <BookmarkIcon bookmark={bookmark} />
-          </DialogLink>
-        </div>
+        {
+          homeAddress !== address ? (
+            <div className={styles.helperIcon}>
+              <DialogLink component="bookmarks">
+                <BookmarkIcon bookmark={bookmark} />
+              </DialogLink>
+            </div>
+          ) : null
+        }
         {
           hwInfo
             ? (
