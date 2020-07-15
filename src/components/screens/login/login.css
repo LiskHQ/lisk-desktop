@@ -104,9 +104,11 @@
   max-width: 665px;
   width: 100%;
   border: none;
+  text-align: left;
 
   & > label {
     margin-bottom: 7px;
+    color: var(--color-maastricht-blue);
   }
 }
 
