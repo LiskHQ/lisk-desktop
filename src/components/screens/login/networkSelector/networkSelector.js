@@ -284,5 +284,4 @@ class NetworkSelector extends React.Component {
 }
 
 NetworkSelector.displayName = 'NetworkSelector';
-NetworkSelector.whyDidYouRender = true;
 export default withTranslation()(withRouter(NetworkSelector));
