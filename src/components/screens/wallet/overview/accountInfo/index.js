@@ -65,7 +65,7 @@ const AccountInfo = ({
           ) : null
         }
         {
-          hwInfo
+          hwInfo && homeAddress === address
             ? (
               <div
                 className={`${styles.helperIcon} verify-address`}
