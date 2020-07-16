@@ -146,6 +146,7 @@ or "warn/action" ineastd of "red/green"
   --color-shadow-word-option: var(--color-ultramarine-blue);
   --color-request-textarea: var(--color-white-smoke);
   --color-active-tab: rgba(64, 112, 244, 0.1);
+  --tab-border-color: transparent;
   --color-btc: #f7931a;
   --color-strong-ink-blue: var(--color-ink-blue);
   --color-top-bar: #101c3d;
@@ -227,4 +228,5 @@ or "warn/action" ineastd of "red/green"
   --color-strong-ink-blue: #254898;
   --color-top-bar: #232325;
   --color-side-bar: #1c1c1e;
+  --tab-border-color: #4070f4;
 }
