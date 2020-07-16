@@ -19,12 +19,12 @@ describe('Reducer: searchParams(state, action)', () => {
   });
 
   it('gets the initial state from the url search params', () => {
-    global.window = Object.create(window);
-    Object.defineProperty(window, 'location', {
-      value: {
-        search: '?modal=etc',
-      },
-    });
+    const oldWindow = window.location;
+    delete window.location;
+    window.location = {
+      ...oldWindow,
+      search: '?modal=etc',
+    };
 
     const action = {
       type: 'unknown action',
@@ -35,5 +35,7 @@ describe('Reducer: searchParams(state, action)', () => {
     };
     const initialState = searchParams(undefined, action);
     expect(initialState).toEqual(expected);
+
+    window.location = oldWindow;
   });
 });
