@@ -71,6 +71,7 @@ const actionTypes = {
   forgingTimesRetrieved: 'FORGING_TIME_RETRIEVED',
   forgingDataDisplayed: 'FORGING_DATA_DISPLAYED',
   forgingDataConcealed: 'FORGING_DATA_CONCEALED',
+  modalParamChanged: 'MODAL_PARAM_CHANGED',
 };
 
 export default actionTypes;
