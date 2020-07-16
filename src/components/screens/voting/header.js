@@ -148,9 +148,8 @@ const VotingHeader = ({
             : (
               <div className={`${styles.box} ${styles.signedOut}`}>
                 <h2>
-                  {`${t('Delegates')}`}
+                  {`${t('Voting')}`}
                 </h2>
-                <span className={styles.subTitle}>{t('Vote for who secures the network or becomes a delegate.')}</span>
               </div>
             )
           }
