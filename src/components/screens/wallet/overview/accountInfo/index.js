@@ -20,7 +20,7 @@ const BookmarkIcon = ({ bookmark }) => (
 
 /* eslint-disable complexity */
 const AccountInfo = ({
-  address, t, activeToken, hwInfo, delegate, bookmark, homeAddress,
+  address, t, activeToken, hwInfo, delegate, bookmark, host,
 }) => (
   <Box className={styles.wrapper}>
     <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
@@ -56,7 +56,7 @@ const AccountInfo = ({
           </Tooltip>
         </div>
         {
-          homeAddress !== address ? (
+          host !== address ? (
             <div className={styles.helperIcon}>
               <DialogLink component="bookmarks">
                 <BookmarkIcon bookmark={bookmark} />
@@ -65,7 +65,7 @@ const AccountInfo = ({
           ) : null
         }
         {
-          hwInfo && homeAddress === address
+          hwInfo && host === address
             ? (
               <div
                 className={`${styles.helperIcon} verify-address`}

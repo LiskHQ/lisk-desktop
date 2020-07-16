@@ -26,10 +26,11 @@ const Overview = ({
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );
-  const homeAddress = useSelector(
-    state => state.account
+  const host = useSelector(
+    state => (state.account
+      && state.account.info
       && state.account.info[activeToken]
-      && state.account.info[activeToken].address,
+      && state.account.info[activeToken].address) || '',
   );
 
   return (
@@ -43,7 +44,7 @@ const Overview = ({
           delegate={delegate}
           bookmark={bookmark}
           publicKey={publicKey}
-          homeAddress={homeAddress}
+          host={host}
         />
       </div>
       <div className={`${grid['col-xs-4']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
