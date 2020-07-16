@@ -41,7 +41,7 @@ const App = ({ history }) => {
   return (
     <ThemeContext.Provider value={theme}>
       <OfflineWrapper>
-        <DialogHolder location={history.location} />
+        <DialogHolder history={history} />
         <ToastContainer
           position="bottom-right"
           hideProgressBar
