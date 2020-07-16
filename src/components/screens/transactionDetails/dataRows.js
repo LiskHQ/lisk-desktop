@@ -169,15 +169,15 @@ export const Message = ({
   if (transaction.type !== transactionTypes().send.code || activeToken !== 'LSK') return null;
   return (
     <BoxRow className={styles.message}>
-      <div className={`${styles.detailsWrapper}`}>
+      <div className={`${styles.value}`}>
         <span className={styles.label}>{t('Message')}</span>
-        <div className={`${styles.value} tx-reference`}>
+        <div className="tx-reference">
           {getTxAsset(transaction)}
         </div>
       </div>
-      <div className={`${styles.detailsWrapper}`}>
+      <div className={`${styles.value}`}>
         <span className={styles.label}>{t('Size')}</span>
-        <div className={`${styles.value} tx-size`}>
+        <div className="tx-size">
           {`${sizeOfString(transaction.asset.data)} bytes`}
         </div>
       </div>
