@@ -7,3 +7,4 @@ export { default as service } from './service';
 export { default as settings } from './settings';
 export { default as transactions } from './transactions';
 export { default as voting } from './voting';
+export { default as searchParams } from './searchParams';
