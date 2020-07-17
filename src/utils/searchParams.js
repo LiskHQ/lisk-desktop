@@ -52,3 +52,13 @@ export const appendSearchParams = (search, key, value) => {
 
   return strigifySearchParams(searchParams);
 };
+
+export const showModal = (history, name) => {
+  const newLocation = appendSearchParams(history.location.search, 'modal', name);
+  history.push(newLocation);
+};
+
+export const hideModal = (history) => {
+  const newLocation = history.location.search.replace(/[?|&]modal=\w+/, '');
+  history.push(newLocation);
+};
