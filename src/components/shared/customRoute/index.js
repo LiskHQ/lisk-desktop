@@ -42,7 +42,7 @@ const CustomRoute = ({
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
   const { search = '' } = history.location;
 
-  const { modal: modalQuery, tab: tabQuery } = parseSearchParams(history.location.search);
+  const { modal: modalQuery } = parseSearchParams(history.location.search);
 
   if (!networkIsSet) return null;
   Piwik.tracking(history, settings);
@@ -64,18 +64,17 @@ const CustomRoute = ({
     const Component = modal.component;
     const page = history.location.pathname;
 
-    if (modal.allowedOnlyOnPages) {
-      if (modal.allowedOnlyOnPages.includes(page)) {
+    if (modal.forbiddenOnPages) {
+      if (!modal.forbiddenOnPages.includes(page)) {
         DialogHolder.showDialog(<Component t={t} />, modalQuery);
       }
     } else {
       DialogHolder.showDialog(<Component t={t} />, modalQuery);
     }
+  } else {
+    DialogHolder.hideDialog();
   }
 
-  if (tabQuery) {
-    // save the tab in the state and implement tab activation  in the tables etc through the state
-  }
   return (
     <Content
       t={t}
