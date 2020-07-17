@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './dialog.css';
-import { appendSearchParams } from '../../../utils/searchParams';
 
 class DialogHolder extends React.Component {
   constructor() {
@@ -20,12 +19,6 @@ class DialogHolder extends React.Component {
   }
 
   static hideDialog() {
-    const { history } = this.singletonRef.props;
-    // const searchParams = parseSearchParams(history.location.search);
-    // if (searchParams.modal) {
-    const newLocation = history.location.search.replace(/[?|&]modal=\w+/, '');
-    history.push(newLocation);
-    // }
     this.singletonRef.setState({ dismissed: true });
     document.body.style.overflow = '';
   }
@@ -40,18 +33,12 @@ class DialogHolder extends React.Component {
     }
   }
 
-  static showDialog(dialog, name) {
+  static showDialog(dialog) {
     if (React.isValidElement(dialog)) {
       const setDialog = () => this.singletonRef.setState({
         dismissed: false,
         dialog,
       });
-
-      const { history } = this.singletonRef.props;
-
-      // const newLocation = appendSearchParams(history.location.search, 'modal', name);
-      // console.log(name, newLocation);
-      // history.push(newLocation);
 
       document.body.style.overflow = 'hidden';
       this.singletonRef.setState({
