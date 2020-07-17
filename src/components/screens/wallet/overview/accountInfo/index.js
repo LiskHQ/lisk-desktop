@@ -65,26 +65,24 @@ const AccountInfo = ({
           ) : null
         }
         {
-          hwInfo && host === address
-            ? (
-              <div
-                className={`${styles.helperIcon} verify-address`}
-                onClick={() => getAddress({
-                  deviceId: hwInfo.deviceId,
-                  index: hwInfo.derivationIndex,
-                  showOnDevice: true,
-                })}
+          hwInfo && host === address && (
+            <div
+              className={`${styles.helperIcon} verify-address`}
+              onClick={() => getAddress({
+                deviceId: hwInfo.deviceId,
+                index: hwInfo.derivationIndex,
+                showOnDevice: true,
+              })}
+            >
+              <Tooltip
+                className={`${styles.verify} showOnBottom`}
+                title={t('Verify address')}
+                content={<Icon name="verifyWalletAddressActive" className={styles.qrCodeIcon} />}
               >
-                <Tooltip
-                  className={`${styles.verify} showOnBottom`}
-                  title={t('Verify address')}
-                  content={<Icon name="verifyWalletAddressActive" className={styles.qrCodeIcon} />}
-                >
-                  <span>{t('Verify the address in your hardware wallet device.')}</span>
-                </Tooltip>
-              </div>
-            )
-            : null
+                <span>{t('Verify the address in your hardware wallet device.')}</span>
+              </Tooltip>
+            </div>
+          )
         }
       </footer>
       <Icon
