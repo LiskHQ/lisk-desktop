@@ -155,7 +155,6 @@ export const modals = {
     component: VotingSummary,
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
-    allowedOnlyOnPages: ['voting'],
   },
   settings: {
     path: '/settings',
@@ -200,6 +199,5 @@ export const modals = {
     component: TransactionDetails,
     isPrivate: false,
     forbiddenTokens: [],
-    allowedOnlyOnPages: [''],
   },
 };
