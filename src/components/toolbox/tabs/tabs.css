@@ -27,6 +27,7 @@
       background: var(--color-active-tab);
       color: var(--color-ultramarine-blue);
       border-radius: 18px;
+      border: solid 1px var(--tab-border-color);
     }
   }
 }

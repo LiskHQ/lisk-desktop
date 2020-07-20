@@ -8,6 +8,4 @@ Feature: Send Btc
     And I fill mkakDp2f31btaXdATtAogoqwXcdx1PqqFo in recipientInput field
     And I fill 0.00000001 in amountInput field
     And I go to transfer confirmation
-    And I click on sendButton
-    And I click on closeDialog
-    Then The latest transaction is transfer to mkakDp2f31btaXdATtAogoqwXcdx1PqqFo
+    Then The sendButton button must be active
