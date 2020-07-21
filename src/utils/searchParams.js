@@ -25,11 +25,10 @@ export const parseSearchParams = (search) => {
 export const strigifySearchParams = (params) => {
   const result = [];
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const key of Object.keys(params)) {
+  Object.keys(params).forEach((key) => {
     const value = params[key];
     result.push(`${key}=${value}`);
-  }
+  });
 
   let stringifiedResult = result.join('&');
   if (result.length > 0) {
