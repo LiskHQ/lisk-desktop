@@ -48,7 +48,6 @@ export const strigifySearchParams = (params) => {
 export const appendSearchParams = (search, key, value) => {
   const searchParams = parseSearchParams(search);
   searchParams[key] = value;
-
   return strigifySearchParams(searchParams);
 };
 
@@ -58,13 +57,14 @@ export const appendSearchParams = (search, key, value) => {
  * @param {String} key the key of the param to remove
  */
 export const removeSearchParam = (search, paramToRemove) => {
-  const regex = new RegExp(`[?|&]${paramToRemove}=\\w+`);
-  return search.replace(regex, '');
+  const params = parseSearchParams(search);
+  delete params[paramToRemove];
+  return strigifySearchParams(params);
 };
 
 /**
  * adds a query param to the url and redirects to that url
- * @param {String} search the search string
+ * @param {object} history the search string
  * @param {String} key the key of the param to append
  * @param {String | Number} value the value of the param to append
  */
@@ -75,10 +75,10 @@ export const addSearchParamToUrl = (history, key, value) => {
 
 /**
  * removes a query param to the url and redirects to that url
- * @param {String} search the search string
+ * @param {object} history the search string
  * @param {String} paramToRemove the param ro remove
  */
 export const removeSearchParamFromUrl = (history, paramToRemove) => {
   const newSearchParams = removeSearchParam(history.location.search, paramToRemove);
-  history.push(`${history.location.pathname}?${newSearchParams}`);
+  history.push(`${history.location.pathname}${newSearchParams}`);
 };
