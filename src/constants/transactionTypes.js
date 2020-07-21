@@ -1,12 +1,13 @@
-import store from '../store';
+// import store from '../store';
 
 const defaultApiVersion = '2';
 
 const transactionTypes = (t = str => str) => {
-  const { network } = store.getState();
-  const apiVersion = network.networks && network.networks.LSK
-    ? network.networks.LSK.apiVersion
-    : defaultApiVersion;
+  // const { network } = store.getState();
+  const apiVersion = defaultApiVersion;
+  // const apiVersion = network.networks && network.networks.LSK
+  //   ? network.networks.LSK.apiVersion
+  //   : defaultApiVersion;
   return {
     send: {
       code: 0,

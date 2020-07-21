@@ -5,24 +5,7 @@ import { Redirect, Route } from 'react-router-dom';
 import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../../utils/piwik';
-import routes, { modals } from '../../../constants/routes';
-import { parseSearchParams } from '../../../utils/searchParams';
-import DialogHolder from '../../toolbox/dialog/holder';
-
-const Content = ({
-  t, isPrivate, pathPrefix, path, pathSuffix, component, exact,
-}) => (
-  <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
-    <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
-      <Route
-        path={`${pathPrefix}${path}${pathSuffix}`}
-        exact={exact}
-        key={path}
-        component={component}
-      />
-    </ErrorBoundary>
-  </main>
-);
+import routes from '../../../constants/routes';
 
 // eslint-disable-next-line max-statements
 const CustomRoute = ({
@@ -42,8 +25,6 @@ const CustomRoute = ({
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
   const { search = '' } = history.location;
 
-  const { modal: modalQuery } = parseSearchParams(history.location.search);
-
   if (!networkIsSet) return null;
   Piwik.tracking(history, settings);
 
@@ -59,32 +40,17 @@ const CustomRoute = ({
     );
   }
 
-  if (modalQuery) {
-    const modal = modals[modalQuery];
-    const Component = modal.component;
-    const page = history.location.pathname;
-
-    if (modal.forbiddenOnPages) {
-      if (!modal.forbiddenOnPages.includes(page)) {
-        DialogHolder.showDialog(<Component t={t} />, modalQuery);
-      }
-    } else {
-      DialogHolder.showDialog(<Component t={t} />, modalQuery);
-    }
-  } else {
-    DialogHolder.hideDialog();
-  }
-
   return (
-    <Content
-      t={t}
-      isPrivate={isPrivate}
-      component={component}
-      exact={exact}
-      path={path}
-      pathPrefix={pathPrefix}
-      pathSuffix={pathSuffix}
-    />
+    <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
+      <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
+        <Route
+          path={`${pathPrefix}${path}${pathSuffix}`}
+          exact={exact}
+          key={path}
+          component={component}
+        />
+      </ErrorBoundary>
+    </main>
   );
 };
 
