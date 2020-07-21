@@ -50,4 +50,6 @@ const DialogHolder = ({ history }) => {
   );
 };
 
+DialogHolder.displayName = 'DialogHolder';
+
 export default withRouter(DialogHolder);
