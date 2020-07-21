@@ -50,7 +50,7 @@ class SignMessageInput extends React.Component {
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>
             <span>{t('The sign message tool allows you to prove ownership of a transaction')}</span>
-            <Tooltip className={`${styles.tooltip} showOnBottom`}>
+            <Tooltip className={styles.tooltip} position="bottom">
               <p>{t('Recipients will be able to confirm the transfer  by viewing the signature which verifies the ownership without exposing any sensitive account information.')}</p>
             </Tooltip>
           </BoxInfoText>

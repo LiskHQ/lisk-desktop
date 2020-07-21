@@ -42,7 +42,7 @@ const TotalActions = ({ t, number, fee }) => (
     </figure>
     <h5>
       <span>{`${number} LSK`}</span>
-      <Tooltip className={`${styles.tooltip} showOnBottom`}>
+      <Tooltip className={styles.tooltip} position="bottom">
         <p>{t('Each time you add or remove a vote it is counted as an action. There\'s {{fee}} LSK fee per every 33 actions.', { fee })}</p>
       </Tooltip>
     </h5>

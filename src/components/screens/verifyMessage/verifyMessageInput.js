@@ -145,7 +145,7 @@ export default class VerifyMessageInput extends React.Component {
         <BoxContent className={styles.content}>
           <BoxInfoText>
             {t('Use this tool to verify the validity of a signed message. This allows you to ensure that the person who signed the message was in fact the account owner')}
-            <Tooltip className="showOnBottom">
+            <Tooltip position="bottom">
               <p>{t('If you would like to ensure the ownership of another account, you can send a message via Lisk and request the recipient to sign it.')}</p>
             </Tooltip>
           </BoxInfoText>
