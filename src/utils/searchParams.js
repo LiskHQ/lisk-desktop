@@ -40,12 +40,11 @@ export const strigifySearchParams = (params) => {
 };
 
 /**
- * returns parsed query params from a url
+ * returns adds query param to a url and returns the new url
  * @param {String} search the search string
  * @param {String} key the key of the param to append
  * @param {String | Number} value the value of the param to append
  */
-// eslint-disable-next-line import/prefer-default-export
 export const appendSearchParams = (search, key, value) => {
   const searchParams = parseSearchParams(search);
   searchParams[key] = value;
@@ -53,17 +52,33 @@ export const appendSearchParams = (search, key, value) => {
   return strigifySearchParams(searchParams);
 };
 
+/**
+ * removes query param from a url and returns the new url
+ * @param {String} search the search string
+ * @param {String} key the key of the param to remove
+ */
 export const removeSearchParam = (search, paramToRemove) => {
   const regex = new RegExp(`[?|&]${paramToRemove}=\\w+`);
   return search.replace(regex, '');
 };
 
+/**
+ * adds a query param to the url and redirects to that url
+ * @param {String} search the search string
+ * @param {String} key the key of the param to append
+ * @param {String | Number} value the value of the param to append
+ */
 export const addSearchParamToUrl = (history, key, value) => {
-  const newLocation = appendSearchParams(history.location.search, key, value);
-  history.push(newLocation);
+  const newSearchParams = appendSearchParams(history.location.search, key, value);
+  history.push(`${history.location.pathname}${newSearchParams}`);
 };
 
+/**
+ * removes a query param to the url and redirects to that url
+ * @param {String} search the search string
+ * @param {String} paramToRemove the param ro remove
+ */
 export const removeSearchParamFromUrl = (history, paramToRemove) => {
-  const newLocation = removeSearchParam(history.location.search, paramToRemove);
-  history.push(newLocation);
+  const newSearchParams = removeSearchParam(history.location.search, paramToRemove);
+  history.push(`${history.location.pathname}?${newSearchParams}`);
 };
