@@ -1,20 +1,14 @@
 import React, { useRef } from 'react';
-import DialogHolder from './holder';
-import { modals } from '../../../constants/routes';
+import { withRouter } from 'react-router';
+
+import { addSearchParamToUrl } from '../../../utils/searchParams';
 
 const DialogLink = ({
-  children, component, className, data,
+  children, component, className, history,
 }) => {
   const linkEl = useRef(null);
   const onClick = () => {
-    if (React.isValidElement(component)) {
-      DialogHolder.showDialog(component);
-    }
-
-    if (typeof component === 'string' && modals[component]) {
-      const Content = modals[component].component;
-      DialogHolder.showDialog(<Content {...data} />);
-    }
+    addSearchParamToUrl(history, 'modal', component);
   };
 
   return (
@@ -22,4 +16,4 @@ const DialogLink = ({
   );
 };
 
-export default DialogLink;
+export default withRouter(DialogLink);

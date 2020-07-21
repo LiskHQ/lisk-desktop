@@ -1,87 +1,53 @@
-import React from 'react';
+import React, {
+  useState, useRef, useMemo,
+} from 'react';
+import { withRouter } from 'react-router';
 import styles from './dialog.css';
+import { modals } from '../../../constants/routes';
+import { parseSearchParams, removeSearchParamFromUrl } from '../../../utils/searchParams';
 
-class DialogHolder extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      dialog: null,
-      dismissed: false,
-    };
+const DialogHolder = ({ history }) => {
+  const modalName = useMemo(() => {
+    const { modal = '' } = parseSearchParams(history.location.search);
+    return modals[modal] ? modal : undefined;
+  }, [history.location.search]);
 
-    this.animationEnd = this.animationEnd.bind(this);
-    this.backdropClick = this.backdropClick.bind(this);
-    this.backdropRef = React.createRef();
+  const backdropRef = useRef();
+  const [dismissed, setDismissed] = useState(true);
 
-    DialogHolder.singletonRef = this;
-    DialogHolder.hideDialog = DialogHolder.hideDialog.bind(DialogHolder);
-    DialogHolder.showDialog = DialogHolder.showDialog.bind(DialogHolder);
-  }
+  const onBackDropClick = (e) => {
+    if (e.target === backdropRef.current) {
+      removeSearchParamFromUrl(history, 'modal');
+    }
+  };
 
-  static hideDialog() {
-    this.singletonRef.setState({ dismissed: true });
-    document.body.style.overflow = '';
-  }
-
-  animationEnd() {
-    const { dismissed } = this.state;
+  const onAnimationEnd = () => {
     if (dismissed) {
-      this.setState({
-        dialog: null,
-        dismissed: false,
-      });
+      setDismissed(false);
     }
-  }
+  };
 
-  static showDialog(dialog) {
-    if (React.isValidElement(dialog)) {
-      const setDialog = () => this.singletonRef.setState({
-        dismissed: false,
-        dialog,
-      });
-
+  const ModalComponent = useMemo(() => {
+    if (modalName) {
+      setDismissed(false);
       document.body.style.overflow = 'hidden';
-      this.singletonRef.setState({
-        dismissed: true,
-        dialog: null,
-      }, setDialog);
-      return true;
+      return modals[modalName].component;
     }
-    return false;
-  }
+    setDismissed(true);
+    document.body.style.overflow = '';
+    return null;
+  }, [modalName]);
 
-  // eslint-disable-next-line class-methods-use-this
-  backdropClick(e) {
-    if (e.target === this.backdropRef.current) {
-      DialogHolder.hideDialog();
-    }
-  }
+  return ModalComponent && (
+    <div
+      ref={backdropRef}
+      className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}
+      onAnimationEnd={onAnimationEnd}
+      onClick={onBackDropClick}
+    >
+      <ModalComponent />
+    </div>
+  );
+};
 
-  componentDidUpdate(prevProps) {
-    if (this.props.history.location !== prevProps.history.location) {
-      DialogHolder.hideDialog();
-    }
-  }
-
-  render() {
-    const { dismissed, position } = this.state;
-    const ChildComponent = this.state.dialog;
-    return React.isValidElement(ChildComponent) && (
-      <div
-        className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}
-        onAnimationEnd={this.animationEnd}
-        onClick={this.backdropClick}
-        ref={this.backdropRef}
-      >
-        <ChildComponent.type
-          {...ChildComponent.props}
-          position={position}
-        />
-      </div>
-    );
-  }
-}
-
-DialogHolder.displayName = 'DialogHolder';
-
-export default DialogHolder;
+export default withRouter(DialogHolder);
