@@ -17,10 +17,6 @@
   padding-bottom: 20px;
 }
 
-.filterTransactionsButton {
-  display: flex;
-}
-
 .submitButton {
   margin: 20px 0;
 }
