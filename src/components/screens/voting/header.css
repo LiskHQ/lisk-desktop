@@ -154,7 +154,7 @@
   height: 40px;
   padding: 19px 0;
 
-  & div,
+  & > div,
   & button {
     height: 40px !important;
     line-height: 40px;
