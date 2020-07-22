@@ -1,4 +1,3 @@
-
 /**
  * returns parsed query params from a url
  * @param {String} search the search string
@@ -41,43 +40,46 @@ export const strigifySearchParams = (params) => {
 /**
  * returns adds query param to a url and returns the new url
  * @param {String} search the search string
- * @param {String} key the key of the param to append
- * @param {String | Number} value the value of the param to append
+ * @param {object} data the key-value dictionary to add
  */
-export const appendSearchParams = (search, key, value) => {
+export const appendSearchParams = (search, data) => {
   const searchParams = parseSearchParams(search);
-  searchParams[key] = value;
+  Object.keys(data).forEach((key) => {
+    searchParams[key] = data[key];
+  });
   return strigifySearchParams(searchParams);
 };
 
 /**
  * removes query param from a url and returns the new url
  * @param {String} search the search string
- * @param {String} key the key of the param to remove
+ * @param {String[]} paramsToRemove an array of param keys to remove
  */
-export const removeSearchParam = (search, paramToRemove) => {
+export const removeSearchParams = (search, paramsToRemove) => {
   const params = parseSearchParams(search);
-  delete params[paramToRemove];
+  paramsToRemove.forEach((key) => {
+    delete params[key];
+  });
   return strigifySearchParams(params);
 };
 
 /**
  * adds a query param to the url and redirects to that url
  * @param {object} history the search string
- * @param {String} key the key of the param to append
- * @param {String | Number} value the value of the param to append
+ * @param {object} data the key-value dictionary to add
  */
-export const addSearchParamToUrl = (history, key, value) => {
-  const newSearchParams = appendSearchParams(history.location.search, key, value);
-  history.push(`${history.location.pathname}${newSearchParams}`);
+export const addSearchParamsToUrl = (history, data = {}) => {
+  const newSearchString = appendSearchParams(history.location.search, data);
+  history.push(`${history.location.pathname}${newSearchString}`);
 };
+
 
 /**
  * removes a query param to the url and redirects to that url
  * @param {object} history the search string
- * @param {String} paramToRemove the param ro remove
+ * @param {String} paramsToRemove the array of params to remove
  */
-export const removeSearchParamFromUrl = (history, paramToRemove) => {
-  const newSearchParams = removeSearchParam(history.location.search, paramToRemove);
-  history.push(`${history.location.pathname}${newSearchParams}`);
+export const removeSearchParamsFromUrl = (history, paramsToRemove) => {
+  const newSearchString = removeSearchParams(history.location.search, paramsToRemove);
+  history.push(`${history.location.pathname}${newSearchString}`);
 };
