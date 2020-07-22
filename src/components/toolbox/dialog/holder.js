@@ -1,11 +1,11 @@
 import React, {
-  useState, useRef, useMemo,
+  useState, useRef, useMemo, useEffect,
 } from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import styles from './dialog.css';
 import { modals } from '../../../constants/routes';
-import { parseSearchParams, removeSearchParamFromUrl } from '../../../utils/searchParams';
+import { parseSearchParams, removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
 // eslint-disable-next-line max-statements
 const DialogHolder = ({ history }) => {
@@ -14,38 +14,13 @@ const DialogHolder = ({ history }) => {
     return modals[modal] ? modal : undefined;
   }, [history.location.search]);
 
-  if (!modalName) {
-    return null;
-  }
-
   const settings = useSelector(state => state.settings);
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
 
-  if (!networkIsSet || modals[modalName].forbiddenTokens.includes(settings.token.active)) {
-    return null;
-  }
-
-  if (modals[modalName].isPrivate && !isAuthenticated) {
-    return null;
-  }
-
   const backdropRef = useRef();
-  const [dismissed, setDismissed] = useState(true);
-
-  const onBackDropClick = (e) => {
-    if (e.target === backdropRef.current) {
-      removeSearchParamFromUrl(history, 'modal');
-    }
-  };
-
-  const onAnimationEnd = () => {
-    if (dismissed) {
-      setDismissed(false);
-    }
-  };
-
+  const [dismissed, setDismissed] = useState(false);
 
   const ModalComponent = useMemo(() => {
     if (modalName) {
@@ -57,6 +32,31 @@ const DialogHolder = ({ history }) => {
     document.body.style.overflow = '';
     return null;
   }, [modalName]);
+
+  if (!modalName) {
+    return null;
+  }
+
+  if (!networkIsSet || modals[modalName].forbiddenTokens.includes(settings.token.active)) {
+    return null;
+  }
+
+  if (modals[modalName].isPrivate && !isAuthenticated) {
+    return null;
+  }
+
+
+  const onBackDropClick = (e) => {
+    if (e.target === backdropRef.current) {
+      removeSearchParamsFromUrl(history, ['modal']);
+    }
+  };
+
+  const onAnimationEnd = () => {
+    if (dismissed) {
+      setDismissed(false);
+    }
+  };
 
   return ModalComponent && (
     <div
