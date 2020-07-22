@@ -1,5 +1,5 @@
 import React, {
-  useState, useRef, useMemo, useEffect,
+  useState, useRef, useMemo,
 } from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
