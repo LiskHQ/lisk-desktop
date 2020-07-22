@@ -5,12 +5,12 @@ import Title from './title';
 import Description from './description';
 import Options from './options';
 import styles from './dialog.css';
-import { removeSearchParamFromUrl } from '../../../utils/searchParams';
+import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
 const Dialog = ({
   children, hasClose, className, history,
 }) => {
-  const onCloseClick = () => removeSearchParamFromUrl(history, 'modal');
+  const onCloseClick = () => removeSearchParamsFromUrl(history, ['modal']);
 
   return (
     <div className={`${styles.wrapper} ${className}`}>

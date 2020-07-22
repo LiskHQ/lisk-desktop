@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { Input } from '../../toolbox/inputs';
 import Accounts from './accounts';
 import Delegates from './delegates';
@@ -8,6 +9,7 @@ import regex from '../../../utils/regex';
 import keyCodes from '../../../constants/keyCodes';
 import styles from './searchBar.css';
 import Blocks from './blocks';
+import { addSearchParamsToUrl } from '../../../utils/searchParams';
 // import DialogHolder from '../../toolbox/dialog/holder';
 // import TransactionDetails from '../../screens/transactionDetails';
 // import { addSearchParamToUrl } from '../../../utils/searchParams';
@@ -61,6 +63,7 @@ class SearchBar extends React.Component {
 
   onSelectedRow(type, value) {
     if (type === 'transactions') {
+      addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails' });
       // DialogHolder.showDialog(<TransactionDetails transactionId={value} />);
     } else {
       this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}/${value}`);
@@ -213,4 +216,4 @@ class SearchBar extends React.Component {
   }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);

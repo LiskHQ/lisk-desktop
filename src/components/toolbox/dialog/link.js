@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
 import { withRouter } from 'react-router';
 
-import { addSearchParamToUrl } from '../../../utils/searchParams';
+import { addSearchParamsToUrl } from '../../../utils/searchParams';
 
 const DialogLink = ({
   children, component, className, history,
 }) => {
   const linkEl = useRef(null);
   const onClick = () => {
-    addSearchParamToUrl(history, 'modal', component);
+    addSearchParamsToUrl(history, { modal: component });
   };
 
   return (
