@@ -1,5 +1,5 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from './votesTab.css';
+import styles from './votes.css';
 
 export default (t, apiVersion) => ([
   {

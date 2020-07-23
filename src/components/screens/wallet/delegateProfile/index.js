@@ -1,8 +1,8 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
-import { getDelegateInfo, getNextForgers } from '../../../utils/api/delegates';
-import DelegateTab from './delegateTab';
-import withData from '../../../utils/withData';
+import { getDelegateInfo, getNextForgers } from '../../../../utils/api/delegates';
+import DelegateProfile from './delegateProfile';
+import withData from '../../../../utils/withData';
 
 const apis = {
   delegate: {
@@ -24,4 +24,4 @@ const apis = {
   },
 };
 
-export default withData(apis)(withTranslation()(DelegateTab));
+export default withData(apis)(withTranslation()(DelegateProfile));

@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import VoteWeight from '../voteWeight';
-import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
-import { getUnixTimestampFromValue } from '../../../utils/datetime';
-import { tokenMap } from '../../../constants/tokens';
-import LiskAmount from '../liskAmount';
-import i18n from '../../../i18n';
-import styles from './delegateTab.css';
+import Box from '../../../toolbox/box';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
+import VoteWeight from '../../../shared/voteWeight';
+import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
+import { getUnixTimestampFromValue } from '../../../../utils/datetime';
+import { tokenMap } from '../../../../constants/tokens';
+import LiskAmount from '../../../shared/liskAmount';
+import i18n from '../../../../i18n';
+import styles from './delegateProfile.css';
 
-const DelegateTab = ({
+const delegateProfile = ({
   delegate, account, t, nextForgers,
 }) => {
   const { apiVersion } = useSelector(state => state.network.networks.LSK);
@@ -91,7 +91,7 @@ const DelegateTab = ({
   );
 };
 
-DelegateTab.propTypes = {
+delegateProfile.propTypes = {
   delegate: PropTypes.shape({
     data: PropTypes.shape({
       account: PropTypes.shape({
@@ -120,7 +120,7 @@ DelegateTab.propTypes = {
   }).isRequired,
 };
 
-DelegateTab.defaultProps = {
+delegateProfile.defaultProps = {
   delegate: {
     data: {
       account: {
@@ -140,4 +140,4 @@ DelegateTab.defaultProps = {
   },
 };
 
-export default withTranslation()(DelegateTab);
+export default withTranslation()(delegateProfile);

@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
-import { delegate } from '../../../../test/constants/accounts';
-import DelegateTab from './delegateTab';
+import { delegate } from '../../../../../test/constants/accounts';
+import DelegateProfile from './delegateProfile';
 
-describe('Delegate Tab', () => {
+describe('Delegate Profile', () => {
   let wrapper;
   const props = {
     delegate: {
@@ -31,7 +31,7 @@ describe('Delegate Tab', () => {
   reactRedux.useSelector = jest.fn().mockImplementation(() => '2');
 
   beforeEach(() => {
-    wrapper = mount(<DelegateTab {...props} />);
+    wrapper = mount(<DelegateProfile {...props} />);
   });
 
   it('Should render active delegate with passed props', () => {
@@ -55,7 +55,7 @@ describe('Delegate Tab', () => {
         },
       },
     };
-    wrapper = mount(<DelegateTab {...newProps} />);
+    wrapper = mount(<DelegateProfile {...newProps} />);
     expect(wrapper.find('.status')).toIncludeText('Standby');
   });
 });
