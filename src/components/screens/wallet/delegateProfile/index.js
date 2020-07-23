@@ -1,18 +1,37 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
-import { getDelegateInfo, getNextForgers } from '../../../../utils/api/delegates';
+import { getNextForgers } from '../../../../utils/api/delegates';
+import { getBlocks } from '../../../../utils/api/blocks';
+import { getTransactions } from '../../../../utils/api/transactions';
 import DelegateProfile from './delegateProfile';
+import transactionTypes from '../../../../constants/transactionTypes';
 import withData from '../../../../utils/withData';
 
 const apis = {
   delegate: {
-    apiUtil: getDelegateInfo,
+    apiUtil: (liskAPIClient, params) => liskAPIClient.delegates.get(params),
     defaultData: {},
     getApiParams: (state, ownProps) => ({
-      address: ownProps.account.address,
-      publicKey: ownProps.account.publicKey,
+      address: ownProps.address,
     }),
-    autoload: true,
+    transformResponse: response => response.data[0],
+  },
+  lastBlock: {
+    apiUtil: getBlocks,
+    defaultData: false,
+    transformResponse: response => (response.data[0] && response.data[0].timestamp),
+  },
+  txDelegateRegister: {
+    apiUtil: (apiClient, params) => getTransactions(params),
+    getApiParams: (state, ownProps) => ({
+      token: state.settings.token.active,
+      address: ownProps.address,
+      networkConfig: state.network,
+      type: transactionTypes().registerDelegate.outgoingCode,
+      limit: 1,
+    }),
+    defaultData: false,
+    transformResponse: response => (response.data[0] && response.data[0].timestamp),
   },
   nextForgers: {
     apiUtil: getNextForgers,
