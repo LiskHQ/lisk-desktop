@@ -90,7 +90,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
   max-width: var(--dialog-box-width);
   opacity: 0;
   padding: 0;

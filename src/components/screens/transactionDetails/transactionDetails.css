@@ -6,7 +6,7 @@
 
 .wrapper {
   overflow-y: scroll;
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
   display: block;
 
   & > header {
