@@ -113,7 +113,7 @@ const Wallet = ({ t, history }) => {
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
-              account={account.info[activeToken]}
+              address={account.info[activeToken].address}
             />
           )
           : null}

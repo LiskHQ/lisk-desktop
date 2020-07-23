@@ -75,7 +75,7 @@ const Wallet = ({
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
-              account={account.data}
+              address={match.params.address}
             />
           )
           : null}
