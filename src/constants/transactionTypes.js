@@ -1,13 +1,24 @@
-// import store from '../store';
+import store from '../store';
 
 const defaultApiVersion = '2';
 
+/**
+ * Returns details of the transaction types
+ *
+ * @todo Starting Lisk Desktop 2.0.0 we should
+ * remove the version detection logic
+ * and simply assume we always receive the new layout
+ * but transactions may have either of the tx type codes.
+ */
 const transactionTypes = (t = str => str) => {
-  // const { network } = store.getState();
-  const apiVersion = defaultApiVersion;
-  // const apiVersion = network.networks && network.networks.LSK
-  //   ? network.networks.LSK.apiVersion
-  //   : defaultApiVersion;
+  let apiVersion = defaultApiVersion;
+  if (store && typeof getState === 'function') {
+    const { network } = store.getState();
+    if (network.networks && network.networks.LSK) {
+      apiVersion = network.networks.LSK.apiVersion;
+    }
+  }
+
   return {
     send: {
       code: 0,
