@@ -5,7 +5,6 @@ import { Gradients, gradientSchemes } from './gradients';
 import generateUniqueId from '../../../utils/generateUniqueId';
 import reg from '../../../utils/regex';
 import styles from './accountVisual.css';
-import withResizeValues from '../../../utils/withResizeValues';
 
 /*
  * Account Visual
@@ -219,16 +218,14 @@ class AccountVisual extends React.Component {
 
   render() {
     const {
-      address, size, sizeM, className, placeholder, isMediumViewPort,
+      address, size, className, placeholder,
     } = this.props;
-
-    const newSize = isMediumViewPort && sizeM ? sizeM : size;
 
     if (placeholder) {
       return (
         <span
           className={`${styles.placeholder} ${className}`}
-          style={{ height: newSize, width: newSize }}
+          style={{ height: size, width: size }}
         />
       );
     }
@@ -236,11 +233,11 @@ class AccountVisual extends React.Component {
     if (!reg.address.test(address)) {
       return null;
     }
-    const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(newSize);
+    const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(size);
 
     return (
-      <div style={{ height: newSize, width: newSize }} className={`${styles.wrapper} ${className}`}>
-        <svg height={newSize} width={newSize} className={styles.accountVisual}>
+      <div style={{ height: size, width: size }} className={`${styles.wrapper} ${className}`}>
+        <svg height={size} width={size} className={styles.accountVisual}>
           <Gradients scheme={gradientsSchemesUrlsHashed} />
           {shapes.map((shape, i) => (
             <shape.component {...shape.props} key={i} />
@@ -252,7 +249,7 @@ class AccountVisual extends React.Component {
 }
 
 AccountVisual.defaultProps = {
-  size: 200,
+  size: 40,
 };
 
-export default withResizeValues(AccountVisual);
+export default AccountVisual;
