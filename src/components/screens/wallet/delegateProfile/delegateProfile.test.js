@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
-import { delegate } from '../../../../../test/constants/accounts';
+import { delegate, genesis } from '../../../../../test/constants/accounts';
 import DelegateProfile from './delegateProfile';
 
 describe('Delegate Profile', () => {
@@ -45,26 +45,27 @@ describe('Delegate Profile', () => {
 
   it('Should render active delegate with passed props', () => {
     expect(wrapper.find('.rank')).toIncludeText(props.delegate.data.rank);
-    expect(wrapper.find('.delegate-since')).toIncludeText('Delegate since23 Jul 2020, 11:13:30 PM');
+    expect(wrapper.find('.delegate-since')).toIncludeText('Delegate since23 Jul 2020');
     expect(wrapper.find('.vote')).toIncludeText('98,769,657 LSK');
     expect(wrapper.find('.approval')).toIncludeText(`${props.delegate.data.approval}%`);
     expect(wrapper.find('.productivity')).toIncludeText(`${props.delegate.data.productivity}%`);
     expect(wrapper.find('.blocks')).toIncludeText(`${props.delegate.data.producedBlocks} (${props.delegate.data.missedBlocks})`);
     expect(wrapper.find('.forged')).toIncludeText('1,405 LSK');
-    expect(wrapper.find('.last-forged')).toIncludeText('Last Forged Block23 Jul 2020, 11:13:30 PM');
+    expect(wrapper.find('.last-forged')).toIncludeText('Last Forged Block23 Jul 2020');
   });
 
-  it.skip('Should render inactive delegate', () => {
+  it('Should render inactive delegate', () => {
     const newProps = {
       ...props,
       delegate: {
+        ...props.delegate,
         data: {
-          ...props.delegate.data,
-          rank: 102,
+          ...genesis,
+          rank: 103,
         },
       },
     };
     wrapper = mount(<DelegateProfile {...newProps} />);
-    expect(wrapper.find('.status')).toIncludeText('Standby');
+    expect(wrapper.find('.status').at(0)).toIncludeText('Standby');
   });
 });
