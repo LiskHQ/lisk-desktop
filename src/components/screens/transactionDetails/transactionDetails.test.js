@@ -1,11 +1,20 @@
 import Lisk from '@liskhq/lisk-client-old';
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import { mount } from 'enzyme';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
 import fees from '../../../constants/fees';
 import transactionTypes from '../../../constants/transactionTypes';
 import routes from '../../../constants/routes';
+
+const mountWithRouter = (Component, props, routeConfig) => mount(
+  <MemoryRouter
+    initialEntries={[routeConfig]}
+  >
+    <Component {...props} />
+  </MemoryRouter>,
+);
 
 describe('Single Transaction Component', () => {
   const transaction = {
@@ -63,7 +72,11 @@ describe('Single Transaction Component', () => {
 
   describe('Transfer transactions', () => {
     it('Should render transaction details after transaction loaded', () => {
-      const wrapper = mount(<TransactionDetails {...props} transaction={transaction} />);
+      const wrapper = mountWithRouter(
+        TransactionDetails,
+        { ...props, transaction },
+        { pathname: '/explorer/transactions', id: transaction.id },
+      );
       expect(wrapper.find('header h1')).toHaveText('Transaction details');
       expect(wrapper.find('.transaction-id .copy-title').first().text().trim()).toBe(`${transaction.data.id}`);
     });
@@ -78,11 +91,12 @@ describe('Single Transaction Component', () => {
     });
 
     it('Should load delegate names after vote transaction loading finished', () => {
-      const wrapper = mount(<TransactionDetails {...props} />);
-      wrapper.setProps({
-        ...props,
-        transaction: voteTransaction,
-      });
+      const wrapper = mountWithRouter(
+        TransactionDetails,
+        { ...props, transaction: voteTransaction },
+        { pathname: '/explorer/transactions', id: transaction.id },
+      );
+      wrapper.update();
       expect(props.delegates.loadData).toHaveBeenCalledWith({
         publicKeys: [
           accounts.delegate.publicKey,
@@ -92,7 +106,11 @@ describe('Single Transaction Component', () => {
     });
 
     it('Should render transfer transaction with message (LSK)', () => {
-      const wrapper = mount(<TransactionDetails {...props} transaction={transaction} />);
+      const wrapper = mountWithRouter(
+        TransactionDetails,
+        { ...props, transaction },
+        { pathname: '/explorer/transactions', id: transaction.id },
+      );
       expect(wrapper).toContainMatchingElements(2, '.accountInfo');
       expect(wrapper.find('.accountInfo .sender-address').text()).toBe(transaction.data.senderId);
       expect(wrapper.find('.accountInfo .receiver-address').text()).toBe(transaction.data.recipientId);
@@ -105,7 +123,7 @@ describe('Single Transaction Component', () => {
     });
 
     it('Should show the delegate name if the sender is a Lisk delegate', () => {
-      const delegateTransaction = {
+      const delegateTx = {
         data: {
           type: 3,
           senderId: accounts.genesis.address,
@@ -121,12 +139,10 @@ describe('Single Transaction Component', () => {
           },
         },
       };
-      const wrapper = mount(
-        <TransactionDetails
-          {...props}
-          activeToken="BTC"
-          transaction={delegateTransaction}
-        />,
+      const wrapper = mountWithRouter(
+        TransactionDetails,
+        { ...props, activeToken: 'BTC', transaction: delegateTx },
+        { pathname: '/explorer/transactions', id: transaction.id },
       );
       expect(wrapper).not.toContain('genesis');
     });
@@ -134,22 +150,22 @@ describe('Single Transaction Component', () => {
 
   describe('Delegate vote transaction', () => {
     it('Should render delegate vote details', () => {
-      const wrapper = mount(
-        <TransactionDetails
-          {...props}
-          transaction={{
-            data: {
-              type: 3,
-              senderId: accounts.genesis.address,
-              recipientId: '',
-              amount: 0,
-              id: 123,
-              asset: {
-                votes: [],
-              },
-            },
-          }}
-        />,
+      const voteTx = {
+        data: {
+          type: 3,
+          senderId: accounts.genesis.address,
+          recipientId: '',
+          amount: 0,
+          id: 123,
+          asset: {
+            votes: [],
+          },
+        },
+      };
+      const wrapper = mountWithRouter(
+        TransactionDetails,
+        { ...props, transaction: voteTx },
+        { pathname: '/explorer/transactions', id: transaction.id },
       );
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
       expect(wrapper.find('.accountInfo .label').text()).toBe('Voter');
@@ -158,19 +174,19 @@ describe('Single Transaction Component', () => {
 
   describe('2nd Passphrase transaction', () => {
     it('Should render register 2nd passphrase details', () => {
-      const wrapper = mount(
-        <TransactionDetails
-          {...props}
-          transaction={{
-            data: {
-              type: 1,
-              senderId: accounts.genesis.address,
-              recipientId: '',
-              amount: 0,
-              id: 123,
-            },
-          }}
-        />,
+      const secondPassTx = {
+        data: {
+          type: 1,
+          senderId: accounts.genesis.address,
+          recipientId: '',
+          amount: 0,
+          id: 123,
+        },
+      };
+      const wrapper = mountWithRouter(
+        TransactionDetails,
+        { ...props, transaction: secondPassTx },
+        { pathname: '/explorer/transactions', id: transaction.id },
       );
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
       expect(wrapper.find('.accountInfo .label').text()).toBe('Account');
@@ -179,20 +195,20 @@ describe('Single Transaction Component', () => {
 
   describe('Register delegate transaction', () => {
     it('Should render register delegate details', () => {
-      const wrapper = mount(
-        <TransactionDetails
-          {...props}
-          transaction={{
-            data: {
-              type: 2,
-              senderId: accounts.delegate.address,
-              recipientId: '',
-              amount: 0,
-              asset: { delegate: accounts.delegate },
-              id: 123,
-            },
-          }}
-        />,
+      const delegateRegTx = {
+        data: {
+          type: 2,
+          senderId: accounts.delegate.address,
+          recipientId: '',
+          amount: 0,
+          asset: { delegate: accounts.delegate },
+          id: 123,
+        },
+      };
+      const wrapper = mountWithRouter(
+        TransactionDetails,
+        { ...props, transaction: delegateRegTx },
+        { pathname: '/explorer/transactions', id: transaction.id },
       );
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
     });
