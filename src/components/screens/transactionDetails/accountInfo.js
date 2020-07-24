@@ -19,7 +19,7 @@ const AccountInfo = ({
     <div className={styles.accountInfo}>
       <p className={styles.label}>{label}</p>
       <div className={styles.addressRow}>
-        <AccountVisual className={styles.avatar} address={address} size={24} />
+        <AccountVisual className={styles.avatar} address={address} size={25} />
         { validateAddress(token, address, netCode) === 0
           ? (
             <Link

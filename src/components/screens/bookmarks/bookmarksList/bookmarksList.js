@@ -168,7 +168,6 @@ class BookmarksList extends React.Component {
                           <AccountVisual
                             className={styles.avatar}
                             address={bookmark.address}
-                            size={40}
                           />
                         )
                         : null

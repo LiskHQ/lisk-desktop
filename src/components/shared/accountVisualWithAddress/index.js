@@ -30,7 +30,7 @@ class AccountVisualWithAddress extends React.Component {
 
   render() {
     const {
-      address, transactionSubject, transactionType, size, sizeM,
+      address, transactionSubject, transactionType, size,
     } = this.props;
     const txType = transactionTypes.getByCode(transactionType);
     return (
@@ -47,7 +47,7 @@ class AccountVisualWithAddress extends React.Component {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <AccountVisual address={address} size={size} sizeM={sizeM} />
+            <AccountVisual address={address} size={size} />
             <span className={styles.addressValue}>{this.getTransformedAddress(address)}</span>
           </React.Fragment>
         )}
@@ -69,7 +69,6 @@ AccountVisualWithAddress.propTypes = {
 AccountVisualWithAddress.defaultProps = {
   showBookmarkedAddress: false,
   size: 32,
-  sizeM: 24,
   transactionSubject: '',
   transactionType: transactionTypes().send.code,
 };
