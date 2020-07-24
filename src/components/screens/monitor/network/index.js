@@ -74,7 +74,7 @@ export const NetworkPure = ({
             <h1 className={`${styles.contentHeader} contentHeader`}>
               {t('Connected peers')}
             </h1>
-            <Tooltip>
+            <Tooltip position="right">
               <p>{t('The current list only reflects the peers connected to the Lisk Service node.')}</p>
             </Tooltip>
           </div>

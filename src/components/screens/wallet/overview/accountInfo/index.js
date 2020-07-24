@@ -48,7 +48,8 @@ const AccountInfo = ({
         <div className={styles.helperIcon}>
           <Tooltip
             tooltipClassName={styles.qrCodeWrapper}
-            className={`${styles.qrCode} showOnBottom`}
+            className={styles.qrCode}
+            position="bottom"
             title={t('Scan address')}
             content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
           >
@@ -75,9 +76,10 @@ const AccountInfo = ({
               })}
             >
               <Tooltip
-                className={`${styles.verify} showOnBottom`}
+                className={styles.verify}
+                position="bottom"
                 title={t('Verify address')}
-                content={<Icon name="verifyWalletAddressActive" className={styles.qrCodeIcon} />}
+                content={<Icon name="verifyWalletAddress" className={styles.qrCodeIcon} />}
               >
                 <span>{t('Verify the address in your hardware wallet device.')}</span>
               </Tooltip>

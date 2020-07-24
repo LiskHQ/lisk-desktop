@@ -90,13 +90,14 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
   max-width: var(--dialog-box-width);
   opacity: 0;
   padding: 0;
   position: relative;
   transform: translateY(-50%) scale(0.9);
   visibility: hidden;
+  overflow: hidden;
   width: 100%;
 }
 

@@ -9,8 +9,8 @@ import { getAccount } from '../../../utils/api/account';
 import { getTransactions } from '../../../utils/api/transactions';
 import txFilters from '../../../constants/transactionFilters';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
-import DelegateTab from '../../shared/delegate';
-import VotesTab from '../../shared/votes';
+import DelegateTab from './delegateProfile';
+import VotesTab from './votes';
 import Transactions from './transactions';
 
 
@@ -75,7 +75,7 @@ const Wallet = ({
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
-              account={account.data}
+              address={match.params.address}
             />
           )
           : null}
