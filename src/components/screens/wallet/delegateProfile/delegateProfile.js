@@ -52,7 +52,7 @@ const delegateProfile = ({
               {t('Status')}
             </span>
             <span className={styles.status}>
-              {isActive ? t('Active') : t('Stand by')}
+              {isActive ? t('Active') : t('Standby')}
             </span>
           </li>
           <li className="delegate-since">
