@@ -79,7 +79,7 @@ const AccountInfo = ({
                 className={styles.verify}
                 position="bottom"
                 title={t('Verify address')}
-                content={<Icon name="verifyWalletAddressActive" className={styles.qrCodeIcon} />}
+                content={<Icon name="verifyWalletAddress" className={styles.qrCodeIcon} />}
               >
                 <span>{t('Verify the address in your hardware wallet device.')}</span>
               </Tooltip>
