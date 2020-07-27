@@ -39,7 +39,7 @@ const BalanceInfo = ({
           </DiscreetMode>
         </div>
         <div className={styles.actionRow}>
-          <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={{ initialValue }}>
+          <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
             <PrimaryButton
               className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
               size="m"

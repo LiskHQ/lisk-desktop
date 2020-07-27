@@ -48,7 +48,7 @@ const DialogHolder = ({ history }) => {
 
   const onBackDropClick = (e) => {
     if (e.target === backdropRef.current) {
-      removeSearchParamsFromUrl(history, ['modal']);
+      removeSearchParamsFromUrl(history);
     }
   };
 

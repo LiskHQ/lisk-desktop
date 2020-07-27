@@ -63,7 +63,7 @@ class SearchBar extends React.Component {
 
   onSelectedRow(type, value) {
     if (type === 'transactions') {
-      addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails' });
+      addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails', transactionId: value });
       // DialogHolder.showDialog(<TransactionDetails transactionId={value} />);
     } else {
       this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}/${value}`);

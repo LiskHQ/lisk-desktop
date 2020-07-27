@@ -7,6 +7,7 @@ import liskService from '../../../utils/api/lsk/liskService';
 import { getSingleTransaction } from '../../../utils/api/transactions';
 import withData from '../../../utils/withData';
 import TransactionDetails from './transactionDetails';
+import { parseSearchParams } from '../../../utils/searchParams';
 
 const mapStateToProps = (state, ownProps) => ({
   address: getActiveTokenAccount(state).address,
@@ -20,7 +21,7 @@ const apis = {
     apiUtil: (apiClient, params) => getSingleTransaction(params),
     getApiParams: (state, ownProps) => ({
       token: state.settings.token.active,
-      id: ownProps.transactionId,
+      id: parseSearchParams(ownProps.location.search).transactionId,
       networkConfig: state.network,
     }),
     transformResponse: response => response.data[0] || {},
