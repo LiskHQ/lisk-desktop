@@ -76,10 +76,14 @@ export const addSearchParamsToUrl = (history, data = {}) => {
 
 /**
  * removes a query param to the url and redirects to that url
+ *
  * @param {object} history the search string
- * @param {String} paramsToRemove the array of params to remove
+ * @param {?String} paramsToRemove the array of params to remove. Leave it blank to remove all.
  */
 export const removeSearchParamsFromUrl = (history, paramsToRemove) => {
-  const newSearchString = removeSearchParams(history.location.search, paramsToRemove);
+  let newSearchString = '';
+  if (Array.isArray(paramsToRemove) && paramsToRemove.length) {
+    newSearchString = removeSearchParams(history.location.search, paramsToRemove);
+  }
   history.push(`${history.location.pathname}${newSearchString}`);
 };
