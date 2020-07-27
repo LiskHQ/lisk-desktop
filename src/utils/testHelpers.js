@@ -26,11 +26,11 @@ export const mountWithProps = (Component, props, store) =>
  *
  * @param {Class|Function} Component - A React component to be tested
  * @param {Object} props - Set of props to be passed to the component
- * @param {Object} routeConfig - A fake history.location object
+ * @param {?Object} routeConfig - A fake history.location object
  *
  * @returns {Object} Mounted component
  */
-export const mountWithRouter = (Component, props, routeConfig) => mount(
+export const mountWithRouter = (Component, props, routeConfig = {}) => mount(
   <MemoryRouter
     initialEntries={[routeConfig]}
   >
