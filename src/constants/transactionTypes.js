@@ -12,7 +12,7 @@ const defaultApiVersion = '2';
  */
 const transactionTypes = (t = str => str) => {
   let apiVersion = defaultApiVersion;
-  if (store && typeof getState === 'function') {
+  if (store && typeof store.getState === 'function') {
     const { network } = store.getState();
     if (network.networks && network.networks.LSK) {
       apiVersion = network.networks.LSK.apiVersion;
