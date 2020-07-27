@@ -1,20 +1,12 @@
 import Lisk from '@liskhq/lisk-client-old';
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import { mount } from 'enzyme';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
 import fees from '../../../constants/fees';
 import transactionTypes from '../../../constants/transactionTypes';
 import routes from '../../../constants/routes';
-
-const mountWithRouter = (Component, props, routeConfig) => mount(
-  <MemoryRouter
-    initialEntries={[routeConfig]}
-  >
-    <Component {...props} />
-  </MemoryRouter>,
-);
+import { mountWithRouter } from '../../../utils/testHelpers';
 
 describe('Single Transaction Component', () => {
   const transaction = {
