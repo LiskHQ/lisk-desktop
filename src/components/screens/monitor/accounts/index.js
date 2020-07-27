@@ -4,7 +4,6 @@ import { withTranslation } from 'react-i18next';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
-import withResizeValues from '../../../../utils/withResizeValues';
 import Table from '../../../toolbox/table';
 import styles from './accounts.css';
 import header from './tableHeader';
@@ -66,6 +65,5 @@ export default compose(
       },
     },
   ),
-  withResizeValues,
   withTranslation(),
 )(AccountsPure);

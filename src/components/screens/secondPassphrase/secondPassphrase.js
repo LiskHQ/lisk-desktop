@@ -8,7 +8,6 @@ import ConfirmPassphrase from './confirmPassphrase';
 import TransactionResult from '../../shared/transactionResult';
 import MultiStep from '../../../../libs/multiStep';
 import Dialog from '../../toolbox/dialog/dialog';
-import DialogHolder from '../../toolbox/dialog/holder';
 
 class SecondPassphrase extends React.Component {
   constructor() {
@@ -17,16 +16,11 @@ class SecondPassphrase extends React.Component {
     this.secondPassphrase = generatePassphrase();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  componentWillUnmount() {
-    document.body.classList.remove('contentFocused');
-  }
 
   componentDidMount() {
-    const { account } = this.props;
-    document.body.classList.add('contentFocused');
+    const { account, location, history } = this.props;
     if (account.secondPublicKey || account.balance < Fees.setSecondPassphrase) {
-      DialogHolder.hideDialog();
+      history.push(`${location.pathname}?modal=settings`);
     }
   }
 

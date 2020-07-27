@@ -52,7 +52,7 @@ const Overview = ({
           <h1 className={styles.boxHeading}>
             {t('Network statistics')}
           </h1>
-          <Tooltip>
+          <Tooltip position="bottom right" indent>
             <p>{t('Statistics shown only reflect the peers connected to the Lisk Service node.')}</p>
           </Tooltip>
         </div>

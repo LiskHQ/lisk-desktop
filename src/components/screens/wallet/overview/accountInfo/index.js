@@ -20,7 +20,7 @@ const BookmarkIcon = ({ bookmark }) => (
 
 /* eslint-disable complexity */
 const AccountInfo = ({
-  address, t, activeToken, hwInfo, delegate, bookmark,
+  address, t, activeToken, hwInfo, delegate, bookmark, host,
 }) => (
   <Box className={styles.wrapper}>
     <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
@@ -48,39 +48,43 @@ const AccountInfo = ({
         <div className={styles.helperIcon}>
           <Tooltip
             tooltipClassName={styles.qrCodeWrapper}
-            className={`${styles.qrCode} showOnBottom`}
+            className={styles.qrCode}
+            position="bottom"
             title={t('Scan address')}
             content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
           >
             <QRCode value={address} size={154} />
           </Tooltip>
         </div>
-        <div className={styles.helperIcon}>
-          <DialogLink component="bookmarks">
-            <BookmarkIcon bookmark={bookmark} />
-          </DialogLink>
-        </div>
         {
-          hwInfo
-            ? (
-              <div
-                className={`${styles.helperIcon} verify-address`}
-                onClick={() => getAddress({
-                  deviceId: hwInfo.deviceId,
-                  index: hwInfo.derivationIndex,
-                  showOnDevice: true,
-                })}
+          host !== address ? (
+            <div className={styles.helperIcon}>
+              <DialogLink component="bookmarks">
+                <BookmarkIcon bookmark={bookmark} />
+              </DialogLink>
+            </div>
+          ) : null
+        }
+        {
+          hwInfo && host === address && (
+            <div
+              className={`${styles.helperIcon} verify-address`}
+              onClick={() => getAddress({
+                deviceId: hwInfo.deviceId,
+                index: hwInfo.derivationIndex,
+                showOnDevice: true,
+              })}
+            >
+              <Tooltip
+                className={styles.verify}
+                position="bottom"
+                title={t('Verify address')}
+                content={<Icon name="verifyWalletAddress" className={styles.qrCodeIcon} />}
               >
-                <Tooltip
-                  className={`${styles.verify} showOnBottom`}
-                  title={t('Verify address')}
-                  content={<Icon name="verifyWalletAddressActive" className={styles.qrCodeIcon} />}
-                >
-                  <span>{t('Verify the address in your hardware wallet device.')}</span>
-                </Tooltip>
-              </div>
-            )
-            : null
+                <span>{t('Verify the address in your hardware wallet device.')}</span>
+              </Tooltip>
+            </div>
+          )
         }
       </footer>
       <Icon

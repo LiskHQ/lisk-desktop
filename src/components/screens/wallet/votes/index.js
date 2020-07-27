@@ -1,8 +1,8 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
-import { getVotes, getDelegates } from '../../../utils/api/delegates';
-import withData from '../../../utils/withData';
-import VotesTab from './votesTab';
+import { getVotes, getDelegates } from '../../../../utils/api/delegates';
+import withData from '../../../../utils/withData';
+import Votes from './votes';
 
 const apis = {
   votes: {
@@ -20,4 +20,4 @@ const apis = {
   },
 };
 
-export default withData(apis)(withTranslation()(VotesTab));
+export default withData(apis)(withTranslation()(Votes));

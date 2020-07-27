@@ -4,11 +4,10 @@ import { firstBlockTime } from '../constants/datetime';
 /**
  * Returns unix timestamp from value
  * @param {Number} value - Date value
- * @param {String} [format] - Format in which the date is provided e.g. MM.DD.YY
  * @returns {Number} - timestamp in Unix timestamp format
  */
-export const getUnixTimestampFromValue = (value, format) =>
-  ((moment(firstBlockTime).format('x') / 1000) + +moment(value, format).format('x')) * 1000;
+export const getUnixTimestampFromValue = value =>
+  ((moment(firstBlockTime).format('x') / 1000) + +moment(value).format('x')) * 1000;
 
 /**
  * returns timestamp from first block considering time

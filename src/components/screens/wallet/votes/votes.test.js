@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
-import accounts from '../../../../test/constants/accounts';
-import routes from '../../../constants/routes';
-import VotesTab from './votesTab';
+import accounts from '../../../../../test/constants/accounts';
+import routes from '../../../../constants/routes';
+import Votes from './votes';
 
 describe('Votes Tab Component', () => {
   let wrapper;
@@ -36,7 +36,7 @@ describe('Votes Tab Component', () => {
     props.delegates.loadData.mockRestore();
   });
 
-  const setup = data => mount(<VotesTab {...data} />);
+  const setup = data => mount(<Votes {...data} />);
 
   it('Should render with empty state', () => {
     wrapper = setup(props);

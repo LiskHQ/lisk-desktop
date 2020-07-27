@@ -5,8 +5,9 @@
 }
 
 .wrapper {
-  background-color: var(--color-white);
-  border-radius: var(--border-radius-box);
+  overflow-y: scroll;
+  max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
+  display: block;
 
   & > header {
     padding-left: var(--horizontal-padding-l) !important;

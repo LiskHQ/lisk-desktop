@@ -52,7 +52,8 @@
   }
 
   & :global(.button-icon) {
-    display: block;
+    display: inline-block;
+    vertical-align: middle;
     height: 1.2em; /* stylelint-disable-line */
     margin-left: 0.42em; /* stylelint-disable-line */
     width: 1.2em; /* stylelint-disable-line */

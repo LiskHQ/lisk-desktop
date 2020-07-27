@@ -56,7 +56,7 @@ const DelegateRow = ({
                 title={forgingTime
                   ? t(statuses[forgingTime.status])
                   : t(statuses.notForging)}
-                className="showOnBottom"
+                position="bottom"
                 size="s"
                 content={(
                   <div className={`${styles.status} ${

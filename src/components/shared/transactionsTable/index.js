@@ -10,7 +10,6 @@ import LoadLatestButton from '../loadLatestButton';
 import Table from '../../toolbox/table';
 import styles from './transactionsTable.css';
 import withFilters from '../../../utils/withFilters';
-import withResizeValues from '../../../utils/withResizeValues';
 import TransactionRow from './transactionRow';
 import header from './tableHeader';
 
@@ -111,7 +110,5 @@ const defaultFilters = {
 const defaultSort = 'timestamp:desc';
 
 export default withTranslation()(
-  withFilters('transactions', defaultFilters, defaultSort)(
-    withResizeValues(TransactionsTable),
-  ),
+  withFilters('transactions', defaultFilters, defaultSort)(TransactionsTable),
 );

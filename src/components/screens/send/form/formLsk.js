@@ -62,7 +62,7 @@ const FormLsk = (props) => {
         <span className={`${styles.feedback} ${reference.error || messageMaxLength - reference.byteCount < 10 ? 'error' : ''} ${styles.show}`}>
           {reference.feedback}
           <Tooltip
-            className="showOnTop"
+            position="top"
             title={t('Bytes counter')}
           >
             <p className={styles.tooltipText}>

@@ -43,7 +43,7 @@ const TransactionRow = ({ data, className, t }) => (
     <span className={grid['col-md-1']}>
       <Tooltip
         title={t('Transaction')}
-        className="showOnBottom"
+        position="bottom"
         tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
         content={<LiskAmount val={data.fee} token={tokenMap.LSK.key} />}
         size="s"
@@ -54,7 +54,7 @@ const TransactionRow = ({ data, className, t }) => (
     <span className={grid['col-md-1']}>
       <Tooltip
         title={data.confirmations > roundSize ? t('Confirmed') : t('Pending')}
-        className="showOnLeft"
+        position="left"
         tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
         content={<Icon name={data.confirmations > roundSize ? 'approved' : 'pending'} />}
         size="s"
