@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DialogHolder from './holder';
+import { withRouter } from 'react-router';
 import styles from './dialog.css';
+import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
-const Options = ({ children, align }) => {
+const Options = ({ history, children, align }) => {
   const options = (Array.isArray(children)
     ? children
     : [children]
   ).filter(child => React.isValidElement(child));
+
+  const closeDialog = () => removeSearchParamsFromUrl(history, ['modal']);
 
   return !!options.length && (
     <div className={`${styles.optionsHolder} ${styles[align]}`}>
@@ -15,8 +18,8 @@ const Options = ({ children, align }) => {
       options.map((option, index) => {
         const { onClick, ...props } = option.props;
         const optionClick = onClick
-          ? (...args) => { onClick(...args); DialogHolder.hideDialog(); }
-          : DialogHolder.hideDialog;
+          ? (...args) => { onClick(...args); closeDialog(); }
+          : closeDialog;
         return (
           <option.type
             {...props}
@@ -44,4 +47,4 @@ Options.defaultProps = {
 
 Options.displayName = 'Dialog.Options';
 
-export default Options;
+export default withRouter(Options);

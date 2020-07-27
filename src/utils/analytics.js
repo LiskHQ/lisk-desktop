@@ -1,14 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
-import DialogHolder from '../components/toolbox/dialog/holder';
 import AnalyticsMessage from '../components/shared/analyticsMessage/analyticsMessage';
-import AnalyticsDialog from '../components/shared/analyticsDialog';
 
 export default {
   init() {
-    const onClick = () => { DialogHolder.showDialog(<AnalyticsDialog />); };
-    FlashMessageHolder.addMessage(<AnalyticsMessage onClick={onClick} />, 'Analytics');
+    FlashMessageHolder.addMessage(<AnalyticsMessage />, 'Analytics');
   },
 
   onTriggerPageLoaded({ settings, settingsUpdated }) {
