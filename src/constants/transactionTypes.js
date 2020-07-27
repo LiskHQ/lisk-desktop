@@ -1,4 +1,4 @@
-// import store from '../store';
+import store from '../store';
 
 const defaultApiVersion = '2';
 
