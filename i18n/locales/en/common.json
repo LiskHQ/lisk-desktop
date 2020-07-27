@@ -527,7 +527,6 @@
   "Your account just received {{amount}} {{token}} {{message}}": "Your account just received {{amount}} {{token}} {{message}}",
   "Your message": "Your message",
   "Your nickname": "Your nickname",
-  "Your session was timed out after 10 minutes of no network activity. Please sign in to continue using your account": "Your session was timed out after 10 minutes of no network activity. Please sign in to continue using your account",
   "Your voice matters": "Your voice matters",
   "You’ll see it in Delegates and it will be confirmed in a matter of minutes.": "You’ll see it in Delegates and it will be confirmed in a matter of minutes.",
   "[Today], hh:mm A": "[Today], hh:mm A",
