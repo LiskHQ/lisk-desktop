@@ -1,11 +1,9 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import DialogHolder from '../../toolbox/dialog/holder';
 import accounts from '../../../../test/constants/accounts';
 import SecondPassphrase from './secondPassphrase';
+import { mountWithRouter } from '../../../utils/testHelpers';
 
 describe('SecondPassphrase', () => {
-  let wrapper;
   let props;
   const account = {
     passphrase: accounts.delegate.passphrase,
@@ -21,11 +19,12 @@ describe('SecondPassphrase', () => {
         account,
         t: key => key,
         history: {
+          pathname: '',
           goBack: jest.fn(),
           push: jest.fn(),
         },
+        location: { pathname: '' },
       };
-      wrapper = mount(<SecondPassphrase {...props} />);
     });
 
     const selectRightWord = (comp, secondPassphrase) => {
@@ -34,37 +33,42 @@ describe('SecondPassphrase', () => {
     };
 
     it('renders MultiStep component and passphrase', () => {
+      const wrapper = mountWithRouter(
+        SecondPassphrase,
+        props,
+        { pathname: '/wallet' },
+      );
       expect(wrapper).toContainMatchingElement('MultiStep');
       expect(wrapper).toContainMatchingElement('.passphrase');
     });
 
-    it('unmount remove contentFocused', () => {
-      expect(document.getElementsByClassName('contentFocused')).toHaveLength(1);
-      wrapper.unmount();
-      expect(document.getElementsByClassName('contentFocused')).toHaveLength(0);
-    });
-
     it('should go to settings if account already has second passphrase', () => {
-      wrapper = mount(<SecondPassphrase
-        {...props}
-        account={accounts.second_passphrase_account}
-      />);
-      expect(DialogHolder.hideDialog).toHaveBeenCalled();
+      mountWithRouter(
+        SecondPassphrase,
+        { ...props, account: accounts.second_passphrase_account },
+        { pathname: '/wallet' },
+      );
+      expect(props.history.push).toHaveBeenCalled();
     });
 
     it('should go to settings if account has not enough balance', () => {
-      wrapper = mount(<SecondPassphrase
-        {...props}
-        account={accounts.empty_account}
-      />);
-      expect(DialogHolder.hideDialog).toHaveBeenCalled();
+      mountWithRouter(
+        SecondPassphrase,
+        { ...props, account: accounts.empty_account },
+        { pathname: '/wallet' },
+      );
+      expect(props.history.push).toHaveBeenCalled();
     });
 
     it('should allow to registerSecondPassphrase and go to wallet', () => {
       props.secondPassphraseRegistered = jest.fn(({ callback }) => {
         callback({ success: true });
       });
-      wrapper = mount(<SecondPassphrase {...props} />);
+      const wrapper = mountWithRouter(
+        SecondPassphrase,
+        props,
+        { pathname: '/wallet' },
+      );
       const secondPassphrase = wrapper.find('.passphrase').text();
       wrapper.find('.go-to-confirmation').first().simulate('click');
 
@@ -87,7 +91,11 @@ describe('SecondPassphrase', () => {
       props.secondPassphraseRegistered = jest.fn(({ callback }) => {
         callback({ success: false, error: { message: 'custom message' } });
       });
-      wrapper = mount(<SecondPassphrase {...props} />);
+      const wrapper = mountWithRouter(
+        SecondPassphrase,
+        props,
+        { pathname: '/wallet' },
+      );
       const secondPassphrase = wrapper.find('.passphrase').text();
       wrapper.find('.go-to-confirmation').first().simulate('click');
 
