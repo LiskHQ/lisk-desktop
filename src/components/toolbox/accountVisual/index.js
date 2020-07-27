@@ -6,6 +6,8 @@ import generateUniqueId from '../../../utils/generateUniqueId';
 import reg from '../../../utils/regex';
 import styles from './accountVisual.css';
 
+const round = num => Math.round((num + Number.EPSILON) * 100) / 100;
+
 /*
  * Account Visual
  *
@@ -60,20 +62,20 @@ const computeTriangle = props => (
 const computePentagon = props => (
   {
     points: [{
-      x: props.x + (props.size / 2),
+      x: round(props.x + (props.size / 2)),
       y: props.y,
     }, {
       x: props.x + props.size,
       y: props.y + (props.size / 2.5),
     }, {
-      x: props.x + (props.size - (props.size / 5)),
+      x: round(props.x + (props.size - (props.size / 5))),
       y: props.y + props.size,
     }, {
-      x: props.x + (props.size / 5),
+      x: round(props.x + (props.size / 5)),
       y: props.y + props.size,
     }, {
       x: props.x,
-      y: props.y + (props.size / 2.5),
+      y: round(props.y + (props.size / 2.5)),
     },
     ].map(({ x, y }) => (`${x},${y}`)).join(' '),
   }
@@ -86,7 +88,7 @@ const getShape = (chunk, size, gradient, sizeScale = 1) => {
 
   const sizes = [
     1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1,
-  ].map(x => x * size * sizeScale);
+  ].map(x => round(x * size * sizeScale));
 
   const coordinates = [
     5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
