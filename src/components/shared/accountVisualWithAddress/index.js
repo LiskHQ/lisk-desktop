@@ -63,14 +63,14 @@ AccountVisualWithAddress.propTypes = {
   size: PropTypes.number,
   token: PropTypes.shape().isRequired,
   transactionSubject: PropTypes.string,
-  transactionType: PropTypes.oneOf(transactionTypes.getListOf('code')),
+  transactionType: PropTypes.isRequired,
 };
 
 AccountVisualWithAddress.defaultProps = {
   showBookmarkedAddress: false,
   size: 32,
   transactionSubject: '',
-  transactionType: transactionTypes().send.code,
+  transactionType: PropTypes.isRequired,
 };
 
 const mapStateToProps = state => ({
