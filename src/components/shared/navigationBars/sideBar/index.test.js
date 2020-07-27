@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { mount } from 'enzyme';
 import { useSelector } from 'react-redux';
 import SideBar from './index';
@@ -43,7 +44,7 @@ describe('SideBar', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<SideBar {...myProps} />);
+    wrapper = mount(<BrowserRouter><SideBar {...myProps} /></BrowserRouter>);
   });
 
   it('renders 8 menu items elements', () => {
@@ -62,7 +63,7 @@ describe('SideBar', () => {
   });
 
   it('renders 8 menu items but only Wallet is disabled when user is logged out', () => {
-    wrapper = mount(<SideBar {...myProps} />);
+    wrapper = mount(<BrowserRouter><SideBar {...myProps} /></BrowserRouter>);
 
     expect(wrapper).toContainMatchingElements(8, 'a');
     expect(wrapper).toContainExactlyOneMatchingElement('a.disabled');
