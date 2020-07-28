@@ -1,7 +1,3 @@
-.dialogWrapper {
-  max-width: 760px;
-}
-
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -9,7 +5,10 @@
   align-items: center;
   background: transparent;
   width: 100%;
-  max-width: 720px;
-  padding: 0 var(--horizontal-padding-l);
   height: auto;
+
+  & header {
+    padding-left: var(--horizontal-padding-l) !important;
+    padding-right: var(--horizontal-padding-l) !important;
+  }
 }
