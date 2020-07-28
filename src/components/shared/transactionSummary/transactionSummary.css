@@ -13,14 +13,6 @@
 }
 
 .content {
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0 20px;
-
   & section {
     width: 100%;
     padding: 16px 0;
