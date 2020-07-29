@@ -78,10 +78,18 @@
     &.left {
       right: 0;
       left: auto;
-      transform: translateY(0) translateX(-10%);
+      transform: none;
+
+      &.indent {
+        right: -40px;
+      }
 
       & .tooltipArrow {
-        left: 40px;
+        right: 40px;
+        left: auto;
+        bottom: -20px;
+        top: auto;
+        transform: rotate(-90deg);
       }
     }
   }
