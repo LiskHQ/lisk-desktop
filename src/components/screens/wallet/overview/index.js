@@ -15,13 +15,12 @@ const getProp = (dic, prop, defaultValue) => {
 };
 
 const Overview = ({
-  t, activeToken, transactions,
+  t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
   const address = getProp(account, 'address', '');
   const delegate = getProp(account, 'delegate', {});
   const publicKey = getProp(account, 'publicKey', '');
-  const hwInfo = getProp(account, 'hwInfo', false);
   const balance = getProp(account, 'balance', 0);
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),

@@ -89,6 +89,7 @@ const Wallet = ({ t, history }) => {
         transactions={transactions.data}
         discreetMode={discreetMode}
         account={account.info[activeToken]}
+        hwInfo={account.hwInfo}
         t={t}
       />
       <TabsContainer>
