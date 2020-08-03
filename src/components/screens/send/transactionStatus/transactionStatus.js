@@ -1,9 +1,9 @@
 import React from 'react';
 import { SecondaryButton } from '../../../toolbox/buttons';
 import { getIndexOfBookmark } from '../../../../utils/bookmarks';
-import { getTokenFromAddress } from '../../../../utils/api/transactions';
-import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
-import DropdownButton from '../../../toolbox/dropdownButton';
+// import { getTokenFromAddress } from '../../../../utils/api/transactions';
+// import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
+// import DropdownButton from '../../../toolbox/dropdownButton';
 import TransactionResult from '../../../shared/transactionResult';
 import statusMessage from './statusMessages';
 import styles from './transactionStatus.css';
@@ -107,13 +107,14 @@ class TransactionStatus extends React.Component {
 
   render() {
     const {
-      transactions, fields, t, recipientAccount,
+      transactions, t,
+      // recipientAccount, fields,
     } = this.props;
-    const { isBookmarked, bookmarkButtonLabel } = this.bookmarkInformation();
+    // const { isBookmarked, bookmarkButtonLabel } = this.bookmarkInformation();
     const { isHardwareWalletError, messageDetails } = this.getMessagesDetails();
-    const token = getTokenFromAddress(fields.recipient.address);
-    const shouldShowBookmark = !transactions.broadcastedTransactionsError.length
-      && !fields.recipient.isBookmark;
+    // const token = getTokenFromAddress(fields.recipient.address);
+    // const shouldShowBookmark = !transactions.broadcastedTransactionsError.length
+    // && !fields.recipient.isBookmark;
     const success = transactions.broadcastedTransactionsError.length === 0;
 
     return (
@@ -136,12 +137,13 @@ class TransactionStatus extends React.Component {
               )
               : null
           }
-          {
+          {/* {
             shouldShowBookmark
               ? (
                 <div className={`${styles.bookmarkBtn} bookmark-container`}>
                   <DropdownButton
-                    buttonClassName={`${styles.btn} ${isBookmarked ? styles.bookmarkButton : ''} bookmark-btn`}
+                    buttonClassName={`${styles.btn} ${isBookmarked
+                      ? styles.bookmarkButton : ''} bookmark-btn`}
                     className={`${styles.bookmarkDropdown}`}
                     buttonLabel={bookmarkButtonLabel}
                     ButtonComponent={SecondaryButton}
@@ -157,7 +159,7 @@ class TransactionStatus extends React.Component {
                 </div>
               )
               : null
-          }
+          } */}
         </TransactionResult>
       </div>
     );
