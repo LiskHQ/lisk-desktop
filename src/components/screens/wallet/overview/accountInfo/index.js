@@ -6,6 +6,7 @@ import BoxContent from '../../../../toolbox/box/content';
 import Icon from '../../../../toolbox/icon';
 import CopyToClipboard from '../../../../toolbox/copyToClipboard';
 import { getAddress } from '../../../../../utils/hwManager';
+import { isEmpty } from '../../../../../utils/helpers';
 import styles from './accountInfo.css';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import DialogLink from '../../../../toolbox/dialog/link';
@@ -66,7 +67,7 @@ const AccountInfo = ({
           ) : null
         }
         {
-          hwInfo && host === address && (
+          !isEmpty(hwInfo) && host === address && (
             <div
               className={`${styles.helperIcon} verify-address`}
               onClick={() => getAddress({
