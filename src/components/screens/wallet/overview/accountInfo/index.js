@@ -67,7 +67,7 @@ const AccountInfo = ({
           ) : null
         }
         {
-          !isEmpty(hwInfo) && host === address && (
+          hwInfo && !isEmpty(hwInfo) && host === address && (
             <div
               className={`${styles.helperIcon} verify-address`}
               onClick={() => getAddress({
