@@ -49,7 +49,7 @@ describe('TransactionStatus', () => {
     expect(wrapper).toContainMatchingElement('.transaction-status');
   });
 
-  // @todo re-enable this by #2977 
+  // @todo re-enable this by #2977
   it.skip('should show dropdown bookmark', () => {
     expect(wrapper).toContainMatchingElement('.bookmark-container');
     expect(wrapper).toContainMatchingElement('.bookmark-btn');
