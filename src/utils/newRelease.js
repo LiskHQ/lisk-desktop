@@ -16,6 +16,7 @@ export default {
       const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
 
       const readMore = () => {
+        addSearchParamsToUrl(history, { modal: 'newRelease' });
         DialogHolder.showDialog(
           <NewReleaseDialog
             version={version}

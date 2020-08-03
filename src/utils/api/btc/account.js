@@ -5,7 +5,7 @@ import { getAPIClient } from './network';
 import { tokenMap } from '../../../constants/tokens';
 
 export const getDerivedPathFromPassphrase = (passphrase, config) => {
-  const Lisk = liskClient();
+  const Lisk = liskClient()['2.x'];
   const seed = Lisk.passphrase.Mnemonic.mnemonicToSeed(passphrase);
   return bip32.fromSeed(seed, config.network).derivePath(config.derivationPath);
 };

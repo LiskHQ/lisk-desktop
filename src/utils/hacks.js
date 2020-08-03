@@ -12,7 +12,7 @@ import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 //
 // eslint-disable-next-line import/prefer-default-export
 export const getTimeOffset = (latestBlocks) => {
-  const Lisk = liskClient();
+  const Lisk = liskClient()['2.x'];
   return (
     latestBlocks.length && latestBlocks[0].timestamp
       ? latestBlocks[0].timestamp - Lisk.transaction.utils.getTimeFromBlockchainEpoch()

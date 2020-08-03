@@ -1,20 +1,15 @@
-/* eslint-disable */
-import React from 'react';
-import { mount, shallow } from 'enzyme';
 import keyCodes from '../../../constants/keyCodes';
 import SearchBar from './searchBar';
-import DialogHolder from '../../toolbox/dialog/holder';
+import { mountWithRouter } from '../../../utils/testHelpers';
 
 describe('SearchBar', () => {
   let wrapper;
-
-  // eslint-disable-next-line no-unused-vars
-  let dialaogWrapper;
 
   const props = {
     t: v => v,
     history: {
       push: jest.fn(),
+      location: { search: '' },
     },
     suggestions: {
       data: {
@@ -30,20 +25,16 @@ describe('SearchBar', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(
-      <SearchBar {...props} />,
-    );
-
-    dialaogWrapper = shallow(<DialogHolder />);
+    wrapper = mountWithRouter(SearchBar, props);
   });
 
-  it.skip('should render properly SearchBar', () => {
+  it('should render properly SearchBar', () => {
     expect(wrapper).toContainMatchingElement('.search-bar');
     expect(wrapper).toContainMatchingElement('.search-input');
     expect(wrapper).not.toContainMatchingElement('.loading');
   });
 
-  it.skip('should render accounts data properly based on user data input', () => {
+  it('should render accounts data properly based on user data input', () => {
     wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456L' } });
     jest.advanceTimersByTime(500);
     wrapper.update();
@@ -55,12 +46,14 @@ describe('SearchBar', () => {
     expect(props.suggestions.clearData).toBeCalled();
   });
 
-  it.skip('should redirect to a different page if user do a click on selected row for address', () => {
+  it('should redirect to a different page if user do a click on selected row for address', () => {
     wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456L' } });
     jest.advanceTimersByTime(500);
     wrapper.update();
     expect(props.suggestions.loadData).toBeCalled();
-    wrapper.setProps({
+
+    const newProps = {
+      ...props,
       suggestions: {
         ...props.suggestions,
         data: {
@@ -74,18 +67,21 @@ describe('SearchBar', () => {
           ],
         },
       },
-    });
+    };
+    wrapper = mountWithRouter(SearchBar, newProps);
     wrapper.find('.account-row').at(0).simulate('click');
     expect(props.history.push).toBeCalled();
     expect(props.suggestions.clearData).toBeCalled();
   });
 
-  it.skip('should redirect to a different page if user do a click on selected row for transaction', () => {
+  it('should redirect to a different page if user do a click on selected row for transaction', () => {
     wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456123234234' } });
     jest.advanceTimersByTime(500);
     wrapper.update();
     expect(props.suggestions.loadData).toBeCalled();
-    wrapper.setProps({
+
+    const newProps = {
+      ...props,
       suggestions: {
         ...props.suggestions,
         data: {
@@ -101,13 +97,14 @@ describe('SearchBar', () => {
           ],
         },
       },
-    });
+    };
+    wrapper = mountWithRouter(SearchBar, newProps);
     wrapper.find('.search-transaction-row').at(0).simulate('click');
     expect(props.history.push).toBeCalled();
     expect(props.suggestions.clearData).toBeCalled();
   });
 
-  it.skip('should redirect to a delegate page if user do a click on selected row for delegates', () => {
+  it('should redirect to a delegate page if user do a click on selected row for delegates', () => {
     wrapper.find('.search-input input').at(0).simulate('change', { target: { value: 'genesis' } });
     jest.advanceTimersByTime(500);
     wrapper.update();

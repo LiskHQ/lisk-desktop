@@ -3,6 +3,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Voting from './voting';
 import DialogHolder from '../../../toolbox/dialog/holder';
+import { mountWithRouter } from '../../../../utils/testHelpers';
 
 describe('Voting', () => {
   const votes = {
@@ -28,28 +29,28 @@ describe('Voting', () => {
     history: { push: jest.fn() },
   };
 
-  it.skip('should render VotingSummary', () => {
-    const wrapper = mount(<Voting {...props} />);
+  it('should render VotingSummary', () => {
+    const wrapper = mountWithRouter(Voting, props);
     expect(wrapper.find('VotingSummary')).toHaveLength(1);
   });
 
-  it.skip('should go to result box with confirm button and then back to delegates', () => {
+  it('should go to result box with confirm button and then back to delegates', () => {
     DialogHolder.hideDialog = jest.fn();
-    const wrapper = mount(<Voting {...{ ...props, votes }} />);
+    const wrapper = mountWithRouter(Voting, { ...props, votes });
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('.result-box-header')).toHaveLength(1);
   });
 
-  it.skip('should show report error link when confirm button is clicked and voting fails', () => {
+  it('should show report error link when confirm button is clicked and voting fails', () => {
     voteResult = { success: false };
-    const wrapper = mount(<Voting {...{ ...props, votes }} />);
+    const wrapper = mountWithRouter(Voting, { ...props, votes });
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('.report-error-link')).toHaveLength(1);
   });
 
-  it.skip('should go to Delegates page when cancel button is clicked', () => {
+  it('should go to Delegates page when cancel button is clicked', () => {
     DialogHolder.hideDialog = jest.fn();
-    const wrapper = mount(<Voting {...props} />);
+    const wrapper = mountWithRouter(Voting, props);
     wrapper.find('.cancel-button').at(0).simulate('click');
     expect(DialogHolder.hideDialog).toHaveBeenCalled();
   });

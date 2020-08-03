@@ -10,9 +10,6 @@ import keyCodes from '../../../constants/keyCodes';
 import styles from './searchBar.css';
 import Blocks from './blocks';
 import { addSearchParamsToUrl } from '../../../utils/searchParams';
-// import DialogHolder from '../../toolbox/dialog/holder';
-// import TransactionDetails from '../../screens/transactionDetails';
-// import { addSearchParamToUrl } from '../../../utils/searchParams';
 
 class SearchBar extends React.Component {
   constructor() {
@@ -64,7 +61,6 @@ class SearchBar extends React.Component {
   onSelectedRow(type, value) {
     if (type === 'transactions') {
       addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails', transactionId: value });
-      // DialogHolder.showDialog(<TransactionDetails transactionId={value} />);
     } else {
       this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}/${value}`);
     }

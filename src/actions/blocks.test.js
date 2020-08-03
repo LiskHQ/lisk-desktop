@@ -6,13 +6,13 @@ import actionTypes from '../constants/actions';
 
 describe('actions: blocks', () => {
   describe('forgingDataDisplayed', () => {
-    it.skip('should return a pure action object', () => {
+    it('should return a pure action object', () => {
       expect(forgingDataDisplayed()).toEqual({ type: actionTypes.forgingDataDisplayed });
     });
   });
 
   describe('forgingDataConcealed', () => {
-    it.skip('should return a pure action object', () => {
+    it('should return a pure action object', () => {
       expect(forgingDataConcealed()).toEqual({ type: actionTypes.forgingDataConcealed });
     });
   });

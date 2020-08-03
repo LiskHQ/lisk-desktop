@@ -1,8 +1,6 @@
-/* eslint-disable */
-import React from 'react';
-import { mount } from 'enzyme';
 import { TransactionsPure } from './index';
 import transactions from '../../../../../test/constants/transactions';
+import { mountWithRouter } from '../../../../utils/testHelpers';
 
 describe('Transactions monitor page', () => {
   const props = {
@@ -29,30 +27,30 @@ describe('Transactions monitor page', () => {
     },
   };
 
-  it.skip('should render transactions list', () => {
-    const wrapper = mount(<TransactionsPure {...props} />);
+  it('should render transactions list', () => {
+    let wrapper = mountWithRouter(TransactionsPure, props);
     expect(wrapper.find('TransactionRow')).toHaveLength(0);
-    wrapper.setProps({
-      transactions: transactionsWithData,
-    });
+
+    wrapper = mountWithRouter(TransactionsPure, { ...props, transactions: transactionsWithData });
     wrapper.update();
     expect(wrapper.find('TransactionRow')).toHaveLength(transactions.length);
   });
 
-  it.skip('allows to load more transactions', () => {
-    const wrapper = mount(<TransactionsPure
-      {... { ...props, transactions: transactionsWithData }}
-    />);
+  it('allows to load more transactions', () => {
+    const wrapper = mountWithRouter(
+      TransactionsPure,
+      { ...props, transactions: transactionsWithData },
+    );
     wrapper.find('button.load-more').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith(
       { offset: transactionsWithData.data.length, sort },
     );
   });
 
-  it.skip('shows error if API failed', () => {
+  it('shows error if API failed', () => {
     const error = 'Loading failed';
-    const wrapper = mount(<TransactionsPure {...props} />);
-    wrapper.setProps({
+    const wrapper = mountWithRouter(TransactionsPure, {
+      ...props,
       transactions: {
         ...props.transactions,
         isLoading: false,
@@ -62,10 +60,11 @@ describe('Transactions monitor page', () => {
     expect(wrapper).toIncludeText(error);
   });
 
-  it.skip('allows to load more transactions when filtered', () => {
-    const wrapper = mount(<TransactionsPure
-      {...{ ...props, transactions: transactionsWithData }}
-    />);
+  it('allows to load more transactions when filtered', () => {
+    const wrapper = mountWithRouter(
+      TransactionsPure,
+      { ...props, transactions: transactionsWithData },
+    );
 
     wrapper.find('button.filter').simulate('click');
     wrapper.find('input.amountFromInput').simulate('change', { target: { value: amountFrom, name: 'amountFrom' } });
@@ -77,10 +76,11 @@ describe('Transactions monitor page', () => {
     });
   });
 
-  it.skip('allows to filter transactions by more filters', () => {
-    const wrapper = mount(<TransactionsPure
-      {...{ ...props, transactions: transactionsWithData }}
-    />);
+  it('allows to filter transactions by more filters', () => {
+    const wrapper = mountWithRouter(
+      TransactionsPure,
+      { ...props, transactions: transactionsWithData },
+    );
 
     wrapper.find('button.filter').simulate('click');
     wrapper.find('.more-less-switch').simulate('click');
@@ -93,18 +93,19 @@ describe('Transactions monitor page', () => {
     });
   });
 
-  it.skip('allows to reverse sort by clicking "Date" header', () => {
-    const wrapper = mount(<TransactionsPure
-      {...{ ...props, transactions: transactionsWithData }}
-    />);
+  it('allows to reverse sort by clicking "Date" header', () => {
+    const wrapper = mountWithRouter(
+      TransactionsPure,
+      { ...props, transactions: transactionsWithData },
+    );
     wrapper.find('.sort-by.timestamp').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:asc' });
     wrapper.find('.sort-by.timestamp').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:desc' });
   });
 
-  it.skip('allows to clear the filter after filtering by height', () => {
-    const wrapper = mount(<TransactionsPure {...props} />);
+  it('allows to clear the filter after filtering by height', () => {
+    const wrapper = mountWithRouter(TransactionsPure, props);
     wrapper.find('button.filter').simulate('click');
     wrapper.find('.more-less-switch').simulate('click');
     wrapper.find('input.height').simulate('change', { target: { value: height } });
