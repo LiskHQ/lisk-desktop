@@ -1,6 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useHistory, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import htmlStringToReact from '../utils/htmlStringToReact';
 import regex from '../utils/regex';

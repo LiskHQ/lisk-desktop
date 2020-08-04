@@ -1,4 +1,3 @@
-import React from 'react';
 import { toast } from 'react-toastify';
 // import newReleaseUtil from './newRelease';
 import { renderHook, act } from '@testing-library/react-hooks';
