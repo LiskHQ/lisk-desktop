@@ -154,7 +154,7 @@
   height: 40px;
   padding: 19px 0;
 
-  & div,
+  & > div,
   & button {
     height: 40px !important;
     line-height: 40px;
@@ -191,11 +191,6 @@
     margin: 0;
     color: var(--color-maastricht-blue);
   }
-}
-
-.tooltip {
-  display: inline-block;
-  vertical-align: text-top;
 }
 
 .btn {

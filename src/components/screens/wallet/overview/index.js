@@ -15,16 +15,21 @@ const getProp = (dic, prop, defaultValue) => {
 };
 
 const Overview = ({
-  t, activeToken, transactions,
+  t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
   const address = getProp(account, 'address', '');
   const delegate = getProp(account, 'delegate', {});
   const publicKey = getProp(account, 'publicKey', '');
-  const hwInfo = getProp(account, 'hwInfo', false);
   const balance = getProp(account, 'balance', 0);
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
+  );
+  const host = useSelector(
+    state => (state.account
+      && state.account.info
+      && state.account.info[activeToken]
+      && state.account.info[activeToken].address) || '',
   );
 
   return (
@@ -38,6 +43,7 @@ const Overview = ({
           delegate={delegate}
           bookmark={bookmark}
           publicKey={publicKey}
+          host={host}
         />
       </div>
       <div className={`${grid['col-xs-4']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>

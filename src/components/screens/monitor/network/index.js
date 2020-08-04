@@ -68,13 +68,13 @@ export const NetworkPure = ({
   return (
     <div>
       <Overview networkStatus={networkStatistics.data} t={t} />
-      <Box main isLoading={peers.isLoading} className="peers-box">
+      <Box className="map-box">
         <BoxHeader>
           <div>
             <h1 className={`${styles.contentHeader} contentHeader`}>
               {t('Connected peers')}
             </h1>
-            <Tooltip>
+            <Tooltip position="right">
               <p>{t('The current list only reflects the peers connected to the Lisk Service node.')}</p>
             </Tooltip>
           </div>
@@ -82,6 +82,8 @@ export const NetworkPure = ({
         <BoxContent className={styles.mapWrapper}>
           <Map peers={peers.data} />
         </BoxContent>
+      </Box>
+      <Box main isLoading={peers.isLoading} className="peers-box">
         <BoxContent className={styles.content}>
           <Table
             data={peers.data}

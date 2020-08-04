@@ -14,8 +14,8 @@ const Identity = ({ address, delegate, bookmark }) => {
   const truncatedAddress = address.length > 12
     ? `${address.slice(0, 10)}...${address.slice(-3)}` : address;
 
-  const [modAddress, setModAddress] = useState(truncatedAddress);
-  const onClick = () => setModAddress(modAddress === address ? truncatedAddress : address);
+  const [isTruncated, setTruncationState] = useState(true);
+  const onClick = () => setTruncationState(!isTruncated);
 
   return (
     <div className={styles.text}>
@@ -30,7 +30,7 @@ const Identity = ({ address, delegate, bookmark }) => {
                 className={`${styles.secondary} ${styles.noSelect} delegate-secondary`}
                 onClick={onClick}
               >
-                {modAddress}
+                {isTruncated ? truncatedAddress : address}
               </span>
             </>
           )
@@ -39,7 +39,7 @@ const Identity = ({ address, delegate, bookmark }) => {
               className={`${styles.primary} ${styles.noSelect} account-primary`}
               onClick={onClick}
             >
-              {modAddress}
+              {isTruncated ? truncatedAddress : address}
             </span>
           )
       }
@@ -47,7 +47,5 @@ const Identity = ({ address, delegate, bookmark }) => {
   );
 };
 
-/* istanbul ignore next */
-const areEqual = (prevProps, nextProps) => (prevProps.address === nextProps.address);
 
-export default React.memo(Identity, areEqual);
+export default Identity;

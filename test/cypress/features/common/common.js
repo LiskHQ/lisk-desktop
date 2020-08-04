@@ -185,3 +185,7 @@ Then(/^I go to transfer confirmation$/, function () {
 Then(/^(.*?) should be visible$/, function (elementName) {
   cy.get(ss[elementName]).should('be.visible');
 });
+
+Then(/^The (.*?) button must be active$/, function (elementName) {
+  cy.get(ss[elementName]).should('not.be.disabled');
+});

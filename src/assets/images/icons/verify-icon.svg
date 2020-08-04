@@ -6,10 +6,10 @@
     <g id="💰-My-Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Wallet----Lisk" transform="translate(-535.000000, -327.000000)">
             <g id="verify-icon" transform="translate(536.000000, 328.000000)">
-                <rect id="Rectangle" stroke="#8A8CA2" x="0" y="5" width="10" height="12"></rect>
-                <rect id="Rectangle" stroke="#8A8CA2" x="2" y="0" width="6" height="5"></rect>
-                <path d="M4.5,0 L4.5,3 L3.5,3 L3.5,0 L4.5,0 Z M6.5,0 L6.5,3 L5.5,3 L5.5,0 L6.5,0 Z" id="Combined-Shape" fill="#8A8CA2"></path>
-                <rect id="Rectangle-Copy-2" stroke="#8A8CA2" x="2" y="7" width="6" height="7"></rect>
+                <rect id="Rectangle" stroke="#ffffff" x="0" y="5" width="10" height="12"></rect>
+                <rect id="Rectangle" stroke="#ffffff" x="2" y="0" width="6" height="5"></rect>
+                <path d="M4.5,0 L4.5,3 L3.5,3 L3.5,0 L4.5,0 Z M6.5,0 L6.5,3 L5.5,3 L5.5,0 L6.5,0 Z" id="Combined-Shape" fill="#ffffff"></path>
+                <rect id="Rectangle-Copy-2" stroke="#ffffff" x="2" y="7" width="6" height="7"></rect>
             </g>
         </g>
     </g>

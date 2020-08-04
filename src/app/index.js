@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { hot } from 'react-hot-loader/root';//eslint-disable-line
 import styles from './app.css';
 import './variables.css';
-import LoadingBar from '../components/shared/loadingBar';
 import OfflineWrapper from '../components/shared/offlineWrapper';
 import CustomRoute from '../components/shared/customRoute';
 import NotFound from '../components/shared/notFound';
@@ -84,7 +83,6 @@ const App = ({ history }) => {
             </div>
           </section>
         </main>
-        <LoadingBar markAsLoaded={setLoaded} />
       </OfflineWrapper>
     </ThemeContext.Provider>
   );

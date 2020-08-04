@@ -7,7 +7,7 @@ import styles from './othersTooltip.css';
 const OthersTooltip = ({ data, title }) => {
   const { t } = useTranslation();
   return (
-    <Tooltip className={styles.tooltip}>
+    <Tooltip className={styles.tooltip} position="bottom right" indent>
       <>
         <header className={styles.row}>
           <h4>{title}</h4>

@@ -1,10 +1,10 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import AccountVisual from '../../toolbox/accountVisual';
-import tableStyles from '../../toolbox/table/table.css';
-import LiskAmount from '../liskAmount';
-import styles from './votesTab.css';
-import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
+import AccountVisual from '../../../toolbox/accountVisual';
+import tableStyles from '../../../toolbox/table/table.css';
+import LiskAmount from '../../../shared/liskAmount';
+import styles from './votes.css';
+import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 
 const VoteRow = ({
   data, onRowClick, t, apiVersion,

@@ -7,6 +7,7 @@ import * as ChartUtils from '../../../../../utils/balanceChart';
 import { tokenMap } from '../../../../../constants/tokens';
 import i18n from '../../../../../i18n';
 import { LineChart } from '../../../../toolbox/charts';
+import Icon from '../../../../toolbox/icon';
 import styles from './balanceChart.css';
 
 const BalanceGraph = ({
@@ -27,7 +28,6 @@ const BalanceGraph = ({
       setOptions(ChartUtils.graphOptions({
         format,
         token,
-        isDiscreetMode,
         locale: i18n.language,
       }));
 
@@ -45,21 +45,31 @@ const BalanceGraph = ({
     <Box className={`${styles.wrapper}`}>
       <BoxContent className={styles.content}>
         <h2 className={styles.title}>{t('{{token}} balance', { token: tokenMap[token].label })}</h2>
-        { data
-          ? (
+        {
+          data && !isDiscreetMode && (
             <LineChart
               data={data}
               options={options}
             />
           )
-          : (
+        }
+        {
+          isDiscreetMode && (
+            <div className={styles.discreetMode}>
+              <Icon name="discreetMode" className={styles.icon} />
+              <p>The balance chart is not visible in discreet mode.</p>
+            </div>
+          )
+        }
+        {
+          !data && !isDiscreetMode && (
             <BoxEmptyState>
               <p>
                 {t('There are no transactions.')}
               </p>
             </BoxEmptyState>
           )
-          }
+        }
       </BoxContent>
     </Box>
   );

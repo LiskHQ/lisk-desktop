@@ -12,59 +12,6 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
-
-  &:global(.showOnBottom),
-  &:global(.showOnTop) {
-    & .tooltip {
-      left: 50%;
-      right: auto;
-      transform: translateY(0) translateX(-50%);
-
-      & .tooltipArrow {
-        left: calc(50% - 6px);
-      }
-    }
-  }
-
-  &:global(.showOnBottom) {
-    & .tooltip {
-      bottom: auto;
-      top: calc(100% + 16px);
-
-      & .tooltipArrow {
-        bottom: auto;
-        top: -20px;
-        transform: rotate(90deg);
-      }
-    }
-  }
-
-  &:global(.showOnTop) {
-    & .tooltip {
-      bottom: calc(100% + 16px);
-      top: auto;
-
-      & .tooltipArrow {
-        bottom: -20px;
-        top: auto;
-        transform: rotate(-90deg);
-      }
-    }
-  }
-
-  &:global(.showOnLeft) {
-    & .tooltip {
-      right: calc(-100% + 48px);
-      left: auto;
-
-      & .tooltipArrow {
-        left: auto;
-        right: -12px;
-        top: calc(50% - 15px);
-        transform: rotate(180deg);
-      }
-    }
-  }
 }
 
 .infoIcon {
@@ -86,13 +33,11 @@
   box-shadow: var(--box-shadow-standard);
   box-sizing: border-box;
   color: var(--color-slate-gray);
-  left: calc(100% + 15px);
   max-width: 380px;
   opacity: 0;
   padding: 20px;
   position: absolute;
   text-align: left;
-  top: 50%;
   transform: translateY(-50%);
   transition:
     visibility var(--animation-speed-fast) linear,
@@ -105,18 +50,129 @@
   & .tooltipArrow {
     color: var(--color-white);
     height: 28px;
-    left: -12px;
     position: absolute;
     stroke: var(--color-platinum);
-    top: 50%;
     transform: translateY(-50%);
     width: 13px;
   }
 
-  &:global(.shownTooltip) {
+  &.top {
+    bottom: calc(100% + 16px);
+    left: 50%;
+    transform: translateY(0) translateX(-50%);
+
+    & .tooltipArrow {
+      left: calc(50% - 6px);
+    }
+
+    &.right {
+      left: 0;
+      transform: translateY(0) translateX(-10%);
+
+      & .tooltipArrow {
+        right: 40px;
+        right: auto;
+      }
+    }
+
+    &.left {
+      right: 0;
+      left: auto;
+      transform: none;
+
+      &.indent {
+        right: -40px;
+      }
+
+      & .tooltipArrow {
+        right: 40px;
+        left: auto;
+        bottom: -20px;
+        top: auto;
+        transform: rotate(-90deg);
+      }
+    }
+  }
+
+  &.bottom {
+    top: calc(100% + 16px);
+    left: 50%;
+    transform: translateY(0) translateX(-50%);
+
+    & .tooltipArrow {
+      top: -20px;
+      left: 50%;
+      transform: rotate(90deg) translateY(25%);
+    }
+
+    &.right {
+      left: 0;
+      transform: none;
+
+      &.indent {
+        left: -40px;
+      }
+
+      & .tooltipArrow {
+        top: -20px;
+        left: 40px;
+        transform: rotate(90deg);
+      }
+    }
+
+    &.left {
+      right: 0;
+      left: auto;
+      transform: none;
+
+      &.indent {
+        right: -40px;
+      }
+
+      & .tooltipArrow {
+        top: -20px;
+        left: auto;
+        right: 40px;
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &.left {
+    &:not(.top) {
+      &:not(.bottom) {
+        right: calc(-100% + 48px);
+        top: 50%;
+
+        & .tooltipArrow {
+          left: auto;
+          right: -12px;
+          top: calc(50% - 15px);
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  &.right {
+    &:not(.top) {
+      &:not(.bottom) {
+        left: calc(-100% + 48px);
+        top: 50%;
+
+        & .tooltipArrow {
+          right: auto;
+          left: -12px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+
+  &.visible {
     opacity: 1;
     visibility: visible;
-    transform: translateY(-50%) scale(1);
   }
 
   & p {
