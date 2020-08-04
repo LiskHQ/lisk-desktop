@@ -12,13 +12,14 @@ jest.mock('../../../utils/searchParams', () => ({
 
 describe('New release dialog component', () => {
   const props = {
+    t: v => v,
     version: '1.20.1',
     releaseNotes: <div><p>Dummy text</p></div>,
     ipc: {
       send: jest.fn(),
     },
-    t: v => v,
   };
+
   let wrapper;
 
   beforeEach(() => {
