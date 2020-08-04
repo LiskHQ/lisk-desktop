@@ -49,3 +49,5 @@ if (module.hot) {
 }
 
 applyDeviceClass(document.getElementsByTagName('html')[0]);
+
+document.documentElement.setAttribute('data-useragent', navigator.userAgent);
