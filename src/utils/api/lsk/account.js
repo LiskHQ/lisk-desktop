@@ -56,7 +56,7 @@ export const setSecondPassphrase = (
   networkIdentifier,
 ) =>
   new Promise((resolve, reject) => {
-    const transaction = liskClient().transaction
+    const transaction = liskClient()['2.x'].transaction
       .registerSecondPassphrase({
         passphrase,
         secondPassphrase,

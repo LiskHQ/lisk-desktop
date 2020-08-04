@@ -37,3 +37,24 @@ export const mountWithRouter = (Component, props, routeConfig = {}) => mount(
     <Component {...props} />
   </MemoryRouter>,
 );
+
+
+/**
+ * Mounts components that are wrapped in WithRouter
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ * @param {?Object} routeConfig - A fake history.location object
+ * @param {?Object} store - A fake redux store object
+ *
+ * @returns {Object} Mounted component
+ */
+export const mountWithRouterAndStore = (Component, props, routeConfig = {}, store) => mount(
+  <Provider store={configureStore()(store)}>
+    <MemoryRouter
+      initialEntries={[routeConfig]}
+    >
+      <Component {...props} />
+    </MemoryRouter>
+  </Provider>,
+);

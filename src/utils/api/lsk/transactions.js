@@ -75,7 +75,7 @@ export const getSingleTransaction = ({
 
 export const create = (transaction, transactionType) => new Promise((resolve, reject) => {
   try {
-    const Lisk = liskClient();
+    const Lisk = liskClient()['2.x'];
     const { networkIdentifier } = transaction.network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
       ...transaction,

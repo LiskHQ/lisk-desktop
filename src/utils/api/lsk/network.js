@@ -6,7 +6,7 @@ const apiClients = {};
 
 // eslint-disable-next-line import/prefer-default-export
 export const getAPIClient = (network) => {
-  const Lisk = liskClient();
+  const Lisk = liskClient()['2.x'];
   if (network.name && (!apiClients[network.name] || network.name === networks.customNode.name)) {
     const { nethash, nodes } = {
       [networks.testnet.name]: {

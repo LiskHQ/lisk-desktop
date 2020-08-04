@@ -10,7 +10,6 @@ import i18n from './i18n'; // initialized i18next instance
 import externalLinks from './utils/externalLinks';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
-import newRelease from './utils/newRelease';
 
 if (env.development) {
   const whyDidYouRender = require('@welldone-software/why-did-you-render'); //eslint-disable-line
@@ -24,8 +23,6 @@ if (env.production) {
 if (!env.test) {
   ipcLocale.init(i18n);
 }
-
-newRelease.init();
 
 const rootElement = document.getElementById('app');
 

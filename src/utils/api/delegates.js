@@ -95,7 +95,7 @@ const voteWithPassphrase = (
 ) => (Promise.all(splitVotesIntoRounds({ votes: [...votes], unvotes: [...unvotes] })
   // eslint-disable-next-line no-shadow
   .map(({ votes, unvotes }) => {
-    const Lisk = liskClient();
+    const Lisk = liskClient()['2.x'];
     return (Lisk.transaction.castVotes(
       {
         votes,
@@ -154,7 +154,7 @@ export const registerDelegate = (
     data.secondPassphrase = secondPassphrase;
   }
   return new Promise((resolve, reject) => {
-    const Lisk = liskClient();
+    const Lisk = liskClient()['2.x'];
     const transaction = Lisk.transaction.registerDelegate({ ...data, networkIdentifier });
     liskAPIClient.transactions
       .broadcast(transaction)

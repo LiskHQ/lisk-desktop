@@ -21,12 +21,14 @@ import DialogHolder from '../components/toolbox/dialog/holder';
 import ThemeContext from '../contexts/theme';
 import { settingsRetrieved } from '../actions/settings';
 import { bookmarksRetrieved } from '../actions/bookmarks';
+import useIpc from '../hooks/useIpc';
 
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
-  // const location = useLocation();
+
+  useIpc();
 
   useEffect(() => {
     setLoaded(true);

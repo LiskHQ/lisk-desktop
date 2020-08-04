@@ -38,7 +38,7 @@ const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) =>
  * This function is used for sign a send transaction.
  */
 const signSendTransaction = async (account, data) => {
-  const { transfer, utils } = lisk().transaction;
+  const { transfer, utils } = lisk()['2.x'].transaction;
   const transactionObject = {
     ...transfer(data),
     senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,
@@ -71,7 +71,7 @@ const signVoteTransaction = async (
   timeOffset,
   networkIdentifier,
 ) => {
-  const { castVotes, utils } = lisk().transaction;
+  const { castVotes, utils } = lisk()['2.x'].transaction;
   const signedTransactions = [];
   const votesChunks = splitVotesIntoRounds({ votes: [...votedList], unvotes: [...unvotedList] });
 
