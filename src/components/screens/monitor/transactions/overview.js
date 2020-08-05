@@ -16,6 +16,7 @@ import { chartStyles } from '../../../../constants/chartConstants';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
 import { kFormatter } from '../../../../utils/helpers';
+import withResizeValues from '../../../../utils/withResizeValues';
 
 const options = {
   responsive: true,
@@ -124,7 +125,7 @@ const formatDates = (date, period) => {
 const formatDistributionByValues = distributions => [0, 1, 2, 3, 4].map(item =>
   (distributions[item] || 0) + (distributions[item + 8] || 0));
 
-const Overview = ({ t, txStats }) => {
+const Overview = ({ t, txStats, isMediumViewPort }) => {
   const [activeTab, setActiveTab] = useState('week');
   const distributionByType = formatDistributionByValues(txStats.data.distributionByType);
   const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
@@ -165,6 +166,7 @@ const Overview = ({ t, txStats }) => {
                   },
                 ],
               }}
+              options={{ legend: { display: !isMediumViewPort } }}
             />
           </div>
         </div>
@@ -180,6 +182,7 @@ const Overview = ({ t, txStats }) => {
                   },
                 ],
               }}
+              options={{ legend: { display: !isMediumViewPort } }}
             />
           </div>
         </div>
@@ -248,4 +251,5 @@ export default compose(
     },
   ),
   withTranslation(),
+  withResizeValues
 )(Overview);

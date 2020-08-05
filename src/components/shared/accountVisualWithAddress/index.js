@@ -1,12 +1,14 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import styles from './accountVisualWithAddress.css';
 import Icon from '../../toolbox/icon';
 import transactionTypes from '../../../constants/transactionTypes';
 import AccountVisual from '../../toolbox/accountVisual';
 import regex from '../../../utils/regex';
+import withResizeValues from '../../../utils/withResizeValues';
 
 class AccountVisualWithAddress extends React.Component {
   getTransformedAddress(address) {
@@ -79,4 +81,8 @@ const mapStateToProps = state => ({
   token: state.settings.token,
 });
 
-export default connect(mapStateToProps)(withTranslation()(AccountVisualWithAddress));
+export default connect(mapStateToProps)(
+  compose(
+    withTranslation(),
+    withResizeValues
+)(AccountVisualWithAddress));

@@ -121,29 +121,19 @@
 }
 
 @media (--large-viewport) {
-  .column {
-    &.pie {
-      width: 50%;
-    }
-
-    &.bar {
-      width: 100%;
-      padding: 0 20%;
-    }
-  }
-}
-
-@media (--medium-viewport) {
-  .column {
-    &.bar {
-      padding: 0 15%;
-    }
+  .legends {
+    display: none;
   }
 }
 
 @media (--small-viewport) {
   .column {
+    &.pie {
+      width: 50%;
+    }
+    
     &.bar {
+      width: 100%;
       padding: 0;
     }
   }

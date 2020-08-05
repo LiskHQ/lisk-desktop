@@ -186,3 +186,9 @@
     opacity: 1;
   }
 }
+
+@media (--large-viewport) {
+  .row {
+    flex-wrap: inherit;
+  }
+}
