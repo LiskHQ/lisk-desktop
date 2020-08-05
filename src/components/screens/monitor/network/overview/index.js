@@ -8,10 +8,12 @@ import { DoughnutChart } from '../../../../toolbox/charts';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './overview.css';
+import withResizeValues from '../../../../../utils/withResizeValues';
 
 const Overview = ({
   networkStatus,
   t,
+  isMediumViewPort
 }) => {
   const createOthers = (data) => {
     const list = {
@@ -75,6 +77,7 @@ const Overview = ({
                         ],
                       }}
                       options={{
+                        legend: { display: !isMediumViewPort },
                         tooltips: {
                           callbacks: {
                             title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
@@ -86,7 +89,7 @@ const Overview = ({
                       }}
                     />
                     {
-                      versionsDistribution.others.length
+                      versionsDistribution.others.length && !isMediumViewPort
                         ? <OthersTooltip title={t('Version')} data={versionsDistribution.others} />
                         : null
                     }
@@ -113,6 +116,7 @@ const Overview = ({
                         ],
                       }}
                       options={{
+                        legend: { display: !isMediumViewPort },
                         tooltips: {
                           callbacks: {
                             title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
@@ -124,7 +128,7 @@ const Overview = ({
                       }}
                     />
                     {
-                      heightDistribution.others.length
+                      heightDistribution.others.length && !isMediumViewPort
                         ? <OthersTooltip title={t('Height')} data={heightDistribution.others} />
                         : null
                     }
@@ -152,6 +156,7 @@ const Overview = ({
                         ],
                       }}
                       options={{
+                        legend: { display: !isMediumViewPort },
                         tooltips: {
                           callbacks: {
                             title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
@@ -173,4 +178,4 @@ const Overview = ({
   );
 };
 
-export default Overview;
+export default withResizeValues(Overview);
