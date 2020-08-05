@@ -4,3 +4,9 @@
   padding-bottom: var(--horizontal-padding-l);
   padding-top: 20px;
 }
+
+@media (--medium-viewport) {
+  .balanceChart {
+    margin-top: 20px;
+  }
+}

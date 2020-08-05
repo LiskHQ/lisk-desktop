@@ -11,10 +11,12 @@ import Spinner from '../../../toolbox/spinner';
 import TransactionAsset from './txAsset';
 import DialogLink from '../../../toolbox/dialog/link';
 import styles from './transactions.css';
+import regex from '../../../../utils/regex';
+import withResizeValues from '../../../../utils/withResizeValues';
 
 // eslint-disable-next-line complexity
 const TransactionRow = ({
-  data, className, t, host,
+  data, className, t, host, isMediumViewPort
 }) => {
   const {
     bookmarks,
@@ -25,6 +27,7 @@ const TransactionRow = ({
   }));
   const isLSK = activeToken === tokenMap.LSK.key;
   const isConfirmed = data.confirmations > 0;
+  const transactionAddressRecipientId = host === data.recipientId ? data.senderId : data.recipientId;
   return (
     <DialogLink
       className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending} transactions-row`}
@@ -38,7 +41,7 @@ const TransactionRow = ({
           transactionType={data.type}
         />
         <TransactionAddress
-          address={host === data.recipientId ? data.senderId : data.recipientId}
+          address={isMediumViewPort ? transactionAddressRecipientId.replace(regex.lskAddressTrunk, '$1...$3') : transactionAddressRecipientId}
           bookmarks={bookmarks}
           t={t}
           token={activeToken}
@@ -58,7 +61,7 @@ const TransactionRow = ({
       {
         isLSK
           ? (
-            <span className={`${grid['col-xs-3']} ${grid['col-md-2']}`}>
+            <span className={`${grid['col-xs-2']} ${grid['col-md-2']}`}>
               <TransactionAsset t={t} transaction={data} />
             </span>
           )
@@ -84,4 +87,4 @@ const areEqual = (prevProps, nextProps) =>
   (prevProps.data.id === nextProps.data.id
   && prevProps.data.confirmations === nextProps.data.confirmations);
 
-export default React.memo(TransactionRow, areEqual);
+export default React.memo(withResizeValues(TransactionRow), areEqual);
