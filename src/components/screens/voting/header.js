@@ -42,7 +42,7 @@ const TotalActions = ({ t, number, fee }) => (
     </figure>
     <h5>
       <span>{`${number} LSK`}</span>
-      <Tooltip className={`${styles.tooltip} showOnBottom`}>
+      <Tooltip position="bottom">
         <p>{t('Each time you add or remove a vote it is counted as an action. There\'s {{fee}} LSK fee per every 33 actions.', { fee })}</p>
       </Tooltip>
     </h5>
@@ -148,9 +148,8 @@ const VotingHeader = ({
             : (
               <div className={`${styles.box} ${styles.signedOut}`}>
                 <h2>
-                  {`${t('Delegates')}`}
+                  {`${t('Voting')}`}
                 </h2>
-                <span className={styles.subTitle}>{t('Vote for who secures the network or becomes a delegate.')}</span>
               </div>
             )
           }

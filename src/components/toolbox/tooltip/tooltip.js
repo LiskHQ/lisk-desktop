@@ -59,7 +59,8 @@ class Tooltip extends React.Component {
 
   render() {
     const {
-      title, children, footer, className, alwaysShow, content, tooltipClassName, size,
+      title, children, footer, className, position = 'bottom',
+      alwaysShow, content, tooltipClassName, size, indent,
     } = this.props;
     const {
       showTooltip,
@@ -67,6 +68,10 @@ class Tooltip extends React.Component {
     const {
       infoIcon = '', tooltip = '',
     } = this.props.styles || {};
+    const positionStyles = position.split(' ')
+      .filter(key => ['top', 'bottom', 'left', 'right'].indexOf(key) >= 0)
+      .map(key => styles[key])
+      .join(' ');
     return React.isValidElement(children) && (
       <div
         className={[styles.tooltipWrapper, className].join(' ')}
@@ -86,8 +91,10 @@ class Tooltip extends React.Component {
          }
         <div className={[
           styles.tooltip,
-          (alwaysShow || showTooltip) && 'shownTooltip',
+          positionStyles,
+          (alwaysShow || showTooltip) && styles.visible,
           tooltip,
+          indent && styles.indent,
           'tooltip-window',
           tooltipClassName,
           styles[size],

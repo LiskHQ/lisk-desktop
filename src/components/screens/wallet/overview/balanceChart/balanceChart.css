@@ -27,3 +27,21 @@
   color: var(--color-maastricht-blue);
   padding: 0 20px 10px;
 }
+
+.discreetMode {
+  height: 129px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+
+  & .icon {
+    width: 30px;
+  }
+
+  & p {
+    @mixin contentLarge;
+
+    color: var(--color-slate-gray);
+  }
+}

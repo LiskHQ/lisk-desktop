@@ -36,7 +36,7 @@ export default (activeTab, changeSort, t) => ([
     tooltip: {
       title: t('Status'),
       message: t('Current status of a delegate: forging, not forging, awaiting slot or missed block.'),
-      className: 'showOnLeft',
+      position: 'left',
     },
   },
   {
@@ -45,7 +45,7 @@ export default (activeTab, changeSort, t) => ([
     tooltip: {
       title: t('Productivity'),
       message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
-      className: 'showOnLeft',
+      position: 'left',
     },
   },
   {
@@ -54,7 +54,7 @@ export default (activeTab, changeSort, t) => ([
     tooltip: {
       title: t('Approval'),
       message: t('Percentage of total supply voting for a delegate.'),
-      className: 'showOnLeft',
+      position: 'left',
     },
   },
 ]);

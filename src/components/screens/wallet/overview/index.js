@@ -4,7 +4,6 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
-import { getIndexOfBookmark } from '../../../../utils/bookmarks';
 import { isEmpty } from '../../../../utils/helpers';
 import styles from './overview.css';
 
@@ -16,18 +15,22 @@ const getProp = (dic, prop, defaultValue) => {
 };
 
 const Overview = ({
-  t, activeToken, transactions,
+  t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
   const address = getProp(account, 'address', '');
   const delegate = getProp(account, 'delegate', {});
   const publicKey = getProp(account, 'publicKey', '');
-  const hwInfo = getProp(account, 'hwInfo', false);
   const balance = getProp(account, 'balance', 0);
-  const bookmarks = useSelector(state => state.bookmarks);
-  const isBookmark = getIndexOfBookmark(bookmarks, {
-    address, token: activeToken,
-  }) !== -1;
+  const bookmark = useSelector(
+    state => state.bookmarks[activeToken].find(item => (item.address === address)),
+  );
+  const host = useSelector(
+    state => (state.account
+      && state.account.info
+      && state.account.info[activeToken]
+      && state.account.info[activeToken].address) || '',
+  );
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
@@ -38,8 +41,9 @@ const Overview = ({
           activeToken={activeToken}
           address={address}
           delegate={delegate}
-          isBookmark={isBookmark}
+          bookmark={bookmark}
           publicKey={publicKey}
+          host={host}
         />
       </div>
       <div className={`${grid['col-xs-4']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>

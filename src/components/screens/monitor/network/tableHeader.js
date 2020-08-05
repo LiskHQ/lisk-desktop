@@ -27,7 +27,7 @@ export default (changeSort, t) => ([
           .
         </p>
       ),
-      className: 'showOnBottom',
+      position: 'bottom',
     },
   },
   {

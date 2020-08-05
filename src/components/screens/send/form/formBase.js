@@ -23,7 +23,7 @@ const FormBase = ({
   }) => error || (required && value === '') || isLoading);
 
   return (
-    <Box className={styles.wrapper} width="medium">
+    <Box className={styles.wrapper}>
       <BoxHeader>
         <h1>{ t('Send {{token}}', { token }) }</h1>
       </BoxHeader>

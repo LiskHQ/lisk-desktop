@@ -40,15 +40,15 @@ describe('Tooltip wrapper', () => {
   it('Should show the tooltip on click', () => {
     expect(wrapper.find('.tooltip.shownTooltip')).to.have.length(0);
     wrapper.find('.infoIcon').hostNodes().simulate('click');
-    expect(wrapper.find('.tooltip')).to.have.className('shownTooltip');
+    expect(wrapper.find('.tooltip')).to.have.className('visible');
   });
 
   it('Should show modal when mouse enter and close after 1 second when mouse leave', () => {
     wrapper.simulate('mousemove');
-    expect(wrapper.find('.tooltip')).to.have.className('shownTooltip');
+    expect(wrapper.find('.tooltip')).to.have.className('visible');
     wrapper.simulate('mouseleave');
     clock.tick(1000);
-    expect(wrapper.find('.tooltip')).not.to.have.className('shownTooltip');
+    expect(wrapper.find('.tooltip')).not.to.have.className('visible');
   });
 
   it('Should reset setTimeout if mouse enter before timeout is over', () => {
@@ -57,6 +57,6 @@ describe('Tooltip wrapper', () => {
     clock.tick(500);
     wrapper.simulate('mousemove');
     clock.tick(1000);
-    expect(wrapper.find('.tooltip')).to.have.className('shownTooltip');
+    expect(wrapper.find('.tooltip')).to.have.className('visible');
   });
 });

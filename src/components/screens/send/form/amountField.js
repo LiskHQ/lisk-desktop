@@ -66,7 +66,7 @@ const AmountField = ({
             fee: formatAmountBasedOnLocale({ value: fromRawLsk(fee) }),
           })}
           <Tooltip
-            className="showOnTop"
+            position="top left"
             title={t('Transaction fee')}
           >
             <p className={styles.tooltipText}>

@@ -41,7 +41,7 @@ class Transactions extends React.Component {
 
     return (
       <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
-        <Box width="medium" isLoading={isLoading} className={styles.wrapper}>
+        <Box isLoading={isLoading} className={styles.wrapper}>
           <BoxHeader>
             <h1>{t('Transaction details')}</h1>
           </BoxHeader>

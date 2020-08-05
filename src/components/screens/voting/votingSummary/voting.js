@@ -2,12 +2,13 @@ import React from 'react';
 import VotingSummary from './votingSummary';
 import TransactionResult from '../../../shared/transactionResult';
 import MultiStep from '../../../shared/multiStep';
+import Dialog from '../../../toolbox/dialog/dialog';
 import styles from './voting.css';
 
 const Voting = ({
   t, votes, history, account, votePlaced,
 }) => (
-  <div className={styles.wrapper}>
+  <Dialog hasClose className={styles.wrapper}>
     <MultiStep>
       <VotingSummary
         t={t}
@@ -18,7 +19,7 @@ const Voting = ({
       />
       <TransactionResult t={t} />
     </MultiStep>
-  </div>
+  </Dialog>
 );
 
 export default Voting;

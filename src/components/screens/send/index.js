@@ -15,7 +15,7 @@ const Send = ({ initialValue, history }) => {
   };
 
   return (
-    <Dialog hasClose className={styles.dialogWrapper}>
+    <Dialog hasClose>
       <MultiStep
         key="send"
         finalCallback={backToWallet}

@@ -3,6 +3,7 @@
 .wrapper {
   & .content {
     height: 200px;
+    position: relative;
 
     &.LSK {
       background-color: var(--color-ultramarine-blue);
@@ -23,6 +24,8 @@
   & .info {
     display: flex;
     flex-flow: row nowrap;
+    position: relative;
+    z-index: 1;
 
     & .text {
       position: relative;
@@ -36,6 +39,7 @@
       & .primary {
         @mixin headingNormalIntermediate normal;
 
+        font-size: 22px;
         display: block;
       }
 
@@ -43,20 +47,12 @@
         @mixin contentLargest normal;
 
         opacity: 0.7;
+        display: inline-block;
       }
 
-      & .addressTooltip {
-        font-size: 20px;
-        white-space: nowrap;
-      }
-
-      & .addressWrapper {
-        width: auto;
-        max-width: fit-content;
-      }
-
-      & .address {
-        padding: 10px;
+      & .noSelect {
+        cursor: pointer;
+        user-select: none;
       }
     }
   }
@@ -64,8 +60,12 @@
   & footer {
     display: flex;
     flex-flow: row nowrap;
-    padding: 30px 0 0;
+    padding: 0 0 var(--horizontal-padding-l) 0;
     justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 
     & .helperIcon {
       width: 40px;

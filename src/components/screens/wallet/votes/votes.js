@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import { Input } from '../../toolbox/inputs';
-import routes from '../../../constants/routes';
-import styles from './votesTab.css';
-import Table from '../../toolbox/table';
+import Box from '../../../toolbox/box';
+import BoxHeader from '../../../toolbox/box/header';
+import BoxContent from '../../../toolbox/box/content';
+import { Input } from '../../../toolbox/inputs';
+import routes from '../../../../constants/routes';
+import styles from './votes.css';
+import Table from '../../../toolbox/table';
 import VoteRow from './voteRow';
 import header from './votesTableHeader';
 
 // eslint-disable-next-line max-statements
-const VotesTab = ({
+const Votes = ({
   votes, delegates, address, t, history,
 }) => {
   const [tOut, setTout] = useState();
@@ -119,7 +119,7 @@ const VotesTab = ({
   );
 };
 
-VotesTab.propTypes = {
+Votes.propTypes = {
   address: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -127,4 +127,4 @@ VotesTab.propTypes = {
   t: PropTypes.func.isRequired,
 };
 
-export default VotesTab;
+export default Votes;
