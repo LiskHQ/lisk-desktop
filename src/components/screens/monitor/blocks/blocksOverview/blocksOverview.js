@@ -7,6 +7,7 @@ import BoxTabs from '../../../../toolbox/tabs';
 import { DoughnutChart, BarChart } from '../../../../toolbox/charts';
 import styles from './blocksOverview.css';
 import { chartStyles } from '../../../../../constants/chartConstants';
+import withResizeValues from '../../../../../utils/withResizeValues';
 
 class BlocksOverview extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class BlocksOverview extends React.Component {
 
   render() {
     const { activeTab } = this.state;
-    const { t, blocks } = this.props;
+    const { t, blocks, isMediumViewPort } = this.props;
 
     const tabs = [
       {
@@ -143,6 +144,7 @@ class BlocksOverview extends React.Component {
                     }],
                   }}
                   options={{
+                    legend: { display: !isMediumViewPort },
                     cutoutPercentage: 65,
                     tooltips: {
                       callbacks: {
@@ -166,4 +168,4 @@ class BlocksOverview extends React.Component {
   }
 }
 
-export default BlocksOverview;
+export default withResizeValues(BlocksOverview);
