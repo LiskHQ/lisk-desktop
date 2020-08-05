@@ -36,6 +36,30 @@ order to be available application wide
   padding: 0px 30px;
 }
 
+html[data-useragent*='Windows'],
+html[data-useragent*='Linux'] {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 5px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: rgba(200, 200, 200, 0.4);
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    width: 12px;
+    background-color: rgba(200, 200, 200, 1);
+  }
+}
+
 @media (--medium-viewport) {
   :global body.contentFocused {
     margin-top: 0;
