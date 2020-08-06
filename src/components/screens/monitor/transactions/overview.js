@@ -17,6 +17,7 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
 import { kFormatter } from '../../../../utils/helpers';
 import withResizeValues from '../../../../utils/withResizeValues';
+import GuideTooltip from '../../../toolbox/charts/guideTooltip';
 
 const options = {
   responsive: true,
@@ -168,6 +169,11 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
               }}
               options={{ legend: { display: !isMediumViewPort } }}
             />
+            <GuideTooltip>
+              <>
+                test tooltip content
+              </>
+            </GuideTooltip>
           </div>
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
