@@ -9,8 +9,8 @@ import transactionTypes from '../../constants/transactionTypes';
 import { signVoteTransaction } from '../hwManager';
 import { getAPIClient } from './lsk/network';
 
-export const getDelegates = (networkConfig, options) =>
-  getAPIClient(networkConfig).delegates.get(options);
+export const getDelegates = (network, options) =>
+  getAPIClient(network).delegates.get(options);
 
 export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
   new Promise(async (resolve, reject) => {

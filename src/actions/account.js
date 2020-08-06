@@ -134,9 +134,9 @@ export const secondPassphraseRegistered = ({
  */
 export const accountDataUpdated = ({ account }) =>
   async (dispatch, getState) => {
-    const networkConfig = getState().network;
+    const network = getState().network;
     const [error, result] = await to(getAccount({
-      networkConfig,
+      network,
       address: account.address,
       publicKey: account.publicKey,
     }));
