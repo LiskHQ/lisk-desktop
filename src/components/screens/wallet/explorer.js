@@ -86,7 +86,7 @@ const Wallet = ({
 
 const apis = {
   account: {
-    apiUtil: (liskAPIClient, params) => getAccount({ liskAPIClient, ...params }),
+    apiUtil: (network, params) => getAccount({ network, ...params }),
     defaultData: {},
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
@@ -96,7 +96,7 @@ const apis = {
     transformResponse: response => response,
   },
   transactions: {
-    apiUtil: (apiClient, params) => getTransactions(transformParams(params)),
+    apiUtil: (network, params) => getTransactions(transformParams(params)),
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
       address: props.match.params.address,
