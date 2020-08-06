@@ -3,6 +3,16 @@ import { mock } from 'sinon';
 import { getAccount, setSecondPassphrase } from './account';
 import accounts from '../../../../test/constants/accounts';
 
+const networkConfig = {
+  network: {
+    networks: {
+      LSK: {
+        apiVersion: '',
+      },
+    },
+  },
+};
+
 describe('Utils: Account API', () => {
   const { address, publicKey, passphrase } = accounts.genesis;
 
@@ -28,7 +38,7 @@ describe('Utils: Account API', () => {
       const response = { data: [{ ...account }] };
 
       liskAPIClientMock.expects('get').withArgs({ address }).resolves(response);
-      const requestPromise = getAccount({ liskAPIClient, address });
+      const requestPromise = getAccount({ liskAPIClient, address, networkConfig });
       return expect(requestPromise).to.eventually.eql({ ...account, serverPublicKey: publicKey, token: 'LSK' });
     });
 
@@ -36,14 +46,14 @@ describe('Utils: Account API', () => {
       const account = { address, balance: 0 };
 
       liskAPIClientMock.expects('get').withArgs({ address }).resolves({ data: [] });
-      expect(await getAccount({ liskAPIClient, passphrase })).to.eql({ ...account, token: 'LSK', publicKey });
+      expect(await getAccount({ liskAPIClient, passphrase, networkConfig })).to.eql({ ...account, token: 'LSK', publicKey });
     });
 
     it('should otherwise return a promise that is rejected', () => {
       const response = { success: false };
 
       liskAPIClientMock.expects('get').withArgs({ address }).rejects(response);
-      const requestPromise = getAccount({ liskAPIClient, address });
+      const requestPromise = getAccount({ liskAPIClient, address, networkConfig });
       return expect(requestPromise).to.eventually.be.rejectedWith(response);
     });
   });

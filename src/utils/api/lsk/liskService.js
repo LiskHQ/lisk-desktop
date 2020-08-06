@@ -53,16 +53,18 @@ const liskServiceSocketGet = request => new Promise((resolve, reject) => {
 });
 
 const liskServiceApi = {
-  getPriceTicker: () =>
+  getPriceTicker: network =>
     liskServiceGet({
       path: '/api/v1/market/prices',
       transformResponse: response => response.data,
+      network,
     }),
 
   getNewsFeed: (networkConfig, searchParams) => liskServiceGet({
     path: '/api/v1/market/newsfeed',
     searchParams,
     transformResponse: response => response.data,
+    network: networkConfig,
   }),
 
   getLastBlocks: async (
@@ -75,10 +77,12 @@ const liskServiceApi = {
       ...(dateFrom && { from: formatDate(dateFrom) }),
       ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
     },
+    network: networkConfig,
   }),
 
   getBlockDetails: async (networkConfig, { id }) => liskServiceGet({
     path: `/api/v1/block/${id}`,
+    network: networkConfig,
   }),
 
   getTransactions: async (networkConfig, {
@@ -97,11 +101,13 @@ const liskServiceApi = {
       ...(amountTo && { max: utils.convertLSKToBeddows(amountTo) }),
       ...searchParams,
     },
+    network: networkConfig,
   }),
 
   getBlockTransactions: async (networkConfig, { id, ...searchParams }) => liskServiceGet({
     path: `/api/v1/block/${id}/transactions`,
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
+    network: networkConfig,
   }),
 
   getStandbyDelegates: async (networkConfig, {
@@ -119,6 +125,7 @@ const liskServiceApi = {
       limit: DEFAULT_LIMIT,
       ...searchParams,
     },
+    network: networkConfig,
   }),
 
   getActiveDelegates: async (networkConfig, { search = '', tab, ...searchParams }) => liskServiceGet({
@@ -133,6 +140,7 @@ const liskServiceApi = {
       limit: voting.numberOfActiveDelegates,
       ...searchParams,
     },
+    network: networkConfig,
   }),
 
   /**
@@ -147,24 +155,27 @@ const liskServiceApi = {
    */
   getLiskServiceUrl: networkConfig => networkConfig.serviceUrl,
 
-  getActiveAndStandByDelegates: async () => liskServiceGet({
+  getActiveAndStandByDelegates: async network => liskServiceGet({
     path: '/api/v1/delegates',
     searchParams: { limit: 1 },
+    network,
   }),
 
-  getRegisteredDelegates: async () => liskServiceGet({
+  getRegisteredDelegates: async network => liskServiceGet({
     path: '/api/v1/transactions',
     searchParams: {
       limit: 100,
       type: transactionTypes().registerDelegate.outgoingCode,
       sort: 'timestamp:desc',
     },
+    network,
   }),
 
   getNextForgers: async (networkConfig, searchParams) => liskServiceGet({
     path: '/api/v1/delegates/next_forgers',
     searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
     transformResponse: response => response.data,
+    network: networkConfig,
   }),
 
   getTopAccounts: async (networkConfig, searchParams) => liskServiceGet({
@@ -173,20 +184,22 @@ const liskServiceApi = {
       limit: DEFAULT_LIMIT,
       ...searchParams,
     },
+    network: networkConfig,
   }),
 
-  getNetworkStatus: async () => liskServiceGet({
+  getNetworkStatus: async network => liskServiceGet({
     path: '/api/v1/network/status',
+    network,
   }),
 
-  getNetworkStatistics: () => liskServiceGet({
+  getNetworkStatistics: network => liskServiceGet({
     path: '/api/v1/network/statistics',
+    network,
   }),
 
-  listenToBlockchainEvents: ({ event, callback }) => {
-    const { network } = store.getState();
+  listenToBlockchainEvents: ({ event, callback, networkConfig = { serviceUrl: '' } }) => {
     const socket = io(
-      `${network.serviceUrl}/blockchain`,
+      `${networkConfig.serviceUrl}/blockchain`,
       { transports: ['websocket'] },
     );
     socket.on(event, callback);
@@ -205,6 +218,7 @@ const liskServiceApi = {
     return liskServiceGet({
       path: `/api/v1/transactions/statistics/${config[searchParams.period].path}`,
       searchParams: { limit: config[searchParams.period].limit },
+      network: networkConfig,
     });
   },
 
@@ -212,6 +226,7 @@ const liskServiceApi = {
     liskServiceGet({
       path: '/api/v1/peers/connected/',
       searchParams,
+      network: networkConfig,
     }),
 
   getLatestVotes: async (networkConfig, params = {}) => {

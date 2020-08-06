@@ -28,6 +28,8 @@ const App = ({ history }) => {
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
   // const location = useLocation();
 
+  useIpc(history);
+
   useEffect(() => {
     setLoaded(true);
     dispatch(bookmarksRetrieved());

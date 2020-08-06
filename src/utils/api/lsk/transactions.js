@@ -73,9 +73,11 @@ export const getSingleTransaction = ({
     }).catch(reject);
 });
 
-export const create = (transaction, transactionType) => new Promise((resolve, reject) => {
+export const create = (
+  transaction, transactionType, apiVersion,
+) => new Promise((resolve, reject) => {
   try {
-    const Lisk = liskClient();
+    const Lisk = liskClient(apiVersion);
     const { networkIdentifier } = transaction.network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
       ...transaction,

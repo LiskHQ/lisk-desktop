@@ -37,8 +37,8 @@ const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) =>
  * signSendTransaction - Function.
  * This function is used for sign a send transaction.
  */
-const signSendTransaction = async (account, data) => {
-  const { transfer, utils } = lisk().transaction;
+const signSendTransaction = async (account, data, apiVersion) => {
+  const { transfer, utils } = lisk(apiVersion).transaction;
   const transactionObject = {
     ...transfer(data),
     senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,

@@ -44,9 +44,9 @@ export const getConnectionErrorMessage = error => (
     : i18next.t('Unable to connect to the node, no response from the server.')
 );
 
-const getNetworkInfo = async nodeUrl => (
+const getNetworkInfo = async (nodeUrl, apiVersion) => (
   new Promise(async (resolve, reject) => {
-    const Client = liskClient();
+    const Client = liskClient(apiVersion);
     new Client.APIClient([nodeUrl], {}).node.getConstants().then((response) => {
       resolve(response.data);
     }).catch((error) => {
@@ -55,11 +55,16 @@ const getNetworkInfo = async nodeUrl => (
   })
 );
 
-export const networkSet = data => async (dispatch) => {
+export const networkSet = data => async (dispatch, getState) => {
+  const state = getState();
+  const apiVersion = state.network
+    && state.network.networks
+    && state.network.networks.LSK
+    && state.network.networks.LSK.apiVersion;
   const nodeUrl = data.name === networks.customNode.name
     ? data.network.address
     : networks[data.name.toLowerCase()].nodes[0];
-  await getNetworkInfo(nodeUrl).then(({ nethash, version, networkId }) => {
+  await getNetworkInfo(nodeUrl, apiVersion).then(({ nethash, version, networkId }) => {
     const networkConfig = {
       nodeUrl,
       custom: data.network.custom,
