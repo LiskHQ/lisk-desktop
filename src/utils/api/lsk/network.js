@@ -25,5 +25,6 @@ export const getAPIClient = (network) => {
     // @todo if we delete nethash it will work just fine
     apiClients[network.name] = new Lisk.APIClient(nodes, { nethash });
   }
+
   return apiClients[network.name];
 };

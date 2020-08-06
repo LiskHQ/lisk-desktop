@@ -13,16 +13,16 @@ export const getAccount = ({
 }) =>
   new Promise((resolve, reject) => {
     // TODO remove liskAPIClient after all code that uses is is removed
-
     const apiClient = getAPIClient(network);
     if (!apiClient) {
       reject();
       return;
     }
-    const apiVersion = network.networks.LSK.apiVersion;
 
+    const apiVersion = network.networks.LSK.apiVersion;
     publicKey = publicKey || (passphrase && extractPublicKey(passphrase, apiVersion));
     address = address || extractAddress(passphrase || publicKey);
+
     apiClient.accounts.get({ address }).then((res) => {
       if (res.data.length > 0) {
         resolve({
