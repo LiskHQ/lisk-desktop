@@ -33,16 +33,17 @@ class AccountVisualWithAddress extends React.Component {
       address, transactionSubject, transactionType, size,
     } = this.props;
     const txType = transactionTypes.getByCode(transactionType);
+    const sendCode = transactionTypes().send.code;
     return (
       <div className={`${styles.address}`}>
-        {transactionType !== transactionTypes().send.code && transactionSubject === 'recipientId' ? (
+        {transactionType !== sendCode && transactionSubject === 'recipientId' ? (
           <React.Fragment>
             <Icon
               className={styles.txIcon}
               name={txType ? txType.icon : 'txDefault'}
             />
             <span className={styles.addressValue}>
-              {transactionTypes.getByCode(transactionType).title}
+              {txType.title}
             </span>
           </React.Fragment>
         ) : (
@@ -63,14 +64,13 @@ AccountVisualWithAddress.propTypes = {
   size: PropTypes.number,
   token: PropTypes.shape().isRequired,
   transactionSubject: PropTypes.string,
-  transactionType: PropTypes.isRequired,
+  transactionType: PropTypes.number,
 };
 
 AccountVisualWithAddress.defaultProps = {
   showBookmarkedAddress: false,
   size: 32,
   transactionSubject: '',
-  transactionType: PropTypes.isRequired,
 };
 
 const mapStateToProps = state => ({
