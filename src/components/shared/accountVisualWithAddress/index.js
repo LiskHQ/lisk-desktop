@@ -40,7 +40,7 @@ class AccountVisualWithAddress extends React.Component {
           <React.Fragment>
             <Icon
               className={styles.txIcon}
-              name={txType ? txType.icon : 'txDefault'}
+              name={txType.icon || 'txDefault'}
             />
             <span className={styles.addressValue}>
               {txType.title}
