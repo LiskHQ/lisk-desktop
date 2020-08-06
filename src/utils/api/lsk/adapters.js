@@ -1,5 +1,3 @@
-import store from '../../../store';
-
 const defaultApiVersion = '2';
 /**
  * Transforms transactions of Core 3.x to the shape of
@@ -11,8 +9,9 @@ const defaultApiVersion = '2';
  * @returns {Object}
  * Morphed transaction in the shape of Core 2.x transactions.
  */
-export const txAdapter = (data) => { // eslint-disable-line import/prefer-default-export
-  const apiVersion = store.getState().network.apiVersion;
+export const txAdapter = (
+  data, apiVersion = defaultApiVersion,
+) => { // eslint-disable-line import/prefer-default-export
   if (apiVersion === defaultApiVersion) return data;
   const morphedData = { ...data };
   const { type } = data;
@@ -27,8 +26,9 @@ export const txAdapter = (data) => { // eslint-disable-line import/prefer-defaul
   return morphedData;
 };
 
-export const adaptTransaction = (res) => { // eslint-disable-line import/prefer-default-export
-  const apiVersion = store.getState().network.apiVersion;
+export const adaptTransaction = (
+  res, apiVersion = defaultApiVersion,
+) => { // eslint-disable-line import/prefer-default-export
   if (apiVersion === defaultApiVersion) return res;
   const morphedData = res.data.map(transaction => txAdapter(transaction));
   return {
@@ -38,8 +38,9 @@ export const adaptTransaction = (res) => { // eslint-disable-line import/prefer-
   };
 };
 
-export const adaptTransactions = (res) => { // eslint-disable-line import/prefer-default-export
-  const apiVersion = store.getState().network.apiVersion;
+export const adaptTransactions = (
+  res, apiVersion = defaultApiVersion,
+) => { // eslint-disable-line import/prefer-default-export
   if (apiVersion === defaultApiVersion) return res;
   const morphedData = res.data.map(transaction => txAdapter(transaction));
   return {
@@ -49,8 +50,7 @@ export const adaptTransactions = (res) => { // eslint-disable-line import/prefer
   };
 };
 
-export const adaptDelegateQueryParams = (params) => {
-  const { apiVersion } = store.getState().network.networks.LSK;
+export const adaptDelegateQueryParams = (params, apiVersion = defaultApiVersion) => {
   if (apiVersion === defaultApiVersion) return params;
   const morphedParams = {
     ...params,

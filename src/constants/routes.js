@@ -24,6 +24,7 @@ import TransactionDetails from '../components/screens/transactionDetails';
 import VerifyMessage from '../components/screens/verifyMessage';
 import VotingSummary from '../components/screens/voting/votingSummary';
 import SearchBar from '../components/shared/searchBar';
+import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
 
 export default {
   wallet: {
@@ -199,5 +200,8 @@ export const modals = {
     component: TransactionDetails,
     isPrivate: false,
     forbiddenTokens: [],
+  },
+  newRelease: {
+    component: NewReleaseDialog,
   },
 };

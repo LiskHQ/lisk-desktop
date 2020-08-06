@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
@@ -95,29 +94,29 @@ describe('Delegates monitor page', () => {
     };
   });
 
-  it.skip('renders a page with header', () => {
+  it('renders a page with header', () => {
     wrapper = setup(props);
     expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Active delegates');
   });
 
-  it.skip('allows to switch to stand by delegates', () => {
+  it('allows to switch to stand by delegates', () => {
     wrapper = setup(props);
     switchTab('standby');
     expect(wrapper.find('.tab.standby')).toHaveClassName('active');
   });
 
-  it.skip('renders the forging status', () => {
+  it('renders the forging status', () => {
     wrapper = setup(props);
     expect(wrapper.find('a.delegate-row')).toHaveLength(delegatesList.length + 1);
   });
 
-  it.skip('triggers forgingDataDisplayed action when mounted', () => {
+  it('triggers forgingDataDisplayed action when mounted', () => {
     jest.spyOn(blockActions, 'forgingDataDisplayed');
     wrapper = setup(props);
     expect(blockActions.forgingDataDisplayed).toHaveBeenCalled();
   });
 
-  it.skip('triggers forgingDataConcealed action when unmounted', () => {
+  it('triggers forgingDataConcealed action when unmounted', () => {
     jest.spyOn(blockActions, 'forgingDataConcealed');
     wrapper = setup(props);
     wrapper.unmount();

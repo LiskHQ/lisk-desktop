@@ -9,14 +9,12 @@ import i18n from '../../../i18n';
 import voting from '../../../constants/voting';
 import { adaptTransactions } from './adapters';
 import transactionTypes from '../../../constants/transactionTypes';
-import store from '../../../store';
 
 const formatDate = (value, options) => getTimestampFromFirstBlock(value, 'DD.MM.YY', options);
 
 const liskServiceGet = ({
-  path, transformResponse = x => x, searchParams = {},
+  path, transformResponse = x => x, searchParams = {}, network,
 }) => new Promise((resolve, reject) => {
-  const { network } = store.getState();
   if (network.serviceUrl === 'unavailable') {
     reject(new Error('Lisk Service is not available for this network.'));
   } else {
@@ -38,8 +36,7 @@ const liskServiceGet = ({
   }
 });
 
-const liskServiceSocketGet = request => new Promise((resolve, reject) => {
-  const { network } = store.getState();
+const liskServiceSocketGet = (request, network) => new Promise((resolve, reject) => {
   const socket = io(`${network.serviceUrl}/rpc`, { transports: ['websocket'] });
   socket.emit('request', request, (response) => {
     if (Array.isArray(response)) {

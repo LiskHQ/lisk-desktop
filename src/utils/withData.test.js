@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { mount } from 'enzyme';
 import withData from './withData';
@@ -7,13 +6,13 @@ describe('withData', () => {
   const className = 'dummy';
   const DummyComponent = () => <span className={className} />;
 
-  it.skip('should render passed component', () => {
+  it('should render passed component', () => {
     const DummyComponentHOC = withData()(DummyComponent);
     const wrapper = mount(<DummyComponentHOC />);
     expect(wrapper).toContainMatchingElement(`.${className}`);
   });
 
-  it.skip('should render passed component with data', () => {
+  it('should render passed component with data', () => {
     const data = [];
     const params = {};
     const apis = {
@@ -37,7 +36,7 @@ describe('withData', () => {
     */
   });
 
-  it.skip('should render passed component with error', () => {
+  it('should render passed component with error', () => {
     const error = 'Some error';
     const apis = {
       dataKey: {
@@ -59,7 +58,7 @@ describe('withData', () => {
     */
   });
 
-  it.skip('should work with two or more apis', () => {
+  it('should work with two or more apis', () => {
     const data = [];
     const apis = {
       dataKey: {
@@ -77,7 +76,7 @@ describe('withData', () => {
     expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[1]);
   });
 
-  it.skip('should allow to loadData from passed component', () => {
+  it('should allow to loadData from passed component', () => {
     const data = [];
     const apis = {
       dataKey: {

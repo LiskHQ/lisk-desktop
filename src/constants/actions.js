@@ -71,6 +71,7 @@ const actionTypes = {
   forgingTimesRetrieved: 'FORGING_TIME_RETRIEVED',
   forgingDataDisplayed: 'FORGING_DATA_DISPLAYED',
   forgingDataConcealed: 'FORGING_DATA_CONCEALED',
+  appUpdateAvailable: 'APP_UPDATE_AVAILABLE',
 };
 
 export default actionTypes;

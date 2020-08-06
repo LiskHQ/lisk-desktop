@@ -1,5 +1,5 @@
 import RecentTransactions, { NoTransactions, NotSignedIn } from './recentTransactions';
-import { mountWithProps } from '../../../../utils/testHelpers';
+import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from '../../../../utils/testHelpers';
 
 const t = str => str;
 
@@ -143,25 +143,27 @@ const NotSignedInState = {
 };
 
 describe('Recent Transactions', () => {
-  it.skip('Should render Recent Transactions properly with LSK active token', () => {
-    const wrapper = mountWithProps(
+  it('Should render Recent Transactions properly with LSK active token', () => {
+    const wrapper = mountWithRouterAndStore(
       RecentTransactions,
       { t, transactions: LiskTransactions },
+      {},
       LiskState,
     );
     expect(wrapper.find('TransactionRow')).toHaveLength(LiskTransactions.data.length);
   });
 
-  it.skip('Should render Recent Transactions properly with BTC active token', () => {
-    const wrapper = mountWithProps(
+  it('Should render Recent Transactions properly with BTC active token', () => {
+    const wrapper = mountWithRouterAndStore(
       RecentTransactions,
       { t, transactions: BitcoinTransactions },
+      {},
       BitcoinState,
     );
     expect(wrapper.find('TransactionRow')).toHaveLength(BitcoinTransactions.data.length);
   });
 
-  it.skip('Should render Recent Transactions with empty state', () => {
+  it('Should render Recent Transactions with empty state', () => {
     const wrapper = mountWithProps(
       RecentTransactions,
       { t, transactions: noTx },
@@ -171,8 +173,8 @@ describe('Recent Transactions', () => {
     expect(wrapper).toContainMatchingElement(NoTransactions);
   });
 
-  it.skip('Should render sign in message if the user is not signed in', () => {
-    const wrapper = mountWithProps(
+  it('Should render sign in message if the user is not signed in', () => {
+    const wrapper = mountWithRouter(
       RecentTransactions,
       { t, transactions: noTx },
       NotSignedInState,
