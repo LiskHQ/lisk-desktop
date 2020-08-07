@@ -12,6 +12,7 @@ import { settingsUpdated } from '../../../../actions/settings';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import { isEmpty } from '../../../../utils/helpers';
 import { selectSearchParamValue } from '../../../../utils/searchParams';
+import AccountVisual from '../../../toolbox/accountVisual';
 
 /**
  * Extracts only one search param out of the url that is relevant
@@ -32,8 +33,7 @@ const getSearchedText = (history) => {
   const relevantSearchParamValue = selectSearchParamValue(
     history.location.search, relevantSearchParam,
   );
-
-  return relevantSearchParamValue;
+  return { relevantSearchParam, relevantSearchParamValue };
 };
 
 /**
@@ -103,6 +103,7 @@ class TopBar extends React.Component {
     this.childRef = node;
   }
 
+  // eslint-disable-next-line complexity
   render() {
     const {
       t,
@@ -114,7 +115,7 @@ class TopBar extends React.Component {
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
     const isUserLogout = isEmpty(account) || account.afterLogout;
-    const searchedValue = getSearchedText(history);
+    const { relevantSearchParam, relevantSearchParamValue } = getSearchedText(history);
 
     return (
       <div className={`${styles.wrapper} top-bar`}>
@@ -135,12 +136,25 @@ class TopBar extends React.Component {
             <Icon name="bookmark" className={styles.bookmarksIcon} />
           </DialogLink>
           <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
-            <span className={searchedValue ? styles.searchContainer : undefined}>
+            <span className={relevantSearchParam ? styles.searchContainer : undefined}>
               <Icon name="search" className="search-icon" />
-              {/* <AccountVisual /> */}
-              {searchedValue && <span className={styles.searchedValue}>{searchedValue}</span>}
+              {
+                relevantSearchParam === routes.accounts.searchParam && relevantSearchParamValue
+                  && (
+                  <AccountVisual
+                    className={styles.accountVisual}
+                    size={18}
+                    address={relevantSearchParamValue}
+                  />
+                  )
+              }
+              {relevantSearchParamValue
+                && (
+                <span className={styles.searchedValue}>
+                  {relevantSearchParamValue}
+                </span>
+                )}
             </span>
-
           </DialogLink>
         </div>
         <div className={styles.group}>
