@@ -96,6 +96,7 @@ export default {
     component: search => (
       selectSearchParamValue(search, 'id') ? BlockDetails : Blocks
     ),
+    searchParam: 'id',
     isPrivate: false,
     exact: true,
     forbiddenTokens: [tokenMap.BTC.key],
