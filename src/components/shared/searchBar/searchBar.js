@@ -62,7 +62,7 @@ class SearchBar extends React.Component {
     if (type === 'transactions') {
       addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails', transactionId: value });
     } else {
-      this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}/${value}`);
+      this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}?${routes[type].searchParam}=${value}`);
     }
     this.clearSearch();
   }

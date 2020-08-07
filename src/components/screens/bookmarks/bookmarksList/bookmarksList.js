@@ -159,7 +159,7 @@ class BookmarksList extends React.Component {
                   onClick={this.onRowClick}
                   key={bookmark.address}
                   className={`${styles.row} ${editedAddress === bookmark.address ? styles.editting : ''} bookmark-list-row`}
-                  to={`${routes.accounts.path}/${bookmark.address}`}
+                  to={`${routes.accounts.path}?address=${bookmark.address}`}
                 >
                   <div className={styles.avatarAndDescriptionWrapper}>
                     {
