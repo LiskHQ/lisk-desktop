@@ -4,46 +4,47 @@ import styles from './guideTooltip.css';
 import Tooltip from '../tooltip/tooltip';
 
 const DoughnutChartIcon = () => (
-    <div className={styles.container}>
-            <div className={styles.quarterTile}>
-                <div className={`${styles.tile} ${styles.green}`}></div>
-                <div className={`${styles.tile} ${styles.blue}`}></div>
-                <div className={`${styles.tile} ${styles.yellow}`}></div>
-                <div className={`${styles.tile} ${styles.orange}`}></div>
-            </div>
-            <span className={styles.label}>Guides</span>
-        </div>
-)
+  <div className={styles.container}>
+    <div className={styles.quarterTile}>
+      <div className={`${styles.tile} ${styles.green}`} />
+      <div className={`${styles.tile} ${styles.blue}`} />
+      <div className={`${styles.tile} ${styles.yellow}`} />
+      <div className={`${styles.tile} ${styles.orange}`} />
+    </div>
+    <span className={styles.label}>Guides</span>
+  </div>
+);
 
 const GuideTooltip = ({ children }) => (
-    <Tooltip position="bottom right" indent content={<DoughnutChartIcon/>}>
-        <ul className={styles.guideTooltipContentList}>
-            {children}
-        </ul>
-    </Tooltip>
+  <Tooltip position="bottom right" indent content={<DoughnutChartIcon />}>
+    <ul className={styles.guideTooltipContentList}>
+      {children}
+    </ul>
+  </Tooltip>
 );
 
 GuideTooltip.propTypes = {
-    children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 GuideTooltip.defaultProps = {
-    children: <React.Fragment />
+  children: <React.Fragment />,
 };
 
 export const GuideTooltipItem = ({ color, label, key }) => (
-    <li
-        key={key}
-        className={styles.guideTooltipContentListItem}>
-        <div className={styles.circle} style={{ backgroundColor: color }}/>
-        {label}
-    </li>
-)
+  <li
+    key={key}
+    className={styles.guideTooltipContentListItem}
+  >
+    <div className={styles.circle} style={{ backgroundColor: color }} />
+    {label}
+  </li>
+);
 
 GuideTooltipItem.propTypes = {
-    label: PropTypes.string,
-    color: PropTypes.string,
-    key: PropTypes.string
+  label: PropTypes.string,
+  color: PropTypes.string,
+  key: PropTypes.string,
 };
 
 export default GuideTooltip;

@@ -9,7 +9,7 @@ import regex from '../../../../utils/regex';
 import withResizeValues from '../../../../utils/withResizeValues';
 
 const VoteRow = ({
-  data, onRowClick, t, apiVersion, isMediumViewPort
+  data, onRowClick, t, apiVersion, isMediumViewPort,
 }) => (
   <div className={`${tableStyles.row} ${styles.row} vote-row`} onClick={() => onRowClick(data.address)}>
     <div className={apiVersion === '3' ? 'hidden' : grid['col-sm-1']}>

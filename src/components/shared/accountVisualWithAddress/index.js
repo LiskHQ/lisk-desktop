@@ -69,6 +69,7 @@ AccountVisualWithAddress.propTypes = {
 };
 
 AccountVisualWithAddress.defaultProps = {
+  address: '',
   showBookmarkedAddress: false,
   size: 32,
   sizeM: 24,
@@ -84,5 +85,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(
   compose(
     withTranslation(),
-    withResizeValues
-)(AccountVisualWithAddress));
+    withResizeValues,
+  )(AccountVisualWithAddress),
+);

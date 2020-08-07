@@ -161,14 +161,16 @@ class BlocksOverview extends React.Component {
                 />
               </div>
               {isMediumViewPort && (
-                  <GuideTooltip>
-                        <GuideTooltipItem
-                          color={chartStyles.mystic}
-                          label={t('Empty')}/>
-                        <GuideTooltipItem
-                          color={chartStyles.ultramarineBlue}
-                          label={t('Not Empty')}/>
-                  </GuideTooltip>
+              <GuideTooltip>
+                <GuideTooltipItem
+                  color={chartStyles.mystic}
+                  label={t('Empty')}
+                />
+                <GuideTooltipItem
+                  color={chartStyles.ultramarineBlue}
+                  label={t('Not Empty')}
+                />
+              </GuideTooltip>
               )}
             </div>
           </div>
