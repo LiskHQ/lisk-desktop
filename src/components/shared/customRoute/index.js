@@ -41,7 +41,6 @@ const CustomRoute = ({
     );
   }
 
-
   return (
     <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
       <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>

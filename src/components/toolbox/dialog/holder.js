@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
+
 import styles from './dialog.css';
 import { modals } from '../../../constants/routes';
 import { parseSearchParams, removeSearchParamsFromUrl } from '../../../utils/searchParams';

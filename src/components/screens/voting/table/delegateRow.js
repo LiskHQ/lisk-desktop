@@ -3,6 +3,7 @@ import React from 'react';
 import isEqual from 'react-fast-compare';
 import { useDispatch, useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+
 import { tokenMap } from '../../../../constants/tokens';
 import AvatarWithNameAndAddress from '../../../shared/avatarWithNameAndAddress';
 import LiskAmount from '../../../shared/liskAmount';
