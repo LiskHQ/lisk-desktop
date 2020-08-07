@@ -19,7 +19,6 @@ const AnalyticsMessage = ({ t, history }) => (
 );
 
 AnalyticsMessage.propTypes = {
-  onClick: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 };
 
