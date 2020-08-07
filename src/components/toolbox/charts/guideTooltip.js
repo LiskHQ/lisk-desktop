@@ -31,9 +31,8 @@ GuideTooltip.defaultProps = {
   children: <React.Fragment />,
 };
 
-export const GuideTooltipItem = ({ color, label, key }) => (
+export const GuideTooltipItem = ({ color, label }) => (
   <li
-    key={key}
     className={styles.guideTooltipContentListItem}
   >
     <div className={styles.circle} style={{ backgroundColor: color }} />

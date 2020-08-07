@@ -30,6 +30,7 @@
     width: 40%;
     padding-right: 20px;
     box-sizing: border-box;
+
     & > .top {
       display: flex;
       justify-content: space-between;
@@ -140,7 +141,7 @@
     &.pie {
       width: 50%;
     }
-    
+
     &.bar {
       width: 100%;
       margin-top: 20px;
