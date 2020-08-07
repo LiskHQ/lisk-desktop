@@ -83,11 +83,12 @@ const HeightDistributionChart = ({ t, heightDistribution, isMediumViewPort }) =>
                       {
                         heightDistribution.labels
                           .map((label, i) => (
-                            <GuideTooltipItem
-                              key={`distribution-GuideTooltip-${i}-${label}`}
-                              label={label}
-                              color={colorPallete[i]}
-                            />
+                            <div key={`distribution-GuideTooltip-${i}-${label}`}>
+                              <GuideTooltipItem
+                                label={label}
+                                color={colorPallete[i]}
+                              />
+                            </div>
                           ))}
                     </GuideTooltip>
                   )}
@@ -134,12 +135,10 @@ const PeersChart = ({ t, basic, isMediumViewPort }) => (
               {isMediumViewPort && (
                 <GuideTooltip>
                   <GuideTooltipItem
-                    key="peers-GuideTooltip-connected"
                     label={t('Connected')}
                     color={colorPallete[0]}
                   />
                   <GuideTooltipItem
-                    key="peers-GuideTooltip-disconnected"
                     label={t('Disconnected')}
                     color={colorPallete[1]}
                   />
@@ -213,11 +212,12 @@ const Overview = ({
                       {
                         versionsDistribution.labels
                           .map((label, i) => (
-                            <GuideTooltipItem
-                              key={`version-GuideTooltip-${i}-${label}`}
-                              label={label}
-                              color={colorPallete[i]}
-                            />
+                            <div key={`version-GuideTooltip-${i}-${label}`}>
+                              <GuideTooltipItem
+                                label={label}
+                                color={colorPallete[i]}
+                              />
+                            </div>
                           ))}
                     </GuideTooltip>
                   )}
