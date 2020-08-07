@@ -39,11 +39,11 @@ describe('TopBar', () => {
 
   const props = {
     account,
-    location: { pathname: routes.dashboard.path },
     showDelegate: false,
     t: val => val,
     logOut: jest.fn(),
     history: {
+      location: { pathname: routes.dashboard.path, search: '' },
       replace: () => {},
       push: jest.fn(),
     },
@@ -114,6 +114,56 @@ describe('TopBar', () => {
       { pathname: '/wallet' },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
+    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
+  });
+
+  it('renders searched value in the search container when the url contains a relevant search param', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      {
+        ...props,
+        history: {
+          location: { pathname: '/monitor/blocks', search: '?id=1L' },
+        },
+      },
+      { pathname: '/monitor/blocks' },
+    );
+    expect(wrapper).toContainMatchingElement('img.search-icon');
+    expect(wrapper).toContainMatchingElement('span.searchedValue');
+    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
+  });
+
+  it('renders searched value in the search container with AccountVisual when the url contains an account address', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      {
+        ...props,
+        history: {
+          location: { pathname: '/explorer/accounts', search: '?address=1L' },
+        },
+      },
+      { pathname: '/explorer/accounts' },
+    );
+    expect(wrapper).toContainMatchingElement('img.search-icon');
+    expect(wrapper).toContainMatchingElement('span.searchedValue');
+    expect(wrapper).toContainMatchingElement('AccountVisual');
+    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
+  });
+
+  it('does not render searched value in the search container when the url contains an irrelevant search param ', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      {
+        ...props,
+        history: {
+          location: { pathname: '/explorer/accounts', search: '?somerandomparam=1L' },
+        },
+      },
+      { pathname: '/explorer/accounts' },
+    );
+    expect(wrapper).toContainMatchingElement('img.search-icon');
+    expect(wrapper).not.toContainMatchingElement('span.searchedValue');
+    expect(wrapper).not.toContainMatchingElement('AccountVisual');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
 
