@@ -83,12 +83,11 @@ const HeightDistributionChart = ({ t, heightDistribution, isMediumViewPort }) =>
                       {
                         heightDistribution.labels
                           .map((label, i) => (
-                            <div key={`distribution-GuideTooltip-${i}-${label}`}>
-                              <GuideTooltipItem
-                                label={label}
-                                color={colorPallete[i]}
-                              />
-                            </div>
+                            <GuideTooltipItem
+                              key={`distribution-GuideTooltip-${i}-${label}`}
+                              label={label}
+                              color={colorPallete[i]}
+                            />
                           ))}
                     </GuideTooltip>
                   )}
@@ -212,12 +211,11 @@ const Overview = ({
                       {
                         versionsDistribution.labels
                           .map((label, i) => (
-                            <div key={`version-GuideTooltip-${i}-${label}`}>
-                              <GuideTooltipItem
-                                label={label}
-                                color={colorPallete[i]}
-                              />
-                            </div>
+                            <GuideTooltipItem
+                              key={`version-GuideTooltip-${i}-${label}`}
+                              label={label}
+                              color={colorPallete[i]}
+                            />
                           ))}
                     </GuideTooltip>
                   )}

@@ -174,15 +174,14 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
             {transactionTypes
               .getListOf('title')
               .map((label, i) => (
-                <div key={`transaction-GuideTooltip${i}`}>
-                  <GuideTooltipItem
-                    color={colorPallete[i]}
-                    label={label
-                      .replace('Second passphrase registration', '2nd passphrase reg.')
-                      .replace('Multisignature creation', 'Multisig. creation')
-                        }
-                  />
-                </div>
+                <GuideTooltipItem
+                  key={`transaction-GuideTooltip${i}`}
+                  color={colorPallete[i]}
+                  label={label
+                    .replace('Second passphrase registration', '2nd passphrase reg.')
+                    .replace('Multisignature creation', 'Multisig. creation')
+                  }
+                />
               ))
                 }
           </GuideTooltip>
@@ -207,9 +206,7 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
             <GuideTooltip>
               {Object.keys(distributionByAmount)
                 .map((label, i) => (
-                  <div key={`distribution-GuideTooltip${i}`}>
-                    <GuideTooltipItem color={colorPallete[i]} label={label} />
-                  </div>
+                  <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPallete[i]} label={label} />
                 ))
               }
             </GuideTooltip>
