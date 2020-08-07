@@ -27,6 +27,7 @@
 
   &.blue {
     background: var(--color-pale-pink);
+    clip: rect(0px, radius, radius, 0px);
     width: diameter;
   }
 
