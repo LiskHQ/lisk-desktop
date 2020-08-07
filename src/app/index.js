@@ -28,8 +28,6 @@ const App = ({ history }) => {
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
 
-  useIpc();
-
   useIpc(history);
 
   useEffect(() => {
