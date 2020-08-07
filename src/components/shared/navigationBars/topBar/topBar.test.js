@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import TopBar from './topBar';
 import routes from '../../../../constants/routes';
 import accounts from '../../../../../test/constants/accounts';

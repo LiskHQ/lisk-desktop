@@ -6,21 +6,23 @@ import { getAPIClient } from './network';
 import { extractAddress, extractPublicKey } from '../../account';
 
 export const getAccount = ({
-  liskAPIClient,
-  networkConfig,
+  network,
   address,
   passphrase,
   publicKey,
 }) =>
   new Promise((resolve, reject) => {
     // TODO remove liskAPIClient after all code that uses is is removed
-    const apiClient = liskAPIClient || getAPIClient(networkConfig);
+    const apiClient = getAPIClient(network);
     if (!apiClient) {
       reject();
       return;
     }
-    publicKey = publicKey || (passphrase && extractPublicKey(passphrase));
+
+    const apiVersion = network.networks.LSK.apiVersion;
+    publicKey = publicKey || (passphrase && extractPublicKey(passphrase, apiVersion));
     address = address || extractAddress(passphrase || publicKey);
+
     apiClient.accounts.get({ address }).then((res) => {
       if (res.data.length > 0) {
         resolve({
@@ -54,9 +56,10 @@ export const setSecondPassphrase = (
   passphrase,
   timeOffset,
   networkIdentifier,
+  apiVersion,
 ) =>
   new Promise((resolve, reject) => {
-    const transaction = liskClient().transaction
+    const transaction = liskClient(apiVersion).transaction
       .registerSecondPassphrase({
         passphrase,
         secondPassphrase,

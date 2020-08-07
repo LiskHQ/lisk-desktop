@@ -12,13 +12,13 @@ const filterAndOrderByMatch = (searchTerm, delegates) =>
   });
 
 /* eslint-disable prefer-promise-reject-errors */
-const searchAddresses = ({ liskAPIClient, searchTerm }) => new Promise((resolve, reject) =>
-  getAccount({ liskAPIClient, address: searchTerm })
+const searchAddresses = ({ network, searchTerm }) => new Promise((resolve, reject) =>
+  getAccount({ network, address: searchTerm })
     .then(response => resolve({ addresses: [response] }))
     .catch(() => reject({ addresses: [] })));
 
-const searchDelegates = ({ liskAPIClient, searchTerm }) => new Promise(resolve =>
-  getDelegates(liskAPIClient, {
+const searchDelegates = ({ network, searchTerm }) => new Promise(resolve =>
+  getDelegates(network, {
     search: searchTerm,
     sort: 'username:asc',
   }).then((response) => {
@@ -30,15 +30,15 @@ const searchDelegates = ({ liskAPIClient, searchTerm }) => new Promise(resolve =
   })
     .catch(() => resolve({ delegates: [] })));
 
-const searchTransactions = ({ liskAPIClient, searchTerm }) => new Promise((resolve, reject) =>
+const searchTransactions = ({ network, searchTerm }) => new Promise((resolve, reject) =>
   getSingleTransaction({
-    liskAPIClient,
+    network,
     id: searchTerm,
   }).then(response => resolve({ transactions: response.data }))
     .catch(() => reject({ transactions: [] })));
 
-const searchBlocks = ({ liskAPIClient, searchTerm }) => new Promise((resolve, reject) =>
-  getBlocks(liskAPIClient,
+const searchBlocks = ({ network, searchTerm }) => new Promise((resolve, reject) =>
+  getBlocks(network,
     { blockId: searchTerm }).then(response => resolve({ blocks: response.data }))
     .catch(() => reject({ blocks: [] })));
 
@@ -49,12 +49,12 @@ const getSearches = search => ([
     ? [searchTransactions] : [() => Promise.resolve({ transactions: [] })]),
   ...(search.match(regex.blockId)
     ? [searchBlocks] : [() => Promise.resolve({ blocks: [] })]),
-  searchDelegates, // allways add delegates promise as they share format (address, tx)
+  searchDelegates, // always add delegates promise as they share format (address, tx)
 ]);
 
-const resolveAll = (liskAPIClient, apiCalls, searchTerm) => {
+const resolveAll = (network, apiCalls, searchTerm) => {
   const promises = apiCalls.map(apiCall =>
-    apiCall({ liskAPIClient, searchTerm })
+    apiCall({ network, searchTerm })
       .catch(err => err));
 
   return new Promise((resolve, reject) => {
@@ -68,9 +68,9 @@ const resolveAll = (liskAPIClient, apiCalls, searchTerm) => {
 };
 /* eslint-enable prefer-promise-reject-errors */
 
-const searchAll = (liskAPIClient, { searchTerm }) => {
+const searchAll = (network, { searchTerm }) => {
   const apiCalls = getSearches(searchTerm);
-  return resolveAll(liskAPIClient, apiCalls, searchTerm);
+  return resolveAll(network, apiCalls, searchTerm);
 };
 
 export default searchAll;

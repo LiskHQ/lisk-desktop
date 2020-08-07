@@ -9,7 +9,7 @@ describe('Utils: Search', () => {
   let getAccountStub;
   let getDelegatesStub;
   let getSingleTransactionStub;
-  const liskAPIClient = 'apiClientMock';
+  const network = 'apiClientMock';
 
   const accountsResponse = { address: '1337L', balance: 1110 };
 
@@ -53,14 +53,14 @@ describe('Utils: Search', () => {
     getSingleTransactionStub = stub(transactionsAPI, 'getSingleTransaction');
 
     // address match
-    getAccountStub.withArgs({ liskAPIClient, address: '1337L' }).resolves(accountsResponse);
-    getDelegatesStub.withArgs(liskAPIClient, delegatesUrlParams)
+    getAccountStub.withArgs({ network, address: '1337L' }).resolves(accountsResponse);
+    getDelegatesStub.withArgs(network, delegatesUrlParams)
       .resolves(delegatesResponse);
     getSingleTransactionStub.resolves(transactionsResponse);
 
     // txSearch match
-    getAccountStub.withArgs({ liskAPIClient, address: '1337' }).resolves(accountsResponse);
-    getDelegatesStub.withArgs(liskAPIClient, delegatesUrlParamsTxMatch)
+    getAccountStub.withArgs({ network, address: '1337' }).resolves(accountsResponse);
+    getDelegatesStub.withArgs(network, delegatesUrlParamsTxMatch)
       .resolves(delegatesResponse);
   });
 
@@ -71,7 +71,7 @@ describe('Utils: Search', () => {
   });
 
   it('should search {addresses,delegates} when only address pattern matched', () =>
-    expect(searchAll(liskAPIClient, { searchTerm: '1337L' })).to.eventually.deep.equal({
+    expect(searchAll(network, { searchTerm: '1337L' })).to.eventually.deep.equal({
       addresses: [accountsResponse],
       blocks: [],
       transactions: [],
@@ -79,16 +79,16 @@ describe('Utils: Search', () => {
     }));
 
   it('should search {transactions,delegates} when only transaction pattern matched', () =>
-    expect(searchAll(liskAPIClient, { searchTerm: '1337' })).to.eventually.deep.equal({
+    expect(searchAll(network, { searchTerm: '1337' })).to.eventually.deep.equal({
       addresses: [],
       transactions: transactionsResponse.data,
       delegates: delegatesResponseOrdered.delegates,
     }));
 
   it('should still search for {addresses} when failing {delegates} request', () => {
-    getDelegatesStub.withArgs(liskAPIClient, delegatesUrlParams)
+    getDelegatesStub.withArgs(network, delegatesUrlParams)
       .rejects({ success: false });
-    return expect(searchAll(liskAPIClient, { searchTerm: '1337L' })).to.eventually.deep.equal({
+    return expect(searchAll(network, { searchTerm: '1337L' })).to.eventually.deep.equal({
       addresses: [accountsResponse],
       blocks: [],
       transactions: [],
@@ -97,8 +97,8 @@ describe('Utils: Search', () => {
   });
 
   it('should still search for {delegates} when failing {addresses} request', async () => {
-    getAccountStub.withArgs({ liskAPIClient, address: '1337L' }).rejects({ success: false });
-    const result = await searchAll(liskAPIClient, { searchTerm: '1337L' });
+    getAccountStub.withArgs({ network, address: '1337L' }).rejects({ success: false });
+    const result = await searchAll(network, { searchTerm: '1337L' });
     expect(result).to.deep.equal({
       addresses: [],
       blocks: [],
@@ -109,7 +109,7 @@ describe('Utils: Search', () => {
 
   it('should still search for {delegates} when failing {transactions} request', () => {
     getSingleTransactionStub.rejects({ success: false });
-    return expect(searchAll(liskAPIClient, { searchTerm: '1337' })).to.eventually.deep.equal({
+    return expect(searchAll(network, { searchTerm: '1337' })).to.eventually.deep.equal({
       addresses: [],
       transactions: [],
       delegates: delegatesResponseOrdered.delegates,

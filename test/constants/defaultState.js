@@ -43,4 +43,5 @@ export default {
     awaitingForgers: [],
     forgingTimes: {},
   },
+  appUpdates: {},
 };

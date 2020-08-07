@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
 import { extractPublicKey } from '../../../utils/account';
 import Box from '../../toolbox/box';
@@ -50,7 +51,7 @@ class TransactionSummary extends React.Component {
 
   checkSecondPassphrase(passphrase, error) {
     const { account, t } = this.props;
-    const expectedPublicKey = !error && extractPublicKey(passphrase);
+    const expectedPublicKey = !error && extractPublicKey(passphrase, this.props.apiVersion);
     const isPassphraseValid = account.secondPublicKey === expectedPublicKey;
     const feedback = !error && !isPassphraseValid ? t('Oops! Wrong passphrase') : '';
 
@@ -200,4 +201,8 @@ TransactionSummary.defaultProps = {
   token: 'LSK',
 };
 
-export default TransactionSummary;
+const mapStateToProps = state => ({
+  apiVersion: state.network.networks.LSK.apiVersion,
+});
+
+export default connect(mapStateToProps)(TransactionSummary);

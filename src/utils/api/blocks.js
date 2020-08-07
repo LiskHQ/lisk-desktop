@@ -1,5 +1,7 @@
-export const getBlocks = (liskAPIClient, options) =>
-  liskAPIClient.blocks.get(options);
+import { getAPIClient } from './lsk/network';
+
+export const getBlocks = (network, options) =>
+  getAPIClient(network).blocks.get(options);
 
 export default {
   getBlocks,

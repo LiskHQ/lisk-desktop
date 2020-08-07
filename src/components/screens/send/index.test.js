@@ -1,7 +1,6 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import accounts from '../../../../test/constants/accounts';
 import Send from './index';
+import { mountWithRouter } from '../../../utils/testHelpers';
 
 describe('Send', () => {
   let wrapper;
@@ -50,7 +49,7 @@ describe('Send', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Send {...props} />);
+    wrapper = mountWithRouter(Send, props);
   });
 
   it('should render properly getting data from URL', () => {
@@ -65,7 +64,7 @@ describe('Send', () => {
     const newProps = { ...props };
     newProps.history.location.path = '';
     newProps.history.location.search = '';
-    wrapper = mount(<Send {...newProps} />);
+    wrapper = mountWithRouter(Send, newProps);
     wrapper.update();
     expect(wrapper).toContainMatchingElement('Dialog');
     expect(wrapper).toContainMatchingElement('MultiStep');
