@@ -43,7 +43,6 @@ export const GuideTooltipItem = ({ color, label }) => (
 GuideTooltipItem.propTypes = {
   label: PropTypes.string,
   color: PropTypes.string,
-  key: PropTypes.string,
 };
 
 export default GuideTooltip;
