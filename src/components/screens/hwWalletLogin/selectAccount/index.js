@@ -8,6 +8,7 @@ import SelectAccount from './selectAccount';
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   settings: state.settings,
+  networkConfig: state.network,
 });
 
 const mapDispatchToProps = {

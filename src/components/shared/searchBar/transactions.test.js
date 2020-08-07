@@ -1,10 +1,7 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import Transactions from './transactions';
+import { mountWithProps } from '../../../utils/testHelpers';
 
 describe('Transactions', () => {
-  let wrapper;
-
   const props = {
     t: v => v,
     transactions: [
@@ -20,12 +17,22 @@ describe('Transactions', () => {
     rowItemIndex: 0,
     updateRowItemIndex: jest.fn(),
   };
-
-  beforeEach(() => {
-    wrapper = mount(<Transactions {...props} />);
-  });
+  const store = {
+    network: {
+      networks: {
+        LSK: {
+          apiVersion: 2,
+        },
+      },
+    },
+  };
 
   it('should render properly empty transactions', () => {
+    const wrapper = mountWithProps(
+      Transactions,
+      props,
+      store,
+    );
     expect(wrapper).toContainMatchingElement('.transactions');
     expect(wrapper).toContainMatchingElement('.transactions-header');
     expect(wrapper).toContainMatchingElement('.transactions-subtitle');
@@ -44,7 +51,11 @@ describe('Transactions', () => {
         type: 0,
       },
     ];
-    wrapper = mount(<Transactions {...newProps} />);
+    const wrapper = mountWithProps(
+      Transactions,
+      newProps,
+      store,
+    );
 
     expect(wrapper).toContainMatchingElement('.transactions');
     expect(wrapper).toContainMatchingElement('.transactions-header');
@@ -64,7 +75,11 @@ describe('Transactions', () => {
         type: 2,
       },
     ];
-    wrapper = mount(<Transactions {...newProps} />);
+    const wrapper = mountWithProps(
+      Transactions,
+      newProps,
+      store,
+    );
 
     expect(wrapper).toContainMatchingElement('.transactions');
     expect(wrapper).toContainMatchingElement('.transactions-header');
@@ -84,7 +99,11 @@ describe('Transactions', () => {
         type: 3,
       },
     ];
-    wrapper = mount(<Transactions {...newProps} />);
+    const wrapper = mountWithProps(
+      Transactions,
+      newProps,
+      store,
+    );
 
     expect(wrapper).toContainMatchingElement('.transactions');
     expect(wrapper).toContainMatchingElement('.transactions-header');
@@ -104,7 +123,11 @@ describe('Transactions', () => {
         type: 7,
       },
     ];
-    wrapper = mount(<Transactions {...newProps} />);
+    const wrapper = mountWithProps(
+      Transactions,
+      newProps,
+      store,
+    );
 
     expect(wrapper).toContainMatchingElement('.transactions');
     expect(wrapper).toContainMatchingElement('.transactions-header');
@@ -124,7 +147,11 @@ describe('Transactions', () => {
         type: 1,
       },
     ];
-    wrapper = mount(<Transactions {...newProps} />);
+    const wrapper = mountWithProps(
+      Transactions,
+      newProps,
+      store,
+    );
 
     wrapper.find('.search-transaction-row').at(0).simulate('click');
     expect(props.onSelectedRow).toBeCalled();

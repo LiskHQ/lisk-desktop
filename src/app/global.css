@@ -61,15 +61,6 @@ html[data-useragent*='Linux'] {
 }
 
 @media (--medium-viewport) {
-  :global body.contentFocused {
-    margin-top: 0;
-
-    & .menuBar,
-    & .mainHeader {
-      display: none;
-    }
-  }
-
   :global .hidden-m {
     position: absolute;
     visibility: hidden;

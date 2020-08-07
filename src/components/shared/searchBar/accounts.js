@@ -22,7 +22,7 @@ const Accounts = ({
             onClick={() => onSelectedRow(account.address)}
             onMouseEnter={updateRowItemIndex}
           >
-            <AccountVisual address={account.address} size={40} />
+            <AccountVisual address={account.address} />
             <div className={styles.accountInformation}>
               {
                 isDelegate

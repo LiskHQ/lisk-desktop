@@ -1,35 +1,50 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import Options from './options';
-import DialogHolder from './holder';
-import { PrimaryButton } from '../buttons';
 
-jest.mock('./holder');
+import React from 'react';
+import Options from './options';
+import { PrimaryButton } from '../buttons';
+import { mountWithRouter } from '../../../utils/testHelpers';
+import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
+
+jest.mock('../../../utils/searchParams', () => ({
+  removeSearchParamsFromUrl: jest.fn(),
+}));
 
 describe('Dialog.Options component', () => {
+  afterEach(() => {
+    removeSearchParamsFromUrl.mockClear();
+  });
+
   it('Should render with single option, clicking option calls DialogHolder.hideDialog', () => {
-    const wrapper = mount(
+    const Component = () => (
       <Options>
         <PrimaryButton>Option</PrimaryButton>
-      </Options>,
+      </Options>
+    );
+    const wrapper = mountWithRouter(
+      Component,
     );
     expect(wrapper).toContainExactlyOneMatchingElement('button');
     wrapper.find('button').simulate('click');
-    expect(DialogHolder.hideDialog).toBeCalled();
+
+    expect(removeSearchParamsFromUrl).toBeCalledTimes(1);
   });
 
   it('Should render multiple options calls DialogHolder.hideDialog even if onClick is set', () => {
     const onClick = jest.fn();
-    const wrapper = mount(
+    const Component = () => (
       <Options align="center">
         <PrimaryButton>Option</PrimaryButton>
         <PrimaryButton onClick={onClick}>Option2</PrimaryButton>
-      </Options>,
+      </Options>
+    );
+
+    const wrapper = mountWithRouter(
+      Component,
     );
     expect(wrapper.find('div')).toHaveClassName('center');
     expect(wrapper).toContainMatchingElements(2, 'button');
     wrapper.find('button').last().simulate('click');
     expect(onClick).toBeCalled();
-    expect(DialogHolder.hideDialog).toBeCalled();
+    expect(removeSearchParamsFromUrl).toBeCalledTimes(1);
   });
 });

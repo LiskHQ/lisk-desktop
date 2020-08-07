@@ -1,8 +1,8 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import VerifyMessage from './verifyMessage';
+import { mountWithRouter } from '../../../utils/testHelpers';
 
 describe('VerifyMessage Component', () => {
+  let wrapper;
   const props = {
     history: {
       location: { search: '?message=Hello&publicKey=c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f&signature=c68adc131' },
@@ -23,8 +23,15 @@ ${signature}
 -----END LISK SIGNED MESSAGE-----
 `;
 
+  beforeEach(() => {
+    wrapper = mountWithRouter(
+      VerifyMessage,
+      props,
+      { pathname: '/wallet' },
+    );
+  });
+
   it('should render properly', () => {
-    const wrapper = mount(<VerifyMessage {...props} />);
     expect(wrapper).toContainExactlyOneMatchingElement('MultiStep');
     wrapper.find('img.inputs-view-icon').simulate('click');
     expect(wrapper).toContainExactlyOneMatchingElement('.message input');
@@ -33,7 +40,6 @@ ${signature}
   });
 
   it('should allow to go forward and back', () => {
-    const wrapper = mount(<VerifyMessage {...props} />);
     wrapper.find('img.inputs-view-icon').simulate('click');
     expect(wrapper).toContainExactlyOneMatchingElement('.continue button');
     wrapper.find('.continue button').simulate('click');
@@ -43,7 +49,6 @@ ${signature}
   });
 
   it('should allow to verify valid inputs', () => {
-    const wrapper = mount(<VerifyMessage {...props} />);
     wrapper.find('img.inputs-view-icon').simulate('click');
     wrapper.find('.message input').simulate('change', { target: { value: message, name: 'message' } });
     wrapper.find('.publicKey input').simulate('change', { target: { value: publicKey, name: 'publicKey' } });
@@ -53,7 +58,6 @@ ${signature}
   });
 
   it('should allow to go back and keep value of all inputs', () => {
-    const wrapper = mount(<VerifyMessage {...props} />);
     wrapper.find('img.inputs-view-icon').simulate('click');
     wrapper.find('.message input').simulate('change', { target: { value: message, name: 'message' } });
     wrapper.find('.publicKey input').simulate('change', { target: { value: publicKey, name: 'publicKey' } });
@@ -68,7 +72,6 @@ ${signature}
   });
 
   it('should allow to verify invalid inputs', () => {
-    const wrapper = mount(<VerifyMessage {...props} />);
     wrapper.find('img.inputs-view-icon').simulate('click');
     wrapper.find('.message input').simulate('change', { target: { value: message, name: 'message' } });
     wrapper.find('.publicKey input').simulate('change', { target: { value: publicKey, name: 'publicKey' } });
@@ -78,14 +81,12 @@ ${signature}
   });
 
   it('should recognize invalid publicKey', () => {
-    const wrapper = mount(<VerifyMessage {...props} />);
     wrapper.find('img.inputs-view-icon').simulate('click');
     wrapper.find('.publicKey input').simulate('change', { target: { value: publicKey.substr(1), name: 'publicKey' } });
     expect(wrapper.find('.publicKey .feedback').first()).toIncludeText('not a valid public key');
   });
 
   it('should allow to switch to textarea view and back', () => {
-    const wrapper = mount(<VerifyMessage {...props} />);
     expect(wrapper).toContainMatchingElement('.signedMessage');
     wrapper.find('img.inputs-view-icon').simulate('click');
     expect(wrapper).not.toContainMatchingElement('.signedMessage');
@@ -94,7 +95,6 @@ ${signature}
   });
 
   it('should allow to verify a valid message with the textarea view', () => {
-    const wrapper = mount(<VerifyMessage {...props} />);
     wrapper.find('.signedMessage textarea').simulate('change', { target: { value: signedMessage, name: 'signedMessage' } });
 
     wrapper.find('.continue button').simulate('click');
@@ -102,7 +102,6 @@ ${signature}
   });
 
   it('should allow to verify a invalid message with the textarea view', () => {
-    const wrapper = mount(<VerifyMessage {...props} />);
     wrapper.find('.signedMessage textarea').simulate('change', { target: { value: signedMessage.substring(10), name: 'signedMessage' } });
 
     wrapper.find('.continue button').simulate('click');

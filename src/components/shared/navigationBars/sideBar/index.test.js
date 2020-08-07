@@ -1,8 +1,7 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import { useSelector } from 'react-redux';
 import SideBar from './index';
 import routes from '../../../../constants/routes';
+import { mountWithRouter } from '../../../../utils/testHelpers';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -43,7 +42,7 @@ describe('SideBar', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<SideBar {...myProps} />);
+    wrapper = mountWithRouter(SideBar, myProps);
   });
 
   it('renders 8 menu items elements', () => {
@@ -62,7 +61,7 @@ describe('SideBar', () => {
   });
 
   it('renders 8 menu items but only Wallet is disabled when user is logged out', () => {
-    wrapper = mount(<SideBar {...myProps} />);
+    wrapper = mountWithRouter(SideBar, myProps);
 
     expect(wrapper).toContainMatchingElements(8, 'a');
     expect(wrapper).toContainExactlyOneMatchingElement('a.disabled');

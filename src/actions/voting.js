@@ -49,10 +49,10 @@ export const votePlaced = ({
 }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
     const state = getState();
-    const { networkIdentifier } = state.network.networks.LSK;
+    const { networkIdentifier, apiVersion } = state.network.networks.LSK;
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, state.network);
     const { votedList, unvotedList } = getVotingLists(votes);
-    const timeOffset = getTimeOffset(state.blocks.latestBlocks);
+    const timeOffset = getTimeOffset(state.blocks.latestBlocks, apiVersion);
 
     const label = getVotingError(votes, account);
     if (label) {
@@ -68,6 +68,7 @@ export const votePlaced = ({
       secondPassphrase,
       timeOffset,
       networkIdentifier,
+      apiVersion,
     }));
 
     if (error) {
@@ -90,8 +91,9 @@ export const votePlaced = ({
  */
 export const loadVotes = ({ address, type, callback = () => null }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState().network);
-    getVotes(liskAPIClient, { address })
+    const { network } = getState();
+
+    getVotes(network, { address })
       .then((response) => {
         dispatch({
           type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
@@ -107,13 +109,12 @@ export const loadVotes = ({ address, type, callback = () => null }) =>
 export const loadDelegates = ({
   offset = 0, q, network,
 }) => {
-  const liskAPIClient = getAPIClient(tokenMap.LSK.key, network);
   let params = {
     offset,
     limit: '90',
   };
   params = q ? { ...params, search: q } : params;
-  return getDelegates(liskAPIClient, params);
+  return getDelegates(network, params);
 };
 
 export const delegatesLoaded = ({

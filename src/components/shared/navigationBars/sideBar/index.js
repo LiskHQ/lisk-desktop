@@ -7,7 +7,7 @@ import routes, { modals } from '../../../../constants/routes';
 import Icon from '../../../toolbox/icon';
 import styles from './sideBar.css';
 import Piwik from '../../../../utils/piwik';
-import { accountLoggedOut, timerReset } from '../../../../actions/account';
+import { accountLoggedOut } from '../../../../actions/account';
 import DialogLink from '../../../toolbox/dialog/link';
 import AutoSignOut from './autoSignOut';
 
@@ -111,21 +111,19 @@ const SideBar = ({
                   )
                   : null
               }
-              {
-                renderAutoSignOut && (
-                  <AutoSignOut
-                    expireTime={expireTime}
-                    onCountdownComplete={() => dispatch(accountLoggedOut())}
-                    history={history}
-                    resetTimer={() => dispatch(timerReset(new Date()))}
-                    t={t}
-                  />
-                )
-              }
+
             </div>
           ))
         }
       </div>
+      {
+        renderAutoSignOut && (
+          <AutoSignOut
+            expireTime={expireTime}
+            onCountdownComplete={() => dispatch(accountLoggedOut())}
+          />
+        )
+      }
     </nav>
   );
 };

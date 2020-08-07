@@ -1,89 +1,55 @@
 import React from 'react';
-import { expect } from 'chai';
-import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { mount } from 'enzyme';
 import AccountVisual from './index';
 import accounts from '../../../../test/constants/accounts';
-import breakpoints from '../../../constants/breakpoints';
 
 describe('AccountVisual', () => {
   it('should create account visual of an address', () => {
     const wrapper = mount(<AccountVisual address={accounts.genesis.address} />);
 
     // should render an svg element
-    expect(wrapper).to.have.exactly(1).descendants('svg');
-    expect(wrapper.find('svg')).to.have.attr('height', '200');
-    expect(wrapper.find('svg')).to.have.attr('width', '200');
+    expect(wrapper.find('svg')).toHaveLength(1);
+    expect(wrapper.find('svg').getDOMNode().getAttribute('height')).toEqual('40');
+    expect(wrapper.find('svg').getDOMNode().getAttribute('width')).toEqual('40');
 
     // with 3 circles and 1 polygon
-    expect(wrapper).to.have.exactly(3).descendants('circle');
-    expect(wrapper).to.have.exactly(1).descendants('polygon');
+    expect(wrapper.find('circle')).toHaveLength(3);
+    expect(wrapper.find('polygon')).toHaveLength(1);
 
     // and a circle of full width and height of the svg
-    expect(wrapper.find('circle').at(0)).to.have.attr('cx', '100');
-    expect(wrapper.find('circle').at(0)).to.have.attr('cy', '100');
-    expect(wrapper.find('circle').at(0)).to.have.attr('r', '100');
-    expect(wrapper.find('circle').at(0)).to.have.attr('fill').match(/url\(#marshmallow-FG-\d{13}-\w{5}\)/);
+    expect(wrapper.find('circle').at(0).getDOMNode().getAttribute('cx')).toEqual('20');
+    expect(wrapper.find('circle').at(0).getDOMNode().getAttribute('cy')).toEqual('20');
+    expect(wrapper.find('circle').at(0).getDOMNode().getAttribute('r')).toEqual('20');
+    expect(/url\(#marshmallow-FG-\d{13}-\w{5}\)/
+      .test(wrapper.find('circle').at(0).getDOMNode().getAttribute('fill'))).toEqual(true);
 
     // and another big circle on a side
-    expect(wrapper.find('circle').at(1)).to.have.attr('cx', '230');
-    expect(wrapper.find('circle').at(1)).to.have.attr('cy', '235');
-    expect(wrapper.find('circle').at(1)).to.have.attr('r', '180');
-    expect(wrapper.find('circle').at(1)).to.have.attr('fill').match(/url\(#marshmallow-BG-\d{13}-\w{5}\)/);
+    expect(wrapper.find('circle').at(1).getDOMNode().getAttribute('cx')).toEqual('46');
+    expect(wrapper.find('circle').at(1).getDOMNode().getAttribute('cy')).toEqual('47');
+    expect(wrapper.find('circle').at(1).getDOMNode().getAttribute('r')).toEqual('36');
+    expect(/url\(#marshmallow-BG-\d{13}-\w{5}\)/
+      .test(wrapper.find('circle').at(1).getDOMNode().getAttribute('fill'))).toEqual(true);
 
     // and another small circle somewhere in the middle
-    expect(wrapper.find('circle').at(2)).to.have.attr('cx', '80.6');
-    expect(wrapper.find('circle').at(2)).to.have.attr('cy', '95.6');
-    expect(wrapper.find('circle').at(2)).to.have.attr('r', '30.599999999999998');
-    expect(wrapper.find('circle').at(2)).to.have.attr('fill').match(/url\(#marshmallow-2-\d{13}-\w{5}\)/);
+    expect(wrapper.find('circle').at(2).getDOMNode().getAttribute('cx')).toEqual('16.12');
+    expect(wrapper.find('circle').at(2).getDOMNode().getAttribute('cy')).toEqual('19.12');
+    expect(wrapper.find('circle').at(2).getDOMNode().getAttribute('r')).toEqual('6.12');
+    expect(/url\(#marshmallow-2-\d{13}-\w{5}\)/
+      .test(wrapper.find('circle').at(2).getDOMNode().getAttribute('fill'))).toEqual(true);
 
     // and a polygon element with points of a triangle
-    expect(wrapper.find('polygon')).to.have.attr('points', '45,25 137,48 68,117');
-    expect(wrapper.find('polygon')).to.have.attr('fill').match(/url\(#marshmallow-3-\d{13}-\w{5}\)/);
+    expect(wrapper.find('polygon').getDOMNode().getAttribute('points')).toEqual('9,5 27.4,9.6 13.6,23.4');
+    expect(/url\(#marshmallow-3-\d{13}-\w{5}\)/
+      .test(wrapper.find('polygon').getDOMNode().getAttribute('fill'))).toEqual(true);
   });
 
   it('should be able to create account visual that contains a rectangle', () => {
     const wrapper = mount(<AccountVisual address={accounts.delegate.address} />);
-    expect(wrapper.find('rect')).to.have.attr('x', '55');
-    expect(wrapper.find('rect')).to.have.attr('y', '45');
-    expect(wrapper.find('rect')).to.have.attr('height', '82.8');
-    expect(wrapper.find('rect')).to.have.attr('width', '82.8');
-    expect(wrapper.find('rect')).to.have.attr('fill').match(/url\(#loriot-3-\d{13}-\w{5}\)/);
-  });
-
-  it('should have given default size and change to sizeM size if resized to M breakpoint', () => {
-    const props = {
-      address: accounts.genesis.address,
-      size: 100,
-      sizeM: 60,
-    };
-
-    // manipulate breakpoints to simulate m breakpoint
-    const mBreakpointBackup = breakpoints.m;
-    breakpoints.m = window.innerWidth - 1;
-    const wrapper = mount(<AccountVisual {...props} />);
-
-    expect(wrapper).to.have.exactly(1).descendants('svg');
-    expect(wrapper.find('svg')).to.have.attr('height', `${props.size}`);
-    expect(wrapper.find('svg')).to.have.attr('width', `${props.size}`);
-
-    breakpoints.m = window.innerWidth + 1;
-    window.dispatchEvent(new Event('resize'));
-
-    expect(wrapper).to.have.exactly(1).descendants('svg');
-    expect(wrapper.find('svg')).to.have.attr('height', `${props.sizeM}`);
-    expect(wrapper.find('svg')).to.have.attr('width', `${props.sizeM}`);
-
-    breakpoints.m = mBreakpointBackup;
-  });
-
-  it('should removeEventListener on unmount', () => {
-    sinon.spy(window, 'removeEventListener');
-    const wrapper = shallow(<AccountVisual address="sadasdasfsg43r43wt35t" />);
-    expect(window.removeEventListener).to.not.have.been.calledWith();
-    wrapper.unmount();
-    expect(window.removeEventListener).to.have.been.calledWith('resize');
-
-    window.removeEventListener.restore();
+    expect(wrapper.find('rect').getDOMNode().getAttribute('x')).toEqual('11');
+    expect(wrapper.find('rect').getDOMNode().getAttribute('y')).toEqual('9');
+    expect(wrapper.find('rect').getDOMNode().getAttribute('height')).toEqual('16.56');
+    expect(wrapper.find('rect').getDOMNode().getAttribute('width')).toEqual('16.56');
+    expect(/url\(#loriot-3-\d{13}-\w{5}\)/
+      .test(wrapper.find('rect').getDOMNode().getAttribute('fill'))).toEqual(true);
   });
 });

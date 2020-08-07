@@ -1,50 +1,83 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { mount } from 'enzyme';
 import DialogHolder from './holder';
-import Dialog from './dialog';
+import MockDialog from './dialog';
+
+const mockHistory = {
+  location: { pathname: '/', search: '' },
+  push: jest.fn(),
+};
+
+jest.mock('../../../constants/routes', () => ({
+  modals: {
+    testDialog: {
+      component: () => (
+        <MockDialog.WrappedComponent hasClose history={mockHistory} />
+      ),
+      forbiddenTokens: [],
+    },
+  },
+}));
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+}));
 
 describe('Dialog Holder Component', () => {
+  const mockAppState = {
+    settings: {
+      token: {
+        active: 'LSK',
+      },
+    },
+    account: {
+      info: {
+        LSK: 'some data',
+      },
+    },
+    network: {
+      name: 'testnet',
+      serviceUrl: 'someUrl',
+    },
+  };
+
+  afterEach(() => {
+    mockHistory.push.mockClear();
+    useSelector.mockClear();
+  });
+
   let wrapper;
-  const DummyDialog = (
-    <Dialog hasClose>
-      <Dialog.Title>Dummy text</Dialog.Title>
-      <Dialog.Options>
-        <button className="dummy-option">Option</button>
-      </Dialog.Options>
-    </Dialog>
-  );
 
   beforeEach(() => {
-    wrapper = mount(<DialogHolder />);
+    useSelector.mockImplementation(callback => callback(mockAppState));
+    wrapper = mount(<DialogHolder.WrappedComponent history={mockHistory} />);
   });
 
   it('Should render empty DialogHolder and add dialog when showDialog is called', () => {
     expect(wrapper).toBeEmptyRender();
-    expect(DialogHolder.showDialog(DummyDialog)).toEqual(true);
-    wrapper.update();
+    const newHistory = {
+      ...mockHistory,
+      location: { search: '?modal=testDialog' },
+    };
+
+    wrapper.setProps({ history: newHistory });
     expect(wrapper).toContainExactlyOneMatchingElement('Dialog');
   });
 
-  it('Should dismiss dialog and remove from holder if closeBtn or option clicked', () => {
-    DialogHolder.showDialog(DummyDialog);
-    wrapper.update();
+  it('Should dismiss dialog and remove from holder if closeBtn clicked', () => {
+    expect(wrapper).toBeEmptyRender();
+    const newHistory = {
+      ...mockHistory,
+      location: { search: '?modal=testDialog' },
+    };
+
+    wrapper.setProps({ history: newHistory });
+    expect(wrapper).toContainExactlyOneMatchingElement('Dialog');
     wrapper.find('.closeBtn').at(0).simulate('click');
-    wrapper.update();
-    wrapper.find('.mask').simulate('animationend');
-    expect(wrapper).toBeEmptyRender();
 
-    DialogHolder.showDialog(DummyDialog);
-    wrapper.update();
-    wrapper.find('.dummy-option').simulate('click');
-    wrapper.update();
-    wrapper.find('.mask').simulate('animationend');
-    expect(wrapper).toBeEmptyRender();
-  });
-
-  it('Should not render dialog with invalid React element', () => {
-    expect(wrapper).toBeEmptyRender();
-    expect(DialogHolder.showDialog(jest.fn())).toBe(false);
-    wrapper.update();
-    expect(wrapper).toBeEmptyRender();
+    expect(mockHistory.push).toHaveBeenCalledTimes(1);
+    expect(mockHistory.push).toHaveBeenCalledWith(mockHistory.location.pathname);
   });
 });

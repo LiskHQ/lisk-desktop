@@ -31,7 +31,6 @@ const Forger = ({ forger }) => (
   <div className={`${styles.forger} forger-item`}>
     <Link to={`${routes.accounts.path}/${forger.address}`}>
       <AccountVisual
-        size={36}
         address={forger.address}
         className={styles.accountVisual}
       />

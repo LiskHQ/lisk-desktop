@@ -53,10 +53,9 @@ export const getTransactions = ({
 };
 
 export const getSingleTransaction = ({
-  networkConfig, id, liskAPIClient,
+  id, network,
 }) => new Promise((resolve, reject) => {
-  // TODO remove liskAPIClient after all code that uses is is removed
-  const apiClient = liskAPIClient || getAPIClient(networkConfig);
+  const apiClient = getAPIClient(network);
   apiClient.transactions.get({ id })
     .then((response) => {
       if (response.data.length !== 0) {
@@ -73,9 +72,11 @@ export const getSingleTransaction = ({
     }).catch(reject);
 });
 
-export const create = (transaction, transactionType) => new Promise((resolve, reject) => {
+export const create = (
+  transaction, transactionType, apiVersion,
+) => new Promise((resolve, reject) => {
   try {
-    const Lisk = liskClient();
+    const Lisk = liskClient(apiVersion);
     const { networkIdentifier } = transaction.network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
       ...transaction,

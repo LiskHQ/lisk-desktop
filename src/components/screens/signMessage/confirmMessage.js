@@ -30,7 +30,7 @@ class ConfirmMessage extends React.Component {
   }
 
   sign() {
-    const Lisk = liskClient();
+    const Lisk = liskClient(this.props.apiVersion);
     const { message, account } = this.props;
     const signedMessage = Lisk.cryptography.signMessageWithPassphrase(
       message,

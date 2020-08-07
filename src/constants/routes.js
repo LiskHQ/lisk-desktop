@@ -23,7 +23,8 @@ import Explorer from '../components/screens/wallet/explorer';
 import TransactionDetails from '../components/screens/transactionDetails';
 import VerifyMessage from '../components/screens/verifyMessage';
 import VotingSummary from '../components/screens/voting/votingSummary';
-import searchBar from '../components/shared/searchBar';
+import SearchBar from '../components/shared/searchBar';
+import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
 
 export default {
   wallet: {
@@ -131,7 +132,6 @@ export default {
   },
 };
 
-
 export const modals = {
   addBookmark: {
     path: '/bookmarks/add-bookmark',
@@ -189,7 +189,7 @@ export const modals = {
   },
   search: {
     path: '/search',
-    component: searchBar,
+    component: SearchBar,
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -200,5 +200,8 @@ export const modals = {
     component: TransactionDetails,
     isPrivate: false,
     forbiddenTokens: [],
+  },
+  newRelease: {
+    component: NewReleaseDialog,
   },
 };

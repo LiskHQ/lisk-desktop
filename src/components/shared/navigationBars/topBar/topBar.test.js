@@ -1,9 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import TopBar from './topBar';
 import routes from '../../../../constants/routes';
 import accounts from '../../../../../test/constants/accounts';
 import DialogHolder from '../../../toolbox/dialog/holder';
+import { mountWithRouter } from '../../../../utils/testHelpers';
 
 const mockInputNode = {
   focus: jest.fn(),
@@ -25,7 +25,6 @@ jest.mock('./navigationButtons', () => function () {
 });
 
 describe('TopBar', () => {
-  let wrapper;
   const account = {
     passphrase: accounts.genesis.passphrase,
     expireTime: Date.now() + 60000,
@@ -75,14 +74,23 @@ describe('TopBar', () => {
 
   beforeEach(() => {
     DialogHolder.showDialog = jest.fn();
-    wrapper = mount(<TopBar {...props} />);
   });
 
   it('renders <TopBar /> component', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      props,
+      { pathname: '/wallet' },
+    );
     expect(wrapper).toContainMatchingElement('.top-bar');
   });
 
   it('renders <TopBar /> component with user log in', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      props,
+      { pathname: '/wallet' },
+    );
     expect(wrapper).not.toContainMatchingElement('.signIn');
   });
 
@@ -91,17 +99,31 @@ describe('TopBar', () => {
       ...props,
       account: {},
     };
-    wrapper = mount(<TopBar {...logoutProps} />);
+    const wrapper = mountWithRouter(
+      TopBar,
+      logoutProps,
+      { pathname: '/wallet' },
+    );
     expect(wrapper).toContainMatchingElement('.signIn');
   });
 
   it('renders the search component when user do click in the search icon', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      props,
+      { pathname: '/wallet' },
+    );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
 
   // can we remove this test?
   it.skip('hides search icon if token is BTC', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      props,
+      { pathname: '/wallet' },
+    );
     expect(wrapper).toContainMatchingElement('.search-icon');
     wrapper.setProps({
       token: {

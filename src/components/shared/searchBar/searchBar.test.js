@@ -1,19 +1,15 @@
-import React from 'react';
-import { mount, shallow } from 'enzyme';
 import keyCodes from '../../../constants/keyCodes';
 import SearchBar from './searchBar';
-import DialogHolder from '../../toolbox/dialog/holder';
+import { mountWithRouter } from '../../../utils/testHelpers';
 
 describe('SearchBar', () => {
   let wrapper;
-
-  // eslint-disable-next-line no-unused-vars
-  let dialaogWrapper;
 
   const props = {
     t: v => v,
     history: {
       push: jest.fn(),
+      location: { search: '' },
     },
     suggestions: {
       data: {
@@ -29,11 +25,7 @@ describe('SearchBar', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(
-      <SearchBar {...props} />,
-    );
-
-    dialaogWrapper = shallow(<DialogHolder />);
+    wrapper = mountWithRouter(SearchBar, props);
   });
 
   it('should render properly SearchBar', () => {
@@ -59,7 +51,9 @@ describe('SearchBar', () => {
     jest.advanceTimersByTime(500);
     wrapper.update();
     expect(props.suggestions.loadData).toBeCalled();
-    wrapper.setProps({
+
+    const newProps = {
+      ...props,
       suggestions: {
         ...props.suggestions,
         data: {
@@ -73,7 +67,8 @@ describe('SearchBar', () => {
           ],
         },
       },
-    });
+    };
+    wrapper = mountWithRouter(SearchBar, newProps);
     wrapper.find('.account-row').at(0).simulate('click');
     expect(props.history.push).toBeCalled();
     expect(props.suggestions.clearData).toBeCalled();
@@ -84,7 +79,9 @@ describe('SearchBar', () => {
     jest.advanceTimersByTime(500);
     wrapper.update();
     expect(props.suggestions.loadData).toBeCalled();
-    wrapper.setProps({
+
+    const newProps = {
+      ...props,
       suggestions: {
         ...props.suggestions,
         data: {
@@ -100,7 +97,8 @@ describe('SearchBar', () => {
           ],
         },
       },
-    });
+    };
+    wrapper = mountWithRouter(SearchBar, newProps);
     wrapper.find('.search-transaction-row').at(0).simulate('click');
     expect(props.history.push).toBeCalled();
     expect(props.suggestions.clearData).toBeCalled();
@@ -111,7 +109,8 @@ describe('SearchBar', () => {
     jest.advanceTimersByTime(500);
     wrapper.update();
     expect(props.suggestions.loadData).toBeCalled();
-    wrapper.setProps({
+    const newProps = {
+      ...props,
       suggestions: {
         ...props.suggestions,
         data: {
@@ -138,7 +137,8 @@ describe('SearchBar', () => {
           ],
         },
       },
-    });
+    };
+    wrapper = mountWithRouter(SearchBar, newProps);
 
     wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
     wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.arrowUp });

@@ -1,11 +1,5 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import { mount } from 'enzyme';
 import RecentTransactions, { NoTransactions, NotSignedIn } from './recentTransactions';
-
-const mountWithProps = (props, store) =>
-  mount(<Provider store={configureStore()(store)}><RecentTransactions {...props} /></Provider>);
+import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from '../../../../utils/testHelpers';
 
 const t = str => str;
 
@@ -150,23 +144,41 @@ const NotSignedInState = {
 
 describe('Recent Transactions', () => {
   it('Should render Recent Transactions properly with LSK active token', () => {
-    const wrapper = mountWithProps({ t, transactions: LiskTransactions }, LiskState);
+    const wrapper = mountWithRouterAndStore(
+      RecentTransactions,
+      { t, transactions: LiskTransactions },
+      {},
+      LiskState,
+    );
     expect(wrapper.find('TransactionRow')).toHaveLength(LiskTransactions.data.length);
   });
 
   it('Should render Recent Transactions properly with BTC active token', () => {
-    const wrapper = mountWithProps({ t, transactions: BitcoinTransactions }, BitcoinState);
+    const wrapper = mountWithRouterAndStore(
+      RecentTransactions,
+      { t, transactions: BitcoinTransactions },
+      {},
+      BitcoinState,
+    );
     expect(wrapper.find('TransactionRow')).toHaveLength(BitcoinTransactions.data.length);
   });
 
   it('Should render Recent Transactions with empty state', () => {
-    const wrapper = mountWithProps({ t, transactions: noTx }, LiskState);
+    const wrapper = mountWithProps(
+      RecentTransactions,
+      { t, transactions: noTx },
+      LiskState,
+    );
     expect(wrapper).not.toContainMatchingElement('TransactionRow');
     expect(wrapper).toContainMatchingElement(NoTransactions);
   });
 
   it('Should render sign in message if the user is not signed in', () => {
-    const wrapper = mountWithProps({ t, transactions: noTx }, NotSignedInState);
+    const wrapper = mountWithRouter(
+      RecentTransactions,
+      { t, transactions: noTx },
+      NotSignedInState,
+    );
     expect(wrapper).not.toContainMatchingElement('.transactions-row');
     expect(wrapper).toContainMatchingElement(NotSignedIn);
   });

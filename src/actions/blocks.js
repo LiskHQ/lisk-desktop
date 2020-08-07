@@ -1,9 +1,7 @@
 import actionTypes from '../constants/actions';
 import { convertUnixSecondsToLiskEpochSeconds } from '../utils/datetime';
-import { tokenMap } from '../constants/tokens';
 import liskServiceApi from '../utils/api/lsk/liskService';
 import voting from '../constants/voting';
-import { getAPIClient } from '../utils/api/network';
 
 /**
  * Retrieves latest blocks from Lisk Service.
@@ -15,7 +13,7 @@ import { getAPIClient } from '../utils/api/network';
  * @returns {Array} - the list of blocks
  */
 const loadLastBlocks = async (params, networkConfig) => {
-  const blocks = await liskServiceApi.getLastBlocks({ networkConfig }, params);
+  const blocks = await liskServiceApi.getLastBlocks(networkConfig, params);
   const total = blocks.meta.total;
   return {
     total,
@@ -29,12 +27,12 @@ const loadLastBlocks = async (params, networkConfig) => {
 // eslint-disable-next-line import/prefer-default-export
 export const olderBlocksRetrieved = () => async (dispatch, getState) => {
   const blocksFetchLimit = 100;
-  const networkConfig = getState().network;
+  const { network } = getState();
 
-  const batch1 = await loadLastBlocks({ limit: blocksFetchLimit }, networkConfig);
+  const batch1 = await loadLastBlocks({ limit: blocksFetchLimit }, network);
   const batch2 = await loadLastBlocks({
     offset: blocksFetchLimit, limit: blocksFetchLimit,
-  }, networkConfig);
+  }, network);
 
   return dispatch({
     type: actionTypes.olderBlocksRetrieved,
@@ -57,11 +55,11 @@ export const forgingDataConcealed = () => ({
 });
 
 const retrieveNextForgers = async (getState, forgedInRound) => {
-  const apiClient = getAPIClient(tokenMap.LSK.key, getState().network);
+  const { network } = getState();
 
   const numberOfRemainingBlocksInRound = voting.numberOfActiveDelegates
     - forgedInRound;
-  const nextForgers = await liskServiceApi.getNextForgers(apiClient, {
+  const nextForgers = await liskServiceApi.getNextForgers(network, {
     limit: Math.min(numberOfRemainingBlocksInRound, 101),
   });
 

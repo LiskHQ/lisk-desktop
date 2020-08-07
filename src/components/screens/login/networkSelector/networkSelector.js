@@ -129,7 +129,8 @@ class NetworkSelector extends React.Component {
     const newNetwork = this.getNetwork(network);
 
     if (network === networks.customNode.code) {
-      const Lisk = liskClient();
+      const { apiVersion } = this.props.network.networks.LSK;
+      const Lisk = liskClient(apiVersion);
       const liskAPIClient = new Lisk.APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
         .then((res) => {
