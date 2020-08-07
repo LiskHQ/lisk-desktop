@@ -36,9 +36,9 @@ const menuLinks = t => ([
     },
     {
       icon: 'blocksMonitor',
-      id: 'blockDetails',
+      id: 'blocks',
       label: t('Blocks'),
-      path: routes.blockDetails.path,
+      path: routes.blocks.path,
     },
     {
       icon: 'accountsMonitor',

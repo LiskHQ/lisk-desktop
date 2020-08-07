@@ -90,6 +90,11 @@ class TopBar extends React.Component {
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
     const isUserLogout = isEmpty(account) || account.afterLogout;
+
+    const splitUrlPath = this.props.location.pathname.split('/');
+    const hasAccountInPath = splitUrlPath[splitUrlPath.length - 2] === 'accounts';
+    const accountId = splitUrlPath[splitUrlPath.length - 1];
+
     return (
       <div className={`${styles.wrapper} top-bar`}>
         <div className={styles.group}>
@@ -110,6 +115,7 @@ class TopBar extends React.Component {
           </DialogLink>
           <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
             <Icon name="search" className={`${styles.searchIcon} search-icon`} />
+            {hasAccountInPath && <>{accountId}</>}
           </DialogLink>
         </div>
         <div className={styles.group}>

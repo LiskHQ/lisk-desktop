@@ -24,6 +24,7 @@ const CustomRoute = ({
     (state.account.info && state.account.info[settings.token.active]));
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
   const { search = '' } = history.location;
+  const Component = component(search);
 
   if (!networkIsSet) return null;
   Piwik.tracking(history, settings);
@@ -40,6 +41,7 @@ const CustomRoute = ({
     );
   }
 
+
   return (
     <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
       <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
@@ -47,7 +49,7 @@ const CustomRoute = ({
           path={`${pathPrefix}${path}${pathSuffix}`}
           exact={exact}
           key={path}
-          component={component}
+          component={Component}
         />
       </ErrorBoundary>
     </main>

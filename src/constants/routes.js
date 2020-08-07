@@ -25,52 +25,53 @@ import VerifyMessage from '../components/screens/verifyMessage';
 import VotingSummary from '../components/screens/voting/votingSummary';
 import SearchBar from '../components/shared/searchBar';
 import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
+import { selectSearchParamValue } from '../utils/searchParams';
 
 export default {
   wallet: {
     path: '/wallet',
-    component: Wallet,
+    component: () => Wallet,
     isPrivate: true,
     exact: false,
     forbiddenTokens: [],
   },
   voting: {
     path: '/delegates',
-    component: Voting,
+    component: () => Voting,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   addAccount: {
     path: '/add-account',
-    component: Login,
+    component: () => Login,
     isPrivate: false,
     forbiddenTokens: [],
   },
   accounts: {
     pathPrefix: '',
     path: '/explorer/accounts',
-    pathSuffix: '/:address?',
-    component: Explorer,
+    searchParam: 'address',
+    component: () => Explorer,
     isPrivate: false,
     forbiddenTokens: [],
   },
   hwWallet: {
     path: '/hw-wallet-login',
-    component: HwWalletLogin,
+    component: () => HwWalletLogin,
     isSigninFlow: true,
     isPrivate: false,
     forbiddenTokens: [],
   },
   register: {
     path: '/register',
-    component: Register,
+    component: () => Register,
     isPrivate: false,
     isSigninFlow: true,
     forbiddenTokens: [],
   },
   login: {
     path: '/login',
-    component: Login,
+    component: () => Login,
     isPrivate: false,
     isSigninFlow: true,
     exact: true,
@@ -78,54 +79,49 @@ export default {
   },
   termsOfUse: {
     path: '/terms-of-use',
-    component: TermsOfUse,
+    component: () => TermsOfUse,
     isPrivate: false,
     isSigninFlow: true,
     forbiddenTokens: [],
   },
   monitorTransactions: {
     path: '/monitor/transactions',
-    component: MonitorTransactions,
+    component: () => MonitorTransactions,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   blocks: {
     pathPrefix: '',
     path: '/monitor/blocks',
-    component: Blocks,
+    component: search => (
+      selectSearchParamValue(search, 'id') ? BlockDetails : Blocks
+    ),
     isPrivate: false,
     exact: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  blockDetails: {
-    path: '/monitor/blocks',
-    pathSuffix: '/:id?',
-    component: BlockDetails,
-    isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
   monitorAccounts: {
     path: '/monitor/accounts',
-    component: MonitorAccounts,
+    component: () => MonitorAccounts,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   monitorNetwork: {
     path: '/monitor/network',
-    component: MonitorNetwork,
+    component: () => MonitorNetwork,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   delegatesMonitor: {
     path: '/monitor/delegates',
-    component: DelegatesMonitor,
+    component: () => DelegatesMonitor,
     exact: true,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   dashboard: {
     path: '/',
-    component: Dashboard,
+    component: () => Dashboard,
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
