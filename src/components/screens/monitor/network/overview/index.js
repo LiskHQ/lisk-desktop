@@ -9,6 +9,8 @@ import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './overview.css';
 import withResizeValues from '../../../../../utils/withResizeValues';
+import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
+import { colorPallete } from '../../../../../constants/chartConstants';
 
 const Overview = ({
   networkStatus,
@@ -94,6 +96,18 @@ const Overview = ({
                         : null
                     }
                   </div>
+                  {isMediumViewPort && (
+                    <GuideTooltip>
+                      {
+                        versionsDistribution.labels
+                        .map((label, i) => (
+                        <GuideTooltipItem
+                          key={`version-GuideTooltip-${i}-${label}`}
+                          label={label}
+                          color={colorPallete[i]} />
+                      ))}
+                    </GuideTooltip>
+                  )}
                 </div>
               )
               : <BoxEmptyState><p>{t('No height distribution information')}</p></BoxEmptyState>
@@ -133,6 +147,18 @@ const Overview = ({
                         : null
                     }
                   </div>
+                  {isMediumViewPort && (
+                    <GuideTooltip>
+                      {
+                        heightDistribution.labels
+                        .map((label, i) => (
+                        <GuideTooltipItem
+                          key={`distribution-GuideTooltip-${i}-${label}`}
+                          label={label}
+                          color={colorPallete[i]} />
+                      ))}
+                    </GuideTooltip>
+                  )}
                 </div>
               )
               : <BoxEmptyState><p>{t('No versions distribution information')}</p></BoxEmptyState>
@@ -168,6 +194,18 @@ const Overview = ({
                       }}
                     />
                   </div>
+                  {isMediumViewPort && (
+                    <GuideTooltip>
+                      <GuideTooltipItem
+                        key={`peers-GuideTooltip-connected`}
+                        label={t('Connected')}
+                        color={colorPallete[0]} />
+                      <GuideTooltipItem
+                        key={`peers-GuideTooltip-disconnected`}
+                        label={t('Disconnected')}
+                        color={colorPallete[1]} />
+                    </GuideTooltip>
+                  )}
                 </div>
               )
               : <BoxEmptyState><p>{t('No peers information')}</p></BoxEmptyState>

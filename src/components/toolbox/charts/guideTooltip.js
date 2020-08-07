@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './guideTooltip.css';
 import Tooltip from '../tooltip/tooltip';
 
-const CustomIcon = () => (
+const DoughnutChartIcon = () => (
     <div className={styles.container}>
             <div className={styles.quarterTile}>
                 <div className={`${styles.tile} ${styles.green}`}></div>
@@ -15,13 +15,13 @@ const CustomIcon = () => (
         </div>
 )
 
-const GuideTooltip = ({ children }) => {
-    return (
-        <Tooltip position="bottom right" indent content={<CustomIcon/>}>
-            <main>{children}</main>
-        </Tooltip>
-    )
-};
+const GuideTooltip = ({ children }) => (
+    <Tooltip position="bottom right" indent content={<DoughnutChartIcon/>}>
+        <ul className={styles.guideTooltipContentList}>
+            {children}
+        </ul>
+    </Tooltip>
+);
 
 GuideTooltip.propTypes = {
     children: PropTypes.node.isRequired
@@ -29,6 +29,21 @@ GuideTooltip.propTypes = {
 
 GuideTooltip.defaultProps = {
     children: <React.Fragment />
+};
+
+export const GuideTooltipItem = ({ color, label, key }) => (
+    <li
+        key={key}
+        className={styles.guideTooltipContentListItem}>
+        <div className={styles.circle} style={{ backgroundColor: color }}/>
+        {label}
+    </li>
+)
+
+GuideTooltipItem.propTypes = {
+    label: PropTypes.string,
+    color: PropTypes.string,
+    key: PropTypes.string
 };
 
 export default GuideTooltip;

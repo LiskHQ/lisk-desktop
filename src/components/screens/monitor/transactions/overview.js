@@ -17,7 +17,7 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
 import { kFormatter } from '../../../../utils/helpers';
 import withResizeValues from '../../../../utils/withResizeValues';
-import GuideTooltip from '../../../toolbox/charts/guideTooltip';
+import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
 import { colorPallete } from '../../../../constants/chartConstants';
 
 const options = {
@@ -171,24 +171,19 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
             />
           </div>
           {isMediumViewPort && (
-            <div className={styles.GuideTooltipContainer}>
               <GuideTooltip>
-                <ul className={styles.guideTooltipContentList}>
                 {transactionTypes
-                    .getListOf('title')
-                    .map((label, i) => (
-                      <li className={styles.guideTooltipContentListItem}>
-                        <div className={styles.circle} style={{ backgroundColor: colorPallete[i] }}/>
-                        {label
-                        .replace('Second passphrase registration', '2nd passphrase reg.')
-                        .replace('Multisignature creation', 'Multisig. creation')
-                        }
-                      </li>
-                    ))
-                  }
-                </ul>
+                  .getListOf('title')
+                  .map((label, i) => (
+                    <GuideTooltipItem
+                      color={colorPallete[i]}
+                      label={label
+                      .replace('Second passphrase registration', '2nd passphrase reg.')
+                      .replace('Multisignature creation', 'Multisig. creation')
+                      }/>
+                  ))
+                }
               </GuideTooltip>
-            </div>
           )}
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
@@ -207,22 +202,33 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
             />
           </div>
           {isMediumViewPort && (
-              <GuideTooltip>
-                <ul className={styles.guideTooltipContentList}>
-                {Object.keys(distributionByAmount)
-                    .map((label, i) => (
-                      <li className={styles.guideTooltipContentListItem}>
-                        <div className={styles.circle} style={{ backgroundColor: colorPallete[i] }}/>
-                        {label}
-                      </li>
-                    ))
-                  }
-                </ul>
-              </GuideTooltip>
-            )}
+            <GuideTooltip>
+              {Object.keys(distributionByAmount)
+                .map((label, i) => (
+                  <GuideTooltipItem color={colorPallete[i]} label={label} />
+                ))
+              }
+            </GuideTooltip>
+          )}
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
-          <h2 className={styles.title}>{t('Transactions number / volume (LSK)')}</h2>
+          <div className={styles.top}>
+            <h2 className={styles.title}>{t('Transactions number / volume (LSK)')}</h2>
+            <aside className={styles.legends}>
+              <h5 className={`${styles.legend} ${styles.volume}`}>
+                <span>{t('Volume')}</span>
+                <Tooltip className={styles.tooltip} position="left">
+                  <p>{t('The aggregated LSK volume transferred on the given time period.')}</p>
+                </Tooltip>
+              </h5>
+              <h5 className={`${styles.legend} ${styles.number}`}>
+                <span>{t('Number')}</span>
+                <Tooltip className={styles.tooltip} position="left">
+                  <p>{t('The number of transactions submitted on the given time period.')}</p>
+                </Tooltip>
+              </h5>
+            </aside>
+          </div>
           <div className={styles.graph}>
             <BarChart
               data={{
@@ -248,20 +254,6 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
               }}
               options={options}
             />
-            <aside className={styles.legends}>
-              <h5 className={`${styles.legend} ${styles.volume}`}>
-                <span>{t('Volume')}</span>
-                <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The aggregated LSK volume transferred on the given time period.')}</p>
-                </Tooltip>
-              </h5>
-              <h5 className={`${styles.legend} ${styles.number}`}>
-                <span>{t('Number')}</span>
-                <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The number of transactions submitted on the given time period.')}</p>
-                </Tooltip>
-              </h5>
-            </aside>
           </div>
         </div>
       </BoxContent>
