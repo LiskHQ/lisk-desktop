@@ -18,6 +18,7 @@ import styles from './overview.css';
 import { kFormatter } from '../../../../utils/helpers';
 import withResizeValues from '../../../../utils/withResizeValues';
 import GuideTooltip from '../../../toolbox/charts/guideTooltip';
+import { colorPallete } from '../../../../constants/chartConstants';
 
 const options = {
   responsive: true,
@@ -138,7 +139,6 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
     setActiveTab(tab.value);
     txStats.loadData({ period: tab.value });
   };
-
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
@@ -169,12 +169,27 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
               }}
               options={{ legend: { display: !isMediumViewPort } }}
             />
-            <GuideTooltip>
-              <>
-                test tooltip content
-              </>
-            </GuideTooltip>
           </div>
+          {isMediumViewPort && (
+            <div className={styles.GuideTooltipContainer}>
+              <GuideTooltip>
+                <ul className={styles.guideTooltipContentList}>
+                {transactionTypes
+                    .getListOf('title')
+                    .map((label, i) => (
+                      <li className={styles.guideTooltipContentListItem}>
+                        <div className={styles.circle} style={{ backgroundColor: colorPallete[i] }}/>
+                        {label
+                        .replace('Second passphrase registration', '2nd passphrase reg.')
+                        .replace('Multisignature creation', 'Multisig. creation')
+                        }
+                      </li>
+                    ))
+                  }
+                </ul>
+              </GuideTooltip>
+            </div>
+          )}
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
@@ -191,6 +206,20 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
               options={{ legend: { display: !isMediumViewPort } }}
             />
           </div>
+          {isMediumViewPort && (
+              <GuideTooltip>
+                <ul className={styles.guideTooltipContentList}>
+                {Object.keys(distributionByAmount)
+                    .map((label, i) => (
+                      <li className={styles.guideTooltipContentListItem}>
+                        <div className={styles.circle} style={{ backgroundColor: colorPallete[i] }}/>
+                        {label}
+                      </li>
+                    ))
+                  }
+                </ul>
+              </GuideTooltip>
+            )}
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
           <h2 className={styles.title}>{t('Transactions number / volume (LSK)')}</h2>

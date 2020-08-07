@@ -31,7 +31,7 @@
 
   & .graph {
     width: 100%;
-    height: calc(100% - 21px);
+    height: calc(100% - 31px);
     position: relative;
   }
 }
@@ -116,6 +116,25 @@
       &::before {
         background-color: var(--color-ultramarine-blue);
       }
+    }
+  }
+}
+
+.GuideTooltipContainer {
+  padding: 0 20px;
+}
+
+.guideTooltipContentList {
+  list-style: none;
+  padding: 0;
+  & > .guideTooltipContentListItem {
+    display: flex;
+    align-items: center;
+    & > .circle {
+      margin-right: 0.5em;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
     }
   }
 }
