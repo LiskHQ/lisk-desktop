@@ -17,6 +17,15 @@ export const parseSearchParams = (search) => {
 };
 
 /**
+ * returns the value of a search param from a search string
+ * @param {string} search the search string
+ * @param {string} paramToSelect the param to get the value of
+ */
+// eslint-disable-next-line import/prefer-default-export
+export const selectSearchParamValue = (search, paramToSelect) =>
+  parseSearchParams(search)[paramToSelect];
+
+/**
  * returns parsed query params from a url
  * @param {object} params the parsed searchParams object
  */
@@ -55,11 +64,21 @@ export const appendSearchParams = (search, data) => {
  * @param {String} search the search string
  * @param {String[]} paramsToRemove an array of param keys to remove
  */
-export const removeSearchParams = (search, paramsToRemove) => {
+export const removeSearchParams = (search, paramsToRemove, cleanParamsAfter) => {
   const params = parseSearchParams(search);
-  paramsToRemove.forEach((key) => {
-    delete params[key];
-  });
+
+  if (cleanParamsAfter) {
+    const paramKeys = Object.keys(params);
+    const indexToStartRemovingFrom = paramKeys.findIndex(param => param === paramsToRemove[0]);
+    Object.keys(params).slice(indexToStartRemovingFrom).forEach((key) => {
+      delete params[key];
+    });
+  } else {
+    paramsToRemove.forEach((key) => {
+      delete params[key];
+    });
+  }
+
   return strigifySearchParams(params);
 };
 
@@ -80,10 +99,10 @@ export const addSearchParamsToUrl = (history, data = {}) => {
  * @param {object} history the search string
  * @param {?String} paramsToRemove the array of params to remove. Leave it blank to remove all.
  */
-export const removeSearchParamsFromUrl = (history, paramsToRemove) => {
+export const removeSearchParamsFromUrl = (history, paramsToRemove, cleanParamsAfter) => {
   let newSearchString = '';
   if (Array.isArray(paramsToRemove) && paramsToRemove.length) {
-    newSearchString = removeSearchParams(history.location.search, paramsToRemove);
+    newSearchString = removeSearchParams(history.location.search, paramsToRemove, cleanParamsAfter);
   }
   history.push(`${history.location.pathname}${newSearchString}`);
 };
