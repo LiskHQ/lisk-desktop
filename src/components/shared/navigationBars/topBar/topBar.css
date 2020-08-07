@@ -51,6 +51,10 @@
       color: #f7f9fb;
       padding-left: 10px;
     }
+
+    & .accountVisual {
+      padding-left: 6px;
+    }
   }
 }
 
