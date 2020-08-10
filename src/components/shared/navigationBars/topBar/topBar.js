@@ -19,8 +19,13 @@ import AccountVisual from '../../../toolbox/accountVisual';
  * to the screen shown
  * @param {string} path the url path
  */
-const extractRelevantSearchParam = path =>
-  Object.values(routes).find(route => route.path === path).searchParam;
+const extractRelevantSearchParam = (path) => {
+  const relevantRoute = Object.values(routes).find(route => route.path === path);
+  if (relevantRoute) {
+    return relevantRoute.searchParam;
+  }
+  return undefined;
+};
 
 /**
  * Gets the searched value depending upon the screen the user is on

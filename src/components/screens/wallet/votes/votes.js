@@ -57,7 +57,7 @@ const Votes = ({
   };
 
   const onRowClick = (rowAddress) => {
-    const accountAddress = `${routes.accounts.pathPrefix}${routes.accounts.path}/${rowAddress}`;
+    const accountAddress = `${routes.accounts.pathPrefix}${routes.accounts.path}?address=${rowAddress}`;
     history.push(accountAddress);
   };
 
