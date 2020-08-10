@@ -8,7 +8,6 @@ import { DoughnutChart } from '../../../../toolbox/charts';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './overview.css';
-import withResizeValues from '../../../../../utils/withResizeValues';
 import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
 import { colorPallete } from '../../../../../constants/chartConstants';
 
@@ -42,123 +41,179 @@ const createOthers = (data, t) => {
   return list;
 };
 
-const HeightDistributionChart = ({ t, heightDistribution, isMediumViewPort }) => (
-  <>
-    <div className={styles.column}>
-      {
-            heightDistribution
-              ? (
-                <div className={styles.chartBox}>
-                  <h2 className={styles.title}>{t('Height distribution')}</h2>
-                  <div className={styles.chart}>
-                    <DoughnutChart
-                      data={{
-                        labels: heightDistribution.labels,
-                        datasets: [
-                          {
-                            data: heightDistribution.values,
-                          },
-                        ],
-                      }}
-                      options={{
-                        legend: { display: !isMediumViewPort },
-                        tooltips: {
-                          callbacks: {
-                            title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
-                            label(tooltipItem, data) {
-                              return data.datasets[0].data[tooltipItem.index];
-                            },
-                          },
-                        },
-                      }}
-                    />
-                    {
-                      heightDistribution.others.length && !isMediumViewPort
-                        ? <OthersTooltip title={t('Height')} data={heightDistribution.others} />
-                        : null
-                    }
-                  </div>
-                  {isMediumViewPort && (
-                    <GuideTooltip>
-                      {
-                        heightDistribution.labels
-                          .map((label, i) => (
-                            <GuideTooltipItem
-                              key={`distribution-GuideTooltip-${i}-${label}`}
-                              label={label}
-                              color={colorPallete[i]}
-                            />
-                          ))}
-                    </GuideTooltip>
-                  )}
-                </div>
-              )
-              : <BoxEmptyState><p>{t('No versions distribution information')}</p></BoxEmptyState>
-          }
-    </div>
-  </>
-);
+const HeightDistributionChart = ({ t, heightDistribution }) => {
+  const chartProps = heightDistribution ? {
+    data: {
+      labels: heightDistribution.labels,
+      datasets: [
+        {
+          data: heightDistribution.values,
+        },
+      ],
+    },
+    options: {
+      tooltips: {
+        callbacks: {
+          title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+          label(tooltipItem, data) {
+            return data.datasets[0].data[tooltipItem.index];
+          },
+        },
+      },
+    },
+  } : {};
 
-const PeersChart = ({ t, basic, isMediumViewPort }) => (
-  <>
-    <div className={styles.column}>
-      {
-        basic
-          ? (
-            <div className={styles.chartBox}>
-              <h2 className={styles.title}>{t('Peers')}</h2>
-              <div className={styles.chart}>
-                <DoughnutChart
-                  data={{
-                    labels: [t('Connected'), t('Disconnected')],
-                    datasets: [
+  return (
+    <>
+      <div className={styles.column}>
+        {
+              heightDistribution
+                ? (
+                  <div className={styles.chartBox}>
+                    <h2 className={styles.title}>{t('Height distribution')}</h2>
+                    <div className={`${styles.chart} ${styles.showOnLargeViewPort}`}>
+                      <DoughnutChart
+                        data={chartProps.data}
+                        options={{
+                          ...chartProps.options,
+                          legend: { display: true },
+                        }}
+                      />
                       {
-                        label: 'delegates',
-                        data: [basic.connectedPeers, basic.disconnectedPeers],
-                      },
-                    ],
-                  }}
-                  options={{
-                    legend: { display: !isMediumViewPort },
-                    tooltips: {
-                      callbacks: {
-                        title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
-                        label(tooltipItem, data) {
-                          return data.datasets[0].data[tooltipItem.index];
-                        },
-                      },
-                    },
-                  }}
-                />
+                        heightDistribution.others.length && !false
+                          ? <OthersTooltip title={t('Height')} data={heightDistribution.others} />
+                          : null
+                      }
+                    </div>
+                    <div className={`${styles.chart} ${styles.hideOnLargeViewPort}`}>
+                      <DoughnutChart
+                        data={chartProps.data}
+                        options={{
+                          ...chartProps.options,
+                          legend: { display: false },
+                        }}
+                      />
+                    </div>
+                    <div className={styles.hideOnLargeViewPort}>
+                      <GuideTooltip>
+                        {
+                          heightDistribution.labels
+                            .map((label, i) => (
+                              <GuideTooltipItem
+                                key={`distribution-GuideTooltip-${i}-${label}`}
+                                label={label}
+                                color={colorPallete[i]}
+                              />
+                            ))}
+                      </GuideTooltip>
+                    </div>
+                  </div>
+                )
+                : <BoxEmptyState><p>{t('No versions distribution information')}</p></BoxEmptyState>
+            }
+      </div>
+    </>
+  );
+};
+
+const PeersChart = ({ t, basic }) => {
+  const chartProps = basic ? {
+    data: {
+      labels: [t('Connected'), t('Disconnected')],
+      datasets: [
+        {
+          label: 'delegates',
+          data: [basic.connectedPeers, basic.disconnectedPeers],
+        },
+      ],
+    },
+    options: {
+      tooltips: {
+        callbacks: {
+          title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+          label(tooltipItem, data) {
+            return data.datasets[0].data[tooltipItem.index];
+          },
+        },
+      },
+    },
+  } : {};
+
+  return (
+    <>
+      <div className={styles.column}>
+        {
+          basic
+            ? (
+              <div className={styles.chartBox}>
+                <h2 className={styles.title}>{t('Peers')}</h2>
+                <div className={`${styles.chart} ${styles.showOnLargeViewPort}`}>
+                  <DoughnutChart
+                    data={chartProps.data}
+                    options={{
+                      ...chartProps.options,
+                      legend: { display: true },
+                    }}
+                  />
+                </div>
+                <div className={`${styles.chart} ${styles.hideOnLargeViewPort}`}>
+                  <DoughnutChart
+                    data={chartProps.data}
+                    options={{
+                      ...chartProps.options,
+                      legend: { display: false },
+                    }}
+                  />
+                </div>
+                <div className={styles.hideOnLargeViewPort}>
+                  <GuideTooltip>
+                    <GuideTooltipItem
+                      label={t('Connected')}
+                      color={colorPallete[0]}
+                    />
+                    <GuideTooltipItem
+                      label={t('Disconnected')}
+                      color={colorPallete[1]}
+                    />
+                  </GuideTooltip>
+                </div>
               </div>
-              {isMediumViewPort && (
-                <GuideTooltip>
-                  <GuideTooltipItem
-                    label={t('Connected')}
-                    color={colorPallete[0]}
-                  />
-                  <GuideTooltipItem
-                    label={t('Disconnected')}
-                    color={colorPallete[1]}
-                  />
-                </GuideTooltip>
-              )}
-            </div>
-          )
-          : <BoxEmptyState><p>{t('No peers information')}</p></BoxEmptyState>
-      }
-    </div>
-  </>
-);
+            )
+            : <BoxEmptyState><p>{t('No peers information')}</p></BoxEmptyState>
+        }
+      </div>
+    </>
+  );
+};
 
 const Overview = ({
   networkStatus,
   t,
-  isMediumViewPort,
 }) => {
   const { basic, coreVer, height } = networkStatus;
   const versionsDistribution = coreVer ? createOthers(coreVer, t) : null;
   const heightDistribution = height ? createOthers(height, t) : null;
+  const versionChartProps = versionsDistribution ? {
+    data: {
+      labels: versionsDistribution.labels,
+      datasets: [
+        {
+          data: versionsDistribution.values,
+        },
+      ],
+    },
+    options: {
+      tooltips: {
+        callbacks: {
+          title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+          label(tooltipItem, data) {
+            return data.datasets[0].data[tooltipItem.index];
+          },
+        },
+      },
+    },
+  } : {};
+
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
@@ -178,35 +233,30 @@ const Overview = ({
               ? (
                 <div className={styles.chartBox}>
                   <h2 className={styles.title}>{t('Versions distribution')}</h2>
-                  <div className={styles.chart}>
+                  <div className={`${styles.chart} ${styles.showOnLargeViewPort}`}>
                     <DoughnutChart
-                      data={{
-                        labels: versionsDistribution.labels,
-                        datasets: [
-                          {
-                            data: versionsDistribution.values,
-                          },
-                        ],
-                      }}
+                      data={versionChartProps.data}
                       options={{
-                        legend: { display: !isMediumViewPort },
-                        tooltips: {
-                          callbacks: {
-                            title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
-                            label(tooltipItem, data) {
-                              return data.datasets[0].data[tooltipItem.index];
-                            },
-                          },
-                        },
+                        ...versionChartProps.options,
+                        legend: { display: true },
                       }}
                     />
                     {
-                      versionsDistribution.others.length && !isMediumViewPort
+                      versionsDistribution.others.length
                         ? <OthersTooltip title={t('Version')} data={versionsDistribution.others} />
                         : null
                     }
                   </div>
-                  {isMediumViewPort && (
+                  <div className={`${styles.chart} ${styles.hideOnLargeViewPort}`}>
+                    <DoughnutChart
+                      data={versionChartProps.data}
+                      options={{
+                        ...versionChartProps.options,
+                        legend: { display: false },
+                      }}
+                    />
+                  </div>
+                  <div className={styles.hideOnLargeViewPort}>
                     <GuideTooltip>
                       {
                         versionsDistribution.labels
@@ -218,21 +268,17 @@ const Overview = ({
                             />
                           ))}
                     </GuideTooltip>
-                  )}
+                  </div>
                 </div>
               )
               : <BoxEmptyState><p>{t('No height distribution information')}</p></BoxEmptyState>
           }
         </div>
-        <HeightDistributionChart
-          t={t}
-          heightDistribution={heightDistribution}
-          isMediumViewPort={isMediumViewPort}
-        />
-        <PeersChart t={t} basic={basic} isMediumViewPort={isMediumViewPort} />
+        <HeightDistributionChart t={t} heightDistribution={heightDistribution} />
+        <PeersChart t={t} basic={basic} />
       </BoxContent>
     </Box>
   );
 };
 
-export default withResizeValues(Overview);
+export default Overview;

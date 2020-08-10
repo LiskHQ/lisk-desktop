@@ -100,3 +100,21 @@
     background: var(--color-ultramarine-blue);
   }
 }
+
+@define-mixin hideOnLargeViewPort {
+  .hideOnLargeViewPort {
+    display: none;
+    @media (--medium-viewport) {
+      display: inherit;
+    }
+  }
+}
+
+@define-mixin showOnLargeViewPort {
+  .showOnLargeViewPort {
+    display: inherit;
+    @media (--medium-viewport) {
+      display: none;
+    }
+  }
+}

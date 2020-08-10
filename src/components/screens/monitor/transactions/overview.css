@@ -148,3 +148,6 @@
     }
   }
 }
+
+@mixin hideOnLargeViewPort;
+@mixin showOnLargeViewPort;

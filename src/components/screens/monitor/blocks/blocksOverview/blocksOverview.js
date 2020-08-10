@@ -7,7 +7,6 @@ import BoxTabs from '../../../../toolbox/tabs';
 import { DoughnutChart, BarChart } from '../../../../toolbox/charts';
 import styles from './blocksOverview.css';
 import { chartStyles } from '../../../../../constants/chartConstants';
-import withResizeValues from '../../../../../utils/withResizeValues';
 import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
 
 class BlocksOverview extends React.Component {
@@ -25,7 +24,7 @@ class BlocksOverview extends React.Component {
 
   render() {
     const { activeTab } = this.state;
-    const { t, blocks, isMediumViewPort } = this.props;
+    const { t, blocks } = this.props;
 
     const tabs = [
       {
@@ -41,6 +40,32 @@ class BlocksOverview extends React.Component {
         name: t('Last {{num}} blocks', { num: 100 }),
       },
     ];
+
+    const doughnutChartData = {
+      labels: [t('Empty'), t('Not Empty')],
+      datasets: [{
+        backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
+        data: blocks.data.reduce((acc, block) => {
+          if (block.numberOfTransactions) acc[1]++;
+          else acc[0]++;
+          return acc;
+        }, [0, 0]),
+      }],
+    };
+
+    const doughnutChartOptions = {
+      cutoutPercentage: 65,
+      tooltips: {
+        callbacks: {
+          // istanbul ignore next
+          title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+          // istanbul ignore next
+          label(tooltipItem, data) {
+            return t('{{ blocks }} Blocks', { blocks: data.datasets[0].data[tooltipItem.index] });
+          },
+        },
+      },
+    };
 
 
     return (
@@ -131,47 +156,36 @@ class BlocksOverview extends React.Component {
 
             <div className={`${grid['col-sm-4']} ${grid['col-xs-5']} ${styles.chartBox} ${styles.doughnutChartContainer}`}>
               <h2 className={styles.chartTitle}>{t('Empty/Not empty')}</h2>
-              <div className={styles.chart}>
+              <div className={`${styles.chart} ${styles.showOnLargeViewPort}`}>
                 <DoughnutChart
-                  data={{
-                    labels: [t('Empty'), t('Not Empty')],
-                    datasets: [{
-                      backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
-                      data: blocks.data.reduce((acc, block) => {
-                        if (block.numberOfTransactions) acc[1]++;
-                        else acc[0]++;
-                        return acc;
-                      }, [0, 0]),
-                    }],
-                  }}
+                  data={doughnutChartData}
                   options={{
-                    legend: { display: !isMediumViewPort },
-                    cutoutPercentage: 65,
-                    tooltips: {
-                      callbacks: {
-                        // istanbul ignore next
-                        title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
-                        // istanbul ignore next
-                        label(tooltipItem, data) {
-                          return t('{{ blocks }} Blocks', { blocks: data.datasets[0].data[tooltipItem.index] });
-                        },
-                      },
-                    },
+                    ...doughnutChartOptions,
+                    legend: { display: true },
                   }}
                 />
               </div>
-              {isMediumViewPort && (
-              <GuideTooltip>
-                <GuideTooltipItem
-                  color={chartStyles.mystic}
-                  label={t('Empty')}
+              <div className={`${styles.chart} ${styles.hideOnLargeViewPort}`}>
+                <DoughnutChart
+                  data={doughnutChartData}
+                  options={{
+                    ...doughnutChartOptions,
+                    legend: { display: false },
+                  }}
                 />
-                <GuideTooltipItem
-                  color={chartStyles.ultramarineBlue}
-                  label={t('Not Empty')}
-                />
-              </GuideTooltip>
-              )}
+              </div>
+              <div className={styles.hideOnLargeViewPort}>
+                <GuideTooltip>
+                  <GuideTooltipItem
+                    color={chartStyles.mystic}
+                    label={t('Empty')}
+                  />
+                  <GuideTooltipItem
+                    color={chartStyles.ultramarineBlue}
+                    label={t('Not Empty')}
+                  />
+                </GuideTooltip>
+              </div>
             </div>
           </div>
         </BoxContent>
@@ -180,4 +194,4 @@ class BlocksOverview extends React.Component {
   }
 }
 
-export default withResizeValues(BlocksOverview);
+export default BlocksOverview;

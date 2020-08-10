@@ -15,7 +15,6 @@ import { fromRawLsk } from '../../../../utils/lsk';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
 import { kFormatter } from '../../../../utils/helpers';
-import withResizeValues from '../../../../utils/withResizeValues';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
 import { colorPallete, chartStyles } from '../../../../constants/chartConstants';
 
@@ -126,7 +125,7 @@ const formatDates = (date, period) => {
 const formatDistributionByValues = distributions => [0, 1, 2, 3, 4].map(item =>
   (distributions[item] || 0) + (distributions[item + 8] || 0));
 
-const Overview = ({ t, txStats, isMediumViewPort }) => {
+const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
   const distributionByType = formatDistributionByValues(txStats.data.distributionByType);
   const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
@@ -138,6 +137,29 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
     setActiveTab(tab.value);
     txStats.loadData({ period: tab.value });
   };
+
+  const distributionChartData = {
+    labels: transactionTypes
+      .getListOf('title')
+      .map(item => item
+        .replace('Second passphrase registration', '2nd passphrase reg.')
+        .replace('Multisignature creation', 'Multisig. creation')),
+    datasets: [
+      {
+        data: distributionByType,
+      },
+    ],
+  };
+
+  const amountChartData = {
+    labels: Object.keys(distributionByAmount),
+    datasets: [
+      {
+        data: Object.values(distributionByAmount),
+      },
+    ],
+  };
+
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
@@ -152,57 +174,51 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
       <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Distribution of transaction types')}</h2>
-          <div className={styles.graph}>
+          <div className={`${styles.graph} ${styles.showOnLargeViewPort}`}>
             <DoughnutChart
-              data={{
-                labels: transactionTypes
-                  .getListOf('title')
-                  .map(item => item
-                    .replace('Second passphrase registration', '2nd passphrase reg.')
-                    .replace('Multisignature creation', 'Multisig. creation')),
-                datasets: [
-                  {
-                    data: distributionByType,
-                  },
-                ],
-              }}
-              options={{ legend: { display: !isMediumViewPort } }}
+              data={distributionChartData}
+              options={{ legend: { display: true } }}
             />
           </div>
-          {isMediumViewPort && (
-          <GuideTooltip>
-            {transactionTypes
-              .getListOf('title')
-              .map((label, i) => (
-                <GuideTooltipItem
-                  key={`transaction-GuideTooltip${i}`}
-                  color={colorPallete[i]}
-                  label={label
-                    .replace('Second passphrase registration', '2nd passphrase reg.')
-                    .replace('Multisignature creation', 'Multisig. creation')
+          <div className={`${styles.graph} ${styles.hideOnLargeViewPort}`}>
+            <DoughnutChart
+              data={distributionChartData}
+              options={{ legend: { display: false } }}
+            />
+          </div>
+          <div className={styles.hideOnLargeViewPort}>
+            <GuideTooltip>
+              {transactionTypes
+                .getListOf('title')
+                .map((label, i) => (
+                  <GuideTooltipItem
+                    key={`transaction-GuideTooltip${i}`}
+                    color={colorPallete[i]}
+                    label={label
+                      .replace('Second passphrase registration', '2nd passphrase reg.')
+                      .replace('Multisignature creation', 'Multisig. creation')
+                    }
+                  />
+                ))
                   }
-                />
-              ))
-                }
-          </GuideTooltip>
-          )}
+            </GuideTooltip>
+          </div>
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
-          <div className={styles.graph}>
+          <div className={`${styles.graph} ${styles.showOnLargeViewPort}`}>
             <DoughnutChart
-              data={{
-                labels: Object.keys(distributionByAmount),
-                datasets: [
-                  {
-                    data: Object.values(distributionByAmount),
-                  },
-                ],
-              }}
-              options={{ legend: { display: !isMediumViewPort } }}
+              data={amountChartData}
+              options={{ legend: { display: true } }}
             />
           </div>
-          {isMediumViewPort && (
+          <div className={`${styles.graph} ${styles.hideOnLargeViewPort}`}>
+            <DoughnutChart
+              data={amountChartData}
+              options={{ legend: { display: false } }}
+            />
+          </div>
+          <div className={styles.hideOnLargeViewPort}>
             <GuideTooltip>
               {Object.keys(distributionByAmount)
                 .map((label, i) => (
@@ -210,7 +226,7 @@ const Overview = ({ t, txStats, isMediumViewPort }) => {
                 ))
               }
             </GuideTooltip>
-          )}
+          </div>
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
           <div className={styles.top}>
@@ -279,5 +295,4 @@ export default compose(
     },
   ),
   withTranslation(),
-  withResizeValues,
 )(Overview);

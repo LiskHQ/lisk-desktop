@@ -6,10 +6,9 @@ import LiskAmount from '../../../shared/liskAmount';
 import styles from './votes.css';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 import regex from '../../../../utils/regex';
-import withResizeValues from '../../../../utils/withResizeValues';
 
 const VoteRow = ({
-  data, onRowClick, t, apiVersion, isMediumViewPort,
+  data, onRowClick, t, apiVersion,
 }) => (
   <div className={`${tableStyles.row} ${styles.row} vote-row`} onClick={() => onRowClick(data.address)}>
     <div className={apiVersion === '3' ? 'hidden' : grid['col-sm-1']}>
@@ -27,7 +26,8 @@ const VoteRow = ({
         />
         <div className={styles.accountInfo}>
           <span className={`${styles.title} vote-username`}>{data.username}</span>
-          <span>{isMediumViewPort ? data.address.replace(regex.lskAddressTrunk, '$1...$3') : data.address}</span>
+          <span className={styles.showOnLargeViewPort}>{data.address}</span>
+          <span className={styles.hideOnLargeViewPort}>{data.address.replace(regex.lskAddressTrunk, '$1...$3')}</span>
         </div>
       </div>
     </div>
@@ -62,4 +62,4 @@ const areEqual = (prevProps, nextProps) =>
   (prevProps.data.address === nextProps.data.address
     && prevProps.data.rewards === nextProps.data.rewards);
 
-export default React.memo(withResizeValues(VoteRow), areEqual);
+export default React.memo(VoteRow, areEqual);

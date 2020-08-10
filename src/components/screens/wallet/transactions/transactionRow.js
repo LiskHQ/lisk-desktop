@@ -12,11 +12,10 @@ import TransactionAsset from './txAsset';
 import DialogLink from '../../../toolbox/dialog/link';
 import styles from './transactions.css';
 import regex from '../../../../utils/regex';
-import withResizeValues from '../../../../utils/withResizeValues';
 
 // eslint-disable-next-line complexity
 const TransactionRow = ({
-  data, className, t, host, isMediumViewPort,
+  data, className, t, host,
 }) => {
   const {
     bookmarks,
@@ -41,13 +40,24 @@ const TransactionRow = ({
           address={host === recipientId ? senderId : recipientId}
           transactionType={data.type}
         />
-        <TransactionAddress
-          address={isMediumViewPort ? addressRecipientId.replace(regex.lskAddressTrunk, '$1...$3') : addressRecipientId}
-          bookmarks={bookmarks}
-          t={t}
-          token={activeToken}
-          transactionType={data.type}
-        />
+        <span className={styles.showOnLargeViewPort}>
+          <TransactionAddress
+            address={addressRecipientId}
+            bookmarks={bookmarks}
+            t={t}
+            token={activeToken}
+            transactionType={data.type}
+          />
+        </span>
+        <span className={styles.hideOnLargeViewPort}>
+          <TransactionAddress
+            address={addressRecipientId.replace(regex.lskAddressTrunk, '$1...$3')}
+            bookmarks={bookmarks}
+            t={t}
+            token={activeToken}
+            transactionType={data.type}
+          />
+        </span>
       </span>
       <span className={grid[isLSK ? 'col-xs-2' : 'col-xs-3']}>
         {
@@ -88,4 +98,4 @@ const areEqual = (prevProps, nextProps) =>
   (prevProps.data.id === nextProps.data.id
   && prevProps.data.confirmations === nextProps.data.confirmations);
 
-export default React.memo(withResizeValues(TransactionRow), areEqual);
+export default React.memo(TransactionRow, areEqual);

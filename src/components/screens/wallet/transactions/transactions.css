@@ -86,3 +86,6 @@
     transform: scale(1);
   }
 }
+
+@mixin hideOnLargeViewPort;
+@mixin showOnLargeViewPort;

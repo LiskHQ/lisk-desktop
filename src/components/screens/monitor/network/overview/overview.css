@@ -118,3 +118,6 @@
     height: 180px;
   }
 }
+
+@mixin hideOnLargeViewPort;
+@mixin showOnLargeViewPort;

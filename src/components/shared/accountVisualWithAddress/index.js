@@ -8,23 +8,16 @@ import Icon from '../../toolbox/icon';
 import transactionTypes from '../../../constants/transactionTypes';
 import AccountVisual from '../../toolbox/accountVisual';
 import regex from '../../../utils/regex';
-import withResizeValues from '../../../utils/withResizeValues';
 
 class AccountVisualWithAddress extends React.Component {
   getTransformedAddress(address) {
-    const { isMediumViewPort, bookmarks, showBookmarkedAddress } = this.props;
+    const { bookmarks, showBookmarkedAddress } = this.props;
 
     if (showBookmarkedAddress) {
       const bookmarkedAddress = bookmarks[this.props.token.active].find(
         element => element.address === address,
       );
       if (bookmarkedAddress) return bookmarkedAddress.title;
-    }
-
-    // @todo fix this using css
-    /* istanbul ignore next */
-    if (isMediumViewPort) {
-      return address.replace(regex.lskAddressTrunk, '$1...$3');
     }
 
     return address;
@@ -36,6 +29,8 @@ class AccountVisualWithAddress extends React.Component {
     } = this.props;
     const txType = transactionTypes.getByCode(transactionType);
     const sendCode = transactionTypes().send.code;
+    const transformedAddress = this.getTransformedAddress(address);
+
     return (
       <div className={`${styles.address}`}>
         {transactionType !== sendCode && transactionSubject === 'recipientId' ? (
@@ -51,7 +46,8 @@ class AccountVisualWithAddress extends React.Component {
         ) : (
           <React.Fragment>
             <AccountVisual address={address} size={size} />
-            <span className={styles.addressValue}>{this.getTransformedAddress(address)}</span>
+            <span className={`${styles.addressValue} ${styles.showOnLargeViewPort}`}>{transformedAddress}</span>
+            <span className={`${styles.addressValue} ${styles.hideOnLargeViewPort}`}>{transformedAddress.replace(regex.lskAddressTrunk, '$1...$3')}</span>
           </React.Fragment>
         )}
       </div>
@@ -84,6 +80,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(
   compose(
     withTranslation(),
-    withResizeValues,
   )(AccountVisualWithAddress),
 );
