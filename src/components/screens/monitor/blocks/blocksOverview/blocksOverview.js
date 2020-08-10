@@ -7,6 +7,8 @@ import BoxTabs from '../../../../toolbox/tabs';
 import { DoughnutChart, BarChart } from '../../../../toolbox/charts';
 import styles from './blocksOverview.css';
 import { chartStyles } from '../../../../../constants/chartConstants';
+import withResizeValues from '../../../../../utils/withResizeValues';
+import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
 
 class BlocksOverview extends React.Component {
   constructor(props) {
@@ -23,7 +25,7 @@ class BlocksOverview extends React.Component {
 
   render() {
     const { activeTab } = this.state;
-    const { t, blocks } = this.props;
+    const { t, blocks, isMediumViewPort } = this.props;
 
     const tabs = [
       {
@@ -55,7 +57,7 @@ class BlocksOverview extends React.Component {
         <BoxContent>
           <div className={`${grid.row} ${styles.row}`}>
 
-            <div className={`${grid['col-sm-8']} ${grid['col-xs-7']} ${styles.chartBox}`}>
+            <div className={`${grid['col-sm-8']} ${grid['col-xs-7']} ${styles.chartBox} ${styles.barChartContainer}`}>
               <h2 className={styles.chartTitle}>{t('Transactions per block')}</h2>
               <div className={styles.chart}>
                 <BarChart
@@ -127,7 +129,7 @@ class BlocksOverview extends React.Component {
               </div>
             </div>
 
-            <div className={`${grid['col-sm-4']} ${grid['col-xs-5']} ${styles.chartBox}`}>
+            <div className={`${grid['col-sm-4']} ${grid['col-xs-5']} ${styles.chartBox} ${styles.doughnutChartContainer}`}>
               <h2 className={styles.chartTitle}>{t('Empty/Not empty')}</h2>
               <div className={styles.chart}>
                 <DoughnutChart
@@ -143,6 +145,7 @@ class BlocksOverview extends React.Component {
                     }],
                   }}
                   options={{
+                    legend: { display: !isMediumViewPort },
                     cutoutPercentage: 65,
                     tooltips: {
                       callbacks: {
@@ -157,8 +160,19 @@ class BlocksOverview extends React.Component {
                   }}
                 />
               </div>
+              {isMediumViewPort && (
+              <GuideTooltip>
+                <GuideTooltipItem
+                  color={chartStyles.mystic}
+                  label={t('Empty')}
+                />
+                <GuideTooltipItem
+                  color={chartStyles.ultramarineBlue}
+                  label={t('Not Empty')}
+                />
+              </GuideTooltip>
+              )}
             </div>
-
           </div>
         </BoxContent>
       </Box>
@@ -166,4 +180,4 @@ class BlocksOverview extends React.Component {
   }
 }
 
-export default BlocksOverview;
+export default withResizeValues(BlocksOverview);

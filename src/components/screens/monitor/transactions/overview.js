@@ -12,10 +12,12 @@ import BoxContent from '../../../toolbox/box/content';
 import transactionTypes from '../../../../constants/transactionTypes';
 import { DoughnutChart, BarChart } from '../../../toolbox/charts';
 import { fromRawLsk } from '../../../../utils/lsk';
-import { chartStyles } from '../../../../constants/chartConstants';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
 import { kFormatter } from '../../../../utils/helpers';
+import withResizeValues from '../../../../utils/withResizeValues';
+import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
+import { colorPallete, chartStyles } from '../../../../constants/chartConstants';
 
 const options = {
   responsive: true,
@@ -124,7 +126,7 @@ const formatDates = (date, period) => {
 const formatDistributionByValues = distributions => [0, 1, 2, 3, 4].map(item =>
   (distributions[item] || 0) + (distributions[item + 8] || 0));
 
-const Overview = ({ t, txStats }) => {
+const Overview = ({ t, txStats, isMediumViewPort }) => {
   const [activeTab, setActiveTab] = useState('week');
   const distributionByType = formatDistributionByValues(txStats.data.distributionByType);
   const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
@@ -136,7 +138,6 @@ const Overview = ({ t, txStats }) => {
     setActiveTab(tab.value);
     txStats.loadData({ period: tab.value });
   };
-
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
@@ -165,8 +166,26 @@ const Overview = ({ t, txStats }) => {
                   },
                 ],
               }}
+              options={{ legend: { display: !isMediumViewPort } }}
             />
           </div>
+          {isMediumViewPort && (
+          <GuideTooltip>
+            {transactionTypes
+              .getListOf('title')
+              .map((label, i) => (
+                <GuideTooltipItem
+                  key={`transaction-GuideTooltip${i}`}
+                  color={colorPallete[i]}
+                  label={label
+                    .replace('Second passphrase registration', '2nd passphrase reg.')
+                    .replace('Multisignature creation', 'Multisig. creation')
+                  }
+                />
+              ))
+                }
+          </GuideTooltip>
+          )}
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
@@ -180,11 +199,37 @@ const Overview = ({ t, txStats }) => {
                   },
                 ],
               }}
+              options={{ legend: { display: !isMediumViewPort } }}
             />
           </div>
+          {isMediumViewPort && (
+            <GuideTooltip>
+              {Object.keys(distributionByAmount)
+                .map((label, i) => (
+                  <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPallete[i]} label={label} />
+                ))
+              }
+            </GuideTooltip>
+          )}
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
-          <h2 className={styles.title}>{t('Transactions number / volume (LSK)')}</h2>
+          <div className={styles.top}>
+            <h2 className={styles.title}>{t('Transactions number / volume (LSK)')}</h2>
+            <aside className={styles.legends}>
+              <h5 className={`${styles.legend} ${styles.volume}`}>
+                <span>{t('Volume')}</span>
+                <Tooltip className={styles.tooltip} position="left">
+                  <p>{t('The aggregated LSK volume transferred on the given time period.')}</p>
+                </Tooltip>
+              </h5>
+              <h5 className={`${styles.legend} ${styles.number}`}>
+                <span>{t('Number')}</span>
+                <Tooltip className={styles.tooltip} position="left">
+                  <p>{t('The number of transactions submitted on the given time period.')}</p>
+                </Tooltip>
+              </h5>
+            </aside>
+          </div>
           <div className={styles.graph}>
             <BarChart
               data={{
@@ -210,20 +255,6 @@ const Overview = ({ t, txStats }) => {
               }}
               options={options}
             />
-            <aside className={styles.legends}>
-              <h5 className={`${styles.legend} ${styles.volume}`}>
-                <span>{t('Volume')}</span>
-                <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The aggregated LSK volume transferred on the given time period.')}</p>
-                </Tooltip>
-              </h5>
-              <h5 className={`${styles.legend} ${styles.number}`}>
-                <span>{t('Number')}</span>
-                <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The number of transactions submitted on the given time period.')}</p>
-                </Tooltip>
-              </h5>
-            </aside>
           </div>
         </div>
       </BoxContent>
@@ -248,4 +279,5 @@ export default compose(
     },
   ),
   withTranslation(),
+  withResizeValues,
 )(Overview);
