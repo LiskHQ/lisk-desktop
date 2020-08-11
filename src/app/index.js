@@ -72,8 +72,6 @@ const App = ({ history }) => {
                       exact={route.exact}
                       isPrivate={route.isPrivate}
                       forbiddenTokens={route.forbiddenTokens}
-                      pathSuffix={route.pathSuffix}
-                      pathPrefix={route.pathPrefix}
                       component={route.component}
                       key={route.path}
                       history={history}

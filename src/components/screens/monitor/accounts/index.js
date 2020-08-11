@@ -32,7 +32,7 @@ export const AccountsPure = ({
         <Table
           data={accounts.data}
           isLoading={accounts.isLoading}
-          row={AccountRow}
+          row={props => <AccountRow {...props} />}
           loadData={handleLoadMore}
           header={header(t)}
           additionalRowProps={{ supply }}

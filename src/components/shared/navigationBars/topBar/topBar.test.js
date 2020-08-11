@@ -80,7 +80,7 @@ describe('TopBar', () => {
     const wrapper = mountWithRouter(
       TopBar,
       props,
-      { pathname: '/wallet' },
+      { pathname: routes.wallet.path },
     );
     expect(wrapper).toContainMatchingElement('.top-bar');
   });
@@ -89,7 +89,7 @@ describe('TopBar', () => {
     const wrapper = mountWithRouter(
       TopBar,
       props,
-      { pathname: '/wallet' },
+      { pathname: routes.wallet.path },
     );
     expect(wrapper).not.toContainMatchingElement('.signIn');
   });
@@ -102,7 +102,7 @@ describe('TopBar', () => {
     const wrapper = mountWithRouter(
       TopBar,
       logoutProps,
-      { pathname: '/wallet' },
+      { pathname: routes.wallet.path },
     );
     expect(wrapper).toContainMatchingElement('.signIn');
   });
@@ -111,7 +111,7 @@ describe('TopBar', () => {
     const wrapper = mountWithRouter(
       TopBar,
       props,
-      { pathname: '/wallet' },
+      { pathname: routes.wallet.path },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
@@ -123,10 +123,10 @@ describe('TopBar', () => {
       {
         ...props,
         history: {
-          location: { pathname: '/monitor/blocks', search: '?id=1L' },
+          location: { pathname: routes.blocks.path, search: '?id=1L' },
         },
       },
-      { pathname: '/monitor/blocks' },
+      { pathname: routes.blocks.path },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).toContainMatchingElement('span.searchedValue');
@@ -139,10 +139,10 @@ describe('TopBar', () => {
       {
         ...props,
         history: {
-          location: { pathname: '/explorer/accounts', search: '?address=1L' },
+          location: { pathname: routes.account.path, search: '?address=1L' },
         },
       },
-      { pathname: '/explorer/accounts' },
+      { pathname: routes.account.path },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).toContainMatchingElement('span.searchedValue');
@@ -156,10 +156,10 @@ describe('TopBar', () => {
       {
         ...props,
         history: {
-          location: { pathname: '/explorer/accounts', search: '?somerandomparam=1L' },
+          location: { pathname: routes.account.path, search: '?somerandomparam=1L' },
         },
       },
-      { pathname: '/explorer/accounts' },
+      { pathname: routes.account.path },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).not.toContainMatchingElement('span.searchedValue');
@@ -172,7 +172,7 @@ describe('TopBar', () => {
     const wrapper = mountWithRouter(
       TopBar,
       props,
-      { pathname: '/wallet' },
+      { pathname: routes.wallet.path },
     );
     expect(wrapper).toContainMatchingElement('.search-icon');
     wrapper.setProps({

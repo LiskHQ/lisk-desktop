@@ -21,9 +21,9 @@ class SearchBar extends React.Component {
     };
 
     this.onChangeSearchTextValue = this.onChangeSearchTextValue.bind(this);
-    this.onSelectAccount = this.onSelectedRow.bind(this, 'accounts');
+    this.onSelectAccount = this.onSelectedRow.bind(this, 'account');
     this.onSelectTransaction = this.onSelectedRow.bind(this, 'transactions');
-    this.onSelectBlock = this.onSelectedRow.bind(this, 'blocks');
+    this.onSelectBlock = this.onSelectedRow.bind(this, 'block');
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.updateRowItemIndex = this.updateRowItemIndex.bind(this);
   }
@@ -62,7 +62,7 @@ class SearchBar extends React.Component {
     if (type === 'transactions') {
       addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails', transactionId: value });
     } else {
-      this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}?${routes[type].searchParam}=${value}`);
+      this.props.history.push(`${routes[type].path}?${routes[type].searchParam}=${value}`);
     }
     this.clearSearch();
   }

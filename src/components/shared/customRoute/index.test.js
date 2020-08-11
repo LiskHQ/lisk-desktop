@@ -44,7 +44,7 @@ describe('CustomRoute', () => {
     t: key => key,
     history: { location: { pathname: '' } },
     path: '/private',
-    component: () => Private,
+    component: Private,
     forbiddenTokens: [],
   };
 

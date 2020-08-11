@@ -144,7 +144,7 @@ class TopBar extends React.Component {
             <span className={relevantSearchParam ? styles.searchContainer : undefined}>
               <Icon name="search" className="search-icon" />
               {
-                relevantSearchParam === routes.accounts.searchParam && relevantSearchParamValue
+                relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
                   && (
                   <AccountVisual
                     className={styles.accountVisual}

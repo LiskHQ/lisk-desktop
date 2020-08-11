@@ -29,7 +29,7 @@ const getForgingStats = (data) => {
 
 const Forger = ({ forger }) => (
   <div className={`${styles.forger} forger-item`}>
-    <Link to={`${routes.accounts.path}/${forger.address}`}>
+    <Link to={`${routes.account.path}?address=${forger.address}`}>
       <AccountVisual
         address={forger.address}
         className={styles.accountVisual}

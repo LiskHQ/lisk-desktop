@@ -24,15 +24,15 @@ const menuLinks = t => ([
   [
     {
       icon: 'networkMonitor',
-      id: 'monitorNetwork',
+      id: 'network',
       label: t('Network'),
-      path: routes.monitorNetwork.path,
+      path: routes.network.path,
     },
     {
       icon: 'transactionsMonitor',
-      id: 'monitorTransactions',
+      id: 'transactions',
       label: t('Transactions'),
-      path: routes.monitorTransactions.path,
+      path: routes.transactions.path,
     },
     {
       icon: 'blocksMonitor',
@@ -42,15 +42,15 @@ const menuLinks = t => ([
     },
     {
       icon: 'accountsMonitor',
-      id: 'monitorAccounts',
+      id: 'accounts',
       label: t('Accounts'),
-      path: routes.monitorAccounts.path,
+      path: routes.accounts.path,
     },
     {
       icon: 'delegatesMonitor',
-      id: 'delegatesMonitor',
+      id: 'delegates',
       label: t('Delegates'),
-      path: routes.delegatesMonitor.path,
+      path: routes.delegates.path,
     },
   ],
   [
