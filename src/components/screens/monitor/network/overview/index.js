@@ -71,7 +71,7 @@ const HeightDistributionChart = ({ t, heightDistribution }) => {
                 ? (
                   <div className={styles.chartBox}>
                     <h2 className={styles.title}>{t('Height distribution')}</h2>
-                    <div className={`${styles.chart} ${styles.showOnLargeViewPort}`}>
+                    <div className={`${styles.chart} showOnLargeViewPort`}>
                       <DoughnutChart
                         data={chartProps.data}
                         options={{
@@ -85,7 +85,7 @@ const HeightDistributionChart = ({ t, heightDistribution }) => {
                           : null
                       }
                     </div>
-                    <div className={`${styles.chart} ${styles.hideOnLargeViewPort}`}>
+                    <div className={`${styles.chart} hideOnLargeViewPort`}>
                       <DoughnutChart
                         data={chartProps.data}
                         options={{
@@ -94,7 +94,7 @@ const HeightDistributionChart = ({ t, heightDistribution }) => {
                         }}
                       />
                     </div>
-                    <div className={styles.hideOnLargeViewPort}>
+                    <div className="hideOnLargeViewPort">
                       <GuideTooltip>
                         {
                           heightDistribution.labels
@@ -147,7 +147,7 @@ const PeersChart = ({ t, basic }) => {
             ? (
               <div className={styles.chartBox}>
                 <h2 className={styles.title}>{t('Peers')}</h2>
-                <div className={`${styles.chart} ${styles.showOnLargeViewPort}`}>
+                <div className={`${styles.chart} showOnLargeViewPort`}>
                   <DoughnutChart
                     data={chartProps.data}
                     options={{
@@ -156,7 +156,7 @@ const PeersChart = ({ t, basic }) => {
                     }}
                   />
                 </div>
-                <div className={`${styles.chart} ${styles.hideOnLargeViewPort}`}>
+                <div className={`${styles.chart} hideOnLargeViewPort`}>
                   <DoughnutChart
                     data={chartProps.data}
                     options={{
@@ -165,7 +165,7 @@ const PeersChart = ({ t, basic }) => {
                     }}
                   />
                 </div>
-                <div className={styles.hideOnLargeViewPort}>
+                <div className="hideOnLargeViewPort">
                   <GuideTooltip>
                     <GuideTooltipItem
                       label={t('Connected')}
@@ -233,7 +233,7 @@ const Overview = ({
               ? (
                 <div className={styles.chartBox}>
                   <h2 className={styles.title}>{t('Versions distribution')}</h2>
-                  <div className={`${styles.chart} ${styles.showOnLargeViewPort}`}>
+                  <div className={`${styles.chart} showOnLargeViewPort`}>
                     <DoughnutChart
                       data={versionChartProps.data}
                       options={{
@@ -247,7 +247,7 @@ const Overview = ({
                         : null
                     }
                   </div>
-                  <div className={`${styles.chart} ${styles.hideOnLargeViewPort}`}>
+                  <div className={`${styles.chart} hideOnLargeViewPort`}>
                     <DoughnutChart
                       data={versionChartProps.data}
                       options={{
@@ -256,7 +256,7 @@ const Overview = ({
                       }}
                     />
                   </div>
-                  <div className={styles.hideOnLargeViewPort}>
+                  <div className="hideOnLargeViewPort">
                     <GuideTooltip>
                       {
                         versionsDistribution.labels

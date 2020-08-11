@@ -39,6 +39,3 @@
 .doughnutChartContainer {
   padding-left: 10px;
 }
-
-@mixin hideOnLargeViewPort;
-@mixin showOnLargeViewPort;

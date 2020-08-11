@@ -13,6 +13,3 @@
   width: 32px;
   height: 32px;
 }
-
-@mixin hideOnLargeViewPort;
-@mixin showOnLargeViewPort;

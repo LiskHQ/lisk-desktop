@@ -76,6 +76,3 @@
     }
   }
 }
-
-@mixin hideOnLargeViewPort;
-@mixin showOnLargeViewPort;

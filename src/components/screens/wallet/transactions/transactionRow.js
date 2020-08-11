@@ -40,7 +40,7 @@ const TransactionRow = ({
           address={host === recipientId ? senderId : recipientId}
           transactionType={data.type}
         />
-        <span className={styles.showOnLargeViewPort}>
+        <span className="showOnLargeViewPort">
           <TransactionAddress
             address={addressRecipientId}
             bookmarks={bookmarks}
@@ -49,7 +49,7 @@ const TransactionRow = ({
             transactionType={data.type}
           />
         </span>
-        <span className={styles.hideOnLargeViewPort}>
+        <span className="hideOnLargeViewPort">
           <TransactionAddress
             address={addressRecipientId.replace(regex.lskAddressTrunk, '$1...$3')}
             bookmarks={bookmarks}

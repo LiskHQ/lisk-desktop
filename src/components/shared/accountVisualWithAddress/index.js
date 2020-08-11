@@ -46,8 +46,8 @@ class AccountVisualWithAddress extends React.Component {
         ) : (
           <React.Fragment>
             <AccountVisual address={address} size={size} />
-            <span className={`${styles.addressValue} ${styles.showOnLargeViewPort}`}>{transformedAddress}</span>
-            <span className={`${styles.addressValue} ${styles.hideOnLargeViewPort}`}>{transformedAddress.replace(regex.lskAddressTrunk, '$1...$3')}</span>
+            <span className={`${styles.addressValue} showOnLargeViewPort`}>{transformedAddress}</span>
+            <span className={`${styles.addressValue} hideOnLargeViewPort`}>{transformedAddress.replace(regex.lskAddressTrunk, '$1...$3')}</span>
           </React.Fragment>
         )}
       </div>

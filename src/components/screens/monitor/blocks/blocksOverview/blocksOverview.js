@@ -156,7 +156,7 @@ class BlocksOverview extends React.Component {
 
             <div className={`${grid['col-sm-4']} ${grid['col-xs-5']} ${styles.chartBox} ${styles.doughnutChartContainer}`}>
               <h2 className={styles.chartTitle}>{t('Empty/Not empty')}</h2>
-              <div className={`${styles.chart} ${styles.showOnLargeViewPort}`}>
+              <div className={`${styles.chart} showOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}
                   options={{
@@ -165,7 +165,7 @@ class BlocksOverview extends React.Component {
                   }}
                 />
               </div>
-              <div className={`${styles.chart} ${styles.hideOnLargeViewPort}`}>
+              <div className={`${styles.chart} hideOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}
                   options={{
@@ -174,7 +174,7 @@ class BlocksOverview extends React.Component {
                   }}
                 />
               </div>
-              <div className={styles.hideOnLargeViewPort}>
+              <div className="hideOnLargeViewPort">
                 <GuideTooltip>
                   <GuideTooltipItem
                     color={chartStyles.mystic}

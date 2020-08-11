@@ -174,19 +174,19 @@ const Overview = ({ t, txStats }) => {
       <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Distribution of transaction types')}</h2>
-          <div className={`${styles.graph} ${styles.showOnLargeViewPort}`}>
+          <div className={`${styles.graph} showOnLargeViewPort`}>
             <DoughnutChart
               data={distributionChartData}
               options={{ legend: { display: true } }}
             />
           </div>
-          <div className={`${styles.graph} ${styles.hideOnLargeViewPort}`}>
+          <div className={`${styles.graph} hideOnLargeViewPort`}>
             <DoughnutChart
               data={distributionChartData}
               options={{ legend: { display: false } }}
             />
           </div>
-          <div className={styles.hideOnLargeViewPort}>
+          <div className="hideOnLargeViewPort">
             <GuideTooltip>
               {transactionTypes
                 .getListOf('title')
@@ -206,19 +206,19 @@ const Overview = ({ t, txStats }) => {
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
-          <div className={`${styles.graph} ${styles.showOnLargeViewPort}`}>
+          <div className={`${styles.graph} showOnLargeViewPort`}>
             <DoughnutChart
               data={amountChartData}
               options={{ legend: { display: true } }}
             />
           </div>
-          <div className={`${styles.graph} ${styles.hideOnLargeViewPort}`}>
+          <div className={`${styles.graph} hideOnLargeViewPort`}>
             <DoughnutChart
               data={amountChartData}
               options={{ legend: { display: false } }}
             />
           </div>
-          <div className={styles.hideOnLargeViewPort}>
+          <div className="hideOnLargeViewPort">
             <GuideTooltip>
               {Object.keys(distributionByAmount)
                 .map((label, i) => (
