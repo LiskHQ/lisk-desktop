@@ -28,8 +28,6 @@
   padding-left: 0;
 
   & > span {
-    margin-left: -27%;
-    width: 127%;
     display: inline-block;
   }
 }
