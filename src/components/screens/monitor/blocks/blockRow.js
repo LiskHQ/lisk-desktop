@@ -4,19 +4,20 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import LiskAmount from '../../../shared/liskAmount';
 import routes from '../../../../constants/routes';
+import styles from './blocks.css';
 
 const BlockRow = ({ data, className }) => (
   <Link
-    className={`${grid.row} ${className}`}
+    className={`${grid.row} ${className} ${styles.tableRow}`}
     to={`${routes.blocks.path}/${data.id}`}
   >
     <span className={grid['col-xs-2']}>
       {data.height}
     </span>
-    <span className={grid['col-xs-2']}>
+    <span className={grid['col-xs-3']}>
       <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
     </span>
-    <span className={grid['col-xs-3']}>
+    <span className={grid['col-xs-2']}>
       {data.numberOfTransactions}
     </span>
     <span className={grid['col-xs-2']}>
