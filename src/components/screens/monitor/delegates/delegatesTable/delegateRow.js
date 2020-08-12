@@ -37,7 +37,7 @@ const DelegateRow = ({
       className={`${grid.row} ${className} delegate-row ${styles.tableRow}`}
       to={`${routes.account.path}?address=${data.address}`}
     >
-      <span className={`${grid['col-xs-1']} ${grid['col-md-1']}`}>
+      <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.noEllipsis}`}>
         {`#${data.rank}`}
       </span>
       <span className={`${grid['col-xs-2']} ${grid['col-md-2']}`}>
@@ -49,10 +49,10 @@ const DelegateRow = ({
       {
         data.rank <= 101 ? (
           <Fragment>
-            <span className={`${grid['col-xs-2']} ${grid['col-md-2']}`}>
+            <span className={`${grid['col-xs-2']} ${grid['col-md-2']} ${styles.noEllipsis}`}>
               {formattedForgingTime}
             </span>
-            <span className={`${grid['col-xs-1']} ${grid['col-md-1']}`}>
+            <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.noEllipsis}`}>
               <Tooltip
                 title={forgingTime
                   ? t(statuses[forgingTime.status])

@@ -21,7 +21,7 @@ const getOwnerName = (account) => {
 const BalanceShare = ({ balance, supply }) => {
   const share = new BigNumber(balance / supply * 100);
   return (
-    <span>
+    <span className={styles.balanceShare}>
       {
         `${formatAmountBasedOnLocale({ value: share.toFormat(2) })} %`
       }
