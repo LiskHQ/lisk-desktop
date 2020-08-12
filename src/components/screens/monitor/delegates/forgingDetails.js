@@ -12,6 +12,8 @@ import styles from './overview.css';
 import NumericInfo from './numericInfo';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import voting from '../../../../constants/voting';
+import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
+
 
 const getForgingStats = (data) => {
   const statuses = {
@@ -42,6 +44,8 @@ const Forger = ({ forger }) => (
 const getPassedMinutes = forgedBlocks => (
   `${String(Math.floor(forgedBlocks / 6)).padStart(2, '0')}:${String(forgedBlocks % 6).padEnd(2, '0')}`
 );
+
+const timeForMaxBlocksForged = getPassedMinutes(MAX_BLOCKS_FORGED);
 
 const ForgingDetails = ({
   t, chartDelegatesForging,
@@ -105,12 +109,12 @@ const ForgingDetails = ({
             <div className={styles.list}>
               <NumericInfo
                 title="Blocks forged"
-                value={`${forgedInRound} / 103`}
+                value={`${forgedInRound} / ${MAX_BLOCKS_FORGED}`}
                 icon="blocksForged"
               />
               <NumericInfo
                 title="Minutes passed"
-                value={`${getPassedMinutes(forgedInRound)} / 17:10`}
+                value={`${getPassedMinutes(forgedInRound)} / ${timeForMaxBlocksForged}`}
                 icon="clock"
               />
             </div>
