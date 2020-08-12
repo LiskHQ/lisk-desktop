@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+
 import withData from '../../../utils/withData';
 import Overview from './overview';
 import { getAccount } from '../../../utils/api/account';
@@ -12,6 +13,7 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
+import { selectSearchParamValue } from '../../../utils/searchParams';
 
 
 const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
@@ -66,7 +68,7 @@ const Wallet = ({
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
-            address={match.params.address}
+            address={selectSearchParamValue(history.location.search, 'address')}
             tabName={t('Voting')}
           />
         ) : null}
@@ -75,7 +77,7 @@ const Wallet = ({
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
-              address={match.params.address}
+              address={selectSearchParamValue(history.location.search, 'address')}
             />
           )
           : null}
@@ -90,8 +92,7 @@ const apis = {
     defaultData: {},
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
-      address: props.match.params.address,
-      networkConfig: state.network,
+      address: selectSearchParamValue(props.history.location.search, 'address'),
     }),
     transformResponse: response => response,
   },
@@ -99,7 +100,7 @@ const apis = {
     apiUtil: (network, params) => getTransactions(transformParams(params)),
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
-      address: props.match.params.address,
+      address: selectSearchParamValue(props.history.location.search, 'address'),
       networkConfig: state.network,
     }),
     defaultData: [],

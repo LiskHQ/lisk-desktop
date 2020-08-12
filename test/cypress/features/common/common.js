@@ -80,7 +80,7 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
   switch (page.toLowerCase()) {
     case 'wallet':
       cy.route('/api/transactions?*').as('transactions');
-      cy.visit(`${urls.accounts}/${accounts[identifier].address}`);
+      cy.visit(`${urls.account}?address=${accounts[identifier].address}`);
       cy.wait('@transactions');
       cy.wait('@transactions');
       cy.wait('@transactions');

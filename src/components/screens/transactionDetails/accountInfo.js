@@ -14,7 +14,7 @@ const AccountInfo = ({
   token,
   netCode,
 }) => {
-  const addressLink = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
+  const addressLink = routes.account.path;
   return (
     <div className={styles.accountInfo}>
       <p className={styles.label}>{label}</p>
@@ -23,7 +23,7 @@ const AccountInfo = ({
         { validateAddress(token, address, netCode) === 0
           ? (
             <Link
-              to={`${addressLink}/${address}`}
+              to={`${addressLink}?address=${address}`}
               className={`${styles.link} ${name ? styles.hasName : ''}`}
             >
               {name}

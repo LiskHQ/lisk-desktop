@@ -78,7 +78,7 @@ describe('Votes Tab Component', () => {
     wrapper.setProps({ votes: { ...props.votes, data: votes } });
     wrapper.update();
     wrapper.find('VoteRow').at(0).simulate('click');
-    expect(props.history.push).toBeCalledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/0L`);
+    expect(props.history.push).toBeCalledWith(`${routes.account.path}?address=0L`);
   });
 
   it('Should filter votes per username and show error message if no results found', () => {
