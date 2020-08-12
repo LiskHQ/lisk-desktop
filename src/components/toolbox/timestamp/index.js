@@ -39,12 +39,12 @@ export const DateTimeFromTimestamp = withTranslation()((props) => {
       datetime.format('DD MMM YYYY, hh:mm:ss A')
     )
       : datetime.calendar(null, {
-        lastDay: props.t('[Yesterday], hh:mm A'),
-        sameDay: props.t('[Today], hh:mm A'),
+        lastDay: props.t('DD MMM YYYY'),
+        sameDay: props.t('hh:mm A'),
         nextDay: props.t('[Tomorrow], hh:mm A'),
-        lastWeek: props.t('DD MMM YYYY, hh:mm A'),
-        nextWeek: props.t('DD MMM YYYY, hh:mm A'),
-        sameElse: props.t('DD MMM YYYY, hh:mm A'),
+        lastWeek: props.t('DD MMM YYYY'),
+        nextWeek: props.t('DD MMM YYYY'),
+        sameElse: props.t('DD MMM YYYY'),
       })
   }
     </span>

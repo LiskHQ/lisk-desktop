@@ -131,7 +131,7 @@ const Overview = ({ t, txStats }) => {
   const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
   const txCountList = txStats.data.timeline.map(item => item.transactionCount);
   const txVolumeList = txStats.data.timeline.map(item => fromRawLsk(item.volume));
-  const txDateList = txStats.data.timeline.map(item => formatDates(item.date, activeTab));
+  const txDateList = txStats.data.timeline.map(item => formatDates(item.date, activeTab).slice(0, 2));
 
   const changeTab = (tab) => {
     setActiveTab(tab.value);
