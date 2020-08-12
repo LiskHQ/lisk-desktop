@@ -123,10 +123,10 @@ describe('TopBar', () => {
       {
         ...props,
         history: {
-          location: { pathname: routes.blocks.path, search: '?id=1L' },
+          location: { pathname: routes.block.path, search: '?id=1L' },
         },
       },
-      { pathname: routes.blocks.path },
+      { pathname: routes.block.path },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).toContainMatchingElement('span.searchedValue');
