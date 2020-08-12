@@ -26,6 +26,7 @@
 
 .approvalTitle {
   padding-left: 0;
+  padding-right: 0;
 
   & > span {
     display: inline-block;
@@ -96,6 +97,9 @@
   & > span:last-child {
     padding-left: 0px;
     padding-right: 0px;
+  }
+
+  & > .noEllipsis {
     text-overflow: initial;
   }
 }
