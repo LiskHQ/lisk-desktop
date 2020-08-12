@@ -84,19 +84,3 @@
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.1px;
 }
-
-@define-mixin customScrollBar {
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--color-ultramarine-blue);
-  }
-}

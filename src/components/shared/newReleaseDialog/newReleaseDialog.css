@@ -14,7 +14,6 @@
 }
 
 .releaseNotes {
-  @mixin customScrollBar;
   @mixin contentNormal;
 
   color: var(--color-slate-gray);
