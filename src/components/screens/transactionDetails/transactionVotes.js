@@ -28,7 +28,7 @@ function addVotesWithDelegateNames(votes, delegates, t) {
 
 const transactionVotes = ({ t, transaction, delegates }) => {
   if (transaction.type !== transactionTypes().vote.code) return null;
-  const accountPath = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
+  const accountPath = routes.account.path;
   const [votesNames, setVoteNames] = useState(
     addVotesWithDelegateNames(transaction.asset.votes, delegates.data, t),
   );
@@ -59,7 +59,7 @@ const transactionVotes = ({ t, transaction, delegates }) => {
                 {votesNames.added.slice(0).sort((a, b) => a.rank - b.rank).map((vote, voteKey) => (
                   <Link
                     key={voteKey}
-                    to={`${accountPath}/${vote.account.address}`}
+                    to={`${accountPath}?address=${vote.account.address}`}
                     className={`${styles.voteTag} voter-address`}
                   >
                     <RankOrStatus data={vote} className={styles.rank} />

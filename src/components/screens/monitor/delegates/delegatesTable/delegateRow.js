@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+
 import routes from '../../../../../constants/routes';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import AccountVisualWithAddress from '../../../../shared/accountVisualWithAddress';
@@ -34,7 +35,7 @@ const DelegateRow = ({
   return (
     <Link
       className={`${grid.row} ${className} delegate-row`}
-      to={`${routes.accounts.path}/${data.address}`}
+      to={`${routes.account.path}?address=${data.address}`}
     >
       <span className={grid['col-md-1']}>
         {`#${data.rank}`}

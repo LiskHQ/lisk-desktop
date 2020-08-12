@@ -8,7 +8,7 @@ import routes from '../../../../constants/routes';
 const BlockRow = ({ data, className }) => (
   <Link
     className={`${grid.row} ${className}`}
-    to={`${routes.blocks.path}/${data.id}`}
+    to={`${routes.blocks.path}?id=${data.id}`}
   >
     <span className={grid['col-md-1']}>
       {data.height}

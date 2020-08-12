@@ -5,6 +5,7 @@ import {
   addSearchParamsToUrl,
   removeSearchParams,
   removeSearchParamsFromUrl,
+  selectSearchParamValue,
 } from './searchParams';
 
 const TEST_URLS = ['?a=1', '?a=1&b=2&c=3', '?a=1&b=2&c=3,4,5', '?a=1,2,3&b=1,5&c=d'];
@@ -66,6 +67,7 @@ describe('Search Params', () => {
       expect(removeSearchParams('?hello=world&jest=good', ['jest'])).toEqual('?hello=world');
       expect(removeSearchParams('?hello=world&jest=good', ['hello'])).toEqual('?jest=good');
       expect(removeSearchParams('?hello=world&jest=good&cats=mean', ['jest'])).toEqual('?hello=world&cats=mean');
+      expect(removeSearchParams('?hello=world&jest=good&cats=mean', ['jest'], true)).toEqual('?hello=world');
     });
   });
 
@@ -86,6 +88,20 @@ describe('Search Params', () => {
       removeSearchParamsFromUrl(history, ['removeMe']);
       expect(history.push).toHaveBeenCalledWith((`${history.location.pathname}?notMe=value`));
       expect(history.push).toHaveBeenCalledTimes(1);
+    });
+
+    it('removes the search params correctly from the url and cleans the rest of the search params and redirects to that url', () => {
+      removeSearchParamsFromUrl(history, ['removeMe'], true);
+      expect(history.push).toHaveBeenCalledWith((history.location.pathname));
+      expect(history.push).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('selectSearchParamValue', () => {
+    it('parses the search params correctly', () => {
+      expect(selectSearchParamValue(TEST_URLS[0], 'a')).toStrictEqual('1');
+      expect(selectSearchParamValue(TEST_URLS[2], 'c')).toStrictEqual(['3', '4', '5']);
+      expect(selectSearchParamValue(TEST_URLS[3], 'unknown')).toBeUndefined();
     });
   });
 });
