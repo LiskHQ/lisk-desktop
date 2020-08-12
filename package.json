@@ -32,6 +32,7 @@
     "clean-build": "rm -rf app/build",
     "clean-dist": "rm -rf dist",
     "eslint": "eslint ./",
+    "eslint:fix": "eslint ./ --fix",
     "pack": "npm install && npm run build && npm run clean-dist && npm run dist",
     "pack:win": "cmd /c npm install && npm run install-electron-dependencies && npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron && npm run clean-dist && npm run dist:win",
     "install-storybook-dependencies": "cd ./storybook/; npm install; cd ..",

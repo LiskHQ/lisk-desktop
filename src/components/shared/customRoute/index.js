@@ -13,8 +13,6 @@ const CustomRoute = ({
   exact,
   isPrivate,
   forbiddenTokens,
-  pathSuffix,
-  pathPrefix,
   component,
   t,
   history,
@@ -44,7 +42,7 @@ const CustomRoute = ({
     <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
       <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
         <Route
-          path={`${pathPrefix}${path}${pathSuffix}`}
+          path={path}
           exact={exact}
           key={path}
           component={component}

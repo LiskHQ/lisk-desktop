@@ -39,11 +39,11 @@ describe('TopBar', () => {
 
   const props = {
     account,
-    location: { pathname: routes.dashboard.path },
     showDelegate: false,
     t: val => val,
     logOut: jest.fn(),
     history: {
+      location: { pathname: routes.dashboard.path, search: '' },
       replace: () => {},
       push: jest.fn(),
     },
@@ -80,7 +80,7 @@ describe('TopBar', () => {
     const wrapper = mountWithRouter(
       TopBar,
       props,
-      { pathname: '/wallet' },
+      { pathname: routes.wallet.path },
     );
     expect(wrapper).toContainMatchingElement('.top-bar');
   });
@@ -89,7 +89,7 @@ describe('TopBar', () => {
     const wrapper = mountWithRouter(
       TopBar,
       props,
-      { pathname: '/wallet' },
+      { pathname: routes.wallet.path },
     );
     expect(wrapper).not.toContainMatchingElement('.signIn');
   });
@@ -102,7 +102,7 @@ describe('TopBar', () => {
     const wrapper = mountWithRouter(
       TopBar,
       logoutProps,
-      { pathname: '/wallet' },
+      { pathname: routes.wallet.path },
     );
     expect(wrapper).toContainMatchingElement('.signIn');
   });
@@ -111,9 +111,59 @@ describe('TopBar', () => {
     const wrapper = mountWithRouter(
       TopBar,
       props,
-      { pathname: '/wallet' },
+      { pathname: routes.wallet.path },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
+    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
+  });
+
+  it('renders searched value in the search container when the url contains a relevant search param', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      {
+        ...props,
+        history: {
+          location: { pathname: routes.blocks.path, search: '?id=1L' },
+        },
+      },
+      { pathname: routes.blocks.path },
+    );
+    expect(wrapper).toContainMatchingElement('img.search-icon');
+    expect(wrapper).toContainMatchingElement('span.searchedValue');
+    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
+  });
+
+  it('renders searched value in the search container with AccountVisual when the url contains an account address', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      {
+        ...props,
+        history: {
+          location: { pathname: routes.account.path, search: '?address=1L' },
+        },
+      },
+      { pathname: routes.account.path },
+    );
+    expect(wrapper).toContainMatchingElement('img.search-icon');
+    expect(wrapper).toContainMatchingElement('span.searchedValue');
+    expect(wrapper).toContainMatchingElement('AccountVisual');
+    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
+  });
+
+  it('does not render searched value in the search container when the url contains an irrelevant search param ', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      {
+        ...props,
+        history: {
+          location: { pathname: routes.account.path, search: '?somerandomparam=1L' },
+        },
+      },
+      { pathname: routes.account.path },
+    );
+    expect(wrapper).toContainMatchingElement('img.search-icon');
+    expect(wrapper).not.toContainMatchingElement('span.searchedValue');
+    expect(wrapper).not.toContainMatchingElement('AccountVisual');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
 
@@ -122,7 +172,7 @@ describe('TopBar', () => {
     const wrapper = mountWithRouter(
       TopBar,
       props,
-      { pathname: '/wallet' },
+      { pathname: routes.wallet.path },
     );
     expect(wrapper).toContainMatchingElement('.search-icon');
     wrapper.setProps({

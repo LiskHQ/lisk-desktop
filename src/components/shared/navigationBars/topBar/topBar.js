@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import routes from '../../../../constants/routes';
 import NavigationButtons from './navigationButtons';
 import Network from './networkName';
@@ -10,6 +11,35 @@ import DialogLink from '../../../toolbox/dialog/link';
 import { settingsUpdated } from '../../../../actions/settings';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import { isEmpty } from '../../../../utils/helpers';
+import { selectSearchParamValue } from '../../../../utils/searchParams';
+import AccountVisual from '../../../toolbox/accountVisual';
+
+/**
+ * Extracts only one search param out of the url that is relevant
+ * to the screen shown
+ * @param {string} path the url path
+ */
+const extractRelevantSearchParam = (path) => {
+  const relevantRoute = Object.values(routes).find(route => route.path === path);
+  if (relevantRoute) {
+    return relevantRoute.searchParam;
+  }
+  return undefined;
+};
+
+/**
+ * Gets the searched value depending upon the screen the user is on
+ * and the url search
+ * @param {object} history the history object
+ */
+const getSearchedText = (history) => {
+  const screenName = history.location.pathname;
+  const relevantSearchParam = extractRelevantSearchParam(screenName);
+  const relevantSearchParamValue = selectSearchParamValue(
+    history.location.search, relevantSearchParam,
+  );
+  return { relevantSearchParam, relevantSearchParamValue };
+};
 
 /**
  * Toggles boolean values on store.settings
@@ -78,18 +108,20 @@ class TopBar extends React.Component {
     this.childRef = node;
   }
 
+  // eslint-disable-next-line complexity
   render() {
     const {
       t,
       account,
       history,
-      location,
       network,
       token,
       // resetTimer,
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
     const isUserLogout = isEmpty(account) || account.afterLogout;
+    const { relevantSearchParam, relevantSearchParamValue } = getSearchedText(history);
+
     return (
       <div className={`${styles.wrapper} top-bar`}>
         <div className={styles.group}>
@@ -109,7 +141,25 @@ class TopBar extends React.Component {
             <Icon name="bookmark" className={styles.bookmarksIcon} />
           </DialogLink>
           <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
-            <Icon name="search" className={`${styles.searchIcon} search-icon`} />
+            <span className={relevantSearchParam ? styles.searchContainer : undefined}>
+              <Icon name="search" className="search-icon" />
+              {
+                relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
+                  && (
+                  <AccountVisual
+                    className={styles.accountVisual}
+                    size={18}
+                    address={relevantSearchParamValue}
+                  />
+                  )
+              }
+              {relevantSearchParamValue
+                && (
+                <span className={styles.searchedValue}>
+                  {relevantSearchParamValue}
+                </span>
+                )}
+            </span>
           </DialogLink>
         </div>
         <div className={styles.group}>
@@ -133,7 +183,7 @@ class TopBar extends React.Component {
             t={t}
           />
           {
-            isUserLogout && location.pathname !== routes.login.path ? (
+            isUserLogout && history.location.pathname !== routes.login.path ? (
               <Link to={routes.login.path} className={styles.signIn}>
                 <PrimaryButton size="s">Sign in</PrimaryButton>
               </Link>

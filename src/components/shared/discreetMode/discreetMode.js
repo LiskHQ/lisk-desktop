@@ -19,7 +19,7 @@ class DiscreetMode extends Component {
     if (!isDiscreetMode) return false;
 
     if (shouldEvaluateForOtherAccounts) {
-      if (location.pathname.includes(routes.accounts.path)) {
+      if (location.pathname.includes(routes.account.path)) {
         return this.handleBlurOnOtherWalletPage();
       }
     }

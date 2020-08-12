@@ -9,7 +9,7 @@ import styles from './blocks.css';
 const BlockRow = ({ data, className }) => (
   <Link
     className={`${grid.row} ${className} ${styles.tableRow}`}
-    to={`${routes.blocks.path}/${data.id}`}
+    to={`${routes.blocks.path}?id=${data.id}`}
   >
     <span className={grid['col-xs-2']}>
       {data.height}
