@@ -32,3 +32,18 @@
 .tooltipOffset {
   left: -8px;
 }
+
+.amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & > .fee {
+    font-family: var(--content-font);
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 14px;
+    color: #8A8CA2;
+  }
+}

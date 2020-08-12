@@ -2,7 +2,6 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import { tokenMap } from '../../../constants/tokens';
-import transactionTypes from '../../../constants/transactionTypes';
 import AccountVisualWithAddress from '../accountVisualWithAddress';
 import Icon from '../../toolbox/icon';
 import LiskAmount from '../liskAmount';
@@ -37,19 +36,9 @@ const TransactionRow = ({ data, className, t }) => (
     <span className={grid['col-xs-2']}>
       <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
     </span>
-    <span className={grid['col-xs-2']}>
+    <span className={`${grid['col-xs-3']} ${styles.amount}`}>
       <LiskAmount val={data.amount} token={tokenMap.LSK.key} />
-    </span>
-    <span className={grid['col-xs-1']}>
-      <Tooltip
-        title={t('Transaction')}
-        position="bottom"
-        tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
-        content={<LiskAmount val={data.fee} token={tokenMap.LSK.key} />}
-        size="s"
-      >
-        <p>{`${data.type} - ${transactionTypes.getByCode(data.type).title}`}</p>
-      </Tooltip>
+      <span className={styles.fee}><LiskAmount val={data.fee} token={tokenMap.LSK.key} /></span>
     </span>
     <span className={grid['col-xs-1']}>
       <Tooltip

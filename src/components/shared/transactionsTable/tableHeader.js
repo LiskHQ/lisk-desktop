@@ -19,15 +19,11 @@ export default (changeSort, t) => ([
   },
   {
     title: t('Amount'),
-    classList: grid['col-xs-2'],
+    classList: grid['col-xs-3'],
     sort: {
       fn: changeSort,
       key: 'amount',
     },
-  },
-  {
-    title: t('Fee'),
-    classList: grid['col-xs-1'],
   },
   {
     title: t('Status'),
