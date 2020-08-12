@@ -44,6 +44,6 @@
     font-weight: normal;
     font-size: 10px;
     line-height: 14px;
-    color: #8A8CA2;
+    color: var(--color-blue-gray);
   }
 }

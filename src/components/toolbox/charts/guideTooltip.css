@@ -38,7 +38,7 @@
   }
 
   &.yellow {
-    background: var(--color-ufo-green);
+    background: var(--color-jade-green);
     clip: rect(radius, diameter, diameter, radius);
     width: diameter;
   }

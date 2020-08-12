@@ -77,8 +77,7 @@ const mapStateToProps = state => ({
   token: state.settings.token,
 });
 
-export default connect(mapStateToProps)(
-  compose(
-    withTranslation(),
-  )(AccountVisualWithAddress),
-);
+export default compose(
+  connect(mapStateToProps),
+  withTranslation(),
+)(AccountVisualWithAddress);

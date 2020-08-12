@@ -23,14 +23,6 @@ const GuideTooltip = ({ children }) => (
   </Tooltip>
 );
 
-GuideTooltip.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-GuideTooltip.defaultProps = {
-  children: <React.Fragment />,
-};
-
 export const GuideTooltipItem = ({ color, label }) => (
   <li
     className={styles.guideTooltipContentListItem}

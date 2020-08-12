@@ -74,7 +74,7 @@
     max-height: 40px;
     overflow: hidden;
     white-space: nowrap;
-    
+
     & a {
       display: flex;
 

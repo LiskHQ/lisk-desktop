@@ -129,9 +129,15 @@ const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
   const distributionByType = formatDistributionByValues(txStats.data.distributionByType);
   const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
-  const txCountList = txStats.data.timeline.map(item => item.transactionCount);
-  const txVolumeList = txStats.data.timeline.map(item => fromRawLsk(item.volume));
-  const txDateList = txStats.data.timeline.map(item => formatDates(item.date, activeTab).slice(0, 2));
+  const { txCountList, txVolumeList, txDateList } = txStats.data.timeline.reduce((acc, item) => ({
+    txCountList: [...acc.txCountList, item.transactionCount],
+    txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
+    txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
+  }), {
+    txCountList: [],
+    txDateList: [],
+    txVolumeList: [],
+  });
 
   const changeTab = (tab) => {
     setActiveTab(tab.value);
@@ -175,10 +181,7 @@ const Overview = ({ t, txStats }) => {
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Distribution of transaction types')}</h2>
           <div className={`${styles.graph} showOnLargeViewPort`}>
-            <DoughnutChart
-              data={distributionChartData}
-              options={{ legend: { display: true } }}
-            />
+            <DoughnutChart data={distributionChartData} options={{ legend: { display: true } }} />
           </div>
           <div className={`${styles.graph} hideOnLargeViewPort`}>
             <DoughnutChart
@@ -207,16 +210,10 @@ const Overview = ({ t, txStats }) => {
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
           <div className={`${styles.graph} showOnLargeViewPort`}>
-            <DoughnutChart
-              data={amountChartData}
-              options={{ legend: { display: true } }}
-            />
+            <DoughnutChart data={amountChartData} options={{ legend: { display: true } }} />
           </div>
           <div className={`${styles.graph} hideOnLargeViewPort`}>
-            <DoughnutChart
-              data={amountChartData}
-              options={{ legend: { display: false } }}
-            />
+            <DoughnutChart data={amountChartData} options={{ legend: { display: false } }} />
           </div>
           <div className="hideOnLargeViewPort">
             <GuideTooltip>

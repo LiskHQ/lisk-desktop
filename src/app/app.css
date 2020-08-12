@@ -162,7 +162,7 @@ html[data-useragent*='Linux'] {
       padding-left: var(--side-bar-shrunk-size);
     }
   }
-  
+
   html[data-useragent*='Windows'],
   html[data-useragent*='Linux'] {
     & :global(.expanded) {

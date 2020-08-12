@@ -34,7 +34,10 @@ const Overview = ({
   };
 
   const getAmountOfDelegatesLabels = () => {
-    const labels = chartRegisteredDelegates.data.map(date => date.x.slice(0, 2) + date.x.slice(3, date.x.length));
+    const labels = chartRegisteredDelegates.data.map((item) => {
+      const date = item.x;
+      return date.slice(0, 2) + date.slice(3, date.length);
+    });
     labels.push('Now');
     return labels;
   };

@@ -11,7 +11,7 @@ import styles from './overview.css';
 import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
 import { colorPallete } from '../../../../../constants/chartConstants';
 
-const createOthers = (data, t) => {
+const createChartData = (data, t) => {
   const list = {
     labels: [],
     values: [],
@@ -191,8 +191,8 @@ const Overview = ({
   t,
 }) => {
   const { basic, coreVer, height } = networkStatus;
-  const versionsDistribution = coreVer ? createOthers(coreVer, t) : null;
-  const heightDistribution = height ? createOthers(height, t) : null;
+  const versionsDistribution = coreVer ? createChartData(coreVer, t) : null;
+  const heightDistribution = height ? createChartData(height, t) : null;
   const versionChartProps = versionsDistribution ? {
     data: {
       labels: versionsDistribution.labels,

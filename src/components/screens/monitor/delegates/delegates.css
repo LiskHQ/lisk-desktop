@@ -86,7 +86,6 @@
 }
 
 .tableRow {
-
   & > span {
     white-space: nowrap;
     text-overflow: ellipsis;
