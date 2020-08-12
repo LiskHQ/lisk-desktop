@@ -142,16 +142,18 @@ const ForgingDetails = ({
           </div>
         </div>
         <div className={`${styles.column} ${styles.nextForgers}`}>
-          <h2 className={styles.title}>{t('Next forgers')}</h2>
-          <nav className={styles.list}>
-            {
-              awaitingForgers
-                .slice(0, 6)
-                .map(forger => (
-                  <Forger key={forger.address} forger={forger} />
-                ))
-            }
-          </nav>
+          <div className={styles.chartBox}>
+            <h2 className={styles.title}>{t('Next forgers')}</h2>
+            <nav className={styles.list}>
+              {
+                awaitingForgers
+                  .slice(0, 6)
+                  .map(forger => (
+                    <Forger key={forger.address} forger={forger} />
+                  ))
+              }
+            </nav>
+          </div>
         </div>
       </BoxContent>
     </Box>

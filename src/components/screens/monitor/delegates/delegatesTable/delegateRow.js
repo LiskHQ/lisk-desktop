@@ -33,13 +33,13 @@ const DelegateRow = ({
   const formattedForgingTime = getForgingTime(forgingTime);
   return (
     <Link
-      className={`${grid.row} ${className} delegate-row`}
+      className={`${grid.row} ${className} delegate-row ${styles.tableRow}`}
       to={`${routes.accounts.path}/${data.address}`}
     >
       <span className={`${grid['col-xs-1']} ${grid['col-md-1']}`}>
         {`#${data.rank}`}
       </span>
-      <span className={`${grid['col-xs-1']} ${grid['col-md-2']}`}>
+      <span className={`${grid['col-xs-2']} ${grid['col-md-2']}`}>
         {data.username}
       </span>
       <span className={data.rank > 101 ? `${grid['col-xs-6']} ${grid['col-md-6']}` : `${grid['col-xs-3']} ${grid['col-md-3']}`}>
@@ -81,7 +81,7 @@ const DelegateRow = ({
       <span className={`${grid['col-xs-2']} ${grid['col-md-2']} ${grid['col-lg-2']}`}>
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>
-      <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
+      <span className={`${grid['col-xs-1']} ${grid['col-md-1']}`}>
         {`${data.approval} %`}
       </span>
     </Link>

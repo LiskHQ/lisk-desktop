@@ -12,7 +12,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Name'),
-    classList: `${grid['col-xs-1']} ${grid['col-md-2']}`,
+    classList: `${grid['col-xs-2']} ${grid['col-md-2']}`,
   },
   {
     title: t('Address'),
@@ -50,7 +50,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Approval'),
-    classList: `${grid['col-xs-2']} ${grid['col-md-1']} ${styles.approvalTitle}`,
+    classList: `${grid['col-xs-1']} ${grid['col-md-1']} ${styles.approvalTitle}`,
     tooltip: {
       title: t('Approval'),
       message: t('Percentage of total supply voting for a delegate.'),

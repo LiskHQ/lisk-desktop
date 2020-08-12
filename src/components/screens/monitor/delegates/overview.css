@@ -11,6 +11,14 @@
     padding: 0;
     padding-right: 10px;
 
+    & > .column {
+      width: 30%;
+    }
+
+    & > .column:nth-child(3) {
+      width: 40%;
+    }
+
     &.overview {
       height: 293px;
     }
@@ -22,7 +30,6 @@
 }
 
 .column {
-  width: 33.33%;
   height: 270px;
   box-sizing: border-box;
 
