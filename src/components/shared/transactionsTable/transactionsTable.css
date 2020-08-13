@@ -47,3 +47,11 @@
     color: var(--color-blue-gray);
   }
 }
+
+.transactionFeeCell {
+  display: inherit;
+
+  @media (--medium-viewport) {
+    display: none;
+  }
+}

@@ -1,4 +1,5 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import styles from './transactionsTable.css';
 
 export default (changeSort, t) => ([
   {
@@ -19,11 +20,15 @@ export default (changeSort, t) => ([
   },
   {
     title: t('Amount'),
-    classList: grid['col-xs-3'],
+    classList: `${grid['col-xs-3']} ${grid['col-md-2']}`,
     sort: {
       fn: changeSort,
       key: 'amount',
     },
+  },
+  {
+    title: t('Fee'),
+    classList: `${grid['col-md-1']} ${styles.transactionFeeCell}`,
   },
   {
     title: t('Status'),
