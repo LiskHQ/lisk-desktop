@@ -43,7 +43,7 @@ const Wallet = ({
   useEffect(() => {
     account.loadData();
     transactions.loadData();
-  }, [match.url]);
+  }, [history.location.search]);
 
   return (
     <section>

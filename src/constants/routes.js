@@ -91,7 +91,6 @@ export default {
   blocks: {
     path: '/blocks',
     component: Blocks,
-    searchParam: 'id',
     isPrivate: false,
     exact: true,
     forbiddenTokens: [tokenMap.BTC.key],
@@ -99,6 +98,7 @@ export default {
   block: {
     path: '/block',
     component: BlockDetails,
+    searchParam: 'id',
     isPrivate: false,
     exact: true,
     forbiddenTokens: [tokenMap.BTC.key],
