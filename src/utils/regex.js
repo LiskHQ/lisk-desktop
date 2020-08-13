@@ -8,6 +8,7 @@ export default {
   delegateSpecialChars: /[a-z0-9!@$&_.]+/g,
   htmlElements: /<(\w+).*?>([\s\S]*?)<\/\1>(.*)/,
   releaseSummary: /<h4>([\s\S]*?)<\/h4>/i,
+  searchbar: /^(.{9})(.+)$/,
   amount: {
     en: {
       format: /[^\d.]|(.*?\.){2}|\.$/,
