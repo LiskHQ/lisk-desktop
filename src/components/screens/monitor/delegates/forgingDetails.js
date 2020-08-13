@@ -12,8 +12,9 @@ import styles from './overview.css';
 import NumericInfo from './numericInfo';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import voting from '../../../../constants/voting';
+import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
+import { colorPallete } from '../../../../constants/chartConstants';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
-
 
 const getForgingStats = (data) => {
   const statuses = {
@@ -61,6 +62,27 @@ const ForgingDetails = ({
   const forgedInRound = latestBlocks.length
     ? latestBlocks[0].height % voting.numberOfActiveDelegates : 0;
 
+  const doughnutChartData = {
+    labels: delegatesForgedLabels,
+    datasets: [
+      {
+        label: 'status',
+        data: getForgingStats(chartDelegatesForging),
+      },
+    ],
+  };
+
+  const doughnutChartOptions = {
+    tooltips: {
+      callbacks: {
+        title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+        label(tooltipItem, data) {
+          return data.datasets[0].data[tooltipItem.index];
+        },
+      },
+    },
+  };
+
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
@@ -73,28 +95,30 @@ const ForgingDetails = ({
               ? (
                 <div className={styles.chartBox}>
                   <h2 className={styles.title}>{t('Delegates Forging Status')}</h2>
-                  <div className={styles.chart}>
+                  <div className={`${styles.chart} showOnLargeViewPort`}>
                     <DoughnutChart
-                      data={{
-                        labels: delegatesForgedLabels,
-                        datasets: [
-                          {
-                            label: 'status',
-                            data: getForgingStats(chartDelegatesForging),
-                          },
-                        ],
-                      }}
+                      data={doughnutChartData}
                       options={{
-                        tooltips: {
-                          callbacks: {
-                            title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
-                            label(tooltipItem, data) {
-                              return data.datasets[0].data[tooltipItem.index];
-                            },
-                          },
-                        },
+                        ...doughnutChartOptions,
+                        legend: { display: true },
                       }}
                     />
+                  </div>
+                  <div className={`${styles.chart} hideOnLargeViewPort`}>
+                    <DoughnutChart
+                      data={doughnutChartData}
+                      options={{
+                        ...doughnutChartOptions,
+                        legend: { display: false },
+                      }}
+                    />
+                  </div>
+                  <div className="hideOnLargeViewPort">
+                    <GuideTooltip>
+                      {delegatesForgedLabels.map((label, i) => (
+                        <GuideTooltipItem key={label} color={colorPallete[i]} label={label} />
+                      ))}
+                    </GuideTooltip>
                   </div>
                 </div>
               )
@@ -121,16 +145,18 @@ const ForgingDetails = ({
           </div>
         </div>
         <div className={`${styles.column} ${styles.nextForgers}`}>
-          <h2 className={styles.title}>{t('Next forgers')}</h2>
-          <nav className={styles.list}>
-            {
-              awaitingForgers
-                .slice(0, 6)
-                .map(forger => (
-                  <Forger key={forger.address} forger={forger} />
-                ))
-            }
-          </nav>
+          <div className={styles.chartBox}>
+            <h2 className={styles.title}>{t('Next forgers')}</h2>
+            <nav className={styles.list}>
+              {
+                awaitingForgers
+                  .slice(0, 6)
+                  .map(forger => (
+                    <Forger key={forger.address} forger={forger} />
+                  ))
+              }
+            </nav>
+          </div>
         </div>
       </BoxContent>
     </Box>

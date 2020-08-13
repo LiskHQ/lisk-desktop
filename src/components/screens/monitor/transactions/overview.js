@@ -12,10 +12,11 @@ import BoxContent from '../../../toolbox/box/content';
 import transactionTypes from '../../../../constants/transactionTypes';
 import { DoughnutChart, BarChart } from '../../../toolbox/charts';
 import { fromRawLsk } from '../../../../utils/lsk';
-import { chartStyles } from '../../../../constants/chartConstants';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
 import { kFormatter } from '../../../../utils/helpers';
+import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
+import { colorPallete, chartStyles } from '../../../../constants/chartConstants';
 
 const options = {
   responsive: true,
@@ -128,13 +129,41 @@ const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
   const distributionByType = formatDistributionByValues(txStats.data.distributionByType);
   const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
-  const txCountList = txStats.data.timeline.map(item => item.transactionCount);
-  const txVolumeList = txStats.data.timeline.map(item => fromRawLsk(item.volume));
-  const txDateList = txStats.data.timeline.map(item => formatDates(item.date, activeTab));
+  const { txCountList, txVolumeList, txDateList } = txStats.data.timeline.reduce((acc, item) => ({
+    txCountList: [...acc.txCountList, item.transactionCount],
+    txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
+    txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
+  }), {
+    txCountList: [],
+    txDateList: [],
+    txVolumeList: [],
+  });
 
   const changeTab = (tab) => {
     setActiveTab(tab.value);
     txStats.loadData({ period: tab.value });
+  };
+
+  const distributionChartData = {
+    labels: transactionTypes
+      .getListOf('title')
+      .map(item => item
+        .replace('Second passphrase registration', '2nd passphrase reg.')
+        .replace('Multisignature creation', 'Multisig. creation')),
+    datasets: [
+      {
+        data: distributionByType,
+      },
+    ],
+  };
+
+  const amountChartData = {
+    labels: Object.keys(distributionByAmount),
+    datasets: [
+      {
+        data: Object.values(distributionByAmount),
+      },
+    ],
   };
 
   return (
@@ -151,40 +180,69 @@ const Overview = ({ t, txStats }) => {
       <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Distribution of transaction types')}</h2>
-          <div className={styles.graph}>
+          <div className={`${styles.graph} showOnLargeViewPort`}>
+            <DoughnutChart data={distributionChartData} options={{ legend: { display: true } }} />
+          </div>
+          <div className={`${styles.graph} hideOnLargeViewPort`}>
             <DoughnutChart
-              data={{
-                labels: transactionTypes
-                  .getListOf('title')
-                  .map(item => item
-                    .replace('Second passphrase registration', '2nd passphrase reg.')
-                    .replace('Multisignature creation', 'Multisig. creation')),
-                datasets: [
-                  {
-                    data: distributionByType,
-                  },
-                ],
-              }}
+              data={distributionChartData}
+              options={{ legend: { display: false } }}
             />
+          </div>
+          <div className="hideOnLargeViewPort">
+            <GuideTooltip>
+              {transactionTypes
+                .getListOf('title')
+                .map((label, i) => (
+                  <GuideTooltipItem
+                    key={`transaction-GuideTooltip${i}`}
+                    color={colorPallete[i]}
+                    label={label
+                      .replace('Second passphrase registration', '2nd passphrase reg.')
+                      .replace('Multisignature creation', 'Multisig. creation')
+                    }
+                  />
+                ))
+                  }
+            </GuideTooltip>
           </div>
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
-          <div className={styles.graph}>
-            <DoughnutChart
-              data={{
-                labels: Object.keys(distributionByAmount),
-                datasets: [
-                  {
-                    data: Object.values(distributionByAmount),
-                  },
-                ],
-              }}
-            />
+          <div className={`${styles.graph} showOnLargeViewPort`}>
+            <DoughnutChart data={amountChartData} options={{ legend: { display: true } }} />
+          </div>
+          <div className={`${styles.graph} hideOnLargeViewPort`}>
+            <DoughnutChart data={amountChartData} options={{ legend: { display: false } }} />
+          </div>
+          <div className="hideOnLargeViewPort">
+            <GuideTooltip>
+              {Object.keys(distributionByAmount)
+                .map((label, i) => (
+                  <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPallete[i]} label={label} />
+                ))
+              }
+            </GuideTooltip>
           </div>
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
-          <h2 className={styles.title}>{t('Transactions number / volume (LSK)')}</h2>
+          <div className={styles.top}>
+            <h2 className={styles.title}>{t('Transactions number / volume (LSK)')}</h2>
+            <aside className={styles.legends}>
+              <h5 className={`${styles.legend} ${styles.volume}`}>
+                <span>{t('Volume')}</span>
+                <Tooltip className={styles.tooltip} position="left">
+                  <p>{t('The aggregated LSK volume transferred on the given time period.')}</p>
+                </Tooltip>
+              </h5>
+              <h5 className={`${styles.legend} ${styles.number}`}>
+                <span>{t('Number')}</span>
+                <Tooltip className={styles.tooltip} position="left">
+                  <p>{t('The number of transactions submitted on the given time period.')}</p>
+                </Tooltip>
+              </h5>
+            </aside>
+          </div>
           <div className={styles.graph}>
             <BarChart
               data={{
@@ -210,20 +268,6 @@ const Overview = ({ t, txStats }) => {
               }}
               options={options}
             />
-            <aside className={styles.legends}>
-              <h5 className={`${styles.legend} ${styles.volume}`}>
-                <span>{t('Volume')}</span>
-                <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The aggregated LSK volume transferred on the given time period.')}</p>
-                </Tooltip>
-              </h5>
-              <h5 className={`${styles.legend} ${styles.number}`}>
-                <span>{t('Number')}</span>
-                <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The number of transactions submitted on the given time period.')}</p>
-                </Tooltip>
-              </h5>
-            </aside>
           </div>
         </div>
       </BoxContent>

@@ -26,10 +26,9 @@
 
 .approvalTitle {
   padding-left: 0;
+  padding-right: 0;
 
   & > span {
-    margin-left: -27%;
-    width: 127%;
     display: inline-block;
   }
 }
@@ -84,6 +83,24 @@
         padding: 0 5px;
       }
     }
+  }
+}
+
+.tableRow {
+  & > span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+  }
+
+  & > span:last-child {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  & > .noEllipsis {
+    text-overflow: initial;
   }
 }
 

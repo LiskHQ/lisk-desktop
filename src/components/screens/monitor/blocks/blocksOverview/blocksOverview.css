@@ -28,6 +28,14 @@
 
   & > .chart {
     position: relative;
-    height: calc(100% - 23px);
+    height: 240px;
   }
+}
+
+.barChartContainer {
+  padding-right: 10px;
+}
+
+.doughnutChartContainer {
+  padding-left: 10px;
 }

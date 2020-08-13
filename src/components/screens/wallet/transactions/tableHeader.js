@@ -18,7 +18,7 @@ export default (t, activeToken) => {
     },
     {
       title: t('Details'),
-      classList: isLSK ? `${grid['col-xs-3']} ${grid['col-md-2']}` : 'hidden',
+      classList: isLSK ? `${grid['col-xs-2']} ${grid['col-md-2']}` : 'hidden',
     },
     {
       title: t('Amount'),
