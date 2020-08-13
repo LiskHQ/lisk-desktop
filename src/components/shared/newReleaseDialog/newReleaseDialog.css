@@ -3,13 +3,13 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  padding: var(--horizontal-padding-l);
+  padding: var(--horizontal-padding-s) var(--horizontal-padding-xl) 0 var(--horizontal-padding-xl);
 
   & > h3 {
     @mixin headingNormal;
 
     color: var(--color-maastricht-blue);
-    margin: 0 0 16px;
+    margin: 10px 0 16px;
   }
 }
 
@@ -18,11 +18,11 @@
   @mixin contentNormal;
 
   color: var(--color-slate-gray);
-  border: 1px solid var(--color-platinum);
-  border-radius: var(--border-radius-standard);
   flex-shrink: 1;
   max-height: 475px;
-  padding: 20px 24px;
+  height: 40vh; /* stylelint-disable-line unit-whitelist */
+  margin-bottom: var(--horizontal-padding-xl);
+  padding-right: var(--horizontal-padding-xl);
 
   & h3,
   & strong {
