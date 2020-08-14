@@ -125,6 +125,10 @@ const menu = {
             click: menu.onClickLink.bind(null, electron, 'https://discord.gg/CngsY6D'),
           },
           {
+            label: i18n.t('Provide Feedback'),
+            click: menu.onClickLink.bind(null, electron, 'https://lisk.io/contact/i-want-provide-feedback-about-lisk-product/form'),
+          },
+          {
             label: i18n.t('Lisk Explorer'),
             click: menu.onClickLink.bind(null, electron, 'https://explorer.lisk.io'),
           },
