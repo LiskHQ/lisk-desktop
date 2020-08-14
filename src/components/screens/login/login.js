@@ -67,7 +67,7 @@ class Login extends React.Component {
 
   getReferrerRoute() {
     const { referrer, ...restParams } = parseSearchParams(this.props.history.location.search);
-    const route = referrer ? `${referrer}?${strigifySearchParams(restParams)}` : routes.dashboard.path;
+    const route = referrer ? `${referrer}${strigifySearchParams(restParams)}` : routes.dashboard.path;
     return route;
   }
 
