@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux';
-import { mount } from 'enzyme';
 import SideBar from './index';
 import routes from '../../../../constants/routes';
-import { mountWithRouter, mountWithRouterAndStore } from '../../../../utils/testHelpers';
+import { mountWithRouter } from '../../../../utils/testHelpers';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
