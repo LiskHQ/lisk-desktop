@@ -62,7 +62,7 @@ const App = ({ history }) => {
           <section className="scrollContainer">
             <FlashMessageHolder />
             <InitializationMessage history={history} />
-            <div className={`${styles.mainContent} ${!routeObj.isSigninFlow ? styles.mainBox : ''}`}>
+            <div className={`${styles.mainContent} ${styles.mainBox}`}>
               <Switch>
                 {
                   routesList.map(route => (
