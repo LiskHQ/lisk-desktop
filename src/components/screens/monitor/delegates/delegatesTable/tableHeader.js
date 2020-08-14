@@ -4,7 +4,7 @@ import styles from '../delegates.css';
 export default (activeTab, changeSort, t) => ([
   {
     title: t('Rank'),
-    classList: grid['col-md-1'],
+    classList: `${grid['col-xs-1']} ${grid['col-md-1']}`,
     sort: {
       fn: changeSort,
       key: 'rank',
@@ -12,17 +12,17 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Name'),
-    classList: grid['col-md-2'],
+    classList: `${grid['col-xs-2']} ${grid['col-md-2']}`,
   },
   {
     title: t('Address'),
     classList: activeTab === 'active'
-      ? grid['col-md-3']
-      : `${grid['col-xs-5']} ${grid['col-md-6']}`,
+      ? `${grid['col-xs-3']} ${grid['col-md-3']}`
+      : `${grid['col-xs-6']} ${grid['col-md-6']}`,
   },
   {
     title: t('Forging time'),
-    classList: activeTab === 'active' ? grid['col-md-2'] : 'hidden',
+    classList: activeTab === 'active' ? `${grid['col-xs-2']} ${grid['col-md-2']}` : 'hidden',
     tooltip: {
       title: t('Forging time'),
       message: t('Time until next forging slot of a delegate.'),
@@ -31,7 +31,7 @@ export default (activeTab, changeSort, t) => ([
   {
     title: t('Status'),
     classList: activeTab === 'active'
-      ? `${grid['col-xs-2']} ${grid['col-md-1']} ${styles.statusTitle}`
+      ? `${grid['col-xs-1']} ${grid['col-md-1']} ${styles.statusTitle}`
       : 'hidden',
     tooltip: {
       title: t('Status'),
@@ -50,7 +50,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Approval'),
-    classList: `${grid['col-xs-2']} ${grid['col-md-1']} ${styles.approvalTitle}`,
+    classList: `${grid['col-xs-1']} ${grid['col-md-1']} ${styles.approvalTitle}`,
     tooltip: {
       title: t('Approval'),
       message: t('Percentage of total supply voting for a delegate.'),

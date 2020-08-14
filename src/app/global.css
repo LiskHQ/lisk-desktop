@@ -72,3 +72,19 @@ html[data-useragent*='Linux'] {
     padding: 0px 20px;
   }
 }
+
+:global .hideOnLargeViewPort {
+  display: none;
+
+  @media (--medium-viewport) {
+    display: inherit;
+  }
+}
+
+:global .showOnLargeViewPort {
+  display: inherit;
+
+  @media (--medium-viewport) {
+    display: none;
+  }
+}

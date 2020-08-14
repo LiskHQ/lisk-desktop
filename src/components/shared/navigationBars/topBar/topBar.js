@@ -13,6 +13,7 @@ import { PrimaryButton } from '../../../toolbox/buttons';
 import { isEmpty } from '../../../../utils/helpers';
 import { selectSearchParamValue } from '../../../../utils/searchParams';
 import AccountVisual from '../../../toolbox/accountVisual';
+import regex from '../../../../utils/regex';
 
 /**
  * Extracts only one search param out of the url that is relevant
@@ -155,9 +156,18 @@ class TopBar extends React.Component {
               }
               {relevantSearchParamValue
                 && (
-                <span className={styles.searchedValue}>
-                  {relevantSearchParamValue}
-                </span>
+                  <>
+                    <div className="hideOnLargeViewPort">
+                      <span className={styles.searchedValue}>
+                        {relevantSearchParamValue.replace(regex.searchbar, '$1...')}
+                      </span>
+                    </div>
+                    <div className="showOnLargeViewPort">
+                      <span className={styles.searchedValue}>
+                        {relevantSearchParamValue}
+                      </span>
+                    </div>
+                  </>
                 )}
             </span>
           </DialogLink>

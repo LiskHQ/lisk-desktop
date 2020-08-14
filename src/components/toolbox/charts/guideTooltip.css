@@ -1,0 +1,72 @@
+@value diameter: 11px;
+@value radius: calc(diameter / 2);
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.quarterTile {
+  position: relative;
+  width: diameter;
+  height: diameter;
+}
+
+.tile {
+  position: absolute;
+  border-radius: 50%;
+  width: diameter;
+  height: diameter;
+
+  &.green {
+    background: var(--color-ink-blue);
+    clip: rect(0px, diameter, radius, radius);
+    width: diameter;
+  }
+
+  &.blue {
+    background: var(--color-pale-pink);
+    clip: rect(0px, radius, radius, 0px);
+    width: diameter;
+  }
+
+  &.orange {
+    background: var(--color-ultramarine-blue);
+    clip: rect(radius, radius, diameter, 0px);
+    width: diameter;
+  }
+
+  &.yellow {
+    background: var(--color-jade-green);
+    clip: rect(radius, diameter, diameter, radius);
+    width: diameter;
+  }
+}
+
+.label {
+  margin-left: 7px;
+  font-family: var(--content-font);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 100%;
+  color: var(--color-blue-gray);
+}
+
+.guideTooltipContentList {
+  list-style: none;
+  padding: 0;
+
+  & > .guideTooltipContentListItem {
+    display: flex;
+    align-items: center;
+
+    & > .circle {
+      margin-right: 7px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+  }
+}

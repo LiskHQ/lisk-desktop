@@ -24,10 +24,6 @@
       display: inline-block;
     }
   }
-
-  &:last-child {
-    margin-right: 16px;
-  }
 }
 
 .status {

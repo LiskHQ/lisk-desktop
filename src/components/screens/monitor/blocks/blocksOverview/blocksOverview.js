@@ -7,6 +7,7 @@ import BoxTabs from '../../../../toolbox/tabs';
 import { DoughnutChart, BarChart } from '../../../../toolbox/charts';
 import styles from './blocksOverview.css';
 import { chartStyles } from '../../../../../constants/chartConstants';
+import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
 
 class BlocksOverview extends React.Component {
   constructor(props) {
@@ -40,6 +41,32 @@ class BlocksOverview extends React.Component {
       },
     ];
 
+    const doughnutChartData = {
+      labels: [t('Empty'), t('Not Empty')],
+      datasets: [{
+        backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
+        data: blocks.data.reduce((acc, block) => {
+          if (block.numberOfTransactions) acc[1]++;
+          else acc[0]++;
+          return acc;
+        }, [0, 0]),
+      }],
+    };
+
+    const doughnutChartOptions = {
+      cutoutPercentage: 65,
+      tooltips: {
+        callbacks: {
+          // istanbul ignore next
+          title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+          // istanbul ignore next
+          label(tooltipItem, data) {
+            return t('{{ blocks }} Blocks', { blocks: data.datasets[0].data[tooltipItem.index] });
+          },
+        },
+      },
+    };
+
 
     return (
       <Box className={styles.wrapper}>
@@ -55,7 +82,7 @@ class BlocksOverview extends React.Component {
         <BoxContent>
           <div className={`${grid.row} ${styles.row}`}>
 
-            <div className={`${grid['col-sm-8']} ${grid['col-xs-7']} ${styles.chartBox}`}>
+            <div className={`${grid['col-sm-8']} ${grid['col-xs-7']} ${styles.chartBox} ${styles.barChartContainer}`}>
               <h2 className={styles.chartTitle}>{t('Transactions per block')}</h2>
               <div className={styles.chart}>
                 <BarChart
@@ -127,38 +154,39 @@ class BlocksOverview extends React.Component {
               </div>
             </div>
 
-            <div className={`${grid['col-sm-4']} ${grid['col-xs-5']} ${styles.chartBox}`}>
+            <div className={`${grid['col-sm-4']} ${grid['col-xs-5']} ${styles.chartBox} ${styles.doughnutChartContainer}`}>
               <h2 className={styles.chartTitle}>{t('Empty/Not empty')}</h2>
-              <div className={styles.chart}>
+              <div className={`${styles.chart} showOnLargeViewPort`}>
                 <DoughnutChart
-                  data={{
-                    labels: [t('Empty'), t('Not Empty')],
-                    datasets: [{
-                      backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
-                      data: blocks.data.reduce((acc, block) => {
-                        if (block.numberOfTransactions) acc[1]++;
-                        else acc[0]++;
-                        return acc;
-                      }, [0, 0]),
-                    }],
-                  }}
+                  data={doughnutChartData}
                   options={{
-                    cutoutPercentage: 65,
-                    tooltips: {
-                      callbacks: {
-                        // istanbul ignore next
-                        title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
-                        // istanbul ignore next
-                        label(tooltipItem, data) {
-                          return t('{{ blocks }} Blocks', { blocks: data.datasets[0].data[tooltipItem.index] });
-                        },
-                      },
-                    },
+                    ...doughnutChartOptions,
+                    legend: { display: true },
                   }}
                 />
               </div>
+              <div className={`${styles.chart} hideOnLargeViewPort`}>
+                <DoughnutChart
+                  data={doughnutChartData}
+                  options={{
+                    ...doughnutChartOptions,
+                    legend: { display: false },
+                  }}
+                />
+              </div>
+              <div className="hideOnLargeViewPort">
+                <GuideTooltip>
+                  <GuideTooltipItem
+                    color={chartStyles.mystic}
+                    label={t('Empty')}
+                  />
+                  <GuideTooltipItem
+                    color={chartStyles.ultramarineBlue}
+                    label={t('Not Empty')}
+                  />
+                </GuideTooltip>
+              </div>
             </div>
-
           </div>
         </BoxContent>
       </Box>

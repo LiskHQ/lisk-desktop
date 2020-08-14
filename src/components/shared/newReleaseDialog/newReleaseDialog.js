@@ -27,14 +27,14 @@ class NewReleaseDialog extends React.Component {
     } = this.props;
     return !!ipc && (
       <Dialog hasClose>
-        <Dialog.Title>
-          {t('Lisk {{version}} is here!', { version })}
-        </Dialog.Title>
-        <Dialog.Description>
-          <p>{t('Would you like to download it now?')}</p>
-        </Dialog.Description>
-
         <div className={styles.wrapper}>
+          <Dialog.Title>
+            {t('Lisk {{version}} is here!', { version })}
+          </Dialog.Title>
+          <Dialog.Description>
+            <p>{t('Would you like to download it now?')}</p>
+          </Dialog.Description>
+
           <h3>{t('Release Notes')}</h3>
           <div className={styles.releaseNotes}>
             {releaseNotes}

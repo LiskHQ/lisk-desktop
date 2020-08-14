@@ -84,6 +84,7 @@ or "warn/action" ineastd of "red/green"
   --header-padding: 0 32px;
   --vertical-padding-l: 15px;
   --horizontal-padding-l: 20px;
+  --horizontal-padding-xl: 30px;
   --vertical-padding-m: 11px;
   --horizontal-padding-m: 16px;
   --vertical-padding-s: 8px;
@@ -107,6 +108,8 @@ or "warn/action" ineastd of "red/green"
   --color-burnt-sienna: #ec6868;
   --color-ufo-green: #00a04b;
   --color-deep-green: #00d563;
+  --color-jade-green: #2bd67b;
+  --color-pale-pink: #ffd0d1;
 
   /*************************
       Other Colors

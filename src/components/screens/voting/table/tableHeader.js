@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 export default (shouldShowVoteColumn, t, apiVersion, firstTimeVotingActive) => ([
   {
     title: t('Vote'),
-    classList: `${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'}`,
+    classList: `${shouldShowVoteColumn ? grid['col-xs-1'] : 'hidden'}`,
     tooltip: firstTimeVotingActive ? {
       title: t('Selecting Delegates'),
       message: t('Start by Selecting the delegates you’d like to vote for.'),
@@ -14,7 +14,7 @@ export default (shouldShowVoteColumn, t, apiVersion, firstTimeVotingActive) => (
   },
   {
     title: t('Rank'),
-    classList: apiVersion === '3' ? 'hidden' : grid['col-md-1'],
+    classList: apiVersion === '3' ? 'hidden' : grid['col-xs-1'],
   },
   {
     title: t('Delegate'),
@@ -22,7 +22,7 @@ export default (shouldShowVoteColumn, t, apiVersion, firstTimeVotingActive) => (
   },
   {
     title: t('Forged'),
-    classList: apiVersion === '3' ? grid['col-md-3'] : grid['col-md-2'],
+    classList: apiVersion === '3' ? grid['col-xs-3'] : grid['col-xs-2'],
     tooltip: {
       title: t('forged'),
       message: t('Total amount of LSK forged by a delegate.'),
@@ -38,7 +38,7 @@ export default (shouldShowVoteColumn, t, apiVersion, firstTimeVotingActive) => (
   },
   {
     title: t('Vote weight'),
-    classList: grid['col-md-2'],
+    classList: grid['col-xs-2'],
     tooltip: {
       title: t('Vote Weight'),
       message: t('Sum of LSK in all accounts who have voted for this delegate.'),

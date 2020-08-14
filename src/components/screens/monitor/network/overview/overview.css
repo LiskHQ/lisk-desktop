@@ -3,7 +3,6 @@
 .wrapper {
   & .content {
     width: 100%;
-    height: 263px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -24,8 +23,9 @@
 
 .column {
   flex-grow: 1;
-  height: 100%;
+  height: 240px;
   box-sizing: border-box;
+  padding: 0 20px;
 
   &.nextForgers {
     width: 50%;
@@ -60,13 +60,13 @@
   @mixin contentLargest semi-bold;
 
   width: 100%;
-  padding: 0 20px;
   margin: 0;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   color: var(--color-maastricht-blue);
   box-sizing: border-box;
+  max-height: 21px;
 }
 
 .list {
@@ -107,12 +107,14 @@
   width: 100%;
   height: 100%;
   margin: 0;
-  padding-bottom: 10px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   & > .chart {
     position: relative;
     width: 100%;
-    height: calc(100% - 21px);
+    height: 180px;
   }
 }
