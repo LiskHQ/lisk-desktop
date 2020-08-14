@@ -11,26 +11,31 @@ import { accountLoggedOut } from '../../../../actions/account';
 import DialogLink from '../../../toolbox/dialog/link';
 import AutoSignOut from './autoSignOut';
 
-const Inner = ({ data, pathname, modal }) => {
+const Inner = ({
+  data, pathname, sideBarExpanded,
+}) => {
   let status = '';
-  if (pathname && pathname === data.path) status = 'Active';
-  else if (modal && modal === '') status = 'Active';
+  if (pathname && pathname === data.path) {
+    status = 'Active';
+  }
   return (
     <span className={styles.holder}>
       <span className={styles.iconWrapper}>
         <Icon name={`${data.icon}${status}`} className={styles.icon} />
       </span>
-      <span className={styles.label}>{data.label}</span>
+      {sideBarExpanded && <span className={styles.label}>{data.label}</span>}
     </span>
   );
 };
 
-const MenuLink = ({ data, isUserLogout, pathname }) => {
+const MenuLink = ({
+  data, isUserLogout, pathname, sideBarExpanded,
+}) => {
   if (data.modal) {
     const className = `${styles.item} ${isUserLogout && modals[data.id].isPrivate ? `${styles.disabled} disabled` : ''}`;
     return (
       <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${className}`}>
-        <Inner data={data} modal={data.id} />
+        <Inner data={data} modal={data.id} sideBarExpanded={sideBarExpanded} />
       </DialogLink>
     );
   }
@@ -44,7 +49,7 @@ const MenuLink = ({ data, isUserLogout, pathname }) => {
       activeClassName={styles.selected}
       exact={routes[data.id].exact}
     >
-      <Inner data={data} pathname={pathname} />
+      <Inner data={data} pathname={pathname} sideBarExpanded={sideBarExpanded} />
     </NavLink>
   );
 };
@@ -101,6 +106,7 @@ const SideBar = ({
                     isUserLogout={isLoggedOut}
                     pathname={location.pathname}
                     data={item}
+                    sideBarExpanded={sideBarExpanded}
                   />
                 ))
               }
