@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import { validateAddress } from '../../../../utils/validators';
 import networks from '../../../../constants/networks';
 import Box from '../../../toolbox/box';
@@ -13,6 +14,7 @@ import { getIndexOfBookmark } from '../../../../utils/bookmarks';
 import { tokenMap } from '../../../../constants/tokens';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Icon from '../../../toolbox/icon';
+import { parseSearchParams } from '../../../../utils/searchParams';
 
 class AddBookmark extends React.Component {
   constructor(props) {
@@ -41,15 +43,27 @@ class AddBookmark extends React.Component {
   }
 
   setupFields() {
-    return this.fields.reduce((acc, field) => ({
-      ...acc,
-      [field.name]: {
-        value: '',
-        error: false,
-        feedback: field.feedback || '',
-        readonly: false,
-      },
-    }), {});
+    const { newBookmarkAddress, label } = parseSearchParams(this.props.history.location.search);
+    return this.fields.reduce((acc, field) => {
+      let value = '';
+      let readonly = false;
+
+      if (field.name === 'address' && newBookmarkAddress) value = newBookmarkAddress;
+      if (field.name === 'label' && label) {
+        value = label;
+        readonly = true;
+      }
+
+      return {
+        ...acc,
+        [field.name]: {
+          value,
+          error: false,
+          feedback: field.feedback || '',
+          readonly,
+        },
+      };
+    }, {});
   }
 
 
@@ -260,6 +274,7 @@ AddBookmark.propTypes = {
   network: PropTypes.shape({
     name: PropTypes.string.isRequired,
   }).isRequired,
+  history: PropTypes.object.isRequired,
 };
 
-export default AddBookmark;
+export default withRouter(AddBookmark);

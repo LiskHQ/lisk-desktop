@@ -1,5 +1,5 @@
 import { tokenMap } from './tokens';
-import AddBookmark from '../components/screens/bookmarks/addBookmark';
+import AddBookmark from '../components/screens/bookmarks/modalAddBookmark';
 import BlockDetails from '../components/screens/monitor/blockDetails';
 import Blocks from '../components/screens/monitor/blocks';
 import Bookmarks from '../components/screens/bookmarks';
