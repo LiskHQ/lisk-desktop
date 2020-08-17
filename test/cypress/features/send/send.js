@@ -13,11 +13,7 @@ const errorMessage = 'Test error';
 
 
 Then(/^I follow the launch protokol link$/, function () {
-  cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
-});
-
-Then(/^I follow the launch protokol link$/, function () {
-  cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
+  cy.visit(`${urls.send}&recipient=4995063339468361088L&amount=5&reference=test`);
 });
 
 Then(/^Send form fields are prefilled$/, function () {

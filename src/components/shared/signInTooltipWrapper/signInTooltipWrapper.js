@@ -5,7 +5,7 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './signInTooltipWrapper.css';
 
 const SignInTooltipWrapper = ({
-  children, account, t, history,
+  children, account, t, history, position = 'bottom left',
 }) => {
   const { pathname, search } = history.location;
   return account && account.info
@@ -13,7 +13,7 @@ const SignInTooltipWrapper = ({
     : (
       <Tooltip
         className={styles.wrapper}
-        position="bottom left"
+        position={position}
         content={React.cloneElement(children, { className: `${children.props.className} ${styles.child} disabled` })}
         title={t('Please sign in')}
         footer={(
