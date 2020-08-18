@@ -36,28 +36,29 @@ order to be available application wide
   padding: 0px 30px;
 }
 
-html[data-useragent*='Windows'],
-html[data-useragent*='Linux'] {
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
+:global ::-webkit-scrollbar {
+  width: 8px;
+}
 
-  &::-webkit-scrollbar-track {
-    width: 5px;
-    background-color: transparent;
-  }
+:global ::-webkit-scrollbar-track {
+  width: 8px;
+  background: transparent;
+}
 
-  &::-webkit-scrollbar-thumb {
-    width: 5px;
-    background-color: rgba(200, 200, 200, 0.4);
-    cursor: pointer;
-    border-radius: 2px;
-  }
+:global ::-webkit-scrollbar-thumb {
+  width: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: rgba(128, 128, 128, 0.7);
+}
 
-  &::-webkit-scrollbar-thumb:hover {
-    width: 12px;
-    background-color: rgba(200, 200, 200, 1);
-  }
+:global ::-webkit-scrollbar-thumb:hover {
+  width: 10px;
+  background-color: rgba(128, 128, 128, 1);
+}
+
+:global ::-webkit-scrollbar-button {
+  display: none;
 }
 
 @media (--medium-viewport) {

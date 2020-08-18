@@ -1,5 +1,3 @@
-@import '../../../../app/mixins.css';
-
 :root {
   --vertical-spaces: calc(var(--header-height) + var(--horizontal-padding-l) + 75px);
 }
@@ -20,8 +18,6 @@
 }
 
 .container {
-  @mixin customScrollBar;
-
   min-height: calc(100vh - var(--vertical-spaces)); /* stylelint-disable-line unit-whitelist */
 
   & > div {

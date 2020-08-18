@@ -9,20 +9,7 @@ jest.mock('react-redux', () => ({
 }));
 
 describe('SideBar', () => {
-  const mockAppState = {
-    settings: {
-      token: {
-        active: 'LSK',
-      },
-    },
-    account: {
-      info: {},
-    },
-    network: {
-      name: 'testnet',
-      serviceUrl: 'someUrl',
-    },
-  };
+  let mockAppState;
 
   beforeEach(() => {
     useSelector.mockImplementation(callback => callback(mockAppState));
@@ -42,27 +29,53 @@ describe('SideBar', () => {
   };
 
   beforeEach(() => {
+    mockAppState = {
+      settings: {
+        token: {
+          active: 'LSK',
+        },
+      },
+      account: {
+        info: {},
+      },
+      network: {
+        name: 'testnet',
+        serviceUrl: 'someUrl',
+      },
+    };
+
     wrapper = mountWithRouter(SideBar, myProps);
   });
 
   it('renders 8 menu items elements', () => {
-    const expectedLinks = [
-      'Dashboard',
-      'Wallet',
-      'Voting',
-      'Network',
-      'Transactions',
-      'Blocks',
-      'Accounts',
-      'Delegates',
-    ];
     expect(wrapper).toContainMatchingElements(8, 'a');
-    wrapper.find('a').forEach((link, index) => expect(link).toHaveText(expectedLinks[index]));
+  });
+
+  describe('renders 8 menu items', () => {
+    it('without labels if sideBarExpanded is false', () => {
+      expect(wrapper).toContainMatchingElements(8, 'a');
+      wrapper.find('a').forEach(link => expect(link).not.toContain(/\w*/));
+    });
+
+    it('without labels if sideBarExpanded is true', () => {
+      const expectedLinks = [
+        'Dashboard',
+        'Wallet',
+        'Voting',
+        'Network',
+        'Transactions',
+        'Blocks',
+        'Accounts',
+        'Delegates',
+      ];
+
+      mockAppState.settings = { ...mockAppState.settings, sideBarExpanded: true };
+      wrapper = mountWithRouter(SideBar, myProps);
+      wrapper.find('a').forEach((link, index) => expect(link).toHaveText(expectedLinks[index]));
+    });
   });
 
   it('renders 8 menu items but only Wallet is disabled when user is logged out', () => {
-    wrapper = mountWithRouter(SideBar, myProps);
-
     expect(wrapper).toContainMatchingElements(8, 'a');
     expect(wrapper).toContainExactlyOneMatchingElement('a.disabled');
     expect(wrapper.find('a').at(0)).not.toHaveClassName('disabled');

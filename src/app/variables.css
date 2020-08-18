@@ -21,7 +21,7 @@ In addition, mixins have their own files,
 Please prefer only variables here.
 
 # Use with :global
-Please do not define any variables ourside
+Please do not define any variables outside
 the :root scope, since then it won't be
 available application wide
 
