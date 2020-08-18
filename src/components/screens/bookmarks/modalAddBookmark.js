@@ -11,7 +11,7 @@ const modalAddBookmarks = ({ history }) => (
         prevStep={() => {
           removeSearchParamsFromUrl(history, ['modal']);
         }}
-        autofill
+        edit
       />
     </div>
   </div>

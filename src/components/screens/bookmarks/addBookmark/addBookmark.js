@@ -31,9 +31,9 @@ class AddBookmark extends React.Component {
 
     this.state = {
       fields: this.setupFields(),
-      showRemoveBtn: false,
-      showSaveBtn: true,
-      edit: false,
+      showRemoveBtn: this.props.edit,
+      showSaveBtn: !this.props.edit,
+      edit: this.props.edit,
     };
 
     this.onInputChange = {
@@ -42,7 +42,7 @@ class AddBookmark extends React.Component {
     };
     this.handleRemoveBookmark = this.handleRemoveBookmark.bind(this);
     this.handleAddBookmark = this.handleAddBookmark.bind(this);
-    if (this.props.autofill) this.props.account.loadData({});
+    if (this.props.edit) this.props.account.loadData({});
   }
 
   setupFields() {
