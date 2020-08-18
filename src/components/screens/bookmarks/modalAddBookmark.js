@@ -1,6 +1,18 @@
 import React from 'react';
-import Bookmarks from './bookmarks';
+import { withRouter } from 'react-router';
+import AddBookmark from './addBookmark';
+import styles from './bookmarks.css';
+import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
-const modalAddBookmarks = props => <Bookmarks step="add" {...props} />;
+const modalAddBookmarks = ({ history }) => (
+  <div className={styles.wrapper}>
+    <div className={styles.content}>
+      <AddBookmark prevStep={() => {
+        removeSearchParamsFromUrl(history, ['modal']);
+      }}
+      />
+    </div>
+  </div>
+);
 
-export default modalAddBookmarks;
+export default withRouter(modalAddBookmarks);

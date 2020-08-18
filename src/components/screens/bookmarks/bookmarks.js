@@ -5,14 +5,11 @@ import AddBookmark from './addBookmark';
 import styles from './bookmarks.css';
 
 const Bookmarks = ({
-  bookmarks, token, t, bookmarkRemoved, bookmarkUpdated, step,
+  bookmarks, token, t, bookmarkRemoved, bookmarkUpdated,
 }) => (
   <div className={styles.wrapper}>
     <div className={styles.content}>
-      <MultiStep
-        key="bookmarks"
-        step={step === 'add' ? 1 : 0}
-      >
+      <MultiStep key="bookmarks">
         <BookmarksList
           enableFilter
           isEditable
