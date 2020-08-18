@@ -58,7 +58,7 @@ class AddBookmark extends React.Component {
     const { token } = this.props;
     const { token: prevToken } = prevProps;
 
-    this.updateLabelIfDelegate(prevProps);
+    this.updateFields(prevProps);
 
     if (token.active !== prevToken.active) {
       this.setState(state => ({
@@ -68,23 +68,24 @@ class AddBookmark extends React.Component {
     }
   }
 
-  updateLabelIfDelegate(prevProps) {
+  updateFields(prevProps) {
     const { account } = this.props;
-    const { fields: { label } } = this.state;
-    if (account.data.delegate === prevProps.account.data.delegate) return;
+    const { fields, fields: { label } } = this.state;
 
-    if (account.data.delegate && account.data.delegate.username !== label.value) {
-      const data = { value: account.data.delegate.username, readonly: true };
-      this.updateField({
-        name: 'label',
-        data,
-      });
-    } else if (label.readonly) {
-      this.updateField({
-        name: 'label',
-        data: { value: '', readonly: false },
-      });
+    if (account.data.address === prevProps.account.data.address) return;
+
+    let newFields = { ...fields, address: { value: account.data.address, readonly: true } };
+
+    if (account.data.delegate !== prevProps.account.data.delegate) {
+      if (account.data.delegate && account.data.delegate.username !== label.value) {
+        const data = { value: account.data.delegate.username, readonly: true };
+        newFields = { ...newFields, label: data };
+      } else if (label.readonly) {
+        newFields = { ...newFields, label: { value: '', readonly: false } };
+      }
     }
+
+    this.setState({ fields: newFields });
   }
 
   updateField({ name, data }) {
