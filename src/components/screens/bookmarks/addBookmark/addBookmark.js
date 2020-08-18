@@ -62,7 +62,7 @@ class AddBookmark extends React.Component {
     const { token } = this.props;
     const { token: prevToken } = prevProps;
 
-    this.updateFields(prevProps);
+    this.updateFields(prevProps, this.props, this.state);
 
     if (token.active !== prevToken.active) {
       this.setState(state => ({
@@ -72,11 +72,11 @@ class AddBookmark extends React.Component {
     }
   }
 
-  // eslint-disable-next-line max-statements
-  updateFields(prevProps) {
-    const { account, bookmarks, token: { active } } = this.props;
-    const { fields, fields: { label } } = this.state;
-
+  updateFields(
+    prevProps,
+    { account, bookmarks, token: { active } },
+    { fields, fields: { label } },
+  ) {
     if (account.data.address === prevProps.account.data.address) return;
 
     const bookmark = bookmarks[active].find(mark => mark.address === account.data.address);
@@ -215,15 +215,9 @@ class AddBookmark extends React.Component {
     return (
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <header className={styles.header}>
-            <Icon name="bookmarkActive" />
-          </header>
+          <header className={styles.header}><Icon name="bookmarkActive" /></header>
           <Box className={styles.box}>
-            <BoxHeader>
-              <h2>
-                {t('New bookmark')}
-              </h2>
-            </BoxHeader>
+            <BoxHeader><h2>{t('New bookmark')}</h2></BoxHeader>
             <BoxContent>
               {this.fields.map(field => (
                 <label key={field.name}>
@@ -259,17 +253,11 @@ class AddBookmark extends React.Component {
               ))}
             </BoxContent>
             <BoxFooter direction="horizontal">
-              <SecondaryButton
-                className="cancel-button"
-                onClick={() => prevStep({})}
-              >
+              <SecondaryButton className="cancel-button" onClick={() => prevStep({})}>
                 {t('Cancel')}
               </SecondaryButton>
               {this.state.showRemoveBtn && (
-                <SecondaryButton
-                  className="remove-button"
-                  onClick={this.handleRemoveBookmark}
-                >
+                <SecondaryButton className="remove-button" onClick={this.handleRemoveBookmark}>
                   <div className={styles.removeBtn}>
                     <Icon name="remove" />
                     {t('Remove')}
@@ -277,11 +265,7 @@ class AddBookmark extends React.Component {
                 </SecondaryButton>
               )}
               {this.state.showSaveBtn && (
-                <PrimaryButton
-                  disabled={isDisabled}
-                  onClick={this.handleAddBookmark}
-                  className="save-button"
-                >
+                <PrimaryButton disabled={isDisabled} onClick={this.handleAddBookmark} className="save-button">
                   {t('Save')}
                 </PrimaryButton>
               )}
