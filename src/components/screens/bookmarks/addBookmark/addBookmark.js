@@ -158,19 +158,22 @@ class AddBookmark extends React.Component {
   handleAddBookmark(e) {
     e.preventDefault();
     const {
-      token: { active }, bookmarkAdded, account, prevStep,
+      token: { active }, bookmarkAdded, account, prevStep, bookmarks,
     } = this.props;
     const { fields: { label, address } } = this.state;
     const { publicKey, delegate } = account.data;
-    bookmarkAdded({
-      token: active,
-      account: {
-        title: label.value,
-        address: address.value,
-        isDelegate: !!(delegate && delegate.username),
-        publicKey,
-      },
-    });
+
+    if (!bookmarks[active].some(bookmark => bookmark.address === address.value)) {
+      bookmarkAdded({
+        token: active,
+        account: {
+          title: label.value,
+          address: address.value,
+          isDelegate: !!(delegate && delegate.username),
+          publicKey,
+        },
+      });
+    }
     prevStep({});
   }
 
