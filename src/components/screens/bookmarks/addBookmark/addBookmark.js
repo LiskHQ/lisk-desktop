@@ -208,7 +208,7 @@ class AddBookmark extends React.Component {
   }
 
   render() {
-    const { t, prevStep } = this.props;
+    const { t, prevStep, edit } = this.props;
     const { fields } = this.state;
     const isDisabled = !!Object.keys(fields).find(field => fields[field].error || fields[field].value === '');
 
@@ -217,7 +217,7 @@ class AddBookmark extends React.Component {
         <div className={styles.content}>
           <header className={styles.header}><Icon name="bookmarkActive" /></header>
           <Box className={styles.box}>
-            <BoxHeader><h2>{t('New bookmark')}</h2></BoxHeader>
+            <BoxHeader><h2>{edit ? t('Edit bookmark') : t('New bookmark')}</h2></BoxHeader>
             <BoxContent>
               {this.fields.map(field => (
                 <label key={field.name}>
