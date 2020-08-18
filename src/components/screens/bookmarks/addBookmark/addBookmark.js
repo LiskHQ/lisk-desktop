@@ -38,7 +38,7 @@ class AddBookmark extends React.Component {
       label: this.onLabelChange.bind(this),
     };
     this.handleAddBookmark = this.handleAddBookmark.bind(this);
-    this.props.account.loadData({});
+    if (this.props.autofill) this.props.account.loadData({});
   }
 
   setupFields() {
@@ -249,6 +249,7 @@ class AddBookmark extends React.Component {
 
 AddBookmark.displayName = 'AddBookmark';
 AddBookmark.propTypes = {
+  autofill: PropTypes.bool,
   t: PropTypes.func.isRequired,
   token: PropTypes.shape({
     active: PropTypes.string.isRequired,

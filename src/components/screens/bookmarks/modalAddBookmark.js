@@ -7,9 +7,11 @@ import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 const modalAddBookmarks = ({ history }) => (
   <div className={styles.wrapper}>
     <div className={styles.content}>
-      <AddBookmark prevStep={() => {
-        removeSearchParamsFromUrl(history, ['modal']);
-      }}
+      <AddBookmark
+        prevStep={() => {
+          removeSearchParamsFromUrl(history, ['modal']);
+        }}
+        autofill
       />
     </div>
   </div>
