@@ -51,7 +51,7 @@ class TransactionSummary extends React.Component {
 
   checkSecondPassphrase(passphrase, error) {
     const { account, t } = this.props;
-    const expectedPublicKey = !error && extractPublicKey(passphrase, this.props.apiVersion);
+    const expectedPublicKey = !error && extractPublicKey(passphrase);
     const isPassphraseValid = account.secondPublicKey === expectedPublicKey;
     const feedback = !error && !isPassphraseValid ? t('Oops! Wrong passphrase') : '';
 

@@ -1,4 +1,4 @@
-import Lisk from '@liskhq/lisk-client-old';// eslint-disable-line
+import Lisk from '@liskhq/lisk-client';// eslint-disable-line
 
 export const getTransactionBytes = transaction =>
   Lisk.transaction.utils.getTransactionBytes(transaction);

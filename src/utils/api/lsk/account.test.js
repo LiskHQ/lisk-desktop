@@ -6,7 +6,7 @@ import { getAPIClient } from './network';
 const network = {
   networks: {
     LSK: {
-      apiVersion: '',
+      apiVersion: '', // @todo should we remove this?
     },
   },
 };

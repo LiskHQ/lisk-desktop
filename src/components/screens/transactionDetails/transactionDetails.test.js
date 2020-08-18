@@ -1,4 +1,4 @@
-import Lisk from '@liskhq/lisk-client-old';
+import Lisk from '@liskhq/lisk-client';
 import React from 'react';
 import { mount } from 'enzyme';
 import TransactionDetails from './transactionDetails';

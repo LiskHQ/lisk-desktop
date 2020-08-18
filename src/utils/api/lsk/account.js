@@ -1,5 +1,5 @@
 
-import liskClient from 'Utils/lisk-client'; // eslint-disable-line
+import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import api from '..';
 import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';
@@ -19,8 +19,7 @@ export const getAccount = ({
       return;
     }
 
-    const apiVersion = network.networks.LSK.apiVersion;
-    publicKey = publicKey || (passphrase && extractPublicKey(passphrase, apiVersion));
+    publicKey = publicKey || (passphrase && extractPublicKey(passphrase));
     address = address || extractAddress(passphrase || publicKey);
 
     apiClient.accounts.get({ address }).then((res) => {
@@ -56,10 +55,9 @@ export const setSecondPassphrase = (
   passphrase,
   timeOffset,
   networkIdentifier,
-  apiVersion,
 ) =>
   new Promise((resolve, reject) => {
-    const transaction = liskClient(apiVersion).transaction
+    const { transaction } = Lisk
       .registerSecondPassphrase({
         passphrase,
         secondPassphrase,

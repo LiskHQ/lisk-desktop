@@ -1,4 +1,4 @@
-import liskClient from 'Utils/lisk-client'; // eslint-disable-line
+import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import { getAPIClient } from './network';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import { toRawLsk } from '../../lsk';
@@ -73,10 +73,9 @@ export const getSingleTransaction = ({
 });
 
 export const create = (
-  transaction, transactionType, apiVersion,
+  transaction, transactionType,
 ) => new Promise((resolve, reject) => {
   try {
-    const Lisk = liskClient(apiVersion);
     const { networkIdentifier } = transaction.network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
       ...transaction,

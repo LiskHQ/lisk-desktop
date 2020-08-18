@@ -52,7 +52,7 @@ export const votePlaced = ({
     const { networkIdentifier, apiVersion } = state.network.networks.LSK;
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, state.network);
     const { votedList, unvotedList } = getVotingLists(votes);
-    const timeOffset = getTimeOffset(state.blocks.latestBlocks, apiVersion);
+    const timeOffset = getTimeOffset(state.blocks.latestBlocks);
 
     const label = getVotingError(votes, account);
     if (label) {
