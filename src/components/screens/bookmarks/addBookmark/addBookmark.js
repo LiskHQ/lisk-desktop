@@ -31,12 +31,16 @@ class AddBookmark extends React.Component {
 
     this.state = {
       fields: this.setupFields(),
+      showRemoveBtn: false,
+      showSaveBtn: true,
+      edit: false,
     };
 
     this.onInputChange = {
       address: this.onAddressChange.bind(this),
       label: this.onLabelChange.bind(this),
     };
+    this.handleRemoveBookmark = this.handleRemoveBookmark.bind(this);
     this.handleAddBookmark = this.handleAddBookmark.bind(this);
     if (this.props.autofill) this.props.account.loadData({});
   }
@@ -68,13 +72,20 @@ class AddBookmark extends React.Component {
     }
   }
 
+  // eslint-disable-next-line max-statements
   updateFields(prevProps) {
-    const { account } = this.props;
+    const { account, bookmarks, token: { active } } = this.props;
     const { fields, fields: { label } } = this.state;
 
     if (account.data.address === prevProps.account.data.address) return;
 
-    let newFields = { ...fields, address: { value: account.data.address, readonly: true } };
+    const bookmark = bookmarks[active].find(mark => mark.address === account.data.address);
+
+    let newFields = {
+      ...fields,
+      address: { value: account.data.address, readonly: true },
+      label: { value: bookmark ? bookmark.title : '', readonly: false },
+    };
 
     if (account.data.delegate !== prevProps.account.data.delegate) {
       if (account.data.delegate && account.data.delegate.username !== label.value) {
@@ -85,7 +96,12 @@ class AddBookmark extends React.Component {
       }
     }
 
-    this.setState({ fields: newFields });
+    this.setState({
+      fields: newFields,
+      showRemoveBtn: bookmark,
+      showSaveBtn: !account.data.delegate || !bookmark,
+      edit: bookmark,
+    });
   }
 
   updateField({ name, data }) {
@@ -155,25 +171,39 @@ class AddBookmark extends React.Component {
     return { error: isInvalid || alreadyBookmarked, isInvalid, feedback };
   }
 
+  handleRemoveBookmark(e) {
+    e.preventDefault();
+    const {
+      token: { active }, bookmarkRemoved, prevStep,
+    } = this.props;
+    const { fields: { address } } = this.state;
+
+    bookmarkRemoved({
+      address: address.value,
+      token: active,
+    });
+    prevStep({});
+  }
+
   handleAddBookmark(e) {
     e.preventDefault();
     const {
-      token: { active }, bookmarkAdded, account, prevStep, bookmarks,
+      token: { active }, bookmarkAdded, account, prevStep, bookmarkUpdated,
     } = this.props;
     const { fields: { label, address } } = this.state;
     const { publicKey, delegate } = account.data;
 
-    if (!bookmarks[active].some(bookmark => bookmark.address === address.value)) {
-      bookmarkAdded({
-        token: active,
-        account: {
-          title: label.value,
-          address: address.value,
-          isDelegate: !!(delegate && delegate.username),
-          publicKey,
-        },
-      });
-    }
+    const func = this.state.edit ? bookmarkUpdated : bookmarkAdded;
+
+    func({
+      token: active,
+      account: {
+        title: label.value,
+        address: address.value,
+        isDelegate: !!(delegate && delegate.username),
+        publicKey,
+      },
+    });
     prevStep({});
   }
 
@@ -235,13 +265,26 @@ class AddBookmark extends React.Component {
               >
                 {t('Cancel')}
               </SecondaryButton>
-              <PrimaryButton
-                disabled={isDisabled}
-                onClick={this.handleAddBookmark}
-                className="save-button"
-              >
-                {t('Save')}
-              </PrimaryButton>
+              {this.state.showRemoveBtn && (
+                <SecondaryButton
+                  className="remove-button"
+                  onClick={this.handleRemoveBookmark}
+                >
+                  <div className={styles.removeBtn}>
+                    <Icon name="remove" />
+                    {t('Remove')}
+                  </div>
+                </SecondaryButton>
+              )}
+              {this.state.showSaveBtn && (
+                <PrimaryButton
+                  disabled={isDisabled}
+                  onClick={this.handleAddBookmark}
+                  className="save-button"
+                >
+                  {t('Save')}
+                </PrimaryButton>
+              )}
             </BoxFooter>
           </Box>
         </div>

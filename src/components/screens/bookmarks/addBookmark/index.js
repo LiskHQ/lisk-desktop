@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { bookmarkAdded } from '../../../../actions/bookmarks';
+import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from '../../../../actions/bookmarks';
 import { getAccount } from '../../../../utils/api/lsk/account';
 import AddBookmark from './addBookmark';
 import withData from '../../../../utils/withData';
@@ -17,6 +17,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   bookmarkAdded,
+  bookmarkUpdated,
+  bookmarkRemoved,
 };
 
 export default compose(
