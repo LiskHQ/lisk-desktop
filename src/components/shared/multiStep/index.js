@@ -20,8 +20,8 @@ import MultiStepNav from './multiStepNav';
  *
  */
 class MultiStep extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       step: {
@@ -32,7 +32,7 @@ class MultiStep extends React.Component {
           this.prev(data);
         },
         data: [{}],
-        current: 0,
+        current: props.step ? props.step : 0,
       },
     };
   }

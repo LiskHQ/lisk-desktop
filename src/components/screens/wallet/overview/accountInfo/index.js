@@ -60,13 +60,7 @@ const AccountInfo = ({
         {
           host !== address ? (
             <div className={styles.helperIcon}>
-              <DialogLink
-                component="addBookmark"
-                data={{
-                  newBookmarkAddress: address,
-                  label: delegate ? delegate.username : '',
-                }}
-              >
+              <DialogLink component="addBookmark">
                 <BookmarkIcon bookmark={bookmark} />
               </DialogLink>
             </div>
