@@ -9,7 +9,9 @@ const Bookmarks = ({
 }) => (
   <div className={styles.wrapper}>
     <div className={styles.content}>
-      <MultiStep key="bookmarks">
+      <MultiStep
+        key="bookmarks"
+      >
         <BookmarksList
           enableFilter
           isEditable
