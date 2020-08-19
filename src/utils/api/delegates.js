@@ -135,7 +135,7 @@ export const castVotes = async ({
 };
 
 export const getVotes = (networkConfig, { address }) =>
-  getAPIClient(networkConfig).votes.get({ address, limit: 101, offset: 0 });
+  getAPIClient(networkConfig).votes.get({ address, limit: 10, offset: 0 });
 
 export const registerDelegate = (
   liskAPIClient,
