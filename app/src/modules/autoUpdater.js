@@ -73,7 +73,8 @@ export default ({ // eslint-disable-line max-statements
       title: i18n.t('Update download finished'),
       buttons: [i18n.t('Restart now'), i18n.t('Later')],
       message: i18n.t('Updates downloaded, application has to be restarted to apply the updates.'),
-    }, (buttonIndex) => {
+    }).then((result) => {
+      const buttonIndex = result.response;
       if (buttonIndex === 0) {
         autoUpdater.quitAndInstall();
       }
