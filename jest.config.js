@@ -1,5 +1,3 @@
-const { join } = require('path');
-
 module.exports = {
   modulePaths: ['src/components'],
   testMatch: [
