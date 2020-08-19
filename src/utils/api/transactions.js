@@ -39,11 +39,7 @@ export const getSingleTransaction = async ({ token, ...params }) => (
  * @param {Number} data.outputCount
  * @param {Number} data.dynamicFeePerByte - in satoshis/byte.
  */
-export const calculateTransactionFee = ({
-  inputCount,
-  outputCount,
-  dynamicFeePerByte,
-}) => (
+export const calculateTransactionFee = () => (
   true
 );
 
