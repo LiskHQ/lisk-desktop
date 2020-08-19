@@ -33,13 +33,13 @@ const parseCustomFilters = filters => ({
 });
 
 export const getTransactions = ({
-  networkConfig, liskAPIClient, address, limit, offset, type = undefined,
-  sort = 'timestamp:desc', filters = {},
+  networkConfig, liskAPIClient, address, limit,
+  offset, type = undefined, filters = {},
 }) => {
   const params = {
     limit,
     offset,
-    sort,
+    // sort, @todo Fix the sort
     ...parseTxFilters(filters.direction, address),
     ...parseCustomFilters(filters),
     ...(type !== undefined ? { type } : {}),
