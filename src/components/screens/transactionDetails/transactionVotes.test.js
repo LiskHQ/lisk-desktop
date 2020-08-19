@@ -7,7 +7,7 @@ import accounts from '../../../../test/constants/accounts';
 const store = {
   network: {
     networks: {
-      LSK: { apiVersion: '2' },
+      LSK: { apiVersion: '2' }, // @todo Remove?
     },
   },
 };

@@ -57,12 +57,11 @@ export const networkSet = data => async (dispatch) => {
   const nodeUrl = data.name === networks.customNode.name
     ? data.network.address
     : networks[data.name.toLowerCase()].nodes[0];
-  await getNetworkInfo(nodeUrl).then(({ nethash, version, networkId }) => {
+  await getNetworkInfo(nodeUrl).then(({ nethash, networkId }) => {
     const networkConfig = {
       nodeUrl,
       custom: data.network.custom,
       code: data.network.code,
-      apiVersion: version.substring(0, 1),
       nethash,
       networkIdentifier: networkId,
     };

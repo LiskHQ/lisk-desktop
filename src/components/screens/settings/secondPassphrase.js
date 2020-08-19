@@ -1,12 +1,12 @@
 import React from 'react';
-import { utils } from '@liskhq/lisk-transactions';
+import { transactions } from '@liskhq/lisk-client';
 import Fees from '../../../constants/fees';
 import Spinner from '../../toolbox/spinner';
 import DialogLink from '../../toolbox/dialog/link';
 import styles from './settings.css';
 import Icon from '../../toolbox/icon';
 
-const fee = utils.convertBeddowsToLSK(`${Fees.setSecondPassphrase}`);
+const fee = transactions.utils.convertBeddowsToLSK(`${Fees.setSecondPassphrase}`);
 
 const SecondPassphraseSetting = ({
   account, t, hasPendingSecondPassphrase, isHardwareWalletAccount,

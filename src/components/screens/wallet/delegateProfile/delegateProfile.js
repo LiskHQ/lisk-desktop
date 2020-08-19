@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -14,7 +13,6 @@ import styles from './delegateProfile.css';
 const delegateProfile = ({
   delegate, lastBlock, txDelegateRegister, address, nextForgers, t = str => str,
 }) => {
-  const { apiVersion } = useSelector(state => state.network.networks.LSK);
   useEffect(() => {
     delegate.loadData();
     txDelegateRegister.loadData();
@@ -39,7 +37,7 @@ const delegateProfile = ({
       </BoxHeader>
       <BoxContent className={styles.wrapper}>
         <ul className={styles.delegateStats}>
-          <li className={apiVersion === '2' ? '' : 'hidden'}>
+          <li className="hidden">
             <span className={styles.label}>
               {t('Rank')}
             </span>

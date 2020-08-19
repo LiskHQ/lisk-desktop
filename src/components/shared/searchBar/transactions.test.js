@@ -21,7 +21,7 @@ describe('Transactions', () => {
     network: {
       networks: {
         LSK: {
-          apiVersion: 2,
+          apiVersion: 2, // @todo remove?
         },
       },
     },

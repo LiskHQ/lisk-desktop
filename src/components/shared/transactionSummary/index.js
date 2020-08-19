@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
 import { extractPublicKey } from '../../../utils/account';
 import Box from '../../toolbox/box';
@@ -204,8 +203,4 @@ TransactionSummary.defaultProps = {
   token: 'LSK',
 };
 
-const mapStateToProps = state => ({
-  apiVersion: state.network.networks.LSK.apiVersion,
-});
-
-export default connect(mapStateToProps)(TransactionSummary);
+export default TransactionSummary;

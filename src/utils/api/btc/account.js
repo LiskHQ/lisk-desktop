@@ -5,7 +5,7 @@ import { getAPIClient } from './network';
 import { tokenMap } from '../../../constants/tokens';
 
 export const getDerivedPathFromPassphrase = (passphrase, config) => {
-  const seed = Lisk.passphrase.Mnemonic.mnemonicToSeed(passphrase);
+  const seed = Lisk.passphrase.Mnemonic.mnemonicToSeedSync(passphrase);
   return bip32.fromSeed(seed, config.network).derivePath(config.derivationPath);
 };
 
@@ -18,12 +18,10 @@ export const extractAddress = (passphrase, config) => {
   return btc.address;
 };
 
-export const getAccount = ({
-  network, address, passphrase,
-}) => new Promise(async (resolve, reject) => {
-  const apiClient = getAPIClient(network);
-  address = address || extractAddress(
-    passphrase, apiClient.config,
+export const getAccount = params => new Promise(async (resolve, reject) => {
+  const apiClient = getAPIClient(params.network);
+  const address = params.address || extractAddress(
+    params.passphrase, apiClient.config,
   );
   await apiClient.get(`account/${address}`).then((response) => {
     resolve({
