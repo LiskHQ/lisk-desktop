@@ -31,17 +31,42 @@ export const getSingleTransaction = async ({ token, ...params }) => (
 );
 
 /**
+ * Normalizes transaction data retrieved from Blockchain.info API
+ *
+ * @todo implement fee calculation logic and define required parameters
+ * @param {Object} data
+ * @param {Number} data.inputCount
+ * @param {Number} data.outputCount
+ * @param {Number} data.dynamicFeePerByte - in satoshis/byte.
+ */
+export const calculateTransactionFee = ({
+  inputCount,
+  outputCount,
+  dynamicFeePerByte,
+}) => (
+  true
+);
+
+/**
  * This functions are not test it because all the purpose is just
  * pass parameters to another functions
  */
 // istanbul ignore file
 export const get = (token, data) => api[token].transactions.get(data);
 
-// istanbul ignore next
+/**
+ * @todo Use transfer from '@liskhq/lisk-transactions'
+ * @todo Implement the dynamic fee
+ * @todo Use nonce
+ * @todo document function signature
+ *
+ */
 export const create = (tokenType, data, transactionType) =>
   api[tokenType].transactions.create(data, transactionType);
 
-// istanbul ignore next
+/**
+ * @todo document function signature
+ */
 export const broadcast = (tokenType, transaction, networkConfig) =>
   api[tokenType].transactions.broadcast(transaction, networkConfig);
 

@@ -7,6 +7,7 @@ import {
   getUnspentTransactionOutputs,
 } from '../../../../utils/api/btc/transactions';
 
+// @todo account for LSK dynamic fees
 const useDynamicFeeCalculation = (account, dynamicFeePerByte) => {
   const {
     settings: { token: { active: token } },
