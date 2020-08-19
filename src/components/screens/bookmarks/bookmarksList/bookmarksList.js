@@ -106,7 +106,7 @@ class BookmarksList extends React.Component {
   render() {
     const {
       t, token, className, enableFilter, isEditable,
-      bookmarks, emptyStateClassName, limit, nextStep,
+      bookmarks, emptyStateClassName, limit, onAddBookmark,
     } = this.props;
     const {
       filter, editedAddress, editedTitle, feedback,
@@ -142,7 +142,7 @@ class BookmarksList extends React.Component {
                 ? (
                   <PrimaryButton
                     className={styles.addButton}
-                    onClick={() => nextStep({})}
+                    onClick={onAddBookmark}
                     size="s"
                   >
                     <Icon name="plus" className={styles.plusIcon} />
@@ -253,7 +253,7 @@ class BookmarksList extends React.Component {
                   emptyStateClassName={emptyStateClassName}
                   limit={limit}
                   t={t}
-                  nextStep={nextStep}
+                  onAddBookmark={onAddBookmark}
                 />
               )
           }
