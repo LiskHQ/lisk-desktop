@@ -8,19 +8,18 @@ import styles from './rankOrStatus.css';
  * @param {String} className custom class names
  */
 const RankOrStatus = ({
-  // data,
+  data,
   className,
 }) => (
-  // ? (
-  //   <span className={`${styles.rank} ${className}`}>
-  //     {`#${data.rank || '-'}`}
-  //   </span>
-  // )
-  // : (
-  <span className={`${styles.status} ${className}`}>
-    {'active'}
-  </span>
-  // )
+  data ? (
+    <span className={`${styles.rank} ${className}`}>
+      {`#${data.rank || '-'}`}
+    </span>
+  ) : (
+    <span className={`${styles.status} ${className}`}>
+      {'active'}
+    </span>
+  )
 );
 
 export default RankOrStatus;
