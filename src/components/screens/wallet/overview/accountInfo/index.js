@@ -69,7 +69,7 @@ const AccountInfo = ({
                 } : {
                   formAddress: address,
                   isDelegate: false,
-                  label: bookmark.title,
+                  label: bookmark ? bookmark.title : '',
                 }}
               >
                 <BookmarkIcon bookmark={bookmark} />
