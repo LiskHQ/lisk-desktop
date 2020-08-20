@@ -11,7 +11,6 @@ import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import styles from './addBookmark.css';
 import { getIndexOfBookmark } from '../../../../utils/bookmarks';
-import { tokenMap } from '../../../../constants/tokens';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Icon from '../../../toolbox/icon';
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '../../../../utils/searchParams';
@@ -132,11 +131,8 @@ class AddBookmark extends React.Component {
   }
 
   onAddressChange({ target: { name, value } }) {
-    const { token: { active }, account } = this.props;
+    const { token: { active } } = this.props;
     const { feedback, error, isInvalid } = this.validateAddress(active, value);
-    if (active === tokenMap.LSK.key && !error && value.length) {
-      account.loadData({ address: value });
-    }
 
     this.updateField({
       name,
@@ -180,10 +176,9 @@ class AddBookmark extends React.Component {
   handleAddBookmark(e) {
     e.preventDefault();
     const {
-      token: { active }, bookmarkAdded, account, bookmarkUpdated,
+      token: { active }, bookmarkAdded, bookmarkUpdated,
     } = this.props;
     const { fields: { label, address } } = this.state;
-    const { publicKey, delegate } = account.data;
 
     const func = this.state.edit ? bookmarkUpdated : bookmarkAdded;
 
@@ -192,15 +187,14 @@ class AddBookmark extends React.Component {
       account: {
         title: label.value,
         address: address.value,
-        isDelegate: !!(delegate && delegate.username),
-        publicKey,
+        isDelegate: selectSearchParamValue(this.props.history.location.search, 'isDelegate') === 'true',
       },
     });
     this.onClose();
   }
 
   onClose(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     removeSearchParamsFromUrl(this.props.history, ['modal']);
   }
 
