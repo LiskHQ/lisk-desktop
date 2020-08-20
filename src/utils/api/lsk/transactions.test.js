@@ -5,14 +5,32 @@ import {
   getSingleTransaction,
   create,
   broadcast,
+  calculateTransactionFee,
 } from './transactions';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
 import txFilters from '../../../constants/transactionFilters';
 import transactionTypes from '../../../constants/transactionTypes';
 import { getTimestampFromFirstBlock } from '../../datetime';
+import accounts from '../../../../test/constants/accounts';
 
 jest.mock('./network');
+const TESTNET_NETHASH = 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba';
+
+const testTx = {
+  amount: '1',
+  data: 'payment',
+  passphrase: accounts.genesis.passphrase,
+  recipientId: '123L',
+  timeOffset: 0,
+  nonce: '1',
+  fee: '123',
+  network: {
+    networks: {
+      LSK: { networkIdentifier: TESTNET_NETHASH },
+    },
+  },
+};
 
 describe('Utils: Transactions API', () => {
   const id = '124701289470';
@@ -121,18 +139,10 @@ describe('Utils: Transactions API', () => {
   });
 
   describe('create', () => {
-    it.skip('should create a transaction and return a promise', async () => {
-      const tx = {
-        amount: '1',
-        data: { data: 'payment' },
-        passphrase: 'abc',
-        recipientId: '123L',
-        secondPassphrase: null,
-        timeOffset: 0,
-      };
-      const txResult = await create(tx, transactionTypes().send.key);
-      expect(txResult.recipientId).toEqual(tx.recipientId);
-      expect(txResult.amount).toEqual(tx.amount);
+    it('should create a transaction and return a promise', async () => {
+      const txResult = await create(testTx, transactionTypes().send.key);
+      expect(txResult.asset.recipientId).toEqual(testTx.recipientId);
+      expect(txResult.asset.amount).toEqual(testTx.amount);
       expect(txResult.signature).not.toBeNull();
       expect(txResult.id).not.toBeNull();
       expect(txResult.senderPublicKey).not.toBeNull();
@@ -143,21 +153,9 @@ describe('Utils: Transactions API', () => {
       Lisk.transaction.transfer.mockImplementation(() => {
         throw new Error('sample error message');
       });
-      const tx = {
-        amount: '1',
-        data: { data: 'payment' },
-        passphrase: 'abc',
-        recipientId: '123L',
-        secondPassphrase: null,
-        timeOffset: 0,
-        network: {
-          networks: {
-            LSK: { networkIdentifier: 'sample_identifier' },
-          },
-        },
-      };
+
       try {
-        await create(tx, transactionTypes().send.key);
+        await create(testTx, transactionTypes().send.key);
       } catch (e) {
         expect(e).toBeInstanceOf(Error);
         expect(e.message).toEqual('sample error message');
@@ -196,6 +194,16 @@ describe('Utils: Transactions API', () => {
         expect(e).toBeInstanceOf(Error);
         expect(e.message).toEqual('sample error message');
       }
+    });
+  });
+
+  describe('calculateTransactionFee', () => {
+    it('calculates the correct tx fees', () => {
+      const fees = calculateTransactionFee({
+        ...testTx,
+        senderPublicKey: accounts.genesis.publicKey,
+      }, transactionTypes().send.key);
+      expect(fees).toBe(0.0144);
     });
   });
 });

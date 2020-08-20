@@ -8,14 +8,20 @@
  */
 const transactionTypes = (t = str => str) => ({
   send: {
-    code: [0, 8][0],
+    code: {
+      legacy: 0,
+      new: 8,
+    }.legacy,
     outgoingCode: 8,
     title: t('Send'),
     senderLabel: t('Sender'),
     key: 'transfer',
   },
   setSecondPassphrase: {
-    code: [1, 9][0],
+    code: {
+      legacy: 1,
+      new: 9,
+    }.legacy,
     outgoingCode: 9,
     title: t('Second passphrase registration'),
     senderLabel: t('Account'),
@@ -23,7 +29,10 @@ const transactionTypes = (t = str => str) => ({
     icon: 'tx2ndPassphrase',
   },
   registerDelegate: {
-    code: [2, 10][0],
+    code: {
+      legacy: 2,
+      new: 10,
+    }.legacy,
     outgoingCode: 10,
     title: t('Delegate registration'),
     senderLabel: t('Account nickname'),
@@ -31,20 +40,26 @@ const transactionTypes = (t = str => str) => ({
     icon: 'txDelegate',
   },
   vote: {
-    code: [3, 11][0],
+    code: {
+      legacy: 3,
+      new: 11,
+    }.legacy,
     outgoingCode: 11,
     title: t('Delegate vote'),
     senderLabel: t('Voter'),
-    key: 'vote',
+    key: 'VoteTransaction',
     icon: 'txVote',
   },
   createMultiSig: {
-    code: [4, 12][0],
+    code: {
+      legacy: 4,
+      new: 12,
+    }.legacy,
     outgoingCode: 12,
     title: t('Multisignature creation'),
     senderLabel: t('Registrant'),
     key: 'createMultiSig',
-    icon: 'multiSignature',
+    icon: 'signMultiSignatureTransaction',
   },
 });
 
