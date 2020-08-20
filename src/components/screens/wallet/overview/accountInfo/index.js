@@ -66,7 +66,11 @@ const AccountInfo = ({
                   formAddress: address,
                   label: delegate.username,
                   isDelegate: true,
-                } : { formAddress: address, isDelegate: false }}
+                } : {
+                  formAddress: address,
+                  isDelegate: false,
+                  label: bookmark.title,
+                }}
               >
                 <BookmarkIcon bookmark={bookmark} />
               </DialogLink>

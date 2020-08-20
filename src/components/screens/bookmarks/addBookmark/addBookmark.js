@@ -1,17 +1,17 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
+import Fields from './fields';
 import { validateAddress } from '../../../../utils/validators';
 import networks from '../../../../constants/networks';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
-import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import styles from './addBookmark.css';
 import { getIndexOfBookmark } from '../../../../utils/bookmarks';
-import AccountVisual from '../../../toolbox/accountVisual';
+import { tokenMap } from '../../../../constants/tokens';
 import Icon from '../../../toolbox/icon';
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '../../../../utils/searchParams';
 
@@ -35,7 +35,7 @@ class AddBookmark extends React.Component {
     this.state = {
       fields: this.setupFields(),
       showRemoveBtn: edit,
-      showSaveBtn: !edit,
+      showSaveBtn: !edit || !this.getUrlSearchParam('isDelegate'),
       edit,
     };
 
@@ -48,16 +48,22 @@ class AddBookmark extends React.Component {
     this.onClose = this.onClose.bind(this);
   }
 
+  getUrlSearchParam(param) {
+    if (param === 'isDelegate') {
+      return selectSearchParamValue(this.props.history.location.search, param) === 'true';
+    }
+    return selectSearchParamValue(this.props.history.location.search, param);
+  }
+
   isEditing() {
     const { token: { active }, bookmarks } = this.props;
-    const formAddress = selectSearchParamValue(this.props.history.location.search, 'formAddress');
+    const formAddress = this.getUrlSearchParam('formAddress');
     return bookmarks[active].some(bookmark => bookmark.address === formAddress);
   }
 
   setupFields() {
-    const formAddress = selectSearchParamValue(this.props.history.location.search, 'formAddress');
-    const label = selectSearchParamValue(this.props.history.location.search, 'label');
-    const isDelegate = selectSearchParamValue(this.props.history.location.search, 'isDelegate') === 'true';
+    const formAddress = this.getUrlSearchParam('formAddress');
+    const label = this.getUrlSearchParam('label');
 
     return this.fields.reduce((acc, field) => {
       let value = '';
@@ -67,7 +73,7 @@ class AddBookmark extends React.Component {
         readonly = true;
       } else if (field.name === 'label' && label) {
         value = label;
-        readonly = isDelegate && true;
+        readonly = this.getUrlSearchParam('isDelegate');
       }
 
       return {
@@ -87,11 +93,31 @@ class AddBookmark extends React.Component {
     const { token } = this.props;
     const { token: prevToken } = prevProps;
 
+    if (this.props.account) this.updateLabelIfDelegate(prevProps, this.props.account);
+
     if (token.active !== prevToken.active) {
       this.setState(state => ({
         ...state,
         fields: this.setupFields(),
       }));
+    }
+  }
+
+  updateLabelIfDelegate(prevProps, account) {
+    const { fields: { label } } = this.state;
+    if (account.data.delegate === prevProps.account.data.delegate) return;
+
+    if (account.data.delegate && account.data.delegate.username !== label.value) {
+      const data = { value: account.data.delegate.username, readonly: true };
+      this.updateField({
+        name: 'label',
+        data,
+      });
+    } else if (label.readonly) {
+      this.updateField({
+        name: 'label',
+        data: { value: '', readonly: false },
+      });
     }
   }
 
@@ -131,8 +157,12 @@ class AddBookmark extends React.Component {
   }
 
   onAddressChange({ target: { name, value } }) {
-    const { token: { active } } = this.props;
+    const { token: { active }, account } = this.props;
     const { feedback, error, isInvalid } = this.validateAddress(active, value);
+
+    if (active === tokenMap.LSK.key && !error && value.length) {
+      account.loadData({ address: value });
+    }
 
     this.updateField({
       name,
@@ -187,7 +217,7 @@ class AddBookmark extends React.Component {
       account: {
         title: label.value,
         address: address.value,
-        isDelegate: selectSearchParamValue(this.props.history.location.search, 'isDelegate') === 'true',
+        isDelegate: this.getUrlSearchParam('isDelegate'),
       },
     });
     this.onClose();
@@ -210,38 +240,11 @@ class AddBookmark extends React.Component {
           <Box className={styles.box}>
             <BoxHeader><h2>{this.state.edit ? t('Edit bookmark') : t('New bookmark')}</h2></BoxHeader>
             <BoxContent>
-              {this.fields.map(field => (
-                <label key={field.name}>
-                  <span className={styles.label}>
-                    {field.label}
-                  </span>
-                  <span className={styles.fieldGroup}>
-                    <Input
-                      error={fields[field.name].error}
-                      className={styles.input}
-                      value={fields[field.name].value}
-                      onChange={this.onInputChange[field.name]}
-                      name={field.name}
-                      placeholder={field.placeholder}
-                      readOnly={fields[field.name].readonly}
-                      size="l"
-                      autoComplete="off"
-                      feedback={fields[field.name].feedback}
-                      status={fields[field.name].error ? 'error' : 'ok'}
-                    />
-                    {field.name === 'address'
-                      ? (
-                        <AccountVisual
-                          className={styles.avatar}
-                          placeholder={fields[field.name].isInvalid || !fields[field.name].value}
-                          address={fields[field.name].value}
-                          size={25}
-                        />
-                      ) : null
-                    }
-                  </span>
-                </label>
-              ))}
+              <Fields
+                fields={this.fields}
+                status={this.state.fields}
+                onInputChange={this.onInputChange}
+              />
             </BoxContent>
             <BoxFooter direction="horizontal">
               <SecondaryButton className="cancel-button" onClick={this.onClose}>
