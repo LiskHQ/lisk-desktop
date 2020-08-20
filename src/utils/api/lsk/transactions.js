@@ -119,16 +119,16 @@ export const calculateTransactionFee = (
  * @returns {{low: number, medium: number, high: number}} with low,
  * medium and high priority fee options
  */
-export const getTransactionFeeOptions = (
+export const getTransactionFeeEstimates = (
   transaction, type,
 ) => {
-  const fee = calculateTransactionFee({ transaction, type });
+  const fee = calculateTransactionFee(transaction, type);
 
   // @todo use real fee estimates
   return {
     low: fee,
-    medium: fee,
-    high: fee,
+    medium: fee * 2,
+    high: fee * 3,
   };
 };
 

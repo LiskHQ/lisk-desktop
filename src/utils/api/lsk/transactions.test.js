@@ -6,6 +6,7 @@ import {
   create,
   broadcast,
   calculateTransactionFee,
+  getTransactionFeeEstimates,
 } from './transactions';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
@@ -204,6 +205,14 @@ describe('Utils: Transactions API', () => {
         senderPublicKey: accounts.genesis.publicKey,
       }, transactionTypes().send.key);
       expect(fees).toBe(0.0144);
+    });
+  });
+
+  describe('getTransactionFeeEstimates', () => {
+    it('calculates the estimated fees for a transaction', () => {
+      const estimates = getTransactionFeeEstimates({ ...testTx, senderPublicKey: accounts.genesis.publicKey }, transactionTypes().send.key);
+      expect(estimates).toBeDefined();
+      expect(Object.keys(estimates)).toHaveLength(3);
     });
   });
 });
