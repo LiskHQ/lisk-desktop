@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import Fields from './fields';
 import { validateAddress } from '../../../../utils/validators';
@@ -289,4 +288,4 @@ AddBookmark.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(AddBookmark);
+export default AddBookmark;

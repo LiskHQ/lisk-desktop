@@ -19,6 +19,9 @@ describe('Add a new bookmark component', () => {
     network: networks.testnet,
     history: {
       push: jest.fn(),
+      location: {
+        search: `?address=${accounts.genesis.address}L&modal=addBookmark&formAddress=${accounts.genesis.address}&label=&isDelegate=false`,
+      },
     },
     account: {
       data: {},
@@ -71,14 +74,21 @@ describe('Add a new bookmark component', () => {
         expect(wrapper.find('button').at(0)).not.toBeDisabled();
         wrapper.find('button.save-button').simulate('click');
         expect(props.bookmarkAdded).toBeCalled();
-        expect(props.prevStep).toBeCalled();
       });
     });
 
     it('should not be possible to change delegate label', () => {
       props.account.loadData.mockImplementation(({ address }) => {
         const account = { address, delegate: { username: accounts.delegate.username } };
-        wrapper.setProps({ account: { ...props.account, data: account } });
+        wrapper.setProps({
+          account: { ...props.account, data: account },
+          history: {
+            push: jest.fn(),
+            location: {
+              search: `?address=${accounts.delegate.address}L&modal=addBookmark&formAddress=${accounts.delegate.address}&label=${accounts.delegate.username}&isDelegate=true`,
+            },
+          },
+        });
       });
       wrapper.find('input[name="address"]').first().simulate('change', {
         target: {
@@ -149,7 +159,15 @@ describe('Add a new bookmark component', () => {
         },
       });
       expect(wrapper.find('input[name="address"]')).toHaveValue(accounts.delegate.address);
-      wrapper.setProps({ token: { active: tokenMap.BTC.key } });
+      wrapper.setProps({
+        token: { active: tokenMap.BTC.key },
+        history: {
+          push: jest.fn(),
+          location: {
+            search: '?modal=addBookmark',
+          },
+        },
+      });
       wrapper.update();
       expect(wrapper.find('input[name="address"]')).toHaveValue('');
     });

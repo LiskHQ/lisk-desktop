@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from '../../../utils/testHelpers';
 import { tokenMap } from '../../../constants/tokens';
 import Bookmarks from './bookmarks';
 import bookmarks from '../../../../test/constants/bookmarks';
@@ -21,7 +20,7 @@ describe('Bookmarks', () => {
       },
       bookmarks,
     };
-    wrapper = mount(<Bookmarks {...props} />);
+    wrapper = mountWithRouter(Bookmarks, props);
   });
 
   it('should render bookmarks list', () => {
