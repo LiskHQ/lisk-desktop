@@ -225,7 +225,7 @@ class AddBookmark extends React.Component {
 
   onClose(e) {
     if (e) e.preventDefault();
-    removeSearchParamsFromUrl(this.props.history, ['modal']);
+    removeSearchParamsFromUrl(this.props.history, ['modal', 'formAddress', 'isDelegate', 'label']);
   }
 
   render() {
