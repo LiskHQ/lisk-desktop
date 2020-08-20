@@ -204,13 +204,17 @@ describe('Utils: Transactions API', () => {
         ...testTx,
         senderPublicKey: accounts.genesis.publicKey,
       }, transactionTypes().send.key);
-      expect(fees).toBe(0.0144);
+      expect(fees).toBe(0.0165);
     });
   });
 
   describe('getTransactionFeeEstimates', () => {
     it('calculates the estimated fees for a transaction', () => {
-      const estimates = getTransactionFeeEstimates({ ...testTx, senderPublicKey: accounts.genesis.publicKey }, transactionTypes().send.key);
+      const estimates = getTransactionFeeEstimates({
+        ...testTx,
+        senderPublicKey: accounts.genesis.publicKey,
+      }, transactionTypes().send.key);
+
       expect(estimates).toBeDefined();
       expect(Object.keys(estimates)).toHaveLength(3);
     });

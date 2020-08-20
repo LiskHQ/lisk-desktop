@@ -29,7 +29,7 @@ export const findTransactionSizeInBytes = ({
   const txAsset = {
     amount: transaction.amount,
     data: transaction.data,
-    recipienetId: transaction.recipienetId,
+    recipientId: transaction.recipientId,
   };
 
   const assetBytes = Buffer.from(JSON.stringify(txAsset), 'utf-8');

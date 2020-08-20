@@ -47,7 +47,7 @@ const transactionTypes = (t = str => str) => ({
     outgoingCode: 11,
     title: t('Delegate vote'),
     senderLabel: t('Voter'),
-    key: 'VoteTransaction',
+    key: 'castVotes',
     icon: 'txVote',
   },
   createMultiSig: {
