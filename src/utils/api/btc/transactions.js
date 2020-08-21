@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import * as bitcoin from 'bitcoinjs-lib';
 import { BigNumber } from 'bignumber.js';
 import * as popsicle from 'popsicle';
@@ -8,6 +9,7 @@ import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
 import getBtcConfig from './config';
 import networks from '../../../constants/networks';
+import { fromRawLsk, toRawLsk } from '../lsk';
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
@@ -248,7 +250,10 @@ export const broadcast = (transactionHex, network) => new Promise(async (resolve
   }
 });
 
-export const getDynamicFees = () => new Promise(async (resolve, reject) => {
+/**
+ * Returns a dictionary of base fees for low, medium and high processing speeds
+ */
+export const getDynamicBaseFees = () => new Promise(async (resolve, reject) => {
   try {
     const config = getBtcConfig(0);
     const response = await popsicle.get(config.minerFeesURL)
@@ -268,3 +273,28 @@ export const getDynamicFees = () => new Promise(async (resolve, reject) => {
     reject(error);
   }
 });
+
+/**
+ * Returns the actual tx fee based on given tx details and selected processing speed
+ * @param {String} address - Account address
+ * @param {Object} network - network configuration
+ */
+export const getDynamicFee = async (account, network, txData, dynamicFeePerByte) => {
+  const unspentTransactionOutputs = await getUnspentTransactionOutputs(
+    account.address, network,
+  );
+
+  const value = getTransactionFeeFromUnspentOutputs({
+    unspentTransactionOutputs,
+    satoshiValue: toRawLsk(txData.amount),
+    dynamicFeePerByte,
+  });
+  const feedback = txData.txAmount === ''
+    ? '-'
+    : `${(value ? '' : 'Invalid amount')}`;
+  return {
+    value,
+    error: !!feedback,
+    feedback,
+  };
+};
