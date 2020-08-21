@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
@@ -10,10 +12,10 @@ import BoxContent from '../../../toolbox/box/content';
 import EmptyState from './emptyState';
 import regex from '../../../../utils/regex';
 import routes from '../../../../constants/routes';
-import styles from './bookmarksList.css';
+import styles from './list.css';
 import Icon from '../../../toolbox/icon';
 
-class BookmarksList extends React.Component {
+export class BookmarksList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -268,4 +270,9 @@ BookmarksList.defaultProps = {
   emptyStateClassName: '',
 };
 
-export default BookmarksList;
+const mapStateToProps = state => ({
+  bookmarks: state.bookmarks,
+  token: state.settings.token,
+});
+
+export default connect(mapStateToProps)(withTranslation()(BookmarksList));

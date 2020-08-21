@@ -3,7 +3,7 @@ import Illustration from '../../../toolbox/illustration';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import Icon from '../../../toolbox/icon';
-import styles from './bookmarksList.css';
+import styles from './list.css';
 
 const EmptyState = ({
   bookmarks, token, emptyStateClassName, t, onAddBookmark,

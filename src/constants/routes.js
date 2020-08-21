@@ -2,7 +2,7 @@ import { tokenMap } from './tokens';
 import AddBookmark from '../components/screens/bookmarks/addBookmark';
 import BlockDetails from '../components/screens/monitor/blockDetails';
 import Blocks from '../components/screens/monitor/blocks';
-import Bookmarks from '../components/screens/bookmarks';
+import Bookmarks from '../components/screens/bookmarks/list';
 import Dashboard from '../components/screens/dashboard';
 import Voting from '../components/screens/voting';
 import DelegatesMonitor from '../components/screens/monitor/delegates';
