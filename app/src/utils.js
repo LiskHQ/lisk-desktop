@@ -1,5 +1,5 @@
 import { ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
-import Lisk from '@liskhq/lisk-client-old'; // eslint-disable-line
+import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 
 export const createCommand = (command, fn) => {
   ipcMain.on(`${command}.request`, (event, ...args) => {

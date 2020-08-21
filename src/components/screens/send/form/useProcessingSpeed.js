@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getDynamicFees } from '../../../../utils/api/btc/service';
 
+// @todo account for LSK processing speed too.
 const useProcessingSpeed = () => {
   const { t } = useTranslation();
   const [dynamicFees = {}, error, status] = usePromise(getDynamicFees, []);
@@ -26,6 +27,7 @@ const useProcessingSpeed = () => {
 
   const feeOptions = [
     { title: t('Low'), value: dynamicFees.Low },
+    // @todo add medium processing speed.
     { title: t('High'), value: dynamicFees.High },
   ];
 

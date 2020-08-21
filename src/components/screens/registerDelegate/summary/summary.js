@@ -33,7 +33,7 @@ class Summary extends React.Component {
     };
 
     const [error, tx] = await to(
-      create(data, transactionTypes().registerDelegate.key, network.networks.LSK.apiVersion),
+      create(data, transactionTypes().registerDelegate.key),
     );
     if (!error) nextStep({ transactionInfo: tx });
   }

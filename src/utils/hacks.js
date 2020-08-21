@@ -1,4 +1,4 @@
-import liskClient from 'Utils/lisk-client'; // eslint-disable-line
+import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 
 // The following function is used as a hack to fix timestamp issues.
 // The problem is that Windows has often local time little bit in future and
@@ -11,11 +11,8 @@ import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 // https://github.com/LiskHQ/lisk-desktop/issues/1277
 //
 // eslint-disable-next-line import/prefer-default-export
-export const getTimeOffset = (latestBlocks, apiVersion) => {
-  const Lisk = liskClient(apiVersion);
-  return (
-    latestBlocks.length && latestBlocks[0].timestamp
-      ? latestBlocks[0].timestamp - Lisk.transaction.utils.getTimeFromBlockchainEpoch()
-      : 0
-  );
-};
+export const getTimeOffset = latestBlocks => (
+  latestBlocks.length && latestBlocks[0].timestamp
+    ? latestBlocks[0].timestamp - Lisk.transaction.utils.getTimeFromBlockchainEpoch()
+    : 0
+);

@@ -1,5 +1,5 @@
 import React from 'react';
-import liskClient from 'Utils/lisk-client'; // eslint-disable-line
+import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styles from './signMessage.css';
 import Box from '../../toolbox/box';
@@ -30,7 +30,6 @@ class ConfirmMessage extends React.Component {
   }
 
   sign() {
-    const Lisk = liskClient(this.props.apiVersion);
     const { message, account } = this.props;
     const signedMessage = Lisk.cryptography.signMessageWithPassphrase(
       message,

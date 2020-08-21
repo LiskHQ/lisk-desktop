@@ -1,5 +1,3 @@
-const defaultApiVersion = '2';
-
 /**
  * Returns details of the transaction types
  *
@@ -8,41 +6,41 @@ const defaultApiVersion = '2';
  * and simply assume we always receive the new layout
  * but transactions may have either of the tx type codes.
  */
-const transactionTypes = (t = str => str, apiVersion = defaultApiVersion) => ({
+const transactionTypes = (t = str => str) => ({
   send: {
-    code: 0,
-    outgoingCode: apiVersion === defaultApiVersion ? 0 : 8,
+    code: [0, 8][0],
+    outgoingCode: 8,
     title: t('Send'),
     senderLabel: t('Sender'),
     key: 'transfer',
   },
   setSecondPassphrase: {
-    code: 1,
-    outgoingCode: apiVersion === defaultApiVersion ? 1 : 9,
+    code: [1, 9][0],
+    outgoingCode: 9,
     title: t('Second passphrase registration'),
     senderLabel: t('Account'),
     key: 'secondPassphrase',
     icon: 'tx2ndPassphrase',
   },
   registerDelegate: {
-    code: 2,
-    outgoingCode: apiVersion === defaultApiVersion ? 2 : 10,
+    code: [2, 10][0],
+    outgoingCode: 10,
     title: t('Delegate registration'),
     senderLabel: t('Account nickname'),
     key: 'registerDelegate',
     icon: 'txDelegate',
   },
   vote: {
-    code: 3,
-    outgoingCode: apiVersion === defaultApiVersion ? 3 : 11,
+    code: [3, 11][0],
+    outgoingCode: 11,
     title: t('Delegate vote'),
     senderLabel: t('Voter'),
     key: 'vote',
     icon: 'txVote',
   },
   createMultiSig: {
-    code: 4,
-    outgoingCode: apiVersion === defaultApiVersion ? 4 : 12,
+    code: [4, 12][0],
+    outgoingCode: 12,
     title: t('Multisignature creation'),
     senderLabel: t('Registrant'),
     key: 'createMultiSig',

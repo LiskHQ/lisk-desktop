@@ -7,10 +7,10 @@ import styles from './votes.css';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 
 const VoteRow = ({
-  data, onRowClick, t, apiVersion,
+  data, onRowClick, t,
 }) => (
   <div className={`${tableStyles.row} ${styles.row} vote-row`} onClick={() => onRowClick(data.address)}>
-    <div className={apiVersion === '3' ? 'hidden' : grid['col-sm-1']}>
+    <div className="hidden">
       {
         /* istanbul ignore next */
         (data.rank && +data.rank < 10 ? `0${data.rank}` : data.rank) || '-'
@@ -36,7 +36,7 @@ const VoteRow = ({
         {t('LSK')}
       </span>
     </div>
-    <div className={`${grid['col-sm-2']} ${grid[apiVersion === '3' ? 'col-lg-2' : 'col-lg-1']}`}>
+    <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`}>
       {data.productivity !== undefined
         ? `${formatAmountBasedOnLocale({ value: data.productivity })}%`
         /* istanbul ignore next */

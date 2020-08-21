@@ -22,7 +22,7 @@ const mockNetwork = {
     LSK: {
       nodeUrl: '',
       code: 0,
-      apiVersion: '2',
+      apiVersion: '2', // @todo Remove?
       nethash: '',
     },
   },

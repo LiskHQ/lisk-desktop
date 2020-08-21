@@ -17,7 +17,7 @@ describe('Delegate Profile', () => {
         rank: 1,
         rewards: '140500000000',
         username: delegate.username,
-        vote: '9876965713168313',
+        voteWeight: '9876965713168313',
         lastBlock: 0,
         txDelegateRegister: { timestamp: 0 },
       },

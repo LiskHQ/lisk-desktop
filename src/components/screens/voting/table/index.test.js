@@ -9,7 +9,7 @@ import delegates from '../../../../../test/constants/delegates';
 const mockStore = {
   network: {
     networks: {
-      LSK: { apiVersion: '2' },
+      LSK: { apiVersion: '2' }, // @todo Remove?
     },
   },
   voting: {

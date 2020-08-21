@@ -26,8 +26,12 @@ const FormLsk = (props) => {
     amount,
     recipient,
     reference,
-    fee: { value: Fees.send },
+    fee: { value: Fees.send }, // @todo implement dynamic fee calculation
   };
+
+  // @todo define getProcessingSpeedStatus. Because the Lisk Service
+  // API is not ready, mock the low/medium/high processing speeds
+  // With constants. Make the custom fee input the default view.
 
   return (
     <FormBase

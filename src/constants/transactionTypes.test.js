@@ -7,7 +7,7 @@ describe('Constants: transactionTypes', () => {
       .fn()
       .mockReturnValue({
         network: {
-          ApiVersion: '2.x',
+          ApiVersion: '2.x', // @todo remove?
         },
       });
   });

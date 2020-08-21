@@ -10,7 +10,6 @@ import SignMessage from './signMessage';
  */
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
-  apiVersion: state.network.networks.LSK.apiVersion,
 });
 
 export default withRouter(connect(mapStateToProps)(withTranslation()(SignMessage)));

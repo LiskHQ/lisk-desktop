@@ -36,6 +36,9 @@ const FormBtc = (props) => {
     ? `${formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) })} ${token}`
     : fields.fee.feedback);
 
+  // @todo Move the processing speed to FormBase because it is used
+  // on both LSK and BTC platforms.
+
   return (
     <FormBase
       {...props}

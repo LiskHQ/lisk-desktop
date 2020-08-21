@@ -31,7 +31,7 @@ const AddressWrapper = ({ votingModeEnabled, address, children }) => {
 const DelegateRow = (props) => {
   const {
     data, className, shouldShowVoteColumn, firstTimeVotingActive,
-    votingModeEnabled, apiVersion,
+    votingModeEnabled,
   } = props;
   const dispatch = useDispatch();
   const voteStatus = useSelector(state => state.voting.votes[data.username]);
@@ -58,7 +58,7 @@ const DelegateRow = (props) => {
           accent={firstTimeVotingActive}
         />
       </span>
-      <span className={apiVersion === '3' ? 'hidden' : grid['col-xs-1']}>
+      <span className="hidden">
         <RankOrStatus data={data} />
       </span>
       <span className={`${shouldShowVoteColumn ? grid['col-xs-4'] : grid['col-xs-5']}`}>
@@ -69,7 +69,7 @@ const DelegateRow = (props) => {
           <AvatarWithNameAndAddress {...data} />
         </AddressWrapper>
       </span>
-      <span className={apiVersion === '3' ? grid['col-md-3'] : grid['col-md-2']}>
+      <span className={grid['col-md-3']}>
         <LiskAmount val={data.rewards} token={tokenMap.LSK.key} />
       </span>
       <span className={grid['col-xs-2']}>

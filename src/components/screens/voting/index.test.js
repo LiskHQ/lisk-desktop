@@ -26,7 +26,7 @@ const votes = {
 const mockStore = {
   network: {
     networks: {
-      LSK: { apiVersion: '2' },
+      LSK: { apiVersion: '2' }, // @todo Remove?
     },
   },
   account: { address: delegates[0].address },

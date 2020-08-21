@@ -84,7 +84,6 @@ const DelegatesTable = ({
   const activeTab = tabsData(t)[params.tab];
   const { votes } = useSelector(state => state.voting);
   const network = useSelector(state => state.network);
-  const { apiVersion } = network.networks.LSK;
   const shouldShowVoteColumn = votingModeEnabled || getTotalVotesCount(votes) > 0;
   const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
 
@@ -152,11 +151,10 @@ const DelegatesTable = ({
             firstTimeVotingActive,
             shouldShowVoteColumn,
             votingModeEnabled,
-            apiVersion,
           }}
           row={DelegateRow}
           loadData={loadDelegatesData}
-          header={header(shouldShowVoteColumn, t, apiVersion, firstTimeVotingActive)}
+          header={header(shouldShowVoteColumn, t, firstTimeVotingActive)}
           canLoadMore={canLoadMore}
           error={false}
           iterationKey="username"

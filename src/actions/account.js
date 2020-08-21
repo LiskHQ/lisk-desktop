@@ -92,7 +92,7 @@ export const secondPassphraseRegistered = ({
     const { settings: { token: { active } }, network, blocks } = getState();
     const { networkIdentifier } = network.networks.LSK;
     const liskAPIClient = getAPIClient(active, network);
-    const timeOffset = getTimeOffset(blocks.latestBlocks, network.networks.LSK.apiVersion);
+    const timeOffset = getTimeOffset(blocks.latestBlocks);
     setSecondPassphrase(
       liskAPIClient,
       secondPassphrase,
@@ -100,7 +100,6 @@ export const secondPassphraseRegistered = ({
       passphrase,
       timeOffset,
       networkIdentifier,
-      network.networks.LSK.apiVersion,
     ).then((transaction) => {
       dispatch({
         type: actionTypes.addNewPendingTransaction,
