@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
@@ -111,4 +112,4 @@ const delegateProfile = ({
   );
 };
 
-export default delegateProfile;
+export default withTranslation()(delegateProfile);

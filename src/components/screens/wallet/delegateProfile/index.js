@@ -1,3 +1,4 @@
+// istanbul ignore file
 import { withTranslation } from 'react-i18next';
 import { getNextForgers } from '../../../../utils/api/delegates';
 import { getBlocks } from '../../../../utils/api/blocks';

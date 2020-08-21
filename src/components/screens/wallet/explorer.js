@@ -15,6 +15,7 @@ import VotesTab from './votes';
 import Transactions from './transactions';
 import { selectSearchParamValue } from '../../../utils/searchParams';
 
+
 const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
 /**
  * The implementation of this API endpoint and the ones implemented for Lisk Service
