@@ -7,7 +7,25 @@ import regex from '../../../../utils/regex';
 
 let loaderTimeout = null;
 
-const useAmountField = (initialValue, maxAmount) => {
+const baseState = {
+  required: true,
+  isLoading: false,
+  error: false,
+  feedback: '',
+};
+
+const getAmountFieldState = (initialValue, getAmountFeedbackAndError) => (initialValue
+  ? {
+    ...baseState,
+    ...getAmountFeedbackAndError(initialValue),
+    value: initialValue,
+  }
+  : {
+    ...baseState,
+    value: '',
+  });
+
+const useAmountField = (initialValue) => {
   const { t, i18n } = useTranslation();
   const {
     settings: { token: { active: token } },
@@ -16,28 +34,16 @@ const useAmountField = (initialValue, maxAmount) => {
   const getAmountFeedbackAndError = (value) => {
     let { message: feedback } = validateAmountFormat({ value, token });
 
+    const maxAmount = 1000;
     if (!feedback && parseFloat(maxAmount) < numeral(value).value()) {
       feedback = t('Provided amount is higher than your current balance.');
     }
     return { error: !!feedback, feedback };
   };
-  const baseState = {
-    required: true,
-    isLoading: false,
-    error: false,
-    feedback: '',
-  };
 
-  const [amountField, setAmountField] = useState(initialValue
-    ? {
-      ...baseState,
-      ...getAmountFeedbackAndError(initialValue),
-      value: initialValue,
-    }
-    : {
-      ...baseState,
-      value: '',
-    });
+  const [amountField, setAmountField] = useState(
+    getAmountFieldState(initialValue, getAmountFeedbackAndError),
+  );
 
   const onAmountInputChange = ({ value }) => {
     const { leadingPoint } = regex.amount[i18n.language];
@@ -58,6 +64,7 @@ const useAmountField = (initialValue, maxAmount) => {
     }, 300);
   };
 
+  console.log('useAMountField', amountField);
   return [amountField, onAmountInputChange];
 };
 

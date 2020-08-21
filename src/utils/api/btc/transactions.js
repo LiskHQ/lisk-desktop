@@ -9,7 +9,7 @@ import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
 import getBtcConfig from './config';
 import networks from '../../../constants/networks';
-import { fromRawLsk, toRawLsk } from '../lsk';
+import { toRawLsk } from '../../lsk';
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
@@ -279,7 +279,10 @@ export const getDynamicBaseFees = () => new Promise(async (resolve, reject) => {
  * @param {String} address - Account address
  * @param {Object} network - network configuration
  */
-export const getDynamicFee = async (account, network, txData, dynamicFeePerByte) => {
+export const getDynamicFee = async ({
+  account, network, txData, dynamicFeePerByte,
+}) => {
+  console.log(account, network, txData, dynamicFeePerByte);
   const unspentTransactionOutputs = await getUnspentTransactionOutputs(
     account.address, network,
   );
@@ -287,7 +290,7 @@ export const getDynamicFee = async (account, network, txData, dynamicFeePerByte)
   const value = getTransactionFeeFromUnspentOutputs({
     unspentTransactionOutputs,
     satoshiValue: toRawLsk(txData.amount),
-    dynamicFeePerByte,
+    dynamicFeePerByte: dynamicFeePerByte.value,
   });
   const feedback = txData.txAmount === ''
     ? '-'

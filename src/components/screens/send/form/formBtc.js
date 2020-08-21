@@ -13,16 +13,27 @@ import useDynamicFeeCalculation from './useDynamicFeeCalculation';
 import useProcessingSpeed from './useProcessingSpeed';
 import useRecipientField from './useRecipientField';
 
+// eslint-disable-next-line max-statements
 const FormBtc = (props) => {
+  console.log('formBtc');
+
   const {
-    t, account, token, getInitialValue,
+    t, token, getInitialValue,
   } = props;
   const txType = 'transfer';
 
   const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
-  const [fee, maxAmount] = useDynamicFeeCalculation(processingSpeed, { amount, txType });
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), maxAmount);
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'));
+
+  console.log('formBtc 2');
+
+  // @todo use real transaction object
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
+  console.log('formBtc 3');
+  const [fee, maxAmount] = useDynamicFeeCalculation(processingSpeed, {
+    amount: amount.value, txType, recipient: recipient.value,
+  });
+
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
@@ -52,8 +63,8 @@ const FormBtc = (props) => {
           <Tooltip>
             <p className={styles.tooltipText}>
               {
-                    t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')
-                  }
+                t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')
+              }
             </p>
           </Tooltip>
         </span>

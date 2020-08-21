@@ -175,13 +175,15 @@ export const broadcast = (transaction, networkConfig) => new Promise(
  * @param {String} address - Account address
  * @param {Object} network - network configuration
  */
-export const getDynamicFee = async (account, network, txData, speedData) => {
+export const getDynamicFee = async ({
+  account, network, txData, dynamicFeePerByte,
+}) => {
   const { txType, ...data } = txData;
   const minFee = calculateMinTxFee(data, txType);
 
-  const value = minFee + speedData.value * findTransactionSizeInBytes({
+  const value = minFee + dynamicFeePerByte.value * findTransactionSizeInBytes({
     transaction: data, type: txType,
-  }) + (minFeePerByte * (speedData.value) * Math.rand());
+  }) + (minFeePerByte * (dynamicFeePerByte.value) * Math.rand());
 
   const feedback = data.amount === ''
     ? '-'

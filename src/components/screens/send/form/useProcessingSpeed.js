@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { getDynamicBaseFees } from '../../../../utils/api/btc/service';
+import { getDynamicBaseFees } from '../../../../utils/api/transactions';
 
 const useProcessingSpeed = () => {
   const { t } = useTranslation();
