@@ -98,11 +98,12 @@ const getNameFee = transactionType => transactionsNameFeeMap[transactionType];
 
 /**
  * Calculates the min. transaction fee needed for a transaction
+ *
  * @param {object} transaction transaction object
  * @param {number} type transaction type
  * @returns {number} min transaction fee
  */
-export const calculateTransactionFee = (
+export const calculateMinTxFee = (
   transaction, type,
 ) => {
   const fees = findTransactionSizeInBytes({
@@ -113,24 +114,23 @@ export const calculateTransactionFee = (
 };
 
 /**
- * Calculates the transaction priority fee options
- * @param {object} transaction transaction object
- * @param {number} type transaction type
- * @returns {{low: number, medium: number, high: number}} with low,
+ * Returns a dictionary of base fees for low, medium and high processing speeds
+ *
+ * @todo get from Lisk Ser
+ * @returns {{Low: number, Medium: number, High: number}} with low,
  * medium and high priority fee options
  */
-export const getTransactionFeeEstimates = (
-  transaction, type,
-) => {
-  const fee = calculateTransactionFee(transaction, type);
+export const getDynamicBaseFees = () => (
+  new Promise(async (resolve) => {
+    const fee = 0.1;
 
-  // @todo use real fee estimates
-  return {
-    low: fee,
-    medium: fee * 2,
-    high: fee * 3,
-  };
-};
+    // @todo use real fee estimates
+    resolve({
+      Low: fee,
+      Medium: fee * 2,
+      High: fee * 3,
+    });
+  }));
 
 /**
  * creates a new transaction
@@ -169,3 +169,26 @@ export const broadcast = (transaction, networkConfig) => new Promise(
     }
   },
 );
+
+/**
+ * Returns the actual tx fee based on given tx details and selected processing speed
+ * @param {String} address - Account address
+ * @param {Object} network - network configuration
+ */
+export const getDynamicFee = async (account, network, txData, speedData) => {
+  const { txType, ...data } = txData;
+  const minFee = calculateMinTxFee(data, txType);
+
+  const value = minFee + speedData.value * findTransactionSizeInBytes({
+    transaction: data, type: txType,
+  }) + (minFeePerByte * (speedData.value) * Math.rand());
+
+  const feedback = data.amount === ''
+    ? '-'
+    : `${(value ? '' : 'Invalid amount')}`;
+  return {
+    value,
+    error: !!feedback,
+    feedback,
+  };
+};
