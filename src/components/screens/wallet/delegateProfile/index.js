@@ -7,7 +7,6 @@ import transactionTypes from '../../../../constants/transactionTypes';
 import withData from '../../../../utils/withData';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 
-
 const apis = {
   delegate: {
     apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).delegates.get(params),

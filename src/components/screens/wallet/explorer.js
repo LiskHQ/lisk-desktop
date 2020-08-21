@@ -74,7 +74,6 @@ const Wallet = ({
         {account.data && account.data.delegate
           ? (
             <DelegateTab
-              delegate={account}
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
               address={selectSearchParamValue(history.location.search, 'address')}
