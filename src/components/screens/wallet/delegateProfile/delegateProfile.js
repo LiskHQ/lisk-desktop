@@ -20,8 +20,6 @@ const delegateProfile = ({
     txDelegateRegister.loadData();
   }, [address]);
 
-  if (!delegate.data) return null;
-
   useEffect(() => {
     if (delegate.data.username) {
       lastBlock.loadData({
