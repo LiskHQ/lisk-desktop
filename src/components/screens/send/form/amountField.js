@@ -11,13 +11,13 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
 
 const AmountField = ({
-  amount, getMaxAmount, fee, setAmountField,
+  amount, maxAmount, fee, setAmountField,
 }) => {
   const { t } = useTranslation();
   const name = 'amount';
   const setEntireBalance = () => {
     const value = formatAmountBasedOnLocale({
-      value: getMaxAmount(),
+      value: maxAmount,
       format: '0.[00000000]',
     });
     setAmountField({ value });

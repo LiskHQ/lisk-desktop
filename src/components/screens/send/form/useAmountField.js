@@ -7,7 +7,7 @@ import regex from '../../../../utils/regex';
 
 let loaderTimeout = null;
 
-const useAmountField = (initialValue, getMaxAmount) => {
+const useAmountField = (initialValue, maxAmount) => {
   const { t, i18n } = useTranslation();
   const {
     settings: { token: { active: token } },
@@ -16,7 +16,7 @@ const useAmountField = (initialValue, getMaxAmount) => {
   const getAmountFeedbackAndError = (value) => {
     let { message: feedback } = validateAmountFormat({ value, token });
 
-    if (!feedback && parseFloat(getMaxAmount()) < numeral(value).value()) {
+    if (!feedback && parseFloat(maxAmount) < numeral(value).value()) {
       feedback = t('Provided amount is higher than your current balance.');
     }
     return { error: !!feedback, feedback };
