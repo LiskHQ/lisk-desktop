@@ -197,3 +197,50 @@
   margin-left: -4px;
   margin-top: 4px;
 }
+
+.dynamicFeeWrapper {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 42px;
+  padding: 0 var(--horizontal-padding-l);
+
+  & > .col {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+    justify-content: space-between;
+    padding-right: 100px;
+
+    & > .prioritySelector {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      & > .feePriority {
+        background-color: var(--color-white);
+        color: var(--color-maastricht-blue);
+        font-family: var(--content-font);
+        font-size: 14px;
+        line-height: 18px;
+        border: 1px solid #C5CFE4;
+        border-radius: 18px;
+        margin-right: 5px;
+        padding: 5px 16px;
+        outline:none;
+
+        &.feePrioritySelected {
+          background-color: var(--color-ink-blue);
+          color: var(--color-white);
+        }
+      }
+    }
+
+    & > .fee {
+      color: var(--color-maastricht-blue);
+      font-family: var(--content-font);
+      font-weight: normal;
+      font-size: var(--font-size-h6);
+      margin-bottom: 5px;
+    }
+  }
+}

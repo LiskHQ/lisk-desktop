@@ -11,6 +11,7 @@ import styles from './form.css';
 import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
+import DynamicFee from './dynamicFee';
 
 const FormLsk = (props) => {
   const { account, t, getInitialValue } = props;
@@ -79,6 +80,7 @@ const FormLsk = (props) => {
           </Tooltip>
         </span>
       </label>
+      <DynamicFee />
     </FormBase>
   );
 };
