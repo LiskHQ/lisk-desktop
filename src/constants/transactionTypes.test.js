@@ -63,7 +63,7 @@ describe('Constants: transactionTypes', () => {
       'transfer',
       'secondPassphrase',
       'registerDelegate',
-      'vote',
+      'castVotes',
       'createMultiSig',
     ]);
   });
