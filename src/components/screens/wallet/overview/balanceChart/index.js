@@ -23,7 +23,7 @@ const BalanceGraph = ({
   }, [token]);
 
   useEffect(() => {
-    if (transactions.length && balance !== undefined) {
+    if (!data && transactions.length && balance !== undefined) {
       const format = ChartUtils.getChartDateFormat(transactions);
       setOptions(ChartUtils.graphOptions({
         format,
