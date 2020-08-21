@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Fields from './fields';
+import ModalWrapper from '../modalWrapper';
 import { validateAddress } from '../../../../utils/validators';
 import networks from '../../../../constants/networks';
 import Box from '../../../toolbox/box';
@@ -233,46 +234,47 @@ class AddBookmark extends React.Component {
     const isDisabled = !!Object.keys(fields).find(field => fields[field].error || fields[field].value === '');
 
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.content}>
-          <header className={styles.header}><Icon name="bookmarkActive" /></header>
-          <Box className={styles.box}>
-            <BoxHeader><h2>{this.state.edit ? t('Edit bookmark') : t('New bookmark')}</h2></BoxHeader>
-            <BoxContent>
-              <Fields
-                fields={this.fields}
-                status={this.state.fields}
-                onInputChange={this.onInputChange}
-              />
-            </BoxContent>
-            <BoxFooter direction="horizontal">
-              <SecondaryButton className="cancel-button" onClick={this.onClose}>
-                {t('Cancel')}
-              </SecondaryButton>
-              {this.state.showRemoveBtn && (
-                <SecondaryButton className="remove-button" onClick={this.handleRemoveBookmark}>
-                  <div className={styles.removeBtn}>
-                    <Icon name="remove" />
-                    {t('Remove')}
-                  </div>
+      <ModalWrapper>
+        <div className={styles.wrapper}>
+          <div className={styles.content}>
+            <header className={styles.header}><Icon name="bookmarkActive" /></header>
+            <Box className={styles.box}>
+              <BoxHeader><h2>{this.state.edit ? t('Edit bookmark') : t('New bookmark')}</h2></BoxHeader>
+              <BoxContent>
+                <Fields
+                  fields={this.fields}
+                  status={this.state.fields}
+                  onInputChange={this.onInputChange}
+                />
+              </BoxContent>
+              <BoxFooter direction="horizontal">
+                <SecondaryButton className="cancel-button" onClick={this.onClose}>
+                  {t('Cancel')}
                 </SecondaryButton>
-              )}
-              {this.state.showSaveBtn && (
-                <PrimaryButton disabled={isDisabled} onClick={this.handleAddBookmark} className="save-button">
-                  {t('Save')}
-                </PrimaryButton>
-              )}
-            </BoxFooter>
-          </Box>
+                {this.state.showRemoveBtn && (
+                  <SecondaryButton className="remove-button" onClick={this.handleRemoveBookmark}>
+                    <div className={styles.removeBtn}>
+                      <Icon name="remove" />
+                      {t('Remove')}
+                    </div>
+                  </SecondaryButton>
+                )}
+                {this.state.showSaveBtn && (
+                  <PrimaryButton disabled={isDisabled} onClick={this.handleAddBookmark} className="save-button">
+                    {t('Save')}
+                  </PrimaryButton>
+                )}
+              </BoxFooter>
+            </Box>
+          </div>
         </div>
-      </div>
+      </ModalWrapper>
     );
   }
 }
 
 AddBookmark.displayName = 'AddBookmark';
 AddBookmark.propTypes = {
-  autofill: PropTypes.bool,
   t: PropTypes.func.isRequired,
   token: PropTypes.shape({
     active: PropTypes.string.isRequired,
