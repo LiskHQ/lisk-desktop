@@ -6,11 +6,10 @@ pipeline {
 	options {
 		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
-	environment {
-		LISK_CORE_VERSION = '2.1.3'
-	}
 	parameters {
 		booleanParam(name: 'SKIP_PERCY', defaultValue: false, description: 'Skip running percy.')
+		string(name: 'LISK_CORE_VERSION', defaultValue: 'release/3.0.0', description: 'Use lisk-core branch.', )
+		string(name: 'LISK_CORE_IMAGE_VERSION', defaultValue: '3.0.0-beta.1-a7842d112d5136d9462501763c4cb2895096e900', description: 'Use lisk-core docker image.', )
 	}
 	stages {
 		stage('Install npm dependencies') {
@@ -89,7 +88,7 @@ pipeline {
 					"cypress": {
 						dir('lisk') {
 							checkout([$class: 'GitSCM',
-							          tags: [[name: "v${env.LISK_CORE_VERSION}" ]],
+							          branches: [[name: "${params.LISK_CORE_VERSION}" ]],
 								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-core']]])
 						}
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
@@ -105,7 +104,7 @@ pipeline {
 										cp $WORKSPACE/test/dev_blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
 										cd $WORKSPACE/$BRANCH_NAME
 										cp .env.development .env
-										sed -i -r -e "s/ENV_LISK_VERSION=.*$/ENV_LISK_VERSION=$LISK_CORE_VERSION/" .env
+										sed -i -r -e "s/ENV_LISK_VERSION=.*$/ENV_LISK_VERSION=$LISK_CORE_IMAGE_VERSION/" .env
 
 										sed -i -r -e '/ports:/,+2d' docker-compose.yml
 										# random port assignment
@@ -119,7 +118,7 @@ services:
       - \\${ENV_LISK_WS_PORT}
 EOF
 
-										ENV_LISK_VERSION="$LISK_CORE_VERSION" make coldstart
+										ENV_LISK_VERSION="$LISK_CORE_IMAGE_VERSION" make coldstart
 										export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
 										export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 										cd -
@@ -196,7 +195,7 @@ EOF
 		}
 		cleanup {
 			ansiColor('xterm') {
-				sh '( cd $WORKSPACE/$BRANCH_NAME && make mrproper || true ) || true'
+				sh '( cd $WORKSPACE/$BRANCH_NAME && docker-compose logs && make mrproper || true ) || true'
 			}
 			cleanWs()
 		}
