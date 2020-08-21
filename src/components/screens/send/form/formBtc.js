@@ -17,11 +17,11 @@ const FormBtc = (props) => {
   const {
     t, account, token, getInitialValue,
   } = props;
-
+  const txType = 'transfer';
 
   const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
-  const [getDynamicFee, getMaxAmount] = useDynamicFeeCalculation(account, processingSpeed.value);
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), getMaxAmount);
+  const [fee, maxAmount] = useDynamicFeeCalculation(processingSpeed, { amount, txType });
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), maxAmount);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
@@ -29,7 +29,7 @@ const FormBtc = (props) => {
     amount,
     recipient,
     processingSpeed,
-    fee: getDynamicFee(amount.value),
+    fee,
   };
 
   const getProcessingSpeedStatus = () => (!fields.fee.error
@@ -44,7 +44,7 @@ const FormBtc = (props) => {
       {...props}
       fields={fields}
       fieldUpdateFunctions={fieldUpdateFunctions}
-      getMaxAmount={getMaxAmount}
+      maxAmount={maxAmount}
     >
       <div className={`${styles.fieldGroup} processing-speed`}>
         <span className={`${styles.fieldLabel}`}>
