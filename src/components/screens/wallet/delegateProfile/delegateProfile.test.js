@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
 import { delegate, genesis } from '../../../../../test/constants/accounts';
-import DelegateProfile from './index';
+import DelegateProfile from './delegateProfile';
 
 describe('Delegate Profile', () => {
   let wrapper;

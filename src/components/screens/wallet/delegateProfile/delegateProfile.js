@@ -14,12 +14,11 @@ const delegateProfile = ({
   delegate, lastBlock, txDelegateRegister, address, nextForgers, t = str => str,
 }) => {
   const { apiVersion } = useSelector(state => state.network.networks.LSK);
+  if (!delegate.data) return null;
   useEffect(() => {
     delegate.loadData();
     txDelegateRegister.loadData();
   }, [address]);
-
-  if (!delegate) return null;
 
   useEffect(() => {
     if (delegate.data.username) {

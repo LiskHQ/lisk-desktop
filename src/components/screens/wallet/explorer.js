@@ -14,11 +14,6 @@ import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
 import { selectSearchParamValue } from '../../../utils/searchParams';
-import { getNextForgers } from '../../../utils/api/delegates';
-import { getBlocks } from '../../../utils/api/blocks';
-import transactionTypes from '../../../constants/transactionTypes';
-import { getAPIClient } from '../../../utils/api/lsk/network';
-
 
 const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
 /**
@@ -39,7 +34,7 @@ const transformParams = params => Object.keys(params)
 
 
 const Wallet = ({
-  transactions, t, match, account, history, lastBlock, txDelegateRegister, nextForgers,
+  transactions, t, match, account, history,
 }) => {
   const activeToken = useSelector(state => state.settings.token.active);
   const { discreetMode } = useSelector(state => state.settings);
@@ -80,9 +75,6 @@ const Wallet = ({
           ? (
             <DelegateTab
               delegate={account}
-              lastBlock={lastBlock}
-              txDelegateRegister={txDelegateRegister}
-              nextForgers={nextForgers}
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
               address={selectSearchParamValue(history.location.search, 'address')}
@@ -122,39 +114,6 @@ const apis = {
         ? [...oldData, ...response.data]
         : response.data
     ),
-  },
-  delegate: {
-    apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).delegates.get(params),
-    defaultData: {},
-    getApiParams: (state, ownProps) => ({
-      address: ownProps.address,
-    }),
-    transformResponse: response => (response.data[0] ? response.data[0] : {}),
-  },
-  lastBlock: {
-    apiUtil: getBlocks,
-    defaultData: false,
-    transformResponse: response => (response.data[0] && response.data[0].timestamp),
-  },
-  txDelegateRegister: {
-    apiUtil: (apiClient, params) => getTransactions(params),
-    getApiParams: (state, ownProps) => ({
-      token: state.settings.token.active,
-      address: ownProps.address,
-      networkConfig: state.network,
-      type: transactionTypes().registerDelegate.outgoingCode,
-      limit: 1,
-    }),
-    defaultData: false,
-    transformResponse: response => (response.data[0] && response.data[0].timestamp),
-  },
-  nextForgers: {
-    apiUtil: getNextForgers,
-    defaultData: [],
-    autoload: true,
-    getApiParams: () => ({
-      limit: 101,
-    }),
   },
 };
 
