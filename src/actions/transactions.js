@@ -61,11 +61,11 @@ export const getTransactions = ({
   filters = undefined,
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.getTransactions));
-  const networkConfig = getState().network;
+  const { network } = getState();
 
-  if (networkConfig) {
+  if (network) {
     const [error, response] = await to(transactionsAPI.getTransactions({
-      networkConfig, address, filters, limit, offset,
+      network, address, filters, limit, offset,
     }));
 
     if (error) {

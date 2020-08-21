@@ -1,5 +1,6 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import { BigNumber } from 'bignumber.js';
+import * as popsicle from 'popsicle';
 
 import { extractAddress, getDerivedPathFromPassphrase } from './account';
 import { getAPIClient, getNetworkCode } from './network';
@@ -241,6 +242,27 @@ export const broadcast = (transactionHex, network) => new Promise(async (resolve
       resolve(json.data);
     } else {
       reject(json);
+    }
+  } catch (error) {
+    reject(error);
+  }
+});
+
+export const getDynamicFees = () => new Promise(async (resolve, reject) => {
+  try {
+    const config = getBtcConfig(0);
+    const response = await popsicle.get(config.minerFeesURL)
+      .use(popsicle.plugins.parse('json'));
+
+    if (response) {
+      const { body } = response;
+      resolve({
+        Low: body.hourFee,
+        Medium: body.halfHourFee,
+        High: body.fastestFee,
+      });
+    } else {
+      reject(response);
     }
   } catch (error) {
     reject(error);

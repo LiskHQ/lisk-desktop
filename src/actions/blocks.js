@@ -9,11 +9,11 @@ import voting from '../constants/voting';
  * into reducer to reduce the big-O factor
  *
  * @param {Object} params - API query parameters
- * @param {Object} networkConfig - Network configuration for mainnet/testnet/devnet
+ * @param {Object} network - Network configuration for mainnet/testnet/devnet
  * @returns {Array} - the list of blocks
  */
-const loadLastBlocks = async (params, networkConfig) => {
-  const blocks = await liskServiceApi.getLastBlocks(networkConfig, params);
+const loadLastBlocks = async (params, network) => {
+  const blocks = await liskServiceApi.getLastBlocks(network, params);
   const total = blocks.meta.total;
   return {
     total,
