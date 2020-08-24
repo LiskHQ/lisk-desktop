@@ -250,6 +250,12 @@
       font-weight: normal;
       font-size: var(--font-size-h6);
       margin-bottom: 10px;
+      display: flex;
+      align-items: flex-end;
+
+      & > img {
+        margin-left: 10px;
+      }
     }
   }
 }
