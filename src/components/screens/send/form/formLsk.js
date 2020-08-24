@@ -80,7 +80,14 @@ const FormLsk = (props) => {
           </Tooltip>
         </span>
       </label>
-      <DynamicFee />
+      <DynamicFee
+        priorities={[
+          { label: 'Low', fee: 0.1 },
+          { label: 'Medium', fee: 0.3 },
+          { label: 'High', fee: 1 },
+          { label: 'Custom', fee: undefined },
+        ]}
+      />
     </FormBase>
   );
 };
