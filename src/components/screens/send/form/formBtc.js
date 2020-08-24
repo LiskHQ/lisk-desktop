@@ -21,7 +21,7 @@ const FormBtc = (props) => {
   const txType = 'transfer';
 
   const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), processingSpeed);
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'));
 
   // @todo use real transaction object
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
