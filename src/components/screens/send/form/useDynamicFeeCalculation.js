@@ -16,13 +16,13 @@ const useDynamicFeeCalculation = (dynamicFeePerByte, txData) => {
     error: false,
     feedback: '',
   };
-  const initialmaxAmount = {
+  const initialMaxAmount = {
     value: account.balance,
     error: false,
     feedback: '',
   };
   const [fee, setFee] = useState(initialFee);
-  const [maxAmount, setMaxAmount] = useState(initialmaxAmount);
+  const [maxAmount, setMaxAmount] = useState(initialMaxAmount);
 
   const asyncFn = async (param, name) => {
     const res = await getDynamicFee(param);
@@ -36,16 +36,14 @@ const useDynamicFeeCalculation = (dynamicFeePerByte, txData) => {
   };
 
   useEffect(() => {
-    console.log('useDynamicFeeCalculation', { txData });
     asyncFn({
       token, account, network, txData, dynamicFeePerByte,
     }, 'fee');
 
-    console.log('useDynamicFeeCalculation 1', { txData });
     asyncFn({
       token, account, network, txData: { ...txData, amount: account.balance }, dynamicFeePerByte,
     }, 'maxAmount');
-  }, []);
+  }, [txData.amount, dynamicFeePerByte.selectedIndex]);
 
   return [fee, maxAmount];
 };

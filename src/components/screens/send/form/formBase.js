@@ -13,7 +13,6 @@ const FormBase = ({
   t, token, children, fields, showFee, networkConfig, maxAmount,
   bookmarks, nextStep, fieldUpdateFunctions,
 }) => {
-  console.log('formbase');
   const onGoNext = () => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     nextStep({ fields });

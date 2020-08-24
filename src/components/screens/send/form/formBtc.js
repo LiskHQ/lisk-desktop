@@ -2,7 +2,7 @@ import React from 'react';
 import {
   formatAmountBasedOnLocale,
 } from '../../../../utils/formattedNumber';
-import { fromRawLsk } from '../../../../utils/lsk';
+import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
 import FormBase from './formBase';
 import Selector from '../../../toolbox/selector/selector';
 import Spinner from '../../../toolbox/spinner';
@@ -15,25 +15,19 @@ import useRecipientField from './useRecipientField';
 
 // eslint-disable-next-line max-statements
 const FormBtc = (props) => {
-  console.log('formBtc');
-
   const {
     t, token, getInitialValue,
   } = props;
   const txType = 'transfer';
 
   const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount'));
-
-  console.log('formBtc 2');
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), processingSpeed);
 
   // @todo use real transaction object
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
-  console.log('formBtc 3');
   const [fee, maxAmount] = useDynamicFeeCalculation(processingSpeed, {
-    amount: amount.value, txType, recipient: recipient.value,
+    amount: toRawLsk(amount.value), txType, recipient: recipient.value,
   });
-
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
@@ -78,7 +72,7 @@ const FormBtc = (props) => {
         <span className={styles.processingInfo}>
           {`${t('Transaction fee')}: `}
           <span>
-            { processingSpeed.isLoading
+            { feeOptions[0].value === 0
               ? (
                 <React.Fragment>
                   {t('Loading')}

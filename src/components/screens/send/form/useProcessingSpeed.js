@@ -8,7 +8,11 @@ const useProcessingSpeed = () => {
   const { t } = useTranslation();
   const { token } = useSelector(state => state.settings);
   const [error, setError] = useState(false);
-  const [baseFees, setBaseFees] = useState({});
+  const [baseFees, setBaseFees] = useState({
+    Low: 0,
+    Medium: 0,
+    High: 0,
+  });
 
   useEffect(() => {
     getDynamicBaseFees(token.active)
@@ -23,7 +27,6 @@ const useProcessingSpeed = () => {
 
   const selectProcessingSpeed = ({ item, index }) => {
     setProcessingSpeedState({
-      ...processingSpeedState,
       ...item,
       selectedIndex: index,
       error: !!error,
@@ -37,16 +40,11 @@ const useProcessingSpeed = () => {
   ];
 
   useEffect(() => {
-    if (processingSpeedState.value) {
-      selectProcessingSpeed({
-        item: {
-          ...processingSpeedState,
-          ...feeOptions[processingSpeedState.selectedIndex],
-        },
-        index: processingSpeedState.selectedIndex,
-      });
-    }
-  }, [processingSpeedState.value]);
+    selectProcessingSpeed({
+      item: feeOptions[processingSpeedState.selectedIndex],
+      index: processingSpeedState.selectedIndex,
+    });
+  }, [processingSpeedState.index, baseFees]);
 
   return [processingSpeedState, selectProcessingSpeed, feeOptions];
 };

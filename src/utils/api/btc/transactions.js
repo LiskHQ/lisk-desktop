@@ -218,6 +218,7 @@ export const getTransactionFeeFromUnspentOutputs = ({
     outputCount: 2,
     dynamicFeePerByte,
   });
+  console.log('Get FEE 1', dynamicFeePerByte, feeInSatoshis);
 
   return calculateTransactionFee({
     inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue
@@ -282,17 +283,19 @@ export const getDynamicBaseFees = () => new Promise(async (resolve, reject) => {
 export const getDynamicFee = async ({
   account, network, txData, dynamicFeePerByte,
 }) => {
-  console.log(account, network, txData, dynamicFeePerByte);
   const unspentTransactionOutputs = await getUnspentTransactionOutputs(
     account.address, network,
   );
 
   const value = getTransactionFeeFromUnspentOutputs({
     unspentTransactionOutputs,
-    satoshiValue: toRawLsk(txData.amount),
+    satoshiValue: txData.amount || 0,
     dynamicFeePerByte: dynamicFeePerByte.value,
   });
-  const feedback = txData.txAmount === ''
+  console.log('1> ', txData.amount);
+  console.log('2> ', dynamicFeePerByte);
+  console.log('3> ', value);
+  const feedback = txData.amount === 0
     ? '-'
     : `${(value ? '' : 'Invalid amount')}`;
   return {

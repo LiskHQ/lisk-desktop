@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input } from '../../../toolbox/inputs';
 import { TertiaryButton } from '../../../toolbox/buttons';
 import {
@@ -17,14 +17,14 @@ const AmountField = ({
   const name = 'amount';
   const setEntireBalance = () => {
     const value = formatAmountBasedOnLocale({
-      value: maxAmount,
+      value: fromRawLsk(maxAmount.value),
       format: '0.[00000000]',
     });
-    setAmountField({ value });
+    setAmountField({ value }, maxAmount);
   };
 
   const handleAmountChange = ({ target }) => {
-    setAmountField(target);
+    setAmountField(target, maxAmount);
   };
 
   return (

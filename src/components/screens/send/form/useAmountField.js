@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
+
+import { toRawLsk } from '../../../../utils/lsk';
 import { validateAmountFormat } from '../../../../utils/validators';
 import regex from '../../../../utils/regex';
 
@@ -31,11 +33,11 @@ const useAmountField = (initialValue) => {
     settings: { token: { active: token } },
   } = useSelector(state => state);
 
-  const getAmountFeedbackAndError = (value) => {
+  const getAmountFeedbackAndError = (value, maxAmount = 0) => {
     let { message: feedback } = validateAmountFormat({ value, token });
+    console.log('getAmountFeedbackAndError', feedback, maxAmount, toRawLsk(numeral(value).value()));
 
-    const maxAmount = 1000;
-    if (!feedback && parseFloat(maxAmount) < numeral(value).value()) {
+    if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {
       feedback = t('Provided amount is higher than your current balance.');
     }
     return { error: !!feedback, feedback };
@@ -45,7 +47,7 @@ const useAmountField = (initialValue) => {
     getAmountFieldState(initialValue, getAmountFeedbackAndError),
   );
 
-  const onAmountInputChange = ({ value }) => {
+  const onAmountInputChange = ({ value }, maxAmount) => {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
     clearTimeout(loaderTimeout);
@@ -59,12 +61,11 @@ const useAmountField = (initialValue) => {
       setAmountField({
         ...baseState,
         value,
-        ...getAmountFeedbackAndError(value),
+        ...getAmountFeedbackAndError(value, maxAmount.value),
       });
     }, 300);
   };
 
-  console.log('useAMountField', amountField);
   return [amountField, onAmountInputChange];
 };
 
