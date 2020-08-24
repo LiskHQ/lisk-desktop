@@ -15,7 +15,7 @@ const apis = {
     getApiParams: (state, ownProps) => ({
       address: ownProps.address,
     }),
-    transformResponse: response => response.data[0],
+    transformResponse: response => (response.data[0] ? response.data[0] : {}),
   },
   lastBlock: {
     apiUtil: getBlocks,
