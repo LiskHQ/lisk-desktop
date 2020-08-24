@@ -1,9 +1,7 @@
 import React from 'react';
 import { AutoResizeTextarea } from '../../../toolbox/inputs';
-import { fromRawLsk } from '../../../../utils/lsk';
 import { messageMaxLength } from '../../../../constants/transactions';
 import CircularProgress from '../../../toolbox/circularProgress/circularProgress';
-import Fees from '../../../../constants/fees';
 import FormBase from './formBase';
 import Icon from '../../../toolbox/icon';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
@@ -11,35 +9,56 @@ import styles from './form.css';
 import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
+import { toRawLsk, fromRawLsk } from '../../../../utils/lsk';
+import Selector from '../../../toolbox/selector/selector';
+import Spinner from '../../../toolbox/spinner';
 
+import {
+  formatAmountBasedOnLocale,
+} from '../../../../utils/formattedNumber';
+import useDynamicFeeCalculation from './useDynamicFeeCalculation';
+import useProcessingSpeed from './useProcessingSpeed';
+
+// eslint-disable-next-line max-statements
 const FormLsk = (props) => {
-  const { account, t, getInitialValue } = props;
+  const { t, token, getInitialValue } = props;
 
-  const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - Fees.send));
+  const txType = 'transfer';
+
+  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
+
 
   const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), getMaxAmount);
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'));
+
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
+
+  const [fee, maxAmount] = useDynamicFeeCalculation(processingSpeed, {
+    amount: toRawLsk(amount.value), txType, recipient: recipient.value,
+  });
+
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
     amount,
     recipient,
     reference,
-    fee: { value: Fees.send }, // @todo implement dynamic fee calculation
+    fee,
+    processingSpeed,
   };
 
-  // @todo define getProcessingSpeedStatus. Because the Lisk Service
-  // API is not ready, mock the low/medium/high processing speeds
-  // With constants. Make the custom fee input the default view.
+
+  const getProcessingSpeedStatus = () => (!fields.fee.error
+    ? `${formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) })} ${token}`
+    : fields.fee.feedback);
+
 
   return (
     <FormBase
       {...props}
       fields={fields}
-      showFee
       fieldUpdateFunctions={fieldUpdateFunctions}
-      getMaxAmount={getMaxAmount}
+      maxAmount={maxAmount}
     >
       <label className={`${styles.fieldGroup} reference`}>
         <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
@@ -79,6 +98,40 @@ const FormLsk = (props) => {
           </Tooltip>
         </span>
       </label>
+      <div className={`${styles.fieldGroup} processing-speed`}>
+        <span className={`${styles.fieldLabel}`}>
+          {t('Processing Speed')}
+          <Tooltip>
+            <p className={styles.tooltipText}>
+              {
+                t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')
+              }
+            </p>
+          </Tooltip>
+        </span>
+        <Selector
+          className={styles.selector}
+          onSelectorChange={selectProcessingSpeed}
+          name="speedSelector"
+          selectedIndex={fields.processingSpeed.selectedIndex}
+          options={feeOptions}
+        />
+        <span className={styles.processingInfo}>
+          {`${t('Transaction fee')}: `}
+          <span>
+            { feeOptions[0].value === 0
+              ? (
+                <React.Fragment>
+                  {t('Loading')}
+                  {' '}
+                  <Spinner className={styles.loading} />
+                </React.Fragment>
+              )
+              : getProcessingSpeedStatus()
+            }
+          </span>
+        </span>
+      </div>
     </FormBase>
   );
 };

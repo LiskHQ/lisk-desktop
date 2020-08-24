@@ -5,7 +5,6 @@
   " is out. ": " is out. ",
   "\"{{username}}\" is already taken.": "\"{{username}}\" is already taken.",
   "% of successfully forged blocks in relation to total blocks that were available for this particular delegate to forge": "% of successfully forged blocks in relation to total blocks that were available for this particular delegate to forge",
-  "+ Transaction fee {{fee}} LSK": "+ Transaction fee {{fee}} LSK",
   "2nd passphrase registration failed": "2nd passphrase registration failed",
   "2nd passphrase registration submitted": "2nd passphrase registration submitted",
   "64 bytes left": "64 bytes left",

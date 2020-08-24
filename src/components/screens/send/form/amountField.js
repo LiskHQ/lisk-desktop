@@ -7,11 +7,10 @@ import {
 } from '../../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../../utils/lsk';
 import Converter from '../../../shared/converter';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
 
 const AmountField = ({
-  amount, maxAmount, fee, setAmountField,
+  amount, maxAmount, setAmountField,
 }) => {
   const { t } = useTranslation();
   const name = 'amount';
@@ -60,24 +59,6 @@ const AmountField = ({
           error={amount.error}
         />
       </span>
-      { fee ? (
-        <span className={styles.amountHint}>
-          {t('+ Transaction fee {{fee}} LSK', {
-            fee: formatAmountBasedOnLocale({ value: fromRawLsk(fee) }),
-          })}
-          <Tooltip
-            position="top left"
-            title={t('Transaction fee')}
-          >
-            <p className={styles.tooltipText}>
-              {
-                    t(`Every transaction needs to be confirmed and forged into Lisk blockchain network. 
-                    Such operations require hardware resources and because of that there is a small fee for processing those.`)
-                  }
-            </p>
-          </Tooltip>
-        </span>
-      ) : null }
     </label>
   );
 };
