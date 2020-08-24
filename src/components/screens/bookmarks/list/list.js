@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
@@ -10,10 +12,10 @@ import BoxContent from '../../../toolbox/box/content';
 import EmptyState from './emptyState';
 import regex from '../../../../utils/regex';
 import routes from '../../../../constants/routes';
-import styles from './bookmarksList.css';
+import styles from './list.css';
 import Icon from '../../../toolbox/icon';
 
-class BookmarksList extends React.Component {
+export class BookmarksList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -106,7 +108,7 @@ class BookmarksList extends React.Component {
   render() {
     const {
       t, token, className, enableFilter, isEditable,
-      bookmarks, emptyStateClassName, limit, nextStep,
+      bookmarks, emptyStateClassName, limit, onAddBookmark,
     } = this.props;
     const {
       filter, editedAddress, editedTitle, feedback,
@@ -142,7 +144,7 @@ class BookmarksList extends React.Component {
                 ? (
                   <PrimaryButton
                     className={styles.addButton}
-                    onClick={() => nextStep({})}
+                    onClick={onAddBookmark}
                     size="s"
                   >
                     <Icon name="plus" className={styles.plusIcon} />
@@ -253,7 +255,7 @@ class BookmarksList extends React.Component {
                   emptyStateClassName={emptyStateClassName}
                   limit={limit}
                   t={t}
-                  nextStep={nextStep}
+                  onAddBookmark={onAddBookmark}
                 />
               )
           }
@@ -268,4 +270,9 @@ BookmarksList.defaultProps = {
   emptyStateClassName: '',
 };
 
-export default BookmarksList;
+const mapStateToProps = state => ({
+  bookmarks: state.bookmarks,
+  token: state.settings.token,
+});
+
+export default connect(mapStateToProps)(withTranslation()(BookmarksList));

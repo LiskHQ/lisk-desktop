@@ -3,10 +3,10 @@ import Illustration from '../../../toolbox/illustration';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import Icon from '../../../toolbox/icon';
-import styles from './bookmarksList.css';
+import styles from './list.css';
 
 const EmptyState = ({
-  bookmarks, token, emptyStateClassName, t, nextStep,
+  bookmarks, token, emptyStateClassName, t, onAddBookmark,
 }) => (
   <React.Fragment>
     { bookmarks[token.active].length
@@ -23,7 +23,7 @@ const EmptyState = ({
             <p>{t('You don’t have any bookmarks yet.')}</p>
             <PrimaryButton
               className={styles.addButton}
-              onClick={() => nextStep({})}
+              onClick={onAddBookmark}
               size="l"
             >
               <Icon name="plus" className={styles.plusIcon} />

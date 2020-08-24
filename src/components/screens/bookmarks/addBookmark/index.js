@@ -1,10 +1,13 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { bookmarkAdded } from '../../../../actions/bookmarks';
+import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from '../../../../actions/bookmarks';
 import { getAccount } from '../../../../utils/api/lsk/account';
 import AddBookmark from './addBookmark';
 import withData from '../../../../utils/withData';
+import { selectSearchParamValue } from '../../../../utils/searchParams';
 
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
@@ -14,10 +17,22 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   bookmarkAdded,
+  bookmarkUpdated,
+  bookmarkRemoved,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withData({
-  account: {
-    apiUtil: (liskAPIClient, params) => getAccount({ liskAPIClient, ...params }),
-  },
-})(withTranslation()(AddBookmark)));
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps),
+  withData({
+    account: {
+      apiUtil: (network, params) => getAccount({ network, ...params }),
+      defaultData: {},
+      getApiParams: (state, props) => ({
+        token: state.settings.token.active,
+        address: selectSearchParamValue(props.history.location.search, 'address'),
+      }),
+    },
+  }),
+  withTranslation(),
+)(AddBookmark);

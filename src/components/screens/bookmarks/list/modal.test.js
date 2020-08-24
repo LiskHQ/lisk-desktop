@@ -1,10 +1,9 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { tokenMap } from '../../../constants/tokens';
-import Bookmarks from './bookmarks';
-import bookmarks from '../../../../test/constants/bookmarks';
+import { mountWithRouter } from '../../../../utils/testHelpers';
+import { tokenMap } from '../../../../constants/tokens';
+import BookmarkListModal from './modal';
+import bookmarks from '../../../../../test/constants/bookmarks';
 
-describe('Bookmarks', () => {
+describe('BookmarkListModal', () => {
   let wrapper;
   let props;
 
@@ -21,7 +20,7 @@ describe('Bookmarks', () => {
       },
       bookmarks,
     };
-    wrapper = mount(<Bookmarks {...props} />);
+    wrapper = mountWithRouter(BookmarkListModal, props);
   });
 
   it('should render bookmarks list', () => {

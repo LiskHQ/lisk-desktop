@@ -92,6 +92,7 @@
         & > span:first-child {
           @mixin headingSmall;
 
+          white-space: pre;
           color: var(--color-maastricht-blue);
         }
 
