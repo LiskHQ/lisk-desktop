@@ -4,28 +4,13 @@ import { getTimestampFromFirstBlock } from '../../datetime';
 import { toRawLsk } from '../../lsk';
 import txFilters from '../../../constants/transactionFilters';
 // eslint-disable-next-line import/no-named-default
-import { default as getTransactionTypes } from '../../../constants/transactionTypes';
+import transactionTypes, { minFeePerByte } from '../../../constants/transactionTypes';
 import { adaptTransactions, adaptTransaction } from './adapters';
 import { findTransactionSizeInBytes } from '../../transactions';
 
-const minFeePerByte = 10e-5;
-
-const transactionTypes = getTransactionTypes();
-
-/**
- * a record of transaction types and their name fees
- */
-const transactionsNameFeeMap = {
-  [transactionTypes.send.key]: 0,
-  [transactionTypes.vote.key]: 0,
-  [transactionTypes.createMultiSig.key]: 0,
-  [transactionTypes.registerDelegate.key]: 10,
-};
-
-
 const parseTxFilters = (filter = txFilters.all, address) => ({
-  [txFilters.incoming]: { recipientId: address, type: transactionTypes.send.outgoingCode },
-  [txFilters.outgoing]: { senderId: address, type: transactionTypes.send.outgoingCode },
+  [txFilters.incoming]: { recipientId: address, type: transactionTypes().send.outgoingCode },
+  [txFilters.outgoing]: { senderId: address, type: transactionTypes().send.outgoingCode },
   [txFilters.all]: { senderIdOrRecipientId: address },
 }[filter]);
 
@@ -90,27 +75,23 @@ export const getSingleTransaction = ({
 });
 
 /**
- * gets the name fee for a transaction type
- * @param {number} transactionType the transaction type
- * @returns {number} transaction name fee
- */
-const getNameFee = transactionType => transactionsNameFeeMap[transactionType];
-
-/**
  * Calculates the min. transaction fee needed for a transaction
  *
  * @param {object} transaction transaction object
  * @param {number} type transaction type
- * @returns {number} min transaction fee
+ * @returns {number} min transaction fee in Beddows
  */
 export const calculateMinTxFee = (
   transaction, type,
 ) => {
+  console.log('> ', type);
   const fees = findTransactionSizeInBytes({
     transaction, type,
-  }) * minFeePerByte + getNameFee(type);
+  }) * minFeePerByte + transactionTypes.getNameFee(type);
 
-  return parseFloat(fees.toFixed(8));
+  console.log('calculateMinTxFee', fees);
+
+  return fees;
 };
 
 /**
@@ -181,13 +162,15 @@ export const getDynamicFee = async ({
 }) => {
   const { txType, ...data } = txData;
   const minFee = calculateMinTxFee(data, txType);
+  // Tie breaker is only meant for Medium and high processing speeds
+  const tieBreaker = dynamicFeePerByte.selectedIndex === 0
+    ? 0 : minFeePerByte * (dynamicFeePerByte.value) * Math.random();
 
-  const value = toRawLsk(minFee + dynamicFeePerByte.value * findTransactionSizeInBytes({
+  const value = minFee + dynamicFeePerByte.value * findTransactionSizeInBytes({
     transaction: data, type: txType,
-  }) + (minFeePerByte * (dynamicFeePerByte.value) * Math.random()));
+  }) + tieBreaker;
 
-  console.log('# value', value);
-  console.log('# dynamicFeePerByte', dynamicFeePerByte.value);
+  console.log('# value', data, value);
 
   const feedback = data.amount === ''
     ? '-'
