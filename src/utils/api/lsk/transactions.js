@@ -145,6 +145,7 @@ export const create = (
     const { networkIdentifier } = transaction.network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
       ...transaction,
+      fee: 10000000,
       networkIdentifier,
     });
     resolve(tx);
@@ -181,9 +182,12 @@ export const getDynamicFee = async ({
   const { txType, ...data } = txData;
   const minFee = calculateMinTxFee(data, txType);
 
-  const value = minFee + dynamicFeePerByte.value * findTransactionSizeInBytes({
+  const value = toRawLsk(minFee + dynamicFeePerByte.value * findTransactionSizeInBytes({
     transaction: data, type: txType,
-  }) + (minFeePerByte * (dynamicFeePerByte.value) * Math.rand());
+  }) + (minFeePerByte * (dynamicFeePerByte.value) * Math.random()));
+
+  console.log('# value', value);
+  console.log('# dynamicFeePerByte', dynamicFeePerByte.value);
 
   const feedback = data.amount === ''
     ? '-'
