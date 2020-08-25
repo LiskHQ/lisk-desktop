@@ -21,7 +21,9 @@ import useProcessingSpeed from './useProcessingSpeed';
 
 // eslint-disable-next-line max-statements
 const FormLsk = (props) => {
-  const { t, token, getInitialValue } = props;
+  const {
+    t, token, getInitialValue, account,
+  } = props;
 
   const txType = 'transfer';
 
@@ -34,7 +36,11 @@ const FormLsk = (props) => {
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
   const [fee, maxAmount] = useDynamicFeeCalculation(processingSpeed, {
-    amount: toRawLsk(amount.value), txType, recipient: recipient.value,
+    amount: toRawLsk(amount.value),
+    txType,
+    recipient: recipient.value,
+    nonce: account.nonce,
+    senderPublicKey: account.publicKey,
   });
 
 
