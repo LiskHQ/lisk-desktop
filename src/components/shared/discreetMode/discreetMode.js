@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import routes from '../../../constants/routes';
 import styles from './discreetMode.css';
 import { getTokenFromAddress } from '../../../utils/api/transactions';
+import { selectSearchParamValue } from '../../../utils/searchParams';
 
 class DiscreetMode extends Component {
   handleBlurOnOtherWalletPage() {
-    const { account, location } = this.props;
-    const address = location.pathname.split('/').pop();
+    const { account, location: { search } } = this.props;
+    const address = selectSearchParamValue(search, routes.account.searchParam);
     const token = getTokenFromAddress(address);
     return account.info && address === account.info[token].address;
   }

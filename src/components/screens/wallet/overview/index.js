@@ -61,7 +61,7 @@ const Overview = ({
           t={t}
           transactions={transactions}
           token={activeToken}
-          isDiscreetMode={discreetMode}
+          isDiscreetMode={discreetMode && host === address}
           balance={balance}
           address={address}
         />
