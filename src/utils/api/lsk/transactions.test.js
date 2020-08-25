@@ -5,8 +5,8 @@ import {
   getSingleTransaction,
   create,
   broadcast,
-  calculateTransactionFee,
-  getTransactionFeeEstimates,
+  calculateMinTxFee,
+  getDynamicBaseFees,
 } from './transactions';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
@@ -198,9 +198,9 @@ describe('Utils: Transactions API', () => {
     });
   });
 
-  describe('calculateTransactionFee', () => {
+  describe('calculateMinTxFee', () => {
     it('calculates the correct tx fees', () => {
-      const fees = calculateTransactionFee({
+      const fees = calculateMinTxFee({
         ...testTx,
         senderPublicKey: accounts.genesis.publicKey,
       }, transactionTypes().send.key);
@@ -208,9 +208,9 @@ describe('Utils: Transactions API', () => {
     });
   });
 
-  describe('getTransactionFeeEstimates', () => {
+  describe('getDynamicBaseFees', () => {
     it('calculates the estimated fees for a transaction', () => {
-      const estimates = getTransactionFeeEstimates({
+      const estimates = getDynamicBaseFees({
         ...testTx,
         senderPublicKey: accounts.genesis.publicKey,
       }, transactionTypes().send.key);
