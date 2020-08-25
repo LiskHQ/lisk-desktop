@@ -235,7 +235,7 @@
         border-radius: 18px;
         margin-right: 5px;
         padding: 5px var(--horizontal-padding-m);
-        outline:none;
+        outline: none;
 
         &.feePrioritySelected {
           background-color: var(--color-ink-blue);
