@@ -9,7 +9,6 @@ import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
 import getBtcConfig from './config';
 import networks from '../../../constants/networks';
-import { toRawLsk } from '../../lsk';
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
