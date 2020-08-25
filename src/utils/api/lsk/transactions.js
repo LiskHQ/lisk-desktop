@@ -35,7 +35,7 @@ const parseCustomFilters = filters => ({
 });
 
 export const getTransactions = ({
-  networkConfig, liskAPIClient, address, limit,
+  network, liskAPIClient, address, limit,
   offset, type = undefined, filters = {},
 }) => {
   const params = {
@@ -48,7 +48,7 @@ export const getTransactions = ({
   };
 
   return new Promise((resolve, reject) => {
-    (liskAPIClient || getAPIClient(networkConfig)).transactions.get(params).then(response => (
+    (liskAPIClient || getAPIClient(network)).transactions.get(params).then(response => (
       resolve(adaptTransactions(response))
     )).catch(reject);
   });
@@ -126,7 +126,7 @@ export const create = (
     const { networkIdentifier } = transaction.network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
       ...transaction,
-      fee: '10000000',
+      fee: transaction.fee.toString(),
       networkIdentifier,
     });
     resolve(tx);
@@ -158,7 +158,7 @@ export const broadcast = (transaction, networkConfig) => new Promise(
  * @param {Object} network - network configuration
  */
 export const getDynamicFee = async ({
-  account, network, txData, dynamicFeePerByte,
+  txData, dynamicFeePerByte,
 }) => {
   const { txType, ...data } = txData;
   const minFee = calculateMinTxFee(data, txType);
@@ -169,8 +169,6 @@ export const getDynamicFee = async ({
   const value = minFee + dynamicFeePerByte.value * findTransactionSizeInBytes({
     transaction: data, type: txType,
   }) + tieBreaker;
-
-  console.log('# value', data, value);
 
   const feedback = data.amount === ''
     ? '-'
