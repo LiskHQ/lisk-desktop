@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
 import { isEmpty } from '../../../../utils/helpers';
 import styles from './overview.css';
+import routes from '../../../../constants/routes';
 
 const getProp = (dic, prop, defaultValue) => {
   if (!dic || isEmpty(dic)) {
@@ -17,6 +19,7 @@ const getProp = (dic, prop, defaultValue) => {
 const Overview = ({
   t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
+  history,
 }) => {
   const address = getProp(account, 'address', '');
   const delegate = getProp(account, 'delegate', {});
@@ -31,7 +34,7 @@ const Overview = ({
       && state.account.info[activeToken]
       && state.account.info[activeToken].address) || '',
   );
-
+  
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
@@ -61,7 +64,7 @@ const Overview = ({
           t={t}
           transactions={transactions}
           token={activeToken}
-          isDiscreetMode={discreetMode}
+          isDiscreetMode={discreetMode && history.location.pathname === routes.wallet.path}
           balance={balance}
           address={address}
         />
@@ -70,4 +73,4 @@ const Overview = ({
   );
 };
 
-export default Overview;
+export default withRouter(Overview);
