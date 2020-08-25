@@ -1,11 +1,6 @@
 import Lisk from '@liskhq/lisk-client';
 
-const BYTESIZES = {
-  TYPE: 1,
-  NONCE: 8,
-  FEE: 8,
-  SIGNATURE: 64,
-};
+import { byteSizes } from '../constants/transactionTypes';
 
 /**
  * calculates the transaction size in bytes
@@ -17,13 +12,13 @@ export const findTransactionSizeInBytes = ({
   type, transaction,
 }) => {
   // delete the fee property from the transaction so it does
-  // not affect the fee calcualtion
+  // not affect the fee calculation
   delete transaction.fee;
 
-  const transactionType = Buffer.alloc(BYTESIZES.TYPE, type);
+  const transactionType = Buffer.alloc(byteSizes.type, type);
   const transactionNonce = Lisk.cryptography.intToBuffer(
     Number(transaction.nonce),
-    BYTESIZES.NONCE,
+    byteSizes.nonce,
   );
   const transactionSenderPublicKey = Lisk.cryptography.hexToBuffer(transaction.senderPublicKey);
   const txAsset = {
@@ -33,7 +28,7 @@ export const findTransactionSizeInBytes = ({
   };
 
   const assetBytes = Buffer.from(JSON.stringify(txAsset), 'utf-8');
-  const feeBytes = Lisk.cryptography.intToBuffer(String(BYTESIZES.FEE), BYTESIZES.FEE);
+  const feeBytes = Lisk.cryptography.intToBuffer(String(byteSizes.fee), byteSizes.fee);
 
   const totalBytes = Buffer.concat([
     transactionType,
@@ -43,7 +38,7 @@ export const findTransactionSizeInBytes = ({
     feeBytes,
   ]).byteLength;
 
-  return totalBytes + BYTESIZES.SIGNATURE;
+  return totalBytes + byteSizes.signature;
 };
 
 const dedupeTransactions = (pendingTransactions, confirmedTransactions) =>
