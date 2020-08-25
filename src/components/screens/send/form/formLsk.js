@@ -41,6 +41,7 @@ const FormLsk = (props) => {
     recipient: recipient.value,
     nonce: account.nonce,
     senderPublicKey: account.publicKey,
+    data: reference.value,
   });
 
 
