@@ -3,8 +3,6 @@ import to from 'await-to-js';
 
 import TransactionSummary from '../../../shared/transactionSummary';
 import AccountVisual from '../../../toolbox/accountVisual';
-import { fromRawLsk } from '../../../../utils/lsk';
-import Fees from '../../../../constants/fees';
 import { create } from '../../../../utils/api/lsk/transactions';
 import transactionTypes from '../../../../constants/transactionTypes';
 import styles from './summary.css';
@@ -62,7 +60,7 @@ class Summary extends React.Component {
         account={account}
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}
-        fee={fromRawLsk(Fees.registerDelegate)}
+        fee={25}
         classNames={`${styles.box} ${styles.summaryContainer}`}
       >
         <section className="summary-container">

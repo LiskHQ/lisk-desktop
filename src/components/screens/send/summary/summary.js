@@ -5,7 +5,6 @@ import AccountVisual from '../../../toolbox/accountVisual';
 import Converter from '../../../shared/converter';
 import Piwik from '../../../../utils/piwik';
 import TransactionSummary from '../../../shared/transactionSummary';
-import fees from '../../../../constants/fees';
 import styles from './summary.css';
 
 class Summary extends React.Component {

@@ -3,7 +3,6 @@ import i18next from 'i18next';
 import to from 'await-to-js';
 
 import actionTypes from '../constants/actions';
-import Fees from '../constants/fees';
 import { tokenMap } from '../constants/tokens';
 import transactionTypes from '../constants/transactionTypes';
 import { loadingStarted, loadingFinished } from './loading';
@@ -206,7 +205,7 @@ export const sent = data => async (dispatch, getState) => {
     dispatch(addNewPendingTransaction({
       amount: txData.amount,
       asset: { reference: txData.data },
-      fee: Fees.send,
+      fee: 1e7,
       id: broadcastTx.id,
       recipientId: txData.recipientId,
       senderId,

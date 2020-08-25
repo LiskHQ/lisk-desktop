@@ -8,7 +8,6 @@ import { PrimaryButton } from '../../../toolbox/buttons';
 import { fromRawLsk } from '../../../../utils/lsk';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import regex from '../../../../utils/regex';
-import Fees from '../../../../constants/fees';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './selectName.css';
 
@@ -51,12 +50,12 @@ class SelectName extends React.Component {
   hasUserEnoughFunds() {
     const { account, t } = this.props;
     const hasFunds = account
-      && fromRawLsk(account.balance) * 1 >= fromRawLsk(Fees.registerDelegate) * 1;
+      && fromRawLsk(account.balance) * 1 >= 25 * 1;
 
     if (!hasFunds) {
       this.setState({
         inputDisabled: true,
-        error: t('Insufficient funds (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) }),
+        error: t('Insufficient funds (Fee: {{fee}} LSK)', { fee: 25 }),
       });
     }
   }
