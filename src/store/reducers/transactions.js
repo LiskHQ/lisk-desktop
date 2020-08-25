@@ -83,11 +83,12 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
       };
     // TODO can be remove after move send (create) tx to utils file
     // istanbul ignore next
-    case actionTypes.transactionCreatedError:
+    case actionTypes.transactionCreatedError: {
+      const { message = 'The transaction failed', name = 'TransactionFailedError' } = action.data;
       return {
         ...state,
-        transactionsCreatedFailed: [...state.transactionsCreatedFailed, action.data.message],
-      };
+        transactionsCreatedFailed: [...state.transactionsCreatedFailed, { message, name }],
+      }; }
     // TODO can be remove after use HOC for send (broadcast) tx
     // istanbul ignore next
     case actionTypes.broadcastedTransactionSuccess:

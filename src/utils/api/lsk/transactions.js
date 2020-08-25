@@ -145,7 +145,7 @@ export const create = (
     const { networkIdentifier } = transaction.network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
       ...transaction,
-      fee: 10000000,
+      fee: '10000000',
       networkIdentifier,
     });
     resolve(tx);
