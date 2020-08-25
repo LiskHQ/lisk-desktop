@@ -35,7 +35,6 @@ const useAmountField = (initialValue) => {
 
   const getAmountFeedbackAndError = (value, maxAmount = 0) => {
     let { message: feedback } = validateAmountFormat({ value, token });
-    console.log('getAmountFeedbackAndError', feedback, maxAmount, toRawLsk(numeral(value).value()));
 
     if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {
       feedback = t('Provided amount is higher than your current balance.');

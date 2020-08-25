@@ -217,7 +217,7 @@ export const getTransactionFeeFromUnspentOutputs = ({
     outputCount: 2,
     dynamicFeePerByte,
   });
-  console.log('Get FEE 1', dynamicFeePerByte, feeInSatoshis);
+
 
   return calculateTransactionFee({
     inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue
@@ -291,9 +291,7 @@ export const getDynamicFee = async ({
     satoshiValue: txData.amount || 0,
     dynamicFeePerByte: dynamicFeePerByte.value,
   });
-  console.log('1> ', txData.amount);
-  console.log('2> ', dynamicFeePerByte);
-  console.log('3> ', value);
+
   const feedback = txData.amount === 0
     ? '-'
     : `${(value ? '' : 'Invalid amount')}`;

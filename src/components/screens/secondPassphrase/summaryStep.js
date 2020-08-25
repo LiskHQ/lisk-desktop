@@ -1,5 +1,4 @@
 import React from 'react';
-import { fromRawLsk } from '../../../utils/lsk';
 import AccountVisual from '../../toolbox/accountVisual';
 import TransactionSummary from '../../shared/transactionSummary';
 

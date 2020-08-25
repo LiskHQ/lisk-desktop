@@ -84,12 +84,9 @@ export const getSingleTransaction = ({
 export const calculateMinTxFee = (
   transaction, type,
 ) => {
-  console.log('> ', type);
   const fees = findTransactionSizeInBytes({
     transaction, type,
   }) * minFeePerByte + transactionTypes.getNameFee(type);
-
-  console.log('calculateMinTxFee', fees);
 
   return fees;
 };

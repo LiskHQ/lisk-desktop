@@ -183,7 +183,7 @@ export const sent = data => async (dispatch, getState) => {
   let tx;
   let fail;
   const {
-    account, network, settings, blocks,
+    account, network, settings,
   } = getState();
   // const timeOffset = getTimeOffset(blocks.latestBlocks);
   const activeToken = settings.token.active;
@@ -254,7 +254,6 @@ export const transactionCreated = data => async (dispatch, getState) => {
     : await to(signSendTransaction(account, data));
 
   if (error) {
-    console.log('tx res', error, tx);
     return dispatch({
       type: actionTypes.transactionCreatedError,
       data: error,

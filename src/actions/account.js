@@ -88,7 +88,7 @@ export const secondPassphraseRegistered = ({
 }) =>
 /* istanbul ignore next */
   (dispatch, getState) => {
-    const { settings: { token: { active } }, network, blocks } = getState();
+    const { settings: { token: { active } }, network } = getState();
     const { networkIdentifier } = network.networks.LSK;
     const liskAPIClient = getAPIClient(active, network);
     setSecondPassphrase(
