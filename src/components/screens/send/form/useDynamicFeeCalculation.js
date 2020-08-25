@@ -43,7 +43,7 @@ const useDynamicFeeCalculation = (dynamicFeePerByte, txData) => {
     asyncFn({
       token, account, network, txData: { ...txData, amount: account.balance }, dynamicFeePerByte,
     }, 'maxAmount');
-  }, [txData.amount, dynamicFeePerByte.selectedIndex]);
+  }, [txData.amount, txData.data, txData.recipient, dynamicFeePerByte.selectedIndex]);
 
   return [fee, maxAmount];
 };
