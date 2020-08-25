@@ -12,7 +12,6 @@
   overflow: hidden;
 
   & > span {
-    white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 100%;
