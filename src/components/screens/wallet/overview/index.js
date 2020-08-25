@@ -32,8 +32,6 @@ const Overview = ({
       && state.account.info[activeToken].address) || '',
   );
 
-  console.log(host, address, host === address);
-
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
