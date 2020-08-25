@@ -143,7 +143,7 @@ class TopBar extends React.Component {
           </DialogLink>
           <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
             <span className={relevantSearchParam ? `${styles.searchContainer} ${styles.searchContainerParam}` : styles.searchContainer}>
-              <Icon name="search" className="search-icon" />
+              <Icon name={relevantSearchParam ? 'search' : 'searchInput'} className="search-icon" />
               {
                 relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
                   && (
