@@ -38,11 +38,14 @@
   }
 
   & .searchContainer {
-    background-color: var(--color-search-container);
-    border-radius: 3px;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  & .searchContainerParam {
+    background-color: var(--color-search-container);
+    border-radius: 3px;
     padding: 8px 10px;
 
     & .searchedValue {
@@ -56,7 +59,7 @@
     }
 
     & .accountVisual {
-      padding-left: 6px;
+      padding-left: 10px;
     }
   }
 }
