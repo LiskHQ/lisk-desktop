@@ -86,7 +86,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.transactionCreatedError:
       return {
         ...state,
-        transactionsCreatedFailed: [...state.transactionsCreatedFailed, action.data],
+        transactionsCreatedFailed: [...state.transactionsCreatedFailed, action.data.message],
       };
     // TODO can be remove after use HOC for send (broadcast) tx
     // istanbul ignore next
