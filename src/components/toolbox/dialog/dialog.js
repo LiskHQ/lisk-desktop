@@ -10,7 +10,7 @@ import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 const Dialog = ({
   children, hasClose, className, history,
 }) => {
-  const onCloseClick = () => removeSearchParamsFromUrl(history);
+  const onCloseClick = () => removeSearchParamsFromUrl(history, ['modal'], true);
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
