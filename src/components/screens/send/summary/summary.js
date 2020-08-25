@@ -29,7 +29,7 @@ class Summary extends React.Component {
       passphrase: account.passphrase,
       recipientId: fields.recipient.address,
       secondPassphrase,
-      dynamicFeePerByte: fields.processingSpeed ? fields.processingSpeed.value : 0,
+      fee: parseInt(fields.fee.value, 10),
       nonce: account.nonce,
     });
   }
