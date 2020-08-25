@@ -204,17 +204,26 @@
   margin-bottom: 42px;
   padding: 0 var(--horizontal-padding-l);
 
+  & > .col:first-child {
+    padding-right: 100px;
+  }
+
   & > .col {
     display: flex;
     flex-direction: column;
     flex-basis: 50%;
     justify-content: space-between;
-    padding-right: 100px;
+    height: 74px;
+
+    & > .fieldLabel {
+      margin-bottom: 14px;
+    }
 
     & > .prioritySelector {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      margin-bottom: 4px;
 
       & > .feePriority {
         background-color: var(--color-white);
@@ -222,10 +231,10 @@
         font-family: var(--content-font);
         font-size: 14px;
         line-height: 18px;
-        border: 1px solid #C5CFE4;
+        border: 1px solid var(--color-periwinkle-blue);
         border-radius: 18px;
         margin-right: 5px;
-        padding: 5px 16px;
+        padding: 5px var(--horizontal-padding-m);
         outline:none;
 
         &.feePrioritySelected {
@@ -240,7 +249,7 @@
       font-family: var(--content-font);
       font-weight: normal;
       font-size: var(--font-size-h6);
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
   }
 }

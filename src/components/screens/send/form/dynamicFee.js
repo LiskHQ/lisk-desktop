@@ -19,8 +19,6 @@ const DynamicFee = ({ t }) => {
     setFee(e.target.value);
   };
 
-  console.log(selectedPriority, fee);
-
   return (
     <div className={`${styles.dynamicFeeWrapper}`}>
       <div className={`${styles.col}`}>
@@ -47,7 +45,7 @@ const DynamicFee = ({ t }) => {
               size="m"
               value={fee}
               onChange={onInputChange}
-              placeholder="size m"
+              placeholder="size s"
             />
           )
           : <span className={styles.fee}>{`${fee} LSK`}</span>
