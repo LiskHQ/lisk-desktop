@@ -31,19 +31,6 @@ export const getSingleTransaction = async ({ token, ...params }) => (
 );
 
 /**
- * Normalizes transaction data retrieved from Blockchain.info API
- *
- * @todo implement fee calculation logic and define required parameters
- * @param {Object} data
- * @param {Number} data.inputCount
- * @param {Number} data.outputCount
- * @param {Number} data.dynamicFeePerByte - in satoshis/byte.
- */
-export const calculateTransactionFee = () => (
-  true
-);
-
-/**
  * This functions are not test it because all the purpose is just
  * pass parameters to another functions
  */
