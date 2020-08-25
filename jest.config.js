@@ -101,7 +101,6 @@ module.exports = {
     'src/utils/balanceChart.js', // This should be unskipped in issue #1499
     'src/utils/loading.js',
     'src/utils/platform.js',
-    'src/utils/hacks.js',
     'src/utils/hwManager.js',
     'src/utils/voting.js',
   ],

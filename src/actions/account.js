@@ -6,7 +6,6 @@ import { getAPIClient } from '../utils/api/network';
 import { getAccount } from '../utils/api/account';
 import { setSecondPassphrase } from '../utils/api/lsk/account';
 import { getConnectionErrorMessage } from './network/lsk';
-import { getTimeOffset } from '../utils/hacks';
 import { loginType } from '../constants/hwConstants';
 import { networkStatusUpdated } from './network';
 import actionTypes from '../constants/actions';
@@ -92,13 +91,11 @@ export const secondPassphraseRegistered = ({
     const { settings: { token: { active } }, network, blocks } = getState();
     const { networkIdentifier } = network.networks.LSK;
     const liskAPIClient = getAPIClient(active, network);
-    const timeOffset = getTimeOffset(blocks.latestBlocks);
     setSecondPassphrase(
       liskAPIClient,
       secondPassphrase,
       account.publicKey,
       passphrase,
-      timeOffset,
       networkIdentifier,
     ).then((transaction) => {
       dispatch({

@@ -1,6 +1,7 @@
 /* eslint-disable max-lines */
 import i18next from 'i18next';
 import to from 'await-to-js';
+
 import actionTypes from '../constants/actions';
 import Fees from '../constants/fees';
 import { tokenMap } from '../constants/tokens';
@@ -8,7 +9,6 @@ import transactionTypes from '../constants/transactionTypes';
 import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
-import { getTimeOffset } from '../utils/hacks';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI } from '../utils/api';
 import { signSendTransaction } from '../utils/hwManager';
@@ -186,11 +186,11 @@ export const sent = data => async (dispatch, getState) => {
   const {
     account, network, settings, blocks,
   } = getState();
-  const timeOffset = getTimeOffset(blocks.latestBlocks);
+  // const timeOffset = getTimeOffset(blocks.latestBlocks);
   const activeToken = settings.token.active;
   const senderId = account.info[activeToken].address;
 
-  const txData = { ...data, timeOffset };
+  const txData = data;
 
   try {
     if (account.loginType === loginType.normal) {
@@ -241,20 +241,21 @@ export const resetTransactionResult = () => ({
 // TODO remove this function once create and broadcast HOC be implemented
 export const transactionCreated = data => async (dispatch, getState) => {
   const {
-    account, settings, network, ...state
+    account, settings, network,
   } = getState();
-  const timeOffset = getTimeOffset(state.blocks.latestBlocks);
+  // const timeOffset = getTimeOffset(state.blocks.latestBlocks);
   const activeToken = settings.token.active;
 
   const [error, tx] = account.loginType === loginType.normal
     ? await to(transactionsAPI.create(
       activeToken,
-      { ...data, timeOffset, network },
+      { ...data, network },
       transactionTypes().send.key,
     ))
-    : await to(signSendTransaction(account, { ...data, timeOffset }));
+    : await to(signSendTransaction(account, data));
 
   if (error) {
+    console.log('tx res', error, tx);
     return dispatch({
       type: actionTypes.transactionCreatedError,
       data: error,
