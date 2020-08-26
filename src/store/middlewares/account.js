@@ -81,9 +81,11 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
 
   const txs = (action.data.block.transactions || []).map(txAdapter);
   const blockContainsRelevantTransaction = txs.filter((transaction) => {
-    const sender = transaction ? transaction.senderId : null;
-    const recipient = transaction ? transaction.recipientId : null;
-    return account.address === recipient || account.address === sender;
+    if (!transaction) return false;
+    return (
+      account.address === transaction.senderId
+      || account.address === transaction.recipientId
+    );
   }).length > 0;
 
   showNotificationsForIncomingTransactions(txs, account, token.active);
@@ -97,9 +99,10 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // Adding timeout explained in
     // https://github.com/LiskHQ/lisk-desktop/pull/1609
     setTimeout(() => {
+      console.log('updateTransactions');
       updateAccountData(store);
       store.dispatch(updateTransactions({
-        pendingTransactions: transactions.pending,
+        pendingTransactions: transactions.pending, // @todo not used? also missing limit
         address: account.address,
         filters: transactions.filters,
       }));
