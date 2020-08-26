@@ -18,8 +18,6 @@ const DynamicFee = ({
   const [customFee, setCustomFee] = useState(0.1);
   const [showEditIcon, setShowEditIcon] = useState(false);
   const isCustom = selectedPriority > priorities.length;
-  const currentFee = !isCustom && priorities[selectedPriority]
-    ? priorities[selectedPriority].fee : customFee;
 
   const onClickPriority = (e) => {
     e.preventDefault();
