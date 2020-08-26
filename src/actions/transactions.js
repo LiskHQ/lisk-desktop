@@ -193,7 +193,7 @@ export const sent = data => async (dispatch, getState) => {
 
   try {
     if (account.loginType === loginType.normal) {
-      tx = await transactionsAPI.create(activeToken, txData, transactionTypes().send.key);
+      tx = await transactionsAPI.create(activeToken, txData, transactionTypes().transfer.key);
     } else {
       [fail, tx] = await (signSendTransaction(account, data));
 
@@ -210,7 +210,7 @@ export const sent = data => async (dispatch, getState) => {
       recipientId: txData.recipientId,
       senderId,
       senderPublicKey: account.publicKey,
-      type: transactionTypes().send.code,
+      type: transactionTypes().transfer.code,
     }));
 
     dispatch(passphraseUsed(new Date()));
@@ -249,7 +249,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
     ? await to(transactionsAPI.create(
       activeToken,
       { ...data, network },
-      transactionTypes().send.key,
+      transactionTypes().transfer.key,
     ))
     : await to(signSendTransaction(account, data));
 

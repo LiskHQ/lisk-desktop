@@ -9,7 +9,7 @@ const Transactions = ({
 }) => {
   function selectTransactionType() {
     return {
-      [transactionTypes().send.code]: {
+      [transactionTypes().transfer.code]: {
         subTitle: t('Amount'),
         value: transactions[0].amount,
       },

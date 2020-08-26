@@ -141,7 +141,7 @@ describe('Utils: Transactions API', () => {
 
   describe('create', () => {
     it('should create a transaction and return a promise', async () => {
-      const txResult = await create(testTx, transactionTypes().send.key);
+      const txResult = await create(testTx, transactionTypes().transfer.key);
       expect(txResult.asset.recipientId).toEqual(testTx.recipientId);
       expect(txResult.asset.amount).toEqual(testTx.amount);
       expect(txResult.signature).not.toBeNull();
@@ -156,7 +156,7 @@ describe('Utils: Transactions API', () => {
       });
 
       try {
-        await create(testTx, transactionTypes().send.key);
+        await create(testTx, transactionTypes().transfer.key);
       } catch (e) {
         expect(e).toBeInstanceOf(Error);
         expect(e.message).toEqual('sample error message');
@@ -203,7 +203,7 @@ describe('Utils: Transactions API', () => {
       const fees = calculateMinTxFee({
         ...testTx,
         senderPublicKey: accounts.genesis.publicKey,
-      }, transactionTypes().send.key);
+      }, transactionTypes().transfer.key);
       expect(fees).toBe(0.0165);
     });
   });
@@ -213,7 +213,7 @@ describe('Utils: Transactions API', () => {
       const estimates = getDynamicBaseFees({
         ...testTx,
         senderPublicKey: accounts.genesis.publicKey,
-      }, transactionTypes().send.key);
+      }, transactionTypes().transfer.key);
 
       expect(estimates).toBeDefined();
       expect(Object.keys(estimates)).toHaveLength(3);

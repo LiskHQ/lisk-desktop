@@ -9,8 +9,8 @@ import { adaptTransactions, adaptTransaction } from './adapters';
 import { findTransactionSizeInBytes } from '../../transactions';
 
 const parseTxFilters = (filter = txFilters.all, address) => ({
-  [txFilters.incoming]: { recipientId: address, type: transactionTypes().send.outgoingCode },
-  [txFilters.outgoing]: { senderId: address, type: transactionTypes().send.outgoingCode },
+  [txFilters.incoming]: { recipientId: address, type: transactionTypes().transfer.outgoingCode },
+  [txFilters.outgoing]: { senderId: address, type: transactionTypes().transfer.outgoingCode },
   [txFilters.all]: { senderIdOrRecipientId: address },
 }[filter]);
 

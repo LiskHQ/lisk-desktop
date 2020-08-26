@@ -7,17 +7,6 @@
  * but transactions may have either of the tx type codes.
  */
 const transactionTypes = (t = str => str) => ({
-  send: {
-    code: {
-      legacy: 0,
-      new: 8,
-    }.legacy,
-    outgoingCode: 8,
-    title: t('Send'),
-    senderLabel: t('Sender'),
-    key: 'transfer',
-    nameFee: 0,
-  },
   transfer: {
     code: {
       legacy: 0,
@@ -87,7 +76,8 @@ const transactionTypes = (t = str => str) => ({
  */
 transactionTypes.getByCode = (code) => {
   const types = transactionTypes();
-  const key = Object.keys(types).filter(type => types[type].code === code);
+  const key = Object.keys(types)
+    .filter(type => (types[type].code === code));
   return key.length ? types[key] : null;
 };
 
