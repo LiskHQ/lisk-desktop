@@ -61,6 +61,7 @@ import outgoing from '../../../assets/images/icons/outgoing.svg';
 import pending from '../../../assets/images/icons/pending.svg';
 import searchActive from '../../../assets/images/icons/search-active.svg';
 import search from '../../../assets/images/icons/search.svg';
+import searchInput from '../../../assets/images/icons/search-input.svg';
 import settings from '../../../assets/images/icons/settings.svg';
 import settingsActive from '../../../assets/images/icons/settings-active.svg';
 import showPassphraseIcon from '../../../assets/images/icons/icon-show-passphrase.svg';
@@ -249,6 +250,7 @@ export const icons = {
   blocksForged,
   distribution,
   clock,
+  searchInput,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
