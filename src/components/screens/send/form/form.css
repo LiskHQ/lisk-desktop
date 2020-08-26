@@ -20,6 +20,11 @@
     flex-direction: column;
     margin-bottom: 16px;
     padding: 0 var(--horizontal-padding-l);
+
+    &.dynamicFeeWrapper {
+      flex-direction: row;
+      margin-bottom: 42px;
+    }
   }
 
   & .fieldLabel {
@@ -199,10 +204,6 @@
 }
 
 .dynamicFeeWrapper {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 42px;
-  padding: 0 var(--horizontal-padding-l);
 
   & > .col:first-child {
     padding-right: 100px;

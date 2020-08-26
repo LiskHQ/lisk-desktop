@@ -4,15 +4,18 @@ import PropTypes from 'prop-types';
 import styles from './form.css';
 import Input from '../../../toolbox/inputs/input';
 import Icon from '../../../toolbox/icon';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 
 const DynamicFee = ({
   t,
   token = 'LSK',
-  initialFeeIndex = 1,
   priorities,
+  selectedPriority,
+  setSelectedPriority,
 }) => {
-  const [selectedPriority, setSelectedPriority] = useState(initialFeeIndex);
   const [customFee, setCustomFee] = useState(0.1);
+
+
   const [showEditIcon, setShowEditIcon] = useState(false);
   const isCustom = priorities[selectedPriority] && !priorities[selectedPriority].fee;
   const currentFee = !isCustom && priorities[selectedPriority]
@@ -20,8 +23,9 @@ const DynamicFee = ({
 
   const onClickPriority = (e) => {
     e.preventDefault();
-    setSelectedPriority(parseInt(e.target.value, 10));
-    setShowEditIcon(false);
+    const selectedIndex = Number(e.target.value);
+    setSelectedPriority({ item: priorities[selectedIndex], index: selectedIndex });
+    if (showEditIcon) setShowEditIcon(false);
   };
 
   const onInputChange = (e) => {
@@ -41,9 +45,18 @@ const DynamicFee = ({
   };
 
   return (
-    <div className={`${styles.dynamicFeeWrapper}`}>
+    <div className={`${styles.dynamicFeeWrapper} ${styles.fieldGroup} processing-speed`}>
       <div className={`${styles.col}`}>
-        <span className={`${styles.fieldLabel}`}>{t('Priority')}</span>
+        <span className={`${styles.fieldLabel}`}>
+          {t('Priority')}
+          <Tooltip>
+            <p className={styles.tooltipText}>
+              {
+                    t('Lorem Ipsum...')
+                  }
+            </p>
+          </Tooltip>
+        </span>
         <div className={`${styles.prioritySelector}`}>
           {priorities.map((priority, index) => (
             <button
@@ -52,13 +65,22 @@ const DynamicFee = ({
               onClick={onClickPriority}
               value={index}
             >
-              {priority.label}
+              {priority.title}
             </button>
           ))}
         </div>
       </div>
       <div className={`${styles.col}`}>
-        <span className={`${styles.fieldLabel}`}>{t('Transaction fee')}</span>
+        <span className={`${styles.fieldLabel}`}>
+          {t('Transaction fee')}
+          <Tooltip>
+            <p className={styles.tooltipText}>
+              {
+                    t('Lorem Ipsum...')
+                  }
+            </p>
+          </Tooltip>
+        </span>
         {isCustom && !showEditIcon ? (
           <Input
             autoFocus
@@ -88,7 +110,8 @@ DynamicFee.propTypes = {
   t: PropTypes.func.isRequired,
   token: PropTypes.string,
   priorities: PropTypes.array.isRequired,
-  initialFeeIndex: PropTypes.number,
+  selectedPriority: PropTypes.number,
+  setSelectedPriority: PropTypes.func,
 };
 
 export default withTranslation()(DynamicFee);

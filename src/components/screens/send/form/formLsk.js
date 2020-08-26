@@ -10,7 +10,7 @@ import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
 import { toRawLsk, fromRawLsk } from '../../../../utils/lsk';
-import Selector from '../../../toolbox/selector/selector';
+import DynamicFee from './dynamicFee';
 import Spinner from '../../../toolbox/spinner';
 
 import {
@@ -105,40 +105,28 @@ const FormLsk = (props) => {
           </Tooltip>
         </span>
       </label>
-      <div className={`${styles.fieldGroup} processing-speed`}>
-        <span className={`${styles.fieldLabel}`}>
-          {t('Processing Speed')}
-          <Tooltip>
-            <p className={styles.tooltipText}>
-              {
-                t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')
-              }
-            </p>
-          </Tooltip>
-        </span>
-        <Selector
-          className={styles.selector}
-          onSelectorChange={selectProcessingSpeed}
-          name="speedSelector"
-          selectedIndex={fields.processingSpeed.selectedIndex}
-          options={feeOptions}
-        />
-        <span className={styles.processingInfo}>
-          {`${t('Transaction fee')}: `}
-          <span>
-            { feeOptions[0].value === 0
-              ? (
-                <React.Fragment>
-                  {t('Loading')}
-                  {' '}
-                  <Spinner className={styles.loading} />
-                </React.Fragment>
-              )
-              : getProcessingSpeedStatus()
+
+      <DynamicFee
+        priorities={feeOptions}
+        selectedPriority={processingSpeed.selectedIndex}
+        setSelectedPriority={selectProcessingSpeed}
+        token={token}
+      />
+      <span className={styles.processingInfo}>
+        {`${t('Transaction fee')}: `}
+        <span>
+          { feeOptions[0].value === 0
+            ? (
+              <React.Fragment>
+                {t('Loading')}
+                {' '}
+                <Spinner className={styles.loading} />
+              </React.Fragment>
+            )
+            : getProcessingSpeedStatus()
             }
-          </span>
         </span>
-      </div>
+      </span>
     </FormBase>
   );
 };
