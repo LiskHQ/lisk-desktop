@@ -210,10 +210,12 @@ describe('Utils: Transactions API', () => {
 
   describe('getDynamicBaseFees', () => {
     it('calculates the estimated fees for a transaction', async () => {
-      const estimates = await getDynamicBaseFees({
-        ...testTx,
-        senderPublicKey: accounts.genesis.publicKey,
-      }, transactionTypes().transfer.key);
+      const estimates = await getDynamicBaseFees(
+      //   {
+      //   ...testTx,
+      //   senderPublicKey: accounts.genesis.publicKey,
+      // }, transactionTypes().transfer.key
+      );
 
       expect(estimates).toBeDefined();
       expect(Object.keys(estimates)).toHaveLength(3);
