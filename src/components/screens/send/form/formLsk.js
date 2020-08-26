@@ -10,7 +10,7 @@ import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
 import { toRawLsk, fromRawLsk } from '../../../../utils/lsk';
-import DynamicFee from './dynamicFee';
+import DynamicFee from '../../../shared/dynamicFee';
 import Spinner from '../../../toolbox/spinner';
 
 import {
@@ -111,6 +111,7 @@ const FormLsk = (props) => {
         selectedPriority={processingSpeed.selectedIndex}
         setSelectedPriority={selectProcessingSpeed}
         token={token}
+        fee={feeOptions[0].value === 0 ? 0 : getProcessingSpeedStatus()}
       />
       <span className={styles.processingInfo}>
         {`${t('Transaction fee')}: `}

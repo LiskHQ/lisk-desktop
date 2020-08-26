@@ -20,11 +20,6 @@
     flex-direction: column;
     margin-bottom: 16px;
     padding: 0 var(--horizontal-padding-l);
-
-    &.dynamicFeeWrapper {
-      flex-direction: row;
-      margin-bottom: 42px;
-    }
   }
 
   & .fieldLabel {
@@ -201,62 +196,4 @@
 .recipientAccountVisual {
   margin-left: -4px;
   margin-top: 4px;
-}
-
-.dynamicFeeWrapper {
-
-  & > .col:first-child {
-    padding-right: 100px;
-  }
-
-  & > .col {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 50%;
-    justify-content: space-between;
-    height: 74px;
-
-    & > .fieldLabel {
-      margin-bottom: 14px;
-    }
-
-    & > .prioritySelector {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      margin-bottom: 4px;
-
-      & > .feePriority {
-        background-color: var(--color-white);
-        color: var(--color-maastricht-blue);
-        font-family: var(--content-font);
-        font-size: 14px;
-        line-height: 18px;
-        border: 1px solid var(--color-periwinkle-blue);
-        border-radius: 18px;
-        margin-right: 5px;
-        padding: 5px var(--horizontal-padding-m);
-        outline: none;
-
-        &.feePrioritySelected {
-          background-color: var(--color-ink-blue);
-          color: var(--color-white);
-        }
-      }
-    }
-
-    & > .fee {
-      color: var(--color-maastricht-blue);
-      font-family: var(--content-font);
-      font-weight: normal;
-      font-size: var(--font-size-h6);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: flex-end;
-
-      & > img {
-        margin-left: 10px;
-      }
-    }
-  }
 }

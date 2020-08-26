@@ -4,7 +4,7 @@ import {
 } from '../../../../utils/formattedNumber';
 import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
 import FormBase from './formBase';
-import Selector from '../../../toolbox/selector/selector';
+import DynamicFee from '../../../shared/dynamicFee';
 import Spinner from '../../../toolbox/spinner';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
@@ -57,12 +57,12 @@ const FormBtc = (props) => {
             </p>
           </Tooltip>
         </span>
-        <Selector
-          className={styles.selector}
-          onSelectorChange={selectProcessingSpeed}
-          name="speedSelector"
-          selectedIndex={fields.processingSpeed.selectedIndex}
-          options={feeOptions}
+        <DynamicFee
+          priorities={feeOptions}
+          selectedPriority={processingSpeed.selectedIndex}
+          setSelectedPriority={selectProcessingSpeed}
+          token={token}
+          fee={feeOptions[0].value === 0 ? 0 : getProcessingSpeedStatus()}
         />
         <span className={styles.processingInfo}>
           {`${t('Transaction fee')}: `}

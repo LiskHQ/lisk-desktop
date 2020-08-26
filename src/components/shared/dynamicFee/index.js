@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import styles from './form.css';
-import Input from '../../../toolbox/inputs/input';
-import Icon from '../../../toolbox/icon';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
+import styles from './dynamicFee.css';
+import { tokenMap } from '../../../constants/tokens';
+import Input from '../../toolbox/inputs/input';
+import Icon from '../../toolbox/icon';
+import Tooltip from '../../toolbox/tooltip/tooltip';
 
 const DynamicFee = ({
   t,
-  token = 'LSK',
+  token,
   priorities,
   selectedPriority,
   setSelectedPriority,
+  fee,
 }) => {
   const [customFee, setCustomFee] = useState(0.1);
-
-
   const [showEditIcon, setShowEditIcon] = useState(false);
-  const isCustom = priorities[selectedPriority] && !priorities[selectedPriority].fee;
+  const isCustom = selectedPriority > priorities.length;
   const currentFee = !isCustom && priorities[selectedPriority]
     ? priorities[selectedPriority].fee : customFee;
 
@@ -68,6 +68,15 @@ const DynamicFee = ({
               {priority.title}
             </button>
           ))}
+          {token === tokenMap.LSK.key && (
+            <button
+              className={`${styles.feePriority} ${isCustom ? styles.feePrioritySelected : ''}`}
+              onClick={onClickPriority}
+              value={priorities.length + 1}
+            >
+              {t('custom')}
+            </button>
+          )}
         </div>
       </div>
       <div className={`${styles.col}`}>
@@ -91,9 +100,9 @@ const DynamicFee = ({
             onBlur={onInputBlur}
           />
         ) : (
-          <span className={styles.fee}>
-            {`${currentFee} ${token}`}
-            {isCustom && showEditIcon && <Icon name="edit" onClick={onClickCustomEdit} />}
+          <span className={styles.fee} onClick={onClickCustomEdit}>
+            {fee}
+            {isCustom && showEditIcon && <Icon name="edit" />}
           </span>
         )}
       </div>
@@ -112,6 +121,7 @@ DynamicFee.propTypes = {
   priorities: PropTypes.array.isRequired,
   selectedPriority: PropTypes.number,
   setSelectedPriority: PropTypes.func,
+  fee: PropTypes.number,
 };
 
 export default withTranslation()(DynamicFee);

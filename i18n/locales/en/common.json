@@ -535,6 +535,7 @@
   "[Tomorrow], hh:mm A": "[Tomorrow], hh:mm A",
   "[Yesterday], hh:mm A": "[Yesterday], hh:mm A",
   "block": "block",
+  "custom": "custom",
   "forged": "forged",
   "from": "from",
   "i.e. {{value1}} or {{value2}}": "i.e. {{value1}} or {{value2}}",
