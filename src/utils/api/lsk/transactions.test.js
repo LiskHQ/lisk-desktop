@@ -224,7 +224,7 @@ describe('Utils: Transactions API', () => {
 
   describe('getDynamicFee', () => {
     it('returns the calculated tx fees for a selected processing speed', async () => {
-      const estimates = await getDynamicFee({
+      const fees = await getDynamicFee({
         txData: {
           ...testTx,
           senderPublicKey: accounts.genesis.publicKey,
@@ -233,8 +233,37 @@ describe('Utils: Transactions API', () => {
         dynamicFeePerByte: { value: 10, selectedIndex: 0 },
       });
 
-      expect(estimates).toBeDefined();
-      expect(Object.keys(estimates)).toHaveLength(3);
+      expect(fees.value).toBeDefined();
+      expect(fees.error).toBeFalsy();
+    });
+
+    it('returns an error and appropriate feedback if the tx amount is empty', async () => {
+      const fees = await getDynamicFee({
+        txData: {
+          ...testTx,
+          amount: '',
+          senderPublicKey: accounts.genesis.publicKey,
+          txType: transactionTypes().transfer.key,
+        },
+        dynamicFeePerByte: { value: 10, selectedIndex: 0 },
+      });
+
+      expect(fees.value).toBeDefined();
+      expect(fees.error).toBeTruthy();
+    });
+
+    it('returns an error and appropriate feedback if it can not calculate the fee', async () => {
+      const fees = await getDynamicFee({
+        txData: {
+          ...testTx,
+          senderPublicKey: accounts.genesis.publicKey,
+          txType: transactionTypes().transfer.key,
+        },
+        dynamicFeePerByte: { value: NaN, selectedIndex: 0 },
+      });
+
+      expect(fees.value).toBeDefined();
+      expect(fees.error).toBeTruthy();
     });
   });
 });
