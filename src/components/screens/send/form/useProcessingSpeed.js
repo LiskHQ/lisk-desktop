@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { getDynamicBaseFees } from '../../../../utils/api/transactions';
 
-const useProcessingSpeed = () => {
+const useProcessingSpeed = (token) => {
   const { t } = useTranslation();
-  const { token } = useSelector(state => state.settings);
   const [error, setError] = useState(false);
   const [baseFees, setBaseFees] = useState({
     Low: 0,
@@ -15,7 +13,7 @@ const useProcessingSpeed = () => {
   });
 
   useEffect(() => {
-    getDynamicBaseFees(token.active)
+    getDynamicBaseFees(token)
       .then(setBaseFees)
       .catch(setError);
   }, []);

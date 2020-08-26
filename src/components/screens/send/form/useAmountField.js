@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
@@ -27,11 +26,8 @@ const getAmountFieldState = (initialValue, getAmountFeedbackAndError) => (initia
     value: '',
   });
 
-const useAmountField = (initialValue) => {
+const useAmountField = (initialValue, token) => {
   const { t, i18n } = useTranslation();
-  const {
-    settings: { token: { active: token } },
-  } = useSelector(state => state);
 
   const getAmountFeedbackAndError = (value, maxAmount = 0) => {
     let { message: feedback } = validateAmountFormat({ value, token });

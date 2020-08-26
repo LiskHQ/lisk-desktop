@@ -95,7 +95,7 @@ export const calculateMinTxFee = (
  * Returns a dictionary of base fees for low, medium and high processing speeds
  *
  * @todo get from Lisk Ser
- * @returns {{Low: number, Medium: number, High: number}} with low,
+ * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
  */
 export const getDynamicBaseFees = () => (

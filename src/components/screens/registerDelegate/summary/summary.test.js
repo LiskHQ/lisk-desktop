@@ -5,6 +5,7 @@ import to from 'await-to-js';
 import { create } from '../../../../utils/api/lsk/transactions';
 import accounts from '../../../../../test/constants/accounts';
 import Summary from './summary';
+import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 describe('Delegate Registration Summary', () => {
   let wrapper;
@@ -31,14 +32,12 @@ describe('Delegate Registration Summary', () => {
   };
 
   const response = {
-    id: 1,
     account: props.account,
     username: props.nickname,
     passphrase: props.passphrase,
-    secondPassphrase: null,
     recipientId: '123123L',
     amount: 0,
-    timeOffset: 0,
+    nonce: '123',
   };
 
   beforeEach(() => {
@@ -50,6 +49,7 @@ describe('Delegate Registration Summary', () => {
 
   afterEach(() => {
     Lisk.transaction.registerDelegate.mockRestore();
+    props.nextStep.mockRestore();
   });
 
   it('renders properly Symmary component', () => {
@@ -68,42 +68,22 @@ describe('Delegate Registration Summary', () => {
   });
 
   it('submit user data when click in confirm button', async () => {
-    const data = {
-      account: props.account,
-      username: props.nickname,
-      passphrase: props.account.passphrase,
-      secondPassphrase: null,
-      network,
-    };
-
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
-    const [err, tx] = await to(create(data, 'registerDelegate'));
-    expect(err).toEqual(null);
-    expect(tx.id).toEqual(response.id);
-    expect(tx.recipientId).toEqual(response.recipientId);
-    expect(data.username).toEqual(response.username);
-    expect(props.nextStep).toBeCalled();
+    await flushPromises();
+    expect(props.nextStep).toBeCalledWith({ transactionInfo: response });
   });
 
   it('submit user data when click in confirm button but fails', async () => {
     Lisk.transaction.registerDelegate.mockRejectedValue(new Error('please provide a username'));
 
-    const data = {
-      account: props.account,
-      passphrase: props.account.passphrase,
-      secondPassphrase: null,
-      networkIdentifier: 'sample_identifier',
-    };
-
-    expect(props.nextStep).toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
-    const [err, tx] = await to(create(data, 'registerDelegate'));
-    expect(tx).toEqual(undefined);
-    expect(err).toBeInstanceOf(Error);
+
+    await flushPromises();
+    expect(props.nextStep).not.toBeCalled();
   });
 
-  it('submit user data after enter second passphrase', async () => {
+  it.skip('submit user data after enter second passphrase', async () => {
     const newProps = { ...props };
     newProps.account = accounts.second_passphrase_account;
 

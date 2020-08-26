@@ -14,7 +14,7 @@ class Summary extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  async onSubmit({ secondPassphrase }) {
+  async onSubmit() {
     const {
       account,
       nextStep,
@@ -26,14 +26,18 @@ class Summary extends React.Component {
       account,
       username: nickname,
       passphrase: account.passphrase,
-      secondPassphrase,
+      // @todo add correct fee here
+      fee: 100,
       network,
     };
 
     const [error, tx] = await to(
       create(data, transactionTypes().registerDelegate.key),
     );
-    if (!error) nextStep({ transactionInfo: tx });
+
+    if (!error) {
+      nextStep({ transactionInfo: tx });
+    }
   }
 
   render() {

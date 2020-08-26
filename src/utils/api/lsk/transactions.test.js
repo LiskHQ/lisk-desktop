@@ -204,13 +204,13 @@ describe('Utils: Transactions API', () => {
         ...testTx,
         senderPublicKey: accounts.genesis.publicKey,
       }, transactionTypes().transfer.key);
-      expect(fees).toBe(0.0165);
+      expect(fees).toBe(165000);
     });
   });
 
   describe('getDynamicBaseFees', () => {
-    it('calculates the estimated fees for a transaction', () => {
-      const estimates = getDynamicBaseFees({
+    it('calculates the estimated fees for a transaction', async () => {
+      const estimates = await getDynamicBaseFees({
         ...testTx,
         senderPublicKey: accounts.genesis.publicKey,
       }, transactionTypes().transfer.key);

@@ -4,12 +4,8 @@ import {
   getDynamicFee,
 } from '../../../../utils/api/transactions';
 
-// eslint-disable-next-line max-statements
-const useDynamicFeeCalculation = (dynamicFeePerByte, txData) => {
+const useDynamicFeeCalculation = (dynamicFeePerByte, txData, token, account) => {
   const network = useSelector(state => state.network);
-  const token = useSelector(state => state.settings.token.active);
-  const account = useSelector(state => state.account.info[token]);
-
 
   const initialFee = {
     value: 0,
