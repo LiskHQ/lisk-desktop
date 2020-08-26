@@ -10,6 +10,8 @@ import DialogLink from '../../../../toolbox/dialog/link';
 import styles from './balanceInfo.css';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
+import DropdownButton from '../../../../toolbox/dropdownButton';
+import Request from './request';
 
 const BalanceInfo = ({
   t, activeToken, balance, isWalletRoute, address,
@@ -41,6 +43,14 @@ const BalanceInfo = ({
         </div>
         <SignInTooltipWrapper position="bottom">
           <div className={styles.actionRow}>
+            <DropdownButton
+              className={`${styles.requestDropdown} requestContainer request-dropdown`}
+              buttonClassName={`${styles.requestButton} tx-receive-bt`}
+              buttonLabel={t('Request {{token}}', { token: activeToken })}
+              size="m"
+            >
+              <Request address={address} token={activeToken} t={t} />
+            </DropdownButton>
             <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
               <PrimaryButton
                 className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
