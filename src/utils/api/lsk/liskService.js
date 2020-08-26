@@ -65,7 +65,7 @@ const liskServiceApi = {
   }),
 
   getLastBlocks: async (
-    networkConfig, { dateFrom, dateTo, ...searchParams },
+    network, { dateFrom, dateTo, ...searchParams },
   ) => liskServiceGet({
     path: '/api/v1/blocks',
     searchParams: {
@@ -74,7 +74,7 @@ const liskServiceApi = {
       ...(dateFrom && { from: formatDate(dateFrom) }),
       ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
     },
-    network: networkConfig,
+    network,
   }),
 
   getBlockDetails: async (networkConfig, { id }) => liskServiceGet({

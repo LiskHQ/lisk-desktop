@@ -32,7 +32,7 @@ describe('findTransactionSizeInBytes', () => {
 
   it('should return the correct transaction size', () => {
     const size = findTransactionSizeInBytes({
-      type: transactionTypes().send.key,
+      type: transactionTypes().transfer.key,
       transaction: testTx,
     });
     expect(size).toBe(165);

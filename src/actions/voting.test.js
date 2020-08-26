@@ -9,7 +9,6 @@ import {
   delegatesLoaded,
   delegatesAdded,
 } from './voting';
-import Fees from '../constants/fees';
 import networks from '../constants/networks';
 import { loginType } from '../constants/hwConstants';
 import * as delegateApi from '../utils/api/delegates';
@@ -95,7 +94,7 @@ describe('actions: voting', () => {
         senderPublicKey: account.publicKey,
         senderId: account.address,
         amount: 0,
-        fee: Fees.vote,
+        fee: 1e8,
         type: 3,
         token: 'LSK',
       };

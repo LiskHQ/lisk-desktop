@@ -31,19 +31,6 @@ export const getSingleTransaction = async ({ token, ...params }) => (
 );
 
 /**
- * Normalizes transaction data retrieved from Blockchain.info API
- *
- * @todo implement fee calculation logic and define required parameters
- * @param {Object} data
- * @param {Number} data.inputCount
- * @param {Number} data.outputCount
- * @param {Number} data.dynamicFeePerByte - in satoshis/byte.
- */
-export const calculateTransactionFee = () => (
-  true
-);
-
-/**
  * This functions are not test it because all the purpose is just
  * pass parameters to another functions
  */
@@ -65,6 +52,12 @@ export const create = (tokenType, data, transactionType) =>
  */
 export const broadcast = (tokenType, transaction, networkConfig) =>
   api[tokenType].transactions.broadcast(transaction, networkConfig);
+
+export const getDynamicBaseFees = tokenType =>
+  api[tokenType].transactions.getDynamicBaseFees();
+
+export const getDynamicFee = ({ token, ...params }) =>
+  api[token].transactions.getDynamicFee(params);
 
 export default {
   broadcast,

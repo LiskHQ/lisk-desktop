@@ -6,15 +6,15 @@ import { fromRawLsk } from '../../../../utils/lsk';
 import {
   getUnspentTransactionOutputs,
   getTransactionFeeFromUnspentOutputs,
+  getDynamicFee,
+  getDynamicBaseFees,
 } from '../../../../utils/api/btc/transactions';
-import {
-  getDynamicFees,
-} from '../../../../utils/api/btc/service';
 import { tokenMap } from '../../../../constants/tokens';
 import Form from './formBtc';
 import accounts from '../../../../../test/constants/accounts';
 import defaultState from '../../../../../test/constants/defaultState';
 import * as serviceActions from '../../../../actions/service';
+import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('../../../../utils/api/btc/transactions');
 
@@ -36,12 +36,22 @@ getTransactionFeeFromUnspentOutputs.mockImplementation(
   ({ dynamicFeePerByte }) => dynamicFeePerByte,
 );
 
-jest.mock('../../../../utils/api/btc/service');
-const dynamicFees = {
+const dynamicBaseFees = {
   Low: 156,
+  Medium: 100,
   High: 51,
 };
-getDynamicFees.mockResolvedValue(dynamicFees);
+
+const dynamicFeeFactor = 100;
+
+getDynamicBaseFees.mockResolvedValue(dynamicBaseFees);
+getDynamicFee.mockImplementation((params) => {
+  const selectedProcessingSpeed = params.dynamicFeePerByte.selectedIndex;
+  const fees = Object.values(dynamicBaseFees)[selectedProcessingSpeed] * dynamicFeeFactor;
+  return ({
+    value: fees, feedback: '', error: false,
+  });
+});
 
 describe('FormBtc', () => {
   let wrapper;
@@ -50,7 +60,7 @@ describe('FormBtc', () => {
   beforeEach(() => {
     useSelector.mockImplementation(selectorFn => selectorFn({
       ...defaultState,
-      service: { dynamicFees },
+      service: { dynamicBaseFees },
     }));
     jest.spyOn(serviceActions, 'dynamicFeesRetrieved');
 
@@ -95,18 +105,20 @@ describe('FormBtc', () => {
       expect(wrapper).not.toContainMatchingElement('label.reference');
     });
 
-    it('should update processingSpeed fee when "High" is selected', () => {
+    it('should update processingSpeed fee when "High" is selected', async () => {
       wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '0.0012' } });
-      expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.Low));
+      expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicBaseFees.Low * dynamicFeeFactor));
       wrapper.find('label.option-High input[type="radio"]').simulate('click').simulate('change');
-      expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.High));
+      await flushPromises();
+      expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicBaseFees.High * dynamicFeeFactor));
     });
 
-    it('should allow to set entire balance', () => {
+    it('should allow to set entire balance', async () => {
       wrapper.find('button.send-entire-balance-button').simulate('click');
       act(() => { jest.runAllTimers(); });
       wrapper.update();
-      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(balance - dynamicFees.Low));
+      await flushPromises();
+      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(balance - dynamicBaseFees.Low * dynamicFeeFactor));
     });
   });
 });

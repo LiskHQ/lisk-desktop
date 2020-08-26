@@ -7,7 +7,6 @@ import {
   updateTransactions,
 } from './transactions';
 import * as transactionsApi from '../utils/api/transactions';
-import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
 
 jest.mock('../utils/api/transactions');
@@ -156,7 +155,7 @@ describe.skip('actions: transactions', () => {
         senderId: 'test_address',
         recipientId: data.recipientId,
         amount: toRawLsk(data.amount),
-        fee: Fees.send,
+        fee: 1e7,
         asset: { data: undefined },
         type: 0,
         token: 'LSK',

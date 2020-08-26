@@ -5,7 +5,6 @@ import AccountVisual from '../../../toolbox/accountVisual';
 import Converter from '../../../shared/converter';
 import Piwik from '../../../../utils/piwik';
 import TransactionSummary from '../../../shared/transactionSummary';
-import fees from '../../../../constants/fees';
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -30,8 +29,8 @@ class Summary extends React.Component {
       passphrase: account.passphrase,
       recipientId: fields.recipient.address,
       secondPassphrase,
-      dynamicFeePerByte: fields.processingSpeed ? fields.processingSpeed.value : 0,
-      fee: fees.send,
+      fee: parseInt(fields.fee.value, 10),
+      nonce: account.nonce,
     });
   }
 

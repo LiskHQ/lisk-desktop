@@ -1,12 +1,11 @@
 import React from 'react';
 import { transactions } from '@liskhq/lisk-client';
-import Fees from '../../../constants/fees';
 import Spinner from '../../toolbox/spinner';
 import DialogLink from '../../toolbox/dialog/link';
 import styles from './settings.css';
 import Icon from '../../toolbox/icon';
 
-const fee = transactions.utils.convertBeddowsToLSK(`${Fees.setSecondPassphrase}`);
+const fee = transactions.utils.convertBeddowsToLSK('5');
 
 const SecondPassphraseSetting = ({
   account, t, hasPendingSecondPassphrase, isHardwareWalletAccount,
@@ -29,7 +28,7 @@ const SecondPassphraseSetting = ({
       {!account.secondPublicKey
         ? (
           <React.Fragment>
-            {account.balance < Fees.setSecondPassphrase
+            {account.balance < 5
               ? (
                 <p className={styles.highlight}>
                   {t('You don’t have enough balance to enable it. {{fee}} LSK is required.', { fee })}

@@ -5,8 +5,9 @@ import {
   getSingleTransaction,
   create,
   broadcast,
-  calculateTransactionFee,
-  getTransactionFeeEstimates,
+  calculateMinTxFee,
+  getDynamicBaseFees,
+  getDynamicFee,
 } from './transactions';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
@@ -23,7 +24,6 @@ const testTx = {
   data: 'payment',
   passphrase: accounts.genesis.passphrase,
   recipientId: '123L',
-  timeOffset: 0,
   nonce: '1',
   fee: '123',
   network: {
@@ -141,7 +141,7 @@ describe('Utils: Transactions API', () => {
 
   describe('create', () => {
     it('should create a transaction and return a promise', async () => {
-      const txResult = await create(testTx, transactionTypes().send.key);
+      const txResult = await create(testTx, transactionTypes().transfer.key);
       expect(txResult.asset.recipientId).toEqual(testTx.recipientId);
       expect(txResult.asset.amount).toEqual(testTx.amount);
       expect(txResult.signature).not.toBeNull();
@@ -156,7 +156,7 @@ describe('Utils: Transactions API', () => {
       });
 
       try {
-        await create(testTx, transactionTypes().send.key);
+        await create(testTx, transactionTypes().transfer.key);
       } catch (e) {
         expect(e).toBeInstanceOf(Error);
         expect(e.message).toEqual('sample error message');
@@ -198,25 +198,72 @@ describe('Utils: Transactions API', () => {
     });
   });
 
-  describe('calculateTransactionFee', () => {
+  describe('calculateMinTxFee', () => {
     it('calculates the correct tx fees', () => {
-      const fees = calculateTransactionFee({
+      const fees = calculateMinTxFee({
         ...testTx,
         senderPublicKey: accounts.genesis.publicKey,
-      }, transactionTypes().send.key);
-      expect(fees).toBe(0.0165);
+      }, transactionTypes().transfer.key);
+      expect(fees).toBe(165000);
     });
   });
 
-  describe('getTransactionFeeEstimates', () => {
-    it('calculates the estimated fees for a transaction', () => {
-      const estimates = getTransactionFeeEstimates({
-        ...testTx,
-        senderPublicKey: accounts.genesis.publicKey,
-      }, transactionTypes().send.key);
+  describe('getDynamicBaseFees', () => {
+    it('calculates the estimated fees for a transaction', async () => {
+      const estimates = await getDynamicBaseFees(
+      //   {
+      //   ...testTx,
+      //   senderPublicKey: accounts.genesis.publicKey,
+      // }, transactionTypes().transfer.key
+      );
 
       expect(estimates).toBeDefined();
       expect(Object.keys(estimates)).toHaveLength(3);
+    });
+  });
+
+  describe('getDynamicFee', () => {
+    it('returns the calculated tx fees for a selected processing speed', async () => {
+      const fees = await getDynamicFee({
+        txData: {
+          ...testTx,
+          senderPublicKey: accounts.genesis.publicKey,
+          txType: transactionTypes().transfer.key,
+        },
+        dynamicFeePerByte: { value: 10, selectedIndex: 0 },
+      });
+
+      expect(fees.value).toBeDefined();
+      expect(fees.error).toBeFalsy();
+    });
+
+    it('returns an error and appropriate feedback if the tx amount is empty', async () => {
+      const fees = await getDynamicFee({
+        txData: {
+          ...testTx,
+          amount: '',
+          senderPublicKey: accounts.genesis.publicKey,
+          txType: transactionTypes().transfer.key,
+        },
+        dynamicFeePerByte: { value: 10, selectedIndex: 0 },
+      });
+
+      expect(fees.value).toBeDefined();
+      expect(fees.error).toBeTruthy();
+    });
+
+    it('returns an error and appropriate feedback if it can not calculate the fee', async () => {
+      const fees = await getDynamicFee({
+        txData: {
+          ...testTx,
+          senderPublicKey: accounts.genesis.publicKey,
+          txType: transactionTypes().transfer.key,
+        },
+        dynamicFeePerByte: { value: NaN, selectedIndex: 0 },
+      });
+
+      expect(fees.value).toBeDefined();
+      expect(fees.error).toBeTruthy();
     });
   });
 });

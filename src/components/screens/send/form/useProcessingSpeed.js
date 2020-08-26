@@ -1,45 +1,48 @@
-import usePromise from 'react-use-promise';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getDynamicFees } from '../../../../utils/api/btc/service';
 
-// @todo account for LSK processing speed too.
-const useProcessingSpeed = () => {
+import { getDynamicBaseFees } from '../../../../utils/api/transactions';
+
+const useProcessingSpeed = (token) => {
   const { t } = useTranslation();
-  const [dynamicFees = {}, error, status] = usePromise(getDynamicFees, []);
-  const isLoading = status === 'pending';
+  const [error, setError] = useState(false);
+  const [baseFees, setBaseFees] = useState({
+    Low: 0,
+    Medium: 0,
+    High: 0,
+  });
+
+  useEffect(() => {
+    getDynamicBaseFees(token)
+      .then(setBaseFees)
+      .catch(setError);
+  }, []);
 
   const [processingSpeedState, setProcessingSpeedState] = useState({
     value: 0,
-    isLoading,
     selectedIndex: 0,
   });
 
   const selectProcessingSpeed = ({ item, index }) => {
     setProcessingSpeedState({
-      ...processingSpeedState,
       ...item,
       selectedIndex: index,
-      isLoading,
       error: !!error,
     });
   };
 
   const feeOptions = [
-    { title: t('Low'), value: dynamicFees.Low },
-    // @todo add medium processing speed.
-    { title: t('High'), value: dynamicFees.High },
+    { title: t('Low'), value: baseFees.Low },
+    { title: t('Medium'), value: baseFees.Medium },
+    { title: t('High'), value: baseFees.High },
   ];
 
   useEffect(() => {
     selectProcessingSpeed({
-      item: {
-        ...processingSpeedState,
-        ...feeOptions[processingSpeedState.selectedIndex],
-      },
+      item: feeOptions[processingSpeedState.selectedIndex],
       index: processingSpeedState.selectedIndex,
     });
-  }, [isLoading]);
+  }, [processingSpeedState.index, baseFees]);
 
   return [processingSpeedState, selectProcessingSpeed, feeOptions];
 };

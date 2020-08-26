@@ -18,7 +18,7 @@ const TransactionAddress = ({
   return (
     <div className={`${styles.wrapper} transaction-address`}>
       <span>
-        {transactionType !== transactionTypes().send.code
+        {transactionType !== transactionTypes().transfer.code
           ? transactionTypes.getByCode(transactionType).title
           : renderAddress()}
       </span>

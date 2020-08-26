@@ -7,7 +7,7 @@
  * but transactions may have either of the tx type codes.
  */
 const transactionTypes = (t = str => str) => ({
-  send: {
+  transfer: {
     code: {
       legacy: 0,
       new: 8,
@@ -16,6 +16,7 @@ const transactionTypes = (t = str => str) => ({
     title: t('Send'),
     senderLabel: t('Sender'),
     key: 'transfer',
+    nameFee: 0,
   },
   setSecondPassphrase: {
     code: {
@@ -27,6 +28,7 @@ const transactionTypes = (t = str => str) => ({
     senderLabel: t('Account'),
     key: 'secondPassphrase',
     icon: 'tx2ndPassphrase',
+    nameFee: 0,
   },
   registerDelegate: {
     code: {
@@ -38,6 +40,7 @@ const transactionTypes = (t = str => str) => ({
     senderLabel: t('Account nickname'),
     key: 'registerDelegate',
     icon: 'txDelegate',
+    nameFee: 1e9,
   },
   vote: {
     code: {
@@ -49,6 +52,7 @@ const transactionTypes = (t = str => str) => ({
     senderLabel: t('Voter'),
     key: 'castVotes',
     icon: 'txVote',
+    nameFee: 0,
   },
   createMultiSig: {
     code: {
@@ -60,6 +64,7 @@ const transactionTypes = (t = str => str) => ({
     senderLabel: t('Registrant'),
     key: 'createMultiSig',
     icon: 'signMultiSignatureTransaction',
+    nameFee: 0,
   },
 });
 
@@ -71,7 +76,8 @@ const transactionTypes = (t = str => str) => ({
  */
 transactionTypes.getByCode = (code) => {
   const types = transactionTypes();
-  const key = Object.keys(types).filter(type => types[type].code === code);
+  const key = Object.keys(types)
+    .filter(type => (types[type].code === code));
   return key.length ? types[key] : null;
 };
 
@@ -86,5 +92,25 @@ transactionTypes.getListOf = (key) => {
   const types = transactionTypes();
   return Object.keys(types).map(type => types[type][key]);
 };
+
+/**
+ * gets the name fee for a transaction type
+ *
+ * @param {key} key the transaction type
+ * @returns {number} transaction name fee
+ */
+transactionTypes.getNameFee = (key) => {
+  const types = transactionTypes();
+  return types[key].nameFee;
+};
+
+export const byteSizes = {
+  type: 1,
+  nonce: 8,
+  fee: 8,
+  signature: 64,
+};
+
+export const minFeePerByte = 1000;
 
 export default transactionTypes;

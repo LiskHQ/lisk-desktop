@@ -1,14 +1,13 @@
 /* eslint-disable max-lines */
 import i18next from 'i18next';
 import to from 'await-to-js';
+
 import actionTypes from '../constants/actions';
-import Fees from '../constants/fees';
 import { tokenMap } from '../constants/tokens';
 import transactionTypes from '../constants/transactionTypes';
 import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
-import { getTimeOffset } from '../utils/hacks';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI } from '../utils/api';
 import { signSendTransaction } from '../utils/hwManager';
@@ -61,11 +60,11 @@ export const getTransactions = ({
   filters = undefined,
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.getTransactions));
-  const networkConfig = getState().network;
+  const { network } = getState();
 
-  if (networkConfig) {
+  if (network) {
     const [error, response] = await to(transactionsAPI.getTransactions({
-      networkConfig, address, filters, limit, offset,
+      network, address, filters, limit, offset,
     }));
 
     if (error) {
@@ -184,17 +183,17 @@ export const sent = data => async (dispatch, getState) => {
   let tx;
   let fail;
   const {
-    account, network, settings, blocks,
+    account, network, settings,
   } = getState();
-  const timeOffset = getTimeOffset(blocks.latestBlocks);
+  // const timeOffset = getTimeOffset(blocks.latestBlocks);
   const activeToken = settings.token.active;
   const senderId = account.info[activeToken].address;
 
-  const txData = { ...data, timeOffset };
+  const txData = data;
 
   try {
     if (account.loginType === loginType.normal) {
-      tx = await transactionsAPI.create(activeToken, txData, transactionTypes().send.key);
+      tx = await transactionsAPI.create(activeToken, txData, transactionTypes().transfer.key);
     } else {
       [fail, tx] = await (signSendTransaction(account, data));
 
@@ -206,12 +205,12 @@ export const sent = data => async (dispatch, getState) => {
     dispatch(addNewPendingTransaction({
       amount: txData.amount,
       asset: { reference: txData.data },
-      fee: Fees.send,
+      fee: 1e7,
       id: broadcastTx.id,
       recipientId: txData.recipientId,
       senderId,
       senderPublicKey: account.publicKey,
-      type: transactionTypes().send.code,
+      type: transactionTypes().transfer.code,
     }));
 
     dispatch(passphraseUsed(new Date()));
@@ -241,18 +240,18 @@ export const resetTransactionResult = () => ({
 // TODO remove this function once create and broadcast HOC be implemented
 export const transactionCreated = data => async (dispatch, getState) => {
   const {
-    account, settings, network, ...state
+    account, settings, network,
   } = getState();
-  const timeOffset = getTimeOffset(state.blocks.latestBlocks);
+  // const timeOffset = getTimeOffset(state.blocks.latestBlocks);
   const activeToken = settings.token.active;
 
   const [error, tx] = account.loginType === loginType.normal
     ? await to(transactionsAPI.create(
       activeToken,
-      { ...data, timeOffset, network },
-      transactionTypes().send.key,
+      { ...data, network },
+      transactionTypes().transfer.key,
     ))
-    : await to(signSendTransaction(account, { ...data, timeOffset }));
+    : await to(signSendTransaction(account, data));
 
   if (error) {
     return dispatch({

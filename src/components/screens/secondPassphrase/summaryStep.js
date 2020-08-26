@@ -1,7 +1,5 @@
 import React from 'react';
-import { fromRawLsk } from '../../../utils/lsk';
 import AccountVisual from '../../toolbox/accountVisual';
-import Fees from '../../../constants/fees';
 import TransactionSummary from '../../shared/transactionSummary';
 
 import styles from './secondPassphrase.css';
@@ -42,7 +40,7 @@ const SummaryStep = ({
       label: t('Go back'),
       onClick: prevStep,
     }}
-    fee={fromRawLsk(Fees.setSecondPassphrase)}
+    fee={25}
     confirmation={t('I’m aware registering a 2nd passphrase is irreversible and it will be required to confirm transactions.')}
     classNames={`${styles.box} ${styles.passphraseConfirmation}`}
     footerClassName={styles.confirmPassphraseFooter}

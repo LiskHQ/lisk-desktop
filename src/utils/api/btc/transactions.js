@@ -1,5 +1,7 @@
+/* eslint-disable max-lines */
 import * as bitcoin from 'bitcoinjs-lib';
 import { BigNumber } from 'bignumber.js';
+import * as popsicle from 'popsicle';
 
 import { extractAddress, getDerivedPathFromPassphrase } from './account';
 import { getAPIClient, getNetworkCode } from './network';
@@ -216,6 +218,7 @@ export const getTransactionFeeFromUnspentOutputs = ({
     dynamicFeePerByte,
   });
 
+
   return calculateTransactionFee({
     inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue
       + feeInSatoshis, unspentTransactionOutputs),
@@ -246,3 +249,55 @@ export const broadcast = (transactionHex, network) => new Promise(async (resolve
     reject(error);
   }
 });
+
+/**
+ * Returns a dictionary of base fees for low, medium and high processing speeds
+ */
+export const getDynamicBaseFees = () => new Promise(async (resolve, reject) => {
+  try {
+    const config = getBtcConfig(0);
+    const response = await popsicle.get(config.minerFeesURL)
+      .use(popsicle.plugins.parse('json'));
+
+    if (response) {
+      const { body } = response;
+      resolve({
+        Low: body.hourFee,
+        Medium: body.halfHourFee,
+        High: body.fastestFee,
+      });
+    } else {
+      reject(response);
+    }
+  } catch (error) {
+    reject(error);
+  }
+});
+
+/**
+ * Returns the actual tx fee based on given tx details and selected processing speed
+ * @param {String} address - Account address
+ * @param {Object} network - network configuration
+ */
+export const getDynamicFee = async ({
+  account, network, txData, dynamicFeePerByte,
+}) => {
+  const unspentTransactionOutputs = await getUnspentTransactionOutputs(
+    account.address, network,
+  );
+
+  const value = getTransactionFeeFromUnspentOutputs({
+    unspentTransactionOutputs,
+    satoshiValue: txData.amount || 0,
+    dynamicFeePerByte: dynamicFeePerByte.value,
+  });
+
+  const feedback = txData.amount === 0
+    ? '-'
+    : `${(value ? '' : 'Invalid amount')}`;
+  return {
+    value,
+    error: !!feedback,
+    feedback,
+  };
+};

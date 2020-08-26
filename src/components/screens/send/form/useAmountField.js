@@ -1,45 +1,48 @@
-import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
+
+import { toRawLsk } from '../../../../utils/lsk';
 import { validateAmountFormat } from '../../../../utils/validators';
 import regex from '../../../../utils/regex';
 
 let loaderTimeout = null;
 
-const useAmountField = (initialValue, getMaxAmount) => {
-  const { t, i18n } = useTranslation();
-  const {
-    settings: { token: { active: token } },
-  } = useSelector(state => state);
+const baseState = {
+  required: true,
+  isLoading: false,
+  error: false,
+  feedback: '',
+};
 
-  const getAmountFeedbackAndError = (value) => {
+const getAmountFieldState = (initialValue, getAmountFeedbackAndError) => (initialValue
+  ? {
+    ...baseState,
+    ...getAmountFeedbackAndError(initialValue),
+    value: initialValue,
+  }
+  : {
+    ...baseState,
+    value: '',
+  });
+
+const useAmountField = (initialValue, token) => {
+  const { t, i18n } = useTranslation();
+
+  const getAmountFeedbackAndError = (value, maxAmount = 0) => {
     let { message: feedback } = validateAmountFormat({ value, token });
 
-    if (!feedback && parseFloat(getMaxAmount()) < numeral(value).value()) {
+    if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {
       feedback = t('Provided amount is higher than your current balance.');
     }
     return { error: !!feedback, feedback };
   };
-  const baseState = {
-    required: true,
-    isLoading: false,
-    error: false,
-    feedback: '',
-  };
 
-  const [amountField, setAmountField] = useState(initialValue
-    ? {
-      ...baseState,
-      ...getAmountFeedbackAndError(initialValue),
-      value: initialValue,
-    }
-    : {
-      ...baseState,
-      value: '',
-    });
+  const [amountField, setAmountField] = useState(
+    getAmountFieldState(initialValue, getAmountFeedbackAndError),
+  );
 
-  const onAmountInputChange = ({ value }) => {
+  const onAmountInputChange = ({ value }, maxAmount) => {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
     clearTimeout(loaderTimeout);
@@ -53,7 +56,7 @@ const useAmountField = (initialValue, getMaxAmount) => {
       setAmountField({
         ...baseState,
         value,
-        ...getAmountFeedbackAndError(value),
+        ...getAmountFeedbackAndError(value, maxAmount.value),
       });
     }, 300);
   };

@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input } from '../../../toolbox/inputs';
 import { TertiaryButton } from '../../../toolbox/buttons';
 import {
@@ -7,24 +7,23 @@ import {
 } from '../../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../../utils/lsk';
 import Converter from '../../../shared/converter';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
 
 const AmountField = ({
-  amount, getMaxAmount, fee, setAmountField,
+  amount, maxAmount, setAmountField,
 }) => {
   const { t } = useTranslation();
   const name = 'amount';
   const setEntireBalance = () => {
     const value = formatAmountBasedOnLocale({
-      value: getMaxAmount(),
+      value: fromRawLsk(maxAmount.value),
       format: '0.[00000000]',
     });
-    setAmountField({ value });
+    setAmountField({ value }, maxAmount);
   };
 
   const handleAmountChange = ({ target }) => {
-    setAmountField(target);
+    setAmountField(target, maxAmount);
   };
 
   return (
@@ -60,24 +59,6 @@ const AmountField = ({
           error={amount.error}
         />
       </span>
-      { fee ? (
-        <span className={styles.amountHint}>
-          {t('+ Transaction fee {{fee}} LSK', {
-            fee: formatAmountBasedOnLocale({ value: fromRawLsk(fee) }),
-          })}
-          <Tooltip
-            position="top left"
-            title={t('Transaction fee')}
-          >
-            <p className={styles.tooltipText}>
-              {
-                    t(`Every transaction needs to be confirmed and forged into Lisk blockchain network. 
-                    Such operations require hardware resources and because of that there is a small fee for processing those.`)
-                  }
-            </p>
-          </Tooltip>
-        </span>
-      ) : null }
     </label>
   );
 };

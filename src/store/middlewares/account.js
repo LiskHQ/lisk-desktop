@@ -58,7 +58,7 @@ const votePlaced = (store, action) => {
 const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
   transaction
   && transaction.recipientId === account.address
-  && transaction.type === transactionTypes().send.code
+  && transaction.type === transactionTypes().transfer.code
 ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {

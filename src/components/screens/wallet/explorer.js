@@ -91,7 +91,7 @@ const apis = {
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
       address: props.match.params.address,
-      networkConfig: state.network,
+      network: state.network,
     }),
     transformResponse: response => response,
   },
@@ -100,7 +100,7 @@ const apis = {
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
       address: props.match.params.address,
-      networkConfig: state.network,
+      network: state.network,
     }),
     defaultData: [],
     defaultUrlSearchParams: {

@@ -1,54 +1,47 @@
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import usePromise from 'react-use-promise';
-import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
+import { useEffect, useState } from 'react';
 import {
-  getTransactionFeeFromUnspentOutputs,
-  getUnspentTransactionOutputs,
-} from '../../../../utils/api/btc/transactions';
+  getDynamicFee,
+} from '../../../../utils/api/transactions';
 
-// @todo account for LSK dynamic fees
-const useDynamicFeeCalculation = (account, dynamicFeePerByte) => {
-  const {
-    settings: { token: { active: token } },
-    network: networkConfig,
-  } = useSelector(state => state);
-  const { t } = useTranslation();
-  const [unspentTransactionOutputs = []] = usePromise(
-    () => getUnspentTransactionOutputs(account.info[token].address, networkConfig),
-    [account.info[token].address],
-  );
+const useDynamicFeeCalculation = (dynamicFeePerByte, txData, token, account) => {
+  const network = useSelector(state => state.network);
 
-  const getDynamicFee = (txAmount) => {
-    const value = getTransactionFeeFromUnspentOutputs({
-      unspentTransactionOutputs,
-      satoshiValue: toRawLsk(txAmount),
-      dynamicFeePerByte,
-    });
-    const feedback = txAmount === ''
-      ? '-'
-      : `${(value ? '' : t('Invalid amount'))}`;
-    return {
-      value,
-      error: !!feedback,
-      feedback,
-    };
+  const initialFee = {
+    value: 0,
+    error: false,
+    feedback: '',
+  };
+  const initialMaxAmount = {
+    value: account.balance,
+    error: false,
+    feedback: '',
+  };
+  const [fee, setFee] = useState(initialFee);
+  const [maxAmount, setMaxAmount] = useState(initialMaxAmount);
+
+  const setDynamicFee = async (param, name) => {
+    const res = await getDynamicFee(param);
+    if (name === 'fee') setFee(res);
+    else {
+      setMaxAmount({
+        ...res,
+        value: account.balance - res.value,
+      });
+    }
   };
 
-  const getMaxAmount = () => {
-    const unspentTxOutsTotal = unspentTransactionOutputs.reduce((total, tx) => {
-      total += tx.value;
-      return total;
-    }, 0) /* fallback before unspentTransactionOutputs are loaded */
-    || /* istanbul ignore next */ account.info[token].balance;
+  useEffect(() => {
+    setDynamicFee({
+      token, account, network, txData, dynamicFeePerByte,
+    }, 'fee');
 
-    return fromRawLsk(Math.max(
-      0,
-      unspentTxOutsTotal - getDynamicFee(fromRawLsk(unspentTxOutsTotal)).value,
-    ));
-  };
+    setDynamicFee({
+      token, account, network, txData: { ...txData, amount: account.balance }, dynamicFeePerByte,
+    }, 'maxAmount');
+  }, [txData.amount, txData.data, txData.recipient, dynamicFeePerByte.selectedIndex]);
 
-  return [getDynamicFee, getMaxAmount];
+  return [fee, maxAmount];
 };
 
 export default useDynamicFeeCalculation;

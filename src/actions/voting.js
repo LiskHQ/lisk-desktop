@@ -6,7 +6,6 @@ import {
   castVotes,
 } from '../utils/api/delegates';
 import { getVotingLists, getVotingError } from '../utils/voting';
-import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
 import { passphraseUsed } from './account';
 import { addNewPendingTransaction } from './transactions';
@@ -52,7 +51,6 @@ export const votePlaced = ({
     const { networkIdentifier } = state.network.networks.LSK;
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, state.network);
     const { votedList, unvotedList } = getVotingLists(votes);
-    const timeOffset = getTimeOffset(state.blocks.latestBlocks);
 
     const label = getVotingError(votes, account);
     if (label) {
@@ -66,7 +64,6 @@ export const votePlaced = ({
       votedList,
       unvotedList,
       secondPassphrase,
-      timeOffset,
       networkIdentifier,
     }));
 
@@ -111,7 +108,7 @@ export const loadDelegates = ({
   let params = {
     offset,
     limit: '90',
-    sort: 'voteWeight:desc',
+    sort: 'totalVotesReceived:desc',
   };
   params = q ? { ...params, search: q } : params;
   return getDelegates(network, params);

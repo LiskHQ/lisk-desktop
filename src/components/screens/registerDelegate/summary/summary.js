@@ -3,8 +3,6 @@ import to from 'await-to-js';
 
 import TransactionSummary from '../../../shared/transactionSummary';
 import AccountVisual from '../../../toolbox/accountVisual';
-import { fromRawLsk } from '../../../../utils/lsk';
-import Fees from '../../../../constants/fees';
 import { create } from '../../../../utils/api/lsk/transactions';
 import transactionTypes from '../../../../constants/transactionTypes';
 import styles from './summary.css';
@@ -16,7 +14,7 @@ class Summary extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  async onSubmit({ secondPassphrase }) {
+  async onSubmit() {
     const {
       account,
       nextStep,
@@ -28,14 +26,18 @@ class Summary extends React.Component {
       account,
       username: nickname,
       passphrase: account.passphrase,
-      secondPassphrase,
+      // @todo add correct fee here
+      fee: 100,
       network,
     };
 
     const [error, tx] = await to(
       create(data, transactionTypes().registerDelegate.key),
     );
-    if (!error) nextStep({ transactionInfo: tx });
+
+    if (!error) {
+      nextStep({ transactionInfo: tx });
+    }
   }
 
   render() {
@@ -62,7 +64,7 @@ class Summary extends React.Component {
         account={account}
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}
-        fee={fromRawLsk(Fees.registerDelegate)}
+        fee={25}
         classNames={`${styles.box} ${styles.summaryContainer}`}
       >
         <section className="summary-container">
