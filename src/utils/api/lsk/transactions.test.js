@@ -7,6 +7,7 @@ import {
   broadcast,
   calculateMinTxFee,
   getDynamicBaseFees,
+  getDynamicFee,
 } from './transactions';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
@@ -23,7 +24,6 @@ const testTx = {
   data: 'payment',
   passphrase: accounts.genesis.passphrase,
   recipientId: '123L',
-  timeOffset: 0,
   nonce: '1',
   fee: '123',
   network: {
@@ -216,6 +216,22 @@ describe('Utils: Transactions API', () => {
       //   senderPublicKey: accounts.genesis.publicKey,
       // }, transactionTypes().transfer.key
       );
+
+      expect(estimates).toBeDefined();
+      expect(Object.keys(estimates)).toHaveLength(3);
+    });
+  });
+
+  describe('getDynamicFee', () => {
+    it('returns the calculated tx fees for a selected processing speed', async () => {
+      const estimates = await getDynamicFee({
+        txData: {
+          ...testTx,
+          senderPublicKey: accounts.genesis.publicKey,
+          txType: transactionTypes().transfer.key,
+        },
+        dynamicFeePerByte: { value: 10, selectedIndex: 0 },
+      });
 
       expect(estimates).toBeDefined();
       expect(Object.keys(estimates)).toHaveLength(3);
