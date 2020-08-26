@@ -113,7 +113,7 @@ export const updateTransactions = ({
 
   if (network) {
     const [error, response] = await to(transactionsAPI.getTransactions({
-      networkConfig: network, address, limit, filters,
+      network, address, limit, filters,
     }));
 
     if (error) {
