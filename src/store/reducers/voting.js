@@ -79,10 +79,10 @@ const voting = (state = { // eslint-disable-line complexity
               ? state.votes[action.data.username].confirmed : false,
             unconfirmed: state.votes[action.data.username]
               ? !state.votes[action.data.username].unconfirmed : true,
-            publicKey: action.data.account.publicKey,
+            publicKey: action.data.publicKey,
             productivity: action.data.productivity,
             rank: action.data.rank,
-            address: action.data.account.address,
+            address: action.data.address,
           },
         },
       };
