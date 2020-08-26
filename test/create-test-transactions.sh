@@ -16,8 +16,8 @@ for i in {1..50}; do
 	transfer ${CURRENT} ${i}00 537318935439898807L test
 done
 
-transfer 154 90 544792633152563672L delegate-candidate
-transfer 155 70 16422276087748907680L send-all-account
-transfer 156 1 94495548317450502L without-initialization
+transfer 153 90 544792633152563672L delegate-candidate
+transfer 154 70 16422276087748907680L send-all-account
+transfer 155 1 94495548317450502L without-initialization
 
 # docker exec -t docker_db_1 pg_dump -U lisk lisk > ./dev_blockchain.db
