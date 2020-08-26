@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import { tokenMap } from '../../../../constants/tokens';
 import Form from './form';
 import accounts from '../../../../../test/constants/accounts';
+import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 describe('Form', () => {
   let wrapper;
@@ -34,13 +35,8 @@ describe('Form', () => {
       token: tokenMap.LSK.key,
       t: v => v,
       account: {
-        balance: accounts.genesis.balance,
-        info: {
-          LSK: accounts.genesis,
-          BTC: {
-            address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
-          },
-        },
+        ...accounts.genesis,
+        nonce: '1',
       },
       bookmarks,
       networkConfig: {
@@ -88,12 +84,16 @@ describe('Form', () => {
     expect(wrapper.find('textarea.message')).toHaveValue(fields.reference.value);
   });
 
-  it('should go to next step when submit button is clicked', () => {
+  it('should go to next step when submit button is clicked', async () => {
     const { address } = accounts.genesis;
     wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
     wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '12' } });
     act(() => { jest.advanceTimersByTime(300); });
-    wrapper.update();
+
+    act(() => { wrapper.update(); });
+    await flushPromises();
+
+    // console.log(wrapper.debug());
     expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     wrapper.find('button.btn-submit').simulate('click');
     expect(props.nextStep).toHaveBeenCalled();
@@ -159,7 +159,7 @@ describe('Form', () => {
       expect(amountField.find('input').prop('value')).toEqual('0.1');
     });
 
-    it('Should show error feedback if wrong data is inserted', () => {
+    it('Should show error feedback if wrong data is inserted', async () => {
       let amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', { target: { name: 'amount', value: 'abc' } });
       act(() => { jest.advanceTimersByTime(300); });
@@ -177,6 +177,7 @@ describe('Form', () => {
 
       amountField.find('input').simulate('change', { target: { name: 'amount', value: props.account.balance + 2 } });
       act(() => { jest.advanceTimersByTime(300); });
+      await flushPromises();
       wrapper.update();
       expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
     });

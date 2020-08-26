@@ -27,11 +27,11 @@ const FormLsk = (props) => {
 
   const txType = 'transfer';
 
-  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
+  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed(token);
 
 
   const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount'));
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
 
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
@@ -42,7 +42,7 @@ const FormLsk = (props) => {
     nonce: account.nonce,
     senderPublicKey: account.publicKey,
     data: reference.value,
-  });
+  }, token, account);
 
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };

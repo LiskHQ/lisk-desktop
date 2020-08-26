@@ -136,7 +136,7 @@ describe('Summary', () => {
 
 
   it('should show props.fields.fee.value and use it in transactionCreated if props.token is not LSK', () => {
-    const txFee = '12451';
+    const txFee = 12451;
     wrapper.setProps({
       token: 'BTC',
       fields: {
@@ -154,7 +154,7 @@ describe('Summary', () => {
     expect(wrapper.find('.fee-value')).toIncludeText(txFee);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(props.transactionCreated).toBeCalledWith(expect.objectContaining({
-      dynamicFeePerByte: txFee,
+      fee: txFee,
     }));
   });
 

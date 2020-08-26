@@ -13,21 +13,19 @@ import useDynamicFeeCalculation from './useDynamicFeeCalculation';
 import useProcessingSpeed from './useProcessingSpeed';
 import useRecipientField from './useRecipientField';
 
-// eslint-disable-next-line max-statements
 const FormBtc = (props) => {
   const {
-    t, token, getInitialValue,
+    t, token, getInitialValue, account,
   } = props;
   const txType = 'transfer';
 
-  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount'));
+  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed(token);
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
 
-  // @todo use real transaction object
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
   const [fee, maxAmount] = useDynamicFeeCalculation(processingSpeed, {
     amount: toRawLsk(amount.value), txType, recipient: recipient.value,
-  });
+  }, token, account);
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
@@ -40,9 +38,6 @@ const FormBtc = (props) => {
   const getProcessingSpeedStatus = () => (!fields.fee.error
     ? `${formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) })} ${token}`
     : fields.fee.feedback);
-
-  // @todo Move the processing speed to FormBase because it is used
-  // on both LSK and BTC platforms.
 
   return (
     <FormBase
