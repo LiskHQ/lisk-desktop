@@ -63,10 +63,10 @@ const DelegateRow = (props) => {
       </span>
       <span className={`${shouldShowVoteColumn ? grid['col-xs-4'] : grid['col-xs-5']}`}>
         <AddressWrapper
-          address={data.account.address}
+          address={data.address}
           votingModeEnabled={votingModeEnabled}
         >
-          <AvatarWithNameAndAddress {...data} />
+          <AvatarWithNameAndAddress username={data.username} account={{ address: data.address }} />
         </AddressWrapper>
       </span>
       <span className={grid['col-md-3']}>
