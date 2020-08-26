@@ -99,7 +99,6 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // Adding timeout explained in
     // https://github.com/LiskHQ/lisk-desktop/pull/1609
     setTimeout(() => {
-      console.log('updateTransactions');
       updateAccountData(store);
       store.dispatch(updateTransactions({
         pendingTransactions: transactions.pending, // @todo not used? also missing limit
