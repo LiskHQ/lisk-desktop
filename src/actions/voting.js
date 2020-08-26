@@ -108,7 +108,7 @@ export const loadDelegates = ({
   let params = {
     offset,
     limit: '90',
-    sort: 'voteWeight:desc',
+    sort: 'totalVotesReceived:desc',
   };
   params = q ? { ...params, search: q } : params;
   return getDelegates(network, params);
