@@ -23,6 +23,7 @@ import Explorer from '../components/screens/wallet/explorer';
 import TransactionDetails from '../components/screens/transactionDetails';
 import VerifyMessage from '../components/screens/verifyMessage';
 import VotingSummary from '../components/screens/voting/votingSummary';
+import Request from '../components/screens/request';
 import SearchBar from '../components/shared/searchBar';
 import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
 
@@ -190,6 +191,11 @@ export const modals = {
   newRelease: {
     component: NewReleaseDialog,
     isPrivate: false,
+    forbiddenTokens: [],
+  },
+  request: {
+    component: Request,
+    isPrivate: true,
     forbiddenTokens: [],
   },
 };

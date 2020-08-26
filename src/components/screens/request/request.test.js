@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Request from '.';
-import accounts from '../../../../../../test/constants/accounts';
+import accounts from '../../../../test/constants/accounts';
 
 jest.mock('../../../../shared/converter', () => (
   function ConverterMock() {

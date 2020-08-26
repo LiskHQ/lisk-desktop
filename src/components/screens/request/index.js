@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { tokenKeys } from '../../../../../../constants/tokens';
+import { tokenKeys } from '../../../constants/tokens';
 import RequestBtc from './requestBtc';
 import RequestLsk from './requestLsk';
 

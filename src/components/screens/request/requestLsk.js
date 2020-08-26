@@ -1,15 +1,15 @@
 import React from 'react';
-import { Input, AutoResizeTextarea } from '../../../../../toolbox/inputs';
-import { messageMaxLength } from '../../../../../../constants/transactions';
-import CircularProgress from '../../../../../toolbox/circularProgress/circularProgress';
-import Converter from '../../../../../shared/converter';
+import { Input, AutoResizeTextarea } from '../../toolbox/inputs';
+import { messageMaxLength } from '../../../constants/transactions';
+import CircularProgress from '../../toolbox/circularProgress/circularProgress';
+import Converter from '../../shared/converter';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
-import Icon from '../../../../../toolbox/icon';
-import { validateAmountFormat } from '../../../../../../utils/validators';
-import i18n from '../../../../../../i18n';
-import regex from '../../../../../../utils/regex';
-import { sizeOfString } from '../../../../../../utils/helpers';
+import Icon from '../../toolbox/icon';
+import { validateAmountFormat } from '../../../utils/validators';
+import i18n from '../../../i18n';
+import regex from '../../../utils/regex';
+import { sizeOfString } from '../../../utils/helpers';
 
 class RequestLsk extends React.Component {
   constructor(props) {
@@ -169,15 +169,6 @@ class RequestLsk extends React.Component {
               {fields.reference.feedback}
             </span>
           </span>
-        </label>
-        <label className={`${styles.fieldGroup}`}>
-          <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>
-          <AutoResizeTextarea
-            name="shareLink"
-            value={shareLink}
-            className={`${styles.textarea} ${styles.sharingLink} request-link`}
-            readOnly
-          />
         </label>
       </RequestWrapper>
     );
