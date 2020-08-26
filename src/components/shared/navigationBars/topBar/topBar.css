@@ -47,6 +47,7 @@
     background-color: var(--color-search-container);
     border-radius: 3px;
     padding: 8px 10px;
+    margin-left: -10px;
 
     & .searchedValue {
       @mixin contentLarge normal;
