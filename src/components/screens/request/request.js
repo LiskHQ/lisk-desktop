@@ -18,7 +18,7 @@ const Request = ({
 };
 
 Request.propTypes = {
-  address: PropTypes.string.isRequired,
+  account: PropTypes.object,
   token: PropTypes.oneOf(tokenKeys).isRequired,
   t: PropTypes.func.isRequired,
 };
