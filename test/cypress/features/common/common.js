@@ -86,6 +86,10 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
   }
 });
 
+Given(/^I scroll to (.*?)$/, (position) => {
+  cy.get('.scrollContainer').scrollTo(position);
+});
+
 Then(/^I should see pending transaction$/, function () {
   cy.get(`${ss.transactionRow} ${ss.spinner}`).should('be.visible');
 });
