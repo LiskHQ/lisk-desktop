@@ -6,10 +6,9 @@ import urls from '../../../constants/urls';
 import accounts from '../../../constants/accounts';
 import compareBalances from '../../utils/compareBalances';
 
-const transactionFee = 0.1;
+const transactionFee = 0.001430143;
 
 const errorMessage = 'Test error';
-
 
 
 Then(/^I follow the launch protokol link$/, function () {
