@@ -1,9 +1,10 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import Request from '.';
+import { mountWithRouter } from '../../../utils/testHelpers';
+import Request from './request';
+import { tokenMap } from '../../../constants/tokens';
 import accounts from '../../../../test/constants/accounts';
 
-jest.mock('../../../../shared/converter', () => (
+jest.mock('../../shared/converter', () => (
   function ConverterMock() {
     return <span className="converted-price" />;
   }
@@ -13,28 +14,25 @@ describe('Request', () => {
   let wrapper;
 
   const props = {
-    address: accounts.genesis.address,
+    account: {
+      info: {
+        LSK: {
+          address: accounts.genesis.address,
+        },
+        BTC: {
+          address: '16Qp9op3fTESTBTCACCOUNTv52ghRzYreUuQ',
+        },
+      },
+    },
+    token: tokenMap.LSK.key,
+    t: v => v,
+    history: {
+      push: jest.fn(),
+    },
   };
 
   beforeEach(() => {
-    wrapper = mount(<Request {...props} />);
-  });
-
-  it('Should render without showing QRCode', () => {
-    expect(wrapper.find('.formSection')).toExist();
-    expect(wrapper.find('.qrSection')).toExist();
-    expect(wrapper.find('.qrSection.hide')).toExist();
-    expect(wrapper.find('.qrSection')).toHaveClassName('hide');
-  });
-
-  it('Should toogle qrSection', () => {
-    expect(wrapper.find('.qrSection')).toHaveClassName('hide');
-    wrapper.find('.formSection .footerActionable').simulate('click');
-    expect(wrapper.find('.qrSection')).not.toHaveClassName('hide');
-    expect(wrapper.find('.formSection .footerContent')).toHaveClassName('hide');
-    wrapper.find('.qrSection .footerActionable').simulate('click');
-    expect(wrapper.find('.qrSection')).toHaveClassName('hide');
-    expect(wrapper.find('.formSection .footerContent')).not.toHaveClassName('hide');
+    wrapper = mountWithRouter(Request, props);
   });
 
   describe('Amount field', () => {
@@ -106,20 +104,6 @@ describe('Request', () => {
   });
 
   describe('Share Link', () => {
-    it('Should update share link with amount and reference', () => {
-      const shareLink = `lisk://wallet/send?recipient=${props.address}`;
-      let evt;
-      expect(wrapper.find('.request-link').first().html()).toMatch(shareLink);
-
-      evt = { target: { name: 'reference', value: 'test' } };
-      wrapper.find('.fieldGroup').at(1).find('AutoResizeTextarea').simulate('change', evt);
-      expect(wrapper.find('.request-link').first().html()).toContain(`${evt.target.name}=${evt.target.value}`);
-
-      evt = { target: { name: 'amount', value: 1 } };
-      wrapper.find('.fieldGroup').at(0).find('input').simulate('change', evt);
-      expect(wrapper.find('.request-link').first().html()).toContain(`${evt.target.name}=${evt.target.value}`);
-    });
-
     it('Should copy and set timeout on click', () => {
       expect(wrapper.find('.copy-button button')).not.toBeDisabled();
       wrapper.find('.copy-button button').simulate('click');
@@ -130,8 +114,8 @@ describe('Request', () => {
     });
 
     it('Should render BTC reqest if props.token is BTC', () => {
-      wrapper = mount(<Request {...props} token="BTC" />);
-      expect(wrapper.find('.copy-button button').text()).toMatch('Copy address');
+      wrapper = mountWithRouter(Request, { ...props, token: 'BTC' });
+      expect(wrapper.find('.copy-button button').text()).toMatch('Copy link');
     });
   });
 });
