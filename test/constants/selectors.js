@@ -234,7 +234,7 @@ const ss = {
   coinRow: '.coin-row',
   closeOnboardingButton: '.closeOnboarding',
   goBack: '.go-back',
-  sendLink: '.tx-send-bt',
+  sendLink: '.open-send-dialog',
   closeDialog: '.dialog-close-button',
   bookmarkListToggle: '.bookmark-list-toggle',
   settingsMenu: '.settings-toggle',
