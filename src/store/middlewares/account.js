@@ -101,7 +101,6 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     setTimeout(() => {
       updateAccountData(store);
       store.dispatch(updateTransactions({
-        pendingTransactions: transactions.pending, // @todo not used? also missing limit
         address: account.address,
         filters: transactions.filters,
       }));
