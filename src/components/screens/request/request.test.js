@@ -115,7 +115,7 @@ describe('Request', () => {
 
     it('Should render BTC reqest if props.token is BTC', () => {
       wrapper = mountWithRouter(Request, { ...props, token: 'BTC' });
-      expect(wrapper.find('.copy-button button').text()).toMatch('Copy link');
+      expect(wrapper.find('.copy-button button').text()).toMatch('Copy address');
     });
   });
 });
