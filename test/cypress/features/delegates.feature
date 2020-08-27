@@ -1,6 +1,6 @@
 Feature: Delegate
 
-  Scenario: Displays 101 delegates and loads more as I scroll to bottom
+  Scenario: Displays 103 delegates and loads more as I scroll to bottom
     Given I login as genesis on devnet
     Given I am on Delegates page
     And I see 90 delegates on page
