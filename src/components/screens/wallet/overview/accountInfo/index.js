@@ -1,5 +1,4 @@
 import React from 'react';
-import QRCode from 'qrcode.react';
 import AccountVisual from '../../../../toolbox/accountVisual';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
@@ -46,7 +45,7 @@ const AccountInfo = ({
             className={styles.copyIcon}
           />
         </div>
-        <div className={styles.helperIcon}>
+        <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
           <DialogLink component="request">
             <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
           </DialogLink>

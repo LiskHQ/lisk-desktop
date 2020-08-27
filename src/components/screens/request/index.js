@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import { connect } from 'react-redux';
 import { tokenKeys } from '../../../constants/tokens';
 import RequestBtc from './requestBtc';
 import RequestLsk from './requestLsk';
@@ -11,9 +11,10 @@ const TagNameMap = {
 };
 
 const Request = ({
-  address, t, token,
+  account, t, token,
 }) => {
   const TagName = TagNameMap[token];
+  const address = account.info ? account.info[token].address : '';
   return <TagName address={address} t={t} />;
 };
 
@@ -30,4 +31,10 @@ Request.defaultProps = {
   t: key => key,
 };
 
-export default Request;
+export default connect(
+  state => ({
+    token: state.settings.token.active,
+    account: state.account,
+  }),
+  {},
+)(Request);

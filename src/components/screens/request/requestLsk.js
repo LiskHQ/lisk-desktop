@@ -118,7 +118,7 @@ class RequestLsk extends React.Component {
     const byteCount = sizeOfString(fields.reference.value);
 
     return (
-      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t}>
+      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request LSK')}>
         <span className={`${styles.label}`}>
           {t('Use the sharing link to easily request any amount of LSK from Lisk users.')}
         </span>

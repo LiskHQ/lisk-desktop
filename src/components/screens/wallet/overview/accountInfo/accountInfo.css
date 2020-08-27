@@ -103,12 +103,18 @@
       padding: 11px;
     }
 
-    & .qrCode {
-      padding: 10px;
+    & .qrCodeWrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      & > div {
+        display: flex;
+      }
     }
 
-    & .qrCodeWrapper {
-      width: auto;
+    & .qrCodeIcon {
+      width: 26px;
     }
 
     & .bookmark {

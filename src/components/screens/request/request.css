@@ -2,12 +2,30 @@
 
 .container {
   display: flex;
-  padding: 10px 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+
+  & h5 {
+    font-family: var(--heading-font);
+    flex-basis: 100%;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
 
   & > section {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    flex-basis: calc(50% - 20px);
+    justify-content: space-between;
+
+    &.BTCWrapper {
+      justify-content: flex-start;
+
+      & .sectionFooter > * > button {
+        background-color: var(--color-btc);
+      }
+    }
   }
 
   & .label {
@@ -52,10 +70,10 @@
   }
 
   & .fieldLabel {
-    @mixin contentNormal bold;
+    @mixin contentNormal normal;
 
     color: var(--color-maastricht-blue);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   & .feedback {
@@ -166,6 +184,7 @@
   }
 
   & .qrCodeContainer {
+    align-self: center;
     align-items: center;
     border: 1px solid var(--color-platinum);
     box-sizing: border-box;
@@ -174,7 +193,8 @@
     flex-grow: 1;
     margin: 24px 0 0;
     width: 100%;
-    padding: 33px 0;
+    width: 236px;
+    height: 236px;
 
     & canvas {
       box-shadow: 0 0 1px 0 var(--color-strong-white);
@@ -182,8 +202,16 @@
   }
 }
 
-.copyIcon {
-  display: none;
+.copyButton {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+
+  & > .copyIcon {
+    filter: brightness(100) !important;
+    margin-right: 8px;
+  }
 }
 
 .feedback {

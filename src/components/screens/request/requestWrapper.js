@@ -10,15 +10,18 @@ const RequestWrapper = ({
   children,
   copyLabel,
   copyValue,
+  title,
+  className,
 }) => {
   return (
     <Dialog hasClose>
       <div className={`${styles.container}`}>
-        <section className={`${styles.formSection}`}>
+        <h5>{title}</h5>
+        <section className={`${styles.formSection} ${className}`}>
           {children}
           <footer className={`${styles.sectionFooter}`}>
             <CopyToClipboard
-              className="copy-button"
+              className={`${styles.copyButton} copy-button`}
               Container={PrimaryButton}
               containerProps={{ size: 's' }}
               value={copyValue}
@@ -32,7 +35,7 @@ const RequestWrapper = ({
             {t('Simply scan the QR code using the Lisk Mobile app or any other QR code reader')}
           </span>
           <div className={`${styles.qrCodeContainer}`}>
-            <QRCode value={copyValue} size={235} />
+            <QRCode value={copyValue} size={176} />
           </div>
         </section>
       </div>

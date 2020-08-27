@@ -12,15 +12,16 @@ const IconAndText = ({
     <Container disabled={copied} {...containerProps}>
       {copied ? (
         <span className={`${className} copied`}>
-          {t('Copied!')}
+          <Icon name="checkmark" className={`${styles.icon} ${copyClassName}`} />
+          {t('Copied')}
         </span>
       ) : (
         <span className={`${className} ${styles.clickable} default`}>
+          <Icon name="copy" className={`${styles.icon} ${copyClassName}`} />
           <span className="copy-title">
             {text || value}
           </span>
           {' '}
-          <Icon name="copy" className={`${styles.icon} ${copyClassName}`} />
         </span>
       )}
     </Container>
