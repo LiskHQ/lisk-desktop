@@ -5,15 +5,6 @@ Feature: Transaction table filtering
     Given I am on Wallet page
     Then I click filter transactions
 
-  Scenario: Filter by 2 Dates, clear 1 filter to filter by 1 Date
-    When I type date from 25.05.16
-    And I type date to 26.05.16
-    And I type amount to 100000001
-    And I apply filters
-    Then I should see 0 transactions in table
-    When Clear filter containing 25
-    Then I should see 2 transactions in table
-
   Scenario: Filter by 1 Amount, add second filter by 1 Amount
     When I type amount from 4800
     And I apply filters
