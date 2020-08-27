@@ -82,8 +82,6 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
       cy.route('/api/transactions?*').as('transactions');
       cy.visit(`${urls.accounts}/${accounts[identifier].address}`);
       cy.wait('@transactions');
-      cy.wait('@transactions');
-      cy.wait('@transactions');
       break;
   }
 });
