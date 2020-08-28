@@ -1,6 +1,6 @@
 import React from 'react';
 import { mountWithRouter } from '../../../utils/testHelpers';
-import Request from './request';
+import Request from '.';
 import { tokenMap } from '../../../constants/tokens';
 import accounts from '../../../../test/constants/accounts';
 
