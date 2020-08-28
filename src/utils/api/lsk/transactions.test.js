@@ -251,19 +251,5 @@ describe('Utils: Transactions API', () => {
       expect(fees.value).toBeDefined();
       expect(fees.error).toBeTruthy();
     });
-
-    it('returns an error and appropriate feedback if it can not calculate the fee', async () => {
-      const fees = await getDynamicFee({
-        txData: {
-          ...testTx,
-          senderPublicKey: accounts.genesis.publicKey,
-          txType: transactionTypes().transfer.key,
-        },
-        dynamicFeePerByte: { value: NaN, selectedIndex: 0 },
-      });
-
-      expect(fees.value).toBeDefined();
-      expect(fees.error).toBeTruthy();
-    });
   });
 });
