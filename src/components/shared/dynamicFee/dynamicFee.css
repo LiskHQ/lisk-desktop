@@ -20,6 +20,11 @@
   color: var(--color-maastricht-blue);
   display: flex;
   margin-bottom: 8px;
+
+  & .loading {
+    color: var(--color-ultramarine-blue);
+    margin-left: 5px;
+  }
 }
 
 .dynamicFeeWrapper {

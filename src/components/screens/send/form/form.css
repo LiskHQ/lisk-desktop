@@ -129,11 +129,6 @@
     display: flex;
     margin: 8px 0;
 
-    & .loading {
-      color: var(--color-ultramarine-blue);
-      margin-left: 5px;
-    }
-
     & > span {
       color: var(--color-maastricht-blue);
       display: flex;

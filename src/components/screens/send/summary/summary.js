@@ -1,5 +1,5 @@
 import React from 'react';
-import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
+import { toRawLsk } from '../../../../utils/lsk';
 import { loginType } from '../../../../constants/hwConstants';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Converter from '../../../shared/converter';
@@ -29,7 +29,7 @@ class Summary extends React.Component {
       passphrase: account.passphrase,
       recipientId: fields.recipient.address,
       secondPassphrase,
-      fee: parseInt(fields.fee.value, 10),
+      fee: toRawLsk(parseFloat(fields.fee.value, 10)),
       nonce: account.nonce,
     });
   }
@@ -86,7 +86,7 @@ class Summary extends React.Component {
           label: t('Edit transaction'),
           onClick: this.prevStep,
         }}
-        fee={fromRawLsk(fields.fee.value)}
+        fee={fields.fee.value}
         token={token}
       >
         <section>

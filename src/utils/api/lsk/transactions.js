@@ -1,7 +1,7 @@
 import Lisk from '@liskhq/lisk-client';
 import { getAPIClient } from './network';
 import { getTimestampFromFirstBlock } from '../../datetime';
-import { toRawLsk } from '../../lsk';
+import { toRawLsk, fromRawLsk } from '../../lsk';
 import txFilters from '../../../constants/transactionFilters';
 // eslint-disable-next-line import/no-named-default
 import transactionTypes, { minFeePerByte } from '../../../constants/transactionTypes';
@@ -100,7 +100,7 @@ export const calculateMinTxFee = (
  */
 export const getDynamicBaseFees = () => (
   new Promise(async (resolve) => {
-    const fee = 0.1;
+    const fee = 1e7;
 
     // @todo use real fee estimates
     resolve({
@@ -159,19 +159,23 @@ export const getDynamicFee = async ({
 }) => {
   const { txType, ...data } = txData;
   const minFee = calculateMinTxFee(data, txType);
+  const feePerByte = fromRawLsk(dynamicFeePerByte.value);
+
   // Tie breaker is only meant for Medium and high processing speeds
   const tieBreaker = dynamicFeePerByte.selectedIndex === 0
-    ? 0 : minFeePerByte * (dynamicFeePerByte.value) * Math.random();
+    ? 0 : minFeePerByte * feePerByte * Math.random();
 
-  const value = minFee + dynamicFeePerByte.value * findTransactionSizeInBytes({
+  const value = minFee + feePerByte * findTransactionSizeInBytes({
     transaction: data, type: txType,
   }) + tieBreaker;
 
+  const roundedValue = parseFloat(Number(fromRawLsk(value)).toFixed(8));
   const feedback = data.amount === ''
     ? '-'
     : `${(value ? '' : 'Invalid amount')}`;
+
   return {
-    value,
+    value: roundedValue,
     error: !!feedback,
     feedback,
   };

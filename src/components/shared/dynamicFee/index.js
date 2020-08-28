@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import styles from './dynamicFee.css';
@@ -6,7 +6,15 @@ import { tokenMap } from '../../../constants/tokens';
 import Input from '../../toolbox/inputs/input';
 import Icon from '../../toolbox/icon';
 import Tooltip from '../../toolbox/tooltip/tooltip';
+import Spinner from '../../toolbox/spinner';
+import {
+  formatAmountBasedOnLocale,
+} from '../../../utils/formattedNumber';
+import { fromRawLsk } from '../../../utils/lsk';
 
+const CUSTOM_FEE_INDEX = 3;
+
+// eslint-disable-next-line max-statements
 const DynamicFee = ({
   t,
   token,
@@ -14,21 +22,26 @@ const DynamicFee = ({
   selectedPriority,
   setSelectedPriority,
   fee,
+  customFee,
+  setCustomFee,
 }) => {
-  const [customFee, setCustomFee] = useState(0.1);
   const [showEditIcon, setShowEditIcon] = useState(false);
-  const isCustom = selectedPriority > priorities.length;
+  const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
 
   const onClickPriority = (e) => {
     e.preventDefault();
+    setCustomFee(undefined);
     const selectedIndex = Number(e.target.value);
     setSelectedPriority({ item: priorities[selectedIndex], index: selectedIndex });
-    if (showEditIcon) setShowEditIcon(false);
+    if (showEditIcon) {
+      setShowEditIcon(false);
+    }
   };
 
   const onInputChange = (e) => {
     e.preventDefault();
-    setCustomFee(e.target.value);
+    const customFeeValue = e.target.value;
+    setCustomFee(customFeeValue);
   };
 
   const onInputBlur = (e) => {
@@ -42,6 +55,26 @@ const DynamicFee = ({
     setShowEditIcon(false);
   };
 
+  const tokenRelevantPriorities = useMemo(() =>
+    priorities.filter((_, index) =>
+      index !== CUSTOM_FEE_INDEX
+      || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key)),
+  [token, priorities]);
+
+
+  const isLoading = priorities[0].value === 0;
+
+  const getFeeStatus = () => {
+    if (customFee) {
+      return customFee;
+    }
+    return !fee.error
+      ? `${formatAmountBasedOnLocale({ value: fee.value })} ${token}`
+      : fee.feedback;
+  };
+
+  const inputValue = !isLoading && (customFee === 'undefined' ? fee.value : customFee);
+
   return (
     <div className={`${styles.dynamicFeeWrapper} ${styles.fieldGroup} processing-speed`}>
       <div className={`${styles.col}`}>
@@ -50,13 +83,13 @@ const DynamicFee = ({
           <Tooltip>
             <p className={styles.tooltipText}>
               {
-                    t('Lorem Ipsum...')
-                  }
+                t('Lorem Ipsum...')
+              }
             </p>
           </Tooltip>
         </span>
         <div className={`${styles.prioritySelector}`}>
-          {priorities.map((priority, index) => (
+          {tokenRelevantPriorities.map((priority, index) => (
             <button
               key={`fee-priority-${index}`}
               className={`${styles.feePriority} ${index === selectedPriority ? styles.feePrioritySelected : ''}`}
@@ -66,15 +99,6 @@ const DynamicFee = ({
               {priority.title}
             </button>
           ))}
-          {token === tokenMap.LSK.key && (
-            <button
-              className={`${styles.feePriority} ${isCustom ? styles.feePrioritySelected : ''}`}
-              onClick={onClickPriority}
-              value={priorities.length + 1}
-            >
-              {t('custom')}
-            </button>
-          )}
         </div>
       </div>
       <div className={`${styles.col}`}>
@@ -83,26 +107,37 @@ const DynamicFee = ({
           <Tooltip>
             <p className={styles.tooltipText}>
               {
-                    t('Lorem Ipsum...')
-                  }
+                t('Lorem Ipsum...')
+              }
             </p>
           </Tooltip>
         </span>
-        {isCustom && !showEditIcon ? (
-          <Input
-            autoFocus
-            type="text"
-            size="m"
-            defaultValue={customFee}
-            onChange={onInputChange}
-            onBlur={onInputBlur}
-          />
-        ) : (
-          <span className={styles.fee} onClick={onClickCustomEdit}>
-            {fee}
-            {isCustom && showEditIcon && <Icon name="edit" />}
-          </span>
-        )}
+        {
+          // eslint-disable-next-line no-nested-ternary
+          isLoading ? (
+            <>
+              {t('Loading')}
+              {' '}
+              <Spinner className={styles.loading} />
+            </>
+          )
+            : (isCustom && !showEditIcon ? (
+              <Input
+                autoFocus
+                type="text"
+                size="m"
+                defaultValue={fromRawLsk(priorities[0].value)}
+                value={inputValue}
+                onChange={onInputChange}
+                onBlur={onInputBlur}
+              />
+            ) : (
+              <span className={styles.fee} onClick={onClickCustomEdit}>
+                {getFeeStatus()}
+                {isCustom && showEditIcon && <Icon name="edit" />}
+              </span>
+            ))
+        }
       </div>
     </div>
   );

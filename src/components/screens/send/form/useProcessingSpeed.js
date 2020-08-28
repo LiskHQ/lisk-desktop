@@ -35,6 +35,7 @@ const useProcessingSpeed = (token) => {
     { title: t('Low'), value: baseFees.Low },
     { title: t('Medium'), value: baseFees.Medium },
     { title: t('High'), value: baseFees.High },
+    { title: t('Custom'), value: baseFees.Low },
   ];
 
   useEffect(() => {
