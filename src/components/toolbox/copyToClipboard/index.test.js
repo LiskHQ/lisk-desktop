@@ -10,7 +10,7 @@ describe('CopyToClipboard', () => {
     value: 2,
     onClick: jest.fn(),
   };
-  const copiedText = 'Copied!';
+  const copiedText = 'Copied';
 
   beforeEach(() => {
     wrapper = mount(<CopyToClipboard {...props} />);

@@ -1,5 +1,4 @@
 import React from 'react';
-import QRCode from 'qrcode.react';
 import AccountVisual from '../../../../toolbox/accountVisual';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
@@ -46,16 +45,10 @@ const AccountInfo = ({
             className={styles.copyIcon}
           />
         </div>
-        <div className={styles.helperIcon}>
-          <Tooltip
-            tooltipClassName={styles.qrCodeWrapper}
-            className={styles.qrCode}
-            position="bottom"
-            title={t('Scan address')}
-            content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
-          >
-            <QRCode value={address} size={154} />
-          </Tooltip>
+        <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
+          <DialogLink component="request">
+            <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
+          </DialogLink>
         </div>
         {
           host !== address ? (
