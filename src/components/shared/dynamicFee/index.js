@@ -63,7 +63,6 @@ const DynamicFee = ({
       || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key)),
   [token, priorities]);
 
-
   const isLoading = priorities[0].value === 0;
 
   const getFeeStatus = () => {
@@ -90,7 +89,7 @@ const DynamicFee = ({
             </p>
           </Tooltip>
         </span>
-        <div className={`${styles.prioritySelector}`}>
+        <div className={`${styles.prioritySelector} priority-selector`}>
           {tokenRelevantPriorities.map((priority, index) => (
             <button
               key={`fee-priority-${index}`}
@@ -103,7 +102,7 @@ const DynamicFee = ({
           ))}
         </div>
       </div>
-      <div className={`${styles.col}`}>
+      <div className={`${styles.col} fee-container`}>
         <span className={`${styles.fieldLabel}`}>
           {t('Transaction fee')}
           <Tooltip>
@@ -125,6 +124,7 @@ const DynamicFee = ({
           )
             : (isCustom && !showEditIcon ? (
               <Input
+                className="custom-fee-input"
                 autoFocus
                 type="text"
                 size="m"
@@ -134,7 +134,7 @@ const DynamicFee = ({
                 onBlur={onInputBlur}
               />
             ) : (
-              <span className={styles.fee} onClick={onClickCustomEdit}>
+              <span className={`${styles.fee} fee-value`} onClick={onClickCustomEdit}>
                 {getFeeStatus()}
                 {isCustom && showEditIcon && <Icon name="edit" />}
               </span>
