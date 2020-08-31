@@ -1,16 +1,16 @@
 @import '../../../app/mixins.css';
 
 .fieldGroup {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
-    padding: 0 var(--horizontal-padding-l);
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  padding: 0 var(--horizontal-padding-l);
 
-    &.dynamicFeeWrapper {
-      flex-direction: row;
-      margin-bottom: 42px;
-    }
+  &.dynamicFeeWrapper {
+    flex-direction: row;
+    margin-bottom: 42px;
+  }
 }
 
 .fieldLabel {
@@ -28,7 +28,6 @@
 }
 
 .dynamicFeeWrapper {
-
   & > .col:first-child {
     padding-right: 100px;
   }
