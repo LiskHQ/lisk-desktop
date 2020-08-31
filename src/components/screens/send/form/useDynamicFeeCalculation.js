@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import {
   getDynamicFee,
 } from '../../../../utils/api/transactions';
+import { toRawLsk } from '../../../../utils/lsk';
 
 const useDynamicFeeCalculation = (dynamicFeePerByte, txData, token, account) => {
   const network = useSelector(state => state.network);
@@ -26,7 +27,7 @@ const useDynamicFeeCalculation = (dynamicFeePerByte, txData, token, account) => 
     else {
       setMaxAmount({
         ...res,
-        value: account.balance - res.value,
+        value: account.balance - toRawLsk(res.value),
       });
     }
   };
