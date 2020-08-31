@@ -29,7 +29,7 @@ class Summary extends React.Component {
       passphrase: account.passphrase,
       recipientId: fields.recipient.address,
       secondPassphrase,
-      fee: toRawLsk(parseFloat(fields.fee.value, 10)),
+      fee: toRawLsk(parseFloat(fields.fee.value)),
       nonce: account.nonce,
     });
   }
