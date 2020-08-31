@@ -30,7 +30,9 @@ const DynamicFee = ({
 
   const onClickPriority = (e) => {
     e.preventDefault();
-    setCustomFee(undefined);
+    if (setCustomFee) {
+      setCustomFee(undefined);
+    }
     const selectedIndex = Number(e.target.value);
     setSelectedPriority({ item: priorities[selectedIndex], index: selectedIndex });
     if (showEditIcon) {
@@ -92,7 +94,7 @@ const DynamicFee = ({
           {tokenRelevantPriorities.map((priority, index) => (
             <button
               key={`fee-priority-${index}`}
-              className={`${styles.feePriority} ${index === selectedPriority ? styles.feePrioritySelected : ''}`}
+              className={`${styles.feePriority} ${index === selectedPriority ? styles.feePrioritySelected : ''} option-${priority.title}`}
               onClick={onClickPriority}
               value={index}
             >

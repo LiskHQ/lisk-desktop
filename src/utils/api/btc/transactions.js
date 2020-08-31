@@ -9,6 +9,7 @@ import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
 import getBtcConfig from './config';
 import networks from '../../../constants/networks';
+import { fromRawLsk } from '../../lsk';
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
@@ -218,7 +219,6 @@ export const getTransactionFeeFromUnspentOutputs = ({
     dynamicFeePerByte,
   });
 
-
   return calculateTransactionFee({
     inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue
       + feeInSatoshis, unspentTransactionOutputs),
@@ -286,15 +286,16 @@ export const getDynamicFee = async ({
     account.address, network,
   );
 
-  const value = getTransactionFeeFromUnspentOutputs({
+  const value = fromRawLsk(getTransactionFeeFromUnspentOutputs({
     unspentTransactionOutputs,
     satoshiValue: txData.amount || 0,
     dynamicFeePerByte: dynamicFeePerByte.value,
-  });
+  }));
 
   const feedback = txData.amount === 0
     ? '-'
     : `${(value ? '' : 'Invalid amount')}`;
+
   return {
     value,
     error: !!feedback,

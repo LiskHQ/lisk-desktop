@@ -1,5 +1,4 @@
 import { act } from 'react-dom/test-utils';
-import { useSelector } from 'react-redux';
 import React from 'react';
 import { mount } from 'enzyme';
 import { fromRawLsk } from '../../../../utils/lsk';
@@ -12,7 +11,6 @@ import {
 import { tokenMap } from '../../../../constants/tokens';
 import Form from './formBtc';
 import accounts from '../../../../../test/constants/accounts';
-import defaultState from '../../../../../test/constants/defaultState';
 import * as serviceActions from '../../../../actions/service';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
@@ -47,7 +45,9 @@ const dynamicFeeFactor = 100;
 getDynamicBaseFees.mockResolvedValue(dynamicBaseFees);
 getDynamicFee.mockImplementation((params) => {
   const selectedProcessingSpeed = params.dynamicFeePerByte.selectedIndex;
-  const fees = Object.values(dynamicBaseFees)[selectedProcessingSpeed] * dynamicFeeFactor;
+  const fees = fromRawLsk(
+    Object.values(dynamicBaseFees)[selectedProcessingSpeed] * dynamicFeeFactor,
+  );
   return ({
     value: fees, feedback: '', error: false,
   });
@@ -58,10 +58,6 @@ describe('FormBtc', () => {
   let props;
 
   beforeEach(() => {
-    useSelector.mockImplementation(selectorFn => selectorFn({
-      ...defaultState,
-      service: { dynamicBaseFees },
-    }));
     jest.spyOn(serviceActions, 'dynamicFeesRetrieved');
 
     props = {
@@ -108,7 +104,7 @@ describe('FormBtc', () => {
     it('should update processingSpeed fee when "High" is selected', async () => {
       wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '0.0012' } });
       expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicBaseFees.Low * dynamicFeeFactor));
-      wrapper.find('label.option-High input[type="radio"]').simulate('click').simulate('change');
+      wrapper.find('button.option-High').simulate('click');
       await flushPromises();
       expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicBaseFees.High * dynamicFeeFactor));
     });
@@ -118,7 +114,7 @@ describe('FormBtc', () => {
       act(() => { jest.runAllTimers(); });
       wrapper.update();
       await flushPromises();
-      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(balance - dynamicBaseFees.Low * dynamicFeeFactor));
+      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(balance - (dynamicBaseFees.Low * dynamicFeeFactor)));
     });
   });
 });

@@ -46,6 +46,7 @@ const useAmountField = (initialValue, token) => {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
     clearTimeout(loaderTimeout);
+
     setAmountField({
       ...baseState,
       ...amountField,
