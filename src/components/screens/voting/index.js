@@ -32,16 +32,13 @@ const getOnboardingSlides = t => (
   }]
 );
 
-// eslint-disable-next-line max-statements
 const Delegates = ({
   t,
   history,
 }) => {
   const votes = useSelector(state => state.voting.votes);
-  const numberOfUnvoted = getUnvoteList(votes).length;
-  const numberOfVoted = getVoteList(votes).length;
   const [votingMode, setVotingMode] = useState(
-    numberOfUnvoted + numberOfVoted > 0,
+    getUnvoteList(votes).length + getVoteList(votes).length > 0,
   );
   const account = useSelector(state => state.account);
   const dispatch = useDispatch();
@@ -66,10 +63,11 @@ const Delegates = ({
 
   useEffect(() => {
     const modalSearchParam = selectSearchParamValue(history.location.search, 'modal');
-    if (numberOfUnvoted + numberOfVoted === 0 && modalSearchParam === 'votingSummary') {
+    const isSubmittedSearchParam = selectSearchParamValue(history.location.search, 'isSubmitted');
+    if (isSubmittedSearchParam === 'true' && modalSearchParam === 'votingSummary') {
       setVotingMode(false);
     }
-  }, [numberOfUnvoted, numberOfVoted]);
+  }, [history.location.search]);
 
   return (
     <div className={`${grid.row} ${styles.wrapper}`} ref={wrapper}>

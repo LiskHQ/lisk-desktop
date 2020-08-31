@@ -12,6 +12,7 @@ import VoteUrlProcessor from './voteUrlProcessor';
 import VoteList from './voteList';
 import styles from './voting.css';
 import DialogHolder from '../../../toolbox/dialog/holder';
+import { addSearchParamsToUrl } from '../../../../utils/searchParams';
 
 const VotingSummary = ({
   t, votes, history, account, nextStep, votePlaced,
@@ -37,6 +38,7 @@ const VotingSummary = ({
             passphrase: account.passphrase,
             secondPassphrase,
             callback: ({ success, error }) => {
+              addSearchParamsToUrl(history, { isSubmitted: true });
               nextStep({
                 success,
                 ...(success ? {
