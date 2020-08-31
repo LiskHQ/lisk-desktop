@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Delegates from './index';
 import { loginType } from '../../../constants/hwConstants';
 import accounts from '../../../../test/constants/accounts';
-import { mountWithProps } from '../../../utils/testHelpers';
+import { mountWithRouter } from '../../../utils/testHelpers';
 
 const delegates = [
   {
@@ -31,6 +31,12 @@ const mockStore = {
   },
   account: { address: delegates[0].address },
   voting: { votes, delegates: [] },
+  history: {
+    push: jest.fn(),
+    location: {
+      search: '',
+    },
+  },
 };
 
 describe('Delegates', () => {
@@ -46,7 +52,7 @@ describe('Delegates', () => {
   };
 
   it.skip('should allow to enable and disable voting mode', () => {
-    const wrapper = mountWithProps(Delegates, defaultProps, mockStore);
+    const wrapper = mountWithRouter(Delegates, defaultProps, mockStore);
     wrapper.find('.start-voting-button').at(0).simulate('click');
     expect(wrapper.find('.addedVotes')).to.have.lengthOf(1);
 
@@ -54,8 +60,27 @@ describe('Delegates', () => {
     expect(wrapper.find('.addedVotes')).to.have.lengthOf(0);
   });
 
+  it.skip('should not be in edit mode', () => {
+    const wrapper = mountWithRouter(
+      Delegates,
+      defaultProps,
+      {
+        ...mockStore,
+        history: {
+          ...mockStore.history,
+          location: {
+            search: '?modal=votingSummary&isSubmitted=true',
+          },
+        },
+      },
+    );
+
+    expect(wrapper.find('.start-voting-button')).to.have.lengthOf(1);
+    expect(wrapper.find('.cancel-voting-button')).to.have.lengthOf(0);
+  });
+
   it('should show onboarding if not in guest mode', () => {
-    const wrapper = mountWithProps(
+    const wrapper = mountWithRouter(
       Delegates,
       defaultProps,
       { ...mockStore, account: { info: { LSK: { ...accounts.genesis } } } },
@@ -64,7 +89,7 @@ describe('Delegates', () => {
   });
 
   it('should not show "Register delegate" button if guest mode', () => {
-    const wrapper = mountWithProps(
+    const wrapper = mountWithRouter(
       Delegates,
       defaultProps,
       { ...mockStore, account: {} },
@@ -78,7 +103,7 @@ describe('Delegates', () => {
       address: delegates[0].address,
       hwInfo: {},
     };
-    const wrapper = mountWithProps(
+    const wrapper = mountWithRouter(
       Delegates,
       defaultProps,
       { ...mockStore, account: noDelegateAccount },
@@ -87,7 +112,7 @@ describe('Delegates', () => {
   });
 
   it('should not show "Register delegate" button if already delegate', () => {
-    const wrapper = mountWithProps(
+    const wrapper = mountWithRouter(
       Delegates,
       defaultProps,
       { ...mockStore, account: { delegate: delegates[0], address: delegates[0].address } },

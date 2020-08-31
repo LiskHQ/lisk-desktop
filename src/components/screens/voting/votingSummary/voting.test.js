@@ -26,7 +26,12 @@ describe('Voting', () => {
     },
     votePlaced: ({ callback }) => callback(voteResult),
     t: key => key,
-    history: { push: jest.fn() },
+    history: {
+      push: jest.fn(),
+      location: {
+        search: '',
+      },
+    },
   };
 
   it('should render VotingSummary', () => {
