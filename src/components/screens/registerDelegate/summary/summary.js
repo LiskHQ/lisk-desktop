@@ -27,7 +27,7 @@ class Summary extends React.Component {
       username: nickname,
       passphrase: account.passphrase,
       // @todo add correct fee here
-      fee: 100,
+      fee: 26e8,
       network,
     };
 

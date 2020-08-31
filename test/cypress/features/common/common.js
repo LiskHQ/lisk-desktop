@@ -82,10 +82,12 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
       cy.route('/api/transactions?*').as('transactions');
       cy.visit(`${urls.accounts}/${accounts[identifier].address}`);
       cy.wait('@transactions');
-      cy.wait('@transactions');
-      cy.wait('@transactions');
       break;
   }
+});
+
+Given(/^I scroll to (.*?)$/, (position) => {
+  cy.get('.scrollContainer').scrollTo(position);
 });
 
 Then(/^I should see pending transaction$/, function () {

@@ -81,9 +81,11 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
 
   const txs = (action.data.block.transactions || []).map(txAdapter);
   const blockContainsRelevantTransaction = txs.filter((transaction) => {
-    const sender = transaction ? transaction.senderId : null;
-    const recipient = transaction ? transaction.recipientId : null;
-    return account.address === recipient || account.address === sender;
+    if (!transaction) return false;
+    return (
+      account.address === transaction.senderId
+      || account.address === transaction.recipientId
+    );
   }).length > 0;
 
   showNotificationsForIncomingTransactions(txs, account, token.active);
@@ -99,7 +101,6 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     setTimeout(() => {
       updateAccountData(store);
       store.dispatch(updateTransactions({
-        pendingTransactions: transactions.pending,
         address: account.address,
         filters: transactions.filters,
       }));

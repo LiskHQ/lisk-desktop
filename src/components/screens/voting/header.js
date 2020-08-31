@@ -18,7 +18,7 @@ import styles from './header.css';
 
 function shouldShowRegisterDelegateButton(account) {
   return account.passphrase
-    && !account.info.LSK.delegate;
+    && !account.info.LSK.isDelegate;
 }
 
 const VotesNumber = ({ t, number, type }) => (
