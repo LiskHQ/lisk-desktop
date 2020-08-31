@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { withRouter } from 'react-router';
+import { compose } from 'redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
 import styles from './voting.css';
@@ -8,6 +10,7 @@ import Header from './header';
 import Onboarding from '../../toolbox/onboarding/onboarding';
 import { clearVotes, loadVotes } from '../../../actions/voting';
 import { getUnvoteList, getVoteList } from '../../../utils/voting';
+import { selectSearchParamValue } from '../../../utils/searchParams';
 
 const getOnboardingSlides = t => (
   [{
@@ -29,12 +32,16 @@ const getOnboardingSlides = t => (
   }]
 );
 
+// eslint-disable-next-line max-statements
 const Delegates = ({
   t,
+  history,
 }) => {
   const votes = useSelector(state => state.voting.votes);
+  const numberOfUnvoted = getUnvoteList(votes).length;
+  const numberOfVoted = getVoteList(votes).length;
   const [votingMode, setVotingMode] = useState(
-    getUnvoteList(votes).length + getVoteList(votes).length > 0,
+    numberOfUnvoted + numberOfVoted > 0,
   );
   const account = useSelector(state => state.account);
   const dispatch = useDispatch();
@@ -56,6 +63,13 @@ const Delegates = ({
       }));
     }
   }, []);
+
+  useEffect(() => {
+    const modalSearchParam = selectSearchParamValue(history.location.search, 'modal');
+    if (numberOfUnvoted + numberOfVoted === 0 && modalSearchParam === 'votingSummary') {
+      setVotingMode(false);
+    }
+  }, [numberOfUnvoted, numberOfVoted]);
 
   return (
     <div className={`${grid.row} ${styles.wrapper}`} ref={wrapper}>
@@ -80,4 +94,7 @@ const Delegates = ({
   );
 };
 
-export default withTranslation()(Delegates);
+export default compose(
+  withRouter,
+  withTranslation(),
+)(Delegates);
