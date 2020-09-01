@@ -46,7 +46,7 @@ const AccountInfo = ({
           />
         </div>
         <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
-          <DialogLink component="request">
+          <DialogLink component="request" data={{ host: host === address }}>
             <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
           </DialogLink>
         </div>

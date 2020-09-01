@@ -16,9 +16,13 @@ describe('RequestLsk', () => {
     address: accounts.genesis.address,
     t: v => v,
   };
+  const routeConfig = {
+    pathname: 'wallet',
+    search: '?modal=request&host=true',
+  };
 
   beforeEach(() => {
-    wrapper = mountWithRouter(Request, props);
+    wrapper = mountWithRouter(Request, props, routeConfig);
   });
 
   it('Should update share link with amount and reference', () => {

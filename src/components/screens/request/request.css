@@ -1,5 +1,17 @@
 @import '../../../app/mixins.css';
 
+.dialogWrapper {
+  width: auto;
+
+  & .container {
+  
+    & .qrSection {
+      flex-basis: auto;
+      margin-left: 0px;
+    }
+  }
+}
+
 .container {
   display: flex;
   padding: 20px;
