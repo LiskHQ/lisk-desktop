@@ -3,12 +3,9 @@
 .dialogWrapper {
   width: auto;
 
-  & .container {
-  
-    & .qrSection {
-      flex-basis: auto;
-      margin-left: 0px;
-    }
+  & .container > & .qrSection {
+    flex-basis: auto;
+    margin-left: 0px;
   }
 }
 
