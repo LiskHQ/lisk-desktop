@@ -11,8 +11,7 @@ import routes from '../../../../constants/routes';
 import VoteUrlProcessor from './voteUrlProcessor';
 import VoteList from './voteList';
 import styles from './voting.css';
-import DialogHolder from '../../../toolbox/dialog/holder';
-import { addSearchParamsToUrl } from '../../../../utils/searchParams';
+import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '../../../../utils/searchParams';
 
 const VotingSummary = ({
   t, votes, history, account, nextStep, votePlaced,
@@ -49,7 +48,7 @@ const VotingSummary = ({
                     title: t('Close'),
                     className: 'close-dialog-button',
                     onClick: () => {
-                      DialogHolder.hideDialog();
+                      removeSearchParamsFromUrl(history, ['modal'], true);
                     },
                   },
                 } : {
@@ -72,7 +71,7 @@ const VotingSummary = ({
       cancelButton={{
         label: t('Edit voting'),
         onClick: () => {
-          DialogHolder.hideDialog();
+          removeSearchParamsFromUrl(history, ['modal'], true);
         },
       }}
       fee={fee * totalActions}
