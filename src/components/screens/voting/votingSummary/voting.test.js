@@ -29,7 +29,8 @@ describe('Voting', () => {
     history: {
       push: jest.fn(),
       location: {
-        search: '',
+        search: '?modal=votingSummary',
+        pathname: 'voting',
       },
     },
   };
@@ -53,10 +54,16 @@ describe('Voting', () => {
     expect(wrapper.find('.report-error-link')).toHaveLength(1);
   });
 
-  it('should go to Delegates page when cancel button is clicked', () => {
-    DialogHolder.hideDialog = jest.fn();
-    const wrapper = mountWithRouter(Voting, props);
+  it('should go to Voting page when cancel button is clicked', () => {
+    const fn = jest.fn();
+    const wrapper =  mountWithRouter(Voting, {
+      ...props,
+      history: {
+        ...props.history,
+        push: fn,
+      }
+    });
     wrapper.find('.cancel-button').at(0).simulate('click');
-    expect(DialogHolder.hideDialog).toHaveBeenCalled();
+    expect(fn).toHaveBeenCalledWith(props.history.location.pathname);
   });
 });

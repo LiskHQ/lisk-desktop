@@ -60,7 +60,7 @@ describe('Delegates', () => {
     expect(wrapper.find('.addedVotes')).to.have.lengthOf(0);
   });
 
-  it.skip('should not be in edit mode', () => {
+  it('should not be in edit mode', () => {
     const wrapper = mountWithRouter(
       Delegates,
       defaultProps,
@@ -75,7 +75,7 @@ describe('Delegates', () => {
       },
     );
 
-    expect(wrapper.find('.start-voting-button')).to.have.lengthOf(1);
+    expect(wrapper.find('.start-voting-button')).to.have.lengthOf(2);
     expect(wrapper.find('.cancel-voting-button')).to.have.lengthOf(0);
   });
 
