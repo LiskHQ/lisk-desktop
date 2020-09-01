@@ -113,8 +113,16 @@
       }
     }
 
+    & .tooltipQRCodeWrapper {
+      padding: 10px;
+    }
+
     & .qrCodeIcon {
       width: 26px;
+    }
+
+    & .tooltipQRCodeIcon {
+      width: auto;
     }
 
     & .bookmark {

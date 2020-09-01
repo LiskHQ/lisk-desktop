@@ -13,6 +13,7 @@ import { PrimaryButton } from '../../../toolbox/buttons';
 import { isEmpty } from '../../../../utils/helpers';
 import { selectSearchParamValue } from '../../../../utils/searchParams';
 import AccountVisual from '../../../toolbox/accountVisual';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 import regex from '../../../../utils/regex';
 
 /**
@@ -67,7 +68,7 @@ const Toggle = ({
   );
 };
 
-const TokenSelector = ({ token, history }) => {
+const TokenSelector = ({ token, history, t }) => {
   const dispatch = useDispatch();
   const activeToken = useSelector(state => state.settings.token.active);
 
@@ -82,11 +83,19 @@ const TokenSelector = ({ token, history }) => {
   };
 
   return (
-    <Icon
-      name={`${token.toLowerCase()}Icon`}
-      className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.disabled}`}
-      onClick={activateToken}
-    />
+    <Tooltip
+      position="bottom"
+      size="s"
+      content={(
+        <Icon
+          name={`${token.toLowerCase()}Icon`}
+          className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.disabled}`}
+          onClick={activateToken}
+        />
+      )}
+    >
+      <p>{t(`${token} wallet`)}</p>
+    </Tooltip>
   );
 };
 
@@ -117,6 +126,7 @@ class TopBar extends React.Component {
       history,
       network,
       token,
+      settings: { darkMode, discreetMode },
       // resetTimer,
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
@@ -173,18 +183,34 @@ class TopBar extends React.Component {
           </DialogLink>
         </div>
         <div className={styles.group}>
-          { !isUserLogout ? <TokenSelector token="LSK" history={history} /> : null }
-          { !isUserLogout && token.list.BTC ? <TokenSelector token="BTC" history={history} /> : null }
-          <Toggle
-            setting="darkMode"
-            icons={['lightMode', 'darkMode']}
-          />
+          { !isUserLogout ? <TokenSelector token="LSK" history={history} t={t} /> : null }
+          { !isUserLogout && token.list.BTC ? <TokenSelector token="BTC" history={history} t={t} /> : null }
+          <Tooltip
+            position="bottom"
+            size="s"
+            content={(
+              <Toggle
+                setting="darkMode"
+                icons={['lightMode', 'darkMode']}
+              />
+            )}
+          >
+            <p>{t(`Switch to the ${darkMode ? 'light' : 'dark'} mode.`)}</p>
+          </Tooltip>
           {
             !isUserLogout ? (
-              <Toggle
-                setting="discreetMode"
-                icons={['discreetModeActive', 'discreetMode']}
-              />
+              <Tooltip
+                position="bottom"
+                size="m"
+                content={(
+                  <Toggle
+                    setting="discreetMode"
+                    icons={['discreetModeActive', 'discreetMode']}
+                  />
+                )}
+              >
+                <p>{t(`${discreetMode ? 'Show' : 'Hide'} balance and transactions amounts`)}</p>
+              </Tooltip>
             ) : null
           }
           <Network
