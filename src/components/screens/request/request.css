@@ -3,7 +3,7 @@
 .dialogWrapper {
   width: auto;
 
-  & .container > & .qrSection {
+  & .qrSection:first-child {
     flex-basis: auto;
     margin-left: 0px;
   }
