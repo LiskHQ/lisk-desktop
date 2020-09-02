@@ -159,7 +159,7 @@ export const getTransactionFee = async ({
 }) => {
   const { txType, ...data } = txData;
   const minFee = calculateMinTxFee(data, txType);
-  const feePerByte = fromRawLsk(selectedPriority.value);
+  const feePerByte = Number(fromRawLsk(selectedPriority.value));
 
   // Tie breaker is only meant for Medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0

@@ -13,8 +13,9 @@ import { toRawLsk } from '../../../../utils/lsk';
 import TransactionPriority from '../../../shared/transactionPriority';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 import useTransactionPriority from './useTransactionPriority';
+import transactionTypes from '../../../../constants/transactionTypes';
 
-const txType = 'transfer';
+const txType = transactionTypes().transfer.key;
 
 // eslint-disable-next-line max-statements
 const FormLsk = (props) => {
@@ -31,6 +32,8 @@ const FormLsk = (props) => {
 
   const [fee, maxAmount] = useTransactionFeeCalculation({
     selectedPriority,
+    token,
+    account,
     txData: {
       amount: toRawLsk(amount.value),
       txType,
@@ -39,8 +42,6 @@ const FormLsk = (props) => {
       senderPublicKey: account.publicKey,
       data: reference.value,
     },
-    token,
-    account,
   });
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
