@@ -22,7 +22,7 @@ const FormLsk = (props) => {
     t, token, getInitialValue, account,
   } = props;
 
-  const [customFee, setCustomFee] = useState(undefined);
+  const [customFee, setCustomFee] = useState();
   const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed(token);
   const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
