@@ -84,7 +84,7 @@ const DynamicFee = ({
           <Tooltip>
             <p className={styles.tooltipText}>
               {
-                t('Lorem Ipsum...')
+                t('When the network is busy, transactions with higher priority get processed sooner.')
               }
             </p>
           </Tooltip>
