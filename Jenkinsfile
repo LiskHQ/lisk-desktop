@@ -119,11 +119,11 @@ services:
 EOF
 
 										ENV_LISK_VERSION="$LISK_CORE_IMAGE_VERSION" make coldstart
-										export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
+										export CYPRESS_baseUrl=http://127.0.0.1:565$N/#/
 										export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 										cd -
 
-										npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
+										npm run serve -- $WORKSPACE/app/build -p 565$N -a 127.0.0.1 &>server.log &
 										set +e
 										set -o pipefail
 										npm run cypress:run |tee cypress.log
