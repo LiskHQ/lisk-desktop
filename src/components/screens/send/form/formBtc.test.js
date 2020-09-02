@@ -30,7 +30,7 @@ const balance = unspendTransactionOutputs[0].value + unspendTransactionOutputs[1
 
 getUnspentTransactionOutputs.mockResolvedValue(unspendTransactionOutputs);
 getTransactionFeeFromUnspentOutputs.mockImplementation(
-  ({ dynamicFeePerByte }) => dynamicFeePerByte,
+  ({ feePerByte }) => feePerByte,
 );
 
 const transactionBaseFees = {
@@ -43,7 +43,7 @@ const mockFeeFactor = 100;
 
 getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
 getTransactionFee.mockImplementation((params) => {
-  const selectedTransactionPriority = params.dynamicFeePerByte.selectedIndex;
+  const selectedTransactionPriority = params.selectedPriority.selectedIndex;
   const fees = fromRawLsk(
     Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
   );

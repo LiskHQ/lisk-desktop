@@ -208,7 +208,7 @@ describe('Utils: Transactions API', () => {
     });
   });
 
-  describe('getDynamicBaseFees', () => {
+  describe('getTransactionBaseFees', () => {
     it('calculates the estimated fees for a transaction', async () => {
       const estimates = await getTransactionBaseFees(
       //   {
@@ -222,7 +222,7 @@ describe('Utils: Transactions API', () => {
     });
   });
 
-  describe('getDynamicFee', () => {
+  describe('getTransactionFee', () => {
     it('returns the calculated tx fees for a selected processing speed', async () => {
       const fees = await getTransactionFee({
         txData: {
@@ -230,7 +230,7 @@ describe('Utils: Transactions API', () => {
           senderPublicKey: accounts.genesis.publicKey,
           txType: transactionTypes().transfer.key,
         },
-        dynamicFeePerByte: { value: 10, selectedIndex: 0 },
+        selectedPriority: { value: 10, selectedIndex: 0 },
       });
 
       expect(fees.value).toBeDefined();
@@ -245,7 +245,7 @@ describe('Utils: Transactions API', () => {
           senderPublicKey: accounts.genesis.publicKey,
           txType: transactionTypes().transfer.key,
         },
-        dynamicFeePerByte: { value: 10, selectedIndex: 0 },
+        selectedPriority: { value: 10, selectedIndex: 0 },
       });
 
       expect(fees.value).toBeDefined();

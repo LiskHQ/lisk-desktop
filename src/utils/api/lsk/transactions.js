@@ -92,25 +92,6 @@ export const calculateMinTxFee = (
 };
 
 /**
- * Returns a dictionary of base fees for low, medium and high processing speeds
- *
- * @todo get from Lisk Ser
- * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
- * medium and high priority fee options
- */
-export const getTransactionBaseFees = () => (
-  new Promise(async (resolve) => {
-    const fee = 1e7;
-
-    // @todo use real fee estimates
-    resolve({
-      Low: fee,
-      Medium: fee * 2,
-      High: fee * 3,
-    });
-  }));
-
-/**
  * creates a new transaction
  * @param {Object} transaction
  * @param {string} transactionType
@@ -150,19 +131,38 @@ export const broadcast = (transaction, networkConfig) => new Promise(
 );
 
 /**
+ * Returns a dictionary of base fees for low, medium and high processing speeds
+ *
+ * @todo get from Lisk Ser
+ * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
+ * medium and high priority fee options
+ */
+export const getTransactionBaseFees = () => (
+  new Promise(async (resolve) => {
+    const fee = 1e7;
+
+    // @todo use real fee estimates
+    resolve({
+      Low: fee,
+      Medium: fee * 2,
+      High: fee * 3,
+    });
+  }));
+
+/**
  * Returns the actual tx fee based on given tx details and selected processing speed
- * @param {String} address - Account address
- * @param {Object} network - network configuration
+ * @param {String} txData - The transaction object
+ * @param {Object} selectedPriority - network configuration
  */
 export const getTransactionFee = async ({
-  txData, dynamicFeePerByte,
+  txData, selectedPriority,
 }) => {
   const { txType, ...data } = txData;
   const minFee = calculateMinTxFee(data, txType);
-  const feePerByte = fromRawLsk(dynamicFeePerByte.value);
+  const feePerByte = fromRawLsk(selectedPriority.value);
 
   // Tie breaker is only meant for Medium and high processing speeds
-  const tieBreaker = dynamicFeePerByte.selectedIndex === 0
+  const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : minFeePerByte * feePerByte * Math.random();
 
   const value = minFee + feePerByte * findTransactionSizeInBytes({

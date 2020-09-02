@@ -5,7 +5,9 @@ import {
 } from '../../../../utils/api/transactions';
 import { toRawLsk } from '../../../../utils/lsk';
 
-const useDynamicFeeCalculation = (dynamicFeePerByte, txData, token, account) => {
+const useTransactionFeeCalculation = ({
+  selectedPriority, txData, token, account,
+}) => {
   const network = useSelector(state => state.network);
 
   const initialFee = {
@@ -34,15 +36,15 @@ const useDynamicFeeCalculation = (dynamicFeePerByte, txData, token, account) => 
 
   useEffect(() => {
     setDynamicFee({
-      token, account, network, txData, dynamicFeePerByte,
+      token, account, network, txData, selectedPriority,
     }, 'fee');
 
     setDynamicFee({
-      token, account, network, txData: { ...txData, amount: account.balance }, dynamicFeePerByte,
+      token, account, network, txData: { ...txData, amount: account.balance }, selectedPriority,
     }, 'maxAmount');
-  }, [txData.amount, txData.data, txData.recipient, dynamicFeePerByte.selectedIndex]);
+  }, [txData.amount, txData.data, txData.recipient, selectedPriority.selectedIndex]);
 
   return [fee, maxAmount];
 };
 
-export default useDynamicFeeCalculation;
+export default useTransactionFeeCalculation;

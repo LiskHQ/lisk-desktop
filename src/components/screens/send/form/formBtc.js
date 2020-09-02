@@ -3,7 +3,7 @@ import { toRawLsk } from '../../../../utils/lsk';
 import FormBase from './formBase';
 import TransactionPriority from '../../../shared/transactionPriority';
 import useAmountField from './useAmountField';
-import useDynamicFeeCalculation from './useDynamicFeeCalculation';
+import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 import useProcessingSpeed from './useTransactionPriority';
 import useRecipientField from './useRecipientField';
 
@@ -15,19 +15,24 @@ const FormBtc = (props) => {
   } = props;
 
   const [
-    transactionPriority, selectTransactionPriority, priorityOptions,
+    selectedPriority, selectTransactionPriority, priorityOptions,
   ] = useProcessingSpeed(token);
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
-  const [fee, maxAmount] = useDynamicFeeCalculation(transactionPriority, {
-    amount: toRawLsk(amount.value), txType, recipient: recipient.value,
-  }, token, account);
+  const [fee, maxAmount] = useTransactionFeeCalculation({
+    selectedPriority,
+    txData: {
+      amount: toRawLsk(amount.value), txType, recipient: recipient.value,
+    },
+    token,
+    account,
+  });
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
     amount,
     recipient,
-    processingSpeed: transactionPriority,
+    selectedPriority,
     fee,
   };
 
@@ -42,7 +47,7 @@ const FormBtc = (props) => {
         token={token}
         fee={fee}
         priorities={priorityOptions}
-        selectedPriority={transactionPriority.selectedIndex}
+        selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
       />
     </FormBase>

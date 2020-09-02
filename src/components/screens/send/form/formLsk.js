@@ -11,7 +11,7 @@ import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
 import { toRawLsk } from '../../../../utils/lsk';
 import TransactionPriority from '../../../shared/transactionPriority';
-import useDynamicFeeCalculation from './useDynamicFeeCalculation';
+import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 import useTransactionPriority from './useTransactionPriority';
 
 const txType = 'transfer';
@@ -23,20 +23,25 @@ const FormLsk = (props) => {
   } = props;
   const [customFee, setCustomFee] = useState();
   const [
-    transactionPriority, selectTransactionPriority, priorityOptions,
+    selectedPriority, selectTransactionPriority, priorityOptions,
   ] = useTransactionPriority(token);
   const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
-  const [fee, maxAmount] = useDynamicFeeCalculation(transactionPriority, {
-    amount: toRawLsk(amount.value),
-    txType,
-    recipient: recipient.value,
-    nonce: account.nonce,
-    senderPublicKey: account.publicKey,
-    data: reference.value,
-  }, token, account);
+  const [fee, maxAmount] = useTransactionFeeCalculation({
+    selectedPriority,
+    txData: {
+      amount: toRawLsk(amount.value),
+      txType,
+      recipient: recipient.value,
+      nonce: account.nonce,
+      senderPublicKey: account.publicKey,
+      data: reference.value,
+    },
+    token,
+    account,
+  });
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
@@ -44,7 +49,7 @@ const FormLsk = (props) => {
     recipient,
     reference,
     fee: customFee ? { value: customFee, feedback: '', error: false } : fee,
-    processingSpeed: transactionPriority,
+    selectedPriority,
   };
 
   const changeCustomFee = (value) => {
@@ -102,7 +107,7 @@ const FormLsk = (props) => {
         customFee={customFee}
         setCustomFee={changeCustomFee}
         priorities={priorityOptions}
-        selectedPriority={transactionPriority.selectedIndex}
+        selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
       />
     </FormBase>
