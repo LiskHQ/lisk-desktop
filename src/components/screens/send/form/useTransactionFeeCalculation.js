@@ -23,7 +23,7 @@ const useTransactionFeeCalculation = ({
   const [fee, setFee] = useState(initialFee);
   const [maxAmount, setMaxAmount] = useState(initialMaxAmount);
 
-  const setDynamicFee = async (param, name) => {
+  const setFeeState = async (param, name) => {
     const res = await getTransactionFee(param);
     if (name === 'fee') setFee(res);
     else {
@@ -35,11 +35,11 @@ const useTransactionFeeCalculation = ({
   };
 
   useEffect(() => {
-    setDynamicFee({
+    setFeeState({
       token, account, network, txData, selectedPriority,
     }, 'fee');
 
-    setDynamicFee({
+    setFeeState({
       token, account, network, txData: { ...txData, amount: account.balance }, selectedPriority,
     }, 'maxAmount');
   }, [txData.amount, txData.data, txData.recipient, selectedPriority.selectedIndex]);

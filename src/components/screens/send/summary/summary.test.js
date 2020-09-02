@@ -144,7 +144,7 @@ describe('Summary', () => {
       token: 'BTC',
       fields: {
         ...props.fields,
-        processingSpeed: {
+        selectedPriority: {
           value: txFee,
         },
         fee: {

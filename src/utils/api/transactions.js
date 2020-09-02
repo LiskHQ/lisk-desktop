@@ -38,9 +38,6 @@ export const getSingleTransaction = async ({ token, ...params }) => (
 export const get = (token, data) => api[token].transactions.get(data);
 
 /**
- * @todo Use transfer from '@liskhq/lisk-transactions'
- * @todo Implement the dynamic fee
- * @todo Use nonce
  * @todo document function signature
  *
  */

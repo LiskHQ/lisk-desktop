@@ -27,23 +27,11 @@ describe('reducers: service', () => {
       },
     };
 
-    expect(service(INITIAL_STATE, action)).toEqual({
-      dynamicFees: {},
+    expect(service(state, action)).toEqual({
       priceTicker: {
         BTC: {},
         LSK: { EUR: 1, USD: 1 },
       },
-    });
-  });
-
-  it('should return updated state in case of actionTypes.dynamicFeesRetrieved', () => {
-    const action = {
-      type: actionTypes.dynamicFeesRetrieved,
-      dynamicFees: { low: 1, medium: 10, high: 100 },
-    };
-
-    expect(service(state, action)).toEqual({
-      dynamicFees: action.dynamicFees,
     });
   });
 });

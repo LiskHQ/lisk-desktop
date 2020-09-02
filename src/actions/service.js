@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import actionTypes from '../constants/actions';
 import serviceAPI from '../utils/api/service';
 
+// eslint-disable-next-line import/prefer-default-export
 export const pricesRetrieved = () => (dispatch, getState) => {
   const { settings: { token }, network } = getState();
   const activeToken = token.active;
@@ -26,16 +27,4 @@ export const pricesRetrieved = () => (dispatch, getState) => {
       });
     })
     .catch(() => toast.error(i18next.t('Error retrieving conversion rates.')));
-};
-
-export const dynamicFeesRetrieved = () => (dispatch, getState) => {
-  const { settings: { token } } = getState();
-  const activeToken = token.active;
-
-  serviceAPI.getDynamicFees(activeToken)
-    .then(dynamicFees => dispatch({
-      type: actionTypes.dynamicFeesRetrieved,
-      dynamicFees,
-    }))
-    .catch(() => toast.error(i18next.t('Error retrieving dynamic fees.')));
 };

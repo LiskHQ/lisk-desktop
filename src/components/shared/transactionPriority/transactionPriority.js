@@ -22,8 +22,8 @@ const getFeeStatus = ({ fee, token, customFee }) => {
     : fee.feedback;
 };
 
-const getRelevantPriorityOptions = (priorities, token) =>
-  priorities.filter((_, index) =>
+const getRelevantPriorityOptions = (options, token) =>
+  options.filter((_, index) =>
     index !== CUSTOM_FEE_INDEX
   || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key));
 
@@ -31,7 +31,7 @@ const getRelevantPriorityOptions = (priorities, token) =>
 const TransactionPriority = ({
   t,
   token,
-  priorities,
+  priorityOptions,
   selectedPriority,
   setSelectedPriority,
   fee,
@@ -47,7 +47,7 @@ const TransactionPriority = ({
       setCustomFee(undefined);
     }
     const selectedIndex = Number(e.target.value);
-    setSelectedPriority({ item: priorities[selectedIndex], index: selectedIndex });
+    setSelectedPriority({ item: priorityOptions[selectedIndex], index: selectedIndex });
     if (showEditIcon) {
       setShowEditIcon(false);
     }
@@ -71,12 +71,12 @@ const TransactionPriority = ({
   };
 
   const tokenRelevantPriorities = useMemo(() =>
-    getRelevantPriorityOptions(priorities, token),
-  [priorities, token]);
+    getRelevantPriorityOptions(priorityOptions, token),
+  [priorityOptions, token]);
 
-  const isLoading = priorities[0].value === 0;
+  const isLoading = priorityOptions[0].value === 0;
   const inputValue = !isLoading && (customFee === 'undefined' ? fee.value : customFee);
-  const minTxFee = fromRawLsk(priorities[0].value);
+  const minTxFee = fromRawLsk(priorityOptions[0].value);
 
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} transaction-priority`}>
@@ -154,13 +154,13 @@ const TransactionPriority = ({
 
 TransactionPriority.defaultProps = {
   t: k => k,
-  priorities: [],
+  priorityOptions: [],
 };
 
 TransactionPriority.propTypes = {
   t: PropTypes.func.isRequired,
   token: PropTypes.string,
-  priorities: PropTypes.array.isRequired,
+  priorityOptions: PropTypes.array.isRequired,
   selectedPriority: PropTypes.number,
   setSelectedPriority: PropTypes.func,
   fee: PropTypes.number,

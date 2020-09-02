@@ -106,7 +106,7 @@ const FormLsk = (props) => {
         fee={fee}
         customFee={customFee}
         setCustomFee={changeCustomFee}
-        priorities={priorityOptions}
+        priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
       />

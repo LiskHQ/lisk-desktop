@@ -4,7 +4,7 @@ import FormBase from './formBase';
 import TransactionPriority from '../../../shared/transactionPriority';
 import useAmountField from './useAmountField';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
-import useProcessingSpeed from './useTransactionPriority';
+import useTransactionPriority from './useTransactionPriority';
 import useRecipientField from './useRecipientField';
 
 const txType = 'transfer';
@@ -16,7 +16,7 @@ const FormBtc = (props) => {
 
   const [
     selectedPriority, selectTransactionPriority, priorityOptions,
-  ] = useProcessingSpeed(token);
+  ] = useTransactionPriority(token);
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
   const [fee, maxAmount] = useTransactionFeeCalculation({
@@ -46,7 +46,7 @@ const FormBtc = (props) => {
       <TransactionPriority
         token={token}
         fee={fee}
-        priorities={priorityOptions}
+        priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
       />
