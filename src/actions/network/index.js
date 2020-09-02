@@ -2,7 +2,7 @@ import { networkSet as lskNetworkSet } from './lsk';
 import actionTypes from '../../constants/actions';
 
 
-export const networkSet = data =>
+export const networkSet = async data =>
   (dispatch) => {
     [
       lskNetworkSet,
