@@ -27,6 +27,7 @@ const getRelevantPriorityOptions = (priorities, token) =>
     index !== CUSTOM_FEE_INDEX
   || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key));
 
+// eslint-disable-next-line max-statements
 const TransactionPriority = ({
   t,
   token,
@@ -75,6 +76,7 @@ const TransactionPriority = ({
 
   const isLoading = priorities[0].value === 0;
   const inputValue = !isLoading && (customFee === 'undefined' ? fee.value : customFee);
+  const minTxFee = fromRawLsk(priorities[0].value);
 
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} transaction-priority`}>
@@ -108,7 +110,12 @@ const TransactionPriority = ({
           <Tooltip>
             <p className={styles.tooltipText}>
               {
-                t('Lorem Ipsum...')
+                t(`
+                  You can choose a high, medium, or low transaction priority, each requiring a 
+                  corresponding transaction fee. Or you can pay any desired fee of no less than 
+                  ${minTxFee} ${token}. If you don't know which to choose, we recommend you choose 
+                  one of the provided options instead.
+                `)
               }
             </p>
           </Tooltip>
@@ -128,7 +135,7 @@ const TransactionPriority = ({
                 autoFocus
                 type="text"
                 size="m"
-                defaultValue={fromRawLsk(priorities[0].value)}
+                defaultValue={minTxFee}
                 value={inputValue}
                 onChange={onInputChange}
                 onBlur={onInputBlur}
