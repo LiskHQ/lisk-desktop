@@ -84,8 +84,9 @@ const TokenSelector = ({ token, history, t }) => {
 
   return (
     <Tooltip
+      className={styles.tooltipWrapper}
+      tooltipClassName={styles.tooltip}
       position="bottom"
-      size="s"
       content={(
         <Icon
           name={`${token.toLowerCase()}Icon`}
@@ -145,8 +146,9 @@ class TopBar extends React.Component {
             history={history}
           />
           <Tooltip
+            className={styles.tooltipWrapper}
+            tooltipClassName={styles.tooltip}
             position="bottom"
-            size="s"
             content={(
               <Toggle
                 setting="sideBarExpanded"
@@ -154,22 +156,24 @@ class TopBar extends React.Component {
               />
             )}
           >
-            <p>{t(`${sideBarExpanded ? 'Collapse' : 'Expand'} sidebar.`)}</p>
+            <p>{t(`${sideBarExpanded ? 'Collapse' : 'Expand'} sidebar`)}</p>
           </Tooltip>
           <Tooltip
+            className={styles.tooltipWrapper}
+            tooltipClassName={styles.tooltip}
             position="bottom"
-            size="s"
             content={(
               <DialogLink component="bookmarks" className={`${styles.toggle} bookmark-list-toggle`}>
                 <Icon name="bookmark" className={styles.bookmarksIcon} />
               </DialogLink>
             )}
           >
-            <p>{t('Bookmarks.')}</p>
+            <p>{t('Bookmarks')}</p>
           </Tooltip>
           <Tooltip
+            className={styles.tooltipWrapper}
+            tooltipClassName={styles.tooltip}
             position="bottom"
-            size="s"
             content={(
               <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
                 <span className={relevantSearchParam ? `${styles.searchContainer} ${styles.searchContainerParam}` : styles.searchContainer}>
@@ -210,8 +214,9 @@ class TopBar extends React.Component {
           { !isUserLogout ? <TokenSelector token="LSK" history={history} t={t} /> : null }
           { !isUserLogout && token.list.BTC ? <TokenSelector token="BTC" history={history} t={t} /> : null }
           <Tooltip
+            className={styles.tooltipWrapper}
+            tooltipClassName={styles.tooltip}
             position="bottom"
-            size="s"
             content={(
               <Toggle
                 setting="darkMode"
@@ -224,8 +229,9 @@ class TopBar extends React.Component {
           {
             !isUserLogout ? (
               <Tooltip
+                className={styles.tooltipWrapper}
+                tooltipClassName={styles.tooltip}
                 position="bottom"
-                size="m"
                 content={(
                   <Toggle
                     setting="discreetMode"
@@ -233,7 +239,7 @@ class TopBar extends React.Component {
                   />
                 )}
               >
-                <p>{t(`${discreetMode ? 'Show' : 'Hide'} balance and transactions amounts`)}</p>
+                <p>{t(`Turn ${discreetMode ? 'off' : 'on'} dicreet mode.`)}</p>
               </Tooltip>
             ) : null
           }

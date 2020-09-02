@@ -40,7 +40,7 @@ const AccountInfo = ({
         <div className={styles.helperIcon}>
           <Tooltip
             position="bottom"
-            size="s"
+            tooltipClassName={styles.tooltip}
             content={(
               <CopyToClipboard
                 value={address}
@@ -50,13 +50,13 @@ const AccountInfo = ({
               />
             )}
           >
-            <p>{t('Copy address.')}</p>
+            <p>{t('Copy address')}</p>
           </Tooltip>
         </div>
         <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
           <Tooltip
             position="bottom"
-            size="s"
+            tooltipClassName={styles.tooltip}
             content={(
               <DialogLink className={styles.dialogLink} component="request">
                 <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
@@ -71,7 +71,7 @@ const AccountInfo = ({
             <div className={styles.helperIcon}>
               <Tooltip
                 position="bottom"
-                size="s"
+                tooltipClassName={styles.tooltip}
                 content={(
                   <DialogLink
                     component="addBookmark"
@@ -89,7 +89,7 @@ const AccountInfo = ({
                   </DialogLink>
                 )}
               >
-                <p>{t('Add to bookmarks.')}</p>
+                <p>{t('Add to bookmarks')}</p>
               </Tooltip>
             </div>
           ) : null

@@ -140,3 +140,8 @@
 .dialogLink {
   display: flex;
 }
+
+.tooltip {
+  padding: 16px;
+  width: max-content;
+}

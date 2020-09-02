@@ -31,7 +31,6 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  margin-right: 16px;
 
   &.disabled {
     opacity: 0.5;
@@ -71,6 +70,15 @@
 
 .signIn {
   margin: 7px 24px 0 0;
+}
+
+.tooltipWrapper {
+  margin-right: 16px;
+}
+
+.tooltip {
+  padding: 16px;
+  width: max-content;
 }
 
 @media (--medium-viewport) {
