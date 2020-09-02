@@ -28,11 +28,15 @@ describe('Request', () => {
     t: v => v,
     history: {
       push: jest.fn(),
+      location: {
+        pathname: 'wallet',
+        search: '?modal=request',
+      },
     },
   };
 
   beforeEach(() => {
-    wrapper = mountWithRouter(Request, props);
+    wrapper = mountWithRouter(Request, props, props.history.location);
   });
 
   describe('Amount field', () => {
@@ -113,8 +117,8 @@ describe('Request', () => {
       expect(wrapper.find('.copy-button button')).not.toBeDisabled();
     });
 
-    it('Should render BTC reqest if props.token is BTC', () => {
-      wrapper = mountWithRouter(Request, { ...props, token: 'BTC' });
+    it('Should render BTC request if props.token is BTC', () => {
+      wrapper = mountWithRouter(Request, { ...props, token: 'BTC' }, props.history.location);
       expect(wrapper.find('.copy-button button').text()).toMatch('Copy address');
     });
   });

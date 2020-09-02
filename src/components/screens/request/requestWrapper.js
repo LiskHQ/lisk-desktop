@@ -13,7 +13,7 @@ const RequestWrapper = ({
   title,
   className,
 }) => (
-  <Dialog hasClose>
+  <Dialog hasClose className={styles.dialogWrapper}>
     <div className={`${styles.container}`}>
       <h5>{title}</h5>
       <section className={`${styles.formSection} ${className}`}>

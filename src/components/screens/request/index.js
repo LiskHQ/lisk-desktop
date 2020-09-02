@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import { tokenKeys } from '../../../constants/tokens';
 import RequestBtc from './requestBtc';
 import RequestLsk from './requestLsk';
@@ -37,4 +38,4 @@ export default connect(
     account: state.account,
   }),
   {},
-)(Request);
+)(withTranslation()(Request));
