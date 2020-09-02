@@ -42,7 +42,7 @@ const AccountInfo = ({
           <Tooltip
             className={styles.tooltipWrapper}
             position="bottom"
-            tooltipClassName={styles.tooltip}
+            size="maxContent"
             content={(
               <CopyToClipboard
                 value={address}
@@ -61,7 +61,7 @@ const AccountInfo = ({
             <Tooltip
               className={styles.tooltipWrapper}
               position="bottom"
-              tooltipClassName={styles.tooltip}
+              size="maxContent"
               content={(
                 <DialogLink component="request">
                   <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
@@ -88,7 +88,7 @@ const AccountInfo = ({
               <Tooltip
                 className={styles.tooltipWrapper}
                 position="bottom"
-                tooltipClassName={styles.tooltip}
+                size="maxContent"
                 content={(
                   <DialogLink
                     component="addBookmark"

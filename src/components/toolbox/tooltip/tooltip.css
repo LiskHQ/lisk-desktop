@@ -225,3 +225,8 @@
     }
   }
 }
+
+.maxContent {
+  padding: 16px;
+  width: max-content;
+}

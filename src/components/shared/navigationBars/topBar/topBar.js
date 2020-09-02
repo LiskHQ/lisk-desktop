@@ -85,7 +85,7 @@ const TokenSelector = ({ token, history, t }) => {
   return (
     <Tooltip
       className={styles.tooltipWrapper}
-      tooltipClassName={styles.tooltip}
+      size="maxContent"
       position="bottom"
       content={(
         <Icon
@@ -147,7 +147,7 @@ class TopBar extends React.Component {
           />
           <Tooltip
             className={styles.tooltipWrapper}
-            tooltipClassName={styles.tooltip}
+            size="maxContent"
             position="bottom"
             content={(
               <Toggle
@@ -160,7 +160,7 @@ class TopBar extends React.Component {
           </Tooltip>
           <Tooltip
             className={styles.tooltipWrapper}
-            tooltipClassName={styles.tooltip}
+            size="maxContent"
             position="bottom"
             content={(
               <DialogLink component="bookmarks" className={`${styles.toggle} bookmark-list-toggle`}>
@@ -172,7 +172,7 @@ class TopBar extends React.Component {
           </Tooltip>
           <Tooltip
             className={styles.tooltipWrapper}
-            tooltipClassName={styles.tooltip}
+            size="maxContent"
             position="bottom"
             content={(
               <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
@@ -215,7 +215,7 @@ class TopBar extends React.Component {
           { !isUserLogout && token.list.BTC ? <TokenSelector token="BTC" history={history} t={t} /> : null }
           <Tooltip
             className={styles.tooltipWrapper}
-            tooltipClassName={styles.tooltip}
+            size="maxContent"
             position="bottom"
             content={(
               <Toggle
@@ -230,7 +230,7 @@ class TopBar extends React.Component {
             !isUserLogout ? (
               <Tooltip
                 className={styles.tooltipWrapper}
-                tooltipClassName={styles.tooltip}
+                size="maxContent"
                 position="bottom"
                 content={(
                   <Toggle

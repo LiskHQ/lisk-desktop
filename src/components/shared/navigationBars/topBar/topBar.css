@@ -76,11 +76,6 @@
   margin-right: 16px;
 }
 
-.tooltip {
-  padding: 16px;
-  width: max-content;
-}
-
 @media (--medium-viewport) {
   .toggle {
     margin-right: 10px;
