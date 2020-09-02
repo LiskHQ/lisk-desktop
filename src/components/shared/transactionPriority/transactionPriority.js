@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import styles from './dynamicFee.css';
+import styles from './transactionPriority.css';
 import { tokenMap } from '../../../constants/tokens';
 import Input from '../../toolbox/inputs/input';
 import Icon from '../../toolbox/icon';
@@ -15,7 +14,7 @@ import { fromRawLsk } from '../../../utils/lsk';
 const CUSTOM_FEE_INDEX = 3;
 
 // eslint-disable-next-line max-statements
-const DynamicFee = ({
+const TransactionPriority = ({
   t,
   token,
   priorities,
@@ -77,7 +76,7 @@ const DynamicFee = ({
   const inputValue = !isLoading && (customFee === 'undefined' ? fee.value : customFee);
 
   return (
-    <div className={`${styles.dynamicFeeWrapper} ${styles.fieldGroup} processing-speed`}>
+    <div className={`${styles.wrapper} ${styles.fieldGroup} transaction-priority`}>
       <div className={`${styles.col}`}>
         <span className={`${styles.fieldLabel}`}>
           {t('Priority')}
@@ -93,7 +92,7 @@ const DynamicFee = ({
           {tokenRelevantPriorities.map((priority, index) => (
             <button
               key={`fee-priority-${index}`}
-              className={`${styles.feePriority} ${index === selectedPriority ? styles.feePrioritySelected : ''} option-${priority.title}`}
+              className={`${styles.priorityTitle} ${index === selectedPriority ? styles.priorityTitleSelected : ''} option-${priority.title}`}
               onClick={onClickPriority}
               value={index}
             >
@@ -134,7 +133,7 @@ const DynamicFee = ({
                 onBlur={onInputBlur}
               />
             ) : (
-              <span className={`${styles.fee} fee-value`} onClick={onClickCustomEdit}>
+              <span className={`${styles.feeValue} fee-value`} onClick={onClickCustomEdit}>
                 {getFeeStatus()}
                 {isCustom && showEditIcon && <Icon name="edit" />}
               </span>
@@ -145,12 +144,12 @@ const DynamicFee = ({
   );
 };
 
-DynamicFee.defaultProps = {
+TransactionPriority.defaultProps = {
   t: k => k,
   priorities: [],
 };
 
-DynamicFee.propTypes = {
+TransactionPriority.propTypes = {
   t: PropTypes.func.isRequired,
   token: PropTypes.string,
   priorities: PropTypes.array.isRequired,
@@ -159,4 +158,4 @@ DynamicFee.propTypes = {
   fee: PropTypes.number,
 };
 
-export default withTranslation()(DynamicFee);
+export default TransactionPriority;

@@ -98,7 +98,7 @@ export const calculateMinTxFee = (
  * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
  */
-export const getDynamicBaseFees = () => (
+export const getTransactionBaseFees = () => (
   new Promise(async (resolve) => {
     const fee = 1e7;
 
@@ -154,7 +154,7 @@ export const broadcast = (transaction, networkConfig) => new Promise(
  * @param {String} address - Account address
  * @param {Object} network - network configuration
  */
-export const getDynamicFee = async ({
+export const getTransactionFee = async ({
   txData, dynamicFeePerByte,
 }) => {
   const { txType, ...data } = txData;

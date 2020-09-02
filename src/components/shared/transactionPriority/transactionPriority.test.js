@@ -1,10 +1,7 @@
 import React from 'react';
-// import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { tokenMap } from '../../../constants/tokens';
-import DynamicFee from '.';
-// import accounts from '../../../../../test/constants/accounts';
-// import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
+import TransactionPriority from '.';
 
 const baseFees = {
   Low: 0.1,
@@ -12,9 +9,8 @@ const baseFees = {
   High: 0.3,
 };
 
-describe('DynamicFee', () => {
+describe('TransactionPriority', () => {
   let wrapper;
-  // let selectedPriority;
   const fee = 0.123;
 
   const props = {
@@ -32,14 +28,13 @@ describe('DynamicFee', () => {
   beforeEach(() => {
     props.setSelectedPriority.mockRestore();
     props.setCustomFee.mockRestore();
-    wrapper = mount(<DynamicFee {...props} />);
+    wrapper = mount(<TransactionPriority {...props} />);
   });
 
   it('renders properly', () => {
-    expect(wrapper).toContainMatchingElement('.processing-speed');
+    expect(wrapper).toContainMatchingElement('.transaction-priority');
     expect(wrapper).toContainMatchingElement('.priority-selector');
     expect(wrapper).toContainMatchingElement('.fee-container');
-    // expect(wrapper).toContainMatchingElement('Spinner');
   });
 
   it('renders low, medium and high processing speed options', () => {

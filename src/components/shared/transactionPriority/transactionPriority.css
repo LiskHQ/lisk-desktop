@@ -7,7 +7,7 @@
   margin-bottom: 16px;
   padding: 0 var(--horizontal-padding-l);
 
-  &.dynamicFeeWrapper {
+  &.wrapper {
     flex-direction: row;
     margin-bottom: 42px;
   }
@@ -27,7 +27,7 @@
   }
 }
 
-.dynamicFeeWrapper {
+.wrapper {
   & > .col:first-child {
     padding-right: 100px;
   }
@@ -49,7 +49,7 @@
       justify-content: space-between;
       margin-bottom: 4px;
 
-      & > .feePriority {
+      & > .priorityTitle {
         background-color: var(--color-white);
         color: var(--color-maastricht-blue);
         font-family: var(--content-font);
@@ -61,14 +61,14 @@
         padding: 5px var(--horizontal-padding-m);
         outline: none;
 
-        &.feePrioritySelected {
+        &.priorityTitleSelected {
           background-color: var(--color-ink-blue);
           color: var(--color-white);
         }
       }
     }
 
-    & > .fee {
+    & > .feeValue {
       color: var(--color-maastricht-blue);
       font-family: var(--content-font);
       font-weight: normal;

@@ -253,7 +253,7 @@ export const broadcast = (transactionHex, network) => new Promise(async (resolve
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
  */
-export const getDynamicBaseFees = () => new Promise(async (resolve, reject) => {
+export const getTransactionBaseFees = () => new Promise(async (resolve, reject) => {
   try {
     const config = getBtcConfig(0);
     const response = await popsicle.get(config.minerFeesURL)
@@ -279,7 +279,7 @@ export const getDynamicBaseFees = () => new Promise(async (resolve, reject) => {
  * @param {String} address - Account address
  * @param {Object} network - network configuration
  */
-export const getDynamicFee = async ({
+export const getTransactionFee = async ({
   account, network, txData, dynamicFeePerByte,
 }) => {
   const unspentTransactionOutputs = await getUnspentTransactionOutputs(

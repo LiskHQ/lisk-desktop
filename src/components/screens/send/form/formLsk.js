@@ -10,9 +10,9 @@ import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
 import { toRawLsk } from '../../../../utils/lsk';
-import DynamicFee from '../../../shared/dynamicFee';
+import TransactionPriority from '../../../shared/transactionPriority';
 import useDynamicFeeCalculation from './useDynamicFeeCalculation';
-import useProcessingSpeed from './useProcessingSpeed';
+import useTransactionPriority from './useTransactionPriority';
 
 const txType = 'transfer';
 
@@ -23,12 +23,14 @@ const FormLsk = (props) => {
   } = props;
 
   const [customFee, setCustomFee] = useState();
-  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed(token);
+  const [
+    transactionPriority, selectTransactionPriority, priorityOptions,
+  ] = useTransactionPriority(token);
   const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
-  const [fee, maxAmount] = useDynamicFeeCalculation(processingSpeed, {
+  const [fee, maxAmount] = useDynamicFeeCalculation(transactionPriority, {
     amount: toRawLsk(amount.value),
     txType,
     recipient: recipient.value,
@@ -43,7 +45,7 @@ const FormLsk = (props) => {
     recipient,
     reference,
     fee: customFee ? { value: customFee, feedback: '', error: false } : fee,
-    processingSpeed,
+    processingSpeed: transactionPriority,
   };
 
   const changeCustomFee = (value) => {
@@ -95,14 +97,14 @@ const FormLsk = (props) => {
           </Tooltip>
         </span>
       </label>
-      <DynamicFee
+      <TransactionPriority
         token={token}
         fee={fee}
         customFee={customFee}
         setCustomFee={changeCustomFee}
-        priorities={feeOptions}
-        selectedPriority={processingSpeed.selectedIndex}
-        setSelectedPriority={selectProcessingSpeed}
+        priorities={priorityOptions}
+        selectedPriority={transactionPriority.selectedIndex}
+        setSelectedPriority={selectTransactionPriority}
       />
     </FormBase>
   );

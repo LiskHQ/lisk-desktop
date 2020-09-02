@@ -53,10 +53,10 @@ export const create = (tokenType, data, transactionType) =>
 export const broadcast = (tokenType, transaction, networkConfig) =>
   api[tokenType].transactions.broadcast(transaction, networkConfig);
 
-export const getDynamicBaseFees = tokenType =>
+export const getTransactionBaseFees = tokenType =>
   api[tokenType].transactions.getDynamicBaseFees();
 
-export const getDynamicFee = ({ token, ...params }) =>
+export const getTransactionFee = ({ token, ...params }) =>
   api[token].transactions.getDynamicFee(params);
 
 export default {

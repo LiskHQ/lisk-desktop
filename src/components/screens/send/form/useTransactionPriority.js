@@ -3,13 +3,17 @@ import { useTranslation } from 'react-i18next';
 
 import { getDynamicBaseFees } from '../../../../utils/api/transactions';
 
-const useProcessingSpeed = (token) => {
+const useTransactionPriority = (token) => {
   const { t } = useTranslation();
   const [error, setError] = useState(false);
   const [baseFees, setBaseFees] = useState({
     Low: 0,
     Medium: 0,
     High: 0,
+  });
+  const [selectedPriority, setselectedPriority] = useState({
+    value: 0,
+    selectedIndex: 0,
   });
 
   useEffect(() => {
@@ -18,20 +22,15 @@ const useProcessingSpeed = (token) => {
       .catch(setError);
   }, []);
 
-  const [processingSpeedState, setProcessingSpeedState] = useState({
-    value: 0,
-    selectedIndex: 0,
-  });
-
-  const selectProcessingSpeed = ({ item, index }) => {
-    setProcessingSpeedState({
+  const selectTransactionPriority = ({ item, index }) => {
+    setselectedPriority({
       ...item,
       selectedIndex: index,
       error: !!error,
     });
   };
 
-  const feeOptions = [
+  const priorityOptions = [
     { title: t('Low'), value: baseFees.Low },
     { title: t('Medium'), value: baseFees.Medium },
     { title: t('High'), value: baseFees.High },
@@ -39,13 +38,13 @@ const useProcessingSpeed = (token) => {
   ];
 
   useEffect(() => {
-    selectProcessingSpeed({
-      item: feeOptions[processingSpeedState.selectedIndex],
-      index: processingSpeedState.selectedIndex,
+    selectTransactionPriority({
+      item: priorityOptions[selectedPriority.selectedIndex],
+      index: selectedPriority.selectedIndex,
     });
-  }, [processingSpeedState.index, baseFees]);
+  }, [selectedPriority.index, baseFees]);
 
-  return [processingSpeedState, selectProcessingSpeed, feeOptions];
+  return [selectedPriority, selectTransactionPriority, priorityOptions];
 };
 
-export default useProcessingSpeed;
+export default useTransactionPriority;
