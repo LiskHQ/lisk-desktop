@@ -54,10 +54,10 @@ export const broadcast = (tokenType, transaction, networkConfig) =>
   api[tokenType].transactions.broadcast(transaction, networkConfig);
 
 export const getTransactionBaseFees = tokenType =>
-  api[tokenType].transactions.getDynamicBaseFees();
+  api[tokenType].transactions.getTransactionBaseFees();
 
 export const getTransactionFee = ({ token, ...params }) =>
-  api[token].transactions.getDynamicFee(params);
+  api[token].transactions.getTransactionFee(params);
 
 export default {
   broadcast,

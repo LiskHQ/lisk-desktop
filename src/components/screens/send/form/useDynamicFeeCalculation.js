@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
-  getDynamicFee,
+  getTransactionFee,
 } from '../../../../utils/api/transactions';
 import { toRawLsk } from '../../../../utils/lsk';
 
@@ -22,7 +22,7 @@ const useDynamicFeeCalculation = (dynamicFeePerByte, txData, token, account) => 
   const [maxAmount, setMaxAmount] = useState(initialMaxAmount);
 
   const setDynamicFee = async (param, name) => {
-    const res = await getDynamicFee(param);
+    const res = await getTransactionFee(param);
     if (name === 'fee') setFee(res);
     else {
       setMaxAmount({

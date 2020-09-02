@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { getDynamicBaseFees } from '../../../../utils/api/transactions';
+import { getTransactionBaseFees } from '../../../../utils/api/transactions';
 
 const useTransactionPriority = (token) => {
   const { t } = useTranslation();
@@ -17,7 +17,7 @@ const useTransactionPriority = (token) => {
   });
 
   useEffect(() => {
-    getDynamicBaseFees(token)
+    getTransactionBaseFees(token)
       .then(setBaseFees)
       .catch(setError);
   }, []);
