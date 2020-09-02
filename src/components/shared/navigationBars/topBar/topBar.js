@@ -126,7 +126,7 @@ class TopBar extends React.Component {
       history,
       network,
       token,
-      settings: { darkMode, discreetMode },
+      settings: { darkMode, discreetMode, sideBarExpanded },
       // resetTimer,
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
@@ -144,43 +144,67 @@ class TopBar extends React.Component {
             account={account}
             history={history}
           />
-          <Toggle
-            setting="sideBarExpanded"
-            icons={['toggleSidebarActive', 'toggleSidebar']}
-          />
-          <DialogLink component="bookmarks" className={`${styles.toggle} bookmark-list-toggle`}>
-            <Icon name="bookmark" className={styles.bookmarksIcon} />
-          </DialogLink>
-          <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
-            <span className={relevantSearchParam ? `${styles.searchContainer} ${styles.searchContainerParam}` : styles.searchContainer}>
-              <Icon name={relevantSearchParam ? 'search' : 'searchInput'} className="search-icon" />
-              {
-                relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
-                  && (
-                  <AccountVisual
-                    className={styles.accountVisual}
-                    size={18}
-                    address={relevantSearchParamValue}
-                  />
-                  )
-              }
-              {relevantSearchParamValue
-                && (
-                  <>
-                    <div className="hideOnLargeViewPort">
-                      <span className={styles.searchedValue}>
-                        {relevantSearchParamValue.replace(regex.searchbar, '$1...')}
-                      </span>
-                    </div>
-                    <div className="showOnLargeViewPort">
-                      <span className={styles.searchedValue}>
-                        {relevantSearchParamValue}
-                      </span>
-                    </div>
-                  </>
-                )}
-            </span>
-          </DialogLink>
+          <Tooltip
+            position="bottom"
+            size="s"
+            content={(
+              <Toggle
+                setting="sideBarExpanded"
+                icons={['toggleSidebarActive', 'toggleSidebar']}
+              />
+            )}
+          >
+            <p>{t(`${sideBarExpanded ? 'Collapse' : 'Expand'} sidebar.`)}</p>
+          </Tooltip>
+          <Tooltip
+            position="bottom"
+            size="s"
+            content={(
+              <DialogLink component="bookmarks" className={`${styles.toggle} bookmark-list-toggle`}>
+                <Icon name="bookmark" className={styles.bookmarksIcon} />
+              </DialogLink>
+            )}
+          >
+            <p>{t('Bookmarks.')}</p>
+          </Tooltip>
+          <Tooltip
+            position="bottom"
+            size="s"
+            content={(
+              <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
+                <span className={relevantSearchParam ? `${styles.searchContainer} ${styles.searchContainerParam}` : styles.searchContainer}>
+                  <Icon name={relevantSearchParam ? 'search' : 'searchInput'} className="search-icon" />
+                  {
+                    relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
+                      && (
+                      <AccountVisual
+                        className={styles.accountVisual}
+                        size={18}
+                        address={relevantSearchParamValue}
+                      />
+                      )
+                  }
+                  {relevantSearchParamValue
+                    && (
+                      <>
+                        <div className="hideOnLargeViewPort">
+                          <span className={styles.searchedValue}>
+                            {relevantSearchParamValue.replace(regex.searchbar, '$1...')}
+                          </span>
+                        </div>
+                        <div className="showOnLargeViewPort">
+                          <span className={styles.searchedValue}>
+                            {relevantSearchParamValue}
+                          </span>
+                        </div>
+                      </>
+                    )}
+                </span>
+              </DialogLink>
+            )}
+          >
+            <p>{t('Search...')}</p>
+          </Tooltip>
         </div>
         <div className={styles.group}>
           { !isUserLogout ? <TokenSelector token="LSK" history={history} t={t} /> : null }
@@ -195,7 +219,7 @@ class TopBar extends React.Component {
               />
             )}
           >
-            <p>{t(`Switch to the ${darkMode ? 'light' : 'dark'} mode.`)}</p>
+            <p>{t(`Switch to ${darkMode ? 'light' : 'dark'} mode.`)}</p>
           </Tooltip>
           {
             !isUserLogout ? (

@@ -50,7 +50,7 @@ const AccountInfo = ({
               />
             )}
           >
-            <p>{t('Copy to clipboard')}</p>
+            <p>{t('Copy address.')}</p>
           </Tooltip>
         </div>
         <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
@@ -89,7 +89,7 @@ const AccountInfo = ({
                   </DialogLink>
                 )}
               >
-                <p>{t('Add to bookmark')}</p>
+                <p>{t('Add to bookmarks.')}</p>
               </Tooltip>
             </div>
           ) : null
