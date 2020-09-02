@@ -40,6 +40,7 @@ const AccountInfo = ({
       <footer>
         <div className={styles.helperIcon}>
           <Tooltip
+            className={styles.tooltipWrapper}
             position="bottom"
             tooltipClassName={styles.tooltip}
             content={(
@@ -58,10 +59,11 @@ const AccountInfo = ({
           {
           host === address ? (
             <Tooltip
+              className={styles.tooltipWrapper}
               position="bottom"
-              size="s"
+              tooltipClassName={styles.tooltip}
               content={(
-                <DialogLink component="request" className={styles.dialogLink}>
+                <DialogLink component="request">
                   <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
                 </DialogLink>
               )}
@@ -70,6 +72,7 @@ const AccountInfo = ({
             </Tooltip>
           ) : (
             <Tooltip
+              className={styles.tooltipWrapper}
               position="bottom"
               size="s"
               title={t('Scan address')}
@@ -83,6 +86,7 @@ const AccountInfo = ({
           host !== address ? (
             <div className={styles.helperIcon}>
               <Tooltip
+                className={styles.tooltipWrapper}
                 position="bottom"
                 tooltipClassName={styles.tooltip}
                 content={(
@@ -110,7 +114,7 @@ const AccountInfo = ({
         {
           hwInfo && !isEmpty(hwInfo) && host === address && (
             <div
-              className={`${styles.helperIcon} verify-address`}
+              className={`${styles.helperIcon} verify-address ${styles.tooltipWrapper}`}
               onClick={() => getAddress({
                 deviceId: hwInfo.deviceId,
                 index: hwInfo.derivationIndex,

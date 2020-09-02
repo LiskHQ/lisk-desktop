@@ -111,10 +111,7 @@
 
     & .qrCodeIcon {
       width: 26px;
-    }
-
-    & .tooltipQRCodeIcon {
-      width: auto;
+      margin: 6px;
     }
 
     & .bookmark {
@@ -137,8 +134,9 @@
   }
 }
 
-.dialogLink {
-  display: flex;
+.tooltipWrapper {
+  width: 100%;
+  height: 100%;
 }
 
 .tooltip {
