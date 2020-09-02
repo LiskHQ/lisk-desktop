@@ -18,7 +18,7 @@ describe('RequestLsk', () => {
   };
   const routeConfig = {
     pathname: 'wallet',
-    search: '?modal=request&host=true',
+    search: '?modal=request',
   };
 
   beforeEach(() => {

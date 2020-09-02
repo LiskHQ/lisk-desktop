@@ -136,3 +136,7 @@
     z-index: 0;
   }
 }
+
+.dialogLink {
+  display: flex;
+}

@@ -30,7 +30,7 @@ describe('Request', () => {
       push: jest.fn(),
       location: {
         pathname: 'wallet',
-        search: '?modal=request&host=true',
+        search: '?modal=request',
       },
     },
   };
