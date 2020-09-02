@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { withRouter } from 'react-router';
+import { compose } from 'redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
 import styles from './voting.css';
@@ -8,6 +10,7 @@ import Header from './header';
 import Onboarding from '../../toolbox/onboarding/onboarding';
 import { clearVotes, loadVotes } from '../../../actions/voting';
 import { getUnvoteList, getVoteList } from '../../../utils/voting';
+import { selectSearchParamValue } from '../../../utils/searchParams';
 
 const getOnboardingSlides = t => (
   [{
@@ -31,6 +34,7 @@ const getOnboardingSlides = t => (
 
 const Delegates = ({
   t,
+  history,
 }) => {
   const votes = useSelector(state => state.voting.votes);
   const [votingMode, setVotingMode] = useState(
@@ -57,6 +61,14 @@ const Delegates = ({
     }
   }, []);
 
+  useEffect(() => {
+    const modalSearchParam = selectSearchParamValue(history.location.search, 'modal');
+    const isSubmittedSearchParam = selectSearchParamValue(history.location.search, 'isSubmitted');
+    if (isSubmittedSearchParam === 'true' && modalSearchParam === 'votingSummary') {
+      setVotingMode(false);
+    }
+  }, [history.location.search]);
+
   return (
     <div className={`${grid.row} ${styles.wrapper}`} ref={wrapper}>
       <Onboarding
@@ -80,4 +92,7 @@ const Delegates = ({
   );
 };
 
-export default withTranslation()(Delegates);
+export default compose(
+  withRouter,
+  withTranslation(),
+)(Delegates);
