@@ -16,12 +16,9 @@ import useTransactionPriority from './useTransactionPriority';
 
 const txType = 'transfer';
 
-// eslint-disable-next-line max-statements
-const FormLsk = (props) => {
-  const {
-    t, token, getInitialValue, account,
-  } = props;
-
+const FormLsk = ({
+  t, token, getInitialValue, account, ...restProps
+}) => {
   const [customFee, setCustomFee] = useState();
   const [
     transactionPriority, selectTransactionPriority, priorityOptions,
@@ -54,7 +51,7 @@ const FormLsk = (props) => {
 
   return (
     <FormBase
-      {...props}
+      {...restProps}
       fields={fields}
       fieldUpdateFunctions={fieldUpdateFunctions}
       maxAmount={maxAmount}

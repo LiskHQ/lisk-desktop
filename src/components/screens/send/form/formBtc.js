@@ -14,7 +14,9 @@ const FormBtc = (props) => {
     token, getInitialValue, account,
   } = props;
 
-  const [transactionPriority, selectTransactionPriority, priorityOptions] = useProcessingSpeed(token);
+  const [
+    transactionPriority, selectTransactionPriority, priorityOptions,
+  ] = useProcessingSpeed(token);
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
   const [fee, maxAmount] = useDynamicFeeCalculation(transactionPriority, {

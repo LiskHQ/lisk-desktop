@@ -13,7 +13,20 @@ import { fromRawLsk } from '../../../utils/lsk';
 
 const CUSTOM_FEE_INDEX = 3;
 
-// eslint-disable-next-line max-statements
+const getFeeStatus = ({ fee, token, customFee }) => {
+  if (customFee) {
+    return customFee;
+  }
+  return !fee.error
+    ? `${formatAmountBasedOnLocale({ value: fee.value })} ${token}`
+    : fee.feedback;
+};
+
+const getRelevantPriorityOptions = (priorities, token) =>
+  priorities.filter((_, index) =>
+    index !== CUSTOM_FEE_INDEX
+  || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key));
+
 const TransactionPriority = ({
   t,
   token,
@@ -57,22 +70,10 @@ const TransactionPriority = ({
   };
 
   const tokenRelevantPriorities = useMemo(() =>
-    priorities.filter((_, index) =>
-      index !== CUSTOM_FEE_INDEX
-      || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key)),
-  [token, priorities]);
+    getRelevantPriorityOptions(priorities, token),
+  [priorities, token]);
 
   const isLoading = priorities[0].value === 0;
-
-  const getFeeStatus = () => {
-    if (customFee) {
-      return customFee;
-    }
-    return !fee.error
-      ? `${formatAmountBasedOnLocale({ value: fee.value })} ${token}`
-      : fee.feedback;
-  };
-
   const inputValue = !isLoading && (customFee === 'undefined' ? fee.value : customFee);
 
   return (
@@ -134,7 +135,7 @@ const TransactionPriority = ({
               />
             ) : (
               <span className={`${styles.feeValue} fee-value`} onClick={onClickCustomEdit}>
-                {getFeeStatus()}
+                {getFeeStatus({ fee, token, customFee })}
                 {isCustom && showEditIcon && <Icon name="edit" />}
               </span>
             ))
