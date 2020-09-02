@@ -107,14 +107,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-
-      & > div {
-        display: flex;
-      }
-    }
-
-    & .tooltipQRCodeWrapper {
-      padding: 10px;
     }
 
     & .qrCodeIcon {
@@ -143,4 +135,8 @@
     filter: brightness(100);
     z-index: 0;
   }
+}
+
+.dialogLink {
+  display: flex;
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import QRCode from 'qrcode.react';
 import AccountVisual from '../../../../toolbox/accountVisual';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
@@ -56,36 +55,42 @@ const AccountInfo = ({
         </div>
         <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
           <Tooltip
-            tooltipClassName={styles.tooltipQRCodeWrapper}
-            className={styles.qrCode}
             position="bottom"
-            title={t('Scan address')}
+            size="s"
             content={(
-              <DialogLink component="request">
+              <DialogLink className={styles.dialogLink} component="request">
                 <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
               </DialogLink>
             )}
           >
-            <QRCode value={address} size={154} />
+            {host !== address ? <p>{t('Scan QR address')}</p> : <p>{t('Request tokens')}</p> }
           </Tooltip>
         </div>
         {
           host !== address ? (
             <div className={styles.helperIcon}>
-              <DialogLink
-                component="addBookmark"
-                data={delegate ? {
-                  formAddress: address,
-                  label: delegate.username,
-                  isDelegate: true,
-                } : {
-                  formAddress: address,
-                  isDelegate: false,
-                  label: bookmark ? bookmark.title : '',
-                }}
+              <Tooltip
+                position="bottom"
+                size="s"
+                content={(
+                  <DialogLink
+                    component="addBookmark"
+                    data={delegate ? {
+                      formAddress: address,
+                      label: delegate.username,
+                      isDelegate: true,
+                    } : {
+                      formAddress: address,
+                      isDelegate: false,
+                      label: bookmark ? bookmark.title : '',
+                    }}
+                  >
+                    <BookmarkIcon bookmark={bookmark} />
+                  </DialogLink>
+                )}
               >
-                <BookmarkIcon bookmark={bookmark} />
-              </DialogLink>
+                <p>{t('Add to bookmark')}</p>
+              </Tooltip>
             </div>
           ) : null
         }
