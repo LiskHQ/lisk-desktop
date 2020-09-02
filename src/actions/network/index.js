@@ -3,11 +3,11 @@ import actionTypes from '../../constants/actions';
 
 
 export const networkSet = async data =>
-  (dispatch) => {
+  async (dispatch) => {
     [
       lskNetworkSet,
       // here is the place to add a new token
-    ].map(action => dispatch(action(data)));
+    ].map(async action => dispatch(await action(data)));
   };
 
 
