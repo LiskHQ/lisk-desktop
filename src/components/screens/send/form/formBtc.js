@@ -1,43 +1,40 @@
 import React from 'react';
-import {
-  formatAmountBasedOnLocale,
-} from '../../../../utils/formattedNumber';
-import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
+import { toRawLsk } from '../../../../utils/lsk';
 import FormBase from './formBase';
-import Selector from '../../../toolbox/selector/selector';
-import Spinner from '../../../toolbox/spinner';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
-import styles from './form.css';
+import TransactionPriority from '../../../shared/transactionPriority';
 import useAmountField from './useAmountField';
-import useDynamicFeeCalculation from './useDynamicFeeCalculation';
-import useProcessingSpeed from './useProcessingSpeed';
+import useTransactionFeeCalculation from './useTransactionFeeCalculation';
+import useTransactionPriority from './useTransactionPriority';
 import useRecipientField from './useRecipientField';
+
+const txType = 'transfer';
 
 const FormBtc = (props) => {
   const {
-    t, token, getInitialValue, account,
+    token, getInitialValue, account,
   } = props;
-  const txType = 'transfer';
 
-  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed(token);
+  const [
+    selectedPriority, selectTransactionPriority, priorityOptions,
+  ] = useTransactionPriority(token);
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
-
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
-  const [fee, maxAmount] = useDynamicFeeCalculation(processingSpeed, {
-    amount: toRawLsk(amount.value), txType, recipient: recipient.value,
-  }, token, account);
+  const [fee, maxAmount] = useTransactionFeeCalculation({
+    selectedPriority,
+    txData: {
+      amount: toRawLsk(amount.value), txType, recipient: recipient.value,
+    },
+    token,
+    account,
+  });
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
     amount,
     recipient,
-    processingSpeed,
+    selectedPriority,
     fee,
   };
-
-  const getProcessingSpeedStatus = () => (!fields.fee.error
-    ? `${formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) })} ${token}`
-    : fields.fee.feedback);
 
   return (
     <FormBase
@@ -46,40 +43,13 @@ const FormBtc = (props) => {
       fieldUpdateFunctions={fieldUpdateFunctions}
       maxAmount={maxAmount}
     >
-      <div className={`${styles.fieldGroup} processing-speed`}>
-        <span className={`${styles.fieldLabel}`}>
-          {t('Processing Speed')}
-          <Tooltip>
-            <p className={styles.tooltipText}>
-              {
-                t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')
-              }
-            </p>
-          </Tooltip>
-        </span>
-        <Selector
-          className={styles.selector}
-          onSelectorChange={selectProcessingSpeed}
-          name="speedSelector"
-          selectedIndex={fields.processingSpeed.selectedIndex}
-          options={feeOptions}
-        />
-        <span className={styles.processingInfo}>
-          {`${t('Transaction fee')}: `}
-          <span>
-            { feeOptions[0].value === 0
-              ? (
-                <React.Fragment>
-                  {t('Loading')}
-                  {' '}
-                  <Spinner className={styles.loading} />
-                </React.Fragment>
-              )
-              : getProcessingSpeedStatus()
-            }
-          </span>
-        </span>
-      </div>
+      <TransactionPriority
+        token={token}
+        fee={fee}
+        priorityOptions={priorityOptions}
+        selectedPriority={selectedPriority.selectedIndex}
+        setSelectedPriority={selectTransactionPriority}
+      />
     </FormBase>
   );
 };

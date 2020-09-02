@@ -38,9 +38,6 @@ export const getSingleTransaction = async ({ token, ...params }) => (
 export const get = (token, data) => api[token].transactions.get(data);
 
 /**
- * @todo Use transfer from '@liskhq/lisk-transactions'
- * @todo Implement the dynamic fee
- * @todo Use nonce
  * @todo document function signature
  *
  */
@@ -53,11 +50,11 @@ export const create = (tokenType, data, transactionType) =>
 export const broadcast = (tokenType, transaction, networkConfig) =>
   api[tokenType].transactions.broadcast(transaction, networkConfig);
 
-export const getDynamicBaseFees = tokenType =>
-  api[tokenType].transactions.getDynamicBaseFees();
+export const getTransactionBaseFees = tokenType =>
+  api[tokenType].transactions.getTransactionBaseFees();
 
-export const getDynamicFee = ({ token, ...params }) =>
-  api[token].transactions.getDynamicFee(params);
+export const getTransactionFee = ({ token, ...params }) =>
+  api[token].transactions.getTransactionFee(params);
 
 export default {
   broadcast,

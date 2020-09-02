@@ -6,7 +6,6 @@ export const INITIAL_STATE = {
     ...info,
     [tokenKey]: {},
   }), {}),
-  dynamicFees: {},
 };
 
 const service = (state = INITIAL_STATE, action = {}) => {
@@ -18,12 +17,6 @@ const service = (state = INITIAL_STATE, action = {}) => {
           ...state.priceTicker,
           ...action.data.priceTicker,
         },
-      });
-
-    case actionTypes.dynamicFeesRetrieved:
-      return ({
-        ...state,
-        dynamicFees: action.dynamicFees,
       });
     default:
       return state;
