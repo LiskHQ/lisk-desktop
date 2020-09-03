@@ -169,27 +169,35 @@ export const getBalanceData = ({
 }) => {
   const data = transactions
     .sort((a, b) => (b.timestamp - a.timestamp))
-    .reduce((acc, item, index) => {
+    .reduce(({ allTransactions, dateSelectedTransaction }, item, index) => {
       const date = moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD');
       const tx = transactions[index - 1];
       const txValue = tx ? parseFloat(fromRawLsk(getTxValue(tx, address))) : 0;
-      // fix for the first item in list
-      const lastBalance = acc[acc.length - 1]
-        ? acc[acc.length - 1].y
+      const lastBalance = allTransactions[allTransactions.length - 1]
+        ? allTransactions[allTransactions.length - 1].y
         : parseFloat(fromRawLsk(balance));
-      if (acc[acc.length - 1] && date === acc[acc.length - 1].x) {
-        acc[acc.length - 1].y = acc[acc.length - 1].y - txValue;
-      } else {
-        acc.push({
-          x: moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD'),
-          y: lastBalance - txValue,
-        });
+      const graphTransactionData = {
+        x: moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD'),
+        y: lastBalance - txValue,
+      };
+
+      allTransactions.push(graphTransactionData);
+
+      if (Object.keys(dateSelectedTransaction).length === 0) {
+        dateSelectedTransaction[date] = graphTransactionData;
+      } else if (Object.keys(dateSelectedTransaction)[0] !== date) {
+        dateSelectedTransaction[date] = graphTransactionData;
       }
-      return acc;
-    }, []).reverse();
+
+      return {
+        allTransactions,
+        dateSelectedTransaction,
+      };
+    }, { allTransactions: [], dateSelectedTransaction: {} });
+
   return {
     datasets: [{
-      data,
+      data: Object.values(data.dateSelectedTransaction).reverse(),
       borderColor: styles.borderColor[token],
       pointBorderColor: styles.borderColor[token],
     }],
