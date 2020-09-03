@@ -9,6 +9,7 @@ import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
 import getBtcConfig from './config';
 import networks from '../../../constants/networks';
+import { fromRawLsk } from '../../lsk';
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
@@ -86,13 +87,13 @@ export const getSingleTransaction = ({
  * @param {Object} data
  * @param {Number} data.inputCount
  * @param {Number} data.outputCount
- * @param {Number} data.dynamicFeePerByte - in satoshis/byte.
+ * @param {Number} data.selectedFeePerByte - in satoshis/byte.
  */
 export const calculateTransactionFee = ({
   inputCount,
   outputCount,
-  dynamicFeePerByte,
-}) => ((inputCount * 180) + (outputCount * 34) + 10 + inputCount) * dynamicFeePerByte;
+  selectedFeePerByte,
+}) => ((inputCount * 180) + (outputCount * 34) + 10 + inputCount) * selectedFeePerByte;
 
 /**
  * Retrieves unspent tx outputs of a BTC address from Blockchain.info API
@@ -112,7 +113,7 @@ export const create = ({
   passphrase,
   recipientId: recipientAddress,
   amount,
-  dynamicFeePerByte,
+  selectedFeePerByte,
   network,
   // eslint-disable-next-line max-statements
 }) => new Promise(async (resolve, reject) => {
@@ -121,7 +122,7 @@ export const create = ({
       ? networks.mainnet.code
       : networks.testnet.code);
     amount = Number(amount);
-    dynamicFeePerByte = Number(dynamicFeePerByte);
+    selectedFeePerByte = Number(selectedFeePerByte);
 
     const senderAddress = extractAddress(passphrase, config);
     const unspentTxOuts = await getUnspentTransactionOutputs(senderAddress, network);
@@ -130,7 +131,7 @@ export const create = ({
     const estimatedMinerFee = calculateTransactionFee({
       inputCount: unspentTxOuts.length,
       outputCount: 2,
-      dynamicFeePerByte,
+      selectedFeePerByte,
     });
 
     const estimatedTotal = amount + estimatedMinerFee;
@@ -172,7 +173,7 @@ export const create = ({
     const calculatedMinerFee = calculateTransactionFee({
       inputCount: txOutsToConsume.length,
       outputCount: 2,
-      dynamicFeePerByte,
+      selectedFeePerByte,
     });
 
     // Calculate total
@@ -210,20 +211,19 @@ const getUnspentTransactionOutputCountToConsume = (satoshiValue, unspentTransact
 };
 
 export const getTransactionFeeFromUnspentOutputs = ({
-  dynamicFeePerByte, satoshiValue, unspentTransactionOutputs,
+  selectedFeePerByte, satoshiValue, unspentTransactionOutputs,
 }) => {
   const feeInSatoshis = calculateTransactionFee({
     inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue, unspentTransactionOutputs),
     outputCount: 2,
-    dynamicFeePerByte,
+    selectedFeePerByte,
   });
-
 
   return calculateTransactionFee({
     inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue
       + feeInSatoshis, unspentTransactionOutputs),
     outputCount: 2,
-    dynamicFeePerByte,
+    selectedFeePerByte,
   });
 };
 
@@ -253,7 +253,7 @@ export const broadcast = (transactionHex, network) => new Promise(async (resolve
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
  */
-export const getDynamicBaseFees = () => new Promise(async (resolve, reject) => {
+export const getTransactionBaseFees = () => new Promise(async (resolve, reject) => {
   try {
     const config = getBtcConfig(0);
     const response = await popsicle.get(config.minerFeesURL)
@@ -279,22 +279,23 @@ export const getDynamicBaseFees = () => new Promise(async (resolve, reject) => {
  * @param {String} address - Account address
  * @param {Object} network - network configuration
  */
-export const getDynamicFee = async ({
-  account, network, txData, dynamicFeePerByte,
+export const getTransactionFee = async ({
+  account, network, txData, selectedPriority,
 }) => {
   const unspentTransactionOutputs = await getUnspentTransactionOutputs(
     account.address, network,
   );
 
-  const value = getTransactionFeeFromUnspentOutputs({
+  const value = fromRawLsk(getTransactionFeeFromUnspentOutputs({
     unspentTransactionOutputs,
     satoshiValue: txData.amount || 0,
-    dynamicFeePerByte: dynamicFeePerByte.value,
-  });
+    selectedFeePerByte: selectedPriority.value,
+  }));
 
   const feedback = txData.amount === 0
     ? '-'
     : `${(value ? '' : 'Invalid amount')}`;
+
   return {
     value,
     error: !!feedback,

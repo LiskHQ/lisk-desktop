@@ -6,8 +6,8 @@ import {
   create,
   broadcast,
   calculateMinTxFee,
-  getDynamicBaseFees,
-  getDynamicFee,
+  getTransactionBaseFees,
+  getTransactionFee,
 } from './transactions';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
@@ -208,9 +208,9 @@ describe('Utils: Transactions API', () => {
     });
   });
 
-  describe('getDynamicBaseFees', () => {
+  describe('getTransactionBaseFees', () => {
     it('calculates the estimated fees for a transaction', async () => {
-      const estimates = await getDynamicBaseFees(
+      const estimates = await getTransactionBaseFees(
       //   {
       //   ...testTx,
       //   senderPublicKey: accounts.genesis.publicKey,
@@ -222,15 +222,15 @@ describe('Utils: Transactions API', () => {
     });
   });
 
-  describe('getDynamicFee', () => {
+  describe('getTransactionFee', () => {
     it('returns the calculated tx fees for a selected processing speed', async () => {
-      const fees = await getDynamicFee({
+      const fees = await getTransactionFee({
         txData: {
           ...testTx,
           senderPublicKey: accounts.genesis.publicKey,
           txType: transactionTypes().transfer.key,
         },
-        dynamicFeePerByte: { value: 10, selectedIndex: 0 },
+        selectedPriority: { value: 10, selectedIndex: 0 },
       });
 
       expect(fees.value).toBeDefined();
@@ -238,28 +238,14 @@ describe('Utils: Transactions API', () => {
     });
 
     it('returns an error and appropriate feedback if the tx amount is empty', async () => {
-      const fees = await getDynamicFee({
+      const fees = await getTransactionFee({
         txData: {
           ...testTx,
           amount: '',
           senderPublicKey: accounts.genesis.publicKey,
           txType: transactionTypes().transfer.key,
         },
-        dynamicFeePerByte: { value: 10, selectedIndex: 0 },
-      });
-
-      expect(fees.value).toBeDefined();
-      expect(fees.error).toBeTruthy();
-    });
-
-    it('returns an error and appropriate feedback if it can not calculate the fee', async () => {
-      const fees = await getDynamicFee({
-        txData: {
-          ...testTx,
-          senderPublicKey: accounts.genesis.publicKey,
-          txType: transactionTypes().transfer.key,
-        },
-        dynamicFeePerByte: { value: NaN, selectedIndex: 0 },
+        selectedPriority: { value: 10, selectedIndex: 0 },
       });
 
       expect(fees.value).toBeDefined();

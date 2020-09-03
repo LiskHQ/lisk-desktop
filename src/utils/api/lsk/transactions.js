@@ -1,7 +1,7 @@
 import Lisk from '@liskhq/lisk-client';
 import { getAPIClient } from './network';
 import { getTimestampFromFirstBlock } from '../../datetime';
-import { toRawLsk } from '../../lsk';
+import { toRawLsk, fromRawLsk } from '../../lsk';
 import txFilters from '../../../constants/transactionFilters';
 // eslint-disable-next-line import/no-named-default
 import transactionTypes, { minFeePerByte } from '../../../constants/transactionTypes';
@@ -92,25 +92,6 @@ export const calculateMinTxFee = (
 };
 
 /**
- * Returns a dictionary of base fees for low, medium and high processing speeds
- *
- * @todo get from Lisk Ser
- * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
- * medium and high priority fee options
- */
-export const getDynamicBaseFees = () => (
-  new Promise(async (resolve) => {
-    const fee = 0.1;
-
-    // @todo use real fee estimates
-    resolve({
-      Low: fee,
-      Medium: fee * 2,
-      High: fee * 3,
-    });
-  }));
-
-/**
  * creates a new transaction
  * @param {Object} transaction
  * @param {string} transactionType
@@ -150,28 +131,51 @@ export const broadcast = (transaction, networkConfig) => new Promise(
 );
 
 /**
- * Returns the actual tx fee based on given tx details and selected processing speed
- * @param {String} address - Account address
- * @param {Object} network - network configuration
+ * Returns a dictionary of base fees for low, medium and high processing speeds
+ *
+ * @todo get from Lisk Ser
+ * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
+ * medium and high priority fee options
  */
-export const getDynamicFee = async ({
-  txData, dynamicFeePerByte,
+export const getTransactionBaseFees = () => (
+  new Promise(async (resolve) => {
+    const fee = 1e7;
+
+    // @todo use real fee estimates
+    resolve({
+      Low: fee,
+      Medium: fee * 2,
+      High: fee * 3,
+    });
+  }));
+
+/**
+ * Returns the actual tx fee based on given tx details and selected processing speed
+ * @param {String} txData - The transaction object
+ * @param {Object} selectedPriority - network configuration
+ */
+export const getTransactionFee = async ({
+  txData, selectedPriority,
 }) => {
   const { txType, ...data } = txData;
   const minFee = calculateMinTxFee(data, txType);
-  // Tie breaker is only meant for Medium and high processing speeds
-  const tieBreaker = dynamicFeePerByte.selectedIndex === 0
-    ? 0 : minFeePerByte * (dynamicFeePerByte.value) * Math.random();
+  const feePerByte = fromRawLsk(selectedPriority.value);
 
-  const value = minFee + dynamicFeePerByte.value * findTransactionSizeInBytes({
+  // Tie breaker is only meant for Medium and high processing speeds
+  const tieBreaker = selectedPriority.selectedIndex === 0
+    ? 0 : minFeePerByte * feePerByte * Math.random();
+
+  const value = minFee + feePerByte * findTransactionSizeInBytes({
     transaction: data, type: txType,
   }) + tieBreaker;
 
+  const roundedValue = parseFloat(Number(fromRawLsk(value)).toFixed(8));
   const feedback = data.amount === ''
     ? '-'
     : `${(value ? '' : 'Invalid amount')}`;
+
   return {
-    value,
+    value: roundedValue,
     error: !!feedback,
     feedback,
   };

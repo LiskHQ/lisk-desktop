@@ -4,6 +4,8 @@ import { tokenMap } from '../../../../constants/tokens';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 import i18n from '../../../../i18n';
+import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
+import { toRawLsk } from '../../../../utils/lsk';
 
 describe('Summary', () => {
   let wrapper;
@@ -137,11 +139,12 @@ describe('Summary', () => {
 
   it('should show props.fields.fee.value and use it in transactionCreated if props.token is not LSK', () => {
     const txFee = 12451;
+    const formattedtxFee = formatAmountBasedOnLocale({ value: txFee });
     wrapper.setProps({
       token: 'BTC',
       fields: {
         ...props.fields,
-        processingSpeed: {
+        selectedPriority: {
           value: txFee,
         },
         fee: {
@@ -151,10 +154,10 @@ describe('Summary', () => {
       },
       account: { },
     });
-    expect(wrapper.find('.fee-value')).toIncludeText(txFee);
+    expect(wrapper.find('.fee-value')).toIncludeText(formattedtxFee);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(props.transactionCreated).toBeCalledWith(expect.objectContaining({
-      fee: txFee,
+      fee: toRawLsk(txFee),
     }));
   });
 
