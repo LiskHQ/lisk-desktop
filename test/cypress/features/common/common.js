@@ -22,7 +22,7 @@ Given(/^I login$/, function () {
 
 Then(/^I enter ([^\s]+) passphrase of ([^\s]+)$/, function (passphraseType, accountName) {
   const passphrase = accounts[accountName][(passphraseType === 'second') ?  'secondPassphrase' : 'passphrase'];
-  cy.get(ss.passphraseInput).first().click({ force: false });
+  cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
     const passphraseWordsArray = passphrase.split(' ');
     cy.wrap($el).type(passphraseWordsArray[index]);
@@ -162,7 +162,7 @@ Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
 
 Then(/^I click on (.*?)$/, function (elementName) {
   cy.wait(100);
-  cy.get(ss[elementName]).eq(0).click({ force: false });
+  cy.get(ss[elementName]).eq(0).click();
 });
 
 Given(/^I click on (.*?)$/, function (elementName) {
