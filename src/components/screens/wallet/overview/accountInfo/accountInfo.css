@@ -118,8 +118,10 @@
       padding: 10px;
     }
 
-    & .verify {
-      padding: 9px 13px 6px;
+    & .hwWalletIcon {
+      width: 26px;
+      height: 26px;
+      margin: 6px;
     }
   }
 

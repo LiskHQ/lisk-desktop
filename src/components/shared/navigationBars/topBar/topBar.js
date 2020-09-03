@@ -224,7 +224,7 @@ class TopBar extends React.Component {
               />
             )}
           >
-            <p>{t(`Switch to ${darkMode ? 'light' : 'dark'} mode.`)}</p>
+            <p>{t(`${darkMode ? 'Disable' : 'Enable'} dark mode`)}</p>
           </Tooltip>
           {
             !isUserLogout ? (
@@ -239,7 +239,7 @@ class TopBar extends React.Component {
                   />
                 )}
               >
-                <p>{t(`Turn ${discreetMode ? 'off' : 'on'} discreet mode.`)}</p>
+                <p>{t(`${discreetMode ? 'Disable' : 'Enable'} discreet mode`)}</p>
               </Tooltip>
             ) : null
           }
