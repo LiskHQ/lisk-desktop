@@ -67,7 +67,7 @@ describe('actions: network.lsk', () => {
           nethash,
         },
       };
-      await networkSet(data)(dispatch);
+      networkSet(data)(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           name,
@@ -87,7 +87,7 @@ describe('actions: network.lsk', () => {
       const error = { };
       jest.spyOn(toast, 'error');
       getConstantsMock.mockRejectedValue(error);
-      await networkSet({ name, network: { name, nodeUrl } })(dispatch);
+      networkSet({ name, network: { name, nodeUrl } })(dispatch);
       expect(toast.error).toHaveBeenCalledWith('Unable to connect to the node, no response from the server.');
     });
 
@@ -96,7 +96,7 @@ describe('actions: network.lsk', () => {
       const error = { message: 'Custom error message' };
       getConstantsMock.mockRejectedValue(error);
       jest.spyOn(toast, 'error');
-      await networkSet({ name, network: { name, nodeUrl } })(dispatch);
+      networkSet({ name, network: { name, nodeUrl } })(dispatch);
       expect(toast.error).toHaveBeenCalledWith('Unable to connect to the node, Error: Custom error message');
     });
   });
