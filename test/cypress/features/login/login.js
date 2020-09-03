@@ -34,24 +34,24 @@ Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
 Given(/^I choose ([^\s]+)$/, function (networkName) {
   switch (networkName) {
     case 'mainnet':
-      cy.get(ss.networkDropdown).click();
-      cy.get(ss.networkOptions).eq(0).click();
+      cy.get(ss.networkDropdown).click({ force: false });
+      cy.get(ss.networkOptions).eq(0).click({ force: false });
       break;
     case 'testnet':
-      cy.get(ss.networkDropdown).click();
-      cy.get(ss.networkOptions).eq(1).click();
+      cy.get(ss.networkDropdown).click({ force: false });
+      cy.get(ss.networkOptions).eq(1).click({ force: false });
       break;
     case 'devnet':
-      cy.get(ss.networkDropdown).click();
-      cy.get(ss.networkOptions).eq(2).click();
+      cy.get(ss.networkDropdown).click({ force: false });
+      cy.get(ss.networkOptions).eq(2).click({ force: false });
       cy.get(ss.addressInput).clear().type(networks.devnet.node);
-      cy.get(ss.connectButton).click();
+      cy.get(ss.connectButton).click({ force: false });
       break;
     case 'invalid':
-      cy.get(ss.networkDropdown).click();
-      cy.get(ss.networkOptions).eq(2).click();
+      cy.get(ss.networkDropdown).click({ force: false });
+      cy.get(ss.networkOptions).eq(2).click({ force: false });
       cy.get(ss.addressInput).type('http://silk.road');
-      cy.get(ss.connectButton).click();
+      cy.get(ss.connectButton).click({ force: false });
       break;
     default:
       throw new Error(`Network should be one of : mainnet , testnet, devnet, invalid . Was: ${networkName}`);
