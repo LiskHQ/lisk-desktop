@@ -96,8 +96,8 @@ class Tooltip extends React.Component {
           tooltip,
           indent && styles.indent,
           'tooltip-window',
-          tooltipClassName,
           styles[size],
+          tooltipClassName,
         ].join(' ')}
         >
           <span className={`${styles.tooltipArrow} tooltip-arrow`}>

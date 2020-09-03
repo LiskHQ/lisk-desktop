@@ -13,6 +13,7 @@ import { PrimaryButton } from '../../../toolbox/buttons';
 import { isEmpty } from '../../../../utils/helpers';
 import { selectSearchParamValue } from '../../../../utils/searchParams';
 import AccountVisual from '../../../toolbox/accountVisual';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 import regex from '../../../../utils/regex';
 
 /**
@@ -67,7 +68,7 @@ const Toggle = ({
   );
 };
 
-const TokenSelector = ({ token, history }) => {
+const TokenSelector = ({ token, history, t }) => {
   const dispatch = useDispatch();
   const activeToken = useSelector(state => state.settings.token.active);
 
@@ -82,11 +83,20 @@ const TokenSelector = ({ token, history }) => {
   };
 
   return (
-    <Icon
-      name={`${token.toLowerCase()}Icon`}
-      className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.disabled}`}
-      onClick={activateToken}
-    />
+    <Tooltip
+      className={styles.tooltipWrapper}
+      size="maxContent"
+      position="bottom"
+      content={(
+        <Icon
+          name={`${token.toLowerCase()}Icon`}
+          className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.disabled}`}
+          onClick={activateToken}
+        />
+      )}
+    >
+      <p>{t(`${token} wallet`)}</p>
+    </Tooltip>
   );
 };
 
@@ -117,6 +127,7 @@ class TopBar extends React.Component {
       history,
       network,
       token,
+      settings: { darkMode, discreetMode, sideBarExpanded },
       // resetTimer,
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
@@ -134,57 +145,102 @@ class TopBar extends React.Component {
             account={account}
             history={history}
           />
-          <Toggle
-            setting="sideBarExpanded"
-            icons={['toggleSidebarActive', 'toggleSidebar']}
-          />
-          <DialogLink component="bookmarks" className={`${styles.toggle} bookmark-list-toggle`}>
-            <Icon name="bookmark" className={styles.bookmarksIcon} />
-          </DialogLink>
-          <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
-            <span className={relevantSearchParam ? `${styles.searchContainer} ${styles.searchContainerParam}` : styles.searchContainer}>
-              <Icon name={relevantSearchParam ? 'search' : 'searchInput'} className="search-icon" />
-              {
-                relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
-                  && (
-                  <AccountVisual
-                    className={styles.accountVisual}
-                    size={18}
-                    address={relevantSearchParamValue}
-                  />
-                  )
-              }
-              {relevantSearchParamValue
-                && (
-                  <>
-                    <div className="hideOnLargeViewPort">
-                      <span className={styles.searchedValue}>
-                        {relevantSearchParamValue.replace(regex.searchbar, '$1...')}
-                      </span>
-                    </div>
-                    <div className="showOnLargeViewPort">
-                      <span className={styles.searchedValue}>
-                        {relevantSearchParamValue}
-                      </span>
-                    </div>
-                  </>
-                )}
-            </span>
-          </DialogLink>
+          <Tooltip
+            className={styles.tooltipWrapper}
+            size="maxContent"
+            position="bottom"
+            content={(
+              <Toggle
+                setting="sideBarExpanded"
+                icons={['toggleSidebarActive', 'toggleSidebar']}
+              />
+            )}
+          >
+            <p>{t(`${sideBarExpanded ? 'Collapse' : 'Expand'} sidebar`)}</p>
+          </Tooltip>
+          <Tooltip
+            className={styles.tooltipWrapper}
+            size="maxContent"
+            position="bottom"
+            content={(
+              <DialogLink component="bookmarks" className={`${styles.toggle} bookmark-list-toggle`}>
+                <Icon name="bookmark" className={styles.bookmarksIcon} />
+              </DialogLink>
+            )}
+          >
+            <p>{t('Bookmarks')}</p>
+          </Tooltip>
+          <Tooltip
+            className={styles.tooltipWrapper}
+            size="maxContent"
+            position="bottom"
+            content={(
+              <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
+                <span className={relevantSearchParam ? `${styles.searchContainer} ${styles.searchContainerParam}` : styles.searchContainer}>
+                  <Icon name={relevantSearchParam ? 'search' : 'searchInput'} className="search-icon" />
+                  {
+                    relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
+                      && (
+                      <AccountVisual
+                        className={styles.accountVisual}
+                        size={18}
+                        address={relevantSearchParamValue}
+                      />
+                      )
+                  }
+                  {relevantSearchParamValue
+                    && (
+                      <>
+                        <div className="hideOnLargeViewPort">
+                          <span className={styles.searchedValue}>
+                            {relevantSearchParamValue.replace(regex.searchbar, '$1...')}
+                          </span>
+                        </div>
+                        <div className="showOnLargeViewPort">
+                          <span className={styles.searchedValue}>
+                            {relevantSearchParamValue}
+                          </span>
+                        </div>
+                      </>
+                    )}
+                </span>
+              </DialogLink>
+            )}
+          >
+            <p>{t('Search...')}</p>
+          </Tooltip>
         </div>
         <div className={styles.group}>
-          { !isUserLogout ? <TokenSelector token="LSK" history={history} /> : null }
-          { !isUserLogout && token.list.BTC ? <TokenSelector token="BTC" history={history} /> : null }
-          <Toggle
-            setting="darkMode"
-            icons={['lightMode', 'darkMode']}
-          />
+          { !isUserLogout ? <TokenSelector token="LSK" history={history} t={t} /> : null }
+          { !isUserLogout && token.list.BTC ? <TokenSelector token="BTC" history={history} t={t} /> : null }
+          <Tooltip
+            className={styles.tooltipWrapper}
+            size="maxContent"
+            position="bottom"
+            content={(
+              <Toggle
+                setting="darkMode"
+                icons={['lightMode', 'darkMode']}
+              />
+            )}
+          >
+            <p>{t(`${darkMode ? 'Disable' : 'Enable'} dark mode`)}</p>
+          </Tooltip>
           {
             !isUserLogout ? (
-              <Toggle
-                setting="discreetMode"
-                icons={['discreetModeActive', 'discreetMode']}
-              />
+              <Tooltip
+                className={styles.tooltipWrapper}
+                size="maxContent"
+                position="bottom"
+                content={(
+                  <Toggle
+                    setting="discreetMode"
+                    icons={['discreetModeActive', 'discreetMode']}
+                  />
+                )}
+              >
+                <p>{t(`${discreetMode ? 'Disable' : 'Enable'} discreet mode`)}</p>
+              </Tooltip>
             ) : null
           }
           <Network

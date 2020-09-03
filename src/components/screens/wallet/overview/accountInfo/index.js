@@ -39,21 +39,31 @@ const AccountInfo = ({
       </div>
       <footer>
         <div className={styles.helperIcon}>
-          <CopyToClipboard
-            value={address}
-            type="icon"
-            copyClassName={styles.copyIcon}
-            className={styles.copyIcon}
-          />
+          <Tooltip
+            className={styles.tooltipWrapper}
+            position="bottom"
+            size="maxContent"
+            content={(
+              <CopyToClipboard
+                value={address}
+                type="icon"
+                copyClassName={styles.copyIcon}
+                className={styles.copyIcon}
+              />
+            )}
+          >
+            <p>{t('Copy address')}</p>
+          </Tooltip>
         </div>
         <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
           {
           host === address ? (
             <Tooltip
+              className={styles.tooltipWrapper}
               position="bottom"
-              size="s"
+              size="maxContent"
               content={(
-                <DialogLink component="request" className={styles.dialogLink}>
+                <DialogLink component="request">
                   <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
                 </DialogLink>
               )}
@@ -62,6 +72,7 @@ const AccountInfo = ({
             </Tooltip>
           ) : (
             <Tooltip
+              className={styles.tooltipWrapper}
               position="bottom"
               size="s"
               title={t('Scan address')}
@@ -74,27 +85,36 @@ const AccountInfo = ({
         {
           host !== address ? (
             <div className={styles.helperIcon}>
-              <DialogLink
-                component="addBookmark"
-                data={delegate ? {
-                  formAddress: address,
-                  label: delegate.username,
-                  isDelegate: true,
-                } : {
-                  formAddress: address,
-                  isDelegate: false,
-                  label: bookmark ? bookmark.title : '',
-                }}
+              <Tooltip
+                className={styles.tooltipWrapper}
+                position="bottom"
+                size="maxContent"
+                content={(
+                  <DialogLink
+                    component="addBookmark"
+                    data={delegate ? {
+                      formAddress: address,
+                      label: delegate.username,
+                      isDelegate: true,
+                    } : {
+                      formAddress: address,
+                      isDelegate: false,
+                      label: bookmark ? bookmark.title : '',
+                    }}
+                  >
+                    <BookmarkIcon bookmark={bookmark} />
+                  </DialogLink>
+                )}
               >
-                <BookmarkIcon bookmark={bookmark} />
-              </DialogLink>
+                <p>{t('Add to bookmarks')}</p>
+              </Tooltip>
             </div>
           ) : null
         }
         {
           hwInfo && !isEmpty(hwInfo) && host === address && (
             <div
-              className={`${styles.helperIcon} verify-address`}
+              className={`${styles.helperIcon} verify-address ${styles.tooltipWrapper}`}
               onClick={() => getAddress({
                 deviceId: hwInfo.deviceId,
                 index: hwInfo.derivationIndex,
@@ -102,10 +122,10 @@ const AccountInfo = ({
               })}
             >
               <Tooltip
-                className={styles.verify}
+                className={styles.tooltipWrapper}
                 position="bottom"
                 title={t('Verify address')}
-                content={<Icon name="verifyWalletAddress" className={styles.qrCodeIcon} />}
+                content={<Icon name="verifyWalletAddress" className={styles.hwWalletIcon} />}
               >
                 <span>{t('Verify the address in your hardware wallet device.')}</span>
               </Tooltip>
