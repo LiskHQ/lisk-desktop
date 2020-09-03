@@ -19,6 +19,6 @@ export default [
   offlineMiddleware,
   settingsMiddleware,
   socketMiddleware,
-  thunk,
   votingMiddleware,
+  thunk,
 ];
