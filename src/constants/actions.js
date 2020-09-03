@@ -28,6 +28,7 @@ const actionTypes = {
   liskAPIClientUpdate: 'LISK_API_CLIENT_UPDATE',
   loadingFinished: 'LOADING_FINISHED',
   loadingStarted: 'LOADING_STARTED',
+  nodeDefined: 'NODE_DEFINED',
   networkSet: 'NETWORK_SET',
   serviceUrlSet: 'SERVICE_URL_SET',
   networkStatusUpdated: 'NETWORK_STATUS_UPDATED',
