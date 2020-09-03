@@ -17,7 +17,6 @@ const actionTypes = {
   delegateRetrieved: 'DELEGATE_RETRIEVED',
   delegateRetrieving: 'DELEGATE_RETRIEVING',
   delegatesAdded: 'DELEGATES_ADDED',
-  dynamicFeesRetrieved: 'DYNAMIC_FEES_RETRIEVED',
   bookmarksRetrieved: 'BOOKMARK_RETRIEVED',
   bookmarkAdded: 'BOOKMARK_ADDED',
   bookmarkRemoved: 'BOOKMARK_REMOVED',

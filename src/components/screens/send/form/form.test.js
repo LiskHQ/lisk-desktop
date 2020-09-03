@@ -93,7 +93,6 @@ describe('Form', () => {
     act(() => { wrapper.update(); });
     await flushPromises();
 
-    // console.log(wrapper.debug());
     expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     wrapper.find('button.btn-submit').simulate('click');
     expect(props.nextStep).toHaveBeenCalled();

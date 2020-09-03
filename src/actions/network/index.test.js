@@ -18,7 +18,7 @@ describe('actions: network', () => {
   describe('networkSet', () => {
     it('should call lsk networkSet action', async () => {
       const { name } = networks.testnet;
-      await networkSet({ name })(dispatch);
+      await (await networkSet({ name }))(dispatch);
       expect(lskNetworkActions.networkSet).toHaveBeenCalled();
     });
   });

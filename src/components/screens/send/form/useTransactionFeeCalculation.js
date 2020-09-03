@@ -1,10 +1,13 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
-  getDynamicFee,
+  getTransactionFee,
 } from '../../../../utils/api/transactions';
+import { toRawLsk } from '../../../../utils/lsk';
 
-const useDynamicFeeCalculation = (dynamicFeePerByte, txData, token, account) => {
+const useTransactionFeeCalculation = ({
+  selectedPriority, txData, token, account,
+}) => {
   const network = useSelector(state => state.network);
 
   const initialFee = {
@@ -20,28 +23,28 @@ const useDynamicFeeCalculation = (dynamicFeePerByte, txData, token, account) => 
   const [fee, setFee] = useState(initialFee);
   const [maxAmount, setMaxAmount] = useState(initialMaxAmount);
 
-  const setDynamicFee = async (param, name) => {
-    const res = await getDynamicFee(param);
+  const setFeeState = async (param, name) => {
+    const res = await getTransactionFee(param);
     if (name === 'fee') setFee(res);
     else {
       setMaxAmount({
         ...res,
-        value: account.balance - res.value,
+        value: account.balance - toRawLsk(res.value),
       });
     }
   };
 
   useEffect(() => {
-    setDynamicFee({
-      token, account, network, txData, dynamicFeePerByte,
+    setFeeState({
+      token, account, network, txData, selectedPriority,
     }, 'fee');
 
-    setDynamicFee({
-      token, account, network, txData: { ...txData, amount: account.balance }, dynamicFeePerByte,
+    setFeeState({
+      token, account, network, txData: { ...txData, amount: account.balance }, selectedPriority,
     }, 'maxAmount');
-  }, [txData.amount, txData.data, txData.recipient, dynamicFeePerByte.selectedIndex]);
+  }, [txData.amount, txData.data, txData.recipient, selectedPriority.selectedIndex]);
 
   return [fee, maxAmount];
 };
 
-export default useDynamicFeeCalculation;
+export default useTransactionFeeCalculation;

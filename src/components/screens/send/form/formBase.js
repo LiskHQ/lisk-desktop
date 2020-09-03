@@ -22,8 +22,6 @@ const FormBase = ({
     error, required, value, isLoading,
   }) => error || (required && value === '') || isLoading);
 
-  // @todo Add processing speed for LSK and BTC.
-
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
