@@ -5,7 +5,7 @@ import { extractAddress } from '../utils/account';
 import { getAPIClient } from '../utils/api/network';
 import { getAccount } from '../utils/api/account';
 import { setSecondPassphrase } from '../utils/api/lsk/account';
-import { getConnectionErrorMessage } from './network/lsk';
+import { getConnectionErrorMessage } from '../utils/getNetwork';
 import { loginType } from '../constants/hwConstants';
 import { networkStatusUpdated } from './network';
 import actionTypes from '../constants/actions';
