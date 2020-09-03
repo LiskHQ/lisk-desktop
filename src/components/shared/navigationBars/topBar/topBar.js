@@ -239,7 +239,7 @@ class TopBar extends React.Component {
                   />
                 )}
               >
-                <p>{t(`Turn ${discreetMode ? 'off' : 'on'} dicreet mode.`)}</p>
+                <p>{t(`Turn ${discreetMode ? 'off' : 'on'} discreet mode.`)}</p>
               </Tooltip>
             ) : null
           }
