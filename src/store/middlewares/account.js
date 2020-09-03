@@ -179,7 +179,7 @@ const autoLogInIfNecessary = async (store) => {
     showNetwork, statistics, statisticsRequest, statisticsFollowingDay,
   } = store.getState().settings;
   const loginNetwork = checkNetworkToConnect(showNetwork);
-
+  console.log('middlewares/account autoLogInIfNecessary', loginNetwork);
   store.dispatch(await networkSet(loginNetwork));
   store.dispatch(networkStatusUpdated({ online: true }));
 

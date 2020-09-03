@@ -54,6 +54,7 @@ const getNetworkInfo = async nodeUrl => (
 );
 
 export const networkSet = data => async (dispatch) => {
+  console.log('actions/network/lsk.js networkSet action', data);
   const nodeUrl = data.name === networks.customNode.name
     ? data.network.address
     : networks[data.name.toLowerCase()].nodes[0];

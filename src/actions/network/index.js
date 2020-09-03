@@ -4,6 +4,7 @@ import actionTypes from '../../constants/actions';
 
 export const networkSet = data =>
   async (dispatch) => {
+    console.log('actions/network/index.js networkSet action', data);
     [
       lskNetworkSet,
       // here is the place to add a new token
