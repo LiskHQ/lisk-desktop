@@ -169,35 +169,37 @@ export const getBalanceData = ({
 }) => {
   const data = transactions
     .sort((a, b) => (b.timestamp - a.timestamp))
-    .reduce(({ allTransactions, dateSelectedTransaction }, item, index) => {
+    .reduce(({ allTransactions, graphTransactions }, item, index) => {
       const date = moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD');
       const tx = transactions[index - 1];
       const txValue = tx ? parseFloat(fromRawLsk(getTxValue(tx, address))) : 0;
       const lastBalance = allTransactions[allTransactions.length - 1]
         ? allTransactions[allTransactions.length - 1].y
         : parseFloat(fromRawLsk(balance));
-      const graphTransactionData = {
+      const transactionData = {
         x: moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD'),
         y: lastBalance - txValue,
       };
 
-      allTransactions.push(graphTransactionData);
+      allTransactions.push(transactionData);
 
-      if (Object.keys(dateSelectedTransaction).length === 0) {
-        dateSelectedTransaction[date] = graphTransactionData;
-      } else if (Object.keys(dateSelectedTransaction)[0] !== date) {
-        dateSelectedTransaction[date] = graphTransactionData;
+      // Pick up latest transaction for the latest day
+      if (Object.keys(graphTransactions).length === 0) {
+        graphTransactions[date] = transactionData;
+      // Pick up earliest transactions for the other days
+      } else if (Object.keys(graphTransactions)[0] !== date) {
+        graphTransactions[date] = transactionData;
       }
 
       return {
         allTransactions,
-        dateSelectedTransaction,
+        graphTransactions,
       };
-    }, { allTransactions: [], dateSelectedTransaction: {} });
+    }, { allTransactions: [], graphTransactions: {} });
 
   return {
     datasets: [{
-      data: Object.values(data.dateSelectedTransaction).reverse(),
+      data: Object.values(data.graphTransactions).reverse(),
       borderColor: styles.borderColor[token],
       pointBorderColor: styles.borderColor[token],
     }],
