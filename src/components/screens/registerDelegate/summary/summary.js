@@ -20,15 +20,16 @@ class Summary extends React.Component {
       nextStep,
       nickname,
       network,
+      fee,
     } = this.props;
 
     const data = {
       account,
       username: nickname,
       passphrase: account.passphrase,
-      // @todo add correct fee here
-      fee: 26e8,
+      fee,
       network,
+      nonce: account.nonce,
     };
 
     const [error, tx] = await to(
@@ -45,6 +46,7 @@ class Summary extends React.Component {
       account,
       nickname,
       prevStep,
+      fee,
       t,
     } = this.props;
 
@@ -64,7 +66,7 @@ class Summary extends React.Component {
         account={account}
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}
-        fee={25}
+        fee={fee}
         classNames={`${styles.box} ${styles.summaryContainer}`}
       >
         <section className="summary-container">
