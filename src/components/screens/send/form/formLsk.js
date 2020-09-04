@@ -34,6 +34,7 @@ const FormLsk = (props) => {
     selectedPriority,
     token,
     account,
+    priorityOptions,
     txData: {
       amount: toRawLsk(amount.value),
       txType,
