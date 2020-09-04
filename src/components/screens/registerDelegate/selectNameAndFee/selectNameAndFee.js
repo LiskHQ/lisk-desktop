@@ -9,7 +9,7 @@ import { fromRawLsk } from '../../../../utils/lsk';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import regex from '../../../../utils/regex';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
-import styles from './selectName.css';
+import styles from './selectNameAndFee.css';
 import TransactionPriority from '../../../shared/transactionPriority/transactionPriority';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { tokenMap } from '../../../../constants/tokens';
