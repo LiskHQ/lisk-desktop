@@ -1,7 +1,7 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
 import { mount } from 'enzyme';
-import SelectName from './SelectName';
+import SelectName from './selectNameAndFee';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import networks from '../../../../constants/networks';
 import accounts from '../../../../../test/constants/accounts';

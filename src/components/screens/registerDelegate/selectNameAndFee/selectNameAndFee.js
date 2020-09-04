@@ -20,7 +20,7 @@ const token = tokenMap.LSK.key;
 const txType = transactionTypes().registerDelegate.key;
 
 // eslint-disable-next-line max-statements
-const SelectName = ({ account, ...props }) => {
+const SelectNameAndFee = ({ account, ...props }) => {
   const timeout = useRef();
 
   const [state, _setState] = useState({
@@ -202,4 +202,4 @@ const SelectName = ({ account, ...props }) => {
 };
 
 
-export default SelectName;
+export default SelectNameAndFee;
