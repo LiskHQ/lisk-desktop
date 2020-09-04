@@ -20,7 +20,7 @@ const FormBtc = (props) => {
   ] = useTransactionPriority(token);
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
-  const [fee, maxAmount] = useTransactionFeeCalculation({
+  const { fee, maxAmount, minFee } = useTransactionFeeCalculation({
     selectedPriority,
     txData: {
       amount: toRawLsk(amount.value), txType, recipient: recipient.value,
@@ -47,6 +47,7 @@ const FormBtc = (props) => {
       <TransactionPriority
         token={token}
         fee={fee}
+        minFee={minFee.value}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}

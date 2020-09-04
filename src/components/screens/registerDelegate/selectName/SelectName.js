@@ -5,7 +5,7 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
+import { fromRawLsk } from '../../../../utils/lsk';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import regex from '../../../../utils/regex';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
@@ -34,10 +34,11 @@ const SelectName = ({ account, ...props }) => {
     selectedPriority, selectTransactionPriority, priorityOptions,
   ] = useTransactionPriority(token);
 
-  const [fee] = useTransactionFeeCalculation({
+  const { fee, minFee } = useTransactionFeeCalculation({
     selectedPriority,
     token,
     account,
+    priorityOptions,
     txData: {
       txType,
       nonce: account.nonce,
@@ -180,6 +181,7 @@ const SelectName = ({ account, ...props }) => {
       <TransactionPriority
         token={token}
         fee={fee}
+        minFee={minFee.value}
         customFee={state.customFee}
         setCustomFee={changeCustomFee}
         priorityOptions={priorityOptions}

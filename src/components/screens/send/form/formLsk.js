@@ -30,7 +30,7 @@ const FormLsk = (props) => {
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
-  const [fee, maxAmount] = useTransactionFeeCalculation({
+  const { fee, maxAmount, minFee } = useTransactionFeeCalculation({
     selectedPriority,
     token,
     account,
@@ -105,6 +105,7 @@ const FormLsk = (props) => {
       <TransactionPriority
         token={token}
         fee={fee}
+        minFee={minFee.value}
         customFee={customFee}
         setCustomFee={changeCustomFee}
         priorityOptions={priorityOptions}
