@@ -161,7 +161,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
             <p>{t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}</p>
           </Tooltip>
         </label>
-        <div>
+        <div className={styles.inputContainer}>
           <Input
             data-name="delegate-nickname"
             autoComplete="off"
@@ -177,17 +177,17 @@ const SelectNameAndFee = ({ account, ...props }) => {
             feedback={state.error}
           />
         </div>
+        <TransactionPriority
+          token={token}
+          fee={fee}
+          minFee={minFee.value}
+          customFee={state.customFee}
+          setCustomFee={changeCustomFee}
+          priorityOptions={priorityOptions}
+          selectedPriority={selectedPriority.selectedIndex}
+          setSelectedPriority={selectTransactionPriority}
+        />
       </BoxContent>
-      <TransactionPriority
-        token={token}
-        fee={fee}
-        minFee={minFee.value}
-        customFee={state.customFee}
-        setCustomFee={changeCustomFee}
-        priorityOptions={priorityOptions}
-        selectedPriority={selectedPriority.selectedIndex}
-        setSelectedPriority={selectTransactionPriority}
-      />
       <BoxFooter>
         <PrimaryButton
           onClick={() => nextStep({ nickname: state.nickname })}
