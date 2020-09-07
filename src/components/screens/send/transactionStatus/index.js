@@ -20,7 +20,7 @@ const mapDispatchToProps = {
 
 const apis = {
   recipientAccount: {
-    apiUtil: (liskAPIClient, params) => getAccount({ liskAPIClient, ...params }),
+    apiUtil: (network, params) => getAccount({ network, ...params }),
   },
 };
 
