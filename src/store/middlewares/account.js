@@ -7,6 +7,7 @@ import {
   emptyTransactionsData,
   updateTransactions,
 } from '../../actions/transactions';
+import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
 import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
@@ -20,6 +21,7 @@ import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import { txAdapter } from '../../utils/api/lsk/adapters';
+import { tokenMap } from '../../constants/tokens';
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -209,6 +211,7 @@ const accountMiddleware = store => next => (action) => {
       votePlaced(store, action);
       break;
     case actionTypes.accountLoggedOut:
+      store.dispatch(settingsUpdated({ token: { active: tokenMap.LSK.key } }));
       store.dispatch(emptyTransactionsData());
       break;
     case actionTypes.settingsUpdated: {
