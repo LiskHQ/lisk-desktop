@@ -22,7 +22,9 @@ describe('Delegate Registration Summary', () => {
       balance: 11000,
       secondPublicKey: '',
       isDelegate: false,
+      nonce: '1',
     },
+    fee: 10,
     prevState: {},
     nickname: 'mydelegate',
     nextStep: jest.fn(),
@@ -43,7 +45,6 @@ describe('Delegate Registration Summary', () => {
   beforeEach(() => {
     Lisk.transaction.registerDelegate = jest.fn();
     Lisk.transaction.registerDelegate.mockResolvedValue(response);
-
     wrapper = mount(<Summary {...props} />);
   });
 

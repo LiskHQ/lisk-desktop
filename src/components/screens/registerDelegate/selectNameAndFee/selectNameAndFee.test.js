@@ -1,13 +1,33 @@
 import React from 'react';
-import debounce from 'lodash.debounce';
 import { mount } from 'enzyme';
-import SelectName from './selectNameAndFee';
+import SelectNameAndFee from './selectNameAndFee';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import networks from '../../../../constants/networks';
 import accounts from '../../../../../test/constants/accounts';
+import { getTransactionBaseFees, getTransactionFee } from '../../../../utils/api/lsk/transactions';
+import { fromRawLsk } from '../../../../utils/lsk';
+import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
-jest.mock('lodash.debounce');
 jest.mock('../../../../utils/api/lsk/network');
+jest.mock('../../../../utils/api/lsk/transactions');
+
+const transactionBaseFees = {
+  Low: 156,
+  Medium: 100,
+  High: 51,
+};
+
+const mockFeeFactor = 100;
+getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
+getTransactionFee.mockImplementation((params) => {
+  const selectedTransactionPriority = params.selectedPriority.selectedIndex;
+  const fees = fromRawLsk(
+    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
+  );
+  return ({
+    value: fees, feedback: '', error: false,
+  });
+});
 
 describe('RegisterDelegate', () => {
   let wrapper;
@@ -38,9 +58,8 @@ describe('RegisterDelegate', () => {
 
     apiClient.delegates.get.mockResolvedValue({ data: [] });
     getAPIClient.mockReturnValue(apiClient);
-    debounce.mockImplementation(fn => fn);
 
-    wrapper = mount(<SelectName {...props} />);
+    wrapper = mount(<SelectNameAndFee {...props} />);
   });
 
   afterEach(() => {
@@ -55,14 +74,15 @@ describe('RegisterDelegate', () => {
     expect(wrapper).toContainMatchingElement('.confirm-btn');
   });
 
-  it('type a valid and unused nickname', () => {
+  it('type a valid and unused nickname', async () => {
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
-    wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate' } });
+    wrapper.find('input.select-name-input')
+      .simulate('change', { target: { value: 'mydelegate' } });
     jest.advanceTimersByTime(1000);
     expect(apiClient.delegates.get).toHaveBeenCalledTimes(1);
-    // TODO investigate why even when the state is update, the test fails - in PR #2199
-    wrapper.setState({ loading: false });
+    await flushPromises();
+    wrapper.update();
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
     wrapper.find('button.confirm-btn').simulate('click');
     expect(props.nextStep).toBeCalled();
@@ -86,13 +106,15 @@ describe('RegisterDelegate', () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
   });
 
-  it('disabled confirm button if nickname is longer than 20 chars', () => {
+  it('disabled confirm button if nickname is longer than 20 chars', async () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate' } });
-    // TODO investigate why even when the state is update, the test fails - in PR #2199
-    wrapper.setState({ loading: false });
+    jest.advanceTimersByTime(1000);
+    await flushPromises();
+    wrapper.update();
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
-    wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate_genesis_1023_gister_number_1' } });
+    wrapper.find('input.select-name-input')
+      .simulate('change', { target: { value: 'mydelegate_genesis_1023_gister_number_1' } });
     jest.advanceTimersByTime(1000);
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
   });

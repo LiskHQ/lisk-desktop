@@ -21,6 +21,9 @@ const txType = transactionTypes().registerDelegate.key;
 
 // eslint-disable-next-line max-statements
 const SelectNameAndFee = ({ account, ...props }) => {
+  const {
+    t, nextStep, network, prevState,
+  } = props;
   const timeout = useRef();
 
   const [state, _setState] = useState({
@@ -47,15 +50,11 @@ const SelectNameAndFee = ({ account, ...props }) => {
   });
 
   const setState = newState => _setState(
-    prevState => (
-      { ...prevState, ...newState }
+    _state => (
+      { ..._state, ...newState }
     ),
   );
 
-  const {
-    t, nextStep, network, prevState,
-  } = props;
-  const isBtnDisabled = !!state.error || state.nickname.length === 0 || state.loading;
 
   const getNicknameFromPrevState = () => {
     if (Object.entries(prevState).length) {
@@ -136,6 +135,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
     hasUserEnoughFunds();
   }, []);
 
+  const isBtnDisabled = !!state.error || state.nickname.length === 0 || state.loading;
   return (
     <Box width="medium" className={styles.box}>
       <BoxHeader>
