@@ -54,6 +54,7 @@ module.exports = {
     'src/actions/network/lsk.js',
     'src/actions/voting.js',
     'src/store/middlewares/login.js',
+    'src/store/middlewares/network.js',
     'src/store/index.js',
     'src/store/reducers/settings.js',
     'src/store/reducers/bookmarks.js',
