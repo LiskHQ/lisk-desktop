@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withRouter } from 'react-router';
 import Switcher from '../switcher';
 import styles from './tabsContainer.css';
+import { selectSearchParamValue } from '../../../utils/searchParams';
 
 class TabsContainer extends React.Component {
   constructor() {
@@ -12,13 +14,6 @@ class TabsContainer extends React.Component {
     };
 
     this.filterChildren = this.filterChildren.bind(this);
-    this.setTab = this.setTab.bind(this);
-  }
-
-  /* istanbul ignore next */
-  setTab({ target }) {
-    const activeTab = (target.dataset && target.dataset.value) || this.state.activeTab;
-    this.setState({ activeTab });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -28,23 +23,31 @@ class TabsContainer extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    const nextTab = selectSearchParamValue(nextProps.history.location.search, 'tab');
     const nextTabs = this.filterChildren(nextProps.children);
     const currentTabs = this.filterChildren(this.props.children);
+
     /* istanbul ignore next */
     if (nextTabs.length !== currentTabs.length) {
       const activeTab = (nextTabs.length > 1 && (this.props.activeTab || nextTabs[0].props.tabName)) || '';
       this.setState({ activeTab });
       return false;
     }
+
+    if (nextTab && nextTab !== this.state.activeTab && nextTab) {
+      this.setState({ activeTab: nextTab });
+    }
+
     return nextState.active !== this.state.activeTab;
   }
 
   componentDidMount() {
     const children = this.filterChildren(this.props.children);
+    const tab = selectSearchParamValue(this.props.history.location.search, 'tab');
 
     this.setState({
       activeTab: (React.Children.count(children) > 1
-        && (this.props.activeTab || children[0].props.tabName))
+        && (tab || this.props.activeTab || children[0].props.tabName))
         || '',
     });
   }
@@ -60,7 +63,6 @@ class TabsContainer extends React.Component {
             name: tab.props.tabName,
             value: tab.props.tabName,
           }))}
-          onClick={this.setTab}
           active={activeTab}
         />
         <div className={styles.contentHolder}>
@@ -86,4 +88,4 @@ TabsContainer.propTypes = {
   ]).isRequired,
 };
 
-export default TabsContainer;
+export default withRouter(TabsContainer);
