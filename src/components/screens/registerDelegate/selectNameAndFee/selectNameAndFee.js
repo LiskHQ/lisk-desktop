@@ -57,7 +57,6 @@ const SelectNameAndFee = ({ account, ...props }) => {
   } = props;
   const isBtnDisabled = !!state.error || state.nickname.length === 0 || state.loading;
 
-
   const getNicknameFromPrevState = () => {
     if (Object.entries(prevState).length) {
       setState({ nickname: prevState.nickname });
@@ -200,6 +199,5 @@ const SelectNameAndFee = ({ account, ...props }) => {
     </Box>
   );
 };
-
 
 export default SelectNameAndFee;
