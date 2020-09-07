@@ -8,7 +8,7 @@ describe('actions: network', () => {
   beforeEach(() => {
     jest.resetModules();
     dispatch = jest.fn();
-    jest.spyOn(lskNetworkActions, 'networkSet');
+    jest.spyOn(lskNetworkActions, 'lskNetworkSet');
   });
 
   afterEach(() => {
@@ -18,8 +18,8 @@ describe('actions: network', () => {
   describe('networkSet', () => {
     it('should call lsk networkSet action', async () => {
       const { name } = networks.testnet;
-      await (await networkSet({ name }))(dispatch);
-      expect(lskNetworkActions.networkSet).toHaveBeenCalled();
+      networkSet({ name })(dispatch);
+      expect(lskNetworkActions.lskNetworkSet).toHaveBeenCalled();
     });
   });
 
