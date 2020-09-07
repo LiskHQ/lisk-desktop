@@ -43,7 +43,6 @@ Switcher.propTypes = {
     value: PropTypes.string.isRequired,
     className: PropTypes.string,
   })),
-  onClick: PropTypes.func.isRequired,
   active: PropTypes.string.isRequired,
 };
 

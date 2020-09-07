@@ -34,7 +34,7 @@ class TabsContainer extends React.Component {
       return false;
     }
 
-    if (nextTab && nextTab !== this.state.activeTab && nextTab) {
+    if (nextTab && nextTab !== this.state.activeTab) {
       this.setState({ activeTab: nextTab });
     }
 
