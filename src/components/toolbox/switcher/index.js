@@ -13,7 +13,7 @@ const TabLink = withRouter(({
   };
 
   return (
-    <li onClick={onClick} ref={linkEl} className={className}>{ children }</li>
+    <li onClick={onClick} ref={linkEl} className={className} data-value={to}>{ children }</li>
   );
 });
 
@@ -27,7 +27,6 @@ const Switcher = ({ options, active }) => (
             tab.className,
           ].filter(Boolean).join(' ')}
           key={tab.value}
-          data-value={tab.value}
           to={tab.value}
         >
           {tab.name}
