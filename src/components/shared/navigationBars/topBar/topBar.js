@@ -15,6 +15,7 @@ import { selectSearchParamValue } from '../../../../utils/searchParams';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import regex from '../../../../utils/regex';
+import { tokenMap } from '../../../../constants/tokens';
 
 /**
  * Extracts only one search param out of the url that is relevant
@@ -95,7 +96,7 @@ const TokenSelector = ({ token, history, t }) => {
         />
       )}
     >
-      <p>{t(`${token} wallet`)}</p>
+      <p>{t(`${token === tokenMap.LSK.key ? 'Lisk' : 'Bitcoin'} wallet`)}</p>
     </Tooltip>
   );
 };
@@ -207,7 +208,7 @@ class TopBar extends React.Component {
               </DialogLink>
             )}
           >
-            <p>{t('Search...')}</p>
+            <p>{t('Search')}</p>
           </Tooltip>
         </div>
         <div className={styles.group}>
