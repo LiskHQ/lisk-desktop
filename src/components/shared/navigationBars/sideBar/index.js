@@ -65,7 +65,7 @@ const SingOut = ({ t, history }) => {
 
   return (
     <div className={styles.item}>
-      <span className={styles.holder} onClick={signOut}>
+      <span className={`${styles.holder} logoutBtn`} onClick={signOut}>
         <span className={styles.iconWrapper}>
           <Icon name="signOut" className={styles.icon} />
         </span>

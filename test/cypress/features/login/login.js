@@ -89,10 +89,23 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
   }
 });
 
+Given(/^I change active token to BTC$/, function (token) {
+  cy.get(ss.btcToken).click();
+});
+
+Given(/^I log out$/, function (token) {
+  cy.get(ss.logoutBtn).click();
+});
+
 Then(/^I should be connected to network ([^\s]+)$/, function (networkName) {
   cy.get(ss.networkStatus).contains(`Connected to:${networkName}`);
 });
 
 Then(/^I should see lisk monitor features$/, function () {
+  cy.get(ss.monitorVoting).should('have.length', 1);
   cy.get(ss.monitorTransactions).should('have.length', 1);
+  cy.get(ss.monitorNetwork).should('have.length', 1);
+  cy.get(ss.monitorBlocks).should('have.length', 1);
+  cy.get(ss.monitorAccounts).should('have.length', 1);
+  cy.get(ss.monitorDelegates).should('have.length', 1);
 });
