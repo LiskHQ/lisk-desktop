@@ -13,7 +13,7 @@ const TabLink = withRouter(({
   };
 
   return (
-    <li onClick={onClick} ref={linkEl} className={className} data-value={to}>{ children }</li>
+    <li onClick={onClick} ref={linkEl} className={className} data-id={to}>{ children }</li>
   );
 });
 
