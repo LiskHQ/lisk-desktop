@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Given } from 'cypress-cucumber-preprocessor/steps';
+import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import urls from '../../../constants/urls';
 import accounts from '../../../constants/accounts';
 import networks from '../../../constants/networks';
