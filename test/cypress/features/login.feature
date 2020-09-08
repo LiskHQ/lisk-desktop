@@ -61,7 +61,8 @@ Feature: Login
     Given I am on Login page
     When I choose testnet
     When I am on dashboard page
-    Given I change active token to BTC
+    And I change active token to BTC
+    And I log out
     Then I should see lisk monitor features
 
 
