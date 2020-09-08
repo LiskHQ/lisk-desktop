@@ -147,7 +147,9 @@ describe('Account middleware', () => {
 
     jest.advanceTimersByTime(7000);
     expect(transactionsActions.updateTransactions)
-      .toHaveBeenCalledWith({ address, filters: undefined, pendingTransactions: state.transactions.pending });
+      .toHaveBeenCalledWith({
+        address, filters: undefined, pendingTransactions: state.transactions.pending,
+      });
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confirmed does not contain recent transaction. Case with transactions address`, () => {
