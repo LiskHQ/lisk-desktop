@@ -12,14 +12,13 @@
 }
 
 .formSection {
-  padding: 0 !important;
+  padding: 0 var(--horizontal-padding-l);
 
   & .fieldGroup {
     align-items: flex-start;
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
-    padding: 0 var(--horizontal-padding-l);
   }
 
   & .fieldLabel {

@@ -9,7 +9,6 @@ import Spinner from '../../toolbox/spinner';
 import {
   formatAmountBasedOnLocale,
 } from '../../../utils/formattedNumber';
-import { fromRawLsk } from '../../../utils/lsk';
 
 const CUSTOM_FEE_INDEX = 3;
 
@@ -35,6 +34,7 @@ const TransactionPriority = ({
   selectedPriority,
   setSelectedPriority,
   fee,
+  minFee,
   customFee,
   setCustomFee,
 }) => {
@@ -76,7 +76,6 @@ const TransactionPriority = ({
 
   const isLoading = priorityOptions[0].value === 0;
   const inputValue = !isLoading && (customFee === 'undefined' ? fee.value : customFee);
-  const minTxFee = fromRawLsk(priorityOptions[0].value);
 
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} transaction-priority`}>
@@ -113,7 +112,7 @@ const TransactionPriority = ({
                 t(`
                   You can choose a high, medium, or low transaction priority, each requiring a 
                   corresponding transaction fee. Or you can pay any desired fee of no less than 
-                  ${minTxFee} ${token}. If you don't know which to choose, we recommend you choose 
+                  ${minFee} ${token}. If you don't know which to choose, we recommend you choose 
                   one of the provided options instead.
                 `)
               }
@@ -135,7 +134,7 @@ const TransactionPriority = ({
                 autoFocus
                 type="text"
                 size="m"
-                defaultValue={minTxFee}
+                defaultValue={minFee}
                 value={inputValue}
                 onChange={onInputChange}
                 onBlur={onInputBlur}
@@ -164,6 +163,7 @@ TransactionPriority.propTypes = {
   selectedPriority: PropTypes.number,
   setSelectedPriority: PropTypes.func,
   fee: PropTypes.number,
+  minFee: PropTypes.number,
 };
 
 export default TransactionPriority;

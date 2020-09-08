@@ -24,6 +24,10 @@
     margin-top: 25px;
   }
 
+  & .inputContainer {
+    margin-bottom: 16px;
+  }
+
   & > .link {
     @mixin contentLargest bold;
 

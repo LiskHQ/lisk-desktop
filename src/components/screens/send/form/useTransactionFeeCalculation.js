@@ -6,7 +6,7 @@ import {
 import { toRawLsk } from '../../../../utils/lsk';
 
 const useTransactionFeeCalculation = ({
-  selectedPriority, txData, token, account,
+  selectedPriority, txData, token, account, priorityOptions,
 }) => {
   const network = useSelector(state => state.network);
 
@@ -22,15 +22,18 @@ const useTransactionFeeCalculation = ({
   };
   const [fee, setFee] = useState(initialFee);
   const [maxAmount, setMaxAmount] = useState(initialMaxAmount);
+  const [minFee, setMinFee] = useState(initialFee);
 
   const setFeeState = async (param, name) => {
     const res = await getTransactionFee(param);
     if (name === 'fee') setFee(res);
-    else {
+    else if (name === 'maxAmount') {
       setMaxAmount({
         ...res,
         value: account.balance - toRawLsk(res.value),
       });
+    } else {
+      setMinFee(res);
     }
   };
 
@@ -42,9 +45,23 @@ const useTransactionFeeCalculation = ({
     setFeeState({
       token, account, network, txData: { ...txData, amount: account.balance }, selectedPriority,
     }, 'maxAmount');
-  }, [txData.amount, txData.data, txData.recipient, selectedPriority.selectedIndex]);
 
-  return [fee, maxAmount];
+    setFeeState({
+      token,
+      account,
+      network,
+      txData,
+      selectedPriority: priorityOptions[0],
+    }, 'minFee');
+  }, [
+    txData.amount,
+    txData.data,
+    txData.recipient,
+    selectedPriority.selectedIndex,
+    selectedPriority.value,
+  ]);
+
+  return { fee, maxAmount, minFee };
 };
 
 export default useTransactionFeeCalculation;
