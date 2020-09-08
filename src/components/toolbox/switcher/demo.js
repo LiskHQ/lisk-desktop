@@ -14,14 +14,17 @@ const SwitcherDemo = () => (
           options={[{
             name: 'Option 1',
             value: 'opt_1',
+            id: 'opt1',
           }, {
             name: 'Option 2',
             value: 'opt_2',
+            id: 'opt2',
           }, {
             name: 'Option 3',
             value: 'opt_3',
+            id: 'opt3',
           }]}
-          active="opt_1"
+          active="opt1"
         />
       </DemoRenderer>
     </MemoryRouter>

@@ -19,7 +19,7 @@ class TabsContainer extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   filterChildren(children) {
     const _children = (Array.isArray(children) && children.filter(c => c)) || [children];
-    return _children.filter(tab => !!tab.props.tabName);
+    return _children.filter(tab => !!tab.props.tabId);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -29,7 +29,7 @@ class TabsContainer extends React.Component {
 
     /* istanbul ignore next */
     if (nextTabs.length !== currentTabs.length) {
-      const activeTab = (nextTabs.length > 1 && (this.props.activeTab || nextTabs[0].props.tabName)) || '';
+      const activeTab = (nextTabs.length > 1 && (this.props.activeTab || nextTabs[0].props.tabId)) || '';
       this.setState({ activeTab });
       return false;
     }
@@ -47,7 +47,7 @@ class TabsContainer extends React.Component {
 
     this.setState({
       activeTab: (React.Children.count(children) > 1
-        && (tab || this.props.activeTab || children[0].props.tabName))
+        && (tab || this.props.activeTab || children[0].props.tabId))
         || '',
     });
   }
@@ -62,6 +62,7 @@ class TabsContainer extends React.Component {
           options={React.Children.map(children.filter(React.isValidElement), tab => ({
             name: tab.props.tabName,
             value: tab.props.tabName,
+            id: tab.props.tabId,
           }))}
           active={activeTab}
         />
@@ -69,7 +70,7 @@ class TabsContainer extends React.Component {
           {React.Children.map(children, tab => (
             React.isValidElement(tab)
             && (
-            <div className={`${tab.props.tabName === activeTab ? styles.active : ''}`}>
+            <div className={`${tab.props.tabId === activeTab ? styles.active : ''}`}>
               { tab }
             </div>
             )

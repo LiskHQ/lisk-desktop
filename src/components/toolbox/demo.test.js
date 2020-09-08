@@ -10,6 +10,6 @@ describe('ToolboxDemo', () => {
 
   it('Should render clickable tab', () => {
     const wrapper = mount(<ToolboxDemo />);
-    wrapper.find('li[data-value="opt_2"]').first().simulate('click');
+    wrapper.find('li[data-value="opt2"]').first().simulate('click');
   });
 });

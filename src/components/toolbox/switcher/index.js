@@ -23,11 +23,11 @@ const Switcher = ({ options, active }) => (
       {options.map(tab => (
         <TabLink
           className={[
-            tab.value === active && styles.active,
+            tab.id === active && styles.active,
             tab.className,
           ].filter(Boolean).join(' ')}
           key={tab.value}
-          to={tab.value}
+          to={tab.id}
         >
           {tab.name}
         </TabLink>
