@@ -18,14 +18,14 @@ import { splitVotesIntoRounds } from './voting';
  * getAccountsFromDevice - Function.
  * This function is used for retrieve the accounts from an hw device, using public keys.
  */
-const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) => {
+const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
   const accounts = [];
   let account = {};
   for (let index = 0; index === accounts.length; index++) {
     // eslint-disable-next-line no-await-in-loop
     const publicKey = await getPublicKey({ index, deviceId });
     // eslint-disable-next-line no-await-in-loop
-    account = await getAccount({ networkConfig, publicKey });
+    account = await getAccount({ network, publicKey });
     if (index === 0 || accounts[index - 1].balance) {
       accounts.push(account);
     }

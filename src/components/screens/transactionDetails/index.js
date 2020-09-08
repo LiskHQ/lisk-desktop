@@ -22,7 +22,7 @@ const apis = {
     getApiParams: (state, ownProps) => ({
       token: state.settings.token.active,
       id: parseSearchParams(ownProps.location.search).transactionId,
-      networkConfig: state.network,
+      network: state.network,
     }),
     transformResponse: response => response.data[0] || {},
     autoload: true,

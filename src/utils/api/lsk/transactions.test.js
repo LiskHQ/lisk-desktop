@@ -18,7 +18,7 @@ describe('Utils: Transactions API', () => {
   const id = '124701289470';
   const amount = '100000';
   const recipientId = '123L';
-  const networkConfig = {
+  const network = {
     name: networks.mainnet.name,
     networks: {
       LSK: {},
@@ -46,7 +46,7 @@ describe('Utils: Transactions API', () => {
 
   describe('getTransactions', () => {
     it('should call transactions.get for incoming promise', () => {
-      getTransactions({ networkConfig, address, filters: { direction: txFilters.incoming } });
+      getTransactions({ network, address, filters: { direction: txFilters.incoming } });
 
       expect(apiClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining({
         recipientId: address,

@@ -101,7 +101,7 @@ const apis = {
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
       address: selectSearchParamValue(props.history.location.search, 'address'),
-      networkConfig: state.network,
+      network: state.network,
     }),
     defaultData: [],
     defaultUrlSearchParams: {

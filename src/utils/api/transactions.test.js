@@ -9,7 +9,7 @@ describe('Utils: Transactions API', () => {
   const id = '124701289470';
   const amount = '100000';
   const recipientId = '123L';
-  const networkConfig = {
+  const network = {
     name: networks.mainnet.name,
     networks: {
       LSK: {},
@@ -37,7 +37,7 @@ describe('Utils: Transactions API', () => {
     it('should resolve getTransactions for specific token (BTC, LSK, ...) based on the address format ', async () => {
       const params = {
         address: recipientId,
-        networkConfig,
+        network,
       };
       liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
       await getTransactions(params);
@@ -51,7 +51,7 @@ describe('Utils: Transactions API', () => {
     it('should resolve getSingleTransaction for specific token (BTC, LSK, ...) based on the address format ', async () => {
       const params = {
         id,
-        networkConfig,
+        network,
       };
       liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
       await to(getSingleTransaction(params));

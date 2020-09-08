@@ -161,11 +161,11 @@ async function getAccounts(tokens, options) {
 }
 
 export const updateEnabledTokenAccount = token => async (dispatch, getState) => {
-  const { network: networkConfig, account } = getState();
+  const { network, account } = getState();
   if (token !== tokenMap.LSK.key) {
     const [error, result] = await to(getAccount({
       token,
-      networkConfig,
+      network,
       passphrase: account.passphrase,
     }));
     if (error) {

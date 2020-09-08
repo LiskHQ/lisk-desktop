@@ -42,8 +42,8 @@ export const create = (tokenType, data, transactionType) =>
   api[tokenType].transactions.create(data, transactionType);
 
 // istanbul ignore next
-export const broadcast = (tokenType, transaction, networkConfig) =>
-  api[tokenType].transactions.broadcast(transaction, networkConfig);
+export const broadcast = (tokenType, transaction, network) =>
+  api[tokenType].transactions.broadcast(transaction, network);
 
 export default {
   broadcast,

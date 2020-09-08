@@ -27,7 +27,7 @@ const apis = {
     getApiParams: (state, ownProps) => ({
       token: state.settings.token.active,
       address: ownProps.address,
-      networkConfig: state.network,
+      network: state.network,
       type: transactionTypes().registerDelegate.outgoingCode,
       limit: 1,
     }),

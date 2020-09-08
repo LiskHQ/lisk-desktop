@@ -30,9 +30,9 @@ describe('hwManager util', () => {
       accountApi.getAccount.mockResolvedValueOnce(accounts.empty_account);
 
       const device = { deviceId: '1234125125' };
-      const networkConfig = { name: 'Testnet', networks: {} };
+      const network = { name: 'Testnet', networks: {} };
 
-      const accountsOnDevice = await getAccountsFromDevice({ device, networkConfig });
+      const accountsOnDevice = await getAccountsFromDevice({ device, network });
 
       expect(accountsOnDevice).toEqual([accounts.genesis, accounts.empty_account]);
     });

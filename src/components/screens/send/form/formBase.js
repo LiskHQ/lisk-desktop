@@ -10,7 +10,7 @@ import Piwik from '../../../../utils/piwik';
 import styles from './form.css';
 
 const FormBase = ({
-  t, token, children, fields, showFee, networkConfig, getMaxAmount,
+  t, token, children, fields, showFee, network, getMaxAmount,
   bookmarks, nextStep, fieldUpdateFunctions,
 }) => {
   const onGoNext = () => {
@@ -32,7 +32,7 @@ const FormBase = ({
           <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
           <BookmarkAutoSuggest
             bookmarks={bookmarks[token]}
-            networkConfig={networkConfig}
+            network={network}
             recipient={fields.recipient}
             t={t}
             token={token}

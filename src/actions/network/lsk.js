@@ -65,7 +65,7 @@ export const networkSet = data => async (dispatch, getState) => {
     ? data.network.address
     : networks[data.name.toLowerCase()].nodes[0];
   await getNetworkInfo(nodeUrl, apiVersion).then(({ nethash, version, networkId }) => {
-    const networkConfig = {
+    const network = {
       nodeUrl,
       custom: data.network.custom,
       code: data.network.code,
@@ -73,7 +73,7 @@ export const networkSet = data => async (dispatch, getState) => {
       nethash,
       networkIdentifier: networkId,
     };
-    dispatch(generateAction(data, networkConfig));
+    dispatch(generateAction(data, network));
     dispatch({
       data: getServerUrl(nodeUrl, nethash),
       type: actionTypes.serviceUrlSet,

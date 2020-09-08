@@ -52,8 +52,8 @@ class SelectAccount extends React.Component {
   }
 
   async getAccountsFromDevice() {
-    const { device, networkConfig } = this.props;
-    const [error, accounts] = await to(getAccountsFromDevice({ device, networkConfig }));
+    const { device, network } = this.props;
+    const [error, accounts] = await to(getAccountsFromDevice({ device, network }));
     if (error) {
       toast.error(`Error retrieving accounts from device: ${error}`);
     } else {

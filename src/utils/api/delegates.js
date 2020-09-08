@@ -17,7 +17,7 @@ export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
     try {
       const response = await getDelegates(liskAPIClient, { address });
       const delegate = response.data[0];
-      updateDelegateCache(response.data, liskAPIClient.networkConfig);
+      updateDelegateCache(response.data, liskAPIClient.network);
       if (delegate) {
         const txDelegateRegister = (await getTransactions({
           liskAPIClient,
@@ -44,7 +44,7 @@ export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
 
 export const getDelegateWithCache = (liskAPIClient, { publicKey }) => (
   new Promise(async (resolve, reject) => {
-    loadDelegateCache(liskAPIClient.networkConfig, async (data) => {
+    loadDelegateCache(liskAPIClient.network, async (data) => {
       const storedDelegate = data[publicKey];
       if (storedDelegate) {
         resolve(storedDelegate);
@@ -53,7 +53,7 @@ export const getDelegateWithCache = (liskAPIClient, { publicKey }) => (
         if (error) {
           reject(error);
         } else if (response.data[0]) {
-          updateDelegateCache(response.data, liskAPIClient.networkConfig);
+          updateDelegateCache(response.data, liskAPIClient.network);
           resolve(response.data[0]);
         } else {
           reject(new Error(`No delegate with publicKey ${publicKey} found.`));
@@ -65,7 +65,7 @@ export const getDelegateWithCache = (liskAPIClient, { publicKey }) => (
 
 export const getDelegateByName = (liskAPIClient, name) => new Promise(async (resolve, reject) => {
   // eslint-disable-next-line max-statements
-  loadDelegateCache(liskAPIClient.networkConfig, async (data) => {
+  loadDelegateCache(liskAPIClient.network, async (data) => {
     const storedDelegate = data[name];
     if (storedDelegate) {
       resolve(storedDelegate);
@@ -80,7 +80,7 @@ export const getDelegateByName = (liskAPIClient, name) => new Promise(async (res
         } else {
           reject(new Error(`No delegate with name ${name} found.`));
         }
-        updateDelegateCache(response.data, liskAPIClient.networkConfig);
+        updateDelegateCache(response.data, liskAPIClient.network);
       }
     }
   });
@@ -142,8 +142,8 @@ export const castVotes = async ({
   )));
 };
 
-export const getVotes = (networkConfig, { address }) =>
-  getAPIClient(networkConfig).votes.get({ address, limit: 101, offset: 0 });
+export const getVotes = (network, { address }) =>
+  getAPIClient(network).votes.get({ address, limit: 101, offset: 0 });
 
 export const registerDelegate = (
   liskAPIClient,
