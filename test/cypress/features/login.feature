@@ -60,6 +60,8 @@ Feature: Login
     Given showNetwork setting is true
     Given I am on Login page
     When I choose testnet
+    When I enter first passphrase of testnet_guy
+    When I login
     When I am on dashboard page
     And I change active token to BTC
     And I log out
