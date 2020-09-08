@@ -92,3 +92,7 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
 Then(/^I should be connected to network ([^\s]+)$/, function (networkName) {
   cy.get(ss.networkStatus).contains(`Connected to:${networkName}`);
 });
+
+Then(/^I should see lisk monitor features$/, function () {
+  cy.get(ss.monitorTransactions).should('have.length', 1);
+});

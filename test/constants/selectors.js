@@ -29,6 +29,7 @@ const ss = {
   ...votingPage,
   ...secondPassphraseRegistrationPage,
   app: '#app',
+  monitorTransactions: '#transactions',
   transactionsTable: '.transaction-results',
   transactionRow: '.transactions-row',
   filterAll: '.filter-all',

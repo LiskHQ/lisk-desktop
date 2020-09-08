@@ -56,4 +56,11 @@ Feature: Login
     When I am on dashboard page
     Then I should be connected to network devnet
 
+  Scenario: Log out
+    Given showNetwork setting is true
+    Given I am on Login page
+    When I choose testnet
+    When I am on dashboard page
+    Then I should see lisk monitor features
+
 
