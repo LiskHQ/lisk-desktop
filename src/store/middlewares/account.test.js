@@ -223,22 +223,15 @@ describe('Account middleware', () => {
     });
   });
 
-  it(`should dispatch ${actionTypes.networkSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, async () => {
+  it(`should dispatch ${actionTypes.networkSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {
     getAutoLogInDataMock.mockImplementation(() => ({
       [settings.keys.loginKey]: passphrase,
       [settings.keys.liskCoreUrl]: networks.testnet.nodes[0],
     }));
     jest.spyOn(networkActions, 'networkSet');
-    jest.spyOn(networkActions, 'networkStatusUpdated');
-    jest.spyOn(accountActions, 'login');
 
-    await middleware(store)(next)(storeCreatedAction);
-
-    jest.advanceTimersByTime(500);
+    middleware(store)(next)(storeCreatedAction);
     expect(networkActions.networkSet).toHaveBeenCalled();
-    expect(networkActions.networkStatusUpdated).toHaveBeenCalled();
-    expect(accountActions.login).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledTimes(3);
   });
 
   it.skip(`should do nothing on ${actionTypes.storeCreated} if autologin data NOT found in localStorage`, () => {
@@ -246,12 +239,14 @@ describe('Account middleware', () => {
     expect(store.dispatch).not.toHaveBeenCalledTimes(liskAPIClientMock);
   });
 
-  it(`should dispatch ${actionTypes.networkSet} on ${actionTypes.storeCreated} if settings with network found in localStorage`, async () => {
+  it(`should dispatch ${actionTypes.networkSet} on ${actionTypes.storeCreated} if settings with network found in localStorage`, () => {
     localStorage.setItem('settings', JSON.stringify({
       network: 'Testnet',
     }));
-    await middleware(store)(next)(storeCreatedAction);
-    expect(store.dispatch).toHaveBeenCalledWith(liskAPIClientMock);
+    jest.spyOn(networkActions, 'networkSet');
+
+    middleware(store)(next)(storeCreatedAction);
+    expect(networkActions.networkSet).toHaveBeenCalled();
   });
 
   it(`should clean up on ${actionTypes.accountLoggedOut} `, () => {
