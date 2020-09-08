@@ -1,13 +1,11 @@
-import { expect } from 'chai';
-import {
-  spy, stub, useFakeTimers, match,
-} from 'sinon';
+// import {
+//    spy, stub, useFakeTimers, match,
+// } from 'sinon';
 import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import * as votingActions from '../../actions/voting';
 import * as networkActions from '../../actions/network';
-import * as accountApi from '../../utils/api/account';
-import * as transactionsApi from '../../utils/api/lsk/transactions';
+import * as settingsActions from '../../actions/settings';
 import * as accountUtils from '../../utils/login';
 import accounts from '../../../test/constants/accounts';
 import networks from '../../constants/networks';
@@ -15,15 +13,13 @@ import settings from '../../constants/settings';
 import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
+import { tokenMap } from '../../constants/tokens';
 
 describe('Account middleware', () => {
   let store;
   let next;
   let state;
-  let stubGetAccount;
-  let stubTransactions;
   let getAutoLogInDataMock;
-  let networkSetMock;
   let accountDataUpdatedSpy;
   let windowNotificationSpy;
   const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
@@ -70,12 +66,11 @@ describe('Account middleware', () => {
     },
   };
 
-  let clock;
 
   beforeEach(() => {
-    clock = useFakeTimers(new Date('2017-12-29').getTime());
-    store = stub();
-    store.dispatch = spy();
+    jest.useFakeTimers();
+    store = jest.fn();
+    store.dispatch = jest.fn();
     state = {
       network: {
         status: { online: true },
@@ -107,34 +102,23 @@ describe('Account middleware', () => {
     };
     store.getState = () => (state);
 
-    next = spy();
-    spy(transactionsActions, 'updateTransactions');
-    spy(accountActions, 'updateEnabledTokenAccount');
-    stubGetAccount = stub(accountApi, 'getAccount');
-    stubTransactions = stub(transactionsApi, 'getTransactions').resolves(true);
-    getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
-    getAutoLogInDataMock.withArgs().returns({ });
-    networkSetMock = stub(networkActions, 'networkSet').returns(liskAPIClientMock);
-    accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
+    next = jest.fn();
+    jest.spyOn(transactionsActions, 'updateTransactions');
+    jest.spyOn(accountActions, 'updateEnabledTokenAccount');
+    jest.spyOn(networkActions, 'networkSet').mockImplementation(() => liskAPIClientMock);
+    getAutoLogInDataMock = jest.spyOn(accountUtils, 'getAutoLogInData').mockImplementation(() => ({}));
+    accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
     window.Notification = () => { };
-    windowNotificationSpy = spy(window, 'Notification');
+    windowNotificationSpy = jest.spyOn(window, 'Notification');
   });
 
   afterEach(() => {
-    transactionsActions.updateTransactions.restore();
-    accountActions.updateEnabledTokenAccount.restore();
-    stubGetAccount.restore();
-    stubTransactions.restore();
-    clock.restore();
-    getAutoLogInDataMock.restore();
-    networkSetMock.restore();
-    accountDataUpdatedSpy.restore();
-    windowNotificationSpy.restore();
+    jest.restoreAllMocks();
   });
 
   it('should pass the action to next middleware', () => {
     middleware(store)(next)(newBlockCreated);
-    expect(next).to.have.been.calledWith(newBlockCreated);
+    expect(next).toHaveBeenCalledWith(newBlockCreated);
   });
 
   it(`should call account API methods on ${actionTypes.newBlockCreated} action when online`, () => {
@@ -145,9 +129,13 @@ describe('Account middleware', () => {
       transactions: state.transactions,
     };
 
-    clock.tick(7000);
-    expect(accountDataUpdatedSpy).to.have.been.calledWith(data);
-    expect(transactionsActions.updateTransactions).to.have.been.calledWith();
+    jest.advanceTimersByTime(7000);
+    expect(accountDataUpdatedSpy).toHaveBeenCalledWith(data);
+    expect(transactionsActions.updateTransactions).toHaveBeenCalledWith({
+      pendingTransactions: data.transactions.pending,
+      address: data.account.address,
+      filters: undefined,
+    });
   });
 
   it(`should call account BTC API methods on ${actionTypes.newBlockCreated} action when BTC is the active token`, () => {
@@ -157,9 +145,9 @@ describe('Account middleware', () => {
     state.transactions.confirmed = [{ senderId: address, confirmations: 1 }];
     middleware(store)(next)(newBlockCreated);
 
-    clock.tick(7000);
+    jest.advanceTimersByTime(7000);
     expect(transactionsActions.updateTransactions)
-      .to.have.been.calledWith(match({ address }));
+      .toHaveBeenCalledWith({ address, filters: undefined, pendingTransactions: state.transactions.pending });
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confirmed does not contain recent transaction. Case with transactions address`, () => {
@@ -171,11 +159,15 @@ describe('Account middleware', () => {
         address: 'sample_address',
       },
     });
+    const currentState = store.getState();
 
     middleware(store)(next)(newBlockCreated);
 
-    clock.tick(7000);
-    expect(accountDataUpdatedSpy).to.have.been.calledWith();
+    jest.advanceTimersByTime(7000);
+    expect(accountDataUpdatedSpy).toHaveBeenCalledWith({
+      account: currentState.account,
+      transactions: currentState.transactions,
+    });
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confirmed does not contain recent transaction. Case with confirmed address`, () => {
@@ -198,40 +190,60 @@ describe('Account middleware', () => {
         },
       },
     });
+    const currentState = store.getState();
 
     middleware(store)(next)(newBlockCreated);
 
-    clock.tick(7000);
-    expect(accountDataUpdatedSpy).to.have.been.calledWith();
+    jest.advanceTimersByTime(7000);
+    expect(accountDataUpdatedSpy).toHaveBeenCalledWith({
+      account: currentState.account,
+      transactions: currentState.transactions,
+    });
   });
 
   it('should show Notification on incoming transaction', () => {
     middleware(store)(next)(newBlockCreated);
-    expect(windowNotificationSpy).to.have.been.calledWith('10 LSK Received');
+    expect(windowNotificationSpy).nthCalledWith(
+      1,
+      '10 LSK Received',
+      {
+        body:
+        'Your account just received 10 LSK with message Message',
+      },
+    );
   });
 
   it(`should dispatch ${actionTypes.loadVotes} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
-    const actionSpy = spy(votingActions, 'loadVotes');
+    const actionSpy = jest.spyOn(votingActions, 'loadVotes');
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes().vote.code;
     middleware(store)(next)(transactionsUpdatedAction);
-    expect(actionSpy).to.have.been.calledWith({
+    expect(actionSpy).toHaveBeenCalledWith({
       address: state.account.address,
       type: 'update',
     });
   });
 
   it(`should dispatch ${actionTypes.networkSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, async () => {
-    getAutoLogInDataMock.withArgs().returns({
+    getAutoLogInDataMock.mockImplementation(() => ({
       [settings.keys.loginKey]: passphrase,
       [settings.keys.liskCoreUrl]: networks.testnet.nodes[0],
-    });
+    }));
+    jest.spyOn(networkActions, 'networkSet');
+    jest.spyOn(networkActions, 'networkStatusUpdated');
+    jest.spyOn(accountActions, 'login');
+
     await middleware(store)(next)(storeCreatedAction);
-    expect(store.dispatch).to.have.been.calledWith();
+
+    jest.advanceTimersByTime(500);
+    expect(networkActions.networkSet).toHaveBeenCalled();
+    expect(networkActions.networkStatusUpdated).toHaveBeenCalled();
+    expect(accountActions.login).toHaveBeenCalled();
+    expect(store.dispatch).toHaveBeenCalledTimes(3);
   });
 
   it.skip(`should do nothing on ${actionTypes.storeCreated} if autologin data NOT found in localStorage`, () => {
     middleware(store)(next)(storeCreatedAction);
-    expect(store.dispatch).to.not.have.been.calledWith(liskAPIClientMock);
+    expect(store.dispatch).not.toHaveBeenCalledTimes(liskAPIClientMock);
   });
 
   it(`should dispatch ${actionTypes.networkSet} on ${actionTypes.storeCreated} if settings with network found in localStorage`, async () => {
@@ -239,15 +251,19 @@ describe('Account middleware', () => {
       network: 'Testnet',
     }));
     await middleware(store)(next)(storeCreatedAction);
-    expect(store.dispatch).to.have.been.calledWith(liskAPIClientMock);
+    expect(store.dispatch).toHaveBeenCalledWith(liskAPIClientMock);
   });
 
   it(`should clean up on ${actionTypes.accountLoggedOut} `, () => {
+    jest.spyOn(settingsActions, 'settingsUpdated');
     const accountLoggedOutAction = {
       type: actionTypes.accountLoggedOut,
     };
     middleware(store)(next)(accountLoggedOutAction);
-    expect(store.dispatch).to.have.been.calledWith({ type: actionTypes.emptyTransactionsData });
+    expect(settingsActions.settingsUpdated).toHaveBeenCalledWith(
+      { token: { active: tokenMap.LSK.key } },
+    );
+    expect(store.dispatch).toHaveBeenCalledWith({ type: actionTypes.emptyTransactionsData });
   });
 
   it(`should update logged accounts on ${actionTypes.settingsUpdated} with enabled tokens`, async () => {
@@ -256,7 +272,7 @@ describe('Account middleware', () => {
       data: { token: { list: { BTC: true } } },
     };
     middleware(store)(next)(settingsUpdatedAction);
-    expect(accountActions.updateEnabledTokenAccount).to.have.been.calledWith('BTC');
-    expect(store.dispatch).to.have.been.calledWith();
+    expect(accountActions.updateEnabledTokenAccount).toHaveBeenCalledWith('BTC');
+    expect(store.dispatch).toHaveBeenCalled();
   });
 });
