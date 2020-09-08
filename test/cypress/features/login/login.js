@@ -89,6 +89,10 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
   }
 });
 
+Then(/^I change active token to BTC$/, function () {
+  cy.get(ss.lskToken).click();
+});
+
 Then(/^I log out$/, function () {
   cy.get(ss.logoutBtn).click();
 });
