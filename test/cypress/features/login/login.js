@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Given } from 'cypress-cucumber-preprocessor/steps';
+import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import urls from '../../../constants/urls';
 import accounts from '../../../constants/accounts';
 import networks from '../../../constants/networks';
@@ -91,4 +91,13 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
 
 Then(/^I should be connected to network ([^\s]+)$/, function (networkName) {
   cy.get(ss.networkStatus).contains(`Connected to:${networkName}`);
+});
+
+Then(/^I should see lisk monitor features$/, function () {
+  cy.get(ss.monitorVoting).should('have.length', 1);
+  cy.get(ss.monitorTransactions).should('have.length', 1);
+  cy.get(ss.monitorNetwork).should('have.length', 1);
+  cy.get(ss.monitorBlocks).should('have.length', 1);
+  cy.get(ss.monitorAccounts).should('have.length', 1);
+  cy.get(ss.monitorDelegates).should('have.length', 1);
 });

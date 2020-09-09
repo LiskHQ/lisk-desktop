@@ -211,6 +211,8 @@ const accountMiddleware = store => next => (action) => {
       votePlaced(store, action);
       break;
     case actionTypes.accountLoggedOut:
+      /* Reset active token setting so in case BTC is selected,
+      the Lisk monitoring features are available and Lisk is selected on the next login */
       store.dispatch(settingsUpdated({ token: { active: tokenMap.LSK.key } }));
       store.dispatch(emptyTransactionsData());
       break;
