@@ -89,14 +89,6 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
   }
 });
 
-Then(/^I change active token to BTC$/, function () {
-  cy.get(ss.lskToken).click();
-});
-
-Then(/^I log out$/, function () {
-  cy.get(ss.logoutBtn).click();
-});
-
 Then(/^I should be connected to network ([^\s]+)$/, function (networkName) {
   cy.get(ss.networkStatus).contains(`Connected to:${networkName}`);
 });

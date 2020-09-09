@@ -21,6 +21,9 @@ Feature: Login
     When I enter first passphrase of testnet_guy
     When I login
     Then I should be connected to testnet
+    And I click on btcToken
+    And I click on logoutBtn
+    Then I should see lisk monitor features
 
   Scenario: Log in on devnet
     Given showNetwork setting is true
@@ -55,16 +58,3 @@ Feature: Login
     When I choose devnet
     When I am on dashboard page
     Then I should be connected to network devnet
-
-  Scenario: Log out
-    Given showNetwork setting is true
-    Given I am on Login page
-    When I choose testnet
-    When I enter first passphrase of testnet_guy
-    When I login
-    When I am on dashboard page
-    And I change active token to BTC
-    And I log out
-    Then I should see lisk monitor features
-
-
