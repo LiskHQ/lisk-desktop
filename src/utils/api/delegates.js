@@ -1,5 +1,5 @@
 import { to } from 'await-to-js';
-import liskClient from 'Utils/lisk-client'; // eslint-disable-line
+import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import { getBlocks } from './blocks';
 import { getTransactions } from './transactions';
 import { loadDelegateCache, updateDelegateCache } from '../delegates';
@@ -93,22 +93,16 @@ const voteWithPassphrase = (
   secondPassphrase,
   timeOffset,
   networkIdentifier,
-  apiVersion,
-) => (Promise.all(splitVotesIntoRounds({ votes: [...votes], unvotes: [...unvotes] })
-  // eslint-disable-next-line no-shadow
-  .map(({ votes, unvotes }) => {
-    const Lisk = liskClient(apiVersion);
-    return (Lisk.transaction.castVotes(
-      {
-        votes,
-        unvotes,
-        passphrase,
-        secondPassphrase,
-        timeOffset,
-        networkIdentifier,
-      },
-    ));
-  }))
+) => (
+  Promise.all(splitVotesIntoRounds({ votes: [...votes], unvotes: [...unvotes] })
+    .map(res => Lisk.transaction.castVotes({
+      votes: res.votes,
+      unvotes: res.unvotes,
+      passphrase,
+      secondPassphrase,
+      timeOffset,
+      networkIdentifier,
+    })))
 );
 
 export const castVotes = async ({
@@ -119,7 +113,6 @@ export const castVotes = async ({
   secondPassphrase,
   timeOffset,
   networkIdentifier,
-  apiVersion,
 }) => {
   const signedTransactions = account.loginType === loginType.normal
     ? await voteWithPassphrase(
@@ -129,7 +122,6 @@ export const castVotes = async ({
       secondPassphrase,
       timeOffset,
       networkIdentifier,
-      apiVersion,
     )
     : await signVoteTransaction(account, votedList, unvotedList, timeOffset, networkIdentifier);
 
@@ -143,7 +135,7 @@ export const castVotes = async ({
 };
 
 export const getVotes = (network, { address }) =>
-  getAPIClient(network).votes.get({ address, limit: 101, offset: 0 });
+  getAPIClient(network).votes.get({ address, limit: 10, offset: 0 });
 
 export const registerDelegate = (
   liskAPIClient,
@@ -152,14 +144,12 @@ export const registerDelegate = (
   secondPassphrase = null,
   timeOffset,
   networkIdentifier,
-  apiVersion,
 ) => {
   const data = { username, passphrase, timeOffset };
   if (secondPassphrase) {
     data.secondPassphrase = secondPassphrase;
   }
   return new Promise((resolve, reject) => {
-    const Lisk = liskClient(apiVersion);
     const transaction = Lisk.transaction.registerDelegate({ ...data, networkIdentifier });
     liskAPIClient.transactions
       .broadcast(transaction)

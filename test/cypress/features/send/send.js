@@ -6,11 +6,9 @@ import urls from '../../../constants/urls';
 import accounts from '../../../constants/accounts';
 import compareBalances from '../../utils/compareBalances';
 
-const transactionFee = 0.1;
+const transactionFee = 0.001430143;
 
 const errorMessage = 'Test error';
-
-
 
 Then(/^I follow the launch protokol link$/, function () {
   cy.visit(`${urls.send}&recipient=4995063339468361088L&amount=5&reference=test`);
@@ -40,8 +38,3 @@ Then(/^The balance is subtracted$/, function () {
     compareBalances(this.balanceBefore, this.balanceAfter, 5 + transactionFee);
   });
 });
-
-
-
-
-

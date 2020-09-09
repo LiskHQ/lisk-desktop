@@ -1,10 +1,10 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votes.css';
 
-export default (t, apiVersion) => ([
+export default t => ([
   {
     title: t('Rank'),
-    classList: apiVersion === '3' ? 'hidden' : grid['col-sm-1'],
+    classList: 'hidden',
   },
   {
     title: t('Delegate'),
@@ -21,7 +21,7 @@ export default (t, apiVersion) => ([
   },
   {
     title: t('Productivity'),
-    classList: `${grid['col-sm-2']} ${grid[apiVersion === '3' ? 'col-lg-2' : 'col-lg-1']}`,
+    classList: `${grid['col-sm-2']} ${grid['col-lg-2']}`,
     tooltip: {
       title: t('Productivity'),
       message: t('% of successfully forged blocks in relation to total blocks that were available for this particular delegate to forge'),

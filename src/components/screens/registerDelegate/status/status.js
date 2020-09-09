@@ -85,8 +85,7 @@ class Status extends React.Component {
               status={status}
               onLoopComplete={this.checkTransactionStatus}
             />
-)
-          }
+          )}
           success={isTransactionSuccess}
           title={displayTemplate.title}
           message={displayTemplate.message}

@@ -1,16 +1,13 @@
-import liskClient from 'Utils/lisk-client'; // eslint-disable-line
+import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import { tokenMap } from '../constants/tokens';
 
-export const extractPublicKey = (passphrase, apiVersion) => {
-  const Lisk = liskClient(apiVersion);
-  return Lisk.cryptography.getKeys(passphrase).publicKey;
-};
+export const extractPublicKey = passphrase =>
+  Lisk.cryptography.getKeys(passphrase).publicKey;
 
 /**
  * @param {String} data - passphrase or public key
  */
-export const extractAddress = (data, apiVersion) => {
-  const Lisk = liskClient(apiVersion);
+export const extractAddress = (data) => {
   if (!data) {
     return false;
   }

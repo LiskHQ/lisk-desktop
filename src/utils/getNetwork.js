@@ -52,3 +52,16 @@ export const getNetworkNameBasedOnNethash = (network, token = 'LSK') => {
   }
   return activeNetwork;
 };
+
+/**
+ * Returns human readable error messages
+ *
+ * @param {Object} error
+ * @param {String} error.message - The error message received from network API call
+ * @returns {String} - The human readable error message.
+ */
+export const getConnectionErrorMessage = error => (
+  error && error.message
+    ? i18next.t(`Unable to connect to the node, Error: ${error.message}`)
+    : i18next.t('Unable to connect to the node, no response from the server.')
+);

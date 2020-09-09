@@ -1,21 +1,19 @@
-const find = require('findit'); // eslint-disable-line
 const fs = require('fs');
 
-const finder = find('./node_modules/@liskhq');
-const fix = "console.log('monkey patch');";
+const buffer = './node_modules/node-libs-browser/node_modules/buffer/index.js';
+const fix = './config/readBigUInt64BE.js';
 
-finder.on('file', (file) => {
-  if (file.match(/\.js/)) {
-    fs.readFile(file, 'utf8', (err, data) => {
+fs.readFile(buffer, (bufferErr, bufferCode) => {
+  if (bufferErr) throw bufferErr;
+
+  fs.readFile(fix, (fixErr, fixCode) => {
+    if (fixErr) throw fixErr;
+
+    fs.writeFile(buffer, bufferCode + fixCode, 'utf8', (err) => {
       if (err) throw err;
-      let newData = '';
-      if (data.match(/process\.env\.NACL_FAST\s=\s'disable';/)) {
-        newData = data
-          .replace(/process.env.NACL_FAST = 'disable';/, fix);
-        /* eslint-disable-next-line no-console */
-        console.log(`Fix the LiskSDK bug in ${file} `);
-        fs.writeFileSync(file, newData, { encoding: 'utf8', flag: 'w' });
-      }
+
+      // eslint-disable-next-line no-console
+      console.log('Successfully added readBigUInt64BE to Buffer.');
     });
-  }
+  });
 });

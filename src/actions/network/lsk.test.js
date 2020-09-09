@@ -1,6 +1,6 @@
-import Lisk from '@liskhq/lisk-client-old';
+import Lisk from '@liskhq/lisk-client';
 import { toast } from 'react-toastify';
-import { networkSet } from './lsk';
+import { lskNetworkSet } from './lsk';
 import networks from '../../constants/networks';
 import { tokenMap } from '../../constants/tokens';
 import actionTypes from '../../constants/actions';
@@ -42,7 +42,7 @@ describe('actions: network.lsk', () => {
           address: 'http://123.lisk.io',
         },
       };
-      networkSet(data)(dispatch);
+      lskNetworkSet(data)(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           name: networks.mainnet.name,
@@ -67,7 +67,7 @@ describe('actions: network.lsk', () => {
           nethash,
         },
       };
-      await networkSet(data)(dispatch);
+      lskNetworkSet(data)(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           name,
@@ -87,7 +87,7 @@ describe('actions: network.lsk', () => {
       const error = { };
       jest.spyOn(toast, 'error');
       getConstantsMock.mockRejectedValue(error);
-      await networkSet({ name, network: { name, nodeUrl } })(dispatch);
+      lskNetworkSet({ name, network: { name, nodeUrl } })(dispatch);
       expect(toast.error).toHaveBeenCalledWith('Unable to connect to the node, no response from the server.');
     });
 
@@ -96,7 +96,7 @@ describe('actions: network.lsk', () => {
       const error = { message: 'Custom error message' };
       getConstantsMock.mockRejectedValue(error);
       jest.spyOn(toast, 'error');
-      await networkSet({ name, network: { name, nodeUrl } })(dispatch);
+      lskNetworkSet({ name, network: { name, nodeUrl } })(dispatch);
       expect(toast.error).toHaveBeenCalledWith('Unable to connect to the node, Error: Custom error message');
     });
   });

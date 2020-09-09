@@ -1,4 +1,4 @@
-import liskClient from 'Utils/lisk-client'; // eslint-disable-line
+import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import networks from '../../../constants/networks';
 import { tokenMap } from '../../../constants/tokens';
 
@@ -6,7 +6,6 @@ const apiClients = {};
 
 // eslint-disable-next-line import/prefer-default-export
 export const getAPIClient = (network) => {
-  const Lisk = liskClient(network.networks.LSK.apiVersion);
   if (network.name && (!apiClients[network.name] || network.name === networks.customNode.name)) {
     const { nethash, nodes } = {
       [networks.testnet.name]: {

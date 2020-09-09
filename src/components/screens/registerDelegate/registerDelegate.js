@@ -1,6 +1,6 @@
 import React from 'react';
 import MultiStep from '../../shared/multiStep';
-import SelectName from './selectName/SelectName';
+import SelectNameAndFee from './selectNameAndFee/selectNameAndFee';
 import Summary from './summary/summary';
 import Status from './status/status';
 import styles from './registerDelegate.css';
@@ -19,7 +19,7 @@ const RegisterDelegate = ({
       prevPage={history.goBack}
       backButtonLabel={t('Back')}
     >
-      <SelectName
+      <SelectNameAndFee
         t={t}
         account={account}
         network={network}

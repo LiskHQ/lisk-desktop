@@ -1,82 +1,58 @@
 import React from 'react';
-import {
-  formatAmountBasedOnLocale,
-} from '../../../../utils/formattedNumber';
-import { fromRawLsk } from '../../../../utils/lsk';
+import { toRawLsk } from '../../../../utils/lsk';
 import FormBase from './formBase';
-import Selector from '../../../toolbox/selector/selector';
-import Spinner from '../../../toolbox/spinner';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
-import styles from './form.css';
+import TransactionPriority from '../../../shared/transactionPriority';
 import useAmountField from './useAmountField';
-import useDynamicFeeCalculation from './useDynamicFeeCalculation';
-import useProcessingSpeed from './useProcessingSpeed';
+import useTransactionFeeCalculation from './useTransactionFeeCalculation';
+import useTransactionPriority from './useTransactionPriority';
 import useRecipientField from './useRecipientField';
+import transactionTypes from '../../../../constants/transactionTypes';
+
+const txType = transactionTypes().transfer.key;
 
 const FormBtc = (props) => {
   const {
-    t, account, token, getInitialValue,
+    token, getInitialValue, account,
   } = props;
 
-
-  const [processingSpeed, selectProcessingSpeed, feeOptions] = useProcessingSpeed();
-  const [getDynamicFee, getMaxAmount] = useDynamicFeeCalculation(account, processingSpeed.value);
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), getMaxAmount);
+  const [
+    selectedPriority, selectTransactionPriority, priorityOptions,
+  ] = useTransactionPriority(token);
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
+  const { fee, maxAmount, minFee } = useTransactionFeeCalculation({
+    selectedPriority,
+    priorityOptions,
+    token,
+    account,
+    txData: {
+      amount: toRawLsk(amount.value), txType, recipient: recipient.value,
+    },
+  });
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
     amount,
     recipient,
-    processingSpeed,
-    fee: getDynamicFee(amount.value),
+    selectedPriority,
+    fee,
   };
-
-  const getProcessingSpeedStatus = () => (!fields.fee.error
-    ? `${formatAmountBasedOnLocale({ value: fromRawLsk(fields.fee.value) })} ${token}`
-    : fields.fee.feedback);
 
   return (
     <FormBase
       {...props}
       fields={fields}
       fieldUpdateFunctions={fieldUpdateFunctions}
-      getMaxAmount={getMaxAmount}
+      maxAmount={maxAmount}
     >
-      <div className={`${styles.fieldGroup} processing-speed`}>
-        <span className={`${styles.fieldLabel}`}>
-          {t('Processing Speed')}
-          <Tooltip tooltipClassName={styles.tooltipBTCProcessingSpeed}>
-            <p className={styles.tooltipText}>
-              {
-                    t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')
-                  }
-            </p>
-          </Tooltip>
-        </span>
-        <Selector
-          className={styles.selector}
-          onSelectorChange={selectProcessingSpeed}
-          name="speedSelector"
-          selectedIndex={fields.processingSpeed.selectedIndex}
-          options={feeOptions}
-        />
-        <span className={styles.processingInfo}>
-          {`${t('Transaction fee')}: `}
-          <span>
-            { processingSpeed.isLoading
-              ? (
-                <React.Fragment>
-                  {t('Loading')}
-                  {' '}
-                  <Spinner className={styles.loading} />
-                </React.Fragment>
-              )
-              : getProcessingSpeedStatus()
-            }
-          </span>
-        </span>
-      </div>
+      <TransactionPriority
+        token={token}
+        fee={fee}
+        minFee={minFee.value}
+        priorityOptions={priorityOptions}
+        selectedPriority={selectedPriority.selectedIndex}
+        setSelectedPriority={selectTransactionPriority}
+      />
     </FormBase>
   );
 };

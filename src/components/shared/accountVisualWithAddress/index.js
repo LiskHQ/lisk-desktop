@@ -28,8 +28,8 @@ class AccountVisualWithAddress extends React.Component {
       address, transactionSubject, transactionType, size,
     } = this.props;
     const txType = transactionTypes.getByCode(transactionType);
-    const sendCode = transactionTypes().send.code;
     const transformedAddress = this.getTransformedAddress(address);
+    const sendCode = transactionTypes().transfer.code;
 
     return (
       <div className={`${styles.address}`}>

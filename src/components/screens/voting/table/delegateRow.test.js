@@ -20,7 +20,7 @@ const voting = {
 reactRedux.useSelector = jest.fn().mockImplementation(filter => filter({
   network: {
     networks: {
-      LSK: { apiVersion: '2' },
+      LSK: { apiVersion: '2' }, // @todo Remove?
     },
   },
   voting,

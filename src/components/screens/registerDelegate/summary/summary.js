@@ -3,8 +3,6 @@ import to from 'await-to-js';
 
 import TransactionSummary from '../../../shared/transactionSummary';
 import AccountVisual from '../../../toolbox/accountVisual';
-import { fromRawLsk } from '../../../../utils/lsk';
-import Fees from '../../../../constants/fees';
 import { create } from '../../../../utils/api/lsk/transactions';
 import transactionTypes from '../../../../constants/transactionTypes';
 import styles from './summary.css';
@@ -16,26 +14,31 @@ class Summary extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  async onSubmit({ secondPassphrase }) {
+  async onSubmit() {
     const {
       account,
       nextStep,
       nickname,
       network,
+      fee,
     } = this.props;
 
     const data = {
       account,
       username: nickname,
       passphrase: account.passphrase,
-      secondPassphrase,
+      fee,
       network,
+      nonce: account.nonce,
     };
 
     const [error, tx] = await to(
-      create(data, transactionTypes().registerDelegate.key, network.networks.LSK.apiVersion),
+      create(data, transactionTypes().registerDelegate.key),
     );
-    if (!error) nextStep({ transactionInfo: tx });
+
+    if (!error) {
+      nextStep({ transactionInfo: tx });
+    }
   }
 
   render() {
@@ -43,6 +46,7 @@ class Summary extends React.Component {
       account,
       nickname,
       prevStep,
+      fee,
       t,
     } = this.props;
 
@@ -62,7 +66,7 @@ class Summary extends React.Component {
         account={account}
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}
-        fee={fromRawLsk(Fees.registerDelegate)}
+        fee={fee}
         classNames={`${styles.box} ${styles.summaryContainer}`}
       >
         <section className="summary-container">

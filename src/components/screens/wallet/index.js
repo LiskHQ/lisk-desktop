@@ -107,7 +107,7 @@ const Wallet = ({ t, history }) => {
             tabName={t('Votes')}
           />
         ) : null}
-        {account.info[activeToken].delegate
+        {account.info[activeToken].isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
