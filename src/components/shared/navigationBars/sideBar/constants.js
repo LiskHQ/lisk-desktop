@@ -14,12 +14,6 @@ const menuLinks = t => ([
       label: t('Wallet'),
       path: routes.wallet.path,
     },
-    {
-      icon: 'voting',
-      id: 'voting',
-      label: t('Voting'),
-      path: routes.voting.path,
-    },
   ],
   [
     {
