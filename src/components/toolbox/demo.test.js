@@ -7,4 +7,9 @@ describe('ToolboxDemo', () => {
     const wrapper = mount(<ToolboxDemo />);
     expect(wrapper).toHaveLength(1);
   });
+
+  it('Should render clickable tab', () => {
+    const wrapper = mount(<ToolboxDemo />);
+    wrapper.find('li[data-id="opt2"]').first().simulate('click');
+  });
 });

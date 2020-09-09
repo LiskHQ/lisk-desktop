@@ -63,6 +63,7 @@ const Wallet = ({
           activeToken={activeToken}
           discreetMode={discreetMode}
           tabName={t('Transactions')}
+          tabId="transactions"
           t={t}
         />
         {activeToken !== 'BTC' ? (
@@ -70,6 +71,7 @@ const Wallet = ({
             history={history}
             address={selectSearchParamValue(history.location.search, 'address')}
             tabName={t('Voting')}
+            tabId="voting"
           />
         ) : null}
         {account.data && account.data.delegate
@@ -77,6 +79,7 @@ const Wallet = ({
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
+              tabId="delegateProfile"
               address={selectSearchParamValue(history.location.search, 'address')}
             />
           )
