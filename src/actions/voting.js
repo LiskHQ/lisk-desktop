@@ -2,28 +2,15 @@ import to from 'await-to-js';
 import { toast } from 'react-toastify';
 import {
   getVotes,
-  getDelegates,
   castVotes,
 } from '../utils/api/delegates';
 import { getVotingLists, getVotingError } from '../utils/voting';
-import { updateDelegateCache } from '../utils/delegates';
 import { passphraseUsed } from './account';
 import { addNewPendingTransaction } from './transactions';
 import actionTypes from '../constants/actions';
 import { getAPIClient } from '../utils/api/network';
 import { tokenMap } from '../constants/tokens';
 import { txAdapter } from '../utils/api/lsk/adapters';
-
-/**
- * Add data to the list of all delegates
- *
- * This action is used in delegatesListView to clear delegates
- * https://github.com/LiskHQ/lisk-desktop/blob/d284b32f747e6b5c9189a3aeeff975b13a7a466b/src/components/delegatesListView/index.js#L21-L23
- */
-export const delegatesAdded = data => ({
-  type: actionTypes.delegatesAdded,
-  data,
-});
 
 /**
  * Toggles account's vote for the given delegate
@@ -97,35 +84,4 @@ export const loadVotes = ({ address, type, callback = () => null }) =>
         });
         callback(response.data.votes);
       });
-  };
-
-/**
- * Gets list of all delegates
- */
-export const loadDelegates = ({
-  offset = 0, q, network,
-}) => {
-  let params = {
-    offset,
-    limit: '90',
-    sort: 'totalVotesReceived:desc',
-  };
-  params = q ? { ...params, search: q } : params;
-  return getDelegates(network, params);
-};
-
-export const delegatesLoaded = ({
-  offset = 0, refresh, q, callback = () => {},
-}) =>
-  (dispatch, getState) => {
-    loadDelegates({ offset, q, network: getState().network })
-      .then((response) => {
-        updateDelegateCache(response.data, getState().network);
-        dispatch(delegatesAdded({
-          list: response.data,
-          refresh,
-        }));
-        callback(response);
-      })
-      .catch(callback);
   };

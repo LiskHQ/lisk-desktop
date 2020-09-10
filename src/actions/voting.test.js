@@ -6,8 +6,6 @@ import {
   voteToggled,
   votePlaced,
   loadVotes,
-  delegatesLoaded,
-  delegatesAdded,
 } from './voting';
 import networks from '../constants/networks';
 import { loginType } from '../constants/hwConstants';
@@ -176,45 +174,6 @@ describe('actions: voting', () => {
       loadVotes({ ...data, type: 'update' })(dispatch, getState);
       await Promise.resolve('This await ensures that the async logic in the action is executed before the assertion');
       expect(dispatch).to.have.been.calledWith(expectedAction);
-    });
-  });
-
-  describe('delegatesLoaded', () => {
-    const data = {
-      q: '',
-      offset: 0,
-      refresh: true,
-    };
-    const delegates = delegateList;
-    const actionFunction = delegatesLoaded(data);
-
-    it('should create an action function', () => {
-      expect(typeof actionFunction).to.be.deep.equal('function');
-    });
-
-    it('should dispatch delegatesAdded action if resolved', async () => {
-      const delegateApiMock = sinon.stub(delegateApi, 'getDelegates');
-      const dispatch = sinon.spy();
-      getState = () => ({
-        network: {
-          status: { online: true },
-          name: networks.mainnet.name,
-          networks: {
-            LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
-          },
-        },
-      });
-
-      delegateApiMock.resolves({ data: delegates });
-      const expectedAction = { list: delegates, refresh: true };
-
-      actionFunction(dispatch, getState);
-      await Promise.resolve('This await ensures that the async logic in the action is executed before the assertion');
-      expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));
-      delegateApiMock.restore();
     });
   });
 });
