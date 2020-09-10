@@ -100,11 +100,11 @@ describe('Login', () => {
     });
 
     it('calls this.props.history.replace with referrer address', () => {
-      history.location.search = `?referrer=${routes.voting.path}`;
+      history.location.search = `?referrer=${routes.wallet.path}`;
       wrapper.setProps({
         history, account: { address: 'dummy' },
       });
-      expect(props.history.replace).toHaveBeenCalledWith(routes.voting.path);
+      expect(props.history.replace).toHaveBeenCalledWith(routes.wallet.path);
     });
   });
 
