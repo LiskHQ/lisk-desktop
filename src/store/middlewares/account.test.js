@@ -132,6 +132,7 @@ describe('Account middleware', () => {
     jest.advanceTimersByTime(7000);
     expect(accountDataUpdatedSpy).toHaveBeenCalledWith(data);
     expect(transactionsActions.updateTransactions).toHaveBeenCalledWith({
+      pendingTransactions: data.transactions.pending,
       address: data.account.address,
       filters: undefined,
     });
@@ -147,7 +148,7 @@ describe('Account middleware', () => {
     jest.advanceTimersByTime(7000);
     expect(transactionsActions.updateTransactions)
       .toHaveBeenCalledWith({
-        address, filters: undefined,
+        address, filters: undefined, pendingTransactions: state.transactions.pending,
       });
   });
 
