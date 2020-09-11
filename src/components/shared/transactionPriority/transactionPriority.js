@@ -58,7 +58,7 @@ const TransactionPriority = ({
   txType,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
-  const [inputValue, setInputValue] = useState(minFee);
+  const [inputValue, setInputValue] = useState(undefined);
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
   const isLoading = priorityOptions[0].value === 0;
 
@@ -87,6 +87,11 @@ const TransactionPriority = ({
     } else {
       setCustomFee(newValue);
     }
+  };
+
+  const onInputFocus = (e) => {
+    e.preventDefault();
+    if (!inputValue) setInputValue(minFee);
   };
 
   const onInputBlur = (e) => {
@@ -163,6 +168,7 @@ const TransactionPriority = ({
                 value={inputValue}
                 onChange={onInputChange}
                 onBlur={onInputBlur}
+                onFocus={onInputFocus}
                 status={!isCustomFeeValid(inputValue, txType, minFee) ? 'error' : 'ok'}
                 feedback={`fee must bee between ${minFee} and ${fromRawLsk(transactionTypes.getHardCap(txType))}`}
               />
