@@ -21,7 +21,7 @@ const delegateProfile = ({
   useEffect(() => {
     if (delegate.data.username) {
       lastBlock.loadData({
-        generatorPublicKey: delegate.data.account.publicKey,
+        generatorPublicKey: delegate.data.publicKey,
         limit: 1,
       });
     }
