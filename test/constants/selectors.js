@@ -244,6 +244,11 @@ const ss = {
   closeDialog: '.dialog-close-button',
   bookmarkListToggle: '.bookmark-list-toggle',
   settingsMenu: '.settings-toggle',
+  lowFeeOption: '.option-Low',
+  mediumFeeOption: '.option-Medium',
+  highFeeOption: '.option-High',
+  customFeeOption: '.option-Custom',
+  customFeeInput: '.custom-fee-input',
 };
 
 export default ss;
