@@ -175,6 +175,14 @@ When(/^I click on (.*?)$/, function (elementName) {
   cy.get(ss[elementName]).eq(0).click();
 });
 
+When(/^I clear input (.*?)$/, function (elementName) {
+  cy.get(ss[elementName]).clear();
+});
+
+When(/^I fill ([\w]+) in ([\w]+) field$/, function (value, field) {
+  cy.get(ss[field]).type(value);
+});
+
 Then(/^I fill ([^s]+) in ([^s]+) field$/, function (value, field) {
   cy.get(ss[field]).type(value);
 });
