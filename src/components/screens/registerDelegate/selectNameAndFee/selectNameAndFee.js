@@ -189,7 +189,10 @@ const SelectNameAndFee = ({ account, ...props }) => {
       </BoxContent>
       <BoxFooter>
         <PrimaryButton
-          onClick={() => nextStep({ nickname: state.nickname, fee: toRawLsk(fee.value) })}
+          onClick={() => nextStep({
+            nickname: state.nickname,
+            fee: toRawLsk(state.customFee || fee.value),
+          })}
           disabled={isBtnDisabled}
           className={`${styles.confirmBtn} confirm-btn`}
         >
