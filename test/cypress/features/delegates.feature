@@ -5,4 +5,4 @@ Feature: Delegate
     Given I am on Voting page
     And I see 90 delegates on page
     When I click load more button
-    And I see 103 delegates on page
+    And I see 104 delegates on page
