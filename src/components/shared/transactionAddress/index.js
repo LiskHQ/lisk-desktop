@@ -1,32 +1,39 @@
 import React from 'react';
-import { tokenMap } from '../../../constants/tokens';
 import regex from '../../../utils/regex';
 import transactionTypes from '../../../constants/transactionTypes';
 import styles from './transactionAddress.css';
 
+const Address = ({
+  bookmark, address, className,
+}) => {
+  const addressTrunk = address && address.replace(regex.lskAddressTrunk, '$1...$3');
+
+  if (bookmark) return (<span>{bookmark.title}</span>);
+  return (
+    <>
+      <span className={`${className} showOnLargeViewPort`}>
+        {address.length < 24 ? address : addressTrunk}
+      </span>
+      <span className={`${className} hideOnLargeViewPort`}>
+        {addressTrunk}
+      </span>
+    </>
+  );
+};
+
 const TransactionAddress = ({
   address, bookmarks, transactionType, token,
 }) => {
-  const account = [...bookmarks.LSK, ...bookmarks.BTC].filter(acc => acc.address === address);
-
-  const formatter = (token === tokenMap.LSK.key)
-    ? value => value
-    : (value => value.replace(regex.btcAddressTrunk, '$1...$3'));
-
-  const renderAddress = () => (account.length ? account[0].title : formatter(address));
+  const bookmark = bookmarks[token].find(acc => acc.address === address);
 
   return (
     <div className={`${styles.wrapper} transaction-address`}>
-      <span>
-        {transactionType !== transactionTypes().transfer.code
-          ? transactionTypes.getByCode(transactionType).title
-          : renderAddress()}
-      </span>
-      {account.length ? (
-        <span className={styles.subTitle}>
-          {token === tokenMap.LSK.key ? address : address.replace(regex.btcAddressTrunk, '$1...$3')}
-        </span>
-      ) : null}
+      {
+        transactionType !== transactionTypes().transfer.code
+          ? <span>{transactionTypes.getByCode(transactionType).title}</span>
+          : <Address address={address} bookmark={bookmark} />
+      }
+      {bookmark && <Address address={address} className={styles.subTitle} />}
     </div>
   );
 };
