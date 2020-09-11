@@ -113,7 +113,7 @@ const TransactionPriority = ({
       <div className={`${styles.col}`}>
         <span className={`${styles.fieldLabel}`}>
           {t('Priority')}
-          <Tooltip>
+          <Tooltip position="right">
             <p className={styles.tooltipText}>
               {
                 t('When the network is busy, transactions with higher priority get processed sooner.')
@@ -137,7 +137,7 @@ const TransactionPriority = ({
       <div className={`${styles.col} fee-container`}>
         <span className={`${styles.fieldLabel}`}>
           {t('Transaction fee')}
-          <Tooltip>
+          <Tooltip position="left">
             <p className={styles.tooltipText}>
               {
                 t(`
