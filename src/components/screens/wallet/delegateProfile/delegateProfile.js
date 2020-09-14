@@ -5,24 +5,15 @@ import Box from '../../../toolbox/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
-// import DelegateVotesView from './delegateVotesView';
+import DelegateVotesView from './delegateVotesView';
 
 const DelegateProfile = ({
-  delegate, lastBlock, txDelegateRegister, address, t,
+  delegate, address, t, voters,
 }) => {
   useEffect(() => {
     delegate.loadData();
-    txDelegateRegister.loadData();
+    voters.loadData();
   }, [address]);
-
-  useEffect(() => {
-    if (delegate.data.username) {
-      lastBlock.loadData({
-        generatorPublicKey: delegate.data.publicKey,
-        limit: 1,
-      });
-    }
-  }, [delegate.data.username]);
 
   return (
     <section className={`${styles.ontainer} container`}>
@@ -37,7 +28,7 @@ const DelegateProfile = ({
           forgedBlocks={delegate.data.producedBlocks}
           missedBlocks={delegate.data.missedBlocks}
         />
-        {/* <DelegateVotesView t={t} votes={delegate.votes} /> */}
+        {voters.data.voters && <DelegateVotesView t={t} voters={voters.data.voters} />}
       </Box>
     </section>
   );

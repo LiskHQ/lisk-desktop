@@ -6,11 +6,11 @@ import BoxContent from '../../../toolbox/box/content';
 import styles from './delegateProfile.css';
 
 const DelegateVotesView = ({
-  votes,
+  voters,
 }) => (
   <Box>
     <BoxContent className={`${styles.votesContainer} votes-container`}>
-      {votes.map((address, index) => (
+      {voters.map((address, index) => (
         <div className={styles.voteItem} key={index}>
           <AccountVisual
             className={styles.accountVisual}
