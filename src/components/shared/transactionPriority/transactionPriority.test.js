@@ -65,14 +65,6 @@ describe('TransactionPriority', () => {
     expect(props.setCustomFee).toHaveBeenCalledTimes(1);
   });
 
-  it.skip('on focus away from the input, the custom fee cb should be called', () => {
-    expect(wrapper).not.toContainMatchingElement('Icon[name="edit"]');
-    wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
-    wrapper.find('.custom-fee-input').at(1).simulate('blur');
-    expect(props.setCustomFee).toHaveBeenCalledTimes(1);
-    expect(wrapper).toContainMatchingElement('Icon[name="edit"]');
-  });
-
   it('hides the edit icon and shows the input when clicked in the "fee-value" element', () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
     // simulate blur so that the edit icon is shown

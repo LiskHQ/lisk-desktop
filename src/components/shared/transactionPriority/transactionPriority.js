@@ -28,10 +28,9 @@ const getRelevantPriorityOptions = (options, token) =>
     index !== CUSTOM_FEE_INDEX
   || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key));
 
-const isCustomFeeValid = (value, txType, minFee) => {
+const isCustomFeeValid = (value, hardCap, minFee) => {
   if (!value) return false;
   const rawValue = toRawLsk(parseFloat(value));
-  const hardCap = transactionTypes.getHardCap(txType);
 
   if (rawValue > hardCap) {
     return false;
@@ -61,6 +60,10 @@ const TransactionPriority = ({
   const [inputValue, setInputValue] = useState(undefined);
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
   const isLoading = priorityOptions[0].value === 0;
+  let hardCap = 0;
+  if (token === tokenMap.LSK.key) {
+    hardCap = transactionTypes.getHardCap(txType);
+  }
 
   const onClickPriority = (e) => {
     e.preventDefault();
@@ -77,13 +80,13 @@ const TransactionPriority = ({
   const onInputChange = (e) => {
     e.preventDefault();
     const newValue = e.target.value;
-    if (token === 'LSK') {
+    if (token === tokenMap.LSK.key) {
       setInputValue(newValue);
-      setCustomFee(
-        isCustomFeeValid(newValue, txType, minFee)
-          ? { value: newValue, feedback: '', error: false }
-          : { value: undefined, feedback: 'invalid custom fee', error: true },
-      );
+      if (isCustomFeeValid(newValue, hardCap, minFee)) {
+        setCustomFee({ value: newValue, feedback: '', error: false });
+      } else {
+        setCustomFee({ value: undefined, feedback: 'invalid custom fee', error: true });
+      }
     } else {
       setCustomFee(newValue);
     }
@@ -169,8 +172,8 @@ const TransactionPriority = ({
                 onChange={onInputChange}
                 onBlur={onInputBlur}
                 onFocus={onInputFocus}
-                status={!isCustomFeeValid(inputValue, txType, minFee) ? 'error' : 'ok'}
-                feedback={`fee must bee between ${minFee} and ${fromRawLsk(transactionTypes.getHardCap(txType))}`}
+                status={!isCustomFeeValid(inputValue, hardCap, minFee) ? 'error' : 'ok'}
+                feedback={`fee must be between ${minFee} and ${fromRawLsk(hardCap)}`}
               />
             ) : (
               <span className={`${styles.feeValue} fee-value`} onClick={onClickCustomEdit}>

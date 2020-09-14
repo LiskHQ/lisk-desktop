@@ -154,12 +154,14 @@ export const getTransactionBaseFees = () => (
  * @param {String} txData - The transaction object
  * @param {Object} selectedPriority - network configuration
  */
+// eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
   txData, selectedPriority,
 }) => {
   const { txType, ...data } = txData;
   const minFee = calculateMinTxFee(data, txType);
   const feePerByte = Number(fromRawLsk(selectedPriority.value));
+  const hardCap = transactionTypes.getHardCap(txType);
 
   // Tie breaker is only meant for Medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
@@ -168,8 +170,8 @@ export const getTransactionFee = async ({
   let value = minFee + feePerByte * findTransactionSizeInBytes({
     transaction: data, type: txType,
   }) + tieBreaker;
-  if (value > transactionTypes.getHardCap(txType)) {
-    value = transactionTypes.getHardCap(txType);
+  if (value > hardCap) {
+    value = hardCap;
   }
 
   const roundedValue = parseFloat(Number(fromRawLsk(value)).toFixed(8));
