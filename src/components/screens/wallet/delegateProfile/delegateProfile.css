@@ -3,17 +3,9 @@
   flex-direction: column;
 }
 
-.statsContainer {
-
-}
-
-.performanceContainer {
-  
-}
-
 .details {
   & .itemContainer {
-    border-bottom: 1px solid #E1E3EB;
+    border-bottom: 1px solid #e1e3eb;
     padding: 20px 0;
     margin-left: 0;
 
@@ -21,6 +13,7 @@
       border: none;
       padding-bottom: 0;
     }
+
     &:first-child {
       padding-top: 0;
     }
@@ -28,7 +21,7 @@
 
   & .item {
     margin-left: 16px;
-    
+
     & .value {
       margin-top: 8px;
     }
@@ -64,6 +57,7 @@
   height: 120px;
   width: 170px;
 }
+
 .productivityIcon {
   height: 122px;
   width: 206px;
@@ -101,6 +95,7 @@
   align-items: center;
   margin-bottom: 10px;
   margin-right: 10px;
+
   & .address {
     padding-left: 10px;
   }
