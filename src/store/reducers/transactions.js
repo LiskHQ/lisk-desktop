@@ -2,7 +2,7 @@ import actionTypes from '../../constants/actions';
 import txFilters from '../../constants/transactionFilters';
 
 // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
-const sortByNonce = (a, b) => (b.nonce - a.nonce);
+const sortByHeight = (a, b) => (b.height - a.height);
 
 const addNewTransactions = (array1, array2) => array1.filter(array1Value =>
   array2.filter(array2Value => array2Value.id === array1Value.id).length === 0);
@@ -53,7 +53,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
       return {
         ...state,
         // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
-        confirmed: action.data.confirmed.sort(sortByNonce),
+        confirmed: action.data.confirmed.sort(sortByHeight),
         count: action.data.count,
         filters: action.data.filters !== undefined
           ? action.data.filters : state.filters,
@@ -67,7 +67,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
           ...action.data.confirmed,
           ...addNewTransactions(state.confirmed, action.data.confirmed),
         // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
-        ].sort(sortByNonce),
+        ].sort(sortByHeight),
         count: action.data.count,
         filters: action.data.filters !== undefined
           ? action.data.filters : state.filters,
