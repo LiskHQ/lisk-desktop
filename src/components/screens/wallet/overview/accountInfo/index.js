@@ -106,7 +106,7 @@ const AccountInfo = ({
                   </DialogLink>
                 )}
               >
-                <p>{t('Add to bookmarks')}</p>
+                <p>{t(bookmark === undefined ? 'Add to bookmarks' : 'Edit bookmark')}</p>
               </Tooltip>
             </div>
           ) : null
