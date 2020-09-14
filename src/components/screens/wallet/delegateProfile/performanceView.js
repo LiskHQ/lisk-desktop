@@ -7,11 +7,13 @@ import BoxContent from '../../../toolbox/box/content';
 import styles from './delegateProfile.css';
 import Icon from '../../../toolbox/icon';
 
-const Item = ({ icon, className }) => (
+const Item = ({
+  icon, className, text, value,
+}) => (
   <BoxContent className={`${styles.performance} performance`}>
     <div className={styles.performanceText}>
-      <div>Performance</div>
-      <div>value</div>
+      <div>{text}</div>
+      <div>{value}</div>
     </div>
     <div className={className}>
       <Icon name={icon} />
@@ -19,19 +21,43 @@ const Item = ({ icon, className }) => (
   </BoxContent>
 );
 
-const PerformanceView = ({ t: t = str => str }) => (
+const PerformanceView = ({
+  t, productivity, forgedBlocks, forgedLsk, missedBlocks,
+}) => (
   <Box className={`${grid['col-xs-6']} ${grid['col-md-8']} ${grid['col-lg-8']} ${styles.performanceContainer} performance-container`}>
     <BoxHeader>
       <h1>{t('Performance')}</h1>
     </BoxHeader>
     <Box className={`${grid.row}`}>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-6']} ${styles.column}`}>
-        <Item icon="productivity" className={`${styles.performanceIcon} ${styles.productivityIcon}`} />
-        <Item icon="forgedBlocks" className={`${styles.performanceIcon} ${styles.forgedBlocksIcon}`} />
+        <Item
+          text={t('Productivity')}
+          value={productivity}
+          icon="productivity"
+          className={`${styles.performanceIcon} ${styles.productivityIcon}`}
+        />
+        <Item
+          text={t('Forged Blocks')}
+          value={forgedBlocks}
+          icon="forgedBlocks"
+          className={`${styles.performanceIcon} ${styles.forgedBlocksIcon}`}
+        />
       </Box>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-6']} ${styles.column}`}>
-        <Item icon="missedBlocks" className={`${styles.performanceIcon} ${styles.missedBlocksIcon}`} />
-        <Item icon="forgedLsk" className={`${styles.performanceIcon} ${styles.forgedLskIcon}`} />
+        <Item
+          text={t('Missed Blocks')}
+          value={missedBlocks}
+          icon="missedBlocks"
+          className={`${styles.performanceIcon} ${styles.missedBlocksIcon}`}
+        />
+        {forgedLsk && (
+          <Item
+            text={t('Forged LSK')}
+            value={forgedLsk}
+            icon="forgedLsk"
+            className={`${styles.performanceIcon} ${styles.forgedLskIcon}`}
+          />
+        )}
       </Box>
     </Box>
   </Box>

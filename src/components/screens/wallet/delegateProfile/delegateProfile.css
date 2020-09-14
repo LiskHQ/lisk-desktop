@@ -93,6 +93,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
 .voteItem {
   width: 238px;
   width: max-content;
