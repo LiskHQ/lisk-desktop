@@ -1,6 +1,6 @@
 .wrapper {
   padding-bottom: var(--horizontal-padding-l);
-  padding-top: 20px;
+  padding-top: 30px;
 }
 
 @media (--medium-viewport) {
