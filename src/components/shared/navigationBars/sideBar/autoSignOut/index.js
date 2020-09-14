@@ -14,6 +14,7 @@ const TimeOutToast = ({ t, history, ...props }) => {
   return (
     renderToast && toast(
       <div className={styles.toastText}>{t('Session timeout')}</div>, {
+        toastId: 'time-out',
         autoClose: false,
         closeButton: <span
           className={styles.closeBtn}
