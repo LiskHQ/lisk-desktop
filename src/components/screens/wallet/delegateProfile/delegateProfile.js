@@ -28,9 +28,14 @@ const DelegateProfile = ({
           forgedBlocks={delegate.data.producedBlocks}
           missedBlocks={delegate.data.missedBlocks}
         />
-        {voters.data.voters && <DelegateVotesView t={t} voters={voters.data.voters} />}
+        {
+          voters.data.voters
+            && voters.data.voters.length > 0
+            && <DelegateVotesView t={t} voters={voters.data.voters} />
+        }
       </Box>
     </section>
   );
 };
+
 export default DelegateProfile;

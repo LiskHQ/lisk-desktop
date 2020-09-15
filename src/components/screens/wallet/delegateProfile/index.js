@@ -19,7 +19,7 @@ const apis = {
     getApiParams: (state, ownProps) => ({
       address: ownProps.address,
     }),
-    transformResponse: response => response,
+    transformResponse: response => (response ? response.data : {}),
   },
 };
 
