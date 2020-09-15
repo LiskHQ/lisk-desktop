@@ -8,7 +8,7 @@ pipeline {
 	}
 	parameters {
 		booleanParam(name: 'SKIP_PERCY', defaultValue: false, description: 'Skip running percy.')
-		string(name: 'LISK_CORE_VERSION', defaultValue: 'release/3.0.0', description: 'Use lisk-core branch.', )
+		string(name: 'LISK_CORE_VERSION', defaultValue: 'release/3.0.0-beta.1', description: 'Use lisk-core branch.', )
 		string(name: 'LISK_CORE_IMAGE_VERSION', defaultValue: '3.0.0-beta.1-a7842d112d5136d9462501763c4cb2895096e900', description: 'Use lisk-core docker image.', )
 	}
 	stages {
