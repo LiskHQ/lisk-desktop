@@ -75,7 +75,7 @@ describe('SideBar', () => {
   });
 
   it('renders 7 menu items but only Wallet is disabled when user is logged out', () => {
-    expect(wrapper).toContainMatchingElements(8, 'a');
+    expect(wrapper).toContainMatchingElements(7, 'a');
     expect(wrapper).toContainExactlyOneMatchingElement('a.disabled');
     expect(wrapper.find('a').at(0)).not.toHaveClassName('disabled');
     expect(wrapper.find('a').at(1)).toHaveClassName('disabled');
