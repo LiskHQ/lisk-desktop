@@ -9,7 +9,11 @@
   }
 
   & .filterHolder {
-    width: 200px;
+    display: flex;
+
+    & .registerDelegate {
+      margin-right: 10px;
+    }
   }
 
   & .lastHeading {
