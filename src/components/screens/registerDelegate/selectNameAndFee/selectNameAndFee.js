@@ -5,7 +5,7 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
+import { fromRawLsk } from '../../../../utils/lsk';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import regex from '../../../../utils/regex';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
@@ -194,7 +194,12 @@ const SelectNameAndFee = ({ account, ...props }) => {
       </BoxContent>
       <BoxFooter>
         <PrimaryButton
-          onClick={() => nextStep({ nickname: state.nickname, fee: toRawLsk(fee.value) })}
+          onClick={() => {
+            nextStep({
+              nickname: state.nickname,
+              fee: state.customFee ? state.customFee.value : fee.value,
+            });
+          }}
           disabled={isBtnDisabled()}
           className={`${styles.confirmBtn} confirm-btn`}
         >
