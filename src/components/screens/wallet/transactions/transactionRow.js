@@ -56,9 +56,6 @@ const TransactionRow = ({
             : <Spinner completed={isConfirmed} label={t('Pending...')} />
         }
       </span>
-      <span className={grid['col-xs-2']}>
-        <LiskAmount val={data.fee} token={activeToken} />
-      </span>
       {
         isLSK
           ? (
@@ -68,6 +65,9 @@ const TransactionRow = ({
           )
           : null
       }
+      <span className={grid['col-xs-2']}>
+        <LiskAmount val={data.fee} token={activeToken} />
+      </span>
       <span className={grid['col-xs-2']}>
         <TransactionAmount
           host={host}
