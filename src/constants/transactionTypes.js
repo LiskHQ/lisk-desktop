@@ -17,6 +17,7 @@ const transactionTypes = (t = str => str) => ({
     senderLabel: t('Sender'),
     key: 'transfer',
     nameFee: 0,
+    hardCap: 10000000, // rawLSK
   },
   setSecondPassphrase: {
     code: {
@@ -29,6 +30,7 @@ const transactionTypes = (t = str => str) => ({
     key: 'secondPassphrase',
     icon: 'tx2ndPassphrase',
     nameFee: 0,
+    hardCap: 500000000, // rawLSK
   },
   registerDelegate: {
     code: {
@@ -41,6 +43,7 @@ const transactionTypes = (t = str => str) => ({
     key: 'registerDelegate',
     icon: 'txDelegate',
     nameFee: 1e9,
+    hardCap: 2500000000, // rawLSK
   },
   vote: {
     code: {
@@ -53,6 +56,7 @@ const transactionTypes = (t = str => str) => ({
     key: 'castVotes',
     icon: 'txVote',
     nameFee: 0,
+    hardCap: 100000000, // rawLSK
   },
   createMultiSig: {
     code: {
@@ -65,6 +69,7 @@ const transactionTypes = (t = str => str) => ({
     key: 'createMultiSig',
     icon: 'signMultiSignatureTransaction',
     nameFee: 0,
+    hardCapp: 500000000, // rawLSK
   },
 });
 
@@ -102,6 +107,17 @@ transactionTypes.getListOf = (key) => {
 transactionTypes.getNameFee = (key) => {
   const types = transactionTypes();
   return types[key].nameFee;
+};
+
+/**
+ * gets the hard cap for a transaction type
+ *
+ * @param {key} key the transaction type
+ * @returns {number} transaction hard cap
+ */
+transactionTypes.getHardCap = (key) => {
+  const types = transactionTypes();
+  return types[key].hardCap;
 };
 
 export const byteSizes = {

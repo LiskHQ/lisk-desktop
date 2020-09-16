@@ -165,9 +165,12 @@ export const getTransactionFee = async ({
   const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : minFeePerByte * feePerByte * Math.random();
 
-  const value = minFee + feePerByte * findTransactionSizeInBytes({
+  let value = minFee + feePerByte * findTransactionSizeInBytes({
     transaction: data, type: txType,
   }) + tieBreaker;
+  if (value > transactionTypes.getHardCap(txType)) {
+    value = transactionTypes.getHardCap(txType);
+  }
 
   const roundedValue = parseFloat(Number(fromRawLsk(value)).toFixed(8));
   const feedback = data.amount === ''

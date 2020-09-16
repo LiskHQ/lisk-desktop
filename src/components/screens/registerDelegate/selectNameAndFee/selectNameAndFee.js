@@ -135,7 +135,11 @@ const SelectNameAndFee = ({ account, ...props }) => {
     hasUserEnoughFunds();
   }, []);
 
-  const isBtnDisabled = !!state.error || state.nickname.length === 0 || state.loading;
+  const isBtnDisabled = () => {
+    if (state.customFee && state.customFee.error) return true;
+    return !!state.error || state.nickname.length === 0 || state.loading;
+  };
+
   return (
     <Box width="medium" className={styles.box}>
       <BoxHeader>
@@ -180,7 +184,8 @@ const SelectNameAndFee = ({ account, ...props }) => {
           token={token}
           fee={fee}
           minFee={minFee.value}
-          customFee={state.customFee}
+          customFee={state.customFee ? state.customFee.value : undefined}
+          txType={txType}
           setCustomFee={changeCustomFee}
           priorityOptions={priorityOptions}
           selectedPriority={selectedPriority.selectedIndex}
@@ -189,11 +194,8 @@ const SelectNameAndFee = ({ account, ...props }) => {
       </BoxContent>
       <BoxFooter>
         <PrimaryButton
-          onClick={() => nextStep({
-            nickname: state.nickname,
-            fee: toRawLsk(state.customFee || fee.value),
-          })}
-          disabled={isBtnDisabled}
+          onClick={() => nextStep({ nickname: state.nickname, fee: toRawLsk(fee.value) })}
+          disabled={isBtnDisabled()}
           className={`${styles.confirmBtn} confirm-btn`}
         >
           {t('Go to confirmation')}

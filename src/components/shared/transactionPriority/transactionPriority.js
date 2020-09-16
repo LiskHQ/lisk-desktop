@@ -9,6 +9,8 @@ import Spinner from '../../toolbox/spinner';
 import {
   formatAmountBasedOnLocale,
 } from '../../../utils/formattedNumber';
+import { toRawLsk, fromRawLsk } from '../../../utils/lsk';
+import transactionTypes from '../../../constants/transactionTypes';
 
 const CUSTOM_FEE_INDEX = 3;
 
@@ -26,6 +28,22 @@ const getRelevantPriorityOptions = (options, token) =>
     index !== CUSTOM_FEE_INDEX
   || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key));
 
+const isCustomFeeValid = (value, txType, minFee) => {
+  if (!value) return false;
+  const rawValue = toRawLsk(parseFloat(value));
+  const hardCap = transactionTypes.getHardCap(txType);
+
+  if (rawValue > hardCap) {
+    return false;
+  }
+
+  if (rawValue < toRawLsk(minFee)) {
+    return false;
+  }
+
+  return true;
+};
+
 // eslint-disable-next-line max-statements
 const TransactionPriority = ({
   t,
@@ -37,9 +55,12 @@ const TransactionPriority = ({
   minFee,
   customFee,
   setCustomFee,
+  txType,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
+  const [inputValue, setInputValue] = useState(minFee);
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
+  const isLoading = priorityOptions[0].value === 0;
 
   const onClickPriority = (e) => {
     e.preventDefault();
@@ -55,13 +76,21 @@ const TransactionPriority = ({
 
   const onInputChange = (e) => {
     e.preventDefault();
-    const customFeeValue = e.target.value;
-    setCustomFee(customFeeValue);
+    const newValue = e.target.value;
+    if (token === 'LSK') {
+      setInputValue(newValue);
+      setCustomFee(
+        isCustomFeeValid(newValue, txType, minFee)
+          ? { value: newValue, feedback: '', error: false }
+          : { value: undefined, feedback: 'invalid custom fee', error: true },
+      );
+    } else {
+      setCustomFee(newValue);
+    }
   };
 
   const onInputBlur = (e) => {
     e.preventDefault();
-    setCustomFee(e.target.value);
     setShowEditIcon(true);
   };
 
@@ -73,9 +102,6 @@ const TransactionPriority = ({
   const tokenRelevantPriorities = useMemo(() =>
     getRelevantPriorityOptions(priorityOptions, token),
   [priorityOptions, token]);
-
-  const isLoading = priorityOptions[0].value === 0;
-  const inputValue = !isLoading && (customFee === 'undefined' ? fee.value : customFee);
 
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} transaction-priority`}>
@@ -134,10 +160,11 @@ const TransactionPriority = ({
                 autoFocus
                 type="text"
                 size="m"
-                defaultValue={minFee}
                 value={inputValue}
                 onChange={onInputChange}
                 onBlur={onInputBlur}
+                status={!isCustomFeeValid(inputValue, txType, minFee) ? 'error' : 'ok'}
+                feedback={`fee must bee between ${minFee} and ${fromRawLsk(transactionTypes.getHardCap(txType))}`}
               />
             ) : (
               <span className={`${styles.feeValue} fee-value`} onClick={onClickCustomEdit}>
@@ -162,8 +189,10 @@ TransactionPriority.propTypes = {
   priorityOptions: PropTypes.array.isRequired,
   selectedPriority: PropTypes.number,
   setSelectedPriority: PropTypes.func,
-  fee: PropTypes.number,
+  fee: PropTypes.object,
+  customFee: PropTypes.number,
   minFee: PropTypes.number,
+  txType: PropTypes.string,
 };
 
 export default TransactionPriority;
