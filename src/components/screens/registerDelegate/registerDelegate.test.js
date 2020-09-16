@@ -1,13 +1,10 @@
-import React from 'react';
 import debounce from 'lodash.debounce';
-import { mount } from 'enzyme';
+import { mountWithRouter } from '../../../utils/testHelpers';
 import RegisterDelegate from './registerDelegate';
 
 jest.mock('lodash.debounce');
 
 describe('RegisterDelegate', () => {
-  let wrapper;
-
   const props = {
     account: {
       info: {
@@ -36,10 +33,10 @@ describe('RegisterDelegate', () => {
   beforeEach(() => {
     props.liskAPIClient.delegates.get.mockClear();
     debounce.mockReturnValue((name, error) => !error && props.liskAPIClient.delegates.get(name));
-    wrapper = mount(<RegisterDelegate {...props} />);
   });
 
   it('renders properly SelectName component', () => {
+    const wrapper = mountWithRouter(RegisterDelegate, props);
     expect(wrapper).toContainMatchingElement('.select-name-container');
     expect(wrapper).toContainMatchingElements(2, '.select-name-text-description');
     expect(wrapper).toContainMatchingElement('.select-name-input');
