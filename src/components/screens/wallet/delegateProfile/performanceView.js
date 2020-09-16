@@ -11,9 +11,9 @@ const Item = ({
   icon, className, text, value,
 }) => (
   <BoxContent className={`${styles.performance} performance`}>
-    <div className={styles.performanceText}>
-      <div>{text}</div>
-      <div>{value}</div>
+    <div className={styles.performanceContent}>
+      <div className={styles.performanaceText}>{text}</div>
+      <div className={styles.performanaceValue}>{value}</div>
     </div>
     <div className={className}>
       <Icon name={icon} />
@@ -26,13 +26,13 @@ const PerformanceView = ({
 }) => (
   <Box className={`${grid['col-xs-6']} ${grid['col-md-8']} ${grid['col-lg-8']} ${styles.performanceContainer} performance-container`}>
     <BoxHeader>
-      <h1>{t('Performance')}</h1>
+      <h1 className={styles.heading}>{t('Performance')}</h1>
     </BoxHeader>
     <Box className={`${grid.row}`}>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-6']} ${styles.column}`}>
         <Item
           text={t('Productivity')}
-          value={productivity}
+          value="99.45%"
           icon="productivity"
           className={`${styles.performanceIcon} ${styles.productivityIcon}`}
         />

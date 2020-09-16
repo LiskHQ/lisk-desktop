@@ -1,8 +1,17 @@
+@import '../../../../app/mixins.css';
+
 .container {
   display: flex;
   flex-direction: column;
 }
 
+.detailsContainer, 
+.performanceContainer {
+  & h1.heading {
+    @mixin headingNormal;
+    font-size: 20px;
+  }
+}
 .statsContainer {
   .votesContainer {
     padding: 16px 12px;
@@ -31,6 +40,11 @@
   & .item {
     margin-left: 16px;
 
+    & .title {
+      @mixin contentNormal;
+      color: var(--color-slate-gray);
+    }
+
     & .value {
       margin-top: 8px;
     }
@@ -48,12 +62,22 @@
   }
 }
 
-.performanceText {
+.performanceContent {
   width: max-content;
   display: flex;
   flex-direction: column;
   padding-left: 20px;
   padding-top: 20px;
+
+  & .performanaceText {
+    @mixin contentNormal;
+    color: var(--color-slate-gray);
+    margin-bottom: 15px;
+  }
+
+  & .performanaceValue {
+    @mixin delegatePerformanceValueFont;
+  }
 }
 
 .icon {

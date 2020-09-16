@@ -84,3 +84,10 @@
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.1px;
 }
+
+@define-mixin delegatePerformanceValueFont {
+  font-family: var(--heading-font);
+  font-size: 35px;
+  font-weight: 300;
+  line-height: 40px;
+}
