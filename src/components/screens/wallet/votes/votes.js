@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
@@ -20,8 +19,7 @@ const Votes = ({
   const [showing, setShowing] = useState(30);
   const [filterValue, setFilterValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { apiVersion } = useSelector(state => state.network.networks.LSK);
-  const votesKey = apiVersion === '2' ? 'vote' : 'voteWeight';
+  const votesKey = 'voteWeight';
 
   const fetchDelegateWhileNeeded = () => {
     const delegatesData = delegates.data;
@@ -108,11 +106,10 @@ const Votes = ({
           row={VoteRow}
           additionalRowProps={{
             t,
-            apiVersion,
             onRowClick,
           }}
           loadData={onShowMore}
-          header={header(t, apiVersion)}
+          header={header(t)}
         />
       </BoxContent>
     </Box>

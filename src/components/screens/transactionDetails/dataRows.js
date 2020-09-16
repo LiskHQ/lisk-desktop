@@ -30,7 +30,7 @@ export const Illustration = ({
   transaction,
 }) => {
   const { title } = transactionTypes.getByCode(transaction.type || 0);
-  if (transaction.type === transactionTypes().send.code) return null;
+  if (transaction.type === transactionTypes().transfer.code) return null;
   return (
     <div className={styles.summaryHeader}>
       <TransactionTypeFigure
@@ -64,7 +64,7 @@ export const Sender = ({
 export const Recipient = ({
   activeToken, netCode, transaction, t,
 }) => {
-  if (transaction.type !== transactionTypes().send.code) return null;
+  if (transaction.type !== transactionTypes().transfer.code) return null;
   return (
     <BoxRow className={styles.detailsWrapper}>
       <AccountInfo
@@ -82,7 +82,7 @@ export const FeeAndAmount = ({
   transaction, activeToken, addresses, t,
 }) => (
   <BoxRow>
-    { transaction.type === transactionTypes().send.code
+    { transaction.type === transactionTypes().transfer.code
       ? (
         <div className={styles.value}>
           <span className={styles.label}>
@@ -166,7 +166,7 @@ export const DateAndConfirmation = ({
 export const Message = ({
   activeToken, transaction, t,
 }) => {
-  if (transaction.type !== transactionTypes().send.code || activeToken !== 'LSK') return null;
+  if (transaction.type !== transactionTypes().transfer.code || activeToken !== 'LSK') return null;
   return (
     <BoxRow className={styles.message}>
       <div className={`${styles.value}`}>

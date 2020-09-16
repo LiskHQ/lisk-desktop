@@ -12,14 +12,13 @@
 }
 
 .formSection {
-  padding: 0 !important;
+  padding: 0 var(--horizontal-padding-l);
 
   & .fieldGroup {
     align-items: flex-start;
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
-    padding: 0 var(--horizontal-padding-l);
   }
 
   & .fieldLabel {
@@ -128,11 +127,6 @@
     color: var(--color-slate-gray);
     display: flex;
     margin: 8px 0;
-
-    & .loading {
-      color: var(--color-ultramarine-blue);
-      margin-left: 5px;
-    }
 
     & > span {
       color: var(--color-maastricht-blue);

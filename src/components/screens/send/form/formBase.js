@@ -10,7 +10,7 @@ import Piwik from '../../../../utils/piwik';
 import styles from './form.css';
 
 const FormBase = ({
-  t, token, children, fields, showFee, network, getMaxAmount,
+  t, token, children, fields, network, maxAmount,
   bookmarks, nextStep, fieldUpdateFunctions,
 }) => {
   const onGoNext = () => {
@@ -41,8 +41,7 @@ const FormBase = ({
         </span>
         <AmountField
           amount={fields.amount}
-          fee={showFee ? fields.fee.value : null}
-          getMaxAmount={getMaxAmount}
+          maxAmount={maxAmount}
           setAmountField={fieldUpdateFunctions.setAmountField}
         />
         { children }

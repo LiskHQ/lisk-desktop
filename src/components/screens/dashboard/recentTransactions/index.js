@@ -6,7 +6,7 @@ import RecentTransaction from './recentTransactions';
 
 export default withData({
   transactions: {
-    apiUtil: (liskAPIClient, params) => getTransactions(params),
+    apiUtil: (network, params) => getTransactions(params),
     getApiParams: (state) => {
       const token = state.settings.token.active;
       const address = state.account.info && state.account.info[token]

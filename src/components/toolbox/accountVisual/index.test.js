@@ -5,7 +5,7 @@ import accounts from '../../../../test/constants/accounts';
 
 describe('AccountVisual', () => {
   it('should create account visual of an address', () => {
-    const wrapper = mount(<AccountVisual address={accounts.genesis.address} />);
+    const wrapper = mount(<AccountVisual address="16313739661670634666L" />);
 
     // should render an svg element
     expect(wrapper.find('svg')).toHaveLength(1);

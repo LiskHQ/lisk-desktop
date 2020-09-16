@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import votingConst from '../constants/voting';
-import Fees from '../constants/fees';
 
 /**
  * Returns the list of CONFRIMED votes.
@@ -85,7 +84,7 @@ export const getVotingLists = votes => ({
 
 export const getVotingError = (votes, account) => {
   let error;
-  if (account.balance < Fees.vote) {
+  if (account.balance < 1e8) {
     error = i18next.t('Not enough LSK to pay for the transaction.');
   } else if (getTotalVotesCount(votes) > votingConst.maxCountOfVotes) {
     error = i18next.t('Max amount of delegates in one voting exceeded.');

@@ -1,14 +1,16 @@
-import liskClient from 'Utils/lisk-client'; // eslint-disable-line
+import Lisk from '@liskhq/lisk-client';
 import { getAPIClient } from './network';
 import { getTimestampFromFirstBlock } from '../../datetime';
-import { toRawLsk } from '../../lsk';
+import { toRawLsk, fromRawLsk } from '../../lsk';
 import txFilters from '../../../constants/transactionFilters';
-import transactionTypes from '../../../constants/transactionTypes';
+// eslint-disable-next-line import/no-named-default
+import transactionTypes, { minFeePerByte } from '../../../constants/transactionTypes';
 import { adaptTransactions, adaptTransaction } from './adapters';
+import { findTransactionSizeInBytes } from '../../transactions';
 
 const parseTxFilters = (filter = txFilters.all, address) => ({
-  [txFilters.incoming]: { recipientId: address, type: transactionTypes().send.outgoingCode },
-  [txFilters.outgoing]: { senderId: address, type: transactionTypes().send.outgoingCode },
+  [txFilters.incoming]: { recipientId: address, type: transactionTypes().transfer.outgoingCode },
+  [txFilters.outgoing]: { senderId: address, type: transactionTypes().transfer.outgoingCode },
   [txFilters.all]: { senderIdOrRecipientId: address },
 }[filter]);
 
@@ -33,13 +35,13 @@ const parseCustomFilters = filters => ({
 });
 
 export const getTransactions = ({
-  network, liskAPIClient, address, limit, offset, type = undefined,
-  sort = 'timestamp:desc', filters = {},
+  network, liskAPIClient, address, limit,
+  offset, type = undefined, filters = {},
 }) => {
   const params = {
     limit,
     offset,
-    sort,
+    // sort, @todo Fix the sort
     ...parseTxFilters(filters.direction, address),
     ...parseCustomFilters(filters),
     ...(type !== undefined ? { type } : {}),
@@ -72,14 +74,37 @@ export const getSingleTransaction = ({
     }).catch(reject);
 });
 
+/**
+ * Calculates the min. transaction fee needed for a transaction
+ *
+ * @param {object} transaction transaction object
+ * @param {number} type transaction type
+ * @returns {number} min transaction fee in Beddows
+ */
+export const calculateMinTxFee = (
+  transaction, type,
+) => {
+  const fees = findTransactionSizeInBytes({
+    transaction, type,
+  }) * minFeePerByte + transactionTypes.getNameFee(type);
+
+  return fees;
+};
+
+/**
+ * creates a new transaction
+ * @param {Object} transaction
+ * @param {string} transactionType
+ * @returns {Promise} promise that resolves to a transaction or rejects with an error
+ */
 export const create = (
-  transaction, transactionType, apiVersion,
+  transaction, transactionType,
 ) => new Promise((resolve, reject) => {
   try {
-    const Lisk = liskClient(apiVersion);
     const { networkIdentifier } = transaction.network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
       ...transaction,
+      fee: transaction.fee.toString(),
       networkIdentifier,
     });
     resolve(tx);
@@ -88,11 +113,70 @@ export const create = (
   }
 });
 
-export const broadcast = (transaction, network) => new Promise(async (resolve, reject) => {
-  try {
-    await getAPIClient(network).transactions.broadcast(transaction);
-    resolve(transaction);
-  } catch (error) {
-    reject(error);
-  }
-});
+/**
+ * broadcasts a transaction over the network
+ * @param {object} transaction
+ * @param {object} network
+ * @returns {Promise} promise that resolves to a transaction or rejects with an error
+ */
+export const broadcast = (transaction, network) => new Promise(
+  async (resolve, reject) => {
+    try {
+      await getAPIClient(network).transactions.broadcast(transaction);
+      resolve(transaction);
+    } catch (error) {
+      reject(error);
+    }
+  },
+);
+
+/**
+ * Returns a dictionary of base fees for low, medium and high processing speeds
+ *
+ * @todo get from Lisk Ser
+ * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
+ * medium and high priority fee options
+ */
+export const getTransactionBaseFees = () => (
+  new Promise(async (resolve) => {
+    const fee = 1e7;
+
+    // @todo use real fee estimates
+    resolve({
+      Low: fee,
+      Medium: fee * 2,
+      High: fee * 3,
+    });
+  }));
+
+/**
+ * Returns the actual tx fee based on given tx details and selected processing speed
+ * @param {String} txData - The transaction object
+ * @param {Object} selectedPriority - network configuration
+ */
+export const getTransactionFee = async ({
+  txData, selectedPriority,
+}) => {
+  const { txType, ...data } = txData;
+  const minFee = calculateMinTxFee(data, txType);
+  const feePerByte = Number(fromRawLsk(selectedPriority.value));
+
+  // Tie breaker is only meant for Medium and high processing speeds
+  const tieBreaker = selectedPriority.selectedIndex === 0
+    ? 0 : minFeePerByte * feePerByte * Math.random();
+
+  const value = minFee + feePerByte * findTransactionSizeInBytes({
+    transaction: data, type: txType,
+  }) + tieBreaker;
+
+  const roundedValue = parseFloat(Number(fromRawLsk(value)).toFixed(8));
+  const feedback = data.amount === ''
+    ? '-'
+    : `${(value ? '' : 'Invalid amount')}`;
+
+  return {
+    value: roundedValue,
+    error: !!feedback,
+    feedback,
+  };
+};

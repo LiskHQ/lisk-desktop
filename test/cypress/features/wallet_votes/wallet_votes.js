@@ -20,6 +20,10 @@ Then(/^I see more than 30 votes$/, function () {
   cy.get(ss.voteRow).should('have.length.greaterThan', 30);
 });
 
+Then(/^I see no votes$/, function () {
+  cy.get(ss.voteRow).should('not.exist');
+});
+
 Then(/^I filter votes$/, function () {
   cy.get(ss.searchDelegateInput).click().type('genesis_17');
 });

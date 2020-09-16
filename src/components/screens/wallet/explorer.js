@@ -74,7 +74,7 @@ const Wallet = ({
             tabId="voting"
           />
         ) : null}
-        {account.data && account.data.delegate
+        {account.data && account.data.isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
@@ -96,6 +96,7 @@ const apis = {
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
       address: selectSearchParamValue(props.history.location.search, 'address'),
+      network: state.network,
     }),
     transformResponse: response => response,
   },

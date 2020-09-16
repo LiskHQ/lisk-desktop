@@ -28,7 +28,7 @@ class AccountVisualWithAddress extends React.Component {
       address, transactionSubject, transactionType, size,
     } = this.props;
     const txType = transactionTypes.getByCode(transactionType);
-    const sendCode = transactionTypes().send.code;
+    const sendCode = transactionTypes().transfer.code;
     const transformedAddress = this.getTransformedAddress(address);
 
     return (

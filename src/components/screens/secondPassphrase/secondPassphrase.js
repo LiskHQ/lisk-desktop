@@ -1,6 +1,5 @@
 import React from 'react';
 import { generatePassphrase } from '../../../utils/passphrase';
-import Fees from '../../../constants/fees';
 import FirstStep from './firstStep';
 import SummaryStep from './summaryStep';
 import styles from './secondPassphrase.css';
@@ -19,7 +18,7 @@ class SecondPassphrase extends React.Component {
 
   componentDidMount() {
     const { account, location, history } = this.props;
-    if (account.secondPublicKey || account.balance < Fees.setSecondPassphrase) {
+    if (account.secondPublicKey || account.balance < 5e8) {
       history.push(`${location.pathname}?modal=settings`);
     }
   }

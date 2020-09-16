@@ -1,5 +1,3 @@
-const { join } = require('path');
-
 module.exports = {
   modulePaths: ['src/components'],
   testMatch: [
@@ -24,7 +22,6 @@ module.exports = {
   moduleNameMapper: {
     '^.+\\.css$': 'identity-obj-proxy',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
-    '^Utils/lisk-client': join(__dirname, '.', 'src/utils/api/lisk-client.js'),
   },
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
@@ -57,6 +54,7 @@ module.exports = {
     'src/actions/network/lsk.js',
     'src/actions/voting.js',
     'src/store/middlewares/login.js',
+    'src/store/middlewares/network.js',
     'src/store/index.js',
     'src/store/reducers/settings.js',
     'src/store/reducers/bookmarks.js',
@@ -95,7 +93,6 @@ module.exports = {
     'src/utils/api/ledger.js',
     'src/utils/api/lsk/liskService.js',
     'src/utils/api/btc/',
-    'src/utils/api/lisk-client.js',
     'src/utils/api/delegates.js',
     'src/utils/api/lsk/adapters.js',
     'src/utils/api/lsk/account.js',
@@ -105,7 +102,6 @@ module.exports = {
     'src/utils/balanceChart.js', // This should be unskipped in issue #1499
     'src/utils/loading.js',
     'src/utils/platform.js',
-    'src/utils/hacks.js',
     'src/utils/hwManager.js',
     'src/utils/voting.js',
   ],

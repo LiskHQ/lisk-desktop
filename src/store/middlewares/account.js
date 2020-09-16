@@ -60,7 +60,7 @@ const votePlaced = (store, action) => {
 const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
   transaction
   && transaction.recipientId === account.address
-  && transaction.type === transactionTypes().send.code
+  && transaction.type === transactionTypes().transfer.code
 ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
@@ -83,9 +83,11 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
 
   const txs = (action.data.block.transactions || []).map(txAdapter);
   const blockContainsRelevantTransaction = txs.filter((transaction) => {
-    const sender = transaction ? transaction.senderId : null;
-    const recipient = transaction ? transaction.recipientId : null;
-    return account.address === recipient || account.address === sender;
+    if (!transaction) return false;
+    return (
+      account.address === transaction.senderId
+      || account.address === transaction.recipientId
+    );
   }).length > 0;
 
   showNotificationsForIncomingTransactions(txs, account, token.active);
@@ -101,7 +103,6 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     setTimeout(() => {
       updateAccountData(store);
       store.dispatch(updateTransactions({
-        pendingTransactions: transactions.pending,
         address: account.address,
         filters: transactions.filters,
       }));
@@ -180,8 +181,7 @@ const autoLogInIfNecessary = async (store) => {
     showNetwork, statistics, statisticsRequest, statisticsFollowingDay,
   } = store.getState().settings;
   const loginNetwork = checkNetworkToConnect(showNetwork);
-
-  store.dispatch(await networkSet(loginNetwork));
+  store.dispatch(networkSet(loginNetwork));
   store.dispatch(networkStatusUpdated({ online: true }));
 
   const autologinData = getAutoLogInData();

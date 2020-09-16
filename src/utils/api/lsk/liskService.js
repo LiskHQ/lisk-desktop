@@ -1,5 +1,5 @@
-import { utils } from '@liskhq/lisk-transactions';
-import { cryptography } from '@liskhq/lisk-client';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { cryptography, transactions } from '@liskhq/lisk-client';
 import io from 'socket.io-client';
 import * as popsicle from 'popsicle';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
@@ -94,8 +94,8 @@ const liskServiceApi = {
       limit: DEFAULT_LIMIT,
       ...(dateFrom && { from: formatDate(dateFrom) }),
       ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
-      ...(amountFrom && { min: utils.convertLSKToBeddows(amountFrom) }),
-      ...(amountTo && { max: utils.convertLSKToBeddows(amountTo) }),
+      ...(amountFrom && { min: transactions.utils.convertLSKToBeddows(amountFrom) }),
+      ...(amountTo && { max: transactions.utils.convertLSKToBeddows(amountTo) }),
       ...searchParams,
     },
     network,
