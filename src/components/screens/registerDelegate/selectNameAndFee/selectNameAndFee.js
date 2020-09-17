@@ -5,7 +5,7 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
+import { fromRawLsk } from '../../../../utils/lsk';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
 import regex from '../../../../utils/regex';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
@@ -135,7 +135,11 @@ const SelectNameAndFee = ({ account, ...props }) => {
     hasUserEnoughFunds();
   }, []);
 
-  const isBtnDisabled = !!state.error || state.nickname.length === 0 || state.loading;
+  const isBtnDisabled = () => {
+    if (state.customFee && state.customFee.error) return true;
+    return !!state.error || state.nickname.length === 0 || state.loading;
+  };
+
   return (
     <Box width="medium" className={styles.box}>
       <BoxHeader>
@@ -180,7 +184,8 @@ const SelectNameAndFee = ({ account, ...props }) => {
           token={token}
           fee={fee}
           minFee={minFee.value}
-          customFee={state.customFee}
+          customFee={state.customFee ? state.customFee.value : undefined}
+          txType={txType}
           setCustomFee={changeCustomFee}
           priorityOptions={priorityOptions}
           selectedPriority={selectedPriority.selectedIndex}
@@ -189,11 +194,13 @@ const SelectNameAndFee = ({ account, ...props }) => {
       </BoxContent>
       <BoxFooter>
         <PrimaryButton
-          onClick={() => nextStep({
-            nickname: state.nickname,
-            fee: toRawLsk(state.customFee || fee.value),
-          })}
-          disabled={isBtnDisabled}
+          onClick={() => {
+            nextStep({
+              nickname: state.nickname,
+              fee: state.customFee ? state.customFee.value : fee.value,
+            });
+          }}
+          disabled={isBtnDisabled()}
           className={`${styles.confirmBtn} confirm-btn`}
         >
           {t('Go to confirmation')}

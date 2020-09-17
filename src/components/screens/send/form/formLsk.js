@@ -50,7 +50,7 @@ const FormLsk = (props) => {
     amount,
     recipient,
     reference,
-    fee: customFee ? { value: customFee, feedback: '', error: false } : fee,
+    fee: customFee || fee,
     selectedPriority,
   };
 
@@ -90,7 +90,7 @@ const FormLsk = (props) => {
         <span className={`${styles.feedback} ${reference.error || messageMaxLength - reference.byteCount < 10 ? 'error' : ''} ${styles.show}`}>
           {reference.feedback}
           <Tooltip
-            position="top left"
+            position="left"
             title={t('Bytes counter')}
           >
             <p className={styles.tooltipText}>
@@ -107,7 +107,8 @@ const FormLsk = (props) => {
         token={token}
         fee={fee}
         minFee={minFee.value}
-        customFee={customFee}
+        customFee={customFee ? customFee.value : undefined}
+        txType={txType}
         setCustomFee={changeCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}

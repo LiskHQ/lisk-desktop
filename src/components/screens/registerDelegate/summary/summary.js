@@ -5,6 +5,7 @@ import TransactionSummary from '../../../shared/transactionSummary';
 import AccountVisual from '../../../toolbox/accountVisual';
 import { create } from '../../../../utils/api/lsk/transactions';
 import transactionTypes from '../../../../constants/transactionTypes';
+import { toRawLsk } from '../../../../utils/lsk';
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -27,7 +28,7 @@ class Summary extends React.Component {
       account,
       username: nickname,
       passphrase: account.passphrase,
-      fee,
+      fee: toRawLsk(parseFloat(fee)),
       network,
       nonce: account.nonce,
     };

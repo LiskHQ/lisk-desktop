@@ -15,6 +15,8 @@ import txFilters from '../../../constants/transactionFilters';
 import transactionTypes from '../../../constants/transactionTypes';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import accounts from '../../../../test/constants/accounts';
+import * as transactionUtils from '../../transactions';
+import { fromRawLsk } from '../../lsk';
 
 jest.mock('./network');
 const TESTNET_NETHASH = 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba';
@@ -250,6 +252,27 @@ describe('Utils: Transactions API', () => {
 
       expect(fees.value).toBeDefined();
       expect(fees.error).toBeTruthy();
+    });
+
+    it('returns transaction type hard cap value', async () => {
+      const txType = transactionTypes().transfer.key;
+      const hardCap = transactionTypes().transfer.hardCap;
+
+      jest.spyOn(transactionUtils, 'findTransactionSizeInBytes').mockImplementation(() => hardCap + 1);
+
+      const fees = await getTransactionFee({
+        txData: {
+          ...testTx,
+          amount: '',
+          senderPublicKey: accounts.genesis.publicKey,
+          txType,
+        },
+        selectedPriority: { value: 10, selectedIndex: 0 },
+      });
+
+      expect(fees.value).toBeDefined();
+      expect(fees.error).toBeTruthy();
+      expect(fees.value).toEqual(parseFloat(Number(fromRawLsk(hardCap)).toFixed(8)));
     });
   });
 });
