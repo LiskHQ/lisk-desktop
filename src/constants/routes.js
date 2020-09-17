@@ -4,7 +4,6 @@ import BlockDetails from '../components/screens/monitor/blockDetails';
 import Blocks from '../components/screens/monitor/blocks';
 import Bookmarks from '../components/screens/bookmarks/list';
 import Dashboard from '../components/screens/dashboard';
-import Voting from '../components/screens/voting';
 import DelegatesMonitor from '../components/screens/monitor/delegates';
 import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
@@ -22,7 +21,6 @@ import Wallet from '../components/screens/wallet';
 import Explorer from '../components/screens/wallet/explorer';
 import TransactionDetails from '../components/screens/transactionDetails';
 import VerifyMessage from '../components/screens/verifyMessage';
-import VotingSummary from '../components/screens/voting/votingSummary';
 import Request from '../components/screens/request';
 import SearchBar from '../components/shared/searchBar';
 import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
@@ -34,12 +32,6 @@ export default {
     isPrivate: true,
     exact: false,
     forbiddenTokens: [],
-  },
-  voting: {
-    path: '/voting',
-    component: Voting,
-    isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
   },
   addAccount: {
     path: '/add-account',
@@ -147,11 +139,6 @@ export const modals = {
     component: Send,
     isPrivate: true,
     forbiddenTokens: [],
-  },
-  votingSummary: {
-    component: VotingSummary,
-    isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
   },
   settings: {
     component: Settings,

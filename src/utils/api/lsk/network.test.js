@@ -25,7 +25,7 @@ describe('Utils: network LSK API', () => {
       Lisk.APIClient = APIClientBackup;
     });
 
-    it.skip('should create a new mainnet Lisk APIClient instance if network is mainnet', () => {
+    it('should create a new mainnet Lisk APIClient instance if network is mainnet', () => {
       const nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
       const network = {
         name: networks.mainnet.name,
@@ -41,7 +41,7 @@ describe('Utils: network LSK API', () => {
       expect(apiClient).toEqual(getAPIClient(network));
     });
 
-    it.skip('should create a new testnet Lisk APIClient instance if network is testnet', () => {
+    it('should create a new testnet Lisk APIClient instance if network is testnet', () => {
       const nethash = Lisk.APIClient.constants.TESTNET_NETHASH;
       const network = {
         name: networks.testnet.name,
@@ -54,7 +54,7 @@ describe('Utils: network LSK API', () => {
       expect(constructorSpy).toHaveBeenCalledWith(networks.testnet.nodes, { nethash });
     });
 
-    it.skip('should create a new customNode Lisk APIClient instance if network is customNode', () => {
+    it('should create a new customNode Lisk APIClient instance if network is customNode', () => {
       const nethash = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';
       const nodeUrl = 'http://localhost:4000';
       const network = {

@@ -47,13 +47,13 @@ describe('SideBar', () => {
     wrapper = mountWithRouter(SideBar, myProps);
   });
 
-  it('renders 8 menu items elements', () => {
-    expect(wrapper).toContainMatchingElements(8, 'a');
+  it('renders 7 menu items elements', () => {
+    expect(wrapper).toContainMatchingElements(7, 'a');
   });
 
-  describe('renders 8 menu items', () => {
+  describe('renders 7 menu items', () => {
     it('without labels if sideBarExpanded is false', () => {
-      expect(wrapper).toContainMatchingElements(8, 'a');
+      expect(wrapper).toContainMatchingElements(7, 'a');
       wrapper.find('a').forEach(link => expect(link).not.toContain(/\w*/));
     });
 
@@ -61,7 +61,6 @@ describe('SideBar', () => {
       const expectedLinks = [
         'Dashboard',
         'Wallet',
-        'Voting',
         'Network',
         'Transactions',
         'Blocks',
@@ -75,8 +74,8 @@ describe('SideBar', () => {
     });
   });
 
-  it('renders 8 menu items but only Wallet is disabled when user is logged out', () => {
-    expect(wrapper).toContainMatchingElements(8, 'a');
+  it('renders 7 menu items but only Wallet is disabled when user is logged out', () => {
+    expect(wrapper).toContainMatchingElements(7, 'a');
     expect(wrapper).toContainExactlyOneMatchingElement('a.disabled');
     expect(wrapper.find('a').at(0)).not.toHaveClassName('disabled');
     expect(wrapper.find('a').at(1)).toHaveClassName('disabled');
@@ -85,6 +84,5 @@ describe('SideBar', () => {
     expect(wrapper.find('a').at(4)).not.toHaveClassName('disabled');
     expect(wrapper.find('a').at(5)).not.toHaveClassName('disabled');
     expect(wrapper.find('a').at(6)).not.toHaveClassName('disabled');
-    expect(wrapper.find('a').at(7)).not.toHaveClassName('disabled');
   });
 });

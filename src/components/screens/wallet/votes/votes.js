@@ -9,6 +9,8 @@ import styles from './votes.css';
 import Table from '../../../toolbox/table';
 import VoteRow from './voteRow';
 import header from './votesTableHeader';
+import DialogLink from '../../../toolbox/dialog/link';
+import { SecondaryButton } from '../../../toolbox/buttons';
 
 // eslint-disable-next-line max-statements
 const Votes = ({
@@ -85,6 +87,14 @@ const Votes = ({
       <BoxHeader>
         <h1>{t('Voted delegates')}</h1>
         <div className={`${styles.filterHolder}`}>
+          <DialogLink
+            className={`${styles.registerDelegate} register-delegate`}
+            component="registerDelegate"
+          >
+            <SecondaryButton size="m">
+              {t('Register a delegate')}
+            </SecondaryButton>
+          </DialogLink>
           <Input
             className="search"
             disabled={!votes.data.length}

@@ -94,7 +94,6 @@ Then(/^I should be connected to network ([^\s]+)$/, function (networkName) {
 });
 
 Then(/^I should see lisk monitor features$/, function () {
-  cy.get(ss.monitorVoting).should('have.length', 1);
   cy.get(ss.monitorTransactions).should('have.length', 1);
   cy.get(ss.monitorNetwork).should('have.length', 1);
   cy.get(ss.monitorBlocks).should('have.length', 1);

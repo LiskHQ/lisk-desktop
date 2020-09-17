@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Table from './index';
+import accounts from '../../../../test/constants/accounts';
 
 describe('Table', () => {
   describe('Loading', () => {
@@ -47,6 +48,30 @@ describe('Table', () => {
       props.emptyState = () => <div>custom_empty_template</div>;
       const wrapper = mount(<Table {...props} />);
       expect(wrapper).toHaveText('custom_empty_template');
+    });
+  });
+
+  describe('List', () => {
+    const Row = ({ data }) => <div>{data.address}</div>;
+    const props = {
+      data: Object.keys(accounts).filter(key => key !== 'any account').map(key => accounts[key]),
+      canLoadMore: false,
+      isLoading: false,
+      row: Row,
+      header: [{
+        title: 'Header Item',
+        classList: 'header-item',
+      }],
+    };
+
+    it('should render the data array in rows and use index for iteration key by default', () => {
+      const wrapper = mount(<Table {...props} />);
+      expect(wrapper.find('Row')).toHaveLength(props.data.length);
+    });
+    it('should render accept function to define iteration key', () => {
+      const iterationKey = jest.fn().mockImplementation(data => data.address);
+      mount(<Table {...props} iterationKey={iterationKey} />);
+      expect(iterationKey.mock.calls.length).toBe(props.data.length);
     });
   });
 });

@@ -25,7 +25,7 @@ describe('Utils: network API', () => {
       Lisk.APIClient = APIClientBackup;
     });
 
-    it.skip('should create a new Lisk APIClient instance if called with LSK token', () => {
+    it('should create a new Lisk APIClient instance if called with LSK token', () => {
       const nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
       const nodeUrl = 'https://hub23.lisk.io';
       const state = {

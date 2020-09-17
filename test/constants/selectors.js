@@ -6,18 +6,6 @@ const delegatesPage = {
   goToConfirmationButton: '.go-to-confirmation-button',
   votingHeader: '.voting-header',
 };
-
-const votingPage = {
-  addedVotes: '.added-votes .vote',
-  removedVotes: '.removed-votes .vote',
-  voteResultHeader: '.result-box-header',
-  backToDelegatesButton: '.back-to-delegates-button',
-  alreadyVotedPreselection: '.alreadyVoted-message .vote',
-  addedVotesContainer: '.added-votes',
-  becomeDelegateLink: '.register-delegate',
-  loadMoreButton: '.load-more',
-};
-
 const secondPassphraseRegistrationPage = {
   goToConfirmation: '.go-to-confirmation',
   confirmationCheckbox: '.confirmation-checkbox',
@@ -26,8 +14,8 @@ const secondPassphraseRegistrationPage = {
 
 const ss = {
   ...delegatesPage,
-  ...votingPage,
   ...secondPassphraseRegistrationPage,
+  becomeDelegateLink: '.register-delegate',
   app: '#app',
   monitorNetwork: '#network',
   monitorTransactions: '#transactions',

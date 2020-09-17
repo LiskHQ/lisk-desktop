@@ -2,7 +2,8 @@ Feature: Register delegate
 
   Scenario: Register delegate + Header balance is affected
     Given I login as delegate_candidate on devnet
-    Given I am on voting page
+    Given I am on wallet page
+    And I click on votesTab
     Given I click on becomeDelegateLink
     Then I see this title: Become a delegate
     When I enter the delegate name
