@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '../../../constants/tokens';
 import TransactionPriority from '.';
+import transactionTypes from '../../../constants/transactionTypes';
 
 const baseFees = {
   Low: 0.1,
@@ -24,6 +25,7 @@ describe('TransactionPriority', () => {
     setSelectedPriority: jest.fn(),
     fee,
     setCustomFee: jest.fn(),
+    txType: transactionTypes().transfer.key,
   };
   beforeEach(() => {
     props.setSelectedPriority.mockRestore();
@@ -61,14 +63,6 @@ describe('TransactionPriority', () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
     wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { value: '0.20' } });
     expect(props.setCustomFee).toHaveBeenCalledTimes(1);
-  });
-
-  it('on focus away from the input, the custom fee cb should be called', () => {
-    expect(wrapper).not.toContainMatchingElement('Icon[name="edit"]');
-    wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
-    wrapper.find('.custom-fee-input').at(1).simulate('blur');
-    expect(props.setCustomFee).toHaveBeenCalledTimes(1);
-    expect(wrapper).toContainMatchingElement('Icon[name="edit"]');
   });
 
   it('hides the edit icon and shows the input when clicked in the "fee-value" element', () => {
