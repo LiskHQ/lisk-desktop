@@ -30,12 +30,22 @@
       top: -1px;
     }
 
+    &:nth-child(2) {
+      &::before {
+        display: block;
+        left: 20px;
+        right: 20px;
+      }
+    }
+
     &:hover {
       background-color: var(--color-rows-hover);
       text-decoration: none;
 
       &::before {
         display: block;
+        left: 0;
+        right: 0;
       }
 
       &::after {
