@@ -268,11 +268,11 @@ const liskServiceApi = {
   },
 
   getVoteNames: async (network, params) => {
-    const results = await liskServiceSocketGet(params.publicKeys.map(publickey => ({
+    const request = params.publicKeys.map(publickey => ({
       method: 'get.accounts',
       params: { publickey },
-    })));
-
+    }));
+    const results = await liskServiceSocketGet(request, network);
 
     return results
       .map(result => result.result.data[0])
