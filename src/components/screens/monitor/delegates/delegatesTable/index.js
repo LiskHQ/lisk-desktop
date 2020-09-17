@@ -4,6 +4,13 @@ import Table from '../../../../toolbox/table';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
 
+const filterDelegates = (delegates, filters) => ({
+  ...delegates,
+  data: filters.search
+    ? delegates.data.filter(delegate => delegate.username.includes(filters.search))
+    : delegates.data,
+});
+
 const DelegatesTable = ({
   standByDelegates,
   changeSort,
@@ -28,14 +35,8 @@ const DelegatesTable = ({
     : standByDelegates.data.length < (standByDelegates.meta.total - voting.numberOfActiveDelegates);
 
   delegates = activeTab === 'active'
-    ? {
-      ...delegates,
-      data: filters.search
-        ? delegates.data.filter(delegate => delegate.username.includes(filters.search))
-        : delegates.data,
-    }
-    : standByDelegates;
-
+    ? filterDelegates(delegates, filters)
+    : filterDelegates(standByDelegates, filters);
 
   return (
     <Table
