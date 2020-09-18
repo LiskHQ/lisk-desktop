@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { PrimaryButton } from '../../../../toolbox/buttons';
+import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
 import LiskAmount from '../../../../shared/liskAmount';
@@ -41,6 +41,18 @@ const BalanceInfo = ({
         </div>
         <SignInTooltipWrapper position="bottom">
           <div className={styles.actionRow}>
+            {
+              activeToken === 'LSK' && (
+                <DialogLink component="addVote" className={`${styles.button} add-vote`}>
+                  <SecondaryButton
+                    className={`${styles.voteButton} open-add-vote-dialog`}
+                    size="m"
+                  >
+                    {t('Add to votes')}
+                  </SecondaryButton>
+                </DialogLink>
+              )
+            }
             <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
               <PrimaryButton
                 className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}

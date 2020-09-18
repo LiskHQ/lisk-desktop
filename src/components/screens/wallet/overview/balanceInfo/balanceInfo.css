@@ -58,6 +58,10 @@
   & .button {
     flex-grow: 1;
 
+    & + .button {
+      margin-left: 10px;
+    }
+
     & button {
       width: 100%;
     }
