@@ -28,14 +28,14 @@ const getTxAsset = (tx) => {
 export const Illustration = ({
   transaction,
 }) => {
-  const { title } = transactionTypes.getByCode(99);
+  const { title } = transactionTypes.getByCode(transaction.type || 0);
   if (transaction.type === transactionTypes().transfer.code) return null;
 
   return (
     <div className={styles.summaryHeader}>
       <TransactionTypeFigure
         address={transaction.senderId}
-        transactionType={99}
+        transactionType={transaction.type}
       />
       <h2 className="tx-header">{title}</h2>
     </div>
