@@ -162,12 +162,12 @@ describe('actions: voting', () => {
       expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });
 
-    it('should dispatch votesUpdated action when resolved if type === \'update\'', async () => {
+    it('should dispatch votesConfirmed action when resolved if type === \'update\'', async () => {
       const dispatch = sinon.spy();
 
       delegateApiMock.resolves({ data: { votes: delegates } });
       const expectedAction = {
-        type: actionTypes.votesUpdated,
+        type: actionTypes.votesConfirmed,
         data: { list: delegates },
       };
 

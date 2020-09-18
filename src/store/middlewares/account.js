@@ -11,7 +11,7 @@ import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
 import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
-import { loadVotes } from '../../actions/voting';
+import { votesRetrieved } from '../../actions/voting';
 import { networkSet, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
 import analytics from '../../utils/analytics';
@@ -50,7 +50,7 @@ const votePlaced = (store, action) => {
   if (voteTransaction) {
     const { account } = store.getState();
 
-    store.dispatch(loadVotes({
+    store.dispatch(votesRetrieved({
       address: account.info.LSK.address,
       type: 'update',
     }));

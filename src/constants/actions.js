@@ -56,7 +56,6 @@ const actionTypes = {
   updateTransactions: 'UPDATE_TRANSACTIONS',
   voteLookupStatusCleared: 'VOTE_LOOKUP_STATUS_CLEARED',
   voteLookupStatusUpdated: 'VOTE_LOOKUP_STATUS_UPDATED',
-  VotePlaced: 'VOTE_PLACED',
   votesRetrieved: 'VOTES_RETRIEVED',
   votesSubmitted: 'VOTES_SUBMITTED',
   votesCleared: 'VOTES_CLEARED',

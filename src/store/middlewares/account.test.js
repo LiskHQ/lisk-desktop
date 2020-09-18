@@ -215,8 +215,8 @@ describe('Account middleware', () => {
     );
   });
 
-  it(`should dispatch ${actionTypes.loadVotes} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
-    const actionSpy = jest.spyOn(votingActions, 'loadVotes');
+  it(`should dispatch ${actionTypes.votesRetrieved} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
+    const actionSpy = jest.spyOn(votingActions, 'votesRetrieved');
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes().vote.code;
     middleware(store)(next)(transactionsUpdatedAction);
     expect(actionSpy).toHaveBeenCalledWith({
