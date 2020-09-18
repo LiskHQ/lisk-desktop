@@ -43,7 +43,6 @@ const AddVote = ({
               amount={voteAmount}
               setAmountField={setVoteAmount}
               title={t('Vote amount (LSK)')}
-              maxAmountTitle={t('Vote with the entire balance')}
               inputPlaceHolder={t('Insert the vote amount')}
               name="vote"
             />
