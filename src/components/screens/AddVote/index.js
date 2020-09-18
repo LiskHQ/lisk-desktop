@@ -11,7 +11,7 @@ import BoxContent from '../../toolbox/box/content';
 import BoxFooter from '../../toolbox/box/footer';
 import BoxHeader from '../../toolbox/box/header';
 import BoxInfoText from '../../toolbox/box/infoText';
-import AmountField from '../send/form/amountField';
+import AmountField from '../../shared/amountField';
 import useVoteAmountField from './useVoteAmountField';
 import { PrimaryButton } from '../../toolbox/buttons';
 import styles from './addVote.css';
