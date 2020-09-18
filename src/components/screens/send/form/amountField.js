@@ -11,9 +11,9 @@ import styles from './form.css';
 
 const AmountField = ({
   amount, maxAmount, setAmountField,
+  title, maxAmountTitle, inputPlaceHolder, name,
 }) => {
   const { t } = useTranslation();
-  const name = 'amount';
   const setEntireBalance = () => {
     const value = formatAmountBasedOnLocale({
       value: fromRawLsk(maxAmount.value),
@@ -32,14 +32,18 @@ const AmountField = ({
     ].filter(Boolean).join(' ')}
     >
       <div className={`${styles.amountFieldHeader}`}>
-        <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
-        <TertiaryButton
-          onClick={setEntireBalance}
-          className="send-entire-balance-button"
-          size="xs"
-        >
-          {t('Send entire balance')}
-        </TertiaryButton>
+        <span className={`${styles.fieldLabel}`}>{title}</span>
+        {
+          maxAmount && (
+            <TertiaryButton
+              onClick={setEntireBalance}
+              className="send-entire-balance-button"
+              size="xs"
+            >
+              {maxAmountTitle}
+            </TertiaryButton>
+          )
+        }
       </div>
       <span className={`${styles.amountField} amount`}>
         <Input
@@ -47,7 +51,7 @@ const AmountField = ({
           onChange={handleAmountChange}
           name={name}
           value={amount.value}
-          placeholder={t('Insert the amount of transaction')}
+          placeholder={inputPlaceHolder}
           className={`${styles.input} ${amount.error ? 'error' : ''}`}
           isLoading={amount.isLoading}
           status={amount.error ? 'error' : 'ok'}
