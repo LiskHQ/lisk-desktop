@@ -55,7 +55,7 @@ const voting = (state = {}, action) => {
      * It removes the unvoted delegates, updates the confirmed vote amounts
      * and removes all pending flags
      */
-    case actionTypes.votesUpdated:
+    case actionTypes.votesConfirmed:
       return Object.keys(state)
         .filter(username => state[username].unconfirmed)
         .reduce((votesDict, username) => {
