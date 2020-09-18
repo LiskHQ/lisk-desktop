@@ -1,19 +1,17 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Input } from '../../../toolbox/inputs';
-import { TertiaryButton } from '../../../toolbox/buttons';
+import { Input } from '../../toolbox/inputs';
+import { TertiaryButton } from '../../toolbox/buttons';
 import {
   formatAmountBasedOnLocale,
-} from '../../../../utils/formattedNumber';
-import { fromRawLsk } from '../../../../utils/lsk';
-import Converter from '../../../shared/converter';
-import styles from './form.css';
+} from '../../../utils/formattedNumber';
+import { fromRawLsk } from '../../../utils/lsk';
+import Converter from '../converter';
+import styles from './amountField.css';
 
 const AmountField = ({
   amount, maxAmount, setAmountField,
   title, maxAmountTitle, inputPlaceHolder, name,
 }) => {
-  const { t } = useTranslation();
   const setEntireBalance = () => {
     const value = formatAmountBasedOnLocale({
       value: fromRawLsk(maxAmount.value),
