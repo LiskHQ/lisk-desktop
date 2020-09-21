@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { selectSearchParamValue } from '../../../utils/searchParams';
-import { votesEdited } from '../../../actions/voting';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from '../../../utils/searchParams';
+import { voteEdited } from '../../../actions/voting';
 import Dialog from '../../toolbox/dialog/dialog';
 import Box from '../../toolbox/box';
 import BoxContent from '../../toolbox/box/content';
@@ -14,18 +14,25 @@ import BoxInfoText from '../../toolbox/box/infoText';
 import AmountField from '../../shared/amountField';
 import useVoteAmountField from './useVoteAmountField';
 import { PrimaryButton } from '../../toolbox/buttons';
+import { toRawLsk } from '../../../utils/lsk';
+
 import styles from './addVote.css';
 
 const AddVote = ({
   history, t,
 }) => {
   const dispatch = useDispatch();
+  const host = useSelector(state => state.account.info.LSK.address);
   const [voteAmount, setVoteAmount] = useVoteAmountField('');
+
   const confirm = () => {
-    dispatch(votesEdited({
-      voteAmount,
-      address: selectSearchParamValue(history.location.search, 'address'),
-    }));
+    const address = selectSearchParamValue(history.location.search, 'address');
+    dispatch(voteEdited([{
+      address: address || host,
+      amount: toRawLsk(voteAmount.value),
+    }]));
+
+    removeSearchParamsFromUrl(history, ['modal']);
   };
 
   return (
@@ -49,7 +56,7 @@ const AddVote = ({
           </label>
         </BoxContent>
         <BoxFooter direction="horizontal">
-          <PrimaryButton className="confirm" onClick={confirm}>
+          <PrimaryButton className={`${styles.confirmButton} confirm`} onClick={confirm}>
             {t('Confirm')}
           </PrimaryButton>
         </BoxFooter>
