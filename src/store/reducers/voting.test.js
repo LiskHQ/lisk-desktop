@@ -3,28 +3,28 @@ import voting from './voting';
 
 describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-statements
   const delegate1 = {
-    publicKey: 'sample_key_1', address: '100001L', rank: 1, productivity: 99, username: 'username1',
+    address: '100001L',
   };
   const delegate2 = {
-    publicKey: 'sample_key_2', address: '100002L', rank: 2, productivity: 98, username: 'username2',
+    address: '100002L',
   };
   const delegate3 = {
-    publicKey: 'sample_key_3', address: '100003L', rank: 3, productivity: 97, username: 'username3',
+    address: '100003L',
   };
   const cleanVotes = {
-    username1: { confirmed: 0, unconfirmed: 0, ...delegate1 },
-    username2: { confirmed: 1e10, unconfirmed: 1e10, ...delegate2 },
-    username3: { confirmed: 1e10, unconfirmed: 1e10, ...delegate3 },
+    [delegate1.address]: { confirmed: 1e10, unconfirmed: 1e10 },
+    [delegate2.address]: { confirmed: 1e10, unconfirmed: 1e10 },
+    [delegate3.address]: { confirmed: 1e10, unconfirmed: 1e10 },
   };
   const dirtyVotes = {
-    username1: { ...cleanVotes.username1, unconfirmed: 1e10 },
-    username2: { ...cleanVotes.username2, unconfirmed: 2e10 },
-    username3: cleanVotes.username3,
+    [delegate1.address]: { ...cleanVotes[delegate1.address], unconfirmed: 3e10 },
+    [delegate2.address]: { ...cleanVotes[delegate2.address], unconfirmed: 2e10 },
+    [delegate3.address]: cleanVotes[[delegate3.address]],
   };
   const pendingVotes = {
-    username1: { ...dirtyVotes.username1, pending: true },
-    username2: { ...dirtyVotes.username2, pending: true },
-    username3: { ...dirtyVotes.username3, pending: false },
+    [delegate1.address]: { ...dirtyVotes[delegate1.address], pending: true },
+    [delegate2.address]: { ...dirtyVotes[delegate2.address], pending: true },
+    [delegate3.address]: { ...dirtyVotes[delegate3.address], pending: false },
   };
 
   it('should return default state if action does not match', () => {
@@ -41,16 +41,14 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
       const action = {
         type: actionTypes.votesRetrieved,
         data: [
-          { ...delegate1, voteAmount: 1e10 },
-          { ...delegate2, voteAmount: 2e10 },
+          { ...delegate1, amount: 1e10 },
+          { ...delegate2, amount: 2e10 },
         ],
       };
       const expectedState = {
-        username1: { ...delegate1, confirmed: 1e10, unconfirmed: 1e10 },
-        username2: { ...delegate2, confirmed: 2e10, unconfirmed: 2e10 },
+        [delegate1.address]: { confirmed: 1e10, unconfirmed: 1e10 },
+        [delegate2.address]: { confirmed: 2e10, unconfirmed: 2e10 },
       };
-      delete expectedState.username1.username;
-      delete expectedState.username2.username;
       const changedState = voting({}, action);
 
       expect(changedState).toEqual(expectedState);
@@ -60,20 +58,18 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
   describe('votesEdited', () => {
     it('should add delegate with voteAmount if does not exist among votes', () => {
       const action = {
-        type: actionTypes.votesEdited,
-        data: {
-          delegate: delegate1,
-          voteAmount: dirtyVotes.username1.unconfirmed,
-        },
+        type: actionTypes.voteEdited,
+        data: [{
+          ...delegate1,
+          amount: dirtyVotes[delegate1.address].unconfirmed,
+        }],
       };
       const expectedState = {
-        username1: {
-          ...delegate1,
-          confirmed: cleanVotes.username1.confirmed,
-          unconfirmed: dirtyVotes.username1.unconfirmed,
+        [delegate1.address]: {
+          confirmed: 0,
+          unconfirmed: dirtyVotes[delegate1.address].unconfirmed,
         },
       };
-      delete expectedState.username1.username;
       const changedState = voting({}, action);
 
       expect(changedState).toEqual(expectedState);
@@ -81,22 +77,20 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
 
     it('should change voteAmount if delegates exist among votes', () => {
       const action = {
-        type: actionTypes.votesEdited,
-        data: {
-          delegate: delegate1,
-          voteAmount: dirtyVotes.username1.unconfirmed,
-        },
+        type: actionTypes.voteEdited,
+        data: [{
+          ...delegate1,
+          amount: dirtyVotes[delegate1.address].unconfirmed,
+        }],
       };
       const expectedState = {
-        username1: {
-          ...delegate1,
-          confirmed: cleanVotes.username1.confirmed,
-          unconfirmed: dirtyVotes.username1.unconfirmed,
+        [delegate1.address]: {
+          confirmed: cleanVotes[delegate1.address].confirmed,
+          unconfirmed: dirtyVotes[delegate1.address].unconfirmed,
         },
-        username2: cleanVotes.username2,
-        username3: cleanVotes.username3,
+        [delegate2.address]: cleanVotes[delegate2.address],
+        [delegate3.address]: cleanVotes[delegate3.address],
       };
-      delete expectedState.username1.username;
       const changedState = voting(cleanVotes, action);
 
       expect(changedState).toEqual(expectedState);
@@ -114,19 +108,23 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     });
   });
 
-  describe('votesUpdated', () => {
+  describe('votesConfirmed', () => {
     it('should remove pending flags and update confirmed values', () => {
       const action = {
-        type: actionTypes.votesUpdated,
+        type: actionTypes.votesConfirmed,
       };
       const expectedState = {
-        username1: {
-          ...dirtyVotes.username1, pending: false, confirmed: dirtyVotes.username1.unconfirmed,
+        [delegate1.address]: {
+          ...dirtyVotes[delegate1.address],
+          pending: false,
+          confirmed: dirtyVotes[delegate1.address].unconfirmed,
         },
-        username2: {
-          ...dirtyVotes.username2, pending: false, confirmed: dirtyVotes.username2.unconfirmed,
+        [delegate2.address]: {
+          ...dirtyVotes[delegate2.address],
+          pending: false,
+          confirmed: dirtyVotes[delegate2.address].unconfirmed,
         },
-        username3: { ...dirtyVotes.username3, pending: false },
+        [delegate3.address]: { ...dirtyVotes[delegate3.address], pending: false },
       };
       const changedState = voting(pendingVotes, action);
 
@@ -135,14 +133,14 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
 
     it('should remove unvoted delegates', () => {
       const action = {
-        type: actionTypes.votesUpdated,
+        type: actionTypes.votesConfirmed,
       };
       const initialState = {
-        username2: { ...cleanVotes.username2, pending: false },
-        username3: { ...cleanVotes.username3, unconfirmed: 0, pending: true },
+        [delegate2.address]: { ...cleanVotes[delegate2.address], pending: false },
+        [delegate3.address]: { ...cleanVotes[delegate3.address], unconfirmed: 0, pending: true },
       };
       const expectedState = {
-        username2: { ...cleanVotes.username2, pending: false },
+        [delegate2.address]: { ...cleanVotes[delegate2.address], pending: false },
       };
       const changedState = voting(initialState, action);
 
@@ -155,14 +153,9 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
       const action = {
         type: actionTypes.votesCleared,
       };
-      const expectedState = {
-        username1: { ...cleanVotes.username1, pending: false },
-        username2: { ...cleanVotes.username2, pending: false },
-        username3: { ...dirtyVotes.username3, pending: false },
-      };
-      const changedState = voting(pendingVotes, action);
+      const changedState = voting(dirtyVotes, action);
 
-      expect(changedState).toEqual(expectedState);
+      expect(changedState).toEqual(cleanVotes);
     });
   });
 });
