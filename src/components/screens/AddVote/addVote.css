@@ -10,6 +10,10 @@
   padding: 0 var(--horizontal-padding-l);
 
   & .noPadding {
-    padding: 0 0 var(--horizontal-padding-l)0;
+    padding: 0 0 var(--horizontal-padding-l) 0;
+  }
+
+  & button.confirmButton {
+    width: 100%;
   }
 }
