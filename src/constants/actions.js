@@ -60,7 +60,7 @@ const actionTypes = {
   votesSubmitted: 'VOTES_SUBMITTED',
   votesCleared: 'VOTES_CLEARED',
   votesConfirmed: 'VOTES_CONFIRMED',
-  voteToggled: 'VOTE_TOGGLED',
+  voteEdited: 'VOTE_EDITED',
   deviceListUpdated: 'DEVICE_LIST_UPDATED',
   transactionCreatedSuccess: 'TRANSACTION_CREATED_SUCCESS',
   transactionCreatedError: 'TRANSACTION_CREATED_ERROR',

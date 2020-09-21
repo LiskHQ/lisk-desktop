@@ -11,13 +11,9 @@ const voting = (state = {}, action) => {
     case actionTypes.votesRetrieved:
       return action.data
         .reduce((votesDict, delegate) => {
-          votesDict[delegate.username] = {
-            confirmed: delegate.voteAmount,
-            unconfirmed: delegate.voteAmount,
-            publicKey: delegate.publicKey,
-            productivity: delegate.productivity,
-            rank: delegate.rank,
-            address: delegate.address,
+          votesDict[delegate.address] = {
+            confirmed: delegate.amount,
+            unconfirmed: delegate.amount,
           };
           return votesDict;
         }, {});
@@ -25,15 +21,14 @@ const voting = (state = {}, action) => {
     case actionTypes.voteEdited:
       return {
         ...state,
-        [action.data.delegate.username]: {
-          confirmed: state[action.data.delegate.username]
-            ? state[action.data.delegate.username].confirmed : 0,
-          unconfirmed: action.data.voteAmount,
-          publicKey: action.data.delegate.publicKey,
-          productivity: action.data.delegate.productivity,
-          rank: action.data.delegate.rank,
-          address: action.data.delegate.address,
-        },
+        ...action.data.reduce((mergedVotes, vote) => {
+          mergedVotes[vote.address] = {
+            confirmed: state[vote.address]
+              ? state[vote.address].confirmed : 0,
+            unconfirmed: vote.amount || (state[vote.address] && state[vote.address].unconfirmed),
+          };
+          return mergedVotes;
+        }, {}),
       };
 
     /**
@@ -41,10 +36,10 @@ const voting = (state = {}, action) => {
      * of each vote to match it's 'confirmed' state.
      */
     case actionTypes.votesCleared:
-      return Object.keys(state).reduce((votesDict, username) => {
-        votesDict[username] = {
-          ...state[username],
-          unconfirmed: state[username].confirmed,
+      return Object.keys(state).reduce((votesDict, address) => {
+        votesDict[address] = {
+          ...state[address],
+          unconfirmed: state[address].confirmed,
           pending: false,
         };
         return votesDict;
@@ -57,11 +52,11 @@ const voting = (state = {}, action) => {
      */
     case actionTypes.votesConfirmed:
       return Object.keys(state)
-        .filter(username => state[username].unconfirmed)
-        .reduce((votesDict, username) => {
-          votesDict[username] = {
-            ...state[username],
-            confirmed: state[username].unconfirmed,
+        .filter(address => state[address].unconfirmed)
+        .reduce((votesDict, address) => {
+          votesDict[address] = {
+            ...state[address],
+            confirmed: state[address].unconfirmed,
             pending: false,
           };
           return votesDict;
@@ -72,14 +67,14 @@ const voting = (state = {}, action) => {
      * of all votes that have different 'confirmed' and 'unconfirmed' state
      */
     case actionTypes.votesSubmitted:
-      return Object.keys(state).reduce((votesDict, username) => {
+      return Object.keys(state).reduce((votesDict, address) => {
         const {
           confirmed, unconfirmed, pending,
-        } = state[username];
+        } = state[address];
         const nextPendingStatus = pending || (confirmed !== unconfirmed);
 
-        votesDict[username] = {
-          ...state[username],
+        votesDict[address] = {
+          ...state[address],
           pending: nextPendingStatus,
         };
         return votesDict;

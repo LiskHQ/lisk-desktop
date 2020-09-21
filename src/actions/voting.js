@@ -38,9 +38,7 @@ export const votesConfirmed = () => ({
  * when the vote transaction is confirmed (via votesConfirmed action)
  *
  * @param {Object} data
- * @param {String} data.username - Delegate username
- * @param {String} data.publicKey - Delegate public key
- * @param {String} data.address - Delegate account address
+ * @param {String} data.address - Delegate address
  * @param {String} data.voteAmount - (New) vote amount in Beddows
  * @returns {Object} Pure action object
  */
