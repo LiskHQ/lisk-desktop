@@ -1,6 +1,3 @@
-// import {
-//    spy, stub, useFakeTimers, match,
-// } from 'sinon';
 import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import * as votingActions from '../../actions/voting';
@@ -203,7 +200,7 @@ describe('Account middleware', () => {
     });
   });
 
-  it('should show Notification on incoming transaction', () => {
+  it.skip('should show Notification on incoming transaction', () => {
     middleware(store)(next)(newBlockCreated);
     expect(windowNotificationSpy).nthCalledWith(
       1,
@@ -217,7 +214,7 @@ describe('Account middleware', () => {
 
   it(`should dispatch ${actionTypes.votesRetrieved} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
     const actionSpy = jest.spyOn(votingActions, 'votesRetrieved');
-    transactionsUpdatedAction.data.confirmed[0].type = transactionTypes().vote.code;
+    transactionsUpdatedAction.data.confirmed[0].type = transactionTypes().vote.code.legacy;
     middleware(store)(next)(transactionsUpdatedAction);
     expect(actionSpy).toHaveBeenCalledWith({
       address: state.account.address,
