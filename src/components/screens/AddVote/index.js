@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '../../../utils/searchParams';
-import { voteEdited } from '../../../actions/voting';
+import { voteEdited, votesSubmitted } from '../../../actions/voting';
 import Dialog from '../../toolbox/dialog/dialog';
 import Box from '../../toolbox/box';
 import BoxContent from '../../toolbox/box/content';
