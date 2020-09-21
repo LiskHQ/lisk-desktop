@@ -35,6 +35,5 @@ describe('voting middleware', () => {
       expect(next).toHaveBeenCalledWith(givenAction);
       expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
     });
-
   });
 });

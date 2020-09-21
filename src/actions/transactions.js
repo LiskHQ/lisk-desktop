@@ -1,5 +1,4 @@
 /* eslint-disable max-lines */
-import i18next from 'i18next';
 import to from 'await-to-js';
 
 import actionTypes from '../constants/actions';
@@ -132,38 +131,6 @@ export const updateTransactions = ({
       });
     }
   }
-};
-
-// ================================================ //
-//  TODO
-// The following functions needs to be remove after
-// implement and use send and broadcast HOC
-// ================================================ //
-
-// TODO remove this function after remove sent function
-const handleSentError = ({
-  account, dispatch, error, tx,
-}) => {
-  let text;
-  switch (account.loginType) {
-    case loginType.normal:
-      text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-      break;
-    case loginType.ledger:
-    case loginType.trezor:
-      text = i18next.t('You have cancelled the transaction on your hardware wallet. You can either continue or retry.');
-      break;
-    default:
-      text = error.message;
-  }
-
-  dispatch({
-    type: actionTypes.transactionFailed,
-    data: {
-      errorMessage: text,
-      tx,
-    },
-  });
 };
 
 // TODO remove this function once create and broadcast HOC be implemented

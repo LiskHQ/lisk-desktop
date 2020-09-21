@@ -1,4 +1,4 @@
-import transactionTypes from "../../../constants/transactionTypes";
+import transactionTypes from '../../../constants/transactionTypes';
 
 /**
  * Transforms transactions of Core 3.x to the shape of

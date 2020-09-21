@@ -3,10 +3,7 @@ import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import { getBlocks } from './blocks';
 import { getTransactions } from './transactions';
 import { loadDelegateCache, updateDelegateCache } from '../delegates';
-import { loginType } from '../../constants/hwConstants';
-import { create, broadcast } from './lsk/transactions';
 import transactionTypes from '../../constants/transactionTypes';
-import { signVoteTransaction } from '../hwManager';
 import { getAPIClient } from './lsk/network';
 
 export const getDelegates = (network, options) =>

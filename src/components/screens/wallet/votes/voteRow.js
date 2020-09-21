@@ -5,7 +5,6 @@ import tableStyles from '../../../toolbox/table/table.css';
 import LiskAmount from '../../../shared/liskAmount';
 import styles from './votes.css';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
-import regex from '../../../../utils/regex';
 
 const VoteRow = ({
   data, onRowClick, t,
