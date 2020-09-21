@@ -1,15 +1,13 @@
-import { toast } from 'react-toastify';
+import to from 'await-to-js';
 import {
   getVotes,
-  castVotes,
 } from '../utils/api/delegates';
-import { getVotingLists, getVotingError } from '../utils/voting';
+import { create } from '../utils/api/lsk/transactions';
 import { passphraseUsed } from './account';
-import { addNewPendingTransaction } from './transactions';
 import actionTypes from '../constants/actions';
-import { getAPIClient } from '../utils/api/network';
-import { tokenMap } from '../constants/tokens';
-import { txAdapter } from '../utils/api/lsk/adapters';
+import { loginType } from '../constants/hwConstants';
+import transactionTypes from '../constants/transactionTypes';
+import { signVoteTransaction } from '../utils/hwManager';
 
 /**
  * Clears the existing changes on votes.
@@ -17,7 +15,7 @@ import { txAdapter } from '../utils/api/lsk/adapters';
  *
  * @returns {Object} Pure action object
  */
-export const clearVotes = () => ({
+export const votesCleared = () => ({
   type: actionTypes.votesCleared,
 });
 
@@ -52,37 +50,30 @@ export const voteEdited = data => ({
  * Adds pending state and then after the duration of one round
  * cleans the pending state
  */
-export const votesSubmitted = ({
-  account, votes,
-}) =>
+export const votesSubmitted = data =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
-    const state = getState();
-    const { networkIdentifier } = state.network.networks.LSK;
-    const liskAPIClient = getAPIClient(tokenMap.LSK.key, state.network);
-    const { votedList, unvotedList } = getVotingLists(votes);
+    const { network, account } = getState();
 
-    const label = getVotingError(votes, account);
-    if (label) {
-      toast.error(label);
-      return;
-    }
+    const [error, tx] = account.loginType === loginType.normal
+      ? await to(create(
+        { ...data, network },
+        transactionTypes().vote.key,
+      ))
+      : await to(signVoteTransaction(account, data));
 
-    const result = await castVotes({
-      liskAPIClient,
-      account,
-      votedList,
-      unvotedList,
-      networkIdentifier,
-    });
-
-    if (result.error) {
-      // What should I do?
+    if (error) {
+      return dispatch({
+        type: actionTypes.transactionCreatedError,
+        data: error,
+      });
     }
 
     dispatch({ type: actionTypes.votesSubmitted });
-    // @todo Should I do these here or in a middleware?
     dispatch(passphraseUsed(new Date()));
-    addNewPendingTransaction(txAdapter(result.data)); // @todo fix the param when API ready
+    return dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
   };
 
 /**
@@ -96,7 +87,7 @@ export const votesRetrieved = () =>
       .then((response) => {
         dispatch({
           type: actionTypes.votesRetrieved,
-          data: response.data.votes,
+          data: response.data,
         });
       });
   };
