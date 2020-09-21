@@ -36,14 +36,15 @@ const voting = (state = {}, action) => {
      * of each vote to match it's 'confirmed' state.
      */
     case actionTypes.votesCleared:
-      return Object.keys(state).reduce((votesDict, address) => {
-        votesDict[address] = {
-          ...state[address],
-          unconfirmed: state[address].confirmed,
-          pending: false,
-        };
-        return votesDict;
-      }, {});
+      return Object.keys(state)
+        .filter(address => state[address].confirmed)
+        .reduce((votesDict, address) => {
+          votesDict[address] = {
+            confirmed: state[address].confirmed,
+            unconfirmed: state[address].confirmed,
+          };
+          return votesDict;
+        }, {});
 
     /**
      * This action is used when voting transaction is confirmed.
