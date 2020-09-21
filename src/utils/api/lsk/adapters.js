@@ -1,3 +1,5 @@
+import transactionTypes from "../../../constants/transactionTypes";
+
 /**
  * Transforms transactions of Core 3.x to the shape of
  * transactions in Core 2.x
@@ -20,7 +22,7 @@ export const txAdapter = (
     morphedData.amount = data.asset.amount;
   }
   if (type >= 8) {
-    morphedData.type -= 8;
+    morphedData.type = transactionTypes.getByCode(type).code.legacy;
   }
   return morphedData;
 };
