@@ -86,21 +86,8 @@ export const getDelegateByName = (liskAPIClient, name) => new Promise(async (res
   });
 });
 
-const signVoteTx = async (data) => {
-  const signedTx = (data.account.loginType === loginType.normal)
-    ? await create({ asset: { votes: data.votes } }, 'VoteTransaction')
-    : await signVoteTransaction();
-  return signedTx;
-};
-
-export const castVotes = async (data) => {
-  const signedTx = await signVoteTx(data);
-  const transaction = await broadcast(signedTx);
-  return transaction;
-};
-
 export const getVotes = (network, { address }) =>
-  getAPIClient(network).votes.get({ address, limit: 10, offset: 0 });
+  getAPIClient(network).votes.get({ address });
 
 export const registerDelegate = (
   liskAPIClient,
