@@ -63,7 +63,7 @@ const Votes = ({
 
   useEffect(() => {
     votes.loadData({ address });
-    delegates.loadData({ offset: 0, limit: 101 });
+    delegates.loadData({});
 
     return () => clearTimeout(tOut);
   }, []);
@@ -73,9 +73,9 @@ const Votes = ({
     fetchDelegateWhileNeeded();
   }, [address]);
 
-  useEffect(() => {
-    fetchDelegateWhileNeeded();
-  }, [delegates.data, votes.data.length, showing, filterValue]);
+  // useEffect(() => {
+  //   fetchDelegateWhileNeeded();
+  // }, [delegates.data, votes.data.length, showing, filterValue]);
 
 
   const filteredVotes = mergedVotes.filter(vote => RegExp(filterValue, 'i').test(vote.username));
