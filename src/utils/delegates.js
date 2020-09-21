@@ -10,6 +10,7 @@ const getNetworkKey = network => (
   }`
 );
 
+/* istanbul ignore next */
 export const updateDelegateCache = (delegates, network) => {
   getFromStorage(getNetworkKey(network), {}, (savedDelegates) => {
     setInStorage(getNetworkKey(network), {
