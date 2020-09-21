@@ -4,7 +4,7 @@ import { getBlocks } from './blocks';
 import { getTransactions } from './transactions';
 import { loadDelegateCache, updateDelegateCache } from '../delegates';
 import { loginType } from '../../constants/hwConstants';
-import { splitVotesIntoRounds } from '../voting';
+import { create, broadcast } from './lsk/transactions';
 import transactionTypes from '../../constants/transactionTypes';
 import { signVoteTransaction } from '../hwManager';
 import { getAPIClient } from './lsk/network';
@@ -86,52 +86,17 @@ export const getDelegateByName = (liskAPIClient, name) => new Promise(async (res
   });
 });
 
-const voteWithPassphrase = (
-  passphrase,
-  votes,
-  unvotes,
-  secondPassphrase,
-  timeOffset,
-  networkIdentifier,
-) => (
-  Promise.all(splitVotesIntoRounds({ votes: [...votes], unvotes: [...unvotes] })
-    .map(res => Lisk.transaction.castVotes({
-      votes: res.votes,
-      unvotes: res.unvotes,
-      passphrase,
-      secondPassphrase,
-      timeOffset,
-      networkIdentifier,
-    })))
-);
+const signVoteTx = async (data) => {
+  const signedTx = (data.account.loginType === loginType.normal)
+    ? await create({ asset: { votes: data.votes } }, 'VoteTransaction')
+    : await signVoteTransaction();
+  return signedTx;
+};
 
-export const castVotes = async ({
-  liskAPIClient,
-  account,
-  votedList,
-  unvotedList,
-  secondPassphrase,
-  timeOffset,
-  networkIdentifier,
-}) => {
-  const signedTransactions = account.loginType === loginType.normal
-    ? await voteWithPassphrase(
-      account.passphrase,
-      votedList,
-      unvotedList,
-      secondPassphrase,
-      timeOffset,
-      networkIdentifier,
-    )
-    : await signVoteTransaction(account, votedList, unvotedList, timeOffset, networkIdentifier);
-
-  return Promise.all(signedTransactions.map(transaction => (
-    new Promise((resolve, reject) => {
-      liskAPIClient.transactions.broadcast(transaction)
-        .then(() => resolve(transaction))
-        .catch(reject);
-    })
-  )));
+export const castVotes = async (data) => {
+  const signedTx = await signVoteTx(data);
+  const transaction = await broadcast(signedTx);
+  return transaction;
 };
 
 export const getVotes = (network, { address }) =>
