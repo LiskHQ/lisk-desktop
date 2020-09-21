@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import numeral from 'numeral';
-import { useSelector } from 'react-redux';
+// import numeral from 'numeral';
+// import { useSelector } from 'react-redux';
 
-import { toRawLsk } from '../../../utils/lsk';
+// import { toRawLsk } from '../../../utils/lsk';
 import { validateAmountFormat } from '../../../utils/validators';
 import regex from '../../../utils/regex';
 
@@ -17,12 +17,12 @@ let loaderTimeout = null;
  * @param {Function} t - i18n.t
  * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value, maxAmount, t) => {
-  let { message: feedback } = validateAmountFormat({ value, token: 'LSK' });
+const getAmountFeedbackAndError = (value) => {
+  const { message: feedback } = validateAmountFormat({ value, token: 'LSK' });
 
-  if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {
-    feedback = t('Provided vote amount is higher than your free balance.');
-  }
+  // if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {
+  //   feedback = t('Provided vote amount is higher than your free balance.');
+  // }
   return { error: !!feedback, feedback };
 };
 
@@ -33,14 +33,14 @@ const getAmountFeedbackAndError = (value, maxAmount, t) => {
  * @param {Object} state - The Redux state
  * @returns {Number} - Available balance
  */
-const getMaxAmount = (state) => {
-  const { balance } = state.account.info.LSK;
-  const totalUnconfirmedVotes = Object.values(state.voting)
-    .map(vote => Math.max(vote.confirmed, vote.unconfirmed))
-    .reduce((total, amount) => (total + amount), 0);
+// const getMaxAmount = (state) => {
+//   const { balance } = state.account.info.LSK;
+//   const totalUnconfirmedVotes = Object.values(state.voting)
+//     .map(vote => Math.max(vote.confirmed, vote.unconfirmed))
+//     .reduce((total, amount) => (total + amount), 0);
 
-  return balance - totalUnconfirmedVotes - 1e8; // only considering fee cap
-};
+//   return balance - totalUnconfirmedVotes - 1e8; // only considering fee cap
+// };
 
 /**
  * Formats and defines potential errors of the vote mount value
@@ -50,8 +50,7 @@ const getMaxAmount = (state) => {
  * @returns {[Boolean, Function]} The error flag, The setter function
  */
 const useVoteAmountField = (initialValue) => {
-  const { t, i18n } = useTranslation();
-  const maxAmount = useSelector(getMaxAmount);
+  const { i18n } = useTranslation();
   const [amountField, setAmountField] = useState({
     value: initialValue,
     isLoading: false,
@@ -73,7 +72,7 @@ const useVoteAmountField = (initialValue) => {
       setAmountField({
         isLoading: false,
         value,
-        ...getAmountFeedbackAndError(value, maxAmount, t),
+        ...getAmountFeedbackAndError(value),
       });
     }, 300);
   };
