@@ -27,7 +27,6 @@ const VoteRow = ({
         <div className={styles.accountInfo}>
           <span className={`${styles.title} vote-username`}>{data.username}</span>
           <span className="showOnLargeViewPort">{data.address}</span>
-          <span className="hideOnLargeViewPort">{data.address.replace(regex.lskAddressTrunk, '$1...$3')}</span>
         </div>
       </div>
     </div>
