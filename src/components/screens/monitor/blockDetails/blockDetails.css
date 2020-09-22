@@ -4,6 +4,16 @@
   box-sizing: border-box;
   width: calc(100% / 5);
   color: var(--color-maastricht-blue);
+
+  & > span {
+    white-space: nowrap;
+    width: 100%;
+
+    & > div {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
 }
 
 h1 {

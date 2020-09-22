@@ -1,10 +1,32 @@
 .wrapper {
   padding-bottom: var(--horizontal-padding-l);
   padding-top: 30px;
+  max-width: 100%;
+
+  & > div:not(:nth-child(3)) {
+    min-width: 320px;
+  }
+}
+
+@media (--large-viewport) {
+  .balanceChart {
+    width: calc(100% - 640px);
+    flex-basis: unset;
+  }
 }
 
 @media (--medium-viewport) {
+  .wrapper {
+    & > div:not(:nth-child(3)) {
+      flex-basis: 50%;
+      max-width: 50%;
+    }
+  }
+
   .balanceChart {
     margin-top: 20px;
+    width: 100%;
+    flex-basis: 100%;
+    max-width: 100%;
   }
 }
