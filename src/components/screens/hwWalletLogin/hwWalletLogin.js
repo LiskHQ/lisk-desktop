@@ -61,7 +61,7 @@ class HardwareWalletLogin extends React.Component {
             <SelectAccount
               t={t}
               devices={devices}
-              networkConfig={network}
+              network={network}
               goBack={this.goBack}
               history={history}
             />

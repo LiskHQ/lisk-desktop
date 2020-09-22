@@ -14,7 +14,7 @@ export default withData({
       return {
         token,
         address,
-        networkConfig: state.network,
+        network: state.network,
       };
     },
     defaultData: [],

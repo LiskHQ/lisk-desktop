@@ -1,7 +1,9 @@
+/* eslint-disable */
 import React from 'react';
 import { mount } from 'enzyme';
 import Voting from './voting';
 import DialogHolder from '../../../toolbox/dialog/holder';
+import { mountWithRouter } from '../../../../utils/testHelpers';
 
 describe('Voting', () => {
   const votes = {
@@ -24,32 +26,44 @@ describe('Voting', () => {
     },
     votePlaced: ({ callback }) => callback(voteResult),
     t: key => key,
-    history: { push: jest.fn() },
+    history: {
+      push: jest.fn(),
+      location: {
+        search: '?modal=votingSummary',
+        pathname: 'voting',
+      },
+    },
   };
 
   it('should render VotingSummary', () => {
-    const wrapper = mount(<Voting {...props} />);
+    const wrapper = mountWithRouter(Voting, props);
     expect(wrapper.find('VotingSummary')).toHaveLength(1);
   });
 
   it('should go to result box with confirm button and then back to delegates', () => {
     DialogHolder.hideDialog = jest.fn();
-    const wrapper = mount(<Voting {...{ ...props, votes }} />);
+    const wrapper = mountWithRouter(Voting, { ...props, votes });
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('.result-box-header')).toHaveLength(1);
   });
 
   it('should show report error link when confirm button is clicked and voting fails', () => {
     voteResult = { success: false };
-    const wrapper = mount(<Voting {...{ ...props, votes }} />);
+    const wrapper = mountWithRouter(Voting, { ...props, votes });
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('.report-error-link')).toHaveLength(1);
   });
 
-  it('should go to Delegates page when cancel button is clicked', () => {
-    DialogHolder.hideDialog = jest.fn();
-    const wrapper = mount(<Voting {...props} />);
+  it('should go to Voting page when cancel button is clicked', () => {
+    const fn = jest.fn();
+    const wrapper =  mountWithRouter(Voting, {
+      ...props,
+      history: {
+        ...props.history,
+        push: fn,
+      }
+    });
     wrapper.find('.cancel-button').at(0).simulate('click');
-    expect(DialogHolder.hideDialog).toHaveBeenCalled();
+    expect(fn).toHaveBeenCalledWith(props.history.location.pathname);
   });
 });

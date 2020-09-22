@@ -3,6 +3,7 @@ import React from 'react';
 import isEqual from 'react-fast-compare';
 import { useDispatch, useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+
 import { tokenMap } from '../../../../constants/tokens';
 import AvatarWithNameAndAddress from '../../../shared/avatarWithNameAndAddress';
 import LiskAmount from '../../../shared/liskAmount';
@@ -21,7 +22,7 @@ const AddressWrapper = ({ votingModeEnabled, address, children }) => {
   return (
     <Link
       className={styles.delegateLink}
-      to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${address}`}
+      to={`${routes.account.path}?address=${address}`}
     >
       {children}
     </Link>
@@ -48,7 +49,7 @@ const DelegateRow = (props) => {
         firstTimeVotingActive ? <div className={styles.highlight} /> : null
       }
       <span
-        className={`${styles.checkboxWrapper} ${shouldShowVoteColumn ? grid['col-md-1'] : 'hidden'} checkbox-column`}
+        className={`${styles.checkboxWrapper} ${shouldShowVoteColumn ? grid['col-xs-1'] : 'hidden'} checkbox-column`}
       >
         <VoteCheckbox
           voteStatus={voteStatus || {}}
@@ -69,13 +70,13 @@ const DelegateRow = (props) => {
           <AvatarWithNameAndAddress {...data} />
         </AddressWrapper>
       </span>
-      <span className={apiVersion === '3' ? grid['col-md-3'] : grid['col-md-2']}>
+      <span className={apiVersion === '3' ? grid['col-xs-3'] : grid['col-xs-2']}>
         <LiskAmount val={data.rewards} token={tokenMap.LSK.key} />
       </span>
       <span className={grid['col-xs-2']}>
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>
-      <span className={grid['col-md-2']}>
+      <span className={grid['col-xs-2']}>
         <VoteWeight data={data} />
       </span>
     </div>

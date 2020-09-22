@@ -6,15 +6,16 @@ import { getTransactions } from '../../../../utils/api/transactions';
 import DelegateProfile from './delegateProfile';
 import transactionTypes from '../../../../constants/transactionTypes';
 import withData from '../../../../utils/withData';
+import { getAPIClient } from '../../../../utils/api/lsk/network';
 
 const apis = {
   delegate: {
-    apiUtil: (liskAPIClient, params) => liskAPIClient.delegates.get(params),
+    apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).delegates.get(params),
     defaultData: {},
     getApiParams: (state, ownProps) => ({
       address: ownProps.address,
     }),
-    transformResponse: response => response.data[0],
+    transformResponse: response => (response.data[0] ? response.data[0] : {}),
   },
   lastBlock: {
     apiUtil: getBlocks,
@@ -26,7 +27,7 @@ const apis = {
     getApiParams: (state, ownProps) => ({
       token: state.settings.token.active,
       address: ownProps.address,
-      networkConfig: state.network,
+      network: state.network,
       type: transactionTypes().registerDelegate.outgoingCode,
       limit: 1,
     }),

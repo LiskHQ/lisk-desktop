@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { bookmarkRemoved, bookmarkUpdated } from '../../../actions/bookmarks';
-import Bookmarks from './bookmarks';
+import { bookmarkRemoved, bookmarkUpdated } from '../../../../actions/bookmarks';
+import BookmarkListModal from './modal';
 
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
@@ -14,4 +14,4 @@ const mapDispatchToProps = {
   bookmarkUpdated,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Bookmarks));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(BookmarkListModal));

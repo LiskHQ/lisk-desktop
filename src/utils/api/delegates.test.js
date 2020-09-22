@@ -39,7 +39,7 @@ describe('Utils: Delegate', () => {
     blocks: {
       get: () => Promise.resolve({ data: [] }),
     },
-    networkConfig: {
+    network: {
       name: 'Testnet',
     },
   };
@@ -120,14 +120,14 @@ describe('Utils: Delegate', () => {
   });
 
   describe('getDelegateWithCache', () => {
-    const networkConfig = { name: 'Mainnet' };
+    const network = { name: 'Mainnet' };
     it.skip('should resolve based on given publicKey', async () => {
       const { publicKey } = delegates[0].account;
       liskAPIClientMockDelegates.expects('get').withArgs({
         publicKey,
       }).resolves({ data: [delegates[0]] });
 
-      const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, networkConfig });
+      const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, network });
       expect(resolved).to.equal(delegates[0]);
     });
 
@@ -137,8 +137,8 @@ describe('Utils: Delegate', () => {
         publicKey,
       }).resolves({ data: [delegates[0]] });
 
-      await getDelegateWithCache(liskAPIClient, { publicKey, networkConfig });
-      const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, networkConfig });
+      await getDelegateWithCache(liskAPIClient, { publicKey, network });
+      const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, network });
       expect(resolved).to.deep.equal(delegates[0]);
     });
 
@@ -148,7 +148,7 @@ describe('Utils: Delegate', () => {
         publicKey,
       }).resolves({ data: [] });
 
-      const [error] = await to(getDelegateWithCache(liskAPIClient, { publicKey, networkConfig }));
+      const [error] = await to(getDelegateWithCache(liskAPIClient, { publicKey, network }));
       expect(error.message).to.equal(`No delegate with publicKey ${publicKey} found.`);
     });
 
@@ -160,7 +160,7 @@ describe('Utils: Delegate', () => {
       }).rejects(error);
 
       expect(await to(
-        getDelegateWithCache(liskAPIClient, { publicKey, networkConfig }),
+        getDelegateWithCache(liskAPIClient, { publicKey, network }),
       )).to.deep.equal([error, undefined]);
     });
   });

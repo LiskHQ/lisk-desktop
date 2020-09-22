@@ -1,6 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import styles from './accountVisualWithAddress.css';
 import Icon from '../../toolbox/icon';
@@ -10,7 +11,7 @@ import regex from '../../../utils/regex';
 
 class AccountVisualWithAddress extends React.Component {
   getTransformedAddress(address) {
-    const { isMediumViewPort, bookmarks, showBookmarkedAddress } = this.props;
+    const { bookmarks, showBookmarkedAddress } = this.props;
 
     if (showBookmarkedAddress) {
       const bookmarkedAddress = bookmarks[this.props.token.active].find(
@@ -19,36 +20,34 @@ class AccountVisualWithAddress extends React.Component {
       if (bookmarkedAddress) return bookmarkedAddress.title;
     }
 
-    // @todo fix this using css
-    /* istanbul ignore next */
-    if (isMediumViewPort) {
-      return address.replace(regex.lskAddressTrunk, '$1...$3');
-    }
-
     return address;
   }
 
   render() {
     const {
-      address, transactionSubject, transactionType, size, sizeM,
+      address, transactionSubject, transactionType, size,
     } = this.props;
     const txType = transactionTypes.getByCode(transactionType);
+    const sendCode = transactionTypes().send.code;
+    const transformedAddress = this.getTransformedAddress(address);
+
     return (
       <div className={`${styles.address}`}>
-        {transactionType !== transactionTypes().send.code && transactionSubject === 'recipientId' ? (
+        {transactionType !== sendCode && transactionSubject === 'recipientId' ? (
           <React.Fragment>
             <Icon
               className={styles.txIcon}
-              name={txType ? txType.icon : 'txDefault'}
+              name={txType.icon || 'txDefault'}
             />
             <span className={styles.addressValue}>
-              {transactionTypes.getByCode(transactionType).title}
+              {txType.title}
             </span>
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <AccountVisual address={address} size={size} sizeM={sizeM} />
-            <span className={styles.addressValue}>{this.getTransformedAddress(address)}</span>
+            <AccountVisual address={address} size={size} />
+            <span className={`${styles.addressValue} showOnLargeViewPort`}>{transformedAddress}</span>
+            <span className={`${styles.addressValue} hideOnLargeViewPort`}>{transformedAddress.replace(regex.lskAddressTrunk, '$1...$3')}</span>
           </React.Fragment>
         )}
       </div>
@@ -63,15 +62,14 @@ AccountVisualWithAddress.propTypes = {
   size: PropTypes.number,
   token: PropTypes.shape().isRequired,
   transactionSubject: PropTypes.string,
-  transactionType: PropTypes.oneOf(transactionTypes.getListOf('code')),
+  transactionType: PropTypes.number,
 };
 
 AccountVisualWithAddress.defaultProps = {
+  address: '',
   showBookmarkedAddress: false,
   size: 32,
-  sizeM: 24,
   transactionSubject: '',
-  transactionType: transactionTypes().send.code,
 };
 
 const mapStateToProps = state => ({
@@ -79,4 +77,7 @@ const mapStateToProps = state => ({
   token: state.settings.token,
 });
 
-export default connect(mapStateToProps)(withTranslation()(AccountVisualWithAddress));
+export default compose(
+  connect(mapStateToProps),
+  withTranslation(),
+)(AccountVisualWithAddress);

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 import Dialog from '../../toolbox/dialog/dialog';
 import FlashMessageHolder from '../../toolbox/flashMessage/holder';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
@@ -28,14 +27,14 @@ class NewReleaseDialog extends React.Component {
     } = this.props;
     return !!ipc && (
       <Dialog hasClose>
-        <Dialog.Title>
-          {t('Lisk {{version}} is here!', { version })}
-        </Dialog.Title>
-        <Dialog.Description>
-          <p>{t('Would you like to download it now?')}</p>
-        </Dialog.Description>
-
         <div className={styles.wrapper}>
+          <Dialog.Title>
+            {t('Lisk {{version}} is here!', { version })}
+          </Dialog.Title>
+          <Dialog.Description>
+            <p>{t('Would you like to download it now?')}</p>
+          </Dialog.Description>
+
           <h3>{t('Release Notes')}</h3>
           <div className={styles.releaseNotes}>
             {releaseNotes}
@@ -64,4 +63,4 @@ NewReleaseDialog.propTypes = {
   t: PropTypes.func.isRequired,
 };
 
-export default withTranslation()(NewReleaseDialog);
+export default NewReleaseDialog;

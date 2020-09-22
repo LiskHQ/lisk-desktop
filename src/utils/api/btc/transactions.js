@@ -16,7 +16,7 @@ import networks from '../../../constants/networks';
  * @param {Number} data.blockHeight Latest block height for calculating confirmation count
  */
 const normalizeTransactionsResponse = ({
-  networkConfig,
+  network,
   list,
   // eslint-disable-next-line max-statements
 }) => list.map(({
@@ -29,10 +29,10 @@ const normalizeTransactionsResponse = ({
     type: 0,
     data: '',
     fee: feeSatoshi,
-    explorerLink: `${getAPIClient(networkConfig).config.transactionExplorerURL}/${tx.txid}`,
+    explorerLink: `${getAPIClient(network).config.transactionExplorerURL}/${tx.txid}`,
   };
 
-  const networkCode = getNetworkCode(networkConfig);
+  const networkCode = getNetworkCode(network);
   data.senderId = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
   const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
   data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0
@@ -43,7 +43,7 @@ const normalizeTransactionsResponse = ({
 });
 
 export const getTransactions = ({
-  networkConfig,
+  network,
   address,
   limit,
   offset,
@@ -52,11 +52,11 @@ export const getTransactions = ({
     limit: limit || 0,
     offset,
   };
-  await getAPIClient(networkConfig).get(`transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`)
+  await getAPIClient(network).get(`transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`)
     .then((response) => {
       resolve({
         data: normalizeTransactionsResponse({
-          networkConfig,
+          network,
           list: response.body.data,
         }),
         meta: response.body.meta ? { ...meta, count: response.body.meta.total } : meta,
@@ -65,14 +65,14 @@ export const getTransactions = ({
 });
 
 export const getSingleTransaction = ({
-  networkConfig,
+  network,
   id,
 }) => new Promise(async (resolve, reject) => {
-  await getAPIClient(networkConfig).get(`transaction/${id}`)
+  await getAPIClient(network).get(`transaction/${id}`)
     .then((response) => {
       resolve({
         data: normalizeTransactionsResponse({
-          networkConfig,
+          network,
           list: [response.body.data],
         }),
       });
@@ -97,9 +97,9 @@ export const calculateTransactionFee = ({
  * @param {String} address
  * @returns {Promise<Array>}
  */
-export const getUnspentTransactionOutputs = (address, networkConfig) =>
+export const getUnspentTransactionOutputs = (address, network) =>
   new Promise(async (resolve, reject) => {
-    getAPIClient(networkConfig).get(`utxo/${address}?limit=100`)
+    getAPIClient(network).get(`utxo/${address}?limit=100`)
       .then((response) => {
         resolve(response.body.data);
       })

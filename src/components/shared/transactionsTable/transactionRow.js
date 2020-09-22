@@ -26,7 +26,7 @@ const TransactionRow = ({ data, className, t }) => (
         showBookmarkedAddress
       />
     </span>
-    <span className={grid['col-md-3']}>
+    <span className={grid['col-xs-3']}>
       <AccountVisualWithAddress
         address={data.recipientId}
         transactionSubject="recipientId"
@@ -34,13 +34,14 @@ const TransactionRow = ({ data, className, t }) => (
         showBookmarkedAddress
       />
     </span>
-    <span className={grid['col-md-2']}>
+    <span className={grid['col-xs-2']}>
       <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
     </span>
-    <span className={grid['col-md-2']}>
+    <span className={`${grid['col-xs-3']} ${grid['col-md-2']} ${styles.amount}`}>
       <LiskAmount val={data.amount} token={tokenMap.LSK.key} />
+      <span className={`${styles.fee} hideOnLargeViewPort`}><LiskAmount val={data.fee} token={tokenMap.LSK.key} /></span>
     </span>
-    <span className={grid['col-md-1']}>
+    <span className={`${grid['col-md-1']} ${styles.transactionFeeCell}`}>
       <Tooltip
         title={t('Transaction')}
         position="bottom"
@@ -51,7 +52,7 @@ const TransactionRow = ({ data, className, t }) => (
         <p>{`${data.type} - ${transactionTypes.getByCode(data.type).title}`}</p>
       </Tooltip>
     </span>
-    <span className={grid['col-md-1']}>
+    <span className={grid['col-xs-1']}>
       <Tooltip
         title={data.confirmations > roundSize ? t('Confirmed') : t('Pending')}
         position="left"

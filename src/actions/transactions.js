@@ -61,11 +61,11 @@ export const getTransactions = ({
   filters = undefined,
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.getTransactions));
-  const networkConfig = getState().network;
+  const network = getState().network;
 
-  if (networkConfig) {
+  if (network) {
     const [error, response] = await to(transactionsAPI.getTransactions({
-      networkConfig, address, filters, limit, offset,
+      network, address, filters, limit, offset,
     }));
 
     if (error) {
@@ -113,7 +113,7 @@ export const updateTransactions = ({
 
   if (network) {
     const [error, response] = await to(transactionsAPI.getTransactions({
-      networkConfig: network, address, limit, filters,
+      network, address, limit, filters,
     }));
 
     if (error) {
@@ -186,17 +186,19 @@ export const sent = data => async (dispatch, getState) => {
   const {
     account, network, settings, blocks,
   } = getState();
-  const timeOffset = getTimeOffset(blocks.latestBlocks);
+  const timeOffset = getTimeOffset(blocks.latestBlocks, network.networks.LSK.apiVersion);
   const activeToken = settings.token.active;
   const senderId = account.info[activeToken].address;
 
   const txData = { ...data, timeOffset };
 
+  const apiVersion = network.networks.LSK.apiVersion;
+
   try {
     if (account.loginType === loginType.normal) {
       tx = await transactionsAPI.create(activeToken, txData, transactionTypes().send.key);
     } else {
-      [fail, tx] = await (signSendTransaction(account, data));
+      [fail, tx] = await (signSendTransaction(account, data, apiVersion));
 
       if (fail) throw new Error(fail);
     }
@@ -246,13 +248,15 @@ export const transactionCreated = data => async (dispatch, getState) => {
   const timeOffset = getTimeOffset(state.blocks.latestBlocks);
   const activeToken = settings.token.active;
 
+  const apiVersion = network.networks.LSK.apiVersion;
+
   const [error, tx] = account.loginType === loginType.normal
     ? await to(transactionsAPI.create(
       activeToken,
       { ...data, timeOffset, network },
       transactionTypes().send.key,
     ))
-    : await to(signSendTransaction(account, { ...data, timeOffset }));
+    : await to(signSendTransaction(account, { ...data, timeOffset }, apiVersion));
 
   if (error) {
     return dispatch({

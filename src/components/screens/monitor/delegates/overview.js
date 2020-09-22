@@ -8,6 +8,8 @@ import { DoughnutChart, LineChart } from '../../../toolbox/charts';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
 import { fromRawLsk } from '../../../../utils/lsk';
+import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
+import { colorPallete } from '../../../../constants/chartConstants';
 
 const Overview = ({
   chartActiveAndStandby,
@@ -32,9 +34,33 @@ const Overview = ({
   };
 
   const getAmountOfDelegatesLabels = () => {
-    const labels = chartRegisteredDelegates.data.map(date => date.x);
+    const labels = chartRegisteredDelegates.data.map((item) => {
+      const date = item.x;
+      return date.slice(0, 2) + date.slice(3, date.length);
+    });
     labels.push('Now');
     return labels;
+  };
+
+  const doughnutChartData = {
+    labels: [t('Standby delegates'), t('Active delegates')],
+    datasets: [
+      {
+        label: 'delegates',
+        data: [Math.max(0, chartActiveAndStandby.data - 101), 101],
+      },
+    ],
+  };
+
+  const doughnutChartOptions = {
+    tooltips: {
+      callbacks: {
+        title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+        label(tooltipItem, data) {
+          return data.datasets[0].data[tooltipItem.index];
+        },
+      },
+    },
   };
 
   return (
@@ -47,32 +73,41 @@ const Overview = ({
           {
             typeof chartActiveAndStandby.data === 'number'
               ? (
-                <div className={styles.chartBox}>
-                  <h2 className={styles.title}>{t('Total')}</h2>
-                  <div className={styles.chart}>
-                    <DoughnutChart
-                      data={{
-                        labels: [t('Standby delegates'), t('Active delegates')],
-                        datasets: [
-                          {
-                            label: 'delegates',
-                            data: [Math.max(0, chartActiveAndStandby.data - 101), 101],
-                          },
-                        ],
-                      }}
-                      options={{
-                        tooltips: {
-                          callbacks: {
-                            title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
-                            label(tooltipItem, data) {
-                              return data.datasets[0].data[tooltipItem.index];
-                            },
-                          },
-                        },
-                      }}
-                    />
+                <>
+                  <div className={styles.chartBox}>
+                    <h2 className={styles.title}>{t('Total')}</h2>
+                    <div className={`${styles.chart} showOnLargeViewPort`}>
+                      <DoughnutChart
+                        data={doughnutChartData}
+                        options={{
+                          ...doughnutChartOptions,
+                          legend: { display: true },
+                        }}
+                      />
+                    </div>
+                    <div className={`${styles.chart} hideOnLargeViewPort`}>
+                      <DoughnutChart
+                        data={doughnutChartData}
+                        options={{
+                          ...doughnutChartOptions,
+                          legend: { display: false },
+                        }}
+                      />
+                    </div>
+                    <div className="hideOnLargeViewPort">
+                      <GuideTooltip>
+                        <GuideTooltipItem
+                          color={colorPallete[0]}
+                          label={t('Standby delegates')}
+                        />
+                        <GuideTooltipItem
+                          color={colorPallete[1]}
+                          label={t('Active delegates')}
+                        />
+                      </GuideTooltip>
+                    </div>
                   </div>
-                </div>
+                </>
               )
               : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
           }

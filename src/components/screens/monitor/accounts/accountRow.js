@@ -21,7 +21,7 @@ const getOwnerName = (account) => {
 const BalanceShare = ({ balance, supply }) => {
   const share = new BigNumber(balance / supply * 100);
   return (
-    <span>
+    <span className={styles.balanceShare}>
       {
         `${formatAmountBasedOnLocale({ value: share.toFormat(2) })} %`
       }
@@ -32,7 +32,7 @@ const BalanceShare = ({ balance, supply }) => {
 const AccountRow = ({ data, className, supply }) => (
   <Link
     className={`${grid.row} ${className} accounts-row`}
-    to={`${routes.accounts.path}/${data.address}`}
+    to={`${routes.account.path}?address=${data.address}`}
   >
     <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}>
       {data.rank}

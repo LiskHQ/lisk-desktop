@@ -2,8 +2,8 @@ import React from 'react';
 import 'numeral/locales';
 import FlashMessage from '../../toolbox/flashMessage/flashMessage';
 import FlashMessageHolder from '../../toolbox/flashMessage/holder';
-import { modals } from '../../../constants/routes';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
+import { addSearchParamsToUrl } from '../../../utils/searchParams';
 
 export const InitializationMessageRenderer = ({
   account,
@@ -23,7 +23,12 @@ export const InitializationMessageRenderer = ({
 
   const onButtonClick = () => {
     const amount = formatAmountBasedOnLocale({ value: 0.1 });
-    history.push(`${modals.send.path}?recipient=${account.address}&amount=${amount}&reference=Account initialization`);
+    addSearchParamsToUrl(history, {
+      modal: 'send',
+      recipient: account.address,
+      amount,
+      reference: 'Account initialization',
+    });
   };
 
   return (

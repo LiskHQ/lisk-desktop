@@ -2,7 +2,6 @@ import { spy } from 'sinon';
 import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-
 import i18n from '../../src/i18n';
 
 

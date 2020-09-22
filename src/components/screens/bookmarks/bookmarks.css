@@ -1,7 +1,9 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
-  width: 630px;
+  width: 75%;
+  max-width: 630px;
+  min-width: 550px;
   height: 423px;
   background: var(--color-white);
   border-radius: var(--border-radius-box);

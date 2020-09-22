@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Fields from './fields';
+import ModalWrapper from '../modalWrapper';
 import { validateAddress } from '../../../../utils/validators';
 import networks from '../../../../constants/networks';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
-import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import styles from './addBookmark.css';
 import { getIndexOfBookmark } from '../../../../utils/bookmarks';
 import { tokenMap } from '../../../../constants/tokens';
-import AccountVisual from '../../../toolbox/accountVisual';
 import Icon from '../../../toolbox/icon';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from '../../../../utils/searchParams';
 
 class AddBookmark extends React.Component {
   constructor(props) {
@@ -29,27 +30,62 @@ class AddBookmark extends React.Component {
       placeholder: props.t('Insert label'),
     }];
 
+    const edit = this.isEditing();
+
     this.state = {
       fields: this.setupFields(),
+      showRemoveBtn: edit,
+      showSaveBtn: !edit || !this.getUrlSearchParam('isDelegate'),
+      edit,
     };
 
     this.onInputChange = {
       address: this.onAddressChange.bind(this),
       label: this.onLabelChange.bind(this),
     };
+    this.handleRemoveBookmark = this.handleRemoveBookmark.bind(this);
     this.handleAddBookmark = this.handleAddBookmark.bind(this);
+    this.onClose = this.onClose.bind(this);
+  }
+
+  getUrlSearchParam(param) {
+    if (param === 'isDelegate') {
+      return selectSearchParamValue(this.props.history.location.search, param) === 'true';
+    }
+    return selectSearchParamValue(this.props.history.location.search, param);
+  }
+
+  isEditing() {
+    const { token: { active }, bookmarks } = this.props;
+    const formAddress = this.getUrlSearchParam('formAddress');
+    return bookmarks[active].some(bookmark => bookmark.address === formAddress);
   }
 
   setupFields() {
-    return this.fields.reduce((acc, field) => ({
-      ...acc,
-      [field.name]: {
-        value: '',
-        error: false,
-        feedback: field.feedback || '',
-        readonly: false,
-      },
-    }), {});
+    const formAddress = this.getUrlSearchParam('formAddress');
+    const label = this.getUrlSearchParam('label');
+
+    return this.fields.reduce((acc, field) => {
+      let value = '';
+      let readonly = false;
+      if (field.name === 'address' && formAddress) {
+        value = formAddress;
+        readonly = true;
+      } else if (field.name === 'label' && label) {
+        value = label;
+        readonly = this.getUrlSearchParam('isDelegate');
+      }
+
+      return {
+        ...acc,
+        [field.name]: {
+          value,
+          error: false,
+          feedback: field.feedback || '',
+          readonly,
+        },
+      };
+    }, {});
   }
 
 
@@ -57,7 +93,7 @@ class AddBookmark extends React.Component {
     const { token } = this.props;
     const { token: prevToken } = prevProps;
 
-    this.updateLabelIfDelegate(prevProps);
+    if (this.props.account) this.updateLabelIfDelegate(prevProps, this.props.account);
 
     if (token.active !== prevToken.active) {
       this.setState(state => ({
@@ -67,8 +103,7 @@ class AddBookmark extends React.Component {
     }
   }
 
-  updateLabelIfDelegate(prevProps) {
-    const { account } = this.props;
+  updateLabelIfDelegate(prevProps, account) {
     const { fields: { label } } = this.state;
     if (account.data.delegate === prevProps.account.data.delegate) return;
 
@@ -124,6 +159,7 @@ class AddBookmark extends React.Component {
   onAddressChange({ target: { name, value } }) {
     const { token: { active }, account } = this.props;
     const { feedback, error, isInvalid } = this.validateAddress(active, value);
+
     if (active === tokenMap.LSK.key && !error && value.length) {
       account.loadData({ address: value });
     }
@@ -153,94 +189,86 @@ class AddBookmark extends React.Component {
     return { error: isInvalid || alreadyBookmarked, isInvalid, feedback };
   }
 
+  handleRemoveBookmark(e) {
+    e.preventDefault();
+    const {
+      token: { active }, bookmarkRemoved,
+    } = this.props;
+    const { fields: { address } } = this.state;
+
+    bookmarkRemoved({
+      address: address.value,
+      token: active,
+    });
+    this.onClose();
+  }
+
   handleAddBookmark(e) {
     e.preventDefault();
     const {
-      token: { active }, bookmarkAdded, account, prevStep,
+      token: { active }, bookmarkAdded, bookmarkUpdated,
     } = this.props;
     const { fields: { label, address } } = this.state;
-    const { publicKey, delegate } = account.data;
-    bookmarkAdded({
+
+    const func = this.state.edit ? bookmarkUpdated : bookmarkAdded;
+
+    func({
       token: active,
       account: {
         title: label.value,
         address: address.value,
-        isDelegate: !!(delegate && delegate.username),
-        publicKey,
+        isDelegate: this.getUrlSearchParam('isDelegate'),
       },
     });
-    prevStep({});
+    this.onClose();
+  }
+
+  onClose(e) {
+    if (e) e.preventDefault();
+    removeSearchParamsFromUrl(this.props.history, ['modal', 'formAddress', 'isDelegate', 'label']);
   }
 
   render() {
-    const { t, prevStep } = this.props;
+    const { t } = this.props;
     const { fields } = this.state;
     const isDisabled = !!Object.keys(fields).find(field => fields[field].error || fields[field].value === '');
 
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.content}>
-          <header className={styles.header}>
-            <Icon name="bookmarkActive" />
-          </header>
-          <Box className={styles.box}>
-            <BoxHeader>
-              <h2>
-                {t('New bookmark')}
-              </h2>
-            </BoxHeader>
-            <BoxContent>
-              {this.fields.map(field => (
-                <label key={field.name}>
-                  <span className={styles.label}>
-                    {field.label}
-                  </span>
-                  <span className={styles.fieldGroup}>
-                    <Input
-                      error={fields[field.name].error}
-                      className={styles.input}
-                      value={fields[field.name].value}
-                      onChange={this.onInputChange[field.name]}
-                      name={field.name}
-                      placeholder={field.placeholder}
-                      readOnly={fields[field.name].readonly}
-                      size="l"
-                      autoComplete="off"
-                      feedback={fields[field.name].feedback}
-                      status={fields[field.name].error ? 'error' : 'ok'}
-                    />
-                    {field.name === 'address'
-                      ? (
-                        <AccountVisual
-                          className={styles.avatar}
-                          placeholder={fields[field.name].isInvalid || !fields[field.name].value}
-                          address={fields[field.name].value}
-                          size={25}
-                        />
-                      ) : null
-                    }
-                  </span>
-                </label>
-              ))}
-            </BoxContent>
-            <BoxFooter direction="horizontal">
-              <SecondaryButton
-                className="cancel-button"
-                onClick={() => prevStep({})}
-              >
-                {t('Cancel')}
-              </SecondaryButton>
-              <PrimaryButton
-                disabled={isDisabled}
-                onClick={this.handleAddBookmark}
-                className="save-button"
-              >
-                {t('Save')}
-              </PrimaryButton>
-            </BoxFooter>
-          </Box>
+      <ModalWrapper>
+        <div className={styles.wrapper}>
+          <div className={styles.content}>
+            <header className={styles.header}><Icon name="bookmarkActive" /></header>
+            <Box className={styles.box}>
+              <BoxHeader><h2>{this.state.edit ? t('Edit bookmark') : t('New bookmark')}</h2></BoxHeader>
+              <BoxContent>
+                <Fields
+                  fields={this.fields}
+                  status={this.state.fields}
+                  onInputChange={this.onInputChange}
+                />
+              </BoxContent>
+              <BoxFooter direction="horizontal">
+                <SecondaryButton className="cancel-button" onClick={this.onClose}>
+                  {t('Cancel')}
+                </SecondaryButton>
+                {this.state.showRemoveBtn && (
+                  <SecondaryButton className="remove-button" onClick={this.handleRemoveBookmark}>
+                    <div className={styles.removeBtn}>
+                      <Icon name="remove" />
+                      {t('Remove')}
+                    </div>
+                  </SecondaryButton>
+                )}
+                {this.state.showSaveBtn && (
+                  <PrimaryButton disabled={isDisabled} onClick={this.handleAddBookmark} className="save-button">
+                    {t('Save')}
+                  </PrimaryButton>
+                )}
+              </BoxFooter>
+            </Box>
+          </div>
         </div>
-      </div>
+      </ModalWrapper>
     );
   }
 }

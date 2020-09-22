@@ -62,15 +62,6 @@ body {
   }
 }
 
-html[data-useragent*='Windows'],
-html[data-useragent*='Linux'] {
-  & :global(.expanded) {
-    & + .bodyWrapper {
-      padding-left: calc(var(--side-bar-expanded-size) + 24px);
-    }
-  }
-}
-
 .hasMarginBottom {
   margin-bottom: 20px;
 }
@@ -154,6 +145,21 @@ html[data-useragent*='Linux'] {
 
     & > section {
       padding: 0;
+    }
+  }
+
+  :global(.expanded) {
+    & + .bodyWrapper {
+      padding-left: var(--side-bar-shrunk-size);
+    }
+  }
+
+  html[data-useragent*='Windows'],
+  html[data-useragent*='Linux'] {
+    & :global(.expanded) {
+      & + .bodyWrapper {
+        padding-left: calc(var(--side-bar-shrunk-size));
+      }
     }
   }
 }

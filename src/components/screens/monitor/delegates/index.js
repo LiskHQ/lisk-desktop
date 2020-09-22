@@ -8,7 +8,6 @@ import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
 import withLocalSort from '../../../../utils/withLocalSort';
-import withResizeValues from '../../../../utils/withResizeValues';
 
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
@@ -94,7 +93,6 @@ const ComposedDelegates = compose(
       },
     },
   ),
-  withResizeValues,
   withFilters(standByDelegatesKey, defaultUrlSearchParams),
   withLocalSort(delegatesKey, 'rank:asc'),
   withTranslation(),

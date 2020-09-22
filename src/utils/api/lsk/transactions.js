@@ -33,7 +33,7 @@ const parseCustomFilters = filters => ({
 });
 
 export const getTransactions = ({
-  networkConfig, liskAPIClient, address, limit, offset, type = undefined,
+  network, liskAPIClient, address, limit, offset, type = undefined,
   sort = 'timestamp:desc', filters = {},
 }) => {
   const params = {
@@ -46,17 +46,16 @@ export const getTransactions = ({
   };
 
   return new Promise((resolve, reject) => {
-    (liskAPIClient || getAPIClient(networkConfig)).transactions.get(params).then(response => (
+    (liskAPIClient || getAPIClient(network)).transactions.get(params).then(response => (
       resolve(adaptTransactions(response))
     )).catch(reject);
   });
 };
 
 export const getSingleTransaction = ({
-  networkConfig, id, liskAPIClient,
+  id, network,
 }) => new Promise((resolve, reject) => {
-  // TODO remove liskAPIClient after all code that uses is is removed
-  const apiClient = liskAPIClient || getAPIClient(networkConfig);
+  const apiClient = getAPIClient(network);
   apiClient.transactions.get({ id })
     .then((response) => {
       if (response.data.length !== 0) {
@@ -73,9 +72,11 @@ export const getSingleTransaction = ({
     }).catch(reject);
 });
 
-export const create = (transaction, transactionType) => new Promise((resolve, reject) => {
+export const create = (
+  transaction, transactionType, apiVersion,
+) => new Promise((resolve, reject) => {
   try {
-    const Lisk = liskClient();
+    const Lisk = liskClient(apiVersion);
     const { networkIdentifier } = transaction.network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
       ...transaction,
@@ -87,9 +88,9 @@ export const create = (transaction, transactionType) => new Promise((resolve, re
   }
 });
 
-export const broadcast = (transaction, networkConfig) => new Promise(async (resolve, reject) => {
+export const broadcast = (transaction, network) => new Promise(async (resolve, reject) => {
   try {
-    await getAPIClient(networkConfig).transactions.broadcast(transaction);
+    await getAPIClient(network).transactions.broadcast(transaction);
     resolve(transaction);
   } catch (error) {
     reject(error);

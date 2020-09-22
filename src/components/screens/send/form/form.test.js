@@ -43,7 +43,7 @@ describe('Form', () => {
         },
       },
       bookmarks,
-      networkConfig: {
+      network: {
         name: 'Mainnet',
       },
       history: {

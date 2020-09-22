@@ -53,7 +53,6 @@ export const TransactionsPure = ({ t, transactions }) => {
     recipient: '',
     sender: '',
   };
-
   const canLoadMore = transactions.meta
     ? transactions.data.length < transactions.meta.total
     : false;

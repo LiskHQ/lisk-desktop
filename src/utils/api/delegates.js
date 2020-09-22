@@ -7,16 +7,17 @@ import { loginType } from '../../constants/hwConstants';
 import { splitVotesIntoRounds } from '../voting';
 import transactionTypes from '../../constants/transactionTypes';
 import { signVoteTransaction } from '../hwManager';
+import { getAPIClient } from './lsk/network';
 
-export const getDelegates = (liskAPIClient, options) =>
-  liskAPIClient.delegates.get(options);
+export const getDelegates = (network, options) =>
+  getAPIClient(network).delegates.get(options);
 
 export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
   new Promise(async (resolve, reject) => {
     try {
       const response = await getDelegates(liskAPIClient, { address });
       const delegate = response.data[0];
-      updateDelegateCache(response.data, liskAPIClient.networkConfig);
+      updateDelegateCache(response.data, liskAPIClient.network);
       if (delegate) {
         const txDelegateRegister = (await getTransactions({
           liskAPIClient,
@@ -43,7 +44,7 @@ export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
 
 export const getDelegateWithCache = (liskAPIClient, { publicKey }) => (
   new Promise(async (resolve, reject) => {
-    loadDelegateCache(liskAPIClient.networkConfig, async (data) => {
+    loadDelegateCache(liskAPIClient.network, async (data) => {
       const storedDelegate = data[publicKey];
       if (storedDelegate) {
         resolve(storedDelegate);
@@ -52,7 +53,7 @@ export const getDelegateWithCache = (liskAPIClient, { publicKey }) => (
         if (error) {
           reject(error);
         } else if (response.data[0]) {
-          updateDelegateCache(response.data, liskAPIClient.networkConfig);
+          updateDelegateCache(response.data, liskAPIClient.network);
           resolve(response.data[0]);
         } else {
           reject(new Error(`No delegate with publicKey ${publicKey} found.`));
@@ -64,7 +65,7 @@ export const getDelegateWithCache = (liskAPIClient, { publicKey }) => (
 
 export const getDelegateByName = (liskAPIClient, name) => new Promise(async (resolve, reject) => {
   // eslint-disable-next-line max-statements
-  loadDelegateCache(liskAPIClient.networkConfig, async (data) => {
+  loadDelegateCache(liskAPIClient.network, async (data) => {
     const storedDelegate = data[name];
     if (storedDelegate) {
       resolve(storedDelegate);
@@ -79,7 +80,7 @@ export const getDelegateByName = (liskAPIClient, name) => new Promise(async (res
         } else {
           reject(new Error(`No delegate with name ${name} found.`));
         }
-        updateDelegateCache(response.data, liskAPIClient.networkConfig);
+        updateDelegateCache(response.data, liskAPIClient.network);
       }
     }
   });
@@ -92,10 +93,11 @@ const voteWithPassphrase = (
   secondPassphrase,
   timeOffset,
   networkIdentifier,
+  apiVersion,
 ) => (Promise.all(splitVotesIntoRounds({ votes: [...votes], unvotes: [...unvotes] })
   // eslint-disable-next-line no-shadow
   .map(({ votes, unvotes }) => {
-    const Lisk = liskClient();
+    const Lisk = liskClient(apiVersion);
     return (Lisk.transaction.castVotes(
       {
         votes,
@@ -117,6 +119,7 @@ export const castVotes = async ({
   secondPassphrase,
   timeOffset,
   networkIdentifier,
+  apiVersion,
 }) => {
   const signedTransactions = account.loginType === loginType.normal
     ? await voteWithPassphrase(
@@ -126,6 +129,7 @@ export const castVotes = async ({
       secondPassphrase,
       timeOffset,
       networkIdentifier,
+      apiVersion,
     )
     : await signVoteTransaction(account, votedList, unvotedList, timeOffset, networkIdentifier);
 
@@ -138,8 +142,8 @@ export const castVotes = async ({
   )));
 };
 
-export const getVotes = (liskAPIClient, { address }) =>
-  liskAPIClient.votes.get({ address, limit: 101, offset: 0 });
+export const getVotes = (network, { address }) =>
+  getAPIClient(network).votes.get({ address, limit: 101, offset: 0 });
 
 export const registerDelegate = (
   liskAPIClient,
@@ -148,13 +152,14 @@ export const registerDelegate = (
   secondPassphrase = null,
   timeOffset,
   networkIdentifier,
+  apiVersion,
 ) => {
   const data = { username, passphrase, timeOffset };
   if (secondPassphrase) {
     data.secondPassphrase = secondPassphrase;
   }
   return new Promise((resolve, reject) => {
-    const Lisk = liskClient();
+    const Lisk = liskClient(apiVersion);
     const transaction = Lisk.transaction.registerDelegate({ ...data, networkIdentifier });
     liskAPIClient.transactions
       .broadcast(transaction)

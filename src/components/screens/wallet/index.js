@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { parseSearchParams } from '../../../utils/searchParams';
+import { parseSearchParams, addSearchParamsToUrl } from '../../../utils/searchParams';
 import Overview from './overview';
 import { getTransactions } from '../../../actions/transactions';
 import txFilters from '../../../constants/transactionFilters';
@@ -11,8 +11,6 @@ import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
 import { isEmpty } from '../../../utils/helpers';
-import Send from '../send';
-import DialogHolder from '../../toolbox/dialog/holder';
 import actionTypes from '../../../constants/actions';
 
 const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
@@ -75,7 +73,7 @@ const Wallet = ({ t, history }) => {
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
     if (params.recipient !== undefined) {
-      DialogHolder.showDialog(<Send initialValue={params} />);
+      addSearchParamsToUrl(history, { modal: 'send' });
     }
   }, []);
 
@@ -100,6 +98,7 @@ const Wallet = ({ t, history }) => {
           activeToken={activeToken}
           discreetMode={discreetMode}
           tabName={t('Transactions')}
+          tabId="Transactions"
           t={t}
         />
         {activeToken !== 'BTC' ? (
@@ -107,6 +106,7 @@ const Wallet = ({ t, history }) => {
             history={history}
             address={account.info[activeToken].address}
             tabName={t('Votes')}
+            tabId="votes"
           />
         ) : null}
         {account.info[activeToken].delegate
@@ -114,6 +114,7 @@ const Wallet = ({ t, history }) => {
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
+              tabId="delegateProfile"
               address={account.info[activeToken].address}
             />
           )

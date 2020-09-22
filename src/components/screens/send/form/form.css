@@ -197,3 +197,7 @@
   margin-left: -4px;
   margin-top: 4px;
 }
+
+.tooltipBTCProcessingSpeed {
+  max-width: 260px;
+}

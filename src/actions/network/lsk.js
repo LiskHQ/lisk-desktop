@@ -44,9 +44,9 @@ export const getConnectionErrorMessage = error => (
     : i18next.t('Unable to connect to the node, no response from the server.')
 );
 
-const getNetworkInfo = async nodeUrl => (
+const getNetworkInfo = async (nodeUrl, apiVersion) => (
   new Promise(async (resolve, reject) => {
-    const Client = liskClient();
+    const Client = liskClient(apiVersion);
     new Client.APIClient([nodeUrl], {}).node.getConstants().then((response) => {
       resolve(response.data);
     }).catch((error) => {
@@ -55,12 +55,17 @@ const getNetworkInfo = async nodeUrl => (
   })
 );
 
-export const networkSet = data => async (dispatch) => {
+export const networkSet = data => async (dispatch, getState) => {
+  const state = getState();
+  const apiVersion = state.network
+    && state.network.networks
+    && state.network.networks.LSK
+    && state.network.networks.LSK.apiVersion;
   const nodeUrl = data.name === networks.customNode.name
     ? data.network.address
     : networks[data.name.toLowerCase()].nodes[0];
-  await getNetworkInfo(nodeUrl).then(({ nethash, version, networkId }) => {
-    const networkConfig = {
+  await getNetworkInfo(nodeUrl, apiVersion).then(({ nethash, version, networkId }) => {
+    const network = {
       nodeUrl,
       custom: data.network.custom,
       code: data.network.code,
@@ -68,7 +73,7 @@ export const networkSet = data => async (dispatch) => {
       nethash,
       networkIdentifier: networkId,
     };
-    dispatch(generateAction(data, networkConfig));
+    dispatch(generateAction(data, network));
     dispatch({
       data: getServerUrl(nodeUrl, nethash),
       type: actionTypes.serviceUrlSet,

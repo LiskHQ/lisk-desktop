@@ -8,19 +8,19 @@ import liskService from '../utils/api/lsk/liskService';
  * @returns {array} - [boolean, function]
  */
 const useServiceSocketUpdates = (event) => {
-  const networkConfig = useSelector(state => state.network);
+  const network = useSelector(state => state.network);
   const [isUpdateAvailable, setUpdateAvailable] = useState(false);
   const reset = () => setUpdateAvailable(false);
 
   useEffect(() => {
     const cleanUp = liskService.listenToBlockchainEvents({
-      networkConfig,
+      network,
       event,
       callback: () => setUpdateAvailable(true),
     });
 
     return cleanUp;
-  }, [networkConfig.name]);
+  }, [network.name]);
 
   return [isUpdateAvailable, reset];
 };

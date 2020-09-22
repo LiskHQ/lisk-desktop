@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+
 import withData from '../../../utils/withData';
 import Overview from './overview';
 import { getAccount } from '../../../utils/api/account';
@@ -12,6 +13,7 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
+import { selectSearchParamValue } from '../../../utils/searchParams';
 
 
 const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
@@ -41,7 +43,7 @@ const Wallet = ({
   useEffect(() => {
     account.loadData();
     transactions.loadData();
-  }, [match.url]);
+  }, [history.location.search]);
 
   return (
     <section>
@@ -61,13 +63,15 @@ const Wallet = ({
           activeToken={activeToken}
           discreetMode={discreetMode}
           tabName={t('Transactions')}
+          tabId="transactions"
           t={t}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
-            address={match.params.address}
+            address={selectSearchParamValue(history.location.search, 'address')}
             tabName={t('Voting')}
+            tabId="voting"
           />
         ) : null}
         {account.data && account.data.delegate
@@ -75,7 +79,8 @@ const Wallet = ({
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
-              address={match.params.address}
+              tabId="delegateProfile"
+              address={selectSearchParamValue(history.location.search, 'address')}
             />
           )
           : null}
@@ -86,21 +91,20 @@ const Wallet = ({
 
 const apis = {
   account: {
-    apiUtil: (liskAPIClient, params) => getAccount({ liskAPIClient, ...params }),
+    apiUtil: (network, params) => getAccount({ network, ...params }),
     defaultData: {},
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
-      address: props.match.params.address,
-      networkConfig: state.network,
+      address: selectSearchParamValue(props.history.location.search, 'address'),
     }),
     transformResponse: response => response,
   },
   transactions: {
-    apiUtil: (apiClient, params) => getTransactions(transformParams(params)),
+    apiUtil: (network, params) => getTransactions(transformParams(params)),
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
-      address: props.match.params.address,
-      networkConfig: state.network,
+      address: selectSearchParamValue(props.history.location.search, 'address'),
+      network: state.network,
     }),
     defaultData: [],
     defaultUrlSearchParams: {

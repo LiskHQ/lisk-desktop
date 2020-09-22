@@ -1,12 +1,10 @@
 import React from 'react';
-import { SecondaryButton } from '../../../toolbox/buttons';
+import { SecondaryButton, PrimaryButton } from '../../../toolbox/buttons';
 import { getIndexOfBookmark } from '../../../../utils/bookmarks';
-// import { getTokenFromAddress } from '../../../../utils/api/transactions';
-// import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
-// import DropdownButton from '../../../toolbox/dropdownButton';
 import TransactionResult from '../../../shared/transactionResult';
 import statusMessage from './statusMessages';
 import styles from './transactionStatus.css';
+import DialogLink from '../../../toolbox/dialog/link';
 
 class TransactionStatus extends React.Component {
   constructor(props) {
@@ -44,20 +42,15 @@ class TransactionStatus extends React.Component {
   }
 
   bookmarkInformation() {
-    const { bookmarks, t } = this.props;
+    const { bookmarks } = this.props;
 
     const isBookmarked = getIndexOfBookmark(
       bookmarks,
       { address: this.props.fields.recipient.address },
     ) !== -1;
 
-    const bookmarkButtonLabel = isBookmarked
-      ? t('Bookmarked')
-      : t('Add address to bookmarks');
-
     return {
       isBookmarked,
-      bookmarkButtonLabel,
     };
   }
 
@@ -108,13 +101,11 @@ class TransactionStatus extends React.Component {
   render() {
     const {
       transactions, t,
-      // recipientAccount, fields,
+      recipientAccount, fields,
+      account,
     } = this.props;
-    // const { isBookmarked, bookmarkButtonLabel } = this.bookmarkInformation();
+    const { isBookmarked } = this.bookmarkInformation();
     const { isHardwareWalletError, messageDetails } = this.getMessagesDetails();
-    // const token = getTokenFromAddress(fields.recipient.address);
-    // const shouldShowBookmark = !transactions.broadcastedTransactionsError.length
-    // && !fields.recipient.isBookmark;
     const success = transactions.broadcastedTransactionsError.length === 0;
 
     return (
@@ -137,29 +128,28 @@ class TransactionStatus extends React.Component {
               )
               : null
           }
-          {/* {
-            shouldShowBookmark
-              ? (
-                <div className={`${styles.bookmarkBtn} bookmark-container`}>
-                  <DropdownButton
-                    buttonClassName={`${styles.btn} ${isBookmarked
-                      ? styles.bookmarkButton : ''} bookmark-btn`}
-                    className={`${styles.bookmarkDropdown}`}
-                    buttonLabel={bookmarkButtonLabel}
-                    ButtonComponent={SecondaryButton}
-                  >
-                    <BookmarkDropdown
-                      delegate={recipientAccount.data.delegate || {}}
-                      address={fields.recipient.address}
-                      publicKey={this.props.recipientAccount.data.publicKey}
-                      isBookmark={isBookmarked}
-                      token={token}
-                    />
-                  </DropdownButton>
-                </div>
-              )
-              : null
-          } */}
+          {
+            !isBookmarked && account.address !== fields.recipient.address && (
+              <div className={`${styles.bookmarkBtn} bookmark-container`}>
+                <DialogLink
+                  component="addBookmark"
+                  data={recipientAccount.data.delegate ? {
+                    formAddress: recipientAccount.data.address,
+                    label: recipientAccount.data.delegate.username,
+                    isDelegate: true,
+                  } : {
+                    formAddress: fields.recipient.address,
+                    isDelegate: false,
+                    label: '',
+                  }}
+                >
+                  <PrimaryButton className={`${styles.btn} bookmark-btn`}>
+                    {t('Add address to bookmarks')}
+                  </PrimaryButton>
+                </DialogLink>
+              </div>
+            )
+          }
         </TransactionResult>
       </div>
     );

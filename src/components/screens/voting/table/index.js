@@ -128,7 +128,7 @@ const DelegatesTable = ({
     }
   }, [activeTab.data, isLoading]);
 
-  const canLoadMore = activeTab.value !== 1;
+  const canLoadMore = activeTab.value === 1 ? false : !params.q;
 
   return (
     <Box main isLoading={isLoading}>

@@ -1,28 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import htmlStringToReact from './htmlStringToReact';
-import regex from './regex';
+import { useDispatch } from 'react-redux';
+import htmlStringToReact from '../utils/htmlStringToReact';
+import regex from '../utils/regex';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import NewReleaseMessage from '../components/shared/newReleaseMessage/newReleaseMessage';
-import DialogHolder from '../components/toolbox/dialog/holder';
-import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
+import { addSearchParamsToUrl } from '../utils/searchParams';
+import { appUpdateAvaiable } from '../actions/appUpdates';
 
-export default {
-  init: () => {
-    const { ipc } = window;
-    if (!ipc) return;
 
+const useIpc = (history) => {
+  const dispatch = useDispatch();
+
+  const { ipc } = window;
+
+  if (!ipc) return;
+
+  useEffect(() => {
     ipc.on('update:available', (action, { version, releaseNotes }) => {
       const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
+      dispatch(appUpdateAvaiable({
+        version, ipc, releaseNotes,
+      }));
 
       const readMore = () => {
-        DialogHolder.showDialog(
-          <NewReleaseDialog
-            version={version}
-            releaseNotes={htmlStringToReact(releaseNotes)}
-            ipc={ipc}
-          />,
-        );
+        addSearchParamsToUrl(history, { modal: 'newRelease' });
       };
 
       const updateNow = () => {
@@ -47,5 +49,7 @@ export default {
     ipc.on('update:downloading', (action, { label }) => {
       toast.success(label);
     });
-  },
+  }, []);
 };
+
+export default useIpc;

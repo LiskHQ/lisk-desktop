@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   bookmarks: state.bookmarks,
   token: state.settings.token && state.settings.token.active,
-  networkConfig: state.network,
+  network: state.network,
 });
 
 export default connect(mapStateToProps)(withTranslation()(Form));

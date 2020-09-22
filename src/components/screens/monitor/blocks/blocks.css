@@ -13,3 +13,18 @@
     display: initial;
   }
 }
+
+.tableRow {
+  & > span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+  }
+
+  & > span:last-child {
+    padding-left: 0px;
+    padding-right: 0px;
+    text-overflow: initial;
+  }
+}

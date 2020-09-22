@@ -1,3 +1,5 @@
+@import '../../../../app/mixins.css';
+
 .wrapper {
   background: var(--color-top-bar);
   display: flex;
@@ -29,10 +31,36 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  margin-right: 17px;
 
   &.disabled {
     opacity: 0.5;
+  }
+
+  & .searchContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .searchContainerParam {
+    background-color: var(--color-search-container);
+    border-radius: 3px;
+    padding: 8px 10px;
+    margin-left: -10px;
+
+    & .searchedValue {
+      @mixin contentLarge normal;
+
+      color: #f7f9fb;
+      padding-left: 10px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    & .accountVisual {
+      padding-left: 10px;
+    }
   }
 }
 
@@ -40,34 +68,16 @@
   display: none !important;
 }
 
-.searchButton {
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  padding: 0 24px;
-  position: relative;
-  border: none;
-
-  & > img {
-    cursor: pointer;
-  }
-}
-
-.searchDropdown {
-  right: 20px !important;
-  top: calc(100% + 13px);
-  width: 502px !important;
-  padding: 20px;
-  box-sizing: border-box;
-
-  & > div {
-    padding: 0;
-  }
-}
-
 .signIn {
-  margin: 7px 20px 0 0;
+  margin: 7px 24px 0 0;
+}
+
+.tooltipWrapper {
+  margin-right: 16px;
+}
+
+@media (--medium-viewport) {
+  .toggle {
+    margin-right: 10px;
+  }
 }

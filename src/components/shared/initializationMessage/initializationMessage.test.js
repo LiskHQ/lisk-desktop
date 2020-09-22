@@ -24,6 +24,10 @@ describe('InitializationMessage', () => {
     },
     history: {
       push: jest.fn(),
+      location: {
+        path: 'dashboard',
+        search: '',
+      },
     },
     t: k => k,
   };

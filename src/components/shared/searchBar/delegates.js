@@ -20,7 +20,7 @@ const Delegates = ({
           onClick={() => onSelectedRow(delegate.account.address)}
           onMouseEnter={updateRowItemIndex}
         >
-          <AccountVisual address={delegate.account.address} size={40} />
+          <AccountVisual address={delegate.account.address} />
           <div className={styles.accountInformation}>
             <div>
               <span className={`${styles.delegateName} delegate-name`}>

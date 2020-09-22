@@ -7,12 +7,14 @@ import TransactionStatus from './transactionStatus';
 import routes from '../../../constants/routes';
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './send.css';
+import { parseSearchParams } from '../../../utils/searchParams';
 
-const Send = ({ initialValue, history }) => {
+const Send = ({ history }) => {
   // istanbul ignore next
   const backToWallet = () => {
     history.push(routes.wallet.path);
   };
+  const initialValue = parseSearchParams(history.location.search);
 
   return (
     <Dialog hasClose>

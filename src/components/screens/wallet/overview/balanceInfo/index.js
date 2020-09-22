@@ -9,6 +9,7 @@ import Converter from '../../../../shared/converter';
 import DialogLink from '../../../../toolbox/dialog/link';
 import styles from './balanceInfo.css';
 import { fromRawLsk } from '../../../../../utils/lsk';
+import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
 
 const BalanceInfo = ({
   t, activeToken, balance, isWalletRoute, address,
@@ -38,16 +39,19 @@ const BalanceInfo = ({
             />
           </DiscreetMode>
         </div>
-        <div className={styles.actionRow}>
-          <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={{ initialValue }}>
-            <PrimaryButton
-              className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
-              size="m"
-            >
-              {sendTitle}
-            </PrimaryButton>
-          </DialogLink>
-        </div>
+        <SignInTooltipWrapper position="bottom">
+          <div className={styles.actionRow}>
+            <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
+              <PrimaryButton
+                className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
+                size="m"
+              >
+                {sendTitle}
+              </PrimaryButton>
+            </DialogLink>
+          </div>
+        </SignInTooltipWrapper>
+
       </BoxContent>
     </Box>
   );

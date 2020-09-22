@@ -6,7 +6,7 @@ jest.mock('./lsk/account');
 
 describe('Utils: Account API', () => {
   const address = '123L';
-  const networkConfig = {
+  const network = {
     name: networks.mainnet.name,
     networks: {
       LSK: {},
@@ -17,11 +17,11 @@ describe('Utils: Account API', () => {
     it('should resolve getAccount for specific token (BTC, LSK, ...) based on the address format ', async () => {
       const params = {
         address,
-        networkConfig,
+        network,
       };
       await getAccount(params);
       expect(lskAccountApi.getAccount).toHaveBeenCalledWith(expect.objectContaining({
-        networkConfig,
+        network,
         address,
       }));
     });

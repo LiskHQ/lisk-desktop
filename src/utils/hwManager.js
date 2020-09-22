@@ -18,14 +18,14 @@ import { splitVotesIntoRounds } from './voting';
  * getAccountsFromDevice - Function.
  * This function is used for retrieve the accounts from an hw device, using public keys.
  */
-const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) => {
+const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
   const accounts = [];
   let account = {};
   for (let index = 0; index === accounts.length; index++) {
     // eslint-disable-next-line no-await-in-loop
     const publicKey = await getPublicKey({ index, deviceId });
     // eslint-disable-next-line no-await-in-loop
-    account = await getAccount({ networkConfig, publicKey });
+    account = await getAccount({ network, publicKey });
     if (index === 0 || accounts[index - 1].balance) {
       accounts.push(account);
     }
@@ -37,8 +37,8 @@ const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) =>
  * signSendTransaction - Function.
  * This function is used for sign a send transaction.
  */
-const signSendTransaction = async (account, data) => {
-  const { transfer, utils } = lisk().transaction;
+const signSendTransaction = async (account, data, apiVersion) => {
+  const { transfer, utils } = lisk(apiVersion).transaction;
   const transactionObject = {
     ...transfer(data),
     senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,
@@ -71,7 +71,7 @@ const signVoteTransaction = async (
   timeOffset,
   networkIdentifier,
 ) => {
-  const { castVotes, utils } = lisk().transaction;
+  const { castVotes, utils } = lisk()['2.x'].transaction;
   const signedTransactions = [];
   const votesChunks = splitVotesIntoRounds({ votes: [...votedList], unvotes: [...unvotedList] });
 

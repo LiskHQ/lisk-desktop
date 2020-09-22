@@ -11,6 +11,7 @@ const bookmarks = (state = emptyBookmarks, action) => {
         [action.data.token]: [
           {
             ...action.data.account,
+            title: action.data.account.title.trim(),
           },
           ...state[action.data.token],
         ],
@@ -31,7 +32,7 @@ const bookmarks = (state = emptyBookmarks, action) => {
             {
               ...tokenBookmarks[indexOfBookmark],
               address: account.address,
-              title: account.title,
+              title: account.title.trim(),
               publicKey: account.publicKey,
             },
             ...tokenBookmarks.slice(indexOfBookmark + 1),

@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { Input } from '../../toolbox/inputs';
 import Accounts from './accounts';
 import Delegates from './delegates';
@@ -8,8 +9,7 @@ import regex from '../../../utils/regex';
 import keyCodes from '../../../constants/keyCodes';
 import styles from './searchBar.css';
 import Blocks from './blocks';
-import DialogHolder from '../../toolbox/dialog/holder';
-import TransactionDetails from '../../screens/transactionDetails';
+import { addSearchParamsToUrl } from '../../../utils/searchParams';
 
 class SearchBar extends React.Component {
   constructor() {
@@ -21,9 +21,9 @@ class SearchBar extends React.Component {
     };
 
     this.onChangeSearchTextValue = this.onChangeSearchTextValue.bind(this);
-    this.onSelectAccount = this.onSelectedRow.bind(this, 'accounts');
+    this.onSelectAccount = this.onSelectedRow.bind(this, 'account');
     this.onSelectTransaction = this.onSelectedRow.bind(this, 'transactions');
-    this.onSelectBlock = this.onSelectedRow.bind(this, 'blocks');
+    this.onSelectBlock = this.onSelectedRow.bind(this, 'block');
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.updateRowItemIndex = this.updateRowItemIndex.bind(this);
   }
@@ -60,9 +60,9 @@ class SearchBar extends React.Component {
 
   onSelectedRow(type, value) {
     if (type === 'transactions') {
-      DialogHolder.showDialog(<TransactionDetails transactionId={value} />);
+      addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails', transactionId: value });
     } else {
-      this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}/${value}`);
+      this.props.history.push(`${routes[type].path}?${routes[type].searchParam}=${value}`);
     }
     this.clearSearch();
   }
@@ -212,4 +212,4 @@ class SearchBar extends React.Component {
   }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);

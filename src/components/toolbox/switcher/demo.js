@@ -1,29 +1,33 @@
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import Switcher from '.';
 import DemoRenderer from '../demoRenderer';
-
-/* eslint-disable-next-line no-console */
-const onClick = console.log;
 
 const SwitcherDemo = () => (
   <React.Fragment>
     <h2>Switcher</h2>
-    <DemoRenderer>
-      <Switcher
-        onClick={onClick}
-        options={[{
-          name: 'Option 1',
-          value: 'opt_1',
-        }, {
-          name: 'Option 2',
-          value: 'opt_2',
-        }, {
-          name: 'Option 3',
-          value: 'opt_3',
-        }]}
-        active="opt_1"
-      />
-    </DemoRenderer>
+    <MemoryRouter
+      initialEntries={[{}]}
+    >
+      <DemoRenderer>
+        <Switcher
+          options={[{
+            name: 'Option 1',
+            value: 'opt_1',
+            id: 'opt1',
+          }, {
+            name: 'Option 2',
+            value: 'opt_2',
+            id: 'opt2',
+          }, {
+            name: 'Option 3',
+            value: 'opt_3',
+            id: 'opt3',
+          }]}
+          active="opt1"
+        />
+      </DemoRenderer>
+    </MemoryRouter>
   </React.Fragment>
 );
 

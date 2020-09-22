@@ -46,7 +46,7 @@ const FormBtc = (props) => {
       <div className={`${styles.fieldGroup} processing-speed`}>
         <span className={`${styles.fieldLabel}`}>
           {t('Processing Speed')}
-          <Tooltip>
+          <Tooltip tooltipClassName={styles.tooltipBTCProcessingSpeed}>
             <p className={styles.tooltipText}>
               {
                     t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')

@@ -48,20 +48,25 @@ describe('autoUpdater', () => {
   };
 
   beforeEach(() => {
-    callbacks = {};
+    const quitAndInstall = spy();
+    callbacks = {
+      clickDialogButton: (buttonIndex) => {
+        if (buttonIndex === 0) {
+          quitAndInstall();
+        }
+      },
+    };
     params = {
       autoUpdater: {
         checkForUpdates: spy(),
         on: (name, callback) => {
           callbacks[name] = callback;
         },
-        quitAndInstall: spy(),
+        quitAndInstall,
         downloadUpdate: spy(),
       },
       dialog: {
-        showMessageBox: (options, callback) => {
-          callbacks.dialog = callback;
-        },
+        showMessageBox: () => new Promise(resolve => resolve()),
         showErrorBox: spy(),
       },
       win: {
@@ -140,7 +145,7 @@ describe('autoUpdater', () => {
   it('should install update once downloaded and "Restart now" button pressed', () => {
     autoUpdater(params);
     callbacks['update-downloaded']({ version });
-    callbacks.dialog(0);
+    callbacks.clickDialogButton(0);
 
     expect(params.autoUpdater.quitAndInstall).to.have.been.calledWithExactly();
   });
@@ -148,7 +153,7 @@ describe('autoUpdater', () => {
   it('should not install update when "Later" was pressed', () => {
     autoUpdater(params);
     callbacks['update-downloaded']({ releaseNotes, version });
-    callbacks.dialog(1);
+    callbacks.clickDialogButton(1);
 
     expect(params.autoUpdater.quitAndInstall).to.not.have.been.calledWith();
   });

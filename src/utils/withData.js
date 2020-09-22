@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { getAPIClient } from './api/network';
 
 /**
  * This HOC helps retrieve the data for it's direct child component.
@@ -86,7 +85,7 @@ function withData(apis = {}) {
         }
 
         loadData(key, urlSearchParams = this.state[key].urlSearchParams, ...args) {
-          const { apiClient, apiParams } = this.props;
+          const { apiParams, network } = this.props;
           if (this.mounted) {
             this.setState(state => ({
               [key]: {
@@ -96,7 +95,7 @@ function withData(apis = {}) {
               },
             }));
           }
-          apis[key].apiUtil(apiClient, {
+          apis[key].apiUtil(network, {
             ...apiParams[key],
             ...urlSearchParams,
           }, ...args).then((data) => {
@@ -121,7 +120,7 @@ function withData(apis = {}) {
         }
 
         render() {
-          const { apiClient, apiParams, ...restOfProps } = this.props;
+          const { apiParams, ...restOfProps } = this.props;
           return (
             <ChildComponent {...{
               ...restOfProps,
@@ -144,7 +143,7 @@ function withData(apis = {}) {
     const keys = Object.keys(apis);
 
     const mapStateToProps = (state, ownProps) => ({
-      apiClient: getAPIClient(state.settings.token.active, state.network),
+      network: state.network,
       apiParams: keys.reduce((acc, key) => {
         acc[key] = apis[key].getApiParams ? apis[key].getApiParams(state, ownProps) : {};
         return acc;

@@ -10,11 +10,11 @@ import {
 const useDynamicFeeCalculation = (account, dynamicFeePerByte) => {
   const {
     settings: { token: { active: token } },
-    network: networkConfig,
+    network,
   } = useSelector(state => state);
   const { t } = useTranslation();
   const [unspentTransactionOutputs = []] = usePromise(
-    () => getUnspentTransactionOutputs(account.info[token].address, networkConfig),
+    () => getUnspentTransactionOutputs(account.info[token].address, network),
     [account.info[token].address],
   );
 

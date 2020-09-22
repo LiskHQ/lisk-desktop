@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
+
 import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../../utils/piwik';
@@ -12,8 +13,6 @@ const CustomRoute = ({
   exact,
   isPrivate,
   forbiddenTokens,
-  pathSuffix,
-  pathPrefix,
   component,
   t,
   history,
@@ -43,7 +42,7 @@ const CustomRoute = ({
     <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
       <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
         <Route
-          path={`${pathPrefix}${path}${pathSuffix}`}
+          path={path}
           exact={exact}
           key={path}
           component={component}

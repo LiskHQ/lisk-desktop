@@ -89,10 +89,10 @@ export const secondPassphraseRegistered = ({
 }) =>
 /* istanbul ignore next */
   (dispatch, getState) => {
-    const { settings: { token: { active } }, network } = getState();
+    const { settings: { token: { active } }, network, blocks } = getState();
     const { networkIdentifier } = network.networks.LSK;
     const liskAPIClient = getAPIClient(active, network);
-    const timeOffset = getTimeOffset(getState().blocks.latestBlocks);
+    const timeOffset = getTimeOffset(blocks.latestBlocks, network.networks.LSK.apiVersion);
     setSecondPassphrase(
       liskAPIClient,
       secondPassphrase,
@@ -100,6 +100,7 @@ export const secondPassphraseRegistered = ({
       passphrase,
       timeOffset,
       networkIdentifier,
+      network.networks.LSK.apiVersion,
     ).then((transaction) => {
       dispatch({
         type: actionTypes.addNewPendingTransaction,
@@ -133,9 +134,9 @@ export const secondPassphraseRegistered = ({
  */
 export const accountDataUpdated = ({ account }) =>
   async (dispatch, getState) => {
-    const networkConfig = getState().network;
+    const network = getState().network;
     const [error, result] = await to(getAccount({
-      networkConfig,
+      network,
       address: account.address,
       publicKey: account.publicKey,
     }));
@@ -160,11 +161,11 @@ async function getAccounts(tokens, options) {
 }
 
 export const updateEnabledTokenAccount = token => async (dispatch, getState) => {
-  const { network: networkConfig, account } = getState();
+  const { network, account } = getState();
   if (token !== tokenMap.LSK.key) {
     const [error, result] = await to(getAccount({
       token,
-      networkConfig,
+      network,
       passphrase: account.passphrase,
     }));
     if (error) {
@@ -185,13 +186,13 @@ export const updateEnabledTokenAccount = token => async (dispatch, getState) => 
  * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
  */
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
-  const { network: networkConfig, settings } = getState();
+  const { network, settings } = getState();
   dispatch(accountLoading());
 
   const activeTokens = Object.keys(settings.token.list)
     .filter(key => settings.token.list[key]);
   const [error, info] = await to(getAccounts(activeTokens, {
-    networkConfig, publicKey, passphrase,
+    network, publicKey, passphrase,
   }));
 
   if (error) {

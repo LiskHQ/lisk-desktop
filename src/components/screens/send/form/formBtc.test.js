@@ -70,7 +70,7 @@ describe('FormBtc', () => {
         LSK: [],
         BTC: [],
       },
-      networkConfig: {
+      network: {
         name: 'Mainnet',
       },
       history: {

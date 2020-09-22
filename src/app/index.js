@@ -21,12 +21,14 @@ import DialogHolder from '../components/toolbox/dialog/holder';
 import ThemeContext from '../contexts/theme';
 import { settingsRetrieved } from '../actions/settings';
 import { bookmarksRetrieved } from '../actions/bookmarks';
+import useIpc from '../hooks/useIpc';
 
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
-  // const location = useLocation();
+
+  useIpc(history);
 
   useEffect(() => {
     setLoaded(true);
@@ -40,7 +42,7 @@ const App = ({ history }) => {
   return (
     <ThemeContext.Provider value={theme}>
       <OfflineWrapper>
-        <DialogHolder location={history.location} />
+        <DialogHolder history={history} />
         <ToastContainer
           position="bottom-right"
           hideProgressBar
@@ -60,7 +62,7 @@ const App = ({ history }) => {
           <section className="scrollContainer">
             <FlashMessageHolder />
             <InitializationMessage history={history} />
-            <div className={`${styles.mainContent} ${!routeObj.isSigninFlow ? styles.mainBox : ''}`}>
+            <div className={`${styles.mainContent} ${styles.mainBox}`}>
               <Switch>
                 {
                   routesList.map(route => (
@@ -70,8 +72,6 @@ const App = ({ history }) => {
                       exact={route.exact}
                       isPrivate={route.isPrivate}
                       forbiddenTokens={route.forbiddenTokens}
-                      pathSuffix={route.pathSuffix}
-                      pathPrefix={route.pathPrefix}
                       component={route.component}
                       key={route.path}
                       history={history}

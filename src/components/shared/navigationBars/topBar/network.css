@@ -7,7 +7,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0 24px;
+  padding-right: 24px;
 
   /* Message */
   & > p {
@@ -23,10 +23,6 @@
       text-transform: capitalize;
       display: inline-block;
     }
-  }
-
-  &:last-child {
-    margin-right: 16px;
   }
 }
 

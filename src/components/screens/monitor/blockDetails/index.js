@@ -6,10 +6,10 @@ import { withRouter } from 'react-router-dom';
 import BlockDetails from './blockDetails';
 import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
-import withResizeValues from '../../../../utils/withResizeValues';
+import { selectSearchParamValue } from '../../../../utils/searchParams';
 
 const mapStateToProps = (state, ownProps) => ({
-  id: ownProps.match.params.id,
+  id: selectSearchParamValue(ownProps.history.location.search, 'id'),
 });
 const ComposedBlockDetails = compose(
   withRouter,
@@ -33,7 +33,6 @@ const ComposedBlockDetails = compose(
     },
   }),
   withTranslation(),
-  withResizeValues,
 )(BlockDetails);
 
 export default ComposedBlockDetails;

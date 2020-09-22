@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from '../../../../utils/testHelpers';
 import TransactionStatus from './transactionStatus';
 
 describe('TransactionStatus', () => {
@@ -13,7 +12,7 @@ describe('TransactionStatus', () => {
     bookmarks: {
       LSK: [],
     },
-    account: { hwInfo: { deviceId: 'MOCK' } },
+    account: { address: '312312Z', hwInfo: { deviceId: 'MOCK' } },
     prevStep: jest.fn(),
     fields: {
       recipient: {
@@ -42,38 +41,44 @@ describe('TransactionStatus', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<TransactionStatus {...props} />);
+    wrapper = mountWithRouter(TransactionStatus, props, {
+      pathname: 'wallet',
+      search: '?modal=send',
+    });
   });
 
   it('should render properly transactionStatus', () => {
     expect(wrapper).toContainMatchingElement('.transaction-status');
   });
 
-  // @todo re-enable this by #2977
-  it.skip('should show dropdown bookmark', () => {
+  it('should show add bookmark button', () => {
     expect(wrapper).toContainMatchingElement('.bookmark-container');
     expect(wrapper).toContainMatchingElement('.bookmark-btn');
     expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Add address to bookmarks');
-    wrapper.find('.bookmark-btn').at(0).simulate('click');
-    wrapper.find('input[name="accountName"]').simulate('change', { target: { name: 'accountName', value: 'ABC' } });
-    wrapper.find('button').last().simulate('click');
-    wrapper.setProps({
+  });
+
+  it('should not show add bookmark button', () => {
+    wrapper = mountWithRouter(TransactionStatus, {
+      ...props,
+      account: { address: props.fields.recipient.address, hwInfo: { deviceId: 'MOCK' } },
+    });
+    expect(wrapper).not.toContainMatchingElement('.bookmark-container');
+    expect(wrapper).not.toContainMatchingElement('.bookmark-btn');
+
+    wrapper = mountWithRouter(TransactionStatus, {
       ...props,
       bookmarks: {
-        LSK: [{
-          address: '123123L',
-        }],
+        LSK: [{ address: props.fields.recipient.address }],
       },
     });
-    wrapper.update();
-    expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Bookmarked');
-    wrapper.find('.bookmark-btn').at(0).simulate('click');
+    expect(wrapper).not.toContainMatchingElement('.bookmark-container');
+    expect(wrapper).not.toContainMatchingElement('.bookmark-btn');
   });
 
   it('should render error message in case of transaction failed', () => {
     const newProps = { ...props };
     newProps.transactions.broadcastedTransactionsError = [{ recipient: '123L', amount: 1, reference: 'test' }];
-    wrapper = mount(<TransactionStatus {...newProps} />);
+    wrapper = mountWithRouter(TransactionStatus, newProps);
     expect(wrapper).toContainMatchingElement('.report-error-link');
   });
 
@@ -85,7 +90,7 @@ describe('TransactionStatus', () => {
       error: { message: 'errorMessage' },
       transaction: { recipient: '123L', amount: 1, reference: 'test' },
     }];
-    wrapper = mount(<TransactionStatus {...newProps} />);
+    wrapper = mountWithRouter(TransactionStatus, newProps);
     expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.retry').at(0).simulate('click');
     expect(props.prevStep).toBeCalled();
@@ -102,7 +107,7 @@ describe('TransactionStatus', () => {
       transactionsCreatedFailed: [{ id: 2 }],
     };
 
-    wrapper = mount(<TransactionStatus {...newProps} />);
+    wrapper = mountWithRouter(TransactionStatus, newProps);
     expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.retry').at(0).simulate('click');
     expect(props.transactionBroadcasted).toBeCalled();
