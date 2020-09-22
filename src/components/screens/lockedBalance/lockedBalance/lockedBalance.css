@@ -1,0 +1,58 @@
+@import '../../../../app/mixins.css';
+
+.wrapper {  
+    & > header {
+      padding-left: var(--horizontal-padding-l) !important;
+      padding-right: var(--horizontal-padding-l) !important;
+      padding-bottom: 0px !important;
+      height: auto !important;
+
+      & > h1 {
+          line-height: unset !important;
+      }
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+
+    & > p {
+        margin-top: 0px;
+    }
+}
+
+.amountStatusContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+
+        & > .columnTitle {
+            @mixin contentNormal semi-bold;
+            color: var(--color-maastricht-blue);
+        }
+
+        & > p {
+            margin-top: 5px;
+            display: flex;
+
+            & > img {
+                margin-right: 11px;
+            }
+        }
+    }
+
+    & > div:nth-child(1) {
+        flex-basis: 20%;
+        max-width: 20%;
+    }
+
+    & > div:nth-child(2) {
+        flex-basis: 80%;
+        max-width: 80%;
+    }
+}

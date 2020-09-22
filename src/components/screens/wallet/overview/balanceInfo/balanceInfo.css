@@ -1,3 +1,5 @@
+@import '../../../../../app/mixins.css';
+
 .wrapper {
   display: flex;
   padding: 0;
@@ -46,6 +48,18 @@
     opacity: 0.8;
     padding: 4px 0;
   }
+
+  & > div {
+    display: flex;
+    flex-wrap: wrap;
+
+    & > div {
+      flex-basis: 50%;
+      max-width: 50%;
+      display: flex;
+      align-items: center;
+    }
+  }
 }
 
 .actionRow {
@@ -71,5 +85,15 @@
     &.BTC {
       background-color: var(--color-btc);
     }
+  }
+}
+
+.lockedBalance {
+  @mixin headingNormal normal;
+  color: var(--color-ink-blue);
+
+  & > img {
+    width: 17px;
+    margin-right: 8px;
   }
 }

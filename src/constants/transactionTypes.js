@@ -69,7 +69,19 @@ const transactionTypes = (t = str => str) => ({
     key: 'createMultiSig',
     icon: 'signMultiSignatureTransaction',
     nameFee: 0,
-    hardCapp: 5e8, // rawLSK
+    hardCap: 5e8, // rawLSK
+  },
+  unlock: {
+    code: {
+      legacy: 5,
+      new: 13,
+    }.legacy,
+    outgoingCode: 13,
+    title: t('Unlock LSK'),
+    senderLabel: t('Sender'),
+    key: 'unlock',
+    icon: 'txUnlock',
+    nameFee: 0,
   },
 });
 

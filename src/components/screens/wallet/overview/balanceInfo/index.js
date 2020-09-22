@@ -7,12 +7,14 @@ import LiskAmount from '../../../../shared/liskAmount';
 import DiscreetMode from '../../../../shared/discreetMode';
 import Converter from '../../../../shared/converter';
 import DialogLink from '../../../../toolbox/dialog/link';
+import Icon from '../../../../toolbox/icon';
 import styles from './balanceInfo.css';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
+import { tokenMap } from '../../../../../constants/tokens';
 
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address,
+  t, activeToken, balance, isWalletRoute, address, lockedBalance = 120,
 }) => {
   const initialValue = isWalletRoute
     ? {}
@@ -37,6 +39,15 @@ const BalanceInfo = ({
               value={fromRawLsk(balance)}
               error=""
             />
+            {activeToken === tokenMap.LSK.key && (
+              <DialogLink
+                className={styles.lockedBalance}
+                component="lockedBalance"
+              >
+                <Icon name="lock" />
+                {`${lockedBalance} ${tokenMap.LSK.key}`}
+              </DialogLink>
+            )}
           </DiscreetMode>
         </div>
         <SignInTooltipWrapper position="bottom">
