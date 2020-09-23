@@ -49,6 +49,17 @@ const AddVote = ({
 
   const titles = getTitles(t)[mode];
 
+  const removeVote = () => {
+    const address = selectSearchParamValue(history.location.search, 'address');
+
+    dispatch(voteEdited([{
+      address: address || host,
+      amount: 0,
+    }]));
+
+    removeSearchParamsFromUrl(history, ['modal']);
+  };
+
   return (
     <Dialog hasClose className={styles.wrapper}>
       <Box>
