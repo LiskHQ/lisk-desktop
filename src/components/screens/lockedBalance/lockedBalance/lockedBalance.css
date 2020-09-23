@@ -25,19 +25,22 @@
 .amountStatusContainer {
     display: flex;
     flex-direction: row;
+    padding: 5px 0;
     margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 
     & > div {
         display: flex;
         flex-direction: column;
 
         & > .columnTitle {
-            @mixin contentNormal semi-bold;
+            @mixin contentNormal bold;
             color: var(--color-maastricht-blue);
         }
 
         & > p {
-            margin-top: 5px;
+            margin-top: 0px;
+            margin-bottom: 20px;
             display: flex;
 
             & > img {
