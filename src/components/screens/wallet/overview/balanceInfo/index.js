@@ -33,12 +33,12 @@ const BalanceInfo = ({
               <LiskAmount val={balance} />
               {' '}
               <span>{activeToken}</span>
+              <Converter
+                className={styles.fiatValue}
+                value={fromRawLsk(balance)}
+                error=""
+              />
             </div>
-            <Converter
-              className={styles.fiatValue}
-              value={fromRawLsk(balance)}
-              error=""
-            />
             {activeToken === tokenMap.LSK.key && (
               <DialogLink
                 className={styles.lockedBalance}
