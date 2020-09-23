@@ -32,7 +32,7 @@ describe('Constants: transactionTypes', () => {
       'registerDelegate',
       'castVotes',
       'createMultiSig',
-      'unlockLSK',
+      'unlock',
     ]);
   });
 });
