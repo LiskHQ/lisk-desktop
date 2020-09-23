@@ -10,6 +10,7 @@ import DialogLink from '../../../../toolbox/dialog/link';
 import styles from './balanceInfo.css';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
+import { tokenMap } from '../../../../../constants/tokens';
 
 const BalanceInfo = ({
   t, activeToken, balance, isWalletRoute, address,
