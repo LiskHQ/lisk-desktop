@@ -5,7 +5,6 @@ import tableStyles from '../../../toolbox/table/table.css';
 import LiskAmount from '../../../shared/liskAmount';
 import styles from './votes.css';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
-import regex from '../../../../utils/regex';
 
 const VoteRow = ({
   data, onRowClick, t,
@@ -27,7 +26,6 @@ const VoteRow = ({
         <div className={styles.accountInfo}>
           <span className={`${styles.title} vote-username`}>{data.username}</span>
           <span className="showOnLargeViewPort">{data.address}</span>
-          <span className="hideOnLargeViewPort">{data.address.replace(regex.lskAddressTrunk, '$1...$3')}</span>
         </div>
       </div>
     </div>

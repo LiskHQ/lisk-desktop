@@ -30,16 +30,6 @@
     margin-bottom: 8px;
   }
 
-  & .amountFieldHeader {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-
-    & button {
-      padding: 0 0 8px;
-    }
-  }
-
   & .amountHint {
     @mixin contentSmallest;
 
@@ -55,25 +45,6 @@
     & > img {
       margin-left: 5px;
       cursor: pointer;
-    }
-  }
-
-  & .amountField {
-    align-items: center;
-    display: flex;
-    position: relative;
-    width: 100%;
-
-    & .converter {
-      position: absolute;
-      right: 45px;
-      top: var(--vertical-padding-l);
-    }
-
-    & .input {
-      padding-right: 120px;
-      width: 100%;
-      height: 48px;
     }
   }
 

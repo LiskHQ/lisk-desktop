@@ -1,131 +1,93 @@
 import to from 'await-to-js';
-import { toast } from 'react-toastify';
 import {
   getVotes,
-  getDelegates,
-  castVotes,
 } from '../utils/api/delegates';
-import { getVotingLists, getVotingError } from '../utils/voting';
-import { updateDelegateCache } from '../utils/delegates';
+import { create } from '../utils/api/lsk/transactions';
 import { passphraseUsed } from './account';
-import { addNewPendingTransaction } from './transactions';
 import actionTypes from '../constants/actions';
-import { getAPIClient } from '../utils/api/network';
-import { tokenMap } from '../constants/tokens';
-import { txAdapter } from '../utils/api/lsk/adapters';
+import { loginType } from '../constants/hwConstants';
+import transactionTypes from '../constants/transactionTypes';
+import { signVoteTransaction } from '../utils/hwManager';
 
 /**
- * Add data to the list of all delegates
+ * Clears the existing changes on votes.
+ * The vote queue will be empty after this action dispatched
  *
- * This action is used in delegatesListView to clear delegates
- * https://github.com/LiskHQ/lisk-desktop/blob/d284b32f747e6b5c9189a3aeeff975b13a7a466b/src/components/delegatesListView/index.js#L21-L23
+ * @returns {Object} Pure action object
  */
-export const delegatesAdded = data => ({
-  type: actionTypes.delegatesAdded,
-  data,
-});
-
-/**
- * Toggles account's vote for the given delegate
- */
-export const voteToggled = data => ({
-  type: actionTypes.voteToggled,
-  data,
-});
-
-export const clearVotes = () => ({
+export const votesCleared = () => ({
   type: actionTypes.votesCleared,
 });
 
+/**
+ * To be dispatched when the pending vote transaction
+ * is confirmed by the blockchain.
+ *
+ * @returns {Object} Pure action object
+ */
+export const votesConfirmed = () => ({
+  type: actionTypes.votesConfirmed,
+});
+
+/**
+ * Defines the new vote amount for a given delegate.
+ * The reducer will add a new vote if if didn't exist before
+ * Any vote whose vote amount changes to zero will be removed
+ * when the vote transaction is confirmed (via votesConfirmed action)
+ *
+ * @param {Object} data
+ * @param {String} data.address - Delegate address
+ * @param {String} data.voteAmount - (New) vote amount in Beddows
+ * @returns {Object} Pure action object
+ */
+export const voteEdited = data => ({
+  type: actionTypes.voteEdited,
+  data,
+});
 
 /**
  * Makes Api call to register votes
  * Adds pending state and then after the duration of one round
  * cleans the pending state
  */
-export const votePlaced = ({
-  account, votes, secondPassphrase, callback,
-}) =>
+export const votesSubmitted = data =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
-    const state = getState();
-    const { networkIdentifier } = state.network.networks.LSK;
-    const liskAPIClient = getAPIClient(tokenMap.LSK.key, state.network);
-    const { votedList, unvotedList } = getVotingLists(votes);
+    const { network, account } = getState();
 
-    const label = getVotingError(votes, account);
-    if (label) {
-      toast.error(label);
-      return;
-    }
-
-    const [error, callResult] = await to(castVotes({
-      liskAPIClient,
-      account,
-      votedList,
-      unvotedList,
-      secondPassphrase,
-      networkIdentifier,
-    }));
+    const [error, tx] = account.loginType === loginType.normal
+      ? await to(create(
+        { ...data, network },
+        transactionTypes().vote.key,
+      ))
+      : await to(signVoteTransaction(account, data));
 
     if (error) {
-      callback({
-        success: false,
-        error,
+      return dispatch({
+        type: actionTypes.transactionCreatedError,
+        data: error,
       });
-    } else {
-      dispatch({ type: actionTypes.pendingVotesAdded });
-      callResult.map(transaction =>
-        dispatch(addNewPendingTransaction(txAdapter(transaction))));
-      dispatch(passphraseUsed(new Date()));
-      callback({ success: true });
     }
+
+    dispatch({ type: actionTypes.votesSubmitted });
+    dispatch(passphraseUsed(new Date()));
+    return dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
   };
 
 /**
- * Gets the list of delegates current account has voted for
- *
+ * Fetches the list of votes of the host account.
  */
-export const loadVotes = ({ address, type, callback = () => null }) =>
+export const votesRetrieved = () =>
   (dispatch, getState) => {
-    const { network } = getState();
+    const { network, account } = getState();
 
-    getVotes(network, { address })
+    getVotes(network, { address: account.info.LSK.address })
       .then((response) => {
         dispatch({
-          type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
-          data: { list: response.data.votes },
+          type: actionTypes.votesRetrieved,
+          data: response.data,
         });
-        callback(response.data.votes);
       });
-  };
-
-/**
- * Gets list of all delegates
- */
-export const loadDelegates = ({
-  offset = 0, q, network,
-}) => {
-  let params = {
-    offset,
-    limit: '90',
-    sort: 'totalVotesReceived:desc',
-  };
-  params = q ? { ...params, search: q } : params;
-  return getDelegates(network, params);
-};
-
-export const delegatesLoaded = ({
-  offset = 0, refresh, q, callback = () => {},
-}) =>
-  (dispatch, getState) => {
-    loadDelegates({ offset, q, network: getState().network })
-      .then((response) => {
-        updateDelegateCache(response.data, getState().network);
-        dispatch(delegatesAdded({
-          list: response.data,
-          refresh,
-        }));
-        callback(response);
-      })
-      .catch(callback);
   };
