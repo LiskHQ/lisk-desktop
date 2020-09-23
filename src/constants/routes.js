@@ -24,6 +24,7 @@ import VerifyMessage from '../components/screens/verifyMessage';
 import Request from '../components/screens/request';
 import SearchBar from '../components/shared/searchBar';
 import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
+import AddVote from '../components/screens/AddVote';
 
 export default {
   wallet: {
@@ -184,5 +185,10 @@ export const modals = {
     component: Request,
     isPrivate: true,
     forbiddenTokens: [],
+  },
+  addVote: {
+    component: AddVote,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
 };

@@ -1,328 +1,161 @@
-import { expect } from 'chai';
 import actionTypes from '../../constants/actions';
 import voting from './voting';
 
 describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-statements
-  const initialState = { votes: {}, delegates: [] };
   const delegate1 = {
-    publicKey: 'sample_key_1', address: '100001L', rank: 1, productivity: 99,
+    address: '100001L',
   };
   const delegate2 = {
-    publicKey: 'sample_key_2', address: '100002L', rank: 2, productivity: 98,
+    address: '100002L',
   };
   const delegate3 = {
-    publicKey: 'sample_key_3', address: '100003L', rank: 3, productivity: 97,
-  };
-  const delegate4 = {
-    publicKey: 'sample_key_4', address: '100004L', rank: 4, productivity: 96,
-  };
-  const delegate5 = {
-    publicKey: 'sample_key_5', address: '100005L', rank: 5, productivity: 95,
+    address: '100003L',
   };
   const cleanVotes = {
-    username1: { confirmed: false, unconfirmed: false, ...delegate1 },
-    username2: { confirmed: true, unconfirmed: true, ...delegate2 },
-    username3: { confirmed: false, unconfirmed: false, ...delegate3 },
+    [delegate1.address]: { confirmed: 1e10, unconfirmed: 1e10 },
+    [delegate2.address]: { confirmed: 1e10, unconfirmed: 1e10 },
+    [delegate3.address]: { confirmed: 1e10, unconfirmed: 1e10 },
   };
   const dirtyVotes = {
-    username1: { confirmed: false, unconfirmed: true, ...delegate1 },
-    username2: { confirmed: true, unconfirmed: true, ...delegate2 },
-    username3: { confirmed: false, unconfirmed: false, ...delegate3 },
+    [delegate1.address]: { ...cleanVotes[delegate1.address], unconfirmed: 3e10 },
+    [delegate2.address]: { ...cleanVotes[delegate2.address], unconfirmed: 2e10 },
+    [delegate3.address]: cleanVotes[[delegate3.address]],
   };
   const pendingVotes = {
-    username1: {
-      confirmed: true, unconfirmed: true, pending: true, ...delegate1,
-    },
-    username2: {
-      confirmed: true, unconfirmed: true, pending: false, ...delegate2,
-    },
-    username3: {
-      confirmed: false, unconfirmed: false, pending: false, ...delegate3,
-    },
+    [delegate1.address]: { ...dirtyVotes[delegate1.address], pending: true },
+    [delegate2.address]: { ...dirtyVotes[delegate2.address], pending: true },
+    [delegate3.address]: { ...dirtyVotes[delegate3.address], pending: false },
   };
-
-  const restoredVotes = {
-    username1: {
-      confirmed: false, unconfirmed: false, pending: false, ...delegate1,
-    },
-    username2: {
-      confirmed: true, unconfirmed: true, pending: false, ...delegate2,
-    },
-    username3: {
-      confirmed: false, unconfirmed: false, pending: false, ...delegate3,
-    },
-  };
-
-  const delegateList1 = [{ username: 'username1', ...delegate1 }, { username: 'username2', ...delegate2 }];
-  const delegateList2 = [{ username: 'username3', ...delegate3 }, { username: 'username4', ...delegate4 }];
-  const delegateList3 = [
-    {
-      username: 'username1',
-      account: { address: delegate1.address, publicKey: delegate1.publicKey },
-      productivity: delegate1.productivity,
-      rank: delegate1.rank,
-      unconfirmed: delegate1.unconfirmed,
-    },
-    {
-      username: 'username2',
-      account: { address: delegate2.address, publicKey: delegate2.publicKey },
-      productivity: delegate2.productivity,
-      rank: delegate2.rank,
-      unconfirmed: delegate2.unconfirmed,
-    },
-  ];
-  const fullDelegates = [...delegateList1, ...delegateList2];
 
   it('should return default state if action does not match', () => {
     const action = {
       type: '',
     };
-    const state = { votes: cleanVotes };
-    const changedState = voting(state, action);
+    const changedState = voting(cleanVotes, action);
 
-    expect(changedState).to.be.equal(state);
+    expect(changedState).toEqual(cleanVotes);
   });
 
-  it('should fill votes object with action: votesAdded', () => {
-    const action = {
-      type: actionTypes.votesAdded,
-      data: {
-        list: delegateList1,
-      },
-    };
-    const expectedState = {
-      votes: {
-        username1: { confirmed: true, unconfirmed: true, ...delegate1 },
-        username2: { confirmed: true, unconfirmed: true, ...delegate2 },
-      },
-      delegates: [],
-    };
-    const changedState = voting(initialState, action);
+  describe('votesRetrieved', () => {
+    it('should store fetched votes of a given account', () => {
+      const action = {
+        type: actionTypes.votesRetrieved,
+        data: [
+          { ...delegate1, amount: 1e10 },
+          { ...delegate2, amount: 2e10 },
+        ],
+      };
+      const expectedState = {
+        [delegate1.address]: { confirmed: 1e10, unconfirmed: 1e10 },
+        [delegate2.address]: { confirmed: 2e10, unconfirmed: 2e10 },
+      };
+      const changedState = voting({}, action);
 
-    expect(changedState).to.be.deep.equal(expectedState);
+      expect(changedState).toEqual(expectedState);
+    });
   });
 
-  it('should append to delegates list with action: delegatesAdded, refresh: false', () => {
-    const action = {
-      type: actionTypes.delegatesAdded,
-      data: {
-        list: delegateList2,
-        totalCount: 100,
-        refresh: false,
-      },
-    };
-    const state = {
-      delegates: delegateList1,
-    };
-    const expectedState = {
-      delegates: fullDelegates,
-    };
-    const changedState = voting(state, action);
-
-    expect(changedState.delegates).to.be.deep.equal(expectedState.delegates);
-  });
-
-  it('should replace delegates with the new delegates list with action: delegatesAdded, refresh: true', () => {
-    const action = {
-      type: actionTypes.delegatesAdded,
-      data: {
-        list: delegateList1,
-        refresh: true,
-      },
-    };
-    const state = {
-      delegates: delegateList2,
-    };
-    const expectedState = {
-      delegates: delegateList1,
-    };
-    const changedState = voting(state, action);
-
-    expect(changedState).to.be.deep.equal(expectedState);
-  });
-
-  it('should toggle unconfirmed state, with action: voteToggled', () => {
-    const action = {
-      type: actionTypes.voteToggled,
-      data: delegateList3[0],
-    };
-    const state = { votes: cleanVotes };
-    const expectedState = {
-      votes: dirtyVotes,
-    };
-    const changedState = voting(state, action);
-
-    expect(changedState).to.be.deep.equal(expectedState);
-  });
-
-  it('should add to votes dictionary in not exist, with action: voteToggled', () => {
-    const action = {
-      type: actionTypes.voteToggled,
-      data: delegateList3[0],
-    };
-    const expectedState = {
-      votes: {
-        [delegateList3[0].username]: dirtyVotes[delegateList3[0].username],
-      },
-      delegates: [],
-    };
-    const changedState = voting(initialState, action);
-
-    expect(changedState).to.be.deep.equal(expectedState);
-  });
-
-  it('should mark the toggles votes as pending, with action: pendingVotesAdded ', () => {
-    const action = {
-      type: actionTypes.pendingVotesAdded,
-    };
-    const state = {
-      votes: dirtyVotes,
-    };
-    const expectedState = {
-      votes: pendingVotes,
-    };
-    const changedState = voting(state, action);
-    expect(changedState).to.be.deep.equal(expectedState);
-  });
-
-  it('should remove all pending flags from votes, with action: votesCleared', () => {
-    const action = {
-      type: actionTypes.votesCleared,
-    };
-    const state = {
-      votes: dirtyVotes,
-    };
-
-    const expectedState = {
-      votes: restoredVotes,
-    };
-    const changedState = voting(state, action);
-
-    expect(changedState).to.be.deep.equal(expectedState);
-  });
-
-  it('should update new username in votes when we\'ve voted but it\'s not in the new list', () => {
-    const action = {
-      type: actionTypes.votesUpdated,
-      data: {
-        list: [{ username: 'username5', ...delegate5 }],
-      },
-    };
-    const votedButNotYetInList = {
-      username1: {
-        confirmed: true, unconfirmed: true, pending: true, ...delegate1,
-      },
-    };
-    const state = {
-      votes: { ...votedButNotYetInList },
-    };
-    const newUserNameRegisteredInVotes = {
-      votes: {
-        ...votedButNotYetInList,
-        username5: {
-          confirmed: true, unconfirmed: true, pending: false, ...delegate5,
+  describe('votesEdited', () => {
+    it('should add delegate with voteAmount if does not exist among votes', () => {
+      const action = {
+        type: actionTypes.voteEdited,
+        data: [{
+          ...delegate1,
+          amount: dirtyVotes[delegate1.address].unconfirmed,
+        }],
+      };
+      const expectedState = {
+        [delegate1.address]: {
+          confirmed: 0,
+          unconfirmed: dirtyVotes[delegate1.address].unconfirmed,
         },
-      },
-    };
-    const saveNewUserInVotes = voting(state, action);
-    expect(saveNewUserInVotes).to.be.deep.equal(newUserNameRegisteredInVotes);
-  });
+      };
+      const changedState = voting({}, action);
 
-  it('should not change votes, when we\'ve un-voted but user still exists in the new list', () => {
-    const updateVotesWithExistingUsernameAction = {
-      type: actionTypes.votesUpdated,
-      data: {
-        list: [{ username: 'username1', ...delegate1 }],
-      },
-    };
-    const updateVotesUnvotedWithExistingUsername = {
-      username1: {
-        confirmed: true, unconfirmed: false, pending: true, ...delegate1,
-      },
-    };
-    const state = {
-      votes: { ...updateVotesUnvotedWithExistingUsername },
-    };
-    const notChangedVotesRecords = {
-      votes: { ...updateVotesUnvotedWithExistingUsername },
-    };
+      expect(changedState).toEqual(expectedState);
+    });
 
-    const changedState = voting(state, updateVotesWithExistingUsernameAction);
-    expect(changedState).to.be.deep.equal(notChangedVotesRecords);
-  });
-
-  it('should add new record of username in votes, when dirty and not voted for and username not yet in the new list', () => {
-    const action = {
-      type: actionTypes.votesUpdated,
-      data: {
-        list: [{ username: 'username5', ...delegate5 }],
-      },
-    };
-    const updateVotesDirtyNotVotedNotExistingUsername = {
-      username1: {
-        confirmed: true, unconfirmed: false, pending: false, ...delegate1,
-      },
-    };
-    const state = {
-      votes: { ...updateVotesDirtyNotVotedNotExistingUsername },
-    };
-    const newUsernameAddedToVotes = {
-      votes: {
-        ...updateVotesDirtyNotVotedNotExistingUsername,
-        username5: {
-          confirmed: true, unconfirmed: true, pending: false, ...delegate5,
+    it('should change voteAmount if delegates exist among votes', () => {
+      const action = {
+        type: actionTypes.voteEdited,
+        data: [{
+          ...delegate1,
+          amount: dirtyVotes[delegate1.address].unconfirmed,
+        }],
+      };
+      const expectedState = {
+        [delegate1.address]: {
+          confirmed: cleanVotes[delegate1.address].confirmed,
+          unconfirmed: dirtyVotes[delegate1.address].unconfirmed,
         },
-      },
-    };
-    const changedState = voting(state, action);
-    expect(changedState).to.be.deep.equal(newUsernameAddedToVotes);
+        [delegate2.address]: cleanVotes[delegate2.address],
+        [delegate3.address]: cleanVotes[delegate3.address],
+      };
+      const changedState = voting(cleanVotes, action);
+
+      expect(changedState).toEqual(expectedState);
+    });
   });
 
-  it('should keep record of username in votes, when dirty and not voted for and username is already in the new list', () => {
-    const action = {
-      type: actionTypes.votesUpdated,
-      data: {
-        list: [{ username: 'username1', ...delegate1 }],
-      },
-    };
-    const updateVotesDirtyNotVotedExistingUsername = {
-      username1: {
-        confirmed: true, unconfirmed: false, pending: false, ...delegate1,
-      },
-    };
-    const state = {
-      votes: { ...updateVotesDirtyNotVotedExistingUsername },
-    };
-    const votesRecordsUnchanged = {
-      votes: { ...updateVotesDirtyNotVotedExistingUsername },
-    };
-    const changedState = voting(state, action);
-    expect(changedState).to.be.deep.equal(votesRecordsUnchanged);
+  describe('votesSubmitted', () => {
+    it('should add pending flag to dirty votes', () => {
+      const action = {
+        type: actionTypes.votesSubmitted,
+      };
+      const changedState = voting(dirtyVotes, action);
+
+      expect(changedState).toEqual(pendingVotes);
+    });
   });
 
-  it('should set default (confirmed, unconfirmed, pending) values on username vote records, when non of previous cases are met', () => {
-    const action = {
-      type: actionTypes.votesUpdated,
-      data: {
-        list: [{ username: 'username1', ...delegate1 }],
-      },
-    };
-    const updateVotesNonConditionsMet = {
-      username1: {
-        confirmed: true, unconfirmed: true, pending: true, ...delegate1,
-      },
-    };
-    const state = {
-      votes: { ...updateVotesNonConditionsMet },
-    };
-    const votesRecordsWithDefaultFlags = {
-      votes: {
-        username1: {
-          confirmed: true, unconfirmed: true, pending: false, ...delegate1,
+  describe('votesConfirmed', () => {
+    it('should remove pending flags and update confirmed values', () => {
+      const action = {
+        type: actionTypes.votesConfirmed,
+      };
+      const expectedState = {
+        [delegate1.address]: {
+          ...dirtyVotes[delegate1.address],
+          pending: false,
+          confirmed: dirtyVotes[delegate1.address].unconfirmed,
         },
-      },
-    };
-    const changedState = voting(state, action);
-    expect(changedState).to.be.deep.equal(votesRecordsWithDefaultFlags);
+        [delegate2.address]: {
+          ...dirtyVotes[delegate2.address],
+          pending: false,
+          confirmed: dirtyVotes[delegate2.address].unconfirmed,
+        },
+        [delegate3.address]: { ...dirtyVotes[delegate3.address], pending: false },
+      };
+      const changedState = voting(pendingVotes, action);
+
+      expect(changedState).toEqual(expectedState);
+    });
+
+    it('should remove unvoted delegates', () => {
+      const action = {
+        type: actionTypes.votesConfirmed,
+      };
+      const initialState = {
+        [delegate2.address]: { ...cleanVotes[delegate2.address], pending: false },
+        [delegate3.address]: { ...cleanVotes[delegate3.address], unconfirmed: 0, pending: true },
+      };
+      const expectedState = {
+        [delegate2.address]: { ...cleanVotes[delegate2.address], pending: false },
+      };
+      const changedState = voting(initialState, action);
+
+      expect(changedState).toEqual(expectedState);
+    });
+  });
+
+  describe('votesCleared', () => {
+    it('should revert votes to initial state', () => {
+      const action = {
+        type: actionTypes.votesCleared,
+      };
+      const changedState = voting(dirtyVotes, action);
+
+      expect(changedState).toEqual(cleanVotes);
+    });
   });
 });

@@ -11,7 +11,7 @@ const transactionTypes = (t = str => str) => ({
     code: {
       legacy: 0,
       new: 8,
-    }.legacy,
+    },
     outgoingCode: 8,
     title: t('Send'),
     senderLabel: t('Sender'),
@@ -23,7 +23,7 @@ const transactionTypes = (t = str => str) => ({
     code: {
       legacy: 1,
       new: 9,
-    }.legacy,
+    },
     outgoingCode: 9,
     title: t('Second passphrase registration'),
     senderLabel: t('Account'),
@@ -36,7 +36,7 @@ const transactionTypes = (t = str => str) => ({
     code: {
       legacy: 2,
       new: 10,
-    }.legacy,
+    },
     outgoingCode: 10,
     title: t('Delegate registration'),
     senderLabel: t('Account nickname'),
@@ -48,8 +48,8 @@ const transactionTypes = (t = str => str) => ({
   vote: {
     code: {
       legacy: 3,
-      new: 11,
-    }.legacy,
+      new: 13,
+    },
     outgoingCode: 11,
     title: t('Delegate vote'),
     senderLabel: t('Voter'),
@@ -62,7 +62,7 @@ const transactionTypes = (t = str => str) => ({
     code: {
       legacy: 4,
       new: 12,
-    }.legacy,
+    },
     outgoingCode: 12,
     title: t('Multisignature creation'),
     senderLabel: t('Registrant'),
@@ -82,7 +82,9 @@ const transactionTypes = (t = str => str) => ({
 transactionTypes.getByCode = (code) => {
   const types = transactionTypes();
   const key = Object.keys(types)
-    .filter(type => (types[type].code === code));
+    .filter(type => (
+      types[type].code.legacy === code || types[type].code.new === code
+    ));
   return key.length ? types[key] : null;
 };
 

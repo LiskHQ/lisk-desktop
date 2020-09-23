@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import AmountField from './amountField';
+import AmountField from '../../../shared/amountField';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
@@ -43,6 +43,10 @@ const FormBase = ({
           amount={fields.amount}
           maxAmount={maxAmount}
           setAmountField={fieldUpdateFunctions.setAmountField}
+          title={t('Amount')}
+          maxAmountTitle={t('Send entire balance')}
+          inputPlaceHolder={t('Insert the amount of transaction')}
+          name="amount"
         />
         { children }
       </BoxContent>
