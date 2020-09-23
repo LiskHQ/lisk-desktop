@@ -1,3 +1,5 @@
+@import '../../../../app/mixins.css';
+
 .sortingColumn {
   cursor: pointer;
 }
@@ -51,6 +53,37 @@
     animation-timing-function: linear;
   }
 }
+
+.voteDetails {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+
+  & .voteItem {
+    background: var(--color-mystic);
+    padding: 4px 6px;
+    border-radius: 3px;
+    flex: 1 0 0;
+    margin: 0 3px;
+
+    & .username {
+      color: var(--color-ink-blue);
+      padding-right: 10px;
+      font-weight: var(--font-weight-semi-bold);
+    }
+  }
+
+  & .more {
+    @mixin contentLarge semi-bold;
+
+    top: 8px;
+    position: relative;
+    color: var(--color-link-active);
+    flex: 1 100%;
+  }
+}
+
+
 
 @keyframes appear {
   0% {
