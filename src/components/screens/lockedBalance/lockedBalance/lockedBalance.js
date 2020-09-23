@@ -55,7 +55,7 @@ const LockedBalance = ({
       </BoxHeader>
       <BoxContent className={styles.content}>
         <p>{t('Find details of your locked balance and the unlock waiting period. Use this panel to submit an unlock request when waiting periods are over.')}</p>
-        <div className={styles.amountStatusContainer}>
+        <div className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
           <div>
             <p className={styles.columnTitle}>{t('Amount')}</p>
             <p>500 LSK</p>
@@ -91,7 +91,10 @@ const LockedBalance = ({
         />
       </BoxContent>
       <BoxFooter>
-        <PrimaryButton onClick={onClickUnlock}>
+        <PrimaryButton
+          className="unlock-btn"
+          onClick={onClickUnlock}
+        >
           {t(`Unlock ${availableTokens} LSK`)}
         </PrimaryButton>
       </BoxFooter>

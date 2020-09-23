@@ -7,7 +7,7 @@ import styles from './status.css';
 const Status = ({
   t, history, transactions, transactionBroadcasted,
 }) => {
-  const success = false;
+  const success = transactions.broadcastedTransactionsError.length === 0;
   const displayTemplate = success
     ? {
       title: t('Transaction submitted'),
