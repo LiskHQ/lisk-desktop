@@ -1,5 +1,7 @@
 import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
+
 import { tokenMap } from '../constants/tokens';
+import regex from './regex';
 
 export const extractPublicKey = passphrase =>
   Lisk.cryptography.getKeys(passphrase).publicKey;
@@ -25,3 +27,13 @@ export const getActiveTokenAccount = state => ({
       : tokenMap.LSK.key
   ]) || {}),
 });
+
+/**
+ * Returns a shorter version of a given address
+ * by replacing characters by ellipsis except for
+ * the first and last 3.
+ * @param {String} address LSk or BTC address
+ * @returns {String} Truncated address
+ */
+export const truncateAddress = address =>
+  address.replace(regex.lskAddressTrunk, '$1...$3');
