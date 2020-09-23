@@ -1,12 +1,14 @@
 import React from 'react';
+
 import { tokenMap } from '../../../../constants/tokens';
 import LiskAmount from '../../../shared/liskAmount';
+import { truncateAddress } from '../../../../utils/account';
 import styles from './transactions.css';
 
 const generateVotes = (asset) => {
   const voteElements = asset.votes.slice(0, 2).map(vote => (
     <div key={vote.delegateAddress} className={styles.voteItem}>
-      <span className={styles.username}>username</span>
+      <span className={styles.username}>{truncateAddress(vote.delegateAddress)}</span>
       <span>
         <LiskAmount val={vote.amount} token={tokenMap.LSK.key} />
       </span>

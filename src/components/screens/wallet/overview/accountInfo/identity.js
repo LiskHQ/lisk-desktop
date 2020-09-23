@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import styles from './accountInfo.css';
+import { truncateAddress } from '../../../../../utils/account';
 
 /**
  *
@@ -12,7 +14,7 @@ const Identity = ({ address, delegate, bookmark }) => {
   if (!address) return null;
   const username = (delegate && delegate.username) || '';
   const truncatedAddress = address.length > 12
-    ? `${address.slice(0, 10)}...${address.slice(-3)}` : address;
+    ? truncateAddress(address) : address;
 
   const [isTruncated, setTruncationState] = useState(true);
   const onClick = () => setTruncationState(!isTruncated);
