@@ -93,6 +93,7 @@
 
 .lockedBalance {
   @mixin headingNormal normal;
+
   color: var(--color-ink-blue);
 
   & > img {
