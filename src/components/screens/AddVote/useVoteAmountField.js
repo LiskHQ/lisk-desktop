@@ -18,7 +18,7 @@ let loaderTimeout = null;
  * @returns {Object} The boolean error flag and a human readable message.
  */
 const getAmountFeedbackAndError = (value) => {
-  const { message: feedback } = validateAmountFormat({ value, token: 'LSK' });
+  const { message: feedback } = validateAmountFormat({ value, token: tokenMap.LSK.key });
 
   // if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {
   //   feedback = t('Provided vote amount is higher than your free balance.');

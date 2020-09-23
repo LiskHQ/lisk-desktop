@@ -42,7 +42,7 @@ const BalanceInfo = ({
         <SignInTooltipWrapper position="bottom">
           <div className={styles.actionRow}>
             {
-              activeToken === 'LSK' && (
+              activeToken === tokenMap.LSK.key && (
                 <DialogLink component="addVote" className={`${styles.button} add-vote`}>
                   <SecondaryButton
                     className={`${styles.voteButton} open-add-vote-dialog`}
