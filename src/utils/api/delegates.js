@@ -3,10 +3,7 @@ import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import { getBlocks } from './blocks';
 import { getTransactions } from './transactions';
 import { loadDelegateCache, updateDelegateCache } from '../delegates';
-import { loginType } from '../../constants/hwConstants';
-import { splitVotesIntoRounds } from '../voting';
 import transactionTypes from '../../constants/transactionTypes';
-import { signVoteTransaction } from '../hwManager';
 import { getAPIClient } from './lsk/network';
 
 export const getDelegates = (network, options) =>
@@ -86,56 +83,8 @@ export const getDelegateByName = (liskAPIClient, name) => new Promise(async (res
   });
 });
 
-const voteWithPassphrase = (
-  passphrase,
-  votes,
-  unvotes,
-  secondPassphrase,
-  timeOffset,
-  networkIdentifier,
-) => (
-  Promise.all(splitVotesIntoRounds({ votes: [...votes], unvotes: [...unvotes] })
-    .map(res => Lisk.transaction.castVotes({
-      votes: res.votes,
-      unvotes: res.unvotes,
-      passphrase,
-      secondPassphrase,
-      timeOffset,
-      networkIdentifier,
-    })))
-);
-
-export const castVotes = async ({
-  liskAPIClient,
-  account,
-  votedList,
-  unvotedList,
-  secondPassphrase,
-  timeOffset,
-  networkIdentifier,
-}) => {
-  const signedTransactions = account.loginType === loginType.normal
-    ? await voteWithPassphrase(
-      account.passphrase,
-      votedList,
-      unvotedList,
-      secondPassphrase,
-      timeOffset,
-      networkIdentifier,
-    )
-    : await signVoteTransaction(account, votedList, unvotedList, timeOffset, networkIdentifier);
-
-  return Promise.all(signedTransactions.map(transaction => (
-    new Promise((resolve, reject) => {
-      liskAPIClient.transactions.broadcast(transaction)
-        .then(() => resolve(transaction))
-        .catch(reject);
-    })
-  )));
-};
-
 export const getVotes = (network, { address }) =>
-  getAPIClient(network).votes.get({ address, limit: 10, offset: 0 });
+  getAPIClient(network).votes.get({ address });
 
 export const registerDelegate = (
   liskAPIClient,

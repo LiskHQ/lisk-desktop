@@ -1,0 +1,44 @@
+.amountFieldHeader {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  & button {
+    padding: 0 0 8px;
+  }
+}
+
+.amountField {
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 100%;
+
+  & .converter {
+    position: absolute;
+    right: 45px;
+    top: var(--vertical-padding-l);
+  }
+
+  & .input {
+    padding-right: 120px;
+    width: 100%;
+    height: 48px;
+  }
+}
+
+.fieldGroup {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.fieldLabel {
+  @mixin contentNormal bold;
+
+  align-items: center;
+  color: var(--color-maastricht-blue);
+  display: flex;
+  margin-bottom: 8px;
+}

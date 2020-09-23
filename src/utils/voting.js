@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import votingConst from '../constants/voting';
 
 /**
- * Returns the list of CONFRIMED votes.
+ * Returns the list of CONFIRMED votes.
  *
  * @param {Object} votes
  * Votes as stored on the Redux store.
@@ -93,19 +93,3 @@ export const getVotingError = (votes, account) => {
 };
 
 export const getVote = (votes, name) => votes.find(v => v.username === name);
-
-export const splitVotesIntoRounds = ({ votes, unvotes }) => {
-  const rounds = [];
-  const maxCountOfVotesInOneTurn = 33;
-  while (votes.length + unvotes.length > 0) {
-    const votesLength = Math.min(
-      votes.length,
-      maxCountOfVotesInOneTurn - Math.min(unvotes.length, 16),
-    );
-    rounds.push({
-      votes: votes.splice(0, votesLength),
-      unvotes: unvotes.splice(0, maxCountOfVotesInOneTurn - votesLength),
-    });
-  }
-  return rounds;
-};
