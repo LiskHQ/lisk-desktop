@@ -57,7 +57,7 @@ describe('Constants: transactionTypes', () => {
   });
   it('should return an array of values for any given key', () => {
     const codesList = transactionTypes.getListOf('code');
-    expect(codesList).toEqual([0, 1, 2, 3, 4]);
+    expect(codesList).toEqual([0, 1, 2, 3, 4, 5]);
     const keysList = transactionTypes.getListOf('key');
     expect(keysList).toEqual([
       'transfer',
@@ -65,6 +65,7 @@ describe('Constants: transactionTypes', () => {
       'registerDelegate',
       'castVotes',
       'createMultiSig',
+      'unlock',
     ]);
   });
 });
