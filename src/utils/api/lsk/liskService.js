@@ -281,6 +281,15 @@ const liskServiceApi = {
         return acc;
       }, {});
   },
+
+  getAccounts: async (network, addressList) => {
+    const results = await liskServiceSocketGet(addressList.map(address => ({
+      method: 'get.accounts',
+      params: { address },
+    })));
+
+    return results;
+  },
 };
 
 export default liskServiceApi;
