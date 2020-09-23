@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 // import { toRawLsk } from '../../../utils/lsk';
 import { validateAmountFormat } from '../../../utils/validators';
 import regex from '../../../utils/regex';
+import { tokenMap } from '../../../constants/tokens';
 
 let loaderTimeout = null;
 
