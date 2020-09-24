@@ -214,15 +214,6 @@
 
     &:not(:last-child) {
       padding-right: 64px;
-
-      &::after {
-        background-color: var(--color-platinum);
-        content: '';
-        height: calc(100% - 13px);
-        position: absolute;
-        right: 0;
-        width: 1px;
-      }
     }
   }
 }

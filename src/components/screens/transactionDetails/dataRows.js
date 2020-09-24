@@ -3,7 +3,6 @@ import CopyToClipboard from '../../toolbox/copyToClipboard';
 import TransactionTypeFigure from '../../shared/transactionTypeFigure';
 import { tokenMap } from '../../../constants/tokens';
 import AccountInfo from './accountInfo';
-import { sizeOfString } from '../../../utils/helpers';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import DiscreetMode from '../../shared/discreetMode';
@@ -32,13 +31,13 @@ export const Illustration = ({
   const { title } = transactionTypes.getByCode(transaction.type || 0);
   if (transaction.type === transactionTypes().transfer.code.legacy) return null;
   return (
-    <div className={styles.summaryHeader}>
+    <BoxRow className={styles.summaryHeader}>
       <TransactionTypeFigure
         address={transaction.senderId}
         transactionType={transaction.type}
       />
       <h2 className="tx-header">{title}</h2>
-    </div>
+    </BoxRow>
   );
 };
 
@@ -127,6 +126,67 @@ export const TransactionId = ({ id, t }) => (
   </BoxRow>
 );
 
+export const AmmountAndDate = ({
+  transaction, activeToken, t, addresses,
+}) => (
+  <BoxRow>
+    <div className={styles.value}>
+      <span className={styles.label}>
+        {t('Amount of Transaction')}
+      </span>
+      <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
+        <span className="tx-amount">
+          <LiskAmount val={transaction.amount} />
+          {' '}
+          {activeToken}
+        </span>
+      </DiscreetMode>
+    </div>
+    <div className={styles.value}>
+      <span className={styles.label}>{t('Date')}</span>
+      <span className={`${styles.date} tx-date`}>
+        <DateTimeFromTimestamp
+          fulltime
+          className="date"
+          time={transaction.timestamp}
+          token={activeToken}
+          showSeconds
+        />
+      </span>
+    </div>
+  </BoxRow>
+);
+
+export const FeeAndConfirmation = ({
+  transaction, activeToken, t,
+}) => (
+  <BoxRow>
+    <div className={styles.value}>
+      <span className={styles.label}>
+        {t('Transaction fee')}
+      </span>
+      <span className="tx-fee">
+        <LiskAmount val={transaction.fee} />
+        {' '}
+        {activeToken}
+      </span>
+    </div>
+    <div className={`${styles.value}`}>
+      <span className={styles.label}>
+        {t('Confirmations')}
+        <Tooltip position="top">
+          <p>
+            { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
+          </p>
+        </Tooltip>
+      </span>
+      <span className="tx-confirmation">
+        {transaction.confirmations || 0}
+      </span>
+    </div>
+  </BoxRow>
+);
+
 export const DateAndConfirmation = ({
   transaction, activeToken, t,
 }) => (
@@ -170,12 +230,6 @@ export const Message = ({
         <span className={styles.label}>{t('Message')}</span>
         <div className="tx-reference">
           {getTxAsset(transaction)}
-        </div>
-      </div>
-      <div className={`${styles.value}`}>
-        <span className={styles.label}>{t('Size')}</span>
-        <div className="tx-size">
-          {`${sizeOfString(transaction.asset.data)} bytes`}
         </div>
       </div>
     </BoxRow>

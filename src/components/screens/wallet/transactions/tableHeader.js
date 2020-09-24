@@ -13,7 +13,7 @@ export default (t, activeToken) => {
       classList: isLSK ? grid['col-xs-1'] : grid['col-xs-1'],
     },
     {
-      title: t('Fee'),
+      title: t('Transaction Fee'),
       classList: grid['col-xs-1'],
     },
     {
