@@ -13,12 +13,12 @@ export default (t, activeToken) => {
       classList: isLSK ? grid['col-xs-2'] : grid['col-xs-3'],
     },
     {
-      title: t('Fee'),
-      classList: grid['col-xs-2'],
-    },
-    {
       title: t('Details'),
       classList: isLSK ? `${grid['col-xs-2']} ${grid['col-md-2']}` : 'hidden',
+    },
+    {
+      title: t('Transaction Fee'),
+      classList: grid['col-xs-2'],
     },
     {
       title: t('Amount'),

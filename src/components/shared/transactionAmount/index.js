@@ -11,7 +11,8 @@ const TransactionAmount = ({
   const isIncoming = host === recipient && sender !== recipient;
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
-      { type === transactionTypes().transfer.code
+      { type === transactionTypes().transfer.code.legacy
+        || type === transactionTypes().unlock.code.legacy
         ? (
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <span className={isIncoming ? styles.receive : ''}>

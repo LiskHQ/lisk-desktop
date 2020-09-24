@@ -125,7 +125,7 @@ Tooltip.propTypes = {
   footer: PropTypes.node,
   className: PropTypes.string,
   content: PropTypes.node,
-  size: PropTypes.oneOf(['s', 'm', 'l']),
+  size: PropTypes.oneOf(['s', 'm', 'l', 'maxContent']),
 };
 
 Tooltip.defaultProps = {

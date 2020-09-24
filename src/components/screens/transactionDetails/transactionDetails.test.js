@@ -1,13 +1,14 @@
-import Lisk from '@liskhq/lisk-client';
+// import Lisk from '@liskhq/lisk-client';
 import React from 'react';
 import { mount } from 'enzyme';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
-import transactionTypes from '../../../constants/transactionTypes';
+// import transactionTypes from '../../../constants/transactionTypes';
 import routes from '../../../constants/routes';
 import { mountWithRouter } from '../../../utils/testHelpers';
+import transactionTypes from '../../../constants/transactionTypes';
 
-describe.skip('Single Transaction Component', () => {
+describe('Single Transaction Component', () => {
   const transaction = {
     data: {
       senderId: accounts.genesis.address,
@@ -23,7 +24,7 @@ describe.skip('Single Transaction Component', () => {
       timestamp: Date.now(),
     },
   };
-  const voteTransaction = {
+  /* const voteTransaction = {
     data: {
       type: transactionTypes().vote.code,
       amount: '0',
@@ -38,7 +39,7 @@ describe.skip('Single Transaction Component', () => {
         ].map(publicKey => `+${publicKey}`),
       },
     },
-  };
+  }; */
 
   const props = {
     t: v => v,
@@ -81,7 +82,7 @@ describe.skip('Single Transaction Component', () => {
       expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
     });
 
-    it('Should load delegate names after vote transaction loading finished', () => {
+    /* it('Should load delegate names after vote transaction loading finished', () => {
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction: voteTransaction },
@@ -94,7 +95,7 @@ describe.skip('Single Transaction Component', () => {
           accounts.delegate_candidate.publicKey,
         ],
       });
-    });
+    }); */
 
     it('Should render transfer transaction with message (LSK)', () => {
       const wrapper = mountWithRouter(
@@ -216,6 +217,30 @@ describe.skip('Single Transaction Component', () => {
       }}
       />);
       expect(wrapper).toContainMatchingElement('NotFound');
+    });
+  });
+
+  describe('Unlock transaction', () => {
+    it('Should render unlock LSK details', () => {
+      const unlockTx = {
+        data: {
+          type: 14,
+          senderId: accounts.genesis.address,
+          recipientId: '',
+          amount: 50,
+          id: 123,
+        },
+      };
+      const wrapper = mountWithRouter(
+        TransactionDetails,
+        { ...props, transaction: unlockTx },
+        { pathname: '/explorer/transactions', id: transaction.id },
+      );
+      expect(wrapper).toContainMatchingElement('.transaction-image');
+      expect(wrapper.find('.tx-header').text()).toEqual(transactionTypes().unlock.title);
+      expect(wrapper).toContainMatchingElement('.transaction-id');
+      expect(wrapper).toContainMatchingElement('.tx-amount');
+      expect(wrapper).toContainMatchingElement('.tx-fee');
     });
   });
 });
