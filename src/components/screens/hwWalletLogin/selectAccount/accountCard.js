@@ -5,6 +5,7 @@ import LiskAmount from '../../../shared/liskAmount';
 import { Input } from '../../../toolbox/inputs';
 import styles from './selectAccount.css';
 import Icon from '../../../toolbox/icon';
+import { tokenMap } from '../../../../constants/tokens';
 
 const AccountCard = ({
   account,
@@ -54,9 +55,7 @@ const AccountCard = ({
       </div>
       <div className={`${styles.row} row-balance`}>
         <p>
-          <LiskAmount val={account.balance} />
-          {' '}
-          {t(' LSK')}
+          <LiskAmount val={account.balance} token={tokenMap.LSK.key} />
         </p>
         <span>{t('Balance')}</span>
       </div>

@@ -6,9 +6,10 @@ import LiskAmount from '../../../shared/liskAmount';
 import styles from './votes.css';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 import { isEmpty } from '../../../../utils/helpers';
+import { tokenMap } from '../../../../constants/tokens';
 
 const VoteRow = ({
-  data, onRowClick, t, accounts,
+  data, onRowClick, accounts,
 }) => (
   <div className={`${tableStyles.row} ${styles.row} vote-row`} onClick={() => onRowClick(data.delegateAddress)}>
     <div className={`${grid['col-sm-4']} ${grid['col-lg-3']}`}>
@@ -43,16 +44,15 @@ const VoteRow = ({
       <span>
         <LiskAmount
           val={!isEmpty(accounts) ? accounts[data.delegateAddress].totalVotesReceived : 0}
+          token={tokenMap.LSK.key}
         />
-        {' '}
-        {t('LSK')}
       </span>
     </div>
     <div className={`${grid['col-sm-2']} ${grid['col-lg-4']}`}>
       <span className={styles.votes}>
         <LiskAmount
           val={data.delegate.totalVotesReceived}
-          token="LSK"
+          token={tokenMap.LSK.key}
           showInt
           className={styles.voteAmount}
         />

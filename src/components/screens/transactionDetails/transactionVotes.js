@@ -4,7 +4,9 @@ import { withTranslation } from 'react-i18next';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
 import transactionTypes from '../../../constants/transactionTypes';
+import LiskAmount from '../../shared/liskAmount';
 import routes from '../../../constants/routes';
+import { tokenMap } from '../../../constants/tokens';
 
 const transactionVotes = ({ t, transaction, delegates }) => {
   if (transaction.type !== transactionTypes().vote.code) return null;
@@ -33,7 +35,9 @@ const transactionVotes = ({ t, transaction, delegates }) => {
               className={`${styles.voteTag} voter-address`}
             >
               <span className={styles.username}>{delegates[vote.delegateAddress].username}</span>
-              <span className={styles.voteAmount}>{vote.amount}</span>
+              <span className={styles.voteAmount}>
+                <LiskAmount val={vote.amount} token={tokenMap.LSK.key} />
+              </span>
             </Link>
           ))}
         </div>

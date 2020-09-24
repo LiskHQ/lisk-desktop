@@ -81,7 +81,6 @@ const Votes = ({
           emptyState={{ message: filterValue ? messages.filtered : messages.all }}
           row={VoteRow}
           additionalRowProps={{
-            t,
             onRowClick,
             accounts: accounts.data,
           }}
