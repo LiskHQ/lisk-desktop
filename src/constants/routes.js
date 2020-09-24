@@ -22,6 +22,7 @@ import Explorer from '../components/screens/wallet/explorer';
 import TransactionDetails from '../components/screens/transactionDetails';
 import VerifyMessage from '../components/screens/verifyMessage';
 import Request from '../components/screens/request';
+import LockedBalance from '../components/screens/lockedBalance';
 import SearchBar from '../components/shared/searchBar';
 import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
 import AddVote from '../components/screens/AddVote';
@@ -185,6 +186,11 @@ export const modals = {
     component: Request,
     isPrivate: true,
     forbiddenTokens: [],
+  },
+  lockedBalance: {
+    component: LockedBalance,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   addVote: {
     component: AddVote,
