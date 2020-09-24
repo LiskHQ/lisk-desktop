@@ -83,6 +83,18 @@ const transactionTypes = (t = str => str) => ({
     icon: 'txUnlock',
     nameFee: 0,
   },
+  unlock: {
+    code: {
+      legacy: 5,
+      new: 14,
+    },
+    outgoingCode: 14,
+    title: t('Unlock LSK'),
+    senderLabel: t('Sender'),
+    key: 'unlock',
+    icon: 'txUnlock',
+    nameFee: 0,
+  },
 });
 
 /**

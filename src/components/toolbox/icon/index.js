@@ -128,6 +128,7 @@ import clock from '../../../assets/images/icons/clock.svg';
 import lock from '../../../assets/images/icons/lock.svg';
 import unlock from '../../../assets/images/icons/unlock.svg';
 import loading from '../../../assets/images/icons/loading.svg';
+import txUnlock from '../../../assets/images/icons/tx-unlock.svg';
 
 export const icons = {
   academy,
@@ -257,6 +258,7 @@ export const icons = {
   lock,
   unlock,
   loading,
+  txUnlock,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
