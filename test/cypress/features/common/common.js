@@ -57,7 +57,6 @@ Given(/^I am on (.*?) page$/, function (page) {
       cy.route('/api/votes?*').as('votes');
       cy.visit(urls.wallet);
       cy.wait('@transactions');
-      cy.wait('@votes');
       break;
     case 'send':
       cy.route('/api/accounts?address*').as('accountLSK');
