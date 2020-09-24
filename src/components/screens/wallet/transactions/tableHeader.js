@@ -10,7 +10,7 @@ export default (t, activeToken) => {
     },
     {
       title: t('Date'),
-      classList: isLSK ? grid['col-xs-1'] : grid['col-xs-1'],
+      classList: grid['col-xs-1'],
     },
     {
       title: t('Transaction Fee'),
