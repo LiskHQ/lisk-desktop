@@ -18,9 +18,8 @@ const generateVotes = (asset) => {
   return (
     <div className={styles.voteDetails}>
       { voteElements }
-      { voteElements }
       {
-        asset.votes.length > 0 && (
+        asset.votes.length > 2 && (
           <span className={styles.more}>{`${asset.votes.length - 2} more...`}</span>
         )
       }

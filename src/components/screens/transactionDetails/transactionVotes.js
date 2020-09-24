@@ -9,9 +9,8 @@ import routes from '../../../constants/routes';
 import { tokenMap } from '../../../constants/tokens';
 
 const transactionVotes = ({ t, transaction, delegates }) => {
-  if (transaction.type !== transactionTypes().vote.code) return null;
+  if (transaction.type !== transactionTypes().vote.code.legacy) return null;
   const accountPath = routes.account.path;
-
   const { votes } = transaction.asset;
 
   useEffect(() => {
@@ -34,7 +33,12 @@ const transactionVotes = ({ t, transaction, delegates }) => {
               to={`${accountPath}?address=${vote.delegateAddress}`}
               className={`${styles.voteTag} voter-address`}
             >
-              <span className={styles.username}>{delegates[vote.delegateAddress].username}</span>
+              <span className={styles.username}>
+                {delegates[vote.delegateAddress]
+                  ? delegates[vote.delegateAddress].username
+                  : vote.delegateAddress
+                }
+              </span>
               <span className={styles.voteAmount}>
                 <LiskAmount val={vote.amount} token={tokenMap.LSK.key} />
               </span>
