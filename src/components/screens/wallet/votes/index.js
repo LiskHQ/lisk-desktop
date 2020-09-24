@@ -1,7 +1,7 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
 import { getVotes } from '../../../../utils/api/delegates';
-import { getAccounts } from '../../../../utils/api/lsk/liskService';
+import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
 import Votes from './votes';
 
@@ -13,7 +13,7 @@ const apis = {
     transformResponse: response => response.data.votes,
   },
   accounts: {
-    apiUtil: getAccounts,
+    apiUtil: liskService.getAccounts,
     autoload: false,
     defaultData: {},
     transformResponse: response =>
