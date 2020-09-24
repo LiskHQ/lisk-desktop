@@ -30,7 +30,7 @@ export const Illustration = ({
   transaction,
 }) => {
   const { title } = transactionTypes.getByCode(transaction.type || 0);
-  if (transaction.type === transactionTypes().transfer.code) return null;
+  if (transaction.type === transactionTypes().transfer.code.legacy) return null;
   return (
     <div className={styles.summaryHeader}>
       <TransactionTypeFigure
@@ -64,7 +64,7 @@ export const Sender = ({
 export const Recipient = ({
   activeToken, netCode, transaction, t,
 }) => {
-  if (transaction.type !== transactionTypes().transfer.code) return null;
+  if (transaction.type !== transactionTypes().transfer.code.legacy) return null;
   return (
     <BoxRow className={styles.detailsWrapper}>
       <AccountInfo
@@ -82,7 +82,7 @@ export const FeeAndAmount = ({
   transaction, activeToken, addresses, t,
 }) => (
   <BoxRow>
-    { transaction.type === transactionTypes().transfer.code
+    { transaction.type === transactionTypes().transfer.code.legacy
       ? (
         <div className={styles.value}>
           <span className={styles.label}>
@@ -90,9 +90,7 @@ export const FeeAndAmount = ({
           </span>
           <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
             <span className="tx-amount">
-              <LiskAmount val={transaction.amount} />
-              {' '}
-              {activeToken}
+              <LiskAmount val={transaction.amount} token={activeToken} />
             </span>
           </DiscreetMode>
         </div>
@@ -102,9 +100,7 @@ export const FeeAndAmount = ({
         {t('Transaction fee')}
       </span>
       <span className="tx-fee">
-        <LiskAmount val={transaction.fee} />
-        {' '}
-        {activeToken}
+        <LiskAmount val={transaction.fee} token={activeToken} />
       </span>
     </div>
   </BoxRow>
@@ -166,7 +162,8 @@ export const DateAndConfirmation = ({
 export const Message = ({
   activeToken, transaction, t,
 }) => {
-  if (transaction.type !== transactionTypes().transfer.code || activeToken !== 'LSK') return null;
+  if (transaction.type !== transactionTypes().transfer.code.legacy
+    || activeToken !== tokenMap.LSK.key) return null;
   return (
     <BoxRow className={styles.message}>
       <div className={`${styles.value}`}>
