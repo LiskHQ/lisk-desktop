@@ -53,7 +53,7 @@ const BalanceInfo = ({
           <div className={styles.actionRow}>
             {
               activeToken === tokenMap.LSK.key && (
-                <DialogLink component="addVote" className={`${styles.button} add-vote`}>
+                <DialogLink component="editVote" className={`${styles.button} add-vote`}>
                   <SecondaryButton
                     className={`${styles.voteButton} open-add-vote-dialog`}
                     size="m"
