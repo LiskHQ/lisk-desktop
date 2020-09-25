@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import Overview from './overview';
-import { forgingDataDisplayed, forgingDataConcealed } from '../../../../actions/blocks';
 import { Input } from '../../../toolbox/inputs';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
@@ -59,12 +58,6 @@ const DelegatesMonitor = ({
     active: activeTab,
     onClick: ({ value }) => setActiveTab(value),
   };
-
-  useEffect(() => {
-    dispatch(forgingDataDisplayed());
-    return () => dispatch(forgingDataConcealed());
-  }, []);
-
 
   return (
     <div>
