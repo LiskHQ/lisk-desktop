@@ -32,7 +32,7 @@ const PerformanceView = ({
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-6']} ${styles.column}`}>
         <Item
           text={t('Productivity')}
-          value="99.45%"
+          value={productivity}
           icon="productivity"
           className={`${styles.performanceIcon} ${styles.productivityIcon}`}
         />

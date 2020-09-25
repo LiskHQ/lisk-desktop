@@ -13,11 +13,14 @@
   }
 }
 .statsContainer {
-  .votesContainer {
-    padding: 16px 12px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  & .votesContainer {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 248px);
+    grid-template-rows: repeat(auto-fill, 52px);
+    grid-gap: 10px;
+    box-sizing: border-box;
+    justify-content: center;
   }
 }
 
@@ -59,6 +62,10 @@
     margin-bottom: 20px;
     width: 408px;
     height: 156px;
+
+    &:nth-child(2) {
+      margin: 0;
+    }
   }
 }
 
@@ -126,4 +133,8 @@
   & .address {
     padding-left: 10px;
   }
+}
+
+.totalVotes {
+  color: var(--color-slate-gray);
 }

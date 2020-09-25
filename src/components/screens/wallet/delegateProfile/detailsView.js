@@ -6,6 +6,7 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxHeader from '../../../toolbox/box/header';
 import styles from './delegateProfile.css';
 import Icon from '../../../toolbox/icon';
+import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 
 const DetailsView = ({
   t, rank, voteWeight, lastBlockForged, status,
@@ -42,7 +43,16 @@ const DetailsView = ({
         <Icon name="calendar" className={styles.icon} />
         <div className={`${grid.col} ${styles.item}`}>
           <div className={styles.title}>Last Block Forged</div>
-          <div className={styles.value}>{lastBlockForged || '-'}</div>
+          <div className={styles.value}>
+            {lastBlockForged ? (
+              <DateTimeFromTimestamp
+                fulltime
+                className="date"
+                time={lastBlockForged.data}
+                token="LSK"
+              />
+            ) : '-' }
+          </div>
         </div>
       </div>
     </BoxContent>

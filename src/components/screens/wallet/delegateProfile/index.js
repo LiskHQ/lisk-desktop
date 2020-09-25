@@ -1,14 +1,21 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import DelegateProfile from './delegateProfile';
 import withData from '../../../../utils/withData';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
+
+const mapStateToProps = state => ({
+  awaitingForgers: state.blocks.awaitingForgers,
+  forgingTimes: state.blocks.forgingTimes,
+});
 
 const apis = {
   delegate: {
     apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).delegates.get(params),
     defaultData: {},
-    getApiParams: (state, ownProps) => ({
+    getApiParams: (_, ownProps) => ({
       address: ownProps.address,
     }),
     transformResponse: response => (response.data[0] ? response.data[0] : {}),
@@ -16,11 +23,25 @@ const apis = {
   voters: {
     apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).voters.get(params),
     defaultData: {},
-    getApiParams: (state, ownProps) => ({
+    getApiParams: (_, ownProps) => ({
       address: ownProps.address,
     }),
     transformResponse: response => (response ? response.data : {}),
   },
+  lastBlockForged: {
+    apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).blocks.get(params),
+    defaultData: {},
+    getApiParams: state => ({
+      height: state.account.info.LSK.delegate.lastForgedHeight,
+    }),
+    transformResponse: response => (response ? response.data[0] : {}),
+  },
 };
 
-export default withData(apis)(withTranslation()(DelegateProfile));
+const ComposedDelegateProfile = compose(
+  connect(mapStateToProps),
+  withData(apis),
+  withTranslation(),
+)(DelegateProfile);
+
+export default ComposedDelegateProfile;
