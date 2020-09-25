@@ -1,12 +1,13 @@
 import React from 'react';
-import regex from '../../../utils/regex';
+
 import transactionTypes from '../../../constants/transactionTypes';
 import styles from './transactionAddress.css';
+import { truncateAddress } from '../../../utils/account';
 
 const Address = ({
   bookmark, address, className,
 }) => {
-  const addressTrunk = address && address.replace(regex.lskAddressTrunk, '$1...$3');
+  const addressTrunk = address && truncateAddress(address);
 
   if (bookmark) return (<span>{bookmark.title}</span>);
   return (

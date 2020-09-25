@@ -49,6 +49,8 @@
 
   & .votes {
     @mixin contentNormal bold;
+
+    color: var(--color-ink-blue);
   }
 }
 
@@ -56,7 +58,7 @@
   display: flex;
 
   & > .avatar {
-    margin-right: 24px;
+    margin-right: 16px;
   }
 
   & > .accountInfo {
@@ -65,11 +67,15 @@
     justify-content: space-evenly;
   }
 
-  & .title {
+  & .username {
     @mixin headingSmall;
 
     color: var(--color-maastricht-blue);
     display: block;
+  }
+
+  & .address {
+    color: var(--color-slate-gray);
   }
 }
 

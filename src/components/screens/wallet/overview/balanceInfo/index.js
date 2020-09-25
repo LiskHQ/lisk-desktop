@@ -30,14 +30,13 @@ const BalanceInfo = ({
         <div className={styles.valuesRow}>
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <div className={`${styles.cryptoValue} balance-value`}>
-              <LiskAmount val={balance} />
-              {' '}
-              <span>{activeToken}</span>
+              <LiskAmount val={balance} token={activeToken} />
               <Converter
                 className={styles.fiatValue}
                 value={fromRawLsk(balance)}
                 error=""
               />
+
             </div>
             {activeToken === tokenMap.LSK.key && (
               <DialogLink

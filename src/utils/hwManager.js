@@ -12,7 +12,6 @@ import {
   subscribeToDevicesList,
   validatePin,
 } from '../../libs/hwManager/communication';
-import { splitVotesIntoRounds } from './voting';
 
 /**
  * getAccountsFromDevice - Function.
@@ -66,39 +65,32 @@ const signSendTransaction = async (account, data) => {
  */
 const signVoteTransaction = async (
   account,
-  votedList,
-  unvotedList,
+  votes,
   timeOffset,
   networkIdentifier,
 ) => {
   const { castVotes, utils } = Lisk.transaction;
-  const signedTransactions = [];
-  const votesChunks = splitVotesIntoRounds({ votes: [...votedList], unvotes: [...unvotedList] });
 
   try {
-    for (let i = 0; i < votesChunks.length; i++) {
-      const transactionObject = {
-        ...castVotes({ ...votesChunks[i], timeOffset, networkIdentifier }),
-        senderPublicKey: account.publicKey,
-        recipientId: account.address, // @todo should we remove this?
-      };
+    const transactionObject = {
+      ...castVotes({ votes, timeOffset, networkIdentifier }),
+      senderPublicKey: account.publicKey,
+      recipientId: account.address, // @todo should we remove this?
+    };
 
-      // eslint-disable-next-line no-await-in-loop
-      const signature = await signTransaction({
-        deviceId: account.hwInfo.deviceId,
-        index: account.hwInfo.derivationIndex,
-        tx: transactionObject,
-      });
+    // eslint-disable-next-line no-await-in-loop
+    const signature = await signTransaction({
+      deviceId: account.hwInfo.deviceId,
+      index: account.hwInfo.derivationIndex,
+      tx: transactionObject,
+    });
 
-      signedTransactions.push({
-        ...transactionObject,
-        signature,
-        // @ todo core 3.x getId
-        id: utils.getTransactionId({ ...transactionObject, signature }),
-      });
-    }
-
-    return signedTransactions;
+    return {
+      ...transactionObject,
+      signature,
+      // @ todo core 3.x getId
+      id: utils.getTransactionId({ ...transactionObject, signature }),
+    };
   } catch (error) {
     throw new Error(i18next.t(
       'The transaction has been canceled on your {{model}}',

@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-// import numeral from 'numeral';
-// import { useSelector } from 'react-redux';
 
-// import { toRawLsk } from '../../../utils/lsk';
 import { validateAmountFormat } from '../../../utils/validators';
 import regex from '../../../utils/regex';
 import { tokenMap } from '../../../constants/tokens';

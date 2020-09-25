@@ -136,6 +136,10 @@
       margin-right: 8px;
       padding: 7px 10px;
       text-decoration: none;
+
+      & .username {
+        padding-right: 6px;
+      }
     }
 
     & .rank {

@@ -267,19 +267,13 @@ const liskServiceApi = {
     return { data, meta: voteTransactions.meta };
   },
 
-  getVoteNames: async (network, params) => {
-    const results = await liskServiceSocketGet(params.publicKeys.map(publickey => ({
+  getAccounts: async (network, addressList) => {
+    const results = await liskServiceSocketGet(addressList.map(address => ({
       method: 'get.accounts',
-      params: { publickey },
+      params: { address },
     })));
 
-
-    return results
-      .map(result => result.result.data[0])
-      .reduce((acc, item) => {
-        acc[item.publicKey] = { ...item.delegate, account: { address: item.address } };
-        return acc;
-      }, {});
+    return results;
   },
 };
 

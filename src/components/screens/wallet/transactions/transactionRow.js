@@ -26,7 +26,7 @@ const TransactionRow = ({
   const isLSK = activeToken === tokenMap.LSK.key;
   const isConfirmed = data.confirmations > 0;
   const { senderId, recipientId } = data;
-  const addressRecipientId = host === recipientId ? senderId : recipientId;
+  const address = host === recipientId ? senderId : recipientId;
   return (
     <DialogLink
       className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending} transactions-row`}
@@ -41,7 +41,7 @@ const TransactionRow = ({
         />
         <span>
           <TransactionAddress
-            address={addressRecipientId}
+            address={address}
             bookmarks={bookmarks}
             t={t}
             token={activeToken}
@@ -49,25 +49,25 @@ const TransactionRow = ({
           />
         </span>
       </span>
-      <span className={grid[isLSK ? 'col-xs-2' : 'col-xs-3']}>
+      <span className={grid[isLSK ? 'col-xs-1' : 'col-xs-2']}>
         {
           isConfirmed
             ? <DateTimeFromTimestamp time={data.timestamp} token={activeToken} />
             : <Spinner completed={isConfirmed} label={t('Pending...')} />
         }
       </span>
+      <span className={grid['col-xs-1']}>
+        <LiskAmount val={data.fee} token={activeToken} />
+      </span>
       {
         isLSK
           ? (
-            <span className={`${grid['col-xs-2']} ${grid['col-md-2']}`}>
+            <span className={`${grid['col-xs-4']} ${grid['col-md-4']}`}>
               <TransactionAsset t={t} transaction={data} />
             </span>
           )
           : null
       }
-      <span className={grid['col-xs-2']}>
-        <LiskAmount val={data.fee} token={activeToken} />
-      </span>
       <span className={grid['col-xs-2']}>
         <TransactionAmount
           host={host}

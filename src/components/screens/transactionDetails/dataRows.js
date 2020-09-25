@@ -30,7 +30,6 @@ export const Illustration = ({
 }) => {
   const { title } = transactionTypes.getByCode(transaction.type || 0);
   if (transaction.type === transactionTypes().transfer.code.legacy) return null;
-
   return (
     <BoxRow className={styles.summaryHeader}>
       <TransactionTypeFigure
@@ -90,9 +89,7 @@ export const FeeAndAmount = ({
           </span>
           <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
             <span className="tx-amount">
-              <LiskAmount val={transaction.amount} />
-              {' '}
-              {activeToken}
+              <LiskAmount val={transaction.amount} token={activeToken} />
             </span>
           </DiscreetMode>
         </div>
@@ -102,9 +99,7 @@ export const FeeAndAmount = ({
         {t('Transaction fee')}
       </span>
       <span className="tx-fee">
-        <LiskAmount val={transaction.fee} />
-        {' '}
-        {activeToken}
+        <LiskAmount val={transaction.fee} token={activeToken} />
       </span>
     </div>
   </BoxRow>
@@ -227,7 +222,8 @@ export const DateAndConfirmation = ({
 export const Message = ({
   activeToken, transaction, t,
 }) => {
-  if (transaction.type !== transactionTypes().transfer.code.legacy || activeToken !== 'LSK') return null;
+  if (transaction.type !== transactionTypes().transfer.code.legacy
+    || activeToken !== tokenMap.LSK.key) return null;
   return (
     <BoxRow className={styles.message}>
       <div className={`${styles.value}`}>
