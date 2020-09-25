@@ -37,3 +37,22 @@ export const getActiveTokenAccount = state => ({
  */
 export const truncateAddress = address =>
   address.replace(regex.lskAddressTrunk, '$1...$3');
+
+export const calculateLockedBalance = ({ votes }) =>
+  votes.reduce((acc, vote) => acc + vote.amount, 0);
+
+const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlockHeight, address) => {
+  // TODO reiterate this calculation
+  const delayedAvailability = address === delegateAddress ? 260000 : 2000;
+  return (unvoteHeight + delayedAvailability) < currentBlockHeight;
+};
+
+export const calculateAvailableAndUnlockingBalance = ({ unlocking, address }, currentBlockHeight) =>
+  unlocking.reduce((acc, vote) => {
+    if (isBlockHeightReached(vote, currentBlockHeight, address)) {
+      acc.availableBalance += vote.amount;
+    } else {
+      acc.unlockingBalance += vote.amount;
+    }
+    return acc;
+  }, { availableBalance: 0, unlockingBalance: 0 });

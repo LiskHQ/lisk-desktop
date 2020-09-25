@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useSelector } from 'react';
 import TransactionResult from '../../../shared/transactionResult';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import { removeSearchParamsFromUrl } from '../../../../utils/searchParams';
@@ -7,6 +7,7 @@ import styles from './status.css';
 const Status = ({
   t, history, transactions, transactionBroadcasted,
 }) => {
+  const { transactionsCreated } = useSelector(state => state.transactions);
   const success = transactions.broadcastedTransactionsError.length === 0;
   const displayTemplate = success
     ? {
@@ -17,6 +18,12 @@ const Status = ({
       title: t('Transaction failed'),
       message: t('Something went wrong with the registration. Please try again below!'),
     };
+
+  useEffect(() => {
+    if (transactionsCreated.length) {
+      transactionBroadcasted(transactionsCreated[0]);
+    }
+  }, [transactionsCreated.length]);
 
   const onRetry = () => {
     const { broadcastedTransactionsError } = transactions;

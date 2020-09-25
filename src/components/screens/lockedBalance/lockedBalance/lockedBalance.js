@@ -7,19 +7,43 @@ import { PrimaryButton } from '../../../toolbox/buttons';
 import Icon from '../../../toolbox/icon';
 import TransactionPriority from '../../../shared/transactionPriority';
 import Piwik from '../../../../utils/piwik';
-import { toRawLsk } from '../../../../utils/lsk';
+import { toRawLsk, fromRawLsk } from '../../../../utils/lsk';
 import styles from './lockedBalance.css';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import transactionTypes from '../../../../constants/transactionTypes';
+import { calculateLockedBalance, calculateAvailableAndUnlockingBalance } from '../../../../utils/account';
 
 const txType = transactionTypes().unlock.key;
 
+// TODO Remove this
+const accountMockVotes = {
+  votes: [
+    { delegateAddress: '1L', amount: 5e9 },
+    { delegateAddress: '2L', amount: 2e9 },
+    { delegateAddress: '3L', amount: 1e9 },
+    { delegateAddress: '4L', amount: 4e9 },
+    { delegateAddress: '5L', amount: 5e8 },
+  ],
+  unlocking: [
+    { delegateAddress: '3L', amount: 2e8, unvoteHeigh: 300 },
+    { delegateAddress: '4L', amount: 2e9, unvoteHeigh: 320 },
+  ],
+};
+
 const LockedBalance = ({
-  t, nextStep, token,
+  t, nextStep, token, currentBlockHeight,
   transactionCreated, account,
-  availableTokens,
 }) => {
+  // TODO replace accountMockedVotes for props.account
+  const lockedBalance = calculateLockedBalance({ ...account, ...accountMockVotes });
+  const {
+    unlockingBalance,
+    availableBalance,
+  } = calculateAvailableAndUnlockingBalance(
+    { ...account, ...accountMockVotes },
+    currentBlockHeight,
+  );
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority, priorityOptions,
@@ -30,7 +54,7 @@ const LockedBalance = ({
     account,
     priorityOptions,
     txData: {
-      amount: toRawLsk(availableTokens),
+      amount: toRawLsk(availableBalance),
       txType,
       nonce: account.nonce,
       senderPublicKey: account.publicKey,
@@ -40,10 +64,11 @@ const LockedBalance = ({
   const onClickUnlock = () => {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
     transactionCreated({
-      amount: `${toRawLsk(availableTokens)}`,
+      amount: `${toRawLsk(availableBalance)}`,
       passphrase: account.passphrase,
       fee: toRawLsk(parseFloat(fee)),
       nonce: account.nonce,
+      senderPublicKey: account.publicKey,
     });
     nextStep();
   };
@@ -58,9 +83,9 @@ const LockedBalance = ({
         <div className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
           <div>
             <p className={styles.columnTitle}>{t('Amount')}</p>
-            <p>500 LSK</p>
-            <p>250 LSK</p>
-            <p>{`${availableTokens} LSK`}</p>
+            <p>{`${fromRawLsk(lockedBalance)} LSK`}</p>
+            <p>{`${fromRawLsk(unlockingBalance)} LSK`}</p>
+            <p>{`${fromRawLsk(availableBalance)} LSK`}</p>
           </div>
           <div>
             <p className={styles.columnTitle}>{t('Status')}</p>
@@ -95,7 +120,7 @@ const LockedBalance = ({
           className="unlock-btn"
           onClick={onClickUnlock}
         >
-          {t(`Unlock ${availableTokens} LSK`)}
+          {t(`Unlock ${fromRawLsk(availableBalance)} LSK`)}
         </PrimaryButton>
       </BoxFooter>
     </Box>

@@ -47,7 +47,10 @@ const Votes = ({
   // }, [votes.data]);
 
   const areLoading = accounts.isLoading || votes.isLoading;
-  const filteredVotes = votes.data.filter(vote => vote.delegate.username.indexOf(filterValue) > -1);
+  const filteredVotes = votes.data.filter((vote) => {
+    if (!vote.delegate) return false;
+    return vote.delegate.username.indexOf(filterValue) > -1;
+  });
 
   return (
     <Box main isLoading={areLoading} className={`${styles.wrapper}`}>

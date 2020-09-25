@@ -8,7 +8,9 @@ import styles from './transactions.css';
 const generateVotes = (asset) => {
   const voteElements = asset.votes.slice(0, 2).map(vote => (
     <div key={vote.delegateAddress} className={styles.voteItem}>
-      <span className={styles.username}>{truncateAddress(vote.delegateAddress)}</span>
+      <span className={styles.username}>
+        {vote.delegateAddress && truncateAddress(vote.delegateAddress)}
+      </span>
       <span>
         <LiskAmount val={vote.amount} token={tokenMap.LSK.key} />
       </span>

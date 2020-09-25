@@ -14,7 +14,7 @@ import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
 import { tokenMap } from '../../../../../constants/tokens';
 
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, lockedBalance = 120,
+  t, activeToken, balance, isWalletRoute, address, lockedBalance,
 }) => {
   const initialValue = isWalletRoute
     ? {}
@@ -44,7 +44,7 @@ const BalanceInfo = ({
                 component="lockedBalance"
               >
                 <Icon name="lock" />
-                {`${lockedBalance} ${tokenMap.LSK.key}`}
+                {`${fromRawLsk(lockedBalance)} ${tokenMap.LSK.key}`}
               </DialogLink>
             )}
           </DiscreetMode>
