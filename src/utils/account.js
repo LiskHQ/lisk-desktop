@@ -42,6 +42,7 @@ export const calculateLockedBalance = ({ votes }) =>
   votes.reduce((acc, vote) => acc + vote.amount, 0);
 
 const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlockHeight, address) => {
+  return true;
   // TODO reiterate this calculation
   const delayedAvailability = address === delegateAddress ? 260000 : 2000;
   return (unvoteHeight + delayedAvailability) < currentBlockHeight;

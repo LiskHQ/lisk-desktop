@@ -1,7 +1,7 @@
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { getActiveTokenAccount } from '../../../../utils/account';
-import { transactionCreated } from '../../../../actions/transactions';
+import { unlockBalanceSubmitted } from '../../../../actions/account';
 import LockedBalance from './lockedBalance';
 
 const mapStateToProps = state => ({
@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  transactionCreated,
+  unlockBalanceSubmitted,
 };
 
 export default connect(

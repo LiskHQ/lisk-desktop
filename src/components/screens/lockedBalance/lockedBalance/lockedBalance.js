@@ -33,7 +33,7 @@ const accountMockVotes = {
 
 const LockedBalance = ({
   t, nextStep, token, currentBlockHeight,
-  transactionCreated, account,
+  unlockBalanceSubmitted, account,
 }) => {
   // TODO replace accountMockedVotes for props.account
   const lockedBalance = calculateLockedBalance({ ...account, ...accountMockVotes });
@@ -63,7 +63,7 @@ const LockedBalance = ({
 
   const onClickUnlock = () => {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
-    transactionCreated({
+    unlockBalanceSubmitted({
       amount: `${toRawLsk(availableBalance)}`,
       passphrase: account.passphrase,
       fee: toRawLsk(parseFloat(fee)),
@@ -119,6 +119,7 @@ const LockedBalance = ({
         <PrimaryButton
           className="unlock-btn"
           onClick={onClickUnlock}
+          disabled={availableBalance === 0}
         >
           {t(`Unlock ${fromRawLsk(availableBalance)} LSK`)}
         </PrimaryButton>

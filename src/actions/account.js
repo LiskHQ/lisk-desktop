@@ -11,6 +11,9 @@ import { networkStatusUpdated } from './network';
 import actionTypes from '../constants/actions';
 import { tokenMap } from '../constants/tokens';
 import { txAdapter } from '../utils/api/lsk/adapters';
+import { create } from '../utils/api/lsk/transactions';
+import transactionTypes from '../constants/transactionTypes';
+import { signVoteTransaction } from '../utils/hwManager';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -204,3 +207,36 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
     }));
   }
 };
+
+/**
+ * Makes Api call to unlock Balance that will broadcast
+ */
+export const unlockBalanceSubmitted = data =>
+  async (dispatch, getState) => { // eslint-disable-line max-statements
+    const { network, account } = getState();
+
+    /* const [error, tx] = account.loginType === loginType.normal
+      ? await to(create(
+        { ...data, network },
+        transactionTypes().unlock.key,
+      ))
+      : await to(signUnlockTransaction(account, data)); */
+    console.log(1);
+    const [error, tx] = await to(create(
+      { ...data, network },
+      transactionTypes().unlock.key,
+    ));
+    console.log(2, error, tx);
+
+    if (error) {
+      return dispatch({
+        type: actionTypes.transactionCreatedError,
+        data: error,
+      });
+    }
+
+    return dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  };

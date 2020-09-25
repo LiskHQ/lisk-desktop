@@ -1,4 +1,4 @@
-import React, { useEffect, useSelector } from 'react';
+import React, { useEffect } from 'react';
 import TransactionResult from '../../../shared/transactionResult';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import { removeSearchParamsFromUrl } from '../../../../utils/searchParams';
@@ -7,7 +7,7 @@ import styles from './status.css';
 const Status = ({
   t, history, transactions, transactionBroadcasted,
 }) => {
-  const { transactionsCreated } = useSelector(state => state.transactions);
+  const { transactionsCreated } = transactions;
   const success = transactions.broadcastedTransactionsError.length === 0;
   const displayTemplate = success
     ? {
