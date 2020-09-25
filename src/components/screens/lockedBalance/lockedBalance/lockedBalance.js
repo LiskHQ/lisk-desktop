@@ -64,11 +64,23 @@ const LockedBalance = ({
   const onClickUnlock = () => {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
     unlockBalanceSubmitted({
+      asset: {
+        // unlockingObjects?
+        unlockObjects: {
+          ...accountMockVotes.unlocking,
+        },
+      },
       amount: `${toRawLsk(availableBalance)}`,
       passphrase: account.passphrase,
       fee: toRawLsk(parseFloat(fee)),
       nonce: account.nonce,
       senderPublicKey: account.publicKey,
+
+      // readonly networkIdentifier: string;
+      // readonly nonce: string; X
+      // readonly fee: string; X
+      // readonly passphrase?: string; X
+      // readonly unlockingObjects?: ReadonlyArray<RawAssetUnlock>;
     });
     nextStep();
   };

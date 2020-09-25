@@ -73,13 +73,13 @@ const transactionTypes = (t = str => str) => ({
   },
   unlock: {
     code: {
-      legacy: 5,
+      legacy: 5, // TODO should be undefined?
       new: 14,
     },
     outgoingCode: 14,
     title: t('Unlock LSK'),
     senderLabel: t('Sender'),
-    key: 'unlock',
+    key: 'unlockToken',
     icon: 'txUnlock',
     nameFee: 0,
   },
@@ -131,7 +131,7 @@ transactionTypes.getNameFee = (key) => {
  */
 transactionTypes.getHardCap = (key) => {
   const types = transactionTypes();
-  return types[key].hardCap;
+  return Object.keys(types).find(type => types[type].key === key).hardCap;
 };
 
 export const byteSizes = {
