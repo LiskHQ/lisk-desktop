@@ -78,18 +78,20 @@ const txTypeClassMap = {
   vote: Lisk.transactions.VoteTransaction,
 };
 
+
+// eslint-disable-next-line max-statements
 export const createTransactionInstance = (rawTx, type) => {
   const DUMMY_FEE = '18446744073709551615';
   const DUMMY_SIGNATURE = '204514eb1152355799ece36d17037e5feb4871472c60763bdafe67eb6a38bec632a8e2e62f84a32cf764342a4708a65fbad194e37feec03940f0ff84d3df2a05';
-
   const asset = {
     data: rawTx.data,
-    recipientId: rawTx.recipient,
-    amount: rawTx.amount,
   };
 
-  if (type === 'registerDelegate') {
-    asset.username = rawTx.username;
+  if (type === 'transfer') {
+    asset.recipientId = rawTx.recipient;
+    asset.amount = rawTx.amount;
+  } else if (type === 'registerDelegate') {
+    asset.username = rawTx.username || '';
   } else if (type === 'vote') {
     asset.votes = rawTx.votes;
   }
