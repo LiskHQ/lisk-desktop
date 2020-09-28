@@ -10,14 +10,14 @@ import regex from '../../../../utils/regex';
 import EmptyState from './emptyState';
 import styles from './delegateProfile.css';
 
-const Item = (index, address) => (
-  <div className={styles.voteItem} key={index}>
+const Item = props => (
+  <div className={styles.voteItem} key={props.index}>
     <AccountVisual
       className={styles.accountVisual}
-      address={address}
+      address={props.address}
       size={44}
     />
-    <div className={styles.address}>{address}</div>
+    <div className={styles.address}>{props.address}</div>
   </div>
 );
 
@@ -41,6 +41,7 @@ const DelegateVotesView = ({
     votersToDisplay.push(...voters);
   }
 
+  console.log(voters);
   return (
     <Box>
       <BoxHeader>
