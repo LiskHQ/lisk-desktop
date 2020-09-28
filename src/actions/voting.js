@@ -81,13 +81,10 @@ export const votesSubmitted = data =>
  */
 export const votesRetrieved = () =>
   (dispatch, getState) => {
-    const { network, account } = getState();
+    const { account } = getState();
 
-    getVotes(network, { address: account.info.LSK.address })
-      .then((response) => {
-        dispatch({
-          type: actionTypes.votesRetrieved,
-          data: response.data,
-        });
-      });
+    dispatch({
+      type: actionTypes.votesRetrieved,
+      data: account.info.LSK.votes,
+    });
   };
