@@ -13,7 +13,7 @@ import Icon from '../../../toolbox/icon';
 const VoteRow = ({
   data, onRowClick, accounts,
 }) => {
-  const onClick = () => onRowClick(data.delegateAddress)
+  const onClick = () => onRowClick(data.delegateAddress);
   return (
     <div className={`${tableStyles.row} ${styles.row} vote-row`}>
       <div className={grid['col-sm-3']} onClick={onClick}>
