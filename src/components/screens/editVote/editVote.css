@@ -16,4 +16,8 @@
   & button.confirmButton {
     width: 100%;
   }
+
+  & button.removeVoteButton {
+    @mixin buttonWarning;
+  }
 }

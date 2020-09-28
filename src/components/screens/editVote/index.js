@@ -82,7 +82,7 @@ const AddVote = ({
         <BoxFooter direction="horizontal">
           {
             mode === 'edit' && (
-              <SecondaryButton className={`${styles.RemoveVoteButton} remove-vote`} onClick={removeVote}>
+              <SecondaryButton className={`${styles.removeVoteButton} remove-vote`} onClick={removeVote}>
                 {t('Remove vote')}
               </SecondaryButton>
             )
