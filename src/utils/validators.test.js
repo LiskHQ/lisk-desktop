@@ -33,11 +33,21 @@ describe('Validate Public Key', () => {
 
 describe('Validate Amount Format', () => {
   const errors = {
+    ZERO: i18n.t('Amount can\'t be zero.'),
     INVALID: i18n.t('Provide a correct amount of {{token}}', { token: 'LSK' }),
     FLOATING_POINT: i18n.t('Maximum floating point is 8.'),
   };
+  it('Should return errors.ZERO if amount is zero', () => {
+    [0.0, '0,', '0,0'].forEach((value) => {
+      expect(validateAmountFormat({ value })).toEqual({
+        error: true,
+        message: errors.ZERO,
+      });
+    });
+  });
+
   it('Should return errors.INVALID if format is invalid', () => {
-    [0.0, '0,0', '0.1.2', '0,', '1..', '1a,1', '2.d2'].forEach((value) => {
+    ['0.1.2', '1..', '1a,1', '2.d2'].forEach((value) => {
       expect(validateAmountFormat({ value })).toEqual({
         error: true,
         message: errors.INVALID,
