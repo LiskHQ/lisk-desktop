@@ -22,10 +22,17 @@ const voting = (state = {}, action) => {
       return {
         ...state,
         ...action.data.reduce((mergedVotes, vote) => {
+          // When added new vote using launch protocol
+          let unconfirmed = -1;
+          // when added, removed or edited vote
+          if (vote.amount !== undefined) unconfirmed = vote.amount;
+          // when the launch protocol includes an existing vote
+          else if (state[vote.address]) unconfirmed = state[vote.address].unconfirmed;
+
           mergedVotes[vote.address] = {
             confirmed: state[vote.address]
               ? state[vote.address].confirmed : 0,
-            unconfirmed: vote.amount || (state[vote.address] && state[vote.address].unconfirmed),
+            unconfirmed,
           };
           return mergedVotes;
         }, {}),
