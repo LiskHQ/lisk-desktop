@@ -1,44 +1,106 @@
-.wrapper {
-  display: flex;
-  padding: 32px 16px;
-}
-
-.delegateStats {
-  align-content: stretch;
-  box-sizing: border-box;
+.container {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  height: 60px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
+}
 
-  & > li {
-    align-items: center;
-    color: var(--color-maastricht-blue);
-    display: flex;
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    height: calc(100% / 2);
+.statsContainer {
+
+}
+
+.performanceContainer {
+  
+}
+
+.details {
+  & .itemContainer {
+    border-bottom: 1px solid #E1E3EB;
+    padding: 20px 0;
+    margin-left: 0;
+
+    &:last-child {
+      border: none;
+      padding-bottom: 0;
+    }
+    &:first-child {
+      padding-top: 0;
+    }
   }
 
-  & span.label {
-    color: var(--color-dark-gray);
-    font-size: var(--paragraph-font-size-s);
-    margin-right: 8px;
-    white-space: nowrap;
+  & .item {
+    margin-left: 16px;
+    
+    & .value {
+      margin-top: 8px;
+    }
   }
 }
 
-@media (--medium-viewport) {
-  .delegateStats {
-    height: 90px;
+.performance {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: row !important;
+  margin-bottom: 20px;
+  width: 408px;
+  height: 156px;
+}
 
-    & > li {
-      height: calc(100% / 3);
-      min-width: calc(100% / 3);
-    }
+.performanceText {
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.icon {
+  height: 16px;
+}
+
+.performanceIcon {
+  align-self: flex-end;
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  height: 120px;
+  width: 170px;
+}
+.productivityIcon {
+  height: 122px;
+  width: 206px;
+}
+
+.forgedBlocksIcon {
+  padding-right: 20px;
+}
+
+.missedBlocksIcon {
+  justify-content: flex-end;
+  align-items: center;
+  height: 156px;
+  width: 216px;
+}
+
+.forgedLskIcon {
+  height: 108px;
+  width: 196px;
+  padding-right: 20px;
+}
+
+.votesContainer {
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.voteItem {
+  width: 238px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  & .address {
+    padding-left: 10px;
   }
 }
