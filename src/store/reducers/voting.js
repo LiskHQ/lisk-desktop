@@ -11,7 +11,7 @@ const voting = (state = {}, action) => {
     case actionTypes.votesRetrieved:
       return action.data
         .reduce((votesDict, delegate) => {
-          votesDict[delegate.address] = {
+          votesDict[delegate.delegateAddress] = {
             confirmed: delegate.amount,
             unconfirmed: delegate.amount,
           };
