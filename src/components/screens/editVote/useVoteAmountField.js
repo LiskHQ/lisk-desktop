@@ -15,12 +15,12 @@ let loaderTimeout = null;
  * @param {Function} t - i18n.t
  * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value) => {
-  const { message: feedback } = validateAmountFormat({ value, token: tokenMap.LSK.key });
+const getAmountFeedbackAndError = (value, t) => {
+  let { message: feedback } = validateAmountFormat({ value, token: tokenMap.LSK.key });
 
-  // if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {
-  //   feedback = t('Provided vote amount is higher than your free balance.');
-  // }
+  if (!feedback && value % 10 !== 0) {
+    feedback = t('You can only vote in multiplies of 10 LSK.');
+  }
   return { error: !!feedback, feedback };
 };
 
@@ -48,7 +48,7 @@ const getAmountFeedbackAndError = (value) => {
  * @returns {[Boolean, Function]} The error flag, The setter function
  */
 const useVoteAmountField = (initialValue) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [amountField, setAmountField] = useState({
     value: initialValue,
     isLoading: false,
@@ -81,7 +81,7 @@ const useVoteAmountField = (initialValue) => {
       setAmountField({
         isLoading: false,
         value,
-        ...getAmountFeedbackAndError(value),
+        ...getAmountFeedbackAndError(value, t),
       });
     }, 300);
   };
