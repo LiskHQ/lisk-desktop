@@ -1,7 +1,4 @@
 import to from 'await-to-js';
-import {
-  getVotes,
-} from '../utils/api/delegates';
 import { create } from '../utils/api/lsk/transactions';
 import { passphraseUsed } from './account';
 import actionTypes from '../constants/actions';
