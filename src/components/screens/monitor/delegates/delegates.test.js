@@ -109,17 +109,4 @@ describe('Delegates monitor page', () => {
     wrapper = setup(props);
     expect(wrapper.find('a.delegate-row')).toHaveLength(delegatesList.length + 1);
   });
-
-  it('triggers forgingDataDisplayed action when mounted', () => {
-    jest.spyOn(blockActions, 'forgingDataDisplayed');
-    wrapper = setup(props);
-    expect(blockActions.forgingDataDisplayed).toHaveBeenCalled();
-  });
-
-  it('triggers forgingDataConcealed action when unmounted', () => {
-    jest.spyOn(blockActions, 'forgingDataConcealed');
-    wrapper = setup(props);
-    wrapper.unmount();
-    expect(blockActions.forgingDataConcealed).toHaveBeenCalled();
-  });
 });
