@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from '../../../utils/validators';
@@ -55,6 +55,17 @@ const useVoteAmountField = (initialValue) => {
     feedback: '',
     error: false,
   });
+
+  useEffect(() => {
+    if (!amountField.value && initialValue) {
+      setAmountField({
+        value: initialValue,
+        isLoading: false,
+        error: false,
+        feedback: '',
+      });
+    }
+  }, [initialValue]);
 
   const onAmountInputChange = ({ value }) => {
     const { leadingPoint } = regex.amount[i18n.language];
