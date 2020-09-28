@@ -7,14 +7,10 @@ import {
   votesRetrieved,
 } from './voting';
 import networks from '../constants/networks';
-import * as delegateApi from '../utils/api/delegates';
 import * as TransactionApi from '../utils/api/lsk/transactions';
 import sampleVotes from '../../test/constants/votes';
 import { loginType } from '../constants/hwConstants';
 
-jest.mock('../utils/api/delegates', () => ({
-  getVotes: jest.fn(),
-}));
 jest.mock('../utils/api/lsk/transactions', () => ({
   create: jest.fn(),
 }));
