@@ -61,8 +61,8 @@
 
   &:hover {
     & .editVoteLink {
-    opacity: 1;
-  }
+      opacity: 1;
+    }
   }
 }
 
