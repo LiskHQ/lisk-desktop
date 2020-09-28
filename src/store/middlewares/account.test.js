@@ -216,10 +216,7 @@ describe('Account middleware', () => {
     const actionSpy = jest.spyOn(votingActions, 'votesRetrieved');
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes().vote.code.legacy;
     middleware(store)(next)(transactionsUpdatedAction);
-    expect(actionSpy).toHaveBeenCalledWith({
-      address: state.account.address,
-      type: 'update',
-    });
+    expect(actionSpy).toHaveBeenCalled();
   });
 
   it(`should dispatch ${actionTypes.networkSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {
