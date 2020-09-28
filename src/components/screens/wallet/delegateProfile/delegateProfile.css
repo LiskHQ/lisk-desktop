@@ -5,13 +5,15 @@
   flex-direction: column;
 }
 
-.detailsContainer, 
+.detailsContainer,
 .performanceContainer {
   & h1.heading {
     @mixin headingNormal;
+
     font-size: 20px;
   }
 }
+
 .statsContainer {
   & .votesContainer {
     padding: 16px;
@@ -45,6 +47,7 @@
 
     & .title {
       @mixin contentNormal;
+
       color: var(--color-slate-gray);
     }
 
@@ -78,6 +81,7 @@
 
   & .performanaceText {
     @mixin contentNormal;
+
     color: var(--color-slate-gray);
     margin-bottom: 15px;
   }
