@@ -14,14 +14,14 @@ import BoxInfoText from '../../toolbox/box/infoText';
 import AmountField from '../../shared/amountField';
 import useVoteAmountField from './useVoteAmountField';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
-import { toRawLsk } from '../../../utils/lsk';
+import { toRawLsk, fromRawLsk } from '../../../utils/lsk';
 
 import styles from './editVote.css';
 
 const getTitles = t => ({
   edit: {
     title: t('Edit vote'),
-    description: t(''),
+    description: t('You can increase or decrease your vote amount, or remove your vote from this delegate.'),
   },
   add: {
     title: t('Add to voting queue'),
@@ -34,11 +34,12 @@ const AddVote = ({
 }) => {
   const dispatch = useDispatch();
   const host = useSelector(state => state.account.info.LSK.address);
-  const [voteAmount, setVoteAmount] = useVoteAmountField('');
-  const mode = 'add';
+  const address = selectSearchParamValue(history.location.search, 'address');
+  const existingVote = useSelector(state => state.voting[address || host]);
+  const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');
+  const mode = existingVote ? 'edit' : 'add';
 
   const confirm = () => {
-    const address = selectSearchParamValue(history.location.search, 'address');
     dispatch(voteEdited([{
       address: address || host,
       amount: toRawLsk(voteAmount.value),
@@ -50,8 +51,6 @@ const AddVote = ({
   const titles = getTitles(t)[mode];
 
   const removeVote = () => {
-    const address = selectSearchParamValue(history.location.search, 'address');
-
     dispatch(voteEdited([{
       address: address || host,
       amount: 0,
