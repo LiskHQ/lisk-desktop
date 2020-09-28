@@ -10,8 +10,8 @@ import regex from '../../../../utils/regex';
 import EmptyState from './emptyState';
 import styles from './delegateProfile.css';
 
-const Item = ({ key, address }) => (
-  <div className={styles.voteItem} key={key}>
+const Item = (index, address) => (
+  <div className={styles.voteItem} key={index}>
     <AccountVisual
       className={styles.accountVisual}
       address={address}
