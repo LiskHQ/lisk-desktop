@@ -12,8 +12,8 @@ const Item = ({
 }) => (
   <BoxContent className={`${styles.performance} performance`}>
     <div className={styles.performanceContent}>
-      <div className={styles.performanaceText}>{text}</div>
-      <div className={styles.performanaceValue}>{value}</div>
+      <div className={styles.performanceText}>{text}</div>
+      <div className={styles.performanceValue}>{value}</div>
     </div>
     <div className={className}>
       <Icon name={icon} />
@@ -24,12 +24,12 @@ const Item = ({
 const PerformanceView = ({
   t, productivity, forgedBlocks, forgedLsk, missedBlocks,
 }) => (
-  <Box className={`${grid['col-xs-6']} ${grid['col-md-8']} ${grid['col-lg-8']} ${styles.performanceContainer} performance-container`}>
+  <Box className={`${grid['col-xs-12']} ${grid['col-md-8']} ${styles.performanceContainer} performance-container`}>
     <BoxHeader>
       <h1 className={styles.heading}>{t('Performance')}</h1>
     </BoxHeader>
     <Box className={`${grid.row}`}>
-      <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-6']} ${styles.column}`}>
+      <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
           text={t('Productivity')}
           value={productivity}
@@ -43,7 +43,7 @@ const PerformanceView = ({
           className={`${styles.performanceIcon} ${styles.forgedBlocksIcon}`}
         />
       </Box>
-      <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-6']} ${styles.column}`}>
+      <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
           text={t('Missed Blocks')}
           value={missedBlocks}

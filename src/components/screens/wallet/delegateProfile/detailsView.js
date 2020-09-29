@@ -11,7 +11,7 @@ import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 const DetailsView = ({
   t, rank, voteWeight, lastBlockForged, status,
 }) => (
-  <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-4']} ${styles.detailsContainer} details-container`}>
+  <Box className={`${grid.col} ${grid['col-xs-12']} ${grid['col-md-4']} ${styles.detailsContainer} details-container`}>
     <BoxHeader>
       <h1 className={styles.heading}>{t('Details')}</h1>
     </BoxHeader>
