@@ -16,12 +16,12 @@
 
 .statsContainer {
   & .votesContainer {
-    padding: 16px;
+    padding: 20px 15px;
     display: grid;
     grid-template-columns: repeat(auto-fill, 25%);
-    grid-template-rows: repeat(auto-fill, 52px);
     box-sizing: border-box;
     justify-content: center;
+    grid-gap: 30px 0px;
   }
 
   @media (--medium-viewport) {
@@ -137,13 +137,44 @@
   width: max-content;
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
-  margin-right: 10px;
 
   & .address {
     @mixin contentLargest;
 
     padding-left: 10px;
+  }
+
+  &::after {
+    display: none;
+    position: absolute;
+    width: calc(100% - 30px);
+    height: 1px;
+    left: 15px;
+    margin-top: 70px;
+    z-index: 0;
+    background: var(--color-platinum);
+  }
+
+  &:nth-child(4n) {
+    &::after {
+      content: '';
+      display: block;
+    }
+  }
+
+  @media (--medium-viewport) {
+    &:nth-child(4n) {
+      &::after {
+        display: none;
+      }
+    }
+
+    &:nth-child(3n) {
+      &::after {
+        content: '';
+        display: block;
+      }
+    }
   }
 }
 
