@@ -62,6 +62,9 @@ const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlock, a
   return currentBlockHeight - unvoteHeight < delayedAvailability;
 };
 
+export const getAvailableUnlockingTransactions = ({ unlocking, address }, currentBlock) =>
+  unlocking.filter(vote => isBlockHeightReached(vote, currentBlock, address));
+
 export const calculateAvailableAndUnlockingBalance = ({ unlocking, address }, currentBlock) =>
   unlocking.reduce((acc, vote) => {
     if (isBlockHeightReached(vote, currentBlock, address)) {

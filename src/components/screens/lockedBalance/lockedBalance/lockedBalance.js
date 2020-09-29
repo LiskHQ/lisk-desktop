@@ -12,9 +12,9 @@ import styles from './lockedBalance.css';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import transactionTypes from '../../../../constants/transactionTypes';
-import { calculateLockedBalance, calculateAvailableAndUnlockingBalance } from '../../../../utils/account';
+import { calculateLockedBalance, calculateAvailableAndUnlockingBalance, getAvailableUnlockingTransactions } from '../../../../utils/account';
 
-const txType = transactionTypes().unlock.key;
+const txType = transactionTypes().unlockToken.key;
 
 const LockedBalance = ({
   t, nextStep, token, currentBlock,
@@ -48,23 +48,12 @@ const LockedBalance = ({
   const onClickUnlock = () => {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
     unlockBalanceSubmitted({
-      asset: {
-        // unlockingObjects?
-        unlockObjects: {
-          ...account.unlocking,
-        },
-      },
       amount: `${toRawLsk(availableBalance)}`,
       passphrase: account.passphrase,
-      fee: toRawLsk(parseFloat(fee)),
+      fee: `${toRawLsk(parseFloat(fee.value))}`,
       nonce: account.nonce,
       senderPublicKey: account.publicKey,
-
-      // readonly networkIdentifier: string;
-      // readonly nonce: string; X
-      // readonly fee: string; X
-      // readonly passphrase?: string; X
-      // readonly unlockingObjects?: ReadonlyArray<RawAssetUnlock>;
+      unlockingObjects: getAvailableUnlockingTransactions(account, currentBlock),
     });
     nextStep();
   };

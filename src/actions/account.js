@@ -215,16 +215,15 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
 export const unlockBalanceSubmitted = data =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
     const { network, account } = getState();
-
     /* const [error, tx] = account.loginType === loginType.normal
       ? await to(create(
         { ...data, network },
-        transactionTypes().unlock.key,
+        transactionTypes().unlockToken.key,
       ))
       : await to(signUnlockTransaction(account, data)); */
     const [error, tx] = await to(create(
       { ...data, network },
-      transactionTypes().unlock.key,
+      transactionTypes().unlockToken.key,
     ));
 
     if (error) {

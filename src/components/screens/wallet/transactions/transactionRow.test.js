@@ -32,7 +32,7 @@ describe('Single Transaction Component', () => {
       { ...props, data: unlockTx.data },
     );
     expect(wrapper).toContainMatchingElement('.transaction-image');
-    expect(wrapper.find('.transaction-address').text()).toEqual(transactionTypes().unlock.title);
+    expect(wrapper.find('.transaction-address').text()).toEqual(transactionTypes().unlockToken.title);
     expect(wrapper).toContainMatchingElement('.transaction-amount');
   });
 });

@@ -237,7 +237,7 @@ describe('Single Transaction Component', () => {
         { pathname: '/explorer/transactions', id: transaction.id },
       );
       expect(wrapper).toContainMatchingElement('.transaction-image');
-      expect(wrapper.find('.tx-header').text()).toEqual(transactionTypes().unlock.title);
+      expect(wrapper.find('.tx-header').text()).toEqual(transactionTypes().unlockToken.title);
       expect(wrapper).toContainMatchingElement('.transaction-id');
       expect(wrapper).toContainMatchingElement('.tx-amount');
       expect(wrapper).toContainMatchingElement('.tx-fee');

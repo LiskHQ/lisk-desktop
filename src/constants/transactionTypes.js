@@ -71,7 +71,7 @@ const transactionTypes = (t = str => str) => ({
     nameFee: 0,
     hardCap: 5e8, // rawLSK
   },
-  unlock: {
+  unlockToken: {
     code: {
       legacy: 5, // TODO should be undefined?
       new: 14,
