@@ -81,8 +81,8 @@ const txTypeClassMap = {
 
 // eslint-disable-next-line max-statements
 export const createTransactionInstance = (rawTx, type) => {
-  const DUMMY_FEE = '18446744073709551615';
-  const DUMMY_SIGNATURE = '204514eb1152355799ece36d17037e5feb4871472c60763bdafe67eb6a38bec632a8e2e62f84a32cf764342a4708a65fbad194e37feec03940f0ff84d3df2a05';
+  const FEE_BYTES_PLACEHOLDER = '18446744073709551615';
+  const SIGNATURE_BYTES_PLACEHOLDER = '204514eb1152355799ece36d17037e5feb4871472c60763bdafe67eb6a38bec632a8e2e62f84a32cf764342a4708a65fbad194e37feec03940f0ff84d3df2a05';
   const asset = {
     data: rawTx.data,
   };
@@ -101,8 +101,8 @@ export const createTransactionInstance = (rawTx, type) => {
     senderPublicKey: rawTx.senderPublicKey,
     nonce: rawTx.nonce,
     asset,
-    fee: DUMMY_FEE,
-    signatures: [DUMMY_SIGNATURE],
+    fee: FEE_BYTES_PLACEHOLDER,
+    signatures: [SIGNATURE_BYTES_PLACEHOLDER],
   });
 
   return tx;
