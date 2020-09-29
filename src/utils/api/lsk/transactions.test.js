@@ -5,9 +5,9 @@ import {
   getSingleTransaction,
   create,
   broadcast,
-  calculateMinTxFee,
+  getMinTxFee,
   getTransactionBaseFees,
-  getTransactionFee,
+  getTransactionFee, createTransactionInstance,
 } from './transactions';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
@@ -15,7 +15,6 @@ import txFilters from '../../../constants/transactionFilters';
 import transactionTypes from '../../../constants/transactionTypes';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import accounts from '../../../../test/constants/accounts';
-import * as transactionUtils from '../../transactions';
 import { fromRawLsk } from '../../lsk';
 
 jest.mock('./network');
@@ -49,6 +48,8 @@ describe('Utils: Transactions API', () => {
   const address = '1212409187243L';
 
   beforeEach(() => {
+    jest.clearAllMocks();
+
     apiClient = {
       transactions: {
         get: jest.fn(),
@@ -200,13 +201,12 @@ describe('Utils: Transactions API', () => {
     });
   });
 
-  describe('calculateMinTxFee', () => {
+  describe('getMinTxFee', () => {
     it('calculates the correct tx fees', () => {
-      const fees = calculateMinTxFee({
-        ...testTx,
-        senderPublicKey: accounts.genesis.publicKey,
-      }, transactionTypes().transfer.key);
-      expect(fees).toBe(165000);
+      const fees = getMinTxFee({
+        minFee: 1,
+      });
+      expect(fees).toBe(1);
     });
   });
 
@@ -255,24 +255,29 @@ describe('Utils: Transactions API', () => {
     });
 
     it('returns transaction type hard cap value', async () => {
+      // tested using a ridiculously high base fee
       const txType = transactionTypes().transfer.key;
       const hardCap = transactionTypes().transfer.hardCap;
-
-      jest.spyOn(transactionUtils, 'findTransactionSizeInBytes').mockImplementation(() => hardCap + 1);
 
       const fees = await getTransactionFee({
         txData: {
           ...testTx,
-          amount: '',
+          amount: '1',
           senderPublicKey: accounts.genesis.publicKey,
           txType,
         },
-        selectedPriority: { value: 10, selectedIndex: 0 },
+        selectedPriority: { value: 1e11, selectedIndex: 0 },
       });
 
       expect(fees.value).toBeDefined();
-      expect(fees.error).toBeTruthy();
       expect(fees.value).toEqual(parseFloat(Number(fromRawLsk(hardCap)).toFixed(8)));
+    });
+  });
+
+  describe('createTransactionInstance', () => {
+    it('returns a transaction instance', () => {
+      const tx = createTransactionInstance({}, 'transfer');
+      expect(tx).toBeDefined();
     });
   });
 });
