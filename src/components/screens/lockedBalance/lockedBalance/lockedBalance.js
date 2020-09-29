@@ -17,16 +17,16 @@ import { calculateLockedBalance, calculateAvailableAndUnlockingBalance } from '.
 const txType = transactionTypes().unlock.key;
 
 const LockedBalance = ({
-  t, nextStep, token, currentBlockHeight,
+  t, nextStep, token, currentBlock,
   unlockBalanceSubmitted, account,
 }) => {
-  const lockedBalance = calculateLockedBalance({ ...account });
+  const lockedBalance = calculateLockedBalance(account);
   const {
     unlockingBalance,
     availableBalance,
   } = calculateAvailableAndUnlockingBalance(
-    { ...account },
-    currentBlockHeight,
+    account,
+    currentBlock,
   );
   const [customFee, setCustomFee] = useState();
   const [

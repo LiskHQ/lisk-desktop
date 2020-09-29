@@ -7,7 +7,7 @@ import LockedBalance from './lockedBalance';
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   token: state.settings.token.active,
-  currentBlockHeight: state.blocks.latestBlocks[0].height,
+  currentBlock: state.blocks.latestBlocks[0],
 });
 
 const mapDispatchToProps = {

@@ -41,16 +41,30 @@ export const truncateAddress = address =>
 export const calculateLockedBalance = ({ votes }) =>
   votes.reduce((acc, vote) => acc + vote.amount, 0);
 
-const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlockHeight, address) => {
-  return true;
-  // TODO reiterate this calculation
+const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlock, address) => {
+  /* LIP 023
+  function hasWaited(U):
+    let account be the account sending the transaction
+    if U.delegateAddress == account.address  //this is a self-unvote
+        delayedAvailability = 260,000
+    else
+        delayedAvailability = 2000
+
+    let h be the block height at which the transaction is included
+    if h - U.unvoteHeight < delayedAvailability
+        return false
+    else
+        return true
+  */
+  if (!currentBlock) return false;
+  const currentBlockHeight = currentBlock.height;
   const delayedAvailability = address === delegateAddress ? 260000 : 2000;
-  return (unvoteHeight + delayedAvailability) < currentBlockHeight;
+  return currentBlockHeight - unvoteHeight < delayedAvailability;
 };
 
-export const calculateAvailableAndUnlockingBalance = ({ unlocking, address }, currentBlockHeight) =>
+export const calculateAvailableAndUnlockingBalance = ({ unlocking, address }, currentBlock) =>
   unlocking.reduce((acc, vote) => {
-    if (isBlockHeightReached(vote, currentBlockHeight, address)) {
+    if (isBlockHeightReached(vote, currentBlock, address)) {
       acc.availableBalance += vote.amount;
     } else {
       acc.unlockingBalance += vote.amount;
