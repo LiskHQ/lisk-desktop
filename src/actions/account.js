@@ -209,6 +209,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
 };
 
 /**
+ * TODO - WIP
  * Makes Api call to unlock Balance that will broadcast
  */
 export const unlockBalanceSubmitted = data =>
@@ -221,12 +222,10 @@ export const unlockBalanceSubmitted = data =>
         transactionTypes().unlock.key,
       ))
       : await to(signUnlockTransaction(account, data)); */
-    console.log(1);
     const [error, tx] = await to(create(
       { ...data, network },
       transactionTypes().unlock.key,
     ));
-    console.log(2, error, tx);
 
     if (error) {
       return dispatch({

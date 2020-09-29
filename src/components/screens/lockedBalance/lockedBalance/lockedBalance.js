@@ -16,32 +16,16 @@ import { calculateLockedBalance, calculateAvailableAndUnlockingBalance } from '.
 
 const txType = transactionTypes().unlock.key;
 
-// TODO Remove this
-const accountMockVotes = {
-  votes: [
-    { delegateAddress: '1L', amount: 5e9 },
-    { delegateAddress: '2L', amount: 2e9 },
-    { delegateAddress: '3L', amount: 1e9 },
-    { delegateAddress: '4L', amount: 4e9 },
-    { delegateAddress: '5L', amount: 5e8 },
-  ],
-  unlocking: [
-    { delegateAddress: '3L', amount: 2e8, unvoteHeigh: 300 },
-    { delegateAddress: '4L', amount: 2e9, unvoteHeigh: 320 },
-  ],
-};
-
 const LockedBalance = ({
   t, nextStep, token, currentBlockHeight,
   unlockBalanceSubmitted, account,
 }) => {
-  // TODO replace accountMockedVotes for props.account
-  const lockedBalance = calculateLockedBalance({ ...account, ...accountMockVotes });
+  const lockedBalance = calculateLockedBalance({ ...account });
   const {
     unlockingBalance,
     availableBalance,
   } = calculateAvailableAndUnlockingBalance(
-    { ...account, ...accountMockVotes },
+    { ...account },
     currentBlockHeight,
   );
   const [customFee, setCustomFee] = useState();
@@ -67,7 +51,7 @@ const LockedBalance = ({
       asset: {
         // unlockingObjects?
         unlockObjects: {
-          ...accountMockVotes.unlocking,
+          ...account.unlocking,
         },
       },
       amount: `${toRawLsk(availableBalance)}`,
