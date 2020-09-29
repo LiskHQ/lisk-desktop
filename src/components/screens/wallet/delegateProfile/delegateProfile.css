@@ -18,11 +18,16 @@
   & .votesContainer {
     padding: 16px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 248px);
+    grid-template-columns: repeat(auto-fill, 25%);
     grid-template-rows: repeat(auto-fill, 52px);
-    grid-gap: 10px;
     box-sizing: border-box;
     justify-content: center;
+  }
+
+  @media (--medium-viewport) {
+    & .votesContainer {
+      grid-template-columns: repeat(auto-fill, 33.3%);
+    }
   }
 }
 

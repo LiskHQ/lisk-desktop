@@ -15,9 +15,9 @@ const Item = props => (
     <AccountVisual
       className={styles.accountVisual}
       address={props.address}
-      size={44}
+      size={40}
     />
-    <div className={styles.address}>{props.address}</div>
+    <span className={styles.address}>{props.address}</span>
   </div>
 );
 
@@ -41,7 +41,6 @@ const DelegateVotesView = ({
     votersToDisplay.push(...voters);
   }
 
-  console.log(voters);
   return (
     <Box>
       <BoxHeader>
