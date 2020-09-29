@@ -108,9 +108,9 @@
 }
 
 @define-mixin buttonWarning {
-  background-color: var(--color-burnt-sienna);
-  color: var(--color-strong-white);
-  border: none;
+  background-color: var(--color-white);
+  color: var(--color-burnt-sienna);
+  border-color: var(--color-burnt-sienna);
 
   &:focus,
   &:hover {

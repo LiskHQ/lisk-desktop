@@ -41,8 +41,8 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
       const action = {
         type: actionTypes.votesRetrieved,
         data: [
-          { ...delegate1, amount: 1e10 },
-          { ...delegate2, amount: 2e10 },
+          { delegateAddress: delegate1.address, amount: 1e10 },
+          { delegateAddress: delegate2.address, amount: 2e10 },
         ],
       };
       const expectedState = {
