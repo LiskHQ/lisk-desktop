@@ -13,7 +13,7 @@ import BoxHeader from '../../toolbox/box/header';
 import BoxInfoText from '../../toolbox/box/infoText';
 import AmountField from '../../shared/amountField';
 import useVoteAmountField from './useVoteAmountField';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
+import { PrimaryButton, WarningButton } from '../../toolbox/buttons';
 import { toRawLsk, fromRawLsk } from '../../../utils/lsk';
 
 import styles from './editVote.css';
@@ -82,9 +82,9 @@ const AddVote = ({
         <BoxFooter direction="horizontal">
           {
             mode === 'edit' && (
-              <SecondaryButton className={`${styles.removeVoteButton} remove-vote`} onClick={removeVote}>
+              <WarningButton className="remove-vote" onClick={removeVote}>
                 {t('Remove vote')}
-              </SecondaryButton>
+              </WarningButton>
             )
           }
           <PrimaryButton className={`${styles.confirmButton} confirm`} onClick={confirm}>
