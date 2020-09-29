@@ -129,6 +129,7 @@ import lock from '../../../assets/images/icons/lock.svg';
 import unlock from '../../../assets/images/icons/unlock.svg';
 import loading from '../../../assets/images/icons/loading.svg';
 import txUnlock from '../../../assets/images/icons/tx-unlock.svg';
+import votingQueueInactive from '../../../assets/images/icons/voting-queue-inactive.svg';
 
 export const icons = {
   academy,
@@ -259,6 +260,7 @@ export const icons = {
   unlock,
   loading,
   txUnlock,
+  votingQueueInactive,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

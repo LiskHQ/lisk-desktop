@@ -176,6 +176,18 @@ class TopBar extends React.Component {
             size="maxContent"
             position="bottom"
             content={(
+              <DialogLink component="votingQueue" className={`${styles.toggle} voting-queue-toggle`}>
+                <Icon name="votingQueueInactive" />
+              </DialogLink>
+            )}
+          >
+            <p>{t('Voting Queue')}</p>
+          </Tooltip>
+          <Tooltip
+            className={styles.tooltipWrapper}
+            size="maxContent"
+            position="bottom"
+            content={(
               <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
                 <span className={relevantSearchParam ? `${styles.searchContainer} ${styles.searchContainerParam}` : styles.searchContainer}>
                   <Icon name={relevantSearchParam ? 'search' : 'searchInput'} className="search-icon" />
