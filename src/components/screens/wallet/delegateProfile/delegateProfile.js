@@ -7,7 +7,7 @@ import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
 import DelegateVotesView from './delegateVotesView';
 
-const placeholders = new Array(101).fill('5059876081639179984L');
+const placeholders = Array.from(Array(101).keys()).map(item => `5447926331525636${item}L`);
 // dummy.push('10016685355739180600L');
 
 // const formatForgingStatus = (status) => {
