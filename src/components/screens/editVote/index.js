@@ -13,10 +13,21 @@ import BoxHeader from '../../toolbox/box/header';
 import BoxInfoText from '../../toolbox/box/infoText';
 import AmountField from '../../shared/amountField';
 import useVoteAmountField from './useVoteAmountField';
-import { PrimaryButton } from '../../toolbox/buttons';
-import { toRawLsk } from '../../../utils/lsk';
+import { PrimaryButton, WarningButton } from '../../toolbox/buttons';
+import { toRawLsk, fromRawLsk } from '../../../utils/lsk';
 
-import styles from './addVote.css';
+import styles from './editVote.css';
+
+const getTitles = t => ({
+  edit: {
+    title: t('Edit vote'),
+    description: t('You can increase or decrease your vote amount, or remove your vote from this delegate.'),
+  },
+  add: {
+    title: t('Add to voting queue'),
+    description: t('Input your vote weight. This value shows how much you trust in this delegate. You can’t use these tokens until you undo your vote.'),
+  },
+});
 
 const AddVote = ({
   history, t,
@@ -25,10 +36,12 @@ const AddVote = ({
   const { transactionsCreated } = useSelector(state => state.transactions);
   const dispatch = useDispatch();
   const host = useSelector(state => state.account.info.LSK.address);
-  const [voteAmount, setVoteAmount] = useVoteAmountField('');
+  const address = selectSearchParamValue(history.location.search, 'address');
+  const existingVote = useSelector(state => state.voting[address || host]);
+  const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');
+  const mode = existingVote ? 'edit' : 'add';
 
   const confirm = () => {
-    const address = selectSearchParamValue(history.location.search, 'address');
     dispatch(voteEdited([{
       address: address || host,
       amount: toRawLsk(voteAmount.value),
@@ -52,15 +65,26 @@ const AddVote = ({
     }
   }, [transactionsCreated.length]);
 
+  const titles = getTitles(t)[mode];
+
+  const removeVote = () => {
+    dispatch(voteEdited([{
+      address: address || host,
+      amount: 0,
+    }]));
+
+    removeSearchParamsFromUrl(history, ['modal']);
+  };
+
   return (
     <Dialog hasClose className={styles.wrapper}>
       <Box>
         <BoxHeader>
-          <h1>{t('Add to voting queue')}</h1>
+          <h1>{titles.title}</h1>
         </BoxHeader>
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>
-            <span>{t('Input your vote weight. This value shows how much you trust in this delegate. You can’t use these tokens until you undo your vote.')}</span>
+            <span>{titles.description}</span>
           </BoxInfoText>
           <label className={styles.fieldGroup}>
             <AmountField
@@ -73,6 +97,13 @@ const AddVote = ({
           </label>
         </BoxContent>
         <BoxFooter direction="horizontal">
+          {
+            mode === 'edit' && (
+              <WarningButton className="remove-vote" onClick={removeVote}>
+                {t('Remove vote')}
+              </WarningButton>
+            )
+          }
           <PrimaryButton className={`${styles.confirmButton} confirm`} onClick={confirm}>
             {t('Confirm')}
           </PrimaryButton>

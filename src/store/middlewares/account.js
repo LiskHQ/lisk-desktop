@@ -48,12 +48,7 @@ const votePlaced = (store, action) => {
   );
 
   if (voteTransaction) {
-    const { account } = store.getState();
-
-    store.dispatch(votesRetrieved({
-      address: account.info.LSK.address,
-      type: 'update',
-    }));
+    store.dispatch(votesRetrieved());
   }
 };
 

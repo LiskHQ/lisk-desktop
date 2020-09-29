@@ -7,14 +7,10 @@ import {
   votesRetrieved,
 } from './voting';
 import networks from '../constants/networks';
-import * as delegateApi from '../utils/api/delegates';
 import * as TransactionApi from '../utils/api/lsk/transactions';
 import sampleVotes from '../../test/constants/votes';
 import { loginType } from '../constants/hwConstants';
 
-jest.mock('../utils/api/delegates', () => ({
-  getVotes: jest.fn(),
-}));
 jest.mock('../utils/api/lsk/transactions', () => ({
   create: jest.fn(),
 }));
@@ -31,7 +27,10 @@ describe('actions: voting', () => {
     account: {
       loginType: loginType.normal,
       info: {
-        LSK: { address: '123L' },
+        LSK: {
+          address: '123L',
+          votes: [{ delegateAddress: '123L', amount: 1e9 }],
+        },
       },
     },
   });
@@ -86,18 +85,15 @@ describe('actions: voting', () => {
   });
 
   describe('votesRetrieved', () => {
-    it('should call getVotes and dispatch vote results', async () => {
+    it('should call getVotes and dispatch vote results', () => {
       const expectedAction = {
         type: actionTypes.votesRetrieved,
-        data: sampleVotes,
+        data: [{ delegateAddress: '123L', amount: 1e9 }],
       };
       const dispatch = jest.fn();
-      delegateApi.getVotes.mockResolvedValue({ data: sampleVotes });
-      await votesRetrieved()(dispatch, getState);
+      votesRetrieved()(dispatch, getState);
 
-      expect(delegateApi.getVotes).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
-      delegateApi.getVotes.mockReset();
     });
   });
 });

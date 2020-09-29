@@ -67,14 +67,16 @@ export const validateAmountFormat = ({
   locale = i18n.language,
 }) => {
   const errors = {
+    ZERO: i18n.t('Amount can\'t be zero.'),
     INVALID: i18n.t('Provide a correct amount of {{token}}', { token }),
     FLOATING_POINT: i18n.t('Maximum floating point is 8.'),
   };
   const { format, maxFloating } = reg.amount[locale];
   const message = (
-    (format.test(value) || numeral(value).value() === 0) && errors.INVALID)
+    (numeral(value).value() === 0 && errors.ZERO)
+    || (format.test(value) && errors.INVALID)
     || (maxFloating.test(value) && errors.FLOATING_POINT)
-    || '';
+    || '');
   return {
     error: !!message,
     message,

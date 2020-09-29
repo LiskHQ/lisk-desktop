@@ -1,5 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+
 import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
@@ -16,9 +18,12 @@ import { tokenMap } from '../../../../../constants/tokens';
 const BalanceInfo = ({
   t, activeToken, balance, isWalletRoute, address, lockedBalance,
 }) => {
+  const vote = useSelector(state => state.voting[address]);
   const initialValue = isWalletRoute
     ? {}
     : { recipient: address };
+
+  const voteButtonTitle = vote ? t('Edit vote') : t('Add to votes');
 
   const sendTitle = isWalletRoute
     ? t('Send {{token}}', { token: activeToken })
@@ -53,12 +58,12 @@ const BalanceInfo = ({
           <div className={styles.actionRow}>
             {
               activeToken === tokenMap.LSK.key && (
-                <DialogLink component="addVote" className={`${styles.button} add-vote`}>
+                <DialogLink component="editVote" className={`${styles.button} add-vote`}>
                   <SecondaryButton
                     className={`${styles.voteButton} open-add-vote-dialog`}
                     size="m"
                   >
-                    {t('Add to votes')}
+                    {voteButtonTitle}
                   </SecondaryButton>
                 </DialogLink>
               )
