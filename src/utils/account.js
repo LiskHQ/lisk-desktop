@@ -43,20 +43,6 @@ export const calculateLockedBalance = ({ votes }) =>
   votes.reduce((acc, vote) => acc + vote.amount, 0);
 
 const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlock, address) => {
-  /* LIP 023
-  function hasWaited(U):
-    let account be the account sending the transaction
-    if U.delegateAddress == account.address  //this is a self-unvote
-        delayedAvailability = 260,000
-    else
-        delayedAvailability = 2000
-
-    let h be the block height at which the transaction is included
-    if h - U.unvoteHeight < delayedAvailability
-        return false
-    else
-        return true
-  */
   if (!currentBlock) return false;
   const currentBlockHeight = currentBlock.height;
   const delayedAvailability = address === delegateAddress

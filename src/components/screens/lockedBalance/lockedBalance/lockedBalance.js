@@ -26,7 +26,8 @@ const calculatePendingTime = (currentBlockHeight, { unlocking, address }) => {
   });
   const highestAwaitingBlocksNumber = Math.max(...awaitingBlocks);
   const secondsToUnlockAllBalance = highestAwaitingBlocksNumber * 10;
-  return moment().to(moment().second(secondsToUnlockAllBalance));
+  const momentSeconds = moment().second(secondsToUnlockAllBalance);
+  return moment().to(momentSeconds, true);
 };
 
 const LockedBalance = ({
@@ -81,7 +82,9 @@ const LockedBalance = ({
           <div>
             <p className={styles.columnTitle}>{t('Amount')}</p>
             <p>{`${fromRawLsk(lockedBalance)} LSK`}</p>
-            <p>{`${fromRawLsk(unlockingBalance)} LSK`}</p>
+            {unlockingBalance !== 0
+              && <p>{`${fromRawLsk(unlockingBalance)} LSK`}</p>
+            }
             <p>{`${fromRawLsk(availableBalance)} LSK`}</p>
           </div>
           <div>
@@ -90,13 +93,14 @@ const LockedBalance = ({
               <Icon name="lock" />
               {t('locked')}
             </p>
-            <p>
-              <Icon name="loading" />
-              {t('will be available to unlock in')}
-              {(currentBlock && unlockingBalance)
-                && calculatePendingTime(currentBlock.height, account)
-              }
-            </p>
+            {unlockingBalance !== 0
+              && (
+                <p>
+                  <Icon name="loading" />
+                    {`${t('will be available to unlock in')} ${calculatePendingTime(currentBlock.height, account)}`}
+                </p>
+              )
+            }
             <p>
               <Icon name="unlock" />
               {t('available to unlock')}

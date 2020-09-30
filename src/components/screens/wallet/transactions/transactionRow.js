@@ -10,6 +10,7 @@ import TransactionAmount from '../../../shared/transactionAmount';
 import Spinner from '../../../toolbox/spinner';
 import TransactionAsset from './txAsset';
 import DialogLink from '../../../toolbox/dialog/link';
+import { getTxAmount } from '../../../../utils/transactions';
 import styles from './transactions.css';
 
 // eslint-disable-next-line complexity
@@ -27,6 +28,8 @@ const TransactionRow = ({
   const isConfirmed = data.confirmations > 0;
   const { senderId, recipientId } = data;
   const address = host === recipientId ? senderId : recipientId;
+  const amount = getTxAmount(data);
+
   return (
     <DialogLink
       className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending} transactions-row`}
@@ -76,7 +79,7 @@ const TransactionRow = ({
           sender={senderId}
           recipient={recipientId || data.asset.recipientId}
           type={data.type}
-          amount={data.amount || data.asset.amount}
+          amount={amount}
         />
       </span>
     </DialogLink>

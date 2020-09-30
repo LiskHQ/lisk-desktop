@@ -73,7 +73,7 @@ const transactionTypes = (t = str => str) => ({
   },
   unlockToken: {
     code: {
-      legacy: 5, // TODO should be undefined?
+      legacy: 5,
       new: 14,
     },
     outgoingCode: 14,
