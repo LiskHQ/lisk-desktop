@@ -1,27 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { PrimaryButton } from '../../../toolbox/buttons';
 import TransactionResult from '../../../shared/transactionResult';
 import { removeSearchParamsFromUrl } from '../../../../utils/searchParams';
-import DelegateAnimation from '../../registerDelegate/animations/delegateAnimation';
 import styles from './status.css';
 
 const Status = ({
   t, history, transactions, transactionBroadcasted,
 }) => {
   const [status, setStatus] = useState('pending');
-  const { transactionsCreated } = transactions;
+  const {
+    transactionsCreated,
+    confirmed,
+    pending,
+    broadcastedTransactionsError,
+  } = transactions;
   const success = status !== 'fail';
-  const checkTransactionStatus = () => {
-    // TODO refactor this
-    const transactionInfo = {}; // get from props
-
-    const isSuccess = transactions.confirmed
-      .filter(tx => tx.id === transactionInfo.id);
-    const error = transactions.broadcastedTransactionsError
-      .filter(tx => tx.transaction.id === transactionInfo.id);
-
-    if (isSuccess.length) setStatus('ok');
-    if (error.length) setStatus('fail');
-  };
 
   const displayTemplate = success
     ? {
@@ -40,7 +33,6 @@ const Status = ({
       message: t('Something went wrong with the registration. Please try again below!'),
       button: {
         onClick: () => {
-          const { broadcastedTransactionsError } = transactions;
           broadcastedTransactionsError.forEach(({ transaction }) =>
             transactionBroadcasted(transaction));
         },
@@ -55,23 +47,39 @@ const Status = ({
     }
   }, [transactionsCreated.length]);
 
+  useEffect(() => {
+    if (!pending.length && !transactionsCreated.length) {
+      setStatus('ok');
+    }
+  }, [confirmed.length]);
+
+  useEffect(() => {
+    if (broadcastedTransactionsError.length) {
+      setStatus('fail');
+    }
+  }, [broadcastedTransactionsError.length]);
+
   return (
     <div className={`${styles.wrapper} transaction-status`}>
       <TransactionResult
         t={t}
-        illustration={(
-          <DelegateAnimation
-            className={styles.animation}
-            status={status}
-            onLoopComplete={checkTransactionStatus}
-          />
-        )}
+        illustration={success ? 'transactionSuccess' : 'transactionError'}
         success={success}
         title={displayTemplate.title}
         message={displayTemplate.message}
         className={styles.content}
         primaryButon={displayTemplate.button}
-      />
+      >
+        {status !== 'pending' && (
+          <PrimaryButton
+            onClick={displayTemplate.button.onClick}
+            className={displayTemplate.button.className}
+          >
+            {displayTemplate.button.title}
+          </PrimaryButton>
+        )
+        }
+      </TransactionResult>
     </div>
   );
 };

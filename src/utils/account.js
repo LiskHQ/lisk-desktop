@@ -58,8 +58,9 @@ const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlock, a
   */
   if (!currentBlock) return false;
   const currentBlockHeight = currentBlock.height;
-  const delayedAvailability = address === delegateAddress ? 260000 : 2000;
-  return currentBlockHeight - unvoteHeight < delayedAvailability;
+  // const delayedAvailability = address === delegateAddress ? 260000 : 2000;
+  const delayedAvailability = address === delegateAddress ? 10 : 5;
+  return currentBlockHeight - unvoteHeight > delayedAvailability;
 };
 
 export const getAvailableUnlockingTransactions = ({ unlocking, address }, currentBlock) =>
