@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "1.27.1-rc.0",
+  "version": "1.27.1",
   "productName": "Lisk",
   "description": "Lisk",
   "homepage": "https://github.com/LiskHQ/lisk-desktop",
@@ -252,14 +252,14 @@
       "background": "./build/background@2x.png",
       "contents": [
         {
-          "x": 396,
-          "y": 345,
+          "x": 584,
+          "y": 230,
           "type": "link",
           "path": "/Applications"
         },
         {
-          "x": 396,
-          "y": 90,
+          "x": 380,
+          "y": 232,
           "type": "file"
         }
       ],
