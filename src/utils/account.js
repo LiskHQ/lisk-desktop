@@ -1,6 +1,7 @@
 import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 
 import { tokenMap } from '../constants/tokens';
+import { unlockTxDelayAvailability } from '../constants/account';
 import regex from './regex';
 
 export const extractPublicKey = passphrase =>
@@ -58,8 +59,8 @@ const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlock, a
   */
   if (!currentBlock) return false;
   const currentBlockHeight = currentBlock.height;
-  // const delayedAvailability = address === delegateAddress ? 260000 : 2000;
-  const delayedAvailability = address === delegateAddress ? 10 : 5;
+  const delayedAvailability = address === delegateAddress
+    ? unlockTxDelayAvailability.selfUnvote : unlockTxDelayAvailability.unvote;
   return currentBlockHeight - unvoteHeight > delayedAvailability;
 };
 

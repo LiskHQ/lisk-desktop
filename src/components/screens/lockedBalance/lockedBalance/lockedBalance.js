@@ -14,12 +14,14 @@ import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import transactionTypes from '../../../../constants/transactionTypes';
 import { calculateLockedBalance, calculateAvailableAndUnlockingBalance, getAvailableUnlockingTransactions } from '../../../../utils/account';
+import { unlockTxDelayAvailability } from '../../../../constants/account';
 
 const txType = transactionTypes().unlockToken.key;
 
 const calculatePendingTime = (currentBlockHeight, { unlocking, address }) => {
   const awaitingBlocks = unlocking.map(({ unvoteHeight, delegateAddress }) => {
-    const delayedAvailability = address === delegateAddress ? 10 : 5;
+    const delayedAvailability = address === delegateAddress
+      ? unlockTxDelayAvailability.selfUnvote : unlockTxDelayAvailability.unvote;
     return delayedAvailability - (currentBlockHeight - unvoteHeight);
   });
   const highestAwaitingBlocksNumber = Math.max(...awaitingBlocks);
