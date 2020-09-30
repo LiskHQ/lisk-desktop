@@ -17,6 +17,23 @@ const dummyVotes = Array.from(Array(20).keys()).map(i => ({
   address: `123${i}L`, oldAmount: i, newAmount: 1000 + i, username: `haha-${i}`,
 }));
 
+const getVoteStats = (votes) => {
+  const count = { added: 0, edited: 0, removed: 0 };
+  votes.forEach(({ oldAmount, newAmount }) => {
+    if (!oldAmount && newAmount) {
+      // new vote
+      count.added++;
+    } else if (oldAmount && !newAmount) {
+      // removed vote
+      count.removed++;
+    } else {
+      // edited vote
+      count.edited++;
+    }
+  });
+  return count;
+};
+
 const token = tokenMap.LSK.key;
 const txType = 'vote';
 
@@ -43,6 +60,8 @@ const VotingQueue = (props) => {
     },
   });
 
+  const { added, edited, removed } = getVoteStats(votes);
+
   return (
     <section className={styles.wrapper}>
       <Box>
@@ -51,9 +70,9 @@ const VotingQueue = (props) => {
         </span>
         <header className={styles.header}>
           <span className={styles.heading}>{t('Voting Queue')}</span>
-          <span className={styles.voteStats}>added</span>
-          <span className={styles.voteStats}>edited</span>
-          <span className={styles.voteStats}>removed</span>
+          <span className={styles.voteStats}>{`${added} ${t('added')}`}</span>
+          <span className={styles.voteStats}>{`${edited} ${t('edited')}`}</span>
+          <span className={styles.voteStats}>{`${removed} ${t('removed')}`}</span>
         </header>
         <BoxContent className={styles.contentContainer}>
           <div className={styles.contentHeader}>
