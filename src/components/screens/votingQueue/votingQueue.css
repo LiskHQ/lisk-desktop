@@ -13,12 +13,12 @@
     padding: 0;
     margin: 20px;
     border-radius: 0;
-    border-bottom: 1px solid #e1e3eB;
+    border-bottom: 1px solid #e1e3eb;
   }
 
   & .header {
     padding: 0 16px;
-    
+
     & .heading {
       width: 45%;
     }
@@ -26,8 +26,8 @@
     & .voteStats {
       width: 18%;
       text-align: center;
-      border-right: 1px solid #e1e3eB;
-  
+      border-right: 1px solid #e1e3eb;
+
       &:last-child {
         border: 0;
       }

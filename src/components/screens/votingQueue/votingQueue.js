@@ -8,7 +8,6 @@ import TransactionPriority from '../../shared/transactionPriority';
 
 import styles from './votingQueue.css';
 import { tokenMap } from '../../../constants/tokens';
-// import transactionTypes from '../../../constants/transactionTypes';
 import useTransactionFeeCalculation from '../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../toolbox/buttons';
@@ -16,6 +15,10 @@ import { PrimaryButton } from '../../toolbox/buttons';
 const dummyVotes = Array.from(Array(20).keys()).map(i => ({
   address: `123${i}L`, oldAmount: i, newAmount: 1000 + i, username: `haha-${i}`,
 }));
+
+dummyVotes.push({
+  address: '123100L', oldAmount: 100, newAmount: 0, username: 'haha',
+});
 
 const getVoteStats = (votes) => {
   const count = { added: 0, edited: 0, removed: 0 };
@@ -62,6 +65,8 @@ const VotingQueue = (props) => {
 
   const { added, edited, removed } = getVoteStats(votes);
 
+  const isCTADisAbled = false;
+
   return (
     <section className={styles.wrapper}>
       <Box>
@@ -106,9 +111,8 @@ const VotingQueue = (props) => {
           selectedPriority={selectedPriority.selectedIndex}
           setSelectedPriority={selectTransactionPriority}
         />
-
         <BoxFooter>
-          <PrimaryButton size="l" disabled>
+          <PrimaryButton size="l" disabled={isCTADisAbled} onClick={console.log}>
             {t('Continue')}
           </PrimaryButton>
 
