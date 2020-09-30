@@ -1,7 +1,6 @@
 import React from 'react';
 import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
-import BoxContent from '../../toolbox/box/content';
 import Icon from '../../toolbox/icon';
 
 import styles from './votingQueue.css';
@@ -20,8 +19,10 @@ const VoteListItem = ({
     </div>
     <span className={`${styles.oldAmountColumn}`}>{`${oldAmount} LSK`}</span>
     <span className={`${styles.newAmountColumn}`}>{`${newAmount} LSK`}</span>
-
-
+    <div className={styles.editIconsContainer}>
+      <Icon name="edit" className={styles.editIcon} />
+      <Icon name="deleteIcon" className={styles.editIcon} />
+    </div>
   </Box>
 );
 

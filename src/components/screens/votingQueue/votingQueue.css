@@ -94,6 +94,16 @@
   &:last-child {
     margin-bottom: 0;
   }
+
+  & img.editIcon {
+    display: none;
+  }
+
+  &:hover {
+    & img.editIcon {
+      display: block;
+    }
+  }
 }
 
 
@@ -103,4 +113,10 @@
 
 .txPriority {
   margin: 10px 20px;
+}
+
+.editIconsContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 50px;
 }
