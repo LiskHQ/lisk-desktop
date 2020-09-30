@@ -60,9 +60,10 @@ const LockedBalance = ({
 
   const onClickUnlock = () => {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
+    const selectedFee = customFee ? customFee.value : fee.value;
     unlockBalanceSubmitted({
       nonce: account.nonce,
-      fee: `${toRawLsk(parseFloat(fee.value))}`,
+      fee: `${toRawLsk(parseFloat(selectedFee))}`,
       passphrase: account.passphrase,
       unlockingObjects: getAvailableUnlockingTransactions(account, currentBlock),
     });
