@@ -1,8 +1,6 @@
 .wrapper {
   width: 45%;
-  /* max-width: 638px; */
   min-width: 638px;
-  /* height: 423px; */
   background: var(--color-white);
   border-radius: var(--border-radius-box);
   position: absolute;
@@ -35,15 +33,10 @@
       }
     }
   }
-
 }
 
 .contentHeader {
   display: flex;
-
-  
-
-  
 }
 
 .infoColumn {
@@ -67,10 +60,6 @@
   flex-direction: column;
   justify-content: space-between;
   margin-left: 10px;
-}
-
-.delagateUsername {
-  /* margin-bottom: 8px; */
 }
 
 .editColumn {
@@ -102,10 +91,10 @@
   &:hover {
     & img.editIcon {
       display: block;
+      cursor: pointer;
     }
   }
 }
-
 
 .toggleIcon {
   padding: 14px 0 0 12px;

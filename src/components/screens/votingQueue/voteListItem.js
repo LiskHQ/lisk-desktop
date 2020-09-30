@@ -7,7 +7,7 @@ import styles from './votingQueue.css';
 
 
 const VoteListItem = ({
-  t, address, username, oldAmount, newAmount,
+  address, username, oldAmount, newAmount,
 }) => (
   <Box className={styles.voteItemContainer}>
     <div className={`${styles.infoColumn} ${styles.delegateInfoContainer}`}>
@@ -20,8 +20,12 @@ const VoteListItem = ({
     <span className={`${styles.oldAmountColumn}`}>{`${oldAmount} LSK`}</span>
     <span className={`${styles.newAmountColumn}`}>{`${newAmount} LSK`}</span>
     <div className={styles.editIconsContainer}>
-      <Icon name="edit" className={styles.editIcon} />
-      <Icon name="deleteIcon" className={styles.editIcon} />
+      <span onClick={console.log}>
+        <Icon name="edit" className={styles.editIcon} />
+      </span>
+      <span onClick={console.log}>
+        <Icon name="deleteIcon" className={styles.editIcon} />
+      </span>
     </div>
   </Box>
 );
