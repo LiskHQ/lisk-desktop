@@ -211,7 +211,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
  * Makes Api call to unlock Balance that will broadcast
  */
 export const unlockBalanceSubmitted = data =>
-  async (dispatch, getState) => { // eslint-disable-line max-statements
+  async (dispatch, getState) => {
     const { network } = getState();
     const [error, tx] = await to(create(
       { ...data, network },

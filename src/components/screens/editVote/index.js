@@ -29,6 +29,7 @@ const getTitles = t => ({
   },
 });
 
+// eslint-disable-next-line max-statements
 const AddVote = ({
   history, t,
 }) => {

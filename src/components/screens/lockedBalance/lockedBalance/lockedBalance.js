@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
@@ -15,6 +16,16 @@ import transactionTypes from '../../../../constants/transactionTypes';
 import { calculateLockedBalance, calculateAvailableAndUnlockingBalance, getAvailableUnlockingTransactions } from '../../../../utils/account';
 
 const txType = transactionTypes().unlockToken.key;
+
+const calculatePendingTime = (currentBlockHeight, { unlocking, address }) => {
+  const awaitingBlocks = unlocking.map(({ unvoteHeight, delegateAddress }) => {
+    const delayedAvailability = address === delegateAddress ? 10 : 5;
+    return delayedAvailability - (currentBlockHeight - unvoteHeight);
+  });
+  const highestAwaitingBlocksNumber = Math.max(...awaitingBlocks);
+  const secondsToUnlockAllBalance = highestAwaitingBlocksNumber * 10;
+  return moment().to(moment().second(secondsToUnlockAllBalance));
+};
 
 const LockedBalance = ({
   t, nextStep, token, currentBlock,
@@ -78,7 +89,10 @@ const LockedBalance = ({
             </p>
             <p>
               <Icon name="loading" />
-              {t('will be available to unlock in 5 mins')}
+              {t('will be available to unlock in')}
+              {(currentBlock && unlockingBalance)
+                && calculatePendingTime(currentBlock.height, account)
+              }
             </p>
             <p>
               <Icon name="unlock" />

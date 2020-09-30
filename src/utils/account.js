@@ -69,9 +69,9 @@ export const getAvailableUnlockingTransactions = ({ unlocking, address }, curren
 export const calculateAvailableAndUnlockingBalance = ({ unlocking, address }, currentBlock) =>
   unlocking.reduce((acc, vote) => {
     if (isBlockHeightReached(vote, currentBlock, address)) {
-      acc.availableBalance += vote.amount;
+      acc.availableBalance += parseInt(vote.amount, 10);
     } else {
-      acc.unlockingBalance += vote.amount;
+      acc.unlockingBalance += parseInt(vote.amount, 10);
     }
     return acc;
   }, { availableBalance: 0, unlockingBalance: 0 });
