@@ -26,6 +26,7 @@ import LockedBalance from '../components/screens/lockedBalance';
 import SearchBar from '../components/shared/searchBar';
 import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
 import EditVote from '../components/screens/editVote';
+import VotingQueue from '../components/screens/votingQueue';
 
 export default {
   wallet: {
@@ -196,5 +197,10 @@ export const modals = {
     component: EditVote,
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
+  },
+  votingQueue: {
+    component: VotingQueue,
+    isPrivate: true,
+    forbiddenTokens: [],
   },
 };

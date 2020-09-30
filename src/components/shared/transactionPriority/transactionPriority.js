@@ -55,6 +55,7 @@ const TransactionPriority = ({
   customFee,
   setCustomFee,
   txType,
+  className,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState(undefined);
@@ -112,7 +113,7 @@ const TransactionPriority = ({
   [priorityOptions, token]);
 
   return (
-    <div className={`${styles.wrapper} ${styles.fieldGroup} transaction-priority`}>
+    <div className={`${styles.wrapper} ${styles.fieldGroup} ${className} transaction-priority`}>
       <div className={`${styles.col}`}>
         <span className={`${styles.fieldLabel}`}>
           {t('Priority')}
@@ -202,6 +203,7 @@ TransactionPriority.propTypes = {
   customFee: PropTypes.number,
   minFee: PropTypes.number,
   txType: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default TransactionPriority;
