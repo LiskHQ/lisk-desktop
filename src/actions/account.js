@@ -13,7 +13,6 @@ import { tokenMap } from '../constants/tokens';
 import { txAdapter } from '../utils/api/lsk/adapters';
 import { create } from '../utils/api/lsk/transactions';
 import transactionTypes from '../constants/transactionTypes';
-import { signVoteTransaction } from '../utils/hwManager';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -209,18 +208,11 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
 };
 
 /**
- * TODO - WIP
  * Makes Api call to unlock Balance that will broadcast
  */
 export const unlockBalanceSubmitted = data =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
-    const { network, account } = getState();
-    /* const [error, tx] = account.loginType === loginType.normal
-      ? await to(create(
-        { ...data, network },
-        transactionTypes().unlockToken.key,
-      ))
-      : await to(signUnlockTransaction(account, data)); */
+    const { network } = getState();
     const [error, tx] = await to(create(
       { ...data, network },
       transactionTypes().unlockToken.key,
