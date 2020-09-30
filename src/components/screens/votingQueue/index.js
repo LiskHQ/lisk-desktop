@@ -1,13 +1,30 @@
-/* istanbul ignore file */
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
-import { getActiveTokenAccount } from '../../../utils/account';
-import VotingQueue from './votingQueue';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import MultiStep from '../../shared/multiStep';
+import Editor from './editor';
+import Summary from './summary';
+import Result from './result';
+import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
-const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
-});
+import styles from './styles.css';
 
-export default connect(
-  mapStateToProps,
-)(withTranslation()(VotingQueue));
+const VotingQueue = ({ history }) => {
+  // istanbul ignore next
+  const closeModal = () => {
+    removeSearchParamsFromUrl(history, ['modal'], true);
+  };
+
+  return (
+    <MultiStep
+      key="voting-queue"
+      finalCallback={closeModal}
+      className={styles.modal}
+    >
+      <Editor />
+      <Summary />
+      <Result />
+    </MultiStep>
+  );
+};
+
+export default withRouter(VotingQueue);

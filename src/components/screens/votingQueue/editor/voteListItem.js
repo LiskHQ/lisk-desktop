@@ -1,9 +1,9 @@
 import React from 'react';
-import AccountVisual from '../../toolbox/accountVisual';
-import Box from '../../toolbox/box';
-import Icon from '../../toolbox/icon';
+import AccountVisual from '../../../toolbox/accountVisual';
+import Box from '../../../toolbox/box';
+import Icon from '../../../toolbox/icon';
 
-import styles from './votingQueue.css';
+import styles from './editor.css';
 
 
 const VoteListItem = ({

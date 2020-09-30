@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import Box from '../../toolbox/box';
-import BoxContent from '../../toolbox/box/content';
-import BoxFooter from '../../toolbox/box/footer';
-import Icon from '../../toolbox/icon';
+import Box from '../../../toolbox/box';
+import BoxContent from '../../../toolbox/box/content';
+import BoxFooter from '../../../toolbox/box/footer';
+import Icon from '../../../toolbox/icon';
 import VoteListItem from './voteListItem';
-import TransactionPriority from '../../shared/transactionPriority';
+import TransactionPriority from '../../../shared/transactionPriority';
 
-import styles from './votingQueue.css';
-import { tokenMap } from '../../../constants/tokens';
-import useTransactionFeeCalculation from '../send/form/useTransactionFeeCalculation';
-import useTransactionPriority from '../send/form/useTransactionPriority';
-import { PrimaryButton } from '../../toolbox/buttons';
+import styles from './editor.css';
+import { tokenMap } from '../../../../constants/tokens';
+import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
+import useTransactionPriority from '../../send/form/useTransactionPriority';
+import { PrimaryButton } from '../../../toolbox/buttons';
 
 const dummyVotes = Array.from(Array(20).keys()).map(i => ({
   address: `123${i}L`, oldAmount: i, newAmount: 1000 + i, username: `haha-${i}`,
@@ -40,7 +40,7 @@ const getVoteStats = (votes) => {
 const token = tokenMap.LSK.key;
 const txType = 'vote';
 
-const VotingQueue = (props) => {
+const Editor = (props) => {
   const {
     t = s => s, votes = dummyVotes, account,
   } = props;
@@ -112,7 +112,7 @@ const VotingQueue = (props) => {
           setSelectedPriority={selectTransactionPriority}
         />
         <BoxFooter>
-          <PrimaryButton size="l" disabled={isCTADisAbled} onClick={console.log}>
+          <PrimaryButton size="l" disabled={isCTADisAbled} onClick={() => props.nextStep()}>
             {t('Continue')}
           </PrimaryButton>
 
@@ -122,4 +122,4 @@ const VotingQueue = (props) => {
   );
 };
 
-export default VotingQueue;
+export default Editor;
