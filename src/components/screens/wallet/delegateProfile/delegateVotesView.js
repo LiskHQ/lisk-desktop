@@ -1,25 +1,13 @@
 import React, { useState } from 'react';
 
-import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxHeader from '../../../toolbox/box/header';
 import { Input } from '../../../toolbox/inputs';
-import regex from '../../../../utils/regex';
-
-import EmptyState from './emptyState';
+import Table from '../../../toolbox/table';
+import VoterRow from './voterRow';
+import tableHeader from './votersTableHeader';
 import styles from './delegateProfile.css';
-
-const Item = props => (
-  <div className={styles.voteItem} key={props.index}>
-    <AccountVisual
-      className={styles.accountVisual}
-      address={props.address}
-      size={40}
-    />
-    <span className={styles.address}>{props.address}</span>
-  </div>
-);
 
 const DelegateVotesView = ({
   voters, t,
@@ -30,23 +18,12 @@ const DelegateVotesView = ({
     setSearchedAddress(e.target.value);
   };
 
-  const votersToDisplay = [];
-
-  if (searchedAddress) {
-    if (regex.address.test(searchedAddress)) {
-      const filteredVoters = voters.filter(address => (address === searchedAddress));
-      votersToDisplay.push(...filteredVoters);
-    }
-  } else {
-    votersToDisplay.push(...voters);
-  }
-
   return (
     <Box>
       <BoxHeader>
         <h1>
-          <span>{t('Placeholder Voters')}</span>
-          {votersToDisplay.length > 0 && <span className={styles.totalVotes}>{` (${voters.length})`}</span>}
+          <span>{t('Voters')}</span>
+          <span className={styles.totalVotes}>{`(${voters.meta ? voters.meta.count : '...'})`}</span>
         </h1>
         {voters.length > 0 && (
           <span>
@@ -60,15 +37,21 @@ const DelegateVotesView = ({
           </span>
         )}
       </BoxHeader>
-      {votersToDisplay.length > 0
-        ? (
-          <BoxContent className={`${styles.votesContainer} votes-container`}>
-            {votersToDisplay.map((address, index) => (
-              <Item key={index} address={address} />
-            ))}
-          </BoxContent>
-        )
-        : <EmptyState message={t('No voters found.')} />}
+      <BoxContent className={`${styles.votesContainer} votes-container`}>
+        <Table
+          data={voters.data}
+          canLoadMore={voters.meta && voters.data.length < voters.meta.count}
+          isLoading={voters.isLoading}
+          iterationKey="address"
+          emptyState={{ message: t('This account doesn’t have any voters.') }}
+          row={VoterRow}
+          additionalRowProps={{
+            t,
+          }}
+          loadData={voters.loadData}
+          header={tableHeader(t)}
+        />
+      </BoxContent>
     </Box>
   );
 };

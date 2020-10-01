@@ -16,12 +16,20 @@
 
 .statsContainer {
   & .votesContainer {
-    padding: 20px 15px;
     display: grid;
     grid-template-columns: repeat(auto-fill, 25%);
     box-sizing: border-box;
     justify-content: center;
     grid-gap: 30px 0px;
+
+    & > header {
+      display: none;
+    }
+
+    & button {
+      grid-column: 1/5;
+      margin-top: -15px;
+    }
   }
 
   @media (--medium-viewport) {
@@ -180,4 +188,5 @@
 
 .totalVotes {
   color: var(--color-slate-gray);
+  padding-left: 5px;
 }
