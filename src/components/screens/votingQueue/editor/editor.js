@@ -12,43 +12,71 @@ import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalcu
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../../toolbox/buttons';
 
-const dummyVotes = Array.from(Array(20).keys()).map(i => ({
-  address: `123${i}L`, oldAmount: i, newAmount: 1000 + i, username: `haha-${i}`,
-}));
+/**
+ * Converts the votes object stored in Redux store
+ * which looks like { delegateAddress: { confirmed, unconfirmed } }
+ * into an array of objects that Lisk Element expects, looking like
+ * [{ delegatesAddress, amount }]
+ *
+ * @param {Object} votes - votes object retrieved from the Redux store
+ * @returns {Array} Array of votes as Lisk Element expects
+ */
+const normalizeVotesForTx = votes =>
+  Object.keys(votes).map(delegateAddress => ({
+    delegateAddress,
+    amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed),
+  }));
 
-dummyVotes.push({
-  address: '123100L', oldAmount: 100, newAmount: 0, username: 'haha',
-});
+const validateVotes = (votes, balance, fee, t) => {
+  const messages = [];
+  if (Object.keys(votes) > 10) messages.push(t('You can\'t vote for more than 10 delegates.'));
+  const addedVoteAmount = Object.values(votes)
+    .filter(vote => vote.unconfirmed > vote.confirmed)
+    .reduce((sum, vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
+  if ((addedVoteAmount + fee) > balance) messages.push(t('You don\'t have enough LSK in your account.'));
 
-const getVoteStats = (votes) => {
-  const count = { added: 0, edited: 0, removed: 0 };
-  votes.forEach(({ oldAmount, newAmount }) => {
+  return { messages, error: !!messages.length };
+};
+
+/**
+ * Determines the number of votes that have been
+ * added, removed or edited.
+ *
+ * @param {Object} votes - votes object retrieved from the Redux store
+ * @returns {Object} - stats object
+ */
+const getVoteStats = votes =>
+  Object.values(votes).reduce((stats, { oldAmount, newAmount }) => {
     if (!oldAmount && newAmount) {
       // new vote
-      count.added++;
+      stats.added++;
     } else if (oldAmount && !newAmount) {
       // removed vote
-      count.removed++;
+      stats.removed++;
     } else {
       // edited vote
-      count.edited++;
+      stats.edited++;
     }
-  });
-  return count;
-};
+    return stats;
+  }, { added: 0, edited: 0, removed: 0 });
 
 const token = tokenMap.LSK.key;
 const txType = 'vote';
 
-const Editor = (props) => {
-  const {
-    t = s => s, votes = dummyVotes, account,
-  } = props;
-
+const Editor = ({
+  t, votes, account, nextStep,
+}) => {
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority, priorityOptions,
   ] = useTransactionPriority(token);
+
+  const changedVotes = Object.keys(votes)
+    .filter(address => votes[address].unconfirmed !== votes[address].confirmed)
+    .reduce((filteredVotes, address) => {
+      filteredVotes[address] = votes[address];
+      return filteredVotes;
+    }, {});
 
   const { fee, minFee } = useTransactionFeeCalculation({
     selectedPriority,
@@ -59,13 +87,12 @@ const Editor = (props) => {
       txType,
       nonce: account.nonce,
       senderPublicKey: account.publicKey,
-      votes,
+      votes: normalizeVotesForTx(votes),
     },
   });
 
   const { added, edited, removed } = getVoteStats(votes);
-
-  const isCTADisAbled = false;
+  const feedback = validateVotes(votes, account.balance, fee.value, t);
 
   return (
     <section className={styles.wrapper}>
@@ -87,14 +114,14 @@ const Editor = (props) => {
             <span className={styles.editColumn} />
           </div>
           <div className={styles.contentScrollable}>
-            {votes.map((vote, index) => (
+            {Object.keys(changedVotes).map((address, index) => (
               <VoteListItem
                 key={index}
                 t={t}
-                address={vote.address}
-                username={vote.username}
-                oldAmount={vote.oldAmount}
-                newAmount={vote.newAmount}
+                address={address}
+                username={changedVotes[address].username}
+                confirmed={changedVotes[address].confirmed}
+                unconfirmed={changedVotes[address].unconfirmed}
               />
             ))}
           </div>
@@ -111,8 +138,11 @@ const Editor = (props) => {
           selectedPriority={selectedPriority.selectedIndex}
           setSelectedPriority={selectTransactionPriority}
         />
+        {
+          feedback.error && <span>{feedback.messages[0]}</span>
+        }
         <BoxFooter>
-          <PrimaryButton size="l" disabled={isCTADisAbled} onClick={() => props.nextStep()}>
+          <PrimaryButton size="l" disabled={feedback.error} onClick={nextStep}>
             {t('Continue')}
           </PrimaryButton>
 
