@@ -27,6 +27,16 @@ const normalizeVotesForTx = votes =>
     amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed),
   }));
 
+/**
+ * Validates given votes against the following criteria:
+ * - Number of votes must not exceed 10
+ * - Added vote amounts + fee must not exceed account balance
+ * @param {Object} votes - Votes object from Redux store
+ * @param {Number} balance - Account balance in Beddows
+ * @param {Number} fee - Tx fee in Beddows
+ * @param {Function} t - i18n translation function
+ * @returns {Object} The feedback object including error status and messages
+ */
 const validateVotes = (votes, balance, fee, t) => {
   const messages = [];
   if (Object.keys(votes) > 10) messages.push(t('You can\'t vote for more than 10 delegates.'));
