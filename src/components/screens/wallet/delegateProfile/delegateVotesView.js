@@ -18,6 +18,10 @@ const DelegateVotesView = ({
     setSearchedAddress(e.target.value);
   };
 
+  const handleLoadMore = () => {
+    voters.loadData({ offset: voters.data.length });
+  };
+
   return (
     <Box>
       <BoxHeader>
@@ -48,7 +52,7 @@ const DelegateVotesView = ({
           additionalRowProps={{
             t,
           }}
-          loadData={voters.loadData}
+          loadData={handleLoadMore}
           header={tableHeader(t)}
         />
       </BoxContent>
