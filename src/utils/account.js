@@ -42,17 +42,47 @@ export const truncateAddress = address =>
 export const calculateLockedBalance = ({ votes }) =>
   votes.reduce((acc, vote) => acc + vote.amount, 0);
 
+const isVotedDelegatePunished = ({ pomHeights }, currentHeight, punishmentTime) => {
+  const highestPomHeight = Math.max(...pomHeights);
+  return (currentHeight - highestPomHeight) < punishmentTime;
+};
+
+export const getDelayedAvailability = (currentBlockHeight, isSelfVote, delegate) => {
+  const punishmentTime = isSelfVote
+    ? unlockTxDelayAvailability.selfUnvotePunished : unlockTxDelayAvailability.unvotePunished;
+  const isPunished = isVotedDelegatePunished(delegate, currentBlockHeight, punishmentTime);
+
+  const selfVoteDelayedAvailability = isPunished
+    ? unlockTxDelayAvailability.selfUnvotePunished : unlockTxDelayAvailability.selfUnvote;
+  const unvoteDelayedAvailability = isPunished
+    ? unlockTxDelayAvailability.unvotePunished : unlockTxDelayAvailability.unvote;
+  const delayedAvailability = isSelfVote
+    ? selfVoteDelayedAvailability : unvoteDelayedAvailability;
+
+  return delayedAvailability;
+}
+
 const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlock, address) => {
   if (!currentBlock) return false;
   const currentBlockHeight = currentBlock.height;
-  const delayedAvailability = address === delegateAddress
-    ? unlockTxDelayAvailability.selfUnvote : unlockTxDelayAvailability.unvote;
+  const isSelfVote = address === delegateAddress;
+  // TODO define delegate
+  const delayedAvailability = getDelayedAvailability(currentBlockHeight, isSelfVote, delegate);
   return currentBlockHeight - unvoteHeight > delayedAvailability;
 };
 
 export const getAvailableUnlockingTransactions = ({ unlocking, address }, currentBlock) =>
   unlocking.filter(vote => isBlockHeightReached(vote, currentBlock, address));
 
+export const calculateAvailableBalance = ({ unlocking, address }, currentBlock) =>
+  unlocking.reduce((acc, vote) => {
+    if (isBlockHeightReached(vote, currentBlock, address)) {
+      acc.availableBalance += parseInt(vote.amount, 10);
+    }
+    return acc;
+  }, 0);
+
+/*
 export const calculateAvailableAndUnlockingBalance = ({ unlocking, address }, currentBlock) =>
   unlocking.reduce((acc, vote) => {
     if (isBlockHeightReached(vote, currentBlock, address)) {
@@ -62,3 +92,4 @@ export const calculateAvailableAndUnlockingBalance = ({ unlocking, address }, cu
     }
     return acc;
   }, { availableBalance: 0, unlockingBalance: 0 });
+  */

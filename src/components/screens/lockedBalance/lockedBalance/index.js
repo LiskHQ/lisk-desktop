@@ -1,20 +1,74 @@
-import { withTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
-import { getActiveTokenAccount } from '../../../../utils/account';
-import { unlockBalanceSubmitted } from '../../../../actions/account';
-import LockedBalance from './lockedBalance';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import TransactionPriority from '../../../shared/transactionPriority';
+import { toRawLsk } from '../../../../utils/lsk';
+import useTransactionPriority from '../../send/form/useTransactionPriority';
+import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
+import transactionTypes from '../../../../constants/transactionTypes';
+import {
+  calculateLockedBalance,
+  calculateAvailableBalance,
+  getActiveTokenAccount,
+} from '../../../../utils/account';
+import Form from './form';
+import BalanceTable from './balanceTable';
 
-const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
-  token: state.settings.token.active,
-  currentBlock: state.blocks.latestBlocks[0] || { height: 0 },
-});
+const txType = transactionTypes().unlockToken.key;
 
-const mapDispatchToProps = {
-  unlockBalanceSubmitted,
+const LockedBalance = (props) => {
+  const account = useSelector(state => getActiveTokenAccount(state));
+  const token = useSelector(state => state.settings.token.active);
+  const currentBlock = useSelector(state => state.blocks.latestBlocks[0] || { height: 0 });
+  const lockedBalance = calculateLockedBalance(account);
+  const availableBalance = calculateAvailableBalance(account, currentBlock);
+  const [customFee, setCustomFee] = useState();
+  const [
+    selectedPriority, selectTransactionPriority, priorityOptions,
+  ] = useTransactionPriority(token);
+  const { fee, minFee } = useTransactionFeeCalculation({
+    selectedPriority,
+    token,
+    account,
+    priorityOptions,
+    // TODO define this txData
+    txData: {
+      amount: toRawLsk(availableBalance),
+      txType,
+      nonce: account.nonce,
+      senderPublicKey: account.publicKey,
+    },
+  });
+
+  return (
+    <Form
+      data={{
+        account,
+        customFee,
+        fee,
+        currentBlock,
+        availableBalance,
+      }}
+      {...props}
+    >
+      <BalanceTable
+        lockedBalance={lockedBalance}
+        availableBalance={availableBalance}
+        currentBlock={currentBlock}
+        account={account}
+      />
+      <TransactionPriority
+        token={token}
+        fee={fee}
+        minFee={minFee.value}
+        customFee={customFee ? customFee.value : undefined}
+        txType={txType}
+        setCustomFee={setCustomFee}
+        priorityOptions={priorityOptions}
+        selectedPriority={selectedPriority.selectedIndex}
+        setSelectedPriority={selectTransactionPriority}
+      />
+    </Form>
+  );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(LockedBalance));
+export default LockedBalance;

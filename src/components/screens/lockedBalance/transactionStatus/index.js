@@ -1,20 +1,76 @@
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import TransactionStatus from './transactionStatus';
 import { transactionBroadcasted } from '../../../../actions/transactions';
+import { PrimaryButton } from '../../../toolbox/buttons';
+import TransactionResult from '../../../shared/transactionResult';
+import { removeSearchParamsFromUrl } from '../../../../utils/searchParams';
+import styles from './status.css';
+import displayTemplate from './displayTemplate';
 
-const mapStateToProps = state => ({
-  transactions: state.transactions,
-});
+const Status = ({
+  t, history, transactionInfo,
+}) => {
+  const transactions = useSelector(state => state.transactions);
+  const dispatch = useDispatch();
+  const [status, setStatus] = useState('pending');
+  const success = status !== 'fail';
 
-const mapDispatchToProps = {
-  transactionBroadcasted,
+  const sendTransaction = () => {
+    dispatch(transactionBroadcasted(transactionInfo));
+  };
+
+  const template = displayTemplate(
+    t,
+    status,
+    () => {
+      removeSearchParamsFromUrl(history, ['modal'], true);
+    },
+    sendTransaction,
+  );
+
+  useEffect(() => {
+    const confirmed = transactions.confirmed
+      .filter(tx => tx.id === transactionInfo.id);
+    const error = transactions.broadcastedTransactionsError
+      .filter(tx => tx.transaction.id === transactionInfo.id);
+
+    if (confirmed.length) setStatus('ok');
+    if (error.length) setStatus('fail');
+  }, [transactions]);
+
+  useEffect(() => {
+    sendTransaction();
+  }, [transactionInfo]);
+
+  return (
+    <div className={`${styles.wrapper} transaction-status`}>
+      <TransactionResult
+        t={t}
+        illustration={success ? 'transactionSuccess' : 'transactionError'}
+        success={success}
+        title={template.title}
+        message={template.message}
+        className={styles.content}
+        primaryButon={template.button}
+      >
+        {status !== 'pending' && (
+          <PrimaryButton
+            onClick={template.button.onClick}
+            className={template.button.className}
+          >
+            {template.button.title}
+          </PrimaryButton>
+        )
+        }
+      </TransactionResult>
+    </div>
+  );
 };
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
   withRouter,
   withTranslation(),
-)(TransactionStatus);
+)(Status);
