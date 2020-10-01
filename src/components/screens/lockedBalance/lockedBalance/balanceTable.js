@@ -15,6 +15,13 @@ const getPendingTime = ({ unvoteHeight, delegateAddress }, currentBlockHeight, {
   return moment().to(momentSeconds, true);
 };
 
+const mockUnlocking = [
+  { amount: 3000000, unvoteHeight: 30000, delegateAddress: '1L' },
+  { amount: 30000, unvoteHeight: 2000, delegateAddress: '2L' },
+  { amount: 100000, unvoteHeight: 35000, delegateAddress: '3L' },
+  { amount: 5000000, unvoteHeight: 100, delegateAddress: '5L' },
+];
+
 const BalanceTable = ({
   t,
   lockedBalance,
@@ -22,41 +29,39 @@ const BalanceTable = ({
   currentBlock,
   account,
 }) => (
-  <div className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-    <div>
+  <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
+    <li>
       <p className={styles.columnTitle}>{t('Amount')}</p>
       <p className={styles.columnTitle}>{t('Status')}</p>
-    </div>
-    <div>
+    </li>
+    <li>
       <p>{`${fromRawLsk(lockedBalance)} LSK`}</p>
       <p>
         <Icon name="lock" />
         {t('locked')}
       </p>
-    </div>
-    <div>
-      {account.unlocking.length > 0
-        && (
-          account.unlocking.map((vote, i) => (
-            <div key={`${i}-unlocking-balance-list`}>
-              <p>{`${fromRawLsk(vote.amount)} LSK`}</p>
-              <p>
-                <Icon name="loading" />
-                {`${t('will be available to unlock in')} ${getPendingTime(vote, currentBlock.height, account)}`}
-              </p>
-            </div>
-          ))
-        )
-      }
-    </div>
-    <div>
+    </li>
+    {mockUnlocking.length > 0
+      && (
+        mockUnlocking.map((vote, i) => (
+          <li key={`${i}-unlocking-balance-list`}>
+            <p>{`${fromRawLsk(vote.amount)} LSK`}</p>
+            <p>
+              <Icon name="loading" />
+              {`${t('will be available to unlock in')} ${getPendingTime(vote, currentBlock.height, account)}`}
+            </p>
+          </li>
+        ))
+      )
+    }
+    <li>
       <p>{`${fromRawLsk(availableBalance)} LSK`}</p>
       <p>
         <Icon name="unlock" />
         {t('available to unlock')}
       </p>
-    </div>
-  </div>
+    </li>
+  </ul>
 );
 
 export default withTranslation()(BalanceTable);
