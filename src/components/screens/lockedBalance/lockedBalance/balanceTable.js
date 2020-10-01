@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import Icon from '../../../toolbox/icon';
 import { fromRawLsk } from '../../../../utils/lsk';
-import { getDelayedAvailability } from '../../../../utils/account';
+import { getDelayedAvailability, isBlockHeightReached } from '../../../../utils/account';
 import styles from './lockedBalance.css';
 
 const getPendingTime = ({ unvoteHeight, delegateAddress }, currentBlockHeight, { address }) => {
@@ -43,15 +43,20 @@ const BalanceTable = ({
     </li>
     {mockUnlocking.length > 0
       && (
-        mockUnlocking.map((vote, i) => (
-          <li key={`${i}-unlocking-balance-list`}>
-            <p>{`${fromRawLsk(vote.amount)} LSK`}</p>
-            <p>
-              <Icon name="loading" />
-              {`${t('will be available to unlock in')} ${getPendingTime(vote, currentBlock.height, account)}`}
-            </p>
-          </li>
-        ))
+        mockUnlocking
+          .sort((voteA, voteB) => voteB.unvoteHeight - voteA.unvoteHeight)
+          .map((vote, i) => {
+            if (isBlockHeightReached(vote, currentBlock, account.address)) return false;
+            return (
+              <li key={`${i}-unlocking-balance-list`}>
+                <p>{`${fromRawLsk(vote.amount)} LSK`}</p>
+                <p>
+                  <Icon name="loading" />
+                  {`${t('will be available to unlock in')} ${getPendingTime(vote, currentBlock.height, account)}`}
+                </p>
+              </li>
+            );
+          })
       )
     }
     <li>

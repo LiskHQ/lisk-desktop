@@ -46,7 +46,7 @@ export const calculateLockedBalance = ({ votes }) =>
 export const getDelayedAvailability = isSelfVote => (isSelfVote
   ? unlockTxDelayAvailability.selfUnvote : unlockTxDelayAvailability.unvote);
 
-const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlock, address) => {
+export const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlock, address) => {
   if (!currentBlock) return false;
   const currentBlockHeight = currentBlock.height;
   const isSelfVote = address === delegateAddress;
