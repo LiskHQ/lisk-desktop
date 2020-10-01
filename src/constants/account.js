@@ -3,8 +3,8 @@ const account = {
 };
 
 export const unlockTxDelayAvailability = {
-  unvote: 5, // 2000
-  selfUnvote: 10, // 260000
+  unvote: 2000,
+  selfUnvote: 260000,
   unvotePunished: 260000,
   selfUnvotePunished: 780000,
 };
