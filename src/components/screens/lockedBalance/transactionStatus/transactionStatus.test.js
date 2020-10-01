@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import TransactionStatus from './transactionStatus';
+import TransactionStatus from './index';
 
 describe('unlock transaction Status', () => {
   let wrapper;

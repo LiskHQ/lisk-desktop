@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import LockedBalance from './lockedBalance';
+import LockedBalance from './index';
 import accounts from '../../../../../test/constants/accounts';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
