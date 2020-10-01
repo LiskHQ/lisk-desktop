@@ -101,3 +101,15 @@
   justify-content: space-between;
   width: 50px;
 }
+
+.editAmountInput {
+  /* width: 72px; */
+}
+.editVoteForm {
+  display: flex;
+  
+  & .formButtons {
+    padding: 0 8px;
+    border: none;
+  }
+}

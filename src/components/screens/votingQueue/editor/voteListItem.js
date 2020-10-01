@@ -1,33 +1,91 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';
+import { SecondaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import Icon from '../../../toolbox/icon';
+import { Input } from '../../../toolbox/inputs';
 
 import styles from './editor.css';
 
+const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
 
 const VoteListItem = ({
-  address, username, oldAmount, newAmount,
-}) => (
-  <Box className={styles.voteItemContainer}>
-    <div className={`${styles.infoColumn} ${styles.delegateInfoContainer}`}>
-      <AccountVisual address={address} />
-      <div className={styles.delegateInfo}>
-        <span className={styles.delegateAddress}>{address}</span>
-        <span className={styles.delegateUsername}>{username}</span>
+  t = s => s, address, username, oldAmount, newAmount, setVoteAmount, deleteVote,
+}) => {
+  const [state, setState] = useState(ComponentState.notEditing);
+  const [inputValue, setInputValue] = useState();
+
+  const handleFormSubmission = (e) => {
+    e.preventDefault();
+    setVoteAmount(inputValue);
+    setState(ComponentState.notEditing);
+  };
+
+  const changeToEditingMode = () => {
+    setState(ComponentState.editing);
+  };
+
+  const changeToNotEditingMode = () => {
+    setState(ComponentState.notEditing);
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const inputError = false;
+
+  return (
+    <Box className={styles.voteItemContainer}>
+      <div className={`${styles.infoColumn} ${styles.delegateInfoContainer}`}>
+        <AccountVisual address={address} />
+        <div className={styles.delegateInfo}>
+          <span className={styles.delegateAddress}>{address}</span>
+          <span className={styles.delegateUsername}>{username}</span>
+        </div>
       </div>
-    </div>
-    <span className={`${styles.oldAmountColumn}`}>{`${oldAmount} LSK`}</span>
-    <span className={`${styles.newAmountColumn}`}>{`${newAmount} LSK`}</span>
-    <div className={styles.editIconsContainer}>
-      <span onClick={console.log}>
-        <Icon name="edit" className={styles.editIcon} />
-      </span>
-      <span onClick={console.log}>
-        <Icon name="deleteIcon" className={styles.editIcon} />
-      </span>
-    </div>
-  </Box>
-);
+      <span className={`${styles.oldAmountColumn}`}>{`${oldAmount} LSK`}</span>
+      {state === ComponentState.notEditing
+        ? (
+          <>
+            <span className={`${styles.newAmountColumn}`}>{`${newAmount} LSK`}</span>
+            <div className={styles.editIconsContainer}>
+              <span onClick={changeToEditingMode}>
+                <Icon name="edit" className={styles.editIcon} />
+              </span>
+              <span onClick={deleteVote}>
+                <Icon name="deleteIcon" className={styles.editIcon} />
+              </span>
+            </div>
+          </>
+        )
+        : (
+          <form className={styles.editVoteForm} onSubmit={handleFormSubmission}>
+            <span className={styles.newAmountColumn}>
+              <Input value={inputValue} onChange={handleInputChange} error={inputError} />
+            </span>
+            <>
+              <SecondaryButton
+                size="s"
+                className={styles.formButtons}
+                onClick={changeToNotEditingMode}
+              >
+                {t('Cancel')}
+              </SecondaryButton>
+              <TertiaryButton
+                size="s"
+                className={styles.formButtons}
+                onClick={handleFormSubmission}
+              >
+                {t('Save')}
+              </TertiaryButton>
+            </>
+          </form>
+        )
+      }
+
+    </Box>
+  );
+};
 
 export default VoteListItem;

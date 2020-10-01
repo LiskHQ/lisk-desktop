@@ -9,7 +9,6 @@ import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 import styles from './styles.css';
 
 const VotingQueue = ({ history }) => {
-  // istanbul ignore next
   const closeModal = () => {
     removeSearchParamsFromUrl(history, ['modal'], true);
   };
