@@ -11,11 +11,11 @@ import styles from './status.css';
 import displayTemplate from './displayTemplate';
 
 const Status = ({
-  t, history, transactionInfo,
+  t, history, transactionInfo, error,
 }) => {
   const transactions = useSelector(state => state.transactions);
   const dispatch = useDispatch();
-  const [status, setStatus] = useState('pending');
+  const [status, setStatus] = useState(!error ? 'pending' : 'fail');
   const success = status !== 'fail';
 
   const template = displayTemplate(
@@ -27,17 +27,19 @@ const Status = ({
   );
 
   useEffect(() => {
-    const confirmed = transactions.confirmed
-      .filter(tx => tx.id === transactionInfo.id);
-    const error = transactions.broadcastedTransactionsError
-      .filter(tx => tx.transaction.id === transactionInfo.id);
+    if (transactionInfo) {
+      const confirmed = transactions.confirmed
+        .filter(tx => tx.id === transactionInfo.id);
+      const broadcastError = transactions.broadcastedTransactionsbroadcastError
+        .filter(tx => tx.transaction.id === transactionInfo.id);
 
-    if (confirmed.length) setStatus('ok');
-    if (error.length) setStatus('fail');
+      if (confirmed.length) setStatus('ok');
+      if (broadcastError.length) setStatus('fail');
+    }
   }, [transactions]);
 
   useEffect(() => {
-    dispatch(transactionBroadcasted(transactionInfo));
+    if (transactionInfo) dispatch(transactionBroadcasted(transactionInfo));
   }, [transactionInfo]);
 
   return (
@@ -50,6 +52,7 @@ const Status = ({
         message={template.message}
         className={styles.content}
         primaryButon={template.button}
+        error={JSON.stringify(error)}
       >
         {template.button && (
           <PrimaryButton

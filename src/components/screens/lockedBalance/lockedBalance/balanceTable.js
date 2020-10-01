@@ -15,13 +15,6 @@ const getPendingTime = ({ unvoteHeight, delegateAddress }, currentBlockHeight, {
   return moment().to(momentSeconds, true);
 };
 
-const mockUnlocking = [
-  { amount: 3000000, unvoteHeight: 30000, delegateAddress: '1L' },
-  { amount: 30000, unvoteHeight: 2000, delegateAddress: '2L' },
-  { amount: 100000, unvoteHeight: 35000, delegateAddress: '3L' },
-  { amount: 5000000, unvoteHeight: 100, delegateAddress: '5L' },
-];
-
 const BalanceTable = ({
   t,
   lockedBalance,
@@ -41,9 +34,9 @@ const BalanceTable = ({
         {t('locked')}
       </p>
     </li>
-    {mockUnlocking.length > 0
+    {account.unlocking.length > 0
       && (
-        mockUnlocking
+        account.unlocking
           .sort((voteA, voteB) => voteB.unvoteHeight - voteA.unvoteHeight)
           .map((vote, i) => {
             if (isBlockHeightReached(vote, currentBlock, account.address)) return false;

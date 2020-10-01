@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
 import Box from '../../../toolbox/box';
@@ -12,6 +12,7 @@ import Piwik from '../../../../utils/piwik';
 import { getAvailableUnlockingTransactions } from '../../../../utils/account';
 import { create } from '../../../../utils/api/lsk/transactions';
 import transactionTypes from '../../../../constants/transactionTypes';
+import actionTypes from '../../../../constants/actions';
 import styles from './lockedBalance.css';
 
 const Form = ({
@@ -27,6 +28,7 @@ const Form = ({
     currentBlock,
     availableBalance,
   } = data;
+  const dispatch = useDispatch();
   const network = useSelector(state => state.network);
 
   const onClickUnlock = async () => {
@@ -45,7 +47,17 @@ const Form = ({
     );
 
     if (!error) {
+      dispatch({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
       nextStep({ transactionInfo: tx });
+    } else {
+      dispatch({
+        type: actionTypes.transactionCreatedError,
+        data: error,
+      });
+      nextStep({ error });
     }
   };
 
