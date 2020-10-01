@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '../../../utils/searchParams';
-import { voteEdited, votesSubmitted } from '../../../actions/voting';
-import { transactionBroadcasted } from '../../../actions/transactions';
 import Dialog from '../../toolbox/dialog/dialog';
 import Box from '../../toolbox/box';
 import BoxContent from '../../toolbox/box/content';
@@ -33,8 +31,6 @@ const getTitles = t => ({
 const AddVote = ({
   history, t,
 }) => {
-  const account = useSelector(state => state.account);
-  const { transactionsCreated } = useSelector(state => state.transactions);
   const dispatch = useDispatch();
   const host = useSelector(state => state.account.info.LSK.address);
   const address = selectSearchParamValue(history.location.search, 'address');
@@ -48,23 +44,7 @@ const AddVote = ({
       amount: toRawLsk(voteAmount.value),
     }]));
 
-    // removeSearchParamsFromUrl(history, ['modal']);
-    dispatch(votesSubmitted({
-      votes: [{
-        delegateAddress: address || host,
-        amount: `-${toRawLsk(voteAmount.value).toString()}`,
-      }],
-      fee: '100000000',
-      nonce: account.info.LSK.nonce,
-      senderPublicKey: account.info.LSK.publicKey,
-      passphrase: account.passphrase,
-    }));
-  };
-  useEffect(() => {
-    if (transactionsCreated.length) {
-      dispatch(transactionBroadcasted(transactionsCreated[0]));
-    }
-  }, [transactionsCreated.length]);
+  removeSearchParamsFromUrl(history, ['modal']);
 
   const titles = getTitles(t)[mode];
 
