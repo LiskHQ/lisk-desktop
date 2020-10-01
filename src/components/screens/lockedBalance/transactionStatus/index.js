@@ -20,7 +20,7 @@ const Status = ({
 
   const template = displayTemplate(
     t,
-    status,
+    success,
     () => {
       removeSearchParamsFromUrl(history, ['modal'], true);
     },
@@ -30,7 +30,7 @@ const Status = ({
     if (transactionInfo) {
       const confirmed = transactions.confirmed
         .filter(tx => tx.id === transactionInfo.id);
-      const broadcastError = transactions.broadcastedTransactionsbroadcastError
+      const broadcastError = transactions.broadcastedTransactionsError
         .filter(tx => tx.transaction.id === transactionInfo.id);
 
       if (confirmed.length) setStatus('ok');

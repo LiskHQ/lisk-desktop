@@ -10,5 +10,5 @@ export default (t, success, onSuccess) => (success
   }
   : {
     title: t('Transaction failed'),
-    message: t('Something went wrong with the registration. Please try again below!'),
+    message: t('Oops, looks like something went wrong. Please try again.'),
   });
