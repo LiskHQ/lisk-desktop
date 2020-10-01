@@ -7,7 +7,7 @@ import styles from './editor.css';
 
 
 const VoteListItem = ({
-  address, username, oldAmount, newAmount,
+  address, username, confirmed, unconfirmed,
 }) => (
   <Box className={styles.voteItemContainer}>
     <div className={`${styles.infoColumn} ${styles.delegateInfoContainer}`}>
@@ -17,8 +17,8 @@ const VoteListItem = ({
         <span className={styles.delegateUsername}>{username}</span>
       </div>
     </div>
-    <span className={`${styles.oldAmountColumn}`}>{`${oldAmount} LSK`}</span>
-    <span className={`${styles.newAmountColumn}`}>{`${newAmount} LSK`}</span>
+    <span className={`${styles.oldAmountColumn}`}>{`${confirmed} LSK`}</span>
+    <span className={`${styles.newAmountColumn}`}>{`${unconfirmed} LSK`}</span>
     <div className={styles.editIconsContainer}>
       <span onClick={console.log}>
         <Icon name="edit" className={styles.editIcon} />
