@@ -40,7 +40,8 @@
 }
 
 .details {
-  padding: 20px 20px 22px 20px !important;
+  flex-shrink: 0;
+  flex-grow: 1;
 
   & .itemContainer {
     border-bottom: 1px solid #e1e3eb;
