@@ -18,17 +18,12 @@ const Status = ({
   const [status, setStatus] = useState('pending');
   const success = status !== 'fail';
 
-  const sendTransaction = () => {
-    dispatch(transactionBroadcasted(transactionInfo));
-  };
-
   const template = displayTemplate(
     t,
     status,
     () => {
       removeSearchParamsFromUrl(history, ['modal'], true);
     },
-    sendTransaction,
   );
 
   useEffect(() => {
@@ -42,7 +37,7 @@ const Status = ({
   }, [transactions]);
 
   useEffect(() => {
-    sendTransaction();
+    dispatch(transactionBroadcasted(transactionInfo));
   }, [transactionInfo]);
 
   return (
@@ -56,7 +51,7 @@ const Status = ({
         className={styles.content}
         primaryButon={template.button}
       >
-        {status !== 'pending' && (
+        {template.button && (
           <PrimaryButton
             onClick={template.button.onClick}
             className={template.button.className}

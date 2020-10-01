@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
 import Box from '../../../toolbox/box';
@@ -11,7 +11,6 @@ import { toRawLsk, fromRawLsk } from '../../../../utils/lsk';
 import Piwik from '../../../../utils/piwik';
 import { getAvailableUnlockingTransactions } from '../../../../utils/account';
 import { create } from '../../../../utils/api/lsk/transactions';
-import actionTypes from '../../../../constants/actions';
 import transactionTypes from '../../../../constants/transactionTypes';
 import styles from './lockedBalance.css';
 
@@ -28,7 +27,7 @@ const Form = ({
     currentBlock,
     availableBalance,
   } = data;
-  const dispatch = useDispatch();
+  const network = useSelector(state => state.network);
 
   const onClickUnlock = async () => {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
@@ -38,27 +37,16 @@ const Form = ({
       fee: `${toRawLsk(parseFloat(selectedFee))}`,
       passphrase: account.passphrase,
       unlockingObjects: getAvailableUnlockingTransactions(account, currentBlock),
+      network,
     };
 
-    const network = useSelector(state => state.network);
-    const [error, tx] = await to(create(
-      { ...txData, network },
-      transactionTypes().unlockToken.key,
-    ));
+    const [error, tx] = await to(
+      create(txData, transactionTypes().unlockToken.key),
+    );
 
-    if (error) {
-      dispatch({
-        type: actionTypes.transactionCreatedError,
-        data: error,
-      });
+    if (!error) {
+      nextStep({ transactionInfo: tx });
     }
-
-    dispatch({
-      type: actionTypes.transactionCreatedSuccess,
-      data: tx,
-    });
-
-    nextStep({ transactionInfo: tx });
   };
 
   return (
