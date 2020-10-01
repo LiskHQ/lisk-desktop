@@ -40,34 +40,17 @@ export const truncateAddress = address =>
   address.replace(regex.lskAddressTrunk, '$1...$3');
 
 export const calculateLockedBalance = ({ votes }) =>
-  votes.reduce((acc, vote) => acc + vote.amount, 0);
+  votes.reduce((acc, vote) => acc + parseInt(vote.amount, 10), 0);
 
-const isVotedDelegatePunished = ({ pomHeights }, currentHeight, punishmentTime) => {
-  const highestPomHeight = Math.max(...pomHeights);
-  return (currentHeight - highestPomHeight) < punishmentTime;
-};
-
-export const getDelayedAvailability = (currentBlockHeight, isSelfVote, delegate) => {
-  const punishmentTime = isSelfVote
-    ? unlockTxDelayAvailability.selfUnvotePunished : unlockTxDelayAvailability.unvotePunished;
-  const isPunished = isVotedDelegatePunished(delegate, currentBlockHeight, punishmentTime);
-
-  const selfVoteDelayedAvailability = isPunished
-    ? unlockTxDelayAvailability.selfUnvotePunished : unlockTxDelayAvailability.selfUnvote;
-  const unvoteDelayedAvailability = isPunished
-    ? unlockTxDelayAvailability.unvotePunished : unlockTxDelayAvailability.unvote;
-  const delayedAvailability = isSelfVote
-    ? selfVoteDelayedAvailability : unvoteDelayedAvailability;
-
-  return delayedAvailability;
-}
+// TODO handle delegate punishment when Lisk Service is ready
+export const getDelayedAvailability = isSelfVote => (isSelfVote
+  ? unlockTxDelayAvailability.selfUnvote : unlockTxDelayAvailability.unvote);
 
 const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlock, address) => {
   if (!currentBlock) return false;
   const currentBlockHeight = currentBlock.height;
   const isSelfVote = address === delegateAddress;
-  // TODO define delegate
-  const delayedAvailability = getDelayedAvailability(currentBlockHeight, isSelfVote, delegate);
+  const delayedAvailability = getDelayedAvailability(isSelfVote);
   return currentBlockHeight - unvoteHeight > delayedAvailability;
 };
 

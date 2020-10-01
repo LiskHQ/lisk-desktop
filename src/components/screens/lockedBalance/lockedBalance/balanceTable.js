@@ -4,26 +4,11 @@ import moment from 'moment';
 import Icon from '../../../toolbox/icon';
 import { fromRawLsk } from '../../../../utils/lsk';
 import { getDelayedAvailability } from '../../../../utils/account';
-import { unlockTxDelayAvailability } from '../../../../constants/account';
 import styles from './lockedBalance.css';
-
-// TODO remove this function
-const calculatePendingTime = (currentBlockHeight, { unlocking, address }) => {
-  const awaitingBlocks = unlocking.map(({ unvoteHeight, delegateAddress }) => {
-    const delayedAvailability = address === delegateAddress
-      ? unlockTxDelayAvailability.selfUnvote : unlockTxDelayAvailability.unvote;
-    return delayedAvailability - (currentBlockHeight - unvoteHeight);
-  });
-  const highestAwaitingBlocksNumber = Math.max(...awaitingBlocks);
-  const secondsToUnlockAllBalance = highestAwaitingBlocksNumber * 10;
-  const momentSeconds = moment().second(secondsToUnlockAllBalance);
-  return moment().to(momentSeconds, true);
-};
 
 const getPendingTime = ({ unvoteHeight, delegateAddress }, currentBlockHeight, { address }) => {
   const isSelfVote = address === delegateAddress;
-  // TODO define delegate
-  const delayedAvailability = getDelayedAvailability(currentBlockHeight, isSelfVote, delegate);
+  const delayedAvailability = getDelayedAvailability(isSelfVote);
   const awaitingBlocks = delayedAvailability - (currentBlockHeight - unvoteHeight);
   const secondsToUnlockAllBalance = awaitingBlocks * 10;
   const momentSeconds = moment().second(secondsToUnlockAllBalance);
@@ -50,7 +35,6 @@ const BalanceTable = ({
       </p>
     </div>
     <div>
-      {/** TODO sort this */}
       {account.unlocking.length > 0
         && (
           account.unlocking.map((vote, i) => (
@@ -59,8 +43,6 @@ const BalanceTable = ({
               <p>
                 <Icon name="loading" />
                 {`${t('will be available to unlock in')} ${getPendingTime(vote, currentBlock.height, account)}`}
-                {/** TODO remove this line */}
-                {`${t('will be available to unlock in')} ${calculatePendingTime(currentBlock.height, account)}`}
               </p>
             </div>
           ))

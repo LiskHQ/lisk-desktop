@@ -5,7 +5,6 @@ import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
 import { isEmpty } from '../../../../utils/helpers';
-import { calculateLockedBalance } from '../../../../utils/account';
 import styles from './overview.css';
 
 const getProp = (dic, prop, defaultValue) => {
@@ -23,7 +22,6 @@ const Overview = ({
   const delegate = getProp(account, 'delegate', {});
   const publicKey = getProp(account, 'publicKey', '');
   const balance = getProp(account, 'balance', 0);
-  const lockedBalance = account ? calculateLockedBalance(account) : 0;
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );
@@ -56,7 +54,6 @@ const Overview = ({
           isDiscreetMode={discreetMode}
           isWalletRoute={isWalletRoute}
           address={address}
-          lockedBalance={lockedBalance}
         />
       </div>
       <div className={`${grid['col-xs-12']} ${grid['col-md-4']} ${grid['col-lg-6']} ${styles.balanceChart}`}>

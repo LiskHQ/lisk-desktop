@@ -71,7 +71,6 @@ const actionTypes = {
   forgingDataDisplayed: 'FORGING_DATA_DISPLAYED',
   forgingDataConcealed: 'FORGING_DATA_CONCEALED',
   appUpdateAvailable: 'APP_UPDATE_AVAILABLE',
-  unlockBalanceSubmitted: 'ACCOUNT_UNLOCK_BALANCE_SUBMITTED',
 };
 
 export default actionTypes;

@@ -14,11 +14,15 @@ import styles from './balanceInfo.css';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
 import { tokenMap } from '../../../../../constants/tokens';
+import { calculateLockedBalance, getActiveTokenAccount } from '../../../../../utils/account';
+
 
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, lockedBalance,
+  t, activeToken, balance, isWalletRoute, address,
 }) => {
+  const account = useSelector(state => getActiveTokenAccount(state));
   const vote = useSelector(state => state.voting[address]);
+  const lockedBalance = account && isWalletRoute ? calculateLockedBalance(account) : undefined;
   const initialValue = isWalletRoute
     ? {}
     : { recipient: address };
@@ -43,7 +47,7 @@ const BalanceInfo = ({
               />
 
             </div>
-            {activeToken === tokenMap.LSK.key && (
+            {activeToken === tokenMap.LSK.key && isWalletRoute && (
               <DialogLink
                 className={styles.lockedBalance}
                 component="lockedBalance"
