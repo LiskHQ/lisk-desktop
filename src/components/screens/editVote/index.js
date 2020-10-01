@@ -2,7 +2,9 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '../../../utils/searchParams';
+import { voteEdited } from '../../../actions/voting';
 import Dialog from '../../toolbox/dialog/dialog';
 import Box from '../../toolbox/box';
 import BoxContent from '../../toolbox/box/content';
@@ -27,7 +29,6 @@ const getTitles = t => ({
   },
 });
 
-// eslint-disable-next-line max-statements
 const AddVote = ({
   history, t,
 }) => {
@@ -44,7 +45,8 @@ const AddVote = ({
       amount: toRawLsk(voteAmount.value),
     }]));
 
-  removeSearchParamsFromUrl(history, ['modal']);
+    removeSearchParamsFromUrl(history, ['modal']);
+  };
 
   const titles = getTitles(t)[mode];
 
