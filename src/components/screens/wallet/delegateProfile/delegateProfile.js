@@ -7,9 +7,6 @@ import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
 import DelegateVotesView from './delegateVotesView';
 
-const placeholders = Array.from(Array(101).keys()).map(item => `5447926331525636${item}L`);
-// dummy.push('10016685355739180600L');
-
 // const formatForgingStatus = (status) => {
 //   const result = status.replace(/([A-Z])/g, ' $1');
 //   return result.charAt(0).toUpperCase() + result.slice(1);
@@ -40,7 +37,7 @@ const DelegateProfile = ({
   const status = 'Mocked Status';
 
   return (
-    <section className={`${styles.ontainer} container`}>
+    <section className={`${styles.container} container`}>
       <Box className={`${grid.row} ${styles.statsContainer} stats-container`}>
         <DetailsView
           t={t}
@@ -57,8 +54,7 @@ const DelegateProfile = ({
         />
         <DelegateVotesView
           t={t}
-            // voters={voters.data.voters}
-          voters={placeholders}
+          voters={voters}
         />
       </Box>
     </section>
