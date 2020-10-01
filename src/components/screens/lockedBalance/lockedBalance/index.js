@@ -30,7 +30,6 @@ const LockedBalance = (props) => {
     token,
     account,
     priorityOptions,
-    // TODO define this txData
     txData: {
       amount: toRawLsk(availableBalance),
       txType,
