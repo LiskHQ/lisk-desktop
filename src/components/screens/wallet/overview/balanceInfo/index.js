@@ -22,7 +22,7 @@ const BalanceInfo = ({
 }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
   const vote = useSelector(state => state.voting[address]);
-  const lockedBalance = activeToken === tokenMap.LSK.key && account && isWalletRoute
+  const lockedBalance = activeToken === tokenMap.LSK.key && isWalletRoute && account.votes
     ? calculateLockedBalance(account) : undefined;
   const initialValue = isWalletRoute
     ? {}
@@ -48,7 +48,7 @@ const BalanceInfo = ({
               />
 
             </div>
-            {activeToken === tokenMap.LSK.key && isWalletRoute && (
+            {lockedBalance && (
               <DialogLink
                 className={styles.lockedBalance}
                 component="lockedBalance"
