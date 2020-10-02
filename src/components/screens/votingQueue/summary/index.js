@@ -5,40 +5,52 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import ToggleIcon from '../toggleIcon';
+import VoteStats from '../voteStats';
 
 import styles from './styles.css';
 
+const vote1 = { rank: '123', username: 'haha', amount: '10000' };
+const votes = new Array(4).fill(vote1);
+
+const ItemList = ({ items }) => (
+  <div className={styles.voteItems}>
+    {items.map((item, i) => (
+      <span key={i} className={styles.voteItem}>
+        <span className={styles.rankText}>{`#${item.rank} `}</span>
+        {`${item.username} - ${item.amount} LSK`}
+      </span>
+    ))}
+  </div>
+);
+
 const Summary = ({
-  t = s => s, removedVotes = [], editedVotes = [], addedVotes = [], fee = 100,
+  t = s => s, removedVotes = votes, editedVotes = votes, addedVotes = votes,
+  fee = 100, prevStep, nextStep,
 }) => (
   <section>
     <Box className={styles.container}>
       <ToggleIcon />
-      <header>
-        <h1>{t('Voting Summary')}</h1>
-      </header>
-      <BoxContent>
-        <div>
-          <span>{t('Added votes')}</span>
-          <div>
-            {addedVotes.map((vote, i) => <span key={i}>{vote}</span>)}
-          </div>
+      <VoteStats
+        t={t}
+        heading={t('Voting Summary')}
+        added={addedVotes.length}
+        edited={editedVotes.length}
+        removed={removedVotes.length}
+      />
+      <BoxContent className={styles.content}>
+        <div className={styles.contentItem}>
+          <span className={styles.contentHeading}>{t('Added votes')}</span>
+          <ItemList items={addedVotes} />
         </div>
-        <div>
-          <span>{t('Changed votes')}</span>
-          <div>
-            {editedVotes.map((vote, i) => <span key={i}>{vote}</span>)}
-          </div>
+        <div className={styles.contentItem}>
+          <span className={styles.contentHeading}>{t('Changed votes')}</span>
+          <ItemList items={editedVotes} />
         </div>
-        <div>
-          <span>{t('Removed votes')}</span>
-          <div>
-            {removedVotes.map((vote, i) => <span key={i}>{vote}</span>)}
-          </div>
+        <div className={styles.contentItem}>
+          <span className={styles.contentHeading}>{t('Removed votes')}</span>
+          <ItemList items={removedVotes} />
         </div>
-      </BoxContent>
-      <BoxFooter className={styles.footer}>
-        <div>
+        <div className={styles.infoContainer}>
           <div className={styles.footerColumn}>
             <span>{t('Total votes after confirmation')}</span>
             <span>0/10</span>
@@ -49,12 +61,12 @@ const Summary = ({
           </div>
 
         </div>
-        <div>
-          <SecondaryButton>Edit</SecondaryButton>
-          <PrimaryButton size="l">
-            {t('Confirm')}
-          </PrimaryButton>
-        </div>
+      </BoxContent>
+      <BoxFooter className={styles.footer} direction="horizontal">
+        <SecondaryButton onClick={prevStep}>Edit</SecondaryButton>
+        <PrimaryButton size="l" onClick={nextStep}>
+          {t('Confirm')}
+        </PrimaryButton>
       </BoxFooter>
     </Box>
   </section>
