@@ -3,6 +3,8 @@ import {
   extractAddress,
   getActiveTokenAccount,
   calculateAvailableBalance,
+  getAvailableUnlockingTransactions,
+  calculateLockedBalance,
 } from './account';
 
 describe('Utils: Account', () => {
@@ -79,6 +81,53 @@ describe('Utils: Account', () => {
       expect(
         calculateAvailableBalance({ unlocking, address }, currentBlock),
       ).toEqual(0);
+    });
+
+    it('should return 0 when unlocking is undefined', () => {
+      const address = '80L';
+      const currentBlock = { height: 5000 };
+
+      expect(
+        calculateAvailableBalance({ address }, currentBlock),
+      ).toEqual(0);
+    });
+
+    describe('calculateLockedBalance', () => {
+      it('should get correct available balance', () => {
+        const votes = [
+          { amount: '5000000000', delegateAddress: '1L' },
+          { amount: '3000000000', delegateAddress: '3L' },
+          { amount: '2000000000', delegateAddress: '1L' },
+        ];
+
+        expect(calculateLockedBalance({ votes })).toEqual(10000000000);
+      });
+
+      it('should return 0 when unlocking is undefined', () => {
+        expect(calculateLockedBalance({ })).toEqual(0);
+      });
+    });
+
+    describe('getAvailableUnlockingTransactions', () => {
+      it('should get correct available balance', () => {
+        const unlocking = [
+          { amount: '1000000000', unvoteHeight: 5000, delegateAddress: '1L' },
+          { amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' },
+          { amount: '1000000000', unvoteHeight: 3100, delegateAddress: '3L' },
+        ];
+        const address = '80L';
+        const currentBlock = { height: 5000 };
+
+        expect(
+          getAvailableUnlockingTransactions({ unlocking, address }, currentBlock),
+        ).toEqual([{ amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' }]);
+      });
+
+      it('should return 0 when unlocking is undefined', () => {
+        const address = '80L';
+        const currentBlock = { height: 5000 };
+        expect(getAvailableUnlockingTransactions({ address }, currentBlock)).toEqual([]);
+      });
     });
   });
 });
