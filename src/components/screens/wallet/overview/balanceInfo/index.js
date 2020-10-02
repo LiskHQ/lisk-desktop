@@ -22,7 +22,8 @@ const BalanceInfo = ({
 }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
   const vote = useSelector(state => state.voting[address]);
-  const lockedBalance = account && isWalletRoute ? calculateLockedBalance(account) : undefined;
+  const lockedBalance = activeToken === tokenMap.LSK.key && account && isWalletRoute
+    ? calculateLockedBalance(account) : undefined;
   const initialValue = isWalletRoute
     ? {}
     : { recipient: address };
