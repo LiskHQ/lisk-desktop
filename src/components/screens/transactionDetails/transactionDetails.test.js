@@ -227,8 +227,10 @@ describe('Single Transaction Component', () => {
           type: 14,
           senderId: accounts.genesis.address,
           recipientId: '',
-          amount: 50,
           id: 123,
+          asset: {
+            amount: 50,
+          },
         },
       };
       const wrapper = mountWithRouter(
