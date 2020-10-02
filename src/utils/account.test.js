@@ -3,7 +3,6 @@ import {
   extractAddress,
   getActiveTokenAccount,
   calculateAvailableBalance,
-  getAvailableUnlockingTransactions,
 } from './account';
 
 describe('Utils: Account', () => {
