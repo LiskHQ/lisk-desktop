@@ -131,7 +131,7 @@ transactionTypes.getNameFee = (key) => {
  */
 transactionTypes.getHardCap = (key) => {
   const types = transactionTypes();
-  return Object.keys(types).find(type => types[type].key === key).hardCap;
+  return types[key].hardCap;
 };
 
 export const byteSizes = {

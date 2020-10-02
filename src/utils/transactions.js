@@ -49,7 +49,7 @@ const dedupeTransactions = (pendingTransactions, confirmedTransactions) =>
       )));
 
 export const getTxAmount = (transaction) => {
-  let amount = transaction.amount || transaction.asset.amount;
+  let amount = transaction.amount !== undefined ? transaction.amount : transaction.asset.amount;
   if (!amount && transaction.type === transactionTypes().unlockToken.code.legacy) {
     amount = 0;
     transaction.asset.unlockingObjects.forEach((unlockedObject) => {
