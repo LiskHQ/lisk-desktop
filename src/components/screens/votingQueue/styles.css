@@ -9,7 +9,11 @@
 }
 
 .toggleIcon {
-  padding: 14px 0 0 12px;
+  padding-left: 14px;
+
+  & :hover {
+    cursor: pointer;
+  }
 }
 
 .header {

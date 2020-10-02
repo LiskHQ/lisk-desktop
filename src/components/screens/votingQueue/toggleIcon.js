@@ -1,12 +1,20 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import Icon from '../../toolbox/icon';
+import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
 import styles from './styles.css';
 
-const ToggleIcon = () => (
-  <span className={styles.toggleIcon}>
-    <Icon name="votingQueueActive" />
-  </span>
-);
+const ToggleIcon = ({ history }) => {
+  const closeModal = () => {
+    removeSearchParamsFromUrl(history, ['modal']);
+  };
 
-export default ToggleIcon;
+  return (
+    <span className={styles.toggleIcon} onClick={closeModal}>
+      <Icon name="votingQueueActive" />
+    </span>
+  );
+};
+
+export default withRouter(ToggleIcon);
