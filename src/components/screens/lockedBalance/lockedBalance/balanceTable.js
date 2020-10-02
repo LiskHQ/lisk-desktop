@@ -28,7 +28,7 @@ const BalanceTable = ({
       <p className={styles.columnTitle}>{t('Status')}</p>
     </li>
     <li>
-      <p>{`${fromRawLsk(lockedBalance)} LSK`}</p>
+      <p className="locked-balance">{`${fromRawLsk(lockedBalance)} LSK`}</p>
       <p>
         <Icon name="lock" />
         {t('locked')}
@@ -41,7 +41,7 @@ const BalanceTable = ({
           .map((vote, i) => {
             if (isBlockHeightReached(vote, currentBlock, account.address)) return false;
             return (
-              <li key={`${i}-unlocking-balance-list`}>
+              <li key={`${i}-unlocking-balance-list`} className="unlocking-balance">
                 <p>{`${fromRawLsk(vote.amount)} LSK`}</p>
                 <p>
                   <Icon name="loading" />
@@ -53,7 +53,7 @@ const BalanceTable = ({
       )
     }
     <li>
-      <p>{`${fromRawLsk(availableBalance)} LSK`}</p>
+      <p className="available-balance">{`${fromRawLsk(availableBalance)} LSK`}</p>
       <p>
         <Icon name="unlock" />
         {t('available to unlock')}
