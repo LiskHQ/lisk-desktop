@@ -1,0 +1,13 @@
+.container {
+  & .footer {
+    
+    & .infoContainer {
+      display: flex;
+    }
+
+    & .footerColumn {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
