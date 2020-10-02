@@ -11,6 +11,7 @@ import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalcu
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import ToggleIcon from '../toggleIcon';
+import VoteStats from '../voteStats';
 
 const dummyVotes = Array.from(Array(20).keys()).map(i => ({
   address: `123${i}L`, oldAmount: i, newAmount: 1000 + i, username: `haha-${i}`,
@@ -71,12 +72,13 @@ const Editor = (props) => {
     <section className={styles.wrapper}>
       <Box>
         <ToggleIcon />
-        <header className={styles.header}>
-          <span className={styles.heading}>{t('Voting Queue')}</span>
-          <span className={styles.voteStats}>{`${added} ${t('added')}`}</span>
-          <span className={styles.voteStats}>{`${edited} ${t('edited')}`}</span>
-          <span className={styles.voteStats}>{`${removed} ${t('removed')}`}</span>
-        </header>
+        <VoteStats
+          t={t}
+          heading={t('Voting queue')}
+          added={added}
+          edited={edited}
+          removed={removed}
+        />
         <BoxContent className={styles.contentContainer}>
           <div className={styles.contentHeader}>
             <span className={styles.infoColumn}>Delegate</span>
