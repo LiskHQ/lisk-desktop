@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
-import Icon from '../../../toolbox/icon';
 import VoteListItem from './voteListItem';
 import TransactionPriority from '../../../shared/transactionPriority';
 
@@ -11,6 +10,7 @@ import { tokenMap } from '../../../../constants/tokens';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../../toolbox/buttons';
+import ToggleIcon from '../toggleIcon';
 
 const dummyVotes = Array.from(Array(20).keys()).map(i => ({
   address: `123${i}L`, oldAmount: i, newAmount: 1000 + i, username: `haha-${i}`,
@@ -70,9 +70,7 @@ const Editor = (props) => {
   return (
     <section className={styles.wrapper}>
       <Box>
-        <span className={styles.toggleIcon}>
-          <Icon name="votingQueueActive" />
-        </span>
+        <ToggleIcon />
         <header className={styles.header}>
           <span className={styles.heading}>{t('Voting Queue')}</span>
           <span className={styles.voteStats}>{`${added} ${t('added')}`}</span>
