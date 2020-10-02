@@ -1,0 +1,21 @@
+.container {
+  & .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & .footer {
+    margin-top: 48px;
+  }
+}
+
+.submissionHeading {
+  margin-top: 14px;
+}
+
+.submissionSubHeading {
+  margin-top: 10px;
+}
+
