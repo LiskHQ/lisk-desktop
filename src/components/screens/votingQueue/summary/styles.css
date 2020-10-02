@@ -17,10 +17,15 @@
     padding-top: 20px;
 
     border-top: 1px solid rgba(0, 0, 0, 0.15);
-    & .footerColumn {
+
+    & .infoColumn {
       display: flex;
       flex-direction: column;
       flex: 1;
+
+      &:last-child {
+        padding-left: 10px;
+      }
     }
   }
 
@@ -29,6 +34,10 @@
       width: 230px;
     }
   }
+}
+
+.infoTitle {
+  margin-bottom: 10px;
 }
 
 .voteItems {

@@ -51,12 +51,14 @@ const Summary = ({
           <ItemList items={removedVotes} />
         </div>
         <div className={styles.infoContainer}>
-          <div className={styles.footerColumn}>
-            <span>{t('Total votes after confirmation')}</span>
-            <span>0/10</span>
+          <div className={styles.infoColumn}>
+            <span className={styles.infoTitle}>{t('Total votes after confirmation')}</span>
+            <span>
+              {`${addedVotes.length + editedVotes.length}/10`}
+            </span>
           </div>
-          <div className={styles.footerColumn}>
-            <span>{t('Transaction fee')}</span>
+          <div className={styles.infoColumn}>
+            <span className={styles.infoTitle}>{t('Transaction fee')}</span>
             <span>{fee}</span>
           </div>
 
