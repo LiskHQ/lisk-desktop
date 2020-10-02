@@ -39,7 +39,7 @@ export const getActiveTokenAccount = state => ({
 export const truncateAddress = address =>
   address.replace(regex.lskAddressTrunk, '$1...$3');
 
-export const calculateLockedBalance = ({ votes }) =>
+export const calculateLockedBalance = ({ votes = [] }) =>
   votes.reduce((acc, vote) => acc + parseInt(vote.amount, 10), 0);
 
 // TODO handle delegate punishment when Lisk Service is ready
@@ -54,10 +54,10 @@ export const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentB
   return currentBlockHeight - unvoteHeight > delayedAvailability;
 };
 
-export const getAvailableUnlockingTransactions = ({ unlocking, address }, currentBlock) =>
+export const getAvailableUnlockingTransactions = ({ unlocking = [], address }, currentBlock) =>
   unlocking.filter(vote => isBlockHeightReached(vote, currentBlock, address));
 
-export const calculateAvailableBalance = ({ unlocking, address }, currentBlock) =>
+export const calculateAvailableBalance = ({ unlocking = [], address }, currentBlock) =>
   unlocking.reduce(
     (acc, vote) =>
       (isBlockHeightReached(vote, currentBlock, address) ? acc + parseInt(vote.amount, 10) : acc),
