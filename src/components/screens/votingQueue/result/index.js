@@ -31,7 +31,9 @@ const Result = ({
             {t('Votes have been submitted')}
           </span>
           <span className={styles.submissionSubHeading}>
-            {`${totalVoteAmount} ${t('LSK will be available to unlock in ~')}${unlockTime}.`}
+            <span className={styles.subHeadingBold}>{totalVoteAmount}</span>
+            <span>{t('LSK will be available to unlock in ~')}</span>
+            <span className={styles.subHeadingBold}>{unlockTime}</span>
           </span>
         </BoxContent>
         <BoxFooter direction="horizontal" className={styles.footer}>

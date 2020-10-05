@@ -60,4 +60,11 @@
       color: #254998;
     }
   }
+
+  & .statText {
+    @mixin contentLargest;
+
+    line-height: 15px;
+    color:var(--color-blue-gray);
+  }
 }

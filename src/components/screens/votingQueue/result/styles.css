@@ -1,3 +1,5 @@
+@import '../../../../app/mixins.css';
+
 .container {
   & .header {
     padding: 0;
@@ -24,9 +26,20 @@
 
 .submissionHeading {
   margin-top: 14px;
+
+  @mixin contentNormal semi-bold;
+
+  font-size: 16px;
 }
 
 .submissionSubHeading {
   margin-top: 10px;
+
+  @mixin contentLarge;
 }
 
+.subHeadingBold {
+  @mixin contentLarge semi-bold;
+
+  color: #4463A7;
+}

@@ -57,15 +57,14 @@ const Summary = ({
         <div className={styles.infoContainer}>
           <div className={styles.infoColumn}>
             <span className={styles.infoTitle}>{t('Total votes after confirmation')}</span>
-            <span>
+            <span className={styles.infoValue}>
               {`${addedVotes.length + editedVotes.length}/10`}
             </span>
           </div>
           <div className={styles.infoColumn}>
             <span className={styles.infoTitle}>{t('Transaction fee')}</span>
-            <span>{fee}</span>
+            <span className={styles.infoValue}>{fee}</span>
           </div>
-
         </div>
       </BoxContent>
       <BoxFooter className={styles.footer} direction="horizontal">

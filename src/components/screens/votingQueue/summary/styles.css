@@ -1,3 +1,5 @@
+@import '../../../../app/mixins.css';
+
 .container {
   & .content {
 
@@ -8,7 +10,7 @@
     }
 
     & .contentHeading {
-      /* padding-bottom: 10px; */
+      @mixin contentLarge semi-bold;
     }
   }
 
@@ -38,6 +40,14 @@
 
 .infoTitle {
   margin-bottom: 10px;
+
+  @mixin contentNormal semi-bold;
+}
+
+.infoValue {
+  @mixin contentNormal;
+
+  font-size: 16px;
 }
 
 .voteItems {
@@ -51,6 +61,8 @@
   border-radius: 3px;
   margin: 10px 10px 0 0;
   white-space: nowrap;
+
+  @mixin contentSmall;
 }
 
 .rankText {
