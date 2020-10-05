@@ -32,7 +32,7 @@ const Form = ({
   const network = useSelector(state => state.network);
 
   const onClickUnlock = async () => {
-    Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
+    Piwik.trackingEvent('Send_UnlockTransaction', 'button', 'Next step');
     const selectedFee = customFee ? customFee.value : fee.value;
     const txData = {
       nonce: account.nonce,

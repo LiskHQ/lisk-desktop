@@ -1,19 +1,10 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import moment from 'moment';
 import Icon from '../../../toolbox/icon';
-import { fromRawLsk } from '../../../../utils/lsk';
-import { getDelayedAvailability, isBlockHeightReached } from '../../../../utils/account';
+import LiskAmount from '../../../shared/liskAmount';
+import { tokenMap } from '../../../../constants/tokens';
+import UnlockingList from './unlockingList';
 import styles from './lockedBalance.css';
-
-const getPendingTime = ({ unvoteHeight, delegateAddress }, currentBlockHeight, { address }) => {
-  const isSelfVote = address === delegateAddress;
-  const delayedAvailability = getDelayedAvailability(isSelfVote);
-  const awaitingBlocks = delayedAvailability - (currentBlockHeight - unvoteHeight);
-  const secondsToUnlockAllBalance = awaitingBlocks * 10;
-  const momentSeconds = moment().second(secondsToUnlockAllBalance);
-  return moment().to(momentSeconds, true);
-};
 
 const BalanceTable = ({
   t,
@@ -23,42 +14,43 @@ const BalanceTable = ({
   account,
 }) => (
   <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-    <li>
-      <p className={styles.columnTitle}>{t('Amount')}</p>
-      <p className={styles.columnTitle}>{t('Status')}</p>
-    </li>
-    <li>
-      <p className="locked-balance">{`${fromRawLsk(lockedBalance)} LSK`}</p>
-      <p>
-        <Icon name="lock" />
-        {t('locked')}
-      </p>
-    </li>
-    {account.unlocking.length > 0
+    {(lockedBalance !== 0 || account.unlocking.length > 0 || availableBalance !== 0)
       && (
-        account.unlocking
-          .sort((voteA, voteB) => voteB.unvoteHeight - voteA.unvoteHeight)
-          .map((vote, i) => {
-            if (isBlockHeightReached(vote, currentBlock, account.address)) return false;
-            return (
-              <li key={`${i}-unlocking-balance-list`} className="unlocking-balance">
-                <p>{`${fromRawLsk(vote.amount)} LSK`}</p>
-                <p>
-                  <Icon name="loading" />
-                  {`${t('will be available to unlock in')} ${getPendingTime(vote, currentBlock.height, account)}`}
-                </p>
-              </li>
-            );
-          })
+      <li>
+        <p className={styles.columnTitle}>{t('Amount')}</p>
+        <p className={styles.columnTitle}>{t('Status')}</p>
+      </li>
       )
     }
-    <li>
-      <p className="available-balance">{`${fromRawLsk(availableBalance)} LSK`}</p>
-      <p>
-        <Icon name="unlock" />
-        {t('available to unlock')}
-      </p>
-    </li>
+    {lockedBalance !== 0
+      && (
+        <li>
+          <p className="locked-balance">
+            <LiskAmount val={lockedBalance} token={tokenMap.LSK.key} />
+          </p>
+          <p>
+            <Icon name="lock" />
+            {t('locked')}
+          </p>
+        </li>
+      )
+    }
+    {account.unlocking.length > 0
+      && <UnlockingList account={account} currentBlock={currentBlock} t={t} />
+    }
+    {availableBalance !== 0
+      && (
+      <li>
+        <p className="available-balance">
+          <LiskAmount val={availableBalance} token={tokenMap.LSK.key} />
+        </p>
+        <p>
+          <Icon name="unlock" />
+          {t('available to unlock')}
+        </p>
+      </li>
+      )
+    }
   </ul>
 );
 
