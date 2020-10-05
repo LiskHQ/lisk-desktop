@@ -2,6 +2,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 
+import { mountWithRouter } from '../../../../utils/testHelpers';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 import Editor from './editor';
@@ -28,17 +29,17 @@ describe('VotingQueue', () => {
   };
 
   it('Render only the changed votes', () => {
-    const wrapper = mount(<Editor {...props} votes={mixedVotes} />);
+    const wrapper = mountWithRouter(Editor, { ...props, votes: mixedVotes });
     expect(wrapper.find('VoteListItem')).toHaveLength(1);
   });
 
   it('Shows an error if trying to vote for more than 10 delegates', () => {
-    const wrapper = mount(<Editor {...props} votes={elevenVotes} />);
+    const wrapper = mountWithRouter(Editor, { ...props, votes: elevenVotes });
     expect(wrapper.find('.feedback').text()).toBe('You can\'t vote for more than 10 delegates.');
   });
 
   it('Shows an error if trying to vote more than your balance', async () => {
-    const wrapper = mount(<Editor {...props} votes={expensiveVotes} />);
+    const wrapper = mountWithRouter(Editor, { ...props, votes: expensiveVotes });
     await flushPromises();
     act(() => { wrapper.update(); });
     expect(wrapper.find('.feedback').text()).toBe('You don\'t have enough LSK in your account.');
