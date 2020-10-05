@@ -8,6 +8,7 @@ import TransactionPriority from '../../../shared/transactionPriority';
 
 import styles from './editor.css';
 import { tokenMap } from '../../../../constants/tokens';
+import { toRawLsk } from '../../../../utils/lsk';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../../toolbox/buttons';
@@ -39,11 +40,11 @@ const normalizeVotesForTx = votes =>
  */
 const validateVotes = (votes, balance, fee, t) => {
   const messages = [];
-  if (Object.keys(votes) > 10) messages.push(t('You can\'t vote for more than 10 delegates.'));
+  if (Object.keys(votes).length > 10) messages.push(t('You can\'t vote for more than 10 delegates.'));
   const addedVoteAmount = Object.values(votes)
     .filter(vote => vote.unconfirmed > vote.confirmed)
     .reduce((sum, vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
-  if ((addedVoteAmount + fee) > balance) messages.push(t('You don\'t have enough LSK in your account.'));
+  if ((addedVoteAmount + toRawLsk(fee)) > balance) messages.push(t('You don\'t have enough LSK in your account.'));
 
   return { messages, error: !!messages.length };
 };
@@ -149,7 +150,7 @@ const Editor = ({
           setSelectedPriority={selectTransactionPriority}
         />
         {
-          feedback.error && <span>{feedback.messages[0]}</span>
+          feedback.error && <span className="feedback">{feedback.messages[0]}</span>
         }
         <BoxFooter>
           <PrimaryButton size="l" disabled={feedback.error} onClick={nextStep}>
