@@ -1,6 +1,4 @@
-import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { mount } from 'enzyme';
 
 import { mountWithRouter } from '../../../../utils/testHelpers';
 import accounts from '../../../../../test/constants/accounts';
