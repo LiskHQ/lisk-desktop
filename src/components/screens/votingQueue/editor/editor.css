@@ -53,7 +53,7 @@
 .contentScrollable {
   margin-top: 10px;
   overflow: scroll;
-  max-height: 300px;
+  max-height: 290px;
   display: flex;
   flex-direction: column;
 
