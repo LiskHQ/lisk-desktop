@@ -110,9 +110,8 @@ const Editor = (props) => {
               data={votes}
               header={header(t)}
               row={VoteListItem}
-              error={false}
               canLoadMore={false}
-              isLoading={false}
+              emptyState={{ message: t('No votes in queue.') }}
             />
           </div>
         </BoxContent>
