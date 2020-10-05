@@ -12,6 +12,7 @@ import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 
 const dummyVotes = Array.from(Array(20).keys()).map(i => ({
   address: `123${i}L`, oldAmount: i, newAmount: 1000 + i, username: `haha-${i}`,
@@ -83,7 +84,15 @@ const Editor = (props) => {
           <div className={styles.contentHeader}>
             <span className={styles.infoColumn}>Delegate</span>
             <span className={styles.oldAmountColumn}>Old Vote Amount</span>
-            <span className={styles.newAmountColumn}>New vote Amount</span>
+            <div className={styles.newAmountColumn}>
+              <span>{t('New vote Amount')}</span>
+              <Tooltip
+                title="title"
+                footer={<footer>footer</footer>}
+                position="bottom"
+              />
+            </div>
+
             <span className={styles.editColumn} />
           </div>
           <div className={styles.contentScrollable}>
