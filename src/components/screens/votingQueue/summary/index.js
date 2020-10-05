@@ -29,7 +29,7 @@ const Summary = ({
 }) => (
   <section>
     <Box className={styles.container}>
-      <ToggleIcon />
+      <ToggleIcon isNotHeader />
       <VoteStats
         t={t}
         heading={t('Voting Summary')}

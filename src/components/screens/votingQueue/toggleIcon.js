@@ -5,13 +5,13 @@ import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
 import styles from './styles.css';
 
-const ToggleIcon = ({ history }) => {
+const ToggleIcon = ({ history, isNotHeader }) => {
   const closeModal = () => {
     removeSearchParamsFromUrl(history, ['modal']);
   };
 
   return (
-    <span className={styles.toggleIcon} onClick={closeModal}>
+    <span className={`${styles.toggleIcon} ${isNotHeader ? styles.notHeader : ''}`} onClick={closeModal}>
       <Icon name="votingQueueActive" />
     </span>
   );

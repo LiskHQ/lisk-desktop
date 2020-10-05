@@ -71,7 +71,7 @@ const Editor = (props) => {
   return (
     <section className={styles.wrapper}>
       <Box>
-        <ToggleIcon />
+        <ToggleIcon isNotHeader />
         <VoteStats
           t={t}
           heading={t('Voting queue')}

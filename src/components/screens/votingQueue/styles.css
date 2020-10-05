@@ -10,10 +10,15 @@
 
 .toggleIcon {
   padding-left: 14px;
-
+  
   & :hover {
     cursor: pointer;
   }
+}
+
+.notHeader {
+  display: flex;
+  height: 50px;
 }
 
 .header {
