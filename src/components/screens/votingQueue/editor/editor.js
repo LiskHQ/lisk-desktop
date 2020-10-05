@@ -58,19 +58,20 @@ const validateVotes = (votes, balance, fee, t) => {
  * @returns {Object} - stats object
  */
 const getVoteStats = votes =>
-  Object.values(votes).reduce((stats, { oldAmount, newAmount }) => {
-    if (!oldAmount && newAmount) {
-      // new vote
-      stats.added++;
-    } else if (oldAmount && !newAmount) {
-      // removed vote
-      stats.removed++;
-    } else {
-      // edited vote
-      stats.edited++;
-    }
-    return stats;
-  }, { added: 0, edited: 0, removed: 0 });
+  Object.values(votes)
+    .reduce((stats, { confirmed, unconfirmed }) => {
+      if (!confirmed && unconfirmed) {
+        // new vote
+        stats.added++;
+      } else if (confirmed && !unconfirmed) {
+        // removed vote
+        stats.removed++;
+      } else if (confirmed !== unconfirmed) {
+        // edited vote
+        stats.edited++;
+      }
+      return stats;
+    }, { added: 0, edited: 0, removed: 0 });
 
 const token = tokenMap.LSK.key;
 const txType = 'vote';
