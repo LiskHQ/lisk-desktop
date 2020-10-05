@@ -76,6 +76,23 @@
   margin-right: 16px;
 }
 
+.votingQueueVoteCount {
+  @mixin contentSmall;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: absolute;
+  top: 6px;
+  left: 17px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  width: 16px;
+  height: 16px;
+  background-color: #2BD67B;
+}
+
 @media (--medium-viewport) {
   .toggle {
     margin-right: 10px;
