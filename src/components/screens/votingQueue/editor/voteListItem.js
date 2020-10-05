@@ -17,7 +17,9 @@ const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
 const token = tokenMap.LSK.key;
 
 const VoteListItem = ({
-  t = s => s, address, username, confirmed, unconfirmed,
+  t = s => s, data: {
+    address, username, confirmed, unconfirmed,
+  },
 }) => {
   const [state, setState] = useState(ComponentState.notEditing);
   const dispatch = useDispatch();

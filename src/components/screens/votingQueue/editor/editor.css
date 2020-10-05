@@ -15,9 +15,11 @@
 
 .infoColumn {
   width: 45%;
+  padding: 0;
 }
 
 .oldAmountColumn {
+  padding: 0;
   width: 20%;
 }
 
@@ -27,6 +29,7 @@
 }
 
 .newAmountColumn {
+  padding: 0;
   display: flex;
   flex: 1;
 }
@@ -43,15 +46,20 @@
 }
 
 .editColumn {
+  padding: 0;
   width: auto;
 }
 
 .contentScrollable {
   margin-top: 10px;
   overflow: scroll;
-  max-height: 300px;
+  max-height: 290px;
   display: flex;
   flex-direction: column;
+
+  & header {
+    padding: 0 0 20px 0;
+  }
 }
 
 .voteItemContainer {
@@ -84,6 +92,7 @@
   display: flex;
   justify-content: space-between;
   width: 50px;
+  margin-right: 10px;
 }
 
 .editAmountInput {
