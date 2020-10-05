@@ -8,7 +8,7 @@ import { tokenMap } from '../../../../constants/tokens';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
+import Table from '../../../toolbox/table';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
 
@@ -22,6 +22,29 @@ const dummyVotes = Array.from(Array(20).keys()).map(i => ({
 dummyVotes.push({
   address: '123100L', oldAmount: 100 + 1e8, newAmount: 0, username: 'haha',
 });
+
+const header = t => ([
+  {
+    title: t('Delegate'),
+    classList: styles.infoColumn,
+  },
+  {
+    title: t('Old Vote Amount'),
+    classList: styles.oldAmountColumn,
+  },
+  {
+    title: t('New Vote Amount'),
+    classList: styles.newAmountColumn,
+    tooltip: {
+      title: t('title'),
+      message: t('message'),
+      position: 'bottom',
+    },
+  },
+  {
+    classList: styles.editColumn,
+  },
+]);
 
 const getVoteStats = (votes) => {
   const count = { added: 0, edited: 0, removed: 0 };
@@ -82,31 +105,15 @@ const Editor = (props) => {
           removed={removed}
         />
         <BoxContent className={styles.contentContainer}>
-          <div className={styles.contentHeader}>
-            <span className={styles.infoColumn}>Delegate</span>
-            <span className={styles.oldAmountColumn}>Old Vote Amount</span>
-            <div className={styles.newAmountColumn}>
-              <span>{t('New vote Amount')}</span>
-              <Tooltip
-                title="title"
-                footer={<footer>footer</footer>}
-                position="bottom"
-              />
-            </div>
-
-            <span className={styles.editColumn} />
-          </div>
           <div className={styles.contentScrollable}>
-            {votes.map((vote, index) => (
-              <VoteListItem
-                key={index}
-                t={t}
-                address={vote.address}
-                username={vote.username}
-                oldAmount={vote.oldAmount}
-                newAmount={vote.newAmount}
-              />
-            ))}
+            <Table
+              data={votes}
+              header={header(t)}
+              row={VoteListItem}
+              error={false}
+              canLoadMore={false}
+              isLoading={false}
+            />
           </div>
         </BoxContent>
         <TransactionPriority
