@@ -38,7 +38,7 @@ describe('unlock transaction Status', () => {
   it('renders properly', () => {
     wrapper = mount(<BalanceTable {...props} />);
     expect(wrapper).toContainMatchingElement('.lock-balance-amount-container');
-    expect(wrapper.find('.locked-balance').text()).toEqual('5050 LSK');
+    expect(wrapper.find('.locked-balance').text()).toEqual('5,050 LSK');
     expect(wrapper.find('.available-balance').text()).toEqual('30 LSK');
     expect(wrapper.find('.unlocking-balance')).toHaveLength(2);
   });
@@ -67,8 +67,7 @@ describe('unlock transaction Status', () => {
 
     wrapper = mount(<BalanceTable {...customProps} />);
     expect(wrapper).toContainMatchingElement('.lock-balance-amount-container');
-    expect(wrapper.find('.locked-balance').text()).toEqual('95020 LSK');
-    expect(wrapper.find('.available-balance').text()).toEqual('0 LSK');
+    expect(wrapper.find('.locked-balance').text()).toEqual('95,020 LSK');
     expect(wrapper.find('.unlocking-balance')).toHaveLength(3);
   });
 });
