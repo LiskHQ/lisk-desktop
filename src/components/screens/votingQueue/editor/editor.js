@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
-import VoteListItem from './voteListItem';
 import TransactionPriority from '../../../shared/transactionPriority';
-
-import styles from './editor.css';
 import { tokenMap } from '../../../../constants/tokens';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../../toolbox/buttons';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
+
+import VoteListItem from './voteListItem';
+import styles from './editor.css';
 
 const dummyVotes = Array.from(Array(20).keys()).map(i => ({
   address: `123${i}L`, oldAmount: i + 1e8, newAmount: 1000 + 1e8 + i, username: `haha-${i}`,
@@ -124,7 +125,6 @@ const Editor = (props) => {
           <PrimaryButton size="l" disabled={isCTADisAbled} onClick={() => props.nextStep()}>
             {t('Continue')}
           </PrimaryButton>
-
         </BoxFooter>
       </Box>
     </section>

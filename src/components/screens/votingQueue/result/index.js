@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+
 import { removeSearchParamsFromUrl } from '../../../../utils/searchParams';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';

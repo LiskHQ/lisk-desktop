@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
+
 import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';
 import { SecondaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import Icon from '../../../toolbox/icon';
 import { Input } from '../../../toolbox/inputs';
 import LiskAmount from '../../../shared/liskAmount';
-
-import styles from './editor.css';
 import { tokenMap } from '../../../../constants/tokens';
 
-const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
+import styles from './editor.css';
 
+const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
 const token = tokenMap.LSK.key;
 
 const VoteListItem = ({

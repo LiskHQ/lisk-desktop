@@ -1,6 +1,6 @@
 import React from 'react';
-import LiskAmount from '../../../shared/liskAmount';
 
+import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
