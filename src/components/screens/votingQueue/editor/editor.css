@@ -21,6 +21,11 @@
   width: 20%;
 }
 
+.centerContent {
+  display: flex;
+  align-items: center;
+}
+
 .newAmountColumn {
   width: 22%;
 }
@@ -81,13 +86,21 @@
 }
 
 .editAmountInput {
-  /* width: 72px; */
+  height: 100%;
 }
+
+.formButtonsContainer {
+  margin-left: 20px;
+  display: flex;
+}
+
 .editVoteForm {
   display: flex;
+  flex: 1;
   
   & .formButtons {
     padding: 0 8px;
     border: none;
+    min-width: 64px;
   }
 }

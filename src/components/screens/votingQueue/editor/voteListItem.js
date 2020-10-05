@@ -44,12 +44,16 @@ const VoteListItem = ({
           <span className={styles.delegateUsername}>{username}</span>
         </div>
       </div>
-      <span className={`${styles.oldAmountColumn}`}>{`${oldAmount} LSK`}</span>
+      <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
+        {`${oldAmount} LSK`}
+      </span>
       {state === ComponentState.notEditing
         ? (
           <>
-            <span className={`${styles.newAmountColumn}`}>{`${newAmount} LSK`}</span>
-            <div className={styles.editIconsContainer}>
+            <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
+              {`${newAmount} LSK`}
+            </span>
+            <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>
               <span onClick={changeToEditingMode}>
                 <Icon name="edit" className={styles.editIcon} />
               </span>
@@ -60,11 +64,18 @@ const VoteListItem = ({
           </>
         )
         : (
-          <form className={styles.editVoteForm} onSubmit={handleFormSubmission}>
-            <span className={styles.newAmountColumn}>
-              <Input value={inputValue} onChange={handleInputChange} error={inputError} />
-            </span>
-            <>
+          <form
+            className={`${styles.editVoteForm} ${styles.centerContent}`}
+            onSubmit={handleFormSubmission}
+          >
+            <Input
+              size="m"
+              value={inputValue}
+              onChange={handleInputChange}
+              error={inputError}
+              className={styles.editAmountInput}
+            />
+            <div className={styles.formButtonsContainer}>
               <SecondaryButton
                 size="s"
                 className={styles.formButtons}
@@ -79,11 +90,10 @@ const VoteListItem = ({
               >
                 {t('Save')}
               </TertiaryButton>
-            </>
+            </div>
           </form>
         )
       }
-
     </Box>
   );
 };
