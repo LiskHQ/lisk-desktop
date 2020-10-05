@@ -1,0 +1,58 @@
+.container {
+  & .content {
+
+    & .contentItem {
+      padding-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    & .contentHeading {
+      /* padding-bottom: 10px; */
+    }
+  }
+
+  & .infoContainer {
+    display: flex;
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+
+    & .infoColumn {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+
+      &:last-child {
+        padding-left: 10px;
+      }
+    }
+  }
+
+  & .footer {
+    & button {
+      width: 230px;
+    }
+  }
+}
+
+.infoTitle {
+  margin-bottom: 10px;
+}
+
+.voteItems {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.voteItem {
+  background-color: #EEF0F7;
+  padding: 8px;
+  border-radius: 3px;
+  margin: 10px 10px 0 0;
+  white-space: nowrap;
+}
+
+.rankText {
+  color: #254898;
+}

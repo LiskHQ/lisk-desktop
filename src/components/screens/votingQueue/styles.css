@@ -7,3 +7,43 @@
   top: 0;
   left: 216px;
 }
+
+.toggleIcon {
+  padding-left: 14px;
+  
+  & :hover {
+    cursor: pointer;
+  }
+}
+
+.toggleIcon.notHeader {
+  display: flex;
+  height: 50px;
+}
+
+.header {
+  display: flex;
+  padding: 0 16px;
+
+  & .heading {
+    width: 45%;
+  }
+
+  & .voteStats {
+    width: 18%;
+    text-align: center;
+    border-right: 1px solid #e1e3eb;
+
+    &:last-child {
+      border: 0;
+    }
+
+    & .addedNumeral {
+      color: #2BD67B;
+    }
+
+    & .editedNumeral {
+      color: #254998;
+    }
+  }
+}

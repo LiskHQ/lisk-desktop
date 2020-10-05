@@ -1,0 +1,32 @@
+.container {
+  & .header {
+    padding: 0;
+    height: 50px;
+    justify-content: flex-start;
+
+    & .title {
+      margin-left: 12px;
+    }
+  }
+
+  & .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  & .footer {
+    margin-top: 48px;
+  }
+}
+
+.submissionHeading {
+  margin-top: 14px;
+}
+
+.submissionSubHeading {
+  margin-top: 10px;
+}
+

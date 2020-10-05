@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
-import Icon from '../../../toolbox/icon';
 import VoteListItem from './voteListItem';
 import TransactionPriority from '../../../shared/transactionPriority';
 
@@ -12,6 +11,8 @@ import { toRawLsk } from '../../../../utils/lsk';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../../toolbox/buttons';
+import ToggleIcon from '../toggleIcon';
+import VoteStats from '../voteStats';
 
 /**
  * Converts the votes object stored in Redux store
@@ -108,15 +109,14 @@ const Editor = ({
   return (
     <section className={styles.wrapper}>
       <Box>
-        <span className={styles.toggleIcon}>
-          <Icon name="votingQueueActive" />
-        </span>
-        <header className={styles.header}>
-          <span className={styles.heading}>{t('Voting Queue')}</span>
-          <span className={styles.voteStats}>{`${added} ${t('added')}`}</span>
-          <span className={styles.voteStats}>{`${edited} ${t('edited')}`}</span>
-          <span className={styles.voteStats}>{`${removed} ${t('removed')}`}</span>
-        </header>
+        <ToggleIcon isNotHeader />
+        <VoteStats
+          t={t}
+          heading={t('Voting queue')}
+          added={added}
+          edited={edited}
+          removed={removed}
+        />
         <BoxContent className={styles.contentContainer}>
           <div className={styles.contentHeader}>
             <span className={styles.infoColumn}>Delegate</span>

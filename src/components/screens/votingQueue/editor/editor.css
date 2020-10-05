@@ -7,24 +7,6 @@
     border-radius: 0;
     border-bottom: 1px solid #e1e3eb;
   }
-
-  & .header {
-    padding: 0 16px;
-
-    & .heading {
-      width: 45%;
-    }
-
-    & .voteStats {
-      width: 18%;
-      text-align: center;
-      border-right: 1px solid #e1e3eb;
-
-      &:last-child {
-        border: 0;
-      }
-    }
-  }
 }
 
 .contentHeader {
@@ -37,6 +19,11 @@
 
 .oldAmountColumn {
   width: 20%;
+}
+
+.centerContent {
+  display: flex;
+  align-items: center;
 }
 
 .newAmountColumn {
@@ -88,16 +75,32 @@
   }
 }
 
-.toggleIcon {
-  padding: 14px 0 0 12px;
-}
-
 .txPriority {
-  margin: 10px 20px;
+  margin: 20px;
 }
 
 .editIconsContainer {
   display: flex;
   justify-content: space-between;
   width: 50px;
+}
+
+.editAmountInput {
+  height: 100%;
+}
+
+.formButtonsContainer {
+  margin-left: 20px;
+  display: flex;
+}
+
+.editVoteForm {
+  display: flex;
+  flex: 1;
+  
+  & .formButtons {
+    padding: 0 8px;
+    border: none;
+    min-width: 64px;
+  }
 }
