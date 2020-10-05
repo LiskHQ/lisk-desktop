@@ -4,10 +4,14 @@ import Box from '../../../toolbox/box';
 import { SecondaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import Icon from '../../../toolbox/icon';
 import { Input } from '../../../toolbox/inputs';
+import LiskAmount from '../../../shared/liskAmount';
 
 import styles from './editor.css';
+import { tokenMap } from '../../../../constants/tokens';
 
 const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
+
+const token = tokenMap.LSK.key;
 
 const VoteListItem = ({
   t = s => s, address, username, oldAmount, newAmount, setVoteAmount, deleteVote,
@@ -45,13 +49,13 @@ const VoteListItem = ({
         </div>
       </div>
       <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
-        {`${oldAmount} LSK`}
+        <LiskAmount val={oldAmount} token={token} />
       </span>
       {state === ComponentState.notEditing
         ? (
           <>
             <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
-              {`${newAmount} LSK`}
+              <LiskAmount val={newAmount} token={token} />
             </span>
             <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>
               <span onClick={changeToEditingMode}>

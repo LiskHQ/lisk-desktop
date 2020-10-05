@@ -15,11 +15,11 @@ import VoteStats from '../voteStats';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 
 const dummyVotes = Array.from(Array(20).keys()).map(i => ({
-  address: `123${i}L`, oldAmount: i, newAmount: 1000 + i, username: `haha-${i}`,
+  address: `123${i}L`, oldAmount: i + 1e8, newAmount: 1000 + 1e8 + i, username: `haha-${i}`,
 }));
 
 dummyVotes.push({
-  address: '123100L', oldAmount: 100, newAmount: 0, username: 'haha',
+  address: '123100L', oldAmount: 100 + 1e8, newAmount: 0, username: 'haha',
 });
 
 const getVoteStats = (votes) => {

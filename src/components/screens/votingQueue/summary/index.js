@@ -1,4 +1,5 @@
 import React from 'react';
+import LiskAmount from '../../../shared/liskAmount';
 
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
@@ -17,7 +18,10 @@ const ItemList = ({ items }) => (
     {items.map((item, i) => (
       <span key={i} className={styles.voteItem}>
         <span className={styles.rankText}>{`#${item.rank} `}</span>
-        {`${item.username} - ${item.amount} LSK`}
+        <span>
+          {`${item.username} - `}
+          <LiskAmount val={item.amount} />
+        </span>
       </span>
     ))}
   </div>
