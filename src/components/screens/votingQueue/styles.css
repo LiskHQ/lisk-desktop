@@ -12,6 +12,7 @@
 
 .toggleIcon {
   padding-left: 14px;
+  box-sizing: border-box;
   
   & :hover {
     cursor: pointer;
@@ -19,6 +20,7 @@
 }
 
 .toggleIcon.notHeader {
+  border-bottom: 1px solid #DFE6F2;
   display: flex;
   height: 50px;
 }
@@ -26,6 +28,7 @@
 .header {
   display: flex;
   padding: 0 16px;
+  margin-top: 20px;
 
   & .heading {
     width: 45%;
