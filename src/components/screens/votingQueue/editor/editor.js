@@ -5,23 +5,15 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import TransactionPriority from '../../../shared/transactionPriority';
 import { tokenMap } from '../../../../constants/tokens';
+import { toRawLsk } from '../../../../utils/lsk';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import Table from '../../../toolbox/table';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
-
 import VoteListItem from './voteListItem';
 import styles from './editor.css';
-
-const dummyVotes = Array.from(Array(20).keys()).map(i => ({
-  address: `123${i}L`, oldAmount: i + 1e8, newAmount: 1000 + 1e8 + i, username: `haha-${i}`,
-}));
-
-dummyVotes.push({
-  address: '123100L', oldAmount: 100 + 1e8, newAmount: 0, username: 'haha',
-});
 
 const header = t => ([
   {
@@ -46,35 +38,80 @@ const header = t => ([
   },
 ]);
 
-const getVoteStats = (votes) => {
-  const count = { added: 0, edited: 0, removed: 0 };
-  votes.forEach(({ oldAmount, newAmount }) => {
-    if (!oldAmount && newAmount) {
-      // new vote
-      count.added++;
-    } else if (oldAmount && !newAmount) {
-      // removed vote
-      count.removed++;
-    } else {
-      // edited vote
-      count.edited++;
-    }
-  });
-  return count;
+
+/**
+ * Converts the votes object stored in Redux store
+ * which looks like { delegateAddress: { confirmed, unconfirmed } }
+ * into an array of objects that Lisk Element expects, looking like
+ * [{ delegatesAddress, amount }]
+ *
+ * @param {Object} votes - votes object retrieved from the Redux store
+ * @returns {Array} Array of votes as Lisk Element expects
+ */
+const normalizeVotesForTx = votes =>
+  Object.keys(votes).map(delegateAddress => ({
+    delegateAddress,
+    amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed),
+  }));
+
+/**
+ * Validates given votes against the following criteria:
+ * - Number of votes must not exceed 10
+ * - Added vote amounts + fee must not exceed account balance
+ * @param {Object} votes - Votes object from Redux store
+ * @param {Number} balance - Account balance in Beddows
+ * @param {Number} fee - Tx fee in Beddows
+ * @param {Function} t - i18n translation function
+ * @returns {Object} The feedback object including error status and messages
+ */
+const validateVotes = (votes, balance, fee, t) => {
+  const messages = [];
+  if (Object.keys(votes).length > 10) messages.push(t('You can\'t vote for more than 10 delegates.'));
+  const addedVoteAmount = Object.values(votes)
+    .filter(vote => vote.unconfirmed > vote.confirmed)
+    .reduce((sum, vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
+  if ((addedVoteAmount + toRawLsk(fee)) > balance) messages.push(t('You don\'t have enough LSK in your account.'));
+
+  return { messages, error: !!messages.length };
 };
+
+/**
+ * Determines the number of votes that have been
+ * added, removed or edited.
+ *
+ * @param {Object} votes - votes object retrieved from the Redux store
+ * @returns {Object} - stats object
+ */
+const getVoteStats = votes =>
+  Object.values(votes)
+    .reduce((stats, { confirmed, unconfirmed }) => {
+      if (!confirmed && unconfirmed) {
+        // new vote
+        stats.added++;
+      } else if (confirmed && !unconfirmed) {
+        // removed vote
+        stats.removed++;
+      } else if (confirmed !== unconfirmed) {
+        // edited vote
+        stats.edited++;
+      }
+      return stats;
+    }, { added: 0, edited: 0, removed: 0 });
 
 const token = tokenMap.LSK.key;
 const txType = 'vote';
 
-const Editor = (props) => {
-  const {
-    t = s => s, votes = dummyVotes, account,
-  } = props;
-
+const Editor = ({
+  t, votes, account, nextStep,
+}) => {
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority, priorityOptions,
   ] = useTransactionPriority(token);
+
+  const changedVotes = Object.keys(votes)
+    .filter(address => votes[address].unconfirmed !== votes[address].confirmed)
+    .map(address => ({ address, ...votes[address] }));
 
   const { fee, minFee } = useTransactionFeeCalculation({
     selectedPriority,
@@ -85,13 +122,12 @@ const Editor = (props) => {
       txType,
       nonce: account.nonce,
       senderPublicKey: account.publicKey,
-      votes,
+      votes: normalizeVotesForTx(votes),
     },
   });
 
   const { added, edited, removed } = getVoteStats(votes);
-
-  const isCTADisAbled = false;
+  const feedback = validateVotes(votes, account.balance, fee.value, t);
 
   return (
     <section className={styles.wrapper}>
@@ -107,7 +143,7 @@ const Editor = (props) => {
         <BoxContent className={styles.contentContainer}>
           <div className={styles.contentScrollable}>
             <Table
-              data={votes}
+              data={changedVotes}
               header={header(t)}
               row={VoteListItem}
               canLoadMore={false}
@@ -127,8 +163,11 @@ const Editor = (props) => {
           selectedPriority={selectedPriority.selectedIndex}
           setSelectedPriority={selectTransactionPriority}
         />
+        {
+          feedback.error && <span className="feedback">{feedback.messages[0]}</span>
+        }
         <BoxFooter>
-          <PrimaryButton size="l" disabled={isCTADisAbled} onClick={() => props.nextStep()}>
+          <PrimaryButton size="l" disabled={feedback.error} onClick={nextStep}>
             {t('Continue')}
           </PrimaryButton>
         </BoxFooter>

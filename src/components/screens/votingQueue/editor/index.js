@@ -6,6 +6,7 @@ import Editor from './editor';
 
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
+  votes: state.voting,
 });
 
 export default connect(
