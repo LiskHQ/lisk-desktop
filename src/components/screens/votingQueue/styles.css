@@ -1,3 +1,5 @@
+@import '../../../app/mixins.css';
+
 .modal {
   width: 45%;
   min-width: 638px;
@@ -27,12 +29,21 @@
 
   & .heading {
     width: 45%;
+    @mixin headingNormal;
+
+    font-size: var(--font-size-h5);
   }
 
   & .voteStats {
     width: 18%;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-right: 1px solid #e1e3eb;
+
+    & span:first-child {
+      margin-right: 6px;
+    }
 
     &:last-child {
       border: 0;

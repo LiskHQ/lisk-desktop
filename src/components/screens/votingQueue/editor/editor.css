@@ -27,7 +27,8 @@
 }
 
 .newAmountColumn {
-  width: 22%;
+  display: flex;
+  flex: 1;
 }
 
 .delegateInfoContainer {

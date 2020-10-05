@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+
 import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';
 import { SecondaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import Icon from '../../../toolbox/icon';
 import { Input } from '../../../toolbox/inputs';
+import LiskAmount from '../../../shared/liskAmount';
+import { tokenMap } from '../../../../constants/tokens';
 
 import styles from './editor.css';
 
 const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
+const token = tokenMap.LSK.key;
 
 const VoteListItem = ({
   t = s => s, address, username, confirmed, unconfirmed, setVoteAmount, deleteVote,
@@ -45,13 +49,13 @@ const VoteListItem = ({
         </div>
       </div>
       <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
-        {`${confirmed} LSK`}
+        <LiskAmount val={confirmed} token={token} />
       </span>
       {state === ComponentState.notEditing
         ? (
           <>
             <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
-              {`${unconfirmed} LSK`}
+              <LiskAmount val={unconfirmed} token={token} />
             </span>
             <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>
               <span onClick={changeToEditingMode}>

@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
-import VoteListItem from './voteListItem';
 import TransactionPriority from '../../../shared/transactionPriority';
-
-import styles from './editor.css';
 import { tokenMap } from '../../../../constants/tokens';
 import { toRawLsk } from '../../../../utils/lsk';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton } from '../../../toolbox/buttons';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
+import VoteListItem from './voteListItem';
+import styles from './editor.css';
 
 /**
  * Converts the votes object stored in Redux store
@@ -122,7 +123,15 @@ const Editor = ({
           <div className={styles.contentHeader}>
             <span className={styles.infoColumn}>Delegate</span>
             <span className={styles.oldAmountColumn}>Old Vote Amount</span>
-            <span className={styles.newAmountColumn}>New vote Amount</span>
+            <div className={styles.newAmountColumn}>
+              <span>{t('New vote Amount')}</span>
+              <Tooltip
+                title="title"
+                footer={<footer>footer</footer>}
+                position="bottom"
+              />
+            </div>
+
             <span className={styles.editColumn} />
           </div>
           <div className={styles.contentScrollable}>
@@ -157,7 +166,6 @@ const Editor = ({
           <PrimaryButton size="l" disabled={feedback.error} onClick={nextStep}>
             {t('Continue')}
           </PrimaryButton>
-
         </BoxFooter>
       </Box>
     </section>

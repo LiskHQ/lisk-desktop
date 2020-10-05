@@ -1,11 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+
 import MultiStep from '../../shared/multiStep';
+import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
+
 import Editor from './editor';
 import Summary from './summary';
 import Result from './result';
-import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
-
 import styles from './styles.css';
 
 const VotingQueue = ({ history }) => {
