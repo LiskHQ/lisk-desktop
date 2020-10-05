@@ -16,7 +16,7 @@
   }
 }
 
-.notHeader {
+.toggleIcon.notHeader {
   display: flex;
   height: 50px;
 }
