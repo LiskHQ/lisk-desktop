@@ -37,5 +37,13 @@
     &:last-child {
       border: 0;
     }
+
+    & .addedNumeral {
+      color: #2BD67B;
+    }
+
+    & .editedNumeral {
+      color: #254998;
+    }
   }
 }
