@@ -7,12 +7,14 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import BoxHeader from '../../../toolbox/box/header';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { toRawLsk, fromRawLsk } from '../../../../utils/lsk';
+import { toRawLsk } from '../../../../utils/lsk';
 import Piwik from '../../../../utils/piwik';
 import { getAvailableUnlockingTransactions } from '../../../../utils/account';
 import { create } from '../../../../utils/api/lsk/transactions';
 import transactionTypes from '../../../../constants/transactionTypes';
 import actionTypes from '../../../../constants/actions';
+import LiskAmount from '../../../shared/liskAmount';
+import { tokenMap } from '../../../../constants/tokens';
 import styles from './lockedBalance.css';
 
 const Form = ({
@@ -76,7 +78,11 @@ const Form = ({
           onClick={onClickUnlock}
           disabled={availableBalance === 0}
         >
-          {t(`Unlock ${fromRawLsk(availableBalance)} LSK`)}
+          <>
+            {t('Unlock')}
+            {' '}
+            <LiskAmount val={availableBalance} token={tokenMap.LSK.key} />
+          </>
         </PrimaryButton>
       </BoxFooter>
     </Box>
