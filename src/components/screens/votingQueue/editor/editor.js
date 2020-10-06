@@ -128,10 +128,14 @@ const Editor = ({
 
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
   const feedback = validateVotes(votes, account.balance, fee.value, t);
-  const goToNextStep = () => nextStep({
-    added, edited, removed, fee: toRawLsk(customFee.value || fee.value),
-  });
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
+
+  const goToNextStep = () => {
+    const feeValue = customFee ? customFee.value : fee.value;
+    nextStep({
+      added, edited, removed, fee: toRawLsk(feeValue),
+    });
+  };
 
   return (
     <section className={styles.wrapper}>

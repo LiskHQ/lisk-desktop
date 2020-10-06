@@ -1,5 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import { tokenMap } from '../../../../constants/tokens';
 
 import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
@@ -11,22 +12,25 @@ import VoteStats from '../voteStats';
 
 import styles from './styles.css';
 
+const token = tokenMap.LSK.key;
+
 const ItemList = ({ items, heading }) => (
   <div className={styles.contentItem}>
     <span className={styles.contentHeading}>{heading}</span>
     <div className={styles.voteItems}>
       {Object.keys(items).map((address, i) => (
         <span key={i} className={styles.voteItem}>
-          <span className={styles.rankText}>{`#${address} `}</span>
+          <span className={styles.addressText}>{address}</span>
           <span>
             {Object.values(items[address]).length === 2
               ? (
                 <>
-                  <LiskAmount val={1} />
-                  <LiskAmount val={2} />
+                  <LiskAmount val={items[address].confirmed} token={token} />
+                  <span>{'->'}</span>
+                  <LiskAmount val={items[address].unconfirmed} token={token} />
                 </>
               )
-              : <LiskAmount val={Object.values(items[address])[0]} />
+              : <LiskAmount val={Object.values(items[address])[0]} token={token} />
             }
           </span>
         </span>

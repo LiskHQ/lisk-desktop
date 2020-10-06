@@ -65,6 +65,7 @@
   @mixin contentSmall;
 }
 
-.rankText {
+.addressText {
   color: #254898;
+  margin-right: 10px;
 }
