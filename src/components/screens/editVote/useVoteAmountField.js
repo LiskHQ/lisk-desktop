@@ -11,18 +11,14 @@ let loaderTimeout = null;
  * Returns error and feedback of vote amount field.
  *
  * @param {String} value - The vote amount value in Beddows
- * @param {Number} maxAmount - The vote amount cap/max in Beddows
- * @param {Function} t - i18n.t
  * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value, t) => {
-  let { message: feedback } = validateAmountFormat({ value, token: tokenMap.LSK.key });
-
-  if (!feedback && value % 10 !== 0) {
-    feedback = t('You can only vote in multiplies of 10 LSK.');
-  }
-  return { error: !!feedback, feedback };
-};
+const getAmountFeedbackAndError = value =>
+  validateAmountFormat({
+    value,
+    token: tokenMap.LSK.key,
+    checklist: ['FORMAT', 'VOTE_10X'],
+  });
 
 /**
  * Calculates the maximum free/available balance to use for voting,
