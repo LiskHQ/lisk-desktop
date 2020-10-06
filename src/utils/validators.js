@@ -97,6 +97,9 @@ export const validateAmountFormat = ({
     },
   };
 
-  const error = checklist.find(type => errors[type].fn());
-  return error ? { error: true, message: errors[error].message } : { error: false };
+  const errorType = checklist.find(type => errors[type].fn());
+  return {
+    error: !!errorType,
+    message: errorType ? errors[errorType].message : '',
+  };
 };
