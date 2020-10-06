@@ -13,12 +13,15 @@ let loaderTimeout = null;
  * @param {String} value - The vote amount value in Beddows
  * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = value =>
-  validateAmountFormat({
+const getAmountFeedbackAndError = (value) => {
+  const { message: feedback } = validateAmountFormat({
     value,
     token: tokenMap.LSK.key,
     checklist: ['FORMAT', 'VOTE_10X'],
   });
+
+  return { error: !!feedback, feedback };
+};
 
 /**
  * Calculates the maximum free/available balance to use for voting,
