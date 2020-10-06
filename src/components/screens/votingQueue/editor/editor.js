@@ -12,6 +12,7 @@ import { PrimaryButton } from '../../../toolbox/buttons';
 import Table from '../../../toolbox/table';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
+
 import VoteRow from './voteRow';
 import styles from './editor.css';
 
@@ -90,10 +91,10 @@ const getVoteStats = votes =>
         stats.added[address] = { unconfirmed };
       } else if (confirmed && !unconfirmed) {
         // removed vote
-        stats.edited[address] = { confirmed };
+        stats.removed[address] = { confirmed };
       } else if (confirmed !== unconfirmed) {
         // edited vote
-        stats.removed[address] = { unconfirmed, confirmed };
+        stats.edited[address] = { unconfirmed, confirmed };
       }
       return stats;
     }, { added: {}, edited: {}, removed: {} });
