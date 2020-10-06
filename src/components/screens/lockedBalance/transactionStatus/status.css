@@ -1,5 +1,5 @@
 .wrapper {
-  padding: var(--horizontal-padding-l);
+  padding: 0 var(--horizontal-padding-l);
 }
 
 .content {

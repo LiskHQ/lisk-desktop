@@ -1,6 +1,6 @@
 import Lisk from '@liskhq/lisk-client';
 
-import { byteSizes } from '../constants/transactionTypes';
+import transactionTypes, { byteSizes } from '../constants/transactionTypes';
 
 /**
  * calculates the transaction size in bytes
@@ -47,5 +47,17 @@ const dedupeTransactions = (pendingTransactions, confirmedTransactions) =>
       index === self.findIndex(transactionB => (
         transactionB.id === transactionA.id
       )));
+
+export const getTxAmount = (transaction) => {
+  let amount = transaction.amount !== undefined ? transaction.amount : transaction.asset.amount;
+  if (!amount && transaction.type === transactionTypes().unlockToken.code.legacy) {
+    amount = 0;
+    transaction.asset.unlockingObjects.forEach((unlockedObject) => {
+      amount += parseInt(unlockedObject.amount, 10);
+    });
+    amount = `${amount}`;
+  }
+  return amount;
+};
 
 export default dedupeTransactions;

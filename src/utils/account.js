@@ -1,6 +1,7 @@
 import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 
 import { tokenMap } from '../constants/tokens';
+import { unlockTxDelayAvailability } from '../constants/account';
 import regex from './regex';
 
 export const extractPublicKey = passphrase =>
@@ -37,3 +38,28 @@ export const getActiveTokenAccount = state => ({
  */
 export const truncateAddress = address =>
   address.replace(regex.lskAddressTrunk, '$1...$3');
+
+export const calculateLockedBalance = ({ votes = [] }) =>
+  votes.reduce((acc, vote) => acc + parseInt(vote.amount, 10), 0);
+
+// TODO handle delegate punishment when Lisk Service is ready
+export const getDelayedAvailability = isSelfVote => (isSelfVote
+  ? unlockTxDelayAvailability.selfUnvote : unlockTxDelayAvailability.unvote);
+
+export const isBlockHeightReached = ({ unvoteHeight, delegateAddress }, currentBlock, address) => {
+  if (!currentBlock) return false;
+  const currentBlockHeight = currentBlock.height;
+  const isSelfVote = address === delegateAddress;
+  const delayedAvailability = getDelayedAvailability(isSelfVote);
+  return currentBlockHeight - unvoteHeight > delayedAvailability;
+};
+
+export const getAvailableUnlockingTransactions = ({ unlocking = [], address }, currentBlock) =>
+  unlocking.filter(vote => isBlockHeightReached(vote, currentBlock, address));
+
+export const calculateAvailableBalance = ({ unlocking = [], address }, currentBlock) =>
+  unlocking.reduce(
+    (acc, vote) =>
+      (isBlockHeightReached(vote, currentBlock, address) ? acc + parseInt(vote.amount, 10) : acc),
+    0,
+  );

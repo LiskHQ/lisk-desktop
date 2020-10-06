@@ -10,6 +10,7 @@ import LiskAmount from '../../shared/liskAmount';
 import transactionTypes from '../../../constants/transactionTypes';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
+import { getTxAmount } from '../../../utils/transactions';
 
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
@@ -136,7 +137,7 @@ export const AmmountAndDate = ({
       </span>
       <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
         <span className="tx-amount">
-          <LiskAmount val={transaction.amount} />
+          <LiskAmount val={getTxAmount(transaction)} />
           {' '}
           {activeToken}
         </span>
