@@ -129,8 +129,9 @@ const Editor = ({
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
   const feedback = validateVotes(votes, account.balance, fee.value, t);
   const goToNextStep = () => nextStep({
-    added, edited, removed, fee,
+    added, edited, removed, fee: toRawLsk(customFee.value || fee.value),
   });
+  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 
   return (
     <section className={styles.wrapper}>
@@ -170,7 +171,11 @@ const Editor = ({
           feedback.error && <span className="feedback">{feedback.messages[0]}</span>
         }
         <BoxFooter>
-          <PrimaryButton size="l" disabled={feedback.error} onClick={goToNextStep}>
+          <PrimaryButton
+            size="l"
+            disabled={isCTADisabled}
+            onClick={goToNextStep}
+          >
             {t('Continue')}
           </PrimaryButton>
         </BoxFooter>
