@@ -44,7 +44,7 @@ const getAmountFeedbackAndError = value =>
  * @returns {[Boolean, Function]} The error flag, The setter function
  */
 const useVoteAmountField = (initialValue) => {
-  const { i18n, t } = useTranslation();
+  const { i18n } = useTranslation();
   const [amountField, setAmountField] = useState({
     value: initialValue,
     isLoading: false,
@@ -77,7 +77,7 @@ const useVoteAmountField = (initialValue) => {
       setAmountField({
         isLoading: false,
         value,
-        ...getAmountFeedbackAndError(value, t),
+        ...getAmountFeedbackAndError(value),
       });
     }, 300);
   };
