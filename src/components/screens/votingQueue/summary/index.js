@@ -7,6 +7,7 @@ import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
+import Icon from '../../../toolbox/icon';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
 
@@ -26,7 +27,7 @@ const ItemList = ({ items, heading }) => (
               ? (
                 <>
                   <LiskAmount val={items[address].confirmed} token={token} />
-                  <span>{'->'}</span>
+                  <span className={styles.arrowIcon}><Icon name="arrowRightTailed" /></span>
                   <LiskAmount val={items[address].unconfirmed} token={token} />
                 </>
               )
