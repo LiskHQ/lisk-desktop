@@ -23,7 +23,7 @@ const VoteListItem = ({
 }) => {
   const [state, setState] = useState(ComponentState.notEditing);
   const dispatch = useDispatch();
-  const [voteAmount, setVoteAmount] = useVoteAmountField(unconfirmed || confirmed);
+  const [voteAmount, setVoteAmount] = useVoteAmountField(unconfirmed);
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
@@ -85,7 +85,6 @@ const VoteListItem = ({
             <AmountField
               amount={voteAmount}
               setAmountField={setVoteAmount}
-              title={t('Vote amount (LSK)')}
               inputPlaceHolder={t('Vote amount')}
               name="vote"
               className={styles.editAmountInput}
