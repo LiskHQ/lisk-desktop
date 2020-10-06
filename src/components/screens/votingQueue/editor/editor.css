@@ -97,6 +97,17 @@
 
 .editAmountInput {
   height: 100%;
+  margin-bottom: 0;
+
+  & input {
+    height: 40px !important;
+    padding: 0 5px !important;
+  }
+
+  /** hide the status spinner **/
+  & img {
+    display: none;
+  }
 }
 
 .formButtonsContainer {

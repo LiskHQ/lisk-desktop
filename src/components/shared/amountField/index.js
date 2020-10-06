@@ -9,7 +9,7 @@ import Converter from '../converter';
 import styles from './amountField.css';
 
 const AmountField = ({
-  amount, maxAmount, setAmountField,
+  amount, maxAmount, setAmountField, className,
   title, maxAmountTitle, inputPlaceHolder, name,
 }) => {
   const setEntireBalance = () => {
@@ -26,11 +26,11 @@ const AmountField = ({
 
   return (
     <label className={[
-      styles.fieldGroup, amount.error && styles.error,
+      styles.fieldGroup, amount.error && styles.error, className,
     ].filter(Boolean).join(' ')}
     >
       <div className={`${styles.amountFieldHeader}`}>
-        <span className={`${styles.fieldLabel}`}>{title}</span>
+        { title && <span className={`${styles.fieldLabel}`}>{title}</span> }
         {
           maxAmount && (
             <TertiaryButton
