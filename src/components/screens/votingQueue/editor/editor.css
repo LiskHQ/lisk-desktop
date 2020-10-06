@@ -102,6 +102,44 @@
   & input {
     height: 40px !important;
     padding: 0 5px !important;
+
+    &:not([class~="error"]) {
+      & + div {
+        display: none;
+      }
+    }
+
+    & + div {
+      position: fixed;
+      z-index: 15;
+      width: max-content;
+      padding-top: 2px;
+
+      & span {
+        margin-top: 6px;
+        position: relative;
+        background-color: var(--color-white) !important;
+        color: var(--color-slate-gray) !important;
+        border: 1px solid var(--color-platinum);
+        border-radius: var(--border-radius-standard);
+        box-shadow: var(--box-shadow-standard);
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        background: var(--color-white);
+        left: 23px;
+        transform: rotate(45deg);
+        border-color: var(--color-platinum);
+        border-style: solid;
+        border-width: 1px 0px 0px 1px;
+        z-index: 2;
+      }
+    }
   }
 
   /** hide the status spinner **/
