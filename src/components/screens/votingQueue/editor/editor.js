@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
@@ -12,7 +12,7 @@ import { PrimaryButton } from '../../../toolbox/buttons';
 import Table from '../../../toolbox/table';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
-import VoteListItem from './voteListItem';
+import VoteRow from './voteRow';
 import styles from './editor.css';
 
 const header = t => ([
@@ -37,7 +37,6 @@ const header = t => ([
     classList: styles.editColumn,
   },
 ]);
-
 
 /**
  * Converts the votes object stored in Redux store
@@ -83,20 +82,21 @@ const validateVotes = (votes, balance, fee, t) => {
  * @returns {Object} - stats object
  */
 const getVoteStats = votes =>
-  Object.values(votes)
-    .reduce((stats, { confirmed, unconfirmed }) => {
+  Object.keys(votes)
+    .reduce((stats, address) => {
+      const { confirmed, unconfirmed } = votes[address];
       if (!confirmed && unconfirmed) {
         // new vote
-        stats.added++;
+        stats.added[address] = { unconfirmed };
       } else if (confirmed && !unconfirmed) {
         // removed vote
-        stats.removed++;
+        stats.edited[address] = { confirmed };
       } else if (confirmed !== unconfirmed) {
         // edited vote
-        stats.edited++;
+        stats.removed[address] = { unconfirmed, confirmed };
       }
       return stats;
-    }, { added: 0, edited: 0, removed: 0 });
+    }, { added: {}, edited: {}, removed: {} });
 
 const token = tokenMap.LSK.key;
 const txType = 'vote';
@@ -126,8 +126,16 @@ const Editor = ({
     },
   });
 
-  const { added, edited, removed } = getVoteStats(votes);
+  const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
   const feedback = validateVotes(votes, account.balance, fee.value, t);
+  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
+
+  const goToNextStep = () => {
+    const feeValue = customFee ? customFee.value : fee.value;
+    nextStep({
+      added, edited, removed, fee: toRawLsk(feeValue),
+    });
+  };
 
   return (
     <section className={styles.wrapper}>
@@ -136,16 +144,16 @@ const Editor = ({
         <VoteStats
           t={t}
           heading={t('Voting queue')}
-          added={added}
-          edited={edited}
-          removed={removed}
+          added={Object.keys(added).length}
+          edited={Object.keys(edited).length}
+          removed={Object.keys(removed).length}
         />
         <BoxContent className={styles.contentContainer}>
           <div className={styles.contentScrollable}>
             <Table
               data={changedVotes}
               header={header(t)}
-              row={VoteListItem}
+              row={VoteRow}
               canLoadMore={false}
               emptyState={{ message: t('No votes in queue.') }}
             />
@@ -167,7 +175,11 @@ const Editor = ({
           feedback.error && <span className="feedback">{feedback.messages[0]}</span>
         }
         <BoxFooter>
-          <PrimaryButton size="l" disabled={feedback.error} onClick={nextStep}>
+          <PrimaryButton
+            size="l"
+            disabled={isCTADisabled}
+            onClick={goToNextStep}
+          >
             {t('Continue')}
           </PrimaryButton>
         </BoxFooter>

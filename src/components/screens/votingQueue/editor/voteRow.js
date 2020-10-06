@@ -16,7 +16,7 @@ import styles from './editor.css';
 const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
 const token = tokenMap.LSK.key;
 
-const VoteListItem = ({
+const VoteRow = ({
   t = s => s, data: {
     address, username, confirmed, unconfirmed,
   },
@@ -112,4 +112,4 @@ const VoteListItem = ({
   );
 };
 
-export default VoteListItem;
+export default VoteRow;
