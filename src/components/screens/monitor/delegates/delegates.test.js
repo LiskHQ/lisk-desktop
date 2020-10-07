@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import fakeStore from '../../../../../test/unit-test-utils/fakeStore';
 import Delegates from './delegates';
 import delegatesList from '../../../../../test/constants/delegates';
-import * as blockActions from '../../../../actions/blocks';
 
 const activeDelegates = delegatesList.map(item => ({ ...item, publicKey: item.account.publicKey }));
 activeDelegates.push({
@@ -108,18 +107,5 @@ describe('Delegates monitor page', () => {
   it('renders the forging status', () => {
     wrapper = setup(props);
     expect(wrapper.find('a.delegate-row')).toHaveLength(delegatesList.length + 1);
-  });
-
-  it('triggers forgingDataDisplayed action when mounted', () => {
-    jest.spyOn(blockActions, 'forgingDataDisplayed');
-    wrapper = setup(props);
-    expect(blockActions.forgingDataDisplayed).toHaveBeenCalled();
-  });
-
-  it('triggers forgingDataConcealed action when unmounted', () => {
-    jest.spyOn(blockActions, 'forgingDataConcealed');
-    wrapper = setup(props);
-    wrapper.unmount();
-    expect(blockActions.forgingDataConcealed).toHaveBeenCalled();
   });
 });
