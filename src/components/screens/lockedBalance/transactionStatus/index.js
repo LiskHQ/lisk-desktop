@@ -57,7 +57,7 @@ const Status = ({
         {template.button && (
           <PrimaryButton
             onClick={template.button.onClick}
-            className={template.button.className}
+            className={`${template.button.className} dialog-close-button`}
           >
             {template.button.title}
           </PrimaryButton>
