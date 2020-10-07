@@ -61,7 +61,7 @@ const Result = ({
                   <LiskAmountFormatted val={locked} />
                   <span>{t('LSK for voting and may unlock')}</span>
                   <LiskAmountFormatted val={unlockable} />
-                  <span>{(`LSK in ${unlockTime} hours.`)}</span>
+                  <span>{t('LSK in {{unlockTime}} hours.', { unlockTime })}</span>
                 </>
               )
               : null}
