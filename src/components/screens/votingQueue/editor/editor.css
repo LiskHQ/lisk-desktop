@@ -5,7 +5,7 @@
     padding: 0;
     margin: 20px;
     border-radius: 0;
-    border-bottom: 1px solid #e1e3eb;
+    border-bottom: 1px solid var(--color-platinum);
   }
 }
 

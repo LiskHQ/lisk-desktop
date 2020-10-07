@@ -20,7 +20,7 @@
 }
 
 .toggleIcon.notHeader {
-  border-bottom: 1px solid #DFE6F2;
+  border-bottom: 1px solid #dfe6f2;
   display: flex;
   height: 50px;
 }
@@ -42,7 +42,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid #e1e3eb;
+    border-right: 1px solid var(--color-platinum);
 
     & span:first-child {
       margin-right: 6px;
@@ -53,11 +53,11 @@
     }
 
     & .addedNumeral {
-      color: #2BD67B;
+      color: var(--color-jade-green);
     }
 
     & .editedNumeral {
-      color: #254998;
+      color: var(--color-ink-blue);
     }
   }
 
@@ -65,6 +65,6 @@
     @mixin contentLargest;
 
     line-height: 15px;
-    color:var(--color-blue-gray);
+    color: var(--color-blue-gray);
   }
 }
