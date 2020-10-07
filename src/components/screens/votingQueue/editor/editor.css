@@ -125,7 +125,7 @@
         box-shadow: var(--box-shadow-standard);
       }
 
-      &:before {
+      &::before {
         content: '';
         display: block;
         width: 10px;
@@ -156,7 +156,7 @@
 .editVoteForm {
   display: flex;
   flex: 1;
-  
+
   & .formButtons {
     padding: 0 8px;
     border: none;

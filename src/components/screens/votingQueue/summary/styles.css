@@ -2,7 +2,6 @@
 
 .container {
   & .content {
-
     & .contentItem {
       padding-bottom: 20px;
       display: flex;
@@ -17,7 +16,6 @@
   & .infoContainer {
     display: flex;
     padding-top: 20px;
-
     border-top: 1px solid var(--darker-border-color);
 
     & .infoColumn {
@@ -39,9 +37,9 @@
 }
 
 .infoTitle {
-  margin-bottom: 10px;
-
   @mixin contentNormal semi-bold;
+
+  margin-bottom: 10px;
 }
 
 .infoValue {
@@ -56,13 +54,13 @@
 }
 
 .voteItem {
+  @mixin contentSmall;
+
   background-color: var(--color-silver);
   padding: 8px;
   border-radius: 3px;
   margin: 10px 10px 0 0;
   white-space: nowrap;
-
-  @mixin contentSmall;
 }
 
 .addressText {

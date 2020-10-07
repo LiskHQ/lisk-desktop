@@ -90,7 +90,7 @@
   border-radius: 50%;
   width: 16px;
   height: 16px;
-  background-color: #2BD67B;
+  background-color: var(--color-jade-green);
 }
 
 @media (--medium-viewport) {

@@ -25,21 +25,20 @@
 }
 
 .submissionHeading {
-  margin-top: 14px;
-
   @mixin contentNormal semi-bold;
 
   font-size: 16px;
+  margin-top: 14px;
 }
 
 .submissionSubHeading {
-  margin-top: 10px;
-
   @mixin contentLarge;
+
+  margin-top: 10px;
 }
 
 .subHeadingBold {
   @mixin contentLarge semi-bold;
 
-  color: #4463A7;
+  color: #4463a7;
 }
