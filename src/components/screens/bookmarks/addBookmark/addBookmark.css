@@ -10,7 +10,7 @@
   }
 
   & .header {
-    border-bottom: solid 1px #dfe6f2;
+    border-bottom: solid 1px var(--color-very-light-gray);
     padding: 15px 20px 11px 15px;
   }
 

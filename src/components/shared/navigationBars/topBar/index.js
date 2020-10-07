@@ -12,6 +12,9 @@ const mapStateToProps = state => ({
   network: state.network,
   token: state.settings.token,
   settings: state.settings,
+  noOfVotes: Object.values(state.voting)
+    .filter(vote => (vote.confirmed !== vote.unconfirmed))
+    .length,
 });
 
 const mapDispatchToProps = {

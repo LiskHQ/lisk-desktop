@@ -110,6 +110,7 @@ or "warn/action" ineastd of "red/green"
   --color-deep-green: #00d563;
   --color-jade-green: #2bd67b;
   --color-pale-pink: #ffd0d1;
+  --color-silver: #eef0f7;
 
   /*************************
       Other Colors
@@ -118,6 +119,7 @@ or "warn/action" ineastd of "red/green"
   --light-border-color: rgba(255, 255, 255, 0.24);
   --overlay-color: rgba(255, 255, 255, 0.8);
   --dark-border-color: rgba(0, 0, 0, 0.08);
+  --darker-border-color: rgba(0, 0, 0, 0.15);
   --primary-background-color: rgba(64, 112, 244, 0.08);
   --error-background-color: var(--color-burnt-sienna);
   --color-dialog-bg: rgba(12, 21, 46, 0.52);
@@ -132,6 +134,7 @@ or "warn/action" ineastd of "red/green"
   --color-background-dark: #1e194d;
   --color-dark-gray: #868ba1;
   --color-light-gray: #e6e6e6;
+  --color-very-light-gray: #dfe6f2;
   --color-content-grayblue: #7383a7;
   --color-background-wrapper: var(--color-mystic);
   --color-background-header: #fbfcfd;
