@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { tokenMap } from '../../../../constants/tokens';
 
+import { tokenMap } from '../../../../constants/tokens';
 import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
@@ -49,12 +49,43 @@ const InfoColumn = ({ title, children }) => (
   </div>
 );
 
+const getResultProps = ({ added, removed, edited }) => {
+  let unlockable = Object.values(removed).reduce((sum, { confirmed }) => {
+    sum += confirmed;
+    return sum;
+  }, 0);
+
+  let locked = Object.values(added).reduce((sum, { unconfirmed }) => {
+    sum += unconfirmed;
+    return sum;
+  }, 0);
+
+  const editedWeight = Object.values(edited).reduce((sum, { confirmed, unconfirmed }) => {
+    sum += confirmed - unconfirmed;
+    return sum;
+  }, 0);
+
+  if (editedWeight > 0) {
+    locked += editedWeight;
+  } else {
+    unlockable += editedWeight;
+  }
+
+  return { locked, unlockable };
+};
+
 const Summary = ({
   t, removed, edited, added, fee, prevStep, nextStep,
 }) => {
   const addedLength = Object.keys(added).length;
   const editedLength = Object.keys(edited).length;
   const removedLength = Object.keys(removed).length;
+
+  const {
+    locked, unlockable,
+  } = getResultProps({ added, removed, edited });
+
+  const goToNextStep = () => nextStep({ locked, unlockable });
 
   return (
     <section>
@@ -80,7 +111,7 @@ const Summary = ({
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
           <SecondaryButton onClick={prevStep}>Edit</SecondaryButton>
-          <PrimaryButton size="l" onClick={nextStep}>
+          <PrimaryButton size="l" onClick={goToNextStep}>
             {t('Confirm')}
           </PrimaryButton>
         </BoxFooter>

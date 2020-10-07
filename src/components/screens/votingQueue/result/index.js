@@ -1,7 +1,9 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 
 import { removeSearchParamsFromUrl } from '../../../../utils/searchParams';
+import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
@@ -11,8 +13,13 @@ import ToggleIcon from '../toggleIcon';
 
 import styles from './styles.css';
 
+const unlockTime = 5;
+
+const LiskAmountFormatted = ({ val }) =>
+  <span className={styles.subHeadingBold}><LiskAmount val={val} /></span>;
+
 const Result = ({
-  t = s => s, totalVoteAmount = 2100, unlockTime = '5h 30min', history,
+  t, history, locked, unlockable,
 }) => {
   const closeModal = () => {
     removeSearchParamsFromUrl(history, ['modal']);
@@ -31,9 +38,33 @@ const Result = ({
             {t('Votes have been submitted')}
           </span>
           <span className={styles.submissionSubHeading}>
-            <span className={styles.subHeadingBold}>{totalVoteAmount}</span>
-            <span>{t('LSK will be available to unlock in ~')}</span>
-            <span className={styles.subHeadingBold}>{unlockTime}</span>
+            {unlockable && !locked
+              ? (
+                <>
+                  <LiskAmountFormatted val={unlockable} />
+                  <span>{t(`will be available to unlock in ${unlockTime}h.`)}</span>
+                </>
+              )
+              : null}
+            {locked && !unlockable
+              ? (
+                <>
+                  <LiskAmountFormatted val={locked} />
+                  <span>{t('LSK will be locked for voting.')}</span>
+                </>
+              )
+              : null}
+            {locked && unlockable
+              ? (
+                <>
+                  <span>{t('You have now locked')}</span>
+                  <LiskAmountFormatted val={locked} />
+                  <span>{t('LSK for voting and may unlock')}</span>
+                  <LiskAmountFormatted val={unlockable} />
+                  <span>{(`LSK in ${unlockTime} hours.`)}</span>
+                </>
+              )
+              : null}
           </span>
         </BoxContent>
         <BoxFooter direction="horizontal" className={styles.footer}>
@@ -46,4 +77,4 @@ const Result = ({
   );
 };
 
-export default withRouter(Result);
+export default withRouter(withTranslation()(Result));
