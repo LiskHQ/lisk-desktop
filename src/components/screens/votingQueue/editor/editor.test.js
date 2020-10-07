@@ -28,7 +28,7 @@ describe('VotingQueue', () => {
 
   it('Render only the changed votes', () => {
     const wrapper = mountWithRouter(Editor, { ...props, votes: mixedVotes });
-    expect(wrapper.find('VoteListItem')).toHaveLength(1);
+    expect(wrapper.find('VoteRow')).toHaveLength(1);
   });
 
   it('Shows an error if trying to vote for more than 10 delegates', () => {
