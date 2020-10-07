@@ -1,7 +1,7 @@
 Feature: Vote delegate
 
   Scenario: Vote for a delegate
-    Given I login as delegate on devnet
+    Given I login as genesis on devnet
     Given I am on wallet page
     And I click on openAddVoteDialog
     And I fill 30 in amountInput field
