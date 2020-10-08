@@ -18,12 +18,12 @@ import { calculateLockedBalance, getActiveTokenAccount } from '../../../../../ut
 
 
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address,
+  t, activeToken, balance, isWalletRoute, address, isDelegate,
 }) => {
-  const account = useSelector(state => getActiveTokenAccount(state));
+  const host = useSelector(state => getActiveTokenAccount(state));
   const vote = useSelector(state => state.voting[address]);
-  const lockedBalance = activeToken === tokenMap.LSK.key && isWalletRoute && account
-    ? calculateLockedBalance(account) : undefined;
+  const lockedBalance = activeToken === tokenMap.LSK.key && isWalletRoute && host
+    ? calculateLockedBalance(host) : undefined;
   const initialValue = isWalletRoute
     ? {}
     : { recipient: address };
@@ -62,7 +62,7 @@ const BalanceInfo = ({
         <SignInTooltipWrapper position="bottom">
           <div className={styles.actionRow}>
             {
-              activeToken === tokenMap.LSK.key && (
+              isDelegate && (
                 <DialogLink component="editVote" className={`${styles.button} add-vote`}>
                   <SecondaryButton
                     className={`${styles.voteButton} open-add-vote-dialog`}
