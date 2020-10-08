@@ -52,4 +52,20 @@ describe('voting middleware', () => {
       expect(store.dispatch).toHaveBeenCalled();
     });
   });
+
+  describe('on accountUpdated action', () => {
+    const givenAction = {
+      type: actionTypes.accountUpdated,
+    };
+    const next = jest.fn();
+    const store = {
+      getState: jest.fn(),
+      dispatch: jest.fn(),
+    };
+    it('should dispatch votesRetrieved with empty array', () => {
+      middleware(store)(next)(givenAction);
+      expect(next).toHaveBeenCalledWith(givenAction);
+      expect(store.dispatch).toHaveBeenCalled();
+    });
+  });
 });
