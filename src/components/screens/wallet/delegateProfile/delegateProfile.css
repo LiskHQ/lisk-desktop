@@ -1,44 +1,193 @@
-.wrapper {
-  display: flex;
-  padding: 32px 16px;
-}
+@import '../../../../app/mixins.css';
 
-.delegateStats {
-  align-content: stretch;
-  box-sizing: border-box;
+.container {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  height: 60px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
+}
 
-  & > li {
-    align-items: center;
-    color: var(--color-maastricht-blue);
-    display: flex;
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    height: calc(100% / 2);
-  }
+.detailsContainer,
+.performanceContainer {
+  & h1.heading {
+    @mixin headingNormal;
 
-  & span.label {
-    color: var(--color-dark-gray);
-    font-size: var(--paragraph-font-size-s);
-    margin-right: 8px;
-    white-space: nowrap;
+    font-size: 20px;
   }
 }
 
-@media (--medium-viewport) {
-  .delegateStats {
-    height: 90px;
+.statsContainer {
+  & .votesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 25%);
+    box-sizing: border-box;
+    justify-content: center;
+    grid-gap: 30px 0px;
 
-    & > li {
-      height: calc(100% / 3);
-      min-width: calc(100% / 3);
+    & > header {
+      display: none;
+    }
+
+    & button {
+      grid-column: 1/5;
+      margin-top: -15px;
     }
   }
+
+  @media (--medium-viewport) {
+    & .votesContainer {
+      grid-template-columns: repeat(auto-fill, 33.3%);
+    }
+  }
+}
+
+.details {
+  flex-shrink: 0;
+  flex-grow: 1;
+
+  & .itemContainer {
+    border-bottom: 1px solid #e1e3eb;
+    padding: 16px 0;
+    margin-left: 0;
+
+    &:last-child {
+      border: none;
+      padding-bottom: 0;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  & .item {
+    margin-left: 16px;
+
+    & .title {
+      @mixin contentNormal;
+
+      color: var(--color-slate-gray);
+    }
+
+    & .value {
+      margin-top: 8px;
+    }
+  }
+}
+
+.column {
+  & .performance {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    height: 156px;
+
+    &:nth-child(2) {
+      margin: 0;
+    }
+  }
+}
+
+.performanceContent {
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-top: 20px;
+
+  & .performanceText {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+    margin-bottom: 15px;
+  }
+
+  & .performanceValue {
+    @mixin delegatePerformanceValueFont;
+  }
+}
+
+.icon {
+  height: 16px;
+}
+
+.performanceIcon {
+  align-self: flex-end;
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  height: 120px;
+  width: 170px;
+}
+
+.productivityIcon {
+  height: 122px;
+  width: 206px;
+}
+
+.forgedBlocksIcon {
+  padding-right: 20px;
+}
+
+.missedBlocksIcon {
+  justify-content: flex-end;
+  align-items: center;
+  height: 156px;
+  width: 216px;
+}
+
+.forgedLskIcon {
+  height: 108px;
+  width: 196px;
+  padding-right: 20px;
+}
+
+.voteItem {
+  width: 238px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+
+  & .address {
+    @mixin contentLargest;
+
+    padding-left: 10px;
+  }
+
+  &::after {
+    display: none;
+    position: absolute;
+    width: calc(100% - 30px);
+    height: 1px;
+    left: 15px;
+    margin-top: 70px;
+    z-index: 0;
+    background: var(--color-platinum);
+  }
+
+  &:nth-child(4n) {
+    &::after {
+      content: '';
+      display: block;
+    }
+  }
+
+  @media (--medium-viewport) {
+    &:nth-child(4n) {
+      &::after {
+        display: none;
+      }
+    }
+
+    &:nth-child(3n) {
+      &::after {
+        content: '';
+        display: block;
+      }
+    }
+  }
+}
+
+.totalVotes {
+  color: var(--color-slate-gray);
+  padding-left: 5px;
 }

@@ -16,7 +16,7 @@ const DoughnutChartIcon = () => (
 );
 
 const GuideTooltip = ({ children }) => (
-  <Tooltip position="bottom right" indent content={<DoughnutChartIcon />}>
+  <Tooltip size="maxContent" position="bottom right" indent content={<DoughnutChartIcon />}>
     <ul className={styles.guideTooltipContentList}>
       {children}
     </ul>
