@@ -40,7 +40,7 @@ const apis = {
     apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).blocks.get(params),
     defaultData: {},
     getApiParams: state => ({
-      height: state.account.info.LSK.delegate.lastForgedHeight,
+      height: state.account.info && state.account.info.LSK.delegate.lastForgedHeight,
     }),
     transformResponse: response => (response ? response.data[0] : {}),
   },
