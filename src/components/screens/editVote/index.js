@@ -53,7 +53,7 @@ const AddVote = ({
   const removeVote = () => {
     dispatch(voteEdited([{
       address: address || host,
-      amount: -toRawLsk(voteAmount.value),
+      amount: 0,
     }]));
 
     removeSearchParamsFromUrl(history, ['modal']);
