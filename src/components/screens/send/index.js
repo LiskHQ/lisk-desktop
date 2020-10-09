@@ -23,8 +23,8 @@ const Send = ({ history }) => {
         finalCallback={backToWallet}
         className={styles.wrapper}
       >
-        <Summary />
         <Form initialValue={initialValue} />
+        <Summary />
         <TransactionStatus history={history} />
       </MultiStep>
     </Dialog>

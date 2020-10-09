@@ -101,7 +101,7 @@ const Summary = ({
 
   const submitTransaction = () => {
     const { normalizedVotes, votesSubmitted } = props;
-    Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
+    Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
 
     votesSubmitted({
       passphrase: account.passphrase,

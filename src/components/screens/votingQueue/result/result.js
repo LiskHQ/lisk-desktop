@@ -20,7 +20,7 @@ const getMessage = ({ t, locked, unlockable }) => {
     return (
       <>
         <LiskAmountFormatted val={unlockable} />
-        <span>{t(`will be available to unlock in ${unlockTime}h.`)}</span>
+        <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
       </>
     );
   } if (locked && !unlockable) {

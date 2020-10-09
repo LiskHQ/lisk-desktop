@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import ResultComponent from './result';
 import { transactionBroadcasted } from '../../../../actions/transactions';
 
-const Summary = (props) => {
+const Result = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const transactions = useSelector(state => state.transactions);
@@ -25,4 +25,4 @@ const Summary = (props) => {
   );
 };
 
-export default withRouter(Summary);
+export default withRouter(Result);
