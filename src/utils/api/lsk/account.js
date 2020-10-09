@@ -3,22 +3,23 @@ import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import api from '..';
 import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';
-import { extractAddress, extractPublicKey } from '../../account';
+import { extractAddress } from '../../account';
 
 export const getAccount = params =>
   new Promise((resolve, reject) => {
-    // TODO remove liskAPIClient after all code that uses is is removed
     const apiClient = getAPIClient(params.network);
-    if (!apiClient) {
-      reject();
+
+    const publicKey = params.publicKey || extractAddress(params.passphrase);
+    const address = params.address || extractAddress(params.passphrase || publicKey);
+
+    if (!apiClient || (!address && !params.username)) {
+      reject(Error('Malformed parameters.'));
       return;
     }
 
-    const publicKey = params.publicKey
-      || (params.passphrase && extractPublicKey(params.passphrase));
-    const address = params.address || extractAddress(params.passphrase || publicKey);
+    const query = address ? { address } : { username: params.username };
 
-    apiClient.accounts.get({ address }).then((res) => {
+    apiClient.accounts.get(query).then((res) => {
       if (res.data.length > 0) {
         resolve({
           ...res.data[0],
@@ -27,7 +28,7 @@ export const getAccount = params =>
           // but that is not equivalent to the ternary if the first value is
           // defined and the second one not.
           // eslint-disable-next-line no-unneeded-ternary
-          publicKey: publicKey ? publicKey : res.data[0].publicKey,
+          publicKey: res.data[0].publicKey,
           serverPublicKey: res.data[0].publicKey,
           token: tokenMap.LSK.key,
         });
