@@ -39,9 +39,10 @@ const normalizeUsernames = (usernames) => {
  */
 const urlProcessor = (search, network) => {
   const params = parseSearchParams(search);
-  const usernames = normalizeUsernames([...params.votes, ...params.unvotes]);
+  const votes = normalizeUsernames(params.votes);
+  const unvotes = normalizeUsernames(params.unvotes);
 
-  return getAccounts(usernames, network);
+  return getAccounts([...votes, ...unvotes], network);
 };
 
 const setVotesByLaunchProtocol = search =>
