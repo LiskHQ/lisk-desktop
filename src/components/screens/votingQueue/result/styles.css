@@ -11,30 +11,9 @@
     }
   }
 
-  & .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 40px;
-  }
-
   & .footer {
     margin-top: 48px;
   }
-}
-
-.submissionHeading {
-  @mixin contentNormal semi-bold;
-
-  font-size: 16px;
-  margin-top: 14px;
-}
-
-.submissionSubHeading {
-  @mixin contentLarge;
-
-  margin-top: 10px;
 }
 
 .subHeadingBold {

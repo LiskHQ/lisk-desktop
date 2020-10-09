@@ -51,7 +51,7 @@ const header = t => ([
 const normalizeVotesForTx = votes =>
   Object.keys(votes).map(delegateAddress => ({
     delegateAddress,
-    amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed),
+    amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed).toString(),
   }));
 
 /**
@@ -114,6 +114,8 @@ const Editor = ({
     .filter(address => votes[address].unconfirmed !== votes[address].confirmed)
     .map(address => ({ address, ...votes[address] }));
 
+  const normalizedVotes = useMemo(() => normalizeVotesForTx(votes), [votes]);
+
   const { fee, minFee } = useTransactionFeeCalculation({
     selectedPriority,
     token,
@@ -123,7 +125,7 @@ const Editor = ({
       txType,
       nonce: account.nonce,
       senderPublicKey: account.publicKey,
-      votes: normalizeVotesForTx(votes),
+      votes: normalizedVotes,
     },
   });
 
@@ -134,7 +136,7 @@ const Editor = ({
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
     nextStep({
-      added, edited, removed, fee: toRawLsk(feeValue),
+      added, edited, removed, fee: toRawLsk(feeValue), normalizedVotes,
     });
   };
 
