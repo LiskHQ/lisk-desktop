@@ -3,13 +3,13 @@ import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import api from '..';
 import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';
-import { extractAddress } from '../../account';
+import { extractAddress, extractPublicKey } from '../../account';
 
 export const getAccount = params =>
   new Promise((resolve, reject) => {
     const apiClient = getAPIClient(params.network);
 
-    const publicKey = params.publicKey || extractAddress(params.passphrase);
+    const publicKey = params.publicKey || extractPublicKey(params.passphrase);
     const address = params.address || extractAddress(params.passphrase || publicKey);
 
     if (!apiClient || (!address && !params.username)) {
