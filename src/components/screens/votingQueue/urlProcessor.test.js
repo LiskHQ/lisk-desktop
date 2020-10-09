@@ -1,9 +1,8 @@
 import urlProcessor from './urlProcessor';
 import { voteEdited } from '../../../actions/voting';
-import * as accountApi from '../../../utils/api/lsk/account';
 
 jest.mock('../../../utils/api/lsk/account', () => ({
-  getAccount: jest.fn().mockResolvedValue({ address: '12L', username: 'username' }),
+  getAccount: jest.fn().mockImplementation(data => Promise.resolve({ address: '12L', username: data.username })),
 }));
 
 describe('urlProcessor', () => {
@@ -22,14 +21,14 @@ describe('urlProcessor', () => {
   const dispatch = jest.fn();
 
   it('Should dispatch voteEdited with empty array if no usernames in query params', async () => {
-    await urlProcessor('?modal=voteQueue')(dispatch, getState);
+    await urlProcessor('?modal=votingQueue')(dispatch, getState);
     expect(dispatch).toHaveBeenCalledWith(voteEdited([]));
   });
 
-  it.skip('Should dispatch voteEdited with an array of valid usernames in query params', async () => {
-    await urlProcessor('?modal=voteQueue&votes=username_1&username_2&unvotes=username_3&username_4')(dispatch, getState);
-    const votes = ['username_1', 'username_2', 'username_3', 'username_4']
-      .map(() => ({ address: '12L', username: 'username', amount: '' }));
+  it('Should dispatch voteEdited with an array of valid usernames in query params', async () => {
+    await urlProcessor('?modal=votingQueue&unvotes=genesis_3,genesis_4&votes=genesis_5,genesis_6,genesis_7')(dispatch, getState);
+    const votes = ['genesis_5', 'genesis_6', 'genesis_7', 'genesis_3', 'genesis_4']
+      .map(username => ({ address: '12L', username, amount: '' }));
     expect(dispatch).toHaveBeenCalledWith(voteEdited(votes));
   });
 });
