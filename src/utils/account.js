@@ -3,20 +3,35 @@ import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import { tokenMap } from '../constants/tokens';
 import regex from './regex';
 
-export const extractPublicKey = passphrase =>
-  Lisk.cryptography.getKeys(passphrase).publicKey;
+/**
+ * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
+ *
+ * @param {String} passphrase - Valid Mnemonic passphrase
+ * @returns {String|Boolean} - Extracted publicKey for a given valid passphrase or
+ * false for a given invalid passphrase
+ */
+export const extractPublicKey = (passphrase) => {
+  if (Lisk.passphrase.Mnemonic.validateMnemonic(passphrase)) {
+    return Lisk.cryptography.getKeys(passphrase).publicKey;
+  }
+  return false;
+};
 
 /**
+ * Extracts Lisk address from given passphrase or publicKey
+ *
  * @param {String} data - passphrase or public key
+ * @returns {String|Boolean} - Extracted address for a given valid passphrase or
+ * publicKey and false for a given invalid passphrase
  */
 export const extractAddress = (data) => {
-  if (!data) {
-    return false;
+  if (Lisk.passphrase.Mnemonic.validateMnemonic(data)) {
+    return Lisk.cryptography.getAddressFromPassphrase(data);
   }
-  if (data.indexOf(' ') < 0) {
+  if (regex.publicKey.test(data)) {
     return Lisk.cryptography.getAddressFromPublicKey(data);
   }
-  return Lisk.cryptography.getAddressFromPassphrase(data);
+  return false;
 };
 
 export const getActiveTokenAccount = state => ({
