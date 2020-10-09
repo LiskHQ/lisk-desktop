@@ -155,6 +155,7 @@ const Editor = ({
               data={changedVotes}
               header={header(t)}
               row={VoteRow}
+              iterationKey="address"
               canLoadMore={false}
               emptyState={{ message: t('No votes in queue.') }}
             />
