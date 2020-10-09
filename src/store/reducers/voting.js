@@ -14,6 +14,7 @@ const voting = (state = {}, action) => {
           votesDict[delegate.delegateAddress] = {
             confirmed: delegate.amount,
             unconfirmed: delegate.amount,
+            username: delegate.username,
           };
           return votesDict;
         }, {});
@@ -23,7 +24,7 @@ const voting = (state = {}, action) => {
         ...state,
         ...action.data.reduce((mergedVotes, vote) => {
           // When added new vote using launch protocol
-          let unconfirmed = -1;
+          let unconfirmed = '';
           // when added, removed or edited vote
           if (vote.amount !== undefined) unconfirmed = vote.amount;
           // when the launch protocol includes an existing vote
@@ -33,6 +34,8 @@ const voting = (state = {}, action) => {
             confirmed: state[vote.address]
               ? state[vote.address].confirmed : 0,
             unconfirmed,
+            username: state[vote.address] && state[vote.address].username
+              ? state[vote.address].username : vote.username,
           };
           return mergedVotes;
         }, {}),
@@ -49,6 +52,7 @@ const voting = (state = {}, action) => {
           votesDict[address] = {
             confirmed: state[address].confirmed,
             unconfirmed: state[address].confirmed,
+            username: state[address].username,
           };
           return votesDict;
         }, {});
