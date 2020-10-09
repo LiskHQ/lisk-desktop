@@ -12,9 +12,9 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     address: '100003L',
   };
   const cleanVotes = {
-    [delegate1.address]: { confirmed: 1e10, unconfirmed: 1e10 },
-    [delegate2.address]: { confirmed: 1e10, unconfirmed: 1e10 },
-    [delegate3.address]: { confirmed: 1e10, unconfirmed: 1e10 },
+    [delegate1.address]: { confirmed: 1e10, unconfirmed: 1e10, username: 'username_1' },
+    [delegate2.address]: { confirmed: 1e10, unconfirmed: 1e10, username: 'username_2' },
+    [delegate3.address]: { confirmed: 1e10, unconfirmed: 1e10, username: 'username_3' },
   };
   const dirtyVotes = {
     [delegate1.address]: { ...cleanVotes[delegate1.address], unconfirmed: 3e10 },
@@ -87,6 +87,7 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
         [delegate1.address]: {
           confirmed: cleanVotes[delegate1.address].confirmed,
           unconfirmed: dirtyVotes[delegate1.address].unconfirmed,
+          username: 'username_1',
         },
         [delegate2.address]: cleanVotes[delegate2.address],
         [delegate3.address]: cleanVotes[delegate3.address],
