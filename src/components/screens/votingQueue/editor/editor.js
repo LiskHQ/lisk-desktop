@@ -179,6 +179,7 @@ const Editor = ({
         }
         <BoxFooter>
           <PrimaryButton
+            className="confirm"
             size="l"
             disabled={isCTADisabled}
             onClick={goToNextStep}

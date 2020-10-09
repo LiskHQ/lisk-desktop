@@ -50,7 +50,7 @@ const BalanceInfo = ({
             </div>
             {lockedBalance && (
               <DialogLink
-                className={styles.lockedBalance}
+                className={`${styles.lockedBalance} open-unlock-balance-dialog`}
                 component="lockedBalance"
               >
                 <Icon name="lock" />

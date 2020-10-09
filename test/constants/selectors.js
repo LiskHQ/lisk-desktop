@@ -237,6 +237,11 @@ const ss = {
   highFeeOption: '.option-High',
   customFeeOption: '.option-Custom',
   customFeeInput: '.custom-fee-input',
+  openAddVoteDialog: '.open-add-vote-dialog',
+  votingQueueToggle: '.voting-queue-toggle',
+  openUnlockBalanceDialog: 'open-unlock-balance-dialog',
+  unlockBtn: 'unlock-btn',
+  removeVote: 'remove-vote',
 };
 
 export default ss;
