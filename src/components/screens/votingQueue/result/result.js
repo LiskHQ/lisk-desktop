@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react';
-import { withTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router';
 
 import { removeSearchParamsFromUrl } from '../../../../utils/searchParams';
 import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import Illustration from '../../../toolbox/illustration';
 import ToggleIcon from '../toggleIcon';
 import TransactionResult from '../../../shared/transactionResult';
 
