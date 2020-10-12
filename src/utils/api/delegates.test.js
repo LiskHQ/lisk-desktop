@@ -3,7 +3,6 @@ import Lisk from '@liskhq/lisk-client';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import {
-  castVotes,
   getDelegateByName,
   getDelegateWithCache,
   getDelegateInfo,
