@@ -7,7 +7,7 @@ import {
   getVotes,
   registerDelegate,
 } from './delegates';
-import { loginType } from '../../constants/hwConstants';
+// import { loginType } from '../../constants/hwConstants';
 import accounts from '../../../test/constants/accounts';
 import delegates from '../../../test/constants/delegates';
 import * as hwManager from '../hwManager';
@@ -161,70 +161,70 @@ describe('Utils: Delegate', () => {
   });
 
   describe('castVotes', () => {
-    it.skip('should call castVotes and broadcast transaction regular login', async () => {
-      const votes = [
-        accounts.genesis.publicKey,
-        accounts.delegate.publicKey,
-      ];
-      const unvotes = [
-        accounts.empty_account.publicKey,
-        accounts.delegate_candidate.publicKey,
-      ];
-      const transaction = { id: '1234' };
-      const secondPassphrase = null;
-      liskTransactionsCastVotesStub.withArgs({
-        votes,
-        unvotes,
-        passphrase: accounts.genesis.passphrase,
-        secondPassphrase,
-        timeOffset,
-      }).returns(transaction);
+    // it.skip('should call castVotes and broadcast transaction regular login', async () => {
+    //   const votes = [
+    //     accounts.genesis.publicKey,
+    //     accounts.delegate.publicKey,
+    //   ];
+    //   const unvotes = [
+    //     accounts.empty_account.publicKey,
+    //     accounts.delegate_candidate.publicKey,
+    //   ];
+    //   const transaction = { id: '1234' };
+    //   const secondPassphrase = null;
+    //   liskTransactionsCastVotesStub.withArgs({
+    //     votes,
+    //     unvotes,
+    //     passphrase: accounts.genesis.passphrase,
+    //     secondPassphrase,
+    //     timeOffset,
+    //   }).returns(transaction);
 
-      await castVotes({
-        liskAPIClient,
-        account: {
-          ...accounts.genesis,
-          loginType: loginType.normal,
-        },
-        votedList: votes,
-        unvotedList: unvotes,
-        secondPassphrase,
-        timeOffset,
-      });
-      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
-    });
+    //   await castVotes({
+    //     liskAPIClient,
+    //     account: {
+    //       ...accounts.genesis,
+    //       loginType: loginType.normal,
+    //     },
+    //     votedList: votes,
+    //     unvotedList: unvotes,
+    //     secondPassphrase,
+    //     timeOffset,
+    //   });
+    //   expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
+    // });
 
-    it.skip('should call castVotes and broadcast transaction with hardware wallet', async () => {
-      const votes = [
-        accounts.genesis.publicKey,
-        accounts.delegate.publicKey,
-      ];
-      const unvotes = [
-        accounts.empty_account.publicKey,
-        accounts.delegate_candidate.publicKey,
-      ];
-      const transaction = { id: '1234' };
-      const secondPassphrase = null;
-      liskTransactionsCastVotesStub.withArgs({
-        votes,
-        unvotes,
-        passphrase: accounts.genesis.passphrase,
-        secondPassphrase,
-        timeOffset,
-      }).returns(transaction);
+    // it.skip('should call castVotes and broadcast transaction with hardware wallet', async () => {
+    //   const votes = [
+    //     accounts.genesis.publicKey,
+    //     accounts.delegate.publicKey,
+    //   ];
+    //   const unvotes = [
+    //     accounts.empty_account.publicKey,
+    //     accounts.delegate_candidate.publicKey,
+    //   ];
+    //   const transaction = { id: '1234' };
+    //   const secondPassphrase = null;
+    //   liskTransactionsCastVotesStub.withArgs({
+    //     votes,
+    //     unvotes,
+    //     passphrase: accounts.genesis.passphrase,
+    //     secondPassphrase,
+    //     timeOffset,
+    //   }).returns(transaction);
 
-      await castVotes({
-        liskAPIClient,
-        account: {
-          ...accounts.genesis,
-          loginType: loginType.ledger,
-        },
-        votedList: votes,
-        unvotedList: unvotes,
-        secondPassphrase,
-        timeOffset,
-      });
-      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
-    });
+    //   await castVotes({
+    //     liskAPIClient,
+    //     account: {
+    //       ...accounts.genesis,
+    //       loginType: loginType.ledger,
+    //     },
+    //     votedList: votes,
+    //     unvotedList: unvotes,
+    //     secondPassphrase,
+    //     timeOffset,
+    //   });
+    //   expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
+    // });
   });
 });
