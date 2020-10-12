@@ -21,7 +21,7 @@ const VoteRow = ({
     address, username, confirmed, unconfirmed,
   },
 }) => {
-  const [state, setState] = useState(ComponentState.notEditing);
+  const [state, setState] = useState(unconfirmed === '' ? ComponentState.editing : ComponentState.notEditing);
   const dispatch = useDispatch();
   const [voteAmount, setVoteAmount] = useVoteAmountField(unconfirmed);
 
