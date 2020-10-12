@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import MultiStep from '../../shared/multiStep';
 import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
-import processLaunchProtocol from './urlProcessor';
+import processLaunchProtocol from '../../../actions/urlProcessor';
 
 import Editor from './editor';
 import Summary from './summary';

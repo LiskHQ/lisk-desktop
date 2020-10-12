@@ -1,7 +1,7 @@
-import { parseSearchParams } from '../../../utils/searchParams';
-import { getAccount } from '../../../utils/api/lsk/account';
-import { voteEdited } from '../../../actions/voting';
-import regex from '../../../utils/regex';
+import { parseSearchParams } from '../utils/searchParams';
+import { getAccount } from '../utils/api/lsk/account';
+import { voteEdited } from './voting';
+import regex from '../utils/regex';
 
 /**
  * Get accounts from Lisk Core using usernames list
