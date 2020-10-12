@@ -7,40 +7,29 @@ import { extractAddress, extractPublicKey } from '../../account';
 
 export const getAccount = params =>
   new Promise((resolve, reject) => {
-    // TODO remove liskAPIClient after all code that uses is is removed
     const apiClient = getAPIClient(params.network);
-    if (!apiClient) {
-      reject();
+
+    const publicKey = params.publicKey || extractPublicKey(params.passphrase);
+    const address = params.address || extractAddress(params.passphrase || publicKey);
+
+    if (!apiClient || (!address && !params.username)) {
+      reject(Error('Malformed parameters.'));
       return;
     }
 
-    const publicKey = params.publicKey
-      || (params.passphrase && extractPublicKey(params.passphrase));
-    const address = params.address || extractAddress(params.passphrase || publicKey);
+    const query = address ? { address } : { username: params.username };
 
-    apiClient.accounts.get({ address }).then((res) => {
-      if (res.data.length > 0) {
-        resolve({
-          ...res.data[0],
-          // It is necessary to disable this rule, because eslint --fix would
-          // change it to publicKey || res.data[0].publicKey
-          // but that is not equivalent to the ternary if the first value is
-          // defined and the second one not.
-          // eslint-disable-next-line no-unneeded-ternary
-          publicKey: publicKey ? publicKey : res.data[0].publicKey,
-          serverPublicKey: res.data[0].publicKey,
-          token: tokenMap.LSK.key,
-        });
-      } else {
-        // when the account has no transactions yet (therefore is not saved on the blockchain)
-        // this endpoint returns { success: false }
-        resolve({
-          address,
-          publicKey,
-          balance: 0,
-          token: tokenMap.LSK.key,
-        });
-      }
+    apiClient.accounts.get(query).then((res) => {
+      const offlineInfo = {
+        address,
+        publicKey,
+        token: tokenMap.LSK.key,
+      };
+      const onlineInfo = res.data.length > 0
+        ? { serverPublicKey: res.data[0].publicKey, ...res.data[0] }
+        : { balance: 0 };
+
+      resolve({ ...offlineInfo, ...onlineInfo });
     }).catch(reject);
   });
 

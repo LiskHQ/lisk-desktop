@@ -1,17 +1,13 @@
-import { to } from 'await-to-js';
 import Lisk from '@liskhq/lisk-client';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import {
-  castVotes,
-  getDelegateByName,
-  getDelegateWithCache,
   getDelegateInfo,
   getDelegates,
   getVotes,
   registerDelegate,
 } from './delegates';
-import { loginType } from '../../constants/hwConstants';
+// import { loginType } from '../../constants/hwConstants';
 import accounts from '../../../test/constants/accounts';
 import delegates from '../../../test/constants/delegates';
 import * as hwManager from '../hwManager';
@@ -119,74 +115,6 @@ describe('Utils: Delegate', () => {
     });
   });
 
-  describe('getDelegateWithCache', () => {
-    const network = { name: 'Mainnet' };
-    it.skip('should resolve based on given publicKey', async () => {
-      const { publicKey } = delegates[0].account;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        publicKey,
-      }).resolves({ data: [delegates[0]] });
-
-      const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, network });
-      expect(resolved).to.equal(delegates[0]);
-    });
-
-    it.skip('should resolve from cache if called twice', async () => {
-      const { publicKey } = delegates[0].account;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        publicKey,
-      }).resolves({ data: [delegates[0]] });
-
-      await getDelegateWithCache(liskAPIClient, { publicKey, network });
-      const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, network });
-      expect(resolved).to.deep.equal(delegates[0]);
-    });
-
-    it.skip('should reject if delegate not found', async () => {
-      const { publicKey } = delegates[0].account;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        publicKey,
-      }).resolves({ data: [] });
-
-      const [error] = await to(getDelegateWithCache(liskAPIClient, { publicKey, network }));
-      expect(error.message).to.equal(`No delegate with publicKey ${publicKey} found.`);
-    });
-
-    it.skip('should reject if delegate request failed', async () => {
-      const error = 'Any network error';
-      const { publicKey } = delegates[0].account;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        publicKey,
-      }).rejects(error);
-
-      expect(await to(
-        getDelegateWithCache(liskAPIClient, { publicKey, network }),
-      )).to.deep.equal([error, undefined]);
-    });
-  });
-
-  describe('getDelegateByName', () => {
-    it.skip('should resolve delegate genesis_3 if name = genesis_3', () => {
-      const name = delegates[0].username;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        search: name, limit: 101,
-      }).resolves({ data: delegates });
-
-      const returnedPromise = getDelegateByName(liskAPIClient, name);
-      expect(returnedPromise).to.eventually.equal(delegates[0]);
-    });
-
-    it.skip('should reject if given name does not exist', () => {
-      const name = `${delegates[0].username}_not_exist`;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        search: name, limit: 101,
-      }).resolves({ data: [] });
-
-      const returnedPromise = getDelegateByName(liskAPIClient, name);
-      expect(returnedPromise).to.be.rejectedWith();
-    });
-  });
-
   describe('getVotes', () => {
     it.skip('should get votes for an address with no parameters', () => {
       const address = '123L';
@@ -233,70 +161,70 @@ describe('Utils: Delegate', () => {
   });
 
   describe('castVotes', () => {
-    it.skip('should call castVotes and broadcast transaction regular login', async () => {
-      const votes = [
-        accounts.genesis.publicKey,
-        accounts.delegate.publicKey,
-      ];
-      const unvotes = [
-        accounts.empty_account.publicKey,
-        accounts.delegate_candidate.publicKey,
-      ];
-      const transaction = { id: '1234' };
-      const secondPassphrase = null;
-      liskTransactionsCastVotesStub.withArgs({
-        votes,
-        unvotes,
-        passphrase: accounts.genesis.passphrase,
-        secondPassphrase,
-        timeOffset,
-      }).returns(transaction);
+    // it.skip('should call castVotes and broadcast transaction regular login', async () => {
+    //   const votes = [
+    //     accounts.genesis.publicKey,
+    //     accounts.delegate.publicKey,
+    //   ];
+    //   const unvotes = [
+    //     accounts.empty_account.publicKey,
+    //     accounts.delegate_candidate.publicKey,
+    //   ];
+    //   const transaction = { id: '1234' };
+    //   const secondPassphrase = null;
+    //   liskTransactionsCastVotesStub.withArgs({
+    //     votes,
+    //     unvotes,
+    //     passphrase: accounts.genesis.passphrase,
+    //     secondPassphrase,
+    //     timeOffset,
+    //   }).returns(transaction);
 
-      await castVotes({
-        liskAPIClient,
-        account: {
-          ...accounts.genesis,
-          loginType: loginType.normal,
-        },
-        votedList: votes,
-        unvotedList: unvotes,
-        secondPassphrase,
-        timeOffset,
-      });
-      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
-    });
+    //   await castVotes({
+    //     liskAPIClient,
+    //     account: {
+    //       ...accounts.genesis,
+    //       loginType: loginType.normal,
+    //     },
+    //     votedList: votes,
+    //     unvotedList: unvotes,
+    //     secondPassphrase,
+    //     timeOffset,
+    //   });
+    //   expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
+    // });
 
-    it.skip('should call castVotes and broadcast transaction with hardware wallet', async () => {
-      const votes = [
-        accounts.genesis.publicKey,
-        accounts.delegate.publicKey,
-      ];
-      const unvotes = [
-        accounts.empty_account.publicKey,
-        accounts.delegate_candidate.publicKey,
-      ];
-      const transaction = { id: '1234' };
-      const secondPassphrase = null;
-      liskTransactionsCastVotesStub.withArgs({
-        votes,
-        unvotes,
-        passphrase: accounts.genesis.passphrase,
-        secondPassphrase,
-        timeOffset,
-      }).returns(transaction);
+    // it.skip('should call castVotes and broadcast transaction with hardware wallet', async () => {
+    //   const votes = [
+    //     accounts.genesis.publicKey,
+    //     accounts.delegate.publicKey,
+    //   ];
+    //   const unvotes = [
+    //     accounts.empty_account.publicKey,
+    //     accounts.delegate_candidate.publicKey,
+    //   ];
+    //   const transaction = { id: '1234' };
+    //   const secondPassphrase = null;
+    //   liskTransactionsCastVotesStub.withArgs({
+    //     votes,
+    //     unvotes,
+    //     passphrase: accounts.genesis.passphrase,
+    //     secondPassphrase,
+    //     timeOffset,
+    //   }).returns(transaction);
 
-      await castVotes({
-        liskAPIClient,
-        account: {
-          ...accounts.genesis,
-          loginType: loginType.ledger,
-        },
-        votedList: votes,
-        unvotedList: unvotes,
-        secondPassphrase,
-        timeOffset,
-      });
-      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
-    });
+    //   await castVotes({
+    //     liskAPIClient,
+    //     account: {
+    //       ...accounts.genesis,
+    //       loginType: loginType.ledger,
+    //     },
+    //     votedList: votes,
+    //     unvotedList: unvotes,
+    //     secondPassphrase,
+    //     timeOffset,
+    //   });
+    //   expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
+    // });
   });
 });

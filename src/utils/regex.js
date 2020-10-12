@@ -1,5 +1,6 @@
 export default {
   address: /^[1-9]\d{0,19}L$/,
+  publicKey: /^[0-9a-f]{64}$/,
   delegateName: /^[a-z0-9!@$&_.]{0,20}$/,
   transactionId: /^[1-9]\d{0,19}$/,
   blockId: /^[1-9]\d{0,19}$/,
