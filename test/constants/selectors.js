@@ -242,6 +242,7 @@ const ss = {
   openUnlockBalanceDialog: '.open-unlock-balance-dialog',
   unlockBtn: '.unlock-btn',
   removeVote: '.remove-vote',
+  unlockingBalance: '.unlocking-balance',
 };
 
 export default ss;
