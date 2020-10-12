@@ -8,6 +8,7 @@ import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 import { isEmpty } from '../../../../utils/helpers';
 import { tokenMap } from '../../../../constants/tokens';
 import DialogLink from '../../../toolbox/dialog/link';
+import Spinner from '../../../toolbox/spinner';
 import Icon from '../../../toolbox/icon';
 
 const VoteRow = ({
@@ -62,14 +63,20 @@ const VoteRow = ({
           />
         </span>
       </div>
-      <div className={grid['col-sm-1']}>
-        <DialogLink
-          className={styles.editVoteLink}
-          component="editVote"
-        >
-          <Icon name="edit" />
-        </DialogLink>
-      </div>
+      {
+        data.pending
+          ? <Spinner />
+          : (
+            <div className={grid['col-sm-1']}>
+              <DialogLink
+                className={styles.editVoteLink}
+                component="editVote"
+              >
+                <Icon name="edit" />
+              </DialogLink>
+            </div>
+          )
+      }
     </div>
   );
 };

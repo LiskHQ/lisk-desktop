@@ -51,7 +51,7 @@ describe('Form', () => {
       },
       nextStep: jest.fn(),
       initialValue: {
-        recipient: bookmarks.LSK[0].title,
+        recipient: bookmarks.LSK[0].address,
       },
     };
 

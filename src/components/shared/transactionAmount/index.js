@@ -8,10 +8,12 @@ import transactionTypes from '../../../constants/transactionTypes';
 const TransactionAmount = ({
   sender, recipient, type, token, showRounded, showInt, host, amount,
 }) => {
-  const isIncoming = host === recipient && sender !== recipient;
+  const isIncoming = host === (recipient && sender !== recipient)
+    || type === transactionTypes().unlockToken.code.legacy;
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
       { type === transactionTypes().transfer.code.legacy
+        || type === transactionTypes().unlockToken.code.legacy
         ? (
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <span className={isIncoming ? styles.receive : ''}>

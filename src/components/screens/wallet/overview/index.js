@@ -34,7 +34,7 @@ const Overview = ({
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
-      <div className={`${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
+      <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
         <AccountInfo
           t={t}
           hwInfo={hwInfo}
@@ -46,17 +46,18 @@ const Overview = ({
           host={host}
         />
       </div>
-      <div className={`${grid['col-xs-6']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
+      <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
         <BalanceInfo
           t={t}
           activeToken={activeToken}
           balance={balance}
           isDiscreetMode={discreetMode}
           isWalletRoute={isWalletRoute}
+          isDelegate={account.isDelegate}
           address={address}
         />
       </div>
-      <div className={`${grid['col-xs-12']} ${grid['col-md-4']} ${grid['col-lg-6']} ${styles.balanceChart}`}>
+      <div className={`${grid['col-xs-12']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.balanceChart}`}>
         <BalanceChart
           t={t}
           transactions={transactions}

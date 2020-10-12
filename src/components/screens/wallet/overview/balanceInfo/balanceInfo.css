@@ -99,6 +99,7 @@
   @mixin headingNormal normal;
 
   color: var(--color-ink-blue);
+  cursor: pointer;
 
   & > img {
     width: 17px;

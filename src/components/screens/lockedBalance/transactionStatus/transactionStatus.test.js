@@ -1,48 +1,49 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import TransactionStatus from './transactionStatus';
+import { mountWithRouterAndStore } from '../../../../utils/testHelpers';
+import TransactionStatus from './index';
 
 describe('unlock transaction Status', () => {
   let wrapper;
 
   const props = {
+    transactionInfo: undefined,
+    error: undefined,
+    t: key => key,
+    history: {},
+  };
+
+  const store = {
     transactions: {
       confirmed: [],
       broadcastedTransactionsError: [],
+      transactionsCreated: [],
     },
-    transactionBroadcasted: jest.fn(),
-    t: key => key,
   };
 
-  beforeEach(() => {
-    wrapper = mount(
-      <TransactionStatus {...props} />,
-    );
-  });
-
   it('renders properly Status component when transaction is succedfully submitted', () => {
-    expect(wrapper).toContainMatchingElement('.transaction-status');
-    expect(wrapper).toContainMatchingElement('.result-box-header');
-    expect(wrapper).toContainMatchingElement('.body-message');
-    expect(wrapper).not.toContainMatchingElement('button.on-retry');
+    wrapper = mountWithRouterAndStore(
+      TransactionStatus,
+      { ...props, transactionInfo: { id: 1 } },
+      {},
+      { transactions: { ...store.transactions, confirmed: [{ id: 1 }] } },
+    );
+    const html = wrapper.html();
+    expect(html).not.toContain('failed');
+    expect(html).not.toContain('something went wrong');
+    expect(html).toContain('submitted');
+    expect(html).toContain('confirmed');
   });
 
-  it('renders properly Status component when transaction failed on being submitted and call props.transactionBroadcasted', () => {
-    const customProps = {
-      ...props,
-      transactions: {
-        ...props.transactions,
-        broadcastedTransactionsError: [{}],
-      },
-    };
-    wrapper = mount(
-      <TransactionStatus {...customProps} />,
+  it('renders properly Status component when transaction failed', () => {
+    wrapper = mountWithRouterAndStore(
+      TransactionStatus,
+      { ...props, error: { message: 'error:test' } },
+      {},
+      store,
     );
-    expect(wrapper).toContainMatchingElement('.transaction-status');
-    expect(wrapper).toContainMatchingElement('.result-box-header');
-    expect(wrapper).toContainMatchingElement('.body-message');
-    expect(wrapper).toContainMatchingElement('button.on-retry');
-    wrapper.find('button.on-retry').at(0).simulate('click');
-    expect(customProps.transactionBroadcasted).toBeCalled();
+    const html = wrapper.html();
+    expect(html).toContain('failed');
+    expect(html).toContain('something went wrong');
+    expect(html).not.toContain('submitted');
+    expect(html).not.toContain('confirmed');
   });
 });

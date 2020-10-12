@@ -71,7 +71,7 @@ const transactionTypes = (t = str => str) => ({
     nameFee: 0,
     hardCap: 5e8, // rawLSK
   },
-  unlock: {
+  unlockToken: {
     code: {
       legacy: 5,
       new: 14,
@@ -79,7 +79,7 @@ const transactionTypes = (t = str => str) => ({
     outgoingCode: 14,
     title: t('Unlock LSK'),
     senderLabel: t('Sender'),
-    key: 'unlock',
+    key: 'unlockToken',
     icon: 'txUnlock',
     nameFee: 0,
   },

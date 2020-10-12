@@ -77,8 +77,8 @@ const Wallet = ({ t, history }) => {
     }
   }, []);
 
-
   if (!account || !account.info || isEmpty(account.info)) return (<div />);
+
   return (
     <section>
       <Overview

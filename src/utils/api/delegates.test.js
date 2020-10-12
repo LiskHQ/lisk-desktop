@@ -1,4 +1,3 @@
-import { to } from 'await-to-js';
 import Lisk from '@liskhq/lisk-client';
 import { expect } from 'chai';
 import sinon from 'sinon';
@@ -115,74 +114,6 @@ describe('Utils: Delegate', () => {
       return expect(getDelegateInfo(liskAPIClient, { address })).to.eventually.be.rejectedWith(
         `"${address}" is not a delegate`,
       );
-    });
-  });
-
-  describe('getDelegateWithCache', () => {
-    const network = { name: 'Mainnet' };
-    it.skip('should resolve based on given publicKey', async () => {
-      const { publicKey } = delegates[0].account;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        publicKey,
-      }).resolves({ data: [delegates[0]] });
-
-      const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, network });
-      expect(resolved).to.equal(delegates[0]);
-    });
-
-    it.skip('should resolve from cache if called twice', async () => {
-      const { publicKey } = delegates[0].account;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        publicKey,
-      }).resolves({ data: [delegates[0]] });
-
-      await getDelegateWithCache(liskAPIClient, { publicKey, network });
-      const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, network });
-      expect(resolved).to.deep.equal(delegates[0]);
-    });
-
-    it.skip('should reject if delegate not found', async () => {
-      const { publicKey } = delegates[0].account;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        publicKey,
-      }).resolves({ data: [] });
-
-      const [error] = await to(getDelegateWithCache(liskAPIClient, { publicKey, network }));
-      expect(error.message).to.equal(`No delegate with publicKey ${publicKey} found.`);
-    });
-
-    it.skip('should reject if delegate request failed', async () => {
-      const error = 'Any network error';
-      const { publicKey } = delegates[0].account;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        publicKey,
-      }).rejects(error);
-
-      expect(await to(
-        getDelegateWithCache(liskAPIClient, { publicKey, network }),
-      )).to.deep.equal([error, undefined]);
-    });
-  });
-
-  describe('getDelegateByName', () => {
-    it.skip('should resolve delegate genesis_3 if name = genesis_3', () => {
-      const name = delegates[0].username;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        search: name, limit: 101,
-      }).resolves({ data: delegates });
-
-      const returnedPromise = getDelegateByName(liskAPIClient, name);
-      expect(returnedPromise).to.eventually.equal(delegates[0]);
-    });
-
-    it.skip('should reject if given name does not exist', () => {
-      const name = `${delegates[0].username}_not_exist`;
-      liskAPIClientMockDelegates.expects('get').withArgs({
-        search: name, limit: 101,
-      }).resolves({ data: [] });
-
-      const returnedPromise = getDelegateByName(liskAPIClient, name);
-      expect(returnedPromise).to.be.rejectedWith();
     });
   });
 

@@ -12,6 +12,7 @@ import LabeledValue from '../../../toolbox/labeledValue';
 import LiskAmount from '../../../shared/liskAmount';
 import TransactionsTable from '../../../shared/transactionsTable';
 import routes from '../../../../constants/routes';
+import regex from '../../../../utils/regex';
 import styles from './blockDetails.css';
 
 const BlockDetails = ({
@@ -22,7 +23,12 @@ const BlockDetails = ({
   const fields = Object.entries({
     id: {
       label: t('Block ID'),
-      value: <CopyToClipboard value={blockDetails.data.id} />,
+      value: (
+        <>
+          <CopyToClipboard className="showOnLargeViewPort" value={blockDetails.data.id} />
+          <CopyToClipboard className="hideOnLargeViewPort" value={blockDetails.data.id ? blockDetails.data.id.replace(regex.lskAddressTrunk, '$1...$3') : ''} />
+        </>
+      ),
     },
     height: {
       label: t('Height'),

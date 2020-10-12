@@ -7,6 +7,9 @@ const votingMiddleware = store => next => (action) => {
     case actionTypes.accountLoggedIn:
       store.dispatch(votesRetrieved());
       break;
+    case actionTypes.accountUpdated:
+      store.dispatch(votesRetrieved());
+      break;
     case actionTypes.accountLoggedOut:
       store.dispatch({
         type: actionTypes.votesRetrieved,

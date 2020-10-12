@@ -46,14 +46,6 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
   });
 };
 
-export const forgingDataDisplayed = () => ({
-  type: actionTypes.forgingDataDisplayed,
-});
-
-export const forgingDataConcealed = () => ({
-  type: actionTypes.forgingDataConcealed,
-});
-
 const retrieveNextForgers = async (getState, forgedInRound) => {
   const { network } = getState();
 

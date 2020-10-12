@@ -14,11 +14,16 @@ import styles from './balanceInfo.css';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
 import { tokenMap } from '../../../../../constants/tokens';
+import { calculateLockedBalance, getActiveTokenAccount } from '../../../../../utils/account';
+
 
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, lockedBalance = 120,
+  t, activeToken, balance, isWalletRoute, address, isDelegate,
 }) => {
+  const host = useSelector(state => getActiveTokenAccount(state));
   const vote = useSelector(state => state.voting[address]);
+  const lockedBalance = activeToken === tokenMap.LSK.key && isWalletRoute && host
+    ? calculateLockedBalance(host) : undefined;
   const initialValue = isWalletRoute
     ? {}
     : { recipient: address };
@@ -43,13 +48,13 @@ const BalanceInfo = ({
               />
 
             </div>
-            {activeToken === tokenMap.LSK.key && (
+            {lockedBalance && (
               <DialogLink
                 className={styles.lockedBalance}
                 component="lockedBalance"
               >
                 <Icon name="lock" />
-                {`${lockedBalance} ${tokenMap.LSK.key}`}
+                {`${fromRawLsk(lockedBalance)} ${tokenMap.LSK.key}`}
               </DialogLink>
             )}
           </DiscreetMode>
@@ -57,7 +62,7 @@ const BalanceInfo = ({
         <SignInTooltipWrapper position="bottom">
           <div className={styles.actionRow}>
             {
-              activeToken === tokenMap.LSK.key && (
+              isDelegate && (
                 <DialogLink component="editVote" className={`${styles.button} add-vote`}>
                   <SecondaryButton
                     className={`${styles.voteButton} open-add-vote-dialog`}

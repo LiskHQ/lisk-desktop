@@ -3,10 +3,8 @@ import { getAPIClient } from './network';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import { toRawLsk, fromRawLsk } from '../../lsk';
 import txFilters from '../../../constants/transactionFilters';
-// eslint-disable-next-line import/no-named-default
 import transactionTypes, { minFeePerByte } from '../../../constants/transactionTypes';
 import { adaptTransactions, adaptTransaction } from './adapters';
-import { findTransactionSizeInBytes } from '../../transactions';
 
 const parseTxFilters = (filter = txFilters.all, address) => ({
   [txFilters.incoming]: { recipientId: address, type: transactionTypes().transfer.outgoingCode },
@@ -74,21 +72,40 @@ export const getSingleTransaction = ({
     }).catch(reject);
 });
 
-/**
- * Calculates the min. transaction fee needed for a transaction
- *
- * @param {object} transaction transaction object
- * @param {number} type transaction type
- * @returns {number} min transaction fee in Beddows
- */
-export const calculateMinTxFee = (
-  transaction, type,
-) => {
-  const fees = findTransactionSizeInBytes({
-    transaction, type,
-  }) * minFeePerByte + transactionTypes.getNameFee(type);
+const txTypeClassMap = {
+  transfer: Lisk.transactions.TransferTransaction,
+  registerDelegate: Lisk.transactions.DelegateTransaction,
+  vote: Lisk.transactions.VoteTransaction,
+};
 
-  return fees;
+
+// eslint-disable-next-line max-statements
+export const createTransactionInstance = (rawTx, type) => {
+  const FEE_BYTES_PLACEHOLDER = '18446744073709551615';
+  const SIGNATURE_BYTES_PLACEHOLDER = '204514eb1152355799ece36d17037e5feb4871472c60763bdafe67eb6a38bec632a8e2e62f84a32cf764342a4708a65fbad194e37feec03940f0ff84d3df2a05';
+  const asset = {
+    data: rawTx.data,
+  };
+
+  if (type === 'transfer') {
+    asset.recipientId = rawTx.recipient;
+    asset.amount = rawTx.amount;
+  } else if (type === 'registerDelegate') {
+    asset.username = rawTx.username || '';
+  } else if (type === 'vote') {
+    asset.votes = rawTx.votes;
+  }
+
+  const TxClass = txTypeClassMap[type];
+  const tx = new TxClass({
+    senderPublicKey: rawTx.senderPublicKey,
+    nonce: rawTx.nonce,
+    asset,
+    fee: FEE_BYTES_PLACEHOLDER,
+    signatures: [SIGNATURE_BYTES_PLACEHOLDER],
+  });
+
+  return tx;
 };
 
 /**
@@ -133,13 +150,16 @@ export const broadcast = (transaction, network) => new Promise(
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
  *
- * @todo get from Lisk Ser
+ * @todo The current implementation mocks the results with realistic values.
+ * We will refactor this function to fetch the base fees from Lisk Service
+ * when the endpoint is ready. Refer to #3081
+ *
  * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
  */
 export const getTransactionBaseFees = () => (
   new Promise(async (resolve) => {
-    const fee = 1e7;
+    const fee = 1e3;
 
     // @todo use real fee estimates
     resolve({
@@ -148,6 +168,9 @@ export const getTransactionBaseFees = () => (
       High: fee * 3,
     });
   }));
+
+
+export const getMinTxFee = tx => Number(tx.minFee.toString());
 
 /**
  * Returns the actual tx fee based on given tx details and selected processing speed
@@ -159,17 +182,18 @@ export const getTransactionFee = async ({
   txData, selectedPriority,
 }) => {
   const { txType, ...data } = txData;
-  const minFee = calculateMinTxFee(data, txType);
-  const feePerByte = Number(fromRawLsk(selectedPriority.value));
+  const tx = createTransactionInstance(data, txType);
+  const minFee = getMinTxFee(tx);
+  const feePerByte = selectedPriority.value;
   const hardCap = transactionTypes.getHardCap(txType);
 
   // Tie breaker is only meant for Medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : minFeePerByte * feePerByte * Math.random();
 
-  let value = minFee + feePerByte * findTransactionSizeInBytes({
-    transaction: data, type: txType,
-  }) + tieBreaker;
+  const size = tx.getBytes().length;
+  let value = minFee + feePerByte * size + tieBreaker;
+
   if (value > hardCap) {
     value = hardCap;
   }

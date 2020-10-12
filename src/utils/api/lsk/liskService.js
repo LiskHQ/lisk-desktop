@@ -227,14 +227,15 @@ const liskServiceApi = {
     }),
 
   getLatestVotes: async (network, params = {}) => {
-    const voteTransactions = await liskServiceSocketGet({
+    const voteTransactionsRequest = {
       method: 'get.transactions',
       params: {
         limit: DEFAULT_LIMIT,
         type: transactionTypes().vote.outgoingCode,
         ...params,
       },
-    });
+    };
+    const voteTransactions = await liskServiceSocketGet(voteTransactionsRequest, network);
 
     const addresses = [
       ...voteTransactions.data.map(({ senderId }) => senderId),
@@ -243,12 +244,12 @@ const liskServiceApi = {
         ...votes.map(v => cryptography.getAddressFromPublicKey(v.substr(1))),
       ]), []),
     ];
-
-
-    const accounts = await liskServiceSocketGet([...new Set(addresses)].map(address => ({
+    const accountsRequest = [...new Set(addresses)].map(address => ({
       method: 'get.accounts',
       params: { address },
-    })));
+    }));
+
+    const accounts = await liskServiceSocketGet(accountsRequest, network);
 
     const accountsMap = accounts.reduce((accumulator, { result: { data } }) => ({
       ...accumulator,
@@ -274,6 +275,21 @@ const liskServiceApi = {
     })));
 
     return results;
+  },
+
+  getVoteNames: async (network, params) => {
+    const request = params.publicKeys.map(publickey => ({
+      method: 'get.accounts',
+      params: { publickey },
+    }));
+    const results = await liskServiceSocketGet(request, network);
+
+    return results
+      .map(result => result.result.data[0])
+      .reduce((acc, item) => {
+        acc[item.publicKey] = { ...item.delegate, account: { address: item.address } };
+        return acc;
+      }, {});
   },
 };
 
