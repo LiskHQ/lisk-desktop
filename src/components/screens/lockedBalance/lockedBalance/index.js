@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import TransactionPriority from '../../../shared/transactionPriority';
-import { toRawLsk } from '../../../../utils/lsk';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import transactionTypes from '../../../../constants/transactionTypes';
@@ -9,6 +8,7 @@ import {
   calculateLockedBalance,
   calculateAvailableBalance,
   getActiveTokenAccount,
+  getAvailableUnlockingTransactions,
 } from '../../../../utils/account';
 import Form from './form';
 import BalanceTable from './balanceTable';
@@ -25,16 +25,16 @@ const LockedBalance = (props) => {
   const [
     selectedPriority, selectTransactionPriority, priorityOptions,
   ] = useTransactionPriority(token);
+
   const { fee, minFee } = useTransactionFeeCalculation({
     selectedPriority,
     token,
     account,
     priorityOptions,
     txData: {
-      amount: toRawLsk(availableBalance),
-      txType,
       nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+      passphrase: account.passphrase,
+      unlockingObjects: getAvailableUnlockingTransactions(account, currentBlock),
     },
   });
 
