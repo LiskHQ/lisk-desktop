@@ -76,6 +76,7 @@ const txTypeClassMap = {
   transfer: Lisk.transactions.TransferTransaction,
   registerDelegate: Lisk.transactions.DelegateTransaction,
   vote: Lisk.transactions.VoteTransaction,
+  unlockToken: Lisk.transaction.UnlockTransaction,
 };
 
 
