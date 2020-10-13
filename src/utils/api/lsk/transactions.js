@@ -95,6 +95,8 @@ export const createTransactionInstance = (rawTx, type) => {
     asset.username = rawTx.username || '';
   } else if (type === 'vote') {
     asset.votes = rawTx.votes;
+  } else if (type === 'unvote') {
+    asset.unlockingObjects = rawTx.unlockingObjects;
   }
 
   const TxClass = txTypeClassMap[type];
