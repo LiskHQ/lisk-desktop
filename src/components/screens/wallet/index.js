@@ -8,6 +8,7 @@ import { getTransactions } from '../../../actions/transactions';
 import txFilters from '../../../constants/transactionFilters';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
+import MultiSignatureTab from './multiSignature';
 import VotesTab from './votes';
 import Transactions from './transactions';
 import { isEmpty } from '../../../utils/helpers';
@@ -79,6 +80,9 @@ const Wallet = ({ t, history }) => {
 
   if (!account || !account.info || isEmpty(account.info)) return (<div />);
 
+  const isDelegate = account.info[activeToken].isDelegate;
+  // const isMultiSignature = account.info[activeToken].isMultiSignature;
+  const isMultiSignature = true;
   return (
     <section>
       <Overview
@@ -109,13 +113,22 @@ const Wallet = ({ t, history }) => {
             tabId="votes"
           />
         ) : null}
-        {account.info[activeToken].isDelegate
+        {isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
               tabId="delegateProfile"
               address={account.info[activeToken].address}
+            />
+          )
+          : null}
+        {isMultiSignature
+          ? (
+            <MultiSignatureTab
+              // tabClassName="delegate-statistics"
+              tabName={t('Multisignatures')}
+              tabId="multiSignatures"
             />
           )
           : null}

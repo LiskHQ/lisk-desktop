@@ -1,0 +1,24 @@
+@import '../../../../app/mixins.css';
+
+.container {
+  & .header {
+    padding: 0;
+    height: 50px;
+    justify-content: flex-start;
+
+    & .title {
+      margin-left: 12px;
+    }
+  }
+
+  & .footer {
+    margin-top: 48px;
+  }
+}
+
+.subHeadingBold {
+  @mixin contentLarge semi-bold;
+
+  color: #4463a7;
+  margin: 0 6px;
+}

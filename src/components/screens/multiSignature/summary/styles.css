@@ -1,0 +1,40 @@
+@import '../../../../app/mixins.css';
+
+.container {
+  & .content {
+  }
+
+  & .infoContainer {
+    display: flex;
+    padding-top: 20px;
+    border-top: 1px solid var(--darker-border-color);
+
+    & .infoColumn {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+
+      &:last-child {
+        padding-left: 10px;
+      }
+    }
+  }
+
+  & .footer {
+    & button {
+      width: 230px;
+    }
+  }
+}
+
+.infoTitle {
+  @mixin contentNormal semi-bold;
+
+  margin-bottom: 10px;
+}
+
+.infoValue {
+  @mixin contentNormal;
+
+  font-size: 16px;
+}
