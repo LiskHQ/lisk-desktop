@@ -9,7 +9,7 @@ import LiskAmount from '../../../shared/liskAmount';
 import { tokenMap } from '../../../../constants/tokens';
 import useVoteAmountField from '../../editVote/useVoteAmountField';
 import { voteEdited } from '../../../../actions/voting';
-import { toRawLsk } from '../../../../utils/lsk';
+import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
 import AmountField from '../../../shared/amountField';
 import styles from './editor.css';
 
@@ -23,7 +23,7 @@ const VoteRow = ({
 }) => {
   const [state, setState] = useState(unconfirmed === '' ? ComponentState.editing : ComponentState.notEditing);
   const dispatch = useDispatch();
-  const [voteAmount, setVoteAmount] = useVoteAmountField(unconfirmed);
+  const [voteAmount, setVoteAmount] = useVoteAmountField(fromRawLsk(unconfirmed));
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
