@@ -116,7 +116,9 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
     }
   }
   switch (transactionType.toLowerCase()) {
-    case 'delegate vote':
+    case 'unlocking':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Unlock LSK');
+      break;
     case 'voting':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate vote');
       break;
@@ -197,4 +199,13 @@ Then(/^(.*?) should be visible$/, function (elementName) {
 
 Then(/^The (.*?) button must be active$/, function (elementName) {
   cy.get(ss[elementName]).should('not.be.disabled');
+});
+
+And(/^I search for account ([^s]+)$/, function (string) {
+  cy.server();
+  cy.route('/api/accounts**').as('requestAccount');
+  cy.route('/api/delegates**').as('requestDelegate');
+  cy.get(ss.searchInput).type(string);
+  cy.wait('@requestAccount');
+  cy.wait('@requestDelegate');
 });

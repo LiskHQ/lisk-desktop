@@ -75,7 +75,7 @@ const Result = ({
           success={!error}
         />
         <BoxFooter direction="horizontal" className={styles.footer}>
-          <PrimaryButton size="l" onClick={closeModal}>
+          <PrimaryButton className="dialog-close-button" size="l" onClick={closeModal}>
             {t('Back to wallet')}
           </PrimaryButton>
         </BoxFooter>
