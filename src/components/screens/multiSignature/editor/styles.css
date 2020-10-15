@@ -34,3 +34,20 @@
   margin-left: 20px;
   display: flex;
 }
+
+.requiredSignaturesInput {
+  width: 140px;
+  height: 40px;
+}
+
+.memberFieldContainer {
+  border: 1px solid grey;
+
+  &:focus {
+    border: 1px solid blue;
+  }
+}
+
+.inputWithDropdown {
+  display: flex;
+}

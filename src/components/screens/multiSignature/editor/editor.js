@@ -9,15 +9,57 @@ import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalcu
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 
 import styles from './styles.css';
-import { PrimaryButton } from '../../../toolbox/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import SteppedProgressBar from '../../../toolbox/steppedProgressBar/steppedProgressBar';
+import Input from '../../../toolbox/inputs/input';
+import Icon from '../../../toolbox/icon';
+import DropdownButton from '../../../toolbox/dropdownButton';
 
 const token = tokenMap.LSK.key;
 const txType = 'createMultiSig';
 
+const MemberCategory = Object.freeze({ optional: 1, mandatory: 2 });
+
+const InputWithDropdown = ({ children, buttonLabel }) => (
+  <div className={styles.inputWithDropdown}>
+    <Input />
+    <DropdownButton
+      // buttonClassName="filterTransactions filter"
+      buttonLabel={buttonLabel}
+      size="s"
+      ButtonComponent={SecondaryButton}
+      align="right"
+    >
+      {children}
+    </DropdownButton>
+  </div>
+
+);
+
+const MemberField = ({
+  t, isMandatory, onCateogryChange, onDelete,
+}) => (
+  <div className={styles.memberFieldContainer}>
+    <InputWithDropdown
+      t={t}
+      buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
+    >
+      <span onClick={() => onCateogryChange(MemberCategory.mandatory)}>
+        {t('Mandatory')}
+      </span>
+      <span onClick={() => onCateogryChange(MemberCategory.optional)}>
+        {t('Optional')}
+      </span>
+    </InputWithDropdown>
+    <span className={onDelete}><Icon name="delete" /></span>
+  </div>
+);
+
 const Editor = ({
   t, account, nextStep,
 }) => {
+  const [requiredSignatures, setRequiredSignatures] = useState();
+  // const [members, setMembers] = useState();
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority, priorityOptions,
@@ -54,8 +96,21 @@ const Editor = ({
         </header>
         <BoxContent className={styles.contentContainer}>
           <SteppedProgressBar total={4} current={2} />
+          <div>
+            {t('Required Signatures')}
+            <Input
+              className={styles.requiredSignaturesInput}
+              value={requiredSignatures}
+              onChange={setRequiredSignatures}
+              autoComplete="off"
+              name="required-signatures"
+            />
+          </div>
+          <p>Members</p>
+          <TertiaryButton>+ Add</TertiaryButton>
+
           <div className={styles.contentScrollable}>
-            {/* put input fields here */}
+            <MemberField t={t} />
           </div>
         </BoxContent>
         <TransactionPriority
