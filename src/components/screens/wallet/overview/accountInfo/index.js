@@ -132,6 +132,25 @@ const AccountInfo = ({
             </div>
           )
         }
+        {
+          <div className={styles.helperIcon}>
+            <Tooltip
+              className={`${styles.tooltipWrapper} ${styles.centerContent} ${styles.whiteBackground}`}
+              position="bottom"
+              size="maxContent"
+              content={(
+                <DialogLink
+                  component="multiSignature"
+                  data={{}}
+                >
+                  <Icon name="multiSignature" />
+                </DialogLink>
+                )}
+            >
+              <p>{t('Register multisignature')}</p>
+            </Tooltip>
+          </div>
+        }
       </footer>
       <Icon
         name={activeToken === 'LSK' ? 'liskLogo' : 'bitcoinLogo'}
