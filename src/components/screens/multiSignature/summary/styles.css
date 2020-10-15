@@ -12,9 +12,6 @@
     }
   }
 
-  & .content {
-  }
-
   & .infoContainer {
     display: flex;
     padding-top: 20px;
@@ -39,7 +36,7 @@
 }
 
 .membersContainer {
-  max-height: 50vh;
+  max-height: 440px;
   overflow-y: auto;
   display: flex;
   flex-direction: row;
@@ -73,7 +70,7 @@
     margin-left: 8px;
 
     & > .memberTitle {
-      @mixin headingSmall; 
+      @mixin headingSmall;
 
       margin-top: 0;
       margin-bottom: 10px;
