@@ -12,7 +12,7 @@ import styles from './styles.css';
 import { PrimaryButton } from '../../../toolbox/buttons';
 
 const token = tokenMap.LSK.key;
-const txType = 'multiSignature';
+const txType = 'createMultiSig';
 
 const Editor = ({
   t, account, nextStep,
