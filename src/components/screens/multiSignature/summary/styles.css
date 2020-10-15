@@ -58,17 +58,13 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-family: 'basier-circle';
   margin-bottom: 30px;
 
   & > .memberInfoIndex {
+    @mixin contentLarge;
+
     margin-right: 8px;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 120%;
-    letter-spacing: 0.230769px;
-    color: #8A8CA2;
+    color: var(--color-blue-gray);
   }
 
   & > .memberDetails {
@@ -77,33 +73,26 @@
     margin-left: 8px;
 
     & > .memberTitle {
+      @mixin headingSmall; 
+
       margin-top: 0;
       margin-bottom: 10px;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 15px;
-      line-height: 120%;
-      letter-spacing: 0.2px;
-      color: #0C152E;
+      color: var(--color-maastricht-blue);
+      font-family: var(--content-font);
 
       & > span {
+        @mixin contentNormal;
+
         margin-left: 10px;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 13px;
-        line-height: 100%;
-        letter-spacing: 0.230769px;
-        color: #000000;
+        color: black;
       }
     }
 
     & > .memberKey {
+      @mixin contentNormal;
+
       margin: 0;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 13px;
-      line-height: 100%;
-      color: #70778B;
+      color: var(--color-slate-gray);
     }
   }
 }
