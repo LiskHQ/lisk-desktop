@@ -139,10 +139,7 @@ const AccountInfo = ({
               position="bottom"
               size="maxContent"
               content={(
-                <DialogLink
-                  component="multiSignature"
-                  data={{}}
-                >
+                <DialogLink component="multiSignature">
                   <Icon name="multiSignature" />
                 </DialogLink>
                 )}
