@@ -12,7 +12,7 @@ import regex from '../../../../utils/regex';
 import styles from './styles.css';
 
 const Member = ({ member, i, t }) => (
-  <div className={styles.memberInfo}>
+  <div className={`${styles.memberInfo} member-info`}>
     <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>
     <AccountVisual address={member.address} />
     <div className={styles.memberDetails}>
@@ -109,8 +109,8 @@ const Summary = ({
           </div>
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
-          <SecondaryButton onClick={prevStep}>Edit</SecondaryButton>
-          <PrimaryButton size="l" onClick={submitTransaction}>
+          <SecondaryButton className="go-back" onClick={prevStep}>Edit</SecondaryButton>
+          <PrimaryButton className="confirm" size="l" onClick={submitTransaction}>
             {t('Sign')}
           </PrimaryButton>
         </BoxFooter>
