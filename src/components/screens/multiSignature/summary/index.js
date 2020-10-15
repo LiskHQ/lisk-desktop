@@ -1,7 +1,33 @@
-import React from 'react';
+// istanbul ignore file
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
+import { getActiveTokenAccount } from '../../../../utils/account';
+import actionTypes from '../../../../constants/actions';
 
-import SummaryComp from './summary';
+import Summary from './summary';
 
-const Summary = () => <SummaryComp />;
+const mapStateToProps = state => ({
+  account: getActiveTokenAccount(state),
+  network: state.network,
+});
 
-export default Summary;
+const mapDispatchToProps = dispatch => ({
+  transactionCreatedSuccess: (data) => {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data,
+    });
+  },
+  transactionCreatedError: (error) => {
+    dispatch({
+      type: actionTypes.transactionCreatedError,
+      error,
+    });
+  },
+});
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withTranslation(),
+)(Summary);
