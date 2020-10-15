@@ -1,0 +1,44 @@
+@import '../../../app/mixins.css';
+
+.container {
+  display: flex;
+  width: 100%;
+}
+  
+.step {
+  @mixin contentSmall;
+
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border: 1px solid #c5cfe4;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divider {
+  border: 0;
+  box-sizing: border-box;
+  flex: 1;
+  height: 10px;
+  border-bottom: 1px dashed #c5cfe4;
+}
+
+.current {
+  border-color: #254898;
+}
+
+.active {
+  border-color: #254898;
+  background-color: #254898;
+  color: white;
+}
+
+.solid {
+  border-style: solid;
+  border-color: #254898;
+}

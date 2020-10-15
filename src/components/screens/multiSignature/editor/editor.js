@@ -10,6 +10,7 @@ import useTransactionPriority from '../../send/form/useTransactionPriority';
 
 import styles from './styles.css';
 import { PrimaryButton } from '../../../toolbox/buttons';
+import SteppedProgressBar from '../../../toolbox/steppedProgressBar/steppedProgressBar';
 
 const token = tokenMap.LSK.key;
 const txType = 'createMultiSig';
@@ -52,6 +53,7 @@ const Editor = ({
           <h1>{t('Register multisignature account')}</h1>
         </header>
         <BoxContent className={styles.contentContainer}>
+          <SteppedProgressBar total={4} current={2} />
           <div className={styles.contentScrollable}>
             {/* put input fields here */}
           </div>
