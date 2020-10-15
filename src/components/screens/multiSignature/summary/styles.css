@@ -1,6 +1,17 @@
 @import '../../../../app/mixins.css';
 
 .container {
+  & > header {
+    padding-left: var(--horizontal-padding-l) !important;
+    padding-right: var(--horizontal-padding-l) !important;
+    padding-bottom: 0px !important;
+    height: auto !important;
+
+    & > h1 {
+      line-height: unset !important;
+    }
+  }
+
   & .content {
   }
 
@@ -23,6 +34,76 @@
   & .footer {
     & button {
       width: 230px;
+    }
+  }
+}
+
+.membersContainer {
+  max-height: 50vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  & > p {
+    width: 100%;
+  }
+
+  & > div {
+    width: 50%;
+  }
+}
+
+.memberInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: 'basier-circle';
+  margin-bottom: 30px;
+
+  & > .memberInfoIndex {
+    margin-right: 8px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 120%;
+    letter-spacing: 0.230769px;
+    color: #8A8CA2;
+  }
+
+  & > .memberDetails {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+
+    & > .memberTitle {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 120%;
+      letter-spacing: 0.2px;
+      color: #0C152E;
+
+      & > span {
+        margin-left: 10px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 100%;
+        letter-spacing: 0.230769px;
+        color: #000000;
+      }
+    }
+
+    & > .memberKey {
+      margin: 0;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 100%;
+      color: #70778B;
     }
   }
 }
