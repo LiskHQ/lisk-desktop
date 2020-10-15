@@ -48,7 +48,9 @@ const Editor = ({
   return (
     <section className={styles.wrapper}>
       <Box>
-
+        <header className={styles.header}>
+          <h1>{t('Register multisignature account')}</h1>
+        </header>
         <BoxContent className={styles.contentContainer}>
           <div className={styles.contentScrollable}>
             {/* put input fields here */}

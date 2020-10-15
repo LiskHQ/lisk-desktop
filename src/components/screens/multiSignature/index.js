@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 import MultiStep from '../../shared/multiStep';
 import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
+import Dialog from '../../toolbox/dialog/dialog';
 
 import Editor from './editor';
 import Summary from './summary';
@@ -18,15 +19,18 @@ const MultiSignature = ({ history }) => {
   };
 
   return (
-    <MultiStep
-      key="multi-signature"
-      finalCallback={closeModal}
-      className={styles.modal}
-    >
-      <Editor />
-      <Summary />
-      <Result />
-    </MultiStep>
+    <Dialog hasClose>
+      <MultiStep
+        key="multi-signature"
+        finalCallback={closeModal}
+        className={styles.modal}
+      >
+        <Editor />
+        <Summary />
+        <Result />
+      </MultiStep>
+    </Dialog>
+
   );
 };
 
