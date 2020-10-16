@@ -1,14 +1,13 @@
-import { mountWithRouterAndStore } from '../../../../utils/testHelpers';
-import Result from './index';
+import React from 'react';
+import { mount } from 'enzyme';
+import Result from './result';
 
 describe('Multisignature result component', () => {
   let wrapper;
 
   const props = {
     t: v => v,
-  };
-
-  const store = {
+    transactionBroadcasted: jest.fn(),
     transactions: {
       confirmed: [],
       broadcastedTransactionsError: [],
@@ -17,11 +16,15 @@ describe('Multisignature result component', () => {
   };
 
   it('Should render properly on success', () => {
-    wrapper = mountWithRouterAndStore(
-      Result,
-      { ...props, transactionInfo: { id: 1 } },
-      {},
-      { transactions: { ...store.transactions, confirmed: [{ id: 1 }] } },
+    wrapper = mount(
+      <Result
+        {...props}
+        transactionInfo={{ id: 1 }}
+        transactions={{
+          ...props.transactions,
+          confirmed: [{ id: 1 }],
+        }}
+      />,
     );
     const html = wrapper.html();
     expect(html).toContain('transaction-status');
@@ -31,11 +34,11 @@ describe('Multisignature result component', () => {
   });
 
   it('Should render properly on error', () => {
-    wrapper = mountWithRouterAndStore(
-      Result,
-      { ...props, error: { message: 'error:test' } },
-      {},
-      store,
+    wrapper = mount(
+      <Result
+        {...props}
+        error={{ message: 'error:test' }}
+      />,
     );
     const html = wrapper.html();
     expect(html).toContain('transaction-status');
