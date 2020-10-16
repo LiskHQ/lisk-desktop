@@ -41,13 +41,53 @@
 }
 
 .memberFieldContainer {
-  border: 1px solid grey;
+  height: auto;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.inputWithDropdown {
+  
+  border: 1px solid var(--color-platinum);
+  border-radius: 3px;
+  display: flex;
+  flex: 1;
 
   &:focus {
     border: 1px solid blue;
   }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+
+  & .inputDropdownButton {
+    height: 100%;
+    border: 0;
+  }
 }
 
-.inputWithDropdown {
+.inputDropdown {
+  border: 0;
+}
+
+
+.membersContainer {
   display: flex;
+
+  & > span {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.deleteIcon {
+  margin-left: 18px;
+  margin-right: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

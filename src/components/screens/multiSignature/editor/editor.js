@@ -20,11 +20,15 @@ const txType = 'createMultiSig';
 
 const MemberCategory = Object.freeze({ optional: 1, mandatory: 2 });
 
+const placeholderMember = {
+  identifier: undefined, isMandatory: false,
+};
+
 const InputWithDropdown = ({ children, buttonLabel }) => (
   <div className={styles.inputWithDropdown}>
-    <Input />
+    <Input size="m" className={styles.inputDropdown} />
     <DropdownButton
-      // buttonClassName="filterTransactions filter"
+      buttonClassName={styles.inputDropdownButton}
       buttonLabel={buttonLabel}
       size="s"
       ButtonComponent={SecondaryButton}
@@ -37,29 +41,42 @@ const InputWithDropdown = ({ children, buttonLabel }) => (
 );
 
 const MemberField = ({
-  t, isMandatory, onCateogryChange, onDelete,
-}) => (
-  <div className={styles.memberFieldContainer}>
-    <InputWithDropdown
-      t={t}
-      buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
-    >
-      <span onClick={() => onCateogryChange(MemberCategory.mandatory)}>
-        {t('Mandatory')}
-      </span>
-      <span onClick={() => onCateogryChange(MemberCategory.optional)}>
-        {t('Optional')}
-      </span>
-    </InputWithDropdown>
-    <span className={onDelete}><Icon name="delete" /></span>
-  </div>
-);
+  t, identifier, isMandatory, onChangeMember, onDelete,
+}) => {
+  const changeCategory = (category) => {
+    onChangeMember({ identifier, isMandatory: category });
+  };
+  const changeIdentifier = (newIdentifier) => {
+    onChangeMember({ identifier: newIdentifier, isMandatory });
+  };
 
+  return (
+    <div className={styles.memberFieldContainer}>
+      <InputWithDropdown
+        t={t}
+        value={identifier}
+        onChange={onIdentifierChange}
+        buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
+      >
+        <span onClick={() => onCateogryChange(MemberCategory.mandatory)}>
+          {t('Mandatory')}
+        </span>
+        <span onClick={() => onCateogryChange(MemberCategory.optional)}>
+          {t('Optional')}
+        </span>
+      </InputWithDropdown>
+      <span className={styles.deleteIcon} onClick={onDelete}><Icon name="deleteIcon" /></span>
+    </div>
+  );
+};
+
+// eslint-disable-next-line max-statements
 const Editor = ({
   t, account, nextStep,
 }) => {
   const [requiredSignatures, setRequiredSignatures] = useState();
-  // const [members, setMembers] = useState();
+  const [members, setMembers] = useState([placeholderMember]);
+
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority, priorityOptions,
@@ -83,6 +100,27 @@ const Editor = ({
   const feedback = { error: false };
   const isCTADisabled = false;
 
+  const addMemberField = () => {
+    setMembers(prevMembers => [...prevMembers, placeholderMember]);
+  };
+
+  const changeMember = ({ identifier, isMandatory }) => {
+    const index = members.findIndex(member => member.identifier === identifier);
+
+    if (index) {
+      const newMember = { identifier, isMandatory };
+      const newMembers = [...members.slice(0, index), newMember, ...members.slice(index + 1)];
+      setMembers(newMembers);
+    }
+  };
+
+  const changeMemberIdentifier = () => {
+
+  };
+
+  const deleteMember = () => {
+
+  };
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
     nextStep({ fee: feeValue });
@@ -106,11 +144,21 @@ const Editor = ({
               name="required-signatures"
             />
           </div>
-          <p>Members</p>
-          <TertiaryButton>+ Add</TertiaryButton>
+          <div className={styles.membersContainer}>
+            <span>Members</span>
+            <TertiaryButton size="s" onClick={addMemberField}>+ Add</TertiaryButton>
+          </div>
 
           <div className={styles.contentScrollable}>
-            <MemberField t={t} />
+            {members.map((member, i) => (
+              <MemberField
+                key={i}
+                t={t}
+                {...member}
+                onChangeMember={changeMember}
+                onDelete={deleteMember}
+              />
+            ))}
           </div>
         </BoxContent>
         <TransactionPriority
