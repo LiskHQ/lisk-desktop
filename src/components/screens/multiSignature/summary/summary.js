@@ -3,7 +3,6 @@ import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
-import BoxHeader from '../../../toolbox/box/header';
 import Piwik from '../../../../utils/piwik';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import AccountVisual from '../../../toolbox/accountVisual';
@@ -96,9 +95,9 @@ const Summary = ({
   return (
     <section>
       <Box className={styles.container}>
-        <BoxHeader>
+        <div className={styles.header}>
           <h1>{t('Register multisignature account')}</h1>
-        </BoxHeader>
+        </div>
         <BoxContent className={styles.content}>
           <Members members={members} t={t} />
           <div className={styles.infoContainer}>

@@ -4,9 +4,6 @@ import { withTranslation } from 'react-i18next';
 import { transactionBroadcasted } from '../../../../actions/transactions';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import TransactionResult from '../../../shared/transactionResult';
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxHeader from '../../../toolbox/box/header';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import Icon from '../../../toolbox/icon';
 
@@ -46,36 +43,32 @@ const Result = ({
 
   return (
     <section className="transaction-status">
-      <Box className={styles.container}>
-        <BoxHeader>
-          <h1>{t('Register multisignature account')}</h1>
-        </BoxHeader>
-        <BoxContent>
-          <TransactionResult
-            t={t}
-            illustration={template.illustration}
-            success={success}
-            message={template.message}
-            className={styles.content}
-            error={JSON.stringify(error)}
-          >
-            {success && (
-              <div className={styles.buttonsContainer}>
-                <CopyToClipboard
-                  Container={SecondaryButton}
-                  text={t('Copy')}
-                />
-                <PrimaryButton>
-                  <span>
-                    <Icon name="download" />
-                    {t('Download')}
-                  </span>
-                </PrimaryButton>
-              </div>
-            )}
-          </TransactionResult>
-        </BoxContent>
-      </Box>
+      <div className={styles.header}>
+        <h1>{t('Register multisignature account')}</h1>
+      </div>
+      <TransactionResult
+        t={t}
+        illustration={template.illustration}
+        success={success}
+        message={template.message}
+        className={styles.content}
+        error={JSON.stringify(error)}
+      >
+        {success && (
+          <div className={styles.buttonsContainer}>
+            <CopyToClipboard
+              Container={SecondaryButton}
+              text={t('Copy')}
+            />
+            <PrimaryButton>
+              <span>
+                <Icon name="download" />
+                {t('Download')}
+              </span>
+            </PrimaryButton>
+            </div>
+        )}
+      </TransactionResult>
     </section>
   );
 };
