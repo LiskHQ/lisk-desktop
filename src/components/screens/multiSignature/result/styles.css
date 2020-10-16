@@ -1,24 +1,37 @@
 @import '../../../../app/mixins.css';
 
-.container {
-  & .header {
-    padding: 0;
-    height: 50px;
-    justify-content: flex-start;
+.header {
+  padding-left: var(--horizontal-padding-l);
+  padding-right: var(--horizontal-padding-l);
 
-    & .title {
-      margin-left: 12px;
-    }
-  }
-
-  & .footer {
-    margin-top: 48px;
+  & > h1 {
+    @mixin headingNormal bold;
   }
 }
 
-.subHeadingBold {
-  @mixin contentLarge semi-bold;
+.content {
+  max-width: 450px;
+  margin: 0 auto;
+}
 
-  color: #4463a7;
-  margin: 0 6px;
+.buttonsContainer {
+  margin-top: 40px;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.buttonsContainer button {
+  width: 200px;
+
+  & > span {
+    @mixin contentLarge;
+
+    display: flex;
+    justify-content: center;
+
+    & > img {
+      margin-right: 8px;
+    }
+  }
 }
