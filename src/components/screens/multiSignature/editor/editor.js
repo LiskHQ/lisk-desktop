@@ -80,6 +80,10 @@ const Editor = ({
     }
   };
 
+  const changeRequiredSignatures = (e) => {
+    const value = e.target.value;
+    setRequiredSignatures(value);
+  };
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
     nextStep({ fee: feeValue });
@@ -98,7 +102,7 @@ const Editor = ({
             <Input
               className={styles.requiredSignaturesInput}
               value={requiredSignatures}
-              onChange={setRequiredSignatures}
+              onChange={changeRequiredSignatures}
               autoComplete="off"
               name="required-signatures"
             />
