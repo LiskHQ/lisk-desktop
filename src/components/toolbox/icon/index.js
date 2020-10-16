@@ -141,6 +141,7 @@ import votingQueueInactive from '../../../assets/images/icons/voting-queue-inact
 import votingQueueActive from '../../../assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '../../../assets/images/icons/delete.svg';
 import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.svg';
+import download from '../../../assets/images/icons/download.svg';
 
 export const icons = {
   academy,
@@ -283,6 +284,7 @@ export const icons = {
   txUnlock,
   votingQueueInactive,
   votingQueueActive,
+  download,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

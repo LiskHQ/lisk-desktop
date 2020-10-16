@@ -1,9 +1,5 @@
 @import '../../../../app/mixins.css';
 
-.wrapper {
-  padding: 0 var(--horizontal-padding-l);
-}
-
 .container {
   & > header {
     padding-left: var(--horizontal-padding-l) !important;
@@ -17,6 +13,28 @@
   }
 }
 
+.content {
+  max-width: 450px;
+  margin: 0 auto
+}
+
 .buttonsContainer {
+  margin-top: 40px;
   display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.buttonsContainer button {
+  width: 200px;
+
+  & > span {
+    display: flex;
+    justify-content: center;
+    @mixin contentLarge;
+
+    & > img {
+      margin-right: 8px;
+    }
+  }
 }

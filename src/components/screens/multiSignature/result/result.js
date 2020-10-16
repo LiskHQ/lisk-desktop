@@ -7,6 +7,8 @@ import TransactionResult from '../../../shared/transactionResult';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxHeader from '../../../toolbox/box/header';
+import CopyToClipboard from '../../../toolbox/copyToClipboard';
+import Icon from '../../../toolbox/icon';
 
 import styles from './styles.css';
 
@@ -43,12 +45,12 @@ const Result = ({
   }, [transactionInfo]);
 
   return (
-    <section className={`${styles.wrapper} transaction-status`}>
+    <section className="transaction-status">
       <Box className={styles.container}>
         <BoxHeader>
           <h1>{t('Register multisignature account')}</h1>
         </BoxHeader>
-        <BoxContent className={styles.content}>
+        <BoxContent>
           <TransactionResult
             t={t}
             illustration={template.illustration}
@@ -59,9 +61,15 @@ const Result = ({
           >
             {success && (
               <div className={styles.buttonsContainer}>
-                <SecondaryButton>Copy</SecondaryButton>
+                <CopyToClipboard
+                  Container={SecondaryButton}
+                  text={t('Copy')}
+                />
                 <PrimaryButton>
-                  Download
+                  <span>
+                    <Icon name="download" />
+                    {t('Download')}
+                  </span>
                 </PrimaryButton>
               </div>
             )}
