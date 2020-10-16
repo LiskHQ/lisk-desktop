@@ -7,78 +7,19 @@ import TransactionPriority from '../../../shared/transactionPriority';
 import { tokenMap } from '../../../../constants/tokens';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
-
-import styles from './styles.css';
-import { PrimaryButton, SecondaryButton, TertiaryButton } from '../../../toolbox/buttons';
+import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import SteppedProgressBar from '../../../toolbox/steppedProgressBar/steppedProgressBar';
-import Input from '../../../toolbox/inputs/input';
-import Icon from '../../../toolbox/icon';
-import DropdownButton from '../../../toolbox/dropdownButton';
+import { Input } from '../../../toolbox/inputs';
+
+import MemberField from './memberField';
+import styles from './styles.css';
 
 const token = tokenMap.LSK.key;
 const txType = 'createMultiSig';
 const MAX_MULTI_SIG_MEMBERS = 64;
 
-
 const placeholderMember = {
   identifier: undefined, isMandatory: false,
-};
-
-const InputWithDropdown = ({
-  value, onChange, children, buttonLabel,
-}) => (
-  <div className={styles.inputWithDropdown}>
-    <Input
-      value={value}
-      onChange={onChange}
-      size="m"
-      className={styles.inputDropdown}
-    />
-    <DropdownButton
-      buttonClassName={styles.inputDropdownButton}
-      buttonLabel={buttonLabel}
-      size="s"
-      ButtonComponent={SecondaryButton}
-      align="right"
-    >
-      {children}
-    </DropdownButton>
-  </div>
-
-);
-
-const MemberField = ({
-  t, index, identifier, isMandatory, onChangeMember, onDeleteMember,
-}) => {
-  const changeCategory = (flag) => {
-    onChangeMember({ index, identifier, isMandatory: flag });
-  };
-
-  const changeIdentifier = (e) => {
-    const newIdentifier = e.target.value;
-    onChangeMember({ index, identifier: newIdentifier, isMandatory });
-  };
-
-  const deleteMember = () => onDeleteMember(index);
-
-  return (
-    <div className={styles.memberFieldContainer}>
-      <InputWithDropdown
-        t={t}
-        value={identifier}
-        onChange={changeIdentifier}
-        buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
-      >
-        <span onClick={() => changeCategory(true)}>
-          {t('Mandatory')}
-        </span>
-        <span onClick={() => changeCategory(false)}>
-          {t('Optional')}
-        </span>
-      </InputWithDropdown>
-      <span className={styles.deleteIcon} onClick={deleteMember}><Icon name="deleteIcon" /></span>
-    </div>
-  );
 };
 
 // eslint-disable-next-line max-statements
@@ -119,7 +60,11 @@ const Editor = ({
 
   const changeMember = ({ index, identifier, isMandatory }) => {
     const newMember = { identifier, isMandatory };
-    const newMembers = [...members.slice(0, index), newMember, ...members.slice(index + 1)];
+    const newMembers = [
+      ...members.slice(0, index),
+      newMember,
+      ...members.slice(index + 1),
+    ];
     setMembers(newMembers);
   };
 
@@ -127,7 +72,10 @@ const Editor = ({
     if (members.length === 1) {
       changeMember({ index, identifier: '', isMandatory: false });
     } else {
-      const newMembers = [...members.slice(0, index), ...members.slice(index + 1)];
+      const newMembers = [
+        ...members.slice(0, index),
+        ...members.slice(index + 1),
+      ];
       setMembers(newMembers);
     }
   };

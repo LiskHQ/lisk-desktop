@@ -47,32 +47,6 @@
   align-items: center;
 }
 
-.inputWithDropdown {
-  
-  border: 1px solid var(--color-platinum);
-  border-radius: 3px;
-  display: flex;
-  flex: 1;
-
-  &:focus {
-    border: 1px solid blue;
-  }
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-  
-
-  & .inputDropdownButton {
-    height: 100%;
-    border: 0;
-  }
-}
-
-.inputDropdown {
-  border: 0;
-}
-
 
 .membersContainer {
   display: flex;
