@@ -15,7 +15,7 @@
 
 .content {
   max-width: 450px;
-  margin: 0 auto
+  margin: 0 auto;
 }
 
 .buttonsContainer {
@@ -29,9 +29,10 @@
   width: 200px;
 
   & > span {
+    @mixin contentLarge;
+
     display: flex;
     justify-content: center;
-    @mixin contentLarge;
 
     & > img {
       margin-right: 8px;
