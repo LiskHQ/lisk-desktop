@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
@@ -7,16 +7,36 @@ import TransactionPriority from '../../../shared/transactionPriority';
 import { tokenMap } from '../../../../constants/tokens';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
+import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
+import { Input } from '../../../toolbox/inputs';
 
+import MemberField from './memberField';
 import styles from './styles.css';
-import { PrimaryButton } from '../../../toolbox/buttons';
+import ProgressBar from '../progressBar';
 
 const token = tokenMap.LSK.key;
-const txType = 'multiSignature';
+const txType = 'createMultiSig';
+const MAX_MULTI_SIG_MEMBERS = 64;
 
+const placeholderMember = {
+  identifier: undefined, isMandatory: false,
+};
+
+// eslint-disable-next-line max-statements
 const Editor = ({
   t, account, nextStep,
 }) => {
+  const [requiredSignatures, setRequiredSignatures] = useState(2);
+  const [members, setMembers] = useState([placeholderMember]);
+
+  useEffect(() => {
+    const difference = requiredSignatures - members.length;
+    if (difference > 0) {
+      const newMembers = new Array(difference).fill(placeholderMember);
+      setMembers(prevMembers => [...prevMembers, ...newMembers]);
+    }
+  }, [requiredSignatures]);
+
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority, priorityOptions,
@@ -40,6 +60,38 @@ const Editor = ({
   const feedback = { error: false };
   const isCTADisabled = false;
 
+  const addMemberField = () => {
+    if (members.length < MAX_MULTI_SIG_MEMBERS) {
+      setMembers(prevMembers => [...prevMembers, placeholderMember]);
+    }
+  };
+
+  const changeMember = ({ index, identifier, isMandatory }) => {
+    const newMember = { identifier, isMandatory };
+    const newMembers = [
+      ...members.slice(0, index),
+      newMember,
+      ...members.slice(index + 1),
+    ];
+    setMembers(newMembers);
+  };
+
+  const deleteMember = (index) => {
+    if (members.length === 1) {
+      changeMember({ index, identifier: '', isMandatory: false });
+    } else {
+      const newMembers = [
+        ...members.slice(0, index),
+        ...members.slice(index + 1),
+      ];
+      setMembers(newMembers);
+    }
+  };
+
+  const changeRequiredSignatures = (e) => {
+    const value = Number(e.target.value);
+    setRequiredSignatures(value);
+  };
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
     nextStep({ fee: feeValue });
@@ -47,11 +99,38 @@ const Editor = ({
 
   return (
     <section className={styles.wrapper}>
-      <Box>
-
+      <Box className={styles.box}>
+        <header className={styles.header}>
+          <h1>{t('Register multisignature account')}</h1>
+        </header>
         <BoxContent className={styles.contentContainer}>
+          <ProgressBar current={1} />
+          <div>
+            <span className={styles.requiredSignaturesHeading}>{t('Required Signatures')}</span>
+            <Input
+              className={`${styles.requiredSignaturesInput} multisignature-editor-input`}
+              value={requiredSignatures}
+              onChange={changeRequiredSignatures}
+              autoComplete="off"
+              name="required-signatures"
+            />
+          </div>
+          <div className={`${styles.membersControls} multisignature-members-controls`}>
+            <span>Members</span>
+            <TertiaryButton size="s" disabled={members.length >= 64} onClick={addMemberField} className="add-new-members">+ Add</TertiaryButton>
+          </div>
           <div className={styles.contentScrollable}>
-            {/* put input fields here */}
+            {members.map((member, i) => (
+              <MemberField
+                key={i}
+                t={t}
+                {...member}
+                index={i}
+                showDeleteIcon={members.length > requiredSignatures}
+                onChangeMember={changeMember}
+                onDeleteMember={deleteMember}
+              />
+            ))}
           </div>
         </BoxContent>
         <TransactionPriority
@@ -71,6 +150,7 @@ const Editor = ({
         }
         <BoxFooter>
           <PrimaryButton
+            className="confirm-button"
             size="l"
             disabled={isCTADisabled}
             onClick={goToNextStep}

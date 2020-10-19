@@ -74,7 +74,6 @@ import transactionError from '../../../assets/images/icons/transaction-error.svg
 import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
 import transactionSuccess from '../../../assets/images/icons/transaction-success.svg';
 import tx2ndPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
-import multiSignature from '../../../assets/images/icons/multiSignature.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
 import txDelegate from '../../../assets/images/icons/tx-delegate.svg';
 import txVote from '../../../assets/images/icons/tx-vote.svg';
@@ -143,6 +142,7 @@ import votingQueueActive from '../../../assets/images/icons/voting-queue-active.
 import deleteIcon from '../../../assets/images/icons/delete.svg';
 import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.svg';
 import download from '../../../assets/images/icons/download.svg';
+import multiSignature from '../../../assets/images/icons/multi-signature.svg';
 
 export const icons = {
   academy,

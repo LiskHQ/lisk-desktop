@@ -140,3 +140,13 @@
   width: 100%;
   height: 100%;
 }
+
+.whiteBackground {
+  background-color: var(--color-white);
+}
+
+.centerContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

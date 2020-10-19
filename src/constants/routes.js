@@ -27,6 +27,7 @@ import SearchBar from '../components/shared/searchBar';
 import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
 import EditVote from '../components/screens/editVote';
 import VotingQueue from '../components/screens/votingQueue';
+import MultiSignature from '../components/screens/multiSignature';
 
 export default {
   wallet: {
@@ -201,6 +202,11 @@ export const modals = {
   votingQueue: {
     component: VotingQueue,
     isPrivate: true,
-    forbiddenTokens: [],
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  multiSignature: {
+    component: MultiSignature,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
 };
