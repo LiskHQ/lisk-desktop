@@ -96,7 +96,12 @@ const Editor = ({
           <h1>{t('Register multisignature account')}</h1>
         </header>
         <BoxContent className={styles.contentContainer}>
-          <SteppedProgressBar total={4} current={2} />
+          <SteppedProgressBar
+            total={3}
+            current={1}
+            labels={[
+              t('Configure account'), t('Review and sign'), t('Share')]}
+          />
           <div>
             {t('Required Signatures')}
             <Input

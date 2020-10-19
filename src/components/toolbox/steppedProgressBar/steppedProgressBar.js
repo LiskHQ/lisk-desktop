@@ -21,7 +21,7 @@ const Divider = ({ index, active }) => (
 );
 
 const SteppedProgressBar = ({
-  total, current, className,
+  total, current, className, labels,
 }) => {
   const steps = new Array(total).fill(null);
 
@@ -42,7 +42,21 @@ const SteppedProgressBar = ({
     );
   });
 
-  return <div className={`${styles.container} ${className}`}>{children}</div>;
+  return (
+    <div className={`${styles.container} ${className}`}>
+      <div className={styles.stepContainer}>{children}</div>
+      <div className={styles.labelContainer}>
+        {labels.map((label, index) => (
+          <span
+            className={index <= current - 1 ? styles.activeLabel : ''}
+            key={index}
+          >
+            {label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default SteppedProgressBar;
