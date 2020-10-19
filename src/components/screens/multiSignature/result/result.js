@@ -38,11 +38,11 @@ const Result = ({
   }, [transactionInfo]);
 
   return (
-    <section className="transaction-status">
+    <section className={`${styles.wrapper} transaction-status`}>
       <div className={styles.header}>
         <h1>{t('Register multisignature account')}</h1>
       </div>
-      <ProgressBar current={3} />
+      <ProgressBar current={4} />
       <TransactionResult
         t={t}
         illustration={template.illustration}

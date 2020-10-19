@@ -1,11 +1,17 @@
 @import '../../../../app/mixins.css';
 
-.header {
-  padding-left: var(--horizontal-padding-l);
-  padding-right: var(--horizontal-padding-l);
+.wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+  padding-bottom: 0;
+}
 
+.header {
   & > h1 {
     @mixin headingNormal bold;
+
+    margin: 0;
   }
 }
 

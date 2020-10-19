@@ -96,7 +96,7 @@ const Summary = ({
   };
 
   return (
-    <section>
+    <section className={styles.wrapper}>
       <Box className={styles.container}>
         <div className={styles.header}>
           <h1>{t('Register multisignature account')}</h1>
