@@ -7,7 +7,7 @@ import { InputWithDropdown } from '../../../toolbox/inputs';
 import styles from './styles.css';
 
 const MemberField = ({
-  t, index, identifier, isMandatory, onChangeMember, onDeleteMember,
+  t, index, identifier, isMandatory, showDeleteIcon, onChangeMember, onDeleteMember,
 }) => {
   const changeCategory = (flag) => {
     onChangeMember({ index, identifier, isMandatory: flag });
@@ -36,7 +36,7 @@ const MemberField = ({
           {t('Optional')}
         </span>
       </InputWithDropdown>
-      <span className={styles.deleteIcon} onClick={deleteMember}><Icon name="deleteIcon" /></span>
+      {showDeleteIcon && <span className={styles.deleteIcon} onClick={deleteMember}><Icon name="deleteIcon" /></span>}
     </div>
   );
 };

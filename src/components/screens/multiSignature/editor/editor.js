@@ -26,11 +26,11 @@ const placeholderMember = {
 const Editor = ({
   t, account, nextStep,
 }) => {
-  const [requiredSignatures, setRequiredSignatures] = useState();
+  const [requiredSignatures, setRequiredSignatures] = useState(2);
   const [members, setMembers] = useState([placeholderMember]);
 
   useEffect(() => {
-    const difference = (requiredSignatures - members.length) || 0;
+    const difference = requiredSignatures - members.length;
     if (difference > 0) {
       const newMembers = new Array(difference).fill(placeholderMember);
       setMembers(prevMembers => [...prevMembers, ...newMembers]);
@@ -131,6 +131,7 @@ const Editor = ({
                 t={t}
                 {...member}
                 index={i}
+                showDeleteIcon={members.length > requiredSignatures}
                 onChangeMember={changeMember}
                 onDeleteMember={deleteMember}
               />
