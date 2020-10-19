@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import styles from './styles.css';
 
@@ -35,10 +35,10 @@ const SteppedProgressBar = ({
     }
 
     return (
-      <>
-        <Step key={`step-${index}`} active={isActive} current={isCurrent}>{text}</Step>
-        <Divider key={`divider-${index}`} active={isActive} />
-      </>
+      <Fragment key={`step-${index}`}>
+        <Step active={isActive} current={isCurrent}>{text}</Step>
+        <Divider active={isActive} />
+      </Fragment>
     );
   });
 
