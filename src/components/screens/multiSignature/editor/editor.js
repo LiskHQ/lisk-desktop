@@ -108,16 +108,16 @@ const Editor = ({
           <div>
             <span className={styles.requiredSignaturesHeading}>{t('Required Signatures')}</span>
             <Input
-              className={styles.requiredSignaturesInput}
+              className={`${styles.requiredSignaturesInput} multisignature-editor-input`}
               value={requiredSignatures}
               onChange={changeRequiredSignatures}
               autoComplete="off"
               name="required-signatures"
             />
           </div>
-          <div className={styles.membersControls}>
+          <div className={`${styles.membersControls} multisignature-members-controls`}>
             <span>Members</span>
-            <TertiaryButton size="s" onClick={addMemberField}>+ Add</TertiaryButton>
+            <TertiaryButton size="s" disabled={members.length >= 64} onClick={addMemberField} className="add-new-members">+ Add</TertiaryButton>
           </div>
           <div className={styles.contentScrollable}>
             {members.map((member, i) => (
@@ -150,6 +150,7 @@ const Editor = ({
         }
         <BoxFooter>
           <PrimaryButton
+            className="confirm-button"
             size="l"
             disabled={isCTADisabled}
             onClick={goToNextStep}

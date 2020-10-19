@@ -37,7 +37,7 @@ const MemberField = ({
           {t('Optional')}
         </span>
       </InputWithDropdown>
-      {showDeleteIcon && <span className={styles.deleteIcon} onClick={deleteMember}><Icon name="deleteIcon" /></span>}
+      {showDeleteIcon && <span className={`${styles.deleteIcon} delete-icon`} onClick={deleteMember}><Icon name="deleteIcon" /></span>}
     </div>
   );
 };
