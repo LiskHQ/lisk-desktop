@@ -1,4 +1,5 @@
 import React from 'react';
+
 import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
@@ -8,6 +9,8 @@ import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import AccountVisual from '../../../toolbox/accountVisual';
 import { tokenMap } from '../../../../constants/tokens';
 import regex from '../../../../utils/regex';
+
+import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Member = ({ member, i, t }) => (
@@ -99,6 +102,7 @@ const Summary = ({
           <h1>{t('Register multisignature account')}</h1>
         </div>
         <BoxContent className={styles.content}>
+          <ProgressBar current={2} />
           <Members members={members} t={t} />
           <div className={styles.infoContainer}>
             <InfoColumn title={t('Required Signatures')}>{requiredSignatures}</InfoColumn>

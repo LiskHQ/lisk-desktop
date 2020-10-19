@@ -3,6 +3,8 @@ import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import TransactionResult from '../../../shared/transactionResult';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import Icon from '../../../toolbox/icon';
+
+import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Result = ({
@@ -40,6 +42,7 @@ const Result = ({
       <div className={styles.header}>
         <h1>{t('Register multisignature account')}</h1>
       </div>
+      <ProgressBar current={3} />
       <TransactionResult
         t={t}
         illustration={template.illustration}
