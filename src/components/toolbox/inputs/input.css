@@ -193,7 +193,7 @@
   &:last-child {
     margin-bottom: 0;
   }
-  
+
   & .inputDropdownButton {
     height: 100%;
     border: 0;

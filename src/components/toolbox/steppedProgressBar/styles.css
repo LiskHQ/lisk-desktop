@@ -21,7 +21,6 @@
   border: 1px solid var(--color-periwinkle-blue);
   border-radius: 50%;
   color: var(--color-blue-gray);
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,7 +53,7 @@
 .labelContainer {
   margin-top: 6px;
   display: flex;
-  
+
   & span {
     @mixin contentNormal;
 
