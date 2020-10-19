@@ -31,13 +31,13 @@ const SteppedProgressBar = ({
     const text = index + 1;
 
     if (index === total - 1) {
-      return <Step active={isActive} current={isCurrent}>{text}</Step>;
+      return <Step key={`step-${total - 1}`} active={isActive} current={isCurrent}>{text}</Step>;
     }
 
     return (
       <>
-        <Step active={isActive} current={isCurrent}>{text}</Step>
-        <Divider active={isActive} />
+        <Step key={`step-${index}`} active={isActive} current={isCurrent}>{text}</Step>
+        <Divider key={`divider-${index}`} active={isActive} />
       </>
     );
   });
