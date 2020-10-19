@@ -24,6 +24,7 @@ const MemberField = ({
     <div className={styles.memberFieldContainer}>
       <InputWithDropdown
         t={t}
+        className={styles.inputWithDropdown}
         value={identifier}
         onChange={changeIdentifier}
         ButtonComponent={SecondaryButton}

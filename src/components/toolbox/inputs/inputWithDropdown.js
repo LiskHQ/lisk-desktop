@@ -6,9 +6,9 @@ import DropdownButton from '../dropdownButton';
 import styles from './input.css';
 
 const InputWithDropdown = ({
-  value, onChange, children, buttonLabel, ButtonComponent,
+  className, value, onChange, children, buttonLabel, ButtonComponent,
 }) => (
-  <div className={styles.inputWithDropdown}>
+  <div className={`${styles.inputWithDropdown} ${className}`}>
     <Input
       value={value}
       onChange={onChange}

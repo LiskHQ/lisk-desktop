@@ -64,7 +64,6 @@
 }
 
 .deleteIcon {
-  margin-left: 18px;
   margin-right: 10px;
 
   &:hover {
@@ -80,4 +79,8 @@
   @mixin contentNormal;
 
   margin-bottom: 10px;
+}
+
+.inputWithDropdown {
+  margin-right: 18px;
 }
