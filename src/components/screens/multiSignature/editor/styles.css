@@ -71,10 +71,6 @@
   }
 }
 
-.progressBarContainer {
-  margin: 18px 0;
-}
-
 .requiredSignaturesHeading {
   @mixin contentNormal;
 

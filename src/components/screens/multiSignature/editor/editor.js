@@ -8,11 +8,11 @@ import { tokenMap } from '../../../../constants/tokens';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
-import SteppedProgressBar from '../../../toolbox/steppedProgressBar/steppedProgressBar';
 import { Input } from '../../../toolbox/inputs';
 
 import MemberField from './memberField';
 import styles from './styles.css';
+import ProgressBar from '../progressBar';
 
 const token = tokenMap.LSK.key;
 const txType = 'createMultiSig';
@@ -104,12 +104,7 @@ const Editor = ({
           <h1>{t('Register multisignature account')}</h1>
         </header>
         <BoxContent className={styles.contentContainer}>
-          <SteppedProgressBar
-            className={styles.progressBarContainer}
-            total={3}
-            current={1}
-            labels={[t('Configure account'), t('Review and sign'), t('Share')]}
-          />
+          <ProgressBar current={1} />
           <div>
             <span className={styles.requiredSignaturesHeading}>{t('Required Signatures')}</span>
             <Input
