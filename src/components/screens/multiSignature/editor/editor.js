@@ -97,13 +97,14 @@ const Editor = ({
         </header>
         <BoxContent className={styles.contentContainer}>
           <SteppedProgressBar
+            className={styles.progressBarContainer}
             total={3}
             current={1}
             labels={[
               t('Configure account'), t('Review and sign'), t('Share')]}
           />
           <div>
-            {t('Required Signatures')}
+            <span className={styles.requiredSignaturesHeading}>{t('Required Signatures')}</span>
             <Input
               className={styles.requiredSignaturesInput}
               value={requiredSignatures}
@@ -112,11 +113,10 @@ const Editor = ({
               name="required-signatures"
             />
           </div>
-          <div className={styles.membersContainer}>
+          <div className={styles.membersControls}>
             <span>Members</span>
             <TertiaryButton size="s" onClick={addMemberField}>+ Add</TertiaryButton>
           </div>
-
           <div className={styles.contentScrollable}>
             {members.map((member, i) => (
               <MemberField

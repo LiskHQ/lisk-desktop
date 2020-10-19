@@ -18,12 +18,10 @@
 }
 
 .contentScrollable {
-  margin-top: 10px;
   overflow: scroll;
   max-height: 290px;
   display: flex;
   flex-direction: column;
-
 }
 
 .txPriority {
@@ -48,10 +46,13 @@
 }
 
 
-.membersContainer {
+.membersControls {
+  margin-top: 28px;
   display: flex;
 
   & > span {
+    @mixin contentNormal;
+
     display: flex;
     align-items: center;
   }
@@ -64,4 +65,14 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.progressBarContainer {
+  margin-bottom: 20px;
+}
+
+.requiredSignaturesHeading {
+  @mixin contentNormal;
+
+  margin-bottom: 10px;
 }
