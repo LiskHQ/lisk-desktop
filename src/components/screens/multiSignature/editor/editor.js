@@ -91,7 +91,7 @@ const Editor = ({
 
   return (
     <section className={styles.wrapper}>
-      <Box>
+      <Box className={styles.box}>
         <header className={styles.header}>
           <h1>{t('Register multisignature account')}</h1>
         </header>

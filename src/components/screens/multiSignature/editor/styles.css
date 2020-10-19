@@ -2,6 +2,11 @@
   box-sizing: border-box;
   width: 100%;
   padding: 20px;
+  padding-bottom: 0;
+
+  & .box {
+    margin-bottom: 0;
+  }
 
   & .contentContainer {
     display: flex;
@@ -68,7 +73,7 @@
 }
 
 .progressBarContainer {
-  margin-bottom: 20px;
+  margin: 18px 0;
 }
 
 .requiredSignaturesHeading {
