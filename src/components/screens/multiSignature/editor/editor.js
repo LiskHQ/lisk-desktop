@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
@@ -28,6 +28,14 @@ const Editor = ({
 }) => {
   const [requiredSignatures, setRequiredSignatures] = useState();
   const [members, setMembers] = useState([placeholderMember]);
+
+  useEffect(() => {
+    const difference = (requiredSignatures - members.length) || 0;
+    if (difference > 0) {
+      const newMembers = new Array(difference).fill(placeholderMember);
+      setMembers(prevMembers => [...prevMembers, ...newMembers]);
+    }
+  }, [requiredSignatures]);
 
   const [customFee, setCustomFee] = useState();
   const [
@@ -81,7 +89,7 @@ const Editor = ({
   };
 
   const changeRequiredSignatures = (e) => {
-    const value = e.target.value;
+    const value = Number(e.target.value);
     setRequiredSignatures(value);
   };
   const goToNextStep = () => {
@@ -100,8 +108,7 @@ const Editor = ({
             className={styles.progressBarContainer}
             total={3}
             current={1}
-            labels={[
-              t('Configure account'), t('Review and sign'), t('Share')]}
+            labels={[t('Configure account'), t('Review and sign'), t('Share')]}
           />
           <div>
             <span className={styles.requiredSignaturesHeading}>{t('Required Signatures')}</span>
