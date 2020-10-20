@@ -1,5 +1,4 @@
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Table from '../../../toolbox/table';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
