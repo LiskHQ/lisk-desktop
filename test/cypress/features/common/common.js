@@ -202,3 +202,12 @@ Then(/^The (.*?) button must (.*?) active$/, function (elementName, check) {
     cy.get(ss[elementName]).should('be.disabled');
   }
 });
+
+And(/^I search for account ([^s]+)$/, function (string) {
+  cy.server();
+  cy.route('/api/accounts**').as('requestAccount');
+  cy.route('/api/delegates**').as('requestDelegate');
+  cy.get(ss.searchInput).type(string);
+  cy.wait('@requestAccount');
+  cy.wait('@requestDelegate');
+});
