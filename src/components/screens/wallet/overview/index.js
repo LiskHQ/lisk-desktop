@@ -19,7 +19,6 @@ const Overview = ({
   discreetMode, isWalletRoute, account,
 }) => {
   const address = getProp(account, 'address', '');
-  const delegate = getProp(account, 'delegate', {});
   const publicKey = getProp(account, 'publicKey', '');
   const balance = getProp(account, 'balance', 0);
   const bookmark = useSelector(
@@ -40,7 +39,8 @@ const Overview = ({
           hwInfo={hwInfo}
           activeToken={activeToken}
           address={address}
-          delegate={delegate}
+          account={account}
+          isDelegate={account.isDelegate}
           bookmark={bookmark}
           publicKey={publicKey}
           host={host}

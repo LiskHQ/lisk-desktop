@@ -10,9 +10,14 @@ import { truncateAddress } from '../../../../../utils/account';
  * but toggles expanded on user click
  *
  */
-const Identity = ({ address, delegate, bookmark }) => {
+const Identity = ({
+  address,
+  account,
+  isDelegate,
+  bookmark,
+}) => {
   if (!address) return null;
-  const username = (delegate && delegate.username) || '';
+  const username = (isDelegate && account.username) || '';
   const truncatedAddress = address.length > 12
     ? truncateAddress(address) : address;
 
