@@ -243,6 +243,9 @@ const ss = {
   unlockBtn: '.unlock-btn',
   removeVote: '.remove-vote',
   unlockingBalance: '.unlocking-balance',
+  addBookmarkIcon: '.add-bookmark-icon',
+  inputLabel: '.input-label',
+  saveButton: '.save-button',
 };
 
 export default ss;
