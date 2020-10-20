@@ -35,7 +35,7 @@
       }
     }
 
-    & > .status {
+    & > * > .status {
       @mixin contentLarge semi-bold;
   
       color: var(--color-link-active);

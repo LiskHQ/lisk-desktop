@@ -7,6 +7,23 @@ import TransactionAmount from '../../../shared/transactionAmount';
 import { tokenMap } from '../../../../constants/tokens';
 import styles from './multiSignature.css';
 
+const ActionButton = ({ status, t }) => (
+  <DialogLink>
+    {(() => {
+      switch (status) {
+        case 1:
+          return <p className={styles.status}>{t('Sign and share')}</p>;
+        case 2:
+          return <p className={styles.status}>{t('Sign and send')}</p>;
+        case 3:
+          return <p className={styles.status}>{t('View remaining')}</p>;
+        default:
+          return null;
+      }
+    })()}
+  </DialogLink>
+);
+
 const TransactionRow = ({
   data,
   t,
@@ -17,6 +34,7 @@ const TransactionRow = ({
     sender,
     recipient,
     amount,
+    status,
   } = data;
 
   return (
@@ -60,7 +78,7 @@ const TransactionRow = ({
         />
       </span>
       <span className={grid['col-xs-2']}>
-        <p className={styles.status}>{t('Sign and share')}</p>
+        <ActionButton status={status} t={t} />
       </span>
     </DialogLink>
   );
