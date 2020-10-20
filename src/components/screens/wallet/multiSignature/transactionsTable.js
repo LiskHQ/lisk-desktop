@@ -12,7 +12,7 @@ const TransactionsTable = ({ transactions, t, host }) => (
     <BoxHeader>
       <h2>{t('Pending multisignature transactions')}</h2>
     </BoxHeader>
-    <BoxContent className={styles.content}>
+    <BoxContent className={`${styles.content} transactions-table`}>
       <Table
         data={transactions}
         row={TransactionRow}
