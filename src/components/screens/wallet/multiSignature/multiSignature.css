@@ -1,10 +1,14 @@
 @import '../../../../app/mixins.css';
 
+.content {
+  padding: 0 !important;
+}
+
 .transactionRow {
-  padding: 20px 0;
 
   & > span {
     display: flex;
+    align-items: center;
 
     & > .incomingOutcomingIcon {
       margin-right: 16px;
