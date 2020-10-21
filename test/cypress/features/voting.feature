@@ -34,7 +34,7 @@ Feature: Vote delegate
 
   Scenario: Unlock balance
     Given I am on wallet page
-    Then I should that 100 LSK are locked
+    Then I see should that 100 LSK are locked
     Then I click on openUnlockBalanceDialog
     Then I should see unlocking balance 40
     When I click on customFeeOption
