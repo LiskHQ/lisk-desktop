@@ -14,6 +14,6 @@ describe('Multisignature wallet tab component', () => {
     wrapper = mountWithRouter(Multisignature, props);
     const html = wrapper.html();
     expect(html).toContain('transactions-table');
-    expect(html).toContain('transactions-row');
+    expect(html).toContain('multisign-transactions-row');
   });
 });
