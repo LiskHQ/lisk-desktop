@@ -78,34 +78,6 @@ export const Recipient = ({
   );
 };
 
-export const FeeAndAmount = ({
-  transaction, activeToken, addresses, t,
-}) => (
-  <BoxRow>
-    { transaction.type === transactionTypes().transfer.code.legacy
-      ? (
-        <div className={styles.value}>
-          <span className={styles.label}>
-            {t('Amount')}
-          </span>
-          <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
-            <span className="tx-amount">
-              <LiskAmount val={transaction.amount} token={activeToken} />
-            </span>
-          </DiscreetMode>
-        </div>
-      ) : null }
-    <div className={styles.value}>
-      <span className={styles.label}>
-        {t('Transaction fee')}
-      </span>
-      <span className="tx-fee">
-        <LiskAmount val={transaction.fee} token={activeToken} />
-      </span>
-    </div>
-  </BoxRow>
-);
-
 export const TransactionId = ({ id, t }) => (
   <BoxRow>
     <div className={`${styles.value}`}>
@@ -170,38 +142,6 @@ export const FeeAndConfirmation = ({
         <LiskAmount val={transaction.fee} />
         {' '}
         {activeToken}
-      </span>
-    </div>
-    <div className={`${styles.value}`}>
-      <span className={styles.label}>
-        {t('Confirmations')}
-        <Tooltip position="top">
-          <p>
-            { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
-          </p>
-        </Tooltip>
-      </span>
-      <span className="tx-confirmation">
-        {transaction.confirmations || 0}
-      </span>
-    </div>
-  </BoxRow>
-);
-
-export const DateAndConfirmation = ({
-  transaction, activeToken, t,
-}) => (
-  <BoxRow>
-    <div className={styles.value}>
-      <span className={styles.label}>{t('Date')}</span>
-      <span className={`${styles.date} tx-date`}>
-        <DateTimeFromTimestamp
-          fulltime
-          className="date"
-          time={transaction.timestamp}
-          token={activeToken}
-          showSeconds
-        />
       </span>
     </div>
     <div className={`${styles.value}`}>
