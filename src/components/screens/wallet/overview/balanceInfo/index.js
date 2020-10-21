@@ -14,18 +14,40 @@ import styles from './balanceInfo.css';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
 import { tokenMap } from '../../../../../constants/tokens';
-import { calculateLockedBalance, getActiveTokenAccount, calculateAvailableBalance } from '../../../../../utils/account';
+import {
+  calculateLockedBalance,
+  getActiveTokenAccount,
+  calculateAvailableBalance,
+  calculateUnlockingBalance,
+} from '../../../../../utils/account';
 
-
-const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, isDelegate,
-}) => {
+const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
   const host = useSelector(state => getActiveTokenAccount(state));
-  const vote = useSelector(state => state.voting[address]);
   const currentBlock = useSelector(state => state.blocks.latestBlocks[0] || { height: 0 });
   const lockedBalance = activeToken === tokenMap.LSK.key && isWalletRoute && host
     ? calculateLockedBalance(host) : undefined;
   const availableBalance = host ? calculateAvailableBalance(host, currentBlock) : undefined;
+  const unlockingBalance = host ? calculateUnlockingBalance(host, currentBlock) : undefined;
+
+  if (lockedBalance + availableBalance + unlockingBalance > 0) {
+    return (
+      <DialogLink
+        className={`${styles.lockedBalance} open-unlock-balance-dialog`}
+        component="lockedBalance"
+      >
+        <Icon name="lock" />
+        {`${fromRawLsk(lockedBalance + availableBalance + unlockingBalance)} ${tokenMap.LSK.key}`}
+      </DialogLink>
+    );
+  }
+
+  return null;
+};
+
+const BalanceInfo = ({
+  t, activeToken, balance, isWalletRoute, address, isDelegate,
+}) => {
+  const vote = useSelector(state => state.voting[address]);
   const initialValue = isWalletRoute
     ? {}
     : { recipient: address };
@@ -50,15 +72,7 @@ const BalanceInfo = ({
               />
 
             </div>
-            {lockedBalance + availableBalance > 0 && (
-              <DialogLink
-                className={`${styles.lockedBalance} open-unlock-balance-dialog`}
-                component="lockedBalance"
-              >
-                <Icon name="lock" />
-                {`${fromRawLsk(lockedBalance + availableBalance)} ${tokenMap.LSK.key}`}
-              </DialogLink>
-            )}
+            <LockedBalanceLink activeToken={activeToken} isWalletRoute={isWalletRoute} />
           </DiscreetMode>
         </div>
         <SignInTooltipWrapper position="bottom">

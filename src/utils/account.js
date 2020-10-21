@@ -78,3 +78,10 @@ export const calculateAvailableBalance = ({ unlocking = [], address }, currentBl
       (isBlockHeightReached(vote, currentBlock, address) ? acc + parseInt(vote.amount, 10) : acc),
     0,
   );
+
+export const calculateUnlockingBalance = ({ unlocking = [], address }, currentBlock) =>
+  unlocking.reduce(
+    (acc, vote) =>
+      (!isBlockHeightReached(vote, currentBlock, address) ? acc + parseInt(vote.amount, 10) : acc),
+    0,
+  );
