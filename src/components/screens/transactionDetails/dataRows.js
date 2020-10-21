@@ -78,6 +78,28 @@ export const Recipient = ({
   );
 };
 
+export const SenderAndRecepient = ({
+  transaction, activeToken, netCode, senderLabel, t,
+}) => (
+  <BoxRow>
+    <AccountInfo
+      name={getDelegateName(transaction, activeToken)}
+      token={activeToken}
+      netCode={netCode}
+      address={transaction.senderId}
+      addressClass="sender-address"
+      label={senderLabel}
+    />
+    <AccountInfo
+      token={activeToken}
+      netCode={netCode}
+      address={transaction.recipientId}
+      addressClass="receiver-address"
+      label={t('Recipient')}
+    />
+  </BoxRow>
+);
+
 export const TransactionId = ({ id, t }) => (
   <BoxRow>
     <div className={`${styles.value}`}>
@@ -97,6 +119,109 @@ export const TransactionId = ({ id, t }) => (
       </span>
     </div>
   </BoxRow>
+);
+
+export const TransactionIdAndAmount = ({
+  t, id, addresses, transaction, activeToken,
+}) => (
+  <>
+    <div className={styles.value}>
+      <span className={styles.label}>
+        {t('Transaction ID')}
+      </span>
+      <span className="transaction-id">
+        <CopyToClipboard
+          value={id}
+          className="tx-id"
+          containerProps={{
+            size: 'xs',
+            className: 'copy-title',
+          }}
+          copyClassName={styles.copyIcon}
+        />
+      </span>
+    </div>
+    <div className={styles.value}>
+      <span className={styles.label}>
+        {t('Amount of Transaction')}
+      </span>
+      <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
+        <span className="tx-amount">
+          <LiskAmount val={getTxAmount(transaction)} />
+          {' '}
+          {activeToken}
+        </span>
+      </DiscreetMode>
+    </div>
+  </>
+);
+
+export const RequiredSigsAndFee = ({
+  t, fee, requiredSignatures, activeToken,
+}) => (
+  <>
+    <div className={styles.value}>
+      <p>{t('Required Signatures')}</p>
+      <span>{requiredSignatures}</span>
+    </div>
+    <div className={styles.value}>
+      <span className={styles.label}>
+        {t('Transaction fee')}
+      </span>
+      <span className="tx-fee">
+        <LiskAmount val={fee} />
+        {' '}
+        {activeToken}
+      </span>
+    </div>
+  </>
+);
+
+export const DateAndConfirmations = ({
+  t, confirmations, activeToken, timestamp,
+}) => (
+  <>
+    <div className={`${styles.value}`}>
+      <span className={styles.label}>
+        {t('Confirmations')}
+        <Tooltip position="top">
+          <p>
+            { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
+          </p>
+        </Tooltip>
+      </span>
+      <span className="tx-confirmation">
+        {confirmations || 0}
+      </span>
+    </div>
+    <div className={styles.value}>
+      <span className={styles.label}>{t('Date')}</span>
+      <span className={`${styles.date} tx-date`}>
+        <DateTimeFromTimestamp
+          fulltime
+          className="date"
+          time={timestamp}
+          token={activeToken}
+          showSeconds
+        />
+      </span>
+    </div>
+  </>
+);
+
+export const MessageAndNonce = ({ t, transaction }) => (
+  <>
+    <div className={`${styles.value}`}>
+      <span className={styles.label}>{t('Message')}</span>
+      <div className="tx-reference">
+        {getTxAsset(transaction)}
+      </div>
+    </div>
+    <div className={`${styles.value}`}>
+      <span className={styles.label}>{t('Nonce')}</span>
+      <span>{transaction.nonce}</span>
+    </div>
+  </>
 );
 
 export const AmmountAndDate = ({
