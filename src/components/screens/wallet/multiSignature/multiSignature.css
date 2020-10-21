@@ -1,0 +1,51 @@
+@import '../../../../app/mixins.css';
+
+.content {
+  padding: 0 !important;
+}
+
+.transactionRow {
+  & > span {
+    display: flex;
+    align-items: center;
+
+    & > .incomingOutcomingIcon {
+      margin-right: 16px;
+    }
+
+    & > .avatar {
+      margin-right: 16px;
+    }
+
+    & > .senderDetails {
+      display: flex;
+      flex-direction: column;
+
+      & .addressTitle {
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+
+      & > .senderKey {
+        @mixin contentNormal;
+
+        margin: 0;
+        color: var(--color-slate-gray);
+      }
+    }
+
+    & > * > .status {
+      @mixin contentLarge semi-bold;
+
+      color: var(--color-link-active);
+      margin: 0;
+    }
+  }
+}
+
+.addressTitle {
+  @mixin headingSmall;
+
+  color: var(--color-maastricht-blue);
+  font-family: var(--content-font);
+}
