@@ -13,7 +13,7 @@ const Fields = ({ fields, status, onInputChange }) => (
         <span className={styles.fieldGroup}>
           <Input
             error={status[field.name].error}
-            className={styles.input}
+            className={`${styles.input} ${field.className}`}
             value={status[field.name].value}
             onChange={onInputChange[field.name]}
             name={field.name}

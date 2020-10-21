@@ -23,11 +23,13 @@ class AddBookmark extends React.Component {
       name: 'address',
       label: props.t('Address'),
       placeholder: props.t('Insert public address'),
+      className: 'input-address',
     }, {
       name: 'label',
       label: props.t('Label'),
       feedback: props.t('Max. 20 characters'),
       placeholder: props.t('Insert label'),
+      className: 'input-label',
     }];
 
     const edit = this.isEditing();

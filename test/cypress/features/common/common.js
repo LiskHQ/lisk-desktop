@@ -197,8 +197,12 @@ Then(/^(.*?) should be visible$/, function (elementName) {
   cy.get(ss[elementName]).should('be.visible');
 });
 
-Then(/^The (.*?) button must be active$/, function (elementName) {
-  cy.get(ss[elementName]).should('not.be.disabled');
+Then(/^The (.*?) button must (.*?) active$/, function (elementName, check) {
+  if (check === 'be') {
+    cy.get(ss[elementName]).should('not.be.disabled');
+  } else if (check === 'not be') {
+    cy.get(ss[elementName]).should('be.disabled');
+  }
 });
 
 And(/^I search for account ([^s]+)$/, function (string) {
