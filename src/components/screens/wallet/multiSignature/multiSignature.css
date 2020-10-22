@@ -21,6 +21,8 @@
 }
 
 .transactionRow {
+  cursor: pointer;
+
   & > span {
     display: flex;
     align-items: center;

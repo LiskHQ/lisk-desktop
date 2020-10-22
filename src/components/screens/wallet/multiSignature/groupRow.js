@@ -6,17 +6,25 @@ import { tokenMap } from '../../../../constants/tokens';
 import styles from './multiSignature.css';
 
 const GroupRow = ({
-  data, className,
+  data, className, setSelectedGroupId,
 }) => {
   const {
+    id,
     address,
     name,
     key,
     balance,
   } = data;
 
+  const handleClick = () => {
+    setSelectedGroupId(id);
+  };
+
   return (
-    <div className={`${grid.row} ${className} ${styles.transactionRow} multisign-group-row`}>
+    <div
+      className={`${grid.row} ${className} ${styles.transactionRow} multisign-group-row`}
+      onClick={handleClick}
+    >
       <span className={grid['col-xs-8']}>
         <AccountVisual
           address={address}
