@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import React from 'react';
-import AccountVisual from '../../toolbox/accountVisual';
-import routes from '../../../constants/routes';
-import styles from './transactionDetails.css';
-import { validateAddress } from '../../../utils/validators';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+import AccountVisual from '../../../toolbox/accountVisual';
+import routes from '../../../../constants/routes';
+import { validateAddress } from '../../../../utils/validators';
+
+import styles from './styles.css';
 
 const AccountInfo = ({
   address,
@@ -14,7 +16,7 @@ const AccountInfo = ({
   token,
   netCode,
 }) => {
-  const addressLink = routes.account.path;
+  const addressLink = `${routes.account.path}?address=${address}`;
   return (
     <div className={styles.accountInfo}>
       <p className={styles.label}>{label}</p>
@@ -23,7 +25,7 @@ const AccountInfo = ({
         { validateAddress(token, address, netCode) === 0
           ? (
             <Link
-              to={`${addressLink}?address=${address}`}
+              to={addressLink}
               className={`${styles.link} ${name ? styles.hasName : ''}`}
             >
               {name}
