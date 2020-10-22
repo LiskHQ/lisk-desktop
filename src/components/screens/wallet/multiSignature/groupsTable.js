@@ -20,7 +20,7 @@ const header = t => (
   ]
 );
 
-const GroupTable = ({ t, groups, setSelectedGroupId }) => (
+const GroupTable = ({ t, groups, selectedGroupId, setSelectedGroupId }) => (
   <Box>
     <BoxHeader>
       <h2>{t('Your multisignatures groups')}</h2>
@@ -30,7 +30,7 @@ const GroupTable = ({ t, groups, setSelectedGroupId }) => (
         data={groups}
         row={GroupRow}
         header={header(t)}
-        additionalRowProps={{ setSelectedGroupId }}
+        additionalRowProps={{ selectedGroupId, setSelectedGroupId }}
       />
     </BoxContent>
   </Box>

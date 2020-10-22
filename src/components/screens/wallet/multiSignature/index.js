@@ -13,6 +13,7 @@ const MultiSignature = (props) => {
     <MultiSignatureComponent
       host={account.info[activeToken].address}
       {...props}
+      selectedGroupId={selectedGroupId}
       setSelectedGroupId={setSelectedGroupId}
       multisignGroups={multisignGroups}
       transactions={transactionsData[selectedGroupId]}

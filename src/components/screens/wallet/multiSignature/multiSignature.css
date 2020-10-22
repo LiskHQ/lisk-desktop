@@ -5,14 +5,6 @@
 
   & > div:first-child {
     padding-right: 10px;
-    flex-basis: calc(100% / 3);
-    max-width: calc(100% / 3);
-  }
-
-  & > div:last-child {
-    padding-left: 10px;
-    flex-basis: calc((100% / 3) * 2);
-    max-width: calc((100% / 3) * 2);
   }
 }
 
@@ -22,6 +14,10 @@
 
 .transactionRow {
   cursor: pointer;
+
+  &.selected {
+    background-color: var(--color-rows-hover);
+  }
 
   & > span {
     display: flex;
@@ -35,19 +31,14 @@
       margin-right: 16px;
     }
 
-    & > .senderDetails {
+    & > .signDetails {
       display: flex;
       flex-direction: column;
 
-      & .addressTitle {
-        margin-top: 0;
-        margin-bottom: 10px;
-      }
-
-      & > .senderKey {
+      & > .key {
         @mixin contentNormal;
 
-        margin: 0;
+        margin: 10px 0 0 0;
         color: var(--color-slate-gray);
       }
     }
@@ -66,6 +57,7 @@
 
   color: var(--color-maastricht-blue);
   font-family: var(--content-font);
+  margin: 0;
 }
 
 .groupBalance {

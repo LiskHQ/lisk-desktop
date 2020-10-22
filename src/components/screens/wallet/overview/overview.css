@@ -1,4 +1,5 @@
 .wrapper {
+  display: flex;
   padding-bottom: var(--horizontal-padding-l);
   padding-top: 30px;
   max-width: 100%;
