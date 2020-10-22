@@ -1,7 +1,7 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
   display: block;
 
@@ -15,7 +15,7 @@
   height: auto;
 
   & .mainContent {
-    margin-bottom: 20px;
+    padding: 0 20px;
     min-height: 400px;
 
     display: grid;
@@ -43,5 +43,26 @@
         border-bottom: 1px solid var(--color-platinum);
       }
     }
+  }
+
+  & .generalLayout {
+    grid-template-areas: 
+      "illustration illustration"
+      "sender sender"
+      "recipient recipient"
+      "transactionId transactionId"
+      "amount date"
+      "fee confirmations"
+      "message message";
+  }
+
+  & .multiSigLayout {
+    grid-template-areas: 
+      "sender recipient"
+      "transactionId amount"
+      "requiredSignatures fee"
+      "date confirmations"
+      "message nonce"
+      "members members"
   }
 }

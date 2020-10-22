@@ -5,7 +5,7 @@ import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
 import NotFound from '../../shared/notFound';
-// import TransactionVotes from './transactionVotes';
+import TransactionVotes from './transactionVotes';
 import routes from '../../../constants/routes';
 import { isEmpty } from '../../../utils/helpers';
 import Dialog from '../../toolbox/dialog/dialog';
