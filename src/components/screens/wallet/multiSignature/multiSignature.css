@@ -1,6 +1,22 @@
 @import '../../../../app/mixins.css';
 
-.content {
+.tablesContainer {
+  display: flex;
+
+  & > div:first-child {
+    padding-right: 10px;
+    flex-basis: calc(100% / 3);
+    max-width: calc(100% / 3);
+  }
+
+  & > div:last-child {
+    padding-left: 10px;
+    flex-basis: calc((100% / 3) * 2);
+    max-width: calc((100% / 3) * 2);
+  }
+}
+
+.tableContent {
   padding: 0 !important;
 }
 
@@ -48,4 +64,15 @@
 
   color: var(--color-maastricht-blue);
   font-family: var(--content-font);
+}
+
+.groupBalance {
+  border-radius: var(--border-radius-standard);
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: rgba(43, 214, 123, 0.15);
+  color: var(--color-deep-green);
+  box-sizing: border-box;
+  line-height: initial;
+  text-align: right;
 }

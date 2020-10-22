@@ -1,9 +1,29 @@
 import React from 'react';
 import TransactionsTable from './transactionsTable';
+import GroupsTable from './groupsTable';
+import styles from './multiSignature.css';
 
 const MultiSignature = ({ t, host }) => (
-  <section>
-    {/* TODO add multisignature groups */}
+  <section className={styles.tablesContainer}>
+    <GroupsTable
+      t={t}
+      groups={[
+        {
+          address: '6195226421328336181L',
+          name: 'Wilson Geidt',
+          key: '8155694652104526882',
+          balance: '127900000000',
+        },
+        {
+          address: '2233116421388836181L',
+          balance: '3162000000000',
+        },
+        {
+          address: '9777226421128322133L',
+          balance: '1525300000000',
+        },
+      ]}
+    />
     <TransactionsTable
       t={t}
       host={host}
