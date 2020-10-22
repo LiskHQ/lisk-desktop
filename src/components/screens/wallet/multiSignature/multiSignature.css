@@ -15,10 +15,6 @@
 .transactionRow {
   cursor: pointer;
 
-  &.selected {
-    background-color: var(--color-rows-hover);
-  }
-
   & > span {
     display: flex;
     align-items: center;

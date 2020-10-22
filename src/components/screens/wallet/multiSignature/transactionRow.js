@@ -51,7 +51,7 @@ const TransactionRow = ({
         />
         <div className={styles.signDetails}>
           <p className={styles.addressTitle}>
-            {sender.name || sender.address.replace(regex.lskAddressTrunk, '$1...$3')}
+            {sender.title || sender.address.replace(regex.lskAddressTrunk, '$1...$3')}
           </p>
           {sender.publicKey && <p className={styles.key}>{sender.publicKey.replace(regex.lskAddressTrunk, '$1...$3')}</p>}
         </div>

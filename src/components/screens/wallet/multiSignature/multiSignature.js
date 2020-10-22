@@ -9,16 +9,12 @@ const MultiSignature = ({
   host,
   multisignGroups,
   transactions,
-  selectedGroupId,
-  setSelectedGroupId,
 }) => (
   <section className={`${grid.row} ${styles.tablesContainer}`}>
     <div className={`${grid['col-xs-12']} ${grid['col-md-4']}`}>
       <GroupsTable
         t={t}
         groups={multisignGroups}
-        selectedGroupId={selectedGroupId}
-        setSelectedGroupId={setSelectedGroupId}
       />
     </div>
     <div className={`${grid['col-xs-12']} ${grid['col-md-8']}`}>
