@@ -15,10 +15,11 @@ const AccountInfo = ({
   name,
   token,
   netCode,
+  className,
 }) => {
   const addressLink = `${routes.account.path}?address=${address}`;
   return (
-    <div className={styles.accountInfo}>
+    <div className={`${styles.accountInfo} ${className}`}>
       <p className={styles.label}>{label}</p>
       <div className={styles.addressRow}>
         <AccountVisual className={styles.avatar} address={address} size={25} />

@@ -6,22 +6,13 @@ import { tokenMap } from '../../../../constants/tokens';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import DiscreetMode from '../../../shared/discreetMode';
 import LiskAmount from '../../../shared/liskAmount';
-import transactionTypes from '../../../../constants/transactionTypes';
-import { getTxAmount } from '../../../../utils/transactions';
 
 import AccountInfo from './accountInfo';
 import styles from './styles.css';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 
-const getTxAsset = (tx) => {
-  if (typeof tx.asset === 'object' && tx.asset !== null && typeof tx.asset.data === 'string') {
-    return tx.asset.data;
-  }
-  return '-';
-};
-
-export const ValueAndLabel = ({ label, children }) => (
-  <div className={`${styles.value}`}>
+export const ValueAndLabel = ({ label, className, children }) => (
+  <div className={`${styles.value} ${className}`}>
     <span className={styles.label}>
       {label}
     </span>
@@ -30,41 +21,36 @@ export const ValueAndLabel = ({ label, children }) => (
 );
 
 export const Illustration = ({
-  transaction,
-}) => {
-  const { title } = transactionTypes.getByCode(transaction.type || 0);
-  if (transaction.type === transactionTypes().transfer.code.legacy) return null;
-  return (
-    <>
-      <TransactionTypeFigure
-        address={transaction.senderId}
-        transactionType={transaction.type}
-      />
-      <h2 className="tx-header">{title}</h2>
-    </>
-  );
-};
+  type, senderId, title,
+}) => (
+  <div className={styles.illustration}>
+    <TransactionTypeFigure
+      address={senderId}
+      transactionType={type}
+    />
+    <h2 className="tx-header">{title}</h2>
+  </div>
+);
 
 export const Sender = ({
-  senderId, delegateName, type, activeToken, netCode,
-}) => {
-  const { senderLabel } = transactionTypes.getByCode(type || 0);
-  return (
-    <AccountInfo
-      name={delegateName}
-      token={activeToken}
-      netCode={netCode}
-      address={senderId}
-      addressClass="sender-address"
-      label={senderLabel}
-    />
-  );
-};
+  senderId, delegateName, activeToken, netCode, senderLabel,
+}) => (
+  <AccountInfo
+    className={`${styles.value} ${styles.sender}`}
+    name={delegateName}
+    token={activeToken}
+    netCode={netCode}
+    address={senderId}
+    addressClass="sender-address"
+    label={senderLabel}
+  />
+);
 
 export const Recipient = ({
   activeToken, netCode, recipientId, t,
 }) => (
   <AccountInfo
+    className={`${styles.value} ${styles.recipient}`}
     token={activeToken}
     netCode={netCode}
     address={recipientId}
@@ -73,8 +59,8 @@ export const Recipient = ({
   />
 );
 
-export const TransactionId = ({ id, t }) => (
-  <ValueAndLabel label={t('Transaction ID')}>
+export const TransactionId = ({ t, id }) => (
+  <ValueAndLabel label={t('Transaction ID')} className={styles.transactionId}>
     <span className="transaction-id">
       <CopyToClipboard
         value={id}
@@ -89,27 +75,21 @@ export const TransactionId = ({ id, t }) => (
   </ValueAndLabel>
 );
 
-export const Message = ({
-  activeToken, transaction, t,
-}) => {
-  if (transaction.type !== transactionTypes().transfer.code.legacy
-    || activeToken !== tokenMap.LSK.key) return null;
-  return (
-    <ValueAndLabel label={t('Message')}>
-      <div className="tx-reference">
-        {getTxAsset(transaction)}
-      </div>
-    </ValueAndLabel>
-  );
-};
+export const Message = ({ message, t }) => (
+  <ValueAndLabel label={t('Message')} className={styles.message}>
+    <div className="tx-reference">
+      {message}
+    </div>
+  </ValueAndLabel>
+);
 
 export const Amount = ({
-  t, transaction, addresses, activeToken,
+  t, amount, addresses, activeToken,
 }) => (
-  <ValueAndLabel label={t('Amount of Transaction')}>
+  <ValueAndLabel label={t('Amount of Transaction')} className={styles.amount}>
     <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
       <span className="tx-amount">
-        <LiskAmount val={getTxAmount(transaction)} />
+        <LiskAmount val={amount} />
         {' '}
         {activeToken}
       </span>
@@ -118,7 +98,7 @@ export const Amount = ({
 );
 
 export const Date = ({ t, timestamp, activeToken }) => (
-  <ValueAndLabel label={t('Date')}>
+  <ValueAndLabel label={t('Date')} className={styles.date}>
     <span className={`${styles.date} tx-date`}>
       <DateTimeFromTimestamp
         fulltime
@@ -132,7 +112,7 @@ export const Date = ({ t, timestamp, activeToken }) => (
 );
 
 export const Fee = ({ t, fee, activeToken }) => (
-  <ValueAndLabel label={t('Transaction fee')}>
+  <ValueAndLabel label={t('Transaction fee')} className={styles.fee}>
     <span className="tx-fee">
       <LiskAmount val={fee} />
       {' '}
@@ -141,16 +121,19 @@ export const Fee = ({ t, fee, activeToken }) => (
   </ValueAndLabel>
 );
 
-export const Confirmations = ({ t, confirmations }) => (
-  <ValueAndLabel label={(
-    <>
-      {t('Confirmations')}
-      <Tooltip position="top">
-        <p>
-          { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
-        </p>
-      </Tooltip>
-    </>
+export const Confirmations = ({ t, confirmations, activeToken }) => (
+  <ValueAndLabel
+    className={styles.confirmations}
+    label={(
+      <>
+        {t('Confirmations')}
+        <Tooltip position="top">
+          <p>
+            { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.',
+              { token: tokenMap[activeToken].label })}
+          </p>
+        </Tooltip>
+      </>
     )}
   >
     <span className="tx-confirmation">
