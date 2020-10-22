@@ -11,13 +11,7 @@ import { getTxAmount } from '../../../../utils/transactions';
 
 import AccountInfo from './accountInfo';
 import styles from './styles.css';
-
-const getDelegateName = (transaction, activeToken) => (
-  (activeToken === 'LSK'
-  && transaction.asset
-  && transaction.asset.delegate
-  && transaction.asset.delegate.username) ? transaction.asset.delegate.username : null
-);
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 
 const getTxAsset = (tx) => {
   if (typeof tx.asset === 'object' && tx.asset !== null && typeof tx.asset.data === 'string') {
@@ -25,6 +19,15 @@ const getTxAsset = (tx) => {
   }
   return '-';
 };
+
+export const ValueAndLabel = ({ label, children }) => (
+  <div className={`${styles.value}`}>
+    <span className={styles.label}>
+      {label}
+    </span>
+    {children}
+  </div>
+);
 
 export const Illustration = ({
   transaction,
@@ -43,15 +46,15 @@ export const Illustration = ({
 };
 
 export const Sender = ({
-  transaction, activeToken, netCode,
+  senderId, delegateName, type, activeToken, netCode,
 }) => {
-  const { senderLabel } = transactionTypes.getByCode(transaction.type || 0);
+  const { senderLabel } = transactionTypes.getByCode(type || 0);
   return (
     <AccountInfo
-      name={getDelegateName(transaction, activeToken)}
+      name={delegateName}
       token={activeToken}
       netCode={netCode}
-      address={transaction.senderId}
+      address={senderId}
       addressClass="sender-address"
       label={senderLabel}
     />
@@ -59,25 +62,19 @@ export const Sender = ({
 };
 
 export const Recipient = ({
-  activeToken, netCode, transaction, t,
-}) => {
-  if (transaction.type !== transactionTypes().transfer.code.legacy) return null;
-  return (
-    <AccountInfo
-      token={activeToken}
-      netCode={netCode}
-      address={transaction.recipientId}
-      addressClass="receiver-address"
-      label={t('Recipient')}
-    />
-  );
-};
+  activeToken, netCode, recipientId, t,
+}) => (
+  <AccountInfo
+    token={activeToken}
+    netCode={netCode}
+    address={recipientId}
+    addressClass="receiver-address"
+    label={t('Recipient')}
+  />
+);
 
 export const TransactionId = ({ id, t }) => (
-  <div className={`${styles.value}`}>
-    <span className={styles.label}>
-      {t('Transaction ID')}
-    </span>
+  <ValueAndLabel label={t('Transaction ID')}>
     <span className="transaction-id">
       <CopyToClipboard
         value={id}
@@ -89,7 +86,7 @@ export const TransactionId = ({ id, t }) => (
         copyClassName={styles.copyIcon}
       />
     </span>
-  </div>
+  </ValueAndLabel>
 );
 
 export const Message = ({
@@ -98,22 +95,18 @@ export const Message = ({
   if (transaction.type !== transactionTypes().transfer.code.legacy
     || activeToken !== tokenMap.LSK.key) return null;
   return (
-    <div className={styles.value}>
-      <span className={styles.label}>{t('Message')}</span>
+    <ValueAndLabel label={t('Message')}>
       <div className="tx-reference">
         {getTxAsset(transaction)}
       </div>
-    </div>
+    </ValueAndLabel>
   );
 };
 
 export const Amount = ({
   t, transaction, addresses, activeToken,
 }) => (
-  <div className={styles.value}>
-    <span className={styles.label}>
-      {t('Amount of Transaction')}
-    </span>
+  <ValueAndLabel label={t('Amount of Transaction')}>
     <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
       <span className="tx-amount">
         <LiskAmount val={getTxAmount(transaction)} />
@@ -121,12 +114,11 @@ export const Amount = ({
         {activeToken}
       </span>
     </DiscreetMode>
-  </div>
+  </ValueAndLabel>
 );
 
 export const Date = ({ t, timestamp, activeToken }) => (
-  <div className={styles.value}>
-    <span className={styles.label}>{t('Date')}</span>
+  <ValueAndLabel label={t('Date')}>
     <span className={`${styles.date} tx-date`}>
       <DateTimeFromTimestamp
         fulltime
@@ -136,18 +128,33 @@ export const Date = ({ t, timestamp, activeToken }) => (
         showSeconds
       />
     </span>
-  </div>
+  </ValueAndLabel>
 );
 
 export const Fee = ({ t, fee, activeToken }) => (
-  <div className={styles.value}>
-    <span className={styles.label}>
-      {t('Transaction fee')}
-    </span>
+  <ValueAndLabel label={t('Transaction fee')}>
     <span className="tx-fee">
       <LiskAmount val={fee} />
       {' '}
       {activeToken}
     </span>
-  </div>
+  </ValueAndLabel>
+);
+
+export const Confirmations = ({ t, confirmations }) => (
+  <ValueAndLabel label={(
+    <>
+      {t('Confirmations')}
+      <Tooltip position="top">
+        <p>
+          { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
+        </p>
+      </Tooltip>
+    </>
+    )}
+  >
+    <span className="tx-confirmation">
+      {confirmations}
+    </span>
+  </ValueAndLabel>
 );

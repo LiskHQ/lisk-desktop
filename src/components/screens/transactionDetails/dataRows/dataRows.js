@@ -1,13 +1,10 @@
 import React from 'react';
 
-import { tokenMap } from '../../../../constants/tokens';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
 import BoxRow from '../../../toolbox/box/row';
 
 import {
-  Message, Sender, Recipient, TransactionId, Amount, Date, Fee,
+  Message, Sender, Recipient, TransactionId, Amount, Date, Fee, ValueAndLabel, Confirmations,
 } from './baseComponents';
-import styles from './styles.css';
 
 export const SenderAndRecepient = ({
   transaction, activeToken, netCode, t,
@@ -40,10 +37,9 @@ export const RequiredSigsAndFee = ({
   t, fee, requiredSignatures, activeToken,
 }) => (
   <BoxRow>
-    <div className={styles.value}>
-      <p>{t('Required Signatures')}</p>
+    <ValueAndLabel label={t('Required Signatures')}>
       <span>{requiredSignatures}</span>
-    </div>
+    </ValueAndLabel>
     <Fee t={t} fee={fee} activeToken={activeToken} />
   </BoxRow>
 );
@@ -52,30 +48,17 @@ export const DateAndConfirmations = ({
   t, confirmations, activeToken, timestamp,
 }) => (
   <BoxRow>
-    <div className={`${styles.value}`}>
-      <span className={styles.label}>
-        {t('Confirmations')}
-        <Tooltip position="top">
-          <p>
-            { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
-          </p>
-        </Tooltip>
-      </span>
-      <span className="tx-confirmation">
-        {confirmations || 0}
-      </span>
-    </div>
     <Date t={t} timestamp={timestamp} activeToken={activeToken} />
+    <Confirmations t={t} confirmations={confirmations} />
   </BoxRow>
 );
 
 export const MessageAndNonce = ({ t, transaction, activeToken }) => (
   <BoxRow>
     <Message t={t} transaction={transaction} activeToken={activeToken} />
-    <div className={`${styles.value}`}>
-      <span className={styles.label}>{t('Nonce')}</span>
+    <ValueAndLabel label={t('Nonce')}>
       <span>{transaction.nonce}</span>
-    </div>
+    </ValueAndLabel>
   </BoxRow>
 );
 
@@ -93,18 +76,6 @@ export const FeeAndConfirmations = ({
 }) => (
   <BoxRow>
     <Fee t={t} fee={fee} activeToken={activeToken} />
-    <div className={`${styles.value}`}>
-      <span className={styles.label}>
-        {t('Confirmations')}
-        <Tooltip position="top">
-          <p>
-            { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
-          </p>
-        </Tooltip>
-      </span>
-      <span className="tx-confirmation">
-        {confirmations}
-      </span>
-    </div>
+    <Confirmations t={t} confirmations={confirmations} />
   </BoxRow>
 );
