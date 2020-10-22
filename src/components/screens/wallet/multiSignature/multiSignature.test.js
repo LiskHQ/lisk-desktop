@@ -1,4 +1,3 @@
-import { act } from 'react-dom/test-utils';
 import { mountWithRouter } from '../../../../utils/testHelpers';
 import Multisignature from './multiSignature';
 import accounts from '../../../../../test/constants/accounts';
