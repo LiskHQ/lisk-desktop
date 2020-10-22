@@ -39,7 +39,7 @@ const TransactionRow = ({
   } = data;
 
   return (
-    <DialogLink className={`${grid.row} ${className} ${styles.transactionRow} multisign-transactions-row`}>
+    <DialogLink className={`${grid.row} ${className} ${styles.transactionRow} multisign-transaction-row`}>
       <span className={grid['col-xs-4']}>
         <Icon
           name={host === recipient.address ? 'incoming' : 'outgoing'}
