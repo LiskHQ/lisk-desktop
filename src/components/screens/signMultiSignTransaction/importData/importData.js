@@ -3,6 +3,7 @@ import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton } from '../../../toolbox/buttons';
+import ProgressBar from '../progressBar';
 
 const ImportData = ({ t, nextStep }) => (
   <section>
@@ -12,6 +13,7 @@ const ImportData = ({ t, nextStep }) => (
         <p>{t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}</p>
       </header>
       <BoxContent>
+        <ProgressBar current={1} />
         {'// TODO'}
       </BoxContent>
       <BoxFooter>

@@ -3,6 +3,7 @@ import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
+import ProgressBar from '../progressBar';
 
 const ReviewSign = ({ t, prevStep, nextStep }) => {
   const submitTransaction = () => {
@@ -23,6 +24,7 @@ const ReviewSign = ({ t, prevStep, nextStep }) => {
           <p>{t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}</p>
         </header>
         <BoxContent>
+          <ProgressBar current={2} />
           {'// TODO'}
         </BoxContent>
         <BoxFooter>

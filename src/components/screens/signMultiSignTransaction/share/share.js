@@ -3,6 +3,7 @@ import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import TransactionResult from '../../../shared/transactionResult';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import Icon from '../../../toolbox/icon';
+import ProgressBar from '../progressBar';
 
 const Share = ({
   t, error,
@@ -24,6 +25,7 @@ const Share = ({
         <h1>{t('Register multisignature account')}</h1>
         <p>{t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}</p>
       </div>
+      <ProgressBar current={4} />
       <TransactionResult
         t={t}
         illustration={template.illustration}
