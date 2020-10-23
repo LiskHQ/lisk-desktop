@@ -90,8 +90,8 @@ const Summary = ({
       transactionCreatedSuccess(tx);
       nextStep({ transactionInfo: tx });
     } else {
-      transactionCreatedError(tx);
-      nextStep({ transactionInfo: tx });
+      transactionCreatedError(error);
+      nextStep({ error });
     }
   };
 
@@ -112,7 +112,7 @@ const Summary = ({
           </div>
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
-          <SecondaryButton className="go-back" onClick={prevStep}>Edit</SecondaryButton>
+          <SecondaryButton className="go-back" onClick={prevStep}>{t('Edit')}</SecondaryButton>
           <PrimaryButton className="confirm" size="l" onClick={submitTransaction}>
             {t('Sign')}
           </PrimaryButton>

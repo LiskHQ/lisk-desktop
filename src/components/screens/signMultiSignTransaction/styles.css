@@ -1,0 +1,13 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  width: 100%;
+  height: auto;
+}
+
+.progressBarContainer {
+  margin: 18px 0;
+}
