@@ -13,7 +13,7 @@ import Dialog from '../../toolbox/dialog/dialog';
 import {
   TransactionId, Sender, Recipient, Message,
   Illustration, Confirmations, Date, Amount, Fee, RequiredSignatures, Nonce,
-} from './dataRows/baseComponents';
+} from './components';
 import styles from './transactionDetails.css';
 import transactionTypes from '../../../constants/transactionTypes';
 
