@@ -3,6 +3,7 @@ import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
+import MultiSignatureReview from '../../../shared/multiSignatureReview';
 import ProgressBar from '../progressBar';
 
 const ReviewSign = ({ t, prevStep, nextStep }) => {
@@ -25,7 +26,7 @@ const ReviewSign = ({ t, prevStep, nextStep }) => {
         </header>
         <BoxContent>
           <ProgressBar current={2} />
-          {'// TODO'}
+          <MultiSignatureReview t={t} />
         </BoxContent>
         <BoxFooter>
           <SecondaryButton className="go-back" onClick={prevStep}>{t('Edit')}</SecondaryButton>
