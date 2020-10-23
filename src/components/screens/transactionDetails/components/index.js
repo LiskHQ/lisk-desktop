@@ -1,7 +1,9 @@
 import {
-  Illustration, Sender, Recipient, Fee, Amount, Date, TransactionId,
+  TransactionId, Sender, Recipient, Message, Illustration, Confirmations,
+  Date, Amount, Fee, RequiredSignatures, Nonce,
 } from './components';
 
 export {
-  Illustration, Sender, Recipient, Fee, Amount, Date, TransactionId,
+  TransactionId, Sender, Recipient, Message, Illustration, Confirmations,
+  Date, Amount, Fee, RequiredSignatures, Nonce,
 };
