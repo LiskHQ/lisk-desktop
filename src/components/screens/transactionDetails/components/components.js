@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
@@ -10,6 +10,15 @@ import LiskAmount from '../../../shared/liskAmount';
 import AccountInfo from './accountInfo';
 import styles from './styles.css';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
+import { Context } from '../transactionDetails';
+import transactionTypes from '../../../../constants/transactionTypes';
+
+const getDelegateName = (transaction, activeToken) => (
+  (activeToken === 'LSK'
+  && transaction.asset
+  && transaction.asset.delegate
+  && transaction.asset.delegate.username) ? transaction.asset.delegate.username : null
+);
 
 const ValueAndLabel = ({ label, className, children }) => (
   <div className={`${styles.value} ${className}`}>
@@ -20,136 +29,197 @@ const ValueAndLabel = ({ label, className, children }) => (
   </div>
 );
 
-export const Illustration = ({
-  type, senderId, title,
-}) => (
-  <div className={styles.illustration}>
-    <TransactionTypeFigure
-      address={senderId}
-      transactionType={type}
-    />
-    <h2 className="tx-header">{title}</h2>
-  </div>
-);
+export const Illustration = () => {
+  const { transaction: { senderId, type } } = useContext(Context);
+  const { title } = transactionTypes.getByCode(type || 0);
 
-export const Sender = ({
-  senderId, delegateName, activeToken, netCode, senderLabel,
-}) => (
-  <AccountInfo
-    className={`${styles.value} ${styles.sender}`}
-    name={delegateName}
-    token={activeToken}
-    netCode={netCode}
-    address={senderId}
-    addressClass="sender-address"
-    label={senderLabel}
-  />
-);
-
-export const Recipient = ({
-  activeToken, netCode, recipientId, t,
-}) => (
-  <AccountInfo
-    className={`${styles.value} ${styles.recipient}`}
-    token={activeToken}
-    netCode={netCode}
-    address={recipientId}
-    addressClass="receiver-address"
-    label={t('Recipient')}
-  />
-);
-
-export const TransactionId = ({ t, id }) => (
-  <ValueAndLabel label={t('Transaction ID')} className={styles.transactionId}>
-    <span className="transaction-id">
-      <CopyToClipboard
-        value={id}
-        className="tx-id"
-        containerProps={{
-          size: 'xs',
-          className: 'copy-title',
-        }}
-        copyClassName={styles.copyIcon}
+  return (
+    <div className={styles.illustration}>
+      <TransactionTypeFigure
+        address={senderId}
+        transactionType={type}
       />
-    </span>
-  </ValueAndLabel>
-);
-
-export const Message = ({ message, t }) => (
-  <ValueAndLabel label={t('Message')} className={styles.message}>
-    <div className="tx-reference">
-      {message}
+      <h2 className="tx-header">{title}</h2>
     </div>
-  </ValueAndLabel>
-);
+  );
+};
+
+export const Sender = () => {
+  const {
+    activeToken, netCode, transaction,
+  } = useContext(Context);
+  const delegateName = getDelegateName(transaction, activeToken);
+  const { senderLabel } = transactionTypes.getByCode(transaction.type || 0);
+
+  return (
+    <AccountInfo
+      className={`${styles.value} ${styles.sender}`}
+      name={delegateName}
+      token={activeToken}
+      netCode={netCode}
+      address={transaction.senderId}
+      addressClass="sender-address"
+      label={senderLabel}
+    />
+  );
+};
+
+export const Recipient = ({ t }) => {
+  const {
+    activeToken, netCode, transaction: { recipientId },
+  } = useContext(Context);
+
+  return (
+    <AccountInfo
+      className={`${styles.value} ${styles.recipient}`}
+      token={activeToken}
+      netCode={netCode}
+      address={recipientId}
+      addressClass="receiver-address"
+      label={t('Recipient')}
+    />
+  );
+};
+
+export const TransactionId = ({ t }) => {
+  const {
+    transaction: { id },
+  } = useContext(Context);
+
+  return (
+    <ValueAndLabel label={t('Transaction ID')} className={styles.transactionId}>
+      <span className="transaction-id">
+        <CopyToClipboard
+          value={id}
+          className="tx-id"
+          containerProps={{
+            size: 'xs',
+            className: 'copy-title',
+          }}
+          copyClassName={styles.copyIcon}
+        />
+      </span>
+    </ValueAndLabel>
+  );
+};
+
+export const Message = ({ t }) => {
+  const {
+    transaction: { message },
+  } = useContext(Context);
+
+  return (
+    <ValueAndLabel label={t('Message')} className={styles.message}>
+      <div className="tx-reference">
+        {message}
+      </div>
+    </ValueAndLabel>
+  );
+};
 
 export const Amount = ({
-  t, amount, addresses, activeToken,
-}) => (
-  <ValueAndLabel label={t('Amount of Transaction')} className={styles.amount}>
-    <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
-      <span className="tx-amount">
-        <LiskAmount val={amount} />
+  t,
+}) => {
+  const {
+    activeToken, transaction: { amount, recipientId, senderId },
+  } = useContext(Context);
+
+  return (
+    <ValueAndLabel label={t('Amount of Transaction')} className={styles.amount}>
+      <DiscreetMode addresses={[recipientId, senderId]} shouldEvaluateForOtherAccounts>
+        <span className="tx-amount">
+          <LiskAmount val={amount} />
+          {' '}
+          {activeToken}
+        </span>
+      </DiscreetMode>
+    </ValueAndLabel>
+  );
+};
+
+export const Date = ({ t }) => {
+  const {
+    activeToken, transaction: { timestamp },
+  } = useContext(Context);
+
+  return (
+    <ValueAndLabel label={t('Date')} className={styles.date}>
+      <span className={`${styles.date} tx-date`}>
+        <DateTimeFromTimestamp
+          fulltime
+          className="date"
+          time={timestamp}
+          token={activeToken}
+          showSeconds
+        />
+      </span>
+    </ValueAndLabel>
+  );
+};
+
+export const Fee = ({ t }) => {
+  const {
+    activeToken, transaction: { fee },
+  } = useContext(Context);
+
+  return (
+    <ValueAndLabel label={t('Transaction fee')} className={styles.fee}>
+      <span className="tx-fee">
+        <LiskAmount val={fee} />
         {' '}
         {activeToken}
       </span>
-    </DiscreetMode>
-  </ValueAndLabel>
-);
+    </ValueAndLabel>
+  );
+};
 
-export const Date = ({ t, timestamp, activeToken }) => (
-  <ValueAndLabel label={t('Date')} className={styles.date}>
-    <span className={`${styles.date} tx-date`}>
-      <DateTimeFromTimestamp
-        fulltime
-        className="date"
-        time={timestamp}
-        token={activeToken}
-        showSeconds
-      />
-    </span>
-  </ValueAndLabel>
-);
+export const Confirmations = ({ t }) => {
+  const {
+    activeToken, transaction: { confirmations },
+  } = useContext(Context);
 
-export const Fee = ({ t, fee, activeToken }) => (
-  <ValueAndLabel label={t('Transaction fee')} className={styles.fee}>
-    <span className="tx-fee">
-      <LiskAmount val={fee} />
-      {' '}
-      {activeToken}
-    </span>
-  </ValueAndLabel>
-);
-
-export const Confirmations = ({ t, confirmations, activeToken }) => (
-  <ValueAndLabel
-    className={styles.confirmations}
-    label={(
-      <>
-        {t('Confirmations')}
-        <Tooltip position="top">
-          <p>
-            { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.',
-              { token: tokenMap[activeToken].label })}
-          </p>
-        </Tooltip>
-      </>
+  return (
+    <ValueAndLabel
+      className={styles.confirmations}
+      label={(
+        <>
+          {t('Confirmations')}
+          <Tooltip position="top">
+            <p>
+              { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.',
+                { token: tokenMap[activeToken].label })}
+            </p>
+          </Tooltip>
+        </>
     )}
-  >
-    <span className="tx-confirmation">
-      {confirmations}
-    </span>
-  </ValueAndLabel>
-);
+    >
+      <span className="tx-confirmation">
+        {confirmations}
+      </span>
+    </ValueAndLabel>
+  );
+};
 
-export const Nonce = ({ t, nonce }) => (
-  <ValueAndLabel className={styles.nonce} label={t('Nonce')}>
-    <span>{nonce}</span>
-  </ValueAndLabel>
-);
+export const Nonce = ({ t }) => {
+  const {
+    transaction: { nonce },
+  } = useContext(Context);
 
-export const RequiredSignatures = ({ t, requiredSignatures }) => (
-  <ValueAndLabel className={styles.requiredSignatures} label={t('Required Signatures')}>
-    <span>{requiredSignatures}</span>
-  </ValueAndLabel>
-);
+  return (
+    <ValueAndLabel className={styles.nonce} label={t('Nonce')}>
+      <span>{nonce}</span>
+    </ValueAndLabel>
+  );
+};
+
+export const RequiredSignatures = ({ t }) => {
+  const {
+    transaction: { requiredSignatures },
+  } = useContext(Context);
+
+  return (
+    <ValueAndLabel className={styles.requiredSignatures} label={t('Required Signatures')}>
+      <span>{requiredSignatures}</span>
+    </ValueAndLabel>
+  );
+};

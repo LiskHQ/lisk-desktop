@@ -17,34 +17,45 @@ import {
 import styles from './transactionDetails.css';
 import transactionTypes from '../../../constants/transactionTypes';
 
-const getDelegateName = (transaction, activeToken) => (
-  (activeToken === 'LSK'
-  && transaction.asset
-  && transaction.asset.delegate
-  && transaction.asset.delegate.username) ? transaction.asset.delegate.username : null
-);
+const txTypes = transactionTypes();
+const baseComponents = [Sender, Recipient, TransactionId, Fee, Date, Nonce];
+const LayoutSchema = {
+  [txTypes.createMultiSig.code.legacy]: {
+    components: [...baseComponents, Confirmations, RequiredSignatures],
+    className: styles.multiSigLayout,
+  },
+  [txTypes.vote.code.legacy]: {
+    components: [...baseComponents, TransactionVotes],
+    className: styles.voteLayout,
+  },
+  default: {
+    components: [...baseComponents, Illustration, Amount, Message],
+    className: styles.generalLayout,
+  },
+};
+
+export const Context = React.createContext({
+  transaction: {},
+});
 
 const TransactionDetails = ({
-  t, activeToken, netCode, transaction, delegates, history,
+  t, activeToken, netCode, delegates, history,
+  transaction: { error, isLoading, data },
 }) => {
   useEffect(() => {
     // history.push(routes.dashboard.path);
   }, [activeToken]);
 
-  const { error, isLoading, data } = transaction;
-  const addresses = data && [data.recipientId, data.senderId];
 
-  if (!error && isEmpty(transaction.data)) {
+  if (!error && isEmpty(data)) {
     return <div />;
   }
 
-  if (error && isEmpty(transaction.data)) {
+  if (error && isEmpty(data)) {
     return <NotFound />;
   }
 
-  const { title } = transactionTypes.getByCode(transaction.type || 0);
-  const { senderLabel } = transactionTypes.getByCode(transaction.type || 0);
-
+  const Layout = LayoutSchema[data.type] || LayoutSchema.default;
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
@@ -52,39 +63,13 @@ const TransactionDetails = ({
         <BoxHeader>
           <h1>{t('Transaction details')}</h1>
         </BoxHeader>
-        <BoxContent className={`${styles.mainContent} ${styles.multiSigLayout}`}>
-          <Illustration type={data.type} senderId={data.senderId} title={title} />
-          <Sender
-            senderId={data.senderId}
-            delegateName={getDelegateName(data, activeToken)}
-            senderLabel={senderLabel}
-            activeToken={activeToken}
-            netCode={netCode}
-          />
-          <Recipient
-            recipientId={data.recipientId}
-            activeToken={activeToken}
-            netCode={netCode}
-            t={t}
-          />
-          <TransactionId t={t} id={data.id} />
-          <Amount
-            t={t}
-            amount={data.amount}
-            addresses={addresses}
-            activeToken={activeToken}
-          />
-          <Date t={t} timestamp={data.timestamp} activeToken={activeToken} />
-          <Fee t={t} fee={data.fee} activeToken={activeToken} />
-          <Confirmations
-            t={t}
-            confirmations={data.confirmations}
-            activeToken={activeToken}
-          />
-          <RequiredSignatures t={t} requiredSignatures={data.requiredSignatures} />
-          <Nonce t={t} nonce={data.nonce} />
-          <Message activeToken={activeToken} transaction={data} t={t} />
-          {/* <TransactionVotes transaction={data} t={t} delegates={delegates} /> */}
+        <BoxContent className={`${styles.mainContent} ${Layout.className}`}>
+          <Context.Provider value={{
+            transaction: data, activeToken, netCode,
+          }}
+          >
+            {Layout.components.map((Component, index) => <Component key={index} t={t} />)}
+          </Context.Provider>
         </BoxContent>
       </Box>
     </Dialog>
