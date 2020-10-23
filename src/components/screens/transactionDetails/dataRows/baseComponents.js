@@ -11,7 +11,7 @@ import AccountInfo from './accountInfo';
 import styles from './styles.css';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 
-export const ValueAndLabel = ({ label, className, children }) => (
+const ValueAndLabel = ({ label, className, children }) => (
   <div className={`${styles.value} ${className}`}>
     <span className={styles.label}>
       {label}
@@ -139,5 +139,17 @@ export const Confirmations = ({ t, confirmations, activeToken }) => (
     <span className="tx-confirmation">
       {confirmations}
     </span>
+  </ValueAndLabel>
+);
+
+export const Nonce = ({ t, nonce }) => (
+  <ValueAndLabel className={styles.nonce} label={t('Nonce')}>
+    <span>{nonce}</span>
+  </ValueAndLabel>
+);
+
+export const RequiredSignatures = ({ t, requiredSignatures }) => (
+  <ValueAndLabel className={styles.requiredSignatures} label={t('Required Signatures')}>
+    <span>{requiredSignatures}</span>
   </ValueAndLabel>
 );

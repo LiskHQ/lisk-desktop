@@ -12,10 +12,17 @@ import Dialog from '../../toolbox/dialog/dialog';
 
 import {
   TransactionId, Sender, Recipient, Message,
-  Illustration, Confirmations, Date, Amount, Fee, ValueAndLabel,
+  Illustration, Confirmations, Date, Amount, Fee, RequiredSignatures, Nonce,
 } from './dataRows/baseComponents';
 import styles from './transactionDetails.css';
 import transactionTypes from '../../../constants/transactionTypes';
+
+const getDelegateName = (transaction, activeToken) => (
+  (activeToken === 'LSK'
+  && transaction.asset
+  && transaction.asset.delegate
+  && transaction.asset.delegate.username) ? transaction.asset.delegate.username : null
+);
 
 const TransactionDetails = ({
   t, activeToken, netCode, transaction, delegates, history,
@@ -38,23 +45,24 @@ const TransactionDetails = ({
   const { title } = transactionTypes.getByCode(transaction.type || 0);
   const { senderLabel } = transactionTypes.getByCode(transaction.type || 0);
 
+
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
       <Box isLoading={isLoading} className={styles.wrapper}>
         <BoxHeader>
           <h1>{t('Transaction details')}</h1>
         </BoxHeader>
-        <BoxContent className={styles.mainContent}>
-          <Illustration type={transaction.type} senderId={data.senderId} title={title} />
+        <BoxContent className={`${styles.mainContent} ${styles.multiSigLayout}`}>
+          <Illustration type={data.type} senderId={data.senderId} title={title} />
           <Sender
             senderId={data.senderId}
-            // delegateName="name"
+            delegateName={getDelegateName(data, activeToken)}
             senderLabel={senderLabel}
             activeToken={activeToken}
             netCode={netCode}
           />
           <Recipient
-            recipientId={data.recepientId}
+            recipientId={data.recipientId}
             activeToken={activeToken}
             netCode={netCode}
             t={t}
@@ -62,23 +70,19 @@ const TransactionDetails = ({
           <TransactionId t={t} id={data.id} />
           <Amount
             t={t}
-            amount={transaction.amount}
+            amount={data.amount}
             addresses={addresses}
             activeToken={activeToken}
           />
-          <Date t={t} timestamp={transaction.timestamp} activeToken={activeToken} />
-          <Fee t={t} fee={transaction.fee} activeToken={activeToken} />
+          <Date t={t} timestamp={data.timestamp} activeToken={activeToken} />
+          <Fee t={t} fee={data.fee} activeToken={activeToken} />
           <Confirmations
             t={t}
-            confirmations={transaction.confirmations}
+            confirmations={data.confirmations}
             activeToken={activeToken}
           />
-          {/* <ValueAndLabel label={t('Required Signatures')}>
-            <span>{transaction.requiredSignatures}</span>
-          </ValueAndLabel>
-          <ValueAndLabel label={t('Nonce')}>
-            <span>{transaction.nonce}</span>
-          </ValueAndLabel> */}
+          <RequiredSignatures t={t} requiredSignatures={data.requiredSignatures} />
+          <Nonce t={t} nonce={data.nonce} />
           <Message activeToken={activeToken} transaction={data} t={t} />
           {/* <TransactionVotes transaction={data} t={t} delegates={delegates} /> */}
         </BoxContent>

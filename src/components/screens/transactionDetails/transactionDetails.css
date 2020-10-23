@@ -27,7 +27,7 @@
       "illustration illustration"
       "sender sender"
       "recipient recipient"
-      "transactionId transactionId"
+      "transactionId nonce"
       "amount date"
       "fee confirmations"
       "message message";
@@ -50,7 +50,7 @@
       "illustration illustration"
       "sender sender"
       "recipient recipient"
-      "transactionId transactionId"
+      "transactionId nonce"
       "amount date"
       "fee confirmations"
       "message message";
