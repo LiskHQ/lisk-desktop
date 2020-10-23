@@ -17,6 +17,10 @@ const ImportData = ({ t, nextStep }) => {
     reader.readAsText(evt.target.files[0]);
   };
 
+  const handleDrop = (evt) => {
+    reader.readAsText(evt.dataTransfer.files[0]);
+  };
+
   return (
     <section>
       <Box>
@@ -29,6 +33,12 @@ const ImportData = ({ t, nextStep }) => {
           {'// TODO'}
           <p>{t('Paste transaction value')}</p>
           <input type="file" onChange={onFileInputChange} />
+          <input
+            type="file"
+            style={{ width: '250px', height: '100px', backgroundColor: 'yellow' }}
+            draggable
+            onDrop={handleDrop}
+          />
           <pre>
             {jsonOutput && JSON.stringify(jsonOutput)}
           </pre>
