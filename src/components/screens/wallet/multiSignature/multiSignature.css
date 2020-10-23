@@ -1,10 +1,20 @@
 @import '../../../../app/mixins.css';
 
-.content {
+.tablesContainer {
+  display: flex;
+
+  & > div:first-child {
+    padding-right: 10px;
+  }
+}
+
+.tableContent {
   padding: 0 !important;
 }
 
 .transactionRow {
+  cursor: pointer;
+
   & > span {
     display: flex;
     align-items: center;
@@ -17,19 +27,14 @@
       margin-right: 16px;
     }
 
-    & > .senderDetails {
+    & > .signDetails {
       display: flex;
       flex-direction: column;
 
-      & .addressTitle {
-        margin-top: 0;
-        margin-bottom: 10px;
-      }
-
-      & > .senderKey {
+      & > .key {
         @mixin contentNormal;
 
-        margin: 0;
+        margin: 10px 0 0 0;
         color: var(--color-slate-gray);
       }
     }
@@ -48,4 +53,16 @@
 
   color: var(--color-maastricht-blue);
   font-family: var(--content-font);
+  margin: 0;
+}
+
+.groupBalance {
+  border-radius: var(--border-radius-standard);
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: rgba(43, 214, 123, 0.15);
+  color: var(--color-deep-green);
+  box-sizing: border-box;
+  line-height: initial;
+  text-align: right;
 }
