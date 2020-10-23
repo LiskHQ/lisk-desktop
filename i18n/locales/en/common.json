@@ -318,6 +318,7 @@
   "Passphrase should have 12 words, entered passphrase has {{length}}": "Passphrase should have 12 words, entered passphrase has {{length}}",
   "Passphrase:": "Passphrase:",
   "Paste": "Paste",
+  "Paste transaction value": "Paste transaction value",
   "Peers": "Peers",
   "Pending": "Pending",
   "Pending multisignature transactions": "Pending multisignature transactions",
