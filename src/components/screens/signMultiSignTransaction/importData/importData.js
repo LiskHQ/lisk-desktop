@@ -29,14 +29,14 @@ const ImportData = ({ t, nextStep }) => {
 
   return (
     <section>
-      <Box className={styles.container}>
+      <Box className={styles.boxContainer}>
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>{t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}</p>
         </header>
         <BoxContent>
           <ProgressBar current={1} />
-          <p>
+          <p className={styles.fileInputlabel}>
             {t('Paste transaction value')}
             <label className={styles.fileInputBtn}>
               {t('Read from JSON file')}

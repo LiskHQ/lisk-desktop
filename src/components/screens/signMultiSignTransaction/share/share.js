@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
+import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import TransactionResult from '../../../shared/transactionResult';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
@@ -24,7 +25,7 @@ const Share = ({
 
   return (
     <section>
-      <Box className={styles.container}>
+      <Box className={styles.boxContainer}>
         <header>
           <h1>{t('Register multisignature account')}</h1>
           <p>{t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}</p>
@@ -38,23 +39,23 @@ const Share = ({
             message={template.message}
             className={styles.content}
             error={JSON.stringify(error)}
-          >
-            {success && (
-              <div className={styles.buttonsContainer}>
-                <CopyToClipboard
-                  Container={SecondaryButton}
-                  text={t('Copy')}
-                />
-                <PrimaryButton>
-                  <span>
-                    <Icon name="download" />
-                    {t('Download')}
-                  </span>
-                </PrimaryButton>
-              </div>
-            )}
-          </TransactionResult>
+          />
         </BoxContent>
+        {success && (
+          <BoxFooter className={styles.footer} direction="horizontal">
+            <CopyToClipboard
+              Container={SecondaryButton}
+              text={t('Copy')}
+              className={styles.buttonContent}
+            />
+            <PrimaryButton>
+              <span className={styles.buttonContent}>
+                <Icon name="download" />
+                {t('Download')}
+              </span>
+            </PrimaryButton>
+          </BoxFooter>
+        )}
       </Box>
     </section>
   );

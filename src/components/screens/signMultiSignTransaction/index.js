@@ -8,7 +8,6 @@ import Dialog from '../../toolbox/dialog/dialog';
 import ImportData from './importData';
 import ReviewSign from './reviewSign';
 import Share from './share';
-import styles from './styles.css';
 
 const MultiSignature = ({ history }) => {
   const closeModal = () => {
@@ -20,7 +19,6 @@ const MultiSignature = ({ history }) => {
       <MultiStep
         key="sign-multi-signature-transaction"
         finalCallback={closeModal}
-        className={styles.modal}
       >
         <ImportData />
         <ReviewSign />
