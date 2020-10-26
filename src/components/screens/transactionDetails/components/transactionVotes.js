@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import BoxRow from '../../../toolbox/box/row';
 import LiskAmount from '../../../shared/liskAmount';
 import routes from '../../../../constants/routes';
 import { tokenMap } from '../../../../constants/tokens';

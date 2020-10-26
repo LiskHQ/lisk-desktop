@@ -21,13 +21,12 @@
   & .mainContent {
     padding: 0 20px;
     min-height: 400px;
-
     display: grid;
     justify-items: flex-start;
     align-items: center;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* stylelint-disable-line unit-whitelist */
     grid-auto-rows: minmax(84px, auto);
-    grid-template-areas: 
+    grid-template-areas:
       "illustration illustration"
       "sender sender"
       "recipient recipient"
@@ -42,7 +41,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      
+
       &:not(:last-child) {
         border-bottom: 1px solid var(--color-platinum);
       }
@@ -50,7 +49,7 @@
   }
 
   & .generalLayout {
-    grid-template-areas: 
+    grid-template-areas:
       "illustration illustration"
       "sender sender"
       "recipient recipient"
@@ -61,31 +60,31 @@
   }
 
   & .multiSigLayout {
-    grid-template-areas: 
+    grid-template-areas:
       "sender recipient"
       "transactionId amount"
       "requiredSignatures fee"
       "date confirmations"
       "message nonce"
-      "members members"
+      "members members";
   }
 
   & .voteLayout {
-    grid-template-areas: 
-    "illustration illustration"
-    "sender sender"
-    "date confirmations"
-    "transactionId nonce"
-    "message fee"
-    "votes votes";
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "date confirmations"
+      "transactionId nonce"
+      "message fee"
+      "votes votes";
   }
 
   & .registerDelegate {
-    grid-template-areas: 
-    "illustration illustration"
-    "sender sender"
-    "date confirmations"
-    "transactionId nonce"
-    "fee fee";
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "date confirmations"
+      "transactionId nonce"
+      "fee fee";
   }
 }

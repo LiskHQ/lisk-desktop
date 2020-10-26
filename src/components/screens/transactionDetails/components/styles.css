@@ -1,8 +1,8 @@
-@import '../../../../app/mixins.css'; 
+@import '../../../../app/mixins.css';
 
 .value {
   @mixin contentLargest;
-  
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -27,10 +27,10 @@
   grid-area: illustration;
   justify-content: flex-start !important;
   align-items: center !important;
-  
+
   & h2 {
     @mixin contentLargest semi-bold;
-    
+
     font-size: 16px;
   }
 }
@@ -61,10 +61,6 @@
 
 .confirmations {
   grid-area: confirmations;
-}
-
-.amount {
-  grid-area: amount;
 }
 
 .date {
@@ -98,11 +94,10 @@
   display: flex;
 }
 
-
 .addressRow {
   display: flex;
   align-items: center;
-  
+
   & .link {
     @mixin contentLargest;
 
