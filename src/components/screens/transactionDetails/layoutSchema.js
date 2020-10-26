@@ -15,16 +15,20 @@ const LayoutSchema = {
     className: '',
   },
   [txTypes.vote.code.legacy]: {
-    components: [...baseComponents, Message, TransactionVotes],
+    components: [...baseComponents, Illustration, Message, TransactionVotes],
     className: styles.voteLayout,
   },
   [txTypes.registerDelegate.code.legacy]: {
     components: [...baseComponents, Illustration],
     className: styles.registerDelegate,
   },
-  [txTypes.createMultiSig.code.legacy]: {
+  [txTypes.createMultiSig.code.new]: {
     components: [...baseComponents, Recipient, RequiredSignatures, Amount, Message],
     className: styles.multiSigLayout,
+  },
+  [txTypes.unlockToken.code.new]: {
+    components: [...baseComponents, Illustration, Amount],
+    className: styles.unlockToken,
   },
   default: {
     components: [...baseComponents],
