@@ -16,9 +16,16 @@ import transactionTypes from '../../../../constants/transactionTypes';
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
   && transaction.asset
-  && transaction.asset.delegate
-  && transaction.asset.delegate.username) ? transaction.asset.delegate.username : null
+  && transaction.asset.username) ? transaction.asset.username : null
 );
+
+const getTxAsset = (tx) => {
+  if (typeof tx.asset === 'object' && tx.asset !== null && typeof tx.asset.data === 'string') {
+    return tx.asset.data;
+  }
+  return '-';
+};
+
 
 const ValueAndLabel = ({ label, className, children }) => (
   <div className={`${styles.value} ${className}`}>
@@ -105,13 +112,13 @@ export const TransactionId = ({ t }) => {
 
 export const Message = ({ t }) => {
   const {
-    transaction: { message },
+    transaction,
   } = useContext(Context);
 
   return (
     <ValueAndLabel label={t('Message')} className={styles.message}>
       <div className="tx-reference">
-        {message}
+        {getTxAsset(transaction)}
       </div>
     </ValueAndLabel>
   );

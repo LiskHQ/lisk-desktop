@@ -14,6 +14,10 @@
 .container {
   height: auto;
 
+  & .votes {
+    grid-area: votes;
+  }
+
   & .mainContent {
     padding: 0 20px;
     min-height: 400px;
@@ -27,9 +31,9 @@
       "illustration illustration"
       "sender sender"
       "recipient recipient"
+      "date confirmations"
       "transactionId nonce"
-      "amount date"
-      "fee confirmations"
+      "amount fee"
       "message message";
 
     & > * {
@@ -50,9 +54,9 @@
       "illustration illustration"
       "sender sender"
       "recipient recipient"
+      "date confirmations"
       "transactionId nonce"
-      "amount date"
-      "fee confirmations"
+      "amount fee"
       "message message";
   }
 
@@ -64,5 +68,24 @@
       "date confirmations"
       "message nonce"
       "members members"
+  }
+
+  & .voteLayout {
+    grid-template-areas: 
+    "illustration illustration"
+    "sender sender"
+    "date confirmations"
+    "transactionId nonce"
+    "message fee"
+    "votes votes";
+  }
+
+  & .registerDelegate {
+    grid-template-areas: 
+    "illustration illustration"
+    "sender sender"
+    "date confirmations"
+    "transactionId nonce"
+    "fee fee";
   }
 }

@@ -11,25 +11,33 @@ import { isEmpty } from '../../../utils/helpers';
 import Dialog from '../../toolbox/dialog/dialog';
 
 import {
-  TransactionId, Sender, Recipient, Message,
-  Illustration, Confirmations, Date, Amount, Fee, RequiredSignatures, Nonce,
+  TransactionId, Sender, Recipient, Message, Illustration,
+  Confirmations, Date, Amount, Fee, RequiredSignatures, Nonce,
 } from './components';
 import styles from './transactionDetails.css';
 import transactionTypes from '../../../constants/transactionTypes';
 
 const txTypes = transactionTypes();
-const baseComponents = [Sender, Recipient, TransactionId, Fee, Date, Nonce];
+const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date, Nonce];
 const LayoutSchema = {
   [txTypes.createMultiSig.code.legacy]: {
-    components: [...baseComponents, Confirmations, RequiredSignatures],
+    components: [...baseComponents, Recipient, RequiredSignatures, Amount, Message],
     className: styles.multiSigLayout,
   },
   [txTypes.vote.code.legacy]: {
     components: [...baseComponents, TransactionVotes],
     className: styles.voteLayout,
   },
+  [txTypes.transfer.code.legacy]: {
+    components: [...baseComponents, Recipient, Illustration, Amount, Message],
+    className: '',
+  },
+  [txTypes.registerDelegate.code.legacy]: {
+    components: [...baseComponents, Illustration],
+    className: styles.registerDelegate,
+  },
   default: {
-    components: [...baseComponents, Illustration, Amount, Message],
+    components: [...baseComponents],
     className: styles.generalLayout,
   },
 };
@@ -55,7 +63,7 @@ const TransactionDetails = ({
     return <NotFound />;
   }
 
-  const Layout = LayoutSchema[data.type] || LayoutSchema.default;
+  const Layout = LayoutSchema[4] || LayoutSchema.default;
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
@@ -65,7 +73,7 @@ const TransactionDetails = ({
         </BoxHeader>
         <BoxContent className={`${styles.mainContent} ${Layout.className}`}>
           <Context.Provider value={{
-            transaction: data, activeToken, netCode,
+            transaction: data, activeToken, netCode, delegates,
           }}
           >
             {Layout.components.map((Component, index) => <Component key={index} t={t} />)}
