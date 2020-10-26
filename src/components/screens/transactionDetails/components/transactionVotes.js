@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import BoxRow from '../../toolbox/box/row';
-import LiskAmount from '../../shared/liskAmount';
-import routes from '../../../constants/routes';
-import { tokenMap } from '../../../constants/tokens';
+import BoxRow from '../../../toolbox/box/row';
+import LiskAmount from '../../../shared/liskAmount';
+import routes from '../../../../constants/routes';
+import { tokenMap } from '../../../../constants/tokens';
 
-import { Context } from './transactionDetails';
-import styles from './transactionDetails.css';
+import { Context } from '../transactionDetails';
+import styles from './styles.css';
 
 const TransactionVotes = ({ t }) => {
   const { transaction, delegates } = useContext(Context);
@@ -23,7 +23,7 @@ const TransactionVotes = ({ t }) => {
   }, []);
 
   return (
-    <BoxRow className={styles.votes}>
+    <div className={`${styles.value} ${styles.votes}`}>
       <div className={styles.detailsWrapper}>
         <span className={styles.label}>
           {`${t('Votes')} (${votes.length})`}
@@ -48,7 +48,7 @@ const TransactionVotes = ({ t }) => {
           ))}
         </div>
       </div>
-    </BoxRow>
+    </div>
   );
 };
 

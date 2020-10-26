@@ -1,46 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
 import NotFound from '../../shared/notFound';
-import TransactionVotes from './transactionVotes';
 import routes from '../../../constants/routes';
 import { isEmpty } from '../../../utils/helpers';
 import Dialog from '../../toolbox/dialog/dialog';
 
-import {
-  TransactionId, Sender, Recipient, Message, Illustration,
-  Confirmations, Date, Amount, Fee, RequiredSignatures, Nonce,
-} from './components';
 import styles from './transactionDetails.css';
-import transactionTypes from '../../../constants/transactionTypes';
-
-const txTypes = transactionTypes();
-const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date, Nonce];
-const LayoutSchema = {
-  [txTypes.createMultiSig.code.legacy]: {
-    components: [...baseComponents, Recipient, RequiredSignatures, Amount, Message],
-    className: styles.multiSigLayout,
-  },
-  [txTypes.vote.code.legacy]: {
-    components: [...baseComponents, TransactionVotes],
-    className: styles.voteLayout,
-  },
-  [txTypes.transfer.code.legacy]: {
-    components: [...baseComponents, Recipient, Illustration, Amount, Message],
-    className: '',
-  },
-  [txTypes.registerDelegate.code.legacy]: {
-    components: [...baseComponents, Illustration],
-    className: styles.registerDelegate,
-  },
-  default: {
-    components: [...baseComponents],
-    className: styles.generalLayout,
-  },
-};
+import LayoutSchema from './layoutSchema';
 
 export const Context = React.createContext({
   transaction: {},
@@ -50,10 +20,17 @@ const TransactionDetails = ({
   t, activeToken, netCode, delegates, history,
   transaction: { error, isLoading, data },
 }) => {
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
-    // history.push(routes.dashboard.path);
+    if (!isFirstRender) {
+      history.push(routes.dashboard.path);
+    }
   }, [activeToken]);
 
+  useEffect(() => {
+    isFirstRender.current = false;
+  }, []);
 
   if (!error && isEmpty(data)) {
     return <div />;
@@ -63,7 +40,7 @@ const TransactionDetails = ({
     return <NotFound />;
   }
 
-  const Layout = LayoutSchema[4] || LayoutSchema.default;
+  const Layout = LayoutSchema[data.type] || LayoutSchema.default;
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
