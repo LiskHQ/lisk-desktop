@@ -29,7 +29,7 @@ const ImportData = ({ t, nextStep }) => {
 
   return (
     <section>
-      <Box>
+      <Box className={styles.container}>
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>{t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}</p>
@@ -55,7 +55,7 @@ const ImportData = ({ t, nextStep }) => {
             />
           </label>
         </BoxContent>
-        <BoxFooter>
+        <BoxFooter className={styles.footer}>
           <PrimaryButton
             className="confirm-button"
             size="l"
