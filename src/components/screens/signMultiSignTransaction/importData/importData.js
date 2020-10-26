@@ -4,13 +4,15 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import ProgressBar from '../progressBar';
+import styles from './styles.css';
 
 const ImportData = ({ t, nextStep }) => {
-  const [jsonOutput, setJsonOutput] = useState(undefined);
+  const [jsonInput, setJsonInput] = useState(undefined);
   const reader = new FileReader();
-  reader.onload = (evt) => {
-    const parsedInput = JSON.parse(evt.target.result);
-    setJsonOutput(parsedInput);
+
+  reader.onload = ({ target }) => {
+    const parsedInput = JSON.parse(target.result);
+    setJsonInput(parsedInput);
   };
 
   const onFileInputChange = (evt) => {
@@ -19,6 +21,10 @@ const ImportData = ({ t, nextStep }) => {
 
   const handleDrop = (evt) => {
     reader.readAsText(evt.dataTransfer.files[0]);
+  };
+
+  const onReview = () => {
+    nextStep({ members: jsonInput });
   };
 
   return (
@@ -30,24 +36,31 @@ const ImportData = ({ t, nextStep }) => {
         </header>
         <BoxContent>
           <ProgressBar current={1} />
-          {'// TODO'}
-          <p>{t('Paste transaction value')}</p>
-          <input type="file" onChange={onFileInputChange} />
-          <input
-            type="file"
-            style={{ width: '250px', height: '100px', backgroundColor: 'yellow' }}
-            draggable
-            onDrop={handleDrop}
-          />
-          <pre>
-            {jsonOutput && JSON.stringify(jsonOutput)}
-          </pre>
+          <p>
+            {t('Paste transaction value')}
+            <label className={styles.fileInputBtn}>
+              {t('Read from JSON file')}
+              <input
+                className={styles.input}
+                type="file"
+                onChange={onFileInputChange}
+              />
+            </label>
+          </p>
+          <label className={styles.dropFileArea}>
+            <input
+              type="file"
+              onChange={onFileInputChange}
+              onDrop={handleDrop}
+            />
+          </label>
         </BoxContent>
         <BoxFooter>
           <PrimaryButton
             className="confirm-button"
             size="l"
-            onClick={nextStep}
+            onClick={onReview}
+            disabled={!jsonInput}
           >
             {t('Review and Sign')}
           </PrimaryButton>

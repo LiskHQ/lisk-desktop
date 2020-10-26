@@ -1,0 +1,30 @@
+
+.input {
+  display: none;
+}
+
+.fileInputBtn {
+  cursor: pointer;
+  margin-left: 15px;
+  font-family: 'basier-circle';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 120%;
+  color: #4070F4;
+}
+
+.dropFileArea {
+  cursor: pointer;
+  width: 100%;
+  height: 200px;
+  border: 1px solid #DFE6F2;
+  background-image: url(../../../../assets/images/icons/upload.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  & > input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+}

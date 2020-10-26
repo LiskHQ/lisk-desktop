@@ -143,6 +143,7 @@ import deleteIcon from '../../../assets/images/icons/delete.svg';
 import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.svg';
 import download from '../../../assets/images/icons/download.svg';
 import multiSignature from '../../../assets/images/icons/multi-signature.svg';
+import upload from '../../../assets/images/icons/upload.svg';
 
 export const icons = {
   academy,
@@ -286,6 +287,7 @@ export const icons = {
   votingQueueInactive,
   votingQueueActive,
   download,
+  upload,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

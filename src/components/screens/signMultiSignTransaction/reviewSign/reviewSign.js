@@ -6,7 +6,8 @@ import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import MultiSignatureReview from '../../../shared/multiSignatureReview';
 import ProgressBar from '../progressBar';
 
-const ReviewSign = ({ t, prevStep, nextStep }) => {
+const ReviewSign = ({ t, prevStep, nextStep, members }) => {
+  console.log(members);
   const submitTransaction = () => {
     const [error, tx] = [false, { id: 1 }];
 
