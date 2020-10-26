@@ -33,9 +33,7 @@ const MyAccount = ({
               <span>{t('{{token}} balance', { token: tokenMap[coin.token].label })}</span>
               <DiscreetMode>
                 <span className={styles.amounts}>
-                  <LiskAmount val={coin.balance} />
-                  {' '}
-                  {coin.token}
+                  <LiskAmount val={coin.balance} token={coin.token} />
                 </span>
               </DiscreetMode>
             </div>

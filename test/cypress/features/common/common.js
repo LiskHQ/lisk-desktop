@@ -57,7 +57,6 @@ Given(/^I am on (.*?) page$/, function (page) {
       cy.route('/api/votes?*').as('votes');
       cy.visit(urls.wallet);
       cy.wait('@transactions');
-      cy.wait('@votes');
       break;
     case 'send':
       cy.route('/api/accounts?address*').as('accountLSK');
@@ -117,7 +116,9 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
     }
   }
   switch (transactionType.toLowerCase()) {
-    case 'delegate vote':
+    case 'unlocking':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Unlock LSK');
+      break;
     case 'voting':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate vote');
       break;
@@ -196,6 +197,19 @@ Then(/^(.*?) should be visible$/, function (elementName) {
   cy.get(ss[elementName]).should('be.visible');
 });
 
-Then(/^The (.*?) button must be active$/, function (elementName) {
-  cy.get(ss[elementName]).should('not.be.disabled');
+Then(/^The (.*?) button must (.*?) active$/, function (elementName, check) {
+  if (check === 'be') {
+    cy.get(ss[elementName]).should('not.be.disabled');
+  } else if (check === 'not be') {
+    cy.get(ss[elementName]).should('be.disabled');
+  }
+});
+
+And(/^I search for account ([^s]+)$/, function (string) {
+  cy.server();
+  cy.route('/api/accounts**').as('requestAccount');
+  cy.route('/api/delegates**').as('requestDelegate');
+  cy.get(ss.searchInput).type(string);
+  cy.wait('@requestAccount');
+  cy.wait('@requestDelegate');
 });

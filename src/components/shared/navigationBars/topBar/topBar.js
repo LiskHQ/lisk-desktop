@@ -129,6 +129,7 @@ class TopBar extends React.Component {
       network,
       token,
       settings: { darkMode, discreetMode, sideBarExpanded },
+      noOfVotes,
       // resetTimer,
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
@@ -170,6 +171,20 @@ class TopBar extends React.Component {
             )}
           >
             <p>{t('Bookmarks')}</p>
+          </Tooltip>
+          <Tooltip
+            className={styles.tooltipWrapper}
+            size="maxContent"
+            position="bottom"
+            content={(
+              <DialogLink component="votingQueue" className={`${styles.toggle} voting-queue-toggle`}>
+                <Icon name="votingQueueInactive" />
+                {noOfVotes !== 0
+                  && <span className={styles.votingQueueVoteCount}>{noOfVotes}</span>}
+              </DialogLink>
+            )}
+          >
+            <p>{t('Voting Queue')}</p>
           </Tooltip>
           <Tooltip
             className={styles.tooltipWrapper}

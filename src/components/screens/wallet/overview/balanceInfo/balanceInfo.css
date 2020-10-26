@@ -1,3 +1,5 @@
+@import '../../../../../app/mixins.css';
+
 .wrapper {
   display: flex;
   padding: 0;
@@ -44,7 +46,22 @@
 
     color: var(--color-ink-blue);
     opacity: 0.8;
-    padding: 4px 0;
+    margin-left: 8px;
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    align-content: baseline;
+
+    & > div {
+      margin-bottom: 10px;
+      white-space: pre;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
   }
 }
 
@@ -57,6 +74,10 @@
 
   & .button {
     flex-grow: 1;
+
+    & + .button {
+      margin-left: 10px;
+    }
 
     & button {
       width: 100%;
@@ -71,5 +92,17 @@
     &.BTC {
       background-color: var(--color-btc);
     }
+  }
+}
+
+.lockedBalance {
+  @mixin headingNormal normal;
+
+  color: var(--color-ink-blue);
+  cursor: pointer;
+
+  & > img {
+    width: 17px;
+    margin-right: 8px;
   }
 }

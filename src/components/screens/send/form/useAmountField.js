@@ -30,7 +30,12 @@ const useAmountField = (initialValue, token) => {
   const { t, i18n } = useTranslation();
 
   const getAmountFeedbackAndError = (value, maxAmount = 0) => {
-    let { message: feedback } = validateAmountFormat({ value, token });
+    let { message: feedback } = validateAmountFormat({
+      value,
+      token,
+      funds: maxAmount,
+      checklist: ['ZERO', 'MAX_ACCURACY', 'FORMAT', 'INSUFFICIENT_FUNDS'],
+    });
 
     if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {
       feedback = t('Provided amount is higher than your current balance.');

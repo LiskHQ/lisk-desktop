@@ -10,15 +10,15 @@ export default (t, activeToken) => {
     },
     {
       title: t('Date'),
-      classList: isLSK ? grid['col-xs-2'] : grid['col-xs-3'],
+      classList: grid['col-xs-1'],
     },
     {
-      title: t('Fee'),
-      classList: grid['col-xs-2'],
+      title: t('Transaction Fee'),
+      classList: grid['col-xs-1'],
     },
     {
       title: t('Details'),
-      classList: isLSK ? `${grid['col-xs-2']} ${grid['col-md-2']}` : 'hidden',
+      classList: isLSK ? `${grid['col-xs-4']} ${grid['col-md-4']}` : 'hidden',
     },
     {
       title: t('Amount'),

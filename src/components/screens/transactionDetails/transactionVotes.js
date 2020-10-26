@@ -1,99 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
 import transactionTypes from '../../../constants/transactionTypes';
-import { isEmpty } from '../../../utils/helpers';
+import LiskAmount from '../../shared/liskAmount';
 import routes from '../../../constants/routes';
-import RankOrStatus from '../../shared/rankOrStatus';
-
-function addVotesWithDelegateNames(votes, delegates, t) {
-  const getVotesStartingWith = sign => (
-    votes
-      .filter(item => item.startsWith(sign))
-      .map(item => item.replace(sign, ''))
-  );
-
-  const getDelegate = publicKey => (
-    delegates[publicKey] || { username: t('Loading...'), account: {} }
-  );
-
-  const votesNames = {
-    added: getVotesStartingWith('+').map(getDelegate),
-    removed: getVotesStartingWith('-').map(getDelegate),
-  };
-  return votesNames;
-}
+import { tokenMap } from '../../../constants/tokens';
 
 const transactionVotes = ({ t, transaction, delegates }) => {
-  if (transaction.type !== transactionTypes().vote.code) return null;
+  if (transaction.type !== transactionTypes().vote.code.legacy) return null;
   const accountPath = routes.account.path;
-  const [votesNames, setVoteNames] = useState(
-    addVotesWithDelegateNames(transaction.asset.votes, delegates.data, t),
-  );
+  const { votes } = transaction.asset;
 
   useEffect(() => {
     if (transaction.asset) {
-      const publicKeys = transaction.asset.votes.map(item => item.replace(/\+|-/, ''));
-      delegates.loadData({ publicKeys });
+      const addressList = votes.map(item => item.delegateAddress);
+      delegates.loadData({ addressList });
     }
   }, []);
 
-  useEffect(() => {
-    if (!isEmpty(delegates.data)) {
-      setVoteNames(addVotesWithDelegateNames(transaction.asset.votes, delegates.data, t));
-    }
-  }, [delegates]);
-
   return (
-    <>
-      {votesNames.added.length > 0
-        ? (
-          <BoxRow>
-            <div className={styles.detailsWrapper}>
-              <span className={styles.label}>
-                {`${t('Added votes')} (${votesNames.added.length})`}
+    <BoxRow>
+      <div className={styles.detailsWrapper}>
+        <span className={styles.label}>
+          {`${t('Votes')} (${votes.length})`}
+        </span>
+        <div className={`${styles.votesContainer} ${styles.added} tx-added-votes`}>
+          {votes.map(vote => (
+            <Link
+              key={vote.delegateAddress}
+              to={`${accountPath}?address=${vote.delegateAddress}`}
+              className={`${styles.voteTag} voter-address`}
+            >
+              <span className={styles.username}>
+                {delegates[vote.delegateAddress]
+                  ? delegates[vote.delegateAddress].username
+                  : vote.delegateAddress
+                }
               </span>
-              <div className={`${styles.votesContainer} ${styles.added} tx-added-votes`}>
-                {votesNames.added.slice(0).sort((a, b) => a.rank - b.rank).map((vote, voteKey) => (
-                  <Link
-                    key={voteKey}
-                    to={`${accountPath}?address=${vote.account.address}`}
-                    className={`${styles.voteTag} voter-address`}
-                  >
-                    <RankOrStatus data={vote} className={styles.rank} />
-                    <span className={styles.username}>{vote.username}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </BoxRow>
-        ) : null}
-      {votesNames.removed.length > 0
-        ? (
-          <BoxRow>
-            <div className={styles.detailsWrapper}>
-              <span className={styles.label}>
-                {`${t('Removed votes')} (${votesNames.removed.length})`}
+              <span className={styles.voteAmount}>
+                <LiskAmount val={vote.amount} token={tokenMap.LSK.key} />
               </span>
-              <div className={`${styles.votesContainer} ${styles.deleted} tx-removed-votes`}>
-                {votesNames.removed
-                  .slice(0).sort((a, b) => a.rank - b.rank).map((vote, voteKey) => (
-                    <Link
-                      key={voteKey}
-                      to={`${accountPath}/${vote.account.address}`}
-                      className={`${styles.voteTag} voter-address`}
-                    >
-                      <RankOrStatus data={vote} className={styles.rank} />
-                      <span className={styles.username}>{vote.username}</span>
-                    </Link>
-                  ))}
-              </div>
-            </div>
-          </BoxRow>
-        ) : null}
-    </>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </BoxRow>
   );
 };
 

@@ -133,6 +133,14 @@ import forgedLsk from '../../../assets/images/icons/forged-lsk.svg';
 import productivity from '../../../assets/images/icons/productivity.svg';
 import missedBlocks from '../../../assets/images/icons/missed-blocks.svg';
 import forgedBlocks from '../../../assets/images/icons/forged-blocks.svg';
+import lock from '../../../assets/images/icons/lock.svg';
+import unlock from '../../../assets/images/icons/unlock.svg';
+import loading from '../../../assets/images/icons/loading.svg';
+import txUnlock from '../../../assets/images/icons/tx-unlock.svg';
+import votingQueueInactive from '../../../assets/images/icons/voting-queue-inactive.svg';
+import votingQueueActive from '../../../assets/images/icons/voting-queue-active.svg';
+import deleteIcon from '../../../assets/images/icons/delete.svg';
+import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.svg';
 
 export const icons = {
   academy,
@@ -143,6 +151,7 @@ export const icons = {
   arrowLeftInactive,
   arrowRightActive,
   arrowRightInactive,
+  arrowRightTailed,
   arrowUpCircle,
   balance,
   bookmarksIconEmptyState,
@@ -153,6 +162,7 @@ export const icons = {
   copy,
   dashboardIcon,
   dashboardIconActive,
+  deleteIcon,
   discord,
   discordActive,
   discreetMode,
@@ -267,6 +277,12 @@ export const icons = {
   searchInput,
   weight,
   productivity,
+  lock,
+  unlock,
+  loading,
+  txUnlock,
+  votingQueueInactive,
+  votingQueueActive,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

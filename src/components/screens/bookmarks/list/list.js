@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import { tokenMap } from '../../../../constants/tokens';
@@ -10,8 +11,8 @@ import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import EmptyState from './emptyState';
-import regex from '../../../../utils/regex';
 import routes from '../../../../constants/routes';
+import { truncateAddress } from '../../../../utils/account';
 import styles from './list.css';
 import Icon from '../../../toolbox/icon';
 
@@ -47,7 +48,7 @@ export class BookmarksList extends React.Component {
 
     return token.active === tokenMap.LSK.key
       ? address
-      : address.replace(regex.btcAddressTrunk, '$1...$3');
+      : truncateAddress(address);
   }
 
   onFilterChange({ target }) {

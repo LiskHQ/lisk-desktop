@@ -1,5 +1,4 @@
 /* eslint-disable max-lines */
-import i18next from 'i18next';
 import to from 'await-to-js';
 
 import actionTypes from '../constants/actions';
@@ -131,94 +130,6 @@ export const updateTransactions = ({
         },
       });
     }
-  }
-};
-
-// ================================================ //
-//  TODO
-// The following functions needs to be remove after
-// implement and use send and broadcast HOC
-// ================================================ //
-
-// TODO remove this function after remove sent function
-const handleSentError = ({
-  account, dispatch, error, tx,
-}) => {
-  let text;
-  switch (account.loginType) {
-    case loginType.normal:
-      text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-      break;
-    case loginType.ledger:
-    case loginType.trezor:
-      text = i18next.t('You have cancelled the transaction on your hardware wallet. You can either continue or retry.');
-      break;
-    default:
-      text = error.message;
-  }
-
-  dispatch({
-    type: actionTypes.transactionFailed,
-    data: {
-      errorMessage: text,
-      tx,
-    },
-  });
-};
-
-
-/**
- * Calls transactionAPI.create and transactionAPI.broadcast methods to make a transaction.
- * @param {Object} data
- * @param {String} data.recipientAddress
- * @param {Number} data.amount - In raw format (satoshis, beddows)
- * @param {Number} data.fee - In raw format, used for updating the TX List.
- * @param {Number} data.dynamicFeePerByte - In raw format, used for creating BTC transaction.
- * @param {Number} data.reference - Data field for LSK transactions
- * @param {String} data.secondPassphrase - Second passphrase for LSK transactions
- */
-// TODO remove this function once create and broadcast HOC be implemented
-// eslint-disable-next-line max-statements
-export const sent = data => async (dispatch, getState) => {
-  let tx;
-  let fail;
-  const {
-    account, network, settings,
-  } = getState();
-  // const timeOffset = getTimeOffset(blocks.latestBlocks);
-  const activeToken = settings.token.active;
-  const senderId = account.info[activeToken].address;
-
-  const txData = data;
-
-  try {
-    if (account.loginType === loginType.normal) {
-      tx = await transactionsAPI.create(activeToken, txData, transactionTypes().transfer.key);
-    } else {
-      [fail, tx] = await (signSendTransaction(account, data));
-
-      if (fail) throw new Error(fail);
-    }
-    const broadcastTx = await transactionsAPI.broadcast(activeToken, tx, network);
-
-    loadingFinished('sent');
-    dispatch(addNewPendingTransaction({
-      amount: txData.amount,
-      asset: { reference: txData.data },
-      fee: 1e7,
-      id: broadcastTx.id,
-      recipientId: txData.recipientId,
-      senderId,
-      senderPublicKey: account.publicKey,
-      type: transactionTypes().transfer.code,
-    }));
-
-    dispatch(passphraseUsed(new Date()));
-  } catch (error) {
-    loadingFinished('sent');
-    handleSentError({
-      error, account, tx, dispatch,
-    });
   }
 };
 

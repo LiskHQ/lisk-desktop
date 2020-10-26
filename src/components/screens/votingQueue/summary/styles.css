@@ -1,0 +1,73 @@
+@import '../../../../app/mixins.css';
+
+.container {
+  & .content {
+    & .contentItem {
+      padding-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    & .contentHeading {
+      @mixin contentLarge semi-bold;
+    }
+  }
+
+  & .infoContainer {
+    display: flex;
+    padding-top: 20px;
+    border-top: 1px solid var(--darker-border-color);
+
+    & .infoColumn {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+
+      &:last-child {
+        padding-left: 10px;
+      }
+    }
+  }
+
+  & .footer {
+    & button {
+      width: 230px;
+    }
+  }
+}
+
+.infoTitle {
+  @mixin contentNormal semi-bold;
+
+  margin-bottom: 10px;
+}
+
+.infoValue {
+  @mixin contentNormal;
+
+  font-size: 16px;
+}
+
+.voteItems {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.voteItem {
+  @mixin contentSmall;
+
+  background-color: var(--color-silver);
+  padding: 8px;
+  border-radius: 3px;
+  margin: 10px 10px 0 0;
+  white-space: nowrap;
+}
+
+.addressText {
+  color: var(--color-ink-blue);
+  margin-right: 10px;
+}
+
+.arrowIcon {
+  margin: 0 6px;
+}

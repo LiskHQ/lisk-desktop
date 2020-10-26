@@ -11,7 +11,7 @@ import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
 import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
-import { loadVotes } from '../../actions/voting';
+import { votesRetrieved } from '../../actions/voting';
 import { networkSet, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
 import analytics from '../../utils/analytics';
@@ -44,23 +44,18 @@ const getRecentTransactionOfType = (transactionsList, type) => (
 const votePlaced = (store, action) => {
   const voteTransaction = getRecentTransactionOfType(
     action.data.confirmed,
-    transactionTypes().vote.code,
+    transactionTypes().vote.code.legacy,
   );
 
   if (voteTransaction) {
-    const { account } = store.getState();
-
-    store.dispatch(loadVotes({
-      address: account.info.LSK.address,
-      type: 'update',
-    }));
+    store.dispatch(votesRetrieved());
   }
 };
 
 const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
   transaction
   && transaction.recipientId === account.address
-  && transaction.type === transactionTypes().transfer.code
+  && transaction.type === transactionTypes().transfer.code.legacy
 ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
