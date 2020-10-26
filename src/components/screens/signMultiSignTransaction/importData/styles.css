@@ -11,6 +11,7 @@
 
 .fileInputBtn {
   @mixin contentNormal semi-bold;
+
   cursor: pointer;
   margin-left: 15px;
   color: var(--color-ultramarine-blue);

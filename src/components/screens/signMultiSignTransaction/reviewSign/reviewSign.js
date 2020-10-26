@@ -7,7 +7,20 @@ import MultiSignatureReview from '../../../shared/multiSignatureReview';
 import ProgressBar from '../progressBar';
 import styles from '../styles.css';
 
-const ReviewSign = ({ t, prevStep, nextStep }) => {
+const ReviewSign = ({
+  t,
+  members = [
+    {
+      name: 'Wilson Geidt', address: '8195226425328336181L', publicKey: '8155694652104526882', mandatory: true,
+    },
+    { address: '6195226421328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', mandatory: false },
+    { address: '4827364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', mandatory: false },
+  ],
+  fee = 15000000, // rawLSK
+  requiredSignatures = 2,
+  prevStep,
+  nextStep,
+}) => {
   const submitTransaction = () => {
     const [error, tx] = [false, { id: 1 }];
 
@@ -27,7 +40,12 @@ const ReviewSign = ({ t, prevStep, nextStep }) => {
         </header>
         <BoxContent>
           <ProgressBar current={2} />
-          <MultiSignatureReview t={t} />
+          <MultiSignatureReview
+            t={t}
+            members={members}
+            fee={fee}
+            requiredSignatures={requiredSignatures}
+          />
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
           <SecondaryButton className="go-back" onClick={prevStep}>{t('Edit')}</SecondaryButton>

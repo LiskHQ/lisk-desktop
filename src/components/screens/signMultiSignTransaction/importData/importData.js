@@ -15,14 +15,8 @@ const ImportData = ({ t, nextStep }) => {
     setJsonInput(parsedInput);
   };
 
-  const onFileInputChange = (evt) => {
-    reader.readAsText(evt.target.files[0]);
-  };
-
-  const handleDrop = (evt) => {
-    reader.readAsText(evt.dataTransfer.files[0]);
-  };
-
+  const onFileInputChange = ({ target }) => reader.readAsText(target.files[0]);
+  const handleDrop = ({ dataTransfer }) => reader.readAsText(dataTransfer.files[0]);
   const onReview = () => {
     nextStep({ members: jsonInput });
   };
@@ -41,15 +35,18 @@ const ImportData = ({ t, nextStep }) => {
             <label className={styles.fileInputBtn}>
               {t('Read from JSON file')}
               <input
-                className={styles.input}
+                className={`${styles.input} clickableFileInput`}
                 type="file"
+                accept="application/JSON"
                 onChange={onFileInputChange}
               />
             </label>
           </p>
           <label className={styles.dropFileArea}>
             <input
+              className="dropfileInput"
               type="file"
+              accept="application/JSON"
               onChange={onFileInputChange}
               onDrop={handleDrop}
             />
@@ -57,7 +54,7 @@ const ImportData = ({ t, nextStep }) => {
         </BoxContent>
         <BoxFooter className={styles.footer}>
           <PrimaryButton
-            className="confirm-button"
+            className="confirm"
             size="l"
             onClick={onReview}
             disabled={!jsonInput}
