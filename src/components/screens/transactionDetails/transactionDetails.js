@@ -40,7 +40,7 @@ const TransactionDetails = ({
     return <NotFound />;
   }
 
-  const Layout = LayoutSchema[14] || LayoutSchema.default;
+  const Layout = LayoutSchema[data.type] || LayoutSchema.default;
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
