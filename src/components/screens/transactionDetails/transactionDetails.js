@@ -23,7 +23,7 @@ const TransactionDetails = ({
   const isFirstRender = useRef(true);
 
   useEffect(() => {
-    if (!isFirstRender) {
+    if (!isFirstRender.current) {
       history.push(routes.dashboard.path);
     }
   }, [activeToken]);
@@ -40,7 +40,7 @@ const TransactionDetails = ({
     return <NotFound />;
   }
 
-  const Layout = LayoutSchema[data.type] || LayoutSchema.default;
+  const Layout = LayoutSchema[14] || LayoutSchema.default;
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
