@@ -57,7 +57,7 @@ const ImportData = ({ t, nextStep }) => {
           </p>
           <label className={`${styles.dropFileArea} ${error && styles.error}`}>
             <input
-              className="dropfileInpu"
+              className="dropfileInput"
               type="file"
               accept="application/JSON"
               onChange={onFileInputChange}
