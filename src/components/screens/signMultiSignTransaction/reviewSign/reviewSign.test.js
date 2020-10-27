@@ -38,7 +38,7 @@ describe('Sign Multisignature Tx Review component', () => {
 
   it('Should render properly', () => {
     const html = wrapper.html();
-    expect(wrapper.find('.member-info').length).toEqual(props.members.length);
+    expect(wrapper).toContainMatchingElements(props.members.length, '.member-info');
     expect(html).toContain('0.02 LSK');
   });
 });
