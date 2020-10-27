@@ -24,6 +24,10 @@
   border: 1px solid var(--color-very-light-gray);
   background: url(../../../../assets/images/icons/upload.svg) center no-repeat;
 
+  &.error {
+    border: 1px solid var(--error-background-color);
+  }
+
   & > input {
     width: 100%;
     height: 100%;

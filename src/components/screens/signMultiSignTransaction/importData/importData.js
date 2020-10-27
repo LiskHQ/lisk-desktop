@@ -3,6 +3,7 @@ import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton } from '../../../toolbox/buttons';
+import Feedback from '../../../toolbox/feedback/feedback';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
@@ -10,6 +11,7 @@ const reader = new FileReader();
 
 const ImportData = ({ t, nextStep }) => {
   const [jsonInput, setJsonInput] = useState(undefined);
+  const [error, setError] = useState(undefined);
 
   const onFileInputChange = ({ target }) => reader.readAsText(target.files[0]);
   const handleDrop = ({ dataTransfer }) => reader.readAsText(dataTransfer.files[0]);
@@ -19,8 +21,16 @@ const ImportData = ({ t, nextStep }) => {
 
   useEffect(() => {
     reader.onload = ({ target }) => {
-      const parsedInput = JSON.parse(target.result);
-      setJsonInput(parsedInput);
+      try {
+        const parsedInput = JSON.parse(target.result);
+        if (Array.isArray(parsedInput.members)) {
+          setJsonInput(parsedInput);
+        } else {
+          throw new Error('invalid json');
+        }
+      } catch (e) {
+        setError(e);
+      }
     };
   }, []);
 
@@ -45,13 +55,18 @@ const ImportData = ({ t, nextStep }) => {
               />
             </label>
           </p>
-          <label className={styles.dropFileArea}>
+          <label className={`${styles.dropFileArea} ${error && styles.error}`}>
             <input
-              className="dropfileInput"
+              className="dropfileInpu"
               type="file"
               accept="application/JSON"
               onChange={onFileInputChange}
               onDrop={handleDrop}
+            />
+            <Feedback
+              message={t('Invalid file')}
+              size="m"
+              status={error ? 'error' : 'ok'}
             />
           </label>
         </BoxContent>
