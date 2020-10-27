@@ -40,7 +40,7 @@ const DelegatesMonitor = ({
     tabs: [
       {
         value: 'active',
-        name: ('Active delegates'),
+        name: ('Inside round'),
         className: 'active',
       },
       {
