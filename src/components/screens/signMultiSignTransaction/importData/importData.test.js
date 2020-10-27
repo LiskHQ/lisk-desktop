@@ -14,11 +14,10 @@ describe('Multisignature ImportData component', () => {
   });
 
   it('renders properly', () => {
-    const html = wrapper.html();
     expect(wrapper).toContainMatchingElement('header');
     expect(wrapper).toContainMatchingElement('ProgressBar');
-    expect(html).toContain('clickableFileInput');
-    expect(html).toContain('dropfileInput');
+    expect(wrapper).toContainMatchingElement('.clickableFileInput');
+    expect(wrapper).toContainMatchingElement('.dropfileInput');
     expect(wrapper).toContainMatchingElement('footer');
     expect(wrapper.find('button.confirm')).toBeDisabled();
   });
