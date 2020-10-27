@@ -22,7 +22,7 @@ const ImportData = ({ t, nextStep }) => {
       const parsedInput = JSON.parse(target.result);
       setJsonInput(parsedInput);
     };
-  }, [onFileInputChange, handleDrop]);
+  }, []);
 
   return (
     <section>
