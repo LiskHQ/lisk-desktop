@@ -21,7 +21,7 @@ const MultiSignature = ({ history }) => {
   return (
     <Dialog hasClose>
       <MultiStep
-        key="multi-signature"
+        key="multisignature"
         finalCallback={closeModal}
         className={styles.modal}
       >

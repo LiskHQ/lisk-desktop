@@ -17,7 +17,7 @@ const MultiSignature = ({ history }) => {
   return (
     <Dialog hasClose>
       <MultiStep
-        key="sign-multi-signature-transaction"
+        key="sign-multisignature-transaction"
         finalCallback={closeModal}
       >
         <ImportData />
