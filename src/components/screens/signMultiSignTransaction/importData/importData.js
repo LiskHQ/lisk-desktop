@@ -18,7 +18,7 @@ const ImportData = ({ t, nextStep }) => {
   const onFileInputChange = ({ target }) => reader.readAsText(target.files[0]);
   const handleDrop = ({ dataTransfer }) => reader.readAsText(dataTransfer.files[0]);
   const onReview = () => {
-    nextStep({ members: jsonInput });
+    nextStep({ members: jsonInput.members });
   };
 
   return (
