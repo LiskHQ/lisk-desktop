@@ -17,6 +17,10 @@ const MultisigAccountDetails = ({
   t,
 }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
+
+  // @todo We shouldn't be needing this if we lazyload the routes.
+  if (!account.keys || account.keys.numberOfSignatures === 0) return null;
+
   const { numberOfSignatures, optionalKeys, mandatoryKeys } = account.keys;
   const [members, setMembers] = useState([]);
 
