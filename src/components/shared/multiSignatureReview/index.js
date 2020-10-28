@@ -53,8 +53,8 @@ const Members = ({ members = [], t }) => {
   );
 };
 
-const InfoColumn = ({ title, children }) => (
-  <div className={styles.infoColumn}>
+const InfoColumn = ({ title, children, className }) => (
+  <div className={`${styles.infoColumn} ${className}`}>
     <span className={styles.infoTitle}>{title}</span>
     <span className={styles.infoValue}>
       {children}
@@ -71,8 +71,10 @@ const MultiSignatureReview = ({
   <>
     <Members members={members} t={t} />
     <div className={styles.infoContainer}>
-      <InfoColumn title={t('Required Signatures')}>{requiredSignatures}</InfoColumn>
-      <InfoColumn title={t('Transaction fee')}>
+      <InfoColumn title={t('Required Signatures')} className="info-requiredSignatures">
+        {requiredSignatures}
+      </InfoColumn>
+      <InfoColumn title={t('Transaction fee')} className="info-fee">
         <LiskAmount val={fee} token={tokenMap.LSK.key} />
       </InfoColumn>
     </div>
