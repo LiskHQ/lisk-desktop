@@ -36,28 +36,31 @@ const ImportData = ({ t, nextStep }) => {
   const [transaction, setTransaction] = useState(undefined);
   const [error, setError] = useState(undefined);
 
-  const onFileInputChange = ({ target }) => reader.readAsText(target.files[0]);
-  const handleDrop = ({ dataTransfer }) => reader.readAsText(dataTransfer.files[0]);
   const onReview = () => {
-    nextStep({
-      signatures: transaction.signatures,
-      fee: parseInt(transaction.fee, 10),
-      requiredSignatures: transaction.asset.numberOfSignatures,
-    });
+    nextStep({ transaction });
+  };
+
+  const validateAndSetTransaction = (input) => {
+    try {
+      const parsedInput = JSON.parse(input);
+      if (!isInputValid(parsedInput)) {
+        throw new Error('invalid json');
+      }
+      setTransaction(parsedInput);
+    } catch (e) {
+      setError(e);
+    }
+  };
+
+  const onFileInputChange = ({ target }) => reader.readAsText(target.files[0]);
+  const onPaste = (evt) => {
+    const paste = evt.clipboardData.getData('text');
+    validateAndSetTransaction(paste);
   };
 
   useEffect(() => {
     reader.onload = ({ target }) => {
-      try {
-        const parsedInput = JSON.parse(target.result);
-        if (isInputValid(parsedInput)) {
-          setTransaction(parsedInput);
-        } else {
-          throw new Error('invalid json');
-        }
-      } catch (e) {
-        setError(e);
-      }
+      validateAndSetTransaction(target.result);
     };
   }, []);
 
@@ -82,20 +85,18 @@ const ImportData = ({ t, nextStep }) => {
               />
             </label>
           </p>
-          <label className={`${styles.dropFileArea} ${error && styles.error}`}>
-            <input
-              className="dropfileInput"
-              type="file"
-              accept="application/JSON"
-              onChange={onFileInputChange}
-              onDrop={handleDrop}
+          <div className={`${styles.textAreaContainer} ${error && styles.error}`}>
+            <textarea
+              onPaste={onPaste}
+              value={JSON.stringify(transaction)}
+              readOnly
             />
             <Feedback
               message={t('Invalid file')}
               size="m"
               status={error ? 'error' : 'ok'}
             />
-          </label>
+          </div>
         </BoxContent>
         <BoxFooter className={styles.footer}>
           <PrimaryButton

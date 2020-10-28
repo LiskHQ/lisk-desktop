@@ -9,12 +9,14 @@ import styles from '../styles.css';
 
 const ReviewSign = ({
   t,
-  signatures,
-  fee,
-  requiredSignatures,
+  transaction,
   prevStep,
   nextStep,
 }) => {
+  const members = transaction.signatures;
+  const fee = parseInt(transaction.fee, 10);
+  const requiredSignatures = transaction.asset.numberOfSignatures;
+
   const submitTransaction = () => {
     const [error, tx] = [false, { id: 1 }];
 
@@ -36,7 +38,7 @@ const ReviewSign = ({
           <ProgressBar current={2} />
           <MultiSignatureReview
             t={t}
-            members={signatures}
+            members={members}
             fee={fee}
             requiredSignatures={requiredSignatures}
           />
