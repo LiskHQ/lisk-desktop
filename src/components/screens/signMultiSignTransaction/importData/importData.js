@@ -106,7 +106,7 @@ const ImportData = ({ t, nextStep }) => {
             onClick={onReview}
             disabled={!transaction}
           >
-            {t('Review and Sign')}
+            {t('Review and sign')}
           </PrimaryButton>
         </BoxFooter>
       </Box>
