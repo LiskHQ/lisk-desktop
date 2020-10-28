@@ -9,9 +9,9 @@ import styles from '../styles.css';
 
 const ReviewSign = ({
   t,
-  members = [],
-  fee = 15000000, // rawLSK
-  requiredSignatures = 2,
+  signatures,
+  fee,
+  requiredSignatures,
   prevStep,
   nextStep,
 }) => {
@@ -36,7 +36,7 @@ const ReviewSign = ({
           <ProgressBar current={2} />
           <MultiSignatureReview
             t={t}
-            members={members}
+            members={signatures}
             fee={fee}
             requiredSignatures={requiredSignatures}
           />

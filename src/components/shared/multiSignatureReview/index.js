@@ -7,14 +7,27 @@ import regex from '../../../utils/regex';
 
 import styles from './styles.css';
 
+const getAccountRoleText = (accountRole, t) => {
+  switch (accountRole) {
+    case 'mandatory':
+      return t('Mandatory');
+    case 'optional':
+      return t('Optional');
+    case 'owner':
+      return t('Owner');
+    default:
+      return t('Optional');
+  }
+};
+
 const Member = ({ member, i, t }) => (
   <div className={`${styles.memberInfo} member-info`}>
     <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>
-    <AccountVisual address={member.address} />
+    <AccountVisual address={member.accountId} />
     <div className={styles.memberDetails}>
       <p className={styles.memberTitle}>
-        {member.name || member.address.replace(regex.lskAddressTrunk, '$1...$3')}
-        <span>{`(${member.mandatory ? t('Mandatory') : t('Optional')})`}</span>
+        {member.name || member.accountId.replace(regex.lskAddressTrunk, '$1...$3')}
+        <span>{`(${getAccountRoleText(member.accountRole, t)})`}</span>
       </p>
       <p className={styles.memberKey}>{member.publicKey.replace(regex.publicKeyTrunk, '$1...$3')}</p>
     </div>
