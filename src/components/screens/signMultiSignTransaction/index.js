@@ -25,7 +25,6 @@ const MultiSignature = ({ history }) => {
         <Share />
       </MultiStep>
     </Dialog>
-
   );
 };
 
