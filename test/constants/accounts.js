@@ -37,8 +37,8 @@ const accounts = {
   },
   second_passphrase_candidate: {
     passphrase: 'dolphin inhale planet talk insect release maze engine guilt loan attend lawn',
-    publicKey: 'a04a60f5f3f9be3a15b121342ba81b7bd66d37e7f3e8cc4f7c03396bd9c1f103',
-    serverPublicKey: 'a04a60f5f3f9be3a15b121342ba81b7bd66d37e7f3e8cc4f7c03396bd9c1f103',
+    publicKey: 'ecf6a5cc0b7168c7948ccfaa652cce8a41256bdac1be62eb52f68cde2fb69f2d',
+    serverPublicKey: 'ecf6a5cc0b7168c7948ccfaa652cce8a41256bdac1be62eb52f68cde2fb69f2d',
     address: '4264113712245538326L',
   },
   send_all_account: {
