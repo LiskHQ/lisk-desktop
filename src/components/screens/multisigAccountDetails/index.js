@@ -13,9 +13,7 @@ import { Members } from '../multiSignature/summary/summary';
 import { getActiveTokenAccount, extractAddress } from '../../../utils/account';
 import styles from './styles.css';
 
-const MultisigAccountDetails = ({
-  t,
-}) => {
+const MultisigAccountDetails = ({ t }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
 
   // @todo We shouldn't be needing this if we lazyload the routes.
