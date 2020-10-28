@@ -20,7 +20,8 @@ const isInputValid = ({
   } = asset;
 
   if (
-    parseInt(nonce, 10) && parseInt(fee, 10) && type === transactionTypes().transfer.code.new && parseInt(amount, 10)
+    parseInt(nonce, 10) && parseInt(fee, 10)
+    && type === transactionTypes().transfer.code.new && parseInt(amount, 10)
     && Array.isArray(signatures) && Array.isArray(optionalKeys) && Array.isArray(mandatoryKeys)
     && typeof recipientId === 'string' && typeof data === 'string'
     && typeof lsTrackingId === 'string' && typeof senderPublicKey === 'string'
