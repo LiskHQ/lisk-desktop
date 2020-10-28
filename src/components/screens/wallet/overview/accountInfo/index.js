@@ -19,9 +19,92 @@ const BookmarkIcon = ({ bookmark }) => (
   />
 );
 
-/* eslint-disable complexity */
+const MultisigButton = ({ isMultisig, t }) => (
+  <div className={styles.helperIcon}>
+    <Tooltip
+      className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisig ? styles.whiteBackground : ''}`}
+      position="bottom"
+      size="maxContent"
+      content={(
+        <DialogLink component={isMultisig ? 'multisigAccountDetails' : 'multiSignature'}>
+          <Icon name="multiSignature" />
+        </DialogLink>
+        )}
+    >
+      <p>{isMultisig ? t('View multisignature account details') : t('Register multisignature')}</p>
+    </Tooltip>
+  </div>
+);
+
+const BookmarkButton = ({
+  delegate, address, bookmark, host, t,
+}) => {
+  if (host === address) return null;
+
+  return (
+    <div className={styles.helperIcon}>
+      <Tooltip
+        className={styles.tooltipWrapper}
+        position="bottom"
+        size="maxContent"
+        content={(
+          <DialogLink
+            component="addBookmark"
+            data={delegate ? {
+              formAddress: address,
+              label: delegate.username,
+              isDelegate: true,
+            } : {
+              formAddress: address,
+              isDelegate: false,
+              label: bookmark ? bookmark.title : '',
+            }}
+          >
+            <BookmarkIcon bookmark={bookmark} />
+          </DialogLink>
+        )}
+      >
+        <p>{t(bookmark === undefined ? 'Add to bookmarks' : 'Edit bookmark')}</p>
+      </Tooltip>
+    </div>
+  );
+};
+
+const RequestButton = ({
+  host, address, activeToken, t,
+}) => {
+  const props = {};
+  if (host === address) {
+    props.content = (
+      <DialogLink component="request">
+        <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
+      </DialogLink>
+    );
+    props.size = 'maxContent';
+    props.children = (<p>{t(`Request ${activeToken}`)}</p>);
+  } else {
+    props.content = (<Icon name="qrCodeActive" className={styles.qrCodeIcon} />);
+    props.size = 's';
+    props.children = (<QRCode value={address} size={154} />);
+  }
+
+  return (
+    <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
+      <Tooltip
+        className={styles.tooltipWrapper}
+        position="bottom"
+        size={props.size}
+        title={t('Scan address')}
+        content={props.content}
+      >
+        {props.children}
+      </Tooltip>
+    </div>
+  );
+};
+
 const AccountInfo = ({
-  address, t, activeToken, hwInfo, delegate, bookmark, host,
+  address, t, activeToken, hwInfo, delegate, bookmark, host, isMultisig,
 }) => (
   <Box className={styles.wrapper}>
     <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
@@ -55,62 +138,19 @@ const AccountInfo = ({
             <p>{t('Copy address')}</p>
           </Tooltip>
         </div>
-        <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
-          {
-          host === address ? (
-            <Tooltip
-              className={styles.tooltipWrapper}
-              position="bottom"
-              size="maxContent"
-              content={(
-                <DialogLink component="request">
-                  <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
-                </DialogLink>
-              )}
-            >
-              <p>{t(`Request ${activeToken}`)}</p>
-            </Tooltip>
-          ) : (
-            <Tooltip
-              className={styles.tooltipWrapper}
-              position="bottom"
-              size="s"
-              title={t('Scan address')}
-              content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
-            >
-              <QRCode value={address} size={154} />
-            </Tooltip>
-          )}
-        </div>
-        {
-          host !== address ? (
-            <div className={styles.helperIcon}>
-              <Tooltip
-                className={styles.tooltipWrapper}
-                position="bottom"
-                size="maxContent"
-                content={(
-                  <DialogLink
-                    component="addBookmark"
-                    data={delegate ? {
-                      formAddress: address,
-                      label: delegate.username,
-                      isDelegate: true,
-                    } : {
-                      formAddress: address,
-                      isDelegate: false,
-                      label: bookmark ? bookmark.title : '',
-                    }}
-                  >
-                    <BookmarkIcon bookmark={bookmark} />
-                  </DialogLink>
-                )}
-              >
-                <p>{t(bookmark === undefined ? 'Add to bookmarks' : 'Edit bookmark')}</p>
-              </Tooltip>
-            </div>
-          ) : null
-        }
+        <RequestButton
+          host={host}
+          address={address}
+          activeToken={activeToken}
+          t={t}
+        />
+        <BookmarkButton
+          delegate={delegate}
+          address={address}
+          bookmark={bookmark}
+          host={host}
+          t={t}
+        />
         {
           hwInfo && !isEmpty(hwInfo) && host === address && (
             <div
@@ -132,22 +172,10 @@ const AccountInfo = ({
             </div>
           )
         }
-        {
-          <div className={styles.helperIcon}>
-            <Tooltip
-              className={`${styles.tooltipWrapper} ${styles.centerContent} ${styles.whiteBackground}`}
-              position="bottom"
-              size="maxContent"
-              content={(
-                <DialogLink component="multiSignature">
-                  <Icon name="multiSignature" />
-                </DialogLink>
-                )}
-            >
-              <p>{t('Register multisignature')}</p>
-            </Tooltip>
-          </div>
-        }
+        <MultisigButton
+          isMultisig={isMultisig}
+          t={t}
+        />
       </footer>
       <Icon
         name={activeToken === 'LSK' ? 'liskLogo' : 'bitcoinLogo'}

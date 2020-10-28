@@ -22,6 +22,7 @@ const Overview = ({
   const delegate = getProp(account, 'delegate', {});
   const publicKey = getProp(account, 'publicKey', '');
   const balance = getProp(account, 'balance', 0);
+  const isMultisig = account.keys.numberOfSignatures > 0;
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );
@@ -44,6 +45,7 @@ const Overview = ({
           bookmark={bookmark}
           publicKey={publicKey}
           host={host}
+          isMultisig={isMultisig}
         />
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
