@@ -22,7 +22,7 @@ const Overview = ({
   const delegate = getProp(account, 'delegate', {});
   const publicKey = getProp(account, 'publicKey', '');
   const balance = getProp(account, 'balance', 0);
-  const isMultisig = account.keys.numberOfSignatures > 0;
+  const isMultisig = account.keys && account.keys.numberOfSignatures > 0;
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );
