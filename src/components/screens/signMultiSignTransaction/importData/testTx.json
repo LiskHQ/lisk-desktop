@@ -1,0 +1,36 @@
+{
+  "lsTrackingId": "1",
+  "nonce": "160",
+  "senderPublicKey": "8155694652104526882",
+  "asset":{
+    "amount": "100000000",
+    "recipientId": "5059876081639179984L",
+    "data": "",
+    "mandatoryKeys": ["8155694652104526882"],
+    "optionalKeys": ["0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a","2ce9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a","3rfe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a"],
+    "numberOfSignatures": 4
+    },
+  "type": 8,
+  "fee":"10000000",
+  "expires": 5000000000000000000,
+  "signatures": [
+      {
+      "publicKey": "8155694652104526882",
+      "accountId": "8195226425328336181L",
+      "signature": "signature",
+      "accountRole": "mandatory"
+      },
+      {
+      "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+      "accountId": "6195226421328336181L",
+      "signature": "signature",
+      "accountRole": "optional"
+      },
+      {
+      "publicKey": "2ce9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+      "accountId": "4827364921328336181L",
+      "signature": "signature",
+      "accountRole": "optional"
+      }
+  ]
+}

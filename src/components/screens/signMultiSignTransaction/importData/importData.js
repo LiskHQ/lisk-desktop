@@ -7,24 +7,47 @@ import Feedback from '../../../toolbox/feedback/feedback';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
+// eslint-disable-next-line complexity
+const isInputValid = ({
+  nonce, fee, type, asset,
+  lsTrackingId, senderPublicKey,
+  signatures,
+}) => {
+  const {
+    amount, recipientId, mandatoryKeys, data,
+    optionalKeys, numberOfSignatures,
+  } = asset;
+
+  if (
+    parseInt(nonce, 10) && parseInt(fee, 10) && type === 8 && parseInt(amount, 10)
+    && Array.isArray(signatures) && Array.isArray(optionalKeys) && Array.isArray(mandatoryKeys)
+    && typeof recipientId === 'string' && typeof data === 'string'
+    && typeof lsTrackingId === 'string' && typeof senderPublicKey === 'string'
+    && typeof numberOfSignatures === 'number'
+  ) {
+    return true;
+  }
+  return false;
+};
+
 const reader = new FileReader();
 
 const ImportData = ({ t, nextStep }) => {
-  const [jsonInput, setJsonInput] = useState(undefined);
+  const [transaction, setTransaction] = useState(undefined);
   const [error, setError] = useState(undefined);
 
   const onFileInputChange = ({ target }) => reader.readAsText(target.files[0]);
   const handleDrop = ({ dataTransfer }) => reader.readAsText(dataTransfer.files[0]);
   const onReview = () => {
-    nextStep({ members: jsonInput.members });
+    nextStep({ transaction });
   };
 
   useEffect(() => {
     reader.onload = ({ target }) => {
       try {
         const parsedInput = JSON.parse(target.result);
-        if (Array.isArray(parsedInput.members)) {
-          setJsonInput(parsedInput);
+        if (isInputValid(parsedInput)) {
+          setTransaction(parsedInput);
         } else {
           throw new Error('invalid json');
         }
@@ -75,7 +98,7 @@ const ImportData = ({ t, nextStep }) => {
             className="confirm"
             size="l"
             onClick={onReview}
-            disabled={!jsonInput}
+            disabled={!transaction}
           >
             {t('Review and Sign')}
           </PrimaryButton>
