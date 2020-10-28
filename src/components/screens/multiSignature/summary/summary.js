@@ -27,7 +27,7 @@ const Member = ({ member, i, t }) => (
   </div>
 );
 
-const Members = ({ members, t }) => {
+export const Members = ({ members, t }) => {
   const sliceIndex = Math.round(members.length / 2);
   const leftColumn = members.slice(0, sliceIndex);
   const rightColumn = members.slice(sliceIndex, members.length);
@@ -46,7 +46,7 @@ const Members = ({ members, t }) => {
   );
 };
 
-const InfoColumn = ({ title, children }) => (
+export const InfoColumn = ({ title, children }) => (
   <div className={styles.infoColumn}>
     <span className={styles.infoTitle}>{title}</span>
     <span className={styles.infoValue}>
