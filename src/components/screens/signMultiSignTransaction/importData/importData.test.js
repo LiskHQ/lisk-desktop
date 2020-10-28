@@ -17,7 +17,7 @@ describe('Multisignature ImportData component', () => {
     expect(wrapper).toContainMatchingElement('header');
     expect(wrapper).toContainMatchingElement('ProgressBar');
     expect(wrapper).toContainMatchingElement('.clickableFileInput');
-    expect(wrapper).toContainMatchingElement('.dropfileInput');
+    expect(wrapper).toContainMatchingElement('.textAreaContainer');
     expect(wrapper).toContainMatchingElement('footer');
     expect(wrapper.find('button.confirm')).toBeDisabled();
   });

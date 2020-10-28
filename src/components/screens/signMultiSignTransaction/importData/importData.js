@@ -4,6 +4,7 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import Feedback from '../../../toolbox/feedback/feedback';
+import transactionTypes from '../../../../constants/transactionTypes';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
@@ -19,7 +20,7 @@ const isInputValid = ({
   } = asset;
 
   if (
-    parseInt(nonce, 10) && parseInt(fee, 10) && type === 8 && parseInt(amount, 10)
+    parseInt(nonce, 10) && parseInt(fee, 10) && type === transactionTypes().transfer.code.new && parseInt(amount, 10)
     && Array.isArray(signatures) && Array.isArray(optionalKeys) && Array.isArray(mandatoryKeys)
     && typeof recipientId === 'string' && typeof data === 'string'
     && typeof lsTrackingId === 'string' && typeof senderPublicKey === 'string'

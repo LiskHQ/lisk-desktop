@@ -12,12 +12,12 @@ describe('Multisignature summary component', () => {
     fee: 2000000,
     members: [
       {
-        name: 'Test User', address: '8195226425328336181L', publicKey: '8155694652104526882', mandatory: true,
+        accountId: '8195226425328336181L', publicKey: '8155694652104526882', accountRole: 'mandatory',
       },
-      { address: '6195226421328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', mandatory: false },
-      { address: '4827364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', mandatory: false },
-      { address: '5738363111328339181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', mandatory: false },
-      { address: '9484364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', mandatory: false },
+      { accountId: '6195226421328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
+      { accountId: '4827364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
+      { accountId: '5738363111328339181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
+      { accountId: '9484364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
     ],
   };
 
