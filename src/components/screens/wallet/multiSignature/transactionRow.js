@@ -5,6 +5,7 @@ import AccountVisual from '../../../toolbox/accountVisual';
 import Icon from '../../../toolbox/icon';
 import TransactionAmount from '../../../shared/transactionAmount';
 import { tokenMap } from '../../../../constants/tokens';
+import regex from '../../../../utils/regex';
 import styles from './multiSignature.css';
 
 const ActionButton = ({ status, t }) => (
@@ -38,7 +39,7 @@ const TransactionRow = ({
   } = data;
 
   return (
-    <DialogLink className={`${grid.row} ${className} ${styles.transactionRow} multisign-transactions-row`}>
+    <DialogLink className={`${grid.row} ${className} ${styles.transactionRow} multisign-transaction-row`}>
       <span className={grid['col-xs-4']}>
         <Icon
           name={host === recipient.address ? 'incoming' : 'outgoing'}
@@ -48,13 +49,11 @@ const TransactionRow = ({
           address={sender.address}
           className={styles.avatar}
         />
-        <div className={styles.senderDetails}>
+        <div className={styles.signDetails}>
           <p className={styles.addressTitle}>
-            {sender.name || sender.address}
+            {sender.title || sender.address.replace(regex.lskAddressTrunk, '$1...$3')}
           </p>
-          <p className={styles.senderKey}>
-            {sender.publicKey && sender.publicKey}
-          </p>
+          {sender.publicKey && <p className={styles.key}>{sender.publicKey.replace(regex.lskAddressTrunk, '$1...$3')}</p>}
         </div>
       </span>
       <span className={grid['col-xs-4']}>
@@ -63,7 +62,7 @@ const TransactionRow = ({
           className={styles.avatar}
         />
         <p className={styles.addressTitle}>
-          {recipient.address}
+          {recipient.address.replace(regex.lskAddressTrunk, '$1...$3')}
         </p>
       </span>
       <span className={grid['col-xs-2']}>
