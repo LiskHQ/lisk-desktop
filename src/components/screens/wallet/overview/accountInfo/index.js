@@ -27,7 +27,7 @@ const MultisigButton = ({ isMultisig, t }) => (
       size="maxContent"
       content={(
         <DialogLink component={isMultisig ? 'multisigAccountDetails' : 'multiSignature'}>
-          <Icon name="multiSignature" />
+          <Icon name="multiSignature" className={styles.multisigIcon} />
         </DialogLink>
         )}
     >
