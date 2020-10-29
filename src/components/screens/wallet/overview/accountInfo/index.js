@@ -37,38 +37,34 @@ const MultisigButton = ({ isMultisig, t }) => (
 );
 
 const BookmarkButton = ({
-  delegate, address, bookmark, host, t,
-}) => {
-  if (host === address) return null;
-
-  return (
-    <div className={styles.helperIcon}>
-      <Tooltip
-        className={styles.tooltipWrapper}
-        position="bottom"
-        size="maxContent"
-        content={(
-          <DialogLink
-            component="addBookmark"
-            data={delegate ? {
-              formAddress: address,
-              label: delegate.username,
-              isDelegate: true,
-            } : {
-              formAddress: address,
-              isDelegate: false,
-              label: bookmark ? bookmark.title : '',
-            }}
-          >
-            <BookmarkIcon bookmark={bookmark} />
-          </DialogLink>
-        )}
-      >
-        <p>{t(bookmark === undefined ? 'Add to bookmarks' : 'Edit bookmark')}</p>
-      </Tooltip>
-    </div>
-  );
-};
+  delegate, address, bookmark, t,
+}) => (
+  <div className={styles.helperIcon}>
+    <Tooltip
+      className={styles.tooltipWrapper}
+      position="bottom"
+      size="maxContent"
+      content={(
+        <DialogLink
+          component="addBookmark"
+          data={delegate ? {
+            formAddress: address,
+            label: delegate.username,
+            isDelegate: true,
+          } : {
+            formAddress: address,
+            isDelegate: false,
+            label: bookmark ? bookmark.title : '',
+          }}
+        >
+          <BookmarkIcon bookmark={bookmark} />
+        </DialogLink>
+      )}
+    >
+      <p>{t(bookmark === undefined ? 'Add to bookmarks' : 'Edit bookmark')}</p>
+    </Tooltip>
+  </div>
+);
 
 const RequestButton = ({
   host, address, activeToken, t,
@@ -144,13 +140,16 @@ const AccountInfo = ({
           activeToken={activeToken}
           t={t}
         />
-        <BookmarkButton
-          delegate={delegate}
-          address={address}
-          bookmark={bookmark}
-          host={host}
-          t={t}
-        />
+        {
+          host !== address && (
+            <BookmarkButton
+              delegate={delegate}
+              address={address}
+              bookmark={bookmark}
+              t={t}
+            />
+          )
+        }
         {
           hwInfo && !isEmpty(hwInfo) && host === address && (
             <div
