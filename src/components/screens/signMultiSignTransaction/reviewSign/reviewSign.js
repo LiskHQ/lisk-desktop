@@ -1,4 +1,5 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
@@ -54,4 +55,4 @@ const ReviewSign = ({
   );
 };
 
-export default ReviewSign;
+export default withTranslation()(ReviewSign);

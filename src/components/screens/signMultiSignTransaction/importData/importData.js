@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { withTranslation } from 'react-i18next';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
@@ -115,4 +116,4 @@ const ImportData = ({ t, nextStep }) => {
   );
 };
 
-export default ImportData;
+export default withTranslation()(ImportData);
