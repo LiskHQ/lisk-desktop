@@ -21,12 +21,10 @@ function transfer(){
 	lisk transaction:broadcast $(lisk transaction:create:transfer $1 0.1 $2 $3 --data=$4 --passphrase="$PASSPHRASE_GENESIS" --networkIdentifier=$NETWORK_IDENTIFIER)
 }
 
-
 for i in {1..50}; do
   CURRENT=$(( $i + $GENESIS_NONCE - 1 ))
 	transfer ${CURRENT} ${i}00 537318935439898807L test
 done
-
 
 transfer 153 1000 1941002779612196826L multisig-candidate
 transfer 154 90 544792633152563672L delegate-candidate
