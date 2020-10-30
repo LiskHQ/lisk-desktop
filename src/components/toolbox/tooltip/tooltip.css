@@ -70,8 +70,11 @@
       transform: translateY(0) translateX(-10%);
 
       & .tooltipArrow {
-        right: 40px;
+        left: 40px;
         right: auto;
+        bottom: -20px;
+        top: auto;
+        transform: rotate(-90deg);
       }
     }
 

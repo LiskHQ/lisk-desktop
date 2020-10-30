@@ -94,8 +94,9 @@
       &.copyIcon,
       &.qrCode,
       &.bookmark,
+      &.multisigIcon,
       &.verify {
-        filter: brightness(100) !important;
+        filter: brightness(100);
       }
     }
 
@@ -143,6 +144,10 @@
 
 .whiteBackground {
   background-color: var(--color-white);
+
+  & .multisigIcon {
+    filter: none !important;
+  }
 }
 
 .centerContent {
