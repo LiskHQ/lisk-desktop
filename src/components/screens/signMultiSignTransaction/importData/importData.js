@@ -5,10 +5,56 @@ import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import Feedback from '../../../toolbox/feedback/feedback';
 import ProgressBar from '../progressBar';
-import inputValidator from './inputValidator';
 import styles from './styles.css';
 
 const reader = new FileReader();
+
+// eslint-disable-next-line max-statements
+const inputValidator = ({
+  senderId, senderPublicKey, fee,
+  nonce, signatures, lsTrackingId, id,
+}) => {
+  const validation = {
+    valid: true,
+    errors: [],
+  };
+
+  if (typeof id !== 'string' && typeof lsTrackingId !== 'string') {
+    validation.valid = false;
+    validation.errors.push('id and lsTrackingId are invalid');
+  }
+
+  if (typeof senderId !== 'string' && typeof senderPublicKey !== 'string') {
+    validation.valid = false;
+    validation.errors.push('senderId and senderPuclickKey are invalid');
+  }
+
+  if (!parseInt(fee, 10)) {
+    validation.valid = false;
+    validation.errors.push('fee is invalid');
+  }
+
+  if (!parseInt(nonce, 10)) {
+    validation.valid = false;
+    validation.errors.push('nonce is invalid');
+  }
+
+  if (!Array.isArray(signatures)) {
+    validation.valid = false;
+    validation.errors.push('signatures is invalid');
+  } else {
+    signatures.find((signature) => {
+      if (typeof signature !== 'string' && typeof signature.signature !== 'string') {
+        validation.valid = false;
+        validation.errors.push('a signature is invalid');
+        return true;
+      }
+      return false;
+    });
+  }
+
+  return validation;
+};
 
 const ImportData = ({ t, nextStep }) => {
   const [transaction, setTransaction] = useState(undefined);
@@ -23,11 +69,13 @@ const ImportData = ({ t, nextStep }) => {
       const parsedInput = JSON.parse(input);
       const validation = inputValidator(parsedInput);
       if (!validation.valid) {
-        throw new Error(validation.errors);
+        setError(validation.errors.toString());
+      } else {
+        setError(undefined);
       }
       setTransaction(parsedInput);
     } catch (e) {
-      setError(e.toString());
+      setError(e);
     }
   };
 
@@ -82,7 +130,7 @@ const ImportData = ({ t, nextStep }) => {
             className="confirm"
             size="l"
             onClick={onReview}
-            disabled={!transaction}
+            disabled={!transaction || error}
           >
             {t('Review and sign')}
           </PrimaryButton>
