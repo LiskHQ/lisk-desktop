@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { withTranslation } from 'react-i18next';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
@@ -22,12 +21,13 @@ const ImportData = ({ t, nextStep }) => {
   const validateAndSetTransaction = (input) => {
     try {
       const parsedInput = JSON.parse(input);
-      if (!inputValidator(parsedInput)) {
-        throw new Error('invalid json');
+      const validation = inputValidator(parsedInput);
+      if (!validation.valid) {
+        throw new Error(validation.errors);
       }
       setTransaction(parsedInput);
     } catch (e) {
-      setError(e);
+      setError(e.toString());
     }
   };
 
@@ -71,7 +71,7 @@ const ImportData = ({ t, nextStep }) => {
               readOnly
             />
             <Feedback
-              message={t('Invalid file')}
+              message={`${t('Invalid file')}: ${error}`}
               size="m"
               status={error ? 'error' : 'ok'}
             />
@@ -92,4 +92,4 @@ const ImportData = ({ t, nextStep }) => {
   );
 };
 
-export default withTranslation()(ImportData);
+export default ImportData;

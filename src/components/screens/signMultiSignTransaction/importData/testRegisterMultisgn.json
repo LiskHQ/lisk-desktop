@@ -1,0 +1,21 @@
+{
+  "id": "8317733624723982010",
+  "type": 12,
+  "senderPublicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+  "senderId": "5059876081639179984L",
+  "nonce": "156",
+  "fee": "10000000000",
+  "signatures": [
+    "90d9fc560dc4599ca3cdbe9fe3307f2044f76c454e739300b85ae2b1e4335d6111186c3f71360f535a0f89413a18d53aa57b74f5afbfd4bb923d32b8e9c0640d",
+    "90d9fc560dc4599ca3cdbe9fe3307f2044f76c454e739300b85ae2b1e4335d6111186c3f71360f535a0f89413a18d53aa57b74f5afbfd4bb923d32b8e9c0640d",
+    ""
+  ],
+  "asset": {
+    "mandatoryKeys": [],
+    "optionalKeys": [
+      "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+      "86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"
+    ],
+    "numberOfSignatures": 1
+  }
+}
