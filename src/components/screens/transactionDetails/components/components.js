@@ -16,7 +16,7 @@ import transactionTypes from '../../../../constants/transactionTypes';
 import { extractAddress } from '../../../../utils/account';
 
 const getDelegateName = (transaction, activeToken) => (
-  (activeToken === 'LSK'
+  (activeToken === tokenMap.LSK.key
   && transaction.asset
   && transaction.asset.username) ? transaction.asset.username : null
 );
@@ -239,7 +239,7 @@ export const Members = ({ t }) => {
 
   const { optionalKeys, mandatoryKeys } = asset;
 
-  const members = useMemo(() => (optionalKeys.map(publicKey => ({
+  const members = useMemo(() => optionalKeys.map(publicKey => ({
     address: extractAddress(publicKey),
     publicKey,
     mandatory: false,
@@ -249,7 +249,7 @@ export const Members = ({ t }) => {
       publicKey,
       mandatory: true,
     })),
-  )), [asset]);
+  ), [asset]);
 
   return (
     <MultiSignatureMembers t={t} members={members} className={styles.multiSignatureMembers} />
