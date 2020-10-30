@@ -61,11 +61,10 @@
 
   & .multiSigLayout {
     grid-template-areas:
-      "sender recipient"
-      "transactionId amount"
+      "sender sender"
+      "transactionId nonce"
       "requiredSignatures fee"
       "date confirmations"
-      "message nonce"
       "members members";
   }
 

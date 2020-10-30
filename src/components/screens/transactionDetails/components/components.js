@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
@@ -6,12 +6,14 @@ import { tokenMap } from '../../../../constants/tokens';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import DiscreetMode from '../../../shared/discreetMode';
 import LiskAmount from '../../../shared/liskAmount';
+import MultiSignatureMembers from '../../../shared/multisignatureMembers';
 
 import AccountInfo from './accountInfo';
 import styles from './styles.css';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import { Context } from '../transactionDetails';
 import transactionTypes from '../../../../constants/transactionTypes';
+import { extractAddress } from '../../../../utils/account';
 
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
@@ -221,12 +223,35 @@ export const Nonce = ({ t }) => {
 
 export const RequiredSignatures = ({ t }) => {
   const {
-    transaction: { requiredSignatures },
+    transaction: { asset },
   } = useContext(Context);
+  const requiredSignatures = asset.numberOfSignatures;
 
   return (
     <ValueAndLabel className={styles.requiredSignatures} label={t('Required Signatures')}>
       <span>{requiredSignatures}</span>
     </ValueAndLabel>
+  );
+};
+
+export const Members = ({ t }) => {
+  const { transaction: { asset } } = useContext(Context);
+
+  const { optionalKeys, mandatoryKeys } = asset;
+
+  const members = useMemo(() => (optionalKeys.map(publicKey => ({
+    address: extractAddress(publicKey),
+    publicKey,
+    mandatory: false,
+  })).concat(
+    mandatoryKeys.map(publicKey => ({
+      address: extractAddress(publicKey),
+      publicKey,
+      mandatory: true,
+    })),
+  )), [asset]);
+
+  return (
+    <MultiSignatureMembers t={t} members={members} className={styles.multiSignatureMembers} />
   );
 };

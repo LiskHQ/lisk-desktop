@@ -4,6 +4,7 @@ import {
   TransactionId, Sender, Recipient, Message, Illustration,
   Confirmations, Date, Amount, Fee, RequiredSignatures, Nonce, TransactionVotes,
 } from './components';
+import { Members } from './components/components';
 import styles from './transactionDetails.css';
 
 const txTypes = transactionTypes();
@@ -22,8 +23,8 @@ const LayoutSchema = {
     components: [...baseComponents, Illustration],
     className: styles.registerDelegate,
   },
-  [txTypes.createMultiSig.code.new]: {
-    components: [...baseComponents, Recipient, RequiredSignatures, Amount, Message],
+  [txTypes.createMultiSig.code.legacy]: {
+    components: [...baseComponents, RequiredSignatures, Members],
     className: styles.multiSigLayout,
   },
   [txTypes.unlockToken.code.new]: {

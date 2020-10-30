@@ -83,6 +83,17 @@
   grid-area: votes;
 }
 
+.multiSignatureMembers {
+  grid-area: members;
+
+  & > p {
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
+    text-align: left;
+  }
+}
+
 .voteTag {
   display: flex;
   flex-direction: column;
