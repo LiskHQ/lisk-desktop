@@ -63,8 +63,8 @@
     grid-template-areas:
       "sender sender"
       "transactionId nonce"
-      "requiredSignatures fee"
-      "date confirmations"
+      "date fee"
+      "confirmations requiredSignatures"
       "members members";
   }
 
@@ -72,9 +72,9 @@
     grid-template-areas:
       "illustration illustration"
       "sender sender"
-      "date confirmations"
+      "date fee"
       "transactionId nonce"
-      "message fee"
+      "message confirmations"
       "votes votes";
   }
 
