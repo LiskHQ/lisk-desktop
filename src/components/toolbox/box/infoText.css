@@ -4,8 +4,8 @@
   @mixin contentLargest;
 
   letter-spacing: 0.21px;
-  line-height: 25px;
+  line-height: 23px;
   margin: 0 0 20px;
   text-align: left;
-  color: var(--color-maastricht-blue);
+  color: var(--color-slate-gray);
 }

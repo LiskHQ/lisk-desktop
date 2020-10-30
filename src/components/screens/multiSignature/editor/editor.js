@@ -92,6 +92,7 @@ const Editor = ({
     const value = Number(e.target.value);
     setRequiredSignatures(value);
   };
+
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
     nextStep({ fee: feeValue });
