@@ -134,13 +134,6 @@ transactionTypes.getHardCap = (key) => {
   return types[key].hardCap;
 };
 
-export const byteSizes = {
-  type: 1,
-  nonce: 8,
-  fee: 8,
-  signature: 64,
-};
-
 export const minFeePerByte = 1000;
 
 export default transactionTypes;

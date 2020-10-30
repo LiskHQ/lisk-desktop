@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { withTranslation } from 'react-i18next';
-import BoxRow from '../../toolbox/box/row';
-import styles from './transactionDetails.css';
-import transactionTypes from '../../../constants/transactionTypes';
-import LiskAmount from '../../shared/liskAmount';
-import routes from '../../../constants/routes';
-import { tokenMap } from '../../../constants/tokens';
 
-const transactionVotes = ({ t, transaction, delegates }) => {
-  if (transaction.type !== transactionTypes().vote.code.legacy) return null;
+import LiskAmount from '../../../shared/liskAmount';
+import routes from '../../../../constants/routes';
+import { tokenMap } from '../../../../constants/tokens';
+
+import { Context } from '../transactionDetails';
+import styles from './styles.css';
+
+const TransactionVotes = ({ t }) => {
+  const { transaction, delegates } = useContext(Context);
+
   const accountPath = routes.account.path;
   const { votes } = transaction.asset;
 
@@ -21,7 +22,7 @@ const transactionVotes = ({ t, transaction, delegates }) => {
   }, []);
 
   return (
-    <BoxRow>
+    <div className={`${styles.value} ${styles.votes}`}>
       <div className={styles.detailsWrapper}>
         <span className={styles.label}>
           {`${t('Votes')} (${votes.length})`}
@@ -46,8 +47,8 @@ const transactionVotes = ({ t, transaction, delegates }) => {
           ))}
         </div>
       </div>
-    </BoxRow>
+    </div>
   );
 };
 
-export default withTranslation()(transactionVotes);
+export default TransactionVotes;

@@ -19,12 +19,12 @@ const Member = ({ member, i, t }) => (
   </div>
 );
 
-const Members = ({ members, t }) => {
+const Members = ({ members, t, className }) => {
   const sliceIndex = Math.round(members.length / 2);
   const leftColumn = members.slice(0, sliceIndex);
   const rightColumn = members.slice(sliceIndex, members.length);
   return (
-    <div className={styles.membersContainer}>
+    <div className={`${styles.membersContainer} ${className}`}>
       <p>{t('Members')}</p>
       <div>
         {leftColumn.map((member, i) =>

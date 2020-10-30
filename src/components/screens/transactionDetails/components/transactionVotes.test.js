@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
 import TransactionVotes from './transactionVotes';
-import accounts from '../../../../test/constants/accounts';
+import accounts from '../../../../../test/constants/accounts';
 
 const store = {
   network: {
