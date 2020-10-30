@@ -9,7 +9,7 @@ import BoxContent from '../../toolbox/box/content';
 import BoxInfoText from '../../toolbox/box/infoText';
 import Dialog from '../../toolbox/dialog/dialog';
 import Tooltip from '../../toolbox/tooltip/tooltip';
-import { Members } from '../multiSignature/summary/summary';
+import Members from '../../shared/multisignatureMembers';
 import { getActiveTokenAccount, extractAddress } from '../../../utils/account';
 import styles from './styles.css';
 
