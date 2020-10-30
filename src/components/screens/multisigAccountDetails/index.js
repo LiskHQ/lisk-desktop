@@ -1,69 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { withTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import BoxInfoText from '../../toolbox/box/infoText';
-import Dialog from '../../toolbox/dialog/dialog';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import Members from '../../shared/multisignatureMembers';
-import { getActiveTokenAccount, extractAddress } from '../../../utils/account';
-import styles from './styles.css';
+import { getActiveTokenAccount } from '../../../utils/account';
+import MultisigAccountDetailsComp from './multisigAccountDetails';
 
-const MultisigAccountDetails = ({ t }) => {
-  const account = useSelector(state => getActiveTokenAccount(state));
-
-  // @todo We shouldn't be needing this if we lazyload the routes.
-  if (!account.keys || account.keys.numberOfSignatures === 0) return null;
-
-  const { numberOfSignatures, optionalKeys, mandatoryKeys } = account.keys;
-  const [members, setMembers] = useState([]);
-
-  useEffect(() => {
-    setMembers(
-      optionalKeys.map(publicKey => ({
-        address: extractAddress(publicKey),
-        publicKey,
-        mandatory: false,
-      })).concat(
-        mandatoryKeys.map(publicKey => ({
-          address: extractAddress(publicKey),
-          publicKey,
-          mandatory: true,
-        })),
-      ),
-    );
-  }, []);
+const MultisigAccountDetails = ({ account }) => {
+  const { t } = useTranslation();
 
   return (
-    <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
-      <Box isLoading={false} className={styles.wrapper}>
-        <BoxHeader>
-          <h1>{t('Multisignature account details')}</h1>
-        </BoxHeader>
-        <BoxContent className={styles.mainContent}>
-          <BoxInfoText>
-            <span>{t('This is a multisignature account, which allows a group of members to control shared LSK.')}</span>
-            <span><br /></span>
-            <span>{t('This account requires {{numberOfSignatures}} signatures to create a transaction.', { numberOfSignatures })}</span>
-          </BoxInfoText>
-          <Members members={members} t={t} />
-          <div className={styles.infoContainer}>
-            <p>
-              {t('Required Signatures')}
-              <Tooltip position="top right">
-                <p>{t('Use the "Sign Multisignature" panel from the sidebar to sign transactions."')}</p>
-              </Tooltip>
-            </p>
-            <span>{numberOfSignatures}</span>
-          </div>
-        </BoxContent>
-      </Box>
-    </Dialog>
+    <MultisigAccountDetailsComp t={t} account={account} />
   );
 };
 
-export default withTranslation()(MultisigAccountDetails);
+const mapStateToProps = state => ({
+  account: getActiveTokenAccount(state),
+});
+
+/* istanbul ignore next */
+const areEqual = (prevProps, nextProps) =>
+  (prevProps.account && prevProps.account.address === nextProps.account.address);
+
+export default React.memo(connect(mapStateToProps)(MultisigAccountDetails), areEqual);
