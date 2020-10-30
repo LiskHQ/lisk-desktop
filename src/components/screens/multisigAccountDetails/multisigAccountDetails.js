@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
@@ -18,7 +18,7 @@ const MultisigAccountDetails = ({ t, account }) => {
 
   const { numberOfSignatures, optionalKeys, mandatoryKeys } = account.keys;
 
-  const members = optionalKeys.map(publicKey => ({
+  const members = useMemo(() => (optionalKeys.map(publicKey => ({
     address: extractAddress(publicKey),
     publicKey,
     mandatory: false,
@@ -28,7 +28,7 @@ const MultisigAccountDetails = ({ t, account }) => {
       publicKey,
       mandatory: true,
     })),
-  );
+  )), [account.address]);
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
