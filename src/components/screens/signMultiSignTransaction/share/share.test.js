@@ -27,12 +27,12 @@ describe('Sign Multisignature Tx Share component', () => {
     wrapper = mount(
       <Share
         {...props}
-        error={{ message: 'error:test' }}
+        error="testerror"
       />,
     );
     const html = wrapper.html();
     expect(html).toContain('transaction-status');
-    expect(html).toContain('Oops, looks like something went wrong.');
+    expect(html).toContain('Error: testerror');
     expect(html).toContain('Report the error via E-Mail');
   });
 });
