@@ -29,6 +29,12 @@ const accounts = {
     address: '544792633152563672L',
     username: 'test',
   },
+  multiSig_candidate: {
+    passphrase: 'approve tribe main deposit luxury obtain knock problem pulse claw social select',
+    publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+    serverPublicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+    address: '1941002779612196826L',
+  },
   second_passphrase_candidate: {
     passphrase: 'dolphin inhale planet talk insect release maze engine guilt loan attend lawn',
     publicKey: 'ecf6a5cc0b7168c7948ccfaa652cce8a41256bdac1be62eb52f68cde2fb69f2d',
