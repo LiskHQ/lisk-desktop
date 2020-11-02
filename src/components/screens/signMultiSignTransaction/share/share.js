@@ -18,7 +18,7 @@ const Share = ({
     message: t('You have successfully signed the transaction. You can download or copy the transaction and send it back to the initiator.'),
   } : {
     illustration: 'registerMultisignatureError',
-    message: t('Oops, looks like something went wrong.'),
+    message: t(`Error: ${error}`),
   };
 
   const onDownload = () => {
@@ -43,7 +43,7 @@ const Share = ({
             success={success}
             message={template.message}
             className={styles.content}
-            error={JSON.stringify(error)}
+            error={error}
           />
         </BoxContent>
         {success && (
