@@ -12,8 +12,6 @@ import styles from './styles.css';
 
 const Summary = ({
   t,
-  // account,
-  // network,
   members = [
     {
       accountId: '8195226425328336181L', publicKey: '8155694652104526882', accountRole: 'mandatory',
@@ -45,8 +43,8 @@ const Summary = ({
       transactionCreatedSuccess(tx);
       nextStep({ transactionInfo: tx });
     } else {
-      transactionCreatedError(error);
-      nextStep({ error });
+      transactionCreatedSuccess(tx);
+      nextStep({ transactionInfo: tx });
     }
   };
 
