@@ -1,28 +1,47 @@
 import React from 'react';
+import Lisk from '@liskhq/lisk-client';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import MultiSignatureReview from '../../../shared/multiSignatureReview';
+import { extractAddress } from '../../../../utils/account';
 import ProgressBar from '../progressBar';
 import styles from '../styles.css';
+
+const convertKeyToMemberData = accountRole => publicKey => ({
+  accountId: extractAddress(publicKey),
+  publicKey,
+  accountRole,
+});
 
 const ReviewSign = ({
   t,
   transaction,
+  networkIdentifier,
+  host,
   prevStep,
   nextStep,
 }) => {
-  const members = transaction.signatures;
+  const mandatoryMembers = transaction.asset.mandatoryKeys.map(convertKeyToMemberData('mandatory'));
+  const optionalMembers = transaction.asset.optionalKeys.map(convertKeyToMemberData('optional'));
+  const members = [...mandatoryMembers, ...optionalMembers];
   const fee = parseInt(transaction.fee, 10);
   const requiredSignatures = transaction.asset.numberOfSignatures;
 
   const submitTransaction = () => {
-    const [error, tx] = [false, { id: 1 }];
-
-    if (!error) {
-      nextStep({ transactionInfo: tx });
-    } else {
+    try {
+      const signedTx = Lisk.transactions.signMultiSignatureTransaction({
+        transaction,
+        passphrase: host.passphrase,
+        networkIdentifier,
+        keys: {
+          mandatoryKeys: transaction.asset.mandatoryKeys,
+          optionalKeys: transaction.asset.optionalKeys,
+        },
+      });
+      nextStep({ transactionInfo: signedTx });
+    } catch (error) {
       nextStep({ error });
     }
   };

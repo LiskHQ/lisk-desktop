@@ -10,17 +10,22 @@ import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Share = ({
-  t, error,
+  t, transactionInfo, error,
 }) => {
-  const [status] = useState(!error ? 'pending' : 'fail');
-  const success = status !== 'fail';
-
+  const success = !error && transactionInfo;
   const template = success ? {
     illustration: 'registerMultisignatureSuccess',
     message: t('You have successfully signed the transaction. You can download or copy the transaction and send it back to the initiator.'),
   } : {
     illustration: 'registerMultisignatureError',
     message: t('Oops, looks like something went wrong.'),
+  };
+
+  const onDownload = () => {
+    const anchor = document.createElement('a');
+    anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(transactionInfo))}`);
+    anchor.setAttribute('download', `tx-${transactionInfo.id}.json`);
+    anchor.click();
   };
 
   return (
@@ -47,8 +52,9 @@ const Share = ({
               Container={SecondaryButton}
               text={t('Copy')}
               className={styles.buttonContent}
+              value={JSON.stringify(transactionInfo)}
             />
-            <PrimaryButton>
+            <PrimaryButton onClick={onDownload}>
               <span className={styles.buttonContent}>
                 <Icon name="download" />
                 {t('Download')}
