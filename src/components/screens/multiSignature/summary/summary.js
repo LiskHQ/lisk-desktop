@@ -43,7 +43,7 @@ const Summary = ({
       transactionCreatedSuccess(tx);
       nextStep({ transactionInfo: tx });
     } else {
-      transactionCreatedSuccess(tx);
+      transactionCreatedError(tx);
       nextStep({ transactionInfo: tx });
     }
   };
