@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
@@ -11,7 +12,7 @@ const reader = new FileReader();
 
 // eslint-disable-next-line max-statements
 const inputValidator = ({
-  senderId, senderPublicKey, fee,
+  senderId, senderPublicKey, fee, asset,
   nonce, signatures, lsTrackingId, id,
 }) => {
   const validation = {
@@ -37,6 +38,11 @@ const inputValidator = ({
   if (!parseInt(nonce, 10)) {
     validation.valid = false;
     validation.errors.push('nonce is invalid');
+  }
+
+  if (!asset || !Array.isArray(asset.mandatoryKeys) || !Array.isArray(asset.optionalKeys)) {
+    validation.valid = false;
+    validation.errors.push('keys are invalid');
   }
 
   if (!Array.isArray(signatures)) {
