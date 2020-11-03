@@ -28,7 +28,7 @@ import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDi
 import EditVote from '../components/screens/editVote';
 import VotingQueue from '../components/screens/votingQueue';
 import MultiSignature from '../components/screens/multiSignature';
-import MultisigAccountDetails from '../components/screens/multisigAccountDetails';
+import SignMultiSigTransaction from '../components/screens/signMultiSignTransaction';
 
 export default {
   wallet: {
@@ -210,8 +210,8 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  multisigAccountDetails: {
-    component: MultisigAccountDetails,
+  signMultiSignTransaction: {
+    component: SignMultiSigTransaction,
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },

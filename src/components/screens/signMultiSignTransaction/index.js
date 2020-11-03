@@ -1,17 +1,13 @@
-
-
 /* istanbul ignore file */
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-
 import MultiStep from '../../shared/multiStep';
 import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 import Dialog from '../../toolbox/dialog/dialog';
 
-import Editor from './editor';
-import Summary from './summary';
-import Result from './result';
-import styles from './styles.css';
+import ImportData from './importData';
+import ReviewSign from './reviewSign';
+import Share from './share';
 
 const MultiSignature = ({ history }) => {
   const closeModal = () => {
@@ -21,16 +17,14 @@ const MultiSignature = ({ history }) => {
   return (
     <Dialog hasClose>
       <MultiStep
-        key="multisignature"
+        key="sign-multisignature-transaction"
         finalCallback={closeModal}
-        className={styles.modal}
       >
-        <Editor />
-        <Summary />
-        <Result />
+        <ImportData />
+        <ReviewSign />
+        <Share />
       </MultiStep>
     </Dialog>
-
   );
 };
 

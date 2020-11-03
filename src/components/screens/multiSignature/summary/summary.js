@@ -1,39 +1,26 @@
 import React from 'react';
 
-import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import Piwik from '../../../../utils/piwik';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
-import Members from '../../../shared/multisignatureMembers';
-import { tokenMap } from '../../../../constants/tokens';
+import MultiSignatureReview from '../../../shared/multiSignatureReview';
 
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
-
-export const InfoColumn = ({ title, children }) => (
-  <div className={styles.infoColumn}>
-    <span className={styles.infoTitle}>{title}</span>
-    <span className={styles.infoValue}>
-      {children}
-    </span>
-  </div>
-);
 
 const Summary = ({
   t,
   members = [
     {
-      name: 'Wilson Geidt', address: '8195226425328336181L', publicKey: '8155694652104526882', mandatory: true,
+      accountId: '8195226425328336181L', publicKey: '8155694652104526882', accountRole: 'mandatory',
     },
-    { address: '6195226421328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', mandatory: false },
-    { address: '4827364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', mandatory: false },
+    { accountId: '6195226421328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
+    { accountId: '4827364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
   ],
   fee = 15000000, // rawLSK
   requiredSignatures = 2,
-  // account,
-  // network,
   prevStep,
   nextStep,
   transactionCreatedSuccess,
@@ -69,16 +56,15 @@ const Summary = ({
         </div>
         <BoxContent className={styles.content}>
           <ProgressBar current={2} />
-          <Members members={members} t={t} />
-          <div className={styles.infoContainer}>
-            <InfoColumn title={t('Required Signatures')}>{requiredSignatures}</InfoColumn>
-            <InfoColumn title={t('Transaction fee')}>
-              <LiskAmount val={fee} token={tokenMap.LSK.key} />
-            </InfoColumn>
-          </div>
+          <MultiSignatureReview
+            t={t}
+            members={members}
+            fee={fee}
+            requiredSignatures={requiredSignatures}
+          />
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
-          <SecondaryButton className="go-back" onClick={prevStep}>Edit</SecondaryButton>
+          <SecondaryButton className="go-back" onClick={prevStep}>{t('Edit')}</SecondaryButton>
           <PrimaryButton className="confirm" size="l" onClick={submitTransaction}>
             {t('Sign')}
           </PrimaryButton>

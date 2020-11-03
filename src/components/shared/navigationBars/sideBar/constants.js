@@ -60,6 +60,12 @@ const menuLinks = t => ([
       label: t('Verify Message'),
       modal: 'verifyMessage',
     },
+    {
+      icon: 'multiSignatureOutline',
+      id: 'signMultiSignTransaction',
+      label: t('Sign multisignature transaction'),
+      modal: 'signMultiSignTransaction',
+    },
   ],
   [
     {

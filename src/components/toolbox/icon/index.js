@@ -142,7 +142,9 @@ import votingQueueActive from '../../../assets/images/icons/voting-queue-active.
 import deleteIcon from '../../../assets/images/icons/delete.svg';
 import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.svg';
 import download from '../../../assets/images/icons/download.svg';
-import multiSignature from '../../../assets/images/icons/multi-signature.svg';
+import multiSignature from '../../../assets/images/icons/multisignature.svg';
+import multiSignatureOutline from '../../../assets/images/icons/multisignature-outline.svg';
+import upload from '../../../assets/images/icons/upload.svg';
 
 export const icons = {
   academy,
@@ -245,6 +247,7 @@ export const icons = {
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
   multiSignature,
+  multiSignatureOutline,
   missedBlocks,
   newsFeedBlog,
   newsFeedBlogDark,
@@ -286,6 +289,7 @@ export const icons = {
   votingQueueInactive,
   votingQueueActive,
   download,
+  upload,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
