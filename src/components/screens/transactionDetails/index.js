@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getActiveTokenAccount } from '../../../utils/account';
 import liskService from '../../../utils/api/lsk/liskService';
-import { getSingleTransaction } from '../../../utils/api/transactions';
 import withData from '../../../utils/withData';
 import TransactionDetails from './transactionDetails';
 import { parseSearchParams } from '../../../utils/searchParams';
