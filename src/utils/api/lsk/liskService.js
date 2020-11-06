@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cryptography, transactions } from '@liskhq/lisk-client';
 import io from 'socket.io-client';
