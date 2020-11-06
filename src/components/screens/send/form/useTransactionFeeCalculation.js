@@ -4,11 +4,13 @@ import {
   getTransactionFee,
 } from '../../../../utils/api/transactions';
 import { toRawLsk } from '../../../../utils/lsk';
+import { tokenMap } from '../../../../constants/tokens';
+import { minBalance } from '../../../../constants/transactions';
 
 const calculateAvailableBalance = (balance, token) => {
-  if (token !== 'LSK') return balance;
-  if (balance <= 5000000) return balance;
-  return balance - 5000000;
+  if (token !== tokenMap.LSK.key) return balance;
+  if (balance <= minBalance) return balance;
+  return balance - minBalance;
 };
 
 const useTransactionFeeCalculation = ({
