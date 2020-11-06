@@ -333,6 +333,7 @@
   "Provide a correct amount of {{token}}": "Provide a correct amount of {{token}}",
   "Provide a correct wallet address or a name of a bookmarked account": "Provide a correct wallet address or a name of a bookmarked account",
   "Provided amount is higher than your current balance.": "Provided amount is higher than your current balance.",
+  "Provided amount will result in a wallet with less than the minimum balance.": "Provided amount will result in a wallet with less than the minimum balance.",
   "Public key": "Public key",
   "Quit": "Quit",
   "Rank": "Rank",

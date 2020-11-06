@@ -37,7 +37,6 @@ const useTransactionFeeCalculation = ({
     if (name === 'fee') setFee(res);
     else if (name === 'maxAmount') {
       const availableBalance = calculateAvailableBalance(account.balance, token);
-      console.log(account.balance, availableBalance);
       setMaxAmount({
         ...res,
         value: availableBalance - toRawLsk(res.value),

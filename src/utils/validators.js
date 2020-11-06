@@ -2,6 +2,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 import numeral from 'numeral';
 import { cryptography } from '@liskhq/lisk-client';
 import { tokenMap } from '../constants/tokens';
+import { minBalance } from '../constants/transactions';
 import getBtcConfig from './api/btc/config';
 import { toRawLsk } from './lsk';
 import i18n from '../i18n';
@@ -94,6 +95,13 @@ export const validateAmountFormat = ({
     INSUFFICIENT_FUNDS: {
       message: i18n.t('Provided amount is higher than your current balance.'),
       fn: () => funds < toRawLsk(numeral(value).value()),
+    },
+    MIN_BALANCE: {
+      message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
+      fn: () => {
+        const rawValue = toRawLsk(numeral(value).value());
+        return funds - rawValue < minBalance;
+      },
     },
   };
 
