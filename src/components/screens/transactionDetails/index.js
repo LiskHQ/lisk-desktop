@@ -18,13 +18,10 @@ const mapStateToProps = (state, ownProps) => ({
 
 const apis = {
   transaction: {
-    apiUtil: (network, params) => getSingleTransaction({ network, ...params }),
+    apiUtil: liskService.getTransaction,
     getApiParams: (state, ownProps) => ({
-      token: state.settings.token.active,
       id: parseSearchParams(ownProps.location.search).transactionId,
-      network: state.network,
     }),
-    transformResponse: response => response.data[0] || {},
     autoload: true,
   },
 
