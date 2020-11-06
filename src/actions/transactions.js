@@ -1,6 +1,7 @@
 /* eslint-disable max-lines */
 import to from 'await-to-js';
 
+import liskService from '../utils/api/lsk/liskService';
 import actionTypes from '../constants/actions';
 import { tokenMap } from '../constants/tokens';
 import transactionTypes from '../constants/transactionTypes';
@@ -62,7 +63,7 @@ export const getTransactions = ({
   const { network } = getState();
 
   if (network) {
-    const [error, response] = await to(transactionsAPI.getTransactions({
+    const [error, response] = await to(liskService.getTransactions({
       network, address, filters, limit, offset,
     }));
 

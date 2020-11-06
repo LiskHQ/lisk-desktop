@@ -7,7 +7,7 @@ import { withTranslation } from 'react-i18next';
 import withData from '../../../utils/withData';
 import Overview from './overview';
 import { getAccount } from '../../../utils/api/account';
-import { getTransactions } from '../../../utils/api/transactions';
+import liskService from '../../../utils/api/lsk/liskService';
 import txFilters from '../../../constants/transactionFilters';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
@@ -101,7 +101,7 @@ const apis = {
     transformResponse: response => response,
   },
   transactions: {
-    apiUtil: (network, params) => getTransactions(transformParams(params)),
+    apiUtil: (network, params) => liskService.getTransactions(transformParams(params)),
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
       address: selectSearchParamValue(props.history.location.search, 'address'),
