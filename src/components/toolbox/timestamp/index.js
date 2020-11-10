@@ -31,15 +31,15 @@ const timestampConverters = {
 
 export const DateTimeFromTimestamp = withTranslation()((props) => {
   moment.locale(i18n.language);
-  const datetime = moment(timestampConverters[props.token || 'LSK'](props.time));
+  const dateTime = moment(timestampConverters[props.token || 'LSK'](props.time));
   return (
     <span className={`${props.className || ''}`}>
       {
     props.fulltime ? (
       /* istanbul ignore next */
-      datetime.format('DD MMM YYYY, hh:mm:ss A')
+      dateTime.format('DD MMM YYYY, hh:mm:ss A')
     )
-      : datetime.calendar(null, {
+      : dateTime.calendar(null, {
         lastDay: props.t('DD MMM YYYY'),
         sameDay: props.t('hh:mm A'),
         nextDay: props.t('[Tomorrow], hh:mm A'),
