@@ -1,40 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 54.1 (76490) - https://sketchapp.com -->
-    <title>3345DF7D-4584-4725-A423-29B4871D426A</title>
-    <desc>Created with sketchtool.</desc>
-    <defs>
-        <circle id="path-1" cx="19.2" cy="19.2" r="19.2"></circle>
-    </defs>
-    <g id="🏡--1.0-Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="1.1.1-Dashboard" transform="translate(-44.000000, -929.000000)">
-            <g id="Recent-Transactions---4-Col" transform="translate(24.000000, 416.000000)">
-                <g id="accounts-copy" transform="translate(20.000000, 67.000000)">
-                    <g id="Recepient-Copy-11" transform="translate(0.000000, 446.000000)">
-                        <g id="completed-registration">
-                            <g id="delegate-icon" transform="translate(0.800000, 0.800000)">
-                                <mask id="mask-2" fill="white">
-                                    <use xlink:href="#path-1"></use>
-                                </mask>
-                                <use id="Oval" stroke="#BEC1CD" stroke-width="1.1" xlink:href="#path-1"></use>
-                                <g id="Group-6" mask="url(#mask-2)">
-                                    <g transform="translate(12.000000, 10.000000)">
-                                        <g id="Group-5" stroke="none" stroke-width="1" fill-rule="evenodd" transform="translate(0.000000, 1.606349)">
-                                            <polyline id="Stroke-1" stroke="#BEC1CD" stroke-width="1.1" points="13.5809524 3.65079365 13.5809524 15.7896825 0.262857143 15.7896825 0.262857143 3.65079365"></polyline>
-                                            <polyline id="Stroke-3" stroke="#BEC1CD" stroke-width="1.1" points="9.25271162 0.182539683 13.5810926 0.182539683 13.5810926 6.42539683 0.262997333 6.42539683 0.262997333 0.182539683 4.59137829 0.182539683"></polyline>
-                                        </g>
-                                        <path d="M2.26029105,4.91024444 L11.5836587,4.91024444" id="Stroke-6" stroke="#BEC1CD" stroke-width="1.1"></path>
-                                        <g id="Group-12" stroke="none" stroke-width="1" fill-rule="evenodd">
-                                            <polygon id="Stroke-7" stroke="#BEC1CD" stroke-width="1.1" points="4.5912381 4.91031746 9.25257143 4.91031746 9.25257143 0.529365079 4.5912381 0.529365079"></polygon>
-                                            <path d="M0.262857143,8.0316 L13.5809524,8.0316" id="Stroke-9" stroke="#BEC1CD" stroke-width="1.1"></path>
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </g>
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 20C0 31.0457 8.9543 40 20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20Z" fill="#0C152E"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M28.8058 12.6329C29.0647 12.3738 29.0647 11.9536 28.8058 11.6944C28.547 11.4352 28.1272 11.4352 27.8684 11.6944L24.7677 14.7987L23.7067 13.7364C23.4478 13.4772 23.0281 13.4772 22.7692 13.7364C22.5103 13.9956 22.5103 14.4158 22.7692 14.675L24.299 16.2065C24.5578 16.4657 24.9776 16.4657 25.2364 16.2065L28.8058 12.6329ZM18.6487 14.4847C17.256 14.4847 16.1244 15.6154 16.1244 17.0135C16.1244 18.4115 17.256 19.5423 18.6487 19.5423C20.0415 19.5423 21.1731 18.4115 21.1731 17.0135C21.1731 15.6154 20.0415 14.4847 18.6487 14.4847ZM14.8244 17.0135C14.8244 14.8989 16.5366 13.1847 18.6487 13.1847C20.7609 13.1847 22.4731 14.8989 22.4731 17.0135C22.4731 19.1281 20.7609 20.8423 18.6487 20.8423C16.5366 20.8423 14.8244 19.1281 14.8244 17.0135ZM11.1604 27.2C11.0545 27.6244 11 28.0599 11 28.5H12.3H24.9974H26.2974C26.2974 28.0599 26.243 27.6244 26.1371 27.2C26.107 27.0793 26.0727 26.9596 26.0344 26.8408C25.6891 25.771 25.0126 24.7848 24.0572 23.9877C22.6228 22.7909 20.6773 22.1186 18.6487 22.1186C16.6202 22.1186 14.6747 22.7909 13.2403 23.9877C12.2849 24.7848 11.6084 25.771 11.263 26.8408C11.2247 26.9596 11.1905 27.0793 11.1604 27.2ZM24.7841 27.2C24.516 26.3969 23.9937 25.6278 23.2244 24.9859C22.0444 24.0014 20.401 23.4186 18.6487 23.4186C16.8964 23.4186 15.2531 24.0014 14.0731 24.9859C13.3037 25.6278 12.7814 26.3969 12.5134 27.2H24.7841Z" fill="#DFE6F2"/>
 </svg>

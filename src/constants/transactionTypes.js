@@ -67,7 +67,7 @@ const transactionTypes = (t = str => str) => ({
     title: t('Multisignature creation'),
     senderLabel: t('Registrant'),
     key: 'createMultiSig',
-    icon: 'signMultiSignatureTransaction',
+    icon: 'txCreateMultiSig',
     nameFee: 0,
     hardCap: 5e8, // rawLSK
   },
