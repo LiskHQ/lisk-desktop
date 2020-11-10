@@ -54,6 +54,7 @@ const Wallet = ({ t, history }) => {
       dispatch(getTransactions(modified));
     },
     isLoading,
+    autoload: false,
     error: false,
     meta: {
       count,
