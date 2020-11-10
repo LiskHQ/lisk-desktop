@@ -86,11 +86,11 @@ const liskServiceApi = {
   getTransaction: async (network, {
     id,
   }) => liskServiceGet({
-    path: `/api/v1/transactions?id=${id}`,
-    transformResponse: response => ({
-      data: adaptTransactions(response).data,
-      meta: response.meta,
-    }),
+    path: '/api/v1/transactions',
+    transformResponse: response => response.data,
+    searchParams: {
+      id,
+    },
     network,
   }),
 
