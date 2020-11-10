@@ -55,23 +55,25 @@ export const addNewPendingTransaction = data => ({
  */
 export const getTransactions = ({
   address,
-  limit = undefined,
+  limit = 30,
   offset = 0,
-  filters = undefined,
+  filters = {},
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.getTransactions));
   const { network } = getState();
 
   if (network) {
-    const [error, response] = await to(liskService.getTransactions({
-      network, address, filters, limit, offset,
-    }));
+    const { direction, ...searchParams } = filters;
 
-    if (error) {
+    const response = await liskService.getTransactions(network, {
+      address, ...searchParams, limit, offset,
+    });
+
+    if (response.error) {
       dispatch({
         type: actionTypes.transactionLoadFailed,
         data: {
-          error,
+          error: response.error,
         },
       });
     } else {
