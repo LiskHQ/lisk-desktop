@@ -21,6 +21,7 @@ const apis = {
     getApiParams: (state, ownProps) => ({
       id: parseSearchParams(ownProps.location.search).transactionId,
     }),
+    transformResponse: tx => (tx.length ? tx[0] : {}),
     autoload: true,
   },
 
