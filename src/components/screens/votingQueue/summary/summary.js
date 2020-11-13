@@ -136,7 +136,7 @@ const Summary = ({
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
           <SecondaryButton onClick={prevStep} className="edit-button">Edit</SecondaryButton>
-          <PrimaryButton className="confirm-button" size="l" onClick={submitTransaction}>
+          <PrimaryButton className="confirm" size="l" onClick={submitTransaction}>
             {t('Confirm')}
           </PrimaryButton>
         </BoxFooter>
