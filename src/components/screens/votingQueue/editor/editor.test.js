@@ -5,7 +5,7 @@ import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 import Editor from './editor';
 
-describe('VotingQueue', () => {
+describe('VotingQueue.Editor', () => {
   const props = {
     t: str => str,
     account: accounts.genesis,
