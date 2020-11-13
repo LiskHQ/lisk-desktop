@@ -41,8 +41,8 @@ const ItemList = ({ items, heading }) => (
   </div>
 );
 
-const InfoColumn = ({ title, children }) => (
-  <div className={styles.infoColumn}>
+const InfoColumn = ({ title, children, className }) => (
+  <div className={`${styles.infoColumn} ${className}`}>
     <span className={styles.infoTitle}>{title}</span>
     <span className={styles.infoValue}>
       {children}
@@ -76,7 +76,7 @@ const getResultProps = ({ added, removed, edited }) => {
 };
 
 const Summary = ({
-  t, removed, edited, added, fee, account, prevStep, nextStep, transactions, ...props
+  t, removed = {}, edited = {}, added = {}, fee, account, prevStep, nextStep, transactions, ...props
 }) => {
   const addedLength = Object.keys(added).length;
   const editedLength = Object.keys(edited).length;
@@ -89,6 +89,7 @@ const Summary = ({
   useEffect(() => {
     if (!transactions.transactionsCreatedFailed.length
       && transactions.transactionsCreated.length) {
+      console.log({ locked, unlockable });
       nextStep({
         locked, unlockable, error: false,
       });
@@ -128,15 +129,15 @@ const Summary = ({
           {editedLength ? <ItemList heading={t('Changed votes')} items={edited} /> : null}
           {removedLength ? <ItemList heading={t('Removed votes')} items={removed} /> : null}
           <div className={styles.infoContainer}>
-            <InfoColumn title={t('Total votes after confirmation')}>{`${addedLength + editedLength}/10`}</InfoColumn>
-            <InfoColumn title={t('Transaction fee')}>
+            <InfoColumn title={t('Total votes after confirmation')} className="total-votes">{`${addedLength + editedLength}/10`}</InfoColumn>
+            <InfoColumn title={t('Transaction fee')} className="fee">
               <LiskAmount val={fee} />
             </InfoColumn>
           </div>
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
-          <SecondaryButton onClick={prevStep}>Edit</SecondaryButton>
-          <PrimaryButton className="confirm" size="l" onClick={submitTransaction}>
+          <SecondaryButton onClick={prevStep} className="edit-button">Edit</SecondaryButton>
+          <PrimaryButton className="confirm-button" size="l" onClick={submitTransaction}>
             {t('Confirm')}
           </PrimaryButton>
         </BoxFooter>
