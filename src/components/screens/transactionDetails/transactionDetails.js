@@ -9,7 +9,7 @@ import TransactionVotes from './transactionVotes';
 import routes from '../../../constants/routes';
 import {
   TransactionId, Sender, Recipient, Message,
-  Illustration, AmmountAndDate, FeeAndConfirmation,
+  Illustration, AmountAndDate, FeeAndConfirmation,
 } from './dataRows';
 import { isEmpty } from '../../../utils/helpers';
 import Dialog from '../../toolbox/dialog/dialog';
@@ -59,7 +59,7 @@ class Transactions extends React.Component {
               t={t}
             />
             <TransactionId t={t} id={data.id} />
-            <AmmountAndDate
+            <AmountAndDate
               transaction={data}
               activeToken={activeToken}
               addresses={addresses}
