@@ -132,7 +132,7 @@ export const AmountAndDate = ({
 }) => (
   <BoxRow>
     {
-      transaction.type === transactionTypes().transfer.code.legacy && (
+      transaction.type !== undefined && (
         <div className={styles.value}>
           <span className={styles.label}>
             {t('Amount of Transaction')}
