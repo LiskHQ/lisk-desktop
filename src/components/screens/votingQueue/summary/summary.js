@@ -89,7 +89,6 @@ const Summary = ({
   useEffect(() => {
     if (!transactions.transactionsCreatedFailed.length
       && transactions.transactionsCreated.length) {
-      console.log({ locked, unlockable });
       nextStep({
         locked, unlockable, error: false,
       });
