@@ -139,6 +139,16 @@ class HwManager {
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  passphraseCallback(callback) {
+    callback(null, '' /* User passphrase here! */);
+    /** TODO this is a quick workaround.
+     * as pinCallback, this procedure needs to take the passphrase from the user
+     * in order to unlock secret wallets (principle of plausible deniability).
+     * More info: https://wiki.trezor.io/Passphrase
+     */
+  }
+
   /**
    * Start listeners set by setTransport
    */
@@ -148,6 +158,7 @@ class HwManager {
         add: data => this.addDevice(data),
         remove: data => this.removeDevice(data),
         pinCallback: (type, callback) => this.pinCallback(type, callback),
+        passphraseCallback: callback => this.passphraseCallback(callback),
       });
     });
   }
