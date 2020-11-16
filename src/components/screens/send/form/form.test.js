@@ -37,6 +37,7 @@ describe('Form', () => {
       account: {
         ...accounts.genesis,
         nonce: '1',
+        balance: '5000000000',
       },
       bookmarks,
       network: {
@@ -179,6 +180,26 @@ describe('Form', () => {
       await flushPromises();
       wrapper.update();
       expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
+    });
+
+    it('Should show error if transaction will result on an account with less than the minimum balance', () => {
+      const evt = { target: { name: 'amount', value: '49.96' } };
+      const amountField = wrapper.find('.fieldGroup').at(1);
+      amountField.find('input').simulate('change', evt);
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount will result in a wallet with less than the minimum balance.');
+      expect(wrapper.find('button.btn-submit')).toBeDisabled();
+    });
+
+    it('Should be able to send entire balance', () => {
+      const { address } = accounts.genesis;
+      wrapper.find('.send-entire-balance-button').at(1).simulate('click');
+      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      expect(wrapper.find('.amount Feedback')).toHaveText('');
+      expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     });
   });
 
