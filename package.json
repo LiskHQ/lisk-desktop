@@ -50,7 +50,7 @@
   "dependencies": {
     "@ledgerhq/hw-transport-node-hid": "4.78.0",
     "@ledgerhq/hw-transport-u2f": "4.78.0",
-    "@liskhq/lisk-client": "^4.0.0-debug.0",
+    "@liskhq/lisk-client": "4.0.0-alpha.1",
     "await-to-js": "2.1.1",
     "bignumber.js": "8.0.1",
     "bip32": "1.0.4",
