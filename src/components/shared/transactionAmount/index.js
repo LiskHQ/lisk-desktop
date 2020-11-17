@@ -35,7 +35,6 @@ const TransactionAmount = ({
 
 TransactionAmount.propTypes = {
   host: PropTypes.string,
-  sender: PropTypes.string.isRequired,
   recipient: PropTypes.string,
   token: PropTypes.string.isRequired,
   type: PropTypes.number.isRequired,
