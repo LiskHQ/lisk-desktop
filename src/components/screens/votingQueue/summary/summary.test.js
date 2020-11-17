@@ -87,7 +87,7 @@ describe('VotingQueue.Summary', () => {
       ...props, added,
     });
 
-    expect(wrapper).toContainMatchingElements(4, '.voteItem');
+    expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
   });
 
   it('renders properly when only removed votes are present', () => {
@@ -95,7 +95,7 @@ describe('VotingQueue.Summary', () => {
       ...props, removed,
     });
 
-    expect(wrapper).toContainMatchingElements(4, '.voteItem');
+    expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
   });
 
   it('renders properly when only edited votes are present', () => {
@@ -103,7 +103,7 @@ describe('VotingQueue.Summary', () => {
       ...props, edited,
     });
 
-    expect(wrapper).toContainMatchingElements(4, '.voteItem');
+    expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
   });
 
   it('renders properly when a mixture of votes is present', () => {
@@ -111,7 +111,7 @@ describe('VotingQueue.Summary', () => {
       ...props, edited, removed, added,
     });
 
-    expect(wrapper).toContainMatchingElements(12, '.voteItem');
+    expect(wrapper).toContainMatchingElements(12, '.vote-item-address');
   });
 
   it('calls props.votesSubmitted when confirm button is clicked', () => {

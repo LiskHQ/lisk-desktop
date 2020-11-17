@@ -21,10 +21,9 @@ const token = tokenMap.LSK.key;
 const VoteItem = ({ vote, address, primaryText }) => {
   const accountPath = routes.account.path;
   return (
-    <span className={styles.container}>
+    <span className={`${styles.container} vote-item-address`}>
       <Link
         to={`${accountPath}?address=${address}`}
-        className="vote-item-address"
       >
         <span className={styles.primaryText}>{primaryText || address}</span>
       </Link>
