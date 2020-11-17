@@ -76,7 +76,6 @@ const TransactionRow = ({
           host={host}
           token={activeToken}
           showRounded
-          sender={senderId}
           recipient={recipientId || data.asset.recipientId}
           type={data.type}
           amount={amount}
