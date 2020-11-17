@@ -7,6 +7,7 @@ import transactionTypes from '../../../constants/transactionTypes';
 import LiskAmount from '../../shared/liskAmount';
 import routes from '../../../constants/routes';
 import { tokenMap } from '../../../constants/tokens';
+import VoteItem from '../../shared/voteItem';
 
 const transactionVotes = ({ t, transaction, delegates }) => {
   if (transaction.type !== transactionTypes().vote.code.legacy) return null;
@@ -27,22 +28,13 @@ const transactionVotes = ({ t, transaction, delegates }) => {
           {`${t('Votes')} (${votes.length})`}
         </span>
         <div className={`${styles.votesContainer} ${styles.added} tx-added-votes`}>
-          {votes.map(vote => (
-            <Link
-              key={vote.delegateAddress}
-              to={`${accountPath}?address=${vote.delegateAddress}`}
-              className={`${styles.voteTag} voter-address`}
-            >
-              <span className={styles.username}>
-                {delegates[vote.delegateAddress]
-                  ? delegates[vote.delegateAddress].username
-                  : vote.delegateAddress
-                }
-              </span>
-              <span className={styles.voteAmount}>
-                <LiskAmount val={vote.amount} token={tokenMap.LSK.key} />
-              </span>
-            </Link>
+          {votes.map((vote, i) => (
+            <VoteItem
+              key={i}
+              vote={{ confirmed: vote.amount }}
+              address={vote.delegateAddress}
+              primaryText={vote.delegateAddress}
+            />
           ))}
         </div>
       </div>
