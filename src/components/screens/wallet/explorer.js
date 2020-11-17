@@ -59,7 +59,7 @@ const Wallet = ({
         <Transactions
           transactions={transactions}
           pending={[]}
-          host={match.params.address}
+          host={selectSearchParamValue(history.location.search, 'address')}
           activeToken={activeToken}
           discreetMode={discreetMode}
           tabName={t('Transactions')}

@@ -6,7 +6,7 @@ import styles from './transactionAmount.css';
 import transactionTypes from '../../../constants/transactionTypes';
 
 const TransactionAmount = ({
-  sender, recipient, type, token, showRounded, showInt, host, amount,
+  recipient, type, token, showRounded, showInt, host, amount,
 }) => {
   const isIncoming = host === recipient
     || type === transactionTypes().unlockToken.code.legacy;
