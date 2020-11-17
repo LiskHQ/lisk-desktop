@@ -1,41 +1,23 @@
 import React, { useEffect } from 'react';
 
-import { tokenMap } from '../../../../constants/tokens';
 import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import Piwik from '../../../../utils/piwik';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
-import Icon from '../../../toolbox/icon';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
-
+import VoteItem from '../../../shared/voteItem';
 
 import styles from './styles.css';
-
-const token = tokenMap.LSK.key;
 
 const ItemList = ({ items, heading }) => (
   <div className={styles.contentItem}>
     <span className={styles.contentHeading}>{heading}</span>
     <div className={styles.voteItems}>
-      {Object.keys(items).map((address, i) => (
-        <span key={i} className={styles.voteItem}>
-          <span className={styles.addressText}>{address}</span>
-          <span>
-            {Object.values(items[address]).length === 2
-              ? (
-                <>
-                  <LiskAmount val={items[address].confirmed} token={token} />
-                  <span className={styles.arrowIcon}><Icon name="arrowRightTailed" /></span>
-                  <LiskAmount val={items[address].unconfirmed} token={token} />
-                </>
-              )
-              : <LiskAmount val={Object.values(items[address])[0]} token={token} />
-            }
-          </span>
-        </span>
+      {Object.keys(items).map(address => (
+        <VoteItem key={`vote-item-${address}`} address={address} vote={items[address]} />
       ))}
     </div>
   </div>

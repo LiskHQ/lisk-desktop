@@ -1,0 +1,26 @@
+@import '../../../app/mixins.css';
+
+.container {
+  @mixin contentSmall;
+
+  background-color: var(--color-silver);
+  padding: 8px;
+  border-radius: 3px;
+  margin: 10px 10px 0 0;
+  white-space: nowrap;
+
+  & a {
+    text-decoration: none;
+  }
+}
+
+.primaryText {
+  @mixin contentSmall semi-bold;
+
+  color: var(--color-ink-blue);
+  margin-right: 10px;
+}
+
+.arrowIcon {
+  margin: 0 6px;
+}
