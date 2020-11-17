@@ -2,7 +2,7 @@
 
 .container {
   @mixin contentSmall;
-  
+
   background-color: var(--color-silver);
   padding: 8px;
   border-radius: 3px;
