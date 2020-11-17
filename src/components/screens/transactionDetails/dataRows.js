@@ -127,22 +127,26 @@ export const TransactionId = ({ id, t }) => (
   </BoxRow>
 );
 
-export const AmmountAndDate = ({
+export const AmountAndDate = ({
   transaction, activeToken, t, addresses,
 }) => (
   <BoxRow>
-    <div className={styles.value}>
-      <span className={styles.label}>
-        {t('Amount of Transaction')}
-      </span>
-      <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
-        <span className="tx-amount">
-          <LiskAmount val={getTxAmount(transaction)} />
-          {' '}
-          {activeToken}
-        </span>
-      </DiscreetMode>
-    </div>
+    {
+      transaction.type !== undefined && (
+        <div className={styles.value}>
+          <span className={styles.label}>
+            {t('Amount of Transaction')}
+          </span>
+          <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
+            <span className="tx-amount">
+              <LiskAmount val={getTxAmount(transaction)} />
+              {' '}
+              {activeToken}
+            </span>
+          </DiscreetMode>
+        </div>
+      )
+    }
     <div className={styles.value}>
       <span className={styles.label}>{t('Date')}</span>
       <span className={`${styles.date} tx-date`}>
