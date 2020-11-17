@@ -71,6 +71,8 @@ const VoteRow = ({
               <DialogLink
                 className={styles.editVoteLink}
                 component="editVote"
+                data={{ address: data.delegateAddress }}
+
               >
                 <Icon name="edit" />
               </DialogLink>
