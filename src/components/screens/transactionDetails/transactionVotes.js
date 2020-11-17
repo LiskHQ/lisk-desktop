@@ -1,17 +1,12 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
 import transactionTypes from '../../../constants/transactionTypes';
-import LiskAmount from '../../shared/liskAmount';
-import routes from '../../../constants/routes';
-import { tokenMap } from '../../../constants/tokens';
 import VoteItem from '../../shared/voteItem';
 
 const transactionVotes = ({ t, transaction, delegates }) => {
   if (transaction.type !== transactionTypes().vote.code.legacy) return null;
-  const accountPath = routes.account.path;
   const { votes } = transaction.asset;
 
   useEffect(() => {
