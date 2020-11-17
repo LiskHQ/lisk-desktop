@@ -23,9 +23,9 @@ const transactionVotes = ({ t, transaction, delegates }) => {
           {`${t('Votes')} (${votes.length})`}
         </span>
         <div className={`${styles.votesContainer} ${styles.added} tx-added-votes`}>
-          {votes.map((vote, i) => (
+          {votes.map(vote => (
             <VoteItem
-              key={i}
+              key={`vote-${vote.delegateAddress}`}
               vote={{ confirmed: vote.amount }}
               address={vote.delegateAddress}
               primaryText={vote.delegateAddress}

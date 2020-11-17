@@ -16,8 +16,8 @@ const ItemList = ({ items, heading }) => (
   <div className={styles.contentItem}>
     <span className={styles.contentHeading}>{heading}</span>
     <div className={styles.voteItems}>
-      {Object.keys(items).map((address, i) => (
-        <VoteItem key={i} address={address} vote={items[address]} />
+      {Object.keys(items).map(address => (
+        <VoteItem key={`vote-item-${address}`} address={address} vote={items[address]} />
       ))}
     </div>
   </div>
