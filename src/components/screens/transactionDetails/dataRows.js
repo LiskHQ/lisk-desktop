@@ -132,7 +132,7 @@ export const AmountAndDate = ({
 }) => (
   <BoxRow>
     {
-      transaction.type !== undefined && (
+      transaction.amount !== undefined && (
         <div className={styles.value}>
           <span className={styles.label}>
             {t('Amount of Transaction')}
