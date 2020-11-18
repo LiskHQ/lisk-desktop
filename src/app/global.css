@@ -33,6 +33,10 @@ order to be available application wide
   z-index: -1;
 }
 
+:global .displayNone {
+  display: none !important;
+}
+
 :global .boxPadding {
   padding: 0px 30px;
 }

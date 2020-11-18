@@ -145,7 +145,7 @@ export const AmountAndDate = ({
           </span>
         </DiscreetMode>
       </div>
-      <div className={`${styles.value} hidden`}>
+      <div className={`${styles.value} displayNone`}>
         <span className={styles.label}>{t('Date')}</span>
         <span className={`${styles.date} tx-date`}>
           <DateTimeFromTimestamp
