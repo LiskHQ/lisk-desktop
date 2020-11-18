@@ -1,4 +1,6 @@
 // istanbul ignore file
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getVotes } from '../../../../utils/api/delegates';
 import liskService from '../../../../utils/api/lsk/liskService';
@@ -24,4 +26,12 @@ const apis = {
   },
 };
 
-export default withData(apis)(withTranslation()(Votes));
+const mapStateToProps = state => ({
+  hostVotes: state.voting,
+});
+
+export default compose(
+  connect(mapStateToProps),
+  withData(apis),
+  withTranslation(),
+)(Votes);
