@@ -88,15 +88,22 @@ export const createTransactionInstance = (rawTx, type) => {
     data: rawTx.data,
   };
 
-  if (type === 'transfer') {
-    asset.recipientId = rawTx.recipient;
-    asset.amount = rawTx.amount;
-  } else if (type === 'registerDelegate') {
-    asset.username = rawTx.username || '';
-  } else if (type === 'vote') {
-    asset.votes = rawTx.votes;
-  } else if (type === 'unvote') {
-    asset.unlockingObjects = rawTx.unlockingObjects;
+  switch (type) {
+    case 'transfer':
+      asset.recipientId = rawTx.recipient;
+      asset.amount = rawTx.amount;
+      break;
+    case 'registerDelegate':
+      asset.username = rawTx.username || '';
+      break;
+    case 'vote':
+      asset.votes = rawTx.votes;
+      break;
+    case 'unlockToken':
+      asset.unlockingObjects = rawTx.unlockingObjects;
+      break;
+    default:
+      break;
   }
 
   const TxClass = txTypeClassMap[type];
