@@ -7,6 +7,14 @@ Feature: Send
     Then I click on sendLink
     When I fill 1234567890L in recipientInput field
     And I fill 5 in amountInput field
+    When I click on customFeeOption
+    And I clear input customFeeInput
+    And I fill 1 in customFeeInput field
+    Then The nextTransferBtn button must not be active
+    And I clear input customFeeInput
+    And I fill 0 in customFeeInput field
+    Then The nextTransferBtn button must not be active
+    And I click on lowPriorityFee
     And I go to transfer confirmation
     And I click on sendButton
     Then submittedTransactionMessage should be visible

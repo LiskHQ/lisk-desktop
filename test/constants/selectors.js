@@ -246,6 +246,7 @@ const ss = {
   addBookmarkIcon: '.add-bookmark-icon',
   inputLabel: '.input-label',
   saveButton: '.save-button',
+  lowPriorityFee: '.option-Low',
 };
 
 export default ss;
