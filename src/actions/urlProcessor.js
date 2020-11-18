@@ -21,10 +21,20 @@ const getAccounts = async (usernames, network) =>
  * @returns {[String]} Array of strings or an empty array
  */
 const normalizeUsernames = (usernames) => {
-  if (!Array.isArray(usernames)) return [];
+  if (usernames === undefined) {
+    return [];
+  }
+
+  if (!Array.isArray(usernames)) {
+    return [usernames];
+  }
+
   const isValid = usernames.reduce((flag, username) =>
     (flag && typeof username === 'string' && username.length > 3), true);
-  if (!isValid) return [];
+
+  if (!isValid) {
+    return [];
+  }
 
   return usernames;
 };
