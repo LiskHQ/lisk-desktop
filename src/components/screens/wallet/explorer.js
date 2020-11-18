@@ -101,7 +101,7 @@ const apis = {
     transformResponse: response => response,
   },
   transactions: {
-    apiUtil: (network, params) => liskService.getTransactions(transformParams(params)),
+    apiUtil: (network, params) => liskService.getTransactions(network, transformParams(params)),
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
       address: selectSearchParamValue(props.history.location.search, 'address'),
