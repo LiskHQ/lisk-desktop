@@ -30,6 +30,7 @@ order to be available application wide
 :global .hidden {
   position: absolute;
   visibility: hidden;
+  z-index: -1;
 }
 
 :global .boxPadding {

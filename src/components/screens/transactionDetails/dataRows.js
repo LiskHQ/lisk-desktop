@@ -129,38 +129,37 @@ export const TransactionId = ({ id, t }) => (
 
 export const AmountAndDate = ({
   transaction, activeToken, t, addresses,
-}) => (
-  <BoxRow>
-    {
-      (transaction.amount !== undefined || transaction.asset.amount !== undefined) && (
-        <div className={styles.value}>
-          <span className={styles.label}>
-            {t('Amount of Transaction')}
+}) => {
+  if (transaction.amount === undefined && transaction.asset.amount === undefined) return null;
+  return (
+    <BoxRow>
+      <div className={styles.value}>
+        <span className={styles.label}>
+          {t('Amount of Transaction')}
+        </span>
+        <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
+          <span className="tx-amount">
+            <LiskAmount val={getTxAmount(transaction)} />
+            {' '}
+            {activeToken}
           </span>
-          <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
-            <span className="tx-amount">
-              <LiskAmount val={getTxAmount(transaction)} />
-              {' '}
-              {activeToken}
-            </span>
-          </DiscreetMode>
-        </div>
-      )
-    }
-    <div className={styles.value}>
-      <span className={styles.label}>{t('Date')}</span>
-      <span className={`${styles.date} tx-date`}>
-        <DateTimeFromTimestamp
-          fulltime
-          className="date"
-          time={transaction.timestamp}
-          token={activeToken}
-          showSeconds
-        />
-      </span>
-    </div>
-  </BoxRow>
-);
+        </DiscreetMode>
+      </div>
+      <div className={`${styles.value} hidden`}>
+        <span className={styles.label}>{t('Date')}</span>
+        <span className={`${styles.date} tx-date`}>
+          <DateTimeFromTimestamp
+            fulltime
+            className="date"
+            time={transaction.timestamp}
+            token={activeToken}
+            showSeconds
+          />
+        </span>
+      </div>
+    </BoxRow>
+  );
+};
 
 export const FeeAndConfirmation = ({
   transaction, activeToken, t,
