@@ -132,10 +132,10 @@ const Editor = ({
 
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
   const feedback = validateVotes(votes, account.balance, fee.value, t);
-  const areVotesValid = Object.values(votes).find(vote =>
-    (vote.unconfirmed === '' || vote.unconfirmed === undefined)) !== undefined;
+  const areVotesInValid = Object.values(votes).some(vote =>
+    (vote.unconfirmed === '' || vote.unconfirmed === undefined));
 
-  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0 || areVotesValid;
+  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0 || areVotesInValid;
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
