@@ -13,7 +13,7 @@ import regex from '../utils/regex';
 const getAccounts = async (usernames, network) =>
   Promise.all(usernames.map(username => getAccount({ username, network })));
 
-const isUsernameValid = username => typeof username === 'string' && username.length > 3;
+const isUsernameValid = username => regex.delegateName.test(username);
 
 /**
  * Returns an empty array if the given list is not an array
