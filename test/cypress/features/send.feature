@@ -14,6 +14,7 @@ Feature: Send
     And I clear input customFeeInput
     And I fill 0 in customFeeInput field
     Then The nextTransferBtn button must not be active
+    Then It should change fee when changing priorities
     And I click on lowPriorityFee
     And I go to transfer confirmation
     And I click on sendButton

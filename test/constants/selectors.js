@@ -247,6 +247,9 @@ const ss = {
   inputLabel: '.input-label',
   saveButton: '.save-button',
   lowPriorityFee: '.option-Low',
+  mediumPriorityFee: '.option-Medium',
+  highPriorityFee: '.option-High',
+  feeValue: '.fee-value',
 };
 
 export default ss;
