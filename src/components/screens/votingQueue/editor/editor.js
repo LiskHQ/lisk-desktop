@@ -66,11 +66,25 @@ const normalizeVotesForTx = votes =>
  */
 const validateVotes = (votes, balance, fee, t) => {
   const messages = [];
-  if (Object.keys(votes).length > 10) messages.push(t('You can\'t vote for more than 10 delegates.'));
+
+  const areVotesInValid = Object.values(votes).some(vote =>
+    (vote.unconfirmed === '' || vote.unconfirmed === undefined));
+
+  if (areVotesInValid) {
+    messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
+  }
+
+  if (Object.keys(votes).length > 10) {
+    messages.push(t('You can\'t vote for more than 10 delegates.'));
+  }
+
   const addedVoteAmount = Object.values(votes)
     .filter(vote => vote.unconfirmed > vote.confirmed)
     .reduce((sum, vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
-  if ((addedVoteAmount + toRawLsk(fee)) > balance) messages.push(t('You don\'t have enough LSK in your account.'));
+
+  if ((addedVoteAmount + toRawLsk(fee)) > balance) {
+    messages.push(t('You don\'t have enough LSK in your account.'));
+  }
 
   return { messages, error: !!messages.length };
 };
@@ -102,7 +116,6 @@ const getVoteStats = votes =>
 const token = tokenMap.LSK.key;
 const txType = 'vote';
 
-/* eslint-disable max-statements */
 const Editor = ({
   t, votes, account, nextStep,
 }) => {
@@ -132,10 +145,8 @@ const Editor = ({
 
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
   const feedback = validateVotes(votes, account.balance, fee.value, t);
-  const areVotesInValid = Object.values(votes).some(vote =>
-    (vote.unconfirmed === '' || vote.unconfirmed === undefined));
 
-  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0 || areVotesInValid;
+  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
