@@ -102,6 +102,7 @@ const getVoteStats = votes =>
 const token = tokenMap.LSK.key;
 const txType = 'vote';
 
+/* eslint-disable max-statements */
 const Editor = ({
   t, votes, account, nextStep,
 }) => {
@@ -131,7 +132,10 @@ const Editor = ({
 
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
   const feedback = validateVotes(votes, account.balance, fee.value, t);
-  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
+  const areVotesValid = Object.values(votes).find(vote =>
+    (vote.unconfirmed === '' || vote.unconfirmed === undefined)) !== undefined;
+
+  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0 || areVotesValid;
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
