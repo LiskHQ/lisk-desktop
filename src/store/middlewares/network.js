@@ -5,6 +5,7 @@ import actionTypes from '../../constants/actions';
 import { tokenMap } from '../../constants/tokens';
 import { getConnectionErrorMessage } from '../../utils/getNetwork';
 
+// eslint-disable-next-line max-statements
 const getServerUrl = (nodeUrl, nethash) => {
   if (nethash === Lisk.constants.MAINNET_NETHASH) {
     return 'https://mainnet-service.lisk.io';
@@ -17,6 +18,12 @@ const getServerUrl = (nodeUrl, nethash) => {
   }
   if (/\.(liskdev.net|lisk.io)$/.test(nodeUrl)) {
     return nodeUrl.replace(/\.(liskdev.net|lisk.io)$/, $1 => `-service${$1}`);
+  }
+  if (/localhost:\d{2,4}$/.test(nodeUrl)) {
+    return 'http://localhost:9901';
+  }
+  if (nodeUrl === 'http://178.62.212.132:4000') {
+    return 'http://service-v4.liskdev.net';
   }
   return 'unavailable';
 };
