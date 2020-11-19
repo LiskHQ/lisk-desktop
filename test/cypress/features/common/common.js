@@ -215,21 +215,16 @@ And(/^I search for account ([^s]+)$/, function (string) {
 });
 
 Then(/^It should change fee when changing priorities$/, function () {
-  const promise1 = new Promise((resolve) => {
-    cy.get(ss.lowPriorityFee).click();
+  const generateFeePromise = (selector) => new Promise((resolve) => {
+    cy.get(selector).click();
     cy.get(ss.feeValue).invoke('text').then(resolve);
   });
-  const promise2 = new Promise((resolve) => {
-    cy.get(ss.mediumPriorityFee).click();
-    cy.get(ss.feeValue).invoke('text').then(resolve);
-  });
-  const promise3 = new Promise((resolve) => {
-    cy.get(ss.highPriorityFee).click();
-    cy.get(ss.feeValue).invoke('text').then(resolve);
-  });  
 
-  Promise.all([promise1, promise2, promise3])
-    .then((values) => {
+  Promise.all([
+    generateFeePromise(ss.lowPriorityFee),
+    generateFeePromise(ss.mediumPriorityFee),
+    generateFeePromise(ss.highPriorityFee),
+  ]).then((values) => {
       const lowFee = values[0];
       const mediumFee = values[1];
       const highFee = values[2];
