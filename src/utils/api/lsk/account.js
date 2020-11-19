@@ -29,7 +29,11 @@ export const getAccount = params =>
         ? { serverPublicKey: res.data[0].publicKey, ...res.data[0] }
         : { balance: 0 };
 
-      resolve({ ...onlineInfo, ...offlineInfo });
+      resolve({
+        ...offlineInfo,
+        ...onlineInfo,
+        publicKey: offlineInfo.publicKey || onlineInfo.publicKey,
+      });
     }).catch(reject);
   });
 
