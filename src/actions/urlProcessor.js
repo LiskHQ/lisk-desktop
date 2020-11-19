@@ -13,6 +13,8 @@ import regex from '../utils/regex';
 const getAccounts = async (usernames, network) =>
   Promise.all(usernames.map(username => getAccount({ username, network })));
 
+const isUsernameValid = username => regex.delegateName.test(username);
+
 /**
  * Returns an empty array if the given list is not an array
  * of usernames in string format
@@ -21,10 +23,22 @@ const getAccounts = async (usernames, network) =>
  * @returns {[String]} Array of strings or an empty array
  */
 const normalizeUsernames = (usernames) => {
-  if (!Array.isArray(usernames)) return [];
-  const isValid = usernames.reduce((flag, username) =>
-    (flag && typeof username === 'string' && username.length > 3), true);
-  if (!isValid) return [];
+  if (usernames === undefined) {
+    return [];
+  }
+
+  if (!Array.isArray(usernames)) {
+    if (isUsernameValid(usernames)) {
+      return [usernames];
+    }
+    return [];
+  }
+
+  const areUsernamesValid = usernames.every(username => isUsernameValid(username));
+
+  if (!areUsernamesValid) {
+    return [];
+  }
 
   return usernames;
 };
