@@ -8,7 +8,7 @@ Feature: Transaction table filtering
   Scenario: Filter by 1 Amount, add second filter by 1 Amount
     When I type amount to 5
     And I apply filters
-    Then I should see 3 transactions in table
+    Then I should see 4 transactions in table
     And I click filter transactions
     When I type amount from 4800
     When I type amount to 100
