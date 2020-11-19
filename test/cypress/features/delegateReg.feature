@@ -14,6 +14,7 @@ Feature: Register delegate
     And I clear input customFeeInput
     And I fill 9 in customFeeInput field
     Then The chooseDelegateName button must not be active
+    Then It should change fee when changing priorities
     When I click on customFeeOption
     And I clear input customFeeInput
     And I fill 11 in customFeeInput field

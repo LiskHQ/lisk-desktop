@@ -38,30 +38,3 @@ Then(/^The balance is subtracted$/, function () {
     compareBalances(this.balanceBefore, this.balanceAfter, 5 + transactionFee);
   });
 });
-
-Then(/^It should change fee when changing priorities$/, function () {
-  const promise1 = new Promise((resolve) => {
-    cy.get(ss.lowPriorityFee).click();
-    cy.get(ss.feeValue).invoke('text').then(resolve);
-  });
-  const promise2 = new Promise((resolve) => {
-    cy.get(ss.mediumPriorityFee).click();
-    cy.get(ss.feeValue).invoke('text').then(resolve);
-  });
-  const promise3 = new Promise((resolve) => {
-    cy.get(ss.highPriorityFee).click();
-    cy.get(ss.feeValue).invoke('text').then(resolve);
-  });  
-
-  Promise.all([promise1, promise2, promise3])
-    .then((values) => {
-      const lowFee = values[0];
-      const mediumFee = values[1];
-      const highFee = values[2];
-      cy.wrap(null).should(() => {
-        expect(lowFee).to.not.equal(mediumFee);
-        expect(lowFee).to.not.equal(highFee);
-        expect(mediumFee).to.not.equal(highFee);
-      })
-    });
-});
