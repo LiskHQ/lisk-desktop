@@ -167,17 +167,12 @@ export const broadcast = (transaction, network) => new Promise(
  * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
  */
-export const getTransactionBaseFees = () => (
-  new Promise(async (resolve) => {
-    const fee = 1e3;
-
-    // @todo use real fee estimates
-    resolve({
-      Low: fee,
-      Medium: fee * 2,
-      High: fee * 3,
-    });
-  }));
+export const getTransactionBaseFees = () => fetch('http://service-v4.liskdev.net/api/v1/fee_estimates', { mode: 'no-cors' })
+  .then(response => response.json())
+  .then((data) => {
+    const { feeEstimatePerByte } = data[0].data;
+    return feeEstimatePerByte;
+  });
 
 
 export const getMinTxFee = tx => Number(tx.minFee.toString());
