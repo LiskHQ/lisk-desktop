@@ -17,12 +17,12 @@ const token = tokenMap.LSK.key;
  * @param {Object} vote object containing either or both the confirmed and unconfirmed
  * vote amount values
  * @param {String} address the address to redirect to, also used as primary text if
- * primaryText is not defined
- * @param {String} primaryText text to use instead of the address e.g. delegate username
+ * title is not defined
+ * @param {String} title text to use instead of the address e.g. delegate username
  * @param {Boolean} truncate text to use instead of the address e.g. delegate username
  */
 const VoteItem = ({
-  vote, address, primaryText, truncate,
+  vote, address, title, truncate,
 }) => {
   const accountPath = routes.account.path;
   return (
@@ -31,7 +31,7 @@ const VoteItem = ({
         to={`${accountPath}?address=${address}`}
       >
         <span className={styles.primaryText}>
-          {primaryText || (truncate ? truncateAddress(address) : address)}
+          {title || (truncate ? truncateAddress(address) : address)}
         </span>
       </Link>
       <span className={styles.value}>
