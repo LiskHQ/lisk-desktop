@@ -1,20 +1,16 @@
 import React from 'react';
 
-import { tokenMap } from '../../../../constants/tokens';
-import LiskAmount from '../../../shared/liskAmount';
-import { truncateAddress } from '../../../../utils/account';
+import VoteItem from '../../../shared/voteItem';
 import styles from './transactions.css';
 
 const generateVotes = (asset) => {
   const voteElements = asset.votes.slice(0, 2).map(vote => (
-    <div key={vote.delegateAddress} className={styles.voteItem}>
-      <span className={styles.username}>
-        {vote.delegateAddress && truncateAddress(vote.delegateAddress)}
-      </span>
-      <span>
-        <LiskAmount val={vote.amount} token={tokenMap.LSK.key} />
-      </span>
-    </div>
+    <VoteItem
+      key={`vote-${vote.delegateAddress}`}
+      vote={{ confirmed: vote.amount }}
+      address={vote.delegateAddress}
+      truncate
+    />
   ));
 
   return (
