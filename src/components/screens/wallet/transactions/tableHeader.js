@@ -10,7 +10,7 @@ export default (t, activeToken) => {
     },
     {
       title: t('Date'),
-      classList: grid['col-xs-1'],
+      classList: `${grid['col-xs-1']} hidden`,
     },
     {
       title: t('Transaction Fee'),
