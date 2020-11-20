@@ -4,7 +4,6 @@ import routes from '../../../constants/routes';
 
 import { truncateAddress } from '../../../utils/account';
 import { tokenMap } from '../../../constants/tokens';
-import Icon from '../../toolbox/icon';
 import LiskAmount from '../liskAmount';
 
 import styles from './styles.css';
