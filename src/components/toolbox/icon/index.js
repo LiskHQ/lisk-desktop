@@ -140,7 +140,6 @@ import txUnlock from '../../../assets/images/icons/tx-unlock.svg';
 import votingQueueInactive from '../../../assets/images/icons/voting-queue-inactive.svg';
 import votingQueueActive from '../../../assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '../../../assets/images/icons/delete.svg';
-import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.svg';
 
 export const icons = {
   academy,
@@ -151,7 +150,6 @@ export const icons = {
   arrowLeftInactive,
   arrowRightActive,
   arrowRightInactive,
-  arrowRightTailed,
   arrowUpCircle,
   balance,
   bookmarksIconEmptyState,
