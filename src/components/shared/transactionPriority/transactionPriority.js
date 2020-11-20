@@ -60,7 +60,11 @@ const TransactionPriority = ({
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState(undefined);
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
-  const isLoading = priorityOptions[0].value === 0;
+  const isLoading = false;
+  const shouldDisableOptions = (
+    priorityOptions[0].value === priorityOptions[1].value
+    && priorityOptions[1].value === priorityOptions[2].value
+  );
   let hardCap = 0;
   if (token === tokenMap.LSK.key) {
     hardCap = transactionTypes.getHardCap(txType);
@@ -132,6 +136,7 @@ const TransactionPriority = ({
               className={`${styles.priorityTitle} ${index === selectedPriority ? styles.priorityTitleSelected : ''} option-${priority.title}`}
               onClick={onClickPriority}
               value={index}
+              disabled={index === 0 ? false : shouldDisableOptions}
             >
               {priority.title}
             </button>
