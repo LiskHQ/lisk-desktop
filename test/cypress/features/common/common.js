@@ -221,9 +221,9 @@ Then(/^It should change fee when changing priorities$/, function () {
   });
 
   Promise.all([
-    generateFeePromise(ss.lowPriorityFee),
-    generateFeePromise(ss.mediumPriorityFee),
-    generateFeePromise(ss.highPriorityFee),
+    generateFeePromise(ss.lowFeeOption),
+    generateFeePromise(ss.mediumFeeOption),
+    generateFeePromise(ss.highFeeOption),
   ]).then((values) => {
       const lowFee = values[0];
       const mediumFee = values[1];

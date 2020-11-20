@@ -246,9 +246,6 @@ const ss = {
   addBookmarkIcon: '.add-bookmark-icon',
   inputLabel: '.input-label',
   saveButton: '.save-button',
-  lowPriorityFee: '.option-Low',
-  mediumPriorityFee: '.option-Medium',
-  highPriorityFee: '.option-High',
   feeValue: '.fee-value',
 };
 
