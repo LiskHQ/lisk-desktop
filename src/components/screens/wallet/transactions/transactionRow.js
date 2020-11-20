@@ -52,7 +52,7 @@ const TransactionRow = ({
           />
         </span>
       </span>
-      <span className={grid[isLSK ? 'col-xs-1' : 'col-xs-2']}>
+      <span className={`${grid[isLSK ? 'col-xs-1' : 'col-xs-2']} hidden`}>
         {
           isConfirmed
             ? <DateTimeFromTimestamp time={data.timestamp} token={activeToken} />
@@ -76,7 +76,6 @@ const TransactionRow = ({
           host={host}
           token={activeToken}
           showRounded
-          sender={senderId}
           recipient={recipientId || data.asset.recipientId}
           type={data.type}
           amount={amount}

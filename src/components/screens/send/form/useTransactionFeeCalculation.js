@@ -4,6 +4,14 @@ import {
   getTransactionFee,
 } from '../../../../utils/api/transactions';
 import { toRawLsk } from '../../../../utils/lsk';
+import { tokenMap } from '../../../../constants/tokens';
+import { minBalance } from '../../../../constants/transactions';
+
+const calculateAvailableBalance = (balance, token) => {
+  if (token !== tokenMap.LSK.key) return balance;
+  if (balance <= minBalance) return balance;
+  return balance - minBalance;
+};
 
 const useTransactionFeeCalculation = ({
   selectedPriority, txData, token, account, priorityOptions,
@@ -28,9 +36,10 @@ const useTransactionFeeCalculation = ({
     const res = await getTransactionFee(param);
     if (name === 'fee') setFee(res);
     else if (name === 'maxAmount') {
+      const availableBalance = calculateAvailableBalance(account.balance, token);
       setMaxAmount({
         ...res,
-        value: account.balance - toRawLsk(res.value),
+        value: availableBalance - toRawLsk(res.value),
       });
     } else {
       setMinFee(res);

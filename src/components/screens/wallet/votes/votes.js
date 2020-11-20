@@ -11,7 +11,6 @@ import VoteRow from './voteRow';
 import header from './votesTableHeader';
 import DialogLink from '../../../toolbox/dialog/link';
 import { SecondaryButton } from '../../../toolbox/buttons';
-// import { isEmpty } from '../../../../utils/helpers';
 
 const getMessages = t => ({
   all: t('This account doesn’t have any votes.'),
@@ -19,7 +18,7 @@ const getMessages = t => ({
 });
 
 const Votes = ({
-  votes, accounts, address, t, history,
+  votes, accounts, address, t, history, hostVotes = {},
 }) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
@@ -35,7 +34,7 @@ const Votes = ({
 
   useEffect(() => {
     votes.loadData({ address });
-  }, [address]);
+  }, [address, hostVotes]);
 
   // @todo uncomment this when Lisk Service API is ready
   // Fetch delegate profiles to define rank, productivity and delegate weight

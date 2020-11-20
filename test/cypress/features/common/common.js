@@ -235,3 +235,7 @@ Then(/^It should change fee when changing priorities$/, function () {
       })
     });
 });
+
+Then(/^I wait 3 seconds$/, function () {
+  cy.wait(Number(3) * 1000);
+});

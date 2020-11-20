@@ -32,6 +32,8 @@ const LockedBalance = (props) => {
     account,
     priorityOptions,
     txData: {
+      txType,
+      senderPublicKey: account.publicKey,
       nonce: account.nonce,
       passphrase: account.passphrase,
       unlockingObjects: getAvailableUnlockingTransactions(account, currentBlock),

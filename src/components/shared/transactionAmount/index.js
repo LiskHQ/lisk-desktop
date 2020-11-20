@@ -6,9 +6,9 @@ import styles from './transactionAmount.css';
 import transactionTypes from '../../../constants/transactionTypes';
 
 const TransactionAmount = ({
-  sender, recipient, type, token, showRounded, showInt, host, amount,
+  recipient, type, token, showRounded, showInt, host, amount,
 }) => {
-  const isIncoming = host === (recipient && sender !== recipient)
+  const isIncoming = host === recipient
     || type === transactionTypes().unlockToken.code.legacy;
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
@@ -35,7 +35,6 @@ const TransactionAmount = ({
 
 TransactionAmount.propTypes = {
   host: PropTypes.string,
-  sender: PropTypes.string.isRequired,
   recipient: PropTypes.string,
   token: PropTypes.string.isRequired,
   type: PropTypes.number.isRequired,

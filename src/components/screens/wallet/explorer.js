@@ -35,7 +35,7 @@ const transformParams = params => Object.keys(params)
 
 
 const Wallet = ({
-  transactions, t, match, account, history,
+  transactions, t, account, history,
 }) => {
   const activeToken = useSelector(state => state.settings.token.active);
   const { discreetMode } = useSelector(state => state.settings);
@@ -59,7 +59,7 @@ const Wallet = ({
         <Transactions
           transactions={transactions}
           pending={[]}
-          host={match.params.address}
+          host={selectSearchParamValue(history.location.search, 'address')}
           activeToken={activeToken}
           discreetMode={discreetMode}
           tabName={t('Transactions')}
