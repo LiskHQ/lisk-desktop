@@ -49,6 +49,7 @@
   & span:first-child {
     color: var(--color-maastricht-blue);
   }
+
   & span:nth-child(2) {
     color: var(--color-blue-gray);
   }
