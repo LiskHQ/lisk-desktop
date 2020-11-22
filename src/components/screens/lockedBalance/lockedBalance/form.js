@@ -17,6 +17,19 @@ import LiskAmount from '../../../shared/liskAmount';
 import { tokenMap } from '../../../../constants/tokens';
 import styles from './lockedBalance.css';
 
+const ButtonTitle = ({ availableBalance, t }) => {
+  if (availableBalance === 0) {
+    return <>{t('Nothing available to unlock')}</>;
+  }
+  return (
+    <>
+      {t('Unlock')}
+      {' '}
+      <LiskAmount val={availableBalance} token={tokenMap.LSK.key} />
+    </>
+  );
+};
+
 const Form = ({
   t,
   children,
@@ -78,11 +91,7 @@ const Form = ({
           onClick={onClickUnlock}
           disabled={availableBalance === 0}
         >
-          <>
-            {t('Unlock')}
-            {' '}
-            <LiskAmount val={availableBalance} token={tokenMap.LSK.key} />
-          </>
+          <ButtonTitle availableBalance={availableBalance} t={t} />
         </PrimaryButton>
       </BoxFooter>
     </Box>
