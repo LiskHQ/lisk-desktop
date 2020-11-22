@@ -92,9 +92,3 @@
   height: 16px;
   background-color: var(--color-jade-green);
 }
-
-@media (--medium-viewport) {
-  .toggle {
-    margin-right: 10px;
-  }
-}

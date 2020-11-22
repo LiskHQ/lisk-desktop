@@ -4,11 +4,11 @@ export default t => (
   [
     {
       title: t('Transaction'),
-      classList: grid['col-xs-9'],
+      classList: grid['col-xs-8'],
     },
     {
       title: t('Amount'),
-      classList: grid['col-xs-3'],
+      classList: grid['col-xs-4'],
     },
   ]
 );

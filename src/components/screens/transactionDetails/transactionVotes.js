@@ -28,7 +28,6 @@ const transactionVotes = ({ t, transaction, delegates }) => {
               key={`vote-${vote.delegateAddress}`}
               vote={{ confirmed: vote.amount }}
               address={vote.delegateAddress}
-              primaryText={vote.delegateAddress}
             />
           ))}
         </div>

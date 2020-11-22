@@ -17,10 +17,14 @@
   & :hover {
     cursor: pointer;
   }
+
+  & img {
+    width: 20px;
+  }
 }
 
 .toggleIcon.notHeader {
-  border-bottom: 1px solid var(--color-very-light-gray);
+  border-bottom: 1px solid var(--color-platinum);
   display: flex;
   height: 50px;
 }
@@ -35,6 +39,7 @@
 
     font-size: var(--font-size-h5);
     width: 45%;
+    color: var(--color-maastricht-blue);
   }
 
   & .voteStats {
@@ -58,6 +63,10 @@
 
     & .editedNumeral {
       color: var(--color-ink-blue);
+    }
+
+    & .removedNumeral {
+      color: var(--color-maastricht-blue);
     }
   }
 
