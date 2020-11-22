@@ -10,13 +10,15 @@
 
     & .contentHeading {
       @mixin contentLarge semi-bold;
+
+      color: var(--color-maastricht-blue);
     }
   }
 
   & .infoContainer {
     display: flex;
     padding-top: 20px;
-    border-top: 1px solid var(--darker-border-color);
+    border-top: 1px solid var(--color-platinum);
 
     & .infoColumn {
       display: flex;
@@ -37,15 +39,17 @@
 }
 
 .infoTitle {
-  @mixin contentNormal semi-bold;
+  @mixin contentNormal bold;
 
   margin-bottom: 10px;
+  color: var(--color-maastricht-blue);
 }
 
 .infoValue {
   @mixin contentNormal;
 
   font-size: 16px;
+  color: var(--color-maastricht-blue);
 }
 
 .voteItems {

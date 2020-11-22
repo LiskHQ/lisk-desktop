@@ -21,6 +21,7 @@
 .oldAmountColumn {
   padding: 0;
   width: 20%;
+  color: var(--color-maastricht-blue);
 }
 
 .centerContent {
@@ -32,6 +33,7 @@
   padding: 0;
   display: flex;
   flex: 1;
+  color: var(--color-maastricht-blue);
 }
 
 .delegateInfoContainer {
@@ -41,8 +43,15 @@
 .delegateInfo {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   margin-left: 10px;
+
+  & span:first-child {
+    color: var(--color-maastricht-blue);
+  }
+  & span:nth-child(2) {
+    color: var(--color-blue-gray);
+  }
 }
 
 .editColumn {
