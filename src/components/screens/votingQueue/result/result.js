@@ -12,8 +12,11 @@ import styles from './styles.css';
 
 const unlockTime = 5;
 
-const LiskAmountFormatted = ({ val }) =>
-  <span className={styles.subHeadingBold}><LiskAmount val={val} /></span>;
+const LiskAmountFormatted = ({ val }) => (
+  <span className={styles.subHeadingBold}>
+    <LiskAmount val={val} token="LSK" />
+  </span>
+);
 
 const getMessage = ({ t, locked, unlockable }) => {
   if (!locked && unlockable) {
