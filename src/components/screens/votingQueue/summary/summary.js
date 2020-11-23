@@ -44,14 +44,14 @@ const getResultProps = ({ added, removed, edited }) => {
   }, 0);
 
   const editedWeight = Object.values(edited).reduce((sum, { confirmed, unconfirmed }) => {
-    sum += confirmed - unconfirmed;
+    sum += unconfirmed - confirmed;
     return sum;
   }, 0);
 
   if (editedWeight > 0) {
     locked += editedWeight;
   } else {
-    unlockable += editedWeight;
+    unlockable += Math.abs(editedWeight);
   }
 
   return { locked, unlockable };
