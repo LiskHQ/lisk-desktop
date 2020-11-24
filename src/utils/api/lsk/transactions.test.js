@@ -277,8 +277,10 @@ describe('Utils: Transactions API', () => {
 
   describe('createTransactionInstance', () => {
     it('returns a transaction instance', () => {
-      const tx = createTransactionInstance({}, 'transfer');
-      expect(tx).toBeDefined();
+      const txTransfer = createTransactionInstance({}, 'transfer');
+      const txRegDelegate = createTransactionInstance({}, 'registerDelegate');
+      expect(txTransfer).toBeDefined();
+      expect(txRegDelegate).toBeDefined();
     });
   });
 });
