@@ -48,8 +48,8 @@ export const create = (tokenType, data, transactionType) =>
 export const broadcast = (tokenType, transaction, network) =>
   api[tokenType].transactions.broadcast(transaction, network);
 
-export const getTransactionBaseFees = tokenType =>
-  api[tokenType].transactions.getTransactionBaseFees();
+export const getTransactionBaseFees = (tokenType, network) =>
+  api[tokenType].transactions.getTransactionBaseFees(network);
 
 export const getTransactionFee = ({ token, ...params }) =>
   api[token].transactions.getTransactionFee(params);

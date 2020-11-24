@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { getTransactionBaseFees } from '../../../../utils/api/transactions';
 
 const useTransactionPriority = (token) => {
   const { t } = useTranslation();
+  const network = useSelector(state => state.network);
   const [error, setError] = useState(false);
   const [baseFees, setBaseFees] = useState({
     Low: 0,
@@ -17,7 +19,7 @@ const useTransactionPriority = (token) => {
   });
 
   useEffect(() => {
-    getTransactionBaseFees(token)
+    getTransactionBaseFees(token, network)
       .then(setBaseFees)
       .catch(setError);
   }, []);

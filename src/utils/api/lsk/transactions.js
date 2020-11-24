@@ -5,6 +5,7 @@ import { toRawLsk, fromRawLsk } from '../../lsk';
 import txFilters from '../../../constants/transactionFilters';
 import transactionTypes, { minFeePerByte } from '../../../constants/transactionTypes';
 import { adaptTransactions, adaptTransaction } from './adapters';
+import liskService from './liskService';
 
 const parseTxFilters = (filter = txFilters.all, address) => ({
   [txFilters.incoming]: { recipientId: address, type: transactionTypes().transfer.outgoingCode },
@@ -167,10 +168,9 @@ export const broadcast = (transaction, network) => new Promise(
  * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
  */
-export const getTransactionBaseFees = () => fetch('http://service-v4.liskdev.net/api/v1/fee_estimates')
-  .then(response => response.json())
-  .then((data) => {
-    const { feeEstimatePerByte } = data.data;
+export const getTransactionBaseFees = network => liskService.getTransactionBaseFees(network)
+  .then((response) => {
+    const { feeEstimatePerByte } = response.data;
     return {
       Low: feeEstimatePerByte.low,
       Medium: feeEstimatePerByte.medium,

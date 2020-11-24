@@ -125,6 +125,12 @@ const liskServiceApi = {
     network,
   }),
 
+  getTransactionBaseFees: async network => liskServiceGet({
+    path: '/api/v1/fee_estimates',
+    searchParams: {},
+    network,
+  }),
+
   getActiveDelegates: async (network, { search = '', tab, ...searchParams }) => liskServiceGet({
     path: '/api/v1/delegates/next_forgers',
     transformResponse: response => ({
