@@ -16,7 +16,7 @@ const VoteStats = ({
       <span className={styles.statText}>{`${t('edited')}`}</span>
     </span>
     <span className={styles.voteStats}>
-      <span>{`${removed} `}</span>
+      <span className={styles.removedNumeral}>{`${removed} `}</span>
       <span className={styles.statText}>{`${t('removed')}`}</span>
     </span>
   </header>

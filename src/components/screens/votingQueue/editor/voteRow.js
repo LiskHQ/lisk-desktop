@@ -55,7 +55,7 @@ const VoteRow = ({
         <AccountVisual address={address} />
         <div className={styles.delegateInfo}>
           <span className={styles.delegateAddress}>{address}</span>
-          <span className={styles.delegateUsername}>{username}</span>
+          { username && <span className={styles.delegateUsername}>{username}</span> }
         </div>
       </div>
       <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>

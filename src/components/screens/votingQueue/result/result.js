@@ -12,14 +12,18 @@ import styles from './styles.css';
 
 const unlockTime = 5;
 
-const LiskAmountFormatted = ({ val }) =>
-  <span className={styles.subHeadingBold}><LiskAmount val={val} /></span>;
+const LiskAmountFormatted = ({ val }) => (
+  <span className={styles.subHeadingBold}>
+    <LiskAmount val={val} token="LSK" />
+  </span>
+);
 
 const getMessage = ({ t, locked, unlockable }) => {
   if (!locked && unlockable) {
     return (
       <>
         <LiskAmountFormatted val={unlockable} />
+        {' '}
         <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
       </>
     );
@@ -27,7 +31,8 @@ const getMessage = ({ t, locked, unlockable }) => {
     return (
       <>
         <LiskAmountFormatted val={locked} />
-        <span>{t('LSK will be locked for voting.')}</span>
+        {' '}
+        <span>{t('will be locked for voting.')}</span>
       </>
     );
   } if (locked && unlockable) {
@@ -35,9 +40,9 @@ const getMessage = ({ t, locked, unlockable }) => {
       <>
         <span>{t('You have now locked')}</span>
         <LiskAmountFormatted val={locked} />
-        <span>{t('LSK for voting and may unlock')}</span>
+        <span>{t('for voting and may unlock')}</span>
         <LiskAmountFormatted val={unlockable} />
-        <span>{t('LSK in {{unlockTime}} hours.', { unlockTime })}</span>
+        <span>{t('in {{unlockTime}} hours.', { unlockTime })}</span>
       </>
     );
   }

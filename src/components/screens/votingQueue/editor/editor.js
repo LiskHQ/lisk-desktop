@@ -193,7 +193,11 @@ const Editor = ({
           setSelectedPriority={selectTransactionPriority}
         />
         {
-          feedback.error && <span className="feedback">{feedback.messages[0]}</span>
+          feedback.error && (
+            <div className={`${styles.feedback} feedback`}>
+              <span>{feedback.messages[0]}</span>
+            </div>
+          )
         }
         <BoxFooter>
           <PrimaryButton

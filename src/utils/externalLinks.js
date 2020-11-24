@@ -1,20 +1,30 @@
 import history from '../history';
 
+const sendRegex = /^\/(wallet|wallet\/send|main\/transactions\/send)$/;
+const sendRedirect = '/wallet?modal=send';
+
+const voteRegex = /^\/(main\/voting\/vote|delegates\/vote|vote)$/;
+const voteRedirect = '/wallet?modal=votingQueue';
+
 export default {
   init: () => {
     const { ipc } = window;
 
     if (ipc) {
       ipc.on('openUrl', (action, url) => {
-        const protocol = url.split(':/')[0];
-        let normalizedUrl = url.split(':/')[1];
+        const [protocol, rest] = url.split(':/');
+        const [normalizedUrl, searchParams] = rest.split('?');
+
         if (protocol && protocol.toLowerCase() === 'lisk' && normalizedUrl) {
-          normalizedUrl = normalizedUrl
-            .replace('/main/transactions/send', '/wallet/send')
-            .replace('/wallet', '/wallet/send')
-            .replace('/main/voting/vote', '/delegates/vote');
-          history.push(normalizedUrl);
-          history.replace(normalizedUrl);
+          let redirectUrl = normalizedUrl;
+          if (normalizedUrl.match(sendRegex)) {
+            redirectUrl = sendRedirect + (searchParams ? `&${searchParams}` : '');
+          } else if (normalizedUrl.match(voteRegex)) {
+            redirectUrl = voteRedirect + (searchParams ? `&${searchParams}` : '');
+          }
+
+          history.push(redirectUrl);
+          history.replace(redirectUrl);
         }
       });
     }
