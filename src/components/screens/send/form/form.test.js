@@ -5,14 +5,6 @@ import { tokenMap } from '../../../../constants/tokens';
 import Form from './form';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
-import { getTransactionBaseFees } from '../../../../utils/api/lsk/transactions';
-
-jest.mock('../../../../utils/api/lsk/transactions');
-getTransactionBaseFees.mockResolvedValue({
-  Low: 0,
-  Medium: 1000,
-  High: 2000,
-});
 
 describe('Form', () => {
   let wrapper;
@@ -226,49 +218,6 @@ describe('Form', () => {
       wrapper.update();
       referenceField = wrapper.find('.fieldGroup').at(2);
       expect(referenceField.find('.feedback.error')).toHaveClassName('show error');
-    });
-  });
-
-  describe('Custom fee', () => {
-    it('Should disable confirmation button when fee is higher than hard cap', async () => {
-      const { address } = accounts.genesis;
-      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
-      wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '12' } });
-      wrapper.find('.option-Custom').simulate('click');
-      wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.5' } });
-      act(() => { jest.advanceTimersByTime(300); });
-      act(() => { wrapper.update(); });
-      await flushPromises();
-
-      expect(wrapper.find('button.btn-submit')).toBeDisabled();
-    });
-
-    it('Should disable confirmation button when fee is less than the minimum', async () => {
-      const { address } = accounts.genesis;
-      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
-      wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '12' } });
-      wrapper.find('.option-Custom').simulate('click');
-      wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.00000000001' } });
-      act(() => { jest.advanceTimersByTime(300); });
-
-      act(() => { wrapper.update(); });
-      await flushPromises();
-
-      expect(wrapper.find('button.btn-submit')).toBeDisabled();
-    });
-
-    it('Should enable confirmation button when fee is within bounds', async () => {
-      const { address } = accounts.genesis;
-      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
-      wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '12' } });
-      wrapper.find('.option-Custom').simulate('click');
-      wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.019' } });
-      act(() => { jest.advanceTimersByTime(300); });
-
-      act(() => { wrapper.update(); });
-      await flushPromises();
-
-      expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     });
   });
 });

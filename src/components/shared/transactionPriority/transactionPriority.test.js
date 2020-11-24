@@ -5,9 +5,9 @@ import TransactionPriority from '.';
 import transactionTypes from '../../../constants/transactionTypes';
 
 const baseFees = {
-  Low: 0.1,
-  Medium: 0.2,
-  High: 0.3,
+  Low: 0,
+  Medium: 1000,
+  High: 2000,
 };
 
 describe('TransactionPriority', () => {
@@ -72,5 +72,54 @@ describe('TransactionPriority', () => {
     wrapper.find('span.fee-value').simulate('click');
     expect(wrapper).not.toContainMatchingElement('Icon[name="edit"]');
     expect(wrapper).toContainMatchingElement('.custom-fee-input');
+  });
+
+  it('should disable button when fees are equal', () => {
+    wrapper.setProps({
+      ...props,
+      token: tokenMap.LSK.key,
+      priorityOptions: [{ title: 'Low', value: baseFees.Low },
+        { title: 'Medium', value: baseFees.Low },
+        { title: 'High', value: baseFees.Low },
+        { title: 'Custom', value: baseFees.Low }],
+    });
+    expect(wrapper.find('.option-Medium')).toBeDisabled();
+    expect(wrapper.find('.option-High')).toBeDisabled();
+    expect(wrapper.find('.option-Custom')).toBeDisabled();
+  });
+
+  it('Should disable confirmation button when fee is higher than hard cap', async () => {
+    wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
+    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.5' } });
+    expect(props.setCustomFee).toHaveBeenCalledWith({
+      error: true,
+      feedback: 'invalid custom fee',
+      value: undefined,
+    });
+  });
+
+  it('Should disable confirmation button when fee is less than the minimum', async () => {
+    wrapper.setProps({
+      ...props,
+      token: tokenMap.LSK.key,
+      selectedPriority: 3,
+      minFee: 1000,
+    });
+    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.00000000001' } });
+    expect(props.setCustomFee).toHaveBeenCalledWith({
+      error: true,
+      feedback: 'invalid custom fee',
+      value: undefined,
+    });
+  });
+
+  it('Should enable confirmation button when fee is within bounds', async () => {
+    wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
+    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.019' } });
+    expect(props.setCustomFee).toHaveBeenCalledWith({
+      error: false,
+      feedback: '',
+      value: '0.019',
+    });
   });
 });
