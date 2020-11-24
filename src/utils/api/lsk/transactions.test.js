@@ -16,8 +16,10 @@ import transactionTypes from '../../../constants/transactionTypes';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import accounts from '../../../../test/constants/accounts';
 import { fromRawLsk } from '../../lsk';
+import liskService from './liskService';
 
 jest.mock('./network');
+jest.mock('./liskService');
 const TESTNET_NETHASH = 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba';
 
 const testTx = {
@@ -211,14 +213,13 @@ describe('Utils: Transactions API', () => {
   });
 
   describe('getTransactionBaseFees', () => {
-    it.skip('calculates the estimated fees for a transaction', async () => {
-      const estimates = await getTransactionBaseFees(
-      //   {
-      //   ...testTx,
-      //   senderPublicKey: accounts.genesis.publicKey,
-      // }, transactionTypes().transfer.key
-      );
-
+    it('calculates the estimated fees for a transaction', async () => {
+      liskService.getTransactionBaseFees.mockResolvedValue({
+        data: {
+          feeEstimatePerByte: { low: 0, medium: 1000, high: 2000 },
+        },
+      });
+      const estimates = await getTransactionBaseFees();
       expect(estimates).toBeDefined();
       expect(Object.keys(estimates)).toHaveLength(3);
     });
