@@ -8,11 +8,10 @@ import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 import { getTransactionBaseFees } from '../../../../utils/api/lsk/transactions';
 
 jest.mock('../../../../utils/api/lsk/transactions');
-
 getTransactionBaseFees.mockResolvedValue({
-  Low: 156,
-  Medium: 100,
-  High: 51,
+  Low: 0,
+  Medium: 1000,
+  High: 2000,
 });
 
 describe('Form', () => {
@@ -238,7 +237,6 @@ describe('Form', () => {
       wrapper.find('.option-Custom').simulate('click');
       wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.5' } });
       act(() => { jest.advanceTimersByTime(300); });
-
       act(() => { wrapper.update(); });
       await flushPromises();
 
@@ -259,7 +257,7 @@ describe('Form', () => {
       expect(wrapper.find('button.btn-submit')).toBeDisabled();
     });
 
-    it('Should enable confirmation button when fee within bounds', async () => {
+    it('Should enable confirmation button when fee is within bounds', async () => {
       const { address } = accounts.genesis;
       wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
       wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '12' } });

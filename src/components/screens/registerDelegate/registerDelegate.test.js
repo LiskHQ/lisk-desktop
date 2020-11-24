@@ -7,9 +7,9 @@ jest.mock('lodash.debounce');
 jest.mock('../../../utils/api/lsk/transactions');
 
 getTransactionBaseFees.mockResolvedValue({
-  Low: 156,
-  Medium: 100,
-  High: 51,
+  Low: 0,
+  Medium: 1000,
+  High: 2000,
 });
 
 describe('RegisterDelegate', () => {
