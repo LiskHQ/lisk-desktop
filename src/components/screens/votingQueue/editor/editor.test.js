@@ -3,16 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { mountWithRouter } from '../../../../utils/testHelpers';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
-import { getTransactionBaseFees } from '../../../../utils/api/lsk/transactions';
 import Editor from './editor';
-
-jest.mock('../../../../utils/api/lsk/transactions');
-
-getTransactionBaseFees.mockResolvedValue({
-  Low: 0,
-  Medium: 1000,
-  High: 2000,
-});
 
 describe('VotingQueue.Editor', () => {
   const props = {
