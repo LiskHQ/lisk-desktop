@@ -5,6 +5,15 @@ import { tokenMap } from '../../../../constants/tokens';
 import Form from './form';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
+import { getTransactionBaseFees } from '../../../../utils/api/lsk/transactions';
+
+jest.mock('../../../../utils/api/lsk/transactions');
+
+getTransactionBaseFees.mockResolvedValue({
+  Low: 156,
+  Medium: 100,
+  High: 51,
+});
 
 describe('Form', () => {
   let wrapper;
