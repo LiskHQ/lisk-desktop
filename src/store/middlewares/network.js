@@ -5,10 +5,7 @@ import actionTypes from '../../constants/actions';
 import { tokenMap } from '../../constants/tokens';
 import { getConnectionErrorMessage } from '../../utils/getNetwork';
 
-
-const getServerUrl = () => 'http://service-v4.liskdev.net';
-
-/* const getServerUrl = (nodeUrl, nethash) => {
+const getServerUrl = (nodeUrl, nethash) => {
   if (nethash === Lisk.constants.MAINNET_NETHASH) {
     return 'https://mainnet-service.lisk.io';
   }
@@ -22,7 +19,7 @@ const getServerUrl = () => 'http://service-v4.liskdev.net';
     return nodeUrl.replace(/\.(liskdev.net|lisk.io)$/, $1 => `-service${$1}`);
   }
   return 'unavailable';
-}; */
+};
 
 const generateAction = (data, config) => ({
   data: {
@@ -58,8 +55,7 @@ const network = store => next => (action) => {
         };
         dispatch(generateAction(action.data, networkConfig));
         dispatch({
-          data: getServerUrl(),
-          // data: getServerUrl(action.data.nodeUrl, nethash),
+          data: getServerUrl(action.data.nodeUrl, nethash),
           type: actionTypes.serviceUrlSet,
         });
       }).catch((error) => {
