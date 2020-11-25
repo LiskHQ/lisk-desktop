@@ -6,9 +6,7 @@ import { tokenMap } from '../../constants/tokens';
 import { getConnectionErrorMessage } from '../../utils/getNetwork';
 
 
-const getServerUrl = () => {
-  return 'http://service-v4.liskdev.net';
-};
+const getServerUrl = () => 'http://service-v4.liskdev.net';
 
 /* const getServerUrl = (nodeUrl, nethash) => {
   if (nethash === Lisk.constants.MAINNET_NETHASH) {
