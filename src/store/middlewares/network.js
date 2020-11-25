@@ -60,7 +60,8 @@ const network = store => next => (action) => {
         };
         dispatch(generateAction(action.data, networkConfig));
         dispatch({
-          data: getServerUrl(action.data.nodeUrl, nethash),
+          data: getServerUrl(),
+          // data: getServerUrl(action.data.nodeUrl, nethash),
           type: actionTypes.serviceUrlSet,
         });
       }).catch((error) => {
