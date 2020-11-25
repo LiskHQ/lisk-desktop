@@ -15,17 +15,15 @@ const mapStateToProps = state => ({
   serviceUrl: state.network.serviceUrl,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = {
   timerReset,
   networkSet,
   settingsUpdated,
-  serviceUrlSet: (url) => {
-    dispatch({
-      data: url,
-      type: actionTypes.serviceUrlSet,
-    });
-  },
-});
+  serviceUrlSet: url => ({
+    data: url,
+    type: actionTypes.serviceUrlSet,
+  }),
+};
 
 export default connect(
   mapStateToProps,
