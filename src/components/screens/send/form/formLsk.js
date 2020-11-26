@@ -24,7 +24,8 @@ const FormLsk = (props) => {
   } = props;
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority, priorityOptions,
+    selectedPriority, selectTransactionPriority,
+    priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority(token);
   const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
@@ -113,6 +114,8 @@ const FormLsk = (props) => {
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
+        loadError={prioritiesLoadError}
+        isLoading={loadingPriorities}
       />
     </FormBase>
   );

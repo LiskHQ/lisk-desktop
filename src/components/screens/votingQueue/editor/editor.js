@@ -123,7 +123,8 @@ const Editor = ({
 }) => {
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority, priorityOptions,
+    selectedPriority, selectTransactionPriority,
+    priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority(token);
 
   const changedVotes = Object.keys(votes)
@@ -191,6 +192,8 @@ const Editor = ({
           priorityOptions={priorityOptions}
           selectedPriority={selectedPriority.selectedIndex}
           setSelectedPriority={selectTransactionPriority}
+          loadError={prioritiesLoadError}
+          isLoading={loadingPriorities}
         />
         {
           feedback.error && (

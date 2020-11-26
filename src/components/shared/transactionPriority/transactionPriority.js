@@ -56,11 +56,12 @@ const TransactionPriority = ({
   setCustomFee,
   txType,
   className,
+  loadError,
+  isLoading,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState(undefined);
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
-  const isLoading = priorityOptions[0].value === 0;
   let hardCap = 0;
   if (token === tokenMap.LSK.key) {
     hardCap = transactionTypes.getHardCap(txType);
@@ -126,17 +127,20 @@ const TransactionPriority = ({
           </Tooltip>
         </span>
         <div className={`${styles.prioritySelector} priority-selector`}>
-          {tokenRelevantPriorities.map((priority, index) => (
-            <button
-              key={`fee-priority-${index}`}
-              className={`${styles.priorityTitle} ${index === selectedPriority ? styles.priorityTitleSelected : ''} option-${priority.title}`}
-              onClick={onClickPriority}
-              value={index}
-              disabled={index && !priority.value}
-            >
-              {priority.title}
-            </button>
-          ))}
+          {tokenRelevantPriorities.map((priority, index) => {
+            const disabled = index !== 3 ? index && !priority.value : !priority.value && !loadError;
+            return (
+              <button
+                key={`fee-priority-${index}`}
+                className={`${styles.priorityTitle} ${index === selectedPriority ? styles.priorityTitleSelected : ''} option-${priority.title}`}
+                onClick={onClickPriority}
+                value={index}
+                disabled={disabled}
+              >
+                {priority.title}
+              </button>
+            )
+          })}
         </div>
       </div>
       <div className={`${styles.col} fee-container`}>
