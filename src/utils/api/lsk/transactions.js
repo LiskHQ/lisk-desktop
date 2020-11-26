@@ -95,7 +95,7 @@ export const createTransactionInstance = (rawTx, type) => {
       asset.amount = rawTx.amount;
       break;
     case 'registerDelegate':
-      asset.username = rawTx.username || '';
+      asset.username = rawTx.username || 'abcd';
       break;
     case 'vote':
       asset.votes = rawTx.votes;
