@@ -37,9 +37,6 @@ Feature: Vote delegate
     Then I should see that 100 LSK are locked
     Then I click on openUnlockBalanceDialog
     Then I should see unlocking balance 40
-    When I click on customFeeOption
-    And I clear input customFeeInput
-    And I fill 1 in customFeeInput field
     And I click on unlockBtn
     And I click on closeDialog
     Then The latest transaction is unlocking

@@ -214,28 +214,6 @@ And(/^I search for account ([^s]+)$/, function (string) {
   cy.wait('@requestDelegate');
 });
 
-Then(/^It should change fee when changing priorities$/, function () {
-  const generateFeePromise = (selector) => new Promise((resolve) => {
-    cy.get(selector).click();
-    cy.get(ss.feeValue).invoke('text').then(resolve);
-  });
-
-  Promise.all([
-    generateFeePromise(ss.lowFeeOption),
-    generateFeePromise(ss.mediumFeeOption),
-    generateFeePromise(ss.highFeeOption),
-  ]).then((values) => {
-      const lowFee = values[0];
-      const mediumFee = values[1];
-      const highFee = values[2];
-      cy.wrap(null).should(() => {
-        expect(lowFee).to.not.equal(mediumFee);
-        expect(lowFee).to.not.equal(highFee);
-        expect(mediumFee).to.not.equal(highFee);
-      })
-    });
-});
-
 Then(/^I wait 3 seconds$/, function () {
   cy.wait(Number(3) * 1000);
 });
