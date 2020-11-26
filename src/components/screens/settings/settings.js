@@ -13,7 +13,6 @@ import links from '../../../constants/externalLinks';
 import settingsConst from '../../../constants/settings';
 import transactionTypes from '../../../constants/transactionTypes';
 import Dialog from '../../toolbox/dialog/dialog';
-import { Input } from '../../toolbox/inputs';
 import styles from './settings.css';
 
 class Settings extends React.Component {
@@ -27,7 +26,6 @@ class Settings extends React.Component {
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.toggleAutoLog = this.toggleAutoLog.bind(this);
     this.handleTokenToggle = this.handleTokenToggle.bind(this);
-    this.setServiceBaseURL = this.setServiceBaseURL.bind(this);
   }
 
   handleTokenToggle({ target: { name } }) {
@@ -52,12 +50,6 @@ class Settings extends React.Component {
   setCurrency(currency) {
     const { settings } = this.props;
     if (settings.currency !== currency) this.onUpdateSettings({ currency });
-  }
-
-  setServiceBaseURL(e) {
-    e.preventDefault();
-    const serviceBaseURL = e.target.value;
-    this.props.serviceUrlSet(serviceBaseURL);
   }
 
   handleCheckboxChange({ target: { name } }) {
@@ -92,13 +84,6 @@ class Settings extends React.Component {
             <h1>{t('Settings')}</h1>
           </BoxHeader>
           <BoxContent className={styles.content}>
-            <section>
-              <h2>{t('Service')}</h2>
-              <div className={styles.fieldGroup}>
-                <span className={styles.labelName}>{t('base URL')}</span>
-                <Input onChange={this.setServiceBaseURL} placeholder={this.props.serviceUrl} />
-              </div>
-            </section>
             <section>
               <h2>{t('Locale')}</h2>
               <div className={styles.fieldGroup}>

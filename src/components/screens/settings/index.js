@@ -6,23 +6,17 @@ import { settingsUpdated } from '../../../actions/settings';
 import { timerReset } from '../../../actions/account';
 import { networkSet } from '../../../actions/network';
 import { getActiveTokenAccount } from '../../../utils/account';
-import actionTypes from '../../../constants/actions';
 
 const mapStateToProps = state => ({
   settings: state.settings,
   account: getActiveTokenAccount(state),
   transactions: state.transactions,
-  serviceUrl: state.network.serviceUrl,
 });
 
 const mapDispatchToProps = {
   timerReset,
   networkSet,
   settingsUpdated,
-  serviceUrlSet: url => ({
-    data: url,
-    type: actionTypes.serviceUrlSet,
-  }),
 };
 
 export default connect(
