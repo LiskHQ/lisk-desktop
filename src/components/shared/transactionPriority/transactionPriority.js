@@ -128,7 +128,12 @@ const TransactionPriority = ({
         </span>
         <div className={`${styles.prioritySelector} priority-selector`}>
           {tokenRelevantPriorities.map((priority, index) => {
-            const disabled = index !== 3 ? index && !priority.value : !priority.value && !loadError;
+            let disabled = false;
+            if (index === 3) {
+              disabled = !priority.value && !loadError;
+            } else if (index !== 0) {
+              disabled = !priority.value || loadError;
+            }
             return (
               <button
                 key={`fee-priority-${index}`}

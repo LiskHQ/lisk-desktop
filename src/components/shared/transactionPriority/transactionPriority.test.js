@@ -5,7 +5,7 @@ import TransactionPriority from '.';
 import transactionTypes from '../../../constants/transactionTypes';
 
 const baseFees = {
-  Low: 0,
+  Low: 100,
   Medium: 1000,
   High: 2000,
 };
@@ -26,6 +26,8 @@ describe('TransactionPriority', () => {
     fee,
     setCustomFee: jest.fn(),
     txType: transactionTypes().transfer.key,
+    loadError: false,
+    isloading: false,
   };
   beforeEach(() => {
     props.setSelectedPriority.mockRestore();
@@ -74,18 +76,34 @@ describe('TransactionPriority', () => {
     expect(wrapper).toContainMatchingElement('.custom-fee-input');
   });
 
-  it('should disable button when fees are equal', () => {
+  it('should disable button when fees are 0', () => {
     wrapper.setProps({
       ...props,
       token: tokenMap.LSK.key,
-      priorityOptions: [{ title: 'Low', value: baseFees.Low },
-        { title: 'Medium', value: baseFees.Low },
-        { title: 'High', value: baseFees.Low },
-        { title: 'Custom', value: baseFees.Low }],
+      priorityOptions: [{ title: 'Low', value: 0 },
+        { title: 'Medium', value: 0 },
+        { title: 'High', value: 0 },
+        { title: 'Custom', value: 0 }],
     });
     expect(wrapper.find('.option-Medium')).toBeDisabled();
     expect(wrapper.find('.option-High')).toBeDisabled();
     expect(wrapper.find('.option-Custom')).toBeDisabled();
+  });
+
+  it('Options buttons should be enabled/disabled correctly with loading lsk tx fee had an error', () => {
+    wrapper.setProps({ ...props, token: tokenMap.LSK.key, loadError: 'Error' });
+    expect(wrapper.find('.option-Medium')).toBeDisabled();
+    expect(wrapper.find('.option-High')).toBeDisabled();
+    expect(wrapper.find('.option-Custom')).not.toBeDisabled();
+    expect(wrapper.find('.option-Low')).not.toBeDisabled();
+  });
+
+  it('Should enable all priority options', () => {
+    wrapper.setProps({ ...props, token: tokenMap.LSK.key });
+    expect(wrapper.find('.option-Low')).not.toBeDisabled();
+    expect(wrapper.find('.option-Medium')).not.toBeDisabled();
+    expect(wrapper.find('.option-High')).not.toBeDisabled();
+    expect(wrapper.find('.option-Custom')).not.toBeDisabled();
   });
 
   it('Should disable confirmation button when fee is higher than hard cap', async () => {
