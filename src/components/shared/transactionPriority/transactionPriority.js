@@ -60,7 +60,7 @@ const TransactionPriority = ({
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState(undefined);
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
-  const isLoading = false;
+  const isLoading = priorityOptions[0].value === 0;
   const shouldDisableOptions = (
     priorityOptions[0].value === priorityOptions[1].value
     && priorityOptions[1].value === priorityOptions[2].value
