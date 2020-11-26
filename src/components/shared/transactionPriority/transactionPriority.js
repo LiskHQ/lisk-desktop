@@ -139,7 +139,7 @@ const TransactionPriority = ({
               >
                 {priority.title}
               </button>
-            )
+            );
           })}
         </div>
       </div>
