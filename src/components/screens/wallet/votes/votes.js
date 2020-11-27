@@ -18,7 +18,7 @@ const getMessages = t => ({
 });
 
 const Votes = ({
-  votes, accounts, address, t, history, hostVotes = {},
+  votes, accounts, address, t, history, hostVotes = {}, isDelegate,
 }) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
@@ -56,6 +56,7 @@ const Votes = ({
       <BoxHeader>
         <h1>{t('Voted delegates')}</h1>
         <div className={`${styles.filterHolder}`}>
+          {!isDelegate && (
           <DialogLink
             className={`${styles.registerDelegate} register-delegate`}
             component="registerDelegate"
@@ -64,6 +65,7 @@ const Votes = ({
               {t('Register a delegate')}
             </SecondaryButton>
           </DialogLink>
+          )}
           <Input
             className="search"
             disabled={!votes.data.length}
