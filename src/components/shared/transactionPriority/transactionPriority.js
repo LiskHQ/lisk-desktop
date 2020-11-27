@@ -130,9 +130,9 @@ const TransactionPriority = ({
           {tokenRelevantPriorities.map((priority, index) => {
             let disabled = false;
             if (index === 3) {
-              disabled = !priority.value && !loadError;
+              disabled = priority.value === 0 && !loadError; // Custom fee option
             } else if (index !== 0) {
-              disabled = !priority.value || loadError;
+              disabled = priority.value === 0 || loadError; // Medium and high fee option
             }
             return (
               <button
