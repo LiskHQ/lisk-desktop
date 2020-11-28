@@ -78,7 +78,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
     if (!hasFunds) {
       setState({
         inputDisabled: true,
-        error: t('Insufficient funds (Fee: {{fee}} LSK)', { fee: 25 }),
+        error: t('Insufficient funds'),
       });
     }
   };
