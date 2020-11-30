@@ -130,6 +130,7 @@ class TopBar extends React.Component {
       token,
       settings: { darkMode, discreetMode, sideBarExpanded },
       noOfVotes,
+      isLoggedOut,
       // resetTimer,
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
@@ -178,7 +179,9 @@ class TopBar extends React.Component {
             position="bottom"
             content={(
               <DialogLink component="votingQueue" className={`${styles.toggle} voting-queue-toggle`}>
-                <Icon name="votingQueueInactive" />
+                <span className={`${styles.votingQueueIcon} ${isLoggedOut ? styles.disabled : ''}`}>
+                  <Icon name="votingQueueInactive" />
+                </span>
                 {noOfVotes !== 0
                   && <span className={styles.votingQueueVoteCount}>{noOfVotes}</span>}
               </DialogLink>

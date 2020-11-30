@@ -92,3 +92,18 @@
   height: 16px;
   background-color: var(--color-jade-green);
 }
+
+.votingQueueIcon {
+  display: flex;
+  justify-content: center;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+
+  & .label,
+  & img {
+    opacity: 0.5;
+  }
+}
