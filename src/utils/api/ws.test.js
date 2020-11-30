@@ -1,9 +1,11 @@
 import ws from './ws';
 
 describe('ws', () => {
+  const baseUrl = 'http://sample-service-url.com';
+
   it('should return a promise', () => {
     const wsPromise = ws({
-      baseUrl: 'http://sample-service-rul.com',
+      baseUrl,
       requests: [{
         method: 'account.get',
         params: { address: '12L' },
