@@ -161,7 +161,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
         </p>
         <label className={styles.nicknameLabel}>
           {t('Your nickname')}
-          <Tooltip>
+          <Tooltip position="right">
             <p>{t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}</p>
           </Tooltip>
         </label>
