@@ -1,12 +1,5 @@
 import * as lsk from './lsk';
 import * as btc from './btc';
-import { tokenMap } from '../../../constants/tokens';
+import functionMapper from '../functionMapper';
 
-const resourceMap = {
-  [tokenMap.LSK.key]: lsk,
-  [tokenMap.BTC.key]: btc,
-};
-
-export const getAccount = (data, token) => resourceMap[token].getAccount(data);
-
-export const getAccounts = (data, token) => resourceMap[token].getAccounts(data);
+export default functionMapper(lsk, btc);
