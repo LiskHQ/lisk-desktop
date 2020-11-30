@@ -34,7 +34,8 @@ const SelectNameAndFee = ({ account, ...props }) => {
   });
 
   const [
-    selectedPriority, selectTransactionPriority, priorityOptions,
+    selectedPriority, selectTransactionPriority,
+    priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority(token);
 
   const { fee, minFee } = useTransactionFeeCalculation({
@@ -190,6 +191,8 @@ const SelectNameAndFee = ({ account, ...props }) => {
           priorityOptions={priorityOptions}
           selectedPriority={selectedPriority.selectedIndex}
           setSelectedPriority={selectTransactionPriority}
+          loadError={prioritiesLoadError}
+          isLoading={loadingPriorities}
         />
       </BoxContent>
       <BoxFooter>

@@ -5,6 +5,7 @@ import { toRawLsk, fromRawLsk } from '../../lsk';
 import txFilters from '../../../constants/transactionFilters';
 import transactionTypes, { minFeePerByte } from '../../../constants/transactionTypes';
 import { adaptTransactions, adaptTransaction } from './adapters';
+import liskService from './liskService';
 
 const parseTxFilters = (filter = txFilters.all, address) => ({
   [txFilters.incoming]: { recipientId: address, type: transactionTypes().transfer.outgoingCode },
@@ -94,7 +95,7 @@ export const createTransactionInstance = (rawTx, type) => {
       asset.amount = rawTx.amount;
       break;
     case 'registerDelegate':
-      asset.username = rawTx.username || '';
+      asset.username = rawTx.username || 'abcde';
       break;
     case 'vote':
       asset.votes = rawTx.votes;
@@ -167,18 +168,15 @@ export const broadcast = (transaction, network) => new Promise(
  * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
  */
-export const getTransactionBaseFees = () => (
-  new Promise(async (resolve) => {
-    const fee = 1e3;
-
-    // @todo use real fee estimates
-    resolve({
-      Low: fee,
-      Medium: fee * 2,
-      High: fee * 3,
-    });
-  }));
-
+export const getTransactionBaseFees = network => liskService.getTransactionBaseFees(network)
+  .then((response) => {
+    const { feeEstimatePerByte } = response.data;
+    return {
+      Low: feeEstimatePerByte.low,
+      Medium: feeEstimatePerByte.medium,
+      High: feeEstimatePerByte.high,
+    };
+  });
 
 export const getMinTxFee = tx => Number(tx.minFee.toString());
 

@@ -23,7 +23,8 @@ const LockedBalance = (props) => {
   const availableBalance = calculateAvailableBalance(account, currentBlock);
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority, priorityOptions,
+    selectedPriority, selectTransactionPriority,
+    priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority(token);
 
   const { fee, minFee } = useTransactionFeeCalculation({
@@ -67,6 +68,8 @@ const LockedBalance = (props) => {
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
+        loadError={prioritiesLoadError}
+        isLoading={loadingPriorities}
       />
     </Form>
   );

@@ -58,6 +58,10 @@
         padding: 5px var(--horizontal-padding-m);
         outline: none;
 
+        &:disabled {
+          background-color: var(--color-platinum);
+        }
+
         &.priorityTitleSelected {
           background-color: var(--color-ink-blue);
           color: var(--color-white);

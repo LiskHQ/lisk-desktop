@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cryptography, transactions } from '@liskhq/lisk-client';
 import io from 'socket.io-client';
@@ -122,6 +123,12 @@ const liskServiceApi = {
       limit: DEFAULT_LIMIT,
       ...searchParams,
     },
+    network,
+  }),
+
+  getTransactionBaseFees: async network => liskServiceGet({
+    path: '/api/v1/fee_estimates',
+    searchParams: {},
     network,
   }),
 

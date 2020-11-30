@@ -1,6 +1,15 @@
 import accounts from '../../../../test/constants/accounts';
 import Send from './index';
 import { mountWithRouter } from '../../../utils/testHelpers';
+import { getTransactionBaseFees } from '../../../utils/api/lsk/transactions';
+
+jest.mock('../../../utils/api/lsk/transactions');
+
+getTransactionBaseFees.mockResolvedValue({
+  Low: 0,
+  Medium: 1000,
+  High: 2000,
+});
 
 describe('Send', () => {
   let wrapper;
