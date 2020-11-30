@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
 
-  &.disabled {
+  &.opaqueLogo {
     opacity: 0.5;
   }
 

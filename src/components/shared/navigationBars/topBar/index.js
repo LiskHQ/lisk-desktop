@@ -15,7 +15,6 @@ const mapStateToProps = state => ({
   noOfVotes: Object.values(state.voting)
     .filter(vote => (vote.confirmed !== vote.unconfirmed))
     .length,
-  isLoggedOut: !state.account.info || !state.account.info[state.settings.token.active],
 });
 
 const mapDispatchToProps = {
