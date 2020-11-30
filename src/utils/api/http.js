@@ -1,12 +1,12 @@
 /**
  * Makes HTTP api call
  *
- * @param {object} data - object containing:
- *         - @param {string} baseUrl - optional service base url
- *         - @param {string} path - api endpoint
- *         - @param {string} params - endpoint parameters
- *         - @param {string} method - HTTP method
- *         - @param {Object} network - redux network status
+ * @param {string} baseUrl - optional service base url
+ * @param {string} path - api endpoint
+ * @param {string} method - HTTP method
+ * @param {string} params - HTTP call parameters
+ * @param {Object} network - redux network status
+ * @param {string} network.serviceUrl - service base url
  * @returns {Promise} - if success it returns data,
  * if fails on server it throws an error,
  *
