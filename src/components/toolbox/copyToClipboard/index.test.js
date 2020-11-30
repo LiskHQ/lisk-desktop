@@ -18,13 +18,13 @@ describe('CopyToClipboard', () => {
 
   it('should show "Copied!" on click', () => {
     wrapper.find('.default').simulate('click');
-    expect(wrapper.find('.copied').text()).toEqual(copiedText);
+    expect(wrapper.find('.copied').text().trim()).toEqual(copiedText);
   });
 
   it('should hide "Copied!" after 3000ms', () => {
     wrapper.find('.default').simulate('click');
     jest.advanceTimersByTime(2900);
-    expect(wrapper.find('.copied').text()).toEqual(copiedText);
+    expect(wrapper.find('.copied').text().trim()).toEqual(copiedText);
     jest.advanceTimersByTime(2000);
     wrapper.update();
     expect(wrapper.find('.copied')).toHaveLength(0);
