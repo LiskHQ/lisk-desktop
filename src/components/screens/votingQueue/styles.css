@@ -33,7 +33,7 @@
   display: flex;
 
   & .voteStats {
-    padding: 0 16px;
+    padding: 0 var(--horizontal-padding-m);
     display: flex;
     justify-content: center;
     align-items: center;

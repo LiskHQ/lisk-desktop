@@ -148,14 +148,14 @@ const Editor = ({
           <header>
             {t('Voting Queue')}
           </header>
-          {!showEmptyState ? (
+          {!showEmptyState && (
             <VoteStats
               t={t}
               added={Object.keys(added).length}
               edited={Object.keys(edited).length}
               removed={Object.keys(removed).length}
             />
-          ) : null}
+          )}
         </div>
         {showEmptyState
           ? (
