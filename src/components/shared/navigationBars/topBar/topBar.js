@@ -91,7 +91,7 @@ const TokenSelector = ({ token, history, t }) => {
       content={(
         <Icon
           name={`${token.toLowerCase()}Icon`}
-          className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.disabled}`}
+          className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.opaqueLogo}`}
           onClick={activateToken}
         />
       )}
@@ -178,7 +178,9 @@ class TopBar extends React.Component {
             position="bottom"
             content={(
               <DialogLink component="votingQueue" className={`${styles.toggle} voting-queue-toggle`}>
-                <Icon name="votingQueueInactive" />
+                <span className={`${styles.votingQueueIcon} ${isUserLogout ? styles.disabled : ''}`}>
+                  <Icon name="votingQueueInactive" />
+                </span>
                 {noOfVotes !== 0
                   && <span className={styles.votingQueueVoteCount}>{noOfVotes}</span>}
               </DialogLink>

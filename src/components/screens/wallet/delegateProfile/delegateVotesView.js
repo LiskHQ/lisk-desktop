@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
@@ -23,40 +24,42 @@ const DelegateVotesView = ({
   };
 
   return (
-    <Box>
-      <BoxHeader>
-        <h1>
-          <span>{t('Voters')}</span>
-          <span className={styles.totalVotes}>{`(${voters.meta ? voters.meta.count : '...'})`}</span>
-        </h1>
-        {voters.length > 0 && (
-          <span>
-            <Input
-              onChange={onInputChange}
-              value={searchedAddress}
-              className="filter-by-address"
-              size="m"
-              placeholder={t('Filter by address...')}
-            />
-          </span>
-        )}
-      </BoxHeader>
-      <BoxContent className={`${styles.votesContainer} votes-container`}>
-        <Table
-          data={voters.data}
-          canLoadMore={voters.meta && voters.data.length < voters.meta.count}
-          isLoading={voters.isLoading}
-          iterationKey="address"
-          emptyState={{ message: t('This account doesn’t have any voters.') }}
-          row={VoterRow}
-          additionalRowProps={{
-            t,
-          }}
-          loadData={handleLoadMore}
-          header={tableHeader(t)}
-        />
-      </BoxContent>
-    </Box>
+    <div className={`${grid.row} ${styles.votesWrapper}`}>
+      <Box className={`${grid.col} ${grid['col-xs-12']}`}>
+        <BoxHeader>
+          <h1>
+            <span>{t('Voters')}</span>
+            <span className={styles.totalVotes}>{`(${voters.meta ? voters.meta.count : '...'})`}</span>
+          </h1>
+          {voters.length > 0 && (
+            <span>
+              <Input
+                onChange={onInputChange}
+                value={searchedAddress}
+                className="filter-by-address"
+                size="m"
+                placeholder={t('Filter by address...')}
+              />
+            </span>
+          )}
+        </BoxHeader>
+        <BoxContent className={`${grid.col} ${grid['col-xs-12']} ${styles.votesContainer} votes-container`}>
+          <Table
+            data={voters.data}
+            canLoadMore={voters.meta && voters.data.length < voters.meta.count}
+            isLoading={voters.isLoading}
+            iterationKey="address"
+            emptyState={{ message: t('This account doesn’t have any voters.') }}
+            row={VoterRow}
+            additionalRowProps={{
+              t,
+            }}
+            loadData={handleLoadMore}
+            header={tableHeader(t)}
+          />
+        </BoxContent>
+      </Box>
+    </div>
   );
 };
 

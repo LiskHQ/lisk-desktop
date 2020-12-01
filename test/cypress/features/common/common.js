@@ -214,6 +214,6 @@ And(/^I search for account ([^s]+)$/, function (string) {
   cy.wait('@requestDelegate');
 });
 
-Then(/^I wait 3 seconds$/, function () {
-  cy.wait(Number(3) * 1000);
+Then(/^I wait (.*?) seconds$/, function (seconds) {
+  cy.wait(Number(seconds) * 1000);
 });

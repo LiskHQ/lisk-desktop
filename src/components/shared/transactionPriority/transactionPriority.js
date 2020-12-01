@@ -60,8 +60,8 @@ const TransactionPriority = ({
   isLoading,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
-  const [inputValue, setInputValue] = useState(undefined);
-  const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
+  const [inputValue, setInputValue] = useState();
+
   let hardCap = 0;
   if (token === tokenMap.LSK.key) {
     hardCap = transactionTypes.getHardCap(txType);
@@ -69,10 +69,11 @@ const TransactionPriority = ({
 
   const onClickPriority = (e) => {
     e.preventDefault();
-    if (setCustomFee) {
-      setCustomFee(undefined);
-    }
     const selectedIndex = Number(e.target.value);
+    if (setCustomFee && selectedIndex !== CUSTOM_FEE_INDEX) {
+      setCustomFee(undefined);
+      setInputValue(undefined);
+    }
     setSelectedPriority({ item: priorityOptions[selectedIndex], index: selectedIndex });
     if (showEditIcon) {
       setShowEditIcon(false);
@@ -112,6 +113,8 @@ const TransactionPriority = ({
   const tokenRelevantPriorities = useMemo(() =>
     getRelevantPriorityOptions(priorityOptions, token),
   [priorityOptions, token]);
+
+  const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
 
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} ${className} transaction-priority`}>
