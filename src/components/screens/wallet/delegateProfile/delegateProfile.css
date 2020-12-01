@@ -10,6 +10,7 @@
 
   & .content {
     flex-flow: row nowrap;
+    width: calc(100% + 1em);
   }
 }
 
@@ -19,6 +20,10 @@
 
   & .statsContainer {
     flex-flow: row nowrap;
+  }
+
+  & .votesWrapper {
+    width: 100%;
   }
 
   & .votesContainer {
