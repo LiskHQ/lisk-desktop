@@ -7,6 +7,19 @@
     border-radius: 0;
     border-bottom: 1px solid var(--color-platinum);
   }
+
+  & header {
+    @mixin headingNormal;
+
+    font-size: var(--font-size-h5);
+    color: var(--color-maastricht-blue);
+  }
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
 }
 
 .contentHeader {
