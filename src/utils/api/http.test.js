@@ -8,7 +8,7 @@ describe('HTTP', () => {
     network: { serviceUrl: 'http://liskdev.net' },
   };
 
-  it('should be able to set an option base url', async () => {
+  it('should be able to set an optional base url', async () => {
     const baseUrl = 'http://testnet.net';
     global.fetch = jest.fn(() => Promise.resolve({
       ok: true,
@@ -19,6 +19,8 @@ describe('HTTP', () => {
     await http({ ...data, baseUrl });
     expect(fetch.mock.calls[0][0]).toEqual(`${data.network.serviceUrl}${data.path}`);
     expect(fetch.mock.calls[1][0]).toEqual(`${baseUrl}${data.path}`);
+    expect(fetch.mock.calls[0][1].method).toEqual(data.method);
+    expect(fetch.mock.calls[0][1].body).toEqual(JSON.stringify(data.params));
   });
 
   it('should return data', async () => {
