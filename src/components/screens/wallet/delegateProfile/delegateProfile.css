@@ -10,7 +10,7 @@
 
   & .content {
     flex-flow: row nowrap;
-    width: calc(100% + 1em);
+    width: calc(100% + 1em); /* stylelint-disable-line unit-whitelist */
   }
 }
 
