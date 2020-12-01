@@ -3,41 +3,20 @@ import React, { useMemo, useState } from 'react';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
+import { PrimaryButton } from '../../../toolbox/buttons';
 import TransactionPriority from '../../../shared/transactionPriority';
 import { tokenMap } from '../../../../constants/tokens';
 import { toRawLsk } from '../../../../utils/lsk';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
-import { PrimaryButton } from '../../../toolbox/buttons';
 import Table from '../../../toolbox/table';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
 
 import VoteRow from './voteRow';
+import EmptyState from './emptyState';
+import header from './tableHeader';
 import styles from './editor.css';
-
-const header = t => ([
-  {
-    title: t('Delegate'),
-    classList: styles.infoColumn,
-  },
-  {
-    title: t('Old Vote Amount'),
-    classList: styles.oldAmountColumn,
-  },
-  {
-    title: t('New Vote Amount'),
-    classList: styles.newAmountColumn,
-    tooltip: {
-      title: t('title'),
-      message: t('message'),
-      position: 'bottom',
-    },
-  },
-  {
-    classList: styles.editColumn,
-  },
-]);
 
 /**
  * Converts the votes object stored in Redux store
@@ -118,6 +97,7 @@ const getVoteStats = votes =>
 const token = tokenMap.LSK.key;
 const txType = 'vote';
 
+// eslint-disable-next-line max-statements
 const Editor = ({
   t, votes, account, nextStep,
 }) => {
@@ -158,60 +138,75 @@ const Editor = ({
     });
   };
 
+  const showEmptyState = !changedVotes.length;
+
   return (
     <section className={styles.wrapper}>
       <Box>
         <ToggleIcon isNotHeader />
-        <VoteStats
-          t={t}
-          heading={t('Voting queue')}
-          added={Object.keys(added).length}
-          edited={Object.keys(edited).length}
-          removed={Object.keys(removed).length}
-        />
-        <BoxContent className={styles.contentContainer}>
-          <div className={styles.contentScrollable}>
-            <Table
-              data={changedVotes}
-              header={header(t)}
-              row={VoteRow}
-              iterationKey="address"
-              canLoadMore={false}
-              emptyState={{ message: t('No votes in queue.') }}
+        <div className={styles.headerContainer}>
+          <header>
+            {t('Voting Queue')}
+          </header>
+          {!showEmptyState ? (
+            <VoteStats
+              t={t}
+              added={Object.keys(added).length}
+              edited={Object.keys(edited).length}
+              removed={Object.keys(removed).length}
             />
-          </div>
-        </BoxContent>
-        <TransactionPriority
-          className={styles.txPriority}
-          token={token}
-          fee={fee}
-          minFee={minFee.value}
-          customFee={customFee ? customFee.value : undefined}
-          txType={txType}
-          setCustomFee={setCustomFee}
-          priorityOptions={priorityOptions}
-          selectedPriority={selectedPriority.selectedIndex}
-          setSelectedPriority={selectTransactionPriority}
-          loadError={prioritiesLoadError}
-          isLoading={loadingPriorities}
-        />
-        {
-          feedback.error && (
-            <div className={`${styles.feedback} feedback`}>
-              <span>{feedback.messages[0]}</span>
-            </div>
+          ) : null}
+        </div>
+        {showEmptyState
+          ? (
+            <EmptyState t={t} />
           )
-        }
-        <BoxFooter>
-          <PrimaryButton
-            className="confirm"
-            size="l"
-            disabled={isCTADisabled}
-            onClick={goToNextStep}
-          >
-            {t('Continue')}
-          </PrimaryButton>
-        </BoxFooter>
+          : (
+            <>
+              <BoxContent className={styles.contentContainer}>
+                <div className={styles.contentScrollable}>
+                  <Table
+                    data={changedVotes}
+                    header={header(t)}
+                    row={VoteRow}
+                    iterationKey="address"
+                    canLoadMore={false}
+                  />
+                </div>
+              </BoxContent>
+              <TransactionPriority
+                className={styles.txPriority}
+                token={token}
+                fee={fee}
+                minFee={minFee.value}
+                customFee={customFee ? customFee.value : undefined}
+                txType={txType}
+                setCustomFee={setCustomFee}
+                priorityOptions={priorityOptions}
+                selectedPriority={selectedPriority.selectedIndex}
+                setSelectedPriority={selectTransactionPriority}
+                loadError={prioritiesLoadError}
+                isLoading={loadingPriorities}
+              />
+              {
+                feedback.error && (
+                  <div className={`${styles.feedback} feedback`}>
+                    <span>{feedback.messages[0]}</span>
+                  </div>
+                )
+              }
+              <BoxFooter>
+                <PrimaryButton
+                  className="confirm"
+                  size="l"
+                  disabled={isCTADisabled}
+                  onClick={goToNextStep}
+                >
+                  {t('Continue')}
+                </PrimaryButton>
+              </BoxFooter>
+            </>
+          )}
       </Box>
     </section>
   );
