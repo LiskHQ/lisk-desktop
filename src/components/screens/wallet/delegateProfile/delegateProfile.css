@@ -69,6 +69,7 @@
 
     & .value {
       margin-top: 8px;
+      color: var(--color-maastricht-blue);
     }
   }
 }
@@ -103,6 +104,8 @@
 
   & .performanceValue {
     @mixin delegatePerformanceValueFont;
+
+    color: var(--color-maastricht-blue);
   }
 }
 
@@ -151,6 +154,7 @@
     @mixin contentLargest;
 
     padding-left: 10px;
+    color: var(--color-maastricht-blue);
   }
 
   &::after {
