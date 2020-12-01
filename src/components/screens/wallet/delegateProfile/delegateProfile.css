@@ -12,9 +12,15 @@
 
     font-size: 20px;
   }
+
+  .content {
+    flex-flow: row nowrap;
+  }
 }
 
 .statsContainer {
+  flex-flow: row nowrap;
+
   & .votesContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, 25%);
@@ -33,6 +39,8 @@
   }
 
   @media (--medium-viewport) {
+    flex-flow: row wrap;
+
     & .votesContainer {
       grid-template-columns: repeat(auto-fill, 33.3%);
     }
@@ -44,7 +52,7 @@
   flex-grow: 1;
 
   & .itemContainer {
-    border-bottom: 1px solid #e1e3eb;
+    border-bottom: 1px solid var(--color-platinum);
     padding: 16px 0;
     margin-left: 0;
 
@@ -86,6 +94,10 @@
       margin: 0;
     }
   }
+}
+
+.rowNoWrap {
+  flex-flow: row nowrap;
 }
 
 .performanceContent {
