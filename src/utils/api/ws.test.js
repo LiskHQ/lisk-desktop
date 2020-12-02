@@ -56,14 +56,13 @@ describe('ws', () => {
     expect(responseArray).toEqual(resultArray);
   });
 
-  it.skip('should return an error', async () => {
+  it('should return an error', async () => {
     const error = { message: 'error' };
     const emit = jest.fn().mockImplementation((evtName, params, callback) => {
       callback({ error });
     });
     io.mockImplementation(() => ({ emit }));
-    const rejectResponse = await ws({});
 
-    expect(rejectResponse).toEqual(error);
+    await expect(ws({})).rejects.toEqual(error);
   });
 });

@@ -48,10 +48,9 @@ describe('HTTP', () => {
     expect(response).toEqual(expectedResponse);
   });
 
-  it.skip('should throw error', async () => {
+  it('should throw error', async () => {
     const statusText = 'Error processing the HTTP call.';
     global.fetch = jest.fn().mockReturnValueOnce(Promise.reject(statusText));
-    const response = await http(data);
-    expect(response).toEqual(statusText);
+    await expect(http(data)).rejects.toEqual(statusText);
   });
 });
