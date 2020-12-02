@@ -31,23 +31,27 @@ describe('ws', () => {
     expect(typeof emit.mock.calls[0][2]).toEqual('function');
   });
 
-  it('should return a response', async () => {
+  it('should return a response object for a single request', async () => {
     const resultObject = { message: 'ok' };
-    const resultArray = ['1', '2', '3'];
 
-    let emit = jest.fn().mockImplementation((evtName, params, callback) => {
+    const emit = jest.fn().mockImplementation((evtName, params, callback) => {
       callback({ result: resultObject });
     });
     io.mockImplementation(() => ({ emit }));
     const responseObject = await ws({});
 
-    emit = jest.fn().mockImplementation((evtName, params, callback) => {
+    expect(responseObject).toEqual(resultObject);
+  });
+
+  it('should return a response object for an array of requests', async () => {
+    const resultArray = ['1', '2', '3'];
+
+    const emit = jest.fn().mockImplementation((evtName, params, callback) => {
       callback({ result: resultArray });
     });
     io.mockImplementation(() => ({ emit }));
     const responseArray = await ws({});
 
-    expect(responseObject).toEqual(resultObject);
     expect(responseArray).toEqual(resultArray);
   });
 
