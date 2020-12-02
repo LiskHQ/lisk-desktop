@@ -13,7 +13,7 @@
  */
 
 const http = ({
-  baseUrl, path, params, method, network, ...restOptions
+  baseUrl, path, params, method = 'GET', network, ...restOptions
 }) => {
   const url = baseUrl ? `${baseUrl}${path}` : `${network.serviceUrl}${path}`;
   return fetch(url, {
