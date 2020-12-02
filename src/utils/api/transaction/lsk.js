@@ -36,6 +36,6 @@ export const getRegisteredDelegates = data => new Promise(resolve =>
  */
 export const getTransactionStats = data => http({
   path: `transactions/statistics/${data.params.period}`,
-  params: { limit: data.limit },
+  params: { limit: data.params.limit },
   network: data.network,
 });
