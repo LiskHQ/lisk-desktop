@@ -18,7 +18,7 @@ const getServerUrl = (nodeUrl, nethash) => {
   if (/\.(liskdev.net|lisk.io)$/.test(nodeUrl)) {
     return nodeUrl.replace(/\.(liskdev.net|lisk.io)$/, $1 => `-service${$1}`);
   }
-  return 'unavailable';
+  return 'http://localhost:9091';
 };
 
 const generateAction = (data, config) => ({
