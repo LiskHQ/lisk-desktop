@@ -1,6 +1,7 @@
 import http from '../http';
 import ws from '../ws';
 import transactionTypes from '../../../constants/transactionTypes';
+import { getDelegates } from '../delegate';
 
 /**
  * Retrieves the details of a single transaction
@@ -25,7 +26,7 @@ const txFilters = {
   dateTo: { key: 'to', test: str => typeof str === 'string' },
   amountFrom: { key: 'min', test: str => typeof str === 'string' },
   amountTo: { key: 'max', test: str => typeof str === 'string' },
-  limit: { key: 'limit', test: num => (typeof num === 'number' && num <= 30) },
+  limit: { key: 'limit', test: num => (typeof num === 'number') },
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
   sort: {
     key: 'sort',
@@ -92,8 +93,38 @@ export const getTransactions = ({
   });
 };
 
-export const getRegisteredDelegates = data => new Promise(resolve =>
-  resolve({ endpoint: 'getRegisteredDelegates', token: 'LSK', data }));
+export const getRegisteredDelegates = async ({ network }) => {
+  const delegates = await getDelegates({
+    network,
+    params: { limit: 1 },
+  });
+  const transactions = await getTransactions({
+    network,
+    params: { type: 'registerDelegate', limit: 100 },
+  });
+
+  if (delegates.error || transactions.error) {
+    return Error('Error fetching data.');
+  }
+
+  // get number of registration in each month
+  const monthStats = transactions
+    .map((tx) => {
+      const date = new Date(tx.timestamp * 1000);
+      return `${date.getFullYear()}-${date.getMonth() + 1}`;
+    }).reduce((acc, date) => {
+      if (typeof acc[date] !== 'number') acc[date] = 1;
+      else acc[date] += 1;
+      return acc;
+    }, {});
+
+  // start with [delegates.total]
+  // subtract total of each month to get prev month's stats
+  return monthStats.reduce((acc, item) => {
+    acc.unshift(acc[0] - item);
+    return acc;
+  }, [delegates.total]);
+};
 
 /**
  * Retrieves the overall statistics of network transactions.

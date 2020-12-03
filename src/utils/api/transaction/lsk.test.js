@@ -2,9 +2,11 @@ import {
   getTransaction,
   getTransactions,
   getTransactionStats,
+  getRegisteredDelegates,
 } from './lsk';
 import http from '../http';
 import ws from '../ws';
+import * as delegates from '../delegate';
 
 jest.mock('../http', () => ({
   __esModule: true,
@@ -16,16 +18,20 @@ jest.mock('../ws', () => ({
   default: jest.fn(),
 }));
 
+jest.mock('../delegate', () => ({
+  getDelegates: jest.fn(),
+}));
+
 describe('API: LSK Transactions', () => {
   const network = { serviceUrl: 'http://sample.com/' };
   const baseUrl = 'http://custom-basse-url.com/';
   const sampleId = 'sample_id';
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   describe('getTransaction', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('Should call http with given params', () => {
       getTransaction({
         network,
@@ -43,6 +49,10 @@ describe('API: LSK Transactions', () => {
   });
 
   describe('getTransactions', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('should call WS with correct list of types', async () => {
       await getTransactions({
         network, params: { type: 'transfer' },
@@ -120,9 +130,37 @@ describe('API: LSK Transactions', () => {
     });
   });
 
+  describe.skip('getRegisteredDelegates', () => {
+    it('should throw if any of the API endpoints throw', () => {
+
+    });
+
+    it('should return correct stats of registered delegates', async () => {
+      const txs = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4]
+        .map((item) => {
+          const t = new Date();
+          t.setMonth(t.getMonth() + item);
+          return { timestamp: t.getTime() };
+        });
+      delegates.getDelegates.mockResolvedValue({
+        data: {},
+        meta: { total: 10 },
+      });
+      getTransactions.mockResolvedValue({
+        data: txs,
+        meta: { total: 10 },
+      });
+
+      const response = await getRegisteredDelegates({ network });
+      expect(response).toEqual([]);
+
+      // delegates.getDelegates.mockReset();
+      // getTransactions.mockReset();
+    });
+  });
+
   describe('getTransactionStats', () => {
     it('Should call http with given params', () => {
-      const network = { serviceUrl: 'http://sample.com/' };
       const params = { period: 'day', limit: 7 };
 
       getTransactionStats({
