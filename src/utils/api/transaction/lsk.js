@@ -1,4 +1,6 @@
 import http from '../http';
+import ws from '../ws';
+import transactionTypes from '../../../constants/transactionTypes';
 
 /**
  * Retrieves the details of a single transaction
@@ -9,7 +11,7 @@ import http from '../http';
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.network - Network setting from Redux store
- * @returns {Object} Transaction details
+ * @returns {Promise} Transaction details API call
  */
 export const getTransaction = data => http({
   path: 'transactions',
@@ -18,8 +20,77 @@ export const getTransaction = data => http({
   baseUrl: data.baseUrl,
 });
 
-export const getTransactions = data => new Promise(resolve =>
-  resolve({ endpoint: 'getTransactions', token: 'LSK', data }));
+const txFilters = {
+  dateFrom: { key: 'from', test: str => typeof str === 'string' },
+  dateTo: { key: 'to', test: str => typeof str === 'string' },
+  amountFrom: { key: 'min', test: str => typeof str === 'string' },
+  amountTo: { key: 'max', test: str => typeof str === 'string' },
+  limit: { key: 'limit', test: num => (typeof num === 'number' && num <= 30) },
+  offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
+  sort: {
+    key: 'sort',
+    test: str => ['amount:asc', 'amount:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
+  },
+};
+/**
+ * Retrieves the list of transactions for given parameters
+ *
+ * @param {Object} data
+ * @param {Object} data.network - Network setting from Redux store
+ * @param {String?} data.baseUrl - Lisk Service API url to override the
+ * existing ServiceUrl on the network param. We may use this to retrieve
+ * the details of an archived transaction.
+ * @param {Object} data.params
+ * @param {String} data.params.dateFrom Unix timestamp, the start time of txs
+ * @param {String} data.params.dateTo Unix timestamp, the end time of txs
+ * @param {String} data.params.amountFrom The minimum value of txs
+ * @param {String} data.params.amountTo The maximum value of txs
+ * @param {String} data.params.type The title of the transaction type
+ * @param {Number} data.params.offset Used for pagination
+ * @param {Number} data.params.limit Used for pagination
+ * @param {String} data.params.sort an option of 'amount:asc',
+ * 'amount:desc', 'timestamp:asc', 'timestamp:desc',
+ * @param {Object} data.params.blockId The id of the block whose transaction we want.
+ * If passed, all other parameter will be ignored.
+ * @returns {Promise} Transactions list API call
+ */
+export const getTransactions = ({
+  network,
+  params,
+  baseUrl,
+}) => {
+  const typeConfig = transactionTypes()[params.type];
+  // if type, correct the type and use WS
+  if (params.type && typeConfig) {
+    const requests = Object.values(typeConfig.code).map(type => ({
+      method: 'get.transactions',
+      params: { type },
+    }));
+    // BaseUrl is only used for retrieving archived txs, so it's not needed here.
+    return ws({ baseUrl: network.serviceUrl, requests });
+  }
+
+  const normParams = {};
+
+  // if blockId, ignore others
+  if (params.blockId) {
+    normParams.block = params.blockId;
+  } else {
+    // Validate params and fix keys
+    Object.keys(params).forEach((key) => {
+      if (txFilters[key].test(params[key])) {
+        normParams[txFilters[key].key] = params[key];
+      }
+    });
+  }
+
+  return http({
+    network,
+    path: 'transactions',
+    params: normParams,
+    baseUrl,
+  });
+};
 
 export const getRegisteredDelegates = data => new Promise(resolve =>
   resolve({ endpoint: 'getRegisteredDelegates', token: 'LSK', data }));
