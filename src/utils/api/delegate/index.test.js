@@ -42,6 +42,11 @@ describe('API delegate module', () => {
       const data = { address: '1L' };
       setApiResponseData(expectedResponse, http);
       await expect(delegate.getDelegate({ ...data })).resolves.toEqual(expectedResponse);
+      expect(http).toHaveBeenCalledWith({
+        baseUrl: undefined,
+        path: delegate.ENDPOINTS.DELEGATES,
+        params: { address: '1L' },
+      });
     });
 
     it('should throw when api fails', async () => {
@@ -76,8 +81,14 @@ describe('API delegate module', () => {
       await expect(delegate.getDelegates({ ...data })).rejects;
     });
 
-    it('should ignore filtering parameters', () => {
-      // TODO
+    it('should ignore filtering parameters', async () => {
+      await delegate.getDelegates({
+        addressList, limit: 5, offset: 3,
+      });
+      expect(ws).toHaveBeenCalledWith({
+        baseUrl: undefined,
+        requests: { params: { addressList }, method: delegate.WS_METHODS.GET_DELEGATES },
+      });
     });
 
     it('should return delegates list when adressList is passed', async () => {
@@ -85,8 +96,11 @@ describe('API delegate module', () => {
       const data = { addressList };
       setApiResponseData(expectedResponse, ws);
       await expect(delegate.getDelegates({ ...data })).resolves.toEqual(expectedResponse);
-      expect(ws).toHaveBeenCalled();
       expect(http).not.toHaveBeenCalled();
+      expect(ws).toHaveBeenCalledWith({
+        baseUrl: undefined,
+        requests: { params: { addressList }, method: delegate.WS_METHODS.GET_DELEGATES },
+      });
     });
 
     it('should return delegates list when filters are passed', async () => {
@@ -96,7 +110,11 @@ describe('API delegate module', () => {
         delegate.getDelegates({ limit: 10, offset: 0 }),
       ).resolves.toEqual(expectedResponse);
       expect(ws).not.toHaveBeenCalled();
-      expect(http).toHaveBeenCalled();
+      expect(http).toHaveBeenCalledWith({
+        baseUrl: undefined,
+        path: delegate.ENDPOINTS.DELEGATES,
+        params: { limit: 10, offset: 0 },
+      });
     });
 
     it('should throw when api fails', async () => {
@@ -140,6 +158,11 @@ describe('API delegate module', () => {
       const data = { address };
       setApiResponseData(expectedResponse, http);
       await expect(delegate.getVotes({ ...data })).resolves.toEqual(expectedResponse);
+      expect(http).toHaveBeenCalledWith({
+        baseUrl: undefined,
+        path: delegate.ENDPOINTS.VOTES_SENT,
+        params: data,
+      });
     });
 
     it('should throw when api fails', async () => {
@@ -179,6 +202,11 @@ describe('API delegate module', () => {
       const data = { address };
       setApiResponseData(expectedResponse, http);
       await expect(delegate.getVoters({ ...data })).resolves.toEqual(expectedResponse);
+      expect(http).toHaveBeenCalledWith({
+        baseUrl: undefined,
+        path: delegate.ENDPOINTS.VOTES_RECEIVED,
+        params: data,
+      });
     });
 
     it('should throw when api fails', async () => {
@@ -197,10 +225,15 @@ describe('API delegate module', () => {
       expect(typeof delegatePromise.catch).toEqual('function');
     });
 
-    it('should return forgers list when adress is passed', async () => {
+    it('should return forgers list', async () => {
       const expectedResponse = [{}, {}, {}];
       setApiResponseData(expectedResponse, http);
       await expect(delegate.getForgers({ limit: 5, offset: 0 })).resolves.toEqual(expectedResponse);
+      expect(http).toHaveBeenCalledWith({
+        baseUrl: undefined,
+        path: delegate.ENDPOINTS.FORGERS,
+        params: { limit: 5, offset: 0 },
+      });
     });
 
     it('should throw when api fails', async () => {

@@ -1,7 +1,17 @@
 import http from '../http';
 import ws from '../ws';
 
-const areAllParametersUndefined = params => !params.some(param => param);
+export const ENDPOINTS = {
+  DELEGATES: '/api/v1/delegates',
+  VOTES_SENT: '/api/v1/votes_sent',
+  VOTES_RECEIVED: '/api/v1/votes_received',
+  FORGERS: '/api/v1/delegates/next_forgers',
+};
+
+export const WS_METHODS = {
+  GET_DELEGATES: 'get.delegates',
+};
+
 const moreThanOneDefinedParam = (params) => {
   let count = 0;
   return params.some((param) => {
@@ -17,7 +27,6 @@ const removeUndefinedProps = (obj) => {
   return obj;
 };
 
-const errorNoParams = new Error('No parameter passed');
 const errorTooManyParams = new Error('Request contains too many parameters');
 
 /**
@@ -35,17 +44,24 @@ const errorTooManyParams = new Error('Request contains too many parameters');
  */
 export const getDelegate = ({
   address, publicKey, username, network, baseUrl,
-}) => {
-  const validateParams = [address, publicKey, username];
-  if (areAllParametersUndefined(validateParams)) return Promise.reject(errorNoParams);
-  if (moreThanOneDefinedParam(validateParams)) return Promise.reject(errorTooManyParams);
-  return http({
-    path: '/api/v1/delegate',
-    params: removeUndefinedProps(validateParams),
-    network,
-    baseUrl,
-  });
-};
+}) => new Promise(async (resolve, reject) => {
+  const validateParams = { address, publicKey, username };
+  if (moreThanOneDefinedParam(Object.values(validateParams))) {
+    reject(errorTooManyParams);
+  }
+
+  try {
+    const delegate = await http({
+      path: ENDPOINTS.DELEGATES,
+      params: removeUndefinedProps(validateParams),
+      network,
+      baseUrl,
+    });
+    resolve(delegate);
+  } catch (e) {
+    reject(e);
+  }
+});
 
 /**
  * Retrieves data of a list of delegates.
@@ -65,25 +81,39 @@ export const getDelegate = ({
 export const getDelegates = ({
   addressList, publicKeyList, usernameList,
   offset, limit, network, baseUrl,
-}) => {
-  const validateParams = [addressList, publicKeyList, usernameList];
-  if (areAllParametersUndefined(validateParams)) {
-    return http({
-      path: '/api/v1/delegates',
-      params: { offset, limit },
-      network,
-      baseUrl,
-    });
+// eslint-disable-next-line max-statements
+}) => new Promise(async (resolve, reject) => {
+  if (!addressList && !publicKeyList && !usernameList) {
+    try {
+      const delegates = await http({
+        path: ENDPOINTS.DELEGATES,
+        params: { offset, limit },
+        network,
+        baseUrl,
+      });
+      resolve(delegates);
+    } catch (e) {
+      reject(e);
+    }
+  } else {
+    const validateParams = { addressList, publicKeyList, usernameList };
+    if (moreThanOneDefinedParam(Object.values(validateParams))) {
+      reject(errorTooManyParams);
+    }
+    try {
+      const delegates = await ws({
+        requests: {
+          method: WS_METHODS.GET_DELEGATES,
+          params: removeUndefinedProps(validateParams),
+        },
+        baseUrl,
+      });
+      resolve(delegates);
+    } catch (e) {
+      reject(e);
+    }
   }
-  if (moreThanOneDefinedParam(validateParams)) return Promise.reject(errorTooManyParams);
-  return ws({
-    requests: {
-      rethod: 'get.delegates',
-      params: removeUndefinedProps(validateParams),
-    },
-    baseUrl,
-  });
-};
+});
 
 /**
  * Retrieves a list of votes sent by a given delegate.
@@ -99,17 +129,24 @@ export const getDelegates = ({
  */
 export const getVotes = ({
   address, publicKey, network, baseUrl,
-}) => {
-  const validateParams = [address, publicKey];
-  if (areAllParametersUndefined(validateParams)) return Promise.reject(errorNoParams);
-  if (moreThanOneDefinedParam(validateParams)) return Promise.reject(errorTooManyParams);
-  return http({
-    path: '/api/v1/votes_sent',
-    params: removeUndefinedProps(validateParams),
-    network,
-    baseUrl,
-  });
-};
+}) => new Promise(async (resolve, reject) => {
+  const validateParams = { address, publicKey };
+  if (moreThanOneDefinedParam(Object.values(validateParams))) {
+    reject(errorTooManyParams);
+  }
+
+  try {
+    const votes = await http({
+      path: ENDPOINTS.VOTES_SENT,
+      params: removeUndefinedProps(validateParams),
+      network,
+      baseUrl,
+    });
+    resolve(votes);
+  } catch (e) {
+    reject(e);
+  }
+});
 
 /**
  * Retrieves list of votes given for a given delegate.
@@ -127,22 +164,40 @@ export const getVotes = ({
  */
 export const getVoters = ({
   address, publicKey, network, baseUrl,
-}) => {
-  const validateParams = [address, publicKey];
-  if (areAllParametersUndefined(validateParams)) return Promise.reject(errorNoParams);
-  if (moreThanOneDefinedParam(validateParams)) return Promise.reject(errorTooManyParams);
-  return http({
-    path: '/api/v1/votes_received',
-    params: removeUndefinedProps(validateParams),
-    network,
-    baseUrl,
-  });
-};
+}) => new Promise(async (resolve, reject) => {
+  const validateParams = { address, publicKey };
+  if (moreThanOneDefinedParam(Object.values(validateParams))) {
+    reject(errorTooManyParams);
+  }
 
+  try {
+    const voters = await http({
+      path: ENDPOINTS.VOTES_RECEIVED,
+      params: removeUndefinedProps(validateParams),
+      network,
+      baseUrl,
+    });
+    resolve(voters);
+  } catch (e) {
+    reject(e);
+  }
+});
+
+/**
+ * Retrieves list of active delegates.
+ *
+ * @param {Number?} data.offset - Index of the first result
+ * @param {Number?} data.limit - Maximum number of results
+ * @param {String?} data.baseUrl - Lisk Service API url to override the
+ * existing ServiceUrl on the network param. We may use this to retrieve
+ * the details of an archived transaction.
+ * @param {Object} data.network - Network setting from Redux store
+ * @returns {Promise} http call or Promise rejection in case of validation error
+ */
 export const getForgers = ({
   limit, offset, network, baseUrl,
 }) => http({
-  path: '/api/v1/delegates/next_forgers',
+  path: ENDPOINTS.FORGERS,
   params: { offset, limit },
   network,
   baseUrl,
