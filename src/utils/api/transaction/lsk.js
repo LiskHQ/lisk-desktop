@@ -104,11 +104,11 @@ export const getRegisteredDelegates = async ({ network }) => {
   });
 
   if (delegates.error || transactions.error) {
-    return Error('Error fetching data.');
+    throw Error('Error fetching data.');
   }
 
   // get number of registration in each month
-  const monthStats = transactions
+  const monthStats = transactions.data
     .map((tx) => {
       const date = new Date(tx.timestamp * 1000);
       return `${date.getFullYear()}-${date.getMonth() + 1}`;
@@ -118,12 +118,13 @@ export const getRegisteredDelegates = async ({ network }) => {
       return acc;
     }, {});
 
-  // start with [delegates.total]
+
+  // start with [total delegates number]
   // subtract total of each month to get prev month's stats
-  return monthStats.reduce((acc, item) => {
+  return Object.values(monthStats).reduce((acc, item) => {
     acc.unshift(acc[0] - item);
     return acc;
-  }, [delegates.total]);
+  }, [delegates.meta.total]);
 };
 
 /**

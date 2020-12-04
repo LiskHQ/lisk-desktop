@@ -130,32 +130,43 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe.skip('getRegisteredDelegates', () => {
-    it('should throw if any of the API endpoints throw', () => {
+  describe('getRegisteredDelegates', () => {
+    beforeEach(() => {
+      ws.mockReset();
+    });
 
+    it('should throw if any of the API endpoints throw', async () => {
+      // Mock promise failure
+      ws.mockRejectedValue(new Error('Error fetching data.'));
+
+      // call and anticipate failure
+      await expect(getRegisteredDelegates({ network }))
+        .rejects
+        .toThrow('Error fetching data.');
     });
 
     it('should return correct stats of registered delegates', async () => {
+      // create sample delegate registration transactions
       const txs = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4]
         .map((item) => {
           const t = new Date();
           t.setMonth(t.getMonth() + item);
           return { timestamp: t.getTime() };
         });
+
+      // mock internals
       delegates.getDelegates.mockResolvedValue({
         data: {},
         meta: { total: 10 },
       });
-      getTransactions.mockResolvedValue({
+      ws.mockResolvedValue({
         data: txs,
         meta: { total: 10 },
       });
 
+      // Call and expect right values
       const response = await getRegisteredDelegates({ network });
-      expect(response).toEqual([]);
-
-      // delegates.getDelegates.mockReset();
-      // getTransactions.mockReset();
+      expect(response).toEqual([0, 1, 4, 7, 10]);
     });
   });
 
