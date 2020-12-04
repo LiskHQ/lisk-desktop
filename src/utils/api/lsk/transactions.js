@@ -172,9 +172,9 @@ export const getTransactionBaseFees = network => liskService.getTransactionBaseF
   .then((response) => {
     const { feeEstimatePerByte } = response.data;
     return {
-      Low: feeEstimatePerByte.low,
-      Medium: feeEstimatePerByte.medium,
-      High: feeEstimatePerByte.high,
+      Low: feeEstimatePerByte.low || 0,
+      Medium: feeEstimatePerByte.medium || 0,
+      High: feeEstimatePerByte.high || 0,
     };
   });
 
