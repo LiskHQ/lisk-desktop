@@ -1,8 +1,5 @@
-export const getConnectedPeers = data => new Promise(resolve =>
-  resolve({ endpoint: 'getConnectedPeers', token: 'LSK', data }));
+import * as lsk from './lsk';
+import * as btc from './btc';
+import functionMapper from '../functionMapper';
 
-export const getNetworkStatus = data => new Promise(resolve =>
-  resolve({ endpoint: 'getNetworkStatus', token: 'LSK', data }));
-
-export const getNetworkStatistics = data => new Promise(resolve =>
-  resolve({ endpoint: 'getNetworkStatistics', token: 'LSK', data }));
+export default functionMapper(lsk, btc);
