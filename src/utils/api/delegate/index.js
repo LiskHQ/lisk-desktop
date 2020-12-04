@@ -27,7 +27,7 @@ const removeUndefinedProps = (obj) => {
   return obj;
 };
 
-const errorTooManyParams = new Error('Request contains too many parameters');
+const errorConflictingParams = new Error('Request contains conflicting parameters');
 
 /**
  * Retrieves data of a given delegate.
@@ -47,7 +47,7 @@ export const getDelegate = ({
 }) => new Promise(async (resolve, reject) => {
   const validateParams = { address, publicKey, username };
   if (moreThanOneDefinedParam(Object.values(validateParams))) {
-    reject(errorTooManyParams);
+    reject(errorConflictingParams);
   }
 
   try {
@@ -98,7 +98,7 @@ export const getDelegates = ({
   } else {
     const validateParams = { addressList, publicKeyList, usernameList };
     if (moreThanOneDefinedParam(Object.values(validateParams))) {
-      reject(errorTooManyParams);
+      reject(errorConflictingParams);
     }
     try {
       const delegates = await ws({
@@ -132,7 +132,7 @@ export const getVotes = ({
 }) => new Promise(async (resolve, reject) => {
   const validateParams = { address, publicKey };
   if (moreThanOneDefinedParam(Object.values(validateParams))) {
-    reject(errorTooManyParams);
+    reject(errorConflictingParams);
   }
 
   try {
@@ -163,17 +163,17 @@ export const getVotes = ({
  * @returns {Promise} http call or Promise rejection in case of validation error
  */
 export const getVoters = ({
-  address, publicKey, network, baseUrl,
+  address, publicKey, network, baseUrl, limit, offset,
 }) => new Promise(async (resolve, reject) => {
   const validateParams = { address, publicKey };
   if (moreThanOneDefinedParam(Object.values(validateParams))) {
-    reject(errorTooManyParams);
+    reject(errorConflictingParams);
   }
 
   try {
     const voters = await http({
       path: ENDPOINTS.VOTES_RECEIVED,
-      params: removeUndefinedProps(validateParams),
+      params: { ...removeUndefinedProps(validateParams), limit, offset },
       network,
       baseUrl,
     });
