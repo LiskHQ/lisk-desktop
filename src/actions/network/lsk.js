@@ -9,6 +9,7 @@ export const lskNetworkSet = data => (dispatch) => {
   dispatch({
     type: actionTypes.nodeDefined,
     data: {
+      token: 'LSK',
       ...data,
       nodeUrl,
     },
