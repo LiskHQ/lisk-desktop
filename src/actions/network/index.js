@@ -7,7 +7,7 @@ export const networkSet = data => (dispatch) => {
   if (data.name) {
     dispatch(btcNetworkSet(data));
   }
-}
+};
 
 /**
  * Returns required action object to update offline/online status of network
