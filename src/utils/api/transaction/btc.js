@@ -1,11 +1,11 @@
 // import bitcoin from 'bitcoinjs-lib';
-import { getNetworkCode, getNetworkConfig } from '../network';
 import { validateAddress } from '../../validators';
 import { tokenMap } from '../../../constants/tokens';
 import http from '../http';
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
+ *
  * @param {Object} data
  * @param {String} data.address Base address to use for formatting transactions
  * @param {Array} data.list Transaction list retrieved from API
@@ -25,13 +25,12 @@ const normalizeTransactionsResponse = ({
     type: 0,
     data: '',
     fee: feeSatoshi,
-    explorerLink: `${getNetworkConfig(network).transactionExplorerURL}/${tx.txid}`,
+    explorerLink: `${network.networks.BTC.transactionExplorerURL}/${tx.txid}`,
   };
 
-  const networkCode = getNetworkCode(network);
   data.senderId = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
   const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
-  data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0
+  data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, network) === 0
     ? extractedAddress : 'Unparsed Address';
   data.amount = tx.outputs[0].satoshi.toString();
 
@@ -81,5 +80,5 @@ export const getTransactions = ({
   params,
 }).then(response => normalizeTransactionsResponse({
   network,
-  list: [response.body.data],
+  list: response.body.data,
 }));
