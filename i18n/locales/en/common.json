@@ -466,7 +466,6 @@
   "Type": "Type",
   "Unable to connect to the node, no response from the server.": "Unable to connect to the node, no response from the server.",
   "Unable to connect to the node, please check the address and try again": "Unable to connect to the node, please check the address and try again",
-  "Unable to connect to {{networkName}}": "Unable to connect to {{networkName}}",
   "Undo": "Undo",
   "Unlock": "Unlock",
   "Unlock LSK": "Unlock LSK",
