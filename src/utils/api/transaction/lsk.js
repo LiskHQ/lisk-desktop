@@ -14,20 +14,22 @@ import { getDelegates } from '../delegate';
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} Transaction details API call
  */
-export const getTransaction = data => http({
+export const getTransaction = ({
+  id, network, baseUrl,
+}) => http({
   path: 'transactions',
-  params: { id: data.id },
-  network: data.network,
-  baseUrl: data.baseUrl,
+  params: { id },
+  network,
+  baseUrl,
 });
 
 const txFilters = {
-  dateFrom: { key: 'from', test: str => typeof str === 'string' },
-  dateTo: { key: 'to', test: str => typeof str === 'string' },
-  amountFrom: { key: 'min', test: str => typeof str === 'string' },
-  amountTo: { key: 'max', test: str => typeof str === 'string' },
-  limit: { key: 'limit', test: num => (typeof num === 'number') },
-  offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
+  dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
+  dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
+  amountFrom: { key: 'min', test: num => typeof num === 'number' && num >= 0 },
+  amountTo: { key: 'max', test: num => typeof num === 'number' && num > 0 },
+  limit: { key: 'limit', test: num => (typeof num === 'number' && num > 0) },
+  offset: { key: 'offset', test: num => (typeof num === 'number' && num >= 0) },
   sort: {
     key: 'sort',
     test: str => ['amount:asc', 'amount:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
@@ -81,6 +83,9 @@ export const getTransactions = ({
     Object.keys(params).forEach((key) => {
       if (txFilters[key].test(params[key])) {
         normParams[txFilters[key].key] = params[key];
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(`getTransactions: Dropped ${key} parameter, it's invalid.`);
       }
     });
   }
