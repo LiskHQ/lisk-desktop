@@ -2,7 +2,7 @@ import { subscribe, unsubscribe } from '../ws';
 
 const WS_ENDPOINTS = {
   BLOCKS_CHANGE: 'blocks/change',
-}
+};
 
 export const getBlock = data => new Promise(resolve =>
   resolve({ endpoint: 'getBlock', token: 'shared', data }));

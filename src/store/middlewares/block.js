@@ -5,16 +5,15 @@ import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
 
 const intervalTime = 5000;
 let interval;
-let forcedClosing = false;
 
 // This is a hack to get a signal to check for changes in BTC account and transactions
 // only once per minute and not every 10 seconds as we do for LSK
 // TODO find a cleaner way for shouldUpdateBtc
 let lastBtcUpdate = new Date();
-const shouldUpdateBtc = (state) => {
+const shouldUpdate = (activeToken) => {
   const now = new Date();
   const oneMinute = 1000 * 60;
-  if (!(state.settings.token && state.settings.token.active === 'BTC') || now - lastBtcUpdate > oneMinute) {
+  if (!(activeToken === 'BTC') || now - lastBtcUpdate > oneMinute) {
     lastBtcUpdate = now;
     return true;
   }
@@ -23,9 +22,7 @@ const shouldUpdateBtc = (state) => {
 
 // eslint-disable-next-line max-statements
 const blockListener = (store) => {
-  forcedClosing = true;
   blockUnsubscribe();
-  forcedClosing = false;
 
   let windowIsFocused = true;
   const { ipc } = window;
@@ -36,9 +33,7 @@ const blockListener = (store) => {
   const state = store.getState();
 
   const onDisconnect = () => {
-    if (!forcedClosing) {
-      store.dispatch(networkStatusUpdated({ online: false }));
-    }
+    store.dispatch(networkStatusUpdated({ online: false }));
   };
 
   const onReconnect = () => {
@@ -46,7 +41,8 @@ const blockListener = (store) => {
   };
 
   const callback = (block) => {
-    if (shouldUpdateBtc(store.getState())) {
+    const activeToken = state.settings.token && state.settings.token.active;
+    if (shouldUpdate(activeToken)) {
       store.dispatch({
         type: actionTypes.newBlockCreated,
         data: { block, windowIsFocused },

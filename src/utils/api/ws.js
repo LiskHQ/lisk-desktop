@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
 
 const connections = {};
+const forcedClosings = {};
 
 /**
  * A generic function to handle WS requests.
@@ -38,14 +39,24 @@ export const subscribe = (
   onReconnect,
 ) => {
   const connection = io.connect(node);
-  connection.on(url, callback);
-  connection.on('disconnect', onDisconnect);
-  connection.on('reconnect', onReconnect);
   connections[url] = connection;
+  connection.on(url, callback);
+  connection.on('reconnect', onReconnect);
+  connection.on('disconnect', () => {
+    if (!forcedClosings[url]) {
+      onDisconnect();
+    }
+  });
 };
 
 export const unsubscribe = (url) => {
-  connections[url].close();
+  if (connections[url]) {
+    forcedClosings[url] = true;
+    connections[url].close();
+    forcedClosings[url] = false;
+    delete connections[url];
+    delete forcedClosings[url];
+  }
 };
 
 export default ws;
