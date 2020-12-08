@@ -104,7 +104,7 @@ export const getRegisteredDelegates = async ({ network }) => {
   });
 
   if (delegates.error || transactions.error) {
-    throw Error('Error fetching data.');
+    return Error('Error fetching data.');
   }
 
   // get number of registration in each month
