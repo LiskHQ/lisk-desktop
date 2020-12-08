@@ -22,6 +22,7 @@ const http = ({
     method,
     mode: 'no-cors',
     headers: {
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     ...restOptions,

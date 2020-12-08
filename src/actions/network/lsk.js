@@ -1,16 +1,20 @@
-import networks from '../../constants/networks';
+import { getNetworkConfig, getServerUrl } from '../../utils/api/network';
 import actionTypes from '../../constants/actions';
+import { tokenMap } from '../../constants/tokens';
 
 // eslint-disable-next-line import/prefer-default-export
 export const lskNetworkSet = data => (dispatch) => {
-  const nodeUrl = data.name === networks.customNode.name
-    ? data.network.address
-    : networks[data.name.toLowerCase()].nodes[0];
-  dispatch({
-    type: actionTypes.nodeDefined,
-    data: {
-      ...data,
-      nodeUrl,
-    },
-  });
+  getNetworkConfig(data, tokenMap.LSK.key)
+    .then((config) => {
+      dispatch({
+        type: actionTypes.networkSet,
+        data: {
+          token: tokenMap.LSK.key,
+          config: {
+            ...config,
+          },
+          serviceUrl: getServerUrl(config.nodeUrl, config.nethash),
+        },
+      });
+    });
 };
