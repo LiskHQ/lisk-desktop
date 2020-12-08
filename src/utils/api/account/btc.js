@@ -26,7 +26,7 @@ export const getDerivedPathFromPassphrase = (passphrase, network) => {
  * @returns {String} account publicKey
  */
 export const extractPublicKey = (passphrase, network) =>
-  getDerivedPathFromPassphrase(passphrase, network.networks.BTC).publicKey;
+  getDerivedPathFromPassphrase(passphrase, network).publicKey;
 
 /**
  * Derives address from passphrase
