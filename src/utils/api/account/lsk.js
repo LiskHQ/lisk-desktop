@@ -30,14 +30,19 @@ const wsMethods = {
  */
 const getAccountParams = (params) => {
   if (!params || isEmpty(params)) return {};
+  const {
+    username,
+    address,
+    passphrase,
+    publicKey,
+  } = params;
   // Pick username, cause the address is not obtainable from the username
-  if (params.username) return { username: params.username };
+  if (username) return { username };
   // If you have the address, you don't need anything else
-  if (params.address) return { address: params.address };
+  if (address) return { address };
   // convert other params to address
-  if (params.publicKey || params.passphrase) {
-    const address = extractAddress(params.publicKey || params.passphrase);
-    return { address };
+  if (publicKey || passphrase) {
+    return { address: extractAddress(publicKey || passphrase) };
   }
   // if none of the above, ignore the params
   return {};
@@ -91,10 +96,10 @@ const txFilters = {
  */
 export const getAccounts = async ({
   network,
-  params,
+  params = {},
   baseUrl,
 }) => {
-  // Use websock to retrieve accounts with a given array of addresses
+  // Use websocket to retrieve accounts with a given array of addresses
   if (Array.isArray(params.addressList) && params.addressList.length) {
     const requests = params.addressList
       .filter(address => regex.address.test(address))
