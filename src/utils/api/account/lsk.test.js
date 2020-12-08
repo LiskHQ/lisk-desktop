@@ -8,6 +8,8 @@ jest.mock('../ws', () => jest.fn().mockReturnValue([]));
 
 describe('API: LSK Account', () => {
   const network = { serviceUrl: 'http://sample.com/' };
+  let baseUrl;
+  const path = '/api/v1/accounts';
 
   beforeEach(() => jest.clearAllMocks());
 
@@ -30,6 +32,7 @@ describe('API: LSK Account', () => {
         params: {
           addressList: ['12L', '13L'],
         },
+        path: 'transactions',
       });
 
       expect(response).toBeDefined();
@@ -50,7 +53,9 @@ describe('API: LSK Account', () => {
       });
 
       expect(response).toBeDefined();
-      expect(http).toHaveBeenCalledWith({ network, params });
+      expect(http).toHaveBeenCalledWith({
+        network, params, baseUrl, path,
+      });
       expect(ws).not.toHaveBeenCalled();
     });
 
@@ -65,7 +70,9 @@ describe('API: LSK Account', () => {
       });
 
       expect(response).toBeDefined();
-      expect(http).toHaveBeenCalledWith({ network, params });
+      expect(http).toHaveBeenCalledWith({
+        network, params, baseUrl, path,
+      });
       expect(ws).not.toHaveBeenCalled();
     });
   });
@@ -92,8 +99,8 @@ describe('API: LSK Account', () => {
       expect(http).toHaveBeenCalledWith({
         network,
         params: { username },
-        baseUrl: undefined,
-        path: '/api/v1/account',
+        baseUrl,
+        path,
       });
     });
 
@@ -110,8 +117,8 @@ describe('API: LSK Account', () => {
       expect(http).toHaveBeenCalledWith({
         network,
         params: { address },
-        baseUrl: undefined,
-        path: '/api/v1/account',
+        baseUrl,
+        path,
       });
     });
 
@@ -126,8 +133,8 @@ describe('API: LSK Account', () => {
       expect(http).toHaveBeenCalledWith({
         network,
         params: { address },
-        baseUrl: undefined,
-        path: '/api/v1/account',
+        baseUrl,
+        path,
       });
     });
 
@@ -142,8 +149,8 @@ describe('API: LSK Account', () => {
       expect(http).toHaveBeenCalledWith({
         network,
         params: { address },
-        baseUrl: undefined,
-        path: '/api/v1/account',
+        baseUrl,
+        path,
       });
     });
   });
