@@ -84,10 +84,10 @@ describe('API: LSK Transactions', () => {
       await getTransactions({
         network,
         params: {
-          dateFrom: 'from_date',
-          dateTo: 'to_date',
-          amountFrom: 'amount_from',
-          amountTo: 'amount_to',
+          dateFrom: 1607446547094,
+          dateTo: 1607446547094,
+          amountFrom: 123445,
+          amountTo: 123445,
           sort: 'amount:asc',
         },
       });
@@ -97,10 +97,10 @@ describe('API: LSK Transactions', () => {
         path: 'transactions',
         baseUrl: undefined,
         params: {
-          from: 'from_date',
-          to: 'to_date',
-          min: 'amount_from',
-          max: 'amount_to',
+          from: 1607446547094,
+          to: 1607446547094,
+          min: 123445,
+          max: 123445,
           sort: 'amount:asc',
         },
       });
@@ -110,10 +110,10 @@ describe('API: LSK Transactions', () => {
       await getTransactions({
         network,
         params: {
-          dateFrom: 12345,
-          dateTo: 'to_date',
-          amountFrom: 123445,
-          amountTo: 'amount_to',
+          dateFrom: 'wrong_date',
+          dateTo: 1607446547094,
+          amountFrom: 'wrong_amount',
+          amountTo: 123445,
           sort: 'wrong_sort',
         },
       });
@@ -123,8 +123,8 @@ describe('API: LSK Transactions', () => {
         path: 'transactions',
         baseUrl: undefined,
         params: {
-          to: 'to_date',
-          max: 'amount_to',
+          to: 1607446547094,
+          max: 123445,
         },
       });
     });

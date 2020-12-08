@@ -1,4 +1,3 @@
-// import bitcoin from 'bitcoinjs-lib';
 import { validateAddress } from '../../validators';
 import { tokenMap } from '../../../constants/tokens';
 import http from '../http';
@@ -52,6 +51,7 @@ export const getTransaction = ({
 }) => http({
   network,
   params: { id },
+  path: 'transactions',
 }).then(response => normalizeTransactionsResponse({
   network,
   list: [response.body.data],
@@ -78,6 +78,7 @@ export const getTransactions = ({
 }) => http({
   network,
   params,
+  path: 'transactions',
 }).then(response => normalizeTransactionsResponse({
   network,
   list: response.body.data,
