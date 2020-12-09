@@ -40,6 +40,7 @@ export const subscribe = (
 ) => {
   const connection = io.connect(node);
   connections[url] = connection;
+  forcedClosings[url] = false;
   connection.on(url, callback);
   connection.on('reconnect', onReconnect);
   connection.on('disconnect', () => {
