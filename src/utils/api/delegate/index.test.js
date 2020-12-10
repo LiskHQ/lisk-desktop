@@ -16,7 +16,7 @@ const resetApiMock = () => {
   ws.mockClear();
 };
 
-describe('API delegate module', () => {
+describe('API: LSK Delegates', () => {
   const baseUrl = 'http://baseurl.io';
   const network = { serviceUrl: 'http://testnet.io' };
 
@@ -29,10 +29,10 @@ describe('API delegate module', () => {
       const expectedResponse = { address: '1L', username: 'del1', data: {} };
       const data = { address: '1L', network };
       setApiResponseData(expectedResponse, http);
-      await expect(delegate.getDelegate({ ...data })).resolves.toEqual(expectedResponse);
+      await expect(delegate.getDelegate(data)).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
-        path: delegate.ENDPOINTS.DELEGATES,
+        path: delegate.httpPaths.delegates,
         params: { address: '1L' },
         network,
       });
@@ -43,7 +43,7 @@ describe('API delegate module', () => {
       delegate.getDelegate({ ...params, baseUrl, network });
       expect(http).toHaveBeenCalledWith({
         baseUrl,
-        path: delegate.ENDPOINTS.DELEGATES,
+        path: delegate.httpPaths.delegates,
         params,
         network,
       });
@@ -53,7 +53,7 @@ describe('API delegate module', () => {
       const expectedResponse = new Error('API call could not be completed');
       const data = { address: '1L' };
       setApiRejection(expectedResponse.message, http);
-      await expect(delegate.getDelegate({ ...data })).rejects.toEqual(expectedResponse);
+      await expect(delegate.getDelegate(data)).rejects.toEqual(expectedResponse);
     });
   });
 
@@ -66,23 +66,29 @@ describe('API delegate module', () => {
 
     it('should ignore filtering parameters and call through websocket', async () => {
       await delegate.getDelegates({
-        addressList, limit: 5, offset: 3,
+        network,
+        params: {
+          addressList, limit: 5, offset: 3,
+        },
       });
       expect(ws).toHaveBeenCalledWith({
         baseUrl: undefined,
-        requests: { params: { addressList }, method: delegate.WS_METHODS.GET_DELEGATES },
+        requests: { params: { addressList }, method: delegate.wsMethods.delegates },
       });
     });
 
     it('should return delegates list when addressList is passed and call through websocket', async () => {
       const expectedResponse = [{}, {}, {}];
-      const data = { addressList };
+      const data = {
+        params: { addressList },
+        network,
+      };
       setApiResponseData(expectedResponse, ws);
-      await expect(delegate.getDelegates({ ...data })).resolves.toEqual(expectedResponse);
+      await expect(delegate.getDelegates(data)).resolves.toEqual(expectedResponse);
       expect(http).not.toHaveBeenCalled();
       expect(ws).toHaveBeenCalledWith({
         baseUrl: undefined,
-        requests: { params: { addressList }, method: delegate.WS_METHODS.GET_DELEGATES },
+        requests: { params: { addressList }, method: delegate.wsMethods.delegates },
       });
     });
 
@@ -90,29 +96,29 @@ describe('API delegate module', () => {
       const expectedResponse = [{}, {}, {}];
       setApiResponseData(expectedResponse, http);
       await expect(
-        delegate.getDelegates({ limit: 10, offset: 0, network }),
+        delegate.getDelegates({ params: { limit: 10, offset: 0 }, network }),
       ).resolves.toEqual(expectedResponse);
       expect(ws).not.toHaveBeenCalled();
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
-        path: delegate.ENDPOINTS.DELEGATES,
+        path: delegate.httpPaths.delegates,
         params: { limit: 10, offset: 0 },
         network,
       });
     });
 
     it('should set baseUrl', () => {
-      delegate.getDelegates({ addressList, baseUrl });
+      delegate.getDelegates({ baseUrl, network, params: { addressList } });
       expect(ws).toHaveBeenCalledWith({
         baseUrl,
-        requests: { params: { addressList }, method: delegate.WS_METHODS.GET_DELEGATES },
+        requests: { params: { addressList }, method: delegate.wsMethods.delegates },
       });
       delegate.getDelegates({
-        limit: 10, offset: 0, baseUrl, network,
+        baseUrl, network, params: { limit: 10, offset: 0 },
       });
       expect(http).toHaveBeenCalledWith({
         baseUrl,
-        path: delegate.ENDPOINTS.DELEGATES,
+        path: delegate.httpPaths.delegates,
         params: { limit: 10, offset: 0 },
         network,
       });
@@ -145,7 +151,7 @@ describe('API delegate module', () => {
       await expect(delegate.getVotes({ ...params, network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
-        path: delegate.ENDPOINTS.VOTES_SENT,
+        path: delegate.httpPaths.votesSent,
         params,
         network,
       });
@@ -156,7 +162,7 @@ describe('API delegate module', () => {
       delegate.getVotes({ ...params, network, baseUrl });
       expect(http).toHaveBeenCalledWith({
         baseUrl,
-        path: delegate.ENDPOINTS.VOTES_SENT,
+        path: delegate.httpPaths.votesSent,
         params,
         network,
       });
@@ -185,7 +191,7 @@ describe('API delegate module', () => {
       await expect(delegate.getVoters({ ...params, network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
-        path: delegate.ENDPOINTS.VOTES_RECEIVED,
+        path: delegate.httpPaths.votesReceived,
         params,
         network,
       });
@@ -202,7 +208,7 @@ describe('API delegate module', () => {
       ).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl,
-        path: delegate.ENDPOINTS.VOTES_RECEIVED,
+        path: delegate.httpPaths.votesReceived,
         params,
         network,
       });
@@ -215,7 +221,7 @@ describe('API delegate module', () => {
       delegate.getVoters({ ...params, baseUrl, network });
       expect(http).toHaveBeenCalledWith({
         baseUrl,
-        path: delegate.ENDPOINTS.VOTES_RECEIVED,
+        path: delegate.httpPaths.votesReceived,
         params,
         network,
       });
@@ -239,11 +245,11 @@ describe('API delegate module', () => {
       const expectedResponse = [{}, {}, {}];
       setApiResponseData(expectedResponse, http);
       await expect(
-        delegate.getForgers({ limit: 5, offset: 0, network }),
+        delegate.getForgers({ params: { limit: 5, offset: 0 }, network }),
       ).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
-        path: delegate.ENDPOINTS.FORGERS,
+        path: delegate.httpPaths.forgers,
         params: { limit: 5, offset: 0 },
         network,
       });
@@ -251,11 +257,11 @@ describe('API delegate module', () => {
 
     it('should set baseUrl', () => {
       delegate.getForgers({
-        limit: 5, offset: 0, baseUrl, network,
+        baseUrl, network, params: { limit: 5, offset: 0 },
       });
       expect(http).toHaveBeenCalledWith({
         baseUrl,
-        path: delegate.ENDPOINTS.FORGERS,
+        path: delegate.httpPaths.forgers,
         params: { limit: 5, offset: 0 },
         network,
       });
@@ -265,7 +271,10 @@ describe('API delegate module', () => {
       const expectedResponse = new Error('API call could not be completed');
       setApiRejection(expectedResponse.message, http);
       await expect(
-        delegate.getForgers({ limit: 5, offset: 0 }),
+        delegate.getForgers({
+          network,
+          params: { limit: 5, offset: 0 },
+        }),
       ).rejects.toEqual(expectedResponse);
     });
   });
