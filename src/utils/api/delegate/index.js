@@ -1,22 +1,26 @@
 import http from '../http';
 import ws from '../ws';
+import { extractAddress } from '../../account';
+import regex from '../../regex';
 
-export const ENDPOINTS = {
-  DELEGATES: '/api/v1/delegates',
-  VOTES_SENT: '/api/v1/votes_sent',
-  VOTES_RECEIVED: '/api/v1/votes_received',
-  FORGERS: '/api/v1/delegates/next_forgers',
+const httpPrefix = '/api/v1';
+
+export const httpPaths = {
+  delegates: `${httpPrefix}/delegates`,
+  votesSent: `${httpPrefix}/votes_sent`,
+  votesReceived: `${httpPrefix}/votes_received`,
+  forgers: `${httpPrefix}/delegates/next_forgers`,
 };
 
-export const WS_METHODS = {
-  GET_DELEGATES: 'get.delegates',
+export const wsMethods = {
+  delegates: 'get.delegates',
 };
 
-const removeUndefinedProps = (obj) => {
-  Object.keys(obj).forEach((prop) => {
-    if (obj[prop] === undefined) delete obj[prop];
-  });
-  return obj;
+const getDelegateProps = ({ address, publicKey, username }) => {
+  if (username) return { username };
+  if (address) return { address };
+  if (publicKey) return { address: extractAddress(publicKey) };
+  return {};
 };
 
 /**
@@ -35,11 +39,40 @@ const removeUndefinedProps = (obj) => {
 export const getDelegate = ({
   address, publicKey, username, network, baseUrl,
 }) => http({
-  path: ENDPOINTS.DELEGATES,
-  params: removeUndefinedProps({ address, publicKey, username }),
+  path: httpPaths.delegates,
+  params: getDelegateProps({ address, publicKey, username }),
   network,
   baseUrl,
 });
+
+const txFilters = {
+  limit: { key: 'limit', test: num => (typeof num === 'number') },
+  offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
+  sort: {
+    key: 'sort',
+    test: str => [
+      'rank:asc',
+      'rank:desc',
+      'productivity:asc',
+      'productivity:desc',
+      'missedBlocks:asc',
+      'missedBlocks:desc',
+    ].includes(str),
+  },
+};
+
+const getRequests = (values) => {
+  const paramList = values.find(item => Array.isArray(item.list) && item.list.length);
+  if (paramList) {
+    return paramList.list
+      .filter(item => regex[paramList.name].test(item))
+      .map(item => ({
+        method: wsMethods.delegates,
+        params: { [paramList.name]: item },
+      }));
+  }
+  return false;
+};
 
 /**
  * Retrieves data of a list of delegates.
@@ -57,22 +90,35 @@ export const getDelegate = ({
  * @returns {Promise} http call or websocket call
  */
 export const getDelegates = ({
-  addressList, publicKeyList, usernameList,
-  offset, limit, network, baseUrl,
+  network,
+  params = {},
+  baseUrl,
 }) => {
-  if (!addressList && !publicKeyList && !usernameList) {
-    return http({
-      path: ENDPOINTS.DELEGATES,
-      params: { offset, limit },
+  // Use websocket to retrieve accounts with a given array of addresses
+  const requests = getRequests([
+    { name: 'address', list: params.addressList },
+    { name: 'publicKey', list: params.publicKeyList },
+    { name: 'username', list: params.usernameList },
+  ]);
+  if (requests) {
+    return ws({
       network,
-      baseUrl,
+      requests,
     });
   }
-  return ws({
-    requests: {
-      method: WS_METHODS.GET_DELEGATES,
-      params: removeUndefinedProps({ addressList, publicKeyList, usernameList }),
-    },
+
+  // Use HTTP to retrieve accounts with given sorting and pagination parameters
+  const normParams = {};
+  Object.keys(params).forEach((key) => {
+    if (txFilters[key].test(params[key])) {
+      normParams[txFilters[key].key] = params[key];
+    }
+  });
+
+  return http({
+    path: httpPaths.delegates,
+    params: normParams,
+    network,
     baseUrl,
   });
 };
@@ -90,10 +136,12 @@ export const getDelegates = ({
  * @returns {Promise} http call
  */
 export const getVotes = ({
-  address, publicKey, network, baseUrl,
+  network,
+  params = {},
+  baseUrl,
 }) => http({
-  path: ENDPOINTS.VOTES_SENT,
-  params: removeUndefinedProps({ address, publicKey }),
+  path: httpPaths.votesSent,
+  params: getDelegateProps({ address: params.address, publicKey: params.publicKey }),
   network,
   baseUrl,
 });
@@ -113,13 +161,31 @@ export const getVotes = ({
  * @returns {Promise} http call
  */
 export const getVoters = ({
-  address, publicKey, network, baseUrl, limit, offset,
-}) => http({
-  path: ENDPOINTS.VOTES_RECEIVED,
-  params: { ...removeUndefinedProps({ address, publicKey }), limit, offset },
   network,
+  params = {},
   baseUrl,
-});
+}) => {
+  const pagination = {};
+  Object.keys(params).forEach((key) => {
+    if (txFilters[key].test(params[key])) {
+      pagination[txFilters[key].key] = params[key];
+    }
+  });
+  const account = getDelegateProps({
+    address: params.address,
+    publicKey: params.publicKey,
+  });
+
+  return http({
+    path: httpPaths.votesReceived,
+    params: {
+      ...account,
+      ...pagination,
+    },
+    network,
+    baseUrl,
+  });
+};
 
 /**
  * Retrieves list of active delegates.
@@ -133,10 +199,12 @@ export const getVoters = ({
  * @returns {Promise} http call
  */
 export const getForgers = ({
-  limit, offset, network, baseUrl,
+  network,
+  params = {},
+  baseUrl,
 }) => http({
-  path: ENDPOINTS.FORGERS,
-  params: { offset, limit },
+  path: httpPaths.forgers,
+  params: { offset: params.offset, limit: params.limit },
   network,
   baseUrl,
 });
