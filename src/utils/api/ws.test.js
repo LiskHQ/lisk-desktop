@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import ws from './ws';
+import ws, { subscribe, unsubscribe } from './ws';
 
 jest.mock('socket.io-client');
 
@@ -58,5 +58,29 @@ describe('ws', () => {
     });
     io.mockImplementation(() => ({ emit }));
     await expect(ws({})).rejects.toEqual(error);
+  });
+
+  it('should subscribe correctly', () => {
+    const on = jest.fn();
+    io.connect = () => ({ on });
+    const fn = () => {};
+    const event = 'blocks/change';
+    subscribe(baseUrl, event, fn, fn, fn);
+
+    expect(on).toHaveBeenCalledTimes(3);
+    expect(on.mock.calls[0][0]).toEqual(event);
+    expect(on.mock.calls[1][0]).toEqual('reconnect');
+    expect(on.mock.calls[2][0]).toEqual('disconnect');
+  });
+
+  it('should unsubscribe correctly', () => {
+    const fn = () => {};
+    const close = jest.fn();
+    io.connect = () => ({ on: fn, close });
+    const event = 'blocks/change';
+    subscribe(baseUrl, event, fn, fn, fn);
+    unsubscribe(event);
+
+    expect(close).toHaveBeenCalledTimes(1);
   });
 });
