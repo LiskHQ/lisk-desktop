@@ -6,6 +6,11 @@ import regex from '../../regex';
 
 const httpPrefix = '/api/v1';
 
+const httpPaths = {
+  account: `${httpPrefix}/accounts`,
+  accounts: `${httpPrefix}/accounts`,
+};
+
 const wsMethods = {
   accounts: 'get.accounts',
   account: 'get.accounts',
@@ -60,7 +65,7 @@ const getAccountParams = (params) => {
 export const getAccount = async ({
   network, params, baseUrl,
 }) => http({
-  path: `${httpPrefix}/accounts`,
+  path: httpPaths.account,
   network,
   params: getAccountParams(params),
   baseUrl,
@@ -118,7 +123,7 @@ export const getAccounts = async ({
   });
 
   return http({
-    path: `${httpPrefix}/accounts`,
+    path: httpPaths.accounts,
     network,
     baseUrl,
     params: normParams,
