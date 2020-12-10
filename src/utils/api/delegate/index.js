@@ -27,9 +27,9 @@ const getDelegateProps = ({ address, publicKey, username }) => {
  * Retrieves data of a given delegate.
  *
  * @param {Object} data
- * @param {String?} data.address - Delegate address
- * @param {String?} data.publicKey - Delegate public key
- * @param {String?} data.username - Delegate username
+ * @param {String?} data.params.address - Delegate address
+ * @param {String?} data.params.publicKey - Delegate public key
+ * @param {String?} data.params.username - Delegate username
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
@@ -37,10 +37,10 @@ const getDelegateProps = ({ address, publicKey, username }) => {
  * @returns {Promise} http call
  */
 export const getDelegate = ({
-  address, publicKey, username, network, baseUrl,
+  params = {}, network, baseUrl,
 }) => http({
   path: httpPaths.delegates,
-  params: getDelegateProps({ address, publicKey, username }),
+  params: getDelegateProps(params),
   network,
   baseUrl,
 });
@@ -78,11 +78,11 @@ const getRequests = (values) => {
  * Retrieves data of a list of delegates.
  *
  * @param {Object} data
- * @param {String?} data.addressList - Delegates address list
- * @param {String?} data.publicKeyList - Delegates public key list
- * @param {String?} data.usernameList - Delegates username list
- * @param {Number?} data.offset - Index of the first result
- * @param {Number?} data.limit - Maximum number of results
+ * @param {String?} data.params.addressList - Delegates address list
+ * @param {String?} data.params.publicKeyList - Delegates public key list
+ * @param {String?} data.params.usernameList - Delegates username list
+ * @param {Number?} data.params.offset - Index of the first result
+ * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
@@ -102,8 +102,8 @@ export const getDelegates = ({
   ]);
   if (requests) {
     return ws({
-      network,
       requests,
+      baseUrl: baseUrl || network.serviceUrl,
     });
   }
 
@@ -127,8 +127,8 @@ export const getDelegates = ({
  * Retrieves a list of votes sent by a given delegate.
  *
  * @param {Object} data
- * @param {String?} data.address - Delegate address
- * @param {String?} data.publicKey - Delegate public key
+ * @param {String?} data.params.address - Delegate address
+ * @param {String?} data.params.publicKey - Delegate public key
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
@@ -150,10 +150,10 @@ export const getVotes = ({
  * Retrieves list of votes given for a given delegate.
  *
  * @param {Object} data
- * @param {String?} data.address - Delegate address
- * @param {String?} data.publicKey - Delegate public key
- * @param {Number?} data.offset - Index of the first result
- * @param {Number?} data.limit - Maximum number of results
+ * @param {String?} data.params.address - Delegate address
+ * @param {String?} data.params.publicKey - Delegate public key
+ * @param {Number?} data.params.offset - Index of the first result
+ * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
@@ -167,7 +167,7 @@ export const getVoters = ({
 }) => {
   const pagination = {};
   Object.keys(params).forEach((key) => {
-    if (txFilters[key].test(params[key])) {
+    if (txFilters[key] && txFilters[key].test(params[key])) {
       pagination[txFilters[key].key] = params[key];
     }
   });
@@ -190,8 +190,8 @@ export const getVoters = ({
 /**
  * Retrieves list of active delegates.
  *
- * @param {Number?} data.offset - Index of the first result
- * @param {Number?} data.limit - Maximum number of results
+ * @param {Number?} data.params.offset - Index of the first result
+ * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.

@@ -27,20 +27,20 @@ describe('API: LSK Delegates', () => {
 
     it('should return delegate data', async () => {
       const expectedResponse = { address: '1L', username: 'del1', data: {} };
-      const data = { address: '1L', network };
+      const params = { address: '1L' };
       setApiResponseData(expectedResponse, http);
-      await expect(delegate.getDelegate(data)).resolves.toEqual(expectedResponse);
+      await expect(delegate.getDelegate({ params, network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
         path: delegate.httpPaths.delegates,
-        params: { address: '1L' },
+        params,
         network,
       });
     });
 
     it('should set baseUrl', () => {
       const params = { address: '1L' };
-      delegate.getDelegate({ ...params, baseUrl, network });
+      delegate.getDelegate({ params, baseUrl, network });
       expect(http).toHaveBeenCalledWith({
         baseUrl,
         path: delegate.httpPaths.delegates,
@@ -72,8 +72,11 @@ describe('API: LSK Delegates', () => {
         },
       });
       expect(ws).toHaveBeenCalledWith({
-        baseUrl: undefined,
-        requests: { params: { addressList }, method: delegate.wsMethods.delegates },
+        baseUrl: network.serviceUrl,
+        requests: [
+          { params: { address: addressList[0] }, method: delegate.wsMethods.delegates },
+          { params: { address: addressList[1] }, method: delegate.wsMethods.delegates },
+        ],
       });
     });
 
@@ -87,22 +90,26 @@ describe('API: LSK Delegates', () => {
       await expect(delegate.getDelegates(data)).resolves.toEqual(expectedResponse);
       expect(http).not.toHaveBeenCalled();
       expect(ws).toHaveBeenCalledWith({
-        baseUrl: undefined,
-        requests: { params: { addressList }, method: delegate.wsMethods.delegates },
+        baseUrl: network.serviceUrl,
+        requests: [
+          { params: { address: addressList[0] }, method: delegate.wsMethods.delegates },
+          { params: { address: addressList[1] }, method: delegate.wsMethods.delegates },
+        ],
       });
     });
 
     it('should return delegates list when filters are passed and call through http', async () => {
       const expectedResponse = [{}, {}, {}];
+      const params = { limit: 10, offset: 2 };
       setApiResponseData(expectedResponse, http);
       await expect(
-        delegate.getDelegates({ params: { limit: 10, offset: 0 }, network }),
+        delegate.getDelegates({ params, network }),
       ).resolves.toEqual(expectedResponse);
       expect(ws).not.toHaveBeenCalled();
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
         path: delegate.httpPaths.delegates,
-        params: { limit: 10, offset: 0 },
+        params,
         network,
       });
     });
@@ -111,15 +118,18 @@ describe('API: LSK Delegates', () => {
       delegate.getDelegates({ baseUrl, network, params: { addressList } });
       expect(ws).toHaveBeenCalledWith({
         baseUrl,
-        requests: { params: { addressList }, method: delegate.wsMethods.delegates },
+        requests: [
+          { params: { address: addressList[0] }, method: delegate.wsMethods.delegates },
+          { params: { address: addressList[1] }, method: delegate.wsMethods.delegates },
+        ],
       });
       delegate.getDelegates({
-        baseUrl, network, params: { limit: 10, offset: 0 },
+        baseUrl, network, params: { limit: 10, offset: 2 },
       });
       expect(http).toHaveBeenCalledWith({
         baseUrl,
         path: delegate.httpPaths.delegates,
-        params: { limit: 10, offset: 0 },
+        params: { limit: 10, offset: 2 },
         network,
       });
     });
@@ -148,7 +158,7 @@ describe('API: LSK Delegates', () => {
       const expectedResponse = [{}, {}, {}];
       const params = { address };
       setApiResponseData(expectedResponse, http);
-      await expect(delegate.getVotes({ ...params, network })).resolves.toEqual(expectedResponse);
+      await expect(delegate.getVotes({ params, network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
         path: delegate.httpPaths.votesSent,
@@ -159,7 +169,7 @@ describe('API: LSK Delegates', () => {
 
     it('should set baseUrl', () => {
       const params = { address };
-      delegate.getVotes({ ...params, network, baseUrl });
+      delegate.getVotes({ params, network, baseUrl });
       expect(http).toHaveBeenCalledWith({
         baseUrl,
         path: delegate.httpPaths.votesSent,
@@ -188,7 +198,7 @@ describe('API: LSK Delegates', () => {
       const expectedResponse = [{}, {}, {}];
       const params = { address };
       setApiResponseData(expectedResponse, http);
-      await expect(delegate.getVoters({ ...params, network })).resolves.toEqual(expectedResponse);
+      await expect(delegate.getVoters({ params, network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
         path: delegate.httpPaths.votesReceived,
@@ -204,7 +214,7 @@ describe('API: LSK Delegates', () => {
       };
       setApiResponseData(expectedResponse, http);
       await expect(
-        delegate.getVoters({ ...params, baseUrl, network }),
+        delegate.getVoters({ params, baseUrl, network }),
       ).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl,
@@ -218,7 +228,7 @@ describe('API: LSK Delegates', () => {
       const params = {
         address, limit: 3, offset: 2,
       };
-      delegate.getVoters({ ...params, baseUrl, network });
+      delegate.getVoters({ params, baseUrl, network });
       expect(http).toHaveBeenCalledWith({
         baseUrl,
         path: delegate.httpPaths.votesReceived,
