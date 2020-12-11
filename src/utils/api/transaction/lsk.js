@@ -147,3 +147,22 @@ export const getTransactionStats = data => http({
   params: { limit: data.params.limit },
   network: data.network,
 });
+
+/**
+ * Gets the amount of a given transaction
+ *
+ * @param {Object} transaction The transaction object
+ * @returns {String} Amount in beddows/satoshi
+ */
+export const getTxAmount = (transaction) => {
+  let amount = transaction.amount !== undefined ? transaction.amount : transaction.asset.amount;
+  if (!amount && transaction.type === transactionTypes().unlockToken.code.legacy) {
+    amount = 0;
+    transaction.asset.unlockingObjects.forEach((unlockedObject) => {
+      amount += parseInt(unlockedObject.amount, 10);
+    });
+    amount = `${amount}`;
+  }
+  return amount;
+};
+
