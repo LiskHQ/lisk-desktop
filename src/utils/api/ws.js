@@ -31,32 +31,46 @@ const ws = ({
   });
 });
 
+/**
+ * Connect to an event and set function to be called when it fires
+ *
+ * @param {String} node - Service URL
+ * @param {String} eventName - Event to subscribe
+ * @param {Function} callback - Function to be called when event fires
+ * @param {Function} onDisconnect - Function to be called when disconnect event fires
+ * @param {Function} onReconnect - Function to be called when reconnect event fires
+ */
 export const subscribe = (
   node,
-  url,
+  eventName,
   callback,
   onDisconnect,
   onReconnect,
 ) => {
   const connection = io.connect(node);
-  connections[url] = connection;
-  forcedClosings[url] = false;
-  connection.on(url, callback);
+  connections[eventName] = connection;
+  forcedClosings[eventName] = false;
+  connection.on(eventName, callback);
   connection.on('reconnect', onReconnect);
   connection.on('disconnect', () => {
-    if (!forcedClosings[url]) {
+    if (!forcedClosings[eventName]) {
       onDisconnect();
     }
   });
 };
 
-export const unsubscribe = (url) => {
-  if (connections[url]) {
-    forcedClosings[url] = true;
-    connections[url].close();
-    forcedClosings[url] = false;
-    delete connections[url];
-    delete forcedClosings[url];
+/**
+ * Close event connection
+ *
+ * @param {String} eventName - Event to unsubscribe
+ */
+export const unsubscribe = (eventName) => {
+  if (connections[eventName]) {
+    forcedClosings[eventName] = true;
+    connections[eventName].close();
+    forcedClosings[eventName] = false;
+    delete connections[eventName];
+    delete forcedClosings[eventName];
   }
 };
 

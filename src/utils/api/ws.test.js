@@ -24,11 +24,9 @@ describe('ws', () => {
 
     expect(typeof wsPromise.then).toEqual('function');
     expect(typeof wsPromise.catch).toEqual('function');
-    expect(io.mock.calls[0][0]).toContain(baseUrl);
+    expect(io).toHaveBeenCalledWith(`${baseUrl}/rpc`, { transports: ['websocket'] });
     expect(emit).toHaveBeenCalledTimes(1);
-    expect(emit.mock.calls[0][0]).toEqual('request');
-    expect(emit.mock.calls[0][1]).toEqual(requests);
-    expect(typeof emit.mock.calls[0][2]).toEqual('function');
+    expect(emit).toHaveBeenCalledWith('request', requests, expect.any(Function));
   });
 
   it('should return a response', async () => {
@@ -68,9 +66,9 @@ describe('ws', () => {
     subscribe(baseUrl, event, fn, fn, fn);
 
     expect(on).toHaveBeenCalledTimes(3);
-    expect(on.mock.calls[0][0]).toEqual(event);
-    expect(on.mock.calls[1][0]).toEqual('reconnect');
-    expect(on.mock.calls[2][0]).toEqual('disconnect');
+    expect(on).toHaveBeenNthCalledWith(1, event, fn);
+    expect(on).toHaveBeenNthCalledWith(2, 'reconnect', fn);
+    expect(on).toHaveBeenNthCalledWith(3, 'disconnect', expect.any(Function));
   });
 
   it('should unsubscribe correctly', () => {

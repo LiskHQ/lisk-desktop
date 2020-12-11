@@ -5,16 +5,16 @@ jest.mock('../ws');
 
 describe('Block api module', () => {
   it('Should call ws subscribe with parameters', () => {
+    const fn = () => {};
     const serviceUrl = 'http://sample-service-url.com';
-    block.blockSubscribe({ serviceUrl });
+    block.blockSubscribe({ serviceUrl }, fn, fn, fn);
     expect(subscribe).toHaveBeenCalledTimes(1);
-    expect(subscribe.mock.calls[0][0]).toContain(serviceUrl);
-    expect(subscribe.mock.calls[0][1]).toContain('blocks/change');
+    expect(subscribe).toHaveBeenCalledWith(serviceUrl, 'blocks/change', fn, fn, fn);
   });
 
   it('Should call ws unsubscribe with parameters', () => {
     block.blockUnsubscribe();
     expect(unsubscribe).toHaveBeenCalledTimes(1);
-    expect(unsubscribe.mock.calls[0][0]).toContain('blocks/change');
+    expect(unsubscribe).toHaveBeenCalledWith('blocks/change');
   });
 });
