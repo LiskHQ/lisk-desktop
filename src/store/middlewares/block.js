@@ -43,7 +43,7 @@ const blockListener = (store) => {
     const now = new Date();
     const oneMinute = 1000 * 60;
 
-    if (!(activeToken === tokenMap.BTC.key) || now - lastBtcUpdate > oneMinute) {
+    if ((activeToken !== tokenMap.BTC.key) || now - lastBtcUpdate > oneMinute) {
       store.dispatch({
         type: actionTypes.newBlockCreated,
         data: { block, windowIsFocused },
