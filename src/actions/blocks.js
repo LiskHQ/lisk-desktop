@@ -1,6 +1,5 @@
 import actionTypes from '../constants/actions';
 import { convertUnixSecondsToLiskEpochSeconds } from '../utils/datetime';
-import liskServiceApi from '../utils/api/lsk/liskService';
 import voting from '../constants/voting';
 
 /**

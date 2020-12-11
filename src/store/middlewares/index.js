@@ -6,7 +6,7 @@ import hwManagerMiddleware from './hwManager';
 // ToDo : enable this one when you solve the problem with multi account management
 // import notificationMiddleware from './notification';
 import votingMiddleware from './voting';
-import socketMiddleware from './socket';
+import blockMiddleware from './block';
 import settingsMiddleware from './settings';
 import bookmarksMiddleware from './bookmarks';
 import networkMiddleware from './network';
@@ -19,7 +19,7 @@ export default [
   loadingBarMiddleware,
   offlineMiddleware,
   settingsMiddleware,
-  socketMiddleware,
+  blockMiddleware,
   votingMiddleware,
   networkMiddleware,
   thunk,
