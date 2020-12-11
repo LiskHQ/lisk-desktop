@@ -32,6 +32,8 @@ const actionTypes = {
   networkSet: 'NETWORK_SET',
   serviceUrlSet: 'SERVICE_URL_SET',
   networkStatusUpdated: 'NETWORK_STATUS_UPDATED',
+  socketConnectionsUpdated: 'NETWORK_SOCKET_CONNECTIONS_UPDATED',
+  lastBtcUpdateSet: 'NETWORK_LAST_BTC_UPDATE_SET',
   newBlockCreated: 'NEW_BLOCK_CREATED',
   olderBlocksRetrieved: 'OLDER_BLOCKS_RETRIEVED',
   passphraseUsed: 'PASSPHRASE_USED',
