@@ -61,9 +61,9 @@ export const subscribe = (
 export const unsubscribe = (eventName, connections) => {
   const eventConnection = connections[eventName];
   if (eventConnection) {
-    eventConnection.forcedClosings = true;
+    eventConnection.forcedClosing = true;
     eventConnection.connection.close();
-    eventConnection.forcedClosings = false;
+    eventConnection.forcedClosing = false;
   }
 };
 

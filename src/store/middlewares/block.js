@@ -60,7 +60,7 @@ const blockListener = (store) => {
   const newConnection = blockSubscribe(state.network, callback, onDisconnect, onReconnect);
   store.dispatch({
     type: actionTypes.socketConnectionsUpdated,
-    data: { ...state.network.socketConnections, newConnection },
+    data: { ...state.network.socketConnections, ...newConnection },
   });
 };
 

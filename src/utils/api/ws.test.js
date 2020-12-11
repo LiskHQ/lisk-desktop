@@ -68,24 +68,25 @@ describe('ws', () => {
 
   it('should subscribe correctly', () => {
     const on = jest.fn();
-    io.connect = () => ({ on });
+    const connection = { on };
+    io.connect = () => connection;
     const fn = () => {};
     const event = 'blocks/change';
-    subscribe(baseUrl, event, fn, fn, fn);
+    const returnedObject = subscribe(baseUrl, event, fn, fn, fn);
 
     expect(on).toHaveBeenCalledTimes(3);
     expect(on).toHaveBeenNthCalledWith(1, event, fn);
     expect(on).toHaveBeenNthCalledWith(2, 'reconnect', fn);
     expect(on).toHaveBeenNthCalledWith(3, 'disconnect', expect.any(Function));
+    expect(returnedObject).toBe(connection);
   });
 
   it('should unsubscribe correctly', () => {
-    const fn = () => {};
     const close = jest.fn();
-    io.connect = () => ({ on: fn, close });
     const event = 'blocks/change';
-    subscribe(baseUrl, event, fn, fn, fn);
-    unsubscribe(event);
+    const connection = { close };
+    const connections = { [event]: { connection, forcedClosing: false } };
+    unsubscribe(event, connections);
 
     expect(close).toHaveBeenCalledTimes(1);
   });
