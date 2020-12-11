@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getVotes } from '../../../../utils/api/delegate';
-import liskService from '../../../../utils/api/lsk/liskService';
+import { getAccounts } from '../../../../utils/api/account';
 import withData from '../../../../utils/withData';
 import Votes from './votes';
 
@@ -15,7 +15,7 @@ const apis = {
     transformResponse: response => response.data.votes,
   },
   accounts: {
-    apiUtil: liskService.getAccounts,
+    apiUtil: getAccounts,
     autoload: false,
     defaultData: {},
     transformResponse: response =>

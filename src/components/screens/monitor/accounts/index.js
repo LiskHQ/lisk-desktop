@@ -10,6 +10,7 @@ import header from './tableHeader';
 import AccountRow from './accountRow';
 import withData from '../../../../utils/withData';
 import liskServiceApi from '../../../../utils/api/lsk/liskService';
+import { getNetworkStatus } from '../../../../utils/api/network';
 
 export const AccountsPure = ({
   accounts,
@@ -58,7 +59,7 @@ export default compose(
         ),
       },
       networkStatus: {
-        apiUtil: liskServiceApi.getNetworkStatus,
+        apiUtil: getNetworkStatus,
         defaultData: {},
         autoload: true,
         transformResponse: response => response,

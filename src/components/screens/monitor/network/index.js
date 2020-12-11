@@ -12,7 +12,7 @@ import Map from './map';
 import PeerRow from './peerRow';
 import Overview from './overview';
 import withLocalSort from '../../../../utils/withLocalSort';
-import liskService from '../../../../utils/api/lsk/liskService';
+import { getNetworkStatistics, getConnectedPeers } from '../../../../utils/api/network';
 import withData from '../../../../utils/withData';
 
 /**
@@ -104,13 +104,13 @@ export const NetworkPure = ({
 export default compose(
   withData({
     networkStatistics: {
-      apiUtil: liskService.getNetworkStatistics,
+      apiUtil: getNetworkStatistics,
       defaultData: {},
       autoload: true,
       transformResponse: response => response.data,
     },
     peers: {
-      apiUtil: liskService.getConnectedPeers,
+      apiUtil: getConnectedPeers,
       defaultData: [],
       autoload: true,
       transformResponse: response => response.data,

@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getActiveTokenAccount } from '../../../utils/account';
-import liskService from '../../../utils/api/lsk/liskService';
+import { getAccounts } from '../../../utils/api/account';
 import { getTransaction } from '../../../utils/api/transaction';
 import withData from '../../../utils/withData';
 import TransactionDetails from './transactionDetails';
@@ -29,7 +29,7 @@ const apis = {
   },
 
   delegates: {
-    apiUtil: liskService.getAccounts,
+    apiUtil: getAccounts,
     autoload: false,
     defaultData: {},
     transformResponse: response => response.reduce((acc, item) => {
