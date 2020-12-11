@@ -8,13 +8,14 @@ jest.mock('../ws', () => jest.fn().mockReturnValue([]));
 
 describe('API: LSK Account', () => {
   const network = { serviceUrl: 'http://sample.com/' };
-  let baseUrl;
+  const baseUrl = 'http://custom-basse-url.com/';
   const path = '/api/v1/accounts';
 
   beforeEach(() => jest.clearAllMocks());
 
   describe('getAccounts', () => {
     it('should return a list of accounts without params', async () => {
+      // Checks with no baseUrl
       const response = await getAccounts({ network });
 
       expect(response).toBeDefined();
@@ -27,6 +28,7 @@ describe('API: LSK Account', () => {
         { method: 'get.accounts', params: { address: '12L' } },
         { method: 'get.accounts', params: { address: '13L' } },
       ];
+      // BaseUrl is not used for WS calls
       const response = await getAccounts({
         network,
         params: {
@@ -42,14 +44,16 @@ describe('API: LSK Account', () => {
       expect(http).not.toHaveBeenCalled();
     });
 
-    it('should call http with given filters', async () => {
+    it('should call http with given filters and baseUrl', async () => {
       const params = {
         limit: 10,
         offset: 10,
       };
+      // Checks the baseUrl too
       const response = await getAccounts({
         network,
         params,
+        baseUrl,
       });
 
       expect(response).toBeDefined();
@@ -64,6 +68,7 @@ describe('API: LSK Account', () => {
         limit: 10,
         offset: 10,
       };
+      // Checks with no baseUrl
       const response = await getAccounts({
         network,
         params,
@@ -71,7 +76,7 @@ describe('API: LSK Account', () => {
 
       expect(response).toBeDefined();
       expect(http).toHaveBeenCalledWith({
-        network, params, baseUrl, path,
+        network, params, baseUrl: undefined, path,
       });
       expect(ws).not.toHaveBeenCalled();
     });
@@ -86,8 +91,10 @@ describe('API: LSK Account', () => {
     } = accounts.delegate;
 
     it('should call http with right params, prioritizing 1. username', async () => {
+      // Checks the baseUrl too
       await getAccount({
         network,
+        baseUrl,
         params: {
           address,
           username,
@@ -105,6 +112,7 @@ describe('API: LSK Account', () => {
     });
 
     it('should call http with right params, prioritizing 2. address', async () => {
+      // Checks with no baseUrl
       await getAccount({
         network,
         params: {
@@ -117,12 +125,13 @@ describe('API: LSK Account', () => {
       expect(http).toHaveBeenCalledWith({
         network,
         params: { address },
-        baseUrl,
+        baseUrl: undefined,
         path,
       });
     });
 
     it('should call http with right address, if publicKey passed', async () => {
+      // Checks with no baseUrl
       await getAccount({
         network,
         params: {
@@ -133,17 +142,19 @@ describe('API: LSK Account', () => {
       expect(http).toHaveBeenCalledWith({
         network,
         params: { address },
-        baseUrl,
+        baseUrl: undefined,
         path,
       });
     });
 
     it('should call http with right address, if passphrase passed', async () => {
+      // Checks the baseUrl too
       await getAccount({
         network,
         params: {
           passphrase,
         },
+        baseUrl,
       });
 
       expect(http).toHaveBeenCalledWith({
