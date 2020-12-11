@@ -139,9 +139,7 @@ export const AmountAndDate = ({
         </span>
         <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
           <span className="tx-amount">
-            <LiskAmount val={getTxAmount(transaction)} />
-            {' '}
-            {activeToken}
+            <LiskAmount val={getTxAmount(transaction)} token={activeToken} />
           </span>
         </DiscreetMode>
       </div>
