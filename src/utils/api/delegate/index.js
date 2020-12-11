@@ -1,204 +1,210 @@
 import http from '../http';
 import ws from '../ws';
+import { extractAddress } from '../../account';
+import regex from '../../regex';
 
-export const ENDPOINTS = {
-  DELEGATES: '/api/v1/delegates',
-  VOTES_SENT: '/api/v1/votes_sent',
-  VOTES_RECEIVED: '/api/v1/votes_received',
-  FORGERS: '/api/v1/delegates/next_forgers',
+const httpPrefix = '/api/v1';
+
+export const httpPaths = {
+  delegates: `${httpPrefix}/delegates`,
+  votesSent: `${httpPrefix}/votes_sent`,
+  votesReceived: `${httpPrefix}/votes_received`,
+  forgers: `${httpPrefix}/delegates/next_forgers`,
 };
 
-export const WS_METHODS = {
-  GET_DELEGATES: 'get.delegates',
+export const wsMethods = {
+  delegates: 'get.delegates',
 };
 
-const moreThanOneDefinedParam = (params) => {
-  let count = 0;
-  return params.some((param) => {
-    if (param) count++;
-    if (count > 1) return true;
-    return false;
-  });
+const getDelegateProps = ({ address, publicKey, username }) => {
+  if (username) return { username };
+  if (address) return { address };
+  if (publicKey) return { address: extractAddress(publicKey) };
+  return {};
 };
-const removeUndefinedProps = (obj) => {
-  Object.keys(obj).forEach((prop) => {
-    if (obj[prop] === undefined) delete obj[prop];
-  });
-  return obj;
-};
-
-const errorConflictingParams = new Error('Request contains conflicting parameters');
 
 /**
  * Retrieves data of a given delegate.
  *
  * @param {Object} data
- * @param {String?} data.address - Delegate address
- * @param {String?} data.publicKey - Delegate public key
- * @param {String?} data.username - Delegate username
+ * @param {String?} data.params.address - Delegate address
+ * @param {String?} data.params.publicKey - Delegate public key
+ * @param {String?} data.params.username - Delegate username
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call or Promise rejection in case of validation error
+ * @returns {Promise} http call
  */
 export const getDelegate = ({
-  address, publicKey, username, network, baseUrl,
-}) => new Promise(async (resolve, reject) => {
-  const validateParams = { address, publicKey, username };
-  if (moreThanOneDefinedParam(Object.values(validateParams))) {
-    reject(errorConflictingParams);
-  }
-
-  try {
-    const delegate = await http({
-      path: ENDPOINTS.DELEGATES,
-      params: removeUndefinedProps(validateParams),
-      network,
-      baseUrl,
-    });
-    resolve(delegate);
-  } catch (e) {
-    reject(e);
-  }
+  params = {}, network, baseUrl,
+}) => http({
+  path: httpPaths.delegates,
+  params: getDelegateProps(params),
+  network,
+  baseUrl,
 });
+
+const txFilters = {
+  limit: { key: 'limit', test: num => (typeof num === 'number') },
+  offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
+  sort: {
+    key: 'sort',
+    test: str => [
+      'rank:asc',
+      'rank:desc',
+      'productivity:asc',
+      'productivity:desc',
+      'missedBlocks:asc',
+      'missedBlocks:desc',
+    ].includes(str),
+  },
+};
+
+const getRequests = (values) => {
+  const paramList = values.find(item => Array.isArray(item.list) && item.list.length);
+  if (paramList) {
+    return paramList.list
+      .filter(item => regex[paramList.name].test(item))
+      .map(item => ({
+        method: wsMethods.delegates,
+        params: { [paramList.name]: item },
+      }));
+  }
+  return false;
+};
 
 /**
  * Retrieves data of a list of delegates.
  *
  * @param {Object} data
- * @param {String?} data.addressList - Delegates address list
- * @param {String?} data.publicKeyList - Delegates public key list
- * @param {String?} data.usernameList - Delegates username list
- * @param {Number?} data.offset - Index of the first result
- * @param {Number?} data.limit - Maximum number of results
+ * @param {String?} data.params.addressList - Delegates address list
+ * @param {String?} data.params.publicKeyList - Delegates public key list
+ * @param {String?} data.params.usernameList - Delegates username list
+ * @param {Number?} data.params.offset - Index of the first result
+ * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call or Promise rejection in case of validation error
+ * @returns {Promise} http call or websocket call
  */
 export const getDelegates = ({
-  addressList, publicKeyList, usernameList,
-  offset, limit, network, baseUrl,
-// eslint-disable-next-line max-statements
-}) => new Promise(async (resolve, reject) => {
-  if (!addressList && !publicKeyList && !usernameList) {
-    try {
-      const delegates = await http({
-        path: ENDPOINTS.DELEGATES,
-        params: { offset, limit },
-        network,
-        baseUrl,
-      });
-      resolve(delegates);
-    } catch (e) {
-      reject(e);
-    }
-  } else {
-    const validateParams = { addressList, publicKeyList, usernameList };
-    if (moreThanOneDefinedParam(Object.values(validateParams))) {
-      reject(errorConflictingParams);
-    }
-    try {
-      const delegates = await ws({
-        requests: {
-          method: WS_METHODS.GET_DELEGATES,
-          params: removeUndefinedProps(validateParams),
-        },
-        baseUrl,
-      });
-      resolve(delegates);
-    } catch (e) {
-      reject(e);
-    }
+  network,
+  params = {},
+  baseUrl,
+}) => {
+  // Use websocket to retrieve accounts with a given array of addresses
+  const requests = getRequests([
+    { name: 'address', list: params.addressList },
+    { name: 'publicKey', list: params.publicKeyList },
+    { name: 'username', list: params.usernameList },
+  ]);
+  if (requests) {
+    return ws({
+      requests,
+      baseUrl: baseUrl || network.serviceUrl,
+    });
   }
-});
+
+  // Use HTTP to retrieve accounts with given sorting and pagination parameters
+  const normParams = {};
+  Object.keys(params).forEach((key) => {
+    if (txFilters[key].test(params[key])) {
+      normParams[txFilters[key].key] = params[key];
+    }
+  });
+
+  return http({
+    path: httpPaths.delegates,
+    params: normParams,
+    network,
+    baseUrl,
+  });
+};
 
 /**
  * Retrieves a list of votes sent by a given delegate.
  *
  * @param {Object} data
- * @param {String?} data.address - Delegate address
- * @param {String?} data.publicKey - Delegate public key
+ * @param {String?} data.params.address - Delegate address
+ * @param {String?} data.params.publicKey - Delegate public key
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call or Promise rejection in case of validation error
+ * @returns {Promise} http call
  */
 export const getVotes = ({
-  address, publicKey, network, baseUrl,
-}) => new Promise(async (resolve, reject) => {
-  const validateParams = { address, publicKey };
-  if (moreThanOneDefinedParam(Object.values(validateParams))) {
-    reject(errorConflictingParams);
-  }
-
-  try {
-    const votes = await http({
-      path: ENDPOINTS.VOTES_SENT,
-      params: removeUndefinedProps(validateParams),
-      network,
-      baseUrl,
-    });
-    resolve(votes);
-  } catch (e) {
-    reject(e);
-  }
+  network,
+  params = {},
+  baseUrl,
+}) => http({
+  path: httpPaths.votesSent,
+  params: getDelegateProps({ address: params.address, publicKey: params.publicKey }),
+  network,
+  baseUrl,
 });
 
 /**
  * Retrieves list of votes given for a given delegate.
  *
  * @param {Object} data
- * @param {String?} data.address - Delegate address
- * @param {String?} data.publicKey - Delegate public key
- * @param {Number?} data.offset - Index of the first result
- * @param {Number?} data.limit - Maximum number of results
+ * @param {String?} data.params.address - Delegate address
+ * @param {String?} data.params.publicKey - Delegate public key
+ * @param {Number?} data.params.offset - Index of the first result
+ * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call or Promise rejection in case of validation error
+ * @returns {Promise} http call
  */
 export const getVoters = ({
-  address, publicKey, network, baseUrl, limit, offset,
-}) => new Promise(async (resolve, reject) => {
-  const validateParams = { address, publicKey };
-  if (moreThanOneDefinedParam(Object.values(validateParams))) {
-    reject(errorConflictingParams);
-  }
+  network,
+  params = {},
+  baseUrl,
+}) => {
+  const pagination = {};
+  Object.keys(params).forEach((key) => {
+    if (txFilters[key] && txFilters[key].test(params[key])) {
+      pagination[txFilters[key].key] = params[key];
+    }
+  });
+  const account = getDelegateProps({
+    address: params.address,
+    publicKey: params.publicKey,
+  });
 
-  try {
-    const voters = await http({
-      path: ENDPOINTS.VOTES_RECEIVED,
-      params: { ...removeUndefinedProps(validateParams), limit, offset },
-      network,
-      baseUrl,
-    });
-    resolve(voters);
-  } catch (e) {
-    reject(e);
-  }
-});
+  return http({
+    path: httpPaths.votesReceived,
+    params: {
+      ...account,
+      ...pagination,
+    },
+    network,
+    baseUrl,
+  });
+};
 
 /**
  * Retrieves list of active delegates.
  *
- * @param {Number?} data.offset - Index of the first result
- * @param {Number?} data.limit - Maximum number of results
+ * @param {Number?} data.params.offset - Index of the first result
+ * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call or Promise rejection in case of validation error
+ * @returns {Promise} http call
  */
 export const getForgers = ({
-  limit, offset, network, baseUrl,
+  network,
+  params = {},
+  baseUrl,
 }) => http({
-  path: ENDPOINTS.FORGERS,
-  params: { offset, limit },
+  path: httpPaths.forgers,
+  params: { offset: params.offset, limit: params.limit },
   network,
   baseUrl,
 });

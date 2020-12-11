@@ -43,7 +43,7 @@ export const Illustration = ({
 };
 
 export const Sender = ({
-  transaction, activeToken, netCode,
+  transaction, activeToken, network,
 }) => {
   const { senderLabel } = transactionTypes.getByCode(transaction.type || 0);
 
@@ -52,7 +52,7 @@ export const Sender = ({
       <AccountInfo
         name={getDelegateName(transaction, activeToken)}
         token={activeToken}
-        netCode={netCode}
+        network={network}
         address={transaction.senderId}
         addressClass="sender-address"
         label={senderLabel}
@@ -62,14 +62,14 @@ export const Sender = ({
 };
 
 export const Recipient = ({
-  activeToken, netCode, transaction, t,
+  activeToken, network, transaction, t,
 }) => {
   if (transaction.type !== transactionTypes().transfer.code.legacy) return null;
   return (
     <BoxRow className={styles.detailsWrapper}>
       <AccountInfo
         token={activeToken}
-        netCode={netCode}
+        network={network}
         address={transaction.recipientId}
         addressClass="receiver-address"
         label={t('Recipient')}

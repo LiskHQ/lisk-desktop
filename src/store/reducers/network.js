@@ -34,6 +34,16 @@ const network = (state = initialState, action) => {
         ...state,
         serviceUrl: action.data,
       };
+    case actionTypes.socketConnectionsUpdated:
+      return {
+        ...state,
+        socketConnections: action.data,
+      };
+    case actionTypes.lastBtcUpdateSet:
+      return {
+        ...state,
+        lastBtcUpdate: action.data,
+      };
     default:
       return state;
   }

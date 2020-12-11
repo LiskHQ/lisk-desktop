@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Lisk from '@liskhq/lisk-client';
 import to from 'await-to-js';
-import { create } from '../../../../utils/api/lsk/transactions';
+import { create } from '../../../../utils/api/transaction';
 import accounts from '../../../../../test/constants/accounts';
 import Summary from './summary';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';

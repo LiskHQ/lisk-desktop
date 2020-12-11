@@ -28,4 +28,43 @@ const ws = ({
   });
 });
 
+/**
+ * Connect to an event and set function to be called when it fires
+ *
+ * @param {String} node - Service URL
+ * @param {String} eventName - Event to subscribe
+ * @param {Function} callback - Function to be called when event fires
+ * @param {Function} onDisconnect - Function to be called when disconnect event fires
+ * @param {Function} onReconnect - Function to be called when reconnect event fires
+ * @returns {Object} - Connection
+ */
+export const subscribe = (
+  node,
+  eventName,
+  callback,
+  onDisconnect,
+  onReconnect,
+) => {
+  const connection = io.connect(node);
+  connection.on(eventName, callback);
+  connection.on('reconnect', onReconnect);
+  connection.on('disconnect', () => { onDisconnect(eventName); });
+  return connection;
+};
+
+/**
+ * Close event connection
+ *
+ * @param {String} eventName - Event to unsubscribe
+ * @param {Object} connections - Stored socket connections
+ */
+export const unsubscribe = (eventName, connections) => {
+  const eventConnection = connections[eventName];
+  if (eventConnection) {
+    eventConnection.forcedClosing = true;
+    eventConnection.connection.close();
+    eventConnection.forcedClosing = false;
+  }
+};
+
 export default ws;

@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { getVotes } from '../../../../utils/api/delegates';
+import { getVotes } from '../../../../utils/api/delegate';
 import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
 import Votes from './votes';

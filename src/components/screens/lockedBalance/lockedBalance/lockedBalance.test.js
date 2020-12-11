@@ -4,14 +4,14 @@ import LockedBalance from './index';
 import accounts from '../../../../../test/constants/accounts';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import { create } from '../../../../utils/api/lsk/transactions';
+import { create } from '../../../../utils/api/transaction';
 import networks from '../../../../constants/networks';
 import { tokenMap } from '../../../../constants/tokens';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('../../send/form/useTransactionPriority');
 jest.mock('../../send/form/useTransactionFeeCalculation');
-jest.mock('../../../../utils/api/lsk/transactions');
+jest.mock('../../../../utils/api/transaction');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
