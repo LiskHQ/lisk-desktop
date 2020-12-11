@@ -7,18 +7,33 @@ import { getConnectionErrorMessage } from '../../utils/getNetwork';
 
 const getServerUrl = (nodeUrl, nethash) => {
   if (nethash === Lisk.constants.MAINNET_NETHASH) {
-    return 'https://mainnet-service.lisk.io';
+    return {
+      serviceUrl: 'https://mainnet-service.lisk.io',
+      cloudUrl: 'https://cloud.lisk.io',
+    };
   }
   if (nethash === Lisk.constants.TESTNET_NETHASH) {
-    return 'https://testnet-service.lisk.io';
+    return {
+      serviceUrl: 'https://testnet-service.lisk.io',
+      cloudUrl: 'https://cloud.lisk.io',
+    };
   }
-  if (/liskdev.net:\d{2,4}$/.test(nodeUrl)) {
-    return nodeUrl.replace(/:\d{2,4}/, ':9901');
+  if (/(localhost|liskdev.net):\d{2,4}$/.test(nodeUrl)) {
+    return {
+      serviceUrl: nodeUrl.replace(/:\d{2,4}/, ':9901'),
+      cloudUrl: 'https://cloud.lisk.io',
+    };
   }
   if (/\.(liskdev.net|lisk.io)$/.test(nodeUrl)) {
-    return nodeUrl.replace(/\.(liskdev.net|lisk.io)$/, $1 => `-service${$1}`);
+    return {
+      serviceUrl: nodeUrl.replace(/\.(liskdev.net|lisk.io)$/, $1 => `-service${$1}`),
+      cloudUrl: 'https://cloud.lisk.io',
+    };
   }
-  return 'unavailable';
+  return {
+    serviceUrl: 'unavailable',
+    cloudUrl: 'unavailable',
+  };
 };
 
 const generateAction = (data, config) => ({
