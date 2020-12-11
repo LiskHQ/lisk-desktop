@@ -7,6 +7,7 @@ jest.mock('../http', () => ({
 }));
 
 describe('API: BTC Transactions', () => {
+  const path = 'transactions';
   const network = {
     serviceUrl: 'http://sample.com/',
     networks: {
@@ -55,6 +56,7 @@ describe('API: BTC Transactions', () => {
       expect(http).toHaveBeenCalledWith({
         params: { id: sampleId },
         network,
+        path,
       });
     });
   });
@@ -82,6 +84,7 @@ describe('API: BTC Transactions', () => {
       expect(http).toHaveBeenCalledWith({
         params,
         network,
+        path,
       });
     });
 
