@@ -10,7 +10,7 @@ import TransactionAmount from '../../../shared/transactionAmount';
 import Spinner from '../../../toolbox/spinner';
 import TransactionAsset from './txAsset';
 import DialogLink from '../../../toolbox/dialog/link';
-import { getTxAmount } from '../../../../utils/transactions';
+import { getTxAmount } from '../../../../utils/api/transaction';
 import styles from './transactions.css';
 
 // eslint-disable-next-line complexity

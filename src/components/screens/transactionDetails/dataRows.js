@@ -10,7 +10,7 @@ import LiskAmount from '../../shared/liskAmount';
 import transactionTypes from '../../../constants/transactionTypes';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
-import { getTxAmount } from '../../../utils/transactions';
+import { getTxAmount } from '../../../utils/api/transaction';
 
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
