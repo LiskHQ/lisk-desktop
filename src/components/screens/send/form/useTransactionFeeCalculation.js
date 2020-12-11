@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
   getTransactionFee,
-} from '../../../../utils/api/transactions';
+} from '../../../../utils/api/transaction';
 import { toRawLsk } from '../../../../utils/lsk';
 import { tokenMap } from '../../../../constants/tokens';
 import { minBalance } from '../../../../constants/transactions';

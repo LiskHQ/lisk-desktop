@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { getNetworkCode } from '../../../../utils/api/btc/network';
+import { getNetworkCode } from '../../../../utils/api/network';
 import { validateAddress } from '../../../../utils/validators';
 import AccountVisual from '../../../toolbox/accountVisual';
 import AutoSuggest from '../../../toolbox/autoSuggest';

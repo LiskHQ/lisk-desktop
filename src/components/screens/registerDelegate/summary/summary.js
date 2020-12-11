@@ -3,7 +3,7 @@ import to from 'await-to-js';
 
 import TransactionSummary from '../../../shared/transactionSummary';
 import AccountVisual from '../../../toolbox/accountVisual';
-import { create } from '../../../../utils/api/lsk/transactions';
+import { create } from '../../../../utils/api/transaction';
 import transactionTypes from '../../../../constants/transactionTypes';
 import { toRawLsk } from '../../../../utils/lsk';
 import styles from './summary.css';

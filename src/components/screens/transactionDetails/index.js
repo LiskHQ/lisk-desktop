@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getActiveTokenAccount } from '../../../utils/account';
 import liskService from '../../../utils/api/lsk/liskService';
-import { getSingleTransaction } from '../../../utils/api/transactions';
+import { getTransaction } from '../../../utils/api/transaction';
 import withData from '../../../utils/withData';
 import TransactionDetails from './transactionDetails';
 import { parseSearchParams } from '../../../utils/searchParams';
@@ -18,7 +18,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const apis = {
   transaction: {
-    apiUtil: (network, params) => getSingleTransaction({ network, ...params }),
+    apiUtil: (network, params) => getTransaction({ network, ...params }),
     getApiParams: (state, ownProps) => ({
       token: state.settings.token.active,
       id: parseSearchParams(ownProps.location.search).transactionId,

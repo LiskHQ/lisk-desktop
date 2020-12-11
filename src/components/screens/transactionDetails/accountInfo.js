@@ -12,7 +12,7 @@ const AccountInfo = ({
   addressClass,
   name,
   token,
-  netCode,
+  network,
 }) => {
   const addressLink = routes.account.path;
   return (
@@ -20,7 +20,7 @@ const AccountInfo = ({
       <p className={styles.label}>{label}</p>
       <div className={styles.addressRow}>
         <AccountVisual className={styles.avatar} address={address} size={25} />
-        { validateAddress(token, address, netCode) === 0
+        { validateAddress(token, address, network) === 0
           ? (
             <Link
               to={`${addressLink}?address=${address}`}
