@@ -14,12 +14,12 @@ import transactionTypes from '../../../constants/transactionTypes';
 const formatDate = (value, options) => getTimestampFromFirstBlock(value, 'DD.MM.YY', options);
 
 const liskServiceGet = ({
-  path, transformResponse = x => x, searchParams = {}, network,
+  path, transformResponse = x => x, searchParams = {}, network, baseUrl = 'serviceUrl',
 }) => new Promise((resolve, reject) => {
   if (network.serviceUrl === 'unavailable') {
     reject(new Error('Lisk Service is not available for this network.'));
   } else {
-    popsicle.get(`${network.serviceUrl}${path}?${new URLSearchParams(searchParams)}`)
+    popsicle.get(`${network[baseUrl]}${path}?${new URLSearchParams(searchParams)}`)
       .use(popsicle.plugins.parse('json'))
       .then((response) => {
         if (response.statusType() === 2) {
@@ -56,6 +56,7 @@ const liskServiceApi = {
       path: '/api/v1/market/prices',
       transformResponse: response => response.data,
       network,
+      baseUrl: 'cloudUrl',
     }),
 
   getNewsFeed: (network, searchParams) => liskServiceGet({
@@ -63,6 +64,7 @@ const liskServiceApi = {
     searchParams,
     transformResponse: response => response.data,
     network,
+    baseUrl: 'cloudUrl',
   }),
 
   getLastBlocks: async (
