@@ -2,14 +2,14 @@
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import BlocksOverview from './blocksOverview';
-import liskService from '../../../../../utils/api/lsk/liskService';
+import { getBlocks } from '../../../../../utils/api/block';
 import withData from '../../../../../utils/withData';
 
 export default compose(
   withRouter,
   withData({
     blocks: {
-      apiUtil: liskService.getLastBlocks,
+      apiUtil: getBlocks,
       transformResponse: response => response.data,
       defaultUrlSearchParams: { limit: '10' },
       defaultData: [],

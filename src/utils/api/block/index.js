@@ -4,6 +4,7 @@ import http from '../http';
 const httpPrefix = '/api/v1';
 
 export const httpPaths = {
+  block: `${httpPrefix}/block`,
   blocks: `${httpPrefix}/blocks`,
 };
 
@@ -25,14 +26,32 @@ const wsMethods = {
 export const getBlock = ({
   params = {}, network, baseUrl,
 }) => http({
-  path: httpPaths.blocks,
+  path: httpPaths.block,
   params,
   network,
   baseUrl,
 });
 
-export const getBlocks = data => new Promise(resolve =>
-  resolve({ endpoint: 'getBlocks', token: 'shared', data }));
+/**
+ * Retrieves blocks list.
+ *
+ * @param {Object} data
+ * @param {Number?} data.params.offset - Index of the first result
+ * @param {Number?} data.params.limit - Maximum number of results
+ * @param {String?} data.baseUrl - Lisk Service API url to override the
+ * existing ServiceUrl on the network param. We may use this to retrieve
+ * the details of an archived transaction.
+ * @param {Object} data.network - Network setting from Redux store
+ * @returns {Promise} http call
+ */
+export const getBlocks = ({
+  params = {}, network, baseUrl,
+}) => http({
+  path: httpPaths.blocks,
+  params,
+  network,
+  baseUrl,
+});
 
 /**
  * Connects to block change event via websocket and set function to be called when it fires
