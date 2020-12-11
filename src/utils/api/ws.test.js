@@ -6,7 +6,7 @@ jest.mock('socket.io-client');
 describe('ws', () => {
   const baseUrl = 'http://sample-service-url.com';
 
-  it('should return a promise and call emit with parameters', async () => {
+  it('Should call socket.emit', async () => {
     const requests = [{
       method: 'account.get',
       params: { address: '12L' },
@@ -16,36 +16,43 @@ describe('ws', () => {
     });
     io.mockImplementation(() => ({ emit }));
 
-    const wsPromise = ws({
+    await ws({
       baseUrl,
       requests,
     });
-    await wsPromise;
 
-    expect(typeof wsPromise.then).toEqual('function');
-    expect(typeof wsPromise.catch).toEqual('function');
-    expect(io).toHaveBeenCalledWith(`${baseUrl}/rpc`, { transports: ['websocket'] });
-    expect(emit).toHaveBeenCalledTimes(1);
-    expect(emit).toHaveBeenCalledWith('request', requests, expect.any(Function));
+    expect(io).toHaveBeenCalledWith(
+      `${baseUrl}/rpc`,
+      { transports: ['websocket'] },
+    );
+    expect(emit).toHaveBeenCalledWith(
+      'request',
+      [{ method: 'account.get', params: { address: '12L' } }],
+      expect.anything(), // callback function
+    );
   });
 
-  it('should return a response', async () => {
+  it('should return a response object for a single request', async () => {
     const resultObject = { message: 'ok' };
-    const resultArray = ['1', '2', '3'];
 
-    let emit = jest.fn().mockImplementation((evtName, params, callback) => {
+    const emit = jest.fn().mockImplementation((evtName, params, callback) => {
       callback({ result: resultObject });
     });
     io.mockImplementation(() => ({ emit }));
     const responseObject = await ws({});
 
-    emit = jest.fn().mockImplementation((evtName, params, callback) => {
+    expect(responseObject).toEqual(resultObject);
+  });
+
+  it('should return a response object for an array of requests', async () => {
+    const resultArray = ['1', '2', '3'];
+
+    const emit = jest.fn().mockImplementation((evtName, params, callback) => {
       callback({ result: resultArray });
     });
     io.mockImplementation(() => ({ emit }));
     const responseArray = await ws({});
 
-    expect(responseObject).toEqual(resultObject);
     expect(responseArray).toEqual(resultArray);
   });
 
@@ -55,6 +62,7 @@ describe('ws', () => {
       callback({ error });
     });
     io.mockImplementation(() => ({ emit }));
+
     await expect(ws({})).rejects.toEqual(error);
   });
 

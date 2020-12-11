@@ -32,7 +32,6 @@ const useTransactionPriority = (token) => {
     setselectedPriority({
       ...item,
       selectedIndex: index,
-      error: !!prioritiesLoadError,
     });
   };
 

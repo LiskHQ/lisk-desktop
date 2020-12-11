@@ -66,6 +66,9 @@ pipeline {
 			}
 		}
 		stage('Run tests') {
+			environment {
+				LISK_CORE_IMAGE_VERSION = "${params.LISK_CORE_IMAGE_VERSION}"
+			}
 			steps {
 				parallel (
 					"jest": {

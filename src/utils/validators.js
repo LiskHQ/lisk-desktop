@@ -3,7 +3,6 @@ import numeral from 'numeral';
 import { cryptography } from '@liskhq/lisk-client';
 import { tokenMap } from '../constants/tokens';
 import { minBalance } from '../constants/transactions';
-import getBtcConfig from './api/btc/config';
 import { toRawLsk } from './lsk';
 import i18n from '../i18n';
 import reg from './regex';
@@ -12,11 +11,11 @@ import reg from './regex';
  * Validates the given address with respect to the tokenType
  * @param {String} tokenType
  * @param {String} address
- * @param {Number} [netCode=1]
+ * @param {Object} network The network config from Redux store
  * @returns {Number} -> 0: valid, 1: invalid, -1: empty
  */
 // eslint-disable-next-line import/prefer-default-export
-export const validateAddress = (tokenType, address, netCode = 1) => {
+export const validateAddress = (tokenType, address, network) => {
   if (address === '') {
     return -1;
   }
@@ -25,9 +24,8 @@ export const validateAddress = (tokenType, address, netCode = 1) => {
     // Reference: https://github.com/bitcoinjs/bitcoinjs-lib/issues/890
     case tokenMap.BTC.key:
       try {
-        const config = getBtcConfig(netCode);
         bitcoin.address.fromBase58Check(address); // eliminates segwit addresses
-        bitcoin.address.toOutputScript(address, config.network);
+        bitcoin.address.toOutputScript(address, network.name);
         return 0;
       } catch (e) {
         return 1;

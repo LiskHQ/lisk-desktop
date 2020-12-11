@@ -13,16 +13,18 @@
  */
 
 const http = ({
-  baseUrl, path, params, method, network, ...restOptions
+  baseUrl, path, params, method = 'GET', network, ...restOptions
 }) => {
-  const url = baseUrl ? `${baseUrl}${path}` : `${network.serviceUrl}${path}`;
-  return fetch(url, {
+  const url = new URL(baseUrl ? `${baseUrl}${path}` : `${network.serviceUrl}${path}`);
+  url.search = new URLSearchParams(params).toString();
+
+  return fetch(url.toString(), {
     method,
     mode: 'no-cors',
     headers: {
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(params),
     ...restOptions,
   })
     .then((response) => {
