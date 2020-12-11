@@ -30,7 +30,10 @@ const getServerUrl = (nodeUrl, nethash) => {
       cloudUrl: 'https://cloud.lisk.io',
     };
   }
-  return 'unavailable';
+  return {
+    serviceUrl: 'unavailable',
+    cloudUrl: 'unavailable',
+  };
 };
 
 const generateAction = (data, config) => ({
