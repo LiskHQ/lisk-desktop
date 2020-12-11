@@ -1,11 +1,35 @@
 import { subscribe, unsubscribe } from '../ws';
+import http from '../http';
+
+const httpPrefix = '/api/v1';
+
+export const httpPaths = {
+  blocks: `${httpPrefix}/blocks`,
+};
 
 const wsMethods = {
   blocksChange: 'blocks/change',
 };
 
-export const getBlock = data => new Promise(resolve =>
-  resolve({ endpoint: 'getBlock', token: 'shared', data }));
+/**
+ * Retrieves block details.
+ *
+ * @param {Object} data
+ * @param {String?} data.params.id - Block id
+ * @param {String?} data.baseUrl - Lisk Service API url to override the
+ * existing ServiceUrl on the network param. We may use this to retrieve
+ * the details of an archived transaction.
+ * @param {Object} data.network - Network setting from Redux store
+ * @returns {Promise} http call
+ */
+export const getBlock = ({
+  params = {}, network, baseUrl,
+}) => http({
+  path: httpPaths.blocks,
+  params,
+  network,
+  baseUrl,
+});
 
 export const getBlocks = data => new Promise(resolve =>
   resolve({ endpoint: 'getBlocks', token: 'shared', data }));

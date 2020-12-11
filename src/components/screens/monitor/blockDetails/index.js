@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import BlockDetails from './blockDetails';
-import liskService from '../../../../utils/api/lsk/liskService';
+import { getBlock } from '../../../../utils/api/block';
 import withData from '../../../../utils/withData';
 import { selectSearchParamValue } from '../../../../utils/searchParams';
 
@@ -16,12 +16,12 @@ const ComposedBlockDetails = compose(
   connect(mapStateToProps),
   withData({
     blockDetails: {
-      apiUtil: liskService.getBlockDetails,
+      apiUtil: getBlock,
       getApiParams: (state, ownProps) => ({ id: ownProps.id }),
       transformResponse: response => (response.data && response.data[0]),
     },
     blockTransactions: {
-      apiUtil: liskService.getBlockTransactions,
+      apiUtil: getBlock, // getBlockTransaction
       defaultData: [],
       getApiParams: (state, ownProps) => ({ id: ownProps.id }),
       transformResponse: (response, oldData, urlSearchParams) => (
