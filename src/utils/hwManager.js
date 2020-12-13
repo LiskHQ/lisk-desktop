@@ -71,7 +71,7 @@ const signVoteTransaction = async (
   timeOffset,
   networkIdentifier,
 ) => {
-  const { castVotes, utils } = lisk()['2.x'].transaction;
+  const { castVotes, utils } = lisk('2').transaction;
   const signedTransactions = [];
   const votesChunks = splitVotesIntoRounds({ votes: [...votedList], unvotes: [...unvotedList] });
 
