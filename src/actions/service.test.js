@@ -4,7 +4,7 @@ import { pricesRetrieved } from './service';
 import { initialState as settings } from '../store/reducers/settings';
 import actionTypes from '../constants/actions';
 import prices from '../../test/constants/prices';
-import serviceAPI from '../utils/api/service';
+import * as marketApi from '../utils/api/market';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -13,8 +13,8 @@ describe('actions: service', () => {
   let store;
 
   beforeEach(() => {
-    serviceAPI.getPriceTicker = jest.fn();
-    serviceAPI.getDynamicFees = jest.fn();
+    marketApi.getPrices = jest.fn();
+    marketApi.getDynamicFees = jest.fn();
     store = mockStore({ settings });
   });
 
@@ -27,7 +27,7 @@ describe('actions: service', () => {
           CHF: prices.find(({ to }) => to === 'CHF').rate,
         },
       };
-      serviceAPI.getPriceTicker.mockResolvedValueOnce(prices);
+      marketApi.getPrices.mockResolvedValueOnce(prices);
 
       await store.dispatch(pricesRetrieved());
 
@@ -41,7 +41,7 @@ describe('actions: service', () => {
     });
 
     it('should handle rejections', async () => {
-      serviceAPI.getPriceTicker.mockRejectedValueOnce('Error');
+      marketApi.getPrices.mockRejectedValueOnce('Error');
       await store.dispatch(pricesRetrieved());
       expect(store.getActions()).toEqual([]);
     });
