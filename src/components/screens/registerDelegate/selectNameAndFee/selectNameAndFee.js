@@ -99,7 +99,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
     clearTimeout(timeout);
 
     timeout.current = setTimeout(() => {
-      getDelegate({ params: { username } })
+      getDelegate({ network, params: { username } })
         .then((response) => {
           if (response.data.length) {
             setState({

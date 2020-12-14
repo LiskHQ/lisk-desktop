@@ -226,14 +226,16 @@ export const createTransactionInstance = (rawTx, type) => {
  * @returns {Promise} promise that resolves to a transaction or
  * rejects with an error
  */
-export const create = (
-  transaction, transactionType,
-) => new Promise((resolve, reject) => {
+export const create = ({
+  network,
+  transactionType,
+  ...rest
+}) => new Promise((resolve, reject) => {
   try {
-    const { networkIdentifier } = transaction.network.networks.LSK;
+    const { networkIdentifier } = network.networks.LSK;
     const tx = Lisk.transaction[transactionType]({
-      ...transaction,
-      fee: transaction.fee.toString(),
+      ...rest,
+      fee: rest.fee.toString(),
       networkIdentifier,
     });
     resolve(tx);
@@ -244,14 +246,16 @@ export const create = (
 
 /**
  * broadcasts a transaction over the network
+ *
  * @param {object} transaction
  * @param {object} network
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = (transaction, network) => new Promise(
   async (resolve, reject) => {
+    console.log('network', network);
     try {
-      await getAPIClient(network).transactions.broadcast(transaction);
+      await network.transactions.broadcast(transaction);
       resolve(transaction);
     } catch (error) {
       reject(error);

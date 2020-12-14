@@ -160,9 +160,8 @@ export const transactionCreated = data => async (dispatch, getState) => {
 
   const [error, tx] = account.loginType === loginType.normal
     ? await to(create(
+      { ...data, network, transactionType: transactionTypes().transfer.key },
       activeToken,
-      { ...data, network },
-      transactionTypes().transfer.key,
     ))
     : await to(signSendTransaction(account, data));
 
@@ -195,7 +194,7 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
     const { network, settings } = getState();
     const activeToken = settings.token.active;
 
-    const [error] = await to(broadcast(transaction, network, activeToken));
+    const [error] = await to(broadcast({ transaction, network }, activeToken));
 
     callback({ success: !error, error, transaction });
     if (error) {
