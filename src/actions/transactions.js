@@ -8,9 +8,8 @@ import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
 import { loginType } from '../constants/hwConstants';
-import { transactions as transactionsAPI } from '../utils/api';
+import { getTransactions, create } from '../utils/api/transaction';
 import { signSendTransaction } from '../utils/hwManager';
-import { txAdapter } from '../utils/api/lsk/adapters';
 
 // ========================================= //
 //            ACTION CREATORS
@@ -31,19 +30,16 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
  */
 export const addNewPendingTransaction = data => ({
   type: actionTypes.addNewPendingTransaction,
-  data: txAdapter({
+  data: {
     ...data,
     senderId: extractAddress(data.senderPublicKey),
-  }),
+  },
 });
-
-// ========================================= //
-//                THUNKS
-// ========================================= //
 
 /**
  * Action trigger for retrieving any amount of transactions
  * for Dashboard and Wallet components
+ *
  * @param {Object} params - Object with all params.
  * @param {String} params.address - address of the account to fetch the transactions for
  * @param {Number} params.limit - amount of transactions to fetch
@@ -52,41 +48,47 @@ export const addNewPendingTransaction = data => ({
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
  * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
-export const getTransactions = ({
+export const transactionsRetrieved = ({
   address,
   limit = undefined,
   offset = 0,
   filters = undefined,
 }) => async (dispatch, getState) => {
-  dispatch(loadingStarted(actionTypes.getTransactions));
+  dispatch(loadingStarted(actionTypes.transactionsRetrieved));
   const { network } = getState();
 
-  if (network) {
-    const [error, response] = await to(transactionsAPI.getTransactions({
-      network, address, filters, limit, offset,
-    }));
-
-    if (error) {
+  getTransactions({
+    network,
+    params: {
+      address,
+      filters,
+      limit,
+      offset,
+    },
+  })
+    .then((response) => {
       dispatch({
-        type: actionTypes.transactionLoadFailed,
+        type: actionTypes.transactionsRetrieved,
         data: {
-          error,
-        },
-      });
-    } else {
-      dispatch({
-        type: offset > 0 ? actionTypes.updateTransactions : actionTypes.getTransactionsSuccess,
-        data: {
+          offset,
           address,
           confirmed: response.data,
           count: parseInt(response.meta.count, 10),
           filters,
         },
       });
-    }
-  }
-
-  dispatch(loadingFinished(actionTypes.getTransactions));
+    })
+    .catch((error) => {
+      dispatch({
+        type: actionTypes.transactionLoadFailed,
+        data: {
+          error,
+        },
+      });
+    })
+    .finally(() => {
+      dispatch(loadingFinished(actionTypes.transactionsRetrieved));
+    });
 };
 
 /**
@@ -102,35 +104,35 @@ export const getTransactions = ({
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
  * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
-export const updateTransactions = ({
+export const transactionsUpdated = ({
   address,
   filters,
   limit,
 }) => async (dispatch, getState) => {
   const { network, transactions } = getState();
 
-  if (network) {
-    const [error, response] = await to(transactionsAPI.getTransactions({
-      network, address, limit, filters,
-    }));
-
-    if (error) {
+  getTransactions({
+    network, address, limit, filters,
+  })
+    .then((response) => {
+      if (response && filters.direction === transactions.filters.direction) {
+        dispatch({
+          type: actionTypes.updateTransactions,
+          data: {
+            confirmed: response.data,
+            count: parseInt(response.meta.count, 10),
+          },
+        });
+      }
+    })
+    .catch((error) => {
       dispatch({
         type: actionTypes.transactionLoadFailed,
         data: {
           error,
         },
       });
-    } else if (response && filters.direction === transactions.filters.direction) {
-      dispatch({
-        type: actionTypes.updateTransactions,
-        data: {
-          confirmed: response.data,
-          count: parseInt(response.meta.count, 10),
-        },
-      });
-    }
-  }
+    });
 };
 
 // TODO remove this function once create and broadcast HOC be implemented
@@ -157,7 +159,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
   const activeToken = settings.token.active;
 
   const [error, tx] = account.loginType === loginType.normal
-    ? await to(transactionsAPI.create(
+    ? await to(create(
       activeToken,
       { ...data, network },
       transactionTypes().transfer.key,
