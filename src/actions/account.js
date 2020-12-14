@@ -1,8 +1,5 @@
 import { to } from 'await-to-js';
-import i18next from 'i18next';
 import { toast } from 'react-toastify';
-import { extractAddress } from '../utils/account';
-import { getAPIClient } from '../utils/api/network';
 import { getAccount } from '../utils/api/account';
 import { setSecondPassphrase } from '../utils/api/lsk/account';
 import { getConnectionErrorMessage } from '../utils/getNetwork';
@@ -10,7 +7,6 @@ import { loginType } from '../constants/hwConstants';
 import { networkStatusUpdated } from './network';
 import actionTypes from '../constants/actions';
 import { tokenMap } from '../constants/tokens';
-import { txAdapter } from '../utils/api/lsk/adapters';
 
 /**
  * Trigger this action to remove passphrase from account object
