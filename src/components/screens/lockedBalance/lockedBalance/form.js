@@ -10,7 +10,7 @@ import { PrimaryButton } from '../../../toolbox/buttons';
 import { toRawLsk } from '../../../../utils/lsk';
 import Piwik from '../../../../utils/piwik';
 import { getAvailableUnlockingTransactions } from '../../../../utils/account';
-import { create } from '../../../../utils/api/lsk/transactions';
+import { create } from '../../../../utils/api/transaction';
 import transactionTypes from '../../../../constants/transactionTypes';
 import actionTypes from '../../../../constants/actions';
 import LiskAmount from '../../../shared/liskAmount';

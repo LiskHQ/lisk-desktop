@@ -1,5 +1,5 @@
 import to from 'await-to-js';
-import { create } from '../utils/api/lsk/transactions';
+import { create } from '../utils/api/transaction';
 import { passphraseUsed } from './account';
 import actionTypes from '../constants/actions';
 import { loginType } from '../constants/hwConstants';
