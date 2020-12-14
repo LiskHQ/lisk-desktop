@@ -4,10 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import Delegates from './delegates';
-import liskService from '../../../../utils/api/lsk/liskService';
+import { getDelegates, getForgers } from '../../../../utils/api/delegate';
+import { getNetworkStatus } from '../../../../utils/api/network';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
 import withLocalSort from '../../../../utils/withLocalSort';
+import voting from '../../../../constants/voting';
 
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
@@ -51,17 +53,22 @@ const ComposedDelegates = compose(
   withData(
     {
       [delegatesKey]: {
-        apiUtil: liskService.getActiveDelegates,
+        apiUtil: getForgers,
         defaultData: [],
         autoload: true,
         transformResponse: transformDelegatesResponse,
       },
 
       [standByDelegatesKey]: {
-        apiUtil: liskService.getStandbyDelegates,
+        apiUtil: getDelegates,
         defaultData: [],
         autoload: true,
-        transformResponse: transformDelegatesResponse,
+        transformResponse: response => transformDelegatesResponse({
+          data: response.data.filter(
+            delegate => delegate.rank > voting.numberOfActiveDelegates,
+          ),
+          meta: response.meta,
+        }),
       },
 
       chartActiveAndStandbyData: {
@@ -72,7 +79,7 @@ const ComposedDelegates = compose(
       },
 
       chartRegisteredDelegatesData: {
-        apiUtil: liskService.getRegisteredDelegates,
+        apiUtil: getDelegates,
         defaultData: [],
         autoload: true,
         transformResponse: transformChartResponse,
@@ -86,7 +93,7 @@ const ComposedDelegates = compose(
       },
 
       networkStatus: {
-        apiUtil: liskService.getNetworkStatus,
+        apiUtil: getNetworkStatus,
         defaultData: {},
         autoload: true,
         transformResponse: response => response,
