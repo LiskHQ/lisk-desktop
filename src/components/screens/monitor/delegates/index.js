@@ -4,10 +4,14 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import Delegates from './delegates';
-import liskService from '../../../../utils/api/lsk/liskService';
+import { getDelegates, getForgers } from '../../../../utils/api/delegate';
+import { getNetworkStatus } from '../../../../utils/api/network';
+import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
 import withLocalSort from '../../../../utils/withLocalSort';
+import voting from '../../../../constants/voting';
+import transactionTypes from '../../../../constants/transactionTypes';
 
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
@@ -51,42 +55,47 @@ const ComposedDelegates = compose(
   withData(
     {
       [delegatesKey]: {
-        apiUtil: liskService.getActiveDelegates,
+        apiUtil: getForgers,
         defaultData: [],
         autoload: true,
         transformResponse: transformDelegatesResponse,
       },
 
       [standByDelegatesKey]: {
-        apiUtil: liskService.getStandbyDelegates,
+        apiUtil: getDelegates,
         defaultData: [],
         autoload: true,
-        transformResponse: transformDelegatesResponse,
+        transformResponse: response => transformDelegatesResponse({
+          data: response.data.filter(
+            delegate => delegate.rank > voting.numberOfActiveDelegates,
+          ),
+          meta: response.meta,
+        }),
       },
 
       chartActiveAndStandbyData: {
-        apiUtil: liskService.getActiveAndStandByDelegates,
+        apiUtil: network => getDelegates({ network, params: { limit: 1 } }),
         defaultData: [],
         autoload: true,
         transformResponse: response => response.meta.total,
       },
 
       chartRegisteredDelegatesData: {
-        apiUtil: liskService.getRegisteredDelegates,
+        apiUtil: network => getDelegates({ network, params: { limit: 100 } }),
         defaultData: [],
         autoload: true,
         transformResponse: transformChartResponse,
       },
 
       votes: {
-        apiUtil: liskService.getLatestVotes,
+        apiUtil: network => getTransactions({ network, params: { type: transactionTypes().vote.new, sort: 'timestamp:desc' } }),
         autoload: true,
         defaultData: [],
         transformResponse: transformVotesResponse,
       },
 
       networkStatus: {
-        apiUtil: liskService.getNetworkStatus,
+        apiUtil: getNetworkStatus,
         defaultData: {},
         autoload: true,
         transformResponse: response => response,

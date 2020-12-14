@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import withData from '../../../../utils/withData';
-import liskService from '../../../../utils/api/lsk/liskService';
+import { getTransactionStats } from '../../../../utils/api/transaction';
 import Box from '../../../toolbox/box';
 import BoxTabs from '../../../toolbox/tabs';
 import BoxHeader from '../../../toolbox/box/header';
@@ -279,7 +279,7 @@ export default compose(
   withData(
     {
       txStats: {
-        apiUtil: liskService.getTxStats,
+        apiUtil: getTransactionStats,
         defaultData: {
           distributionByType: {},
           distributionByAmount: {},

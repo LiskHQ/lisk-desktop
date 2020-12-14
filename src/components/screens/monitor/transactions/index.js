@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import Overview from './overview';
 import TransactionsTable from '../../../shared/transactionsTable';
 import withData from '../../../../utils/withData';
-import liskServiceApi from '../../../../utils/api/lsk/liskService';
+import { getTransactions } from '../../../../utils/api/transaction';
 
 const fields = t => [{
   label: t('Date Range'),
@@ -75,7 +75,7 @@ export const TransactionsPure = ({ t, transactions }) => {
 export default compose(
   withData({
     transactions: {
-      apiUtil: liskServiceApi.getTransactions,
+      apiUtil: getTransactions,
       defaultData: [],
       autoload: true,
       transformResponse: (response, oldData, urlSearchParams) => (

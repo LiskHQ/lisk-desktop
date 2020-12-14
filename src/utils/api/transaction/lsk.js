@@ -32,7 +32,7 @@ const txFilters = {
   offset: { key: 'offset', test: num => (typeof num === 'number' && num >= 0) },
   sort: {
     key: 'sort',
-    test: str => ['amount:asc', 'amount:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
+    test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
   },
 };
 /**
