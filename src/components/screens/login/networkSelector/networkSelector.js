@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { to } from 'await-to-js';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import { Input } from '../../../toolbox/inputs';
 import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../../../utils/login';
@@ -13,6 +12,7 @@ import networks from '../../../../constants/networks';
 import styles from './networkSelector.css';
 import keyCodes from '../../../../constants/keyCodes';
 import DropdownButton from '../../../toolbox/dropdownButton';
+import { isEmpty } from '../../../../utils/helpers';
 
 class NetworkSelector extends React.Component {
   // eslint-disable-next-line max-statements
@@ -68,18 +68,17 @@ class NetworkSelector extends React.Component {
 
   // eslint-disable-next-line max-statements
   async checkNodeStatus(showErrorToaster = true) {
-    const {
-      liskAPIClient, network,
-    } = this.props;
+    const { network, getNetworkConfig } = this.props;
 
-    if (liskAPIClient) {
+    if (network && !isEmpty(network)) {
       this.setState({
         network: network.networks.LSK.code,
         activeNetwork: network.networks.LSK.code,
       });
-      const [error] = await to(liskAPIClient.node.getConstants());
 
-      if (error) {
+      const response = getNetworkConfig(network);
+
+      if (response.data) {
         if (network.name === networks.customNode.name) {
           this.setValidationError();
         } else {
