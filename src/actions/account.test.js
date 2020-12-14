@@ -3,14 +3,12 @@ import actionTypes from '../constants/actions';
 import {
   accountUpdated,
   accountLoggedOut,
-  secondPassphraseRegistered,
   removePassphrase,
   accountDataUpdated,
   updateEnabledTokenAccount,
   login,
 } from './account';
 import * as accountApi from '../utils/api/account';
-import transactionTypes from '../constants/transactionTypes';
 import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
 import * as networkActions from './network';
@@ -39,7 +37,6 @@ describe('actions: account', () => {
 
   afterEach(() => {
     accountApi.getAccount.mockReset();
-    accountApi.setSecondPassphrase.mockReset();
     networkActions.networkStatusUpdated.mockReset();
   });
 
@@ -64,72 +61,6 @@ describe('actions: account', () => {
       };
 
       expect(accountLoggedOut()).toEqual(expectedAction);
-    });
-  });
-
-  // TODO remove this test when the action is removed
-  describe.skip('secondPassphraseRegistered', () => {
-    const data = {
-      passphrase: accounts.second_passphrase_account.passphrase,
-      secondPassphrase: accounts.second_passphrase_account.secondPassphrase,
-      account: accounts.second_passphrase_account,
-      callback: jest.fn(),
-    };
-    const actionFunction = secondPassphraseRegistered(data);
-    let getState;
-
-    beforeEach(() => {
-      getState = () => ({
-        network: {
-          status: { online: true },
-          name: 'Mainnet',
-          networks: {
-            LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
-          },
-        },
-        settings: {
-          token: {
-            active: 'LSK',
-          },
-        },
-      });
-    });
-
-    it('should dispatch addNewPendingTransaction action if resolved', () => {
-      const transaction = {
-        id: '15626650747375562521',
-        senderPublicKey: accounts.second_passphrase_account.publicKey,
-        senderId: accounts.second_passphrase_account.address,
-        amount: 0,
-        fee: 5e8,
-        type: transactionTypes().setSecondPassphrase.code,
-        token: 'LSK',
-      };
-      accountApi.setSecondPassphrase.mockResolvedValue(transaction);
-
-      actionFunction(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledWith({
-        data: transaction, type: actionTypes.addNewPendingTransaction,
-      });
-      expect(data.callback).toHaveBeenCalledWith({
-        success: true,
-        transaction,
-      });
-    });
-
-    it('should call callback if api call fails', () => {
-      const error = { message: 'sample message' };
-      accountApi.setSecondPassphrase.mockRejectedValue(error);
-
-      actionFunction(dispatch, getState);
-      expect(data.callback).toHaveBeenCalledWith({
-        success: false,
-        error,
-        message: error.message,
-      });
     });
   });
 

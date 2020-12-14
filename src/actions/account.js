@@ -1,7 +1,6 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import { getAccount } from '../utils/api/account';
-import { setSecondPassphrase } from '../utils/api/lsk/account';
 import { getConnectionErrorMessage } from '../utils/getNetwork';
 import { loginType } from '../constants/hwConstants';
 import { networkStatusUpdated } from './network';
@@ -76,44 +75,6 @@ export const passphraseUsed = data => ({
   type: actionTypes.passphraseUsed,
   data,
 });
-
-// TODO delete this action and use setSecondPassphrase with withData HOC
-// directly in the Second passphrase registration component
-export const secondPassphraseRegistered = ({
-  secondPassphrase, account, passphrase, callback,
-}) =>
-/* istanbul ignore next */
-  (dispatch, getState) => {
-    const { settings: { token: { active } }, network } = getState();
-    const { networkIdentifier } = network.networks.LSK;
-    const liskAPIClient = getAPIClient(active, network);
-    setSecondPassphrase(
-      liskAPIClient,
-      secondPassphrase,
-      account.publicKey,
-      passphrase,
-      networkIdentifier,
-    ).then((transaction) => {
-      dispatch({
-        type: actionTypes.addNewPendingTransaction,
-        data: txAdapter({
-          ...transaction,
-          senderId: extractAddress(transaction.senderPublicKey),
-        }),
-      });
-      callback({
-        success: true,
-        transaction,
-      });
-    }).catch((error) => {
-      callback({
-        success: false,
-        error,
-        message: (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.'),
-      });
-    });
-    dispatch(passphraseUsed(new Date()));
-  };
 
 /**
  * This action is used to update account balance when new block was forged and
