@@ -71,12 +71,12 @@ export const getAccount = async ({
   baseUrl,
 });
 
-const txFilters = {
+const accountFilters = {
   limit: { key: 'limit', test: num => (typeof num === 'number') },
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
   sort: {
     key: 'sort',
-    test: str => ['amount:asc', 'amount:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
+    test: str => ['balance:asc', 'balance:desc'].includes(str),
   },
 };
 
@@ -117,8 +117,8 @@ export const getAccounts = async ({
   // Use HTTP to retrieve accounts with given sorting and pagination parameters
   const normParams = {};
   Object.keys(params).forEach((key) => {
-    if (txFilters[key].test(params[key])) {
-      normParams[txFilters[key].key] = params[key];
+    if (accountFilters[key].test(params[key])) {
+      normParams[accountFilters[key].key] = params[key];
     }
   });
 

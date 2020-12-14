@@ -9,7 +9,7 @@ import styles from './accounts.css';
 import header from './tableHeader';
 import AccountRow from './accountRow';
 import withData from '../../../../utils/withData';
-import liskServiceApi from '../../../../utils/api/lsk/liskService';
+import { getAccounts } from '../../../../utils/api/account';
 import { getNetworkStatus } from '../../../../utils/api/network';
 
 export const AccountsPure = ({
@@ -49,7 +49,7 @@ export default compose(
   withData(
     {
       accounts: {
-        apiUtil: liskServiceApi.getTopAccounts,
+        apiUtil: network => getAccounts({ network, params: { sort: 'balance:desc' } }),
         defaultData: [],
         autoload: true,
         transformResponse: (response, accounts, urlSearchParams) => (
