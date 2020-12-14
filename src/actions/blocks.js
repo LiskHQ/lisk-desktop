@@ -1,6 +1,8 @@
 import actionTypes from '../constants/actions';
 import { convertUnixSecondsToLiskEpochSeconds } from '../utils/datetime';
 import voting from '../constants/voting';
+import { getBlocks } from '../utils/api/block';
+import { getForgers } from '../utils/api/delegate';
 
 /**
  * Retrieves latest blocks from Lisk Service.
@@ -12,7 +14,7 @@ import voting from '../constants/voting';
  * @returns {Array} - the list of blocks
  */
 const loadLastBlocks = async (params, network) => {
-  const blocks = await liskServiceApi.getLastBlocks(network, params);
+  const blocks = await getBlocks({ network, params });
   const total = blocks.meta.total;
   return {
     total,
@@ -50,8 +52,9 @@ const retrieveNextForgers = async (getState, forgedInRound) => {
 
   const numberOfRemainingBlocksInRound = voting.numberOfActiveDelegates
     - forgedInRound;
-  const nextForgers = await liskServiceApi.getNextForgers(network, {
-    limit: Math.min(numberOfRemainingBlocksInRound, 101),
+  const nextForgers = await getForgers({
+    network,
+    params: { limit: Math.min(numberOfRemainingBlocksInRound, 101) },
   });
 
   return nextForgers.slice(0, numberOfRemainingBlocksInRound);
