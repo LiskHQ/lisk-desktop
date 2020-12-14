@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import SelectNameAndFee from './selectNameAndFee';
-import { getAPIClient } from '../../../../utils/api/network';
+import { getDelegate } from '../../../../utils/api/delegate';
 import networks from '../../../../constants/networks';
 import accounts from '../../../../../test/constants/accounts';
 import { getTransactionBaseFees, getTransactionFee } from '../../../../utils/api/transaction';
@@ -57,7 +57,7 @@ describe('RegisterDelegate', () => {
     };
 
     apiClient.delegates.get.mockResolvedValue({ data: [] });
-    getAPIClient.mockReturnValue(apiClient);
+    getDelegate.mockReturnValue(apiClient);
 
     wrapper = mount(<SelectNameAndFee {...props} />);
   });
