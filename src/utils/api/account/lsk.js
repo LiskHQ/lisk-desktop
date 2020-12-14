@@ -80,6 +80,19 @@ const accountFilters = {
   },
 };
 
+const getRequests = (values) => {
+  const paramList = values.find(item => Array.isArray(item.list) && item.list.length);
+  if (paramList) {
+    return paramList.list
+      .filter(item => regex[paramList.name].test(item))
+      .map(item => ({
+        method: wsMethods.delegates,
+        params: { [paramList.name]: item },
+      }));
+  }
+  return false;
+};
+
 /**
  * Retrieves the list of accounts with given params
  *
@@ -87,10 +100,12 @@ const accountFilters = {
  * @param {Object} data.network The network config from the Redux store
  * @param {String?} data.baseUrl Custom API URL
  * @param {Object} data.params
- * @param {String?} data.params.username Valid delegate username
- * @param {String?} data.params.address Valid Lisk Address
- * @param {String?} data.params.passphrase Valid Mnemonic passphrase
- * @param {String?} data.params.publicKey Valid Lisk PublicKey
+ * @param {String?} data.params.usernameList Valid delegate username
+ * @param {String?} data.params.addressList Valid Lisk Address
+ * @param {String?} data.params.publicKeyList Valid Lisk PublicKey
+ * @param {String?} data.params.limit Used for pagination
+ * @param {String?} data.params.offset Used for pagination
+ * @param {String?} data.params.sort  an option of 'balance:asc' and 'balance:desc',
  *
  * @returns {Promise}
  */
@@ -100,17 +115,15 @@ export const getAccounts = async ({
   baseUrl,
 }) => {
   // Use websocket to retrieve accounts with a given array of addresses
-  if (Array.isArray(params.addressList) && params.addressList.length) {
-    const requests = params.addressList
-      .filter(address => regex.address.test(address))
-      .map(address => ({
-        method: wsMethods.accounts,
-        params: { address },
-      }));
-
+  const requests = getRequests([
+    { name: 'address', list: params.addressList },
+    { name: 'publicKey', list: params.publicKeyList },
+    { name: 'username', list: params.usernameList },
+  ]);
+  if (requests) {
     return ws({
-      network,
       requests,
+      baseUrl: baseUrl || network.serviceUrl,
     });
   }
 
