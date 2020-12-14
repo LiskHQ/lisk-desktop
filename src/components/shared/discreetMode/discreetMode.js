@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import routes from '../../../constants/routes';
 import styles from './discreetMode.css';
-import { getTokenFromAddress } from '../../../utils/api/transactions';
+import { getTokenFromAddress } from '../../../utils/api/transaction';
 import { selectSearchParamValue } from '../../../utils/searchParams';
 
 class DiscreetMode extends Component {
