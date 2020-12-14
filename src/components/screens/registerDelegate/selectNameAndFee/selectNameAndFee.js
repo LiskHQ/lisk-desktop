@@ -6,7 +6,7 @@ import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import { fromRawLsk } from '../../../../utils/lsk';
-import { getAPIClient } from '../../../../utils/api/lsk/network';
+import { getAPIClient } from '../../../../utils/api/network';
 import regex from '../../../../utils/regex';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './selectNameAndFee.css';

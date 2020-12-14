@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
-import { getAccount } from './api/lsk/account';
+import { getAccount } from './api/account';
 import {
   checkIfInsideLiskApp,
   getAddress,
