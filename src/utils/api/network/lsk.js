@@ -35,13 +35,13 @@ export const getNetworkConfig = (network) => {
 
   // get mainnet testnet node url here
   return new Lisk.APIClient([networkConfig.nodes[0]], {}).node.getConstants()
-    .then(({ nethash, networkId }) => ({
+    .then(response => ({
       ...networkConfig,
       nodeUrl: networkConfig.nodes[0],
       custom: networkConfig.name === networks.customNode.name,
       code: networkConfig.code,
-      nethash,
-      networkIdentifier: networkId,
+      nethash: response.data.nethash,
+      networkIdentifier: response.data.networkId,
     }));
 };
 

@@ -10,9 +10,7 @@ export const lskNetworkSet = data => (dispatch) => {
         type: actionTypes.networkSet,
         data: {
           token: tokenMap.LSK.key,
-          config: {
-            ...config,
-          },
+          config,
           serviceUrl: getServerUrl(config.nodeUrl, config.nethash),
         },
       });
