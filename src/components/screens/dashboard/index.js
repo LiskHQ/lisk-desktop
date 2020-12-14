@@ -1,7 +1,6 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { getTransactions } from '../../../actions/transactions';
 import { getActiveTokenAccount } from '../../../utils/account';
 import Dashboard from './dashboard';
 
@@ -23,8 +22,4 @@ const mapStateToProps = state => ({
   settings: state.settings,
 });
 
-const mapDispatchToProps = {
-  getTransactions,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Dashboard));
+export default connect(mapStateToProps)(withTranslation()(Dashboard));

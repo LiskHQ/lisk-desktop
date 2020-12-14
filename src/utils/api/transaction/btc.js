@@ -5,7 +5,7 @@ import { BigNumber } from 'bignumber.js';
 import networks from '../../../constants/networks';
 import { validateAddress } from '../../validators';
 import { tokenMap } from '../../../constants/tokens';
-import { extractAddress, getDerivedPathFromPassphrase } from '../../account';
+import { extractAddress, getDerivedPathFromPassphrase } from '../account';
 import { fromRawLsk } from '../../lsk';
 import http from '../http';
 
