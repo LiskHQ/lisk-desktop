@@ -2,6 +2,7 @@
 import {
   IPC_MESSAGES,
   PIN,
+  PASSPHRASE,
 } from '../../constants';
 import { TREZOR } from './constants';
 import {
@@ -40,6 +41,10 @@ const onPinCallback = (device, { pinCallback }) => {
   device.on(PIN, (type, callback) => pinCallback(type, callback));
 };
 
+const onPassphraseCallback = (device, { passphraseCallback }) => {
+  device.on(PASSPHRASE, callback => passphraseCallback(callback));
+};
+
 /**
  * listener - function - Always listen for new messages for connect or disconnect devices.
  * @param {object} transport - Library use for handle the trezor devices.
@@ -51,6 +56,7 @@ const listener = (transport, actions) => {
   transport.on(IPC_MESSAGES.CONNECT, (device) => {
     addDevice(device, actions);
     onPinCallback(device, actions);
+    onPassphraseCallback(device, actions);
   });
   transport.on(IPC_MESSAGES.DISCONNECT, (device) => { removeDevice(device, actions); });
   transport.on(IPC_MESSAGES.ERROR, (error) => { throw new Error(error); });
