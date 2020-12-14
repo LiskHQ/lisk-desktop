@@ -104,6 +104,7 @@ export const getTransactions = ({
   });
 };
 
+// @todo document this function signature
 export const getRegisteredDelegates = async ({ network }) => {
   const delegates = await getDelegates({
     network,
