@@ -8,7 +8,7 @@ import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
 import { loginType } from '../constants/hwConstants';
-import { getTransactions, create } from '../utils/api/transaction';
+import { getTransactions, create, broadcast } from '../utils/api/transaction';
 import { signSendTransaction } from '../utils/hwManager';
 
 // ========================================= //
@@ -195,7 +195,7 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
     const { network, settings } = getState();
     const activeToken = settings.token.active;
 
-    const [error] = await to(transactionsAPI.broadcast(activeToken, transaction, network));
+    const [error] = await to(broadcast(transaction, network, activeToken));
 
     callback({ success: !error, error, transaction });
     if (error) {
