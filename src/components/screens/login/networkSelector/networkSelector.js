@@ -84,9 +84,9 @@ class NetworkSelector extends React.Component {
         } else {
           this.setState(({ validationError: '' }));
         }
-        if (showErrorToaster) {
-          toast.error(`Unable to connect to the node, Error: ${error.message}`);
-        }
+      }
+      if (showErrorToaster) {
+        toast.error(`Unable to connect to the node, Error: ${response.message}`);
       }
     }
   }
@@ -138,6 +138,8 @@ class NetworkSelector extends React.Component {
                 ...newNetwork,
               },
             });
+
+            console.log(newNetwork);
 
             this.props.history.push(nextPath);
             this.setState({ validationError: '', connected: true });
