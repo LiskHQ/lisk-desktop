@@ -60,7 +60,7 @@ class UnlockDevice extends React.Component {
           { t('If you’re not sure how to do this please follow the') }
           {' '}
         </p>
-        <Illustration name="ledgerNanoLight" />
+        <Illustration name="ledgerNano" />
         <TertiaryButton onClick={goBack}>
           {t('Go back')}
         </TertiaryButton>
