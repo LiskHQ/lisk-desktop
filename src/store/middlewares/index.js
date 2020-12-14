@@ -9,7 +9,6 @@ import votingMiddleware from './voting';
 import blockMiddleware from './block';
 import settingsMiddleware from './settings';
 import bookmarksMiddleware from './bookmarks';
-import networkMiddleware from './network';
 
 export default [
   // notificationMiddleware,
@@ -21,6 +20,5 @@ export default [
   settingsMiddleware,
   blockMiddleware,
   votingMiddleware,
-  networkMiddleware,
   thunk,
 ];
