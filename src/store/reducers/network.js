@@ -19,6 +19,7 @@ const network = (state = initialState, action) => {
       return {
         ...state,
         name: action.data.name,
+        serviceUrl: action.data.serviceUrl, // TODO
         networks: {
           ...state.networks,
           [action.data.token]: action.data.config || {},

@@ -4,7 +4,7 @@ import actionTypes from '../../constants/actions';
 
 export const networkSet = data => (dispatch) => {
   dispatch(lskNetworkSet(data));
-  if (data.name !== 'Custom Node') {
+  if (data.name) {
     dispatch(btcNetworkSet(data));
   }
 };

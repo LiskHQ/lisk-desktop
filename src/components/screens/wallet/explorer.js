@@ -91,7 +91,7 @@ const Wallet = ({
 
 const apis = {
   account: {
-    apiUtil: (network, params) => getAccount({ network, ...params }),
+    apiUtil: (network, params) => getAccount({ network, params }, params.token),
     defaultData: {},
     getApiParams: (state, props) => ({
       token: state.settings.token.active,

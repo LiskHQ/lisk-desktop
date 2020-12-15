@@ -88,11 +88,12 @@ export const passphraseUsed = data => ({
 export const accountDataUpdated = ({ account }) =>
   async (dispatch, getState) => {
     const network = getState().network;
+    const activeToken = getState().settings.token.active;
     const [error, result] = await to(getAccount({
       network,
       address: account.address,
       publicKey: account.publicKey,
-    }));
+    }, activeToken));
     if (result) {
       dispatch(accountUpdated(result));
       dispatch(networkStatusUpdated({ online: true }));
@@ -105,7 +106,8 @@ export const accountDataUpdated = ({ account }) =>
 async function getAccounts(tokens, options) {
   return tokens.reduce(async (accountsPromise, token) => {
     const accounts = await accountsPromise;
-    const account = await getAccount({ ...options, token });
+    const { network, ...params } = options;
+    const account = await getAccount({ params, network }, token);
     return {
       ...accounts,
       [token]: account,
@@ -115,12 +117,13 @@ async function getAccounts(tokens, options) {
 
 export const updateEnabledTokenAccount = token => async (dispatch, getState) => {
   const { network, account } = getState();
+  const activeToken = getState().settings.token.active;
   if (token !== tokenMap.LSK.key) {
     const [error, result] = await to(getAccount({
       token,
       network,
       passphrase: account.passphrase,
-    }));
+    }, activeToken));
     if (error) {
       toast.error(getConnectionErrorMessage(error));
     } else {

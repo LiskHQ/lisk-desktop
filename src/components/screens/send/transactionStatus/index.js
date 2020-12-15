@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   bookmarks: state.bookmarks,
   transactions: state.transactions,
+  token: state.settings.token,
 });
 
 const mapDispatchToProps = {
@@ -20,7 +21,10 @@ const mapDispatchToProps = {
 
 const apis = {
   recipientAccount: {
-    apiUtil: (network, params) => getAccount({ network, ...params }),
+    apiUtil: (network, params) => getAccount({ network, params }, params.token),
+    getApiParams: state => ({
+      token: state.settings.token.active,
+    }),
   },
 };
 

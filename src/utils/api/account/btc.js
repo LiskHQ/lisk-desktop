@@ -71,7 +71,7 @@ export const getAccount = ({
 
   return http({
     network,
-    path: `account/${address}`,
+    path: `/account/${address}`,
   }).then(response => normalizeAccountResponse({
     response,
     address,
