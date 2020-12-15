@@ -8,6 +8,19 @@ import { getDelegates } from '../delegate';
 import regex from '../../regex';
 import { tokenMap } from '../../../constants/tokens';
 import { fromRawLsk } from '../../lsk';
+import { validateAddress } from '../../validators';
+
+const httpPrefix = '/api/v1';
+
+const httpPaths = {
+  feeEstimates: `${httpPrefix}/fee_estimates`,
+  transactions: `${httpPrefix}/transactions`,
+  transaction: `${httpPrefix}/transactions`,
+};
+
+const wsMethods = {
+  transactions: 'get.transactions',
+};
 
 /**
  * Retrieves the details of a single transaction
@@ -23,13 +36,14 @@ import { fromRawLsk } from '../../lsk';
 export const getTransaction = ({
   id, network, baseUrl,
 }) => http({
-  path: 'transactions',
+  path: httpPaths.transaction,
   params: { id },
   network,
   baseUrl,
 });
 
-const txFilters = {
+const filters = {
+  address: { key: 'address', test: address => !validateAddress(tokenMap.LSK.key, address) },
   dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
   dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
   amountFrom: { key: 'min', test: num => typeof num === 'number' && num >= 0 },
@@ -72,7 +86,7 @@ export const getTransactions = ({
   // if type, correct the type and use WS
   if (params.type && typeConfig) {
     const requests = Object.values(typeConfig.code).map(type => ({
-      method: 'get.transactions',
+      method: wsMethods.transactions,
       params: { type },
     }));
     // BaseUrl is only used for retrieving archived txs, so it's not needed here.
@@ -87,8 +101,8 @@ export const getTransactions = ({
   } else {
     // Validate params and fix keys
     Object.keys(params).forEach((key) => {
-      if (txFilters[key].test(params[key])) {
-        normParams[txFilters[key].key] = params[key];
+      if (filters[key] && filters[key].test(params[key])) {
+        normParams[filters[key].key] = params[key];
       } else {
         // eslint-disable-next-line no-console
         console.log(`getTransactions: Dropped ${key} parameter, it's invalid.`);
@@ -98,7 +112,7 @@ export const getTransactions = ({
 
   return http({
     network,
-    path: 'transactions',
+    path: httpPaths.transactions,
     params: normParams,
     baseUrl,
   });
@@ -275,7 +289,7 @@ export const broadcast = (transaction, network) => new Promise(
  */
 export const getTransactionBaseFees = network =>
   http({
-    path: '/api/v1/fee_estimates',
+    path: httpPaths.feeEstimates,
     searchParams: {},
     network,
   })
