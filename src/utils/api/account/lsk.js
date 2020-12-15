@@ -69,6 +69,10 @@ export const getAccount = async ({
   network,
   params: getAccountParams(params),
   baseUrl,
+}).then((response) => {
+  const account = response.data[0];
+  if (!account) throw Error('Account not found');
+  return account;
 });
 
 const accountFilters = {

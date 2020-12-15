@@ -21,7 +21,8 @@ const http = ({
   return fetch(url.toString(), {
     method,
     headers: {
-      'Access-Control-Allow-Origin': '*',
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     ...restOptions,
   })

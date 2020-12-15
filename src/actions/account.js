@@ -107,7 +107,8 @@ async function getAccounts(tokens, options) {
   return tokens.reduce(async (accountsPromise, token) => {
     const accounts = await accountsPromise;
     const { network, ...params } = options;
-    const account = await getAccount({ params, network }, token);
+    const baseUrl = network.networks[token].serviceUrl;
+    const account = await getAccount({ params, network, baseUrl }, token);
     return {
       ...accounts,
       [token]: account,

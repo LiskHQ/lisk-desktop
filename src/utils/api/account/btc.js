@@ -45,7 +45,7 @@ const normalizeAccountResponse = ({
   response, address,
 }) => ({
   address,
-  balance: response.body.data.confirmed_balance,
+  balance: response.data.confirmed_balance,
   initialized: true,
   token: tokenMap.BTC.key,
 });
@@ -59,11 +59,13 @@ const normalizeAccountResponse = ({
  * @param {String?} data.params.address - Valid Bitcoin address
  * @param {String?} data.params.passphrase - Valid Mnemonic passphrase
  * @param {Object} data.network - Network setting from Redux store
+ * @param {String?} data.baseUrl Custom API URL
  * @returns {Promise} Transaction details API call
  */
 export const getAccount = ({
   network,
   params,
+  baseUrl,
 }) => {
   const address = params.address || extractAddress(
     params.passphrase, network,
@@ -72,6 +74,7 @@ export const getAccount = ({
   return http({
     network,
     path: `/account/${address}`,
+    baseUrl,
   }).then(response => normalizeAccountResponse({
     response,
     address,
