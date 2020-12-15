@@ -55,7 +55,8 @@ export const transactionsRetrieved = ({
   filters = undefined,
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.transactionsRetrieved));
-  const { network } = getState();
+  const { network, settings } = getState();
+  const token = settings.token.active;
 
   getTransactions({
     network,
@@ -65,7 +66,7 @@ export const transactionsRetrieved = ({
       limit,
       offset,
     },
-  })
+  }, token)
     .then((response) => {
       dispatch({
         type: actionTypes.transactionsRetrieved,
@@ -109,11 +110,12 @@ export const transactionsUpdated = ({
   filters,
   limit,
 }) => async (dispatch, getState) => {
-  const { network, transactions } = getState();
+  const { network, transactions, settings } = getState();
+  const token = settings.token.active;
 
   getTransactions({
     network, address, limit, filters,
-  })
+  }, token)
     .then((response) => {
       if (response && filters.direction === transactions.filters.direction) {
         dispatch({

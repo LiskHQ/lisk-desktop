@@ -101,7 +101,8 @@ const apis = {
     transformResponse: response => response,
   },
   transactions: {
-    apiUtil: (network, params) => getTransactions(transformParams(params)),
+    apiUtil: (network, { token, ...params }) =>
+      getTransactions({ network, params: transformParams(params) }, token),
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
       address: selectSearchParamValue(props.history.location.search, 'address'),

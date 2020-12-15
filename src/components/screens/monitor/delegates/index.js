@@ -88,7 +88,11 @@ const ComposedDelegates = compose(
       },
 
       votes: {
-        apiUtil: network => getTransactions({ network, params: { type: transactionTypes().vote.new, sort: 'timestamp:desc' } }),
+        apiUtil: (network, params) => getTransactions({
+          network,
+          params: { type: transactionTypes().vote.new, sort: 'timestamp:desc' },
+        }, params.token),
+        getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,
         defaultData: [],
         transformResponse: transformVotesResponse,
