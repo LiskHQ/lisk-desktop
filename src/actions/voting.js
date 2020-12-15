@@ -80,8 +80,8 @@ export const votesRetrieved = () =>
   (dispatch, getState) => {
     const { account } = getState();
 
-    dispatch({
-      type: actionTypes.votesRetrieved,
-      data: account.info.LSK.votes,
-    });
+    // dispatch({
+    //   type: actionTypes.votesRetrieved,
+    //   data: account.info.LSK.votes,
+    // });
   };
