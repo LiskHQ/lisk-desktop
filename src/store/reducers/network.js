@@ -21,7 +21,7 @@ const network = (state = initialState, action) => {
         name: action.data.name,
         networks: {
           ...state.networks,
-          [action.data.token]: action.data.network || {},
+          [action.data.token]: action.data.config || {},
         },
       };
     case actionTypes.networkStatusUpdated:

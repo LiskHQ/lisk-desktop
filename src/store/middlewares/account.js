@@ -176,7 +176,7 @@ const autoLogInIfNecessary = async (store) => {
     showNetwork, statistics, statisticsRequest, statisticsFollowingDay,
   } = store.getState().settings;
   const loginNetwork = checkNetworkToConnect(showNetwork);
-  store.dispatch(networkSet(loginNetwork));
+  store.dispatch(networkSet(loginNetwork, tokenMap.LSK.key));
   store.dispatch(networkStatusUpdated({ online: true }));
 
   const autologinData = getAutoLogInData();

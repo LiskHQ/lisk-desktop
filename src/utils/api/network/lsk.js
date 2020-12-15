@@ -30,7 +30,7 @@ export const getServerUrl = (nodeUrl, nethash) => {
 export const getNetworkConfig = (network) => {
   const networkConfig = networks[camelize(network.name)];
   if (networkConfig.name === networks.customNode.name) {
-    networkConfig.nodes = [network.address];
+    networkConfig.nodes = [network.options.address];
   }
 
   // get mainnet testnet node url here

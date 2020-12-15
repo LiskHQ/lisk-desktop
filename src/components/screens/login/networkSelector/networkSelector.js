@@ -130,10 +130,13 @@ class NetworkSelector extends React.Component {
     const nodeURL = address !== '' ? addHttp(address) : '';
     const newNetwork = this.getNetwork(network);
 
+    console.log('nodeURL', nodeURL);
+
     if (network === networks.customNode.code) {
       const liskAPIClient = new Lisk.APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
         .then((res) => {
+          console.log('this.props.networkSet', res);
           if (res.data) {
             this.props.networkSet({
               name: newNetwork.name,
@@ -142,7 +145,7 @@ class NetworkSelector extends React.Component {
               },
             });
 
-            console.log(newNetwork);
+            console.log('getConstant > ', newNetwork);
 
             this.props.history.push(nextPath);
             this.setState({ validationError: '', connected: true });
