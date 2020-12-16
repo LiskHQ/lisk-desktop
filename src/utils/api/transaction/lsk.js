@@ -266,10 +266,10 @@ export const create = ({
  * @param {string} network - the network name, e.g. mainnet, betanet
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
-export const broadcast = (transaction, network) => new Promise(
+export const broadcast = ({ transaction, networkName }) => new Promise(
   async (resolve, reject) => {
     try {
-      const client = getApiClient(network);
+      const client = getApiClient(networkName);
       const response = await client.transactions.broadcast(transaction);
       resolve(response);
     } catch (error) {

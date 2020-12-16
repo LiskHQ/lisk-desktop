@@ -35,7 +35,10 @@ class TransactionStatus extends React.Component {
       transactionBroadcasted,
     } = this.props;
 
-    if (transactionsCreated.length) transactionsCreated.forEach(tx => transactionBroadcasted(tx));
+    if (transactionsCreated.length) {
+      transactionsCreated.forEach(tx => transactionBroadcasted(tx));
+    }
+
     if (transactionsCreatedFailed.length) {
       transactionsCreatedFailed.forEach(tx => transactionBroadcasted(tx));
     }
