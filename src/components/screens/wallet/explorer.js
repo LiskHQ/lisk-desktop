@@ -7,7 +7,7 @@ import { withTranslation } from 'react-i18next';
 import withData from '../../../utils/withData';
 import Overview from './overview';
 import { getAccount } from '../../../utils/api/account';
-import { getTransactions } from '../../../utils/api/transactions';
+import { getTransactions } from '../../../utils/api/transaction';
 import txFilters from '../../../constants/transactionFilters';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
@@ -91,7 +91,7 @@ const Wallet = ({
 
 const apis = {
   account: {
-    apiUtil: (network, params) => getAccount({ network, ...params }),
+    apiUtil: (network, params) => getAccount({ network, params }, params.token),
     defaultData: {},
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
@@ -101,7 +101,8 @@ const apis = {
     transformResponse: response => response,
   },
   transactions: {
-    apiUtil: (network, params) => getTransactions(transformParams(params)),
+    apiUtil: (network, { token, ...params }) =>
+      getTransactions({ network, params: transformParams(params) }, token),
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
       address: selectSearchParamValue(props.history.location.search, 'address'),

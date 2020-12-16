@@ -5,7 +5,7 @@ import {
 } from '../../actions/account';
 import {
   emptyTransactionsData,
-  updateTransactions,
+  transactionsUpdated,
 } from '../../actions/transactions';
 import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
@@ -20,7 +20,6 @@ import { getFromStorage } from '../../utils/localJSONStorage';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
-import { txAdapter } from '../../utils/api/lsk/adapters';
 import { tokenMap } from '../../constants/tokens';
 
 const updateAccountData = (store) => {
@@ -76,7 +75,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   const { transactions, settings: { token } } = state;
   const account = getActiveTokenAccount(store.getState());
 
-  const txs = (action.data.block.transactions || []).map(txAdapter);
+  const txs = action.data.block.transactions || [];
   const blockContainsRelevantTransaction = txs.filter((transaction) => {
     if (!transaction) return false;
     return (
@@ -97,7 +96,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // https://github.com/LiskHQ/lisk-desktop/pull/1609
     setTimeout(() => {
       updateAccountData(store);
-      store.dispatch(updateTransactions({
+      store.dispatch(transactionsUpdated({
         pendingTransactions: transactions.pending,
         address: account.address,
         filters: transactions.filters,
@@ -177,7 +176,7 @@ const autoLogInIfNecessary = async (store) => {
     showNetwork, statistics, statisticsRequest, statisticsFollowingDay,
   } = store.getState().settings;
   const loginNetwork = checkNetworkToConnect(showNetwork);
-  store.dispatch(networkSet(loginNetwork));
+  store.dispatch(networkSet(loginNetwork, tokenMap.LSK.key));
   store.dispatch(networkStatusUpdated({ online: true }));
 
   const autologinData = getAutoLogInData();
@@ -203,7 +202,7 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.newBlockCreated:
       checkTransactionsAndUpdateAccount(store, action);
       break;
-    case actionTypes.updateTransactions:
+    case actionTypes.transactionsRetrieved:
       votePlaced(store, action);
       break;
     case actionTypes.accountLoggedOut:

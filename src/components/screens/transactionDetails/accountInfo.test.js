@@ -8,7 +8,9 @@ describe('TxDetail AccountInfo', () => {
     label: 'Label test',
     address: accounts.genesis.address,
     token: 'LSK',
-    netCode: 1,
+    network: {
+      name: 'Mainnet',
+    },
   };
 
   it('Should render with address and label passed as props', () => {

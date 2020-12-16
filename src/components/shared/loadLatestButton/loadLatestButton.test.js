@@ -2,21 +2,15 @@ import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
 import LoadLatestButton from '.';
-import liskService from '../../../utils/api/lsk/liskService';
-
-jest.mock('../../../utils/api/lsk/liskService');
 
 describe('LoadLatestButton', () => {
-  let onSocketEvent;
+  const onSocketEvent = () => {};
   const props = {
     onClick: jest.fn(),
     event: 'test.event',
     children: 'Test load button',
   };
   const render = () => {
-    liskService.listenToBlockchainEvents.mockImplementation(({ callback }) => {
-      onSocketEvent = callback;
-    });
     const wrapper = mount(<LoadLatestButton {...props} />);
     return wrapper;
   };

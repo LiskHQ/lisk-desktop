@@ -20,7 +20,6 @@ const http = ({
 
   return fetch(url.toString(), {
     method,
-    mode: 'no-cors',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',

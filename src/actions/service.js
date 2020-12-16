@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { toast } from 'react-toastify';
 import actionTypes from '../constants/actions';
-import serviceAPI from '../utils/api/service';
+import { getPrices } from '../utils/api/market';
 
 // eslint-disable-next-line import/prefer-default-export
 export const pricesRetrieved = () => (dispatch, getState) => {
@@ -15,7 +15,7 @@ export const pricesRetrieved = () => (dispatch, getState) => {
     },
   });
 
-  serviceAPI.getPriceTicker(network, activeToken)
+  getPrices(network, activeToken)
     .then((priceTicker) => {
       const priceTickerReduced = priceTicker.reduce(tickerReducer, {});
       dispatch({

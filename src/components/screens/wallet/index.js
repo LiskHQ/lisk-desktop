@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { parseSearchParams, addSearchParamsToUrl } from '../../../utils/searchParams';
 import Overview from './overview';
-import { getTransactions } from '../../../actions/transactions';
+import { transactionsRetrieved } from '../../../actions/transactions';
 import txFilters from '../../../constants/transactionFilters';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
@@ -51,7 +51,7 @@ const Wallet = ({ t, history }) => {
     loadData: (params) => {
       const modified = transformParams(params);
       modified.address = account.info[activeToken].address;
-      dispatch(getTransactions(modified));
+      dispatch(transactionsRetrieved(modified));
     },
     isLoading,
     error: false,

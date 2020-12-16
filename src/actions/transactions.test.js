@@ -3,12 +3,12 @@ import actionTypes from '../constants/actions';
 import txFilters from '../constants/transactionFilters';
 import {
   getTransactions,
-  updateTransactions,
+  transactionsUpdated,
 } from './transactions';
-import * as transactionsApi from '../utils/api/transactions';
+import * as transactionsApi from '../utils/api/transaction';
 
-jest.mock('../utils/api/transactions');
-jest.mock('../utils/api/delegates');
+jest.mock('../utils/api/transaction');
+jest.mock('../utils/api/delegate');
 
 describe.skip('actions: transactions', () => {
   const dispatch = jest.fn();
@@ -47,7 +47,7 @@ describe.skip('actions: transactions', () => {
       offset: 0,
       filters: { direction: txFilters.all },
     };
-    const actionFunction = updateTransactions(data);
+    const actionFunction = transactionsUpdated(data);
 
     it('should dispatch updateTransactions action if resolved', async () => {
       transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });

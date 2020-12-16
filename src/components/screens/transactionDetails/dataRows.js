@@ -10,7 +10,7 @@ import LiskAmount from '../../shared/liskAmount';
 import transactionTypes from '../../../constants/transactionTypes';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
-import { getTxAmount } from '../../../utils/transactions';
+import { getTxAmount } from '../../../utils/api/transaction';
 
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
@@ -43,7 +43,7 @@ export const Illustration = ({
 };
 
 export const Sender = ({
-  transaction, activeToken, netCode,
+  transaction, activeToken, network,
 }) => {
   const { senderLabel } = transactionTypes.getByCode(transaction.type || 0);
 
@@ -52,7 +52,7 @@ export const Sender = ({
       <AccountInfo
         name={getDelegateName(transaction, activeToken)}
         token={activeToken}
-        netCode={netCode}
+        network={network}
         address={transaction.senderId}
         addressClass="sender-address"
         label={senderLabel}
@@ -62,14 +62,14 @@ export const Sender = ({
 };
 
 export const Recipient = ({
-  activeToken, netCode, transaction, t,
+  activeToken, network, transaction, t,
 }) => {
   if (transaction.type !== transactionTypes().transfer.code.legacy) return null;
   return (
     <BoxRow className={styles.detailsWrapper}>
       <AccountInfo
         token={activeToken}
-        netCode={netCode}
+        network={network}
         address={transaction.recipientId}
         addressClass="receiver-address"
         label={t('Recipient')}
@@ -139,9 +139,7 @@ export const AmountAndDate = ({
         </span>
         <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
           <span className="tx-amount">
-            <LiskAmount val={getTxAmount(transaction)} />
-            {' '}
-            {activeToken}
+            <LiskAmount val={getTxAmount(transaction)} token={activeToken} />
           </span>
         </DiscreetMode>
       </div>

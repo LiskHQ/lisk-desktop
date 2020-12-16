@@ -71,6 +71,7 @@ const actionTypes = {
   broadcastedTransactionError: 'BROADCASTED_TRANSACTION_ERROR',
   forgingTimesRetrieved: 'FORGING_TIME_RETRIEVED',
   appUpdateAvailable: 'APP_UPDATE_AVAILABLE',
+  transactionsRetrieved: 'TRANSACTION_RETRIEVED',
 };
 
 export default actionTypes;

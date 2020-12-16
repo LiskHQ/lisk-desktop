@@ -93,7 +93,6 @@ module.exports = {
     'src/utils/analytics.js',
     'src/utils/bookmarks.js',
     'src/utils/api/ledger.js',
-    'src/utils/api/lsk/liskService.js',
     'src/utils/api/btc/',
     'src/utils/api/delegates.js',
     'src/utils/api/lsk/adapters.js',

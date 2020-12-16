@@ -1,15 +1,15 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import SelectNameAndFee from './selectNameAndFee';
-import { getAPIClient } from '../../../../utils/api/lsk/network';
+import { getDelegate } from '../../../../utils/api/delegate';
 import networks from '../../../../constants/networks';
 import accounts from '../../../../../test/constants/accounts';
-import { getTransactionBaseFees, getTransactionFee } from '../../../../utils/api/lsk/transactions';
+import { getTransactionBaseFees, getTransactionFee } from '../../../../utils/api/transaction';
 import { fromRawLsk } from '../../../../utils/lsk';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
-jest.mock('../../../../utils/api/lsk/network');
-jest.mock('../../../../utils/api/lsk/transactions');
+jest.mock('../../../../utils/api/network');
+jest.mock('../../../../utils/api/transaction');
 
 const transactionBaseFees = {
   Low: 156,
@@ -57,7 +57,7 @@ describe('RegisterDelegate', () => {
     };
 
     apiClient.delegates.get.mockResolvedValue({ data: [] });
-    getAPIClient.mockReturnValue(apiClient);
+    getDelegate.mockReturnValue(apiClient);
 
     wrapper = mount(<SelectNameAndFee {...props} />);
   });

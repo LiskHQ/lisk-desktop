@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { to } from 'await-to-js';
+
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import { Input } from '../../../toolbox/inputs';
 import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../../../utils/login';
@@ -13,6 +13,9 @@ import networks from '../../../../constants/networks';
 import styles from './networkSelector.css';
 import keyCodes from '../../../../constants/keyCodes';
 import DropdownButton from '../../../toolbox/dropdownButton';
+import { isEmpty } from '../../../../utils/helpers';
+import { tokenMap } from '../../../../constants/tokens';
+import { getNetworkConfig } from '../../../../utils/api/network';
 
 class NetworkSelector extends React.Component {
   // eslint-disable-next-line max-statements
@@ -68,26 +71,25 @@ class NetworkSelector extends React.Component {
 
   // eslint-disable-next-line max-statements
   async checkNodeStatus(showErrorToaster = true) {
-    const {
-      liskAPIClient, network,
-    } = this.props;
+    const { network } = this.props;
 
-    if (liskAPIClient) {
+    if (network && !isEmpty(network)) {
       this.setState({
         network: network.networks.LSK.code,
         activeNetwork: network.networks.LSK.code,
       });
-      const [error] = await to(liskAPIClient.node.getConstants());
 
-      if (error) {
+      const response = getNetworkConfig(network, tokenMap.LSK.key);
+
+      if (response.data) {
         if (network.name === networks.customNode.name) {
           this.setValidationError();
         } else {
           this.setState(({ validationError: '' }));
         }
-        if (showErrorToaster) {
-          toast.error(`Unable to connect to the node, Error: ${error.message}`);
-        }
+      }
+      if (showErrorToaster) {
+        toast.error(`Unable to connect to the node, Error: ${response.message}`);
       }
     }
   }
@@ -128,10 +130,13 @@ class NetworkSelector extends React.Component {
     const nodeURL = address !== '' ? addHttp(address) : '';
     const newNetwork = this.getNetwork(network);
 
+    console.log('nodeURL', nodeURL);
+
     if (network === networks.customNode.code) {
       const liskAPIClient = new Lisk.APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
         .then((res) => {
+          console.log('this.props.networkSet', res);
           if (res.data) {
             this.props.networkSet({
               name: newNetwork.name,
@@ -139,6 +144,8 @@ class NetworkSelector extends React.Component {
                 ...newNetwork,
               },
             });
+
+            console.log('getConstant > ', newNetwork);
 
             this.props.history.push(nextPath);
             this.setState({ validationError: '', connected: true });

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
-import { getTokenFromAddress } from './api/transactions';
+import { getTokenFromAddress } from './api/transaction';
 import i18n from '../i18n';
 import { tokenMap } from '../constants/tokens';
 

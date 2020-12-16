@@ -5,7 +5,7 @@ import TransactionSummary from '../../shared/transactionSummary';
 import styles from './secondPassphrase.css';
 
 const SummaryStep = ({
-  t, account, prevStep, nextStep, secondPassphrase, secondPassphraseRegistered,
+  t, account, prevStep,
 }) => (
   <TransactionSummary
     title={t('Register 2nd passphrase summary')}
@@ -13,28 +13,7 @@ const SummaryStep = ({
     t={t}
     confirmButton={{
       label: t('Register'),
-      onClick: () => {
-        secondPassphraseRegistered({
-          secondPassphrase,
-          passphrase: account.passphrase,
-          account: account.info.LSK,
-          callback: ({ success, error }) => {
-            nextStep({
-              success,
-              ...(success ? {
-                illustration: 'secondPassphraseSuccess',
-                title: t('2nd passphrase registration submitted'),
-                message: t('You will be notified when your transaction is confirmed.'),
-              } : {
-                illustration: 'secondPassphraseError',
-                title: t('2nd passphrase registration failed'),
-                message: t('There was an error on the transaction.'),
-                error,
-              }),
-            });
-          },
-        });
-      },
+      onClick: () => {},
     }}
     cancelButton={{
       label: t('Go back'),

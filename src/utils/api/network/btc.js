@@ -29,7 +29,7 @@ export const getNetworkConfig = (network) => {
   return new Promise(resolve =>
     resolve({
       isTestnet: netCode !== 0,
-      url: netCode !== 0 ? 'https://btc-test.lisk.io' : 'https://btc.lisk.io',
+      serviceUrl: netCode !== 0 ? 'https://btc-test.lisk.io' : 'https://btc.lisk.io',
       minerFeesURL: 'https://bitcoinfees.earn.com/api/v1/fees/recommended',
       network: netCode !== 0 ? bitcoin.networks.testnet : bitcoin.networks.bitcoin,
       derivationPath: netCode !== 0 ? "m/44'/1'/0'/0/0" : "m/44'/0'/0'/0/0",

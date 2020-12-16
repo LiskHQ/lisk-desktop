@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
-import { getAccount } from './api/lsk/account';
+import { getAccount } from './api/account';
 import {
   checkIfInsideLiskApp,
   getAddress,
@@ -24,7 +24,7 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
     // eslint-disable-next-line no-await-in-loop
     const publicKey = await getPublicKey({ index, deviceId });
     // eslint-disable-next-line no-await-in-loop
-    account = await getAccount({ network, publicKey });
+    account = await getAccount({ network, publicKey }, 'LSK');
     if (index === 0 || accounts[index - 1].balance) {
       accounts.push(account);
     }

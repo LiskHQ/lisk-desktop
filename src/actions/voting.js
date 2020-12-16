@@ -1,5 +1,5 @@
 import to from 'await-to-js';
-import { create } from '../utils/api/lsk/transactions';
+import { create } from '../utils/api/transaction';
 import { passphraseUsed } from './account';
 import actionTypes from '../constants/actions';
 import { loginType } from '../constants/hwConstants';
@@ -80,8 +80,8 @@ export const votesRetrieved = () =>
   (dispatch, getState) => {
     const { account } = getState();
 
-    dispatch({
-      type: actionTypes.votesRetrieved,
-      data: account.info.LSK.votes,
-    });
+    // dispatch({
+    //   type: actionTypes.votesRetrieved,
+    //   data: account.info.LSK.votes,
+    // });
   };

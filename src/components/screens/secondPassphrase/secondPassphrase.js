@@ -24,7 +24,7 @@ class SecondPassphrase extends React.Component {
   }
 
   render() {
-    const { t, account, secondPassphraseRegistered } = this.props;
+    const { t, account } = this.props;
     return (
       <Dialog hasClose className={styles.wrapper}>
         <MultiStep>
@@ -41,7 +41,6 @@ class SecondPassphrase extends React.Component {
           />
           <SummaryStep
             secondPassphrase={this.secondPassphrase}
-            secondPassphraseRegistered={secondPassphraseRegistered}
             account={account}
             t={t}
           />

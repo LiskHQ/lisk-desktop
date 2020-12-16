@@ -1,7 +1,7 @@
 import urlProcessor from './urlProcessor';
 import { voteEdited } from './voting';
 
-jest.mock('../utils/api/lsk/account', () => ({
+jest.mock('../utils/api/account', () => ({
   getAccount: jest.fn().mockImplementation(data => Promise.resolve({ address: '12L', username: data.username })),
 }));
 

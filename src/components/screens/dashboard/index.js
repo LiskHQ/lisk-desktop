@@ -1,10 +1,15 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { getTransactions } from '../../../actions/transactions';
-import removeDuplicateTransactions from '../../../utils/transactions';
 import { getActiveTokenAccount } from '../../../utils/account';
 import Dashboard from './dashboard';
+
+const removeDuplicateTransactions = (pendingTransactions, confirmedTransactions) =>
+  [...pendingTransactions, ...confirmedTransactions]
+    .filter((transactionA, index, self) =>
+      index === self.findIndex(transactionB => (
+        transactionB.id === transactionA.id
+      )));
 
 const mapStateToProps = state => ({
   transactions: removeDuplicateTransactions(
@@ -17,8 +22,4 @@ const mapStateToProps = state => ({
   settings: state.settings,
 });
 
-const mapDispatchToProps = {
-  getTransactions,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Dashboard));
+export default connect(mapStateToProps)(withTranslation()(Dashboard));
