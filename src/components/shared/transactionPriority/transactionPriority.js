@@ -132,8 +132,8 @@ const TransactionPriority = ({
         <div className={`${styles.prioritySelector} priority-selector`}>
           {tokenRelevantPriorities.map((priority, index) => {
             let disabled = false;
-            if (index === 0 && priority.value === 0) {
-              priority.title = 'Normal';
+            if (index === 0) {
+              priority.title = priority.value === 0 ? 'Normal' : 'Low';
             } else if (index === 3) {
               disabled = priority.value === 0 && !loadError; // Custom fee option
             } else {
