@@ -15,7 +15,7 @@ const NewsFeed = (props) => {
     newsFeed,
     t,
   } = props;
-  const filteredNewsFeed = newsFeed.data.data || [];
+  const filteredNewsFeed = newsFeed.data || [];
   const serviceUrl = useSelector(state => state.network.serviceUrl);
   const sources = ['twitter_lisk', 'drupal_lisk_general'];
   const [source, setSource] = useState(sources.join(','));
