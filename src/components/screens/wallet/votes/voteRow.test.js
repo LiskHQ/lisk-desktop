@@ -8,11 +8,10 @@ describe('VoteRow Component', () => {
   let wrapper;
   const props = {
     data: {
-      delegateAddress: accounts.delegate.address,
-      delegate: accounts.delegate,
+      address: accounts.delegate.address,
     },
     onRowClick: jest.fn(),
-    accounts: {
+    delegates: {
       [accounts.delegate.address]: {
         productivity: 95,
         rank: 1,
