@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
 
-  &.disabled {
+  &.opaqueLogo {
     opacity: 0.5;
   }
 
@@ -76,8 +76,34 @@
   margin-right: 16px;
 }
 
-@media (--medium-viewport) {
-  .toggle {
-    margin-right: 10px;
+.votingQueueVoteCount {
+  @mixin contentSmall;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: absolute;
+  top: 6px;
+  left: 17px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-jade-green);
+}
+
+.votingQueueIcon {
+  display: flex;
+  justify-content: center;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+
+  & .label,
+  & img {
+    opacity: 0.5;
   }
 }

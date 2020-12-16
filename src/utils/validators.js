@@ -2,7 +2,9 @@ import * as bitcoin from 'bitcoinjs-lib';
 import numeral from 'numeral';
 import { cryptography } from '@liskhq/lisk-client';
 import { tokenMap } from '../constants/tokens';
+import { minBalance } from '../constants/transactions';
 import getBtcConfig from './api/btc/config';
+import { toRawLsk } from './lsk';
 import i18n from '../i18n';
 import reg from './regex';
 
@@ -54,8 +56,11 @@ export const validateLSKPublicKey = (address) => {
  * - Check that has no more than 8 floating points digits
  * @param {Object.<string, srting>} data
  * @param {string} data.value
- * @param {string} [data.token="LSK"]
- * @param {string} [data.locale="en"]
+ * @param {string} [data.token="LSK"] The active token
+ * @param {string} [data.locale="en"] The locale for testing the format against
+ * @param {string?} [data.funds] Maximum funds users are allowed to input
+ * @param {Array?} [data.checklist] The list of errors to be tested. A choice of
+ * ZERO, MAX_ACCURACY, FORMAT, VOTE_10X, INSUFFICIENT_FUNDS
  * @returns {Object.<string, string|boolean>}
  * data - Object containing the message and if has an error
  *  data.message - Message of the error or empty string
@@ -65,18 +70,44 @@ export const validateAmountFormat = ({
   value,
   token = 'LSK',
   locale = i18n.language,
+  funds,
+  checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT'],
 }) => {
-  const errors = {
-    INVALID: i18n.t('Provide a correct amount of {{token}}', { token }),
-    FLOATING_POINT: i18n.t('Maximum floating point is 8.'),
-  };
   const { format, maxFloating } = reg.amount[locale];
-  const message = (
-    (format.test(value) || numeral(value).value() === 0) && errors.INVALID)
-    || (maxFloating.test(value) && errors.FLOATING_POINT)
-    || '';
+
+  const errors = {
+    ZERO: {
+      message: i18n.t('Amount can\'t be zero.'),
+      fn: () => numeral(value).value() === 0,
+    },
+    FORMAT: {
+      message: i18n.t('Provide a correct amount of {{token}}', { token }),
+      fn: () => format.test(value),
+    },
+    MAX_ACCURACY: {
+      message: i18n.t('Maximum floating point is 8.'),
+      fn: () => maxFloating.test(value),
+    },
+    VOTE_10X: {
+      message: i18n.t('You can only vote in multiplies of 10 LSK.'),
+      fn: () => value % 10 !== 0,
+    },
+    INSUFFICIENT_FUNDS: {
+      message: i18n.t('Provided amount is higher than your current balance.'),
+      fn: () => funds < toRawLsk(numeral(value).value()),
+    },
+    MIN_BALANCE: {
+      message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
+      fn: () => {
+        const rawValue = toRawLsk(numeral(value).value());
+        return funds - rawValue < minBalance;
+      },
+    },
+  };
+
+  const errorType = checklist.find(type => errors[type].fn());
   return {
-    error: !!message,
-    message,
+    error: !!errorType,
+    message: errorType ? errors[errorType].message : '',
   };
 };

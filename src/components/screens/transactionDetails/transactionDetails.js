@@ -8,8 +8,8 @@ import NotFound from '../../shared/notFound';
 import TransactionVotes from './transactionVotes';
 import routes from '../../../constants/routes';
 import {
-  DateAndConfirmation, FeeAndAmount, TransactionId,
-  Sender, Recipient, Message, Illustration,
+  TransactionId, Sender, Recipient, Message,
+  Illustration, AmountAndDate, FeeAndConfirmation,
 } from './dataRows';
 import { isEmpty } from '../../../utils/helpers';
 import Dialog from '../../toolbox/dialog/dialog';
@@ -58,14 +58,14 @@ class Transactions extends React.Component {
               netCode={netCode}
               t={t}
             />
-            <DateAndConfirmation
+            <TransactionId t={t} id={data.id} />
+            <AmountAndDate
               transaction={data}
               activeToken={activeToken}
               addresses={addresses}
               t={t}
             />
-            <TransactionId t={t} id={data.id} />
-            <FeeAndAmount
+            <FeeAndConfirmation
               transaction={data}
               activeToken={activeToken}
               addresses={addresses}

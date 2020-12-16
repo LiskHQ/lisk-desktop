@@ -3,7 +3,6 @@ import CopyToClipboard from '../../toolbox/copyToClipboard';
 import TransactionTypeFigure from '../../shared/transactionTypeFigure';
 import { tokenMap } from '../../../constants/tokens';
 import AccountInfo from './accountInfo';
-import { sizeOfString } from '../../../utils/helpers';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import DiscreetMode from '../../shared/discreetMode';
@@ -11,6 +10,7 @@ import LiskAmount from '../../shared/liskAmount';
 import transactionTypes from '../../../constants/transactionTypes';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
+import { getTxAmount } from '../../../utils/transactions';
 
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
@@ -30,15 +30,15 @@ export const Illustration = ({
   transaction,
 }) => {
   const { title } = transactionTypes.getByCode(transaction.type || 0);
-  if (transaction.type === transactionTypes().send.code) return null;
+  if (transaction.type === transactionTypes().transfer.code.legacy) return null;
   return (
-    <div className={styles.summaryHeader}>
+    <BoxRow className={styles.summaryHeader}>
       <TransactionTypeFigure
         address={transaction.senderId}
         transactionType={transaction.type}
       />
       <h2 className="tx-header">{title}</h2>
-    </div>
+    </BoxRow>
   );
 };
 
@@ -64,7 +64,7 @@ export const Sender = ({
 export const Recipient = ({
   activeToken, netCode, transaction, t,
 }) => {
-  if (transaction.type !== transactionTypes().send.code) return null;
+  if (transaction.type !== transactionTypes().transfer.code.legacy) return null;
   return (
     <BoxRow className={styles.detailsWrapper}>
       <AccountInfo
@@ -82,7 +82,7 @@ export const FeeAndAmount = ({
   transaction, activeToken, addresses, t,
 }) => (
   <BoxRow>
-    { transaction.type === transactionTypes().send.code
+    { transaction.type === transactionTypes().transfer.code.legacy
       ? (
         <div className={styles.value}>
           <span className={styles.label}>
@@ -90,9 +90,7 @@ export const FeeAndAmount = ({
           </span>
           <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
             <span className="tx-amount">
-              <LiskAmount val={transaction.amount} />
-              {' '}
-              {activeToken}
+              <LiskAmount val={transaction.amount} token={activeToken} />
             </span>
           </DiscreetMode>
         </div>
@@ -102,9 +100,7 @@ export const FeeAndAmount = ({
         {t('Transaction fee')}
       </span>
       <span className="tx-fee">
-        <LiskAmount val={transaction.fee} />
-        {' '}
-        {activeToken}
+        <LiskAmount val={transaction.fee} token={activeToken} />
       </span>
     </div>
   </BoxRow>
@@ -126,6 +122,70 @@ export const TransactionId = ({ id, t }) => (
           }}
           copyClassName={styles.copyIcon}
         />
+      </span>
+    </div>
+  </BoxRow>
+);
+
+export const AmountAndDate = ({
+  transaction, activeToken, t, addresses,
+}) => {
+  if (transaction.amount === undefined && transaction.asset.amount === undefined) return null;
+  return (
+    <BoxRow>
+      <div className={styles.value}>
+        <span className={styles.label}>
+          {t('Amount of Transaction')}
+        </span>
+        <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
+          <span className="tx-amount">
+            <LiskAmount val={getTxAmount(transaction)} />
+            {' '}
+            {activeToken}
+          </span>
+        </DiscreetMode>
+      </div>
+      <div className={`${styles.value} displayNone`}>
+        <span className={styles.label}>{t('Date')}</span>
+        <span className={`${styles.date} tx-date`}>
+          <DateTimeFromTimestamp
+            fulltime
+            className="date"
+            time={transaction.timestamp}
+            token={activeToken}
+            showSeconds
+          />
+        </span>
+      </div>
+    </BoxRow>
+  );
+};
+
+export const FeeAndConfirmation = ({
+  transaction, activeToken, t,
+}) => (
+  <BoxRow>
+    <div className={styles.value}>
+      <span className={styles.label}>
+        {t('Transaction fee')}
+      </span>
+      <span className="tx-fee">
+        <LiskAmount val={transaction.fee} />
+        {' '}
+        {activeToken}
+      </span>
+    </div>
+    <div className={`${styles.value}`}>
+      <span className={styles.label}>
+        {t('Confirmations')}
+        <Tooltip position="top">
+          <p>
+            { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
+          </p>
+        </Tooltip>
+      </span>
+      <span className="tx-confirmation">
+        {transaction.confirmations || 0}
       </span>
     </div>
   </BoxRow>
@@ -166,19 +226,14 @@ export const DateAndConfirmation = ({
 export const Message = ({
   activeToken, transaction, t,
 }) => {
-  if (transaction.type !== transactionTypes().send.code || activeToken !== 'LSK') return null;
+  if (transaction.type !== transactionTypes().transfer.code.legacy
+    || activeToken !== tokenMap.LSK.key) return null;
   return (
     <BoxRow className={styles.message}>
       <div className={`${styles.value}`}>
         <span className={styles.label}>{t('Message')}</span>
         <div className="tx-reference">
           {getTxAsset(transaction)}
-        </div>
-      </div>
-      <div className={`${styles.value}`}>
-        <span className={styles.label}>{t('Size')}</span>
-        <div className="tx-size">
-          {`${sizeOfString(transaction.asset.data)} bytes`}
         </div>
       </div>
     </BoxRow>

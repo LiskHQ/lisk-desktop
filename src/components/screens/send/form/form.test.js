@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import { tokenMap } from '../../../../constants/tokens';
 import Form from './form';
 import accounts from '../../../../../test/constants/accounts';
+import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 describe('Form', () => {
   let wrapper;
@@ -34,13 +35,9 @@ describe('Form', () => {
       token: tokenMap.LSK.key,
       t: v => v,
       account: {
-        balance: accounts.genesis.balance,
-        info: {
-          LSK: accounts.genesis,
-          BTC: {
-            address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
-          },
-        },
+        ...accounts.genesis,
+        nonce: '1',
+        balance: '5000000000',
       },
       bookmarks,
       network: {
@@ -55,7 +52,7 @@ describe('Form', () => {
       },
       nextStep: jest.fn(),
       initialValue: {
-        recipient: bookmarks.LSK[0].title,
+        recipient: bookmarks.LSK[0].address,
       },
     };
 
@@ -88,12 +85,15 @@ describe('Form', () => {
     expect(wrapper.find('textarea.message')).toHaveValue(fields.reference.value);
   });
 
-  it('should go to next step when submit button is clicked', () => {
+  it('should go to next step when submit button is clicked', async () => {
     const { address } = accounts.genesis;
     wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
     wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '12' } });
     act(() => { jest.advanceTimersByTime(300); });
-    wrapper.update();
+
+    act(() => { wrapper.update(); });
+    await flushPromises();
+
     expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     wrapper.find('button.btn-submit').simulate('click');
     expect(props.nextStep).toHaveBeenCalled();
@@ -159,7 +159,7 @@ describe('Form', () => {
       expect(amountField.find('input').prop('value')).toEqual('0.1');
     });
 
-    it('Should show error feedback if wrong data is inserted', () => {
+    it('Should show error feedback if wrong data is inserted', async () => {
       let amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', { target: { name: 'amount', value: 'abc' } });
       act(() => { jest.advanceTimersByTime(300); });
@@ -177,8 +177,29 @@ describe('Form', () => {
 
       amountField.find('input').simulate('change', { target: { name: 'amount', value: props.account.balance + 2 } });
       act(() => { jest.advanceTimersByTime(300); });
+      await flushPromises();
       wrapper.update();
       expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
+    });
+
+    it('Should show error if transaction will result on an account with less than the minimum balance', () => {
+      const evt = { target: { name: 'amount', value: '49.96' } };
+      const amountField = wrapper.find('.fieldGroup').at(1);
+      amountField.find('input').simulate('change', evt);
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount will result in a wallet with less than the minimum balance.');
+      expect(wrapper.find('button.btn-submit')).toBeDisabled();
+    });
+
+    it('Should be able to send entire balance', () => {
+      const { address } = accounts.genesis;
+      wrapper.find('.send-entire-balance-button').at(1).simulate('click');
+      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      expect(wrapper.find('.amount Feedback')).toHaveText('');
+      expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     });
   });
 

@@ -77,8 +77,8 @@ const Wallet = ({ t, history }) => {
     }
   }, []);
 
-
   if (!account || !account.info || isEmpty(account.info)) return (<div />);
+
   return (
     <section>
       <Overview
@@ -109,7 +109,7 @@ const Wallet = ({ t, history }) => {
             tabId="votes"
           />
         ) : null}
-        {account.info[activeToken].delegate
+        {account.info[activeToken].isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"

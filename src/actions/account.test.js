@@ -10,7 +10,6 @@ import {
   login,
 } from './account';
 import * as accountApi from '../utils/api/account';
-import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
@@ -105,7 +104,7 @@ describe('actions: account', () => {
         senderPublicKey: accounts.second_passphrase_account.publicKey,
         senderId: accounts.second_passphrase_account.address,
         amount: 0,
-        fee: Fees.setSecondPassphrase,
+        fee: 5e8,
         type: transactionTypes().setSecondPassphrase.code,
         token: 'LSK',
       };

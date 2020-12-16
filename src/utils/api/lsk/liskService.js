@@ -1,5 +1,6 @@
-import { utils } from '@liskhq/lisk-transactions';
-import { cryptography } from '@liskhq/lisk-client';
+/* eslint-disable max-lines */
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { cryptography, transactions } from '@liskhq/lisk-client';
 import io from 'socket.io-client';
 import * as popsicle from 'popsicle';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
@@ -13,12 +14,12 @@ import transactionTypes from '../../../constants/transactionTypes';
 const formatDate = (value, options) => getTimestampFromFirstBlock(value, 'DD.MM.YY', options);
 
 const liskServiceGet = ({
-  path, transformResponse = x => x, searchParams = {}, network,
+  path, transformResponse = x => x, searchParams = {}, network, baseUrl = 'serviceUrl',
 }) => new Promise((resolve, reject) => {
   if (network.serviceUrl === 'unavailable') {
     reject(new Error('Lisk Service is not available for this network.'));
   } else {
-    popsicle.get(`${network.serviceUrl}${path}?${new URLSearchParams(searchParams)}`)
+    popsicle.get(`${network[baseUrl]}${path}?${new URLSearchParams(searchParams)}`)
       .use(popsicle.plugins.parse('json'))
       .then((response) => {
         if (response.statusType() === 2) {
@@ -55,6 +56,7 @@ const liskServiceApi = {
       path: '/api/v1/market/prices',
       transformResponse: response => response.data,
       network,
+      baseUrl: 'cloudUrl',
     }),
 
   getNewsFeed: (network, searchParams) => liskServiceGet({
@@ -62,6 +64,7 @@ const liskServiceApi = {
     searchParams,
     transformResponse: response => response.data,
     network,
+    baseUrl: 'cloudUrl',
   }),
 
   getLastBlocks: async (
@@ -94,8 +97,8 @@ const liskServiceApi = {
       limit: DEFAULT_LIMIT,
       ...(dateFrom && { from: formatDate(dateFrom) }),
       ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
-      ...(amountFrom && { min: utils.convertLSKToBeddows(amountFrom) }),
-      ...(amountTo && { max: utils.convertLSKToBeddows(amountTo) }),
+      ...(amountFrom && { min: transactions.utils.convertLSKToBeddows(amountFrom) }),
+      ...(amountTo && { max: transactions.utils.convertLSKToBeddows(amountTo) }),
       ...searchParams,
     },
     network,
@@ -122,6 +125,12 @@ const liskServiceApi = {
       limit: DEFAULT_LIMIT,
       ...searchParams,
     },
+    network,
+  }),
+
+  getTransactionBaseFees: async network => liskServiceGet({
+    path: '/api/v1/fee_estimates',
+    searchParams: {},
     network,
   }),
 
@@ -266,6 +275,15 @@ const liskServiceApi = {
     }));
 
     return { data, meta: voteTransactions.meta };
+  },
+
+  getAccounts: async (network, addressList) => {
+    const results = await liskServiceSocketGet(addressList.map(address => ({
+      method: 'get.accounts',
+      params: { address },
+    })));
+
+    return results;
   },
 
   getVoteNames: async (network, params) => {

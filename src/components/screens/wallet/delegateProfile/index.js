@@ -1,47 +1,56 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
-import { getNextForgers } from '../../../../utils/api/delegates';
-import { getBlocks } from '../../../../utils/api/blocks';
-import { getTransactions } from '../../../../utils/api/transactions';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import DelegateProfile from './delegateProfile';
-import transactionTypes from '../../../../constants/transactionTypes';
 import withData from '../../../../utils/withData';
 import { getAPIClient } from '../../../../utils/api/lsk/network';
+
+const mapStateToProps = state => ({
+  awaitingForgers: state.blocks.awaitingForgers,
+  forgingTimes: state.blocks.forgingTimes,
+});
 
 const apis = {
   delegate: {
     apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).delegates.get(params),
     defaultData: {},
-    getApiParams: (state, ownProps) => ({
+    getApiParams: (_, ownProps) => ({
       address: ownProps.address,
     }),
     transformResponse: response => (response.data[0] ? response.data[0] : {}),
   },
-  lastBlock: {
-    apiUtil: getBlocks,
-    defaultData: false,
-    transformResponse: response => (response.data[0] && response.data[0].timestamp),
-  },
-  txDelegateRegister: {
-    apiUtil: (apiClient, params) => getTransactions(params),
-    getApiParams: (state, ownProps) => ({
-      token: state.settings.token.active,
-      address: ownProps.address,
-      network: state.network,
-      type: transactionTypes().registerDelegate.outgoingCode,
-      limit: 1,
-    }),
-    defaultData: false,
-    transformResponse: response => (response.data[0] && response.data[0].timestamp),
-  },
-  nextForgers: {
-    apiUtil: getNextForgers,
+  voters: {
+    // apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).voters.get(params),
+    apiUtil: (liskAPIClient, params) => (new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: Array.from(Array(10).keys()).map(item => `5447926331525636${item + (params.offset || 0)}L`),
+          meta: { count: 1000, offset: (params.offset || 0) },
+        });
+      }, 50);
+    })),
     defaultData: [],
-    autoload: true,
-    getApiParams: () => ({
-      limit: 101,
+    getApiParams: (_, ownProps) => ({
+      address: ownProps.address,
     }),
+    transformResponse: response => (response ? response.data : []),
+  },
+  lastBlockForged: {
+    apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).blocks.get(params),
+    defaultData: {},
+    getApiParams: state => ({
+      height: state.account.info && state.account.info.LSK.delegate
+        ? state.account.info.LSK.delegate.lastForgedHeight : 0,
+    }),
+    transformResponse: response => (response ? response.data[0] : {}),
   },
 };
 
-export default withData(apis)(withTranslation()(DelegateProfile));
+const ComposedDelegateProfile = compose(
+  connect(mapStateToProps),
+  withData(apis),
+  withTranslation(),
+)(DelegateProfile);
+
+export default ComposedDelegateProfile;

@@ -1,12 +1,12 @@
-import Lisk from '@liskhq/lisk-client-old';
+// import Lisk from '@liskhq/lisk-client';
 import React from 'react';
 import { mount } from 'enzyme';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
-import fees from '../../../constants/fees';
-import transactionTypes from '../../../constants/transactionTypes';
+// import transactionTypes from '../../../constants/transactionTypes';
 import routes from '../../../constants/routes';
 import { mountWithRouter } from '../../../utils/testHelpers';
+import transactionTypes from '../../../constants/transactionTypes';
 
 describe('Single Transaction Component', () => {
   const transaction = {
@@ -20,15 +20,15 @@ describe('Single Transaction Component', () => {
       confirmation: 1,
       type: 0,
       id: 123,
-      fee: fees.send,
+      fee: 1e7,
       timestamp: Date.now(),
     },
   };
-  const voteTransaction = {
+  /* const voteTransaction = {
     data: {
       type: transactionTypes().vote.code,
       amount: '0',
-      fee: Lisk.transaction.constants.VOTE_FEE.toString(),
+      fee: 1e8,
       senderId: accounts.genesis.address,
       recipientId: accounts.delegate.address,
       timestamp: Lisk.transaction.utils.getTimeFromBlockchainEpoch() - 100,
@@ -39,7 +39,7 @@ describe('Single Transaction Component', () => {
         ].map(publicKey => `+${publicKey}`),
       },
     },
-  };
+  }; */
 
   const props = {
     t: v => v,
@@ -82,7 +82,7 @@ describe('Single Transaction Component', () => {
       expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
     });
 
-    it('Should load delegate names after vote transaction loading finished', () => {
+    /* it('Should load delegate names after vote transaction loading finished', () => {
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction: voteTransaction },
@@ -95,7 +95,7 @@ describe('Single Transaction Component', () => {
           accounts.delegate_candidate.publicKey,
         ],
       });
-    });
+    }); */
 
     it('Should render transfer transaction with message (LSK)', () => {
       const wrapper = mountWithRouter(
@@ -217,6 +217,32 @@ describe('Single Transaction Component', () => {
       }}
       />);
       expect(wrapper).toContainMatchingElement('NotFound');
+    });
+  });
+
+  describe('Unlock transaction', () => {
+    it('Should render unlock LSK details', () => {
+      const unlockTx = {
+        data: {
+          type: 14,
+          senderId: accounts.genesis.address,
+          recipientId: '',
+          id: 123,
+          asset: {
+            amount: 50,
+          },
+        },
+      };
+      const wrapper = mountWithRouter(
+        TransactionDetails,
+        { ...props, transaction: unlockTx },
+        { pathname: '/explorer/transactions', id: transaction.id },
+      );
+      expect(wrapper).toContainMatchingElement('.transaction-image');
+      expect(wrapper.find('.tx-header').text()).toEqual(transactionTypes().unlockToken.title);
+      expect(wrapper).toContainMatchingElement('.transaction-id');
+      expect(wrapper).toContainMatchingElement('.tx-amount');
+      expect(wrapper).toContainMatchingElement('.tx-fee');
     });
   });
 });

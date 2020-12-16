@@ -91,7 +91,7 @@ const TokenSelector = ({ token, history, t }) => {
       content={(
         <Icon
           name={`${token.toLowerCase()}Icon`}
-          className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.disabled}`}
+          className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.opaqueLogo}`}
           onClick={activateToken}
         />
       )}
@@ -129,6 +129,7 @@ class TopBar extends React.Component {
       network,
       token,
       settings: { darkMode, discreetMode, sideBarExpanded },
+      noOfVotes,
       // resetTimer,
     } = this.props;
     // const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
@@ -170,6 +171,22 @@ class TopBar extends React.Component {
             )}
           >
             <p>{t('Bookmarks')}</p>
+          </Tooltip>
+          <Tooltip
+            className={styles.tooltipWrapper}
+            size="maxContent"
+            position="bottom"
+            content={(
+              <DialogLink component="votingQueue" className={`${styles.toggle} voting-queue-toggle`}>
+                <span className={`${styles.votingQueueIcon} ${isUserLogout ? styles.disabled : ''}`}>
+                  <Icon name="votingQueueInactive" />
+                </span>
+                {noOfVotes !== 0
+                  && <span className={styles.votingQueueVoteCount}>{noOfVotes}</span>}
+              </DialogLink>
+            )}
+          >
+            <p>{t('Voting Queue')}</p>
           </Tooltip>
           <Tooltip
             className={styles.tooltipWrapper}

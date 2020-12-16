@@ -19,6 +19,7 @@
 
     color: var(--color-strong-mystic);
     margin: 0 0 10px;
+    box-sizing: border-box;
   }
 
   & .info {

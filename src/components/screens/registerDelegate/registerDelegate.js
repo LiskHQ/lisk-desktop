@@ -1,6 +1,7 @@
 import React from 'react';
 import MultiStep from '../../shared/multiStep';
-import SelectName from './selectName/SelectName';
+import Dialog from '../../toolbox/dialog/dialog';
+import SelectNameAndFee from './selectNameAndFee/selectNameAndFee';
 import Summary from './summary/summary';
 import Status from './status/status';
 import styles from './registerDelegate.css';
@@ -13,13 +14,13 @@ const RegisterDelegate = ({
   transactionBroadcasted,
   t,
 }) => (
-  <section className={`${styles.wrapper}`}>
+  <Dialog hasClose>
     <MultiStep
       className={styles.multiStep}
       prevPage={history.goBack}
       backButtonLabel={t('Back')}
     >
-      <SelectName
+      <SelectNameAndFee
         t={t}
         account={account}
         network={network}
@@ -35,7 +36,7 @@ const RegisterDelegate = ({
         transactions={transactions}
       />
     </MultiStep>
-  </section>
+  </Dialog>
 );
 
 export default RegisterDelegate;

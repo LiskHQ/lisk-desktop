@@ -57,7 +57,6 @@ Given(/^I am on (.*?) page$/, function (page) {
       cy.route('/api/votes?*').as('votes');
       cy.visit(urls.wallet);
       cy.wait('@transactions');
-      cy.wait('@votes');
       break;
     case 'send':
       cy.route('/api/accounts?address*').as('accountLSK');
@@ -82,10 +81,12 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
       cy.route('/api/transactions?*').as('transactions');
       cy.visit(`${urls.account}?address=${accounts[identifier].address}`);
       cy.wait('@transactions');
-      cy.wait('@transactions');
-      cy.wait('@transactions');
       break;
   }
+});
+
+Given(/^I scroll to (.*?)$/, (position) => {
+  cy.get('.scrollContainer').scrollTo(position);
 });
 
 Then(/^I should see pending transaction$/, function () {
@@ -115,7 +116,9 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
     }
   }
   switch (transactionType.toLowerCase()) {
-    case 'delegate vote':
+    case 'unlocking':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Unlock LSK');
+      break;
     case 'voting':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate vote');
       break;
@@ -173,6 +176,14 @@ When(/^I click on (.*?)$/, function (elementName) {
   cy.get(ss[elementName]).eq(0).click();
 });
 
+When(/^I clear input (.*?)$/, function (elementName) {
+  cy.get(ss[elementName]).clear();
+});
+
+When(/^I fill ([\w]+) in ([\w]+) field$/, function (value, field) {
+  cy.get(ss[field]).type(value);
+});
+
 Then(/^I fill ([^s]+) in ([^s]+) field$/, function (value, field) {
   cy.get(ss[field]).type(value);
 });
@@ -186,6 +197,23 @@ Then(/^(.*?) should be visible$/, function (elementName) {
   cy.get(ss[elementName]).should('be.visible');
 });
 
-Then(/^The (.*?) button must be active$/, function (elementName) {
-  cy.get(ss[elementName]).should('not.be.disabled');
+Then(/^The (.*?) button must (.*?) active$/, function (elementName, check) {
+  if (check === 'be') {
+    cy.get(ss[elementName]).should('not.be.disabled');
+  } else if (check === 'not be') {
+    cy.get(ss[elementName]).should('be.disabled');
+  }
+});
+
+And(/^I search for account ([^s]+)$/, function (string) {
+  cy.server();
+  cy.route('/api/accounts**').as('requestAccount');
+  cy.route('/api/delegates**').as('requestDelegate');
+  cy.get(ss.searchInput).type(string);
+  cy.wait('@requestAccount');
+  cy.wait('@requestDelegate');
+});
+
+Then(/^I wait (.*?) seconds$/, function (seconds) {
+  cy.wait(Number(seconds) * 1000);
 });

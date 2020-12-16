@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import AmountField from './amountField';
+import AmountField from '../../../shared/amountField';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
@@ -10,7 +10,7 @@ import Piwik from '../../../../utils/piwik';
 import styles from './form.css';
 
 const FormBase = ({
-  t, token, children, fields, showFee, network, getMaxAmount,
+  t, token, children, fields, network, maxAmount,
   bookmarks, nextStep, fieldUpdateFunctions,
 }) => {
   const onGoNext = () => {
@@ -41,9 +41,12 @@ const FormBase = ({
         </span>
         <AmountField
           amount={fields.amount}
-          fee={showFee ? fields.fee.value : null}
-          getMaxAmount={getMaxAmount}
+          maxAmount={maxAmount}
           setAmountField={fieldUpdateFunctions.setAmountField}
+          title={t('Amount')}
+          maxAmountTitle={t('Send entire balance')}
+          inputPlaceHolder={t('Insert the amount of transaction')}
+          name="amount"
         />
         { children }
       </BoxContent>

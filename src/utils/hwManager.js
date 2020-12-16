@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import lisk from 'Utils/lisk-client';
+import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import { getAccount } from './api/lsk/account';
 import {
@@ -12,7 +12,6 @@ import {
   subscribeToDevicesList,
   validatePin,
 } from '../../libs/hwManager/communication';
-import { splitVotesIntoRounds } from './voting';
 
 /**
  * getAccountsFromDevice - Function.
@@ -37,8 +36,8 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
  * signSendTransaction - Function.
  * This function is used for sign a send transaction.
  */
-const signSendTransaction = async (account, data, apiVersion) => {
-  const { transfer, utils } = lisk(apiVersion).transaction;
+const signSendTransaction = async (account, data) => {
+  const { transfer, utils } = Lisk.transaction;
   const transactionObject = {
     ...transfer(data),
     senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,
@@ -66,39 +65,32 @@ const signSendTransaction = async (account, data, apiVersion) => {
  */
 const signVoteTransaction = async (
   account,
-  votedList,
-  unvotedList,
+  votes,
   timeOffset,
   networkIdentifier,
 ) => {
-  const { castVotes, utils } = lisk()['2.x'].transaction;
-  const signedTransactions = [];
-  const votesChunks = splitVotesIntoRounds({ votes: [...votedList], unvotes: [...unvotedList] });
+  const { castVotes, utils } = Lisk.transaction;
 
   try {
-    for (let i = 0; i < votesChunks.length; i++) {
-      const transactionObject = {
-        ...castVotes({ ...votesChunks[i], timeOffset, networkIdentifier }),
-        senderPublicKey: account.publicKey,
-        recipientId: account.address, // @todo should we remove this?
-      };
+    const transactionObject = {
+      ...castVotes({ votes, timeOffset, networkIdentifier }),
+      senderPublicKey: account.publicKey,
+      recipientId: account.address, // @todo should we remove this?
+    };
 
-      // eslint-disable-next-line no-await-in-loop
-      const signature = await signTransaction({
-        deviceId: account.hwInfo.deviceId,
-        index: account.hwInfo.derivationIndex,
-        tx: transactionObject,
-      });
+    // eslint-disable-next-line no-await-in-loop
+    const signature = await signTransaction({
+      deviceId: account.hwInfo.deviceId,
+      index: account.hwInfo.derivationIndex,
+      tx: transactionObject,
+    });
 
-      signedTransactions.push({
-        ...transactionObject,
-        signature,
-        // @ todo core 3.x getId
-        id: utils.getTransactionId({ ...transactionObject, signature }),
-      });
-    }
-
-    return signedTransactions;
+    return {
+      ...transactionObject,
+      signature,
+      // @ todo core 3.x getId
+      id: utils.getTransactionId({ ...transactionObject, signature }),
+    };
   } catch (error) {
     throw new Error(i18next.t(
       'The transaction has been canceled on your {{model}}',

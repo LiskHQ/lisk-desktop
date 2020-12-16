@@ -2,9 +2,7 @@ import actionTypes from '../../constants/actions';
 import txFilters from '../../constants/transactionFilters';
 
 // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
-const sortByTimestamp = (a, b) => (
-  (!a.timestamp || a.timestamp > b.timestamp) && b.timestamp ? -1 : 1
-);
+const sortByHeight = (a, b) => (b.height - a.height);
 
 const addNewTransactions = (array1, array2) => array1.filter(array1Value =>
   array2.filter(array2Value => array2Value.id === array1Value.id).length === 0);
@@ -55,7 +53,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
       return {
         ...state,
         // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
-        confirmed: action.data.confirmed.sort(sortByTimestamp),
+        confirmed: action.data.confirmed.sort(sortByHeight),
         count: action.data.count,
         filters: action.data.filters !== undefined
           ? action.data.filters : state.filters,
@@ -69,7 +67,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
           ...action.data.confirmed,
           ...addNewTransactions(state.confirmed, action.data.confirmed),
         // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
-        ].sort(sortByTimestamp),
+        ].sort(sortByHeight),
         count: action.data.count,
         filters: action.data.filters !== undefined
           ? action.data.filters : state.filters,
@@ -83,11 +81,12 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
       };
     // TODO can be remove after move send (create) tx to utils file
     // istanbul ignore next
-    case actionTypes.transactionCreatedError:
+    case actionTypes.transactionCreatedError: {
+      const { message = 'The transaction failed', name = 'TransactionFailedError' } = action.data;
       return {
         ...state,
-        transactionsCreatedFailed: [...state.transactionsCreatedFailed, action.data],
-      };
+        transactionsCreatedFailed: [...state.transactionsCreatedFailed, { message, name }],
+      }; }
     // TODO can be remove after use HOC for send (broadcast) tx
     // istanbul ignore next
     case actionTypes.broadcastedTransactionSuccess:

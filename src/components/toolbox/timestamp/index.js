@@ -36,6 +36,7 @@ export const DateTimeFromTimestamp = withTranslation()((props) => {
     <span className={`${props.className || ''}`}>
       {
     props.fulltime ? (
+      /* istanbul ignore next */
       datetime.format('DD MMM YYYY, hh:mm:ss A')
     )
       : datetime.calendar(null, {

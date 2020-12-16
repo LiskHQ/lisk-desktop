@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
@@ -10,50 +9,22 @@ import styles from './votes.css';
 import Table from '../../../toolbox/table';
 import VoteRow from './voteRow';
 import header from './votesTableHeader';
+import DialogLink from '../../../toolbox/dialog/link';
+import { SecondaryButton } from '../../../toolbox/buttons';
 
-// eslint-disable-next-line max-statements
+const getMessages = t => ({
+  all: t('This account doesn’t have any votes.'),
+  filtered: t('This account doesn’t have any votes matching searched username.'),
+});
+
 const Votes = ({
-  votes, delegates, address, t, history,
+  votes, accounts, address, t, history, hostVotes = {}, isDelegate,
 }) => {
-  const [tOut, setTout] = useState();
-  const [mergedVotes, setMergedVotes] = useState([]);
-  const [showing, setShowing] = useState(30);
   const [filterValue, setFilterValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const { apiVersion } = useSelector(state => state.network.networks.LSK);
-  const votesKey = apiVersion === '2' ? 'vote' : 'voteWeight';
-
-  const fetchDelegateWhileNeeded = () => {
-    const delegatesData = delegates.data;
-    const filteredVotes = votes.data.filter(vote => RegExp(filterValue, 'i').test(vote.username));
-    const mVotes = filteredVotes.map((vote) => {
-      const delegate = delegatesData[vote.username] || {};
-      return { ...vote, ...delegate };
-    }).sort((a, b) => {
-      if (!a[votesKey] && !b[votesKey]) return 0;
-      if (!a[votesKey] || +a[votesKey] > +b[votesKey]) return 1;
-      return -1;
-    });
-    if (mVotes.length && !(mVotes.slice(0, showing).slice(-1)[0] || {})[votesKey]) {
-      const offset = Object.keys(delegatesData).length;
-      delegates.loadData({ offset, limit: 101 });
-    }
-    setMergedVotes(mVotes);
-  };
-
-  const onShowMore = () => {
-    setShowing(showing + 30);
-  };
+  const messages = getMessages(t);
 
   const handleFilter = ({ target }) => {
-    clearTimeout(tOut);
     setFilterValue(target.value);
-    setIsLoading(true);
-
-    const timeout = setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
-    setTout(timeout);
   };
 
   const onRowClick = (rowAddress) => {
@@ -63,30 +34,38 @@ const Votes = ({
 
   useEffect(() => {
     votes.loadData({ address });
-    delegates.loadData({ offset: 0, limit: 101 });
+  }, [address, hostVotes]);
 
-    return () => clearTimeout(tOut);
-  }, []);
+  // @todo uncomment this when Lisk Service API is ready
+  // Fetch delegate profiles to define rank, productivity and delegate weight
+  // useEffect(() => {
+  //   if (isEmpty(accounts.data) && votes.data.length) {
+  //     const addressList = votes.data.map(vote => vote.delegateAddress);
+  //     accounts.loadData({ addressList });
+  //   }
+  // }, [votes.data]);
 
-  useEffect(() => {
-    votes.loadData({ address });
-    fetchDelegateWhileNeeded();
-  }, [address]);
-
-  useEffect(() => {
-    fetchDelegateWhileNeeded();
-  }, [delegates.data, votes.data.length, showing, filterValue]);
-
-
-  const filteredVotes = mergedVotes.filter(vote => RegExp(filterValue, 'i').test(vote.username));
-  const canLoadMore = filteredVotes.length > showing;
-  const areLoading = isLoading || delegates.isLoading || votes.isLoading;
+  const areLoading = accounts.isLoading || votes.isLoading;
+  const filteredVotes = votes.data.filter((vote) => {
+    if (!vote.delegate) return false;
+    return vote.delegate.username.indexOf(filterValue) > -1;
+  });
 
   return (
     <Box main isLoading={areLoading} className={`${styles.wrapper}`}>
       <BoxHeader>
         <h1>{t('Voted delegates')}</h1>
         <div className={`${styles.filterHolder}`}>
+          {!isDelegate && (
+          <DialogLink
+            className={`${styles.registerDelegate} register-delegate`}
+            component="registerDelegate"
+          >
+            <SecondaryButton size="m">
+              {t('Register a delegate')}
+            </SecondaryButton>
+          </DialogLink>
+          )}
           <Input
             className="search"
             disabled={!votes.data.length}
@@ -98,21 +77,18 @@ const Votes = ({
           />
         </div>
       </BoxHeader>
-      <BoxContent className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} votes-tab`}>
+      <BoxContent className={`${styles.results} votes-tab`}>
         <Table
-          data={filteredVotes.slice(0, showing)}
-          canLoadMore={canLoadMore}
+          data={filteredVotes}
           isLoading={areLoading}
           iterationKey="address"
-          emptyState={{ message: t('This account doesn’t have any votes.') }}
+          emptyState={{ message: filterValue ? messages.filtered : messages.all }}
           row={VoteRow}
           additionalRowProps={{
-            t,
-            apiVersion,
             onRowClick,
+            accounts: accounts.data,
           }}
-          loadData={onShowMore}
-          header={header(t, apiVersion)}
+          header={header(t)}
         />
       </BoxContent>
     </Box>

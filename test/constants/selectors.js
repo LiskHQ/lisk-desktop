@@ -6,18 +6,6 @@ const delegatesPage = {
   goToConfirmationButton: '.go-to-confirmation-button',
   votingHeader: '.voting-header',
 };
-
-const votingPage = {
-  addedVotes: '.added-votes .vote',
-  removedVotes: '.removed-votes .vote',
-  voteResultHeader: '.result-box-header',
-  backToDelegatesButton: '.back-to-delegates-button',
-  alreadyVotedPreselection: '.alreadyVoted-message .vote',
-  addedVotesContainer: '.added-votes',
-  becomeDelegateLink: '.register-delegate',
-  loadMoreButton: '.load-more',
-};
-
 const secondPassphraseRegistrationPage = {
   goToConfirmation: '.go-to-confirmation',
   confirmationCheckbox: '.confirmation-checkbox',
@@ -26,8 +14,8 @@ const secondPassphraseRegistrationPage = {
 
 const ss = {
   ...delegatesPage,
-  ...votingPage,
   ...secondPassphraseRegistrationPage,
+  becomeDelegateLink: '.register-delegate',
   app: '#app',
   monitorNetwork: '#network',
   monitorTransactions: '#transactions',
@@ -240,10 +228,20 @@ const ss = {
   coinRow: '.coin-row',
   closeOnboardingButton: '.closeOnboarding',
   goBack: '.go-back',
-  sendLink: '.tx-send-bt',
+  sendLink: '.open-send-dialog',
   closeDialog: '.dialog-close-button',
   bookmarkListToggle: '.bookmark-list-toggle',
   settingsMenu: '.settings-toggle',
+  openAddVoteDialog: '.open-add-vote-dialog',
+  votingQueueToggle: '.voting-queue-toggle',
+  openUnlockBalanceDialog: '.open-unlock-balance-dialog',
+  unlockBtn: '.unlock-btn',
+  removeVote: '.remove-vote',
+  unlockingBalance: '.unlocking-balance',
+  addBookmarkIcon: '.add-bookmark-icon',
+  inputLabel: '.input-label',
+  saveButton: '.save-button',
+  feeValue: '.fee-value',
 };
 
 export default ss;

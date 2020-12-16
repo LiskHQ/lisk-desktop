@@ -63,14 +63,20 @@
 
     & .tooltipArrow {
       left: calc(50% - 6px);
+      bottom: -20px;
+      transform: rotate(-90deg);
     }
 
     &.right {
       left: 0;
-      transform: translateY(0) translateX(-10%);
+      transform: translateY(0) translateX(0);
+
+      &.indent {
+        left: -40px;
+      }
 
       & .tooltipArrow {
-        right: 40px;
+        left: 40px;
         right: auto;
       }
     }

@@ -37,13 +37,22 @@ export const getSingleTransaction = async ({ token, ...params }) => (
 // istanbul ignore file
 export const get = (token, data) => api[token].transactions.get(data);
 
-// istanbul ignore next
+/**
+ * @todo document function signature
+ *
+ */
 export const create = (tokenType, data, transactionType) =>
   api[tokenType].transactions.create(data, transactionType);
 
 // istanbul ignore next
 export const broadcast = (tokenType, transaction, network) =>
   api[tokenType].transactions.broadcast(transaction, network);
+
+export const getTransactionBaseFees = (tokenType, network) =>
+  api[tokenType].transactions.getTransactionBaseFees(network);
+
+export const getTransactionFee = ({ token, ...params }) =>
+  api[token].transactions.getTransactionFee(params);
 
 export default {
   broadcast,

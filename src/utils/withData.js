@@ -39,11 +39,10 @@ import React from 'react';
  * ```
  * getApiParams: (state, props) => ({
  *   address: props.account.address,
- *   apiVersion: state.network.networks.LSK.apiVersion,
  * })
  * ```
  * Creates an API call with the following query parameters
- * `?address=${props.account.address}&apiVersion=${state.network.networks.LSK.apiVersion}`
+ * `?address=${props.account.address}`
  *
  * @param {Boolean} autoload
  * Determines if the first API call should get fired by componentDidMount cycle event.

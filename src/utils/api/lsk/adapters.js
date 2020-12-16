@@ -1,4 +1,5 @@
-const defaultApiVersion = '2';
+import transactionTypes from '../../../constants/transactionTypes';
+
 /**
  * Transforms transactions of Core 3.x to the shape of
  * transactions in Core 2.x
@@ -10,26 +11,25 @@ const defaultApiVersion = '2';
  * Morphed transaction in the shape of Core 2.x transactions.
  */
 export const txAdapter = (
-  data, apiVersion = defaultApiVersion,
+  data,
 ) => { // eslint-disable-line import/prefer-default-export
-  if (apiVersion === defaultApiVersion) return data;
-  const morphedData = { ...data };
   const { type } = data;
+  if (type < 8) return data;
+  const morphedData = { ...data };
 
   if (type === 8 && data.asset.recipientId && data.asset.amount) {
     morphedData.recipientId = data.asset.recipientId;
     morphedData.amount = data.asset.amount;
   }
   if (type >= 8) {
-    morphedData.type -= 8;
+    morphedData.type = transactionTypes.getByCode(type).code.legacy;
   }
   return morphedData;
 };
 
 export const adaptTransaction = (
-  res, apiVersion = defaultApiVersion,
+  res,
 ) => { // eslint-disable-line import/prefer-default-export
-  if (apiVersion === defaultApiVersion) return res;
   const morphedData = res.data.map(transaction => txAdapter(transaction));
   return {
     links: res.links,
@@ -39,9 +39,8 @@ export const adaptTransaction = (
 };
 
 export const adaptTransactions = (
-  res, apiVersion = defaultApiVersion,
+  res,
 ) => { // eslint-disable-line import/prefer-default-export
-  if (apiVersion === defaultApiVersion) return res;
   const morphedData = res.data.map(transaction => txAdapter(transaction));
   return {
     links: res.links,
@@ -50,8 +49,7 @@ export const adaptTransactions = (
   };
 };
 
-export const adaptDelegateQueryParams = (params, apiVersion = defaultApiVersion) => {
-  if (apiVersion === defaultApiVersion) return params;
+export const adaptDelegateQueryParams = (params) => {
   const morphedParams = {
     ...params,
   };

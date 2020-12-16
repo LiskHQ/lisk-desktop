@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AutoResizeTextarea } from '../../../toolbox/inputs';
-import { fromRawLsk } from '../../../../utils/lsk';
 import { messageMaxLength } from '../../../../constants/transactions';
 import CircularProgress from '../../../toolbox/circularProgress/circularProgress';
-import Fees from '../../../../constants/fees';
 import FormBase from './formBase';
 import Icon from '../../../toolbox/icon';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
@@ -11,31 +9,62 @@ import styles from './form.css';
 import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
+import { toRawLsk } from '../../../../utils/lsk';
+import TransactionPriority from '../../../shared/transactionPriority';
+import useTransactionFeeCalculation from './useTransactionFeeCalculation';
+import useTransactionPriority from './useTransactionPriority';
+import transactionTypes from '../../../../constants/transactionTypes';
 
+const txType = transactionTypes().transfer.key;
+
+// eslint-disable-next-line max-statements
 const FormLsk = (props) => {
-  const { account, t, getInitialValue } = props;
-
-  const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - Fees.send));
-
+  const {
+    t, token, getInitialValue, account,
+  } = props;
+  const [customFee, setCustomFee] = useState();
+  const [
+    selectedPriority, selectTransactionPriority,
+    priorityOptions, prioritiesLoadError, loadingPriorities,
+  ] = useTransactionPriority(token);
   const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), getMaxAmount);
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
+
+  const { fee, maxAmount, minFee } = useTransactionFeeCalculation({
+    selectedPriority,
+    token,
+    account,
+    priorityOptions,
+    txData: {
+      amount: toRawLsk(amount.value),
+      txType,
+      recipient: recipient.value,
+      nonce: account.nonce,
+      senderPublicKey: account.publicKey,
+      data: reference.value,
+    },
+  });
 
   const fieldUpdateFunctions = { setAmountField, setRecipientField };
   const fields = {
     amount,
     recipient,
     reference,
-    fee: { value: Fees.send },
+    fee: customFee || fee,
+    selectedPriority,
+  };
+
+  const changeCustomFee = (value) => {
+    setCustomFee(value);
   };
 
   return (
     <FormBase
       {...props}
       fields={fields}
-      showFee
       fieldUpdateFunctions={fieldUpdateFunctions}
-      getMaxAmount={getMaxAmount}
+      maxAmount={maxAmount}
     >
       <label className={`${styles.fieldGroup} reference`}>
         <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
@@ -62,19 +91,32 @@ const FormLsk = (props) => {
         <span className={`${styles.feedback} ${reference.error || messageMaxLength - reference.byteCount < 10 ? 'error' : ''} ${styles.show}`}>
           {reference.feedback}
           <Tooltip
-            position="top left"
+            position="left"
             title={t('Bytes counter')}
           >
             <p className={styles.tooltipText}>
               {
-                    t(`Lisk counts your message by bytes so keep in mind 
-                    that the length on your message may vary in different languages. 
-                    Different characters may consume different amount of bytes space.`)
-                  }
+                t(`Lisk counts your message by bytes so keep in mind 
+                that the length on your message may vary in different languages. 
+                Different characters may consume different amount of bytes space.`)
+              }
             </p>
           </Tooltip>
         </span>
       </label>
+      <TransactionPriority
+        token={token}
+        fee={fee}
+        minFee={minFee.value}
+        customFee={customFee ? customFee.value : undefined}
+        txType={txType}
+        setCustomFee={changeCustomFee}
+        priorityOptions={priorityOptions}
+        selectedPriority={selectedPriority.selectedIndex}
+        setSelectedPriority={selectTransactionPriority}
+        loadError={prioritiesLoadError}
+        isLoading={loadingPriorities}
+      />
     </FormBase>
   );
 };

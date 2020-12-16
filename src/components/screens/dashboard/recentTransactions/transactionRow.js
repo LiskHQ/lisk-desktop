@@ -19,13 +19,18 @@ const TransactionRow = ({
     activeToken: state.settings.token.active,
   }));
   const isConfirmed = data.confirmations > 0;
+  const unlockAmount = data.asset && data.asset.unlockingObjects
+    && data.asset.unlockingObjects.reduce((total, item) => {
+      total += item.amount;
+      return total;
+    }, 0);
   return (
     <DialogLink
       className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending} transactions-row`}
       component="transactionDetails"
       data={{ transactionId: data.id, token: activeToken }}
     >
-      <span className={grid['col-xs-9']}>
+      <span className={grid['col-xs-8']}>
         <TransactionTypeFigure
           icon={host === data.recipientId ? 'incoming' : 'outgoing'}
           address={host === data.recipientId ? data.senderId : data.recipientId}
@@ -39,7 +44,7 @@ const TransactionRow = ({
           transactionType={data.type}
         />
       </span>
-      <span className={grid['col-xs-3']}>
+      <span className={grid['col-xs-4']}>
         <TransactionAmount
           host={host}
           token={activeToken}
@@ -47,7 +52,7 @@ const TransactionRow = ({
           sender={data.senderId}
           recipient={data.recipientId || data.asset.recipientId}
           type={data.type}
-          amount={data.amount || data.asset.amount}
+          amount={data.amount || data.asset.amount || unlockAmount}
         />
       </span>
     </DialogLink>

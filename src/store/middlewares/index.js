@@ -9,6 +9,7 @@ import votingMiddleware from './voting';
 import socketMiddleware from './socket';
 import settingsMiddleware from './settings';
 import bookmarksMiddleware from './bookmarks';
+import networkMiddleware from './network';
 
 export default [
   // notificationMiddleware,
@@ -19,6 +20,7 @@ export default [
   offlineMiddleware,
   settingsMiddleware,
   socketMiddleware,
-  thunk,
   votingMiddleware,
+  networkMiddleware,
+  thunk,
 ];

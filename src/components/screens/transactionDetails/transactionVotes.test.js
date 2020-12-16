@@ -7,7 +7,7 @@ import accounts from '../../../../test/constants/accounts';
 const store = {
   network: {
     networks: {
-      LSK: { apiVersion: '2' },
+      LSK: { apiVersion: '2' }, // @todo Remove?
     },
   },
 };
@@ -29,14 +29,14 @@ describe('Transaction Votes', () => {
   };
   reactRedux.useSelector = jest.fn().mockImplementation(filter => filter(store));
 
-  it('Should render with added and deleted Votes', () => {
+  it.skip('Should render with added and deleted Votes', () => {
     wrapper = mount(<TransactionVotes {...props} />);
     expect(wrapper).toContainMatchingElements(2, '.votesContainer');
     expect(wrapper.find('.rank').first().text()).toEqual('#-');
     expect(wrapper.find('.username').first().text()).toEqual('Loading...');
   });
 
-  it('Should fetch and render delegate names and ranks', () => {
+  it.skip('Should fetch and render delegate names and ranks', () => {
     wrapper = mount(<TransactionVotes {...props} />);
     wrapper.setProps({
       ...props,

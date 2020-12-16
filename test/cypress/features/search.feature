@@ -12,7 +12,7 @@ Feature: Search
     When I click on searchIcon
     And I search for account 537318935439898807L
     Then I click on searchAccountRow
-    Then I should be on Account page of 537318935439898807L
+    Then I should be on Account page of 537318...8807L
 
   Scenario: Search for non-existent account
     Given I am on Dashboard page

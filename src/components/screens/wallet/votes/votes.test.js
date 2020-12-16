@@ -5,7 +5,8 @@ import accounts from '../../../../../test/constants/accounts';
 import routes from '../../../../constants/routes';
 import Votes from './votes';
 
-describe('Votes Tab Component', () => {
+
+describe.skip('Votes Tab Component', () => {
   let wrapper;
   const props = {
     address: accounts.genesis.address,
@@ -24,7 +25,7 @@ describe('Votes Tab Component', () => {
   const network = {
     network: {
       networks: {
-        LSK: { apiVersion: '2' },
+        LSK: { apiVersion: '2' }, // @todo Remove?
       },
     },
   };
@@ -65,7 +66,7 @@ describe('Votes Tab Component', () => {
     expect(wrapper).toContainMatchingElements(60, 'VoteRow');
   });
 
-  it.skip('Should go to account page on clicking row', () => {
+  it('Should go to account page on clicking row', () => {
     const votes = [...Array(101)].map((_, i) => ({
       username: `user_${i}`,
       address: `${i}L`,

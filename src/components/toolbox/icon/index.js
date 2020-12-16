@@ -125,6 +125,21 @@ import totalBlocks from '../../../assets/images/icons/total-blocks.svg';
 import blocksForged from '../../../assets/images/icons/blocks-forged.svg';
 import distribution from '../../../assets/images/icons/distribution.svg';
 import clock from '../../../assets/images/icons/clock.svg';
+import clockActive from '../../../assets/images/icons/clock-active.svg';
+import star from '../../../assets/images/icons/star.svg';
+import calendar from '../../../assets/images/icons/calendar.svg';
+import weight from '../../../assets/images/icons/weight.svg';
+import forgedLsk from '../../../assets/images/icons/forged-lsk.svg';
+import productivity from '../../../assets/images/icons/productivity.svg';
+import missedBlocks from '../../../assets/images/icons/missed-blocks.svg';
+import forgedBlocks from '../../../assets/images/icons/forged-blocks.svg';
+import lock from '../../../assets/images/icons/lock.svg';
+import unlock from '../../../assets/images/icons/unlock.svg';
+import loading from '../../../assets/images/icons/loading.svg';
+import txUnlock from '../../../assets/images/icons/tx-unlock.svg';
+import votingQueueInactive from '../../../assets/images/icons/voting-queue-inactive.svg';
+import votingQueueActive from '../../../assets/images/icons/voting-queue-active.svg';
+import deleteIcon from '../../../assets/images/icons/delete.svg';
 
 export const icons = {
   academy,
@@ -139,11 +154,13 @@ export const icons = {
   balance,
   bookmarksIconEmptyState,
   btcIcon,
+  calendar,
   checkboxFilled,
   checkmark,
   copy,
   dashboardIcon,
   dashboardIconActive,
+  deleteIcon,
   discord,
   discordActive,
   discreetMode,
@@ -151,6 +168,8 @@ export const icons = {
   feedback,
   feedbackActive,
   fileOutline,
+  forgedBlocks,
+  forgedLsk,
   help,
   helpActive,
   helpCenter,
@@ -183,6 +202,7 @@ export const icons = {
   showPassphraseIcon,
   signIn,
   signInActive,
+  star,
   tooltipQuestionMark,
   transactionApproved,
   transactionError,
@@ -221,6 +241,7 @@ export const icons = {
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
   multiSignature,
+  missedBlocks,
   newsFeedBlog,
   newsFeedBlogDark,
   bookmark,
@@ -250,7 +271,16 @@ export const icons = {
   blocksForged,
   distribution,
   clock,
+  clockActive,
   searchInput,
+  weight,
+  productivity,
+  lock,
+  unlock,
+  loading,
+  txUnlock,
+  votingQueueInactive,
+  votingQueueActive,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

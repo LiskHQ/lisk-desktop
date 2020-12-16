@@ -1,20 +1,17 @@
 import { act } from 'react-dom/test-utils';
-import { useSelector } from 'react-redux';
 import React from 'react';
 import { mount } from 'enzyme';
 import { fromRawLsk } from '../../../../utils/lsk';
 import {
   getUnspentTransactionOutputs,
   getTransactionFeeFromUnspentOutputs,
+  getTransactionFee,
+  getTransactionBaseFees,
 } from '../../../../utils/api/btc/transactions';
-import {
-  getDynamicFees,
-} from '../../../../utils/api/btc/service';
 import { tokenMap } from '../../../../constants/tokens';
 import Form from './formBtc';
 import accounts from '../../../../../test/constants/accounts';
-import defaultState from '../../../../../test/constants/defaultState';
-import * as serviceActions from '../../../../actions/service';
+import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('../../../../utils/api/btc/transactions');
 
@@ -33,27 +30,33 @@ const balance = unspendTransactionOutputs[0].value + unspendTransactionOutputs[1
 
 getUnspentTransactionOutputs.mockResolvedValue(unspendTransactionOutputs);
 getTransactionFeeFromUnspentOutputs.mockImplementation(
-  ({ dynamicFeePerByte }) => dynamicFeePerByte,
+  ({ feePerByte }) => feePerByte,
 );
 
-jest.mock('../../../../utils/api/btc/service');
-const dynamicFees = {
+const transactionBaseFees = {
   Low: 156,
+  Medium: 100,
   High: 51,
 };
-getDynamicFees.mockResolvedValue(dynamicFees);
+
+const mockFeeFactor = 100;
+
+getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
+getTransactionFee.mockImplementation((params) => {
+  const selectedTransactionPriority = params.selectedPriority.selectedIndex;
+  const fees = fromRawLsk(
+    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
+  );
+  return ({
+    value: fees, feedback: '', error: false,
+  });
+});
 
 describe('FormBtc', () => {
   let wrapper;
   let props;
 
   beforeEach(() => {
-    useSelector.mockImplementation(selectorFn => selectorFn({
-      ...defaultState,
-      service: { dynamicFees },
-    }));
-    jest.spyOn(serviceActions, 'dynamicFeesRetrieved');
-
     props = {
       token: tokenMap.BTC.key,
       t: v => v,
@@ -91,22 +94,24 @@ describe('FormBtc', () => {
     it('should re-render properly if props.token', () => {
       expect(wrapper).toContainMatchingElement('span.recipient');
       expect(wrapper).toContainMatchingElement('span.amount');
-      expect(wrapper).toContainMatchingElement('div.processing-speed');
+      expect(wrapper).toContainMatchingElement('div.transaction-priority');
       expect(wrapper).not.toContainMatchingElement('label.reference');
     });
 
-    it('should update processingSpeed fee when "High" is selected', () => {
+    it('should update transaction priority fee when "High" is selected', async () => {
       wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '0.0012' } });
-      expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.Low));
-      wrapper.find('label.option-High input[type="radio"]').simulate('click').simulate('change');
-      expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.High));
+      expect(wrapper.find('div.transaction-priority')).toIncludeText(fromRawLsk(transactionBaseFees.Low * mockFeeFactor));
+      wrapper.find('button.option-High').simulate('click');
+      await flushPromises();
+      expect(wrapper.find('div.transaction-priority')).toIncludeText(fromRawLsk(transactionBaseFees.High * mockFeeFactor));
     });
 
-    it('should allow to set entire balance', () => {
+    it('should allow to set entire balance', async () => {
       wrapper.find('button.send-entire-balance-button').simulate('click');
       act(() => { jest.runAllTimers(); });
       wrapper.update();
-      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(balance - dynamicFees.Low));
+      await flushPromises();
+      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(balance - (transactionBaseFees.Low * mockFeeFactor)));
     });
   });
 });

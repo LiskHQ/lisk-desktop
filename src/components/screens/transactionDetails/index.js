@@ -29,12 +29,13 @@ const apis = {
   },
 
   delegates: {
-    apiUtil: liskService.getVoteNames,
+    apiUtil: liskService.getAccounts,
     autoload: false,
     defaultData: {},
-    getApiParams: (state, ownProps) => ({
-      transactionId: ownProps.id,
-    }),
+    transformResponse: response => response.reduce((acc, item) => {
+      acc[item.address] = item;
+      return acc;
+    }, {}),
   },
 };
 
