@@ -9,10 +9,11 @@ import Votes from './votes';
 
 const apis = {
   votes: {
-    apiUtil: getVotes,
+    apiUtil: (network, params) => getVotes({ network, params }),
+    getApiParams: state => ({ address: state.account.address }),
     defaultData: [],
     autoload: false,
-    transformResponse: response => response.data.votes,
+    transformResponse: response => response.data,
   },
   accounts: {
     apiUtil: getAccounts,

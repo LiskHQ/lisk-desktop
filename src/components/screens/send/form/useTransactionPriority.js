@@ -22,7 +22,7 @@ const useTransactionPriority = (token) => {
 
   useEffect(() => {
     setLoadingPriorities(true);
-    getTransactionBaseFees(token, network)
+    getTransactionBaseFees(network, token)
       .then(setBaseFees)
       .catch(setPrioritiesLoadError)
       .finally(() => setLoadingPriorities(false));
