@@ -1,14 +1,13 @@
 .wrapper {
   padding-bottom: var(--horizontal-padding-l);
   padding-top: 30px;
-  max-width: 100%;
 
   & > div:not(:nth-child(3)) {
     min-width: 320px;
   }
 }
 
-@media (--large-viewport) {
+@media (--xLarge-viewport) {
   .balanceChart {
     width: calc(100% - 640px);
     flex-basis: unset;
