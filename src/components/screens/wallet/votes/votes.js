@@ -18,7 +18,7 @@ const getMessages = t => ({
 });
 
 const Votes = ({
-  votes, accounts, address, t, history, hostVotes = {}, isDelegate,
+  votes, address, t, history, hostVotes = {}, isDelegate, delegates,
 }) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
@@ -36,20 +36,13 @@ const Votes = ({
     votes.loadData({ address });
   }, [address, hostVotes]);
 
-  // @todo uncomment this when Lisk Service API is ready
-  // Fetch delegate profiles to define rank, productivity and delegate weight
-  // useEffect(() => {
-  //   if (isEmpty(accounts.data) && votes.data.length) {
-  //     const addressList = votes.data.map(vote => vote.delegateAddress);
-  //     accounts.loadData({ addressList });
-  //   }
-  // }, [votes.data]);
+  useEffect(() => {
+    if (votes.data.length > 0) {
+      delegates.loadData({ addressList: votes.data.map(vote => vote.address) });
+    }
+  }, [votes.data]);
 
-  const areLoading = accounts.isLoading || votes.isLoading;
-  const filteredVotes = votes.data.filter((vote) => {
-    if (!vote.delegate) return false;
-    return vote.delegate.username.indexOf(filterValue) > -1;
-  });
+  const areLoading = delegates.isLoading || votes.isLoading;
 
   return (
     <Box main isLoading={areLoading} className={`${styles.wrapper}`}>
@@ -79,14 +72,16 @@ const Votes = ({
       </BoxHeader>
       <BoxContent className={`${styles.results} votes-tab`}>
         <Table
-          data={filteredVotes}
+          data={votes.data}
           isLoading={areLoading}
           iterationKey="address"
           emptyState={{ message: filterValue ? messages.filtered : messages.all }}
           row={VoteRow}
           additionalRowProps={{
             onRowClick,
-            accounts: accounts.data,
+            delegates: delegates.data.reduce(
+              (acc, delegate) => ({ ...acc, [delegate.address]: delegate }), {},
+            ),
           }}
           header={header(t)}
         />

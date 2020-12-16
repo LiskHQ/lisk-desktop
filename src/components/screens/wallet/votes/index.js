@@ -2,8 +2,7 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { getVotes } from '../../../../utils/api/delegate';
-import { getAccounts } from '../../../../utils/api/account';
+import { getVotes, getDelegates } from '../../../../utils/api/delegate';
 import withData from '../../../../utils/withData';
 import Votes from './votes';
 
@@ -13,17 +12,12 @@ const apis = {
     getApiParams: state => ({ address: state.account.address }),
     defaultData: [],
     autoload: false,
-    transformResponse: response => response.data,
+    transformResponse: response => response.data || response.data.data,
   },
-  accounts: {
-    apiUtil: getAccounts,
-    autoload: false,
-    defaultData: {},
-    transformResponse: response =>
-      response.data.reduce((dict, account) => {
-        dict[account.address] = account;
-        return dict;
-      }, {}),
+  delegates: {
+    apiUtil: (network, params) => getDelegates({ network, params }),
+    defaultData: [],
+    transformResponse: response => response[0].result.data,
   },
 };
 

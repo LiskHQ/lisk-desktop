@@ -12,27 +12,27 @@ import Spinner from '../../../toolbox/spinner';
 import Icon from '../../../toolbox/icon';
 
 const VoteRow = ({
-  data, onRowClick, accounts,
+  data, onRowClick, delegates,
 }) => {
-  const onClick = () => onRowClick(data.delegateAddress);
+  const onClick = () => onRowClick(data.address);
   return (
     <div className={`${tableStyles.row} ${styles.row} vote-row`}>
       <div className={grid['col-sm-3']} onClick={onClick}>
         <div className={`${styles.info}`}>
           <AccountVisual
             className={`${styles.avatar}`}
-            address={data.delegateAddress}
+            address={data.address}
             size={40}
           />
           <div className={styles.accountInfo}>
-            <span className={`${styles.username} vote-username`}>{data.delegate.username}</span>
-            <span className={`${styles.address} showOnLargeViewPort`}>{data.delegateAddress}</span>
+            <span className={`${styles.username} vote-username`}>{data.username}</span>
+            <span className={`${styles.address} showOnLargeViewPort`}>{data.address}</span>
           </div>
         </div>
       </div>
       <div className={grid['col-sm-2']} onClick={onClick}>
-        {!isEmpty(accounts)
-          ? `${formatAmountBasedOnLocale({ value: accounts[data.delegateAddress].productivity })}%`
+        {!isEmpty(delegates)
+          ? `${formatAmountBasedOnLocale({ value: delegates[data.address].productivity })}%`
           /* istanbul ignore next */
           : '-'
         }
@@ -41,14 +41,14 @@ const VoteRow = ({
         <span>
           {
             /* istanbul ignore next */
-            !isEmpty(accounts) ? `#${accounts[data.delegateAddress].rank}` : '-'
+            !isEmpty(delegates) ? `#${delegates[data.address].rank}` : '-'
           }
         </span>
       </div>
       <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`} onClick={onClick}>
         <span>
           <LiskAmount
-            val={!isEmpty(accounts) ? accounts[data.delegateAddress].totalVotesReceived : 0}
+            val={!isEmpty(delegates) ? delegates[data.address].delegateWeight : 0}
             token={tokenMap.LSK.key}
           />
         </span>
@@ -56,7 +56,7 @@ const VoteRow = ({
       <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} ${styles.flexRightAlign}`} onClick={onClick}>
         <span className={styles.votes}>
           <LiskAmount
-            val={data.delegate.totalVotesReceived}
+            val={data.amount}
             token={tokenMap.LSK.key}
             showInt
             className={styles.voteAmount}
@@ -71,7 +71,7 @@ const VoteRow = ({
               <DialogLink
                 className={styles.editVoteLink}
                 component="editVote"
-                data={{ address: data.delegateAddress }}
+                data={{ address: data.address }}
 
               >
                 <Icon name="edit" />
@@ -84,8 +84,8 @@ const VoteRow = ({
 };
 
 /* istanbul ignore next */
-const areEqual = (prevProps, nextProps) =>
-  (prevProps.data.address === nextProps.data.address
-    && prevProps.data.rewards === nextProps.data.rewards);
+const areEqual = (prevProps, nextProps) => (prevProps.data.address === nextProps.data.address
+    && prevProps.data.rewards === nextProps.data.rewards)
+    && prevProps.delegates === nextProps.delegates;
 
 export default React.memo(VoteRow, areEqual);
