@@ -12,7 +12,7 @@ const apis = {
     getApiParams: state => ({ address: state.account.address }),
     defaultData: [],
     autoload: false,
-    transformResponse: response => response.data || response.data.data,
+    transformResponse: response => response.data,
   },
   delegates: {
     apiUtil: (network, params) => getDelegates({ network, params }),
