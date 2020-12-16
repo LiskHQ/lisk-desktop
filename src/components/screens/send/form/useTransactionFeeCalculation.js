@@ -33,7 +33,7 @@ const useTransactionFeeCalculation = ({
   const [minFee, setMinFee] = useState(initialFee);
 
   const setFeeState = async (param, name) => {
-    const res = await getTransactionFee(param);
+    const res = await getTransactionFee(param, token);
     if (name === 'fee') setFee(res);
     else if (name === 'maxAmount') {
       const availableBalance = calculateAvailableBalance(account.balance, token);
