@@ -9,6 +9,7 @@ import regex from '../../regex';
 import { tokenMap } from '../../../constants/tokens';
 import { fromRawLsk } from '../../lsk';
 import { validateAddress } from '../../validators';
+import { getApiClient } from '../apiClient';
 
 const httpPrefix = '/api/v1';
 
@@ -262,15 +263,15 @@ export const create = ({
  * broadcasts a transaction over the network
  *
  * @param {object} transaction
- * @param {object} network
+ * @param {string} network - the network name, e.g. mainnet, betanet
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
-export const broadcast = (transaction, network) => new Promise(
+export const broadcast = ({ transaction, networkName }) => new Promise(
   async (resolve, reject) => {
-    console.log('network', network);
     try {
-      await network.transactions.broadcast(transaction);
-      resolve(transaction);
+      const client = getApiClient(networkName);
+      const response = await client.transactions.broadcast(transaction);
+      resolve(response);
     } catch (error) {
       reject(error);
     }

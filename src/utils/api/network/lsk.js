@@ -2,6 +2,7 @@ import Lisk from '@liskhq/lisk-client';
 
 import networks from '../../../constants/networks';
 import { camelize } from '../../helpers';
+import { getApiClient } from '../apiClient';
 
 export const getServerUrl = (nodeUrl, nethash) => {
   if (nethash === Lisk.constants.MAINNET_NETHASH) {
@@ -33,8 +34,8 @@ export const getNetworkConfig = (network) => {
     networkConfig.nodes = [network.options.address];
   }
 
-  // get mainnet testnet node url here
-  return new Lisk.APIClient([networkConfig.nodes[0]], {}).node.getConstants()
+  const apiClient = getApiClient(network.name);
+  return apiClient.node.getConstants()
     .then(response => ({
       ...networkConfig,
       nodeUrl: networkConfig.nodes[0],

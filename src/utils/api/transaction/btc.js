@@ -2,28 +2,12 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import { BigNumber } from 'bignumber.js';
 
-import networks from '../../../constants/networks';
 import { validateAddress } from '../../validators';
 import { tokenMap } from '../../../constants/tokens';
 import { extractAddress, getDerivedPathFromPassphrase } from '../account';
 import { fromRawLsk } from '../../lsk';
+import { getNetworkConfig } from '../network';
 import http from '../http';
-
-const getBtcConfig = netCode => ({
-  isTestnet: netCode !== 0,
-  url: netCode !== 0 ? 'https://btc-test.lisk.io' : 'https://btc.lisk.io',
-  minerFeesURL: 'https://bitcoinfees.earn.com/api/v1/fees/recommended',
-  network: netCode !== 0 ? bitcoin.networks.testnet : bitcoin.networks.bitcoin,
-  derivationPath: netCode !== 0 ? "m/44'/1'/0'/0/0" : "m/44'/0'/0'/0/0",
-  transactionExplorerURL: `https://www.blockchain.com/${netCode !== 0 ? 'btctest' : 'btc'}/tx`,
-  requestOptions: {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  },
-});
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
@@ -168,7 +152,7 @@ export const getTransactionFeeFromUnspentOutputs = ({
  * Returns a dictionary of base fees for low, medium and high processing speeds
  */
 export const getTransactionBaseFees = async () => {
-  const config = getBtcConfig(0);
+  const config = getNetworkConfig(tokenMap.LSK.key, { name: 'Mainnet' });
   const response = await http({
     baseUrl: config.minerFeesURL,
   });
@@ -222,10 +206,7 @@ export const create = ({
   // eslint-disable-next-line max-statements
 }) => new Promise(async (resolve, reject) => {
   try {
-    const networkCode = network.name === networks.mainnet.name
-      ? networks.mainnet.code
-      : networks.testnet.code;
-    const config = getBtcConfig(networkCode);
+    const config = getNetworkConfig(tokenMap.LSK.key, network);
     amount = Number(amount);
     selectedFeePerByte = Number(selectedFeePerByte);
 
@@ -302,10 +283,7 @@ export const create = ({
 });
 
 export const broadcast = async (transaction, network) => {
-  const networkCode = network.name === networks.mainnet.name
-    ? networks.mainnet.code
-    : networks.testnet.code;
-  const config = getBtcConfig(networkCode);
+  const config = getNetworkConfig(tokenMap.LSK.key, network);
 
   const response = await http({
     baseUrl: config.url,

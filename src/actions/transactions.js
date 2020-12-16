@@ -190,13 +190,12 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {Number} transaction.reference - Data field for LSK transactions
  * @param {String} transaction.secondPassphrase - Second passphrase for LSK transactions
  */
-// TODO remove this function once create and broadcast HOC be implemented
 export const transactionBroadcasted = (transaction, callback = () => {}) =>
   async (dispatch, getState) => {
     const { network, settings } = getState();
     const activeToken = settings.token.active;
 
-    const [error] = await to(broadcast({ transaction, network }, activeToken));
+    const [error] = await to(broadcast({ transaction, networkName: network.name }, activeToken));
 
     callback({ success: !error, error, transaction });
     if (error) {
