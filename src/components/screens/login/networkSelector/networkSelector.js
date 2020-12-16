@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import { toast } from 'react-toastify';
-import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
+import { APIClient } from '@liskhq/lisk-client'; // eslint-disable-line
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 
@@ -133,7 +133,7 @@ class NetworkSelector extends React.Component {
     console.log('nodeURL', nodeURL);
 
     if (network === networks.customNode.code) {
-      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+      const liskAPIClient = new APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
         .then((res) => {
           console.log('this.props.networkSet', res);

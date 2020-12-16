@@ -1,4 +1,5 @@
 import { APIClient } from '@liskhq/lisk-client';
+import networks from '../../constants/networks';
 
 const networkNameMap = {
   mainnet: 'Mainnet',
@@ -16,6 +17,6 @@ export const getApiClient = (networkName) => {
     return APIClient.createMainnetAPIClient();
   }
   // custom node
-  const client = new APIClient(['http://localhost:4000']);
+  const client = new APIClient([networks.customNode.address]);
   return client;
 };
