@@ -47,6 +47,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
       txType,
       nonce: account.nonce,
       senderPublicKey: account.publicKey,
+      username: state.nickname,
     },
   });
 
@@ -133,8 +134,11 @@ const SelectNameAndFee = ({ account, ...props }) => {
   useEffect(() => {
     getNicknameFromPrevState();
     checkIfUserIsDelegate();
-    hasUserEnoughFunds();
   }, []);
+
+  useEffect(() => {
+    hasUserEnoughFunds();
+  }, [fee]);
 
   const isBtnDisabled = () => {
     if (state.customFee && state.customFee.error) return true;
