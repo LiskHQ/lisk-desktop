@@ -26,6 +26,7 @@
   align-items: flex-start;
   padding: 0 20px 10px;
   color: var(--color-ink-blue);
+  box-sizing: border-box;
 }
 
 .valuesRow {
