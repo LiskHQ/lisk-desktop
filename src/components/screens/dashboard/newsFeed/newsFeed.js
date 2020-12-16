@@ -15,18 +15,15 @@ const NewsFeed = (props) => {
     newsFeed,
     t,
   } = props;
-  const filteredNewsFeed = newsFeed.data || [];
+  const filteredNewsFeed = newsFeed.data.data || [];
   const serviceUrl = useSelector(state => state.network.serviceUrl);
   const sources = ['twitter_lisk', 'drupal_lisk_general'];
   const [source, setSource] = useState(sources.join(','));
-  useEffect(
-    () => {
-      if (newsFeed && (newsFeed.error.length === 0 && newsFeed.data.length === 0)) {
-        newsFeed.loadData({ source });
-      }
-    },
-    [serviceUrl],
-  );
+  useEffect(() => {
+    if (newsFeed && (newsFeed.error.length === 0 && newsFeed.data.length === 0)) {
+      newsFeed.loadData({ source });
+    }
+  }, [serviceUrl, source]);
   const tabs = [
     {
       value: sources.join(','),
