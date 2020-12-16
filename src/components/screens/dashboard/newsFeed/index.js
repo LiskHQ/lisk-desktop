@@ -7,7 +7,8 @@ import NewsFeed from './newsFeed';
 export default withData({
   newsFeed: {
     autoload: false,
-    apiUtil: getNews,
+    apiUtil: (_, params) => getNews({ params }),
     defaultData: [],
+    transformResponse: response => response.data,
   },
 })(withTranslation()(NewsFeed));
