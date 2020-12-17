@@ -3,31 +3,31 @@ import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import i18n from '../../../i18n';
 
-const _convertTimeFromFirstBlock = value =>
-  new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000));
+const timestampConverters = {
+  LSK: timestamp => timestamp * 1000,
+  BTC: timestamp => timestamp,
+};
 
 export const Time = withTranslation()((props) => {
   moment.locale(i18n.language);
-  const time = moment(_convertTimeFromFirstBlock(props.label));
+  // eslint-disable-next-line new-cap
+  const time = moment(timestampConverters.LSK(props.label));
   return <span>{time.fromNow(true)}</span>;
 });
 
 export const DateFromTimestamp = withTranslation()((props) => {
   moment.locale(i18n.language);
-  const day = moment(_convertTimeFromFirstBlock(props.time));
+  // eslint-disable-next-line new-cap
+  const day = moment(timestampConverters.LSK(props.time));
   return (<span className="date">{day.format('ll')}</span>);
 });
 
 export const TimeFromTimestamp = withTranslation()((props) => {
   moment.locale(i18n.language);
-  const day = moment(_convertTimeFromFirstBlock(props.time));
+  // eslint-disable-next-line new-cap
+  const day = moment(timestampConverters.LSK(props.time));
   return (<span className="time">{day.format('LTS')}</span>);
 });
-
-const timestampConverters = {
-  LSK: _convertTimeFromFirstBlock,
-  BTC: timestamp => timestamp,
-};
 
 export const DateTimeFromTimestamp = withTranslation()((props) => {
   moment.locale(i18n.language);

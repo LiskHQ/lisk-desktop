@@ -52,7 +52,7 @@ const TransactionRow = ({
           />
         </span>
       </span>
-      <span className={`${grid[isLSK ? 'col-xs-1' : 'col-xs-2']} hidden`}>
+      <span className={grid[isLSK ? 'col-xs-1' : 'col-xs-2']}>
         {
           isConfirmed
             ? <DateTimeFromTimestamp time={data.timestamp} token={activeToken} />
