@@ -34,7 +34,7 @@ export const getNetworkConfig = (network) => {
     networkConfig.nodes = [network.options.address];
   }
 
-  const apiClient = getApiClient(network.name);
+  const apiClient = getApiClient(network);
   return apiClient.node.getConstants()
     .then(response => ({
       ...networkConfig,
