@@ -51,7 +51,7 @@ const transactionTypes = (t = str => str) => ({
     outgoingCode: 11,
     title: t('Delegate vote'),
     senderLabel: t('Voter'),
-    key: 'castVotes',
+    key: 'vote',
     nameFee: 0,
     hardCap: 1e8, // rawLSK
   },

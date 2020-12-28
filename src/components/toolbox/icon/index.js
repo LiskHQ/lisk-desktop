@@ -76,7 +76,7 @@ import secondPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg
 import createMultiSig from '../../../assets/images/icons/multiSignature.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
 import registerDelegate from '../../../assets/images/icons/tx-delegate.svg';
-import castVotes from '../../../assets/images/icons/tx-vote.svg';
+import vote from '../../../assets/images/icons/tx-vote.svg';
 import addedVotes from '../../../assets/images/icons/added-votes.svg';
 import removedVotes from '../../../assets/images/icons/removed-votes.svg';
 import totalVotes from '../../../assets/images/icons/total-votes.svg';
@@ -211,7 +211,7 @@ export const icons = {
   secondPassphrase,
   txDefault,
   registerDelegate,
-  castVotes,
+  vote,
   user,
   userActive,
   verifyMessageInputsView,
