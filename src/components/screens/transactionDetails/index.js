@@ -18,7 +18,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const apis = {
   transaction: {
-    apiUtil: (network, { token, ...params }) => getTransaction({ network, params }, token),
+    apiUtil: (network, { token, id }) => getTransaction({ network, params: { id } }, token),
     getApiParams: (state, ownProps) => ({
       token: state.settings.token.active,
       id: parseSearchParams(ownProps.location.search).transactionId,
