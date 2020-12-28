@@ -49,16 +49,17 @@ const normalizeTransactionsResponse = ({
  * Converts the response to match Lisk data structure
  *
  * @param {Object} data
- * @param {String} data.params - Id of the transaction
+ * @param {String} data.params
+ * @param {String} data.params.id - Id of the transaction
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} Transaction details API call
  */
 export const getTransaction = ({
   network,
-  id,
+  params,
 }) => http({
   network,
-  params: { id },
+  params,
   path: 'transactions',
 }).then(response => normalizeTransactionsResponse({
   network,
