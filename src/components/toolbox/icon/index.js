@@ -72,11 +72,11 @@ import transactionApproved from '../../../assets/images/icons/transaction-status
 import transactionError from '../../../assets/images/icons/transaction-error.svg';
 import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
 import transactionSuccess from '../../../assets/images/icons/transaction-success.svg';
-import tx2ndPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
-import multiSignature from '../../../assets/images/icons/multiSignature.svg';
+import secondPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
+import createMultiSig from '../../../assets/images/icons/multiSignature.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
-import txDelegate from '../../../assets/images/icons/tx-delegate.svg';
-import txVote from '../../../assets/images/icons/tx-vote.svg';
+import registerDelegate from '../../../assets/images/icons/tx-delegate.svg';
+import castVotes from '../../../assets/images/icons/tx-vote.svg';
 import addedVotes from '../../../assets/images/icons/added-votes.svg';
 import removedVotes from '../../../assets/images/icons/removed-votes.svg';
 import totalVotes from '../../../assets/images/icons/total-votes.svg';
@@ -136,7 +136,7 @@ import forgedBlocks from '../../../assets/images/icons/forged-blocks.svg';
 import lock from '../../../assets/images/icons/lock.svg';
 import unlock from '../../../assets/images/icons/unlock.svg';
 import loading from '../../../assets/images/icons/loading.svg';
-import txUnlock from '../../../assets/images/icons/tx-unlock.svg';
+import unlockToken from '../../../assets/images/icons/tx-unlock.svg';
 import votingQueueInactive from '../../../assets/images/icons/voting-queue-inactive.svg';
 import votingQueueActive from '../../../assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '../../../assets/images/icons/delete.svg';
@@ -208,10 +208,10 @@ export const icons = {
   transactionError,
   transactionPending,
   transactionSuccess,
-  tx2ndPassphrase,
+  secondPassphrase,
   txDefault,
-  txDelegate,
-  txVote,
+  registerDelegate,
+  castVotes,
   user,
   userActive,
   verifyMessageInputsView,
@@ -240,7 +240,7 @@ export const icons = {
   verifyMessageActive,
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
-  multiSignature,
+  createMultiSig,
   missedBlocks,
   newsFeedBlog,
   newsFeedBlogDark,
@@ -278,7 +278,7 @@ export const icons = {
   lock,
   unlock,
   loading,
-  txUnlock,
+  unlockToken,
   votingQueueInactive,
   votingQueueActive,
 };
