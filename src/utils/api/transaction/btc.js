@@ -29,6 +29,7 @@ const normalizeTransactionsResponse = ({
     timestamp: timestamp ? Number(timestamp) * 1000 : null,
     confirmations: confirmations || 0,
     type: 0,
+    title: 'transfer',
     data: '',
     fee: feeSatoshi,
     explorerLink: `${network.networks.BTC.transactionExplorerURL}/${tx.txid}`,
