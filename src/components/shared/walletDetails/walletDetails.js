@@ -27,7 +27,7 @@ const MyAccount = ({
       <BoxContent className={`${styles.container} coin-container`}>
         {
         coins.map(coin => (
-          <BoxRow key={coin.token} className={`${styles.row} coin-row`}>
+          <BoxRow key={coin.address} className={`${styles.row} coin-row`}>
             <Icon name={coin.token === tokenMap.BTC.key ? 'btcIcon' : 'lskIcon'} />
             <div className={styles.details}>
               <span>{t('{{token}} balance', { token: tokenMap[coin.token || 'LSK'].label })}</span>
