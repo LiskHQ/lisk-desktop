@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import settings from '../constants/settings';
-import networks from '../constants/networks';
 
 // https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 const pattern = new RegExp(/[-a-zA-Z0-9@:%_+.~#?&/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&/=]*)?/gi);
@@ -43,11 +42,3 @@ export const getAutoLogInData = /* istanbul ignore next */ () => ({
 export const shouldAutoLogIn = /* istanbul ignore next */ autologin =>
   autologin[settings.keys.liskCoreUrl] && autologin[settings.keys.liskCoreUrl] !== ''
     && autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
-
-export const findMatchingLoginNetwork = () => {
-  const { liskCoreUrl } = getAutoLogInData();
-  return Object.entries(networks).find((network) => {
-    const { nodes } = network.slice(-1).shift();
-    return Array.isArray(nodes) ? nodes.includes(liskCoreUrl) : false;
-  });
-};

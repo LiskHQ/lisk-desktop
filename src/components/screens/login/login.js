@@ -25,9 +25,7 @@ class Login extends React.Component {
     let loginNetwork = findMatchingLoginNetwork();
     let address = '';
 
-    if (loginNetwork) {
-      loginNetwork = loginNetwork.slice(-1).shift();
-    } else if (!loginNetwork) {
+    if (!loginNetwork) {
       loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
       address = liskCoreUrl || '';
     }

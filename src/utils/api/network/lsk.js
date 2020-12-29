@@ -31,7 +31,7 @@ export const getServerUrl = (nodeUrl, nethash) => {
 export const getNetworkConfig = (network) => {
   const networkConfig = networks[camelize(network.name)];
   if (networkConfig.name === networks.customNode.name) {
-    networkConfig.nodes = [network.options.address];
+    networkConfig.nodes = [network.network.address];
   }
 
   const apiClient = getApiClient(network);
