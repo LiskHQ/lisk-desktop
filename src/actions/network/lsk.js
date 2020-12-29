@@ -1,4 +1,4 @@
-import { getNetworkConfig, getServerUrl } from '../../utils/api/network';
+import { getNetworkConfig } from '../../utils/api/network';
 import actionTypes from '../../constants/actions';
 import { tokenMap } from '../../constants/tokens';
 
@@ -11,7 +11,6 @@ export const lskNetworkSet = data => (dispatch) => {
         data: {
           token: tokenMap.LSK.key,
           config,
-          serviceUrl: getServerUrl(config.nodeUrl, config.nethash),
         },
       });
     });

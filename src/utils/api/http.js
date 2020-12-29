@@ -15,7 +15,8 @@
 const http = ({
   baseUrl, path, params, method = 'GET', network, ...restOptions
 }) => {
-  const url = new URL(baseUrl ? `${baseUrl}${path}` : `${network.serviceUrl}${path}`);
+  const url = new URL(baseUrl ? `${baseUrl}${path}`
+    : `${network.networks.LSK.serviceUrl}${path}`);
   url.search = new URLSearchParams(params).toString();
 
   return fetch(url.toString(), {
