@@ -13,7 +13,7 @@ import Transactions from './transactions';
 import { isEmpty } from '../../../utils/helpers';
 import actionTypes from '../../../constants/actions';
 
-const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
+const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo'];
 /**
  * The implementation of this API endpoint and the ones implemented for Lisk Service
  * are different. this transformer adapts params temporarily before all the APIs
@@ -26,7 +26,6 @@ const transformParams = params => Object.keys(params)
     if (filterNames.includes(item)) acc.filters[item] = params[item];
     else acc[item] = params[item];
 
-    if (typeof params.tab === 'number') acc.filters.direction = params.tab;
     return acc;
   }, { filters: {} });
 

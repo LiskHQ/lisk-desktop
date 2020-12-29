@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
-import txFilters from '../../../../constants/transactionFilters';
-import BoxTabs from '../../../toolbox/tabs';
 import Table from '../../../toolbox/table';
 import styles from './transactions.css';
 import header from './tableHeader';
@@ -12,46 +9,6 @@ import FilterBar from '../../../shared/filterBar';
 import withFilters from '../../../../utils/withFilters';
 import TransactionRow from './transactionRow';
 import FilterDropdown from './filterDropdown';
-
-const tabsData = (t, activeToken) => {
-  const all = {
-    name: t('All'),
-    value: txFilters.all,
-    className: 'filter-all',
-  };
-  const filtered = [
-    {
-      name: t('Incoming'),
-      value: txFilters.incoming,
-      className: 'filter-in',
-    },
-    {
-      name: t('Outgoing'),
-      value: txFilters.outgoing,
-      className: 'filter-out',
-    },
-  ];
-
-  if (activeToken === 'LSK') return [all, ...filtered];
-  return [all];
-};
-
-const Tabs = ({ t, onTabChange }) => {
-  const activeToken = useSelector(state => state.settings.token.active);
-  const tabs = tabsData(t, activeToken);
-  const [active, setActive] = useState(tabs[0].value);
-
-  return (
-    <BoxTabs
-      tabs={tabs}
-      active={active}
-      onClick={({ value }) => {
-        setActive(value);
-        onTabChange({ tab: value });
-      }}
-    />
-  );
-};
 
 const Transactions = ({
   pending,
@@ -86,14 +43,14 @@ const Transactions = ({
     clearAllFilters();
   }, [activeToken]);
 
-  const onTabChange = ({ tab }) => {
-    applyFilters({ ...filters, tab });
-  };
+  useEffect(() => {
+    console.log('>>>', filters);
+    console.log('>>>', transactions);
+  }, [filters]);
 
   return (
-    <Box main isLoading={transactions.isLoading} className="transactions-box">
+    <Box main isLoading={transactions.isLoading} className={`${styles.wrapper} transactions-box`}>
       <BoxHeader>
-        <Tabs t={t} onTabChange={onTabChange} />
         {
           activeToken === 'LSK' ? (
             <FilterDropdown filters={filters} applyFilters={applyFilters} />
