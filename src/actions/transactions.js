@@ -62,7 +62,7 @@ export const transactionsRetrieved = ({
     network,
     params: {
       address,
-      filters,
+      ...filters,
       limit,
       offset,
     },
