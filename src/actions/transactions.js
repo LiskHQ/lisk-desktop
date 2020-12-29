@@ -50,9 +50,9 @@ export const addNewPendingTransaction = data => ({
  */
 export const transactionsRetrieved = ({
   address,
-  limit = undefined,
+  limit = 30,
   offset = 0,
-  filters = undefined,
+  filters = {},
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.transactionsRetrieved));
   const { network, settings } = getState();
