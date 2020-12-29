@@ -14,6 +14,7 @@ export const httpPaths = {
 
 export const wsMethods = {
   delegates: 'get.delegates',
+  forgers: 'get.delegates.next_forgers',
 };
 
 const getDelegateProps = ({ address, publicKey, username }) => {
@@ -202,9 +203,10 @@ export const getForgers = ({
   network,
   params = {},
   baseUrl,
-}) => http({
-  path: httpPaths.forgers,
-  params: { offset: params.offset, limit: params.limit },
-  network,
-  baseUrl,
+}) => ws({
+  requests: {
+    method: wsMethods.forgers,
+    params,
+  },
+  baseUrl: baseUrl || network.serviceUrl,
 });
