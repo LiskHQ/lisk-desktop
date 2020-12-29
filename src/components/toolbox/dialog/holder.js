@@ -16,7 +16,7 @@ const DialogHolder = ({ history }) => {
   }, [history.location.search]);
 
   const settings = useSelector(state => state.settings);
-  const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
+  const networkIsSet = useSelector(state => !!state.network.name);
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
 
