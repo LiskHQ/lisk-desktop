@@ -30,8 +30,8 @@ const TransactionAddress = ({
   return (
     <div className={`${styles.wrapper} transaction-address`}>
       {
-        transactionType !== transactionTypes().transfer.code.legacy
-          ? <span>{transactionTypes.getByCode(transactionType).title}</span>
+        transactionType !== transactionTypes().transfer.key
+          ? <span>{transactionTypes.getByCode(transactionType).key}</span>
           : <Address address={address} bookmark={bookmark} />
       }
       {bookmark && <Address address={address} className={styles.subTitle} />}

@@ -20,10 +20,13 @@ const CustomRoute = ({
   const settings = useSelector(state => state.settings);
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
-  const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
+  const isNetworkSet = useSelector(state => !!state.network.name);
   const { search = '' } = history.location;
 
-  if (!networkIsSet) return null;
+  if (!isNetworkSet) {
+    return null;
+  }
+
   Piwik.tracking(history, settings);
 
   if (forbiddenTokens.indexOf(settings.token.active) !== -1) {

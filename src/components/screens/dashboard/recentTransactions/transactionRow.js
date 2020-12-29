@@ -34,14 +34,14 @@ const TransactionRow = ({
         <TransactionTypeFigure
           icon={host === data.recipientId ? 'incoming' : 'outgoing'}
           address={host === data.recipientId ? data.senderId : data.recipientId}
-          transactionType={data.type}
+          transactionType={data.title}
         />
         <TransactionAddress
           address={host === data.recipientId ? data.senderId : data.recipientId}
           bookmarks={bookmarks}
           t={t}
           token={activeToken}
-          transactionType={data.type}
+          transactionType={data.title}
         />
       </span>
       <span className={grid['col-xs-4']}>

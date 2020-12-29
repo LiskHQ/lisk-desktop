@@ -40,7 +40,7 @@ const TransactionRow = ({
         <TransactionTypeFigure
           icon={host === recipientId ? 'incoming' : 'outgoing'}
           address={host === recipientId ? senderId : recipientId}
-          transactionType={data.type}
+          transactionType={data.title}
         />
         <span>
           <TransactionAddress
@@ -48,7 +48,7 @@ const TransactionRow = ({
             bookmarks={bookmarks}
             t={t}
             token={activeToken}
-            transactionType={data.type}
+            transactionType={data.title}
           />
         </span>
       </span>

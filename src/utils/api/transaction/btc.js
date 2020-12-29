@@ -29,6 +29,7 @@ const normalizeTransactionsResponse = ({
     timestamp: timestamp ? Number(timestamp) * 1000 : null,
     confirmations: confirmations || 0,
     type: 0,
+    title: 'transfer',
     data: '',
     fee: feeSatoshi,
     explorerLink: `${network.networks.BTC.transactionExplorerURL}/${tx.txid}`,
@@ -48,16 +49,17 @@ const normalizeTransactionsResponse = ({
  * Converts the response to match Lisk data structure
  *
  * @param {Object} data
- * @param {String} data.params - Id of the transaction
+ * @param {String} data.params
+ * @param {String} data.params.id - Id of the transaction
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} Transaction details API call
  */
 export const getTransaction = ({
   network,
-  id,
+  params,
 }) => http({
   network,
-  params: { id },
+  params,
   path: 'transactions',
 }).then(response => normalizeTransactionsResponse({
   network,

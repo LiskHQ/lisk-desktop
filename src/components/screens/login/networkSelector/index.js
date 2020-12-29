@@ -5,12 +5,12 @@ import { networkSet } from '../../../../actions/network';
 import { settingsUpdated } from '../../../../actions/settings';
 import networks from '../../../../constants/networks';
 import { tokenMap } from '../../../../constants/tokens';
+import { camelize } from '../../../../utils/helpers';
 
 // eslint-disable-next-line complexity
 const mapStateToProps = state => ({
   network: state.network,
-  selectedNetwork: (state.network.networks.LSK && state.network.networks.LSK.code)
-    || networks.mainnet.code,
+  selectedNetwork: camelize(state.network.name || 'Mainnet'),
   address: ((state.network.networks[state.settings.token.active || tokenMap.LSK.key]
     && state.network.networks[state.settings.token.active || tokenMap.LSK.key].nodeUrl)
     || (state.settings.network && state.settings.network.name === networks.customNode.name

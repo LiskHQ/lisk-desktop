@@ -32,6 +32,7 @@ export const getNetworkConfig = (network) => {
 
   return new Promise(resolve =>
     resolve({
+      name: network.name,
       isTestnet: netCode !== 0,
       serviceUrl,
       minerFeesURL: 'https://bitcoinfees.earn.com/api/v1/fees/recommended',

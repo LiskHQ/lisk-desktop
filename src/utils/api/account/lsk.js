@@ -90,7 +90,7 @@ const getRequests = (values) => {
     return paramList.list
       .filter(item => regex[paramList.name].test(item))
       .map(item => ({
-        method: wsMethods.delegates,
+        method: wsMethods.accounts,
         params: { [paramList.name]: item },
       }));
   }

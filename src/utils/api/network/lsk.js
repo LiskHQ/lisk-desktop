@@ -31,19 +31,25 @@ export const getServerUrl = (nodeUrl, nethash) => {
 export const getNetworkConfig = (network) => {
   const networkConfig = networks[camelize(network.name)];
   if (networkConfig.name === networks.customNode.name) {
-    networkConfig.nodes = [network.options.address];
+    networkConfig.nodes = [network.network.address];
   }
+  const nodeUrl = networkConfig.nodes[0];
 
   const apiClient = getApiClient(network);
   return apiClient.node.getConstants()
-    .then(response => ({
-      ...networkConfig,
-      nodeUrl: networkConfig.nodes[0],
-      custom: networkConfig.name === networks.customNode.name,
-      code: networkConfig.code,
-      nethash: response.data.nethash,
-      networkIdentifier: response.data.networkId,
-    }));
+    .then((response) => {
+      const nethash = response.data.nethash;
+
+      return ({
+        ...networkConfig,
+        nodeUrl,
+        nethash,
+        serviceUrl: getServerUrl(nodeUrl, nethash),
+        custom: networkConfig.name === networks.customNode.name,
+        code: networkConfig.code,
+        networkIdentifier: response.data.networkId,
+      });
+    });
 };
 
 export const getConnectedPeers = data => new Promise(resolve =>

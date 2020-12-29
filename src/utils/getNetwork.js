@@ -2,7 +2,7 @@ import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import networks from '../constants/networks';
 
-const getNetwork = (networkName) => {
+export const getNetwork = (networkName) => {
   let network;
   Object.keys(networks).forEach((key) => {
     if (networks[key].name === networkName) {
@@ -11,8 +11,6 @@ const getNetwork = (networkName) => {
   });
   return network;
 };
-
-export default getNetwork;
 
 /**
  * If Mainnet or Testnet returns the name, if custom node returns the nethash
@@ -32,10 +30,10 @@ export const getNetworkIdentifier = (network) => {
 export const getNetworksList = () =>
   Object.keys(networks)
     .filter(network => network !== 'default')
-    .map((network, index) => ({
+    .map(network => ({
       label: i18next.t(networks[network].name),
       name: networks[network].name,
-      value: index,
+      value: network,
     }));
 
 

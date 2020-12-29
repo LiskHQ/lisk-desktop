@@ -10,6 +10,6 @@ export const getApiClient = (network) => {
     return APIClient.createTestnetAPIClient();
   }
 
-  const client = new APIClient([network.options.address]);
+  const client = new APIClient([network.network.address]);
   return client;
 };

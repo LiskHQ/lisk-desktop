@@ -27,7 +27,8 @@ const wsMethods = {
  * Retrieves the details of a single transaction
  *
  * @param {Object} data
- * @param {String} data.params - Id of the transaction
+ * @param {String} data.params
+ * @param {String} data.params.id - Id of the transaction
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
@@ -35,12 +36,19 @@ const wsMethods = {
  * @returns {Promise} Transaction details API call
  */
 export const getTransaction = ({
-  id, network, baseUrl,
+  params, network, baseUrl,
 }) => http({
   path: httpPaths.transaction,
-  params: { id },
+  params,
   network,
   baseUrl,
+}).then((response) => {
+  const data = response.data.map((tx) => {
+    tx.title = transactionTypes.getByCode(tx.type).key;
+    return tx;
+  });
+
+  return { data, meta: response.meta };
 });
 
 const filters = {
@@ -91,7 +99,15 @@ export const getTransactions = ({
       params: { type },
     }));
     // BaseUrl is only used for retrieving archived txs, so it's not needed here.
-    return ws({ baseUrl: network.serviceUrl, requests });
+    return ws({ baseUrl: network.serviceUrl, requests })
+      .then((response) => {
+        const data = response.data.map((tx) => {
+          tx.title = transactionTypes.getByCode(tx.type).key;
+          return tx;
+        });
+
+        return { data, meta: response.meta };
+      });
   }
 
   const normParams = {};
@@ -116,7 +132,15 @@ export const getTransactions = ({
     path: httpPaths.transactions,
     params: normParams,
     baseUrl,
-  });
+  })
+    .then((response) => {
+      const data = response.data.map((tx) => {
+        tx.title = transactionTypes.getByCode(tx.type).key;
+        return tx;
+      });
+
+      return { data, meta: response.meta };
+    });
 };
 
 // @todo document this function signature
