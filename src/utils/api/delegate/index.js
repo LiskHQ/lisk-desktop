@@ -124,11 +124,11 @@ export const getDelegates = ({
 };
 
 /**
- * Retrieves a list of votes sent by a given delegate.
+ * Retrieves a list of votes sent by a given account
  *
  * @param {Object} data
- * @param {String?} data.params.address - Delegate address
- * @param {String?} data.params.publicKey - Delegate public key
+ * @param {String?} data.params.address - account address
+ * @param {String?} data.params.publicKey - account public key
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
