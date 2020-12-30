@@ -16,14 +16,17 @@ const Transactions = ({
   activeToken,
   filters,
   applyFilters,
+  changeSort,
+  sort,
   clearFilter,
   clearAllFilters,
   host,
   t,
+  isWallet,
 }) => {
   /* istanbul ignore next */
   const handleLoadMore = () => {
-    transactions.loadData({ offset: transactions.data.length });
+    transactions.loadData({ offset: transactions.data.length, sort });
   };
 
   const canLoadMore = transactions.meta
@@ -44,9 +47,10 @@ const Transactions = ({
   }, [activeToken]);
 
   useEffect(() => {
-    console.log('>>>', filters);
-    console.log('>>>', transactions);
-  }, [filters]);
+    if (isWallet) {
+      transactions.loadData({ offset: 0, sort, ...filters });
+    }
+  }, [sort]);
 
   return (
     <Box main isLoading={transactions.isLoading} className={`${styles.wrapper} transactions-box`}>
@@ -67,10 +71,11 @@ const Transactions = ({
           isLoading={transactions.isLoading}
           row={TransactionRow}
           loadData={handleLoadMore}
-          header={header(t, activeToken)}
-          error={transactions.error}
-          canLoadMore={canLoadMore}
           additionalRowProps={{ t, activeToken, host }}
+          header={header(t, activeToken, changeSort)}
+          currentSort={sort}
+          canLoadMore={canLoadMore}
+          error={transactions.error}
         />
       </BoxContent>
     </Box>

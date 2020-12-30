@@ -104,6 +104,7 @@ const Wallet = ({ t, history }) => {
           tabName={t('Transactions')}
           tabId="Transactions"
           t={t}
+          isWallet={history.location.pathname === '/wallet'}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
