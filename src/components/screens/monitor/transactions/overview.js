@@ -279,7 +279,8 @@ export default compose(
   withData(
     {
       txStats: {
-        apiUtil: getTransactionStats,
+        apiUtil: (network, { token, ...params }) =>
+          getTransactionStats({ network, params }, token),
         defaultData: {
           distributionByType: {},
           distributionByAmount: {},
