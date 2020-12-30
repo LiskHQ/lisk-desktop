@@ -37,6 +37,7 @@ const blockListener = (store) => {
   };
 
   const callback = (block) => {
+    console.log('update.block callback', block.generatorUsername, block.generatorAddress);
     const { settings, network } = store.getState();
     const activeToken = settings.token && state.settings.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;

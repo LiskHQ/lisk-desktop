@@ -47,9 +47,7 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
   });
 };
 
-const retrieveNextForgers = async (getState, forgedInRound) => {
-  const { network } = getState();
-
+const retrieveNextForgers = async (network, forgedInRound) => {
   const numberOfRemainingBlocksInRound = voting.numberOfActiveDelegates
     - forgedInRound;
   const { data } = await getForgers({
@@ -66,9 +64,10 @@ const retrieveNextForgers = async (getState, forgedInRound) => {
 
 // eslint-disable-next-line max-statements
 export const forgingTimesRetrieved = () => async (dispatch, getState) => {
-  const { latestBlocks } = getState().blocks;
+  const { network, blocks } = getState();
+  const { latestBlocks } = blocks;
   const forgedInRoundNum = latestBlocks[0].height % voting.numberOfActiveDelegates;
-  const awaitingForgers = await retrieveNextForgers(getState, 0);
+  const awaitingForgers = await retrieveNextForgers(network, 0);
 
   // First I define the delegates who forged in this round.
   // Their status is forging with no doubt
