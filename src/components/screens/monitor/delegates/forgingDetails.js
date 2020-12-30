@@ -57,8 +57,7 @@ const ForgingDetails = ({
     t('Not forging'),
     t('Missed block'),
   ];
-  const awaitingForgers = useSelector(state => state.blocks.awaitingForgers);
-  const { latestBlocks } = useSelector(state => state.blocks);
+  const { latestBlocks, awaitingForgers } = useSelector(state => state.blocks);
   const forgedInRound = latestBlocks.length
     ? latestBlocks[0].height % voting.numberOfActiveDelegates : 0;
 

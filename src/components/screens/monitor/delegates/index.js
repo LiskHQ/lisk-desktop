@@ -55,7 +55,7 @@ const ComposedDelegates = compose(
   withData(
     {
       [delegatesKey]: {
-        apiUtil: (network, params) => getForgers({ network, params }),
+        apiUtil: network => getForgers({ network, params: { limit: voting.numberOfActiveDelegates } }),
         defaultData: [],
         autoload: true,
         transformResponse: transformDelegatesResponse,

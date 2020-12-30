@@ -27,8 +27,7 @@ const DelegatesMonitor = ({
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
-  const forgingTimes = useSelector(state => state.blocks.forgingTimes);
-  const totalBlocks = useSelector(state => state.blocks.total);
+  const { forgingTimes, totalBlocks } = useSelector(state => state.blocks);
 
   const handleFilter = ({ target: { value } }) => {
     applyFilters({
