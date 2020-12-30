@@ -9,7 +9,7 @@ export const httpPaths = {
 };
 
 const wsMethods = {
-  blocksChange: 'blocks/change',
+  blocksChange: 'update.block',
 };
 
 /**
@@ -65,7 +65,7 @@ export const getBlocks = ({
  */
 export const blockSubscribe = (network, callback, onDisconnect, onReconnect) => {
   const connection = subscribe(
-    network.serviceUrl, wsMethods.blocksChange, callback, onDisconnect, onReconnect,
+    `${network.serviceUrl}/blockchain`, wsMethods.blocksChange, callback, onDisconnect, onReconnect,
   );
   return ({
     [wsMethods.blocksChange]: {
@@ -82,7 +82,7 @@ export const blockSubscribe = (network, callback, onDisconnect, onReconnect) => 
  * @param {Object} network.socketConnections - Stored socket connections
  * @returns {Object} - Socket connections
  */
-export const blockUnsubscribe = ({ socketConnections }) => {
+export const blockUnsubscribe = ({ socketConnections = {} }) => {
   unsubscribe(wsMethods.blocksChange, socketConnections);
   delete socketConnections[wsMethods.blocksChange];
   return socketConnections;

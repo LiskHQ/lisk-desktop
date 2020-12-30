@@ -68,7 +68,7 @@ const blockMiddleware = store => (
   next => (action) => {
     next(action);
     switch (action.type) {
-      case actionTypes.serviceUrlSet:
+      case actionTypes.networkSet:
         store.dispatch(olderBlocksRetrieved());
         blockListener(store);
         clearInterval(interval);
