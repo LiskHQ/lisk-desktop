@@ -52,12 +52,16 @@ const retrieveNextForgers = async (getState, forgedInRound) => {
 
   const numberOfRemainingBlocksInRound = voting.numberOfActiveDelegates
     - forgedInRound;
-  const nextForgers = await getForgers({
+  const { data } = await getForgers({
     network,
     params: { limit: Math.min(numberOfRemainingBlocksInRound, 101) },
   });
 
-  return nextForgers.slice(0, numberOfRemainingBlocksInRound);
+  if (data) {
+    return data.slice(0, numberOfRemainingBlocksInRound);
+  }
+
+  return [];
 };
 
 // eslint-disable-next-line max-statements
