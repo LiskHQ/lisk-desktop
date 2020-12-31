@@ -7,7 +7,15 @@ import { tokenMap } from '../../../constants/tokens';
 import { extractAddress, getDerivedPathFromPassphrase } from '../account';
 import { fromRawLsk } from '../../lsk';
 import { getNetworkConfig } from '../network';
+import regex from '../../regex';
 import http from '../http';
+
+const httpPrefix = '/api';
+
+const httpPaths = {
+  transactions: `${httpPrefix}/transactions`,
+  transaction: `${httpPrefix}/transactions`,
+};
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
@@ -60,11 +68,26 @@ export const getTransaction = ({
 }) => http({
   network,
   params,
-  path: 'transactions',
+  path: httpPaths.transaction,
+  baseUrl: network.networks.BTC.serviceUrl,
 }).then(response => normalizeTransactionsResponse({
   network,
   list: [response.body.data],
 }));
+
+const filters = {
+  address: { key: 'senderIdOrRecipientId', test: address => regex.btcAddress.test(address) },
+  dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
+  dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
+  amountFrom: { key: 'min', test: num => typeof num === 'number' && num >= 0 },
+  amountTo: { key: 'max', test: num => typeof num === 'number' && num > 0 },
+  limit: { key: 'limit', test: num => (typeof num === 'number' && num > 0) },
+  offset: { key: 'offset', test: num => (typeof num === 'number' && num >= 0) },
+  sort: {
+    key: 'sort',
+    test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
+  },
+};
 
 /**
  * Retrieves the list of BTC transactions for a given parameters set
@@ -73,6 +96,7 @@ export const getTransaction = ({
  * @param {Object} data
  * @param {Object} data.network - Network setting from Redux store
  * @param {Object} data.params
+ * @param {String} data.params.address Sender or recipient account
  * @param {Number} data.params.offset Used for pagination
  * @param {Number} data.params.limit Used for pagination
  * @param {String} data.params.sort an option of 'amount:asc',
@@ -84,14 +108,34 @@ export const getTransaction = ({
 export const getTransactions = ({
   network,
   params,
-}) => http({
-  network,
-  params,
-  path: 'transactions',
-}).then(response => normalizeTransactionsResponse({
-  network,
-  list: response.body.data,
-}));
+}) => {
+  const normParams = {};
+
+  // if blockId, ignore others
+  if (params.blockId) {
+    normParams.block = params.blockId;
+  } else {
+    // Validate params and fix keys
+    Object.keys(params).forEach((key) => {
+      if (filters[key] && filters[key].test(params[key])) {
+        normParams[filters[key].key] = params[key];
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(`getTransactions: Dropped ${key} parameter, it's invalid.`);
+      }
+    });
+  }
+
+  return http({
+    network,
+    params: normParams,
+    path: httpPaths.transactions,
+    baseUrl: network.networks.BTC.serviceUrl,
+  }).then(response => normalizeTransactionsResponse({
+    network,
+    list: response.body.data,
+  }));
+};
 
 /**
  * Retrieves unspent tx outputs of a BTC address from Blockchain.info API
