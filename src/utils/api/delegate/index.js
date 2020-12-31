@@ -48,6 +48,7 @@ export const getDelegate = ({
 const txFilters = {
   limit: { key: 'limit', test: num => (typeof num === 'number') },
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
+  search: { key: 'search', test: str => (typeof str === 'string' && str.length > 0) },
   sort: {
     key: 'sort',
     test: str => [
@@ -81,6 +82,7 @@ const getRequests = (values) => {
  * @param {String?} data.params.addressList - Delegates address list
  * @param {String?} data.params.publicKeyList - Delegates public key list
  * @param {String?} data.params.usernameList - Delegates username list
+ * @param {String?} data.params.search - A string to search for usernames
  * @param {Number?} data.params.offset - Index of the first result
  * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
