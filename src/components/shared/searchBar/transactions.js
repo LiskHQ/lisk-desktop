@@ -4,66 +4,44 @@ import styles from './transactionsAndBlocks.css';
 import transactionTypes from '../../../constants/transactionTypes';
 import Icon from '../../toolbox/icon';
 
+const getTxConfig = (t, transactions) => {
+  const config = transactionTypes()[transactions[0].title];
+  const { amount, fee } = transactions[0];
+
+  return {
+    icon: transactions[0].title === 'transfer' ? undefined : config.icon,
+    subTitle: transactions[0].title === 'transfer' ? t('Amount') : t('Fee'),
+    value: transactions[0].title === 'transfer' ? amount : fee,
+  };
+};
+
 const Transactions = ({
   t, transactions, onSelectedRow, rowItemIndex, updateRowItemIndex,
 }) => {
-  function selectTransactionType() {
-    return {
-      [transactionTypes().transfer.code]: {
-        subTitle: t('Amount'),
-        value: transactions[0].amount,
-      },
-      [transactionTypes().setSecondPassphrase.code]: {
-        icon: 'tx2ndPassphrase',
-        subTitle: t('Fee'),
-        value: transactions[0].fee,
-      },
-      [transactionTypes().registerDelegate.code]: {
-        icon: 'txDelegate',
-        subTitle: t('Fee'),
-        value: transactions[0].fee,
-      },
-      [transactionTypes().vote.code]: {
-        icon: 'txVote',
-        subTitle: t('Fee'),
-        value: transactions[0].fee,
-      },
-    }[transactions[0].type] || {
-      icon: 'txDefault',
-      subTitle: t('Amount'),
-      value: transactions[0].amount,
-    };
-  }
-
-  const transactionType = selectTransactionType();
+  const txConfig = getTxConfig(t, transactions);
 
   return (
     <div className={`${styles.wrapper} transactions`}>
       <header className={`${styles.header} transactions-header`}>
         <div className={`${styles.subTitles} transactions-subtitle`}>
           <label>{t('Transaction')}</label>
-          <label>{transactionType.subTitle}</label>
+          <label>{txConfig.subTitle}</label>
         </div>
       </header>
       <div className={`${styles.content} transactions-content`}>
-        {
-          transactions.map((transaction, index) => (
-            <div
-              key={transaction.id}
-              data-index={index}
-              className={`${styles.resultRow} ${rowItemIndex === index ? styles.active : ''} search-transaction-row`}
-              onClick={() => onSelectedRow(transaction.id)}
-              onMouseEnter={updateRowItemIndex}
-            >
-              {transactionType.icon ? <Icon name={transactionType.icon} /> : null }
-              <span className={`${styles.transactionId} transaction-id`}>{transaction.id}</span>
-              <span className={styles.transactionMessage}>
-                <LiskAmount val={transactionType.value} />
-                <span>{t(' LSK')}</span>
-              </span>
-            </div>
-          ))
-        }
+        <div
+          data-index={0}
+          className={`${styles.resultRow} ${rowItemIndex === 0 ? styles.active : ''} search-transaction-row`}
+          onClick={() => onSelectedRow(transactions[0].id)}
+          onMouseEnter={updateRowItemIndex}
+        >
+          {txConfig.icon ? <Icon name={txConfig.icon} /> : null }
+          <span className={`${styles.transactionId} transaction-id`}>{transactions[0].id}</span>
+          <span className={styles.transactionMessage}>
+            <LiskAmount val={txConfig.value} />
+            <span>{t(' LSK')}</span>
+          </span>
+        </div>
       </div>
     </div>
   );
