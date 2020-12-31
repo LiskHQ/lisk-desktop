@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+
 import { parseSearchParams, addSearchParamsToUrl } from '../../../utils/searchParams';
 import Overview from './overview';
 import { transactionsRetrieved } from '../../../actions/transactions';
@@ -13,6 +14,7 @@ import Transactions from './transactions';
 import { isEmpty } from '../../../utils/helpers';
 import actionTypes from '../../../constants/actions';
 import { toRawLsk } from '../../../utils/lsk';
+import routes from '../../../constants/routes';
 
 /**
  * The implementation of this API endpoint and the ones implemented for Lisk Service
@@ -104,7 +106,7 @@ const Wallet = ({ t, history }) => {
           tabName={t('Transactions')}
           tabId="Transactions"
           t={t}
-          isWallet={history.location.pathname === '/wallet'}
+          isWallet={history.location.pathname === routes.wallet.path}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
