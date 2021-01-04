@@ -29,7 +29,7 @@ export const search = ({ network, params }) => {
     return getTransaction({
       network,
       params: { id: params.query },
-    }).then(res => ({ data: { transactions: res }, meta: res.meta }));
+    }).then(res => ({ data: { transactions: res.data }, meta: res.meta }));
   }
   return rejectOnly;
 };

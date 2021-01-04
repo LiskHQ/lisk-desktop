@@ -69,9 +69,12 @@ export const getTransaction = ({
   params: {},
   path: `${httpPaths.transaction}/${params.id}`,
   baseUrl: network.networks.BTC.serviceUrl,
-}).then(response => normalizeTransactionsResponse({
-  network,
-  list: [response.data],
+}).then(response => ({
+  meta: response.meta,
+  data: normalizeTransactionsResponse({
+    network,
+    list: [response.data],
+  }),
 }));
 
 const filters = {
@@ -129,9 +132,12 @@ export const getTransactions = ({
     params: normParams,
     path: `${httpPaths.transactions}/${params.address}`,
     baseUrl: network.networks.BTC.serviceUrl,
-  }).then(response => normalizeTransactionsResponse({
-    network,
-    list: response.body.data,
+  }).then(response => ({
+    meta: response.meta,
+    data: normalizeTransactionsResponse({
+      network,
+      list: response.data,
+    }),
   }));
 };
 
