@@ -58,7 +58,10 @@ export const subscribe = (
   onDisconnect,
   onReconnect,
 ) => {
-  const connection = io.connect(node);
+  const connection = io(node, {
+    forceNew: true,
+    transports: ['websocket'],
+  });
   connection.on(eventName, callback);
   connection.on('reconnect', onReconnect);
   connection.on('disconnect', () => { onDisconnect(eventName); });
