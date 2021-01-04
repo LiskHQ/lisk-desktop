@@ -74,7 +74,7 @@ export const search = ({ network, params, baseUrl }) => {
       baseUrl,
     }).then(res => ({ data: { addresses: [res] }, meta: res.meta }));
   }
-  if (regex.btcTransactionId.test(params.query)) {
+  if (regex.transactionId.test(params.query)) {
     return getTransactionOrBlock({ network, params, baseUrl });
   }
   return getDelegates({

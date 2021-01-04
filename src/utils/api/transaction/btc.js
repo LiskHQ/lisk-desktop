@@ -7,14 +7,13 @@ import { tokenMap } from '../../../constants/tokens';
 import { extractAddress, getDerivedPathFromPassphrase } from '../account';
 import { fromRawLsk } from '../../lsk';
 import { getNetworkConfig } from '../network';
-import regex from '../../regex';
 import http from '../http';
 
-const httpPrefix = '/api';
+const httpPrefix = '';
 
 const httpPaths = {
   transactions: `${httpPrefix}/transactions`,
-  transaction: `${httpPrefix}/transactions`,
+  transaction: `${httpPrefix}/transaction`,
 };
 
 /**
@@ -67,16 +66,15 @@ export const getTransaction = ({
   params,
 }) => http({
   network,
-  params,
-  path: httpPaths.transaction,
+  params: {},
+  path: `${httpPaths.transaction}/${params.id}`,
   baseUrl: network.networks.BTC.serviceUrl,
 }).then(response => normalizeTransactionsResponse({
   network,
-  list: [response.body.data],
+  list: [response.data],
 }));
 
 const filters = {
-  address: { key: 'senderIdOrRecipientId', test: address => regex.btcAddress.test(address) },
   dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
   dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
   amountFrom: { key: 'min', test: num => typeof num === 'number' && num >= 0 },
@@ -129,7 +127,7 @@ export const getTransactions = ({
   return http({
     network,
     params: normParams,
-    path: httpPaths.transactions,
+    path: `${httpPaths.transactions}/${params.address}`,
     baseUrl: network.networks.BTC.serviceUrl,
   }).then(response => normalizeTransactionsResponse({
     network,
