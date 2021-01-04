@@ -55,14 +55,16 @@ const ComposedDelegates = compose(
   withData(
     {
       [delegatesKey]: {
-        apiUtil: (network, params) => getForgers({ network, params }),
+        apiUtil: ({ networks }, params) => getForgers(
+          { network: networks.LSK, params: { ...params, limit: voting.numberOfActiveDelegates } },
+        ),
         defaultData: [],
         autoload: true,
         transformResponse: transformDelegatesResponse,
       },
 
       [standByDelegatesKey]: {
-        apiUtil: (network, params) => getDelegates({ network, params }),
+        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
         defaultData: [],
         autoload: true,
         transformResponse: response => transformDelegatesResponse({

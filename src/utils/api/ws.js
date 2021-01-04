@@ -23,6 +23,7 @@ const ws = ({
     if (response.error) reject(response.error);
 
     else {
+      if (!Array.isArray(response)) resolve(response.result);
       const normRes = response.reduce((acc, res) => {
         res.result.data.forEach(item => acc.data.push(item));
         acc.meta.count += res.result.meta.count;
