@@ -64,8 +64,10 @@ export const getBlocks = ({
  *                     socket connection and fordecClosing status
  */
 export const blockSubscribe = (network, callback, onDisconnect, onReconnect) => {
+  const node = network && network.networks
+  && network.networks.LSK && network.networks.LSK.serviceUrl;
   const connection = subscribe(
-    `${network.serviceUrl}/blockchain`, wsMethods.blocksChange, callback, onDisconnect, onReconnect,
+    `${node}/blockchain`, wsMethods.blocksChange, callback, onDisconnect, onReconnect,
   );
   return ({
     [wsMethods.blocksChange]: {
