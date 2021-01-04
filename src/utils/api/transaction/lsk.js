@@ -55,10 +55,11 @@ const filters = {
   address: { key: 'address', test: address => !validateAddress(tokenMap.LSK.key, address) },
   dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
   dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
-  amountFrom: { key: 'min', test: num => typeof num === 'number' && num >= 0 },
-  amountTo: { key: 'max', test: num => typeof num === 'number' && num > 0 },
-  limit: { key: 'limit', test: num => (typeof num === 'number' && num > 0) },
-  offset: { key: 'offset', test: num => (typeof num === 'number' && num >= 0) },
+  amountFrom: { key: 'min', test: num => parseFloat(num) >= 0 },
+  amountTo: { key: 'max', test: num => parseFloat(num) > 0 },
+  limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
+  offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
+  message: { key: 'message', test: str => (typeof str === 'string') },
   sort: {
     key: 'sort',
     test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
@@ -122,7 +123,7 @@ export const getTransactions = ({
         normParams[filters[key].key] = params[key];
       } else {
         // eslint-disable-next-line no-console
-        console.log(`getTransactions: Dropped ${key} parameter, it's invalid.`);
+        console.log(`getTransactions: Dropped ${key} parameter, it's invalid.`, params[key]);
       }
     });
   }

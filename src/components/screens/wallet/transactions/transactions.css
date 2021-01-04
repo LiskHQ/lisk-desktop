@@ -1,5 +1,17 @@
 @import '../../../../app/mixins.css';
 
+.wrapper {
+  & > header {
+    justify-content: flex-end !important;
+    padding: 0 !important;
+    height: 20px !important;
+
+    & > div {
+      margin-top: -70px;
+    }
+  }
+}
+
 .sortingColumn {
   cursor: pointer;
 }

@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+
 import { parseSearchParams, addSearchParamsToUrl } from '../../../utils/searchParams';
 import Overview from './overview';
 import { transactionsRetrieved } from '../../../actions/transactions';
@@ -12,8 +13,9 @@ import VotesTab from './votes';
 import Transactions from './transactions';
 import { isEmpty } from '../../../utils/helpers';
 import actionTypes from '../../../constants/actions';
+import { toRawLsk } from '../../../utils/lsk';
+import routes from '../../../constants/routes';
 
-const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
 /**
  * The implementation of this API endpoint and the ones implemented for Lisk Service
  * are different. this transformer adapts params temporarily before all the APIs
@@ -23,10 +25,14 @@ const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 
  */
 const transformParams = params => Object.keys(params)
   .reduce((acc, item) => {
-    if (filterNames.includes(item)) acc.filters[item] = params[item];
-    else acc[item] = params[item];
+    if (item === 'amountFrom' || item === 'amountTo') {
+      acc.filters[item] = toRawLsk(params[item]);
+    } else if (item === 'dateFrom' || item === 'dateTo') {
+      acc.filters[item] = params[item];
+    } else {
+      acc[item] = params[item];
+    }
 
-    if (typeof params.tab === 'number') acc.filters.direction = params.tab;
     return acc;
   }, { filters: {} });
 
@@ -100,6 +106,7 @@ const Wallet = ({ t, history }) => {
           tabName={t('Transactions')}
           tabId="Transactions"
           t={t}
+          isWallet={history.location.pathname === routes.wallet.path}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
