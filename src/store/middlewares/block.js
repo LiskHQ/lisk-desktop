@@ -2,10 +2,8 @@ import actionTypes from '../../constants/actions';
 import { networkStatusUpdated } from '../../actions/network';
 import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
 import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
+import { forgersSubscribe, forgersUnsubscribe } from '../../utils/api/delegate';
 import { tokenMap } from '../../constants/tokens';
-
-const intervalTime = 5000;
-let interval;
 
 // eslint-disable-next-line max-statements
 const blockListener = (store) => {
@@ -37,7 +35,6 @@ const blockListener = (store) => {
   };
 
   const callback = (block) => {
-    console.log('update.block callback', block.generatorUsername, block.generatorAddress);
     const { settings, network } = store.getState();
     const activeToken = settings.token && state.settings.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;
@@ -65,6 +62,30 @@ const blockListener = (store) => {
   });
 };
 
+const forgingListener = (store) => {
+  const state = store.getState();
+  const socketConnections = forgersUnsubscribe(state.network);
+  store.dispatch({
+    type: actionTypes.socketConnectionsUpdated,
+    data: socketConnections,
+  });
+
+  const newConnection = forgersSubscribe(
+    state.network,
+    (round) => {
+      if (store.getState().blocks.latestBlocks.length) {
+        store.dispatch(forgingTimesRetrieved(round));
+      }
+    },
+    () => {},
+    () => {},
+  );
+  store.dispatch({
+    type: actionTypes.socketConnectionsUpdated,
+    data: { ...state.network.socketConnections, ...newConnection },
+  });
+};
+
 const blockMiddleware = store => (
   next => (action) => {
     next(action);
@@ -72,14 +93,8 @@ const blockMiddleware = store => (
       case actionTypes.networkSet:
         store.dispatch(olderBlocksRetrieved());
         blockListener(store);
-        clearInterval(interval);
-        interval = setInterval(() => {
-          // if user refreshes the page, we might have a race condition here.
-          // I'll skip the first retrieval since it is useless without the blocks list
-          if (store.getState().blocks.latestBlocks.length) {
-            store.dispatch(forgingTimesRetrieved());
-          }
-        }, intervalTime);
+        forgingListener(store);
+        store.dispatch(forgingTimesRetrieved());
         break;
 
       default: break;
