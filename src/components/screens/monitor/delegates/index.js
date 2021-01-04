@@ -55,14 +55,14 @@ const ComposedDelegates = compose(
   withData(
     {
       [delegatesKey]: {
-        apiUtil: getForgers,
+        apiUtil: (network, params) => getForgers({ network, params }),
         defaultData: [],
         autoload: true,
         transformResponse: transformDelegatesResponse,
       },
 
       [standByDelegatesKey]: {
-        apiUtil: getDelegates,
+        apiUtil: (network, params) => getDelegates({ network, params }),
         defaultData: [],
         autoload: true,
         transformResponse: response => transformDelegatesResponse({

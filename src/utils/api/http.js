@@ -15,22 +15,26 @@
 const http = ({
   baseUrl, path, params, method = 'GET', network, ...restOptions
 }) => {
-  const url = new URL(baseUrl ? `${baseUrl}${path}`
-    : `${network.networks.LSK.serviceUrl}${path}`);
-  url.search = new URLSearchParams(params).toString();
+  try {
+    const url = new URL(baseUrl ? `${baseUrl}${path}`
+      : `${network.networks && network.networks.LSK && network.networks.LSK.serviceUrl}${path}`);
+    url.search = new URLSearchParams(params).toString();
 
-  return fetch(url.toString(), {
-    method,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    ...restOptions,
-  })
-    .then((response) => {
-      if (!response.ok) throw Error(response.statusText);
-      return response.json();
-    });
+    return fetch(url.toString(), {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      ...restOptions,
+    })
+      .then((response) => {
+        if (!response.ok) throw Error(response.statusText);
+        return response.json();
+      });
+  } catch (e) {
+    return Promise.reject(Error(e));
+  }
 };
 
 export default http;
