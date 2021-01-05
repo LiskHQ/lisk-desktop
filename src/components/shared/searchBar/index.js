@@ -27,12 +27,7 @@ export default compose(
         const { token, ...params } = rest;
         return search({ network, params }, token);
       },
-      defaultData: {
-        delegates: [],
-        addresses: [],
-        transactions: [],
-        blocks: [],
-      },
+      defaultData,
       transformResponse: res => ({ ...defaultData, ...res.data }),
     },
   }),
