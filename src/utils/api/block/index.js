@@ -14,6 +14,12 @@ const wsMethods = {
   blocksChange: 'update.block',
 };
 
+const getBlockProps = ({ id, height }) => {
+  if (id) return { id };
+  if (height) return { height };
+  return {};
+};
+
 /**
  * Retrieves block details.
  *
@@ -30,7 +36,7 @@ export const getBlock = ({
   params = {}, network, baseUrl,
 }) => http({
   path: httpPaths.block,
-  params,
+  params: getBlockProps(params),
   network,
   baseUrl,
 });
