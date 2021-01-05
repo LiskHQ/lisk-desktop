@@ -3,9 +3,6 @@ import { getAccount } from '../account/btc';
 import { getTransaction } from '../transaction/btc';
 import regex from '../../regex';
 
-const rejectOnly = () => new Promise((_, reject) =>
-  reject(Error('Nothing found.')));
-
 /**
  * Defines the entity corresponding the given query
  * and uses other API methods to fetch the data
@@ -31,5 +28,6 @@ export const search = ({ network, params }) => {
       params: { id: params.query },
     }).then(res => ({ data: { transactions: res.data }, meta: res.meta }));
   }
-  return rejectOnly;
+  return () => new Promise((_, reject) =>
+    reject(Error('Nothing found.')));
 };
