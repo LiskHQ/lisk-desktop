@@ -122,7 +122,6 @@ export const getNetworkStatus = ({
 }) => http({
   path: httpPaths.networkStatus,
   network,
-  params: {},
 });
 
 /**
