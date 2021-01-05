@@ -1,5 +1,6 @@
 import {
   getConnectedPeers,
+  getNetworkStatistics,
 } from './lsk';
 import http from '../http';
 
@@ -45,6 +46,42 @@ describe('API: LSK Network', () => {
       const expectedResponse = new Error('API call could not be completed');
       setApiRejection(expectedResponse.message, http);
       await expect(getConnectedPeers({ network, params: {} })).rejects.toEqual(expectedResponse);
+    });
+  });
+
+  describe('getNetworkStatistics', () => {
+    beforeEach(() => {
+      resetApiMock();
+    });
+
+    it('should return statistics of the network', async () => {
+      const expectedResponse = {
+        data: {
+          basic: {
+            totalPeers: 22,
+            connectedPeers: 22,
+            disconnectedPeers: 0,
+          },
+          coreVer: {
+            '3.0.0-beta.1': 22,
+          },
+          height: {
+            449486: 22,
+          },
+        },
+      };
+      setApiResponseData(expectedResponse, http);
+      await expect(getNetworkStatistics({ network })).resolves.toEqual(expectedResponse);
+      expect(http).toHaveBeenCalledWith({
+        path: '/api/v1/network/statistics',
+        network,
+      });
+    });
+
+    it('should throw when api fails', async () => {
+      const expectedResponse = new Error('API call could not be completed');
+      setApiRejection(expectedResponse.message, http);
+      await expect(getNetworkStatistics({ network })).rejects.toEqual(expectedResponse);
     });
   });
 });
