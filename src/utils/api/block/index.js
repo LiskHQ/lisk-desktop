@@ -4,7 +4,7 @@ import http from '../http';
 const httpPrefix = '/api/v1';
 
 export const httpPaths = {
-  block: `${httpPrefix}/block`,
+  block: `${httpPrefix}/blocks`,
   blocks: `${httpPrefix}/blocks`,
 };
 
