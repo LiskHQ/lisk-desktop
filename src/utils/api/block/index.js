@@ -4,7 +4,7 @@ import http from '../http';
 const httpPrefix = '/api/v1';
 
 export const httpPaths = {
-  block: `${httpPrefix}/block`,
+  block: `${httpPrefix}/blocks`,
   blocks: `${httpPrefix}/blocks`,
 };
 
@@ -17,6 +17,7 @@ const wsMethods = {
  *
  * @param {Object} data
  * @param {String?} data.params.id - Block id
+ * @param {Number?} data.params.height - Block height
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
@@ -36,6 +37,10 @@ export const getBlock = ({
  * Retrieves blocks list.
  *
  * @param {Object} data
+ * @param {Array<String>?} data.params.addressList - List of account addresses
+ * @param {Date?} data.params.dateFrom - Starting timestamp
+ * @param {Date?} data.params.dateTo - Ending timestamp
+ * @param {String?} data.params.generatorAddress - Address of delegate that forged the blocks
  * @param {Number?} data.params.offset - Index of the first result
  * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
