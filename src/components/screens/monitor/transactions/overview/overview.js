@@ -164,8 +164,6 @@ const Overview = ({ t, txStats }) => {
     ],
   };
 
-  console.log({ txStats });
-
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
