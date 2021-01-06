@@ -1,36 +1,143 @@
 import * as block from './index';
 import { subscribe, unsubscribe } from '../ws';
+import http from '../http';
 
+jest.mock('../http');
 jest.mock('../ws');
 
 describe('Block api module', () => {
-  it('Should call ws subscribe with parameters', () => {
-    const fn = () => {};
-    const serviceUrl = 'http://sample-service-url.com';
-    const connection = {};
-    subscribe.mockImplementation(() => connection);
-    const returnedObject = block.blockSubscribe({ serviceUrl }, fn, fn, fn);
+  describe('getBlock', () => {
+    beforeEach(() => {
+      http.mockClear();
+    });
 
-    expect(subscribe).toHaveBeenCalledTimes(1);
-    expect(subscribe).toHaveBeenCalledWith(serviceUrl, 'blocks/change', fn, fn, fn);
-    expect(returnedObject).toEqual({
-      'blocks/change': {
-        forcedClosing: false,
-        connection,
-      },
+    it('should return block data', async () => {
+      const expectedResponse = { data: {} };
+      const params = { id: 1 };
+      http.mockImplementation(() => Promise.resolve(expectedResponse));
+      await expect(block.getBlock({ params })).resolves.toEqual(expectedResponse);
+      expect(http).toHaveBeenCalledWith({
+        path: block.httpPaths.block,
+        params,
+      });
+    });
+
+    it('should handle parameters correctly', async () => {
+      block.getBlock({ params: { id: 1, height: 5000 } });
+      expect(http).toHaveBeenCalledWith({
+        path: block.httpPaths.block,
+        params: { id: 1 },
+      });
+      block.getBlock({ params: { height: 5000 } });
+      expect(http).toHaveBeenCalledWith({
+        path: block.httpPaths.block,
+        params: { height: 5000 },
+      });
+    });
+
+    it('should throw when api fails', async () => {
+      const expectedResponse = new Error('API call could not be completed');
+      const params = { id: 1 };
+      http.mockImplementation(() => Promise.reject(new Error(expectedResponse.message)));
+      await expect(block.getBlock({ params })).rejects.toEqual(expectedResponse);
     });
   });
 
-  it('Should call ws unsubscribe with parameters', () => {
-    const socketConnections = {
-      'blocks/change': {
-        forcedClosing: false,
-        connection: {},
-      },
-    };
-    const returnedObject = block.blockUnsubscribe({ socketConnections });
-    expect(unsubscribe).toHaveBeenCalledTimes(1);
-    expect(unsubscribe).toHaveBeenCalledWith('blocks/change', socketConnections);
-    expect(returnedObject).toEqual({});
+  describe('getBlocks', () => {
+    beforeEach(() => {
+      http.mockClear();
+    });
+
+    it('should return blocks data', async () => {
+      const expectedResponse = [{}, {}, {}];
+      const params = { limit: 50, offset: 100 };
+      http.mockImplementation(() => Promise.resolve(expectedResponse));
+      await expect(block.getBlocks({ params })).resolves.toEqual(expectedResponse);
+      expect(http).toHaveBeenCalledWith({
+        path: block.httpPaths.block,
+        params,
+      });
+    });
+
+    it('should handle filters correctly', async () => {
+      const dateFrom = Date.now() - 1000;
+      const dateTo = Date.now();
+      const params = {
+        addressList: ['1059876081639179984L', '2059876081639179984L'],
+        dateFrom,
+        dateTo,
+        generatorAddress: '5059876081639179984L',
+        limit: 50,
+        offset: 100,
+      };
+      const expectedParams = {
+        addressList: params.addressList,
+        from: dateFrom,
+        to: dateTo,
+        generatorAddress: params.generatorAddress,
+        limit: params.limit,
+        offset: params.offset,
+      };
+      const baseUrl = 'https://url.io';
+      const network = {};
+      block.getBlocks({ params, baseUrl, network });
+      expect(http).toHaveBeenCalledWith({
+        path: block.httpPaths.block,
+        params: expectedParams,
+        baseUrl,
+        network,
+      });
+      params.addressList = [1, 2];
+      delete params.dateTo;
+      delete expectedParams.addressList;
+      delete expectedParams.to;
+      block.getBlocks({ params, baseUrl, network });
+      expect(http).toHaveBeenCalledWith({
+        path: block.httpPaths.block,
+        params: expectedParams,
+        baseUrl,
+        network,
+      });
+    });
+
+    it('should throw when api fails', async () => {
+      const expectedResponse = new Error('API call could not be completed');
+      http.mockImplementation(() => Promise.reject(new Error(expectedResponse.message)));
+      await expect(block.getBlocks({})).rejects.toEqual(expectedResponse);
+    });
+  });
+
+  describe('Block websocket', () => {
+    it('Should call ws subscribe with parameters', () => {
+      const fn = () => {};
+      const serviceUrl = 'http://sample-service-url.com';
+      const connection = {};
+      subscribe.mockImplementation(() => connection);
+      const returnedObject = block.blockSubscribe(
+        { networks: { LSK: { serviceUrl } } }, fn, fn, fn,
+      );
+
+      expect(subscribe).toHaveBeenCalledTimes(1);
+      expect(subscribe).toHaveBeenCalledWith(`${serviceUrl}/blockchain`, 'update.block', fn, fn, fn);
+      expect(returnedObject).toEqual({
+        'update.block': {
+          forcedClosing: false,
+          connection,
+        },
+      });
+    });
+
+    it('Should call ws unsubscribe with parameters', () => {
+      const socketConnections = {
+        'update.block': {
+          forcedClosing: false,
+          connection: {},
+        },
+      };
+      const returnedObject = block.blockUnsubscribe({ socketConnections });
+      expect(unsubscribe).toHaveBeenCalledTimes(1);
+      expect(unsubscribe).toHaveBeenCalledWith('update.block', socketConnections);
+      expect(returnedObject).toEqual({});
+    });
   });
 });
