@@ -1,7 +1,6 @@
 import thunk from 'redux-thunk';
 import account from './account';
 import loading from './loadingBar';
-// import offlineMiddleware from './offline';
 import hwManager from './hwManager';
 // ToDo : enable this one when you solve the problem with multi account management
 // import notificationMiddleware from './notification';
@@ -18,7 +17,6 @@ export default [
   hwManager,
   loading,
   network,
-  // offlineMiddleware,
   settings,
   block,
   voting,
