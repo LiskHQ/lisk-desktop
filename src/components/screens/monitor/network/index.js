@@ -14,6 +14,7 @@ import Overview from './overview';
 import withLocalSort from '../../../../utils/withLocalSort';
 import { getNetworkStatistics, getConnectedPeers } from '../../../../utils/api/network';
 import withData from '../../../../utils/withData';
+import { tokenMap } from '../../../../constants/tokens';
 
 /**
  * Compares two version values to and returns
@@ -104,13 +105,13 @@ export const NetworkPure = ({
 export default compose(
   withData({
     networkStatistics: {
-      apiUtil: getNetworkStatistics,
+      apiUtil: network => getNetworkStatistics({ network }, tokenMap.LSK.key),
       defaultData: {},
       autoload: true,
       transformResponse: response => response.data,
     },
     peers: {
-      apiUtil: getConnectedPeers,
+      apiUtil: (network, params) => getConnectedPeers({ network, params }, tokenMap.LSK.key),
       defaultData: [],
       autoload: true,
       transformResponse: response => response.data,

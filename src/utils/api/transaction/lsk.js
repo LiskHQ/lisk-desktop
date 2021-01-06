@@ -74,6 +74,7 @@ const filters = {
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.params
+ * @param {String} data.params.address Sender or recipient account
  * @param {String} data.params.dateFrom Unix timestamp, the start time of txs
  * @param {String} data.params.dateTo Unix timestamp, the end time of txs
  * @param {String} data.params.amountFrom The minimum value of txs

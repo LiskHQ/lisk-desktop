@@ -7,6 +7,12 @@ import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../../utils/piwik';
 import routes from '../../../constants/routes';
 
+const checkNetwork = state =>
+  !!state.network.name
+  && !!(state.network.networks
+    && state.network.networks.LSK
+    && state.network.networks.LSK.serviceUrl);
+
 // eslint-disable-next-line max-statements
 const CustomRoute = ({
   path,
@@ -20,7 +26,7 @@ const CustomRoute = ({
   const settings = useSelector(state => state.settings);
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
-  const isNetworkSet = useSelector(state => !!state.network.name);
+  const isNetworkSet = useSelector(checkNetwork);
   const { search = '' } = history.location;
 
   if (!isNetworkSet) {
