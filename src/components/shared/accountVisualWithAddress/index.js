@@ -28,16 +28,15 @@ class AccountVisualWithAddress extends React.Component {
       address, transactionSubject, transactionType, size,
     } = this.props;
     const txType = transactionTypes.getByCode(transactionType);
-    const sendCode = transactionTypes().transfer.code;
     const transformedAddress = this.getTransformedAddress(address);
 
     return (
       <div className={`${styles.address}`}>
-        {transactionType !== sendCode && transactionSubject === 'recipientId' ? (
+        {transactionType !== 'transfer' && transactionSubject === 'recipientId' ? (
           <React.Fragment>
             <Icon
               className={styles.txIcon}
-              name={txType.icon || 'txDefault'}
+              name={transactionType || 'txDefault'}
             />
             <span className={styles.addressValue}>
               {txType.title}
@@ -62,7 +61,7 @@ AccountVisualWithAddress.propTypes = {
   size: PropTypes.number,
   token: PropTypes.shape().isRequired,
   transactionSubject: PropTypes.string,
-  transactionType: PropTypes.number,
+  transactionType: PropTypes.string,
 };
 
 AccountVisualWithAddress.defaultProps = {

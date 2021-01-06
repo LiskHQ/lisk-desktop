@@ -10,19 +10,19 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 import DialogLink from '../../toolbox/dialog/link';
 import styles from './transactionsTable.css';
 
-const roundSize = 101;
+const roundSize = 103;
 
 const TransactionRow = ({ data, className, t }) => (
   <DialogLink
     className={`${grid.row} ${className}`}
     component="transactionDetails"
-    data={{ transactionId: data.id, token: 'LSK' }}
+    data={{ transactionId: data.id, token: tokenMap.LSK.key }}
   >
     <span className={grid['col-xs-3']}>
       <AccountVisualWithAddress
         address={data.senderId}
         transactionSubject="senderId"
-        transactionType={data.type}
+        transactionType={data.title}
         showBookmarkedAddress
       />
     </span>
@@ -30,16 +30,18 @@ const TransactionRow = ({ data, className, t }) => (
       <AccountVisualWithAddress
         address={data.recipientId}
         transactionSubject="recipientId"
-        transactionType={data.type}
+        transactionType={data.title}
         showBookmarkedAddress
       />
     </span>
     <span className={grid['col-xs-2']}>
-      <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
+      <DateTimeFromTimestamp time={data.timestamp * 1000} token={tokenMap.BTC.key} />
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-2']} ${styles.amount}`}>
       <LiskAmount val={data.amount} token={tokenMap.LSK.key} />
-      <span className={`${styles.fee} hideOnLargeViewPort`}><LiskAmount val={data.fee} token={tokenMap.LSK.key} /></span>
+      <span className={`${styles.fee} hideOnLargeViewPort`}>
+        <LiskAmount val={data.fee} token={tokenMap.LSK.key} />
+      </span>
     </span>
     <span className={`${grid['col-md-1']} ${styles.transactionFeeCell}`}>
       <Tooltip
@@ -49,7 +51,7 @@ const TransactionRow = ({ data, className, t }) => (
         content={<LiskAmount val={data.fee} token={tokenMap.LSK.key} />}
         size="s"
       >
-        <p>{`${data.type} - ${transactionTypes.getByCode(data.type).title}`}</p>
+        <p>{`${data.type} - ${transactionTypes.getByCode(data.title).title}`}</p>
       </Tooltip>
     </span>
     <span className={grid['col-xs-1']}>
