@@ -10,7 +10,7 @@ const ComposedBlocks = compose(
   withRouter,
   withData({
     blocks: {
-      apiUtil: getBlocks,
+      apiUtil: (network, params) => getBlocks({ network, params }),
       defaultData: [],
       autoload: true,
       transformResponse: (response, oldData, urlSearchParams) => (

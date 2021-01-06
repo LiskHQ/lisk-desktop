@@ -10,12 +10,12 @@ import styles from '../delegates.css';
 const VoteRow = ({
   data, className,
 }) => {
-  const votes = data.votes
+  /*const votes = data.votes
     .filter(vote => vote.status === '+')
     .map(vote => vote.delegate.username);
   const unVotes = data.votes
     .filter(vote => vote.status === '-')
-    .map(vote => vote.delegate.username);
+    .map(vote => vote.delegate.username);*/
   return (
     <DialogLink
       className={`${grid.row} ${className} ${styles.voteRow} vote-row`}
@@ -40,7 +40,7 @@ const VoteRow = ({
         <span>{Math.ceil(data.height / 101)}</span>
       </span>
       <span className={`${grid['col-sm-5']} ${grid['col-lg-4']} ${styles.votesColumn}`}>
-        {
+        {/*
           votes.length ? (
             <span className={styles.vote}>
               <span className={styles.icon}>↑</span>
@@ -59,7 +59,7 @@ const VoteRow = ({
               </span>
             </span>
           ) : null
-        }
+          */}
       </span>
     </DialogLink>
   );

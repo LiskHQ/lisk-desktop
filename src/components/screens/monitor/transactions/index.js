@@ -75,7 +75,11 @@ export const TransactionsPure = ({ t, transactions }) => {
 export default compose(
   withData({
     transactions: {
-      apiUtil: getTransactions,
+      apiUtil: (network, { token, ...params }) =>
+        getTransactions({ network, params }, token),
+      getApiParams: state => ({
+        token: state.settings.token.active,
+      }),
       defaultData: [],
       autoload: true,
       transformResponse: (response, oldData, urlSearchParams) => (
