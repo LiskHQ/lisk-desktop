@@ -18,7 +18,7 @@ export default compose(
           timeline: [],
         },
         autoload: true,
-        defaultUrlSearchParams: { period: 'week'},
+        defaultUrlSearchParams: { period: 'week' },
         transformResponse: response => response.data,
       },
     },
