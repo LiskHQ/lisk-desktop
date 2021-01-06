@@ -12,7 +12,7 @@ import { fromRawLsk } from '../../utils/lsk';
 import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
 import { votesRetrieved } from '../../actions/voting';
-import { networkSelected, networkSet, networkStatusUpdated } from '../../actions/network';
+import { networkSelected, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
 import analytics from '../../utils/analytics';
 import i18n from '../../i18n';
