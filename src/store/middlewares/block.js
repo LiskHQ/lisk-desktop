@@ -8,11 +8,11 @@ const intervalTime = 5000;
 let interval;
 
 // eslint-disable-next-line max-statements
-const blockListener = (store) => {
-  const state = store.getState();
+const blockListener = ({ getState, dispatch }) => {
+  const state = getState();
 
   const socketConnections = blockUnsubscribe(state.network);
-  store.dispatch({
+  dispatch({
     type: actionTypes.socketConnectionsUpdated,
     data: socketConnections,
   });
@@ -25,31 +25,31 @@ const blockListener = (store) => {
   }
 
   const onDisconnect = (eventName) => {
-    const networkState = store.getState().network;
+    const networkState = getState().network;
     const connection = networkState.socketConnections && networkState.socketConnections[eventName];
     if (connection && !connection.forcedClosings) {
-      store.dispatch(networkStatusUpdated({ online: false }));
+      dispatch(networkStatusUpdated({ online: false }));
     }
   };
 
   const onReconnect = () => {
-    store.dispatch(networkStatusUpdated({ online: true }));
+    dispatch(networkStatusUpdated({ online: true }));
   };
 
   const callback = (block) => {
-    const { settings, network } = store.getState();
+    const { settings, network } = getState();
     const activeToken = settings.token && state.settings.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;
     const now = new Date();
     const oneMinute = 1000 * 60;
 
     if ((activeToken !== tokenMap.BTC.key) || now - lastBtcUpdate > oneMinute) {
-      store.dispatch({
+      dispatch({
         type: actionTypes.newBlockCreated,
         data: { block, windowIsFocused },
       });
       if (activeToken === tokenMap.BTC.key) {
-        store.dispatch({
+        dispatch({
           type: actionTypes.lastBtcUpdateSet,
           data: now,
         });
@@ -58,25 +58,25 @@ const blockListener = (store) => {
   };
 
   const newConnection = blockSubscribe(state.network, callback, onDisconnect, onReconnect);
-  store.dispatch({
+  dispatch({
     type: actionTypes.socketConnectionsUpdated,
     data: { ...state.network.socketConnections, ...newConnection },
   });
 };
 
-const blockMiddleware = store => (
+const blockMiddleware = ({ getState, dispatch }) => (
   next => (action) => {
     next(action);
     switch (action.type) {
-      case actionTypes.networkSet:
-        store.dispatch(olderBlocksRetrieved());
-        blockListener(store);
+      case actionTypes.networkConfigSet:
+        dispatch(olderBlocksRetrieved());
+        blockListener({ getState, dispatch });
         clearInterval(interval);
         interval = setInterval(() => {
           // if user refreshes the page, we might have a race condition here.
           // I'll skip the first retrieval since it is useless without the blocks list
-          if (store.getState().blocks.latestBlocks.length) {
-            store.dispatch(forgingTimesRetrieved());
+          if (getState().blocks.latestBlocks.length) {
+            dispatch(forgingTimesRetrieved());
           }
         }, intervalTime);
         break;

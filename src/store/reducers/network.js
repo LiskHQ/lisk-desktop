@@ -15,14 +15,13 @@ const initialState = {
  */
 const network = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.networkSet:
+    case actionTypes.networkConfigSet:
       return {
         ...state,
-        name: action.data.config ? action.data.config.name : '',
-        serviceUrl: action.data.serviceUrl, // TODO
+        name: action.data.name,
         networks: {
           ...state.networks,
-          [action.data.token]: action.data.config || {},
+          ...action.data.networks,
         },
       };
     case actionTypes.networkStatusUpdated:
