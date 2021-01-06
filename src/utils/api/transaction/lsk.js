@@ -17,6 +17,7 @@ const httpPaths = {
   feeEstimates: `${httpPrefix}/fee_estimates`,
   transactions: `${httpPrefix}/transactions`,
   transaction: `${httpPrefix}/transactions`,
+  transactionStats: `${httpPrefix}/transactions/statistics`,
 };
 
 const wsMethods = {
@@ -190,11 +191,19 @@ export const getRegisteredDelegates = async ({ network }) => {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Object} Network transactions statistics
  */
-export const getTransactionStats = data => http({
-  path: `transactions/statistics/${data.params.period}`,
-  params: { limit: data.params.limit },
-  network: data.network,
-});
+export const getTransactionStats = ({ network, params: { period } }) => {
+  const normParams = {
+    week: { path: 'day', limit: 7 },
+    month: { path: 'day', limit: 30 },
+    year: { path: 'month', limit: 12 },
+  };
+
+  return http({
+    path: `${httpPaths.transactionStats}/${normParams[period].path}`,
+    params: { limit: normParams[period].limit },
+    network,
+  });
+};
 
 /**
  * Gets the amount of a given transaction
