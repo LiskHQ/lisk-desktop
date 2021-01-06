@@ -1,4 +1,4 @@
-import { networkSet, networkStatusUpdated } from './index';
+import { networkSet, networkStatusUpdated } from './network';
 import * as lskNetworkActions from './lsk';
 import networks from '../constants/networks';
 

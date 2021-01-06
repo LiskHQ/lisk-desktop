@@ -1,4 +1,4 @@
-import { networkConfigSet } from '../../actions';
+import { networkConfigSet } from '../../actions/network';
 import actionsType from '../../constants/actions';
 
 const network = ({ dispatch }) => next => async (action) => {
