@@ -1,6 +1,6 @@
 import { networkSet, networkStatusUpdated } from './index';
 import * as lskNetworkActions from './lsk';
-import networks from '../../constants/networks';
+import networks from '../constants/networks';
 
 describe('actions: network', () => {
   let dispatch;
