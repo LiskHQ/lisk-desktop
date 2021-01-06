@@ -16,8 +16,8 @@ export const pricesRetrieved = () => (dispatch, getState) => {
   });
 
   getPrices()
-    .then((priceTicker) => {
-      const priceTickerReduced = priceTicker.reduce(tickerReducer, {});
+    .then(({ data }) => {
+      const priceTickerReduced = data.reduce(tickerReducer, {});
       dispatch({
         type: actionTypes.pricesRetrieved,
         data: {
