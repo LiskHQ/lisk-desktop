@@ -27,7 +27,7 @@ const blockListener = ({ getState, dispatch }) => {
   const onDisconnect = (eventName) => {
     const networkState = getState().network;
     const connection = networkState.socketConnections && networkState.socketConnections[eventName];
-    if (connection && !connection.forcedClosings) {
+    if (connection && !connection.forcedClosing) {
       dispatch(networkStatusUpdated({ online: false }));
     }
   };

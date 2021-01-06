@@ -6,7 +6,7 @@ const Network = ({ network, t, token }) => {
   const networksList = {
     Mainnet: t('Mainnet').toLowerCase(),
     Testnet: t('Testnet').toLowerCase(),
-    'Custom Node': t('Devnet').toLowerCase(),
+    customNode: t('Devnet').toLowerCase(),
   };
 
   const activeNetwork = getNetworkNameBasedOnNethash(network, token);

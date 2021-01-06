@@ -1,6 +1,7 @@
 import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
-import networks from '../constants/networks';
+import networks, { networkKeys } from '../constants/networks';
+
 
 export const getNetwork = (networkName) => {
   let network;
@@ -29,7 +30,6 @@ export const getNetworkIdentifier = (network) => {
 
 export const getNetworksList = () =>
   Object.keys(networks)
-    .filter(network => network !== 'default')
     .map(network => ({
       label: i18next.t(networks[network].name),
       name: networks[network].name,
@@ -39,13 +39,12 @@ export const getNetworksList = () =>
 
 export const getNetworkNameBasedOnNethash = (network, token = 'LSK') => {
   let activeNetwork = network.name;
-  if (network.name === networks.customNode.name && token !== 'BTC') {
-    activeNetwork = network.networks[token].nethash === Lisk.constants.TESTNET_NETHASH
-      ? networks.testnet.name
-      : network.name;
+  if (network.name === networkKeys.customNode && token !== 'BTC') {
+    const isTestnetHash = network.networks[token].nethash === Lisk.constants.TESTNET_NETHASH;
+    activeNetwork = isTestnetHash ? networks.testnet.name : network.name;
   }
 
-  if (network.name === networks.customNode.name && token === 'BTC') {
+  if (network.name === networkKeys.customNode && token === 'BTC') {
     activeNetwork = networks.testnet.name;
   }
   return activeNetwork;
