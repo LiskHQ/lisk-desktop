@@ -18,7 +18,7 @@ const network = (state = initialState, action) => {
     case actionTypes.networkSet:
       return {
         ...state,
-        name: action.data.config.name,
+        name: action.data.config ? action.data.config.name : '',
         serviceUrl: action.data.serviceUrl, // TODO
         networks: {
           ...state.networks,

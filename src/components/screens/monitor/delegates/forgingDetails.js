@@ -13,7 +13,7 @@ import NumericInfo from './numericInfo';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import voting from '../../../../constants/voting';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
-import { colorPallete } from '../../../../constants/chartConstants';
+import { colorPalette } from '../../../../constants/chartConstants';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
 
 const getForgingStats = (data) => {
@@ -116,7 +116,7 @@ const ForgingDetails = ({
                   <div className="hideOnLargeViewPort">
                     <GuideTooltip>
                       {delegatesForgedLabels.map((label, i) => (
-                        <GuideTooltipItem key={label} color={colorPallete[i]} label={label} />
+                        <GuideTooltipItem key={label} color={colorPalette[i]} label={label} />
                       ))}
                     </GuideTooltip>
                   </div>

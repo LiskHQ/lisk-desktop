@@ -1,4 +1,4 @@
-import { TransactionsPure } from './index';
+import TransactionsPure from './transactions';
 import transactions from '../../../../../test/constants/transactions';
 import { mountWithRouter } from '../../../../utils/testHelpers';
 
