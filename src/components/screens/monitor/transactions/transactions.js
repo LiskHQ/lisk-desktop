@@ -37,7 +37,7 @@ const fields = t => [{
   type: 'integer',
 }];
 
-export const Transactions = ({ t, transactions }) => {
+const Transactions = ({ t, transactions }) => {
   const filters = {
     dateFrom: '',
     dateTo: '',
