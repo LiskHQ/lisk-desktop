@@ -10,19 +10,20 @@ import styles from '../delegates.css';
 const VoteRow = ({
   data, className,
 }) => {
-  /*const votes = data.votes
-    .filter(vote => vote.status === '+')
-    .map(vote => vote.delegate.username);
-  const unVotes = data.votes
-    .filter(vote => vote.status === '-')
-    .map(vote => vote.delegate.username);*/
+  console.log(data);
+  const votes = data.asset.votes && data.asset.votes
+    .filter(vote => parseInt(vote.amount, 10) > 0)
+    .map(vote => vote.delegateAddress);
+  const unVotes = data.asset.votes && data.asset.votes
+    .filter(vote => parseInt(vote.amount, 10) < 0)
+    .map(vote => vote.delegateAddress);
   return (
     <DialogLink
       className={`${grid.row} ${className} ${styles.voteRow} vote-row`}
       component="transactionDetails"
       data={{ transactionId: data.id, token: 'LSK' }}
     >
-      <span className={grid['col-sm-3']}>
+      <span className={grid['col-sm-4']}>
         <AccountVisualWithAddress
           address={data.senderId}
           transactionSubject="senderId"
@@ -30,18 +31,15 @@ const VoteRow = ({
           showBookmarkedAddress
         />
       </span>
-      <span className={grid['col-sm-2']}>
+      <span className={grid['col-sm-3']}>
         <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
-      </span>
-      <span className={grid['col-sm-2']}>
-        <LiskAmount val={data.balance} token="LSK" />
       </span>
       <span className={`${grid['col-lg-1']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}>
         <span>{Math.ceil(data.height / 101)}</span>
       </span>
       <span className={`${grid['col-sm-5']} ${grid['col-lg-4']} ${styles.votesColumn}`}>
-        {/*
-          votes.length ? (
+        {
+          votes && votes.length ? (
             <span className={styles.vote}>
               <span className={styles.icon}>↑</span>
               <span className={styles.delegatesList}>
@@ -51,7 +49,7 @@ const VoteRow = ({
           ) : null
         }
         {
-          unVotes.length ? (
+          unVotes && unVotes.length ? (
             <span className={styles.unVote}>
               <span className={styles.icon}>↓</span>
               <span className={styles.delegatesList}>
@@ -59,7 +57,7 @@ const VoteRow = ({
               </span>
             </span>
           ) : null
-          */}
+          }
       </span>
     </DialogLink>
   );

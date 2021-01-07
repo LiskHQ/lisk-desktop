@@ -64,13 +64,13 @@ const ComposedDelegates = compose(
       },
 
       [standByDelegatesKey]: {
-        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        apiUtil: (network, params) => getDelegates({
+          network, params: { ...params, limit: 30, offset: voting.numberOfActiveDelegates + 1 },
+        }),
         defaultData: [],
         autoload: true,
         transformResponse: response => transformDelegatesResponse({
-          data: response.data.filter(
-            delegate => delegate.rank > voting.numberOfActiveDelegates,
-          ),
+          data: response.data,
           meta: response.meta,
         }),
       },
