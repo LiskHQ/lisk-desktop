@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import BlockDetails from './blockDetails';
 import { getBlock } from '../../../../utils/api/block';
+import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
 import { selectSearchParamValue } from '../../../../utils/searchParams';
 
@@ -16,14 +17,14 @@ const ComposedBlockDetails = compose(
   connect(mapStateToProps),
   withData({
     blockDetails: {
-      apiUtil: getBlock,
+      apiUtil: (network, params) => getBlock({ network, params }),
       getApiParams: (state, ownProps) => ({ id: ownProps.id }),
       transformResponse: response => (response.data && response.data[0]),
     },
     blockTransactions: {
-      apiUtil: getBlock, // getBlockTransaction
+      apiUtil: (network, params) => getTransactions({ network, params }, 'LSK'),
       defaultData: [],
-      getApiParams: (state, ownProps) => ({ id: ownProps.id }),
+      getApiParams: (state, ownProps) => ({ blockId: ownProps.id }),
       transformResponse: (response, oldData, urlSearchParams) => (
         urlSearchParams.offset
           ? [...oldData, ...response.data.filter(block =>
