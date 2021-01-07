@@ -16,7 +16,7 @@ import { networkSelected, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
 import analytics from '../../utils/analytics';
 import i18n from '../../i18n';
-import networks from '../../constants/networks';
+import networks, { networkKeys } from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import { tokenMap } from '../../constants/tokens';
@@ -112,8 +112,8 @@ const autoLogInIfNecessary = async ({ dispatch, getState }) => {
 
   const address = autologinData[settings.keys.liskCoreUrl];
   const network = address
-    ? { name: 'customNode', address }
-    : { name: 'mainnet', address: networks.mainnet.nodes[0] };
+    ? { name: networkKeys.customNode, address }
+    : { name: networkKeys.mainNet, address: networks.mainnet.nodes[0] };
   dispatch(networkSelected(network));
   dispatch(networkStatusUpdated({ online: true }));
 

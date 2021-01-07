@@ -29,23 +29,25 @@ export const getNetworkIdentifier = (network) => {
 };
 
 export const getNetworksList = () =>
-  Object.keys(networks)
-    .map(network => ({
-      label: i18next.t(networks[network].name),
-      name: networks[network].name,
-      value: network,
+  Object.values(networkKeys)
+    .map(name => ({
+      label: i18next.t(networks[name].name),
+      name,
     }));
 
 
 export const getNetworkNameBasedOnNethash = (network, token = 'LSK') => {
   let activeNetwork = network.name;
-  if (network.name === networkKeys.customNode && token !== 'BTC') {
+  const isCustomNode = network.name === networkKeys.customNode;
+  const isBtc = token === 'BTC';
+
+  if (isCustomNode && !isBtc) {
     const isTestnetHash = network.networks[token].nethash === Lisk.constants.TESTNET_NETHASH;
-    activeNetwork = isTestnetHash ? networks.testnet.name : network.name;
+    activeNetwork = isTestnetHash ? networkKeys.testNet : network.name;
   }
 
-  if (network.name === networkKeys.customNode && token === 'BTC') {
-    activeNetwork = networks.testnet.name;
+  if (isCustomNode && isBtc) {
+    activeNetwork = networkKeys.testNet;
   }
   return activeNetwork;
 };

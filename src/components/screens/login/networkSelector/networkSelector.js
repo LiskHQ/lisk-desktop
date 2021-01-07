@@ -20,7 +20,6 @@ const getInitialState = (address) => {
   const { liskCoreUrl } = getAutoLogInData();
   return {
     address: liskCoreUrl || address,
-    activeNetwork: networkKeys.mainNet,
     connected: true,
     isValid: true,
     isCustomSelected: false,
@@ -45,9 +44,9 @@ const NetworkSelector = ({
     });
   };
 
-  const getNetwork = (networkName) => {
-    const { name, nodes, initialSupply } = networks[networkName];
-    const address = networkName === networkKeys.customNode
+  const getNetwork = (name) => {
+    const { nodes, initialSupply } = networks[name];
+    const address = name === networkKeys.customNode
       ? addHttp(state.address) : nodes[0];
 
     return {
@@ -149,12 +148,12 @@ const NetworkSelector = ({
     >
       {
           networkList.map((network, key) => {
-            if (network.value === networkKeys.customNode) {
+            if (network.name === networkKeys.customNode) {
               return (
                 <span
                   className={`${styles.networkSpan} address`}
                   key={key}
-                  onClick={() => onChangeNetwork(network.value)}
+                  onClick={() => onChangeNetwork(network.name)}
                 >
                   {network.label}
                   <div className={styles.inputWrapper}>
@@ -205,8 +204,8 @@ const NetworkSelector = ({
             return (
               <span
                 onClick={() => {
-                  onChangeNetwork(network.value);
-                  validateCorrectNode(network.value);
+                  onChangeNetwork(network.name);
+                  validateCorrectNode(network.name);
                   setState({ connected: false });
                   childRef.current.toggleDropdown(false);
                 }}
