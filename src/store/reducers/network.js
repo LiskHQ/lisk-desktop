@@ -29,11 +29,6 @@ const network = (state = initialState, action) => {
         ...state,
         status: action.data,
       };
-    case actionTypes.serviceUrlSet:
-      return {
-        ...state,
-        serviceUrl: action.data,
-      };
     case actionTypes.socketConnectionsUpdated:
       return {
         ...state,
