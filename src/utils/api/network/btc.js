@@ -25,15 +25,14 @@ export const getNetworkCode = network => (
  */
 export const getNetworkConfig = (network) => {
   const netCode = getNetworkCode(network);
-  const serviceUrl = netCode !== 0 ? 'https://btc-test.lisk.io' : 'https://btc.lisk.io';
-  const btcNetwork = netCode !== 0 ? bitcoin.networks.testnet : bitcoin.networks.bitcoin;
-  const derivationPath = netCode !== 0 ? "m/44'/1'/0'/0/0" : "m/44'/0'/0'/0/0";
+  const isTestnet = netCode === 0;
+  const serviceUrl = isTestnet ? 'https://btc-test.lisk.io' : 'https://btc.lisk.io';
+  const btcNetwork = isTestnet ? bitcoin.networks.testnet : bitcoin.networks.bitcoin;
+  const derivationPath = isTestnet ? "m/44'/1'/0'/0/0" : "m/44'/0'/0'/0/0";
   const transactionExplorerURL = `https://www.blockchain.com/${netCode !== 0 ? 'btctest' : 'btc'}/tx`;
 
   return new Promise(resolve =>
     resolve({
-      name: network.name,
-      isTestnet: netCode !== 0,
       serviceUrl,
       minerFeesURL: 'https://bitcoinfees.earn.com/api/v1/fees/recommended',
       network: btcNetwork,

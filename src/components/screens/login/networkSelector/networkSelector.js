@@ -28,7 +28,7 @@ const getInitialState = (address) => {
 
 // eslint-disable-next-line max-statements
 const NetworkSelector = ({
-  t, selectedNetwork, selectedAddress, networkSelected, settingsUpdated,
+  t, selectedNetworkName, selectedNetwork, selectedAddress, networkSelected, settingsUpdated,
 }) => {
   const childRef = useRef(null);
   const [state, _setState] = useState(() => getInitialState(selectedAddress));
@@ -108,7 +108,7 @@ const NetworkSelector = ({
 
   const checkNodeStatus = () => {
     getNetworkConfig({
-      name: selectedNetwork.name,
+      name: selectedNetworkName,
       address: state.address,
     }, tokenMap.LSK.key).then((response) => {
       if (response) {
@@ -123,7 +123,7 @@ const NetworkSelector = ({
 
   useEffect(() => {
     checkNodeStatus();
-  }, [selectedNetwork.name]);
+  }, [selectedNetworkName]);
 
   const {
     address,
@@ -141,7 +141,7 @@ const NetworkSelector = ({
       buttonClassName={`${isValid ? '' : styles.dropdownError} ${styles.dropdownHandler} network`}
       wrapperClassName={styles.NetworkSelector}
       className={`${styles.menu} network-dropdown`}
-      buttonLabel={(<span>{selectedNetwork.name}</span>)}
+      buttonLabel={(<span>{networks[selectedNetworkName].label}</span>)}
       ButtonComponent={SecondaryButton}
       align="right"
     >
