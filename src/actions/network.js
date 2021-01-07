@@ -38,7 +38,7 @@ export const networkStatusUpdated = data => ({
  * @param {Object} data - user selected network
  * @param {String} data.name - the network name
  * @param {String} data.address - the network address
- * @returns {Obejct} the action object
+ * @returns {Object} the action object
  */
 export const networkSelected = data => ({
   data,
