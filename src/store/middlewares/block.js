@@ -69,8 +69,10 @@ const blockMiddleware = store => (
     next(action);
     switch (action.type) {
       case actionTypes.networkSet:
-        store.dispatch(olderBlocksRetrieved());
-        blockListener(store);
+        if (action.data.token === tokenMap.LSK.key) {
+          blockListener(store);
+          store.dispatch(olderBlocksRetrieved());
+        }
         clearInterval(interval);
         interval = setInterval(() => {
           // if user refreshes the page, we might have a race condition here.
