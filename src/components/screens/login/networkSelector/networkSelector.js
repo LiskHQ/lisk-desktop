@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
-import { APIClient } from '@liskhq/lisk-client';
 
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import { Input } from '../../../toolbox/inputs';
 import { addHttp, getAutoLogInData } from '../../../../utils/login';
 import { getNetworksList } from '../../../../utils/getNetwork';
 import networks, { networkKeys } from '../../../../constants/networks';
-import styles from './networkSelector.css';
 import keyCodes from '../../../../constants/keyCodes';
 import DropdownButton from '../../../toolbox/dropdownButton';
 import { tokenMap } from '../../../../constants/tokens';
 import { getNetworkConfig } from '../../../../utils/api/network';
 import { getApiClient } from '../../../../utils/api/apiClient';
+
+import styles from './networkSelector.css';
 
 const networkList = getNetworksList();
 
