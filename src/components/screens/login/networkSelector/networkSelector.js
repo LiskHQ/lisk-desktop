@@ -76,7 +76,7 @@ const NetworkSelector = ({
 
   // eslint-disable-next-line max-statements
   const validateCorrectNode = async (networkName) => {
-    const networkToSet = getNetwork(networkName);
+    const networkToSet = networks[networkName];
 
     if (networkName === networkKeys.customNode) {
       const liskApiClient = getApiClient({ address: state.address });
