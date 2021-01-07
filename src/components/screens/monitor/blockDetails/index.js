@@ -8,6 +8,7 @@ import { getBlock } from '../../../../utils/api/block';
 import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
 import { selectSearchParamValue } from '../../../../utils/searchParams';
+import { tokenMap } from '../../../../constants/tokens';
 
 const mapStateToProps = (state, ownProps) => ({
   id: selectSearchParamValue(ownProps.history.location.search, 'id'),
@@ -22,7 +23,7 @@ const ComposedBlockDetails = compose(
       transformResponse: response => (response.data && response.data[0]),
     },
     blockTransactions: {
-      apiUtil: (network, params) => getTransactions({ network, params }, 'LSK'),
+      apiUtil: (network, params) => getTransactions({ network, params }, tokenMap.LSK.key),
       defaultData: [],
       getApiParams: (state, ownProps) => ({ blockId: ownProps.id }),
       transformResponse: (response, oldData, urlSearchParams) => (

@@ -35,6 +35,12 @@ describe('Block api module', () => {
       });
     });
 
+    it('should return promise rejection when no parameters are sup', async () => {
+      await expect(
+        block.getBlock({ params: { } }),
+      ).rejects.toEqual(Error('No parameters supplied'));
+    });
+
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
       const params = { id: 1 };

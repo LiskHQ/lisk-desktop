@@ -17,7 +17,7 @@ const wsMethods = {
 const getBlockProps = ({ id, height }) => {
   if (id) return { id };
   if (height) return { height };
-  return {};
+  throw Error('No parameters supplied');
 };
 
 /**
@@ -34,12 +34,19 @@ const getBlockProps = ({ id, height }) => {
  */
 export const getBlock = ({
   params = {}, network, baseUrl,
-}) => http({
-  path: httpPaths.block,
-  params: getBlockProps(params),
-  network,
-  baseUrl,
-});
+}) => {
+  try {
+    const blockProps = getBlockProps(params);
+    return http({
+      path: httpPaths.block,
+      params: blockProps,
+      network,
+      baseUrl,
+    });
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
 
 const blocksFilters = {
   addressList: { key: 'addressList', test: addressList => !addressList.some(address => validateAddress(tokenMap.LSK.key, address)) },
