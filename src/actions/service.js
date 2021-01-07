@@ -19,13 +19,13 @@ export const pricesRetrieved = () => (dispatch, getState) => {
   getPrices()
     .then(({ data }) => {
       const priceTickerReduced = data.reduce(tickerReducer, {});
-      dispatch({
+      return {
         type: actionTypes.pricesRetrieved,
         data: {
           priceTicker: priceTickerReduced,
           activeToken,
         },
-      });
+      };
     })
     .catch(() => toast.error(i18next.t('Error retrieving conversion rates.')));
 };

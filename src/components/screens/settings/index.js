@@ -4,7 +4,6 @@ import { withTranslation } from 'react-i18next';
 import Settings from './settings';
 import { settingsUpdated } from '../../../actions/settings';
 import { timerReset } from '../../../actions/account';
-import { networkSet } from '../../../actions/network';
 import { getActiveTokenAccount } from '../../../utils/account';
 
 const mapStateToProps = state => ({
@@ -15,7 +14,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   timerReset,
-  networkSet,
   settingsUpdated,
 };
 

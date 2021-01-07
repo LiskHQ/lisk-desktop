@@ -15,9 +15,9 @@ class DropdownButton extends React.Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
   }
 
-  toggleDropdown() {
+  toggleDropdown(_, showDropdown) {
     this.setState(prevState => ({
-      shownDropdown: !prevState.shownDropdown,
+      shownDropdown: showDropdown || !prevState.shownDropdown,
     }));
   }
 

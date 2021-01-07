@@ -40,7 +40,7 @@ export const getServerUrl = (nodeUrl, nethash) => {
 export const getNetworkConfig = (network) => {
   const networkConfig = networks[camelize(network.name)];
   if (networkConfig.name === networks.customNode.name) {
-    networkConfig.nodes = [network.network.address];
+    networkConfig.nodes = [network.address];
   }
   const nodeUrl = networkConfig.nodes[0];
 
