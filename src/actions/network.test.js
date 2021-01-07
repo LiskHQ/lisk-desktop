@@ -1,34 +1,46 @@
-import { networkSet, networkStatusUpdated } from './network';
-import * as lskNetworkActions from './lsk';
-import networks from '../constants/networks';
+import { networkSelected, networkConfigSet, networkStatusUpdated } from './network';
+import { getNetworkConfig } from '../utils/api/network';
+import actionTypes from '../constants/actions';
+
+jest.mock('../utils/api/network', () => ({ getNetworkConfig: jest.fn() }));
 
 describe('actions: network', () => {
-  let dispatch;
-
   beforeEach(() => {
     jest.resetModules();
-    dispatch = jest.fn();
-    jest.spyOn(lskNetworkActions, 'lskNetworkSet');
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  describe('networkSet', () => {
-    it('should call lsk networkSet action', async () => {
-      const { name } = networks.testnet;
-      networkSet({ name })(dispatch);
-      expect(lskNetworkActions.lskNetworkSet).toHaveBeenCalled();
+  describe('networkSelected', () => {
+    it('should create networkSelected action', () => {
+      const data = { name: '' };
+      const action = networkSelected(data);
+      expect(action).toMatchObject({ type: actionTypes.networkSelected, data });
     });
   });
 
   describe('networkStatusUpdated', () => {
     it('should create networkStatusUpdated action ', () => {
       const online = false;
-      expect(networkStatusUpdated({ online })).toMatchObject({
+      const action = networkStatusUpdated({ online });
+      expect(action).toMatchObject({
+        type: actionTypes.networkStatusUpdated,
         data: { online },
       });
+    });
+  });
+
+  describe('networkConfigSet', () => {
+    it('should create networkConfigSet action ', async () => {
+      const data = { name: 'example', address: 'http://example.com' };
+      const action = await networkConfigSet(data);
+      expect(action).toMatchObject({
+        type: actionTypes.networkConfigSet,
+      });
+      expect(action.data).toMatchObject({ name: data.name, networks: expect.anything() });
+      expect(getNetworkConfig).toHaveBeenCalled();
     });
   });
 });
