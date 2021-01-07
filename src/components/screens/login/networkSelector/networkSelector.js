@@ -1,9 +1,6 @@
-/* eslint-disable max-lines */
 import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { APIClient } from '@liskhq/lisk-client';
-import { withTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
 
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import { Input } from '../../../toolbox/inputs';
@@ -242,6 +239,5 @@ const NetworkSelector = ({
   );
 };
 
-
 NetworkSelector.displayName = 'NetworkSelector';
-export default withTranslation()(withRouter(NetworkSelector));
+export default NetworkSelector;
