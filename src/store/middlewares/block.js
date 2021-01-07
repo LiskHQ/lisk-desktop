@@ -1,11 +1,8 @@
 import actionTypes from '../../constants/actions';
 import { networkStatusUpdated } from '../../actions/network';
-import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
+import { olderBlocksRetrieved } from '../../actions/blocks';
 import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
 import { tokenMap } from '../../constants/tokens';
-
-const intervalTime = 5000;
-let interval;
 
 // eslint-disable-next-line max-statements
 const blockListener = (store) => {
@@ -73,14 +70,6 @@ const blockMiddleware = store => (
           blockListener(store);
           store.dispatch(olderBlocksRetrieved());
         }
-        clearInterval(interval);
-        interval = setInterval(() => {
-          // if user refreshes the page, we might have a race condition here.
-          // I'll skip the first retrieval since it is useless without the blocks list
-          if (store.getState().blocks.latestBlocks.length) {
-            store.dispatch(forgingTimesRetrieved());
-          }
-        }, intervalTime);
         break;
 
       default: break;
