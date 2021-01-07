@@ -19,7 +19,7 @@ const network = (state = initialState, action) => {
       return {
         ...state,
         name: action.data.config ? action.data.config.name : '',
-        serviceUrl: action.data.serviceUrl, // TODO
+        serviceUrl: action.data.serviceUrl,
         networks: {
           ...state.networks,
           [action.data.token]: action.data.config || {},
@@ -29,11 +29,6 @@ const network = (state = initialState, action) => {
       return {
         ...state,
         status: action.data,
-      };
-    case actionTypes.serviceUrlSet:
-      return {
-        ...state,
-        serviceUrl: action.data,
       };
     case actionTypes.socketConnectionsUpdated:
       return {
