@@ -12,6 +12,7 @@ import keyCodes from '../../../../constants/keyCodes';
 import DropdownButton from '../../../toolbox/dropdownButton';
 import { tokenMap } from '../../../../constants/tokens';
 import { getNetworkConfig } from '../../../../utils/api/network';
+import { getApiClient } from '../../../../utils/api/apiClient';
 
 const networkList = getNetworksList();
 
@@ -22,6 +23,7 @@ const getInitialState = (address) => {
     activeNetwork: networkKeys.mainNet,
     connected: true,
     isValid: true,
+    isCustomSelected: false,
     isValidationLoading: false,
   };
 };
@@ -32,15 +34,20 @@ const NetworkSelector = ({
 }) => {
   const childRef = useRef(null);
   const [state, _setState] = useState(() => getInitialState(selectedAddress));
-  const setState = (newState) => { _setState({ ...state, ...newState }); };
+  const setState = newState => _setState(prevState => ({ ...prevState, ...newState }));
 
-  /**
-   * @param chosenNetworkName {string}
-   * @returns network {object}
-   */
-  const getNetwork = (chosenNetworkName) => {
-    const { name, nodes, initialSupply } = networks[chosenNetworkName];
-    const address = chosenNetworkName === networkKeys.customNode
+  const onChangeInput = ({ target }) => {
+    const address = target.value;
+    setState({
+      address,
+      connected: false,
+      isValid: true,
+    });
+  };
+
+  const getNetwork = (networkName) => {
+    const { name, nodes, initialSupply } = networks[networkName];
+    const address = networkName === networkKeys.customNode
       ? addHttp(state.address) : nodes[0];
 
     return {
@@ -50,104 +57,82 @@ const NetworkSelector = ({
     };
   };
 
-  /**
-   * @param networkName {string}
-   */
-  const changeNetwork = (networkName) => {
+  const changeNetworkInSettings = (networkName) => {
     const { name, address } = getNetwork(networkName);
     if (address !== 'http://') {
       settingsUpdated({ network: { name, address } });
     }
   };
 
-  /**
-   * @param {String} activeNetwork
-   */
-  const onChangeActiveNetwork = (activeNetwork) => {
-    if (activeNetwork !== networkKeys.customNode) {
-      changeNetwork(activeNetwork);
+  const onChangeNetwork = (networkName) => {
+    if (networkName !== networkKeys.customNode) {
+      changeNetworkInSettings(networkName);
+    } else {
+      setState({ isCustomSelected: true });
     }
-    setState({ activeNetwork });
   };
 
   const setIsValid = (validity) => {
-    setState({
-      isValid: validity,
-    });
+    setState({ isValid: validity });
   };
 
-  const checkNodeStatus = async (showErrorToaster = true) => {
-    const response = getNetworkConfig({
-      name: state.activeNetwork,
-      address: state.address,
-    }, tokenMap.LSK.key);
-
-    if (response.data) {
-      if (state.activeNetwork === networkKeys.customNode) {
-        setIsValid(false);
-      } else {
-        setIsValid(true);
-      }
-    }
-    if (showErrorToaster) {
-      toast.error(`Unable to connect to the node, Error: ${response.message}`);
-    }
-  };
-
-  const changeAddress = ({ target }) => {
-    const address = target.value;
-    setState({
-      address,
-      connected: false,
-      isValid: true,
-    });
-  };
-
-  /* istanbul ignore next */
   // eslint-disable-next-line max-statements
-  const validateCorrectNode = async (network) => {
-    const newNetwork = getNetwork(network.name);
+  const validateCorrectNode = async (networkName) => {
+    const networkToSet = getNetwork(networkName);
 
-    if (network.name === networkKeys.customNode) {
-      const liskAPIClient = new APIClient([network.address], {});
+    if (networkName === networkKeys.customNode) {
+      const liskApiClient = getApiClient({ address: state.address });
       try {
-        const response = await liskAPIClient.node.getConstants();
+        const response = await liskApiClient.node.getConstants();
         if (response.data) {
-          networkSelected(newNetwork);
           setState({ isValid: true, connected: true });
-          childRef.current.toggleDropdown();
-          changeNetwork(networkKeys.customNode);
+          changeNetworkInSettings(networkName);
+          networkSelected(networkToSet);
+          childRef.current.toggleDropdown(false);
         } else {
           setIsValid(false);
         }
       } catch {
         setIsValid(false);
       }
-
       setState({ isValidationLoading: false });
     } else {
-      networkSelected(newNetwork);
       setIsValid(true);
+      networkSelected(networkToSet);
     }
-
-    setState({ activeNetwork: network });
   };
 
   const onConnectToCustomNode = (e) => {
     e.stopPropagation();
     setState({ isValidationLoading: true });
-    validateCorrectNode({ name: networkKeys.customNode, address: state.address });
+    validateCorrectNode(networkKeys.customNode);
+  };
+
+  const checkNodeStatus = () => {
+    getNetworkConfig({
+      name: selectedNetwork.name,
+      address: state.address,
+    }, tokenMap.LSK.key).then((response) => {
+      if (response) {
+        if (selectedNetwork.name === networkKeys.customNode) {
+          setIsValid(false);
+        } else {
+          setIsValid(true);
+        }
+      }
+    });
   };
 
   useEffect(() => {
-    checkNodeStatus(false);
-  }, []);
+    checkNodeStatus();
+  }, [selectedNetwork.name]);
 
   const {
+    address,
     isValid,
-    activeNetwork,
     connected,
-    isValidationLoading, address,
+    isCustomSelected,
+    isValidationLoading,
   } = state;
 
   const validationError = isValid ? '' : t('Unable to connect to the node, please check the address and try again');
@@ -155,7 +140,7 @@ const NetworkSelector = ({
   return (
     <DropdownButton
       ref={childRef}
-      buttonClassName={`${isValid ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
+      buttonClassName={`${isValid ? '' : styles.dropdownError} ${styles.dropdownHandler} network`}
       wrapperClassName={styles.NetworkSelector}
       className={`${styles.menu} network-dropdown`}
       buttonLabel={(<span>{selectedNetwork.name}</span>)}
@@ -164,33 +149,30 @@ const NetworkSelector = ({
     >
       {
           networkList.map((network, key) => {
-            const isActiveItem = networks[activeNetwork] !== undefined;
-
             if (network.value === networkKeys.customNode) {
               return (
                 <span
                   className={`${styles.networkSpan} address`}
                   key={key}
-                  onClick={() => onChangeActiveNetwork(network.value)}
+                  onClick={() => onChangeNetwork(network.value)}
                 >
                   {network.label}
                   <div className={styles.inputWrapper}>
                     <Input
                       autoComplete="off"
-                      onChange={(value) => { changeAddress(value); }}
+                      onChange={onChangeInput}
                       name="customNetwork"
                       value={address}
-                      placeholder={t('ie. 192.168.0.1')}
+                      placeholder="ie. 192.168.0.1"
                       size="xs"
-                      className={`custom-network ${styles.input} ${isValid ? styles.errorInput : ''}`}
-                      onKeyDown={e => e.keyCode === keyCodes.enter
-                      && onConnectToCustomNode(e)}
-                      isLoading={isValidationLoading && address}
+                      className={`custom-network ${styles.input} ${isValid ? '' : styles.errorInput}`}
+                      onKeyDown={e => e.keyCode === keyCodes.enter && onConnectToCustomNode(e)}
+                      isLoading={isValidationLoading}
                       status={connected ? 'ok' : 'error'}
                       feedback={validationError}
                     />
                     {
-                      isValid
+                      !isValid
                         ? (
                           <span className={styles.customNodeError}>
                             {validationError}
@@ -200,7 +182,7 @@ const NetworkSelector = ({
                     }
                   </div>
                   {
-                    isActiveItem
+                    isCustomSelected
                       ? (
                         <div>
                           <PrimaryButton
@@ -223,10 +205,10 @@ const NetworkSelector = ({
             return (
               <span
                 onClick={() => {
-                  onChangeActiveNetwork(network.value);
-                  validateCorrectNode({ name: network.value });
+                  onChangeNetwork(network.value);
+                  validateCorrectNode(network.value);
                   setState({ connected: false });
-                  childRef.current.toggleDropdown();
+                  childRef.current.toggleDropdown(false);
                 }}
                 key={key}
               >
