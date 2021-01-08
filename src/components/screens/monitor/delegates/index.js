@@ -12,6 +12,7 @@ import withFilters from '../../../../utils/withFilters';
 import withLocalSort from '../../../../utils/withLocalSort';
 import voting from '../../../../constants/voting';
 import transactionTypes from '../../../../constants/transactionTypes';
+import { tokenMap } from '../../../../constants/tokens';
 
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
@@ -90,10 +91,10 @@ const ComposedDelegates = compose(
       },
 
       votes: {
-        apiUtil: (network, params) => getTransactions({
+        apiUtil: network => getTransactions({
           network,
-          params: { type: transactionTypes().vote.new, sort: 'timestamp:desc' },
-        }, params.token),
+          params: { type: transactionTypes().vote.code.new, sort: 'timestamp:desc' },
+        }, tokenMap.LSK.key),
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,
         defaultData: [],

@@ -60,6 +60,7 @@ const filters = {
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
   message: { key: 'message', test: str => (typeof str === 'string') },
+  type: { key: 'type', test: num => parseInt(num, 10) > 0 },
   sort: {
     key: 'sort',
     test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
