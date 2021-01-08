@@ -66,12 +66,12 @@ const ComposedDelegates = compose(
 
       [standByDelegatesKey]: {
         apiUtil: (network, params) => getDelegates({
-          network, params: { ...params, limit: 30, offset: voting.numberOfActiveDelegates + 1 },
+          network, params: { ...params, limit: 30, offset: voting.numberOfActiveDelegates },
         }),
         defaultData: [],
         autoload: true,
         transformResponse: response => transformDelegatesResponse({
-          data: response.data,
+          data: response.data.filter(delegate => delegate.status === 'standby'),
           meta: response.meta,
         }),
       },
