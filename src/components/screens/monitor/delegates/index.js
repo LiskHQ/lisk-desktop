@@ -107,6 +107,19 @@ const ComposedDelegates = compose(
         autoload: true,
         transformResponse: response => response,
       },
+
+      votedDelegates: {
+        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        defaultData: {},
+        transformResponse: (response) => {
+          const transformedResponse = transformDelegatesResponse(response);
+          const responseMap = transformedResponse.reduce((acc, delegate) => {
+            acc[delegate.address] = delegate;
+            return acc;
+          }, {});
+          return responseMap;
+        },
+      },
     },
   ),
   withFilters(standByDelegatesKey, defaultUrlSearchParams),

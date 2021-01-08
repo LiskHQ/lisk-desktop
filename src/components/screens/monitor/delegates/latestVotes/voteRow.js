@@ -8,7 +8,7 @@ import VoteItem from '../../../../shared/voteItem';
 import styles from '../delegates.css';
 
 const VoteRow = ({
-  data, className,
+  data, className, delegates,
 }) => {
   const { votes } = data.asset;
   return (
@@ -41,6 +41,7 @@ const VoteRow = ({
                       key={`vote-${delegateAddress}`}
                       vote={{ confirmed: amount }}
                       address={delegateAddress}
+                      title={delegates[delegateAddress].username}
                     />
                   ))}
                 </span>
