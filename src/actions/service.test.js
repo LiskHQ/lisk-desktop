@@ -6,16 +6,23 @@ import actionTypes from '../constants/actions';
 import prices from '../../test/constants/prices';
 import * as marketApi from '../utils/api/market';
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+const middlewareList = [thunk];
+const mockStore = configureMockStore(middlewareList);
 
 describe('actions: service', () => {
-  let store;
+  const getState = () => ({
+    settings: {
+      token: {
+        active: 'LSK',
+      },
+    },
+  });
+  const dispatch = jest.fn();
+  marketApi.getPrices = jest.fn();
+  marketApi.getDynamicFees = jest.fn();
 
   beforeEach(() => {
-    marketApi.getPrices = jest.fn();
-    marketApi.getDynamicFees = jest.fn();
-    store = mockStore({ settings });
+    jest.clearAllMocks();
   });
 
   describe('pricesRetrieved', () => {
@@ -27,23 +34,23 @@ describe('actions: service', () => {
           CHF: prices.find(({ to }) => to === 'CHF').rate,
         },
       };
-      marketApi.getPrices.mockResolvedValueOnce(prices);
+      marketApi.getPrices.mockResolvedValueOnce({ data: prices });
 
-      await store.dispatch(pricesRetrieved());
+      await pricesRetrieved()(dispatch, getState);
 
-      expect(store.getActions()).toEqual([{
+      expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.pricesRetrieved,
         data: {
           priceTicker: tickers,
           activeToken: settings.token.active,
         },
-      }]);
+      });
     });
 
     it('should handle rejections', async () => {
       marketApi.getPrices.mockRejectedValueOnce('Error');
-      await store.dispatch(pricesRetrieved());
-      expect(store.getActions()).toEqual([]);
+      await pricesRetrieved()(dispatch, getState);
+      expect(dispatch).not.toHaveBeenCalled();
     });
   });
 });
