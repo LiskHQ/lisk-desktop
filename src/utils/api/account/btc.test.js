@@ -21,10 +21,8 @@ describe('API: BTC Accounts', () => {
     },
   };
   const response = {
-    body: {
-      data: {
-        confirmed_balance: 10000,
-      },
+    data: {
+      confirmed_balance: 10000,
     },
   };
 
@@ -43,7 +41,7 @@ describe('API: BTC Accounts', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: `account/${address}`,
+        path: `/account/${address}`,
       });
     });
 
@@ -58,7 +56,7 @@ describe('API: BTC Accounts', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: `account/${address}`,
+        path: `/account/${address}`,
       });
     });
   });
