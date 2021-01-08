@@ -43,7 +43,12 @@ const VoteRow = ({
             <span className={styles.vote}>
               <span className={styles.icon}>↑</span>
               <span className={styles.delegatesList}>
-                {votes.map(username => <span key={username}>{username}</span>)}
+                {votes.map(({ amount, delegateAddress }) => (
+                  <div key={delegateAddress}>
+                    <LiskAmount val={amount} token="LSK" />
+                    <span>{delegateAddress}</span>
+                  </div>
+                ))}
               </span>
             </span>
           ) : null
@@ -53,7 +58,12 @@ const VoteRow = ({
             <span className={styles.unVote}>
               <span className={styles.icon}>↓</span>
               <span className={styles.delegatesList}>
-                {unVotes.map(username => <span key={username}>{username}</span>)}
+                {unVotes.map(({ amount, delegateAddress }) => (
+                  <div key={delegateAddress}>
+                    <LiskAmount val={amount} token="LSK" />
+                    <span>{delegateAddress}</span>
+                  </div>
+                ))}
               </span>
             </span>
           ) : null
