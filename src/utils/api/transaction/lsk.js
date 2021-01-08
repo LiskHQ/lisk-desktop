@@ -81,7 +81,7 @@ const filters = {
  * @param {String} data.params.dateTo Unix timestamp, the end time of txs
  * @param {String} data.params.amountFrom The minimum value of txs
  * @param {String} data.params.amountTo The maximum value of txs
- * @param {String} data.params.type The title of the transaction type
+ * @param {Number} data.params.type The title of the transaction type
  * @param {Number} data.params.offset Used for pagination
  * @param {Number} data.params.limit Used for pagination
  * @param {String} data.params.sort an option of 'amount:asc',
