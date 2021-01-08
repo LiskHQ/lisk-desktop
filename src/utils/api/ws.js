@@ -59,6 +59,7 @@ export const subscribe = (
   onDisconnect,
   onReconnect,
 ) => {
+  
   const connection = io(node, {
     forceNew: true,
     transports: ['websocket'],

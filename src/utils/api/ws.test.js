@@ -101,17 +101,15 @@ describe('Web socket', () => {
   describe('subscribe', () => {
     it('should subscribe correctly', () => {
       const on = jest.fn();
-      const connection = { on };
-      io.connect = () => connection;
+      io.mockImplementation(() => ({ on }));
       const fn = () => {};
       const event = 'blocks/change';
-      const returnedObject = subscribe(baseUrl, event, fn, fn, fn);
+      subscribe(baseUrl, event, fn, fn, fn);
 
       expect(on).toHaveBeenCalledTimes(3);
       expect(on).toHaveBeenNthCalledWith(1, event, fn);
       expect(on).toHaveBeenNthCalledWith(2, 'reconnect', fn);
       expect(on).toHaveBeenNthCalledWith(3, 'disconnect', expect.any(Function));
-      expect(returnedObject).toBe(connection);
     });
   });
 
