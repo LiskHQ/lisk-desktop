@@ -10,13 +10,10 @@ import styles from '../delegates.css';
 const VoteRow = ({
   data, className,
 }) => {
-  console.log(data);
   const votes = data.asset.votes && data.asset.votes
-    .filter(vote => parseInt(vote.amount, 10) > 0)
-    .map(vote => vote.delegateAddress);
+    .filter(vote => parseInt(vote.amount, 10) > 0);
   const unVotes = data.asset.votes && data.asset.votes
-    .filter(vote => parseInt(vote.amount, 10) < 0)
-    .map(vote => vote.delegateAddress);
+    .filter(vote => parseInt(vote.amount, 10) < 0);
   return (
     <DialogLink
       className={`${grid.row} ${className} ${styles.voteRow} vote-row`}
