@@ -2,6 +2,7 @@ import { parseSearchParams } from '../utils/searchParams';
 import { getAccounts } from '../utils/api/account';
 import { voteEdited } from './voting';
 import regex from '../utils/regex';
+import { tokenMap } from '../constants/tokens';
 
 const isUsernameValid = username => regex.delegateName.test(username);
 
@@ -46,7 +47,13 @@ const urlProcessor = (search, network) => {
   const votes = normalizeUsernames(params.votes);
   const unvotes = normalizeUsernames(params.unvotes);
 
-  return getAccounts({ network, params: { usernameList: [...votes, ...unvotes] } });
+  return getAccounts(
+    {
+      network,
+      params: { usernameList: [...votes, ...unvotes] }
+    },
+    tokenMap.LSK.key,
+  );
 };
 
 const setVotesByLaunchProtocol = search =>
