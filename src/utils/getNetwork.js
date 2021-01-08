@@ -32,7 +32,7 @@ export const getNetworkIdentifier = (network) => {
 export const getNetworksList = () =>
   Object.values(networkKeys)
     .map(name => ({
-      label: i18next.t(networks[name].name),
+      label: i18next.t(networks[name].label),
       name,
     }));
 

@@ -5,8 +5,8 @@ export const networkKeys = {
 };
 
 const networks = {
-  [networkKeys.mainNet]: { // network name translation t('Mainnet');
-    name: 'Mainnet',
+  [networkKeys.mainNet]: {
+    label: 'Mainnet',
     code: 0,
     nodes: [
       'https://hub21.lisk.io',
@@ -28,18 +28,16 @@ const networks = {
     ],
     initialSupply: 10000000000000000,
   },
-  [networkKeys.testNet]: { // network name translation t('Testnet');
-    name: 'Testnet',
-    testnet: true,
+  [networkKeys.testNet]: {
+    label: 'Testnet',
     code: 1,
     nodes: ['https://testnet.lisk.io'],
     initialSupply: 10000000000000000,
   },
-  [networkKeys.customNode]: { // network name translation t('Custom Node');
-    name: 'Custom Node',
-    custom: true,
-    address: 'http://localhost:4000',
+  [networkKeys.customNode]: {
+    label: 'Custom Node',
     code: 2,
+    nodes: ['http://localhost:4000'],
     initialSupply: 10000000000000000,
   },
 };

@@ -11,6 +11,7 @@ import { tokenMap } from '../../../../constants/tokens';
 const NetworkSelector = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const selectedNetworkName = useSelector(state => state.network.name);
   const selectedNetwork = useSelector(
     state => state.network.networks[state.settings.token.active || tokenMap.LSK.key],
   );
@@ -23,6 +24,7 @@ const NetworkSelector = (props) => {
   return (
     <NetworkSelectorComp
       t={t}
+      selectedNetworkName={selectedNetworkName}
       selectedNetwork={selectedNetwork}
       selectedAddress={selectedAddress}
       networkSelected={params => dispatch(networkSelected(params))}
