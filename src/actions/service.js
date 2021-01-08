@@ -3,28 +3,29 @@ import { toast } from 'react-toastify';
 import actionTypes from '../constants/actions';
 import { getPrices } from '../utils/api/market';
 
+const tickerReducer = (acc, key) => ({
+  ...acc,
+  [key.from]: {
+    ...acc[key.from],
+    [key.to]: key.rate,
+  },
+});
+
 // eslint-disable-next-line import/prefer-default-export
 export const pricesRetrieved = () => (dispatch, getState) => {
-  const { settings: { token }, network } = getState();
+  const { settings: { token } } = getState();
   const activeToken = token.active;
-  const tickerReducer = (acc, key) => ({
-    ...acc,
-    [key.from]: {
-      ...acc[key.from],
-      [key.to]: key.rate,
-    },
-  });
 
-  getPrices(network, activeToken)
-    .then((priceTicker) => {
-      const priceTickerReduced = priceTicker.reduce(tickerReducer, {});
-      dispatch({
+  getPrices()
+    .then(({ data }) => {
+      const priceTickerReduced = data.reduce(tickerReducer, {});
+      return {
         type: actionTypes.pricesRetrieved,
         data: {
           priceTicker: priceTickerReduced,
           activeToken,
         },
-      });
+      };
     })
     .catch(() => toast.error(i18next.t('Error retrieving conversion rates.')));
 };

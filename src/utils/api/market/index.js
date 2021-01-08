@@ -3,15 +3,22 @@ import http from '../http';
 const httpPrefix = '/api/v1';
 
 export const httpPaths = {
+  prices: `${httpPrefix}/market/prices`,
   news: `${httpPrefix}/market/newsfeed`,
 };
 
-
-export const getPrices = data => new Promise(resolve =>
-  resolve({ endpoint: 'getPrices', token: 'LSK', data }));
+/**
+ * Retrieve the market prices and exchange ratios.
+ *
+ * @returns {Promise} http call
+ */
+export const getPrices = () => http({
+  path: httpPaths.prices,
+  baseUrl: 'https://cloud.lisk.io',
+});
 
 /**
- * Retrieves newsfeed
+ * Retrieve the list of announcements by Lisk Foundation.
  *
  * @param {Object} data
  * @param {[String]} data.params.source - News sources

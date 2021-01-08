@@ -1,16 +1,15 @@
 import React from 'react';
+import { networkKeys } from '../../../../constants/networks';
 import { getNetworkNameBasedOnNethash } from '../../../../utils/getNetwork';
 import styles from './network.css';
 
 const Network = ({ network, t, token }) => {
   const networksList = {
-    Mainnet: t('Mainnet').toLowerCase(),
-    Testnet: t('Testnet').toLowerCase(),
-    'Custom Node': t('Devnet').toLowerCase(),
+    [networkKeys.mainNet]: t('Mainnet').toLowerCase(),
+    [networkKeys.testNet]: t('Testnet').toLowerCase(),
+    [networkKeys.customNode]: t('Devnet').toLowerCase(),
   };
-
   const activeNetwork = getNetworkNameBasedOnNethash(network, token);
-
   const statusColor = network.status.online ? styles.online : styles.offline;
 
   return (

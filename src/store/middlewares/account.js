@@ -12,11 +12,11 @@ import { fromRawLsk } from '../../utils/lsk';
 import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
 import { votesRetrieved } from '../../actions/voting';
-import { networkSet, networkStatusUpdated } from '../../actions/network';
+import { networkSelected, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
 import analytics from '../../utils/analytics';
 import i18n from '../../i18n';
-import networks from '../../constants/networks';
+import networks, { networkKeys } from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import { tokenMap } from '../../constants/tokens';
@@ -104,22 +104,22 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
-const autoLogInIfNecessary = async (store) => {
+const autoLogInIfNecessary = async ({ dispatch, getState }) => {
   const {
     statistics, statisticsRequest, statisticsFollowingDay,
-  } = store.getState().settings;
+  } = getState().settings;
   const autologinData = getAutoLogInData();
 
   const address = autologinData[settings.keys.liskCoreUrl];
   const network = address
-    ? { name: 'customNode', network: { address } }
-    : { name: 'mainnet', network: { address: networks.mainnet.nodes[0] } };
-  store.dispatch(networkSet(network));
-  store.dispatch(networkStatusUpdated({ online: true }));
+    ? { name: networkKeys.customNode, address }
+    : { name: networkKeys.mainNet, address: networks.mainnet.nodes[0] };
+  dispatch(networkSelected(network));
+  dispatch(networkStatusUpdated({ online: true }));
 
   if (shouldAutoLogIn(autologinData)) {
     setTimeout(() => {
-      store.dispatch(login({ passphrase: autologinData[settings.keys.loginKey] }));
+      dispatch(login({ passphrase: autologinData[settings.keys.loginKey] }));
     }, 500);
   }
 

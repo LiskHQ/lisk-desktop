@@ -9,7 +9,7 @@ import { parseSearchParams, strigifySearchParams } from '../../../utils/searchPa
 import { extractAddress } from '../../../utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
 import { getNetworksList } from '../../../utils/getNetwork';
-import networks from '../../../constants/networks';
+import networks, { networkKeys } from '../../../constants/networks';
 import { PrimaryButton } from '../../toolbox/buttons';
 import PassphraseInput from '../../toolbox/passphraseInput';
 import Piwik from '../../../utils/piwik';
@@ -26,7 +26,7 @@ class Login extends React.Component {
     let address = '';
 
     if (!loginNetwork) {
-      loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
+      loginNetwork = liskCoreUrl ? networks.customNode : networks[networkKeys.mainNet];
       address = liskCoreUrl || '';
     }
 

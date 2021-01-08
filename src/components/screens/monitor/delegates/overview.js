@@ -9,7 +9,7 @@ import NumericInfo from './numericInfo';
 import styles from './overview.css';
 import { fromRawLsk } from '../../../../utils/lsk';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
-import { colorPallete } from '../../../../constants/chartConstants';
+import { colorPalette } from '../../../../constants/chartConstants';
 
 const Overview = ({
   chartActiveAndStandby,
@@ -97,11 +97,11 @@ const Overview = ({
                     <div className="hideOnLargeViewPort">
                       <GuideTooltip>
                         <GuideTooltipItem
-                          color={colorPallete[0]}
+                          color={colorPalette[0]}
                           label={t('Standby delegates')}
                         />
                         <GuideTooltipItem
-                          color={colorPallete[1]}
+                          color={colorPalette[1]}
                           label={t('Active delegates')}
                         />
                       </GuideTooltip>

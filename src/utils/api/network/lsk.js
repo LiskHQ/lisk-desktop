@@ -1,8 +1,7 @@
 import Lisk from '@liskhq/lisk-client';
 
 import http from '../http';
-import networks from '../../../constants/networks';
-import { camelize } from '../../helpers';
+import networks, { networkKeys } from '../../../constants/networks';
 import { getApiClient } from '../apiClient';
 
 const httpPrefix = '/api/v1';
@@ -13,7 +12,7 @@ const httpPaths = {
   networkStatistics: `${httpPrefix}/network/statistics`,
 };
 
-export const getServerUrl = (nodeUrl, nethash) => {
+const getServiceUrl = (nodeUrl, nethash) => {
   if (nethash === Lisk.constants.MAINNET_NETHASH) {
     return 'https://mainnet-service.lisk.io';
   }
@@ -26,7 +25,7 @@ export const getServerUrl = (nodeUrl, nethash) => {
   if (/\.(liskdev.net|lisk.io)$/.test(nodeUrl)) {
     return nodeUrl.replace(/\.(liskdev.net|lisk.io)$/, $1 => `-service${$1}`);
   }
-  return 'unavailable';
+  throw Error('The node url entered does not have a corresponding service url');
 };
 
 /**
@@ -38,24 +37,22 @@ export const getServerUrl = (nodeUrl, nethash) => {
  * @returns {Promise}
  */
 export const getNetworkConfig = (network) => {
-  const networkConfig = networks[camelize(network.name)];
-  if (networkConfig.name === networks.customNode.name) {
-    networkConfig.nodes = [network.network.address];
+  const { label, code, ...networkConfig } = networks[network.name];
+  if (network.name === networkKeys.customNode) {
+    networkConfig.nodes = [network.address];
   }
   const nodeUrl = networkConfig.nodes[0];
-
   const apiClient = getApiClient(network);
+
   return apiClient.node.getConstants()
     .then((response) => {
       const nethash = response.data.nethash;
-
+      const serviceUrl = getServiceUrl(nodeUrl, nethash);
       return ({
         ...networkConfig,
         nodeUrl,
         nethash,
-        serviceUrl: getServerUrl(nodeUrl, nethash),
-        custom: networkConfig.name === networks.customNode.name,
-        code: networkConfig.code,
+        serviceUrl,
         networkIdentifier: response.data.networkId,
       });
     });

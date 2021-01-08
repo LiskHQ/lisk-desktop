@@ -2,7 +2,7 @@ import Lisk from '@liskhq/lisk-client';
 import actionTypes from '../constants/actions';
 import txFilters from '../constants/transactionFilters';
 import {
-  getTransactions,
+  transactionsRetrieved,
   transactionsUpdated,
 } from './transactions';
 import * as transactionsApi from '../utils/api/transaction';
@@ -71,7 +71,7 @@ describe.skip('actions: transactions', () => {
       offset: 0,
       filters: { direction: txFilters.all },
     };
-    const actionFunction = getTransactions(data);
+    const actionFunction = transactionsRetrieved(data);
 
     it('should create an action function', () => {
       expect(typeof actionFunction).toBe('function');

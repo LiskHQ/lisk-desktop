@@ -1,5 +1,7 @@
 import { subscribe, unsubscribe } from '../ws';
 import http from '../http';
+import { tokenMap } from '../../../constants/tokens';
+import { validateAddress } from '../../validators';
 
 const httpPrefix = '/api/v1';
 
@@ -12,11 +14,18 @@ const wsMethods = {
   blocksChange: 'update.block',
 };
 
+const getBlockProps = ({ id, height }) => {
+  if (id) return { id };
+  if (height) return { height };
+  throw Error('No parameters supplied');
+};
+
 /**
  * Retrieves block details.
  *
  * @param {Object} data
  * @param {String?} data.params.id - Block id
+ * @param {Number?} data.params.height - Block height
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
@@ -25,17 +34,43 @@ const wsMethods = {
  */
 export const getBlock = ({
   params = {}, network, baseUrl,
-}) => http({
-  path: httpPaths.block,
-  params,
-  network,
-  baseUrl,
-});
+}) => {
+  try {
+    const blockProps = getBlockProps(params);
+    return http({
+      path: httpPaths.block,
+      params: blockProps,
+      network,
+      baseUrl,
+    });
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const blocksFilters = {
+  addressList: { key: 'addressList', test: addressList => !addressList.some(address => validateAddress(tokenMap.LSK.key, address)) },
+  dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
+  dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
+  generatorAddress: { key: 'generatorAddress', test: address => !validateAddress(tokenMap.LSK.key, address) },
+  limit: { key: 'limit', test: num => (typeof num === 'number') },
+  offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
+  sort: {
+    key: 'sort',
+    test: str => [
+      'height:asc', 'height:desc', 'totalAmount:asc', 'totalAmount:desc', 'totalFee:asc', 'totalFee:desc', 'timestamp:asc', 'timestamp:desc',
+    ].includes(str),
+  },
+};
 
 /**
  * Retrieves blocks list.
  *
  * @param {Object} data
+ * @param {Array<String>?} data.params.addressList - List of account addresses
+ * @param {Date?} data.params.dateFrom - Starting timestamp
+ * @param {Date?} data.params.dateTo - Ending timestamp
+ * @param {String?} data.params.generatorAddress - Address of delegate that forged the blocks
  * @param {Number?} data.params.offset - Index of the first result
  * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
@@ -46,12 +81,22 @@ export const getBlock = ({
  */
 export const getBlocks = ({
   params = {}, network, baseUrl,
-}) => http({
-  path: httpPaths.blocks,
-  params,
-  network,
-  baseUrl,
-});
+}) => {
+  // Use HTTP to retrieve accounts with given sorting and pagination parameters
+  const normParams = {};
+  Object.keys(params).forEach((key) => {
+    if (blocksFilters[key].test(params[key])) {
+      normParams[blocksFilters[key].key] = params[key];
+    }
+  });
+
+  return http({
+    path: httpPaths.blocks,
+    params: normParams,
+    network,
+    baseUrl,
+  });
+};
 
 /**
  * Connects to block change event via websocket and set function to be called when it fires

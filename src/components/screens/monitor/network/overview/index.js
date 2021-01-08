@@ -9,7 +9,7 @@ import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './overview.css';
 import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
-import { colorPallete } from '../../../../../constants/chartConstants';
+import { colorPalette } from '../../../../../constants/chartConstants';
 
 const createChartData = (data, t) => {
   const list = {
@@ -102,7 +102,7 @@ const HeightDistributionChart = ({ t, heightDistribution }) => {
                               <GuideTooltipItem
                                 key={`distribution-GuideTooltip-${i}-${label}`}
                                 label={label}
-                                color={colorPallete[i]}
+                                color={colorPalette[i]}
                               />
                             ))}
                       </GuideTooltip>
@@ -169,11 +169,11 @@ const PeersChart = ({ t, basic }) => {
                   <GuideTooltip>
                     <GuideTooltipItem
                       label={t('Connected')}
-                      color={colorPallete[0]}
+                      color={colorPalette[0]}
                     />
                     <GuideTooltipItem
                       label={t('Disconnected')}
-                      color={colorPallete[1]}
+                      color={colorPalette[1]}
                     />
                   </GuideTooltip>
                 </div>
@@ -264,7 +264,7 @@ const Overview = ({
                             <GuideTooltipItem
                               key={`version-GuideTooltip-${i}-${label}`}
                               label={label}
-                              color={colorPallete[i]}
+                              color={colorPalette[i]}
                             />
                           ))}
                     </GuideTooltip>
