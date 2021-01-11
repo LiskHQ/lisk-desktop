@@ -1,6 +1,5 @@
 import transactions from './transactions';
 import actionTypes from '../../constants/actions';
-import txFilter from '../../constants/transactionFilters';
 import { resetTransactionResult } from '../../actions/transactions';
 
 describe('Reducer: transactions', () => {
@@ -73,7 +72,6 @@ describe('Reducer: transactions', () => {
         confirmed: mockTransactions,
         count: mockTransactions.length,
         filters: {
-          direction: txFilter.all,
           dateFrom: '1',
           dateTo: '2',
           amountFrom: '3',
@@ -209,7 +207,6 @@ describe('Reducer: transactions', () => {
         confirmed: [],
         count: null,
         filters: {
-          direction: txFilter.all,
           dateFrom: '',
           dateTo: '',
           amountFrom: '',

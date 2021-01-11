@@ -104,7 +104,6 @@ module.exports = {
     'src/utils/loading.js',
     'src/utils/platform.js',
     'src/utils/hwManager.js',
-    'src/utils/voting.js',
   ],
   coverageThreshold: {
     global: {

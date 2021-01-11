@@ -46,7 +46,6 @@ export const addNewPendingTransaction = data => ({
  * @param {Number} params.offset - index of the first transaction
  * @param {Object} params.filters - object with filters for the filer dropdown
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
- * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
 export const transactionsRetrieved = ({
   address,
@@ -89,51 +88,6 @@ export const transactionsRetrieved = ({
     })
     .finally(() => {
       dispatch(loadingFinished(actionTypes.transactionsRetrieved));
-    });
-};
-
-/**
- * This action is used to update transactions from account middleware when balance
- * of the account changes. The difference from getTransactions action is that
- * this one merges the transactions list with what is already in the store whereas
- * the other one replaces the list.
- *
- * @param {Object} params - all params
- * @param {String} params.address - address of the account to fetch the transactions for
- * @param {Number} params.limit - amount of transactions to fetch
- * @param {Object} params.filters - object with filters for the filer dropdown
- *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
- * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
- */
-export const transactionsUpdated = ({
-  address,
-  filters,
-  limit,
-}) => async (dispatch, getState) => {
-  const { network, transactions, settings } = getState();
-  const token = settings.token.active;
-
-  getTransactions({
-    network, address, limit, filters,
-  }, token)
-    .then((response) => {
-      if (response && filters.direction === transactions.filters.direction) {
-        dispatch({
-          type: actionTypes.updateTransactions,
-          data: {
-            confirmed: response.data,
-            count: parseInt(response.meta.count, 10),
-          },
-        });
-      }
-    })
-    .catch((error) => {
-      dispatch({
-        type: actionTypes.transactionLoadFailed,
-        data: {
-          error,
-        },
-      });
     });
 };
 

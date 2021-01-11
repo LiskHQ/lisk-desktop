@@ -1,5 +1,4 @@
 import actionTypes from '../../constants/actions';
-import txFilters from '../../constants/transactionFilters';
 
 // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
 const sortByHeight = (a, b) => (b.height - a.height);
@@ -18,7 +17,6 @@ const initialState = {
   confirmed: [],
   count: null,
   filters: {
-    direction: txFilters.all,
     dateFrom: '',
     dateTo: '',
     amountFrom: '',
