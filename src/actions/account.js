@@ -2,7 +2,7 @@ import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import { getAccount } from '../utils/api/account';
 import { getConnectionErrorMessage } from '../utils/getNetwork';
-import { loginType } from '../constants/hwConstants';
+import { loginType } from '../constants/loginTypes';
 import { networkStatusUpdated } from './network';
 import actionTypes from '../constants/actions';
 import { tokenMap } from '../constants/tokens';
@@ -158,7 +158,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
   } else {
     dispatch(accountLoggedIn({
       passphrase,
-      loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
+      loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()].code : loginType.normal.code,
       hwInfo: hwInfo || {},
       date: new Date(),
       info,
