@@ -66,7 +66,10 @@ const ComposedDelegates = compose(
 
       [standByDelegatesKey]: {
         apiUtil: (network, params) => getDelegates({
-          network, params: { ...params, limit: 30, offset: voting.numberOfActiveDelegates },
+          network,
+          params: {
+            ...params, limit: 30, offset: params.offset || voting.numberOfActiveDelegates,
+          },
         }),
         defaultData: [],
         autoload: true,
