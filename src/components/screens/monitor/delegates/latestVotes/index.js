@@ -9,7 +9,7 @@ const LatestVotes = ({
   const canLoadMore = votes.meta ? votes.data.length < votes.meta.total : false;
 
   const handleLoadMore = () => {
-    votes.loadData({ offset: votes.data.length });
+    votes.loadData({ offset: votes.meta.count + votes.meta.offset });
   };
 
   return (

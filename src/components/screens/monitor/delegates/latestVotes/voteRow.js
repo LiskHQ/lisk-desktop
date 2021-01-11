@@ -41,7 +41,7 @@ const VoteRow = ({
                       key={`vote-${delegateAddress}`}
                       vote={{ confirmed: amount }}
                       address={delegateAddress}
-                      title={delegates[delegateAddress].username}
+                      title={delegates[delegateAddress] && delegates[delegateAddress].username}
                     />
                   ))}
                 </span>

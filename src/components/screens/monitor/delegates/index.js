@@ -94,9 +94,9 @@ const ComposedDelegates = compose(
       },
 
       votes: {
-        apiUtil: network => getTransactions({
+        apiUtil: (network, params) => getTransactions({
           network,
-          params: { type: transactionTypes().vote.code.new, sort: 'timestamp:desc' },
+          params: { ...params, type: transactionTypes().vote.code.new, sort: 'timestamp:desc' },
         }, tokenMap.LSK.key),
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,
