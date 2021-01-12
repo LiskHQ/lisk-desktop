@@ -50,7 +50,7 @@ Given(/^I am on (.*?) page$/, function (page) {
       cy.visit(urls.send);
       break;
     case 'login':
-      cy.visit('/login');
+      cy.visit(urls.login);
       break;
     default:
       cy.visit(urls[page]);
