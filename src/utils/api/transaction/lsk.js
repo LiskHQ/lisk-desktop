@@ -307,7 +307,7 @@ export const create = ({
 export const broadcast = ({ transaction, network }) => new Promise(
   async (resolve, reject) => {
     try {
-      const client = getApiClient(network);
+      const client = getApiClient({ name: network.name, address: network.networks.LSK.nodeUrl });
       const response = await client.transactions.broadcast(transaction);
       resolve(response);
     } catch (error) {
