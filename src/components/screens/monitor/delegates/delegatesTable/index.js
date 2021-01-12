@@ -25,7 +25,7 @@ const DelegatesTable = ({
       ...acc,
       ...(filters[key] && { [key]: filters[key] }),
     }), {
-      offset: delegates.data.length + standByDelegates.meta.offset,
+      offset: standByDelegates.meta.count + standByDelegates.meta.offset,
     }));
   };
 
