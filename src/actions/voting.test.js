@@ -10,7 +10,7 @@ import networks from '../constants/networks';
 import * as TransactionApi from '../utils/api/transaction';
 import * as delegateApi from '../utils/api/delegate';
 import sampleVotes from '../../test/constants/votes';
-import { loginType } from '../constants/loginTypes';
+import loginTypes from '../constants/loginTypes';
 
 jest.mock('../utils/api/transaction', () => ({
   create: jest.fn(),
@@ -30,7 +30,7 @@ describe('actions: voting', () => {
       },
     },
     account: {
-      loginType: loginType.normal.code,
+      loginType: loginTypes.passphrase.code,
       info: {
         LSK: {
           address: '123L',
