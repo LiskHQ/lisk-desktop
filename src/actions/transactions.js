@@ -143,6 +143,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {Number} transaction.reference - Data field for LSK transactions
  */
 export const transactionBroadcasted = (transaction, callback = () => {}) =>
+  // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
     const { network, settings } = getState();
     const activeToken = settings.token.active;
@@ -174,8 +175,14 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
       data: transaction,
     });
 
+    console.log(transaction);
     if (activeToken !== tokenMap.BTC.key) {
-      dispatch(addNewPendingTransaction(transaction));
+      dispatch(addNewPendingTransaction({
+        ...transaction,
+        title: transactionTypes.getByCode(transaction.type).key,
+        amount: transaction.asset.amount,
+        recipientId: transaction.asset.recipientId,
+      }));
     }
 
     return dispatch(passphraseUsed(new Date()));
