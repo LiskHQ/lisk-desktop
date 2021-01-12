@@ -1,7 +1,6 @@
 import actionTypes from '../constants/actions';
 import {
   transactionsRetrieved,
-  transactionsUpdated,
 } from './transactions';
 import * as transactionsApi from '../utils/api/transaction';
 
