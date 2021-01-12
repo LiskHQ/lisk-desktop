@@ -81,6 +81,20 @@ describe('Delegates monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
+      votes: {
+        isLoading: false,
+        data: [{ asset: { votes: [{ delegateAddress: '1L', amount: '100000000' }] } }],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      votedDelegates: {
+        isLoading: false,
+        data: [{ address: '1L', username: 'test_del' }],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
       filters: {
         tab: 'active',
       },
