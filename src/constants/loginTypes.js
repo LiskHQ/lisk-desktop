@@ -3,7 +3,7 @@ const loginTypes = {
     title: 'Passphrase',
     code: 0,
   },
-  ledgerNano: {
+  ledger: {
     title: 'Ledger',
     code: 1,
   },

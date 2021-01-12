@@ -2,7 +2,7 @@ import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import { getAccount } from '../utils/api/account';
 import { getConnectionErrorMessage } from '../utils/getNetwork';
-import { loginType } from '../constants/loginTypes';
+import loginTypes from '../constants/loginTypes';
 import { networkStatusUpdated } from './network';
 import actionTypes from '../constants/actions';
 import { tokenMap } from '../constants/tokens';
@@ -156,9 +156,12 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
     toast.error(getConnectionErrorMessage(error));
     dispatch(accountLoggedOut());
   } else {
+    const loginType = hwInfo
+      ? ['trezor', 'ledger'].find(item => hwInfo.deviceModel.toLowerCase().indexOf(item) > -1)
+      : 'passphrase';
     dispatch(accountLoggedIn({
       passphrase,
-      loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()].code : loginType.normal.code,
+      loginType: loginTypes[loginType].code,
       hwInfo: hwInfo || {},
       date: new Date(),
       info,
