@@ -4,9 +4,6 @@ import * as votingActions from '../../actions/voting';
 import * as networkActions from '../../actions/network';
 import * as settingsActions from '../../actions/settings';
 import * as accountUtils from '../../utils/login';
-import accounts from '../../../test/constants/accounts';
-import networks from '../../constants/networks';
-import settings from '../../constants/settings';
 import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
@@ -16,15 +13,12 @@ describe('Account middleware', () => {
   let store;
   let next;
   let state;
-  let getAutoLogInDataMock;
   let accountDataUpdatedSpy;
   let windowNotificationSpy;
   const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
   const storeCreatedAction = {
     type: actionTypes.storeCreated,
   };
-
-  const { passphrase } = accounts.genesis;
 
   const block = {
     transactions: [
@@ -102,8 +96,6 @@ describe('Account middleware', () => {
     next = jest.fn();
     jest.spyOn(transactionsActions, 'transactionsRetrieved');
     jest.spyOn(accountActions, 'updateEnabledTokenAccount');
-    jest.spyOn(networkActions, 'networkConfigSet').mockImplementation(() => liskAPIClientMock);
-    getAutoLogInDataMock = jest.spyOn(accountUtils, 'getAutoLogInData').mockImplementation(() => ({}));
     accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
     window.Notification = () => { };
     windowNotificationSpy = jest.spyOn(window, 'Notification');
