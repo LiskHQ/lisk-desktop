@@ -2,7 +2,7 @@ import to from 'await-to-js';
 import { create } from '../utils/api/transaction';
 import { passphraseUsed } from './account';
 import actionTypes from '../constants/actions';
-import { loginType } from '../constants/loginTypes';
+import loginTypes from '../constants/loginTypes';
 import transactionTypes from '../constants/transactionTypes';
 import { signVoteTransaction } from '../utils/hwManager';
 import { getVotes } from '../utils/api/delegate';
@@ -53,7 +53,7 @@ export const votesSubmitted = data =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
     const { network, account } = getState();
 
-    const [error, tx] = account.loginType === loginType.normal.code
+    const [error, tx] = account.loginType === loginTypes.passphrase.code
       ? await to(create(
         { ...data, network },
         transactionTypes().vote.key,

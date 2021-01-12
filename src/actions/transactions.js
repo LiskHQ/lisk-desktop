@@ -7,7 +7,7 @@ import transactionTypes from '../constants/transactionTypes';
 import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
-import { loginType } from '../constants/loginTypes';
+import loginTypes from '../constants/loginTypes';
 import { getTransactions, create, broadcast } from '../utils/api/transaction';
 import { signSendTransaction } from '../utils/hwManager';
 
@@ -114,7 +114,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
   // const timeOffset = getTimeOffset(state.blocks.latestBlocks);
   const activeToken = settings.token.active;
 
-  const [error, tx] = account.loginType === loginType.normal.code
+  const [error, tx] = account.loginType === loginTypes.passphrase.code
     ? await to(create(
       { ...data, network, transactionType: transactionTypes().transfer.key },
       activeToken,
