@@ -27,19 +27,20 @@ export const getNetworksList = () =>
 
 
 export const getNetworkNameBasedOnNethash = (network, token = 'LSK') => {
-  let activeNetwork = network.name;
   const isCustomNode = network.name === networkKeys.customNode;
   const isBtc = token === tokenMap.BTC.key;
 
   if (isCustomNode && !isBtc) {
-    const isTestnetHash = network.networks[token].nethash === Lisk.constants.TESTNET_NETHASH;
-    activeNetwork = isTestnetHash ? networkKeys.testNet : network.name;
+    const { nethash } = network.networks[token];
+    const testNet = nethash === Lisk.constants.TESTNET_NETHASH ? 'testNet' : '';
+    const mainNet = nethash === Lisk.constants.MAINNET_NETHASH ? 'mainNet' : '';
+    return networkKeys[mainNet || testNet] || network.name;
   }
 
   if (isCustomNode && isBtc) {
-    activeNetwork = networkKeys.testNet;
+    return networkKeys.testNet;
   }
-  return activeNetwork;
+  return network.name;
 };
 
 /**
