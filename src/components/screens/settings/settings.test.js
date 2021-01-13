@@ -103,14 +103,6 @@ describe('Setting', () => {
       expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.loading');
     });
 
-    it('should render 2nd passphrase as active', () => {
-      const account2ndPassphrase = { secondPublicKey: 'sample_public_key', token: 'LSK' };
-      const newProps = { ...props, account: account2ndPassphrase, hasSecondPassphrase: true };
-      wrapper = mountWithRouter(Settings, newProps);
-      expect(wrapper.find('.second-passphrase')).not.toContainMatchingElement('.link');
-      expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.second-passphrase-registered');
-    });
-
     it('should update expireTime when updating autolog', () => {
       const accountToExpireTime = { ...account };
       const settingsToExpireTime = { ...settings };

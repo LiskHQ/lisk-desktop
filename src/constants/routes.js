@@ -12,7 +12,6 @@ import MonitorNetwork from '../components/screens/monitor/network';
 import MonitorTransactions from '../components/screens/monitor/transactions';
 import Register from '../components/screens/register';
 import RegisterDelegate from '../components/screens/registerDelegate';
-import SecondPassphrase from '../components/screens/secondPassphrase';
 import Send from '../components/screens/send';
 import Settings from '../components/screens/settings';
 import SignMessage from '../components/screens/signMessage';
@@ -147,11 +146,6 @@ export const modals = {
     component: Settings,
     isPrivate: false,
     forbiddenTokens: [],
-  },
-  secondPassphrase: {
-    component: SecondPassphrase,
-    isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
   },
   signMessage: {
     component: SignMessage,
