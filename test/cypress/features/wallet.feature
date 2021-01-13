@@ -6,11 +6,6 @@ Feature: Wallet
     Then I should see 30 transactions
     When I click show more
     Then I should see more than 30 transactions
-    Then I click filter incoming
-    Then I should see incoming transaction in table
-    Then I click filter outgoing
-    Then I should not see outgoing transaction in table
-    Then I should not see incoming transaction in table
 
   Scenario: Click leads to tx details
     Given I login as genesis on devnet
