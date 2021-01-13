@@ -6,7 +6,6 @@ import { withTranslation } from 'react-i18next';
 import { parseSearchParams, addSearchParamsToUrl } from '../../../utils/searchParams';
 import Overview from './overview';
 import { transactionsRetrieved } from '../../../actions/transactions';
-import txFilters from '../../../constants/transactionFilters';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
@@ -71,7 +70,6 @@ const Wallet = ({ t, history }) => {
       transactions.loadData({
         offset: 0,
         limit: 30,
-        direction: txFilters.all,
       });
     }
   }, [account.info]);

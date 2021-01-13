@@ -1,5 +1,4 @@
 import React from 'react';
-import voting from '../../../../../constants/voting';
 import Table from '../../../../toolbox/table';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
@@ -32,7 +31,7 @@ const DelegatesTable = ({
 
   const canLoadMore = activeTab === 'active' || !standByDelegates.meta
     ? false
-    : standByDelegates.data.length < (standByDelegates.meta.total - voting.numberOfActiveDelegates);
+    : standByDelegates.data.length < (standByDelegates.meta.total - 103);
 
   delegates = activeTab === 'active'
     ? filterDelegates(delegates, filters)

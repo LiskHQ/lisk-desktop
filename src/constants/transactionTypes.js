@@ -1,10 +1,5 @@
 /**
  * Returns details of the transaction types
- *
- * @todo Starting Lisk Desktop 2.0.0 we should
- * remove the version detection logic
- * and simply assume we always receive the new layout
- * but transactions may have either of the tx type codes.
  */
 const transactionTypes = (t = str => str) => ({
   transfer: {
