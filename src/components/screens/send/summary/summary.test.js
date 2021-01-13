@@ -87,15 +87,6 @@ describe('Summary', () => {
     expect(props.prevStep).toBeCalled();
   });
 
-  it('should disable "Next" button if secondPassphrase invalid for active account', () => {
-    expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeTruthy();
-    const clipboardData = {
-      getData: () => accounts.second_passphrase_account.passphrase,
-    };
-    wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
-    expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeTruthy();
-  });
-
   it('should call transactionCreated function after do a click in confirm button', () => {
     const clipboardData = {
       getData: () => accounts.second_passphrase_account.secondPassphrase,
