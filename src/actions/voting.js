@@ -55,8 +55,8 @@ export const votesSubmitted = data =>
 
     const [error, tx] = account.loginType === loginTypes.passphrase.code
       ? await to(create(
-        { ...data, network },
-        transactionTypes().vote.key,
+        { ...data, network, transactionType: 'castVotes' },
+        tokenMap.LSK.key,
       ))
       : await to(signVoteTransaction(account, data));
 

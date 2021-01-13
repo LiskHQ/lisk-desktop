@@ -149,7 +149,7 @@ export const getAccounts = async ({
   // Use HTTP to retrieve accounts with given sorting and pagination parameters
   const normParams = {};
   Object.keys(params).forEach((key) => {
-    if (accountFilters[key].test(params[key])) {
+    if (accountFilters[key] && accountFilters[key].test(params[key])) {
       normParams[accountFilters[key].key] = params[key];
     }
   });

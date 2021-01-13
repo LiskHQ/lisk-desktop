@@ -53,7 +53,7 @@ const Overview = ({
           balance={balance}
           isDiscreetMode={discreetMode}
           isWalletRoute={isWalletRoute}
-          isDelegate={account.isDelegate}
+          isDelegate={!!account.delegate}
           address={address}
         />
       </div>
