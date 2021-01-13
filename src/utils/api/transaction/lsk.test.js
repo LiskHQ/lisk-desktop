@@ -10,12 +10,13 @@ import * as delegates from '../delegate';
 
 jest.mock('../http', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })),
 }));
 
 jest.mock('../ws', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
+    .mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })),
 }));
 
 jest.mock('../delegate', () => ({
@@ -36,11 +37,11 @@ describe('API: LSK Transactions', () => {
       getTransaction({
         network,
         baseUrl,
-        id: sampleId,
+        params: { id: sampleId },
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: 'transactions',
+        path: '/api/v1/transactions',
         params: { id: sampleId },
         network,
         baseUrl,
@@ -73,7 +74,7 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: 'transactions',
+        path: '/api/v1/transactions',
         params: { block: sampleId },
         network,
         baseUrl: undefined,
@@ -94,7 +95,7 @@ describe('API: LSK Transactions', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: 'transactions',
+        path: '/api/v1/transactions',
         baseUrl: undefined,
         params: {
           from: 1607446547094,
@@ -120,7 +121,7 @@ describe('API: LSK Transactions', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: 'transactions',
+        path: '/api/v1/transactions',
         baseUrl: undefined,
         params: {
           to: 1607446547094,
@@ -151,7 +152,7 @@ describe('API: LSK Transactions', () => {
         .map((item) => {
           const t = new Date();
           t.setMonth(t.getMonth() + item);
-          return { timestamp: t.getTime() };
+          return { timestamp: t.getTime(), type: 0 };
         });
 
       // mock internals
@@ -172,16 +173,14 @@ describe('API: LSK Transactions', () => {
 
   describe('getTransactionStats', () => {
     it('Should call http with given params', () => {
-      const params = { period: 'day', limit: 7 };
-
       getTransactionStats({
         network,
-        params,
+        params: { period: 'week' },
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: `transactions/statistics/${params.period}`,
-        params: { limit: params.limit },
+        path: '/api/v1/transactions/statistics/day',
+        params: { limit: 7 },
         network,
       });
     });

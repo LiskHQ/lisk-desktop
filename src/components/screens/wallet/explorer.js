@@ -8,7 +8,6 @@ import withData from '../../../utils/withData';
 import Overview from './overview';
 import { getAccount } from '../../../utils/api/account';
 import { getTransactions } from '../../../utils/api/transaction';
-import txFilters from '../../../constants/transactionFilters';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
@@ -114,9 +113,7 @@ const apis = {
     }),
     defaultData: [],
     defaultUrlSearchParams: {
-      filters: {
-        direction: txFilters.all,
-      },
+      filters: {},
     },
     transformResponse: (response, oldData, urlSearchParams) => (
       urlSearchParams.offset

@@ -1,8 +1,10 @@
 import urlProcessor from './urlProcessor';
 import { voteEdited } from './voting';
+import * as accounts from '../utils/api/account';
 
 jest.mock('../utils/api/account', () => ({
   getAccount: jest.fn().mockImplementation(data => Promise.resolve({ address: '12L', username: data.username })),
+  getAccounts: jest.fn(),
 }));
 
 describe('urlProcessor', () => {
@@ -26,11 +28,17 @@ describe('urlProcessor', () => {
   });
 
   it('Should dispatch voteEdited with empty array if no usernames in query params', async () => {
+    accounts.getAccounts.mockImplementation(() => Promise.resolve([]));
     await urlProcessor('?modal=votingQueue')(dispatch, getState);
     expect(dispatch).toHaveBeenCalledWith(voteEdited([]));
   });
 
   it('Should dispatch voteEdited with a single username in the query params', async () => {
+    accounts.getAccounts.mockImplementation(() => Promise.resolve([{
+      address: '12L',
+      amount: '',
+      username: 'genesis_5',
+    }]));
     await urlProcessor('?modal=votingQueue&unvotes=genesis_5')(dispatch, getState);
     const votes = ['genesis_5']
       .map(username => ({ address: '12L', username, amount: '' }));
@@ -38,6 +46,7 @@ describe('urlProcessor', () => {
   });
 
   it('Should dispatch voteEdited with empty data if the username is invalid', async () => {
+    accounts.getAccounts.mockImplementation(() => Promise.resolve([]));
     await urlProcessor('?modal=votingQueue&unvotes=ad')(dispatch, getState);
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ data: [] }));
   });
@@ -48,9 +57,16 @@ describe('urlProcessor', () => {
   });
 
   it('Should dispatch voteEdited with an array of valid usernames in query params', async () => {
-    await urlProcessor('?modal=votingQueue&unvotes=genesis_3,genesis_4&votes=genesis_5,genesis_6,genesis_7')(dispatch, getState);
-    const votes = ['genesis_5', 'genesis_6', 'genesis_7', 'genesis_3', 'genesis_4']
-      .map(username => ({ address: '12L', username, amount: '' }));
-    expect(dispatch).toHaveBeenCalledWith(voteEdited(votes));
+    const usernameList = ['genesis_5', 'genesis_6', 'genesis_7', 'genesis_3', 'genesis_4'];
+    const accountsList = usernameList.map((username, index) => ({
+      address: `12${index}L`,
+      amount: '',
+      username,
+    }));
+    const url = `?modal=votingQueue&unvotes=${usernameList.join(',')}`;
+    accounts.getAccounts.mockImplementation(() => Promise.resolve(accountsList));
+
+    await urlProcessor(url)(dispatch, getState);
+    expect(dispatch).toHaveBeenCalledWith(voteEdited(accountsList));
   });
 });

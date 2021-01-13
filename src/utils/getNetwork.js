@@ -3,17 +3,6 @@ import i18next from 'i18next';
 import networks, { networkKeys } from '../constants/networks';
 import { tokenMap } from '../constants/tokens';
 
-
-export const getNetwork = (networkName) => {
-  let network;
-  Object.keys(networks).forEach((key) => {
-    if (networks[key].name === networkName) {
-      network = networks[key];
-    }
-  });
-  return network;
-};
-
 /**
  * If Mainnet or Testnet returns the name, if custom node returns the nethash
  * @param {Object} network - network object from store, with options.code or options.nethash set.
@@ -23,7 +12,7 @@ export const getNetworkIdentifier = (network) => {
   const selectedNetwork = (Lisk.constants.MAINNET_NETHASH === network.networks.LSK.nethash
     && networks.mainnet)
     || (Lisk.constants.TESTNET_NETHASH === network.networks.LSK.nethash && networks.testnet)
-    || getNetwork(networkName);
+    || networks[networkName];
   return !selectedNetwork.custom
     ? selectedNetwork.name.toLowerCase()
     : network.networks.LSK.nethash;
@@ -38,19 +27,20 @@ export const getNetworksList = () =>
 
 
 export const getNetworkNameBasedOnNethash = (network, token = 'LSK') => {
-  let activeNetwork = network.name;
   const isCustomNode = network.name === networkKeys.customNode;
   const isBtc = token === tokenMap.BTC.key;
 
   if (isCustomNode && !isBtc) {
-    const isTestnetHash = network.networks[token].nethash === Lisk.constants.TESTNET_NETHASH;
-    activeNetwork = isTestnetHash ? networkKeys.testNet : network.name;
+    const { nethash } = network.networks[token];
+    const testNet = nethash === Lisk.constants.TESTNET_NETHASH ? 'testNet' : '';
+    const mainNet = nethash === Lisk.constants.MAINNET_NETHASH ? 'mainNet' : '';
+    return networkKeys[mainNet || testNet] || network.name;
   }
 
   if (isCustomNode && isBtc) {
-    activeNetwork = networkKeys.testNet;
+    return networkKeys.testNet;
   }
-  return activeNetwork;
+  return network.name;
 };
 
 /**

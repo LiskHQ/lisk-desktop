@@ -10,7 +10,6 @@ import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
 import withLocalSort from '../../../../utils/withLocalSort';
-import voting from '../../../../constants/voting';
 import transactionTypes from '../../../../constants/transactionTypes';
 import { tokenMap } from '../../../../constants/tokens';
 
@@ -57,7 +56,7 @@ const ComposedDelegates = compose(
     {
       [delegatesKey]: {
         apiUtil: ({ networks }, params) => getForgers(
-          { network: networks.LSK, params: { ...params, limit: voting.numberOfActiveDelegates } },
+          { network: networks.LSK, params: { ...params, limit: 103 } },
         ),
         defaultData: [],
         autoload: true,

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
 import CustomRoute from './index';
@@ -28,7 +27,11 @@ describe('CustomRoute', () => {
     },
     network: {
       name: 'testnet',
-      serviceUrl: 'someUrl',
+      networks: {
+        LSK: {
+          serviceUrl: 'someUrl',
+        },
+      },
     },
   };
 
@@ -63,12 +66,12 @@ describe('CustomRoute', () => {
   );
   it('should render Component if user is authenticated', () => {
     const wrapper = isAuth({ isPrivate: true });
-    expect(wrapper.find(Private)).to.have.length(1);
+    expect(wrapper.find(Private).exists()).toBe(true);
   });
 
   it('should redirect to root path if user is not authenticated', () => {
     mockAppState.account.info = {};
     const wrapper = isAuth({ isPrivate: true });
-    expect(wrapper.find(Public)).to.have.length(1);
+    expect(wrapper.find(Public).exists()).toBe(true);
   });
 });

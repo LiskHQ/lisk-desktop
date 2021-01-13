@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import routes from '../../../constants/routes';
-import { parseSearchParams, strigifySearchParams } from '../../../utils/searchParams';
+import { parseSearchParams, stringifySearchParams } from '../../../utils/searchParams';
 import { extractAddress } from '../../../utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
 import { getNetworksList } from '../../../utils/getNetwork';
@@ -65,7 +65,7 @@ class Login extends React.Component {
 
   getReferrerRoute() {
     const { referrer, ...restParams } = parseSearchParams(this.props.history.location.search);
-    const route = referrer ? `${referrer}${strigifySearchParams(restParams)}` : routes.dashboard.path;
+    const route = referrer ? `${referrer}${stringifySearchParams(restParams)}` : routes.dashboard.path;
     return route;
   }
 

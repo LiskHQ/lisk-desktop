@@ -1,6 +1,5 @@
 import actionTypes from '../constants/actions';
 import { convertUnixSecondsToLiskEpochSeconds } from '../utils/datetime';
-import voting from '../constants/voting';
 import { getBlocks } from '../utils/api/block';
 import { getForgers } from '../utils/api/delegate';
 
@@ -50,7 +49,7 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
 const retrieveNextForgers = async (getState, forgedInRound) => {
   const { network } = getState();
 
-  const numberOfRemainingBlocksInRound = voting.numberOfActiveDelegates
+  const numberOfRemainingBlocksInRound = 103
     - forgedInRound;
   const nextForgers = await getForgers({
     network,
@@ -63,7 +62,7 @@ const retrieveNextForgers = async (getState, forgedInRound) => {
 // eslint-disable-next-line max-statements
 export const forgingTimesRetrieved = () => async (dispatch, getState) => {
   const { latestBlocks } = getState().blocks;
-  const forgedInRoundNum = latestBlocks[0].height % voting.numberOfActiveDelegates;
+  const forgedInRoundNum = latestBlocks[0].height % 103;
   const awaitingForgers = await retrieveNextForgers(getState, 0);
 
   // First I define the delegates who forged in this round.

@@ -5,7 +5,7 @@ import {
 } from '../../actions/account';
 import {
   emptyTransactionsData,
-  transactionsUpdated,
+  transactionsRetrieved,
 } from '../../actions/transactions';
 import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
@@ -95,7 +95,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // https://github.com/LiskHQ/lisk-desktop/pull/1609
     setTimeout(() => {
       updateAccountData(store);
-      store.dispatch(transactionsUpdated({
+      store.dispatch(transactionsRetrieved({
         pendingTransactions: transactions.pending,
         address: account.address,
         filters: transactions.filters,
@@ -108,18 +108,18 @@ const autoLogInIfNecessary = async ({ dispatch, getState }) => {
   const {
     statistics, statisticsRequest, statisticsFollowingDay,
   } = getState().settings;
-  const autologinData = getAutoLogInData();
+  const autoLoginData = getAutoLogInData();
 
-  const address = autologinData[settings.keys.liskCoreUrl];
+  const address = autoLoginData[settings.keys.liskCoreUrl];
   const network = address
     ? { name: networkKeys.customNode, address }
     : { name: networkKeys.mainNet, address: networks.mainnet.nodes[0] };
   dispatch(networkSelected(network));
   dispatch(networkStatusUpdated({ online: true }));
 
-  if (shouldAutoLogIn(autologinData)) {
+  if (shouldAutoLogIn(autoLoginData)) {
     setTimeout(() => {
-      dispatch(login({ passphrase: autologinData[settings.keys.loginKey] }));
+      dispatch(login({ passphrase: autoLoginData[settings.keys.loginKey] }));
     }, 500);
   }
 

@@ -11,7 +11,6 @@ import BoxContent from '../../../toolbox/box/content';
 import styles from './overview.css';
 import NumericInfo from './numericInfo';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
-import voting from '../../../../constants/voting';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
 import { colorPalette } from '../../../../constants/chartConstants';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
@@ -60,7 +59,7 @@ const ForgingDetails = ({
   const awaitingForgers = useSelector(state => state.blocks.awaitingForgers);
   const { latestBlocks } = useSelector(state => state.blocks);
   const forgedInRound = latestBlocks.length
-    ? latestBlocks[0].height % voting.numberOfActiveDelegates : 0;
+    ? latestBlocks[0].height % 103 : 0;
 
   const doughnutChartData = {
     labels: delegatesForgedLabels,

@@ -18,7 +18,11 @@ const resetApiMock = () => {
 
 describe('API: LSK Delegates', () => {
   const baseUrl = 'http://baseurl.io';
-  const network = { serviceUrl: 'http://testnet.io' };
+  const network = {
+    networks: {
+      LSK: { serviceUrl: 'http://testnet.io' },
+    },
+  };
 
   describe('getDelegate', () => {
     beforeEach(() => {
@@ -253,15 +257,16 @@ describe('API: LSK Delegates', () => {
 
     it('should return forgers list', async () => {
       const expectedResponse = [{}, {}, {}];
-      setApiResponseData(expectedResponse, http);
+      setApiResponseData(expectedResponse, ws);
       await expect(
         delegate.getForgers({ params: { limit: 5, offset: 0 }, network }),
       ).resolves.toEqual(expectedResponse);
-      expect(http).toHaveBeenCalledWith({
+      expect(ws).toHaveBeenCalledWith({
+        requests: {
+          method: delegate.wsMethods.forgers,
+          params: { limit: 5, offset: 0 },
+        },
         baseUrl: undefined,
-        path: delegate.httpPaths.forgers,
-        params: { limit: 5, offset: 0 },
-        network,
       });
     });
 
@@ -269,17 +274,18 @@ describe('API: LSK Delegates', () => {
       delegate.getForgers({
         baseUrl, network, params: { limit: 5, offset: 0 },
       });
-      expect(http).toHaveBeenCalledWith({
+      expect(ws).toHaveBeenCalledWith({
+        requests: {
+          method: delegate.wsMethods.forgers,
+          params: { limit: 5, offset: 0 },
+        },
         baseUrl,
-        path: delegate.httpPaths.forgers,
-        params: { limit: 5, offset: 0 },
-        network,
       });
     });
 
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
-      setApiRejection(expectedResponse.message, http);
+      setApiRejection(expectedResponse.message, ws);
       await expect(
         delegate.getForgers({
           network,
