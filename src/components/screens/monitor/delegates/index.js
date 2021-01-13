@@ -16,6 +16,7 @@ import { tokenMap } from '../../../../constants/tokens';
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
 const standByDelegatesKey = 'standByDelegates';
+const numberOfActiveDelegates = 103;
 
 const transformDelegatesResponse = (response, oldData = []) => (
   [...oldData, ...response.data.filter(
@@ -56,7 +57,7 @@ const ComposedDelegates = compose(
     {
       [delegatesKey]: {
         apiUtil: ({ networks }, params) => getForgers(
-          { network: networks.LSK, params: { ...params, limit: 103 } },
+          { network: networks.LSK, params: { ...params, limit: numberOfActiveDelegates } },
         ),
         defaultData: [],
         autoload: true,
@@ -69,7 +70,7 @@ const ComposedDelegates = compose(
           params: {
             ...params,
             limit: params.limit || 30,
-            offset: params.offset || voting.numberOfActiveDelegates,
+            offset: params.offset || numberOfActiveDelegates,
           },
         }),
         defaultData: [],
