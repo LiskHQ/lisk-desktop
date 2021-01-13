@@ -73,7 +73,7 @@ export const transactionsRetrieved = ({
           offset,
           address,
           confirmed: response.data,
-          count: parseInt(response.meta.count, 10),
+          count: response.meta.total,
           filters,
         },
       });

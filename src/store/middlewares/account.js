@@ -20,15 +20,12 @@ import networks, { networkKeys } from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import { tokenMap } from '../../constants/tokens';
+import { getTransactions } from '../../utils/api/transaction/lsk';
 
 const updateAccountData = (store) => {
-  const { transactions } = store.getState();
   const account = getActiveTokenAccount(store.getState());
 
-  store.dispatch(accountDataUpdated({
-    transactions,
-    account,
-  }));
+  store.dispatch(accountDataUpdated({ account }));
 };
 
 const getRecentTransactionOfType = (transactionsList, type) => (
@@ -69,38 +66,40 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
   });
 };
 
-const checkTransactionsAndUpdateAccount = (store, action) => {
+// eslint-disable-next-line max-statements
+const checkTransactionsAndUpdateAccount = async (store, action) => {
   const state = store.getState();
-  const { transactions, settings: { token } } = state;
+  const { transactions, settings: { token }, network } = state;
   const account = getActiveTokenAccount(store.getState());
+  const { numberOfTransactions, id } = action.data.block;
 
-  const txs = action.data.block.transactions || [];
-  const blockContainsRelevantTransaction = txs.filter((transaction) => {
-    if (!transaction) return false;
-    return (
-      account.address === transaction.senderId
-      || account.address === transaction.recipientId
-    );
-  }).length > 0;
+  if (numberOfTransactions) {
+    const { data: txs } = await getTransactions({ network, params: { blockId: id } }, token);
+    const blockContainsRelevantTransaction = txs.filter((transaction) => {
+      if (!transaction) return false;
+      return (
+        account.address === transaction.senderId
+        || account.address === transaction.recipientId
+      );
+    }).length > 0;
 
-  showNotificationsForIncomingTransactions(txs, account, token.active);
+    showNotificationsForIncomingTransactions(txs, account, token.active);
+    const recentBtcTransaction = token.active === 'BTC'
+      && transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
 
-  const recentBtcTransaction = token.active === 'BTC'
-    && transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
-
-  if (blockContainsRelevantTransaction || recentBtcTransaction) {
-    // it was not getting the account with secondPublicKey right
-    // after a new block with second passphrase registration transaction was received
-    // Adding timeout explained in
-    // https://github.com/LiskHQ/lisk-desktop/pull/1609
-    setTimeout(() => {
-      updateAccountData(store);
-      store.dispatch(transactionsRetrieved({
-        pendingTransactions: transactions.pending,
-        address: account.address,
-        filters: transactions.filters,
-      }));
-    }, 500);
+    if (blockContainsRelevantTransaction || recentBtcTransaction) {
+      // it was not getting the account with secondPublicKey right
+      // after a new block with second passphrase registration transaction was received
+      // Adding timeout explained in
+      // https://github.com/LiskHQ/lisk-desktop/pull/1609
+      setTimeout(() => {
+        updateAccountData(store);
+        store.dispatch(transactionsRetrieved({
+          address: account.address,
+          filters: transactions.filters,
+        }));
+      }, 500);
+    }
   }
 };
 
@@ -130,14 +129,14 @@ const autoLogInIfNecessary = async ({ dispatch, getState }) => {
   }
 };
 
-const accountMiddleware = store => next => (action) => {
+const accountMiddleware = store => next => async (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.storeCreated:
       autoLogInIfNecessary(store);
       break;
     case actionTypes.newBlockCreated:
-      checkTransactionsAndUpdateAccount(store, action);
+      await checkTransactionsAndUpdateAccount(store, action);
       break;
     case actionTypes.transactionsRetrieved:
       votePlaced(store, action);
