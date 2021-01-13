@@ -3,6 +3,7 @@ const transaction = index => ({
   height: 9381199 + index,
   blockId: `35335302495521273${index}`,
   type: 0,
+  title: 'transfer',
   timestamp: 106359314,
   senderPublicKey: 'f4852b270f76dc8b49bfa88de5906e81d3b001d23852f0e74ba60cac7180a184',
   recipientPublicKey: '',
