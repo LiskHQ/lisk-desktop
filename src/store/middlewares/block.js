@@ -2,7 +2,7 @@ import actionTypes from '../../constants/actions';
 import { networkStatusUpdated } from '../../actions/network';
 import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
 import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
-import { forgersSubscribe, forgersUnsubscribe } from '../../utils/api/delegate';
+import { forgersSubscribe, forgersUnsubscribe, getDelegates } from '../../utils/api/delegate';
 import { tokenMap } from '../../constants/tokens';
 
 // eslint-disable-next-line max-statements
@@ -76,13 +76,21 @@ const forgingListener = (store) => {
     data: socketConnections,
   });
 
-  console.log('forgingListener');
   const newConnection = forgersSubscribe(
     state.network,
-    (round) => {
-      console.log(round);
+    async (round) => {
+      console.log('forgingListener', round.nextForgers);
       if (store.getState().blocks.latestBlocks.length) {
-        // store.dispatch(forgingTimesRetrieved(round));
+        try {
+          const delegates = await getDelegates({
+            params: { addressList: round.nextForgers },
+            network: state.network,
+          });
+          store.dispatch(forgingTimesRetrieved(delegates));
+        } catch (e) {
+          console.log(e);
+          store.dispatch(forgingTimesRetrieved());
+        }
       }
     },
     () => {},
