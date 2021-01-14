@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Fields from './fields';
 import ModalWrapper from '../modalWrapper';
 import { validateAddress } from '../../../../utils/validators';
-import networks from '../../../../constants/networks';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -179,10 +178,7 @@ class AddBookmark extends React.Component {
 
   validateAddress(token, value) {
     const { network, bookmarks, t } = this.props;
-    const netCode = network.name === networks.mainnet.name
-      ? networks.mainnet.code
-      : networks.testnet.code;
-    const isInvalid = validateAddress(token, value, netCode) === 1;
+    const isInvalid = validateAddress(token, value, network) === 1;
     const alreadyBookmarked = !isInvalid
       && getIndexOfBookmark(bookmarks, { address: value, token }) !== -1;
     const feedback = (isInvalid && t('Invalid address'))
