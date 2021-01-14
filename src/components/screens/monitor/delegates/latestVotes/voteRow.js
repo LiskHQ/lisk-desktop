@@ -51,7 +51,6 @@ const VoteRow = ({
       </span>
     </DialogLink>
   );
-};
 
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) => (prevProps.data.id === nextProps.data.id);
