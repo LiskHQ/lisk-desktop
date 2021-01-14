@@ -204,12 +204,11 @@ export const getForgers = ({
   network,
   params = {},
   baseUrl,
-}) => ws({
-  requests: {
-    method: wsMethods.forgers,
-    params,
-  },
-  baseUrl: baseUrl || network.serviceUrl,
+}) => http({
+  path: httpPaths.forgers,
+  params,
+  network,
+  baseUrl,
 });
 
 /**
@@ -224,7 +223,7 @@ export const getForgers = ({
  */
 export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) => {
   const connection = subscribe(
-    `${network.serviceUrl}/blockchain`, wsMethods.blocksChange, callback, onDisconnect, onReconnect,
+    `${network.serviceUrl}/blockchain`, wsMethods.forgersRound, callback, onDisconnect, onReconnect,
   );
   return ({
     [wsMethods.blocksChange]: {

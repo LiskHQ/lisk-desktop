@@ -149,7 +149,7 @@ const ForgingDetails = ({
             <nav className={styles.list}>
               {
                 awaitingForgers
-                  .slice(0, 6)
+                  .slice(forgedInRound, forgedInRound + 6)
                   .map(forger => (
                     <Forger key={forger.address} forger={forger} />
                   ))

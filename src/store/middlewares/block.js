@@ -34,8 +34,10 @@ const blockListener = (store) => {
     store.dispatch(networkStatusUpdated({ online: true }));
   };
 
+  // eslint-disable-next-line max-statements
   const callback = (block) => {
-    const { settings, network } = store.getState();
+    console.log(block.generatorUsername);
+    const { settings, network, blocks } = store.getState();
     const activeToken = settings.token && state.settings.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;
     const now = new Date();
@@ -52,6 +54,10 @@ const blockListener = (store) => {
           data: now,
         });
       }
+    }
+
+    if (Object.keys(blocks.forgingTimes).length === 0 || blocks.awaitingForgers.length === 0) {
+      store.dispatch(forgingTimesRetrieved());
     }
   };
 
@@ -70,11 +76,13 @@ const forgingListener = (store) => {
     data: socketConnections,
   });
 
+  console.log('forgingListener');
   const newConnection = forgersSubscribe(
     state.network,
     (round) => {
+      console.log(round);
       if (store.getState().blocks.latestBlocks.length) {
-        store.dispatch(forgingTimesRetrieved(round));
+        // store.dispatch(forgingTimesRetrieved(round));
       }
     },
     () => {},
@@ -94,7 +102,6 @@ const blockMiddleware = store => (
         store.dispatch(olderBlocksRetrieved());
         blockListener(store);
         forgingListener(store);
-        store.dispatch(forgingTimesRetrieved());
         break;
 
       default: break;

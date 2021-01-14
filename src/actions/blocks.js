@@ -52,7 +52,7 @@ const retrieveNextForgers = async (network, forgedInRound) => {
     - forgedInRound;
   const { data } = await getForgers({
     network,
-    params: { limit: Math.min(numberOfRemainingBlocksInRound, 101) },
+    params: { limit: 103 },
   });
 
   if (data) {

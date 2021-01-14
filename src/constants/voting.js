@@ -3,7 +3,7 @@ const votingConst = {
   maxCountOfVotes: 101,
   // numberOfActiveDelegates is separate from maxCountOfVotes because it will change:
   // https://github.com/LiskHQ/lips/blob/master/proposals/lip-0021.md
-  numberOfActiveDelegates: 101,
+  numberOfActiveDelegates: 103,
   fee: 1,
 };
 
