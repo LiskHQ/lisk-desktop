@@ -9,7 +9,6 @@ import Piwik from '../../../utils/piwik';
 import Select from '../../toolbox/select';
 import links from '../../../constants/externalLinks';
 import settingsConst from '../../../constants/settings';
-import transactionTypes from '../../../constants/transactionTypes';
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './settings.css';
 

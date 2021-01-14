@@ -1,5 +1,4 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import SelectNameAndFee from './selectNameAndFee';
 import * as delegatesApi from '../../../../utils/api/delegate';

@@ -50,7 +50,7 @@ const urlProcessor = (search, network) => {
   return getAccounts(
     {
       network,
-      params: { usernameList: [...votes, ...unvotes] }
+      params: { usernameList: [...votes, ...unvotes] },
     },
     tokenMap.LSK.key,
   );
