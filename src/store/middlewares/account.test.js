@@ -1,9 +1,7 @@
 import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import * as votingActions from '../../actions/voting';
-import * as networkActions from '../../actions/network';
 import * as settingsActions from '../../actions/settings';
-import * as accountUtils from '../../utils/login';
 import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
