@@ -8,13 +8,13 @@ import { subscribe } from '../utils/api/ws';
  * @returns {array} - [boolean, function]
  */
 const useServiceSocketUpdates = (event) => {
-  const network = useSelector(state => state.network);
+  const serviceUrl = useSelector(state => state.network[state.settings.token.active].serviceUrl);
   const [isUpdateAvailable, setUpdateAvailable] = useState(false);
   const reset = () => setUpdateAvailable(false);
 
   useEffect(() => {
     const connection = subscribe(
-      network.serviceUrl,
+      serviceUrl,
       event,
       () => setUpdateAvailable(true),
       () => {},
@@ -22,7 +22,7 @@ const useServiceSocketUpdates = (event) => {
     );
 
     return () => { connection.close(); };
-  }, [network.name]);
+  }, [serviceUrl]);
 
   return [isUpdateAvailable, reset];
 };
