@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import styles from './newsFeed.css';
 import News from './news';
 import Box from '../../../toolbox/box';
