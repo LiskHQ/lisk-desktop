@@ -13,7 +13,6 @@ describe('components/toolbox/timestamp', () => {
 
   describe('<Time label={1499983200} />', () => {
     it('renders "5 months" if today is 2017-01-15', () => {
-
       const wrapper = mount(<Time label={inputValue} />);
       expect(wrapper).toHaveText('5 months');
     });
