@@ -59,5 +59,22 @@ describe('API: BTC Accounts', () => {
         path: `/account/${address}`,
       });
     });
+
+    it('should return empty account if the API returns 404', async () => {
+      http.mockImplementation(() => Promise.reject(Error('Account not found.')));
+      // Checks the baseUrl too
+      const result = await getAccount({
+        network,
+        params: {
+          passphrase,
+        },
+      });
+
+      expect(result).toEqual({
+        address,
+        balance: 0,
+        token: 'BTC',
+      });
+    });
   });
 });

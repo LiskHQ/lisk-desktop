@@ -69,7 +69,7 @@ export const getAccount = async ({
     params.passphrase, network,
   );
   let account = {
-    address: params.address,
+    address,
     balance: 0,
     token: tokenMap.BTC.key,
   };
