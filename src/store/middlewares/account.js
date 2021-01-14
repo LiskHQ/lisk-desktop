@@ -20,7 +20,7 @@ import networks, { networkKeys } from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import { tokenMap } from '../../constants/tokens';
-import { getTransactions } from '../../utils/api/transaction/lsk';
+import { getTransactions } from '../../utils/api/transaction';
 
 const updateAccountData = (store) => {
   const account = getActiveTokenAccount(store.getState());
