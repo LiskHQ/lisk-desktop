@@ -10,9 +10,9 @@ Feature: Search
   Scenario: Search for Lisk ID
     Given I am on Dashboard page
     When I click on searchIcon
-    And I search for account 537318935439898807L
+    And I search for account 6566229458323231555L
     Then I click on searchAccountRow
-    Then I should be on Account page of 537318...8807L
+    Then I should be on Account page of 656622...1555L
 
   Scenario: Search for non-existent account
     Given I am on Dashboard page
