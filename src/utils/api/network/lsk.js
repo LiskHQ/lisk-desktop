@@ -5,6 +5,7 @@ import { camelize } from '../../helpers';
 import { getApiClient } from '../apiClient';
 
 export const getServerUrl = (nodeUrl, nethash) => {
+  return 'http://service-v4.liskdev.net';
   if (nethash === Lisk.constants.MAINNET_NETHASH) {
     return 'https://mainnet-service.lisk.io';
   }
