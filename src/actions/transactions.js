@@ -147,7 +147,16 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
     const { network, settings } = getState();
     const activeToken = settings.token.active;
 
-    const [error] = await to(broadcast({ transaction, network }, activeToken));
+    const [error] = await to(broadcast(
+      {
+        transaction,
+        network: {
+          address: network.networks[activeToken].nodeUrl,
+          name: network.name,
+        },
+      },
+      activeToken,
+    ));
 
     callback({ success: !error, error, transaction });
     if (error) {
