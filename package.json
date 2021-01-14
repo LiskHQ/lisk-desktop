@@ -19,7 +19,7 @@
     "build-prod": "webpack --config ./config/webpack.config.prod",
     "build-electron": "webpack --config ./config/webpack.config.electron --mode production",
     "cypress:open": "cypress open --project test/cypress",
-    "cypress:run": "cypress run --project test/cypress -b chrome",
+    "cypress:run": "cypress run --project test/cypress",
     "test": "jest --config ./jest.config.js",
     "test-live": "npm test -- --watch",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
