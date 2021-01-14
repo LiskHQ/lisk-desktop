@@ -298,7 +298,9 @@ export const create = ({
  * broadcasts a transaction over the network
  *
  * @param {object} transaction
- * @param {string} network - the network name, e.g. mainnet, betanet
+ * @param {Object} network
+ * @param {string} network.name - the network name, e.g. mainnet, betanet
+ * @param {string} network.address - the node address e.g. https://betanet-lisk.io
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = ({ transaction, network }) => new Promise(
