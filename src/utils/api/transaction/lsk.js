@@ -341,9 +341,12 @@ export const getTransactionBaseFees = network =>
 export const getMinTxFee = tx => Number(tx.minFee.toString());
 
 /**
- * Returns the actual tx fee based on given tx details and selected processing speed
+ * Returns the actual tx fee based on given tx details
+ * and selected processing speed
+ *
  * @param {String} txData - The transaction object
  * @param {Object} selectedPriority - network configuration
+ * @returns {Promise} Object containing value, error and feedback
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
