@@ -61,20 +61,34 @@ const normalizeAccountResponse = ({
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} Transaction details API call
  */
-export const getAccount = ({
+export const getAccount = async ({
   network,
   params,
 }) => {
   const address = params.address || extractAddress(
     params.passphrase, network,
   );
-
-  return http({
-    network,
-    path: `/account/${address}`,
-    baseUrl: network.networks.BTC.serviceUrl,
-  }).then(response => normalizeAccountResponse({
-    response,
+  let account = {
     address,
-  }));
+    balance: 0,
+    token: tokenMap.BTC.key,
+  };
+
+  try {
+    const response = await http({
+      network,
+      path: `/account/${address}`,
+      baseUrl: network.networks.BTC.serviceUrl,
+    });
+    if (response.data) {
+      account = normalizeAccountResponse({
+        response,
+        address,
+      });
+    }
+  } catch (e) {
+    console.log('Bitcoin account not found.');
+  }
+
+  return account;
 };

@@ -3,6 +3,7 @@ import ws from '../ws';
 import { isEmpty } from '../../helpers';
 import { extractAddress } from '../../account';
 import regex from '../../regex';
+import { tokenMap } from '../../../constants/tokens';
 
 const httpPrefix = '/api/v1';
 
@@ -64,16 +65,30 @@ const getAccountParams = (params) => {
  */
 export const getAccount = async ({
   network, params, baseUrl,
-}) => http({
-  path: httpPaths.account,
-  network,
-  params: getAccountParams(params),
-  baseUrl,
-}).then((response) => {
-  const account = response.data[0];
-  if (!account) throw Error('Account not found');
+}) => {
+  const normParams = getAccountParams(params);
+  let account = {
+    address: normParams.address,
+    balance: 0,
+    token: tokenMap.LSK.key,
+  };
+
+  try {
+    const response = await http({
+      path: httpPaths.account,
+      network,
+      params: normParams,
+      baseUrl,
+    });
+    if (response.data[0]) {
+      account = response.data[0];
+    }
+  } catch (e) {
+    console.log('Lisk account not found.');
+  }
+
   return account;
-});
+};
 
 const accountFilters = {
   limit: { key: 'limit', test: num => (typeof num === 'number') },
