@@ -23,7 +23,21 @@ const ws = ({
     if (response.error) reject(response.error);
 
     else {
-      resolve(Array.isArray(response) ? response : response.result);
+      if (!Array.isArray(response)) resolve(response.result);
+      const normRes = response.reduce((acc, res) => {
+        res.result.data.forEach(item => acc.data.push(item));
+        acc.meta.count += res.result.meta.count;
+        acc.meta.offset = res.result.meta.offset;
+        return acc;
+      }, {
+        data: [],
+        meta: {
+          count: 0,
+          offset: 0,
+        },
+      });
+
+      resolve(normRes);
     }
   });
 });

@@ -79,16 +79,14 @@ const forgingListener = (store) => {
   const newConnection = forgersSubscribe(
     state.network,
     async (round) => {
-      console.log('forgingListener', round.nextForgers);
       if (store.getState().blocks.latestBlocks.length) {
         try {
           const delegates = await getDelegates({
             params: { addressList: round.nextForgers },
             network: state.network,
           });
-          store.dispatch(forgingTimesRetrieved(delegates));
+          store.dispatch(forgingTimesRetrieved(delegates.data));
         } catch (e) {
-          console.log(e);
           store.dispatch(forgingTimesRetrieved());
         }
       }
