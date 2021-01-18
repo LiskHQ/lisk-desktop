@@ -235,5 +235,5 @@ export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) =
  * @param {Object} network - Redux network state
  */
 export const forgersUnsubscribe = () => {
-  unsubscribe(wsMethods.blocksChange);
+  unsubscribe(wsMethods.forgersRound);
 };
