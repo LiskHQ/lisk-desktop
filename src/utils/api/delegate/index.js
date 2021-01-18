@@ -224,8 +224,10 @@ export const getForgers = ({
  *                     socket connection and fordecClosing status
  */
 export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) => {
+  const node = network && network.networks
+  && network.networks.LSK && network.networks.LSK.serviceUrl;
   const connection = subscribe(
-    `${network.serviceUrl}/blockchain`, wsMethods.forgersRound, callback, onDisconnect, onReconnect,
+    `${node}/blockchain`, wsMethods.forgersRound, callback, onDisconnect, onReconnect,
   );
   return ({
     [wsMethods.blocksChange]: {
