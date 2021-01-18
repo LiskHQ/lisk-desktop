@@ -15,7 +15,7 @@ describe('actions: transactions', () => {
       name: 'Mainnet',
       networks: {
         LSK: {
-          nodeUrl: 'hhtp://localhost:4000',
+          serviceUrl: 'hhtp://localhost:4000',
           nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
         },
       },
@@ -54,10 +54,11 @@ describe('actions: transactions', () => {
         confirmed: [],
         address: data.address,
         filters: data.filters,
+        offset: 0,
       };
 
       await transactionsRetrieved(data)(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch).toHaveBeenLastCalledWith({
         type: actionTypes.transactionsRetrieved,
         data: expectedAction,
       });

@@ -8,7 +8,7 @@ import routes from '../../../constants/routes';
 import { mountWithRouter } from '../../../utils/testHelpers';
 import transactionTypes from '../../../constants/transactionTypes';
 
-describe('Single Transaction Component', () => {
+describe('Transaction Details Component', () => {
   const transaction = {
     data: {
       senderId: accounts.genesis.address,
@@ -22,6 +22,7 @@ describe('Single Transaction Component', () => {
       id: 123,
       fee: 1e7,
       timestamp: Date.now(),
+      title: 'transfer',
     },
   };
   /* const voteTransaction = {
@@ -129,6 +130,7 @@ describe('Single Transaction Component', () => {
               accounts.delegate_candidate.publicKey,
             ].map(publicKey => `+${publicKey}`),
           },
+          title: 'vote',
         },
       };
       const wrapper = mountWithRouter(
@@ -152,6 +154,7 @@ describe('Single Transaction Component', () => {
           asset: {
             votes: [],
           },
+          title: 'vote',
         },
       };
       const wrapper = mountWithRouter(
@@ -161,27 +164,6 @@ describe('Single Transaction Component', () => {
       );
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
       expect(wrapper.find('.accountInfo .label').text()).toBe('Voter');
-    });
-  });
-
-  describe('2nd Passphrase transaction', () => {
-    it('Should render register 2nd passphrase details', () => {
-      const secondPassTx = {
-        data: {
-          type: 1,
-          senderId: accounts.genesis.address,
-          recipientId: '',
-          amount: 0,
-          id: 123,
-        },
-      };
-      const wrapper = mountWithRouter(
-        TransactionDetails,
-        { ...props, transaction: secondPassTx },
-        { pathname: '/explorer/transactions', id: transaction.id },
-      );
-      expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
-      expect(wrapper.find('.accountInfo .label').text()).toBe('Account');
     });
   });
 
@@ -195,6 +177,7 @@ describe('Single Transaction Component', () => {
           amount: 0,
           asset: { delegate: accounts.delegate },
           id: 123,
+          title: 'registerDelegate',
         },
       };
       const wrapper = mountWithRouter(
@@ -231,6 +214,7 @@ describe('Single Transaction Component', () => {
           asset: {
             amount: 50,
           },
+          title: 'unlockToken',
         },
       };
       const wrapper = mountWithRouter(

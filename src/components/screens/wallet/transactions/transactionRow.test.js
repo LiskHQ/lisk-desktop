@@ -18,18 +18,18 @@ describe('Single Transaction Component', () => {
       id: 123,
       fee: 1e7,
       timestamp: Date.now(),
+      title: 'unlockToken',
     },
-  };
-
-  const props = {
-    t: v => v,
-    host: accounts.genesis.address,
   };
 
   it('Should render unlock LSK details', () => {
     const wrapper = mountWithRouter(
       TransactionRow,
-      { ...props, data: unlockTx.data },
+      {
+        t: v => v,
+        host: accounts.genesis.address,
+        data: unlockTx.data,
+      },
     );
     expect(wrapper).toContainMatchingElement('.transaction-image');
     expect(wrapper.find('.transaction-address').text()).toEqual(transactionTypes().unlockToken.title);

@@ -111,11 +111,13 @@ export const getTransactions = ({
   params,
 }) => {
   const normParams = {};
+  let path = httpPaths.transactions;
 
   // if blockId, ignore others
   if (params.blockId) {
     normParams.block = params.blockId;
   } else {
+    path += `/${params.address}`;
     // Validate params and fix keys
     Object.keys(params).forEach((key) => {
       if (filters[key] && filters[key].test(params[key])) {
@@ -130,7 +132,7 @@ export const getTransactions = ({
   return http({
     network,
     params: normParams,
-    path: `${httpPaths.transactions}/${params.address}`,
+    path,
     baseUrl: network.networks.BTC.serviceUrl,
   }).then(response => ({
     meta: response.meta,

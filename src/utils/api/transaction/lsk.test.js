@@ -3,10 +3,13 @@ import {
   getTransactions,
   getTransactionStats,
   getRegisteredDelegates,
+  getTxAmount,
+  getTransactionFee,
 } from './lsk';
 import http from '../http';
 import ws from '../ws';
 import * as delegates from '../delegate';
+import transactionTypes from '../../../constants/transactionTypes';
 
 jest.mock('../http', () => ({
   __esModule: true,
@@ -116,6 +119,10 @@ describe('API: LSK Transactions', () => {
           amountFrom: 'wrong_amount',
           amountTo: 123445,
           sort: 'wrong_sort',
+          limit: 0,
+          offset: -1,
+          message: {},
+          address: 'invalid_address',
         },
       });
 
@@ -183,6 +190,101 @@ describe('API: LSK Transactions', () => {
         params: { limit: 7 },
         network,
       });
+    });
+  });
+
+  describe('getTxAmount', () => {
+    it('should return amount of transfer in Beddows', () => {
+      const tx = {
+        amount: '100000000',
+        type: 0,
+      };
+
+      expect(getTxAmount(tx)).toEqual(tx.amount);
+    });
+
+    it('should return amount of unlock in Beddows', () => {
+      const tx = {
+        type: transactionTypes().unlockToken.code.legacy,
+        asset: {
+          unlockingObjects: [
+            {
+              amount: '100000000',
+            },
+            {
+              amount: '100000000',
+            },
+          ],
+        },
+      };
+
+      expect(getTxAmount(tx)).toEqual('200000000');
+    });
+  });
+
+  describe('getTransactionFee', () => {
+    const txData = {
+      amount: '100000000',
+      data: 'to test the instance',
+      nonce: '6',
+      recipient: '16313739661670634666L',
+      senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+      txType: 'transfer',
+    };
+    const selectedPriority = {
+      value: 0,
+      title: 'LOW',
+    };
+    it('should return fee in Beddows', async () => {
+      const result = await getTransactionFee({
+        txData, selectedPriority,
+      });
+      expect(result.value).toEqual(0.0015);
+    });
+
+    it('should use zero instead of invalid amounts', async () => {
+      const invalidAmountResult = await getTransactionFee({
+        txData: {
+          ...txData,
+          amount: 'invalid',
+        },
+        selectedPriority,
+      });
+      const ZeroAmountResult = await getTransactionFee({
+        txData: {
+          ...txData,
+          amount: '0',
+        },
+        selectedPriority,
+      });
+      expect(invalidAmountResult.value).toEqual(ZeroAmountResult.value);
+    });
+
+    it('should calculate fee of vote tx', async () => {
+      const voteTxData = {
+        txType: 'vote',
+        nonce: '6',
+        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        votes: [],
+      };
+      const result = await getTransactionFee({
+        txData: voteTxData,
+        selectedPriority,
+      });
+      expect(result.value).toEqual(0.00114);
+    });
+
+    it('should calculate fee of register delegate tx', async () => {
+      const voteTxData = {
+        txType: 'registerDelegate',
+        nonce: '6',
+        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+      };
+      const result = await getTransactionFee({
+        txData: voteTxData,
+        selectedPriority,
+      });
+      expect(result.value).toEqual(10.00119);
     });
   });
 });

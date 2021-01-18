@@ -1,13 +1,8 @@
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
 import { pricesRetrieved } from './service';
 import { initialState as settings } from '../store/reducers/settings';
 import actionTypes from '../constants/actions';
 import prices from '../../test/constants/prices';
 import * as marketApi from '../utils/api/market';
-
-const middlewareList = [thunk];
-const mockStore = configureMockStore(middlewareList);
 
 describe('actions: service', () => {
   const getState = () => ({
