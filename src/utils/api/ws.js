@@ -66,7 +66,11 @@ export const subscribe = (
   });
   connection.on(eventName, callback);
   connection.on('reconnect', onReconnect);
-  connection.on('disconnect', () => { onDisconnect(eventName, subscribeConnections); });
+  connection.on('disconnect', () => {
+    if (subscribeConnections[node] && !subscribeConnections[node].forcedClosing) {
+      onDisconnect(eventName, subscribeConnections);
+    }
+  });
   subscribeConnections[node] = connection;
 };
 

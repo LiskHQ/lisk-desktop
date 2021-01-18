@@ -5,6 +5,18 @@ import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
 import { forgersSubscribe, forgersUnsubscribe, getDelegates } from '../../utils/api/delegate';
 import { tokenMap } from '../../constants/tokens';
 
+const generateOnDisconnect = (dispatch) => {
+  return () => {
+    dispatch(networkStatusUpdated({ online: false }));
+  };
+};
+
+const generateOnReconnect = (dispatch) => {
+  return () => {
+    dispatch(networkStatusUpdated({ online: true }));
+  };
+};
+
 // eslint-disable-next-line max-statements
 const blockListener = ({ getState, dispatch }) => {
   const state = getState();
@@ -17,17 +29,6 @@ const blockListener = ({ getState, dispatch }) => {
     ipc.on('blur', () => { windowIsFocused = false; });
     ipc.on('focus', () => { windowIsFocused = true; });
   }
-
-  const onDisconnect = (eventName, socketConnections) => {
-    const connection = socketConnections && socketConnections[eventName];
-    if (connection && !connection.forcedClosing) {
-      dispatch(networkStatusUpdated({ online: false }));
-    }
-  };
-
-  const onReconnect = () => {
-    dispatch(networkStatusUpdated({ online: true }));
-  };
 
   // eslint-disable-next-line max-statements
   const callback = (block) => {
@@ -55,30 +56,37 @@ const blockListener = ({ getState, dispatch }) => {
     }
   };
 
-  blockSubscribe(state.network, callback, onDisconnect, onReconnect);
+  blockSubscribe(
+    state.network,
+    callback,
+    generateOnDisconnect(dispatch),
+    generateOnReconnect(dispatch),
+  );
 };
 
 const forgingListener = ({ getState, dispatch }) => {
   const state = getState();
   forgersUnsubscribe(state.network);
 
+  const callback = async (round) => {
+    if (getState().blocks.latestBlocks.length) {
+      try {
+        const delegates = await getDelegates({
+          params: { addressList: round.nextForgers },
+          network: state.network,
+        });
+        dispatch(forgingTimesRetrieved(delegates.data));
+      } catch (e) {
+        dispatch(forgingTimesRetrieved());
+      }
+    }
+  };
+
   forgersSubscribe(
     state.network,
-    async (round) => {
-      if (getState().blocks.latestBlocks.length) {
-        try {
-          const delegates = await getDelegates({
-            params: { addressList: round.nextForgers },
-            network: state.network,
-          });
-          dispatch(forgingTimesRetrieved(delegates.data));
-        } catch (e) {
-          dispatch(forgingTimesRetrieved());
-        }
-      }
-    },
-    () => {},
-    () => {},
+    callback,
+    generateOnDisconnect(dispatch),
+    generateOnReconnect(dispatch),
   );
 };
 
