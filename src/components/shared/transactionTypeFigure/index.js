@@ -9,7 +9,6 @@ const TransactionTypeFigure = ({
   transactionType, address, avatarSize = 40, className = '', icon,
 }) => {
   const validateAddress = () => !!reg.address.test(address);
-  const txType = transactionTypes.getByCode(transactionType);
 
   const renderAvatar = () => (validateAddress()
     ? <AccountVisual address={address} size={avatarSize} />
@@ -19,9 +18,9 @@ const TransactionTypeFigure = ({
     <div className={`${styles.wrapper} ${className} transaction-image`}>
       { icon ? <Icon name={icon} className={styles.inOutIcon} /> : null }
       {
-        transactionType === transactionTypes().transfer.code.legacy
+        transactionType === transactionTypes().transfer.key
           ? renderAvatar()
-          : <Icon name={txType ? txType.icon : 'txDefault'} className={styles.transactionIcon} />
+          : <Icon name={transactionType || 'txDefault'} className={styles.transactionIcon} />
       }
     </div>
   );

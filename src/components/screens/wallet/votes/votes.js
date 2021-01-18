@@ -11,6 +11,7 @@ import VoteRow from './voteRow';
 import header from './votesTableHeader';
 import DialogLink from '../../../toolbox/dialog/link';
 import { SecondaryButton } from '../../../toolbox/buttons';
+import { isEmpty } from '../../../../utils/helpers';
 
 const getMessages = t => ({
   all: t('This account doesn’t have any votes.'),
@@ -36,19 +37,18 @@ const Votes = ({
     votes.loadData({ address });
   }, [address, hostVotes]);
 
-  // @todo uncomment this when Lisk Service API is ready
   // Fetch delegate profiles to define rank, productivity and delegate weight
-  // useEffect(() => {
-  //   if (isEmpty(accounts.data) && votes.data.length) {
-  //     const addressList = votes.data.map(vote => vote.delegateAddress);
-  //     accounts.loadData({ addressList });
-  //   }
-  // }, [votes.data]);
+  useEffect(() => {
+    if (isEmpty(accounts.data) && votes.data.length) {
+      const addressList = votes.data.map(vote => vote.address);
+      accounts.loadData({ addressList });
+    }
+  }, [votes.data]);
 
   const areLoading = accounts.isLoading || votes.isLoading;
   const filteredVotes = votes.data.filter((vote) => {
-    if (!vote.delegate) return false;
-    return vote.delegate.username.indexOf(filterValue) > -1;
+    if (!vote.username) return false;
+    return vote.username.indexOf(filterValue) > -1;
   });
 
   return (

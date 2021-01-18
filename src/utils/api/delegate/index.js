@@ -50,6 +50,7 @@ export const getDelegate = ({
 const txFilters = {
   limit: { key: 'limit', test: num => (typeof num === 'number') },
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
+  search: { key: 'search', test: str => (typeof str === 'string' && str.length > 0) },
   sort: {
     key: 'sort',
     test: str => [
@@ -83,6 +84,7 @@ const getRequests = (values) => {
  * @param {String?} data.params.addressList - Delegates address list
  * @param {String?} data.params.publicKeyList - Delegates public key list
  * @param {String?} data.params.usernameList - Delegates username list
+ * @param {String?} data.params.search - A string to search for usernames
  * @param {Number?} data.params.offset - Index of the first result
  * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
@@ -126,11 +128,11 @@ export const getDelegates = ({
 };
 
 /**
- * Retrieves a list of votes sent by a given delegate.
+ * Retrieves a list of votes sent by a given account
  *
  * @param {Object} data
- * @param {String?} data.params.address - Delegate address
- * @param {String?} data.params.publicKey - Delegate public key
+ * @param {String?} data.params.address - account address
+ * @param {String?} data.params.publicKey - account public key
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.

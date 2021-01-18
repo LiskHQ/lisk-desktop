@@ -7,7 +7,7 @@ jest.mock('../../utils/api/block');
 jest.mock('../../actions/blocks');
 
 describe('Block middleware', () => {
-  it('Should subscribe to block/change when actionTypes.serviceUrlSet', () => {
+  it('Should subscribe to block/change when actionTypes.networkConfigSet', () => {
     const state = {
       blocks: { latestBlocks: [1] },
       network: {},
@@ -17,7 +17,7 @@ describe('Block middleware', () => {
       getState: () => state,
     };
     const action = {
-      type: actionTypes.serviceUrlSet,
+      type: actionTypes.networkConfigSet,
     };
     const newConnections = { 'block/change': { connection: {}, forcedClosing: false } };
     blockSubscribe.mockImplementation(() => newConnections);

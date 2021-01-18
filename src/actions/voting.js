@@ -2,9 +2,11 @@ import to from 'await-to-js';
 import { create } from '../utils/api/transaction';
 import { passphraseUsed } from './account';
 import actionTypes from '../constants/actions';
-import { loginType } from '../constants/hwConstants';
+import loginTypes from '../constants/loginTypes';
 import transactionTypes from '../constants/transactionTypes';
 import { signVoteTransaction } from '../utils/hwManager';
+import { getVotes } from '../utils/api/delegate';
+import { tokenMap } from '../constants/tokens';
 
 /**
  * Clears the existing changes on votes.
@@ -51,7 +53,7 @@ export const votesSubmitted = data =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
     const { network, account } = getState();
 
-    const [error, tx] = account.loginType === loginType.normal
+    const [error, tx] = account.loginType === loginTypes.passphrase.code
       ? await to(create(
         { ...data, network },
         transactionTypes().vote.key,
@@ -77,11 +79,13 @@ export const votesSubmitted = data =>
  * Fetches the list of votes of the host account.
  */
 export const votesRetrieved = () =>
-  (dispatch, getState) => {
-    const { account } = getState();
+  async (dispatch, getState) => {
+    const { account, network } = getState();
+    const address = account.info[tokenMap.LSK.key].address;
+    const votes = await getVotes({ network, params: { address } });
 
-    // dispatch({
-    //   type: actionTypes.votesRetrieved,
-    //   data: account.info.LSK.votes,
-    // });
+    dispatch({
+      type: actionTypes.votesRetrieved,
+      data: votes.data,
+    });
   };

@@ -21,10 +21,8 @@ describe('API: BTC Accounts', () => {
     },
   };
   const response = {
-    body: {
-      data: {
-        confirmed_balance: 10000,
-      },
+    data: {
+      confirmed_balance: 10000,
     },
   };
 
@@ -43,7 +41,7 @@ describe('API: BTC Accounts', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: `account/${address}`,
+        path: `/account/${address}`,
       });
     });
 
@@ -58,7 +56,24 @@ describe('API: BTC Accounts', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: `account/${address}`,
+        path: `/account/${address}`,
+      });
+    });
+
+    it('should return empty account if the API returns 404', async () => {
+      http.mockImplementation(() => Promise.reject(Error('Account not found.')));
+      // Checks the baseUrl too
+      const result = await getAccount({
+        network,
+        params: {
+          passphrase,
+        },
+      });
+
+      expect(result).toEqual({
+        address,
+        balance: 0,
+        token: 'BTC',
       });
     });
   });

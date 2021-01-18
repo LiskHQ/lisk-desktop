@@ -7,7 +7,7 @@ import transactionTypes from '../constants/transactionTypes';
 import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
-import { loginType } from '../constants/hwConstants';
+import loginTypes from '../constants/loginTypes';
 import { getTransactions, create, broadcast } from '../utils/api/transaction';
 import { signSendTransaction } from '../utils/hwManager';
 
@@ -46,13 +46,12 @@ export const addNewPendingTransaction = data => ({
  * @param {Number} params.offset - index of the first transaction
  * @param {Object} params.filters - object with filters for the filer dropdown
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
- * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
 export const transactionsRetrieved = ({
   address,
-  limit = undefined,
+  limit = 30,
   offset = 0,
-  filters = undefined,
+  filters = {},
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.transactionsRetrieved));
   const { network, settings } = getState();
@@ -62,7 +61,7 @@ export const transactionsRetrieved = ({
     network,
     params: {
       address,
-      filters,
+      ...filters,
       limit,
       offset,
     },
@@ -92,51 +91,6 @@ export const transactionsRetrieved = ({
     });
 };
 
-/**
- * This action is used to update transactions from account middleware when balance
- * of the account changes. The difference from getTransactions action is that
- * this one merges the transactions list with what is already in the store whereas
- * the other one replaces the list.
- *
- * @param {Object} params - all params
- * @param {String} params.address - address of the account to fetch the transactions for
- * @param {Number} params.limit - amount of transactions to fetch
- * @param {Object} params.filters - object with filters for the filer dropdown
- *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
- * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
- */
-export const transactionsUpdated = ({
-  address,
-  filters,
-  limit,
-}) => async (dispatch, getState) => {
-  const { network, transactions, settings } = getState();
-  const token = settings.token.active;
-
-  getTransactions({
-    network, address, limit, filters,
-  }, token)
-    .then((response) => {
-      if (response && filters.direction === transactions.filters.direction) {
-        dispatch({
-          type: actionTypes.updateTransactions,
-          data: {
-            confirmed: response.data,
-            count: parseInt(response.meta.count, 10),
-          },
-        });
-      }
-    })
-    .catch((error) => {
-      dispatch({
-        type: actionTypes.transactionLoadFailed,
-        data: {
-          error,
-        },
-      });
-    });
-};
-
 // TODO remove this function once create and broadcast HOC be implemented
 export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,
@@ -160,7 +114,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
   // const timeOffset = getTimeOffset(state.blocks.latestBlocks);
   const activeToken = settings.token.active;
 
-  const [error, tx] = account.loginType === loginType.normal
+  const [error, tx] = account.loginType === loginTypes.passphrase.code
     ? await to(create(
       { ...data, network, transactionType: transactionTypes().transfer.key },
       activeToken,

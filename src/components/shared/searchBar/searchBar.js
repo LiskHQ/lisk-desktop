@@ -5,7 +5,6 @@ import Accounts from './accounts';
 import Delegates from './delegates';
 import Transactions from './transactions';
 import routes from '../../../constants/routes';
-import regex from '../../../utils/regex';
 import keyCodes from '../../../constants/keyCodes';
 import styles from './searchBar.css';
 import Blocks from './blocks';
@@ -28,23 +27,16 @@ class SearchBar extends React.Component {
     this.updateRowItemIndex = this.updateRowItemIndex.bind(this);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  isSubmittedStringValid(text) {
-    return regex.address.test(text)
-      || regex.transactionId.test(text)
-      || regex.delegateName.test(text);
-  }
-
   onChangeSearchTextValue({ target: { value: searchTextValue } }) {
-    const { suggestions } = this.props;
-    const isTextValid = this.isSubmittedStringValid(searchTextValue);
+    const { suggestions, activeToken } = this.props;
 
     this.setState({ searchTextValue, rowItemIndex: 0 });
-    if (searchTextValue.length > 2 && isTextValid) {
+    if (searchTextValue.length > 2) {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         suggestions.loadData({
-          searchTerm: this.state.searchTextValue,
+          query: this.state.searchTextValue,
+          token: activeToken,
         });
         this.timeout = null;
       }, 500);

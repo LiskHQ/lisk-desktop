@@ -91,6 +91,7 @@ describe('API: LSK Account', () => {
     } = accounts.delegate;
 
     it('should call http with right params, prioritizing 1. username', async () => {
+      http.mockImplementation(() => Promise.resolve({ data: [{}] }));
       // Checks the baseUrl too
       await getAccount({
         network,
@@ -112,6 +113,7 @@ describe('API: LSK Account', () => {
     });
 
     it('should call http with right params, prioritizing 2. address', async () => {
+      http.mockImplementation(() => Promise.resolve({ data: [{}] }));
       // Checks with no baseUrl
       await getAccount({
         network,
@@ -131,6 +133,7 @@ describe('API: LSK Account', () => {
     });
 
     it('should call http with right address, if publicKey passed', async () => {
+      http.mockImplementation(() => Promise.resolve({ data: [{}] }));
       // Checks with no baseUrl
       await getAccount({
         network,
@@ -148,6 +151,7 @@ describe('API: LSK Account', () => {
     });
 
     it('should call http with right address, if passphrase passed', async () => {
+      http.mockImplementation(() => Promise.resolve({ data: [{}] }));
       // Checks the baseUrl too
       await getAccount({
         network,
@@ -162,6 +166,24 @@ describe('API: LSK Account', () => {
         params: { address },
         baseUrl,
         path,
+      });
+    });
+
+    it('should return empty account if the API returns 404', async () => {
+      http.mockImplementation(() => Promise.reject(Error('Account not found.')));
+      // Checks the baseUrl too
+      const result = await getAccount({
+        network,
+        params: {
+          passphrase,
+        },
+        baseUrl,
+      });
+
+      expect(result).toEqual({
+        address,
+        balance: 0,
+        token: 'LSK',
       });
     });
   });

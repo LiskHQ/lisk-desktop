@@ -5,19 +5,18 @@ import {
 } from '../../actions/account';
 import {
   emptyTransactionsData,
-  transactionsUpdated,
+  transactionsRetrieved,
 } from '../../actions/transactions';
 import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
 import { getActiveTokenAccount } from '../../utils/account';
-import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
+import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
 import { votesRetrieved } from '../../actions/voting';
-import { networkSet, networkStatusUpdated } from '../../actions/network';
+import { networkSelected, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
 import analytics from '../../utils/analytics';
 import i18n from '../../i18n';
-import { getFromStorage } from '../../utils/localJSONStorage';
-import networks from '../../constants/networks';
+import networks, { networkKeys } from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import { tokenMap } from '../../constants/tokens';
@@ -96,7 +95,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // https://github.com/LiskHQ/lisk-desktop/pull/1609
     setTimeout(() => {
       updateAccountData(store);
-      store.dispatch(transactionsUpdated({
+      store.dispatch(transactionsRetrieved({
         pendingTransactions: transactions.pending,
         address: account.address,
         filters: transactions.filters,
@@ -105,84 +104,22 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
-// istanbul ignore next
-const getNetworkFromLocalStorage = () => {
-  let mySettings = {};
-  getFromStorage('settings', {}, (data) => {
-    mySettings = data;
-  });
-  if (!mySettings.network) return networks.mainnet;
-  return {
-    ...Object.values(networks).find(
-      ({ name }) => name === mySettings.network.name,
-    ) || networks.mainnet,
-    address: mySettings.network.address,
-  };
-};
-
-// eslint-disable-next-line max-statements
-const checkNetworkToConnect = (showNetwork) => {
-  const autologinData = getAutoLogInData();
-  let loginNetwork = findMatchingLoginNetwork();
-
-  if (loginNetwork) {
-    const net = loginNetwork.slice(-1).shift();
-    loginNetwork = {
-      name: net.name,
-      network: {
-        ...net,
-      },
-    };
-  }
-
-  if (!loginNetwork && autologinData.liskCoreUrl) {
-    loginNetwork = {
-      name: networks.customNode.name,
-      passphrase: autologinData[settings.keys.loginKey],
-      network: { ...networks.customNode, address: autologinData[settings.keys.liskCoreUrl] },
-      options: {
-        code: networks.customNode.code,
-        address: autologinData[settings.keys.liskCoreUrl],
-      },
-    };
-  }
-
-  // istanbul ignore next
-  if (!loginNetwork && !autologinData.liskCoreUrl) {
-    if (showNetwork) {
-      const currentNetwork = getNetworkFromLocalStorage();
-      loginNetwork = {
-        name: currentNetwork.name,
-        network: {
-          ...currentNetwork,
-        },
-      };
-    } else {
-      loginNetwork = {
-        name: networks.mainnet.name,
-        network: {
-          ...networks.mainnet,
-        },
-      };
-    }
-  }
-
-  return loginNetwork;
-};
-
-// eslint-disable-next-line max-statements
-const autoLogInIfNecessary = async (store) => {
+const autoLogInIfNecessary = async ({ dispatch, getState }) => {
   const {
-    showNetwork, statistics, statisticsRequest, statisticsFollowingDay,
-  } = store.getState().settings;
-  const loginNetwork = checkNetworkToConnect(showNetwork);
-  store.dispatch(networkSet(loginNetwork, tokenMap.LSK.key));
-  store.dispatch(networkStatusUpdated({ online: true }));
+    statistics, statisticsRequest, statisticsFollowingDay,
+  } = getState().settings;
+  const autoLoginData = getAutoLogInData();
 
-  const autologinData = getAutoLogInData();
-  if (shouldAutoLogIn(autologinData)) {
+  const address = autoLoginData[settings.keys.liskCoreUrl];
+  const network = address
+    ? { name: networkKeys.customNode, address }
+    : { name: networkKeys.mainNet, address: networks.mainnet.nodes[0] };
+  dispatch(networkSelected(network));
+  dispatch(networkStatusUpdated({ online: true }));
+
+  if (shouldAutoLogIn(autoLoginData)) {
     setTimeout(() => {
-      store.dispatch(login({ passphrase: autologinData[settings.keys.loginKey] }));
+      dispatch(login({ passphrase: autoLoginData[settings.keys.loginKey] }));
     }, 500);
   }
 

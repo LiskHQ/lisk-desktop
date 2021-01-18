@@ -1,16 +1,16 @@
 import actionTypes from '../../constants/actions';
 import { networkStatusUpdated } from '../../actions/network';
-import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
+import { olderBlocksRetrieved } from '../../actions/blocks';
 import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
 import { forgersSubscribe, forgersUnsubscribe, getDelegates } from '../../utils/api/delegate';
 import { tokenMap } from '../../constants/tokens';
 
 // eslint-disable-next-line max-statements
-const blockListener = (store) => {
-  const state = store.getState();
+const blockListener = ({ getState, dispatch }) => {
+  const state = getState();
 
   const socketConnections = blockUnsubscribe(state.network);
-  store.dispatch({
+  dispatch({
     type: actionTypes.socketConnectionsUpdated,
     data: socketConnections,
   });
@@ -23,15 +23,15 @@ const blockListener = (store) => {
   }
 
   const onDisconnect = (eventName) => {
-    const networkState = store.getState().network;
+    const networkState = getState().network;
     const connection = networkState.socketConnections && networkState.socketConnections[eventName];
-    if (connection && !connection.forcedClosings) {
-      store.dispatch(networkStatusUpdated({ online: false }));
+    if (connection && !connection.forcedClosing) {
+      dispatch(networkStatusUpdated({ online: false }));
     }
   };
 
   const onReconnect = () => {
-    store.dispatch(networkStatusUpdated({ online: true }));
+    dispatch(networkStatusUpdated({ online: true }));
   };
 
   // eslint-disable-next-line max-statements
@@ -44,12 +44,12 @@ const blockListener = (store) => {
     const oneMinute = 1000 * 60;
 
     if ((activeToken !== tokenMap.BTC.key) || now - lastBtcUpdate > oneMinute) {
-      store.dispatch({
+      dispatch({
         type: actionTypes.newBlockCreated,
         data: { block, windowIsFocused },
       });
       if (activeToken === tokenMap.BTC.key) {
-        store.dispatch({
+        dispatch({
           type: actionTypes.lastBtcUpdateSet,
           data: now,
         });
@@ -62,7 +62,7 @@ const blockListener = (store) => {
   };
 
   const newConnection = blockSubscribe(state.network, callback, onDisconnect, onReconnect);
-  store.dispatch({
+  dispatch({
     type: actionTypes.socketConnectionsUpdated,
     data: { ...state.network.socketConnections, ...newConnection },
   });
@@ -104,7 +104,7 @@ const blockMiddleware = store => (
   next => (action) => {
     next(action);
     switch (action.type) {
-      case actionTypes.networkSet:
+      case actionTypes.networkConfigSet:
         store.dispatch(olderBlocksRetrieved());
         blockListener(store);
         forgingListener(store);

@@ -10,7 +10,6 @@ import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
 import withLocalSort from '../../../../utils/withLocalSort';
-import voting from '../../../../constants/voting';
 import transactionTypes from '../../../../constants/transactionTypes';
 
 const defaultUrlSearchParams = { search: '' };
@@ -55,19 +54,21 @@ const ComposedDelegates = compose(
   withData(
     {
       [delegatesKey]: {
-        apiUtil: network => getForgers({ network, params: { limit: voting.numberOfActiveDelegates } }),
+        apiUtil: ({ networks }, params) => getForgers(
+          { network: networks.LSK, params: { ...params, limit: 103 } },
+        ),
         defaultData: [],
         autoload: true,
         transformResponse: transformDelegatesResponse,
       },
 
       [standByDelegatesKey]: {
-        apiUtil: (network, params) => getDelegates({ network, params }),
+        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
         defaultData: [],
         autoload: true,
         transformResponse: response => transformDelegatesResponse({
           data: response.data.filter(
-            delegate => delegate.rank > voting.numberOfActiveDelegates,
+            delegate => delegate.rank > 103,
           ),
           meta: response.meta,
         }),

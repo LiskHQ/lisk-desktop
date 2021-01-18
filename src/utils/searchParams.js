@@ -30,7 +30,7 @@ export const selectSearchParamValue = (search, paramToSelect) =>
  * @param {object} params the parsed searchParams object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const strigifySearchParams = (params) => {
+export const stringifySearchParams = (params) => {
   const result = [];
 
   Object.keys(params).forEach((key) => {
@@ -56,7 +56,7 @@ export const appendSearchParams = (search, data) => {
   Object.keys(data).forEach((key) => {
     searchParams[key] = data[key];
   });
-  return strigifySearchParams(searchParams);
+  return stringifySearchParams(searchParams);
 };
 
 /**
@@ -79,7 +79,7 @@ export const removeSearchParams = (search, paramsToRemove, cleanParamsAfter) => 
     });
   }
 
-  return strigifySearchParams(params);
+  return stringifySearchParams(params);
 };
 
 /**

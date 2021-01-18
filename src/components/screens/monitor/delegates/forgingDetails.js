@@ -11,9 +11,8 @@ import BoxContent from '../../../toolbox/box/content';
 import styles from './overview.css';
 import NumericInfo from './numericInfo';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
-import voting from '../../../../constants/voting';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
-import { colorPallete } from '../../../../constants/chartConstants';
+import { colorPalette } from '../../../../constants/chartConstants';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
 
 const getForgingStats = (data) => {
@@ -59,7 +58,7 @@ const ForgingDetails = ({
   ];
   const { latestBlocks, awaitingForgers } = useSelector(state => state.blocks);
   const forgedInRound = latestBlocks.length
-    ? latestBlocks[0].height % voting.numberOfActiveDelegates : 0;
+    ? latestBlocks[0].height % 103 : 0;
 
   const doughnutChartData = {
     labels: delegatesForgedLabels,
@@ -115,7 +114,7 @@ const ForgingDetails = ({
                   <div className="hideOnLargeViewPort">
                     <GuideTooltip>
                       {delegatesForgedLabels.map((label, i) => (
-                        <GuideTooltipItem key={label} color={colorPallete[i]} label={label} />
+                        <GuideTooltipItem key={label} color={colorPalette[i]} label={label} />
                       ))}
                     </GuideTooltip>
                   </div>

@@ -1,10 +1,5 @@
 /**
  * Returns details of the transaction types
- *
- * @todo Starting Lisk Desktop 2.0.0 we should
- * remove the version detection logic
- * and simply assume we always receive the new layout
- * but transactions may have either of the tx type codes.
  */
 const transactionTypes = (t = str => str) => ({
   transfer: {
@@ -28,7 +23,6 @@ const transactionTypes = (t = str => str) => ({
     title: t('Second passphrase registration'),
     senderLabel: t('Account'),
     key: 'secondPassphrase',
-    icon: 'tx2ndPassphrase',
     nameFee: 0,
     hardCap: 5e8, // rawLSK
   },
@@ -41,7 +35,6 @@ const transactionTypes = (t = str => str) => ({
     title: t('Delegate registration'),
     senderLabel: t('Account nickname'),
     key: 'registerDelegate',
-    icon: 'txDelegate',
     nameFee: 1e9,
     hardCap: 25e8, // rawLSK
   },
@@ -53,8 +46,7 @@ const transactionTypes = (t = str => str) => ({
     outgoingCode: 11,
     title: t('Delegate vote'),
     senderLabel: t('Voter'),
-    key: 'castVotes',
-    icon: 'txVote',
+    key: 'vote',
     nameFee: 0,
     hardCap: 1e8, // rawLSK
   },
@@ -67,7 +59,6 @@ const transactionTypes = (t = str => str) => ({
     title: t('Multisignature creation'),
     senderLabel: t('Registrant'),
     key: 'createMultiSig',
-    icon: 'signMultiSignatureTransaction',
     nameFee: 0,
     hardCap: 5e8, // rawLSK
   },
@@ -80,7 +71,6 @@ const transactionTypes = (t = str => str) => ({
     title: t('Unlock LSK'),
     senderLabel: t('Sender'),
     key: 'unlockToken',
-    icon: 'txUnlock',
     nameFee: 0,
   },
 });
@@ -93,9 +83,14 @@ const transactionTypes = (t = str => str) => ({
  */
 transactionTypes.getByCode = (code) => {
   const types = transactionTypes();
+
+  if (typeof code === 'string' && types[code]) {
+    return types[code];
+  }
   const key = Object.keys(types)
     .filter(type => (
-      types[type].code.legacy === code || types[type].code.new === code
+      types[type].code.legacy === code
+      || types[type].code.new === code
     ));
   return key.length ? types[key] : null;
 };

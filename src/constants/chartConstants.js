@@ -17,7 +17,7 @@ export const chartStyles = {
   fontSize: 13,
 };
 
-export const colorPallete = [
+export const colorPalette = [
   chartStyles.ufoGreen,
   chartStyles.ultramarineBlue,
   chartStyles.maastrichtBlue,

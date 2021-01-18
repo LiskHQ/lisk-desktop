@@ -7,12 +7,12 @@ jest.mock('../http', () => ({
 }));
 
 describe('API: BTC Transactions', () => {
-  const path = 'transactions';
   const network = {
     serviceUrl: 'http://sample.com/',
     networks: {
       BTC: {
         name: 'mainnet',
+        serviceUrl: 'http://btc.io',
       },
     },
   };
@@ -42,21 +42,21 @@ describe('API: BTC Transactions', () => {
   describe('getTransaction', () => {
     it('Should call http with given params', async () => {
       jest.clearAllMocks();
-      http.mockResolvedValue({
-        body: {
+      http.mockImplementation(() =>
+        Promise.resolve({
           data: sampleTx(0),
           meta: { total: 1 },
-        },
-      });
+        }));
       await getTransaction({
         network,
-        id: sampleId,
+        params: { id: sampleId },
       });
 
       expect(http).toHaveBeenCalledWith({
-        params: { id: sampleId },
+        baseUrl: 'http://btc.io',
+        params: {},
         network,
-        path,
+        path: `/transaction/${sampleId}`,
       });
     });
   });
@@ -64,27 +64,31 @@ describe('API: BTC Transactions', () => {
   describe('getTransactions', () => {
     it('Should call http with given params', async () => {
       const total = 10;
+      const address = 'sample_address';
       const params = {
         offset: total,
         limit: total,
         sort: 'amount:asc',
       };
       jest.clearAllMocks();
-      http.mockResolvedValue({
-        body: {
+      http.mockImplementation(() =>
+        Promise.resolve({
           data: Array.from(Array(total).keys()).map(sampleTx),
           meta: { total },
-        },
-      });
+        }));
       await getTransactions({
         network,
-        params,
+        params: {
+          ...params,
+          address,
+        },
       });
 
       expect(http).toHaveBeenCalledWith({
+        baseUrl: 'http://btc.io',
         params,
         network,
-        path,
+        path: `/transactions/${address}`,
       });
     });
 

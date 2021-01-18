@@ -8,15 +8,14 @@ import withData from '../../../utils/withData';
 import Overview from './overview';
 import { getAccount } from '../../../utils/api/account';
 import { getTransactions } from '../../../utils/api/transaction';
-import txFilters from '../../../constants/transactionFilters';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
 import { selectSearchParamValue } from '../../../utils/searchParams';
+import { toRawLsk } from '../../../utils/lsk';
 
 
-const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
 /**
  * The implementation of this API endpoint and the ones implemented for Lisk Service
  * are different. this transformer adapts params temporarily before all the APIs
@@ -26,10 +25,14 @@ const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 
  */
 const transformParams = params => Object.keys(params)
   .reduce((acc, item) => {
-    if (filterNames.includes(item)) acc.filters[item] = params[item];
-    else acc[item] = params[item];
+    if (item === 'amountFrom' || item === 'amountTo') {
+      acc.filters[item] = toRawLsk(params[item]);
+    } else if (item === 'dateFrom' || item === 'dateTo') {
+      acc.filters[item] = params[item];
+    } else {
+      acc[item] = params[item];
+    }
 
-    if (typeof params.tab === 'number') acc.filters.direction = params.tab;
     return acc;
   }, { filters: {} });
 
@@ -91,7 +94,7 @@ const Wallet = ({
 
 const apis = {
   account: {
-    apiUtil: (network, params) => getAccount({ network, params }, params.token),
+    apiUtil: (network, { token, ...params }) => getAccount({ network, params }, token),
     defaultData: {},
     getApiParams: (state, props) => ({
       token: state.settings.token.active,
@@ -110,9 +113,7 @@ const apis = {
     }),
     defaultData: [],
     defaultUrlSearchParams: {
-      filters: {
-        direction: txFilters.all,
-      },
+      filters: {},
     },
     transformResponse: (response, oldData, urlSearchParams) => (
       urlSearchParams.offset

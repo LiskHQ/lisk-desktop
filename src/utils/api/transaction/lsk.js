@@ -17,6 +17,7 @@ const httpPaths = {
   feeEstimates: `${httpPrefix}/fee_estimates`,
   transactions: `${httpPrefix}/transactions`,
   transaction: `${httpPrefix}/transactions`,
+  transactionStats: `${httpPrefix}/transactions/statistics`,
 };
 
 const wsMethods = {
@@ -27,7 +28,8 @@ const wsMethods = {
  * Retrieves the details of a single transaction
  *
  * @param {Object} data
- * @param {String} data.params - Id of the transaction
+ * @param {String} data.params
+ * @param {String} data.params.id - Id of the transaction
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
@@ -35,22 +37,30 @@ const wsMethods = {
  * @returns {Promise} Transaction details API call
  */
 export const getTransaction = ({
-  id, network, baseUrl,
+  params, network, baseUrl,
 }) => http({
   path: httpPaths.transaction,
-  params: { id },
+  params,
   network,
   baseUrl,
+}).then((response) => {
+  const data = response.data.map((tx) => {
+    tx.title = transactionTypes.getByCode(tx.type).key;
+    return tx;
+  });
+
+  return { data, meta: response.meta };
 });
 
 const filters = {
   address: { key: 'address', test: address => !validateAddress(tokenMap.LSK.key, address) },
   dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
   dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
-  amountFrom: { key: 'min', test: num => typeof num === 'number' && num >= 0 },
-  amountTo: { key: 'max', test: num => typeof num === 'number' && num > 0 },
-  limit: { key: 'limit', test: num => (typeof num === 'number' && num > 0) },
-  offset: { key: 'offset', test: num => (typeof num === 'number' && num >= 0) },
+  amountFrom: { key: 'min', test: num => parseFloat(num) >= 0 },
+  amountTo: { key: 'max', test: num => parseFloat(num) > 0 },
+  limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
+  offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
+  message: { key: 'message', test: str => (typeof str === 'string') },
   sort: {
     key: 'sort',
     test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
@@ -65,6 +75,7 @@ const filters = {
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.params
+ * @param {String} data.params.address Sender or recipient account
  * @param {String} data.params.dateFrom Unix timestamp, the start time of txs
  * @param {String} data.params.dateTo Unix timestamp, the end time of txs
  * @param {String} data.params.amountFrom The minimum value of txs
@@ -91,7 +102,15 @@ export const getTransactions = ({
       params: { type },
     }));
     // BaseUrl is only used for retrieving archived txs, so it's not needed here.
-    return ws({ baseUrl: network.serviceUrl, requests });
+    return ws({ baseUrl: network.serviceUrl, requests })
+      .then((response) => {
+        const data = response.data.map((tx) => {
+          tx.title = transactionTypes.getByCode(tx.type).key;
+          return tx;
+        });
+
+        return { data, meta: response.meta };
+      });
   }
 
   const normParams = {};
@@ -106,7 +125,7 @@ export const getTransactions = ({
         normParams[filters[key].key] = params[key];
       } else {
         // eslint-disable-next-line no-console
-        console.log(`getTransactions: Dropped ${key} parameter, it's invalid.`);
+        console.log(`getTransactions: Dropped ${key} parameter, it's invalid.`, params[key]);
       }
     });
   }
@@ -116,7 +135,15 @@ export const getTransactions = ({
     path: httpPaths.transactions,
     params: normParams,
     baseUrl,
-  });
+  })
+    .then((response) => {
+      const data = response.data.map((tx) => {
+        tx.title = transactionTypes.getByCode(tx.type).key;
+        return tx;
+      });
+
+      return { data, meta: response.meta };
+    });
 };
 
 // @todo document this function signature
@@ -164,11 +191,19 @@ export const getRegisteredDelegates = async ({ network }) => {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Object} Network transactions statistics
  */
-export const getTransactionStats = data => http({
-  path: `transactions/statistics/${data.params.period}`,
-  params: { limit: data.params.limit },
-  network: data.network,
-});
+export const getTransactionStats = ({ network, params: { period } }) => {
+  const normParams = {
+    week: { path: 'day', limit: 7 },
+    month: { path: 'day', limit: 30 },
+    year: { path: 'month', limit: 12 },
+  };
+
+  return http({
+    path: `${httpPaths.transactionStats}/${normParams[period].path}`,
+    params: { limit: normParams[period].limit },
+    network,
+  });
+};
 
 /**
  * Gets the amount of a given transaction

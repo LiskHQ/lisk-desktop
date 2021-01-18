@@ -5,7 +5,11 @@ describe('HTTP', () => {
     path: '/api/endpoint',
     params: { id: 'test' },
     method: 'GET',
-    network: { serviceUrl: 'http://liskdev.net' },
+    network: {
+      networks: {
+        LSK: { serviceUrl: 'http://liskdev.net' },
+      },
+    },
   };
 
   it('should make HTTP calls with given params', async () => {
@@ -17,7 +21,7 @@ describe('HTTP', () => {
     await http(data);
 
     expect(fetch).toHaveBeenCalledWith(
-      `${data.network.serviceUrl}${data.path}?id=test`,
+      `${data.network.networks.LSK.serviceUrl}${data.path}?id=test`,
       expect.objectContaining({ method: 'GET' }),
     );
   });

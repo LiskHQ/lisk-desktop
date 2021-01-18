@@ -1,6 +1,6 @@
 import React from 'react';
 import { toRawLsk } from '../../../../utils/lsk';
-import { loginType } from '../../../../constants/hwConstants';
+import loginTypes from '../../../../constants/loginTypes';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Converter from '../../../shared/converter';
 import Piwik from '../../../../utils/piwik';
@@ -42,7 +42,8 @@ class Summary extends React.Component {
       transactions,
     } = this.props;
 
-    if (account.loginType !== loginType.normal && transactions.transactionsCreatedFailed.length) {
+    if (account.loginType !== loginTypes.passphrase.code
+        && transactions.transactionsCreatedFailed.length) {
       nextStep({
         fields: {
           ...fields,
