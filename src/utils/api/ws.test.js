@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import ws, { subscribe, unsubscribe } from './ws';
+import ws, { subscribe, unsubscribe, subscribeConnections } from './ws';
 
 jest.mock('socket.io-client');
 
@@ -98,30 +98,34 @@ describe('Web socket', () => {
     });
   });
 
-  describe('subscribe', () => {
+  describe('subscribe&unsubscribe', () => {
+    const on = jest.fn();
+    const close = jest.fn();
+    const event = 'blocks/change';
+
+
     it('should subscribe correctly', () => {
-      const on = jest.fn();
-      io.mockImplementation(() => ({ on }));
+      io.mockImplementation(() => ({ on, close }));
       const fn = () => {};
-      const event = 'blocks/change';
       subscribe(baseUrl, event, fn, fn, fn);
 
       expect(on).toHaveBeenCalledTimes(3);
       expect(on).toHaveBeenNthCalledWith(1, event, fn);
       expect(on).toHaveBeenNthCalledWith(2, 'reconnect', fn);
       expect(on).toHaveBeenNthCalledWith(3, 'disconnect', expect.any(Function));
+      expect(subscribeConnections).toEqual({
+        [event]: {
+          connection: { on, close },
+          forcedClosing: false,
+        },
+      });
     });
-  });
 
-  describe('unsubscribe', () => {
     it('should unsubscribe correctly', () => {
-      const close = jest.fn();
-      const event = 'blocks/change';
-      const connection = { close };
-      const connections = { [event]: { connection, forcedClosing: false } };
-      unsubscribe(event, connections);
+      unsubscribe(event);
 
       expect(close).toHaveBeenCalledTimes(1);
+      expect(subscribeConnections).toEqual({});
     });
   });
 });

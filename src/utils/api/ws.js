@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-const subscribeConnections = {};
+export const subscribeConnections = {};
 
 /**
  * A generic function to handle WS requests.
@@ -71,7 +71,7 @@ export const subscribe = (
       onDisconnect(eventName, subscribeConnections);
     }
   });
-  subscribeConnections[node] = connection;
+  subscribeConnections[eventName] = { connection, forcedClosing: false };
 };
 
 /**

@@ -5,16 +5,12 @@ import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
 import { forgersSubscribe, forgersUnsubscribe, getDelegates } from '../../utils/api/delegate';
 import { tokenMap } from '../../constants/tokens';
 
-const generateOnDisconnect = (dispatch) => {
-  return () => {
-    dispatch(networkStatusUpdated({ online: false }));
-  };
+const generateOnDisconnect = dispatch => () => {
+  dispatch(networkStatusUpdated({ online: false }));
 };
 
-const generateOnReconnect = (dispatch) => {
-  return () => {
-    dispatch(networkStatusUpdated({ online: true }));
-  };
+const generateOnReconnect = dispatch => () => {
+  dispatch(networkStatusUpdated({ online: true }));
 };
 
 // eslint-disable-next-line max-statements
