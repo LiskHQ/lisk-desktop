@@ -1,6 +1,6 @@
 import actionTypes from '../../constants/actions';
 import { networkStatusUpdated } from '../../actions/network';
-import { olderBlocksRetrieved } from '../../actions/blocks';
+import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
 import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
 import { forgersSubscribe, forgersUnsubscribe, getDelegates } from '../../utils/api/delegate';
 import { tokenMap } from '../../constants/tokens';
@@ -37,7 +37,7 @@ const blockListener = ({ getState, dispatch }) => {
   // eslint-disable-next-line max-statements
   const callback = (block) => {
     console.log(block.generatorUsername);
-    const { settings, network, blocks } = store.getState();
+    const { settings, network, blocks } = getState();
     const activeToken = settings.token && state.settings.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;
     const now = new Date();
@@ -57,7 +57,7 @@ const blockListener = ({ getState, dispatch }) => {
     }
 
     if (Object.keys(blocks.forgingTimes).length === 0 || blocks.awaitingForgers.length === 0) {
-      store.dispatch(forgingTimesRetrieved());
+      dispatch(forgingTimesRetrieved());
     }
   };
 
@@ -68,10 +68,10 @@ const blockListener = ({ getState, dispatch }) => {
   });
 };
 
-const forgingListener = (store) => {
-  const state = store.getState();
+const forgingListener = ({ getState, dispatch }) => {
+  const state = getState();
   const socketConnections = forgersUnsubscribe(state.network);
-  store.dispatch({
+  dispatch({
     type: actionTypes.socketConnectionsUpdated,
     data: socketConnections,
   });
@@ -79,22 +79,22 @@ const forgingListener = (store) => {
   const newConnection = forgersSubscribe(
     state.network,
     async (round) => {
-      if (store.getState().blocks.latestBlocks.length) {
+      if (getState().blocks.latestBlocks.length) {
         try {
           const delegates = await getDelegates({
             params: { addressList: round.nextForgers },
             network: state.network,
           });
-          store.dispatch(forgingTimesRetrieved(delegates.data));
+          dispatch(forgingTimesRetrieved(delegates.data));
         } catch (e) {
-          store.dispatch(forgingTimesRetrieved());
+          dispatch(forgingTimesRetrieved());
         }
       }
     },
     () => {},
     () => {},
   );
-  store.dispatch({
+  dispatch({
     type: actionTypes.socketConnectionsUpdated,
     data: { ...state.network.socketConnections, ...newConnection },
   });

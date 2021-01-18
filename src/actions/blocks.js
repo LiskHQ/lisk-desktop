@@ -61,7 +61,7 @@ const retrieveNextForgers = async (network) => {
 
 // eslint-disable-next-line max-statements
 export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) => {
-  const { network, blocks } = getState();
+  const { network } = getState();
   const { latestBlocks } = getState().blocks;
   const forgedInRoundNum = latestBlocks[0].height % 103;
   const awaitingForgers = nextForgers || await retrieveNextForgers(network);
