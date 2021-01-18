@@ -16,8 +16,7 @@ const generateOnReconnect = dispatch => () => {
 // eslint-disable-next-line max-statements
 const blockListener = ({ getState, dispatch }) => {
   const state = getState();
-
-  blockUnsubscribe(state.network);
+  blockUnsubscribe();
 
   let windowIsFocused = true;
   const { ipc } = window;
@@ -62,7 +61,7 @@ const blockListener = ({ getState, dispatch }) => {
 
 const forgingListener = ({ getState, dispatch }) => {
   const state = getState();
-  forgersUnsubscribe(state.network);
+  forgersUnsubscribe();
 
   const callback = async (round) => {
     if (getState().blocks.latestBlocks.length) {
