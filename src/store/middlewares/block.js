@@ -36,7 +36,6 @@ const blockListener = ({ getState, dispatch }) => {
 
   // eslint-disable-next-line max-statements
   const callback = (block) => {
-    console.log(block.generatorUsername);
     const { settings, network, blocks } = getState();
     const activeToken = settings.token && state.settings.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;
