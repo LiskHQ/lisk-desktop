@@ -9,13 +9,14 @@ import styles from '../delegates.css';
 
 const VoteRow = ({
   data, className,
+// eslint-disable-next-line arrow-body-style
 }) => {
-  /*const votes = data.votes
+  /* const votes = data.votes
     .filter(vote => vote.status === '+')
     .map(vote => vote.delegate.username);
   const unVotes = data.votes
     .filter(vote => vote.status === '-')
-    .map(vote => vote.delegate.username);*/
+    .map(vote => vote.delegate.username); */
   return (
     <DialogLink
       className={`${grid.row} ${className} ${styles.voteRow} vote-row`}

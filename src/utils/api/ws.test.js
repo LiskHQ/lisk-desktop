@@ -103,7 +103,6 @@ describe('Web socket', () => {
     const close = jest.fn();
     const event = 'blocks/change';
 
-
     it('should subscribe correctly', () => {
       io.mockImplementation(() => ({ on, close }));
       const fn = () => {};
