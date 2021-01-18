@@ -61,6 +61,7 @@ const filters = {
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
   message: { key: 'message', test: str => (typeof str === 'string') },
+  type: { key: 'type', test: num => parseInt(num, 10) > 0 },
   sort: {
     key: 'sort',
     test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
@@ -80,7 +81,7 @@ const filters = {
  * @param {String} data.params.dateTo Unix timestamp, the end time of txs
  * @param {String} data.params.amountFrom The minimum value of txs
  * @param {String} data.params.amountTo The maximum value of txs
- * @param {String} data.params.type The title of the transaction type
+ * @param {Number} data.params.type The title of the transaction type
  * @param {Number} data.params.offset Used for pagination
  * @param {Number} data.params.limit Used for pagination
  * @param {String} data.params.sort an option of 'amount:asc',
