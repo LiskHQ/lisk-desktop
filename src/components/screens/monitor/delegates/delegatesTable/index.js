@@ -1,5 +1,6 @@
 import React from 'react';
 import Table from '../../../../toolbox/table';
+import { MAX_BLOCKS_FORGED } from '../../../../../constants/delegates';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
 
@@ -31,7 +32,7 @@ const DelegatesTable = ({
 
   const canLoadMore = activeTab === 'active' || !standByDelegates.meta
     ? false
-    : standByDelegates.data.length < (standByDelegates.meta.total - 103);
+    : standByDelegates.data.length < (standByDelegates.meta.total - MAX_BLOCKS_FORGED);
 
   delegates = activeTab === 'active'
     ? filterDelegates(delegates, filters)

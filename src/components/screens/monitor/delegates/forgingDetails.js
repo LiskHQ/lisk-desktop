@@ -58,7 +58,7 @@ const ForgingDetails = ({
   ];
   const { latestBlocks, awaitingForgers } = useSelector(state => state.blocks);
   const forgedInRound = latestBlocks.length
-    ? latestBlocks[0].height % 103 : 0;
+    ? latestBlocks[0].height % MAX_BLOCKS_FORGED : 0;
 
   const doughnutChartData = {
     labels: delegatesForgedLabels,

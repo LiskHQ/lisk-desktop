@@ -11,6 +11,7 @@ import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
 import withLocalSort from '../../../../utils/withLocalSort';
 import transactionTypes from '../../../../constants/transactionTypes';
+import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
 
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
@@ -55,7 +56,7 @@ const ComposedDelegates = compose(
     {
       [delegatesKey]: {
         apiUtil: ({ networks }, params) => getForgers(
-          { network: networks.LSK, params: { ...params, limit: 103 } },
+          { network: networks.LSK, params: { ...params, limit: MAX_BLOCKS_FORGED } },
         ),
         defaultData: [],
         autoload: true,
@@ -68,7 +69,7 @@ const ComposedDelegates = compose(
         autoload: true,
         transformResponse: response => transformDelegatesResponse({
           data: response.data.filter(
-            delegate => delegate.rank > 103,
+            delegate => delegate.rank > MAX_BLOCKS_FORGED,
           ),
           meta: response.meta,
         }),

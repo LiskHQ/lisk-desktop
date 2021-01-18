@@ -1,4 +1,5 @@
 import actionTypes from '../constants/actions';
+import { MAX_BLOCKS_FORGED } from '../constants/delegates';
 import { convertUnixSecondsToLiskEpochSeconds } from '../utils/datetime';
 import { getBlocks } from '../utils/api/block';
 import { getForgers } from '../utils/api/delegate';
@@ -49,7 +50,7 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
 const retrieveNextForgers = async (network) => {
   const { data } = await getForgers({
     network,
-    params: { limit: 103 },
+    params: { limit: MAX_BLOCKS_FORGED },
   });
 
   if (data) {
@@ -63,7 +64,7 @@ const retrieveNextForgers = async (network) => {
 export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) => {
   const { network } = getState();
   const { latestBlocks } = getState().blocks;
-  const forgedInRoundNum = latestBlocks[0].height % 103;
+  const forgedInRoundNum = latestBlocks[0].height % MAX_BLOCKS_FORGED;
   const awaitingForgers = nextForgers || await retrieveNextForgers(network);
 
   // First I define the delegates who forged in this round.
