@@ -9,11 +9,7 @@ import { tokenMap } from '../../constants/tokens';
 const blockListener = ({ getState, dispatch }) => {
   const state = getState();
 
-  const socketConnections = blockUnsubscribe(state.network);
-  dispatch({
-    type: actionTypes.socketConnectionsUpdated,
-    data: socketConnections,
-  });
+  blockUnsubscribe(state.network);
 
   let windowIsFocused = true;
   const { ipc } = window;
@@ -22,9 +18,8 @@ const blockListener = ({ getState, dispatch }) => {
     ipc.on('focus', () => { windowIsFocused = true; });
   }
 
-  const onDisconnect = (eventName) => {
-    const networkState = getState().network;
-    const connection = networkState.socketConnections && networkState.socketConnections[eventName];
+  const onDisconnect = (eventName, socketConnections) => {
+    const connection = socketConnections && socketConnections[eventName];
     if (connection && !connection.forcedClosing) {
       dispatch(networkStatusUpdated({ online: false }));
     }
@@ -60,22 +55,14 @@ const blockListener = ({ getState, dispatch }) => {
     }
   };
 
-  const newConnection = blockSubscribe(state.network, callback, onDisconnect, onReconnect);
-  dispatch({
-    type: actionTypes.socketConnectionsUpdated,
-    data: { ...state.network.socketConnections, ...newConnection },
-  });
+  blockSubscribe(state.network, callback, onDisconnect, onReconnect);
 };
 
 const forgingListener = ({ getState, dispatch }) => {
   const state = getState();
-  const socketConnections = forgersUnsubscribe(state.network);
-  dispatch({
-    type: actionTypes.socketConnectionsUpdated,
-    data: socketConnections,
-  });
+  forgersUnsubscribe(state.network);
 
-  const newConnection = forgersSubscribe(
+  forgersSubscribe(
     state.network,
     async (round) => {
       if (getState().blocks.latestBlocks.length) {
@@ -93,10 +80,6 @@ const forgingListener = ({ getState, dispatch }) => {
     () => {},
     () => {},
   );
-  dispatch({
-    type: actionTypes.socketConnectionsUpdated,
-    data: { ...state.network.socketConnections, ...newConnection },
-  });
 };
 
 const blockMiddleware = store => (

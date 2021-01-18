@@ -220,32 +220,20 @@ export const getForgers = ({
  * @param {Function} callback - Function to be called when event fires
  * @param {Function} onDisconnect - Function to be called when disconnect event fires
  * @param {Function} onReconnect - Function to be called when reconnect event fires
- * @returns {Object} - Object containing a key with the event name and another object that stores
- *                     socket connection and fordecClosing status
  */
 export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) => {
   const node = network && network.networks
   && network.networks.LSK && network.networks.LSK.serviceUrl;
-  const connection = subscribe(
+  subscribe(
     `${node}/blockchain`, wsMethods.forgersRound, callback, onDisconnect, onReconnect,
   );
-  return ({
-    [wsMethods.blocksChange]: {
-      forcedClosing: false,
-      connection,
-    },
-  });
 };
 
 /**
  * Disconnects from block change websocket event and deletes socket connection
  *
  * @param {Object} network - Redux network state
- * @param {Object} network.socketConnections - Stored socket connections
- * @returns {Object} - Socket connections
  */
-export const forgersUnsubscribe = ({ socketConnections = {} }) => {
-  unsubscribe(wsMethods.blocksChange, socketConnections);
-  delete socketConnections[wsMethods.blocksChange];
-  return socketConnections;
+export const forgersUnsubscribe = () => {
+  unsubscribe(wsMethods.blocksChange);
 };
