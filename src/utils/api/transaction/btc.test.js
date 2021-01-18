@@ -1,4 +1,8 @@
-import { getTransaction, getTransactions } from './btc';
+import {
+  getTransaction,
+  getTransactions,
+  calculateTransactionFee,
+} from './btc';
 import http from '../http';
 
 jest.mock('../http', () => ({
@@ -92,9 +96,36 @@ describe('API: BTC Transactions', () => {
       });
     });
 
+    it('should call http with block id', async () => {
+      const total = 1;
+      const blockId = 'block_id';
+      const params = { blockId };
+      jest.clearAllMocks();
+      http.mockImplementation(() =>
+        Promise.resolve({
+          data: Array.from(Array(total).keys()).map(sampleTx),
+          meta: { total },
+        }));
+      await getTransactions({
+        network,
+        params,
+      });
+
+      expect(http).toHaveBeenCalledWith({
+        baseUrl: 'http://btc.io',
+        params: { block: blockId },
+        network,
+        path: '/transactions',
+      });
+    });
+
     it('Should not allow call with wrong params', async () => {
       const params = {
-        sort: 'wrong_sort_value',
+        sort: 'invalid',
+        dateFrom: 'invalid',
+        dateTo: 'invalid',
+        amountFrom: 'invalid',
+        amountTo: 'invalid',
       };
       jest.clearAllMocks();
       http.mockRejectedValue(new Error('Error fetching data.'));
@@ -106,5 +137,13 @@ describe('API: BTC Transactions', () => {
         .rejects
         .toThrow('Error fetching data.');
     });
+  });
+
+  describe('calculateTransactionFee', () => {
+    expect(calculateTransactionFee({
+      inputCount: 10,
+      outputCount: 10,
+      selectedFeePerByte: 1,
+    })).toBe(2160);
   });
 });

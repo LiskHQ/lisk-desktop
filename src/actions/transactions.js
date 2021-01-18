@@ -104,7 +104,6 @@ export const resetTransactionResult = () => ({
  * @param {Number} data.fee - In raw format, used for updating the TX List.
  * @param {Number} data.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} data.reference - Data field for LSK transactions
- * @param {String} data.secondPassphrase - Second passphrase for LSK transactions
  */
 // TODO remove this function once create and broadcast HOC be implemented
 export const transactionCreated = data => async (dispatch, getState) => {
@@ -142,14 +141,22 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {Number} transaction.fee - In raw format, used for updating the TX List.
  * @param {Number} transaction.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} transaction.reference - Data field for LSK transactions
- * @param {String} transaction.secondPassphrase - Second passphrase for LSK transactions
  */
 export const transactionBroadcasted = (transaction, callback = () => {}) =>
   async (dispatch, getState) => {
     const { network, settings } = getState();
     const activeToken = settings.token.active;
 
-    const [error] = await to(broadcast({ transaction, network }, activeToken));
+    const [error] = await to(broadcast(
+      {
+        transaction,
+        network: {
+          address: network.networks[activeToken].nodeUrl,
+          name: network.name,
+        },
+      },
+      activeToken,
+    ));
 
     callback({ success: !error, error, transaction });
     if (error) {

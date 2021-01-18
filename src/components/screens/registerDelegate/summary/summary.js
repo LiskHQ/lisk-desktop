@@ -7,6 +7,7 @@ import { create } from '../../../../utils/api/transaction';
 import transactionTypes from '../../../../constants/transactionTypes';
 import { toRawLsk } from '../../../../utils/lsk';
 import styles from './summary.css';
+import { tokenMap } from '../../../../constants/tokens';
 
 class Summary extends React.Component {
   constructor(props) {
@@ -31,10 +32,11 @@ class Summary extends React.Component {
       fee: toRawLsk(parseFloat(fee)),
       network,
       nonce: account.nonce,
+      transactionType: transactionTypes().registerDelegate.key,
     };
 
     const [error, tx] = await to(
-      create(data, transactionTypes().registerDelegate.key),
+      create(data, tokenMap.LSK.key),
     );
 
     if (!error) {

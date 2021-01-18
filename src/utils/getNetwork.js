@@ -3,21 +3,6 @@ import i18next from 'i18next';
 import networks, { networkKeys } from '../constants/networks';
 import { tokenMap } from '../constants/tokens';
 
-/**
- * If Mainnet or Testnet returns the name, if custom node returns the nethash
- * @param {Object} network - network object from store, with options.code or options.nethash set.
- */
-export const getNetworkIdentifier = (network) => {
-  const networkName = network.name;
-  const selectedNetwork = (Lisk.constants.MAINNET_NETHASH === network.networks.LSK.nethash
-    && networks.mainnet)
-    || (Lisk.constants.TESTNET_NETHASH === network.networks.LSK.nethash && networks.testnet)
-    || networks[networkName];
-  return !selectedNetwork.custom
-    ? selectedNetwork.name.toLowerCase()
-    : network.networks.LSK.nethash;
-};
-
 export const getNetworksList = () =>
   Object.values(networkKeys)
     .map(name => ({
