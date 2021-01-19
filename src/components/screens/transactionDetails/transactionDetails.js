@@ -6,7 +6,6 @@ import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
 import NotFound from '../../shared/notFound';
 import TransactionVotes from './transactionVotes';
-import routes from '../../../constants/routes';
 import {
   TransactionId, Sender, Recipient, Message,
   Illustration, AmountAndDate, FeeAndConfirmation,
@@ -15,69 +14,53 @@ import { isEmpty } from '../../../utils/helpers';
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './transactionDetails.css';
 
-class Transactions extends React.Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.activeToken !== prevProps.activeToken) {
-      this.props.history.push(routes.dashboard.path);
-    }
-  }
+const Transactions = ({
+  t, activeToken, netCode, transaction,
+}) => {
+  const { error, isLoading, data } = transaction;
+  const addresses = data && [data.recipientId, data.senderId];
 
-  getLinkToCopy() {
-    return {
-      LSK: `lisk:/${this.props.match.url}`,
-      BTC: this.props.transaction.data.explorerLink,
-    }[this.props.activeToken];
-  }
+  if (!error && isEmpty(transaction.data)) return <div />;
+  if (error && isEmpty(transaction.data)) return <NotFound />;
 
-  render() {
-    const {
-      t, activeToken, netCode, transaction, delegates,
-    } = this.props;
-    const { error, isLoading, data } = transaction;
-    const addresses = data && [data.recipientId, data.senderId];
-
-    if (!error && isEmpty(transaction.data)) return <div />;
-    if (error && isEmpty(transaction.data)) return <NotFound />;
-
-    return (
-      <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
-        <Box isLoading={isLoading} className={styles.wrapper}>
-          <BoxHeader>
-            <h1>{t('Transaction details')}</h1>
-          </BoxHeader>
-          <BoxContent className={styles.mainContent}>
-            <Illustration transaction={data} />
-            <Sender
-              transaction={data}
-              activeToken={activeToken}
-              netCode={netCode}
-            />
-            <Recipient
-              transaction={data}
-              activeToken={activeToken}
-              netCode={netCode}
-              t={t}
-            />
-            <TransactionId t={t} id={data.id} />
-            <AmountAndDate
-              transaction={data}
-              activeToken={activeToken}
-              addresses={addresses}
-              t={t}
-            />
-            <FeeAndConfirmation
-              transaction={data}
-              activeToken={activeToken}
-              addresses={addresses}
-              t={t}
-            />
-            <Message activeToken={activeToken} transaction={data} t={t} />
-            <TransactionVotes transaction={data} t={t} delegates={delegates} />
-          </BoxContent>
-        </Box>
-      </Dialog>
-    );
-  }
-}
+  return (
+    <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
+      <Box isLoading={isLoading} className={styles.wrapper}>
+        <BoxHeader>
+          <h1>{t('Transaction details')}</h1>
+        </BoxHeader>
+        <BoxContent className={styles.mainContent}>
+          <Illustration transaction={data} />
+          <Sender
+            transaction={data}
+            activeToken={activeToken}
+            netCode={netCode}
+          />
+          <Recipient
+            transaction={data}
+            activeToken={activeToken}
+            netCode={netCode}
+            t={t}
+          />
+          <TransactionId t={t} id={data.id} />
+          <AmountAndDate
+            transaction={data}
+            activeToken={activeToken}
+            addresses={addresses}
+            t={t}
+          />
+          <FeeAndConfirmation
+            transaction={data}
+            activeToken={activeToken}
+            addresses={addresses}
+            t={t}
+          />
+          <Message activeToken={activeToken} transaction={data} t={t} />
+          <TransactionVotes transaction={data} t={t} />
+        </BoxContent>
+      </Box>
+    </Dialog>
+  );
+};
 
 export default withTranslation()(Transactions);
