@@ -108,6 +108,7 @@ const getRequests = (values) => {
       .map(item => ({
         method: wsMethods.accounts,
         params: { [paramList.name]: item },
+        jsonrpc: '2.0',
       }));
   }
   return false;
@@ -140,11 +141,10 @@ export const getAccounts = async ({
     { name: 'publicKey', list: params.publicKeyList },
     { name: 'username', list: params.usernameList },
   ]);
-  console.log('-> requests', requests);
-  if (requests) {
+  if (requests.length) {
     return ws({
       requests,
-      baseUrl: baseUrl || network.serviceUrl,
+      baseUrl: baseUrl || network.networks.LSK.serviceUrl,
     });
   }
 
