@@ -84,6 +84,7 @@ export const getAccount = async ({
       account = response.data[0];
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log('Lisk account not found.');
   }
 
@@ -139,6 +140,7 @@ export const getAccounts = async ({
     { name: 'publicKey', list: params.publicKeyList },
     { name: 'username', list: params.usernameList },
   ]);
+  console.log('-> requests', requests);
   if (requests) {
     return ws({
       requests,
