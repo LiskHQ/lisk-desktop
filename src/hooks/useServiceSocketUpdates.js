@@ -13,7 +13,6 @@ const useServiceSocketUpdates = (event) => {
   const reset = () => setUpdateAvailable(false);
 
   useEffect(() => {
-    const connection = subscribe(
     subscribe(
       serviceUrl,
       event,
