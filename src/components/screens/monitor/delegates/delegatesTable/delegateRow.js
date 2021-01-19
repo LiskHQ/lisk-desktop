@@ -84,7 +84,7 @@ const DelegateRow = ({
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>
       <span className={`${grid['col-xs-1']} ${grid['col-md-1']}`}>
-        <DelegateWeight val={data.totalVotesReceived} />
+        <DelegateWeight value={data.totalVotesReceived} />
       </span>
     </Link>
   );
