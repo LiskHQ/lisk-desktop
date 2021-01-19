@@ -1,10 +1,8 @@
-// import Lisk from '@liskhq/lisk-client';
 import React from 'react';
 import { mount } from 'enzyme';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
 // import transactionTypes from '../../../constants/transactionTypes';
-import routes from '../../../constants/routes';
 import { mountWithRouter } from '../../../utils/testHelpers';
 import transactionTypes from '../../../constants/transactionTypes';
 
@@ -25,22 +23,26 @@ describe('Transaction Details Component', () => {
       title: 'transfer',
     },
   };
-  /* const voteTransaction = {
+  const voteTransaction = {
     data: {
-      type: transactionTypes().vote.code,
+      type: transactionTypes().vote.code.new,
       amount: '0',
       fee: 1e8,
       senderId: accounts.genesis.address,
       recipientId: accounts.delegate.address,
-      timestamp: Lisk.transaction.utils.getTimeFromBlockchainEpoch() - 100,
+      timestamp: 1499983200,
+      title: 'vote',
       asset: {
         votes: [
-          accounts.delegate.publicKey,
-          accounts.delegate_candidate.publicKey,
-        ].map(publicKey => `+${publicKey}`),
+          {
+            address: '123456789L',
+            username: 'saample',
+            amount: '10000000000',
+          },
+        ],
       },
     },
-  }; */
+  };
 
   const props = {
     t: v => v,
@@ -59,7 +61,7 @@ describe('Transaction Details Component', () => {
       loadData: jest.fn(),
     },
     match: {
-      url: `/explorer/transactions/${transaction.id}`,
+      url: `/transactions/${transaction.id}`,
     },
   };
 
@@ -68,41 +70,26 @@ describe('Transaction Details Component', () => {
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction },
-        { pathname: '/explorer/transactions', id: transaction.id },
+        { id: transaction.id },
       );
       expect(wrapper.find('header h1')).toHaveText('Transaction details');
       expect(wrapper.find('.transaction-id .copy-title').first().text().trim()).toBe(`${transaction.data.id}`);
     });
 
-    it('Should redirect to dashboard if activeToken changes', () => {
-      const wrapper = mount(<TransactionDetails {...props} />);
-      wrapper.setProps({
-        ...props,
-        activeToken: 'BTC',
-      });
-      expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
-    });
-
-    /* it('Should load delegate names after vote transaction loading finished', () => {
+    it('Should load delegate names after vote transaction loading finished', () => {
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction: voteTransaction },
-        { pathname: '/explorer/transactions', id: transaction.id },
+        { id: transaction.id },
       );
-      wrapper.update();
-      expect(props.delegates.loadData).toHaveBeenCalledWith({
-        publicKeys: [
-          accounts.delegate.publicKey,
-          accounts.delegate_candidate.publicKey,
-        ],
-      });
-    }); */
+      expect(wrapper.find('VoteItem')).toHaveLength(1);
+    });
 
     it('Should render transfer transaction with message (LSK)', () => {
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction },
-        { pathname: '/explorer/transactions', id: transaction.id },
+        { id: transaction.id },
       );
       expect(wrapper).toContainMatchingElements(2, '.accountInfo');
       expect(wrapper.find('.accountInfo .sender-address').text()).toBe(transaction.data.senderId);
@@ -136,7 +123,7 @@ describe('Transaction Details Component', () => {
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, activeToken: 'BTC', transaction: delegateTx },
-        { pathname: '/explorer/transactions', id: transaction.id },
+        { id: transaction.id },
       );
       expect(wrapper).not.toContain('genesis');
     });
@@ -160,7 +147,7 @@ describe('Transaction Details Component', () => {
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction: voteTx },
-        { pathname: '/explorer/transactions', id: transaction.id },
+        { id: transaction.id },
       );
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
       expect(wrapper.find('.accountInfo .label').text()).toBe('Voter');
@@ -183,9 +170,10 @@ describe('Transaction Details Component', () => {
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction: delegateRegTx },
-        { pathname: '/explorer/transactions', id: transaction.id },
+        { id: transaction.id },
       );
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
+      expect(wrapper.find('DelegateUsername')).toHaveLength(1);
     });
   });
 
@@ -220,7 +208,7 @@ describe('Transaction Details Component', () => {
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction: unlockTx },
-        { pathname: '/explorer/transactions', id: transaction.id },
+        { id: transaction.id },
       );
       expect(wrapper).toContainMatchingElement('.transaction-image');
       expect(wrapper.find('.tx-header').text()).toEqual(transactionTypes().unlockToken.title);
