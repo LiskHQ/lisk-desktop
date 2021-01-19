@@ -224,7 +224,7 @@ export const DateAndConfirmation = ({
 export const Message = ({
   activeToken, transaction, t,
 }) => {
-  if (transaction.type !== transactionTypes().transfer.code.legacy
+  if (transaction.title !== 'transfer'
     || activeToken !== tokenMap.LSK.key) return null;
   return (
     <BoxRow className={styles.message}>
@@ -232,6 +232,23 @@ export const Message = ({
         <span className={styles.label}>{t('Message')}</span>
         <div className="tx-reference">
           {getTxAsset(transaction)}
+        </div>
+      </div>
+    </BoxRow>
+  );
+};
+
+export const DelegateUsername = ({
+  transaction, t,
+}) => {
+  if (transaction.title !== 'registerDelegate') return null;
+
+  return (
+    <BoxRow className={styles.message}>
+      <div className={`${styles.value}`}>
+        <span className={styles.label}>{t('Delegate username')}</span>
+        <div className="delegate-username">
+          { transaction.asset.delegate.username }
         </div>
       </div>
     </BoxRow>

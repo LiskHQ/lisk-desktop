@@ -9,6 +9,7 @@ import TransactionVotes from './transactionVotes';
 import {
   TransactionId, Sender, Recipient, Message,
   Illustration, AmountAndDate, FeeAndConfirmation,
+  DelegateUsername,
 } from './dataRows';
 import { isEmpty } from '../../../utils/helpers';
 import Dialog from '../../toolbox/dialog/dialog';
@@ -57,6 +58,7 @@ const Transactions = ({
           />
           <Message activeToken={activeToken} transaction={data} t={t} />
           <TransactionVotes transaction={data} t={t} />
+          <DelegateUsername transaction={data} t={t} />
         </BoxContent>
       </Box>
     </Dialog>
