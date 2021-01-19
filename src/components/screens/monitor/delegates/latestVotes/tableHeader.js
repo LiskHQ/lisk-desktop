@@ -5,15 +5,11 @@ import styles from '../delegates.css';
 export default t => ([
   {
     title: t('Sender'),
-    classList: grid['col-sm-3'],
+    classList: grid['col-sm-4'],
   },
   {
     title: t('Date'),
-    classList: grid['col-sm-2'],
-  },
-  {
-    title: t('Current balance'),
-    classList: grid['col-sm-2'],
+    classList: grid['col-sm-3'],
   },
   {
     title: t('Round'),

@@ -4,12 +4,12 @@ import VoteRow from './voteRow';
 import header from './tableHeader';
 
 const LatestVotes = ({
-  votes, t,
+  votes, t, delegates,
 }) => {
   const canLoadMore = votes.meta ? votes.data.length < votes.meta.total : false;
 
   const handleLoadMore = () => {
-    votes.loadData({ offset: votes.data.length });
+    votes.loadData({ offset: votes.meta.count + votes.meta.offset });
   };
 
   return (
@@ -19,6 +19,7 @@ const LatestVotes = ({
       row={VoteRow}
       additionalRowProps={{
         t,
+        delegates: delegates.data,
       }}
       header={header(t)}
       loadData={handleLoadMore}

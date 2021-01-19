@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import Overview from './overview';
@@ -14,6 +14,7 @@ import ForgingDetails from './forgingDetails';
 
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
+  votedDelegates,
   chartActiveAndStandbyData,
   chartRegisteredDelegatesData,
   standByDelegates,
@@ -28,6 +29,16 @@ const DelegatesMonitor = ({
 }) => {
   const [activeTab, setActiveTab] = useState('active');
   const { forgingTimes, totalBlocks } = useSelector(state => state.blocks);
+
+  useEffect(() => {
+    const addressList = votes.data && votes.data.reduce((acc, data) => {
+      const dataAddresses = data.asset.votes.map(vote => vote.delegateAddress);
+      return acc.concat(dataAddresses);
+    }, []);
+    if (addressList.length > 1) {
+      votedDelegates.loadData({ addressList });
+    }
+  }, [votes.data]);
 
   const handleFilter = ({ target: { value } }) => {
     applyFilters({
@@ -89,7 +100,7 @@ const DelegatesMonitor = ({
         <BoxContent className={styles.content}>
           {
             activeTab === 'votes'
-              ? <LatestVotes votes={votes} t={t} />
+              ? <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
               : (
                 <DelegatesTable
                   standByDelegates={standByDelegates}

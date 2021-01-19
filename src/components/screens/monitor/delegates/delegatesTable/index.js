@@ -26,13 +26,13 @@ const DelegatesTable = ({
       ...acc,
       ...(filters[key] && { [key]: filters[key] }),
     }), {
-      offset: delegates.data.length,
+      offset: standByDelegates.meta.count + standByDelegates.meta.offset,
     }));
   };
 
   const canLoadMore = activeTab === 'active' || !standByDelegates.meta
     ? false
-    : standByDelegates.data.length < (standByDelegates.meta.total - MAX_BLOCKS_FORGED);
+    : standByDelegates.data.length < (standByDelegates.meta.total - standByDelegates.meta.offset);
 
   delegates = activeTab === 'active'
     ? filterDelegates(delegates, filters)

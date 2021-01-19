@@ -61,6 +61,7 @@ const filters = {
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
   message: { key: 'message', test: str => (typeof str === 'string') },
+  type: { key: 'type', test: num => parseInt(num, 10) > 0 },
   sort: {
     key: 'sort',
     test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
@@ -80,7 +81,7 @@ const filters = {
  * @param {String} data.params.dateTo Unix timestamp, the end time of txs
  * @param {String} data.params.amountFrom The minimum value of txs
  * @param {String} data.params.amountTo The maximum value of txs
- * @param {String} data.params.type The title of the transaction type
+ * @param {Number} data.params.type The title of the transaction type
  * @param {Number} data.params.offset Used for pagination
  * @param {Number} data.params.limit Used for pagination
  * @param {String} data.params.sort an option of 'amount:asc',
@@ -298,7 +299,9 @@ export const create = ({
  * broadcasts a transaction over the network
  *
  * @param {object} transaction
- * @param {string} network - the network name, e.g. mainnet, betanet
+ * @param {Object} network
+ * @param {string} network.name - the network name, e.g. mainnet, betanet
+ * @param {string} network.address - the node address e.g. https://betanet-lisk.io
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = ({ transaction, network }) => new Promise(
@@ -341,9 +344,12 @@ export const getTransactionBaseFees = network =>
 export const getMinTxFee = tx => Number(tx.minFee.toString());
 
 /**
- * Returns the actual tx fee based on given tx details and selected processing speed
+ * Returns the actual tx fee based on given tx details
+ * and selected processing speed
+ *
  * @param {String} txData - The transaction object
  * @param {Object} selectedPriority - network configuration
+ * @returns {Promise} Object containing value, error and feedback
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({

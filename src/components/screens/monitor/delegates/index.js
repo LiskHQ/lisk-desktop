@@ -12,10 +12,12 @@ import withFilters from '../../../../utils/withFilters';
 import withLocalSort from '../../../../utils/withLocalSort';
 import transactionTypes from '../../../../constants/transactionTypes';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
+import { tokenMap } from '../../../../constants/tokens';
 
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
 const standByDelegatesKey = 'standByDelegates';
+const numberOfActiveDelegates = 103;
 
 const transformDelegatesResponse = (response, oldData = []) => (
   [...oldData, ...response.data.filter(
@@ -64,15 +66,20 @@ const ComposedDelegates = compose(
       },
 
       [standByDelegatesKey]: {
-        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        apiUtil: (network, params) => getDelegates({
+          network,
+          params: {
+            ...params,
+            limit: params.limit || 30,
+            offset: params.offset || numberOfActiveDelegates,
+          },
+        }),
         defaultData: [],
         autoload: true,
-        transformResponse: response => transformDelegatesResponse({
-          data: response.data.filter(
-            delegate => delegate.rank > MAX_BLOCKS_FORGED,
-          ),
+        transformResponse: (response, oldData) => transformDelegatesResponse({
+          data: response.data.filter(delegate => delegate.status === 'standby'),
           meta: response.meta,
-        }),
+        }, oldData),
       },
 
       chartActiveAndStandbyData: {
@@ -92,8 +99,8 @@ const ComposedDelegates = compose(
       votes: {
         apiUtil: (network, params) => getTransactions({
           network,
-          params: { type: transactionTypes().vote.new, sort: 'timestamp:desc' },
-        }, params.token),
+          params: { ...params, type: transactionTypes().vote.code.new, sort: 'timestamp:desc' },
+        }, tokenMap.LSK.key),
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,
         defaultData: [],
@@ -105,6 +112,19 @@ const ComposedDelegates = compose(
         defaultData: {},
         autoload: true,
         transformResponse: response => response,
+      },
+
+      votedDelegates: {
+        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        defaultData: {},
+        transformResponse: (response) => {
+          const transformedResponse = transformDelegatesResponse(response);
+          const responseMap = transformedResponse.reduce((acc, delegate) => {
+            acc[delegate.address] = delegate;
+            return acc;
+          }, {});
+          return responseMap;
+        },
       },
     },
   ),

@@ -1,53 +1,58 @@
 import { constants } from '@liskhq/lisk-client';
-import { getNetworkIdentifier } from './getNetwork';
+import {
+  getNetworksList,
+  getNetworkNameBasedOnNethash,
+} from './getNetwork';
 
-describe('getNetwork Utils', () => {
+describe('Utils: getNetwork', () => {
   const { MAINNET_NETHASH, TESTNET_NETHASH } = constants;
-  describe('getNetworkIdentifier function', () => {
-    it('Should return network name based on nethash', () => {
-      let network = {
-        name: 'Mainnet',
-        networks: {
-          LSK: { nethash: MAINNET_NETHASH },
-        },
-      };
-      expect(getNetworkIdentifier(network)).toBe('mainnet');
 
-      network = {
-        name: 'Testnet',
-        networks: {
-          LSK: { nethash: TESTNET_NETHASH },
-        },
-      };
-      expect(getNetworkIdentifier(network)).toBe('testnet');
+  describe('getNetworksList', () => {
+    const response = [
+      { label: 'Mainnet', name: 'mainnet' },
+      { label: 'Testnet', name: 'testnet' },
+      { label: 'Custom Node', name: 'customNode' },
+    ];
+    it('returns names and labels', () => {
+      expect(getNetworksList()).toEqual(response);
     });
+  });
 
-    it('Should return network name based on name', () => {
-      let network = {
-        name: 'Mainnet',
-        networks: {
-          LSK: { nethash: MAINNET_NETHASH },
-        },
-      };
-      expect(getNetworkIdentifier(network)).toBe('mainnet');
-
-      network = {
-        name: 'Testnet',
-        networks: {
-          LSK: { nethash: TESTNET_NETHASH },
-        },
-      };
-      expect(getNetworkIdentifier(network)).toBe('testnet');
-    });
-
-    it.skip('Should return nethash for custom node', () => {
+  describe('getNetworkNameBasedOnNethash', () => {
+    it('should discover mainnet', () => {
       const network = {
-        name: 'Custom Node',
+        name: 'customNode',
         networks: {
-          LSK: { nethash: '098f6bcd4621d373cade4e832627b4f6' },
+          LSK: {
+            nethash: MAINNET_NETHASH,
+          },
         },
       };
-      expect(getNetworkIdentifier(network)).toBe(network.networks.LSK.nethash);
+      expect(getNetworkNameBasedOnNethash(network, 'LSK')).toEqual('mainnet');
+    });
+
+    it('should discover testnet', () => {
+      const network = {
+        name: 'customNode',
+        networks: {
+          LSK: {
+            nethash: TESTNET_NETHASH,
+          },
+        },
+      };
+      expect(getNetworkNameBasedOnNethash(network, 'LSK')).toEqual('testnet');
+    });
+
+    it('should mark as customNode otherwise', () => {
+      const network = {
+        name: 'customNode',
+        networks: {
+          LSK: {
+            nethash: 'sample_hash',
+          },
+        },
+      };
+      expect(getNetworkNameBasedOnNethash(network, 'LSK')).toEqual('customNode');
     });
   });
 });

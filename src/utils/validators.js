@@ -25,7 +25,7 @@ export const validateAddress = (tokenType, address, network) => {
     case tokenMap.BTC.key:
       try {
         bitcoin.address.fromBase58Check(address); // eliminates segwit addresses
-        bitcoin.address.toOutputScript(address, network.name);
+        bitcoin.address.toOutputScript(address, network.networks.BTC.network);
         return 0;
       } catch (e) {
         return 1;

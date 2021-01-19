@@ -3,8 +3,16 @@ import React from 'react';
 import { mount } from 'enzyme';
 import LoadLatestButton from '.';
 
+jest.mock('../../../utils/api/ws', () => ({
+  subscribe: (node, ev, update) => {
+    setTimeout(() => {
+      update(ev);
+    }, 1);
+    return { close: jest.fn() };
+  },
+}));
+
 describe('LoadLatestButton', () => {
-  const onSocketEvent = () => {};
   const props = {
     onClick: jest.fn(),
     event: 'test.event',
@@ -25,8 +33,9 @@ describe('LoadLatestButton', () => {
 
     const wrapper = render();
     expect(wrapper).toBeEmptyRender();
-
-    act(() => { onSocketEvent(); });
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
     wrapper.update();
     expect(wrapper).toContainExactlyOneMatchingElement('button');
     expect(wrapper).toHaveText(props.children);

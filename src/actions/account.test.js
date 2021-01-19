@@ -19,7 +19,6 @@ jest.mock('i18next', () => ({
 }));
 jest.mock('../utils/api/account', () => ({
   getAccount: jest.fn(),
-  setSecondPassphrase: jest.fn(),
 }));
 jest.mock('./transactions', () => ({
   updateTransactions: jest.fn(),

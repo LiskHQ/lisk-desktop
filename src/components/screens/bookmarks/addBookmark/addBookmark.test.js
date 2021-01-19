@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import * as bitcoin from 'bitcoinjs-lib';
 import { tokenMap, tokenKeys } from '../../../../constants/tokens';
-import networks from '../../../../constants/networks';
 import accounts from '../../../../../test/constants/accounts';
 import AddBookmark from './addBookmark';
 
@@ -16,7 +16,20 @@ describe('Add a new bookmark component', () => {
       active: tokenMap.LSK.key,
     },
     bookmarks,
-    network: networks.testnet,
+    network: {
+      name: 'testnet',
+      networks: {
+        BTC: {
+          network: bitcoin.networks.testnet,
+          serviceUrl: 'https://btc.lisk.io',
+          minerFeesURL: 'https://bitcoinfees.earn.com/api/v1/fees/recommended',
+          derivationPath: "m/44'/1'/0'/0/0",
+        },
+        LSK: {
+          serviceUrl: 'https://service.lisk.io',
+        },
+      },
+    },
     history: {
       push: jest.fn(),
       location: {

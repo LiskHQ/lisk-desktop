@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import SelectNameAndFee from './selectNameAndFee';
-import { getDelegate } from '../../../../utils/api/delegate';
+import * as delegatesApi from '../../../../utils/api/delegate';
 import networks from '../../../../constants/networks';
 import accounts from '../../../../../test/constants/accounts';
 import { getTransactionBaseFees, getTransactionFee } from '../../../../utils/api/transaction';
@@ -10,6 +10,9 @@ import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('../../../../utils/api/network');
 jest.mock('../../../../utils/api/transaction');
+jest.mock('../../../../utils/api/delegate', () => ({
+  getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
+}));
 
 const transactionBaseFees = {
   Low: 156,
@@ -29,9 +32,8 @@ getTransactionFee.mockImplementation((params) => {
   });
 });
 
-describe('RegisterDelegate', () => {
+describe('SelectNameAndFee', () => {
   let wrapper;
-  let apiClient;
 
   const props = {
     account: {
@@ -50,20 +52,13 @@ describe('RegisterDelegate', () => {
   };
 
   beforeEach(() => {
-    apiClient = {
-      delegates: {
-        get: jest.fn(),
-      },
-    };
-
-    apiClient.delegates.get.mockResolvedValue({ data: [] });
-    getDelegate.mockReturnValue(apiClient);
+    // delegatesApi.getDelegate.mockReset();
 
     wrapper = mount(<SelectNameAndFee {...props} />);
   });
 
   afterEach(() => {
-    apiClient.delegates.get.mockClear();
+    jest.clearAllMocks();
   });
 
   it('renders properly SelectName component', () => {
@@ -80,7 +75,7 @@ describe('RegisterDelegate', () => {
     wrapper.find('input.select-name-input')
       .simulate('change', { target: { value: 'mydelegate' } });
     jest.advanceTimersByTime(1000);
-    expect(apiClient.delegates.get).toHaveBeenCalledTimes(1);
+    expect(delegatesApi.getDelegate).toHaveBeenCalledTimes(1);
     await flushPromises();
     wrapper.update();
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
@@ -92,7 +87,7 @@ describe('RegisterDelegate', () => {
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate+' } });
-    expect(apiClient.delegates.get).not.toBeCalled();
+    expect(delegatesApi.getDelegate).not.toBeCalled();
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
   });
 
