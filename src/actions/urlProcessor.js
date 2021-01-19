@@ -47,25 +47,28 @@ const urlProcessor = (search, network) => {
   const votes = normalizeUsernames(params.votes);
   const unvotes = normalizeUsernames(params.unvotes);
 
-  return getAccounts(
-    {
-      network,
-      params: { usernameList: [...votes, ...unvotes] },
-    },
-    tokenMap.LSK.key,
-  );
+  if (votes.length + unvotes.length === 0) {
+    return [];
+  }
+
+  return getAccounts({
+    network,
+    params: { usernameList: [...votes, ...unvotes] },
+  }, tokenMap.LSK.key).data;
 };
 
 const setVotesByLaunchProtocol = search =>
   async (dispatch, getState) => {
     const { network } = getState();
-    const votesAccounts = await urlProcessor(search, network);
+    const accounts = await urlProcessor(search, network);
 
-    return dispatch(voteEdited(votesAccounts
-      .filter(({ address }) => regex.address.test(address))
-      .map(
-        ({ address, username }) => ({ address, username, amount: '' }),
-      )));
+    return dispatch(
+      voteEdited(accounts
+        .filter(({ address }) => regex.address.test(address))
+        .map(
+          ({ address, username }) => ({ address, username, amount: '' }),
+        )),
+    );
   };
 
 export default setVotesByLaunchProtocol;

@@ -40,7 +40,7 @@ const Overview = ({
           activeToken={activeToken}
           address={address}
           account={account}
-          isDelegate={account.isDelegate}
+          isDelegate={!!account.delegate}
           bookmark={bookmark}
           publicKey={publicKey}
           host={host}
@@ -53,7 +53,7 @@ const Overview = ({
           balance={balance}
           isDiscreetMode={discreetMode}
           isWalletRoute={isWalletRoute}
-          isDelegate={account.isDelegate}
+          isDelegate={!!account.delegate}
           address={address}
         />
       </div>

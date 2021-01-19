@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import styles from './newsFeed.css';
 import News from './news';
 import Box from '../../../toolbox/box';
@@ -16,14 +15,13 @@ const NewsFeed = (props) => {
     t,
   } = props;
   const filteredNewsFeed = newsFeed.data || [];
-  const serviceUrl = useSelector(state => state.network.serviceUrl);
   const sources = ['twitter_lisk', 'drupal_lisk_general'];
   const [source, setSource] = useState(sources.join(','));
   useEffect(() => {
     if (newsFeed && (newsFeed.error.length === 0 && newsFeed.data.length === 0)) {
       newsFeed.loadData({ source });
     }
-  }, [serviceUrl, source]);
+  }, [source]);
   const tabs = [
     {
       value: sources.join(','),

@@ -95,9 +95,9 @@ export const getTransactions = ({
   params,
   baseUrl,
 }) => {
-  const typeConfig = transactionTypes()[params.type];
+  const typeConfig = params.type && transactionTypes()[params.type];
   // if type, correct the type and use WS
-  if (params.type && typeConfig) {
+  if (typeConfig) {
     const requests = Object.values(typeConfig.code).map(type => ({
       method: wsMethods.transactions,
       params: { type },
@@ -307,7 +307,7 @@ export const create = ({
 export const broadcast = ({ transaction, network }) => new Promise(
   async (resolve, reject) => {
     try {
-      const client = getApiClient(network);
+      const client = getApiClient({ name: network.name, address: network.networks.LSK.nodeUrl });
       const response = await client.transactions.broadcast(transaction);
       resolve(response);
     } catch (error) {

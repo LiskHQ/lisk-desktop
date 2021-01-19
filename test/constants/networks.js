@@ -6,6 +6,7 @@ const networks = {
   testnet: { ...nets.testnet, node: nets.testnet.nodes[0] },
   devnet: {
     node: Cypress.env('coreUrl'),
+    serviceUrl: Cypress.env('serviceUrl'),
   },
 };
 

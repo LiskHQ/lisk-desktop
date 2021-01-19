@@ -83,7 +83,6 @@ export const passphraseUsed = data => ({
  *
  * @param {Object} data
  * @param {Object} data.account - current account with address and publicKey
- * @param {Array} data.transactions - list of transactions
  */
 export const accountDataUpdated = ({ account }) =>
   async (dispatch, getState) => {
