@@ -97,8 +97,10 @@ const VoteRow = ({
 };
 
 /* istanbul ignore next */
-const areEqual = (prevProps, nextProps) =>
-  (prevProps.data.address === nextProps.data.address
-    && prevProps.data.rewards === nextProps.data.rewards);
+const areEqual = (prevProps, nextProps) => (
+  prevProps.data.address === nextProps.data.address
+  && (!!prevProps.accounts[nextProps.data.address]
+    || !nextProps.accounts[nextProps.data.address])
+);
 
 export default React.memo(VoteRow, areEqual);
