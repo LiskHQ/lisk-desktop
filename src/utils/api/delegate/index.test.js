@@ -1,6 +1,6 @@
 import * as delegate from './index';
 import http from '../http';
-import ws from '../ws';
+import ws, { subscribe, unsubscribe } from '../ws';
 
 jest.mock('../http');
 jest.mock('../ws');
@@ -257,41 +257,61 @@ describe('API: LSK Delegates', () => {
 
     it('should return forgers list', async () => {
       const expectedResponse = [{}, {}, {}];
-      setApiResponseData(expectedResponse, ws);
+      setApiResponseData(expectedResponse, http);
       await expect(
         delegate.getForgers({ params: { limit: 5, offset: 0 }, network }),
       ).resolves.toEqual(expectedResponse);
-      expect(ws).toHaveBeenCalledWith({
-        requests: {
-          method: delegate.wsMethods.forgers,
-          params: { limit: 5, offset: 0 },
-        },
+      expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
+        path: delegate.httpPaths.forgers,
+        params: { limit: 5, offset: 0 },
+        network,
       });
     });
 
     it('should set baseUrl', () => {
+      const params = { limit: 5, offset: 0 };
       delegate.getForgers({
-        baseUrl, network, params: { limit: 5, offset: 0 },
+        baseUrl, network, params,
       });
-      expect(ws).toHaveBeenCalledWith({
-        requests: {
-          method: delegate.wsMethods.forgers,
-          params: { limit: 5, offset: 0 },
-        },
+      expect(http).toHaveBeenCalledWith({
         baseUrl,
+        path: delegate.httpPaths.forgers,
+        params,
+        network,
       });
     });
 
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
-      setApiRejection(expectedResponse.message, ws);
+      setApiRejection(expectedResponse.message, http);
       await expect(
         delegate.getForgers({
           network,
           params: { limit: 5, offset: 0 },
         }),
       ).rejects.toEqual(expectedResponse);
+    });
+  });
+
+  describe('forgers websocket', () => {
+    it('Should call ws subscribe with parameters', () => {
+      const fn = () => {};
+      const serviceUrl = 'http://sample-service-url.com';
+      subscribe.mockImplementation(() => {});
+
+      delegate.forgersSubscribe(
+        { networks: { LSK: { serviceUrl } } }, fn, fn, fn,
+      );
+
+      expect(subscribe).toHaveBeenCalledTimes(1);
+      expect(subscribe).toHaveBeenCalledWith(`${serviceUrl}/blockchain`, 'update.round', fn, fn, fn);
+    });
+
+    it('Should call ws unsubscribe with parameters', () => {
+      delegate.forgersUnsubscribe();
+      expect(unsubscribe).toHaveBeenCalledTimes(1);
+      expect(unsubscribe).toHaveBeenCalledWith('update.round');
     });
   });
 });

@@ -28,8 +28,7 @@ const DelegatesMonitor = ({
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
-  const forgingTimes = useSelector(state => state.blocks.forgingTimes);
-  const totalBlocks = useSelector(state => state.blocks.total);
+  const { forgingTimes, totalBlocks } = useSelector(state => state.blocks);
 
   useEffect(() => {
     const addressList = votes.data && votes.data.reduce((acc, data) => {

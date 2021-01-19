@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { subscribe } from '../utils/api/ws';
+import { subscribe, unsubscribe } from '../utils/api/ws';
 
 /**
  *
@@ -13,7 +13,7 @@ const useServiceSocketUpdates = (event) => {
   const reset = () => setUpdateAvailable(false);
 
   useEffect(() => {
-    const connection = subscribe(
+    subscribe(
       network.serviceUrl,
       event,
       () => setUpdateAvailable(true),
@@ -21,7 +21,7 @@ const useServiceSocketUpdates = (event) => {
       () => {},
     );
 
-    return () => { connection.close(); };
+    return () => { unsubscribe(event); };
   }, [network.name]);
 
   return [isUpdateAvailable, reset];

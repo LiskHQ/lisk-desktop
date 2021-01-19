@@ -56,10 +56,9 @@ const ForgingDetails = ({
     t('Not forging'),
     t('Missed block'),
   ];
-  const awaitingForgers = useSelector(state => state.blocks.awaitingForgers);
-  const { latestBlocks } = useSelector(state => state.blocks);
+  const { latestBlocks, awaitingForgers } = useSelector(state => state.blocks);
   const forgedInRound = latestBlocks.length
-    ? latestBlocks[0].height % 103 : 0;
+    ? latestBlocks[0].height % MAX_BLOCKS_FORGED : 0;
 
   const doughnutChartData = {
     labels: delegatesForgedLabels,
@@ -149,7 +148,7 @@ const ForgingDetails = ({
             <nav className={styles.list}>
               {
                 awaitingForgers
-                  .slice(0, 6)
+                  .slice(forgedInRound, forgedInRound + 6)
                   .map(forger => (
                     <Forger key={forger.address} forger={forger} />
                   ))

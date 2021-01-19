@@ -1,18 +1,22 @@
 import actionTypes from '../../constants/actions';
 import { networkStatusUpdated } from '../../actions/network';
-import { olderBlocksRetrieved } from '../../actions/blocks';
+import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
 import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
+import { forgersSubscribe, forgersUnsubscribe, getDelegates } from '../../utils/api/delegate';
 import { tokenMap } from '../../constants/tokens';
+
+const generateOnDisconnect = dispatch => () => {
+  dispatch(networkStatusUpdated({ online: false }));
+};
+
+const generateOnReconnect = dispatch => () => {
+  dispatch(networkStatusUpdated({ online: true }));
+};
 
 // eslint-disable-next-line max-statements
 const blockListener = ({ getState, dispatch }) => {
   const state = getState();
-
-  const socketConnections = blockUnsubscribe(state.network);
-  dispatch({
-    type: actionTypes.socketConnectionsUpdated,
-    data: socketConnections,
-  });
+  blockUnsubscribe();
 
   let windowIsFocused = true;
   const { ipc } = window;
@@ -21,20 +25,9 @@ const blockListener = ({ getState, dispatch }) => {
     ipc.on('focus', () => { windowIsFocused = true; });
   }
 
-  const onDisconnect = (eventName) => {
-    const networkState = getState().network;
-    const connection = networkState.socketConnections && networkState.socketConnections[eventName];
-    if (connection && !connection.forcedClosing) {
-      dispatch(networkStatusUpdated({ online: false }));
-    }
-  };
-
-  const onReconnect = () => {
-    dispatch(networkStatusUpdated({ online: true }));
-  };
-
+  // eslint-disable-next-line max-statements
   const callback = (block) => {
-    const { settings, network } = getState();
+    const { settings, network, blocks } = getState();
     const activeToken = settings.token && state.settings.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;
     const now = new Date();
@@ -52,22 +45,54 @@ const blockListener = ({ getState, dispatch }) => {
         });
       }
     }
+
+    if (Object.keys(blocks.forgingTimes).length === 0 || blocks.awaitingForgers.length === 0) {
+      dispatch(forgingTimesRetrieved());
+    }
   };
 
-  const newConnection = blockSubscribe(state.network, callback, onDisconnect, onReconnect);
-  dispatch({
-    type: actionTypes.socketConnectionsUpdated,
-    data: { ...state.network.socketConnections, ...newConnection },
-  });
+  blockSubscribe(
+    state.network,
+    callback,
+    generateOnDisconnect(dispatch),
+    generateOnReconnect(dispatch),
+  );
 };
 
-const blockMiddleware = ({ getState, dispatch }) => (
+const forgingListener = ({ getState, dispatch }) => {
+  const state = getState();
+  forgersUnsubscribe();
+
+  const callback = async (round) => {
+    if (getState().blocks.latestBlocks.length) {
+      try {
+        const delegates = await getDelegates({
+          params: { addressList: round.nextForgers },
+          network: state.network,
+        });
+        dispatch(forgingTimesRetrieved(delegates.data));
+      } catch (e) {
+        dispatch(forgingTimesRetrieved());
+      }
+    }
+  };
+
+  forgersSubscribe(
+    state.network,
+    callback,
+    generateOnDisconnect(dispatch),
+    generateOnReconnect(dispatch),
+  );
+};
+
+const blockMiddleware = store => (
   next => (action) => {
     next(action);
     switch (action.type) {
       case actionTypes.networkConfigSet:
-        dispatch(olderBlocksRetrieved());
-        blockListener({ getState, dispatch });
+        store.dispatch(olderBlocksRetrieved());
+        blockListener(store);
+        forgingListener(store);
         break;
 
       default: break;

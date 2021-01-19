@@ -1,5 +1,7 @@
 import io from 'socket.io-client';
 
+export const subscribeConnections = {};
+
 /**
  * A generic function to handle WS requests.
  *
@@ -50,7 +52,6 @@ const ws = ({
  * @param {Function} callback - Function to be called when event fires
  * @param {Function} onDisconnect - Function to be called when disconnect event fires
  * @param {Function} onReconnect - Function to be called when reconnect event fires
- * @returns {Object} - Connection
  */
 export const subscribe = (
   node,
@@ -65,22 +66,26 @@ export const subscribe = (
   });
   connection.on(eventName, callback);
   connection.on('reconnect', onReconnect);
-  connection.on('disconnect', () => { onDisconnect(eventName); });
-  return connection;
+  connection.on('disconnect', () => {
+    if (subscribeConnections[eventName] && !subscribeConnections[eventName].forcedClosing) {
+      onDisconnect();
+    }
+  });
+  subscribeConnections[eventName] = { connection, forcedClosing: false };
 };
 
 /**
  * Close event connection
  *
  * @param {String} eventName - Event to unsubscribe
- * @param {Object} connections - Stored socket connections
  */
-export const unsubscribe = (eventName, connections) => {
-  const eventConnection = connections[eventName];
+export const unsubscribe = (eventName) => {
+  const eventConnection = subscribeConnections[eventName];
   if (eventConnection) {
     eventConnection.forcedClosing = true;
     eventConnection.connection.close();
     eventConnection.forcedClosing = false;
+    delete subscribeConnections[eventName];
   }
 };
 

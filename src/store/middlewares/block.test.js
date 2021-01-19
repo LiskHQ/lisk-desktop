@@ -1,9 +1,11 @@
 import middleware from './block';
 import actionTypes from '../../constants/actions';
 import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
+import { forgersSubscribe, forgersUnsubscribe } from '../../utils/api/delegate';
 import { olderBlocksRetrieved } from '../../actions/blocks';
 
 jest.mock('../../utils/api/block');
+jest.mock('../../utils/api/delegate');
 jest.mock('../../actions/blocks');
 
 describe('Block middleware', () => {
@@ -19,22 +21,17 @@ describe('Block middleware', () => {
     const action = {
       type: actionTypes.networkConfigSet,
     };
-    const newConnections = { 'block/change': { connection: {}, forcedClosing: false } };
-    blockSubscribe.mockImplementation(() => newConnections);
-    blockUnsubscribe.mockImplementation(() => ({}));
+
+    blockSubscribe.mockImplementation(() => {});
+    blockUnsubscribe.mockImplementation(() => {});
+    forgersSubscribe.mockImplementation(() => {});
+    forgersUnsubscribe.mockImplementation(() => {});
     middleware(store)(() => {})(action);
 
     expect(blockSubscribe).toHaveBeenCalledTimes(1);
     expect(blockUnsubscribe).toHaveBeenCalledTimes(1);
+    expect(forgersSubscribe).toHaveBeenCalledTimes(1);
+    expect(forgersUnsubscribe).toHaveBeenCalledTimes(1);
     expect(olderBlocksRetrieved).toHaveBeenCalledTimes(1);
-
-    expect(store.dispatch).toHaveBeenNthCalledWith(2, {
-      data: {},
-      type: actionTypes.socketConnectionsUpdated,
-    });
-    expect(store.dispatch).toHaveBeenNthCalledWith(3, {
-      data: { ...newConnections },
-      type: actionTypes.socketConnectionsUpdated,
-    });
   });
 });
