@@ -5,8 +5,9 @@ import styles from './transactionDetails.css';
 import VoteItem from '../../shared/voteItem';
 
 const transactionVotes = ({ t, transaction }) => {
-  const { votes } = transaction.asset;
+  if (transaction.title !== 'vote') return null;
 
+  const { votes } = transaction.asset;
   return (
     <BoxRow>
       <div className={styles.detailsWrapper}>
