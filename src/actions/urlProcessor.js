@@ -47,15 +47,14 @@ const urlProcessor = (search, network) => {
   const votes = normalizeUsernames(params.votes);
   const unvotes = normalizeUsernames(params.unvotes);
 
-  return getAccounts({ network, params: { usernameList: [...votes, ...unvotes] } }).data;
   if (votes.length + unvotes.length === 0) {
     return [];
   }
-  return getAccounts({ 
-      network, 
-      params: { usernameList: [...votes, ...unvotes] } }, 
-      tokenMap.LSK.key
-    ).data;
+
+  return getAccounts({
+    network,
+    params: { usernameList: [...votes, ...unvotes] },
+  }, tokenMap.LSK.key).data;
 };
 
 const setVotesByLaunchProtocol = search =>
