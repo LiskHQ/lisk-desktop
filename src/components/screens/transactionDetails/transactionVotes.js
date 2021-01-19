@@ -1,20 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withTranslation } from 'react-i18next';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
-import transactionTypes from '../../../constants/transactionTypes';
 import VoteItem from '../../shared/voteItem';
 
-const transactionVotes = ({ t, transaction, delegates }) => {
-  if (transaction.type !== transactionTypes().vote.code.legacy) return null;
+const transactionVotes = ({ t, transaction }) => {
   const { votes } = transaction.asset;
-
-  useEffect(() => {
-    if (transaction.asset) {
-      const addressList = votes.map(item => item.delegateAddress);
-      delegates.loadData({ addressList });
-    }
-  }, []);
 
   return (
     <BoxRow>
