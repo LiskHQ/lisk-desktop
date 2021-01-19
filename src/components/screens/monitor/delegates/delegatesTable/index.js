@@ -1,6 +1,5 @@
 import React from 'react';
 import Table from '../../../../toolbox/table';
-import { MAX_BLOCKS_FORGED } from '../../../../../constants/delegates';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
 

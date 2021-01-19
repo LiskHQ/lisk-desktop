@@ -57,8 +57,8 @@ const ComposedDelegates = compose(
   withData(
     {
       [delegatesKey]: {
-        apiUtil: ({ networks }, params) => getForgers(
-          { network: networks.LSK, params: { ...params, limit: MAX_BLOCKS_FORGED } },
+        apiUtil: (network, params) => getForgers(
+          { network, params: { ...params, limit: MAX_BLOCKS_FORGED } },
         ),
         defaultData: [],
         autoload: true,
