@@ -11,7 +11,7 @@ const httpPaths = {
   networkStatus: `${httpPrefix}/network/status`,
   networkStatistics: `${httpPrefix}/network/statistics`,
 };
-
+// eslint-disable-next-line max-statements
 const getServiceUrl = (nodeUrl, nethash) => {
   if (nethash === Lisk.constants.MAINNET_NETHASH) {
     return 'https://mainnet-service.lisk.io';
@@ -20,6 +20,10 @@ const getServiceUrl = (nodeUrl, nethash) => {
     return 'https://testnet-service.lisk.io';
   }
   if (/localhost|liskdev.net:\d{2,4}$/.test(nodeUrl)) {
+    const serviceUrl = window.localStorage.getItem('serviceUrl');
+    if (serviceUrl) {
+      return serviceUrl;
+    }
     return nodeUrl.replace(/:\d{2,4}/, ':9901');
   }
   if (/\.(liskdev.net|lisk.io)$/.test(nodeUrl)) {

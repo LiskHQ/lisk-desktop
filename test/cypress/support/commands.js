@@ -30,6 +30,7 @@ import { deepMergeObj } from '../../../src/utils/helpers';
 before(() => {
   // Check if lisk core is running
   cy.request(`${networks.devnet.node}/api/node/constants`).then(resp => expect(resp.status).to.eq(200));
+  cy.request(`${networks.devnet.serviceUrl}/api/v1/network/status`).then(resp => expect(resp.status).to.eq(200));
 });
 
 beforeEach(() => {
@@ -38,6 +39,7 @@ beforeEach(() => {
     { token: { list: { BTC: true } } },
   );
   window.localStorage.setItem('settings', JSON.stringify(btcSettings));
+  window.localStorage.setItem('serviceUrl', networks.devnet.serviceUrl);
 });
 
 Cypress.Commands.add('addToLocalStorage', (item, value) => {
