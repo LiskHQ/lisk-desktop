@@ -117,33 +117,20 @@ describe('Block api module', () => {
     it('Should call ws subscribe with parameters', () => {
       const fn = () => {};
       const serviceUrl = 'http://sample-service-url.com';
-      const connection = {};
-      subscribe.mockImplementation(() => connection);
-      const returnedObject = block.blockSubscribe(
+      subscribe.mockImplementation(() => {});
+
+      block.blockSubscribe(
         { networks: { LSK: { serviceUrl } } }, fn, fn, fn,
       );
 
       expect(subscribe).toHaveBeenCalledTimes(1);
       expect(subscribe).toHaveBeenCalledWith(`${serviceUrl}/blockchain`, 'update.block', fn, fn, fn);
-      expect(returnedObject).toEqual({
-        'update.block': {
-          forcedClosing: false,
-          connection,
-        },
-      });
     });
 
     it('Should call ws unsubscribe with parameters', () => {
-      const socketConnections = {
-        'update.block': {
-          forcedClosing: false,
-          connection: {},
-        },
-      };
-      const returnedObject = block.blockUnsubscribe({ socketConnections });
+      block.blockUnsubscribe();
       expect(unsubscribe).toHaveBeenCalledTimes(1);
-      expect(unsubscribe).toHaveBeenCalledWith('update.block', socketConnections);
-      expect(returnedObject).toEqual({});
+      expect(unsubscribe).toHaveBeenCalledWith('update.block');
     });
   });
 });

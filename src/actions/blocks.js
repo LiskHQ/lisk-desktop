@@ -1,4 +1,5 @@
 import actionTypes from '../constants/actions';
+import { MAX_BLOCKS_FORGED } from '../constants/delegates';
 import { convertUnixSecondsToLiskEpochSeconds } from '../utils/datetime';
 import { getBlocks } from '../utils/api/block';
 import { getForgers } from '../utils/api/delegate';
@@ -46,24 +47,25 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
   });
 };
 
-const retrieveNextForgers = async (getState, forgedInRound) => {
-  const { network } = getState();
-
-  const numberOfRemainingBlocksInRound = 103
-    - forgedInRound;
-  const nextForgers = await getForgers({
+const retrieveNextForgers = async (network) => {
+  const { data } = await getForgers({
     network,
-    params: { limit: Math.min(numberOfRemainingBlocksInRound, 101) },
+    params: { limit: MAX_BLOCKS_FORGED },
   });
 
-  return nextForgers.slice(0, numberOfRemainingBlocksInRound);
+  if (data) {
+    return data;
+  }
+
+  return [];
 };
 
 // eslint-disable-next-line max-statements
-export const forgingTimesRetrieved = () => async (dispatch, getState) => {
+export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) => {
+  const { network } = getState();
   const { latestBlocks } = getState().blocks;
-  const forgedInRoundNum = latestBlocks[0].height % 103;
-  const awaitingForgers = await retrieveNextForgers(getState, 0);
+  const forgedInRoundNum = latestBlocks[0].height % MAX_BLOCKS_FORGED;
+  const awaitingForgers = nextForgers || await retrieveNextForgers(network);
 
   // First I define the delegates who forged in this round.
   // Their status is forging with no doubt

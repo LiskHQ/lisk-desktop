@@ -1,5 +1,5 @@
 import http from '../http';
-import ws from '../ws';
+import ws, { subscribe, unsubscribe } from '../ws';
 import { extractAddress } from '../../account';
 import regex from '../../regex';
 
@@ -15,6 +15,7 @@ export const httpPaths = {
 export const wsMethods = {
   delegates: 'get.delegates',
   forgers: 'get.delegates.next_forgers',
+  forgersRound: 'update.round',
 };
 
 const getDelegateProps = ({ address, publicKey, username }) => {
@@ -205,10 +206,36 @@ export const getForgers = ({
   network,
   params = {},
   baseUrl,
-}) => ws({
-  requests: {
-    method: wsMethods.forgers,
-    params,
-  },
-  baseUrl: baseUrl || network.serviceUrl,
+}) => http({
+  path: httpPaths.forgers,
+  params,
+  network,
+  baseUrl,
 });
+
+/**
+ * Connects to block change event via websocket and set function to be called when it fires
+ *
+ * @param {Object} network - Redux network state
+ * @param {Function} callback - Function to be called when event fires
+ * @param {Function} onDisconnect - Function to be called when disconnect event fires
+ * @param {Function} onReconnect - Function to be called when reconnect event fires
+ */
+export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) => {
+  const node = network && network.networks
+  && network.networks.LSK && network.networks.LSK.serviceUrl;
+  if (node) {
+    subscribe(
+      `${node}/blockchain`, wsMethods.forgersRound, callback, onDisconnect, onReconnect,
+    );
+  }
+};
+
+/**
+ * Disconnects from block change websocket event and deletes socket connection
+ *
+ * @param {Object} network - Redux network state
+ */
+export const forgersUnsubscribe = () => {
+  unsubscribe(wsMethods.forgersRound);
+};
