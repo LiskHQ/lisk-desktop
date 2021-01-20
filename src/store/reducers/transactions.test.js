@@ -42,6 +42,7 @@ describe('Reducer: transactions', () => {
       const changedState = transactions(state, action);
       expect(changedState).toEqual({
         ...defaultState,
+        filters: undefined,
         confirmed: mockTransactions,
         count: mockTransactions.length,
       });
