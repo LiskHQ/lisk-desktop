@@ -8,7 +8,7 @@ import { subscribe, unsubscribe } from '../utils/api/ws';
  * @returns {array} - [boolean, function]
  */
 const useServiceSocketUpdates = (event) => {
-  const serviceUrl = useSelector(state => state.network[state.settings.token.active].serviceUrl);
+  const serviceUrl = useSelector(state => state.network.networks[state.settings.token.active].serviceUrl);
   const [isUpdateAvailable, setUpdateAvailable] = useState(false);
   const reset = () => setUpdateAvailable(false);
 
