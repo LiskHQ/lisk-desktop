@@ -74,7 +74,7 @@ export const getAvailableUnlockingTransactions = ({ unlocking = [], address }, c
     .map(vote => ({
       delegateAddress: vote.delegateAddress,
       amount: vote.amount,
-      unvoteHeight: Number(vote.height.end),
+      unvoteHeight: Number(vote.height.start),
     }));
 
 export const calculateUnlockableBalance = ({ unlocking = [], address }, currentBlock) =>
