@@ -5,10 +5,10 @@ import { getDelayedAvailability, isBlockHeightReached } from '../../../../utils/
 import LiskAmount from '../../../shared/liskAmount';
 import { tokenMap } from '../../../../constants/tokens';
 
-const getPendingTime = ({ unvoteHeight, delegateAddress }, currentBlockHeight, { address }) => {
+const getPendingTime = ({ height, delegateAddress }, currentBlockHeight, { address }) => {
   const isSelfVote = address === delegateAddress;
   const delayedAvailability = getDelayedAvailability(isSelfVote);
-  const awaitingBlocks = delayedAvailability - (currentBlockHeight - unvoteHeight);
+  const awaitingBlocks = delayedAvailability - (currentBlockHeight - height.start);
   const secondsToUnlockAllBalance = awaitingBlocks * 10;
   const momentSeconds = moment().second(secondsToUnlockAllBalance);
   return moment().to(momentSeconds, true);
@@ -33,7 +33,7 @@ const UnlockingListItem = ({
 
 const UnlockingList = ({ account, currentBlock, t }) => (
   account.unlocking
-    .sort((voteA, voteB) => voteB.unvoteHeight - voteA.unvoteHeight)
+    .sort((voteA, voteB) => voteB.height.start - voteA.height.start)
     .map((vote, i) => {
       if (isBlockHeightReached(vote, currentBlock, account.address)) return false;
       return (
