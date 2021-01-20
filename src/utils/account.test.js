@@ -2,7 +2,7 @@ import {
   extractPublicKey,
   extractAddress,
   getActiveTokenAccount,
-  calculateAvailableBalance,
+  calculateUnlockableBalance,
   getAvailableUnlockingTransactions,
   calculateLockedBalance,
 } from './account';
@@ -70,7 +70,7 @@ describe('Utils: Account', () => {
       const currentBlock = { height: 5000 };
 
       expect(
-        calculateAvailableBalance({ unlocking, address }, currentBlock),
+        calculateUnlockableBalance({ unlocking, address }, currentBlock),
       ).toEqual(3000000000);
 
       unlocking = [
@@ -79,7 +79,7 @@ describe('Utils: Account', () => {
         { amount: '1000000000', unvoteHeight: 3000, delegateAddress: '3L' },
       ];
       expect(
-        calculateAvailableBalance({ unlocking, address }, currentBlock),
+        calculateUnlockableBalance({ unlocking, address }, currentBlock),
       ).toEqual(0);
     });
 
@@ -88,7 +88,7 @@ describe('Utils: Account', () => {
       const currentBlock = { height: 5000 };
 
       expect(
-        calculateAvailableBalance({ address }, currentBlock),
+        calculateUnlockableBalance({ address }, currentBlock),
       ).toEqual(0);
     });
 

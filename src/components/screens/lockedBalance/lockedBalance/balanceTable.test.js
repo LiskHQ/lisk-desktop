@@ -4,7 +4,7 @@ import BalanceTable from './balanceTable';
 import accounts from '../../../../../test/constants/accounts';
 import {
   calculateLockedBalance,
-  calculateAvailableBalance,
+  calculateUnlockableBalance,
 } from '../../../../utils/account';
 
 describe('unlock transaction Status', () => {
@@ -30,7 +30,7 @@ describe('unlock transaction Status', () => {
   const props = {
     t: key => key,
     lockedBalance: calculateLockedBalance(account),
-    availableBalance: calculateAvailableBalance(account, currentBlock),
+    availableBalance: calculateUnlockableBalance(account, currentBlock),
     currentBlock,
     account,
   };
@@ -62,7 +62,7 @@ describe('unlock transaction Status', () => {
       ...props,
       account: customAccount,
       lockedBalance: calculateLockedBalance(customAccount),
-      availableBalance: calculateAvailableBalance(customAccount, currentBlock),
+      availableBalance: calculateUnlockableBalance(customAccount, currentBlock),
     };
 
     wrapper = mount(<BalanceTable {...customProps} />);
