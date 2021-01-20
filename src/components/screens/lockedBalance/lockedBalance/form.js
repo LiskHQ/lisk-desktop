@@ -17,15 +17,15 @@ import LiskAmount from '../../../shared/liskAmount';
 import { tokenMap } from '../../../../constants/tokens';
 import styles from './lockedBalance.css';
 
-const ButtonTitle = ({ availableBalance, t }) => {
-  if (availableBalance === 0) {
+const ButtonTitle = ({ unlockableBalance, t }) => {
+  if (unlockableBalance === 0) {
     return <>{t('Nothing available to unlock')}</>;
   }
   return (
     <>
       {t('Unlock')}
       {' '}
-      <LiskAmount val={availableBalance} token={tokenMap.LSK.key} />
+      <LiskAmount val={unlockableBalance} token={tokenMap.LSK.key} />
     </>
   );
 };
@@ -41,7 +41,7 @@ const Form = ({
     customFee,
     fee,
     currentBlock,
-    availableBalance,
+    unlockableBalance,
   } = data;
   const dispatch = useDispatch();
   const network = useSelector(state => state.network);
@@ -58,7 +58,11 @@ const Form = ({
     };
 
     const [error, tx] = await to(
-      create(txData, transactionTypes().unlockToken.key),
+      create({
+        ...txData,
+        transactionType: transactionTypes().unlockToken.key,
+        network,
+      }, tokenMap.LSK.key),
     );
 
     if (!error) {
@@ -89,9 +93,9 @@ const Form = ({
         <PrimaryButton
           className="unlock-btn"
           onClick={onClickUnlock}
-          disabled={availableBalance === 0}
+          disabled={unlockableBalance === 0}
         >
-          <ButtonTitle availableBalance={availableBalance} t={t} />
+          <ButtonTitle unlockableBalance={unlockableBalance} t={t} />
         </PrimaryButton>
       </BoxFooter>
     </Box>

@@ -6,7 +6,7 @@ import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalcu
 import transactionTypes from '../../../../constants/transactionTypes';
 import {
   calculateLockedBalance,
-  calculateAvailableBalance,
+  calculateUnlockableBalance,
   getActiveTokenAccount,
   getAvailableUnlockingTransactions,
 } from '../../../../utils/account';
@@ -19,8 +19,8 @@ const LockedBalance = (props) => {
   const account = useSelector(state => getActiveTokenAccount(state));
   const token = useSelector(state => state.settings.token.active);
   const currentBlock = useSelector(state => state.blocks.latestBlocks[0] || { height: 0 });
-  const lockedBalance = calculateLockedBalance(account);
-  const availableBalance = calculateAvailableBalance(account, currentBlock);
+  const lockedBalance = calculateLockedBalance(account.unlocking);
+  const unlockableBalance = calculateUnlockableBalance(account, currentBlock);
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority,
@@ -48,13 +48,13 @@ const LockedBalance = (props) => {
         customFee,
         fee,
         currentBlock,
-        availableBalance,
+        unlockableBalance,
       }}
       {...props}
     >
       <BalanceTable
         lockedBalance={lockedBalance}
-        availableBalance={availableBalance}
+        unlockableBalance={unlockableBalance}
         currentBlock={currentBlock}
         account={account}
       />

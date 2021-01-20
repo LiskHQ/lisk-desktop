@@ -15,28 +15,23 @@ import { fromRawLsk } from '../../../../../utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
 import { tokenMap } from '../../../../../constants/tokens';
 import {
-  calculateLockedBalance,
+  calculateTotalLockedBalance,
   getActiveTokenAccount,
-  calculateAvailableBalance,
-  calculateUnlockingBalance,
 } from '../../../../../utils/account';
 
 const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
   const host = useSelector(state => getActiveTokenAccount(state));
-  const currentBlock = useSelector(state => state.blocks.latestBlocks[0] || { height: 0 });
   const lockedBalance = activeToken === tokenMap.LSK.key && isWalletRoute && host
-    ? calculateLockedBalance(host) : undefined;
-  const availableBalance = host ? calculateAvailableBalance(host, currentBlock) : undefined;
-  const unlockingBalance = host ? calculateUnlockingBalance(host, currentBlock) : undefined;
+    ? calculateTotalLockedBalance(host.unlocking) : undefined;
 
-  if (lockedBalance + availableBalance + unlockingBalance > 0) {
+  if (lockedBalance > 0) {
     return (
       <DialogLink
         className={`${styles.lockedBalance} open-unlock-balance-dialog`}
         component="lockedBalance"
       >
         <Icon name="lock" />
-        {`${fromRawLsk(lockedBalance + availableBalance + unlockingBalance)} ${tokenMap.LSK.key}`}
+        {`${fromRawLsk(lockedBalance)} ${tokenMap.LSK.key}`}
       </DialogLink>
     );
   }
