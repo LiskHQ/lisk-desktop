@@ -48,7 +48,7 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch getTransactionsSuccess action if resolved', async () => {
-      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
+      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { total: 0 } });
       const expectedAction = {
         count: 0,
         confirmed: [],
