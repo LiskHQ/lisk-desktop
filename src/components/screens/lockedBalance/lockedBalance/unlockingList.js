@@ -31,11 +31,16 @@ const UnlockingListItem = ({
   </li>
 );
 
+/**
+ * displays a list of vote amounts that can be unlocked sometime in the future
+ */
 const UnlockingList = ({ account, currentBlock, t }) => (
   account.unlocking
     .sort((voteA, voteB) => voteB.height.start - voteA.height.start)
     .map((vote, i) => {
-      if (isBlockHeightReached(vote, currentBlock, account.address)) return false;
+      if (isBlockHeightReached(vote, currentBlock, account.address)) {
+        return null;
+      }
       return (
         <UnlockingListItem
           key={`${i}-unlocking-balance-list`}

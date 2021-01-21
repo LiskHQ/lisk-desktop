@@ -8,13 +8,13 @@ import styles from './lockedBalance.css';
 
 const BalanceTable = ({
   t,
-  lockedBalance,
+  lockedInVotes,
   unlockableBalance,
   currentBlock,
   account,
 }) => (
   <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-    {(lockedBalance !== 0 || account.unlocking.length > 0 || unlockableBalance !== 0)
+    {(lockedInVotes !== 0 || account.unlocking.length > 0 || unlockableBalance !== 0)
       && (
       <li>
         <p className={styles.columnTitle}>{t('Amount')}</p>
@@ -22,11 +22,11 @@ const BalanceTable = ({
       </li>
       )
     }
-    {lockedBalance !== 0
+    {lockedInVotes !== 0
       && (
         <li>
           <p className="locked-balance">
-            <LiskAmount val={lockedBalance} token={tokenMap.LSK.key} />
+            <LiskAmount val={lockedInVotes} token={tokenMap.LSK.key} />
           </p>
           <p>
             <Icon name="lock" />

@@ -9,7 +9,7 @@ import BoxHeader from '../../../toolbox/box/header';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import { toRawLsk } from '../../../../utils/lsk';
 import Piwik from '../../../../utils/piwik';
-import { getAvailableUnlockingTransactions } from '../../../../utils/account';
+import { getUnlockableUnlockingObjects } from '../../../../utils/account';
 import { create } from '../../../../utils/api/transaction';
 import transactionTypes from '../../../../constants/transactionTypes';
 import actionTypes from '../../../../constants/actions';
@@ -53,7 +53,7 @@ const Form = ({
       nonce: account.nonce,
       fee: `${toRawLsk(parseFloat(selectedFee))}`,
       passphrase: account.passphrase,
-      unlockingObjects: getAvailableUnlockingTransactions(account, currentBlock),
+      unlockingObjects: getUnlockableUnlockingObjects(account, currentBlock),
       network,
     };
 
