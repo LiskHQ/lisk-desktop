@@ -40,7 +40,7 @@ const Form = ({
     account,
     customFee,
     fee,
-    currentBlock,
+    currentBlockHeight,
     unlockableBalance,
   } = data;
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const Form = ({
       nonce: account.nonce,
       fee: `${toRawLsk(parseFloat(selectedFee))}`,
       passphrase: account.passphrase,
-      unlockingObjects: getUnlockableUnlockingObjects(account, currentBlock),
+      unlockingObjects: getUnlockableUnlockingObjects(account.unlocking, currentBlockHeight),
       network,
     };
 

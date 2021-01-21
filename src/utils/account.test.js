@@ -67,28 +67,26 @@ describe('Utils: Account', () => {
         { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: '3L' },
       ];
       const address = '80L';
-      const currentBlock = { height: 5000 };
+      const currentBlockHeight = 5000;
 
       expect(
-        calculateUnlockableBalance({ unlocking, address }, currentBlock),
-      ).toEqual(3000000000);
+        calculateUnlockableBalance(unlocking, currentBlockHeight),
+      ).toEqual(4000000000);
 
       unlocking = [
         { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: '1L' },
-        { amount: '3000000000', height: { start: 2500, end: 3500 }, delegateAddress: address },
-        { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: '3L' },
+        { amount: '3000000000', height: { start: 2500, end: 5500 }, delegateAddress: address },
+        { amount: '1000000000', height: { start: 3000, end: 5500 }, delegateAddress: '3L' },
       ];
       expect(
-        calculateUnlockableBalance({ unlocking, address }, currentBlock),
+        calculateUnlockableBalance(unlocking, currentBlockHeight),
       ).toEqual(0);
     });
 
     it('should return 0 when unlocking is undefined', () => {
-      const address = '80L';
-      const currentBlock = { height: 5000 };
-
+      const currentBlockHeight = 5000;
       expect(
-        calculateUnlockableBalance({ address }, currentBlock),
+        calculateUnlockableBalance(undefined, currentBlockHeight),
       ).toEqual(0);
     });
 
@@ -104,7 +102,7 @@ describe('Utils: Account', () => {
       });
 
       it('should return 0 when unlocking is undefined', () => {
-        expect(calculateBalanceLockedInVotes({ })).toEqual(0);
+        expect(calculateBalanceLockedInVotes({})).toEqual(0);
       });
     });
 
@@ -112,21 +110,19 @@ describe('Utils: Account', () => {
       it('should get correct available balance', () => {
         const unlocking = [
           { amount: '1000000000', height: { start: 5000, end: 6000 }, delegateAddress: '1L' },
-          { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: '1L' },
-          { amount: '1000000000', height: { start: 3100, end: 4100 }, delegateAddress: '3L' },
+          { amount: '3000000000', height: { start: 100, end: 2000 }, delegateAddress: '1L' },
+          { amount: '1000000000', height: { start: 3100, end: 41000 }, delegateAddress: '3L' },
         ];
-        const address = '80L';
-        const currentBlock = { height: 5000 };
+        const currentBlockHeight = 5000;
 
         expect(
-          getUnlockableUnlockingObjects({ unlocking, address }, currentBlock),
+          getUnlockableUnlockingObjects(unlocking, currentBlockHeight),
         ).toEqual([{ amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' }]);
       });
 
       it('should return 0 when unlocking is undefined', () => {
-        const address = '80L';
-        const currentBlock = { height: 5000 };
-        expect(getUnlockableUnlockingObjects({ address }, currentBlock)).toEqual([]);
+        const currentBlockHeight = 5000;
+        expect(getUnlockableUnlockingObjects(undefined, currentBlockHeight)).toEqual([]);
       });
     });
   });

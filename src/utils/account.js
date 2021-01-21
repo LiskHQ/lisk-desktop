@@ -66,24 +66,15 @@ export const calculateBalanceLockedInVotes = (votes = {}) =>
 export const calculateBalanceLockedInUnvotes = (unlocking = []) =>
   unlocking.reduce((acc, vote) => acc + parseInt(vote.amount, 10), 0);
 
-// TODO handle delegate punishment when Lisk Service is ready
-export const getDelayedAvailability = isSelfVote => (isSelfVote
-  ? unlockTxDelayAvailability.selfUnvote : unlockTxDelayAvailability.unvote);
-
-export const isBlockHeightReached = ({ height, delegateAddress }, currentBlock, address) => {
-  if (!currentBlock) return false;
-  const currentBlockHeight = currentBlock.height;
-  const isSelfVote = address === delegateAddress;
-  const delayedAvailability = getDelayedAvailability(isSelfVote);
-  return currentBlockHeight - height.end > delayedAvailability;
-};
+export const isBlockHeightReached = (unlockHeight, currentBlockHeight) =>
+  currentBlockHeight >= unlockHeight;
 
 /**
  * returns unlocking objects for broadcasting an unlock transaction
  * at the current height
  */
-export const getUnlockableUnlockingObjects = ({ unlocking = [], address }, currentBlock) =>
-  unlocking.filter(vote => isBlockHeightReached(vote, currentBlock, address))
+export const getUnlockableUnlockingObjects = (unlocking = [], currentBlockHeight = 0) =>
+  unlocking.filter(vote => isBlockHeightReached(vote.height.end, currentBlockHeight))
     .map(vote => ({
       delegateAddress: vote.delegateAddress,
       amount: vote.amount,
@@ -93,19 +84,21 @@ export const getUnlockableUnlockingObjects = ({ unlocking = [], address }, curre
 /**
  * returns the balance that can be unlocked at the current block height
  */
-export const calculateUnlockableBalance = ({ unlocking = [], address }, currentBlock) =>
+export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
-    (acc, vote) =>
-      (isBlockHeightReached(vote, currentBlock, address) ? acc + parseInt(vote.amount, 10) : acc),
+    (sum, vote) =>
+      (isBlockHeightReached(vote.height.end, currentBlockHeight)
+        ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );
 
 /**
  * returns the balance that can not be unlocked at the current block height
  */
-export const calculateBalanceUnlockableInTheFuture = ({ unlocking = [], address }, currentBlock) =>
+export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
-    (acc, vote) =>
-      (!isBlockHeightReached(vote, currentBlock, address) ? acc + parseInt(vote.amount, 10) : acc),
+    (sum, vote) =>
+      (!isBlockHeightReached(vote.height.end, currentBlockHeight)
+        ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );

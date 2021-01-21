@@ -88,7 +88,7 @@ describe('Unlock LSK modal', () => {
     wrapper = mountWithProps(LockedBalance, props, store);
   });
 
-  it('renders properly LockedBalance component', () => {
+  it('renders the LockedBalance component properly', () => {
     expect(wrapper).toContainMatchingElement('.lock-balance-amount-container');
     expect(wrapper).toContainMatchingElement('.transaction-priority');
     expect(wrapper).toContainMatchingElement('.unlock-btn');
