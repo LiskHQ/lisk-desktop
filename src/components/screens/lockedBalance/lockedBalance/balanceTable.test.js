@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import BalanceTable from './balanceTable';
 import accounts from '../../../../../test/constants/accounts';
 import {
-  calculateLockedBalance,
+  calculateBalanceLockedInVotes,
   calculateUnlockableBalance,
 } from '../../../../utils/account';
 
@@ -17,20 +17,21 @@ describe('unlock transaction Status', () => {
       { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: '1L' },
       { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: '3L' },
     ],
-    votes: [
-      { amount: '500000000000', delegateAddress: '1L' },
-      { amount: '3000000000', delegateAddress: '3L' },
-      { amount: '2000000000', delegateAddress: '1L' },
-    ],
     nonce: '178',
   };
+  const voting = {
+    '1L': { confirmed: 500000000000 },
+    '2L': { confirmed: 3000000000 },
+    '3L': { confirmed: 2000000000 },
+  };
+
   const currentBlockHeight = 5000;
   const currentBlock = { height: currentBlockHeight };
 
   const props = {
     t: key => key,
-    lockedBalance: calculateLockedBalance(account),
-    availableBalance: calculateUnlockableBalance(account, currentBlock),
+    lockedInVotes: calculateBalanceLockedInVotes(voting),
+    unlockableBalance: calculateUnlockableBalance(account, currentBlock),
     currentBlock,
     account,
   };
@@ -51,18 +52,18 @@ describe('unlock transaction Status', () => {
         { amount: '3000000000', height: { start: 2500, end: 3500 }, delegateAddress: accounts.genesis.address },
         { amount: '3000000000', height: { start: 2900, end: 3900 }, delegateAddress: accounts.genesis.address },
       ],
-      votes: [
-        { amount: '500000000000', delegateAddress: '1L' },
-        { amount: '9000000000000', delegateAddress: accounts.genesis.address },
-        { amount: '2000000000', delegateAddress: '1L' },
-      ],
+    };
+    const customVoting = {
+      '1L': { confirmed: 500000000000 },
+      '2L': { confirmed: 2000000000 },
+      [accounts.genesis.address]: { confirmed: 9000000000000 },
     };
 
     const customProps = {
       ...props,
       account: customAccount,
-      lockedBalance: calculateLockedBalance(customAccount),
-      availableBalance: calculateUnlockableBalance(customAccount, currentBlock),
+      lockedInVotes: calculateBalanceLockedInVotes(customVoting),
+      unlockableBalance: calculateUnlockableBalance(customAccount, currentBlock),
     };
 
     wrapper = mount(<BalanceTable {...customProps} />);

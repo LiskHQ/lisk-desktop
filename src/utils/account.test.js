@@ -3,8 +3,8 @@ import {
   extractAddress,
   getActiveTokenAccount,
   calculateUnlockableBalance,
-  getAvailableUnlockingTransactions,
-  calculateLockedBalance,
+  getUnlockableUnlockingObjects,
+  calculateBalanceLockedInVotes,
 } from './account';
 
 describe('Utils: Account', () => {
@@ -59,7 +59,7 @@ describe('Utils: Account', () => {
     });
   });
 
-  describe('calculateAvailableBalance', () => {
+  describe('unlocking util functions', () => {
     it('should get correct available balance', () => {
       let unlocking = [
         { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: '1L' },
@@ -92,19 +92,19 @@ describe('Utils: Account', () => {
       ).toEqual(0);
     });
 
-    describe('calculateLockedBalance', () => {
+    describe('calculateBalanceLockedInVotes', () => {
       it('should get correct available balance', () => {
-        const votes = [
-          { amount: '5000000000', delegateAddress: '1L' },
-          { amount: '3000000000', delegateAddress: '3L' },
-          { amount: '2000000000', delegateAddress: '1L' },
-        ];
+        const votes = {
+          '1L': { confirmed: 5000000000 },
+          '2L': { confirmed: 3000000000 },
+          '3L': { confirmed: 2000000000 },
+        };
 
-        expect(calculateLockedBalance({ votes })).toEqual(10000000000);
+        expect(calculateBalanceLockedInVotes(votes)).toEqual(10000000000);
       });
 
       it('should return 0 when unlocking is undefined', () => {
-        expect(calculateLockedBalance({ })).toEqual(0);
+        expect(calculateBalanceLockedInVotes({ })).toEqual(0);
       });
     });
 
@@ -119,14 +119,14 @@ describe('Utils: Account', () => {
         const currentBlock = { height: 5000 };
 
         expect(
-          getAvailableUnlockingTransactions({ unlocking, address }, currentBlock),
+          getUnlockableUnlockingObjects({ unlocking, address }, currentBlock),
         ).toEqual([{ amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' }]);
       });
 
       it('should return 0 when unlocking is undefined', () => {
         const address = '80L';
         const currentBlock = { height: 5000 };
-        expect(getAvailableUnlockingTransactions({ address }, currentBlock)).toEqual([]);
+        expect(getUnlockableUnlockingObjects({ address }, currentBlock)).toEqual([]);
       });
     });
   });
