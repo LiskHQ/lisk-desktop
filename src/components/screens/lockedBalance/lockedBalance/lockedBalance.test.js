@@ -47,9 +47,9 @@ describe('Unlock LSK modal', () => {
     { amount: '2000000000', delegateAddress: '1L' },
   ];
   const initUnlocking = [
-    { amount: '1000000000', unvoteHeight: 4900, delegateAddress: '1L' },
-    { amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' },
-    { amount: '1000000000', unvoteHeight: 3000, delegateAddress: '3L' },
+    { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: '1L' },
+    { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: '1L' },
+    { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: '3L' },
   ];
 
   const store = {

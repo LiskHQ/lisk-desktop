@@ -62,9 +62,9 @@ describe('Utils: Account', () => {
   describe('calculateAvailableBalance', () => {
     it('should get correct available balance', () => {
       let unlocking = [
-        { amount: '1000000000', unvoteHeight: 4900, delegateAddress: '1L' },
-        { amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' },
-        { amount: '1000000000', unvoteHeight: 3000, delegateAddress: '3L' },
+        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: '1L' },
+        { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: '1L' },
+        { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: '3L' },
       ];
       const address = '80L';
       const currentBlock = { height: 5000 };
@@ -74,9 +74,9 @@ describe('Utils: Account', () => {
       ).toEqual(3000000000);
 
       unlocking = [
-        { amount: '1000000000', unvoteHeight: 4900, delegateAddress: '1L' },
-        { amount: '3000000000', unvoteHeight: 2500, delegateAddress: address },
-        { amount: '1000000000', unvoteHeight: 3000, delegateAddress: '3L' },
+        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: '1L' },
+        { amount: '3000000000', height: { start: 2500, end: 3500 }, delegateAddress: address },
+        { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: '3L' },
       ];
       expect(
         calculateUnlockableBalance({ unlocking, address }, currentBlock),
@@ -111,9 +111,9 @@ describe('Utils: Account', () => {
     describe('getAvailableUnlockingTransactions', () => {
       it('should get correct available balance', () => {
         const unlocking = [
-          { amount: '1000000000', unvoteHeight: 5000, delegateAddress: '1L' },
-          { amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' },
-          { amount: '1000000000', unvoteHeight: 3100, delegateAddress: '3L' },
+          { amount: '1000000000', height: { start: 5000, end: 6000 }, delegateAddress: '1L' },
+          { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: '1L' },
+          { amount: '1000000000', height: { start: 3100, end: 4100 }, delegateAddress: '3L' },
         ];
         const address = '80L';
         const currentBlock = { height: 5000 };

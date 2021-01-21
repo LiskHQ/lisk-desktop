@@ -13,9 +13,9 @@ describe('unlock transaction Status', () => {
   const account = {
     ...accounts.genesis,
     unlocking: [
-      { amount: '1000000000', unvoteHeight: 4900, delegateAddress: '1L' },
-      { amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' },
-      { amount: '1000000000', unvoteHeight: 3000, delegateAddress: '3L' },
+      { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: '1L' },
+      { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: '1L' },
+      { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: '3L' },
     ],
     votes: [
       { amount: '500000000000', delegateAddress: '1L' },
@@ -47,9 +47,9 @@ describe('unlock transaction Status', () => {
     const customAccount = {
       ...account,
       unlocking: [
-        { amount: '1000000000', unvoteHeight: 4900, delegateAddress: '1L' },
-        { amount: '3000000000', unvoteHeight: 2500, delegateAddress: accounts.genesis.address },
-        { amount: '3000000000', unvoteHeight: 2900, delegateAddress: accounts.genesis.address },
+        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: '1L' },
+        { amount: '3000000000', height: { start: 2500, end: 3500 }, delegateAddress: accounts.genesis.address },
+        { amount: '3000000000', height: { start: 2900, end: 3900 }, delegateAddress: accounts.genesis.address },
       ],
       votes: [
         { amount: '500000000000', delegateAddress: '1L' },
