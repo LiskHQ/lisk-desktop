@@ -2,105 +2,111 @@ import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import * as votingActions from '../../actions/voting';
 import * as settingsActions from '../../actions/settings';
+import * as transactionApi from '../../utils/api/transaction';
 import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
 import { tokenMap } from '../../constants/tokens';
 
+jest.mock('../../utils/api/transaction', () => ({
+  getTransactions: jest.fn(),
+}));
+
+const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
+const storeCreatedAction = {
+  type: actionTypes.storeCreated,
+};
+
+const transactions = [
+  {
+    senderId: 'some_address',
+    recipientId: 'sample_address',
+    asset: { data: 'Message' },
+    amount: 10e8,
+    type: 0,
+  },
+  {
+    senderId: 'some_address',
+    recipientId: 'sample_address',
+    asset: { data: '' },
+    amount: 10e8,
+    type: 0,
+  },
+];
+
+const block = {
+  numberOfTransactions: 2,
+  id: '513008230952104224',
+};
+
+const transactionsRetrievedAction = {
+  type: actionTypes.transactionsRetrieved,
+  data: {
+    confirmed: [{
+      type: transactionTypes().registerDelegate.code,
+      confirmations: 1,
+    }],
+  },
+};
+
+const newBlockCreated = {
+  type: actionTypes.newBlockCreated,
+  data: {
+    windowIsFocused: true,
+    block,
+  },
+};
+
+const network = {
+  status: { online: true },
+  name: 'Custom Node',
+  networks: {
+    LSK: {
+      nodeUrl: 'hhtp://localhost:4000',
+      nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+    },
+  },
+};
+
+const account = {
+  address: 'sample_address',
+  info: {
+    LSK: {
+      address: 'sample_address',
+    },
+  },
+};
+
+const defaultState = {
+  network,
+  account,
+  transactions: {
+    pending: [{
+      id: 12498250891724098,
+    }],
+    confirmed: [],
+    account: { address: 'test_address', balance: 0 },
+  },
+  delegate: {},
+  settings: { token: { active: 'LSK' }, statistics: false },
+};
+
 describe('Account middleware', () => {
-  let store;
-  let next;
-  let state;
-  let accountDataUpdatedSpy;
-  let windowNotificationSpy;
-  const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
-  const storeCreatedAction = {
-    type: actionTypes.storeCreated,
+  const next = jest.fn();
+  const store = {
+    dispatch: jest.fn().mockImplementation(() => console.log('Dispatch called')),
+    getState: () => defaultState,
   };
 
-  const block = {
-    transactions: [
-      {
-        senderId: 'some_address',
-        recipientId: 'sample_address',
-        asset: { data: 'Message' },
-        amount: 10e8,
-        type: 0,
-      },
-      {
-        senderId: 'some_address',
-        recipientId: 'sample_address',
-        asset: { data: '' },
-        amount: 10e8,
-        type: 0,
-      },
-    ],
-  };
-
-  const transactionsRetrievedAction = {
-    type: actionTypes.transactionsRetrieved,
-    data: {
-      confirmed: [{
-        type: transactionTypes().registerDelegate.code,
-        confirmations: 1,
-      }],
-    },
-  };
-
-  const newBlockCreated = {
-    type: actionTypes.newBlockCreated,
-    data: {
-      windowIsFocused: true,
-      block,
-    },
-  };
-
-
-  beforeEach(() => {
-    jest.useFakeTimers();
-    store = jest.fn();
-    store.dispatch = jest.fn();
-    state = {
-      network: {
-        status: { online: true },
-        name: 'Custom Node',
-        networks: {
-          LSK: {
-            nodeUrl: 'hhtp://localhost:4000',
-            nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-          },
-        },
-      },
-      account: {
-        address: 'sample_address',
-        info: {
-          LSK: {
-            address: 'sample_address',
-          },
-        },
-      },
-      transactions: {
-        pending: [{
-          id: 12498250891724098,
-        }],
-        confirmed: [],
-        account: { address: 'test_address', balance: 0 },
-      },
-      delegate: {},
-      settings: { token: { active: 'LSK' }, statistics: false },
-    };
-    store.getState = () => (state);
-
-    next = jest.fn();
-    jest.spyOn(transactionsActions, 'transactionsRetrieved');
-    jest.spyOn(accountActions, 'updateEnabledTokenAccount');
-    accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
-    window.Notification = () => { };
-    windowNotificationSpy = jest.spyOn(window, 'Notification');
-  });
+  jest.useFakeTimers();
+  jest.spyOn(transactionsActions, 'transactionsRetrieved');
+  jest.spyOn(accountActions, 'updateEnabledTokenAccount');
+  const accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
+  window.Notification = () => { };
+  const windowNotificationSpy = jest.spyOn(window, 'Notification');
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetAllMocks();
   });
 
   describe('Basic behavior', () => {
@@ -112,37 +118,32 @@ describe('Account middleware', () => {
 
   describe('on newBlockCreated', () => {
     it('should call account API methods', () => {
-      middleware(store)(next)(newBlockCreated);
-
-      const data = {
-        account: state.account,
-        transactions: state.transactions,
-      };
-
-      jest.advanceTimersByTime(7000);
-      expect(accountDataUpdatedSpy).toHaveBeenCalledWith(data);
-      expect(transactionsActions.transactionsRetrieved).toHaveBeenCalledWith({
-        pendingTransactions: data.transactions.pending,
-        address: data.account.address,
-        filters: undefined,
+      transactionApi.getTransactions.mockResolvedValue({ data: transactions });
+      const promise = middleware(store)(next);
+      promise(newBlockCreated).then(() => {
+        jest.runOnlyPendingTimers();
+        expect(store.dispatch).toHaveBeenCalled();
       });
     });
 
     it('should call account BTC API methods when BTC is the active token', () => {
+      const state = store.getState();
       state.settings = { token: { active: 'BTC' } };
       const address = 'n45uoyzDvep8cwgkfxq3H3te1ujWyu1kkB';
       state.account = { address };
       state.transactions.confirmed = [{ senderId: address, confirmations: 1 }];
-      middleware(store)(next)(newBlockCreated);
-
-      jest.advanceTimersByTime(7000);
-      expect(transactionsActions.transactionsRetrieved)
-        .toHaveBeenCalledWith({
-          address, filters: undefined, pendingTransactions: state.transactions.pending,
-        });
+      const promise = middleware(store)(next);
+      promise(newBlockCreated).then(() => {
+        jest.runOnlyPendingTimers();
+        expect(transactionsActions.transactionsRetrieved)
+          .toHaveBeenCalledWith({
+            address, filters: undefined, pendingTransactions: state.transactions.pending,
+          });
+      });
     });
 
-    it('should fetch transactions if confirmed tx list does not contain recent transaction', () => {
+    it('should not fetch transactions if confirmed tx list does not contain recent transaction', () => {
+      const state = store.getState();
       store.getState = () => ({
         ...state,
         transactions: {
@@ -153,16 +154,18 @@ describe('Account middleware', () => {
       });
       const currentState = store.getState();
 
-      middleware(store)(next)(newBlockCreated);
-
-      jest.advanceTimersByTime(7000);
-      expect(accountDataUpdatedSpy).toHaveBeenCalledWith({
-        account: currentState.account,
-        transactions: currentState.transactions,
+      const promise = middleware(store)(next);
+      promise(newBlockCreated).then(() => {
+        jest.runOnlyPendingTimers();
+        expect(accountDataUpdatedSpy).toHaveBeenCalledWith({
+          account: currentState.account,
+          transactions: currentState.transactions,
+        });
       });
     });
 
-    it('should fetch transactions if confirmed tx list does not contain recent transaction', () => {
+    it('should fetch transactions if confirmed tx list contains recent transaction', () => {
+      const state = store.getState();
       store.getState = () => ({
         ...state,
         transactions: {
@@ -184,12 +187,13 @@ describe('Account middleware', () => {
       });
       const currentState = store.getState();
 
-      middleware(store)(next)(newBlockCreated);
-
-      jest.advanceTimersByTime(7000);
-      expect(accountDataUpdatedSpy).toHaveBeenCalledWith({
-        account: currentState.account,
-        transactions: currentState.transactions,
+      const promise = middleware(store)(next);
+      promise(newBlockCreated).then(() => {
+        jest.runOnlyPendingTimers();
+        expect(accountDataUpdatedSpy).toHaveBeenCalledWith({
+          account: currentState.account,
+          transactions: currentState.transactions,
+        });
       });
     });
 
