@@ -49,11 +49,11 @@ export default (activeTab, changeSort, t) => ([
     },
   },
   {
-    title: t('Approval'),
-    classList: `${grid['col-xs-1']} ${grid['col-md-1']} ${styles.approvalTitle}`,
+    title: t('Delegate weight'),
+    classList: `${grid['col-xs-1']} ${grid['col-md-1']} ${styles.voteWeight}`,
     tooltip: {
-      title: t('Approval'),
-      message: t('Percentage of total supply voting for a delegate.'),
+      title: t('Delegate weight'),
+      message: t('The total LSK voted to a delegate.'),
       position: 'left',
     },
   },

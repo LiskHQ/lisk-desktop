@@ -14,9 +14,15 @@ describe('VoteRow Component', () => {
     onRowClick: jest.fn(),
     accounts: {
       [accounts.delegate.address]: {
-        productivity: 95,
-        rank: 1,
-        totalVotesReceived: 50e8,
+        address: '16313739661670634666L',
+        balance: '99994688951000',
+        delegate: {
+          productivity: '0',
+          rank: 0,
+          rewards: '0',
+          username: 'free',
+          vote: '10000000000',
+        },
       },
     },
   };

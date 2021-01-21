@@ -16,6 +16,15 @@ const trim = (value) => {
 
 const getInt = value => value.replace(IntegerReg, '');
 
+/**
+ * Displays the LSK/BTC amount with Token sign next to the value
+ *
+ * @param {Object} params
+ * @param {String} params.val Amount in Beddows
+ * @param {Boolean} params.showRounded Round the number (decimal)
+ * @param {Boolean} params.showInt Remove the floating points
+ * @param {String} params.token An option of LSK and BTC
+ */
 const LiskAmount = ({
   val, showRounded, showInt, token,
 }) => {

@@ -59,7 +59,7 @@ export default compose(
         ),
       },
       networkStatus: {
-        apiUtil: getNetworkStatus,
+        apiUtil: network => getNetworkStatus({ network }),
         defaultData: {},
         autoload: true,
         transformResponse: response => response,

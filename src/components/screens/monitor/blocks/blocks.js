@@ -42,7 +42,7 @@ const Blocks = ({
   /* istanbul ignore next */
   const loadLastBlocks = () => applyFilters(filters);
 
-  const canLoadMore = blocks.meta ? blocks.meta.count === 30 : false;
+  const canLoadMore = blocks.meta && blocks.meta.total > blocks.data.length;
 
   return (
     <div>

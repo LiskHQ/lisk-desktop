@@ -10,6 +10,7 @@ pipeline {
 		booleanParam(name: 'SKIP_PERCY', defaultValue: false, description: 'Skip running percy.')
 		string(name: 'LISK_CORE_VERSION', defaultValue: 'release/3.0.0-beta.1', description: 'Use lisk-core branch.', )
 		string(name: 'LISK_CORE_IMAGE_VERSION', defaultValue: '3.0.0-beta.1-a7842d112d5136d9462501763c4cb2895096e900', description: 'Use lisk-core docker image.', )
+		string(name: 'LISK_SERVICE_VERSION', defaultValue: 'development', description: 'Use lisk-service branch.', )
 	}
 	stages {
 		stage('Install npm dependencies') {
@@ -94,13 +95,22 @@ pipeline {
 							          branches: [[name: "${params.LISK_CORE_VERSION}" ]],
 								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-core']]])
 						}
-						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
-						withCredentials([string(credentialsId: 'lisk-hub-cypress-record-key', variable: 'CYPRESS_RECORD_KEY')]) {
+						dir('lisk-service') {
+							checkout([$class: 'GitSCM',
+								  branches: [[name: "${params.LISK_SERVICE_VERSION}" ]],
+								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-service']]])
+							sh '''
+							make build-core
+							make build-gateway
+							make build-template
+							make build-tests
+							'''
+						}
+						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE'), string(credentialsId: 'lisk-hub-cypress-record-key', variable: 'CYPRESS_RECORD_KEY')]) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
 									nvm(getNodejsVersion()) {
 										sh '''#!/bin/bash -xe
-										export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
 										rm -rf $WORKSPACE/$BRANCH_NAME/
 										cp -rf $WORKSPACE/lisk/docker/ $WORKSPACE/$BRANCH_NAME/
@@ -117,36 +127,80 @@ services:
 
   lisk:
     ports:
-      - \\${ENV_LISK_HTTP_PORT}
-      - \\${ENV_LISK_WS_PORT}
+      - 4000:4000
+    environment:
+      - LISK_CONSOLE_LOG_LEVEL=debug
 EOF
 
+										rm -rf $WORKSPACE/$BRANCH_NAME-service/
+										cp -rf $WORKSPACE/lisk-service/docker/ $WORKSPACE/$BRANCH_NAME-service/
+
 										ENV_LISK_VERSION="$LISK_CORE_IMAGE_VERSION" make coldstart
-										export CYPRESS_baseUrl=http://127.0.0.1:565$N/#/
-										export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 										cd -
 
-										npm run serve -- $WORKSPACE/app/build -p 565$N -a 127.0.0.1 &>server.log &
+										cd $WORKSPACE/$BRANCH_NAME-service/
+										# TODO: use random port when the tests support it
+										cat <<EOF >docker-compose.override.yml
+version: "3"
+services:
+
+  gateway:
+    ports:
+      - 127.0.0.1:9901:9901
+EOF
+
+										cat <<EOF >custom.env
+LISK_CORE_HTTP=http://10.127.0.1:4000
+LISK_CORE_WS=ws://10.127.0.1:4000
+EOF
+										sed -i '/compose := docker-compose/a\\\t-f docker-compose.override.yml \\\\' Makefile.jenkins
+										sed -i 's/docker-compose.testnet.yml/docker-compose.custom.yml/' Makefile.jenkins
+										ENABLE_HTTP_API='http-version1,http-version1-compat,http-status,http-test' \
+										ENABLE_WS_API='rpc,rpc-v1,blockchain,rpc-test' \
+										make -f Makefile.jenkins up
+										ready=1
+										retries=0
+										set +e
+										while [ $ready -ne 0 ]; do
+										  curl --fail --verbose http://127.0.0.1:9901/api/v1/blocks
+										  ready=$?
+										  sleep 10
+										  let retries++
+										  if [ $retries = 6 ]; then
+										    break
+										  fi
+										done
+										set -e
+										if [ $retries -ge 6 ]; then
+										  exit 1
+										fi
+										cd -
+
+										npm run serve -- $WORKSPACE/app/build -p 5650 -a 127.0.0.1 &>server.log &
+
+										export CYPRESS_baseUrl=http://127.0.0.1:5650/#/
+										export CYPRESS_coreUrl=http://127.0.0.1:4000
+										export CYPRESS_serviceUrl=http://127.0.0.1:9901
 										set +e
 										set -o pipefail
 										npm run cypress:run |tee cypress.log
 										ret=$?
+
+										# this is to save on cypress credits
 										if [ $ret -ne 0 ]; then
 										  FAILED_TESTS="$( awk '/Spec/{f=1}f' cypress.log |grep --only-matching '✖ .*.feature' |awk '{ print "test/cypress/features/"$2 }' |xargs| tr -s ' ' ',' )"
-                                          cd $WORKSPACE/$BRANCH_NAME
-                                          make coldstart
-                                          export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
-                                          sleep 10
-                                          cd -
-                                          npm run cypress:run -- --record --spec $FAILED_TESTS |tee cypress.log
-                                          ret=$?
+										  cd $WORKSPACE/$BRANCH_NAME
+										  make coldstart
+										  sleep 10
+										  cd -
+										  npm run cypress:run -- --record --spec $FAILED_TESTS |tee cypress.log
+										  ret=$?
 										fi
 										exit $ret
 										'''
 									}
 								}
 							}
-						}
 						}
 					},
 					"percy": {
@@ -198,7 +252,11 @@ EOF
 		}
 		cleanup {
 			ansiColor('xterm') {
-				sh '( cd $WORKSPACE/$BRANCH_NAME && docker-compose logs && make mrproper || true ) || true'
+				sh 'cat $WORKSPACE/server.log || true'
+				sh '( cd $WORKSPACE/$BRANCH_NAME-service && make -f Makefile.jenkins logs || true ) || true'
+				sh '( cd $WORKSPACE/$BRANCH_NAME-service && make -f Makefile.jenkins mrproper || true ) || true'
+				sh '( cd $WORKSPACE/$BRANCH_NAME && docker-compose logs || true ) || true'
+				sh '( cd $WORKSPACE/$BRANCH_NAME && make mrproper || true ) || true'
 			}
 			cleanWs()
 		}

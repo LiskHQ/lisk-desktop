@@ -87,6 +87,7 @@ export const getAccount = async ({
       });
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log('Bitcoin account not found.');
   }
 

@@ -16,7 +16,7 @@ const apis = {
     transformResponse: response => response.data,
   },
   accounts: {
-    apiUtil: getAccounts,
+    apiUtil: (network, params) => getAccounts({ network, params }),
     autoload: false,
     defaultData: {},
     transformResponse: response =>
