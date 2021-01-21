@@ -1,4 +1,4 @@
-import urlProcessor from './urlProcessor';
+import setVotesByLaunchProtocol from './urlProcessor';
 import { voteEdited } from './voting';
 import * as accounts from '../utils/api/account';
 
@@ -7,7 +7,7 @@ jest.mock('../utils/api/account', () => ({
   getAccounts: jest.fn(),
 }));
 
-describe('urlProcessor', () => {
+describe('setVotesByLaunchProtocol', () => {
   const getState = () => ({
     network: {
       status: { online: true },
@@ -29,30 +29,31 @@ describe('urlProcessor', () => {
 
   it('Should dispatch voteEdited with empty array if no usernames in query params', async () => {
     accounts.getAccounts.mockImplementation(() => Promise.resolve([]));
-    await urlProcessor('?modal=votingQueue')(dispatch, getState);
+    await setVotesByLaunchProtocol('?modal=votingQueue')(dispatch, getState);
     expect(dispatch).toHaveBeenCalledWith(voteEdited([]));
   });
 
   it('Should dispatch voteEdited with a single username in the query params', async () => {
-    accounts.getAccounts.mockImplementation(() => Promise.resolve([{
+    const data = [{
       address: '12L',
       amount: '',
       username: 'genesis_5',
-    }]));
-    await urlProcessor('?modal=votingQueue&unvotes=genesis_5')(dispatch, getState);
+    }];
+    accounts.getAccounts.mockImplementation(() => Promise.resolve({ data }));
+    await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=genesis_5')(dispatch, getState);
     const votes = ['genesis_5']
       .map(username => ({ address: '12L', username, amount: '' }));
     expect(dispatch).toHaveBeenCalledWith(voteEdited(votes));
   });
 
   it('Should dispatch voteEdited with empty data if the username is invalid', async () => {
-    accounts.getAccounts.mockImplementation(() => Promise.resolve([]));
-    await urlProcessor('?modal=votingQueue&unvotes=ad')(dispatch, getState);
+    accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: [] }));
+    await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=ad')(dispatch, getState);
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ data: [] }));
   });
 
   it('Should dispatch voteEdited with empty data if the usernames are invalid', async () => {
-    await urlProcessor('?modal=votingQueue&unvotes=ad,genesis_5')(dispatch, getState);
+    await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=ad,genesis_5')(dispatch, getState);
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ data: [] }));
   });
 
@@ -64,9 +65,9 @@ describe('urlProcessor', () => {
       username,
     }));
     const url = `?modal=votingQueue&unvotes=${usernameList.join(',')}`;
-    accounts.getAccounts.mockImplementation(() => Promise.resolve(accountsList));
+    accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: accountsList }));
 
-    await urlProcessor(url)(dispatch, getState);
+    await setVotesByLaunchProtocol(url)(dispatch, getState);
     expect(dispatch).toHaveBeenCalledWith(voteEdited(accountsList));
   });
 });

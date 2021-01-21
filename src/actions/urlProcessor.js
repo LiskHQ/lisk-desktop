@@ -48,13 +48,13 @@ const urlProcessor = (search, network) => {
   const unvotes = normalizeUsernames(params.unvotes);
 
   if (votes.length + unvotes.length === 0) {
-    return [];
+    return { data: [] };
   }
 
   return getAccounts({
     network,
     params: { usernameList: [...votes, ...unvotes] },
-  }, tokenMap.LSK.key).data;
+  }, tokenMap.LSK.key);
 };
 
 const setVotesByLaunchProtocol = search =>
@@ -63,7 +63,7 @@ const setVotesByLaunchProtocol = search =>
     const accounts = await urlProcessor(search, network);
 
     return dispatch(
-      voteEdited(accounts
+      voteEdited(accounts.data
         .filter(({ address }) => regex.address.test(address))
         .map(
           ({ address, username }) => ({ address, username, amount: '' }),
