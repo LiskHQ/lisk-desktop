@@ -3,7 +3,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getActiveTokenAccount } from '../../../utils/account';
-import { getAccounts } from '../../../utils/api/account';
 import { getTransaction } from '../../../utils/api/transaction';
 import withData from '../../../utils/withData';
 import TransactionDetails from './transactionDetails';
@@ -26,16 +25,6 @@ const apis = {
     }),
     transformResponse: response => response.data[0] || {},
     autoload: true,
-  },
-
-  delegates: {
-    apiUtil: getAccounts,
-    autoload: false,
-    defaultData: {},
-    transformResponse: response => response.reduce((acc, item) => {
-      acc[item.address] = item;
-      return acc;
-    }, {}),
   },
 };
 

@@ -37,11 +37,13 @@ describe('Reducer: transactions', () => {
         data: {
           confirmed: mockTransactions,
           count: mockTransactions.length,
+          offset: 0,
         },
       };
       const changedState = transactions(state, action);
       expect(changedState).toEqual({
         ...defaultState,
+        filters: undefined,
         confirmed: mockTransactions,
         count: mockTransactions.length,
       });

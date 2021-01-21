@@ -20,7 +20,7 @@ activeDelegates.push({
     publicKey: 'test_pbk',
     secondPublicKey: '',
   },
-  approval: 0,
+  delegateWeight: 0,
 });
 
 describe('Delegates monitor page', () => {

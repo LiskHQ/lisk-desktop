@@ -7,7 +7,11 @@ jest.mock('../http', () => jest.fn().mockReturnValue([]));
 jest.mock('../ws', () => jest.fn().mockReturnValue([]));
 
 describe('API: LSK Account', () => {
-  const network = { serviceUrl: 'http://sample.com/' };
+  const network = {
+    networks: {
+      LSK: { serviceUrl: 'http://sample.com/' },
+    },
+  };
   const baseUrl = 'http://custom-basse-url.com/';
   const path = '/api/v1/accounts';
 
@@ -25,8 +29,8 @@ describe('API: LSK Account', () => {
 
     it('should call ws with addressList if it is provided', async () => {
       const expectedApiCallParams = [
-        { method: 'get.accounts', params: { address: '12L' } },
-        { method: 'get.accounts', params: { address: '13L' } },
+        { method: 'get.accounts', params: { address: '12L' }, jsonrpc: '2.0' },
+        { method: 'get.accounts', params: { address: '13L' }, jsonrpc: '2.0' },
       ];
       // BaseUrl is not used for WS calls
       const response = await getAccounts({

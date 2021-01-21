@@ -5,6 +5,7 @@ jest.mock('socket.io-client');
 
 describe('Web socket', () => {
   const baseUrl = 'http://sample-service-url.com';
+  const wsURI = 'ws://sample-service-url.com/rpc-v1';
 
   describe('ws', () => {
     it('Should call socket.emit', async () => {
@@ -23,7 +24,7 @@ describe('Web socket', () => {
       });
 
       expect(io).toHaveBeenCalledWith(
-        `${baseUrl}/rpc`,
+        wsURI,
         { transports: ['websocket'] },
       );
       expect(emit).toHaveBeenCalledWith(
@@ -52,7 +53,9 @@ describe('Web socket', () => {
         callback(wsResult);
       });
       io.mockImplementation(() => ({ emit }));
-      const responseObject = await ws({});
+      const responseObject = await ws({
+        baseUrl,
+      });
 
       expect(responseObject).toEqual(normalizedResult);
     });
@@ -82,7 +85,9 @@ describe('Web socket', () => {
         callback(wsResult);
       });
       io.mockImplementation(() => ({ emit }));
-      const responseArray = await ws({});
+      const responseArray = await ws({
+        baseUrl,
+      });
 
       expect(responseArray).toEqual(normalizedResult);
     });
@@ -94,7 +99,9 @@ describe('Web socket', () => {
       });
       io.mockImplementation(() => ({ emit }));
 
-      await expect(ws({})).rejects.toEqual(error);
+      await expect(ws({
+        baseUrl,
+      })).rejects.toEqual(error);
     });
   });
 
