@@ -1,7 +1,6 @@
 import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 
 import { tokenMap } from '../constants/tokens';
-import { unlockTxDelayAvailability } from '../constants/account';
 import regex from './regex';
 
 /**
