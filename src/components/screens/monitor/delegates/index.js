@@ -9,7 +9,6 @@ import { getNetworkStatus } from '../../../../utils/api/network';
 import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
-import withLocalSort from '../../../../utils/withLocalSort';
 import transactionTypes from '../../../../constants/transactionTypes';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
 import { tokenMap } from '../../../../constants/tokens';
@@ -129,7 +128,6 @@ const ComposedDelegates = compose(
     },
   ),
   withFilters(standByDelegatesKey, defaultUrlSearchParams),
-  withLocalSort(delegatesKey, 'rank:asc'),
   withTranslation(),
 )(Delegates);
 

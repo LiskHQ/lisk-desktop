@@ -50,7 +50,7 @@ const DelegatesMonitor = ({
     tabs: [
       {
         value: 'active',
-        name: ('Active delegates'),
+        name: ('Inside round'),
         className: 'active',
       },
       {
@@ -105,7 +105,12 @@ const DelegatesMonitor = ({
                 <DelegatesTable
                   standByDelegates={standByDelegates}
                   changeSort={changeSort}
-                  delegates={delegates}
+                  delegates={{
+                    ...delegates,
+                    data: delegates.data.map(
+                      data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
+                    ),
+                  }}
                   filters={filters}
                   sort={sort}
                   t={t}
