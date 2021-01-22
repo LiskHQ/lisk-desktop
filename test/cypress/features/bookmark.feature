@@ -10,7 +10,7 @@ Feature: Add bookmark
     When I click on searchIcon
 
   Scenario: Add a delegate to bookmarks
-    And I search for account 537318935439898807L
+    And I search for account 10016685355739180605L
     Then I click on searchAccountRow
     Then I should be on Account page
     Then I click on addBookmarkIcon
