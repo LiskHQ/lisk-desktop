@@ -6,7 +6,7 @@ import LiskAmount from '../../../shared/liskAmount';
 import { tokenMap } from '../../../../constants/tokens';
 
 const getPendingTime = (unvoteHeight, unlockHeight) => {
-  const awaitingBlocks = unvoteHeight - unlockHeight;
+  const awaitingBlocks = unlockHeight - unvoteHeight;
   const secondsToUnlockAllBalance = awaitingBlocks * 10;
   const momentSeconds = moment().second(secondsToUnlockAllBalance);
   return moment().to(momentSeconds, true);
