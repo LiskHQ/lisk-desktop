@@ -35,7 +35,6 @@
   }
 }
 
-
 .delegateWeight {
   padding-left: 0;
   padding-right: 0;
@@ -124,4 +123,19 @@
 
 .statusToolip {
   white-space: nowrap;
+}
+
+.statusIconsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.statusIcon {
+  height: 17px;
+}
+
+.warningIcon {
+  position: absolute;
+  padding-left: 12px;
 }

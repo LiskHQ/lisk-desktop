@@ -69,40 +69,44 @@ const DelegateRow = ({
         {formattedForgingTime}
       </span>
       <span className={`${grid['col-xs-1']} ${styles.noEllipsis}`}>
-        <Tooltip
-          title={data.forgingTime
-            ? t(statuses[data.forgingTime.status])
-            : t(statuses.notForging)}
-          position="left"
-          size="maxContent"
-          content={(
-            <Icon name={data.forgingTime
-              ? t(icons[data.forgingTime.status])
-              : t(icons.notForging)}
-            />
+        <div className={`${styles.statusIconsContainer}`}>
+          <Tooltip
+            title={data.forgingTime
+              ? t(statuses[data.forgingTime.status])
+              : t(statuses.notForging)}
+            position="left"
+            size="maxContent"
+            content={(
+              <Icon
+                className={styles.statusIcon}
+                name={data.forgingTime
+                  ? t(icons[data.forgingTime.status])
+                  : t(icons.notForging)}
+              />
+            )}
+            footer={(
+              <p>{formattedForgingTime}</p>
+            )}
+          >
+            <p className={styles.statusToolip}>
+              {data.lastBlock && `Last block forged ${data.lastBlock}`}
+            </p>
+          </Tooltip>
+          {(data.isBanned) && (
+          <Tooltip
+            position="left"
+            size="maxContent"
+            content={<Icon className={`${styles.statusIcon} ${styles.warningIcon}`} name="delegateWarning" />}
+            footer={(
+              <p>{formattedForgingTime}</p>
+            )}
+          >
+            <p className={styles.statusToolip}>
+              {t('This delegate will be punished in upcoming rounds')}
+            </p>
+          </Tooltip>
           )}
-          footer={(
-            <p>{formattedForgingTime}</p>
-          )}
-        >
-          <p className={styles.statusToolip}>
-            {data.lastBlock && `Last block forged ${data.lastBlock}`}
-          </p>
-        </Tooltip>
-        {!data.isBanned && (
-        <Tooltip
-          position="left"
-          size="maxContent"
-          content={<Icon name="delegateWarning" />}
-          footer={(
-            <p>{formattedForgingTime}</p>
-          )}
-        >
-          <p className={styles.statusToolip}>
-            {t('This delegate will be punished in upcoming rounds')}
-          </p>
-        </Tooltip>
-        )}
+        </div>
       </span>
     </Link>
   );
