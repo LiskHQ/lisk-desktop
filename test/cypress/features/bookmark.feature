@@ -2,9 +2,6 @@ Feature: Add bookmark
 
   Background:
     Given I am on Login page
-    When I click on settingsMenu
-    And I click on switchNetworksTrigger
-    And I click on closeDialog
     Given I login as genesis on devnet
     Given I am on wallet page
     When I click on searchIcon
