@@ -23,14 +23,13 @@ Feature: Send
     Then Send form fields are prefilled
 
   Scenario: Launch protocol prefills fields  - from logged out state
-    Given I am on Login page
-    Given I login as genesis on devnet
     Given I follow the launch protokol link
     When I enter first passphrase of genesis
     When I login
     Then Send form fields are prefilled
 
   Scenario: Error message is shown if transfer tx fails
+    Given I login as genesis on devnet
     Given I mock api /transactions
     Given I am on Wallet page
     Then I click on sendLink
