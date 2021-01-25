@@ -13,5 +13,4 @@ Feature: Dashboard
     Then I click on closeDialog
     When I click on bookmarkListToggle
     Then I click on bookmarkAccount
-    And I scroll to top
     Then I should be on Account page

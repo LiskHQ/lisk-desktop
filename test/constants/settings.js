@@ -1,5 +1,4 @@
 const settings = {
-  showNetwork: true,
   areTermsOfUseAccepted: true,
   token: {
     list: {
