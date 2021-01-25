@@ -6,9 +6,9 @@ Feature: Search
     When I click on searchIcon
 
   Scenario: Search for Transaction in mainnet, signed off
-    And I search for transaction 881002485778658401
+    And I search for transaction 15753715487817769755
     Then I click on searchTransactionRow
-    Then I should be on Tx Details page of 881002485778658401
+    Then I should be on Tx Details page of 15753715487817769755
 
   Scenario: Search for Lisk ID
     And I search for account 6566229458323231555L
