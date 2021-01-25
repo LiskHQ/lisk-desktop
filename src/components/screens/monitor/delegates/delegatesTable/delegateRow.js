@@ -39,22 +39,18 @@ const getForgingTime = (data) => {
 const DelegateRow = ({
   data, className, t,
 }) => {
-  const watched = Math.random() < 0.5;
+  const watched = false;
   const formattedForgingTime = data.forgingTime && data.forgingTime.time;
-
-  const watchToogle = () => {};
 
   return (
     <Link
       className={`${grid.row} ${className} delegate-row ${styles.tableRow}`}
       to={`${routes.account.path}?address=${data.address}`}
     >
-      <span className={`${grid['col-xs-1']} ${styles.watchIcon} ${!watched && styles.watchInactiveIcon}`}>
-        <div onClick={watchToogle}>
-          {watched
-            ? <Icon name="eyeActive" />
-            : <Icon name="eyeInactive" />}
-        </div>
+      <span className={`${grid['col-xs-1']}`}>
+        {watched
+          ? <Icon name="eyeActive" />
+          : <Icon name="eyeInactive" />}
       </span>
       <span className={`${grid['col-xs-3']}`}>
         <div className={`${styles.delegateDetails}`}>
@@ -77,8 +73,6 @@ const DelegateRow = ({
         <DelegateWeight value={data.totalVotesReceived} />
       </span>
       <span className={`${grid['col-xs-2']} ${styles.noEllipsis}`}>
-        {formattedForgingTime}
-        /
         {getForgingTime(data.forgingTime)}
       </span>
       <span className={`${grid['col-xs-1']} ${styles.noEllipsis}`}>

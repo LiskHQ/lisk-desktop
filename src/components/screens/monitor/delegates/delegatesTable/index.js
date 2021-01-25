@@ -57,8 +57,8 @@ export default compose(
   withLocalSort('delegates', 'rank:asc', {
     // eslint-disable-next-line max-statements
     forgingTime: (a, b, direction) => {
-      if (!a.forgingTime || !b.forgingTime) return 0;
-      if (a.forgingTime.time === -1 || a.forgingTime.time === undefined) return 1;
+      if (!a.forgingTime) return 1;
+      if (!b.forgingTime) return -1;
       if (direction === 'asc') {
         if (a.forgingTime.time < b.forgingTime.time) return -1;
         if (a.forgingTime.time > b.forgingTime.time) return 1;
