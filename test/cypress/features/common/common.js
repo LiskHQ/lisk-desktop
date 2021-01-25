@@ -9,9 +9,6 @@ import urls from '../../../constants/urls';
 const txConfirmationTimeout = 15000;
 
 Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
-  // cy.autologin(accounts[account].passphrase, networks[network].node);
-  // cy.visit(urls.login);
-
   cy.get(ss.networkDropdown).click();
   cy.get(ss.networkOptions).eq(2).click();
   cy.get(ss.addressInput).clear().type(networks[network].node);
@@ -25,7 +22,6 @@ Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
 
   cy.get(ss.loginBtn).should('be.enabled');
   cy.get(ss.loginBtn).click();
-
 });
 
 Given(/^I login$/, function () {
