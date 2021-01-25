@@ -55,6 +55,18 @@ const DelegatesTable = ({
 
 export default compose(
   withLocalSort('delegates', 'rank:asc', {
-    forgingTime: (a, b, direction) => ((a.time > b.time) ? 1 : -1) * (direction === 'asc' ? 1 : -1),
+    // eslint-disable-next-line max-statements
+    forgingTime: (a, b, direction) => {
+      if (!a.forgingTime || !b.forgingTime) return 0;
+      if (a.forgingTime.time === -1 || a.forgingTime.time === undefined) return 1;
+      if (direction === 'asc') {
+        if (a.forgingTime.time < b.forgingTime.time) return -1;
+        if (a.forgingTime.time > b.forgingTime.time) return 1;
+        return 0;
+      }
+      if (a.forgingTime.time < b.forgingTime.time) return 1;
+      if (a.forgingTime.time > b.forgingTime.time) return -1;
+      return 0;
+    },
   }),
 )(DelegatesTable);

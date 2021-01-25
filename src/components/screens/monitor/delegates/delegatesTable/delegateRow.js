@@ -39,13 +39,16 @@ const getForgingTime = (data) => {
 const DelegateRow = ({
   data, className, t,
 }) => {
-  const formattedForgingTime = getForgingTime(data.forgingTime);
+  const formattedForgingTime = data.forgingTime && data.forgingTime.time;
   return (
     <Link
       className={`${grid.row} ${className} delegate-row ${styles.tableRow}`}
       to={`${routes.account.path}?address=${data.address}`}
     >
-      <span className={`${grid['col-xs-4']}`}>
+      <span className={`${grid['col-xs-1']}`}>
+        x
+      </span>
+      <span className={`${grid['col-xs-3']}`}>
         <div className={`${styles.delegateDetails}`}>
           <AccountVisual address={data.address} />
           <div>
@@ -67,6 +70,8 @@ const DelegateRow = ({
       </span>
       <span className={`${grid['col-xs-2']} ${styles.noEllipsis}`}>
         {formattedForgingTime}
+        /
+        {getForgingTime(data.forgingTime)}
       </span>
       <span className={`${grid['col-xs-1']} ${styles.noEllipsis}`}>
         <div className={`${styles.statusIconsContainer}`}>
