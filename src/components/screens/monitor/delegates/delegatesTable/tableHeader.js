@@ -3,8 +3,11 @@ import styles from '../delegates.css';
 
 export default (activeTab, changeSort, t) => ([
   {
+    classList: `${grid['col-xs-1']}`,
+  },
+  {
     title: t('Delegate'),
-    classList: `${grid['col-xs-4']}`,
+    classList: `${grid['col-xs-3']}`,
   },
   {
     title: t('Productivity'),

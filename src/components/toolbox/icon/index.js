@@ -145,6 +145,8 @@ import delegateForged from '../../../assets/images/icons/delegate-forged.svg';
 import delegateMissed from '../../../assets/images/icons/delegate-missed.svg';
 import delegateWarning from '../../../assets/images/icons/delegate-warning.svg';
 import delegateAwaiting from '../../../assets/images/icons/delegate-awaiting.svg';
+import eyeInactive from '../../../assets/images/icons/eye-inactive.svg';
+import eyeActive from '../../../assets/images/icons/eye-active.svg';
 
 export const icons = {
   academy,
@@ -290,6 +292,8 @@ export const icons = {
   delegateMissed,
   delegateWarning,
   delegateAwaiting,
+  eyeActive,
+  eyeInactive,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

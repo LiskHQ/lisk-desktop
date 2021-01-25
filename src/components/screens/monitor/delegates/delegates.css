@@ -139,3 +139,18 @@
   position: absolute;
   padding-left: 12px;
 }
+
+.watchIcon {
+  width: 100%;
+  height: 100%;
+}
+
+.watchInactiveIcon {
+  visibility: visible;
+  opacity: 1;
+
+  &:hover {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
