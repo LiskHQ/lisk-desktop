@@ -99,7 +99,7 @@ const DelegateRow = ({
               {data.lastBlock && `Last block forged ${data.lastBlock}`}
             </p>
           </Tooltip>
-          {(!data.isBanned) && (
+          {data.isBanned && (
           <Tooltip
             position="left"
             size="maxContent"

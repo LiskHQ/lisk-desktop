@@ -20,15 +20,19 @@ const DelegatesMonitor = ({
   standByDelegates,
   networkStatus,
   applyFilters,
-  changeSort,
   delegates,
   filters,
   votes,
-  sort,
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
   const { forgingTimes, totalBlocks } = useSelector(state => state.blocks);
+  const delegatesWithForgingTimes = {
+    ...delegates,
+    data: delegates.data.map(
+      data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
+    ),
+  };
 
   useEffect(() => {
     const addressList = votes.data && votes.data.reduce((acc, data) => {
@@ -107,18 +111,10 @@ const DelegatesMonitor = ({
               : (
                 <DelegatesTable
                   standByDelegates={standByDelegates}
-                  changeSort={changeSort}
-                  delegates={{
-                    ...delegates,
-                    data: delegates.data.map(
-                      data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
-                    ),
-                  }}
+                  delegates={delegatesWithForgingTimes}
                   filters={filters}
-                  sort={sort}
                   t={t}
                   activeTab={activeTab}
-                  forgingTimes={forgingTimes}
                 />
               )
           }
