@@ -75,8 +75,8 @@ const DelegateRow = ({
       <span className={`${grid['col-xs-2']} ${styles.noEllipsis}`}>
         {getForgingTime(data.forgingTime)}
       </span>
-      <span className={`${grid['col-xs-1']} ${styles.noEllipsis}`}>
-        <div className={`${styles.statusIconsContainer}`}>
+      <span className={`${grid['col-xs-1']} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
+        <>
           <Tooltip
             title={data.forgingTime
               ? t(statuses[data.forgingTime.status])
@@ -99,21 +99,21 @@ const DelegateRow = ({
               {data.lastBlock && `Last block forged ${data.lastBlock}`}
             </p>
           </Tooltip>
-          {(data.isBanned) && (
+          {(!data.isBanned) && (
           <Tooltip
             position="left"
             size="maxContent"
-            content={<Icon className={`${styles.statusIcon} ${styles.warningIcon}`} name="delegateWarning" />}
+            content={<Icon className={styles.statusIcon} name="delegateWarning" />}
             footer={(
               <p>{formattedForgingTime}</p>
             )}
           >
-            <p className={styles.statusToolip}>
+            <p>
               {t('This delegate will be punished in upcoming rounds')}
             </p>
           </Tooltip>
           )}
-        </div>
+        </>
       </span>
     </Link>
   );

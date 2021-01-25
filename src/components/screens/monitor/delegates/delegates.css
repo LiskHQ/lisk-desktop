@@ -126,16 +126,20 @@
 }
 
 .statusIconsContainer {
-  display: flex;
+  overflow: visible !important;
+  display: flex !important;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start !important;
+
+  & > div:first-child {
+    margin-left: calc(50% - 17px);
+  }
+
+  & > div:nth-child(2) {
+    margin-left: 12px;
+  }
 }
 
 .statusIcon {
   height: 17px;
-}
-
-.warningIcon {
-  position: absolute;
-  padding-left: 12px;
 }
