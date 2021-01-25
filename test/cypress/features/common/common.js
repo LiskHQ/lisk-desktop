@@ -14,6 +14,7 @@ Given(/^Network switcher is disabled$/, function() {
 });
 
 Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
+  cy.visit(urls.login);
   cy.get(ss.networkDropdown).click();
   cy.get(ss.networkOptions).eq(2).click();
   cy.get(ss.addressInput).clear().type(networks[network].node);

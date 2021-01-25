@@ -1,6 +1,5 @@
 Feature: Register delegate
   Background:
-    Given I am on Login page
     Given I login as genesis on devnet
   
   Scenario: Register delegate + Header balance is affected

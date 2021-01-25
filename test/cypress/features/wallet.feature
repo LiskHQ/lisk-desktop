@@ -1,7 +1,6 @@
 Feature: Wallet
 
   Background:
-    Given I am on Login page
     Given I login as genesis on devnet
     Given I am on wallet page
     

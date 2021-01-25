@@ -1,6 +1,5 @@
 Feature: Search
   Background:
-    Given I am on Login page
     Given I login as genesis on devnet
     Given I am on Dashboard page
     When I click on searchIcon
