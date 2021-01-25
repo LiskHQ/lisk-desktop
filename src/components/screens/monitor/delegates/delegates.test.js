@@ -109,7 +109,7 @@ describe('Delegates monitor page', () => {
 
   it('renders a page with header', () => {
     wrapper = setup(props);
-    expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Active delegates');
+    expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Inside round');
   });
 
   it('allows to switch to stand by delegates', () => {
