@@ -20,6 +20,7 @@ test/cypress/videos/
 .history
 storybook-static
 .env
+cypress.log
 
 ## Commercial fonts
 src/assets/fonts/basier-circle/
