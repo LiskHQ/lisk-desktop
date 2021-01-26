@@ -156,7 +156,7 @@ export const getRegisteredDelegates = async ({ network }) => {
   const transactions = await getTransactions({
     network,
     params: { type: 'registerDelegate', limit: 100 },
-  }, tokenMap.LSK.key);
+  });
 
   if (delegates.error || transactions.error) {
     return Error('Error fetching data.');
