@@ -47,26 +47,27 @@ const DelegateRow = ({
       className={`${grid.row} ${className} delegate-row ${styles.tableRow}`}
       to={`${routes.account.path}?address=${data.address}`}
     >
-      <span className={`${grid['col-xs-1']}`}>
-        {watched
-          ? <Icon name="eyeActive" />
-          : <Icon name="eyeInactive" />}
-      </span>
       <span className={`${grid['col-xs-3']}`}>
-        <div className={`${styles.delegateDetails}`}>
-          <AccountVisual address={data.address} />
-          <div>
-            <p className={styles.delegateName}>
-              {data.username}
-            </p>
-            <p className={styles.delegateAddress}>{data.address}</p>
+        <div className={styles.delegateColumn}>
+          {watched
+            ? <Icon name="eyeActive" />
+            : <Icon name="eyeInactive" />
+          }
+          <div className={`${styles.delegateDetails}`}>
+            <AccountVisual address={data.address} />
+            <div>
+              <p className={styles.delegateName}>
+                {data.username}
+              </p>
+              <p className={styles.delegateAddress}>{data.address}</p>
+            </div>
           </div>
         </div>
       </span>
       <span className={`${grid['col-xs-2']}`}>
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>
-      <span className={`${grid['col-xs-1']} ${styles.noEllipsis}`}>
+      <span className={`${grid['col-xs-2']} ${styles.noEllipsis}`}>
         {`#${data.rank}`}
       </span>
       <span className={`${grid['col-xs-2']}`}>
