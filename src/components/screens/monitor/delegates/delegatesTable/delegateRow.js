@@ -10,7 +10,7 @@ import { formatAmountBasedOnLocale } from '../../../../../utils/formattedNumber'
 import styles from '../delegates.css';
 import DelegateWeight from './delegateWeight';
 
-const statuses = {
+const roundStatus = {
   forging: 'Forging',
   awaitingSlot: 'Awaiting slot',
   notForging: 'Not forging',
@@ -83,8 +83,8 @@ const DelegateRow = ({
             <>
               <Tooltip
                 title={data.forgingTime
-                  ? t(statuses[data.forgingTime.status])
-                  : t(statuses.notForging)}
+                  ? t(roundStatus[data.forgingTime.status])
+                  : t(roundStatus.notForging)}
                 position="left"
                 size="maxContent"
                 content={(
@@ -121,8 +121,8 @@ const DelegateRow = ({
           </span>
         </>
       ) : (
-        <span className={`${grid['col-xs-2']} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
-          {data.status}
+        <span className={`${grid['col-xs-2']}`}>
+          <span className={`${styles.delegateStatus} ${styles[data.status]}`}>{data.status}</span>
         </span>
       )}
     </Link>
