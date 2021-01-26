@@ -1,17 +1,14 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import { tokenMap } from '../../../constants/tokens';
 import { isEmpty } from '../../../utils/helpers';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
 import CheckBox from '../../toolbox/checkBox';
 import Piwik from '../../../utils/piwik';
-import SecondPassphraseSetting from './secondPassphrase';
 import Select from '../../toolbox/select';
 import links from '../../../constants/externalLinks';
 import settingsConst from '../../../constants/settings';
-import transactionTypes from '../../../constants/transactionTypes';
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './settings.css';
 
@@ -67,15 +64,12 @@ class Settings extends React.Component {
   render() {
     const {
       t, settings,
-      transactions: { pending },
       account,
     } = this.props;
     const { currencies } = this.state;
 
     const isHardwareWalletAccount = account.hwInfo && !!account.hwInfo.deviceId;
     const activeCurrency = settings.currency || settingsConst.currencies[0];
-    const hasPendingSecondPassphrase = pending.find(element =>
-      element.type === transactionTypes().setSecondPassphrase.code) !== undefined;
 
     return (
       <Dialog hasClose className={styles.dialogWrapper}>
@@ -128,17 +122,6 @@ class Settings extends React.Component {
                   <p>{t('Log out automatically after 10 minutes.')}</p>
                 </div>
               </label>
-              {!account.afterLogout && account.token === tokenMap.LSK.key
-                ? (
-                  <SecondPassphraseSetting
-                    account={account}
-                    t={t}
-                    isHardwareWalletAccount={isHardwareWalletAccount}
-                    hasPendingSecondPassphrase={hasPendingSecondPassphrase}
-                  />
-                )
-                : null}
-
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
                   name="discreetMode"

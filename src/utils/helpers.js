@@ -114,3 +114,24 @@ export const kFormatter = (num, precision = 0) => {
   }
   return num;
 };
+
+/**
+ * Convert given strings to camel case
+ * All below string convert into equipmentClassName
+ * EquipmentClass name
+ * Equipment className
+ * equipment class name
+ * Equipment Class Name
+ *
+ * @param {String} str - The string to convert ot camelCase
+ * @return {String} camelCased string
+ */
+export const camelize = str =>
+  str
+    .replace(
+      /(?:^\w|[A-Z]|\b\w)/g,
+      (word, index) => (index === 0
+        ? word.toLowerCase()
+        : word.toUpperCase()),
+    )
+    .replace(/\s+/g, '');

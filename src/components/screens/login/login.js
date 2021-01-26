@@ -5,11 +5,11 @@ import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import routes from '../../../constants/routes';
-import { parseSearchParams, strigifySearchParams } from '../../../utils/searchParams';
+import { parseSearchParams, stringifySearchParams } from '../../../utils/searchParams';
 import { extractAddress } from '../../../utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
 import { getNetworksList } from '../../../utils/getNetwork';
-import networks from '../../../constants/networks';
+import networks, { networkKeys } from '../../../constants/networks';
 import { PrimaryButton } from '../../toolbox/buttons';
 import PassphraseInput from '../../toolbox/passphraseInput';
 import Piwik from '../../../utils/piwik';
@@ -25,10 +25,8 @@ class Login extends React.Component {
     let loginNetwork = findMatchingLoginNetwork();
     let address = '';
 
-    if (loginNetwork) {
-      loginNetwork = loginNetwork.slice(-1).shift();
-    } else if (!loginNetwork) {
-      loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
+    if (!loginNetwork) {
+      loginNetwork = liskCoreUrl ? networks.customNode : networks[networkKeys.mainNet];
       address = liskCoreUrl || '';
     }
 
@@ -67,7 +65,7 @@ class Login extends React.Component {
 
   getReferrerRoute() {
     const { referrer, ...restParams } = parseSearchParams(this.props.history.location.search);
-    const route = referrer ? `${referrer}${strigifySearchParams(restParams)}` : routes.dashboard.path;
+    const route = referrer ? `${referrer}${stringifySearchParams(restParams)}` : routes.dashboard.path;
     return route;
   }
 

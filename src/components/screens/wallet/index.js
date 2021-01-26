@@ -2,18 +2,19 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+
 import { parseSearchParams, addSearchParamsToUrl } from '../../../utils/searchParams';
 import Overview from './overview';
-import { getTransactions } from '../../../actions/transactions';
-import txFilters from '../../../constants/transactionFilters';
+import { transactionsRetrieved } from '../../../actions/transactions';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
 import { isEmpty } from '../../../utils/helpers';
 import actionTypes from '../../../constants/actions';
+import { toRawLsk } from '../../../utils/lsk';
+import routes from '../../../constants/routes';
 
-const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 'direction'];
 /**
  * The implementation of this API endpoint and the ones implemented for Lisk Service
  * are different. this transformer adapts params temporarily before all the APIs
@@ -23,10 +24,14 @@ const filterNames = ['message', 'dateFrom', 'dateTo', 'amountFrom', 'amountTo', 
  */
 const transformParams = params => Object.keys(params)
   .reduce((acc, item) => {
-    if (filterNames.includes(item)) acc.filters[item] = params[item];
-    else acc[item] = params[item];
+    if (item === 'amountFrom' || item === 'amountTo') {
+      acc.filters[item] = toRawLsk(params[item]);
+    } else if (item === 'dateFrom' || item === 'dateTo') {
+      acc.filters[item] = params[item];
+    } else {
+      acc[item] = params[item];
+    }
 
-    if (typeof params.tab === 'number') acc.filters.direction = params.tab;
     return acc;
   }, { filters: {} });
 
@@ -51,7 +56,7 @@ const Wallet = ({ t, history }) => {
     loadData: (params) => {
       const modified = transformParams(params);
       modified.address = account.info[activeToken].address;
-      dispatch(getTransactions(modified));
+      dispatch(transactionsRetrieved(modified));
     },
     isLoading,
     error: false,
@@ -65,7 +70,6 @@ const Wallet = ({ t, history }) => {
       transactions.loadData({
         offset: 0,
         limit: 30,
-        direction: txFilters.all,
       });
     }
   }, [account.info]);
@@ -100,6 +104,7 @@ const Wallet = ({ t, history }) => {
           tabName={t('Transactions')}
           tabId="Transactions"
           t={t}
+          isWallet={history.location.pathname === routes.wallet.path}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab

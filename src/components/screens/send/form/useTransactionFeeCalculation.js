@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
   getTransactionFee,
-} from '../../../../utils/api/transactions';
+} from '../../../../utils/api/transaction';
 import { toRawLsk } from '../../../../utils/lsk';
 import { tokenMap } from '../../../../constants/tokens';
 import { minBalance } from '../../../../constants/transactions';
@@ -33,7 +33,7 @@ const useTransactionFeeCalculation = ({
   const [minFee, setMinFee] = useState(initialFee);
 
   const setFeeState = async (param, name) => {
-    const res = await getTransactionFee(param);
+    const res = await getTransactionFee(param, token);
     if (name === 'fee') setFee(res);
     else if (name === 'maxAmount') {
       const availableBalance = calculateAvailableBalance(account.balance, token);

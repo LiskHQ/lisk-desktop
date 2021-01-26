@@ -7,12 +7,17 @@ import {
   votesRetrieved,
 } from './voting';
 import networks from '../constants/networks';
-import * as TransactionApi from '../utils/api/lsk/transactions';
+import * as TransactionApi from '../utils/api/transaction';
+import * as delegateApi from '../utils/api/delegate';
 import sampleVotes from '../../test/constants/votes';
-import { loginType } from '../constants/hwConstants';
+import loginTypes from '../constants/loginTypes';
 
-jest.mock('../utils/api/lsk/transactions', () => ({
+jest.mock('../utils/api/transaction', () => ({
   create: jest.fn(),
+}));
+
+jest.mock('../utils/api/delegate', () => ({
+  getVotes: jest.fn(),
 }));
 
 describe('actions: voting', () => {
@@ -25,7 +30,7 @@ describe('actions: voting', () => {
       },
     },
     account: {
-      loginType: loginType.normal,
+      loginType: loginTypes.passphrase.code,
       info: {
         LSK: {
           address: '123L',
@@ -33,6 +38,10 @@ describe('actions: voting', () => {
         },
       },
     },
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('voteEdited', () => {
@@ -85,13 +94,15 @@ describe('actions: voting', () => {
   });
 
   describe('votesRetrieved', () => {
-    it('should call getVotes and dispatch vote results', () => {
+    it('should call getVotes and dispatch vote results', async () => {
+      const votes = [{ address: '12L', username: 'genesis', amount: 1e8 }];
       const expectedAction = {
         type: actionTypes.votesRetrieved,
-        data: [{ delegateAddress: '123L', amount: 1e9 }],
+        data: votes,
       };
       const dispatch = jest.fn();
-      votesRetrieved()(dispatch, getState);
+      delegateApi.getVotes.mockImplementation(() => Promise.resolve({ data: votes }));
+      await votesRetrieved()(dispatch, getState);
 
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });

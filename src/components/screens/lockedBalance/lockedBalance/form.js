@@ -9,23 +9,23 @@ import BoxHeader from '../../../toolbox/box/header';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import { toRawLsk } from '../../../../utils/lsk';
 import Piwik from '../../../../utils/piwik';
-import { getAvailableUnlockingTransactions } from '../../../../utils/account';
-import { create } from '../../../../utils/api/lsk/transactions';
+import { getUnlockableUnlockingObjects } from '../../../../utils/account';
+import { create } from '../../../../utils/api/transaction';
 import transactionTypes from '../../../../constants/transactionTypes';
 import actionTypes from '../../../../constants/actions';
 import LiskAmount from '../../../shared/liskAmount';
 import { tokenMap } from '../../../../constants/tokens';
 import styles from './lockedBalance.css';
 
-const ButtonTitle = ({ availableBalance, t }) => {
-  if (availableBalance === 0) {
+const ButtonTitle = ({ unlockableBalance, t }) => {
+  if (unlockableBalance === 0) {
     return <>{t('Nothing available to unlock')}</>;
   }
   return (
     <>
       {t('Unlock')}
       {' '}
-      <LiskAmount val={availableBalance} token={tokenMap.LSK.key} />
+      <LiskAmount val={unlockableBalance} token={tokenMap.LSK.key} />
     </>
   );
 };
@@ -40,8 +40,8 @@ const Form = ({
     account,
     customFee,
     fee,
-    currentBlock,
-    availableBalance,
+    currentBlockHeight,
+    unlockableBalance,
   } = data;
   const dispatch = useDispatch();
   const network = useSelector(state => state.network);
@@ -53,12 +53,16 @@ const Form = ({
       nonce: account.nonce,
       fee: `${toRawLsk(parseFloat(selectedFee))}`,
       passphrase: account.passphrase,
-      unlockingObjects: getAvailableUnlockingTransactions(account, currentBlock),
+      unlockingObjects: getUnlockableUnlockingObjects(account.unlocking, currentBlockHeight),
       network,
     };
 
     const [error, tx] = await to(
-      create(txData, transactionTypes().unlockToken.key),
+      create({
+        ...txData,
+        transactionType: transactionTypes().unlockToken.key,
+        network,
+      }, tokenMap.LSK.key),
     );
 
     if (!error) {
@@ -89,9 +93,9 @@ const Form = ({
         <PrimaryButton
           className="unlock-btn"
           onClick={onClickUnlock}
-          disabled={availableBalance === 0}
+          disabled={unlockableBalance === 0}
         >
-          <ButtonTitle availableBalance={availableBalance} t={t} />
+          <ButtonTitle unlockableBalance={unlockableBalance} t={t} />
         </PrimaryButton>
       </BoxFooter>
     </Box>

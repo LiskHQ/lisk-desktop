@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import liskService from '../utils/api/lsk/liskService';
+import { subscribe, unsubscribe } from '../utils/api/ws';
 
 /**
  *
@@ -8,19 +8,23 @@ import liskService from '../utils/api/lsk/liskService';
  * @returns {array} - [boolean, function]
  */
 const useServiceSocketUpdates = (event) => {
-  const network = useSelector(state => state.network);
+  const serviceUrl = useSelector(
+    state => state.network.networks[state.settings.token.active].serviceUrl,
+  );
   const [isUpdateAvailable, setUpdateAvailable] = useState(false);
   const reset = () => setUpdateAvailable(false);
 
   useEffect(() => {
-    const cleanUp = liskService.listenToBlockchainEvents({
-      network,
+    subscribe(
+      serviceUrl,
       event,
-      callback: () => setUpdateAvailable(true),
-    });
+      () => setUpdateAvailable(true),
+      () => {},
+      () => {},
+    );
 
-    return cleanUp;
-  }, [network.name]);
+    return () => { unsubscribe(event); };
+  }, [serviceUrl]);
 
   return [isUpdateAvailable, reset];
 };

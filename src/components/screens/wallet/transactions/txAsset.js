@@ -1,4 +1,5 @@
 import React from 'react';
+import transactionTypes from '../../../../constants/transactionTypes';
 
 import VoteItem from '../../../shared/voteItem';
 import styles from './transactions.css';
@@ -25,6 +26,9 @@ const generateVotes = (asset) => {
   );
 };
 
+const voteTxType = transactionTypes().vote.code.new;
+const registerDelegateTxType = transactionTypes().registerDelegate.code.new;
+
 const TransactionAsset = ({
   transaction,
 }) => {
@@ -34,10 +38,10 @@ const TransactionAsset = ({
   let data = token !== 'BTC' ? '-' : '';
   let className = '';
   switch (type) {
-    case 2:
+    case registerDelegateTxType:
       data = asset && asset.delegate ? asset.delegate.username : username;
       break;
-    case 3:
+    case voteTxType:
       className = styles.delegateVote;
       data = asset && asset.votes ? generateVotes(asset) : data;
       break;

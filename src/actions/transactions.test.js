@@ -1,16 +1,13 @@
-import Lisk from '@liskhq/lisk-client';
 import actionTypes from '../constants/actions';
-import txFilters from '../constants/transactionFilters';
 import {
-  getTransactions,
-  updateTransactions,
+  transactionsRetrieved,
 } from './transactions';
-import * as transactionsApi from '../utils/api/transactions';
+import * as transactionsApi from '../utils/api/transaction';
 
-jest.mock('../utils/api/transactions');
-jest.mock('../utils/api/delegates');
+jest.mock('../utils/api/transaction');
+jest.mock('../utils/api/delegate');
 
-describe.skip('actions: transactions', () => {
+describe('actions: transactions', () => {
   const dispatch = jest.fn();
   const getState = () => ({
     network: {
@@ -18,15 +15,13 @@ describe.skip('actions: transactions', () => {
       name: 'Mainnet',
       networks: {
         LSK: {
-          nodeUrl: 'hhtp://localhost:4000',
+          serviceUrl: 'hhtp://localhost:4000',
           nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
         },
       },
     },
     transactions: {
-      filters: {
-        direction: txFilters.all,
-      },
+      filters: {},
     },
     settings: {
       token: {
@@ -35,33 +30,9 @@ describe.skip('actions: transactions', () => {
     },
     blocks: {
       latestBlocks: [{
-        timestamp: Lisk.transaction.utils.getTimeFromBlockchainEpoch() - 12,
+        timestamp: 123123123,
       }],
     },
-  });
-
-  describe('updateTransactions', () => {
-    const data = {
-      address: '15626650747375562521',
-      limit: 20,
-      offset: 0,
-      filters: { direction: txFilters.all },
-    };
-    const actionFunction = updateTransactions(data);
-
-    it('should dispatch updateTransactions action if resolved', async () => {
-      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
-      const expectedAction = {
-        count: 0,
-        confirmed: [],
-      };
-
-      await actionFunction(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledWith({
-        data: expectedAction,
-        type: actionTypes.updateTransactions,
-      });
-    });
   });
 
   describe('getTransactions', () => {
@@ -69,26 +40,27 @@ describe.skip('actions: transactions', () => {
       address: '15626650747375562521L',
       limit: 20,
       offset: 0,
-      filters: { direction: txFilters.all },
+      filters: {},
     };
-    const actionFunction = getTransactions(data);
 
     it('should create an action function', () => {
-      expect(typeof actionFunction).toBe('function');
+      expect(typeof transactionsRetrieved(data)).toBe('function');
     });
 
     it('should dispatch getTransactionsSuccess action if resolved', async () => {
-      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
+      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { total: 0 } });
       const expectedAction = {
         count: 0,
         confirmed: [],
         address: data.address,
         filters: data.filters,
+        offset: 0,
       };
 
-      await actionFunction(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledWith({
-        data: expectedAction, type: actionTypes.getTransactionsSuccess,
+      await transactionsRetrieved(data)(dispatch, getState);
+      expect(dispatch).toHaveBeenLastCalledWith({
+        type: actionTypes.transactionsRetrieved,
+        data: expectedAction,
       });
     });
   });

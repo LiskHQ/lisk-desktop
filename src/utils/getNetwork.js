@@ -1,56 +1,31 @@
 import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
-import networks from '../constants/networks';
-
-const getNetwork = (networkName) => {
-  let network;
-  Object.keys(networks).forEach((key) => {
-    if (networks[key].name === networkName) {
-      network = networks[key];
-    }
-  });
-  return network;
-};
-
-export default getNetwork;
-
-/**
- * If Mainnet or Testnet returns the name, if custom node returns the nethash
- * @param {Object} network - network object from store, with options.code or options.nethash set.
- */
-export const getNetworkIdentifier = (network) => {
-  const networkName = network.name;
-  const selectedNetwork = (Lisk.constants.MAINNET_NETHASH === network.networks.LSK.nethash
-    && networks.mainnet)
-    || (Lisk.constants.TESTNET_NETHASH === network.networks.LSK.nethash && networks.testnet)
-    || getNetwork(networkName);
-  return !selectedNetwork.custom
-    ? selectedNetwork.name.toLowerCase()
-    : network.networks.LSK.nethash;
-};
+import networks, { networkKeys } from '../constants/networks';
+import { tokenMap } from '../constants/tokens';
 
 export const getNetworksList = () =>
-  Object.keys(networks)
-    .filter(network => network !== 'default')
-    .map((network, index) => ({
-      label: i18next.t(networks[network].name),
-      name: networks[network].name,
-      value: index,
+  Object.values(networkKeys)
+    .map(name => ({
+      label: i18next.t(networks[name].label),
+      name,
     }));
 
 
 export const getNetworkNameBasedOnNethash = (network, token = 'LSK') => {
-  let activeNetwork = network.name;
-  if (network.name === networks.customNode.name && token !== 'BTC') {
-    activeNetwork = network.networks[token].nethash === Lisk.constants.TESTNET_NETHASH
-      ? networks.testnet.name
-      : network.name;
+  const isCustomNode = network.name === networkKeys.customNode;
+  const isBtc = token === tokenMap.BTC.key;
+
+  if (isCustomNode && !isBtc) {
+    const { nethash } = network.networks[token];
+    const testNet = nethash === Lisk.constants.TESTNET_NETHASH ? 'testNet' : '';
+    const mainNet = nethash === Lisk.constants.MAINNET_NETHASH ? 'mainNet' : '';
+    return networkKeys[mainNet || testNet] || network.name;
   }
 
-  if (network.name === networks.customNode.name && token === 'BTC') {
-    activeNetwork = networks.testnet.name;
+  if (isCustomNode && isBtc) {
+    return networkKeys.testNet;
   }
-  return activeNetwork;
+  return network.name;
 };
 
 /**

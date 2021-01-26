@@ -1,6 +1,6 @@
 import {
   parseSearchParams,
-  strigifySearchParams,
+  stringifySearchParams,
   appendSearchParams,
   addSearchParamsToUrl,
   removeSearchParams,
@@ -21,13 +21,13 @@ describe('Search Params', () => {
   });
 
 
-  describe('strigifySearchParams', () => {
+  describe('stringifySearchParams', () => {
     it('strigifies the search params correctly', () => {
-      expect(strigifySearchParams(parseSearchParams(''))).toEqual('');
-      expect(strigifySearchParams(parseSearchParams(TEST_URLS[0]))).toEqual(TEST_URLS[0]);
-      expect(strigifySearchParams(parseSearchParams(TEST_URLS[1]))).toEqual(TEST_URLS[1]);
-      expect(strigifySearchParams(parseSearchParams(TEST_URLS[2]))).toEqual(TEST_URLS[2]);
-      expect(strigifySearchParams(parseSearchParams(TEST_URLS[3]))).toEqual(TEST_URLS[3]);
+      expect(stringifySearchParams(parseSearchParams(''))).toEqual('');
+      expect(stringifySearchParams(parseSearchParams(TEST_URLS[0]))).toEqual(TEST_URLS[0]);
+      expect(stringifySearchParams(parseSearchParams(TEST_URLS[1]))).toEqual(TEST_URLS[1]);
+      expect(stringifySearchParams(parseSearchParams(TEST_URLS[2]))).toEqual(TEST_URLS[2]);
+      expect(stringifySearchParams(parseSearchParams(TEST_URLS[3]))).toEqual(TEST_URLS[3]);
     });
   });
 

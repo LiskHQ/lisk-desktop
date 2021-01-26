@@ -3,21 +3,36 @@ import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps';
 import accounts from '../../../constants/accounts';
 import ss from '../../../constants/selectors';
 import networks from '../../../constants/networks';
-import compareBalances from '../../utils/compareBalances';
 import urls from '../../../constants/urls';
+import settings from '../../../constants/settings';
 
 const txConfirmationTimeout = 15000;
 
+Given(/^Network switcher is disabled$/, function() {
+  window.localStorage.setItem('settings', 
+    JSON.stringify({ ...settings, 'showNetwork': false }));
+});
+
 Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
-  cy.autologin(accounts[account].passphrase, networks[network].node);
+  cy.visit(urls.login);
+  cy.get(ss.networkDropdown).click();
+  cy.get(ss.networkOptions).eq(2).click();
+  cy.get(ss.addressInput).clear().type(networks[network].node);
+  cy.get(ss.connectButton).click();
+
+  cy.get(ss.passphraseInput).first().click();
+  cy.get(ss.passphraseInput).each(($el, index) => {
+    const passphraseWordsArray = accounts[account].passphrase.split(' ');
+    cy.wrap($el, { log: false }).type(passphraseWordsArray[index], { log: false });
+  });
+  cy.get(ss.loginBtn).should('be.enabled');
+  cy.get(ss.loginBtn).click();
 });
 
 Given(/^I login$/, function () {
   cy.server();
-  cy.route('/account/**').as('btcAccount');
   cy.get(ss.loginBtn).should('be.enabled');
   cy.get(ss.loginBtn).click();
-  cy.wait('@btcAccount');
 });
 
 Then(/^I enter ([^\s]+) passphrase of ([^\s]+)$/, function (passphraseType, accountName) {
@@ -34,12 +49,7 @@ Given(/^I am on (.*?) page$/, function (page) {
   cy.server();
   switch (page) {
     case 'dashboard':
-      cy.route('/api/node/constants').as('constants');
-      cy.visit(urls.dashboard).then(() => {
-        const liskCoreUrl = window.localStorage.getItem('liskCoreUrl');
-        const isDevNet = liskCoreUrl !== 'https://testnet.lisk.io' && liskCoreUrl !== null;
-        if (isDevNet) cy.wait('@constants');
-      });
+      cy.visit(urls.dashboard);
       break;
     case 'second passphrase registration':
       cy.visit(urls.secondPassphrase);
@@ -49,24 +59,15 @@ Given(/^I am on (.*?) page$/, function (page) {
       break;
     case 'delegates':
       cy.visit(urls.delegates);
-      // cy.route('/api/delegates**').as('requestDelegate');
-      // cy.wait('@requestDelegate');
       break;
     case 'wallet':
-      cy.route('/api/transactions?*').as('transactions');
-      cy.route('/api/votes?*').as('votes');
       cy.visit(urls.wallet);
-      cy.wait('@transactions');
       break;
     case 'send':
-      cy.route('/api/accounts?address*').as('accountLSK');
-      cy.route('/account/*').as('accountBTC');
       cy.visit(urls.send);
-      cy.wait('@accountLSK');
-      cy.wait('@accountBTC');
       break;
     case 'login':
-      cy.visit('/login');
+      cy.visit(urls.login);
       break;
     default:
       cy.visit(urls[page]);
@@ -78,15 +79,13 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
   cy.server();
   switch (page.toLowerCase()) {
     case 'wallet':
-      cy.route('/api/transactions?*').as('transactions');
       cy.visit(`${urls.account}?address=${accounts[identifier].address}`);
-      cy.wait('@transactions');
       break;
   }
 });
 
 Given(/^I scroll to (.*?)$/, (position) => {
-  cy.get('.scrollContainer').scrollTo(position);
+  cy.get('.scrollContainer').scrollTo(position, { ensureScrollable: false });
 });
 
 Then(/^I should see pending transaction$/, function () {
@@ -155,9 +154,7 @@ Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
       break;
     case 'wallet':
       cy.server();
-      cy.route('/api/accounts?address=**').as('requestAccountData');
       cy.visit(`${urls.accounts}/${accounts[identifier].address}`);
-      cy.wait('@requestAccountData');
   }
 });
 
@@ -207,11 +204,7 @@ Then(/^The (.*?) button must (.*?) active$/, function (elementName, check) {
 
 And(/^I search for account ([^s]+)$/, function (string) {
   cy.server();
-  cy.route('/api/accounts**').as('requestAccount');
-  cy.route('/api/delegates**').as('requestDelegate');
   cy.get(ss.searchInput).type(string);
-  cy.wait('@requestAccount');
-  cy.wait('@requestDelegate');
 });
 
 Then(/^I wait (.*?) seconds$/, function (seconds) {

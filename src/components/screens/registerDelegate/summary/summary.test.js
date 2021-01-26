@@ -1,9 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Lisk from '@liskhq/lisk-client';
-import to from 'await-to-js';
-import { create } from '../../../../utils/api/lsk/transactions';
-import accounts from '../../../../../test/constants/accounts';
 import Summary from './summary';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
@@ -82,22 +79,5 @@ describe('Delegate Registration Summary', () => {
 
     await flushPromises();
     expect(props.nextStep).not.toBeCalled();
-  });
-
-  it.skip('submit user data after enter second passphrase', async () => {
-    const newProps = { ...props };
-    newProps.account = accounts.second_passphrase_account;
-
-    wrapper = mount(<Summary {...newProps} />);
-
-    const clipboardData = {
-      getData: () => accounts.second_passphrase_account.secondPassphrase,
-    };
-
-    wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
-    wrapper.update();
-    wrapper.find('button.confirm-button').simulate('click');
-    await to(create(newProps.account, 'registerDelegate'));
-    expect(props.nextStep).toBeCalled();
   });
 });

@@ -1,7 +1,8 @@
 Feature: Register delegate
-
+  Background:
+    Given I login as genesis on devnet
+  
   Scenario: Register delegate + Header balance is affected
-    Given I login as delegate_candidate on devnet
     Given I am on wallet page
     And I click on votesTab
     Given I click on becomeDelegateLink

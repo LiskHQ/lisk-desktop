@@ -46,8 +46,6 @@ export const shouldAutoLogIn = /* istanbul ignore next */ autologin =>
 
 export const findMatchingLoginNetwork = () => {
   const { liskCoreUrl } = getAutoLogInData();
-  return Object.entries(networks).find((network) => {
-    const { nodes } = network.slice(-1).shift();
-    return Array.isArray(nodes) ? nodes.includes(liskCoreUrl) : false;
-  });
+  return Object.values(networks).find(({ nodes }) =>
+    (Array.isArray(nodes) ? nodes.includes(liskCoreUrl) : false));
 };

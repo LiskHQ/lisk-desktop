@@ -1,5 +1,4 @@
 import React from 'react';
-import voting from '../../../../../constants/voting';
 import Table from '../../../../toolbox/table';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
@@ -26,13 +25,13 @@ const DelegatesTable = ({
       ...acc,
       ...(filters[key] && { [key]: filters[key] }),
     }), {
-      offset: delegates.data.length,
+      offset: standByDelegates.meta.count + standByDelegates.meta.offset,
     }));
   };
 
   const canLoadMore = activeTab === 'active' || !standByDelegates.meta
     ? false
-    : standByDelegates.data.length < (standByDelegates.meta.total - voting.numberOfActiveDelegates);
+    : standByDelegates.data.length < (standByDelegates.meta.total - standByDelegates.meta.offset);
 
   delegates = activeTab === 'active'
     ? filterDelegates(delegates, filters)

@@ -9,7 +9,6 @@ import transactionTypes from '../../../constants/transactionTypes';
 import AccountVisual from '../../toolbox/accountVisual';
 import regex from '../../../utils/regex';
 
-const sendCodes = transactionTypes().transfer.code;
 class AccountVisualWithAddress extends React.Component {
   getTransformedAddress(address) {
     const { bookmarks, showBookmarkedAddress } = this.props;
@@ -33,11 +32,11 @@ class AccountVisualWithAddress extends React.Component {
 
     return (
       <div className={`${styles.address}`}>
-        {!Object.values(sendCodes).includes(transactionType) && transactionSubject === 'recipientId' ? (
+        {transactionType !== 'transfer' && transactionSubject === 'recipientId' ? (
           <React.Fragment>
             <Icon
               className={styles.txIcon}
-              name={txType.icon || 'txDefault'}
+              name={transactionType || 'txDefault'}
             />
             <span className={styles.addressValue}>
               {txType.title}
@@ -62,7 +61,7 @@ AccountVisualWithAddress.propTypes = {
   size: PropTypes.number,
   token: PropTypes.shape().isRequired,
   transactionSubject: PropTypes.string,
-  transactionType: PropTypes.number,
+  transactionType: PropTypes.string,
 };
 
 AccountVisualWithAddress.defaultProps = {

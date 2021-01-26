@@ -3,14 +3,14 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import Blocks from './blocks';
-import liskService from '../../../../utils/api/lsk/liskService';
+import { getBlocks } from '../../../../utils/api/block';
 import withData from '../../../../utils/withData';
 
 const ComposedBlocks = compose(
   withRouter,
   withData({
     blocks: {
-      apiUtil: liskService.getLastBlocks,
+      apiUtil: (network, params) => getBlocks({ network, params }),
       defaultData: [],
       autoload: true,
       transformResponse: (response, oldData, urlSearchParams) => (

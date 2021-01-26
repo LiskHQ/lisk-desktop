@@ -7,6 +7,12 @@ import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../../utils/piwik';
 import routes from '../../../constants/routes';
 
+const checkNetwork = state =>
+  !!state.network.name
+  && !!(state.network.networks
+    && state.network.networks.LSK
+    && state.network.networks.LSK.serviceUrl);
+
 // eslint-disable-next-line max-statements
 const CustomRoute = ({
   path,
@@ -20,10 +26,13 @@ const CustomRoute = ({
   const settings = useSelector(state => state.settings);
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
-  const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
+  const isNetworkSet = useSelector(checkNetwork);
   const { search = '' } = history.location;
 
-  if (!networkIsSet) return null;
+  if (!isNetworkSet) {
+    return null;
+  }
+
   Piwik.tracking(history, settings);
 
   if (forbiddenTokens.indexOf(settings.token.active) !== -1) {
@@ -40,7 +49,7 @@ const CustomRoute = ({
 
   return (
     <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
-      <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
+      <ErrorBoundary errorMessage={t('An error occurred while rendering this page')}>
         <Route
           path={path}
           exact={exact}

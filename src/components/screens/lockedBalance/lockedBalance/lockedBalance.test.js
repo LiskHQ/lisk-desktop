@@ -4,14 +4,14 @@ import LockedBalance from './index';
 import accounts from '../../../../../test/constants/accounts';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import { create } from '../../../../utils/api/lsk/transactions';
+import { create } from '../../../../utils/api/transaction';
 import networks from '../../../../constants/networks';
 import { tokenMap } from '../../../../constants/tokens';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('../../send/form/useTransactionPriority');
 jest.mock('../../send/form/useTransactionFeeCalculation');
-jest.mock('../../../../utils/api/lsk/transactions');
+jest.mock('../../../../utils/api/transaction');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
@@ -47,9 +47,9 @@ describe('Unlock LSK modal', () => {
     { amount: '2000000000', delegateAddress: '1L' },
   ];
   const initUnlocking = [
-    { amount: '1000000000', unvoteHeight: 4900, delegateAddress: '1L' },
-    { amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' },
-    { amount: '1000000000', unvoteHeight: 3000, delegateAddress: '3L' },
+    { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: '1L' },
+    { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: '1L' },
+    { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: '3L' },
   ];
 
   const store = {
@@ -88,7 +88,7 @@ describe('Unlock LSK modal', () => {
     wrapper = mountWithProps(LockedBalance, props, store);
   });
 
-  it('renders properly LockedBalance component', () => {
+  it('renders the LockedBalance component properly', () => {
     expect(wrapper).toContainMatchingElement('.lock-balance-amount-container');
     expect(wrapper).toContainMatchingElement('.transaction-priority');
     expect(wrapper).toContainMatchingElement('.unlock-btn');

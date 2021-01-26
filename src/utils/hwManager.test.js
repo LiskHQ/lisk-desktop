@@ -1,5 +1,5 @@
 import { getAccountsFromDevice, signSendTransaction, signVoteTransaction } from './hwManager';
-import * as accountApi from './api/lsk/account';
+import * as accountApi from './api/account';
 import accounts from '../../test/constants/accounts';
 import * as communication from '../../libs/hwManager/communication';
 
@@ -8,7 +8,7 @@ jest.mock('../../libs/hwManager/communication', () => ({
   signTransaction: jest.fn(),
 }));
 
-jest.mock('./api/lsk/account', () => ({
+jest.mock('./api/account', () => ({
   getAccount: jest.fn(),
 }));
 

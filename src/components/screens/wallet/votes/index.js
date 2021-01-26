@@ -2,20 +2,21 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { getVotes } from '../../../../utils/api/delegates';
-import liskService from '../../../../utils/api/lsk/liskService';
+import { getVotes } from '../../../../utils/api/delegate';
+import { getAccounts } from '../../../../utils/api/account';
 import withData from '../../../../utils/withData';
 import Votes from './votes';
 
 const apis = {
   votes: {
-    apiUtil: getVotes,
+    apiUtil: (network, params) => getVotes({ network, params }),
+    getApiParams: state => ({ address: state.account.address }),
     defaultData: [],
     autoload: false,
-    transformResponse: response => response.data.votes,
+    transformResponse: response => response.data,
   },
   accounts: {
-    apiUtil: liskService.getAccounts,
+    apiUtil: (network, params) => getAccounts({ network, params }),
     autoload: false,
     defaultData: {},
     transformResponse: response =>

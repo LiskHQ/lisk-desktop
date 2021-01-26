@@ -1,7 +1,7 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '../../../../constants/tokens';
 
-export default (t, activeToken) => {
+export default (t, activeToken, changeSort) => {
   const isLSK = activeToken === tokenMap.LSK.key;
   return ([
     {
@@ -10,7 +10,11 @@ export default (t, activeToken) => {
     },
     {
       title: t('Date'),
-      classList: `${grid['col-xs-1']} hidden`,
+      classList: grid['col-xs-1'],
+      sort: {
+        fn: changeSort,
+        key: 'timestamp',
+      },
     },
     {
       title: t('Transaction Fee'),

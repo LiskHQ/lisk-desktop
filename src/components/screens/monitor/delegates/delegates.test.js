@@ -20,7 +20,7 @@ activeDelegates.push({
     publicKey: 'test_pbk',
     secondPublicKey: '',
   },
-  approval: 0,
+  delegateWeight: 0,
 });
 
 describe('Delegates monitor page', () => {
@@ -77,6 +77,20 @@ describe('Delegates monitor page', () => {
           { x: 'Oct', y: 8 },
           { x: 'Nov', y: 4 },
         ],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      votes: {
+        isLoading: false,
+        data: [{ asset: { votes: [{ delegateAddress: '1L', amount: '100000000' }] } }],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      votedDelegates: {
+        isLoading: false,
+        data: [{ address: '1L', username: 'test_del' }],
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},

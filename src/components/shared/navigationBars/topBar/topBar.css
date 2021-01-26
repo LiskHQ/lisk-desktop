@@ -93,6 +93,13 @@
   background-color: var(--color-jade-green);
 }
 
+.signedOutTip {
+  & p {
+    padding-top: 5px;
+    padding-bottom: 7px;
+  }
+}
+
 .votingQueueIcon {
   display: flex;
   justify-content: center;

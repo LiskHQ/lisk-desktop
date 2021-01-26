@@ -1,7 +1,8 @@
 import actionTypes from '../constants/actions';
+import { MAX_BLOCKS_FORGED } from '../constants/delegates';
 import { convertUnixSecondsToLiskEpochSeconds } from '../utils/datetime';
-import liskServiceApi from '../utils/api/lsk/liskService';
-import voting from '../constants/voting';
+import { getBlocks } from '../utils/api/block';
+import { getForgers } from '../utils/api/delegate';
 
 /**
  * Retrieves latest blocks from Lisk Service.
@@ -13,7 +14,7 @@ import voting from '../constants/voting';
  * @returns {Array} - the list of blocks
  */
 const loadLastBlocks = async (params, network) => {
-  const blocks = await liskServiceApi.getLastBlocks(network, params);
+  const blocks = await getBlocks({ network, params });
   const total = blocks.meta.total;
   return {
     total,
@@ -46,23 +47,25 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
   });
 };
 
-const retrieveNextForgers = async (getState, forgedInRound) => {
-  const { network } = getState();
-
-  const numberOfRemainingBlocksInRound = voting.numberOfActiveDelegates
-    - forgedInRound;
-  const nextForgers = await liskServiceApi.getNextForgers(network, {
-    limit: Math.min(numberOfRemainingBlocksInRound, 101),
+const retrieveNextForgers = async (network) => {
+  const { data } = await getForgers({
+    network,
+    params: { limit: MAX_BLOCKS_FORGED },
   });
 
-  return nextForgers.slice(0, numberOfRemainingBlocksInRound);
+  if (data) {
+    return data;
+  }
+
+  return [];
 };
 
 // eslint-disable-next-line max-statements
-export const forgingTimesRetrieved = () => async (dispatch, getState) => {
+export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) => {
+  const { network } = getState();
   const { latestBlocks } = getState().blocks;
-  const forgedInRoundNum = latestBlocks[0].height % voting.numberOfActiveDelegates;
-  const awaitingForgers = await retrieveNextForgers(getState, 0);
+  const forgedInRoundNum = latestBlocks[0].height % MAX_BLOCKS_FORGED;
+  const awaitingForgers = nextForgers || await retrieveNextForgers(network);
 
   // First I define the delegates who forged in this round.
   // Their status is forging with no doubt

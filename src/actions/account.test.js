@@ -3,14 +3,12 @@ import actionTypes from '../constants/actions';
 import {
   accountUpdated,
   accountLoggedOut,
-  secondPassphraseRegistered,
   removePassphrase,
   accountDataUpdated,
   updateEnabledTokenAccount,
   login,
 } from './account';
 import * as accountApi from '../utils/api/account';
-import transactionTypes from '../constants/transactionTypes';
 import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
 import * as networkActions from './network';
@@ -21,7 +19,6 @@ jest.mock('i18next', () => ({
 }));
 jest.mock('../utils/api/account', () => ({
   getAccount: jest.fn(),
-  setSecondPassphrase: jest.fn(),
 }));
 jest.mock('./transactions', () => ({
   updateTransactions: jest.fn(),
@@ -30,16 +27,23 @@ jest.mock('./network', () => ({
   networkStatusUpdated: jest.fn(),
 }));
 
+const network = {
+  name: 'Mainnet',
+  networks: {
+    LSK: {},
+    BTC: {},
+  },
+};
+
 describe('actions: account', () => {
-  let dispatch;
+  const dispatch = jest.fn();
 
   beforeEach(() => {
-    dispatch = jest.fn();
+    jest.resetAllMocks();
   });
 
   afterEach(() => {
     accountApi.getAccount.mockReset();
-    accountApi.setSecondPassphrase.mockReset();
     networkActions.networkStatusUpdated.mockReset();
   });
 
@@ -64,72 +68,6 @@ describe('actions: account', () => {
       };
 
       expect(accountLoggedOut()).toEqual(expectedAction);
-    });
-  });
-
-  // TODO remove this test when the action is removed
-  describe.skip('secondPassphraseRegistered', () => {
-    const data = {
-      passphrase: accounts.second_passphrase_account.passphrase,
-      secondPassphrase: accounts.second_passphrase_account.secondPassphrase,
-      account: accounts.second_passphrase_account,
-      callback: jest.fn(),
-    };
-    const actionFunction = secondPassphraseRegistered(data);
-    let getState;
-
-    beforeEach(() => {
-      getState = () => ({
-        network: {
-          status: { online: true },
-          name: 'Mainnet',
-          networks: {
-            LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
-          },
-        },
-        settings: {
-          token: {
-            active: 'LSK',
-          },
-        },
-      });
-    });
-
-    it('should dispatch addNewPendingTransaction action if resolved', () => {
-      const transaction = {
-        id: '15626650747375562521',
-        senderPublicKey: accounts.second_passphrase_account.publicKey,
-        senderId: accounts.second_passphrase_account.address,
-        amount: 0,
-        fee: 5e8,
-        type: transactionTypes().setSecondPassphrase.code,
-        token: 'LSK',
-      };
-      accountApi.setSecondPassphrase.mockResolvedValue(transaction);
-
-      actionFunction(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledWith({
-        data: transaction, type: actionTypes.addNewPendingTransaction,
-      });
-      expect(data.callback).toHaveBeenCalledWith({
-        success: true,
-        transaction,
-      });
-    });
-
-    it('should call callback if api call fails', () => {
-      const error = { message: 'sample message' };
-      accountApi.setSecondPassphrase.mockRejectedValue(error);
-
-      actionFunction(dispatch, getState);
-      expect(data.callback).toHaveBeenCalledWith({
-        success: false,
-        error,
-        message: error.message,
-      });
     });
   });
 
@@ -222,9 +160,7 @@ describe('actions: account', () => {
 
     beforeEach(() => {
       state = {
-        network: {
-          name: 'Mainnet',
-        },
+        network,
         settings: {
           autoLog: true,
           token: {
@@ -238,7 +174,6 @@ describe('actions: account', () => {
     });
 
     it('should call account api and dispatch accountLoggedIn ', async () => {
-      accountApi.getAccount.mockResolvedValue({ balance, address });
       await login({ passphrase })(dispatch, getState);
       expect(dispatch).toHaveBeenNthCalledWith(1, expect.objectContaining({
         type: actionTypes.accountLoading,
@@ -246,13 +181,6 @@ describe('actions: account', () => {
 
       expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
         type: actionTypes.accountLoggedIn,
-        data: expect.objectContaining({
-          passphrase,
-          info: {
-            LSK: expect.objectContaining({ address, balance }),
-            BTC: expect.objectContaining({ address, balance }),
-          },
-        }),
       }));
     });
 
@@ -270,9 +198,9 @@ describe('actions: account', () => {
       }));
     });
 
-    it('should fire an error toast if getAccount fails ', async () => {
+    it.skip('should fire an error toast if getAccount fails ', async () => {
       jest.spyOn(toast, 'error');
-      accountApi.getAccount.mockRejectedValue({ error: 'custom error' });
+      accountApi.getAccount.mockRejectedValue({ message: 'custom error' });
       await login({ passphrase })(dispatch, getState);
       expect(toast.error).toHaveBeenNthCalledWith(1, 'Unable to connect to the node, no response from the server.');
     });
@@ -292,9 +220,7 @@ describe('actions: account', () => {
         account: {
           passphrase,
         },
-        network: {
-          name: 'Mainnet',
-        },
+        network,
         settings: {
           autoLog: true,
           token: {
@@ -318,7 +244,7 @@ describe('actions: account', () => {
 
     it('should fire an error toast if getAccount fails ', async () => {
       jest.spyOn(toast, 'error');
-      accountApi.getAccount.mockRejectedValue({ error: 'custom error' });
+      accountApi.getAccount.mockRejectedValue({ message: 'custom error' });
       await updateEnabledTokenAccount('BTC')(dispatch, getState);
       expect(toast.error).toHaveBeenCalled();
     });

@@ -91,26 +91,6 @@ describe('Setting', () => {
   });
 
   describe('With specific properties', () => {
-    it('should disable 2nd passphrase when hardwareWallet', () => {
-      const newProps = { ...props, account: { hwInfo: { deviceId: '123' }, token: 'LSK' } };
-      wrapper = mountWithRouter(Settings, newProps);
-      expect(wrapper).toContainMatchingElements(1, '.disabled');
-    });
-
-    it.skip('should show 2nd passphrase as processing', () => {
-      const newProps = { ...props, transactions: { pending: [{ type: 1 }] } };
-      wrapper = mountWithRouter(Settings, newProps);
-      expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.loading');
-    });
-
-    it('should render 2nd passphrase as active', () => {
-      const account2ndPassphrase = { secondPublicKey: 'sample_public_key', token: 'LSK' };
-      const newProps = { ...props, account: account2ndPassphrase, hasSecondPassphrase: true };
-      wrapper = mountWithRouter(Settings, newProps);
-      expect(wrapper.find('.second-passphrase')).not.toContainMatchingElement('.link');
-      expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.second-passphrase-registered');
-    });
-
     it('should update expireTime when updating autolog', () => {
       const accountToExpireTime = { ...account };
       const settingsToExpireTime = { ...settings };

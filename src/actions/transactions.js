@@ -7,10 +7,9 @@ import transactionTypes from '../constants/transactionTypes';
 import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
-import { loginType } from '../constants/hwConstants';
-import { transactions as transactionsAPI } from '../utils/api';
+import loginTypes from '../constants/loginTypes';
+import { getTransactions, create, broadcast } from '../utils/api/transaction';
 import { signSendTransaction } from '../utils/hwManager';
-import { txAdapter } from '../utils/api/lsk/adapters';
 
 // ========================================= //
 //            ACTION CREATORS
@@ -31,106 +30,65 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
  */
 export const addNewPendingTransaction = data => ({
   type: actionTypes.addNewPendingTransaction,
-  data: txAdapter({
+  data: {
     ...data,
     senderId: extractAddress(data.senderPublicKey),
-  }),
+  },
 });
-
-// ========================================= //
-//                THUNKS
-// ========================================= //
 
 /**
  * Action trigger for retrieving any amount of transactions
  * for Dashboard and Wallet components
+ *
  * @param {Object} params - Object with all params.
  * @param {String} params.address - address of the account to fetch the transactions for
  * @param {Number} params.limit - amount of transactions to fetch
  * @param {Number} params.offset - index of the first transaction
  * @param {Object} params.filters - object with filters for the filer dropdown
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
- * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
-export const getTransactions = ({
+export const transactionsRetrieved = ({
   address,
-  limit = undefined,
+  limit = 30,
   offset = 0,
-  filters = undefined,
+  filters = {},
 }) => async (dispatch, getState) => {
-  dispatch(loadingStarted(actionTypes.getTransactions));
-  const { network } = getState();
+  dispatch(loadingStarted(actionTypes.transactionsRetrieved));
+  const { network, settings } = getState();
+  const token = settings.token.active;
 
-  if (network) {
-    const [error, response] = await to(transactionsAPI.getTransactions({
-      network, address, filters, limit, offset,
-    }));
-
-    if (error) {
+  getTransactions({
+    network,
+    params: {
+      address,
+      ...filters,
+      limit,
+      offset,
+    },
+  }, token)
+    .then((response) => {
       dispatch({
-        type: actionTypes.transactionLoadFailed,
+        type: actionTypes.transactionsRetrieved,
         data: {
-          error,
-        },
-      });
-    } else {
-      dispatch({
-        type: offset > 0 ? actionTypes.updateTransactions : actionTypes.getTransactionsSuccess,
-        data: {
+          offset,
           address,
           confirmed: response.data,
-          count: parseInt(response.meta.count, 10),
+          count: response.meta.total,
           filters,
         },
       });
-    }
-  }
-
-  dispatch(loadingFinished(actionTypes.getTransactions));
-};
-
-/**
- * This action is used to update transactions from account middleware when balance
- * of the account changes. The difference from getTransactions action is that
- * this one merges the transactions list with what is already in the store whereas
- * the other one replaces the list.
- *
- * @param {Object} params - all params
- * @param {String} params.address - address of the account to fetch the transactions for
- * @param {Number} params.limit - amount of transactions to fetch
- * @param {Object} params.filters - object with filters for the filer dropdown
- *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
- * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
- */
-export const updateTransactions = ({
-  address,
-  filters,
-  limit,
-}) => async (dispatch, getState) => {
-  const { network, transactions } = getState();
-
-  if (network) {
-    const [error, response] = await to(transactionsAPI.getTransactions({
-      network, address, limit, filters,
-    }));
-
-    if (error) {
+    })
+    .catch((error) => {
       dispatch({
         type: actionTypes.transactionLoadFailed,
         data: {
           error,
         },
       });
-    } else if (response && filters.direction === transactions.filters.direction) {
-      dispatch({
-        type: actionTypes.updateTransactions,
-        data: {
-          confirmed: response.data,
-          count: parseInt(response.meta.count, 10),
-        },
-      });
-    }
-  }
+    })
+    .finally(() => {
+      dispatch(loadingFinished(actionTypes.transactionsRetrieved));
+    });
 };
 
 // TODO remove this function once create and broadcast HOC be implemented
@@ -146,7 +104,6 @@ export const resetTransactionResult = () => ({
  * @param {Number} data.fee - In raw format, used for updating the TX List.
  * @param {Number} data.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} data.reference - Data field for LSK transactions
- * @param {String} data.secondPassphrase - Second passphrase for LSK transactions
  */
 // TODO remove this function once create and broadcast HOC be implemented
 export const transactionCreated = data => async (dispatch, getState) => {
@@ -156,11 +113,10 @@ export const transactionCreated = data => async (dispatch, getState) => {
   // const timeOffset = getTimeOffset(state.blocks.latestBlocks);
   const activeToken = settings.token.active;
 
-  const [error, tx] = account.loginType === loginType.normal
-    ? await to(transactionsAPI.create(
+  const [error, tx] = account.loginType === loginTypes.passphrase.code
+    ? await to(create(
+      { ...data, network, transactionType: transactionTypes().transfer.key },
       activeToken,
-      { ...data, network },
-      transactionTypes().transfer.key,
     ))
     : await to(signSendTransaction(account, data));
 
@@ -185,15 +141,23 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {Number} transaction.fee - In raw format, used for updating the TX List.
  * @param {Number} transaction.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} transaction.reference - Data field for LSK transactions
- * @param {String} transaction.secondPassphrase - Second passphrase for LSK transactions
  */
-// TODO remove this function once create and broadcast HOC be implemented
 export const transactionBroadcasted = (transaction, callback = () => {}) =>
+  // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
     const { network, settings } = getState();
     const activeToken = settings.token.active;
 
-    const [error] = await to(transactionsAPI.broadcast(activeToken, transaction, network));
+    const [error] = await to(broadcast(
+      {
+        transaction,
+        network: {
+          address: network.networks[activeToken].nodeUrl,
+          name: network.name,
+        },
+      },
+      activeToken,
+    ));
 
     callback({ success: !error, error, transaction });
     if (error) {
@@ -211,8 +175,14 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
       data: transaction,
     });
 
+    console.log(transaction);
     if (activeToken !== tokenMap.BTC.key) {
-      dispatch(addNewPendingTransaction(transaction));
+      dispatch(addNewPendingTransaction({
+        ...transaction,
+        title: transactionTypes.getByCode(transaction.type).key,
+        amount: transaction.asset.amount,
+        recipientId: transaction.asset.recipientId,
+      }));
     }
 
     return dispatch(passphraseUsed(new Date()));

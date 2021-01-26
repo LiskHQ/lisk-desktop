@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { getTransactionBaseFees } from '../../../../utils/api/transactions';
+import { getTransactionBaseFees } from '../../../../utils/api/transaction';
 
 // eslint-disable-next-line max-statements
 const useTransactionPriority = (token) => {
@@ -22,7 +22,7 @@ const useTransactionPriority = (token) => {
 
   useEffect(() => {
     setLoadingPriorities(true);
-    getTransactionBaseFees(token, network)
+    getTransactionBaseFees(network, token)
       .then(setBaseFees)
       .catch(setPrioritiesLoadError)
       .finally(() => setLoadingPriorities(false));

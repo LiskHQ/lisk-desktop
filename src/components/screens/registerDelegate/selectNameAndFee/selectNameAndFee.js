@@ -5,7 +5,7 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { getAPIClient } from '../../../../utils/api/lsk/network';
+import { getDelegate } from '../../../../utils/api/delegate';
 import regex from '../../../../utils/regex';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './selectNameAndFee.css';
@@ -99,7 +99,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
     clearTimeout(timeout);
 
     timeout.current = setTimeout(() => {
-      getAPIClient(network).delegates.get({ username })
+      getDelegate({ network, params: { username } })
         .then((response) => {
           if (response.data.length) {
             setState({

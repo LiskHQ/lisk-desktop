@@ -10,7 +10,7 @@ import TransactionAmount from '../../../shared/transactionAmount';
 import Spinner from '../../../toolbox/spinner';
 import TransactionAsset from './txAsset';
 import DialogLink from '../../../toolbox/dialog/link';
-import { getTxAmount } from '../../../../utils/transactions';
+import { getTxAmount } from '../../../../utils/api/transaction';
 import styles from './transactions.css';
 
 // eslint-disable-next-line complexity
@@ -40,7 +40,7 @@ const TransactionRow = ({
         <TransactionTypeFigure
           icon={host === recipientId ? 'incoming' : 'outgoing'}
           address={host === recipientId ? senderId : recipientId}
-          transactionType={data.type}
+          transactionType={data.title}
         />
         <span>
           <TransactionAddress
@@ -48,11 +48,11 @@ const TransactionRow = ({
             bookmarks={bookmarks}
             t={t}
             token={activeToken}
-            transactionType={data.type}
+            transactionType={data.title}
           />
         </span>
       </span>
-      <span className={`${grid[isLSK ? 'col-xs-1' : 'col-xs-2']} hidden`}>
+      <span className={grid[isLSK ? 'col-xs-1' : 'col-xs-2']}>
         {
           isConfirmed
             ? <DateTimeFromTimestamp time={data.timestamp} token={activeToken} />

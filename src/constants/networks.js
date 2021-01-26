@@ -1,6 +1,12 @@
+export const networkKeys = {
+  mainNet: 'mainnet',
+  testNet: 'testnet',
+  customNode: 'customNode',
+};
+
 const networks = {
-  mainnet: { // network name translation t('Mainnet');
-    name: 'Mainnet',
+  [networkKeys.mainNet]: {
+    label: 'Mainnet',
     code: 0,
     nodes: [
       'https://hub21.lisk.io',
@@ -22,21 +28,18 @@ const networks = {
     ],
     initialSupply: 10000000000000000,
   },
-  testnet: { // network name translation t('Testnet');
-    name: 'Testnet',
-    testnet: true,
+  [networkKeys.testNet]: {
+    label: 'Testnet',
     code: 1,
     nodes: ['https://testnet.lisk.io'],
     initialSupply: 10000000000000000,
   },
-  customNode: { // network name translation t('Custom Node');
-    name: 'Custom Node',
-    custom: true,
-    address: 'http://localhost:4000',
+  [networkKeys.customNode]: {
+    label: 'Custom Node',
     code: 2,
+    nodes: ['http://localhost:4000'],
     initialSupply: 10000000000000000,
   },
 };
 
-networks.default = networks[window.localStorage && window.localStorage.getItem('defaultNetwork')] || networks.mainnet;
-module.exports = networks;
+export default networks;

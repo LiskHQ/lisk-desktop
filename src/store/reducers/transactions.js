@@ -1,12 +1,7 @@
 import actionTypes from '../../constants/actions';
-import txFilters from '../../constants/transactionFilters';
-
-// TODO the sort should be removed when BTC api returns transactions sorted by timestamp
-const sortByHeight = (a, b) => (b.height - a.height);
 
 const addNewTransactions = (array1, array2) => array1.filter(array1Value =>
   array2.filter(array2Value => array2Value.id === array1Value.id).length === 0);
-
 
 /**
  * Initial State
@@ -18,7 +13,6 @@ const initialState = {
   confirmed: [],
   count: null,
   filters: {
-    direction: txFilters.all,
     dateFrom: '',
     dateTo: '',
     amountFrom: '',
@@ -49,29 +43,23 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
           action.data.failed.filter(transaction =>
             transaction.id === pendingTransaction.id).length === 0),
       };
-    case actionTypes.getTransactionsSuccess:
+    case actionTypes.transactionsRetrieved: {
+      const confirmed = action.data.offset === 0
+        ? [
+          ...addNewTransactions(action.data.confirmed, state.confirmed),
+          ...state.confirmed,
+        ] : [
+          ...state.confirmed,
+          ...addNewTransactions(action.data.confirmed, state.confirmed),
+        ];
       return {
         ...state,
-        // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
-        confirmed: action.data.confirmed.sort(sortByHeight),
+        confirmed,
         count: action.data.count,
-        filters: action.data.filters !== undefined
-          ? action.data.filters : state.filters,
-      };
-    case actionTypes.updateTransactions:
-      return {
-        ...state, // Filter any newly confirmed transaction from pending
+        filters: action.data.filters || state.filters,
         pending: addNewTransactions(state.pending, action.data.confirmed),
-        // Add any newly confirmed transaction to confirmed
-        confirmed: [
-          ...action.data.confirmed,
-          ...addNewTransactions(state.confirmed, action.data.confirmed),
-        // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
-        ].sort(sortByHeight),
-        count: action.data.count,
-        filters: action.data.filters !== undefined
-          ? action.data.filters : state.filters,
       };
+    }
     // TODO can be remove after move send (create) tx to utils file
     // istanbul ignore next
     case actionTypes.transactionCreatedSuccess:

@@ -22,16 +22,14 @@ const actionTypes = {
   bookmarkRemoved: 'BOOKMARK_REMOVED',
   bookmarkUpdated: 'BOOKMARK_UPDATED',
   getNewsFeed: 'GET_NEWS_FEED',
-  // TODO next 3 lines should be removed after the new 'network' actions are used everywhere
-  liskAPIClientReset: 'LISK_API_CLIENT_RESET',
-  liskAPIClientSet: 'LISK_API_CLIENT_SET',
-  liskAPIClientUpdate: 'LISK_API_CLIENT_UPDATE',
   loadingFinished: 'LOADING_FINISHED',
   loadingStarted: 'LOADING_STARTED',
   nodeDefined: 'NODE_DEFINED',
-  networkSet: 'NETWORK_SET',
+  networkSelected: 'NETWORK_SELECTED',
+  networkConfigSet: 'NETWORK_CONFIG_SET',
   serviceUrlSet: 'SERVICE_URL_SET',
   networkStatusUpdated: 'NETWORK_STATUS_UPDATED',
+  lastBtcUpdateSet: 'NETWORK_LAST_BTC_UPDATE_SET',
   newBlockCreated: 'NEW_BLOCK_CREATED',
   olderBlocksRetrieved: 'OLDER_BLOCKS_RETRIEVED',
   passphraseUsed: 'PASSPHRASE_USED',
@@ -69,6 +67,7 @@ const actionTypes = {
   broadcastedTransactionError: 'BROADCASTED_TRANSACTION_ERROR',
   forgingTimesRetrieved: 'FORGING_TIME_RETRIEVED',
   appUpdateAvailable: 'APP_UPDATE_AVAILABLE',
+  transactionsRetrieved: 'TRANSACTION_RETRIEVED',
 };
 
 export default actionTypes;

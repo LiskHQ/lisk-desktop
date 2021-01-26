@@ -10,7 +10,7 @@ import LiskAmount from '../../shared/liskAmount';
 import transactionTypes from '../../../constants/transactionTypes';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
-import { getTxAmount } from '../../../utils/transactions';
+import { getTxAmount } from '../../../utils/api/transaction';
 
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
@@ -29,21 +29,21 @@ const getTxAsset = (tx) => {
 export const Illustration = ({
   transaction,
 }) => {
-  const { title } = transactionTypes.getByCode(transaction.type || 0);
-  if (transaction.type === transactionTypes().transfer.code.legacy) return null;
+  const TypeInfo = transactionTypes.getByCode(transaction.title);
+  if (transaction.title === transactionTypes().transfer.key) return null;
   return (
     <BoxRow className={styles.summaryHeader}>
       <TransactionTypeFigure
         address={transaction.senderId}
-        transactionType={transaction.type}
+        transactionType={transaction.title}
       />
-      <h2 className="tx-header">{title}</h2>
+      <h2 className="tx-header">{TypeInfo.title}</h2>
     </BoxRow>
   );
 };
 
 export const Sender = ({
-  transaction, activeToken, netCode,
+  transaction, activeToken, network,
 }) => {
   const { senderLabel } = transactionTypes.getByCode(transaction.type || 0);
 
@@ -52,7 +52,7 @@ export const Sender = ({
       <AccountInfo
         name={getDelegateName(transaction, activeToken)}
         token={activeToken}
-        netCode={netCode}
+        network={network}
         address={transaction.senderId}
         addressClass="sender-address"
         label={senderLabel}
@@ -62,14 +62,14 @@ export const Sender = ({
 };
 
 export const Recipient = ({
-  activeToken, netCode, transaction, t,
+  activeToken, network, transaction, t,
 }) => {
   if (transaction.type !== transactionTypes().transfer.code.legacy) return null;
   return (
     <BoxRow className={styles.detailsWrapper}>
       <AccountInfo
         token={activeToken}
-        netCode={netCode}
+        network={network}
         address={transaction.recipientId}
         addressClass="receiver-address"
         label={t('Recipient')}
@@ -139,13 +139,11 @@ export const AmountAndDate = ({
         </span>
         <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
           <span className="tx-amount">
-            <LiskAmount val={getTxAmount(transaction)} />
-            {' '}
-            {activeToken}
+            <LiskAmount val={getTxAmount(transaction)} token={activeToken} />
           </span>
         </DiscreetMode>
       </div>
-      <div className={`${styles.value} displayNone`}>
+      <div className={styles.value}>
         <span className={styles.label}>{t('Date')}</span>
         <span className={`${styles.date} tx-date`}>
           <DateTimeFromTimestamp
@@ -226,7 +224,7 @@ export const DateAndConfirmation = ({
 export const Message = ({
   activeToken, transaction, t,
 }) => {
-  if (transaction.type !== transactionTypes().transfer.code.legacy
+  if (transaction.title !== 'transfer'
     || activeToken !== tokenMap.LSK.key) return null;
   return (
     <BoxRow className={styles.message}>
@@ -234,6 +232,23 @@ export const Message = ({
         <span className={styles.label}>{t('Message')}</span>
         <div className="tx-reference">
           {getTxAsset(transaction)}
+        </div>
+      </div>
+    </BoxRow>
+  );
+};
+
+export const DelegateUsername = ({
+  transaction, t,
+}) => {
+  if (transaction.title !== 'registerDelegate') return null;
+
+  return (
+    <BoxRow className={styles.message}>
+      <div className={`${styles.value}`}>
+        <span className={styles.label}>{t('Delegate username')}</span>
+        <div className="delegate-username">
+          { transaction.asset.delegate.username }
         </div>
       </div>
     </BoxRow>

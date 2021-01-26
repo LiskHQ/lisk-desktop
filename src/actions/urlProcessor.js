@@ -1,17 +1,8 @@
 import { parseSearchParams } from '../utils/searchParams';
-import { getAccount } from '../utils/api/lsk/account';
+import { getAccounts } from '../utils/api/account';
 import { voteEdited } from './voting';
 import regex from '../utils/regex';
-
-/**
- * Get accounts from Lisk Core using usernames list
- *
- * @param {[String]} usernames - Array of usernames
- * @param {Object} network - network config from Redux store
- * @returns {Promise} - API call promise
- */
-const getAccounts = async (usernames, network) =>
-  Promise.all(usernames.map(username => getAccount({ username, network })));
+import { tokenMap } from '../constants/tokens';
 
 const isUsernameValid = username => regex.delegateName.test(username);
 
@@ -56,19 +47,28 @@ const urlProcessor = (search, network) => {
   const votes = normalizeUsernames(params.votes);
   const unvotes = normalizeUsernames(params.unvotes);
 
-  return getAccounts([...votes, ...unvotes], network);
+  if (votes.length + unvotes.length === 0) {
+    return { data: [] };
+  }
+
+  return getAccounts({
+    network,
+    params: { usernameList: [...votes, ...unvotes] },
+  }, tokenMap.LSK.key);
 };
 
 const setVotesByLaunchProtocol = search =>
   async (dispatch, getState) => {
     const { network } = getState();
-    const votesAccounts = await urlProcessor(search, network);
+    const accounts = await urlProcessor(search, network);
 
-    return dispatch(voteEdited(votesAccounts
-      .filter(({ address }) => regex.address.test(address))
-      .map(
-        ({ address, username }) => ({ address, username, amount: '' }),
-      )));
+    return dispatch(
+      voteEdited(accounts.data
+        .filter(({ address }) => regex.address.test(address))
+        .map(
+          ({ address, username }) => ({ address, username, amount: '' }),
+        )),
+    );
   };
 
 export default setVotesByLaunchProtocol;

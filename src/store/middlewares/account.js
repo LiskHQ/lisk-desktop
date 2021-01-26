@@ -1,36 +1,30 @@
 import {
   accountDataUpdated,
   updateEnabledTokenAccount,
-  login,
 } from '../../actions/account';
 import {
   emptyTransactionsData,
-  updateTransactions,
+  transactionsRetrieved,
 } from '../../actions/transactions';
 import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
 import { getActiveTokenAccount } from '../../utils/account';
-import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
+import { getAutoLogInData } from '../../utils/login';
 import { votesRetrieved } from '../../actions/voting';
-import { networkSet, networkStatusUpdated } from '../../actions/network';
+import { networkSelected, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
 import analytics from '../../utils/analytics';
 import i18n from '../../i18n';
-import { getFromStorage } from '../../utils/localJSONStorage';
-import networks from '../../constants/networks';
+import networks, { networkKeys } from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
-import { txAdapter } from '../../utils/api/lsk/adapters';
 import { tokenMap } from '../../constants/tokens';
+import { getTransactions } from '../../utils/api/transaction';
 
 const updateAccountData = (store) => {
-  const { transactions } = store.getState();
   const account = getActiveTokenAccount(store.getState());
 
-  store.dispatch(accountDataUpdated({
-    transactions,
-    account,
-  }));
+  store.dispatch(accountDataUpdated({ account }));
 };
 
 const getRecentTransactionOfType = (transactionsList, type) => (
@@ -71,121 +65,55 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
   });
 };
 
-const checkTransactionsAndUpdateAccount = (store, action) => {
-  const state = store.getState();
-  const { transactions, settings: { token } } = state;
-  const account = getActiveTokenAccount(store.getState());
-
-  const txs = (action.data.block.transactions || []).map(txAdapter);
-  const blockContainsRelevantTransaction = txs.filter((transaction) => {
-    if (!transaction) return false;
-    return (
-      account.address === transaction.senderId
-      || account.address === transaction.recipientId
-    );
-  }).length > 0;
-
-  showNotificationsForIncomingTransactions(txs, account, token.active);
-
-  const recentBtcTransaction = token.active === 'BTC'
-    && transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
-
-  if (blockContainsRelevantTransaction || recentBtcTransaction) {
-    // it was not getting the account with secondPublicKey right
-    // after a new block with second passphrase registration transaction was received
-    // Adding timeout explained in
-    // https://github.com/LiskHQ/lisk-desktop/pull/1609
-    setTimeout(() => {
-      updateAccountData(store);
-      store.dispatch(updateTransactions({
-        pendingTransactions: transactions.pending,
-        address: account.address,
-        filters: transactions.filters,
-      }));
-    }, 500);
-  }
-};
-
-// istanbul ignore next
-const getNetworkFromLocalStorage = () => {
-  let mySettings = {};
-  getFromStorage('settings', {}, (data) => {
-    mySettings = data;
-  });
-  if (!mySettings.network) return networks.mainnet;
-  return {
-    ...Object.values(networks).find(
-      ({ name }) => name === mySettings.network.name,
-    ) || networks.mainnet,
-    address: mySettings.network.address,
-  };
-};
-
 // eslint-disable-next-line max-statements
-const checkNetworkToConnect = (showNetwork) => {
-  const autologinData = getAutoLogInData();
-  let loginNetwork = findMatchingLoginNetwork();
+const checkTransactionsAndUpdateAccount = async (store, action) => {
+  const state = store.getState();
+  const { transactions, settings: { token }, network } = state;
+  const account = getActiveTokenAccount(store.getState());
+  const { numberOfTransactions, id } = action.data.block;
 
-  if (loginNetwork) {
-    const net = loginNetwork.slice(-1).shift();
-    loginNetwork = {
-      name: net.name,
-      network: {
-        ...net,
-      },
-    };
-  }
+  if (numberOfTransactions) {
+    const { data: txs } = await getTransactions({ network, params: { blockId: id } }, token.active);
+    const blockContainsRelevantTransaction = txs.filter((transaction) => {
+      if (!transaction) return false;
+      return (
+        account.address === transaction.senderId
+        || account.address === transaction.recipientId
+      );
+    }).length > 0;
 
-  if (!loginNetwork && autologinData.liskCoreUrl) {
-    loginNetwork = {
-      name: networks.customNode.name,
-      passphrase: autologinData[settings.keys.loginKey],
-      network: { ...networks.customNode, address: autologinData[settings.keys.liskCoreUrl] },
-      options: {
-        code: networks.customNode.code,
-        address: autologinData[settings.keys.liskCoreUrl],
-      },
-    };
-  }
+    showNotificationsForIncomingTransactions(txs, account, token.active);
+    const recentBtcTransaction = token.active === 'BTC'
+      && transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
 
-  // istanbul ignore next
-  if (!loginNetwork && !autologinData.liskCoreUrl) {
-    if (showNetwork) {
-      const currentNetwork = getNetworkFromLocalStorage();
-      loginNetwork = {
-        name: currentNetwork.name,
-        network: {
-          ...currentNetwork,
-        },
-      };
-    } else {
-      loginNetwork = {
-        name: networks.mainnet.name,
-        network: {
-          ...networks.mainnet,
-        },
-      };
+    if (blockContainsRelevantTransaction || recentBtcTransaction) {
+      // it was not getting the account with secondPublicKey right
+      // after a new block with second passphrase registration transaction was received
+      // Adding timeout explained in
+      // https://github.com/LiskHQ/lisk-desktop/pull/1609
+      setTimeout(() => {
+        updateAccountData(store);
+        store.dispatch(transactionsRetrieved({
+          address: account.address,
+          filters: transactions.filters,
+        }));
+      }, 500);
     }
   }
-
-  return loginNetwork;
 };
 
-// eslint-disable-next-line max-statements
-const autoLogInIfNecessary = async (store) => {
+const autoLogInIfNecessary = async ({ dispatch, getState }) => {
   const {
-    showNetwork, statistics, statisticsRequest, statisticsFollowingDay,
-  } = store.getState().settings;
-  const loginNetwork = checkNetworkToConnect(showNetwork);
-  store.dispatch(networkSet(loginNetwork));
-  store.dispatch(networkStatusUpdated({ online: true }));
+    statistics, statisticsRequest, statisticsFollowingDay,
+  } = getState().settings;
+  const autoLoginData = getAutoLogInData();
 
-  const autologinData = getAutoLogInData();
-  if (shouldAutoLogIn(autologinData)) {
-    setTimeout(() => {
-      store.dispatch(login({ passphrase: autologinData[settings.keys.loginKey] }));
-    }, 500);
-  }
+  const address = autoLoginData[settings.keys.liskCoreUrl];
+  const network = address
+    ? { name: networkKeys.customNode, address }
+    : { name: networkKeys.mainNet, address: networks.mainnet.nodes[0] };
+  dispatch(networkSelected(network));
+  dispatch(networkStatusUpdated({ online: true }));
 
   if (!statistics) {
     analytics.checkIfAnalyticsShouldBeDisplayed({
@@ -194,16 +122,16 @@ const autoLogInIfNecessary = async (store) => {
   }
 };
 
-const accountMiddleware = store => next => (action) => {
+const accountMiddleware = store => next => async (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.storeCreated:
       autoLogInIfNecessary(store);
       break;
     case actionTypes.newBlockCreated:
-      checkTransactionsAndUpdateAccount(store, action);
+      await checkTransactionsAndUpdateAccount(store, action);
       break;
-    case actionTypes.updateTransactions:
+    case actionTypes.transactionsRetrieved:
       votePlaced(store, action);
       break;
     case actionTypes.accountLoggedOut:

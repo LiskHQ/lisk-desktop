@@ -1,22 +1,27 @@
 import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
+import io from 'socket.io-client';
 import LoadLatestButton from '.';
-import liskService from '../../../utils/api/lsk/liskService';
+import { subscribeConnections } from '../../../utils/api/ws';
 
-jest.mock('../../../utils/api/lsk/liskService');
+jest.mock('socket.io-client');
+
+const on = (ev, callback) => {
+  setTimeout(() => {
+    callback(ev);
+  }, 1);
+};
+const close = jest.fn();
+io.mockImplementation(() => ({ on, close }));
 
 describe('LoadLatestButton', () => {
-  let onSocketEvent;
   const props = {
     onClick: jest.fn(),
     event: 'test.event',
     children: 'Test load button',
   };
   const render = () => {
-    liskService.listenToBlockchainEvents.mockImplementation(({ callback }) => {
-      onSocketEvent = callback;
-    });
     const wrapper = mount(<LoadLatestButton {...props} />);
     return wrapper;
   };
@@ -31,8 +36,9 @@ describe('LoadLatestButton', () => {
 
     const wrapper = render();
     expect(wrapper).toBeEmptyRender();
-
-    act(() => { onSocketEvent(); });
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
     wrapper.update();
     expect(wrapper).toContainExactlyOneMatchingElement('button');
     expect(wrapper).toHaveText(props.children);
@@ -43,12 +49,18 @@ describe('LoadLatestButton', () => {
       jest.runOnlyPendingTimers();
     });
     expect(wrapper).toBeEmptyRender();
+    expect(subscribeConnections[props.event]).toBeDefined();
   });
 
   it('clears the timeout before unmounting', () => {
     jest.useFakeTimers();
     const wrapper = render();
+    expect(subscribeConnections[props.event]).toBeDefined();
+    expect(close).toHaveBeenCalledTimes(0);
+
     wrapper.unmount();
     expect(clearTimeout).toHaveBeenCalledTimes(1);
+    expect(close).toHaveBeenCalledTimes(1);
+    expect(subscribeConnections[props.event]).not.toBeDefined();
   });
 });

@@ -242,6 +242,7 @@ const ss = {
   inputLabel: '.input-label',
   saveButton: '.save-button',
   feeValue: '.fee-value',
+  nodeConnectionLoadingSpinner: '.node-connection-loading-spinner',
 };
 
 export default ss;

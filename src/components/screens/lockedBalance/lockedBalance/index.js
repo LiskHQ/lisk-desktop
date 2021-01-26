@@ -5,10 +5,10 @@ import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import transactionTypes from '../../../../constants/transactionTypes';
 import {
-  calculateLockedBalance,
-  calculateAvailableBalance,
+  calculateBalanceLockedInVotes,
+  calculateUnlockableBalance,
   getActiveTokenAccount,
-  getAvailableUnlockingTransactions,
+  getUnlockableUnlockingObjects,
 } from '../../../../utils/account';
 import Form from './form';
 import BalanceTable from './balanceTable';
@@ -18,9 +18,9 @@ const txType = transactionTypes().unlockToken.key;
 const LockedBalance = (props) => {
   const account = useSelector(state => getActiveTokenAccount(state));
   const token = useSelector(state => state.settings.token.active);
-  const currentBlock = useSelector(state => state.blocks.latestBlocks[0] || { height: 0 });
-  const lockedBalance = calculateLockedBalance(account);
-  const availableBalance = calculateAvailableBalance(account, currentBlock);
+  const currentBlockHeight = useSelector(state => state.blocks.latestBlocks[0].height || 0);
+  const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
+  const unlockableBalance = calculateUnlockableBalance(account.unlocking, currentBlockHeight);
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority,
@@ -37,7 +37,7 @@ const LockedBalance = (props) => {
       senderPublicKey: account.publicKey,
       nonce: account.nonce,
       passphrase: account.passphrase,
-      unlockingObjects: getAvailableUnlockingTransactions(account, currentBlock),
+      unlockingObjects: getUnlockableUnlockingObjects(account.unlocking, currentBlockHeight),
     },
   });
 
@@ -47,15 +47,15 @@ const LockedBalance = (props) => {
         account,
         customFee,
         fee,
-        currentBlock,
-        availableBalance,
+        currentBlockHeight,
+        unlockableBalance,
       }}
       {...props}
     >
       <BalanceTable
-        lockedBalance={lockedBalance}
-        availableBalance={availableBalance}
-        currentBlock={currentBlock}
+        lockedInVotes={lockedInVotes}
+        unlockableBalance={unlockableBalance}
+        currentBlockHeight={currentBlockHeight}
         account={account}
       />
       <TransactionPriority

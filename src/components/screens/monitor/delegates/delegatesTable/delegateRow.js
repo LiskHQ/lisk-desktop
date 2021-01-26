@@ -7,6 +7,7 @@ import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import AccountVisualWithAddress from '../../../../shared/accountVisualWithAddress';
 import { formatAmountBasedOnLocale } from '../../../../../utils/formattedNumber';
 import styles from '../delegates.css';
+import DelegateWeight from './delegateWeight';
 
 const statuses = {
   forging: 'Forging',
@@ -83,7 +84,7 @@ const DelegateRow = ({
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>
       <span className={`${grid['col-xs-1']} ${grid['col-md-1']}`}>
-        {`${data.approval} %`}
+        <DelegateWeight value={data.totalVotesReceived} />
       </span>
     </Link>
   );
