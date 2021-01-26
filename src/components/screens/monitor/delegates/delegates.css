@@ -111,6 +111,7 @@
         margin-right: 12px;    
         visibility: hidden;
         opacity: 0;
+        position: relative;
       }
     }
   }

@@ -51,8 +51,8 @@ const DelegateRow = ({
       <span className={`${grid['col-xs-3']}`}>
         <div className={styles.delegateColumn}>
           {watched
-            ? <Icon name="eyeActive" />
-            : <Icon name="eyeInactive" />
+            ? <Icon name="eyeActive" className={`${activeTab !== 'active' && 'hidden'}`} />
+            : <Icon name="eyeInactive" className={`${activeTab !== 'active' && 'hidden'}`} />
           }
           <div className={`${styles.delegateDetails}`}>
             <AccountVisual address={data.address} />
