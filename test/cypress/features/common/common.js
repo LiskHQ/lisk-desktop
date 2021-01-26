@@ -18,6 +18,7 @@ Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
   cy.get(ss.networkDropdown).click();
   cy.get(ss.networkOptions).eq(2).click();
   cy.get(ss.addressInput).clear().type(networks[network].node);
+  cy.wait(5000);
   cy.get(ss.nodeConnectionLoadingSpinner).should('not.exist', { timeout: 2000 });
   cy.get(ss.connectButton).click();
   cy.wait(5000);
