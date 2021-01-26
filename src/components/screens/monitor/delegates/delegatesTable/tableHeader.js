@@ -15,7 +15,7 @@ export default (activeTab, changeSort, t) => ([
     tooltip: {
       title: t('Productivity'),
       message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
-      position: 'left',
+      position: 'top',
     },
   },
   {
@@ -32,7 +32,7 @@ export default (activeTab, changeSort, t) => ([
     tooltip: {
       title: t('Delegate weight'),
       message: t('The total LSK voted to a delegate.'),
-      position: 'left',
+      position: 'top',
     },
   },
   {
