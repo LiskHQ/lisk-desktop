@@ -23,11 +23,14 @@ Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
   cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
     const passphraseWordsArray = accounts[account].passphrase.split(' ');
-    cy.wrap($el).type(passphraseWordsArray[index]);
+    cy.wrap($el, { log: false }).type(passphraseWordsArray[index], { log: false });
   });
 
   cy.get(ss.loginBtn).should('be.enabled');
   cy.get(ss.loginBtn).click();
+
+  cy.visit(urls.wallet);
+  cy.get(ss.accountBalance, { timeout: 1000 }).should('not.contain', "0 LSK");
 });
 
 Given(/^I login$/, function () {
