@@ -1,6 +1,7 @@
 Feature: Login
 
   Scenario: Log in to Mainnet (Network switcher is not enabled)
+    Given Network switcher is disabled
     Given I am on Login page
     When I enter first passphrase of genesis
     When I login
@@ -8,9 +9,6 @@ Feature: Login
 
   Scenario: Log in to Mainnet (Network switcher is enabled)
     Given I am on Login page
-    When I click on settingsMenu
-    And I click on switchNetworksTrigger
-    And I click on closeDialog
     When I choose mainnet
     When I enter first passphrase of genesis
     When I login

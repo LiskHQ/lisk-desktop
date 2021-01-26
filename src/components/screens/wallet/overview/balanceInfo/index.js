@@ -42,7 +42,7 @@ const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
 };
 
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, isDelegate,
+  t, activeToken, balance, isWalletRoute, address, username,
 }) => {
   const vote = useSelector(state => state.voting[address]);
   const initialValue = isWalletRoute
@@ -75,7 +75,7 @@ const BalanceInfo = ({
         <SignInTooltipWrapper position="bottom">
           <div className={styles.actionRow}>
             {
-              isDelegate && (
+              username ? (
                 <DialogLink component="editVote" className={`${styles.button} add-vote`}>
                   <SecondaryButton
                     className={`${styles.voteButton} open-add-vote-dialog`}
@@ -84,7 +84,7 @@ const BalanceInfo = ({
                     {voteButtonTitle}
                   </SecondaryButton>
                 </DialogLink>
-              )
+              ) : null
             }
             <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
               <PrimaryButton

@@ -19,7 +19,7 @@ const getServiceUrl = (nodeUrl, nethash) => {
   if (nethash === Lisk.constants.TESTNET_NETHASH) {
     return 'https://testnet-service.lisk.io';
   }
-  if (/localhost|liskdev.net:\d{2,4}$/.test(nodeUrl)) {
+  if (/localhost|liskdev.net|127.0.0.1:\d{2,4}$/.test(nodeUrl)) {
     const serviceUrl = window.localStorage.getItem('serviceUrl');
     if (serviceUrl) {
       return serviceUrl;

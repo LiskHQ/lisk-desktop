@@ -34,8 +34,9 @@ before(() => {
 });
 
 beforeEach(() => {
+  const settingsWithNetworkSelectorEnabled = { ...settings, showNetwork: true };
   const btcSettings = deepMergeObj(
-    settings,
+    settingsWithNetworkSelectorEnabled,
     { token: { list: { BTC: true } } },
   );
   window.localStorage.setItem('settings', JSON.stringify(btcSettings));
