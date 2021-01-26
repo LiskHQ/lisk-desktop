@@ -1,7 +1,6 @@
 import {
   accountDataUpdated,
   updateEnabledTokenAccount,
-  login,
 } from '../../actions/account';
 import {
   emptyTransactionsData,
@@ -10,7 +9,7 @@ import {
 import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
 import { getActiveTokenAccount } from '../../utils/account';
-import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
+import { getAutoLogInData } from '../../utils/login';
 import { votesRetrieved } from '../../actions/voting';
 import { networkSelected, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
@@ -74,7 +73,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
   const { numberOfTransactions, id } = action.data.block;
 
   if (numberOfTransactions) {
-    const { data: txs } = await getTransactions({ network, params: { blockId: id } }, token);
+    const { data: txs } = await getTransactions({ network, params: { blockId: id } }, token.active);
     const blockContainsRelevantTransaction = txs.filter((transaction) => {
       if (!transaction) return false;
       return (
@@ -115,12 +114,6 @@ const autoLogInIfNecessary = async ({ dispatch, getState }) => {
     : { name: networkKeys.mainNet, address: networks.mainnet.nodes[0] };
   dispatch(networkSelected(network));
   dispatch(networkStatusUpdated({ online: true }));
-
-  if (shouldAutoLogIn(autoLoginData)) {
-    setTimeout(() => {
-      dispatch(login({ passphrase: autoLoginData[settings.keys.loginKey] }));
-    }, 500);
-  }
 
   if (!statistics) {
     analytics.checkIfAnalyticsShouldBeDisplayed({

@@ -8,13 +8,13 @@ import styles from './lockedBalance.css';
 
 const BalanceTable = ({
   t,
-  lockedBalance,
-  availableBalance,
-  currentBlock,
+  lockedInVotes,
+  unlockableBalance,
+  currentBlockHeight,
   account,
 }) => (
   <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-    {(lockedBalance !== 0 || account.unlocking.length > 0 || availableBalance !== 0)
+    {(lockedInVotes !== 0 || account.unlocking.length > 0 || unlockableBalance !== 0)
       && (
       <li>
         <p className={styles.columnTitle}>{t('Amount')}</p>
@@ -22,11 +22,11 @@ const BalanceTable = ({
       </li>
       )
     }
-    {lockedBalance !== 0
+    {lockedInVotes !== 0
       && (
         <li>
           <p className="locked-balance">
-            <LiskAmount val={lockedBalance} token={tokenMap.LSK.key} />
+            <LiskAmount val={lockedInVotes} token={tokenMap.LSK.key} />
           </p>
           <p>
             <Icon name="lock" />
@@ -36,13 +36,19 @@ const BalanceTable = ({
       )
     }
     {account.unlocking.length > 0
-      && <UnlockingList account={account} currentBlock={currentBlock} t={t} />
+      && (
+      <UnlockingList
+        unlocking={account.unlocking}
+        currentBlockHeight={currentBlockHeight}
+        t={t}
+      />
+      )
     }
-    {availableBalance !== 0
+    {unlockableBalance !== 0
       && (
       <li>
         <p className="available-balance">
-          <LiskAmount val={availableBalance} token={tokenMap.LSK.key} />
+          <LiskAmount val={unlockableBalance} token={tokenMap.LSK.key} />
         </p>
         <p>
           <Icon name="unlock" />

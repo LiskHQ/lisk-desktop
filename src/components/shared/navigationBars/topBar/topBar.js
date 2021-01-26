@@ -33,7 +33,6 @@ const TopBar = ({
           className={`${styles.logo} topbar-logo`}
         />
         <NavigationButtons
-          account={account}
           history={history}
         />
         <Toggle

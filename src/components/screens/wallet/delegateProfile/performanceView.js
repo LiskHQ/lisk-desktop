@@ -28,7 +28,7 @@ const PerformanceView = ({
     <BoxHeader>
       <h1 className={styles.heading}>{t('Performance')}</h1>
     </BoxHeader>
-    <Box className={`${grid.row}`}>
+    <Box className={`${grid.row} ${styles.content}`}>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
           text={t('Productivity')}
