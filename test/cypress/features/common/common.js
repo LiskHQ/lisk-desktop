@@ -19,6 +19,7 @@ Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
   cy.get(ss.networkOptions).eq(2).click();
   cy.get(ss.addressInput).clear().type(networks[network].node);
   cy.get(ss.connectButton).click();
+  cy.get(ss.nodeConnectionLoadingSpinner).should('be.not.visible', { timeout: 1000 });
 
   cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
@@ -30,7 +31,7 @@ Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
   cy.get(ss.loginBtn).click();
 
   cy.visit(urls.wallet);
-  cy.get(ss.accountBalance, { timeout: 1000 }).should('not.contain', "0 LSK");
+  cy.get(ss.accountBalance, { timeout: 1000 }).should('not.contain', "0");
 });
 
 Given(/^I login$/, function () {
