@@ -3,7 +3,7 @@ import styles from '../delegates.css';
 
 export default (activeTab, changeSort, t) => ([
   {
-    classList: `${grid['col-xs-1']}`,
+    classList: activeTab === 'active' ? `${grid['col-xs-1']}` : 'hidden',
   },
   {
     title: t('Delegate'),
@@ -11,7 +11,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Productivity'),
-    classList: `${grid['col-xs-2']}`,
+    classList: activeTab === 'active' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']}`,
     tooltip: {
       title: t('Productivity'),
       message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
@@ -20,7 +20,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Rank'),
-    classList: `${grid['col-xs-1']}`,
+    classList: activeTab === 'active' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`,
     sort: {
       fn: changeSort,
       key: 'rank',
@@ -47,6 +47,12 @@ export default (activeTab, changeSort, t) => ([
     title: t('Round state'),
     classList: activeTab === 'active'
       ? `${grid['col-xs-1']} ${styles.statusTitle}`
+      : 'hidden',
+  },
+  {
+    title: t('Status'),
+    classList: activeTab !== 'active'
+      ? `${grid['col-xs-2']}`
       : 'hidden',
   },
 ]);

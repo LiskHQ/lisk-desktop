@@ -45,6 +45,7 @@ const DelegatesTable = ({
       loadData={handleLoadMore}
       additionalRowProps={{
         t,
+        activeTab,
       }}
       header={header(activeTab, changeSort, t)}
       currentSort={sort}

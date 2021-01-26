@@ -62,7 +62,7 @@ const DelegatesMonitor = ({
       },
       {
         value: 'standby',
-        name: ('Standby delegates'),
+        name: ('Outside round'),
         className: 'standby',
       },
       {
