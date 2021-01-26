@@ -4,10 +4,10 @@ Feature: Wallet
     Given I login as genesis on devnet
     Given I am on wallet page
     
-  Scenario: 30 tx are shown, clicking show more loads more transactions
-    Then I should see 30 transactions
-    When I click show more
-    Then I should see more than 30 transactions
+  # Scenario: 30 tx are shown, clicking show more loads more transactions
+  #   Then I should see 30 transactions
+  #   When I click show more
+  #   Then I should see more than 30 transactions
 
   Scenario: Click leads to tx details
     When I click on transactionRow
