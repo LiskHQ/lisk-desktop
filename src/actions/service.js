@@ -16,7 +16,7 @@ export const pricesRetrieved = () => (dispatch, getState) => {
   const { settings: { token } } = getState();
   const activeToken = token.active;
 
-  getPrices()
+  return getPrices()
     .then(({ data }) => {
       const priceTickerReduced = data.reduce(tickerReducer, {});
       dispatch({
