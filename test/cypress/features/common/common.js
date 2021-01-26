@@ -3,12 +3,18 @@ import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps';
 import accounts from '../../../constants/accounts';
 import ss from '../../../constants/selectors';
 import networks from '../../../constants/networks';
-import compareBalances from '../../utils/compareBalances';
 import urls from '../../../constants/urls';
+import settings from '../../../constants/settings';
 
 const txConfirmationTimeout = 15000;
 
+Given(/^Network switcher is disabled$/, function() {
+  window.localStorage.setItem('settings', 
+    JSON.stringify({ ...settings, 'showNetwork': false }));
+});
+
 Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
+  cy.visit(urls.login);
   cy.get(ss.networkDropdown).click();
   cy.get(ss.networkOptions).eq(2).click();
   cy.get(ss.addressInput).clear().type(networks[network].node);
@@ -80,7 +86,7 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
 });
 
 Given(/^I scroll to (.*?)$/, (position) => {
-  cy.get('.scrollContainer').scrollTo(position);
+  cy.get('.scrollContainer').scrollTo(position, { ensureScrollable: false });
 });
 
 Then(/^I should see pending transaction$/, function () {

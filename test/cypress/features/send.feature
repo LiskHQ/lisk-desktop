@@ -17,6 +17,7 @@ Feature: Send
     Then The balance is subtracted
 
   Scenario: Launch protocol prefills fields  - from logged in state
+    Given I am on Login page
     Given I login as genesis on devnet
     When I follow the launch protokol link
     Then Send form fields are prefilled
@@ -28,8 +29,8 @@ Feature: Send
     Then Send form fields are prefilled
 
   Scenario: Error message is shown if transfer tx fails
-    Given I mock api /transactions
     Given I login as genesis on devnet
+    Given I mock api /transactions
     Given I am on Wallet page
     Then I click on sendLink
     When I fill 1234567890L in recipientInput field
