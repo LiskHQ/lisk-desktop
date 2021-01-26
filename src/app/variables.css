@@ -205,7 +205,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
 }
 
-@custom-media --xLarge-viewport (min-width: 1400px);
+@custom-media --xLarge-viewport (max-width: 1600px);
 @custom-media --large-viewport (max-width: 1400px);
 @custom-media --medium-viewport (max-width: 1024px);
 @custom-media --small-viewport (max-width: 768px);

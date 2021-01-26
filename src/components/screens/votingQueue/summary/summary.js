@@ -98,13 +98,18 @@ const Summary = ({
     <section>
       <Box className={styles.container}>
         <ToggleIcon isNotHeader />
-        <VoteStats
-          t={t}
-          heading={t('Voting Summary')}
-          added={addedLength}
-          edited={editedLength}
-          removed={removedLength}
-        />
+        <div className={styles.headerContainer}>
+          <header>
+            {t('Voting Summary')}
+          </header>
+          <VoteStats
+            t={t}
+            heading={t('Voting Summary')}
+            added={addedLength}
+            edited={editedLength}
+            removed={removedLength}
+          />
+        </div>
         <BoxContent className={styles.content}>
           {addedLength ? <ItemList heading={t('Added votes')} items={added} /> : null}
           {editedLength ? <ItemList heading={t('Changed votes')} items={edited} /> : null}

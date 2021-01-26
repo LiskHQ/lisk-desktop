@@ -5,7 +5,6 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { fromRawLsk } from '../../../../utils/lsk';
 import { getDelegate } from '../../../../utils/api/delegate';
 import regex from '../../../../utils/regex';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
@@ -47,6 +46,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
       txType,
       nonce: account.nonce,
       senderPublicKey: account.publicKey,
+      username: state.nickname,
     },
   });
 
@@ -74,7 +74,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
 
   const hasUserEnoughFunds = () => {
     const hasFunds = account
-      && fromRawLsk(account.balance) * 1 >= 25 * 1;
+      && account.balance >= fee.value;
 
     if (!hasFunds) {
       setState({
@@ -133,8 +133,11 @@ const SelectNameAndFee = ({ account, ...props }) => {
   useEffect(() => {
     getNicknameFromPrevState();
     checkIfUserIsDelegate();
-    hasUserEnoughFunds();
   }, []);
+
+  useEffect(() => {
+    hasUserEnoughFunds();
+  }, [fee]);
 
   const isBtnDisabled = () => {
     if (state.customFee && state.customFee.error) return true;
@@ -161,7 +164,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
         </p>
         <label className={styles.nicknameLabel}>
           {t('Your nickname')}
-          <Tooltip>
+          <Tooltip position="right">
             <p>{t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}</p>
           </Tooltip>
         </label>
