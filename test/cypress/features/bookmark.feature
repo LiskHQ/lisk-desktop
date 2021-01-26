@@ -14,3 +14,14 @@ Feature: Add bookmark
     Then I click on saveButton
     When I click on bookmarkListToggle
     Then The bookmarkList should contain delegate
+
+  Scenario: Add regular account to bookmarks
+    And I search for account 16422276087748907680L
+    Then I click on searchAccountRow
+    Then I should be on Account page
+    Then I click on addBookmarkIcon
+    Then The saveButton button must not be active
+    And I fill testBmark in inputLabel field
+    Then I click on saveButton
+    When I click on bookmarkListToggle
+    Then The bookmarkList should contain testBmark
