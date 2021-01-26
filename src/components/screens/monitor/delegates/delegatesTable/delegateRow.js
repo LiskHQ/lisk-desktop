@@ -122,7 +122,7 @@ const DelegateRow = ({
         </>
       ) : (
         <span className={`${grid['col-xs-2']} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
-          standby
+          {data.status}
         </span>
       )}
     </Link>
