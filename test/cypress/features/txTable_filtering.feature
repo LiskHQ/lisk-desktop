@@ -1,9 +1,9 @@
-# Feature: Transaction table filtering
+Feature: Transaction table filtering
 
-#   Background:
-#     Given I login as genesis on devnet
-#     Given I am on Wallet page
-#     Then I click filter transactions
+  # Background:
+  #   Given I login as genesis on devnet
+  #   Given I am on Wallet page
+  #   Then I click filter transactions
 
 #   Scenario: Filter by 1 Amount, add second filter by 1 Amount
 #     When I type amount to 5

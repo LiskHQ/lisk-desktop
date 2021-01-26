@@ -1,4 +1,4 @@
-# Feature: Send Btc
+Feature: Send Btc
 
 #   Scenario: Enable and Transfer btc
 #     Given I login as genesis on testnet
