@@ -15,6 +15,7 @@ Feature: Wallet
 
   Scenario: Send LSK to this account
     Given I am on Wallet page of delegate
+    And I wait 1 seconds
     When I send LSK
     Then I should see delegate in recipient
 
