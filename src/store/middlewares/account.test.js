@@ -94,7 +94,7 @@ const defaultState = {
 describe('Account middleware', () => {
   const next = jest.fn();
   const store = {
-    dispatch: jest.fn().mockImplementation(() => console.log('Dispatch called')),
+    dispatch: jest.fn().mockImplementation(() => ({})),
     getState: () => defaultState,
   };
 
