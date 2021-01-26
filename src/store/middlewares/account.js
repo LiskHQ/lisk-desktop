@@ -73,7 +73,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
   const { numberOfTransactions, id } = action.data.block;
 
   if (numberOfTransactions) {
-    const { data: txs } = await getTransactions({ network, params: { blockId: id } }, token);
+    const { data: txs } = await getTransactions({ network, params: { blockId: id } }, token.active);
     const blockContainsRelevantTransaction = txs.filter((transaction) => {
       if (!transaction) return false;
       return (
