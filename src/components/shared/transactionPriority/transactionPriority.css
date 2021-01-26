@@ -59,7 +59,7 @@
         outline: none;
 
         &:disabled {
-          background-color: var(--color-platinum);
+          opacity: 0;
         }
 
         &.priorityTitleSelected {

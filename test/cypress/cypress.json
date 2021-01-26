@@ -15,5 +15,6 @@
   "videosFolder": "./videos",
   "trashAssetsBeforeRuns": true,
   "projectId": "528xi2",
-  "ignoreTestFiles": "*.js"
+  "ignoreTestFiles": "*.js",
+  "modifyObstructiveCode": false
 }

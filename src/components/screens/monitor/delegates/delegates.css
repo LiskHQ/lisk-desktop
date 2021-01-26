@@ -103,6 +103,16 @@
     text-overflow: ellipsis;
     overflow: hidden;
     display: block;
+
+    & > .delegateColumn {
+      display: flex;
+    
+      & > img {
+        margin-right: 12px;    
+        visibility: hidden;
+        opacity: 0;
+      }
+    }
   }
 
   & > span:last-child {
@@ -112,6 +122,13 @@
 
   & > .noEllipsis {
     text-overflow: initial;
+  }
+
+  &:hover {
+    & > span > .delegateColumn > img {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 }
 
@@ -142,4 +159,13 @@
 
 .statusIcon {
   height: 17px;
+}
+
+.delegateHeader {
+  padding-left: 45px;
+}
+
+.roundStateHeader {
+  justify-content: inherit !important;
+  text-align: inherit !important;
 }

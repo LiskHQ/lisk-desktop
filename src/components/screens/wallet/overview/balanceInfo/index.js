@@ -15,28 +15,25 @@ import { fromRawLsk } from '../../../../../utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
 import { tokenMap } from '../../../../../constants/tokens';
 import {
-  calculateLockedBalance,
+  calculateBalanceLockedInUnvotes,
+  calculateBalanceLockedInVotes,
   getActiveTokenAccount,
-  calculateAvailableBalance,
-  calculateUnlockingBalance,
 } from '../../../../../utils/account';
 
 const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
   const host = useSelector(state => getActiveTokenAccount(state));
-  const currentBlock = useSelector(state => state.blocks.latestBlocks[0] || { height: 0 });
-  const lockedBalance = activeToken === tokenMap.LSK.key && isWalletRoute && host
-    ? calculateLockedBalance(host) : undefined;
-  const availableBalance = host ? calculateAvailableBalance(host, currentBlock) : undefined;
-  const unlockingBalance = host ? calculateUnlockingBalance(host, currentBlock) : undefined;
+  const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
+  const lockedInUnovtes = activeToken === tokenMap.LSK.key && isWalletRoute && host
+    ? calculateBalanceLockedInUnvotes(host.unlocking) : undefined;
 
-  if (lockedBalance + availableBalance + unlockingBalance > 0) {
+  if (lockedInUnovtes + lockedInVotes > 0) {
     return (
       <DialogLink
         className={`${styles.lockedBalance} open-unlock-balance-dialog`}
         component="lockedBalance"
       >
         <Icon name="lock" />
-        {`${fromRawLsk(lockedBalance + availableBalance + unlockingBalance)} ${tokenMap.LSK.key}`}
+        {`${fromRawLsk(lockedInUnovtes + lockedInVotes)} ${tokenMap.LSK.key}`}
       </DialogLink>
     );
   }
@@ -45,7 +42,7 @@ const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
 };
 
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, isDelegate,
+  t, activeToken, balance, isWalletRoute, address, username,
 }) => {
   const vote = useSelector(state => state.voting[address]);
   const initialValue = isWalletRoute
@@ -78,7 +75,7 @@ const BalanceInfo = ({
         <SignInTooltipWrapper position="bottom">
           <div className={styles.actionRow}>
             {
-              isDelegate && (
+              username ? (
                 <DialogLink component="editVote" className={`${styles.button} add-vote`}>
                   <SecondaryButton
                     className={`${styles.voteButton} open-add-vote-dialog`}
@@ -87,7 +84,7 @@ const BalanceInfo = ({
                     {voteButtonTitle}
                   </SecondaryButton>
                 </DialogLink>
-              )
+              ) : null
             }
             <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
               <PrimaryButton

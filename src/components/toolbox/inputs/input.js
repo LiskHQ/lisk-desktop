@@ -67,7 +67,7 @@ const Input = ({
             : <span className={styles.icon}>{icon}</span>
         )}
         { status === 'pending'
-          && <Spinner className={`${styles.loading} ${styles.status}`} />
+          && <Spinner className={`${styles.loading} ${styles.status} node-connection-loading-spinner`} />
         }
         { statusIconNameMap[status]
           && <Icon name={statusIconNameMap[status]} className={`${styles.status}`} />

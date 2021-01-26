@@ -52,11 +52,11 @@ const DelegateProfile = ({
           missedBlocks={delegate.data.missedBlocks}
           forgedLsk="-"
         />
-        <DelegateVotesView
-          t={t}
-          voters={voters}
-        />
       </Box>
+      <DelegateVotesView
+        t={t}
+        voters={voters}
+      />
     </section>
   );
 };

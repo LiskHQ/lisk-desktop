@@ -3,11 +3,8 @@ import styles from '../delegates.css';
 
 export default (activeTab, changeSort, t) => ([
   {
-    classList: activeTab === 'active' ? `${grid['col-xs-1']}` : 'hidden',
-  },
-  {
     title: t('Delegate'),
-    classList: `${grid['col-xs-3']}`,
+    classList: `${grid['col-xs-3']} ${styles.delegateHeader}`,
   },
   {
     title: t('Productivity'),
@@ -20,7 +17,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Rank'),
-    classList: activeTab === 'active' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`,
+    classList: `${grid['col-xs-2']}`,
     sort: {
       fn: changeSort,
       key: 'rank',
@@ -46,7 +43,7 @@ export default (activeTab, changeSort, t) => ([
   {
     title: t('Round state'),
     classList: activeTab === 'active'
-      ? `${grid['col-xs-1']} ${styles.statusTitle}`
+      ? `${grid['col-xs-1']} ${styles.statusTitle} ${styles.roundStateHeader}`
       : 'hidden',
   },
   {

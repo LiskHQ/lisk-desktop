@@ -12,12 +12,10 @@ import { truncateAddress } from '../../../../../utils/account';
  */
 const Identity = ({
   address,
-  account,
-  isDelegate,
   bookmark,
+  username = '',
 }) => {
   if (!address) return null;
-  const username = (isDelegate && account.username) || '';
   const truncatedAddress = address.length > 12
     ? truncateAddress(address) : address;
 

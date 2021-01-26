@@ -36,11 +36,9 @@ const DelegatesMonitor = ({
 
   useEffect(() => {
     const addressList = votes.data && votes.data.reduce((acc, data) => {
-      if (data.asset.votes) {
-        const dataAddresses = data.asset.votes.map(vote => vote.delegateAddress);
-        return acc.concat(dataAddresses);
-      }
-      return acc;
+      const votesList = data.asset.votes || [];
+      const dataAddresses = votesList.map(vote => vote.delegateAddress);
+      return acc.concat(dataAddresses);
     }, []);
     if (addressList.length > 1) {
       votedDelegates.loadData({ addressList });

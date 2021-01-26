@@ -66,6 +66,7 @@ const useTransactionFeeCalculation = ({
     txData.amount,
     txData.data,
     txData.recipient,
+    txData.username,
     selectedPriority.selectedIndex,
     selectedPriority.value,
   ]);

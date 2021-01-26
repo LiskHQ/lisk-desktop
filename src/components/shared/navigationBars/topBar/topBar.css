@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
 
-  &.disabled {
+  &.opaqueLogo {
     opacity: 0.5;
   }
 
@@ -97,5 +97,20 @@
   & p {
     padding-top: 5px;
     padding-bottom: 7px;
+  }
+}
+
+.votingQueueIcon {
+  display: flex;
+  justify-content: center;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+
+  & .label,
+  & img {
+    opacity: 0.5;
   }
 }
