@@ -106,9 +106,9 @@
 
     & > .delegateColumn {
       display: flex;
-    
+
       & > img {
-        margin-right: 12px;    
+        margin-right: 12px;
         visibility: hidden;
         opacity: 0;
         position: relative;
@@ -173,6 +173,7 @@
 
 .delegateStatus {
   @mixin contentSmall 500;
+
   padding: 8px 10px;
   line-height: 12px;
   text-transform: capitalize;
@@ -183,7 +184,7 @@
   }
 
   &.banned {
-    color: #FF4557;
+    color: #ff4557;
     background-color: rgba(247, 227, 109, 0.3);
   }
 
