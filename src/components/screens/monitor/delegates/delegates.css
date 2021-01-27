@@ -103,6 +103,8 @@
     text-overflow: ellipsis;
     overflow: hidden;
     display: block;
+    padding-right: 8px;
+    padding-left: 8px;
 
     & > .delegateColumn {
       display: flex;
@@ -167,8 +169,7 @@
 }
 
 .roundStateHeader {
-  justify-content: inherit !important;
-  text-align: inherit !important;
+  padding-left: 0;
 }
 
 .delegateStatus {

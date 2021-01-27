@@ -15,6 +15,7 @@ activeDelegates.push({
   productivity: 0,
   publicKey: 'test_pbk',
   rank: 999,
+  address: '14018336151296112016L',
   account: {
     address: '14018336151296112016L',
     publicKey: 'test_pbk',
