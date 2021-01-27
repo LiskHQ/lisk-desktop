@@ -172,18 +172,13 @@
 }
 
 .delegateStatus {
+  @mixin contentSmall 500;
   padding: 8px 10px;
-  font-family: 'basier-circle';
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
   line-height: 12px;
-  letter-spacing: 0.19999997317790985px;
   text-transform: capitalize;
-  text-align: left;
 
   &.standby {
-    color: #254898;
+    color: var(--color-ink-blue);
     background-color: rgba(64, 112, 244, 0.1);
   }
 
@@ -193,12 +188,12 @@
   }
 
   &.punished {
-    color: #0C152E;
+    color: var(--color-maastricht-blue);
     background-color: rgba(255, 69, 87, 0.1);
   }
 
   &.non-eligible {
-    color: #8A8CA2;
+    color: var(--color-blue-gray);
     background-color: rgba(138, 140, 162, 0.1);
   }
 }
