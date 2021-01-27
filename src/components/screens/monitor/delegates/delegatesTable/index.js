@@ -1,4 +1,6 @@
 import React from 'react';
+import { compose } from 'redux';
+import withLocalSort from '../../../../../utils/withLocalSort';
 import Table from '../../../../toolbox/table';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
@@ -18,7 +20,6 @@ const DelegatesTable = ({
   sort,
   t,
   activeTab,
-  forgingTimes,
 }) => {
   const handleLoadMore = () => {
     delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
@@ -36,7 +37,6 @@ const DelegatesTable = ({
   delegates = activeTab === 'active'
     ? filterDelegates(delegates, filters)
     : filterDelegates(standByDelegates, filters);
-
   return (
     <Table
       data={delegates.data}
@@ -45,7 +45,6 @@ const DelegatesTable = ({
       loadData={handleLoadMore}
       additionalRowProps={{
         t,
-        forgingTimes,
       }}
       header={header(activeTab, changeSort, t)}
       currentSort={sort}
@@ -54,4 +53,12 @@ const DelegatesTable = ({
   );
 };
 
-export default DelegatesTable;
+export default compose(
+  withLocalSort('delegates', 'rank:asc', {
+    forgingTime: (a, b, direction) => {
+      if (!a.forgingTime) return 1;
+      if (!b.forgingTime) return -1;
+      return ((a.forgingTime.time > b.forgingTime.time) ? 1 : -1) * (direction === 'asc' ? 1 : -1);
+    },
+  }),
+)(DelegatesTable);

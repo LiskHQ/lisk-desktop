@@ -15,6 +15,7 @@ activeDelegates.push({
   productivity: 0,
   publicKey: 'test_pbk',
   rank: 999,
+  address: '14018336151296112016L',
   account: {
     address: '14018336151296112016L',
     publicKey: 'test_pbk',
@@ -109,7 +110,7 @@ describe('Delegates monitor page', () => {
 
   it('renders a page with header', () => {
     wrapper = setup(props);
-    expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Active delegates');
+    expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Inside round');
   });
 
   it('allows to switch to stand by delegates', () => {

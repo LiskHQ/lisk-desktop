@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '../../../utils/theme';
@@ -140,6 +141,12 @@ import unlockToken from '../../../assets/images/icons/tx-unlock.svg';
 import votingQueueInactive from '../../../assets/images/icons/voting-queue-inactive.svg';
 import votingQueueActive from '../../../assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '../../../assets/images/icons/delete.svg';
+import delegateForged from '../../../assets/images/icons/delegate-forged.svg';
+import delegateMissed from '../../../assets/images/icons/delegate-missed.svg';
+import delegateWarning from '../../../assets/images/icons/delegate-warning.svg';
+import delegateAwaiting from '../../../assets/images/icons/delegate-awaiting.svg';
+import eyeInactive from '../../../assets/images/icons/eye-inactive.svg';
+import eyeActive from '../../../assets/images/icons/eye-active.svg';
 
 export const icons = {
   academy,
@@ -281,6 +288,12 @@ export const icons = {
   unlockToken,
   votingQueueInactive,
   votingQueueActive,
+  delegateForged,
+  delegateMissed,
+  delegateWarning,
+  delegateAwaiting,
+  eyeActive,
+  eyeInactive,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

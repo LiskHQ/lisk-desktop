@@ -1,26 +1,37 @@
-.status {
-  box-sizing: border-box;
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  border: 1px solid var(--color-light-gray);
+@import '../../../../app/mixins.css';
 
-  &.forging {
-    border-color: var(--color-deep-green);
-    background-color: var(--color-deep-green);
-  }
+.delegateDetails {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-  &.awaitingSlot {
-    border-color: var(--color-deep-green);
-  }
+  & > div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
 
-  &.notForging {
-    border-color: var(--color-burnt-sienna);
-    background-color: var(--color-burnt-sienna);
-  }
+    & > .delegateName {
+      @mixin headingSmall;
 
-  &.missedBlock {
-    border-color: var(--color-burnt-sienna);
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--color-maastricht-blue);
+      font-family: var(--content-font);
+
+      & > span {
+        @mixin contentNormal;
+
+        margin-left: 10px;
+        color: black;
+      }
+    }
+
+    & > .delegateAddress {
+      @mixin contentNormal;
+
+      margin: 0;
+      color: var(--color-slate-gray);
+    }
   }
 }
 
@@ -92,6 +103,18 @@
     text-overflow: ellipsis;
     overflow: hidden;
     display: block;
+    padding-right: 8px;
+    padding-left: 8px;
+
+    & > .delegateColumn {
+      display: flex;
+
+      & > img {
+        margin-right: 12px;
+        visibility: hidden;
+        opacity: 0;
+      }
+    }
   }
 
   & > span:last-child {
@@ -101,6 +124,13 @@
 
   & > .noEllipsis {
     text-overflow: initial;
+  }
+
+  &:hover {
+    & > span > .delegateColumn > img {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 }
 
@@ -112,4 +142,31 @@
 
 .statusToolip {
   white-space: nowrap;
+}
+
+.statusIconsContainer {
+  overflow: visible !important;
+  display: flex !important;
+  flex-direction: row;
+  justify-content: flex-start !important;
+
+  & > div:first-child {
+    margin-left: calc(50% - 17px);
+  }
+
+  & > div:nth-child(2) {
+    margin-left: 12px;
+  }
+}
+
+.statusIcon {
+  height: 17px;
+}
+
+.delegateHeader {
+  padding-left: 45px;
+}
+
+.roundStateHeader {
+  padding-left: 0;
 }
