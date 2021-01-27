@@ -173,29 +173,31 @@
 }
 
 .delegateStatus {
-  @mixin contentSmall 500;
+  @mixin contentSmall semi-bold;
 
   padding: 8px 10px;
+  border-radius: 3px;
   line-height: 12px;
+  letter-spacing: 0.2px;
   text-transform: capitalize;
 
   &.standby {
     color: var(--color-ink-blue);
-    background-color: rgba(64, 112, 244, 0.1);
+    background-color: var(--color-active-tab);
   }
 
   &.banned {
-    color: #ff4557;
-    background-color: rgba(247, 227, 109, 0.3);
+    color: var(--color-red);
+    background-color: var(--color-red-transparent);
   }
 
   &.punished {
     color: var(--color-maastricht-blue);
-    background-color: rgba(255, 69, 87, 0.1);
+    background-color: var(--color-yellow-transparent);
   }
 
   &.non-eligible {
     color: var(--color-blue-gray);
-    background-color: rgba(138, 140, 162, 0.1);
+    background-color: var(--color-blue-manatee-transparent);
   }
 }

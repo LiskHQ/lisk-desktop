@@ -127,6 +127,7 @@ or "warn/action" ineastd of "red/green"
   --color-primary-light: #9db8fa;
   --color-white: #fff;
   --color-danger: #ff7721;
+  --color-red: #ff4557;
   --color-content: #19224d;
   --color-content-light: #0c152e;
   --color-primary-very-light: #e8f0fa;
@@ -160,6 +161,9 @@ or "warn/action" ineastd of "red/green"
   --color-search-container: #1d2b52;
   --color-periwinkle-blue: #c5cfe4;
   --color-vote-item-bg: var(--color-silver);
+  --color-yellow-transparent: rgba(247, 227, 109, 0.3);
+  --color-red-transparent: rgba(255, 69, 87, 0.1);
+  --color-blue-manatee-transparent: rgba(138, 140, 162, 0.1);
 
   /*************************
         Box
