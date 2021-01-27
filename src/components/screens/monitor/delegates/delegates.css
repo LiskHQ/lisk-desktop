@@ -106,9 +106,9 @@
 
     & > .delegateColumn {
       display: flex;
-    
+
       & > img {
-        margin-right: 12px;    
+        margin-right: 12px;
         visibility: hidden;
         opacity: 0;
       }
