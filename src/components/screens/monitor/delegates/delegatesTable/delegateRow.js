@@ -7,6 +7,7 @@ import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import Icon from '../../../../toolbox/icon';
 import AccountVisual from '../../../../toolbox/accountVisual';
 import { formatAmountBasedOnLocale } from '../../../../../utils/formattedNumber';
+import regex from '../../../../../utils/regex';
 import styles from '../delegates.css';
 import DelegateWeight from './delegateWeight';
 
@@ -59,7 +60,8 @@ const DelegateRow = ({
               <p className={styles.delegateName}>
                 {data.username}
               </p>
-              <p className={styles.delegateAddress}>{data.address}</p>
+              <p className={`${styles.delegateAddress} showOnLargeViewPort`}>{data.address}</p>
+              <p className={`${styles.delegateAddress} hideOnLargeViewPort`}>{data.address.replace(regex.lskAddressTrunk, '$1...$3')}</p>
             </div>
           </div>
         </div>

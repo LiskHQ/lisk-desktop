@@ -166,6 +166,5 @@
 }
 
 .roundStateHeader {
-  justify-content: inherit !important;
-  text-align: inherit !important;
+  padding-left: 0;
 }
