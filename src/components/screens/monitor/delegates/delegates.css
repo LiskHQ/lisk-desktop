@@ -113,6 +113,7 @@
         margin-right: 12px;
         visibility: hidden;
         opacity: 0;
+        position: relative;
       }
     }
   }
@@ -169,4 +170,34 @@
 
 .roundStateHeader {
   padding-left: 0;
+}
+
+.delegateStatus {
+  @mixin contentSmall semi-bold;
+
+  padding: 8px 10px;
+  border-radius: 3px;
+  line-height: 12px;
+  letter-spacing: 0.2px;
+  text-transform: capitalize;
+
+  &.standby {
+    color: var(--color-ink-blue);
+    background-color: var(--color-active-tab);
+  }
+
+  &.banned {
+    color: var(--color-red);
+    background-color: var(--color-red-transparent);
+  }
+
+  &.punished {
+    color: var(--color-maastricht-blue);
+    background-color: var(--color-yellow-transparent);
+  }
+
+  &.non-eligible {
+    color: var(--color-blue-gray);
+    background-color: var(--color-blue-manatee-transparent);
+  }
 }

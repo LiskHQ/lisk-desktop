@@ -5,6 +5,33 @@ import Table from '../../../../toolbox/table';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
 
+const TableWrapper = compose(
+  withLocalSort('delegates', 'rank:asc', {
+    forgingTime: (a, b, direction) => {
+      if (!a.forgingTime) return 1;
+      if (!b.forgingTime) return -1;
+      return ((a.forgingTime.time > b.forgingTime.time) ? 1 : -1) * (direction === 'asc' ? 1 : -1);
+    },
+  }),
+)(({
+  delegates, handleLoadMore, t, activeTab,
+  changeSort, sort, canLoadMore,
+}) => (
+  <Table
+    data={delegates.data}
+    isLoading={delegates.isLoading}
+    row={DelegateRow}
+    loadData={handleLoadMore}
+    additionalRowProps={{
+      t,
+      activeTab,
+    }}
+    header={header(activeTab, changeSort, t)}
+    currentSort={sort}
+    canLoadMore={canLoadMore}
+  />
+));
+
 const filterDelegates = (delegates, filters) => ({
   ...delegates,
   data: filters.search
@@ -37,28 +64,18 @@ const DelegatesTable = ({
   delegates = activeTab === 'active'
     ? filterDelegates(delegates, filters)
     : filterDelegates(standByDelegates, filters);
+
   return (
-    <Table
-      data={delegates.data}
-      isLoading={delegates.isLoading}
-      row={DelegateRow}
-      loadData={handleLoadMore}
-      additionalRowProps={{
-        t,
-      }}
-      header={header(activeTab, changeSort, t)}
-      currentSort={sort}
+    <TableWrapper
+      delegates={delegates}
+      handleLoadMore={handleLoadMore}
+      t={t}
+      activeTab={activeTab}
+      changeSort={changeSort}
+      sort={sort}
       canLoadMore={canLoadMore}
     />
   );
 };
 
-export default compose(
-  withLocalSort('delegates', 'rank:asc', {
-    forgingTime: (a, b, direction) => {
-      if (!a.forgingTime) return 1;
-      if (!b.forgingTime) return -1;
-      return ((a.forgingTime.time > b.forgingTime.time) ? 1 : -1) * (direction === 'asc' ? 1 : -1);
-    },
-  }),
-)(DelegatesTable);
+export default DelegatesTable;

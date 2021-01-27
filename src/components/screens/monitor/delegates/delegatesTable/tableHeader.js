@@ -8,11 +8,11 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Productivity'),
-    classList: `${grid['col-xs-2']}`,
+    classList: activeTab === 'active' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']}`,
     tooltip: {
       title: t('Productivity'),
       message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
-      position: 'left',
+      position: 'top',
     },
   },
   {
@@ -29,7 +29,7 @@ export default (activeTab, changeSort, t) => ([
     tooltip: {
       title: t('Delegate weight'),
       message: t('The total LSK voted to a delegate.'),
-      position: 'left',
+      position: 'top',
     },
   },
   {
@@ -44,6 +44,12 @@ export default (activeTab, changeSort, t) => ([
     title: t('Round state'),
     classList: activeTab === 'active'
       ? `${grid['col-xs-1']} ${styles.statusTitle} ${styles.roundStateHeader}`
+      : 'hidden',
+  },
+  {
+    title: t('Status'),
+    classList: activeTab !== 'active'
+      ? `${grid['col-xs-2']}`
       : 'hidden',
   },
 ]);
