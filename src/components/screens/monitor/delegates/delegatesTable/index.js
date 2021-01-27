@@ -39,14 +39,30 @@ const filterDelegates = (delegates, filters) => ({
     : delegates.data,
 });
 
+const selectDelegates = ({
+  activeTab, delegates, standByDelegates, sanctionedDelegates, filters,
+}) => {
+  if (activeTab === 'active') {
+    return filterDelegates(delegates, filters);
+  }
+  if (activeTab === 'standby') {
+    return filterDelegates(standByDelegates, filters);
+  }
+  if (activeTab === 'sanctioned') {
+    return filterDelegates(sanctionedDelegates, filters);
+  }
+  return undefined;
+};
+
 const DelegatesTable = ({
-  standByDelegates,
-  changeSort,
   delegates,
+  standByDelegates,
+  sanctionedDelegates,
+  activeTab,
+  changeSort,
   filters,
   sort,
   t,
-  activeTab,
 }) => {
   const handleLoadMore = () => {
     delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
@@ -61,13 +77,13 @@ const DelegatesTable = ({
     ? false
     : standByDelegates.data.length < (standByDelegates.meta.total - standByDelegates.meta.offset);
 
-  delegates = activeTab === 'active'
-    ? filterDelegates(delegates, filters)
-    : filterDelegates(standByDelegates, filters);
+  const delegatesToShow = selectDelegates({
+    activeTab, delegates, standByDelegates, sanctionedDelegates, filters,
+  });
 
   return (
     <TableWrapper
-      delegates={delegates}
+      delegates={delegatesToShow}
       handleLoadMore={handleLoadMore}
       t={t}
       activeTab={activeTab}

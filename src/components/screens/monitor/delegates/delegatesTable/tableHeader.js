@@ -4,7 +4,7 @@ import styles from '../delegates.css';
 export default (activeTab, changeSort, t) => ([
   {
     title: t('Delegate'),
-    classList: `${grid['col-xs-3']} ${styles.delegateHeader}`,
+    classList: `${activeTab === 'sanctioned' ? grid['col-xs-4'] : grid['col-xs-3']} ${styles.delegateHeader}`,
   },
   {
     title: t('Productivity'),
@@ -17,7 +17,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Rank'),
-    classList: `${grid['col-xs-2']}`,
+    classList: activeTab === 'sanctioned' ? `${grid['col-xs-3']}` : `${grid['col-xs-2']}`,
     sort: {
       fn: changeSort,
       key: 'rank',
@@ -25,7 +25,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Delegate weight'),
-    classList: `${grid['col-xs-2']} ${styles.voteWeight}`,
+    classList: activeTab === 'sanctioned' ? 'hidden' : `${grid['col-xs-2']} ${styles.voteWeight}`,
     tooltip: {
       title: t('Delegate weight'),
       message: t('The total LSK voted to a delegate.'),

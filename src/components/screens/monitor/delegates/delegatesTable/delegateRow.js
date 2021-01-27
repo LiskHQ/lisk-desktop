@@ -107,18 +107,20 @@ const DelegateRow = ({
       className={`${grid.row} ${className} delegate-row ${styles.tableRow}`}
       to={`${routes.account.path}?address=${data.address}`}
     >
-      <span className={`${grid['col-xs-3']}`}>
+      <span className={activeTab !== 'sanctioned' ? `${grid['col-xs-3']}` : `${grid['col-xs-4']}`}>
         <DelegateDetails data={data} activeTab={activeTab} />
       </span>
       <span className={`${activeTab === 'active' ? grid['col-xs-2'] : grid['col-xs-3']}`}>
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>
-      <span className={`${grid['col-xs-2']} ${styles.noEllipsis}`}>
+      <span className={activeTab !== 'sanctioned' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']} ${styles.noEllipsis}`}>
         {`#${data.rank}`}
       </span>
-      <span className={`${grid['col-xs-2']}`}>
-        <DelegateWeight value={data.totalVotesReceived} />
-      </span>
+      {activeTab !== 'sanctioned' && (
+        <span className={`${grid['col-xs-2']}`}>
+          <DelegateWeight value={data.totalVotesReceived} />
+        </span>
+      )}
       {activeTab === 'active' ? (
         <>
           <span className={`${grid['col-xs-2']} ${styles.noEllipsis}`}>
