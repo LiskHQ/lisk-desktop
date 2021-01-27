@@ -37,11 +37,69 @@ const getForgingTime = (data) => {
   return `${minutes}${seconds} ago`;
 };
 
-// eslint-disable-next-line complexity
+const DelegateDetails = ({ watched = false, data, activeTab }) => (
+  <div className={styles.delegateColumn}>
+    {watched
+      ? <Icon name="eyeActive" className={`${activeTab !== 'active' && 'hidden'}`} />
+      : <Icon name="eyeInactive" className={`${activeTab !== 'active' && 'hidden'}`} />
+    }
+    <div className={`${styles.delegateDetails}`}>
+      <AccountVisual address={data.address} />
+      <div>
+        <p className={styles.delegateName}>
+          {data.username}
+        </p>
+        <p className={`${styles.delegateAddress} showOnLargeViewPort`}>{data.address}</p>
+        <p className={`${styles.delegateAddress} hideOnLargeViewPort`}>{data.address && data.address.replace(regex.lskAddressTrunk, '$1...$3')}</p>
+      </div>
+    </div>
+  </div>
+);
+
+const RoundStatus = ({ data, t, formattedForgingTime }) => (
+  <>
+    <Tooltip
+      title={data.forgingTime
+        ? t(roundStatus[data.forgingTime.status])
+        : t(roundStatus.notForging)}
+      position="left"
+      size="maxContent"
+      content={(
+        <Icon
+          className={styles.statusIcon}
+          name={data.forgingTime
+            ? t(icons[data.forgingTime.status])
+            : t(icons.notForging)}
+        />
+      )}
+      footer={(
+        <p>{formattedForgingTime}</p>
+      )}
+    >
+      <p className={styles.statusToolip}>
+        {data.lastBlock && `Last block forged ${data.lastBlock}`}
+      </p>
+    </Tooltip>
+    {data.isBanned && (
+    <Tooltip
+      position="left"
+      size="maxContent"
+      content={<Icon className={styles.statusIcon} name="delegateWarning" />}
+      footer={(
+        <p>{formattedForgingTime}</p>
+      )}
+    >
+      <p>
+        {t('This delegate will be punished in upcoming rounds')}
+      </p>
+    </Tooltip>
+    )}
+  </>
+);
+
 const DelegateRow = ({
   data, className, t, activeTab,
 }) => {
-  const watched = false;
   const formattedForgingTime = data.forgingTime && data.forgingTime.time;
 
   return (
@@ -50,22 +108,7 @@ const DelegateRow = ({
       to={`${routes.account.path}?address=${data.address}`}
     >
       <span className={`${grid['col-xs-3']}`}>
-        <div className={styles.delegateColumn}>
-          {watched
-            ? <Icon name="eyeActive" className={`${activeTab !== 'active' && 'hidden'}`} />
-            : <Icon name="eyeInactive" className={`${activeTab !== 'active' && 'hidden'}`} />
-          }
-          <div className={`${styles.delegateDetails}`}>
-            <AccountVisual address={data.address} />
-            <div>
-              <p className={styles.delegateName}>
-                {data.username}
-              </p>
-              <p className={`${styles.delegateAddress} showOnLargeViewPort`}>{data.address}</p>
-              <p className={`${styles.delegateAddress} hideOnLargeViewPort`}>{data.address && data.address.replace(regex.lskAddressTrunk, '$1...$3')}</p>
-            </div>
-          </div>
-        </div>
+        <DelegateDetails data={data} activeTab={activeTab} />
       </span>
       <span className={`${activeTab === 'active' ? grid['col-xs-2'] : grid['col-xs-3']}`}>
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
@@ -82,44 +125,7 @@ const DelegateRow = ({
             {getForgingTime(data.forgingTime)}
           </span>
           <span className={`${grid['col-xs-1']} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
-            <>
-              <Tooltip
-                title={data.forgingTime
-                  ? t(roundStatus[data.forgingTime.status])
-                  : t(roundStatus.notForging)}
-                position="left"
-                size="maxContent"
-                content={(
-                  <Icon
-                    className={styles.statusIcon}
-                    name={data.forgingTime
-                      ? t(icons[data.forgingTime.status])
-                      : t(icons.notForging)}
-                  />
-                )}
-                footer={(
-                  <p>{formattedForgingTime}</p>
-                )}
-              >
-                <p className={styles.statusToolip}>
-                  {data.lastBlock && `Last block forged ${data.lastBlock}`}
-                </p>
-              </Tooltip>
-              {data.isBanned && (
-              <Tooltip
-                position="left"
-                size="maxContent"
-                content={<Icon className={styles.statusIcon} name="delegateWarning" />}
-                footer={(
-                  <p>{formattedForgingTime}</p>
-                )}
-              >
-                <p>
-                  {t('This delegate will be punished in upcoming rounds')}
-                </p>
-              </Tooltip>
-              )}
-            </>
+            <RoundStatus data={data} t={t} formattedForgingTime={formattedForgingTime} />
           </span>
         </>
       ) : (
