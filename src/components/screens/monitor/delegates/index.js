@@ -3,7 +3,8 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
-import Delegates from './delegates';
+import { connect } from 'react-redux';
+
 import { getDelegates, getForgers } from '../../../../utils/api/delegate';
 import { getNetworkStatus } from '../../../../utils/api/network';
 import { getTransactions } from '../../../../utils/api/transaction';
@@ -13,16 +14,22 @@ import transactionTypes from '../../../../constants/transactionTypes';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
 import { tokenMap } from '../../../../constants/tokens';
 
+import Delegates from './delegates';
+
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
 const standByDelegatesKey = 'standByDelegates';
 const numberOfActiveDelegates = 103;
 
-const transformDelegatesResponse = (response, oldData = []) => (
-  [...oldData, ...response.data.filter(
-    delegate => !oldData.find(({ username }) => username === delegate.username),
-  )]
-);
+const transformDelegatesResponse = (response, oldData = []) => {
+  console.log('transformDelegatesResponse');
+  console.log(response);
+  return (
+    [...oldData, ...response.data.filter(
+      delegate => !oldData.find(({ username }) => username === delegate.username),
+    )]
+  );
+};
 
 const transformVotesResponse = (response, oldData = []) => (
   [...oldData, ...response.data.filter(
@@ -51,8 +58,13 @@ const transformChartResponse = (response) => {
     .map(delegate => ({ ...delegate, x: moment(delegate.x).format('MMM YY') }));
 };
 
+const mapStateToProps = state => ({
+  watchList: state.watchList,
+});
+
 const ComposedDelegates = compose(
   withRouter,
+  connect(mapStateToProps),
   withData(
     {
       [delegatesKey]: {
@@ -124,6 +136,13 @@ const ComposedDelegates = compose(
           }, {});
           return responseMap;
         },
+      },
+
+      watchedDelegates: {
+        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        defaultData: {},
+        getApiParams: state => ({ addressList: state.watchList }),
+        transformResponse: response => response.data,
       },
     },
   ),

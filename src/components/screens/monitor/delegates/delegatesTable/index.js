@@ -12,10 +12,13 @@ const TableWrapper = compose(
       if (!b.forgingTime) return -1;
       return ((a.forgingTime.time > b.forgingTime.time) ? 1 : -1) * (direction === 'asc' ? 1 : -1);
     },
+    rank: () => {
+
+    },
   }),
 )(({
   delegates, handleLoadMore, t, activeTab,
-  changeSort, sort, canLoadMore,
+  changeSort, sort, canLoadMore, watchList,
 }) => (
   <Table
     data={delegates.data}
@@ -25,6 +28,7 @@ const TableWrapper = compose(
     additionalRowProps={{
       t,
       activeTab,
+      watchList,
     }}
     header={header(activeTab, changeSort, t)}
     currentSort={sort}
@@ -40,22 +44,31 @@ const filterDelegates = (delegates, filters) => ({
 });
 
 const selectDelegates = ({
-  activeTab, delegates, standByDelegates, sanctionedDelegates, filters,
+  activeTab, delegates, standByDelegates, sanctionedDelegates,
+  watchedDelegates, filters,
 }) => {
-  if (activeTab === 'active') {
-    return filterDelegates(delegates, filters);
+  switch (activeTab) {
+    case 'active':
+      return filterDelegates(delegates, filters);
+
+    case 'standby':
+      return filterDelegates(standByDelegates, filters);
+
+    case 'sanctioned':
+      return filterDelegates(sanctionedDelegates, filters);
+
+    case 'watched':
+      return filterDelegates(watchedDelegates, filters);
+
+    default:
+      return undefined;
   }
-  if (activeTab === 'standby') {
-    return filterDelegates(standByDelegates, filters);
-  }
-  if (activeTab === 'sanctioned') {
-    return filterDelegates(sanctionedDelegates, filters);
-  }
-  return undefined;
 };
 
 const DelegatesTable = ({
   delegates,
+  watchList,
+  watchedDelegates,
   standByDelegates,
   sanctionedDelegates,
   activeTab,
@@ -64,6 +77,8 @@ const DelegatesTable = ({
   sort,
   t,
 }) => {
+  console.log('watchedDelegates');
+  console.log(watchedDelegates);
   const handleLoadMore = () => {
     delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
       ...acc,
@@ -78,12 +93,14 @@ const DelegatesTable = ({
     : standByDelegates.data.length < (standByDelegates.meta.total - standByDelegates.meta.offset);
 
   const delegatesToShow = selectDelegates({
-    activeTab, delegates, standByDelegates, sanctionedDelegates, filters,
+    activeTab, delegates, standByDelegates, sanctionedDelegates, watchedDelegates, filters,
   });
 
+  console.log('delegates to show', delegatesToShow);
   return (
     <TableWrapper
       delegates={delegatesToShow}
+      watchList={watchList}
       handleLoadMore={handleLoadMore}
       t={t}
       activeTab={activeTab}

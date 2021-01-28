@@ -16,8 +16,10 @@ const withLocalSort = (dataKey, initialSort, sortFn) => WrapperComponent => (
       const { sort } = this.state;
       const [id, direction] = sort.split(':');
       if (sortFn && sortFn[id]) {
+        console.log(data, sortFn, id);
         return data.sort((a, b) => sortFn[id](a, b, direction));
       }
+      console.log(data, sortFn, id);
       return data.sort((a, b) => ((a[id] > b[id]) ? 1 : -1) * (direction === 'asc' ? 1 : -1));
     }
 

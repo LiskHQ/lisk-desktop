@@ -21,6 +21,7 @@ import DialogHolder from '../components/toolbox/dialog/holder';
 import ThemeContext from '../contexts/theme';
 import { settingsRetrieved } from '../actions/settings';
 import { bookmarksRetrieved } from '../actions/bookmarks';
+import { watchListRetrieved } from '../actions/watchList';
 import useIpc from '../hooks/useIpc';
 
 const App = ({ history }) => {
@@ -34,6 +35,7 @@ const App = ({ history }) => {
     setLoaded(true);
     dispatch(bookmarksRetrieved());
     dispatch(settingsRetrieved());
+    dispatch(watchListRetrieved());
   }, []);
 
   const routesList = Object.values(routes);

@@ -54,6 +54,8 @@ const sanctionedDelegates = {
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
   votedDelegates,
+  watchedDelegates,
+  watchList,
   chartActiveAndStandbyData,
   chartRegisteredDelegatesData,
   standByDelegates,
@@ -84,6 +86,12 @@ const DelegatesMonitor = ({
     }
   }, [votes.data]);
 
+  useEffect(() => {
+    if (watchList.length) {
+      watchedDelegates.loadData({ addressList: watchList });
+    }
+  }, [watchList.length]);
+
   const handleFilter = ({ target: { value } }) => {
     applyFilters({
       ...filters,
@@ -94,29 +102,37 @@ const DelegatesMonitor = ({
     tabs: [
       {
         value: 'active',
-        name: ('Inside round'),
+        name: t('Inside round'),
         className: 'active',
       },
       {
         value: 'standby',
-        name: ('Outside round'),
+        name: t('Outside round'),
         className: 'standby',
       },
-
       {
         value: 'sanctioned',
-        name: ('Sanctioned'),
+        name: t('Sanctioned'),
         className: 'sanctioned',
       },
       {
         value: 'votes',
-        name: ('Latest votes'),
+        name: t('Latest votes'),
         className: 'votes',
       },
+
     ],
     active: activeTab,
     onClick: ({ value }) => setActiveTab(value),
   };
+
+  if (watchList.length) {
+    tabs.tabs.push({
+      value: 'watched',
+      name: t('Watched'),
+      className: 'watched',
+    });
+  }
 
   return (
     <div>
@@ -154,6 +170,8 @@ const DelegatesMonitor = ({
               : (
                 <DelegatesTable
                   delegates={delegatesWithForgingTimes}
+                  watchList={watchList}
+                  watchedDelegates={watchedDelegates}
                   standByDelegates={standByDelegates}
                   sanctionedDelegates={sanctionedDelegates}
                   filters={filters}

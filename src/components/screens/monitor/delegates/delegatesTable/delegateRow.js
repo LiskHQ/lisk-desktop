@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
+import { useDispatch } from 'react-redux';
 import routes from '../../../../../constants/routes';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import Icon from '../../../../toolbox/icon';
@@ -10,6 +11,7 @@ import { formatAmountBasedOnLocale } from '../../../../../utils/formattedNumber'
 import regex from '../../../../../utils/regex';
 import styles from '../delegates.css';
 import DelegateWeight from './delegateWeight';
+import { addedToWatchList, removedFromWatchList } from '../../../../../actions/watchList';
 
 const roundStatus = {
   forging: 'Forging',
@@ -37,11 +39,21 @@ const getForgingTime = (data) => {
   return `${minutes}${seconds} ago`;
 };
 
-const DelegateDetails = ({ watched = false, data, activeTab }) => (
+const DelegateDetails = ({
+  watched = false, data, activeTab, removeFromWatchList, addToWatchList,
+}) => (
   <div className={styles.delegateColumn}>
     {watched
-      ? <Icon name="eyeActive" className={`${activeTab !== 'active' && 'hidden'}`} />
-      : <Icon name="eyeInactive" className={`${activeTab !== 'active' && 'hidden'}`} />
+      ? (
+        <span onClick={removeFromWatchList}>
+          <Icon name="eyeActive" className={`${activeTab !== 'active' && 'hidden'}`} />
+        </span>
+      )
+      : (
+        <span onClick={addToWatchList}>
+          <Icon name="eyeInactive" className={`${activeTab !== 'active' && 'hidden'}`} />
+        </span>
+      )
     }
     <div className={`${styles.delegateDetails}`}>
       <AccountVisual address={data.address} />
@@ -81,26 +93,40 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
       </p>
     </Tooltip>
     {data.isBanned && (
-    <Tooltip
-      position="left"
-      size="maxContent"
-      content={<Icon className={styles.statusIcon} name="delegateWarning" />}
-      footer={(
-        <p>{formattedForgingTime}</p>
-      )}
-    >
-      <p>
-        {t('This delegate will be punished in upcoming rounds')}
-      </p>
-    </Tooltip>
+      <Tooltip
+        position="left"
+        size="maxContent"
+        content={<Icon className={styles.statusIcon} name="delegateWarning" />}
+        footer={(
+          <p>{formattedForgingTime}</p>
+        )}
+      >
+        <p>
+          {t('This delegate will be punished in upcoming rounds')}
+        </p>
+      </Tooltip>
     )}
   </>
 );
 
 const DelegateRow = ({
-  data, className, t, activeTab,
+  data, className, t, activeTab, watchList,
 }) => {
   const formattedForgingTime = data.forgingTime && data.forgingTime.time;
+  const dispatch = useDispatch();
+
+  const isWatched = watchList.find(address => address === data.address);
+  const removeFromWatchList = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(removedFromWatchList({ address: data.address }));
+  };
+
+  const addToWatchList = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(addedToWatchList({ address: data.address }));
+  };
 
   return (
     <Link
@@ -108,7 +134,7 @@ const DelegateRow = ({
       to={`${routes.account.path}?address=${data.address}`}
     >
       <span className={activeTab !== 'sanctioned' ? `${grid['col-xs-3']}` : `${grid['col-xs-4']}`}>
-        <DelegateDetails data={data} activeTab={activeTab} />
+        <DelegateDetails addToWatchList={addToWatchList} removeFromWatchList={removeFromWatchList} watched={isWatched} data={data} activeTab={activeTab} />
       </span>
       <span className={`${activeTab === 'active' ? grid['col-xs-2'] : grid['col-xs-3']}`}>
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
