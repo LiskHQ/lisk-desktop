@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
 import { DateTimeFromTimestamp } from '../../../../toolbox/timestamp';
@@ -6,6 +6,37 @@ import AccountVisualWithAddress from '../../../../shared/accountVisualWithAddres
 import DialogLink from '../../../../toolbox/dialog/link';
 import VoteItem from '../../../../shared/voteItem';
 import styles from '../delegates.css';
+
+const VotesItemsList = ({ votes, delegates }) => {
+  const [showAll, setShowAll] = useState(false);
+  return (
+    <>
+      {
+        votes && votes.length && (
+          <span className={styles.vote}>
+            <span className={styles.delegatesList}>
+              {votes.slice(0, showAll ? votes.length : 2).map(({ amount, delegateAddress }) => (
+                <VoteItem
+                  key={`vote-${delegateAddress}`}
+                  vote={{ confirmed: amount }}
+                  address={delegateAddress}
+                  title={delegates[delegateAddress] && delegates[delegateAddress].username}
+                />
+              ))}
+            </span>
+            {!showAll && (
+              <button
+                className={`${styles.loadMoreVotesBtn} ignore-dialog-click`}
+                onClick={() => setShowAll(true)}>
+                {votes.length - 2} more...
+              </button>
+            )}
+          </span>
+        )
+      }
+    </>
+  );
+};
 
 const VoteRow = ({
   data, className, delegates,
@@ -32,22 +63,7 @@ const VoteRow = ({
         <span>{Math.ceil(data.height / 101)}</span>
       </span>
       <span className={`${grid['col-xs-5']} ${grid['col-lg-3']} ${styles.votesColumn}`}>
-        {
-            votes && votes.length ? (
-              <span className={styles.vote}>
-                <span className={styles.delegatesList}>
-                  {votes.map(({ amount, delegateAddress }) => (
-                    <VoteItem
-                      key={`vote-${delegateAddress}`}
-                      vote={{ confirmed: amount }}
-                      address={delegateAddress}
-                      title={delegates[delegateAddress] && delegates[delegateAddress].username}
-                    />
-                  ))}
-                </span>
-              </span>
-            ) : null
-          }
+        <VotesItemsList votes={votes} delegates={delegates} />
       </span>
     </DialogLink>
   );

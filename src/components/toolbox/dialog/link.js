@@ -7,8 +7,10 @@ const DialogLink = ({
   children, component, className, history, data,
 }) => {
   const linkEl = useRef(null);
-  const onClick = () => {
-    addSearchParamsToUrl(history, { modal: component, ...data });
+  const onClick = (evt) => {
+    if (!evt.target.classList.contains('ignore-dialog-click')) {
+      addSearchParamsToUrl(history, { modal: component, ...data });
+    }
   };
 
   return (

@@ -201,3 +201,17 @@
     background-color: var(--color-blue-manatee-transparent);
   }
 }
+
+.loadMoreVotesBtn {
+  @mixin contentLarge semi-bold;
+
+  background-color: transparent;
+  border: unset;
+  color: var(--color-ultramarine-blue);
+  cursor: pointer;
+  margin-top: 12px;
+
+  &:hover {
+    color: var(--color-maastricht-blue);
+  }
+}
