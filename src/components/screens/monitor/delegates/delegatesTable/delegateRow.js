@@ -112,6 +112,7 @@ const DelegateRow = ({
   const dispatch = useDispatch();
 
   const isWatched = watchList.find(address => address === data.address);
+
   const removeFromWatchList = (e) => {
     e.preventDefault();
     e.stopPropagation();

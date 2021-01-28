@@ -38,4 +38,16 @@ describe('actions: watchList', () => {
     watchListRetrieved()(dispatch);
     expect(dispatch).toHaveBeenCalledWith(expectedAction);
   });
+
+  it('should create an action  with an empty array if no no watchlist is found in localStorage', () => {
+    const dispatch = jest.fn();
+    window.localStorage.getItem = jest.fn(() => null);
+    const expectedAction = {
+      data: [],
+      type: actionTypes.watchListRetrieved,
+    };
+
+    watchListRetrieved()(dispatch);
+    expect(dispatch).toHaveBeenCalledWith(expectedAction);
+  });
 });
