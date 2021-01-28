@@ -17,7 +17,7 @@ const VoteRow = ({
       component="transactionDetails"
       data={{ transactionId: data.id, token: 'LSK' }}
     >
-      <span className={grid['col-sm-4']}>
+      <span className={grid['col-xs-4']}>
         <AccountVisualWithAddress
           address={data.senderId}
           transactionSubject="senderId"
@@ -25,13 +25,13 @@ const VoteRow = ({
           showBookmarkedAddress
         />
       </span>
-      <span className={grid['col-sm-3']}>
+      <span className={grid['col-xs-3']}>
         <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
       </span>
-      <span className={`${grid['col-lg-1']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}>
+      <span className={`${grid['col-lg-2']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}>
         <span>{Math.ceil(data.height / 101)}</span>
       </span>
-      <span className={`${grid['col-sm-5']} ${grid['col-lg-4']} ${styles.votesColumn}`}>
+      <span className={`${grid['col-xs-5']} ${grid['col-lg-3']} ${styles.votesColumn}`}>
         {
             votes && votes.length ? (
               <span className={styles.vote}>
