@@ -88,7 +88,7 @@ const DelegatesTable = ({
     }));
   };
 
-  const canLoadMore = activeTab === 'active' || !standByDelegates.meta
+  const canLoadMore = activeTab === 'active' || activeTab === 'watched' || !standByDelegates.meta
     ? false
     : standByDelegates.data.length < (standByDelegates.meta.total - standByDelegates.meta.offset);
 
