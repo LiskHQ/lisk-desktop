@@ -21,15 +21,11 @@ const delegatesKey = 'delegates';
 const standByDelegatesKey = 'standByDelegates';
 const numberOfActiveDelegates = 103;
 
-const transformDelegatesResponse = (response, oldData = []) => {
-  console.log('transformDelegatesResponse');
-  console.log(response);
-  return (
-    [...oldData, ...response.data.filter(
-      delegate => !oldData.find(({ username }) => username === delegate.username),
-    )]
-  );
-};
+const transformDelegatesResponse = (response, oldData = []) => (
+  [...oldData, ...response.data.filter(
+    delegate => !oldData.find(({ username }) => username === delegate.username),
+  )]
+);
 
 const transformVotesResponse = (response, oldData = []) => (
   [...oldData, ...response.data.filter(

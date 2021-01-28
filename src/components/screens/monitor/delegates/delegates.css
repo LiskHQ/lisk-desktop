@@ -201,3 +201,7 @@
     background-color: var(--color-blue-manatee-transparent);
   }
 }
+
+.eyeIcon {
+  display: flex;
+}

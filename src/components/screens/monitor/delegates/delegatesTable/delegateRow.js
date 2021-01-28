@@ -45,8 +45,8 @@ const DelegateDetails = ({
   const showEyeIcon = activeTab === 'active' || activeTab === 'watched';
   return (
     <div className={styles.delegateColumn}>
-      <span onClick={watched ? removeFromWatchList : addToWatchList}>
-        <Icon name={watched ? 'eyeActive' : 'eyeInactive'} className={`${!showEyeIcon && 'hidden'}`} />
+      <span className={`${styles.eyeIcon} ${!showEyeIcon && 'hidden'}`} onClick={watched ? removeFromWatchList : addToWatchList}>
+        <Icon name={watched ? 'eyeActive' : 'eyeInactive'} />
       </span>
       <div className={`${styles.delegateDetails}`}>
         <AccountVisual address={data.address} />
