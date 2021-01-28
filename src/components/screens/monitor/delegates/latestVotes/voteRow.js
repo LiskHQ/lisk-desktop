@@ -8,13 +8,13 @@ import DialogLink from '../../../../toolbox/dialog/link';
 import VoteItem from '../../../../shared/voteItem';
 import styles from '../delegates.css';
 
-const VotesItemsList = ({ votes, delegates }) => {
+const VotesItemsList = ({ votes = [], delegates }) => {
   const [showAll, setShowAll] = useState(false);
   const { t } = useTranslation();
   return (
     <>
       {
-        votes && votes.length && (
+        votes.length > 0 && (
           <span className={styles.vote}>
             <span className={styles.delegatesList}>
               {votes.slice(0, showAll ? votes.length : 2).map(({ amount, delegateAddress }) => (
