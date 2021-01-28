@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -103,6 +104,7 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
   </>
 );
 
+// eslint-disable-next-line complexity
 const DelegateRow = ({
   data, className, t, activeTab, watchList, setActiveTab,
 }) => {
@@ -131,12 +133,18 @@ const DelegateRow = ({
       to={`${routes.account.path}?address=${data.address}`}
     >
       <span className={activeTab !== 'sanctioned' ? `${grid['col-xs-3']}` : `${grid['col-xs-4']}`}>
-        <DelegateDetails addToWatchList={addToWatchList} removeFromWatchList={removeFromWatchList} watched={isWatched} data={data} activeTab={activeTab} />
+        <DelegateDetails
+          addToWatchList={addToWatchList}
+          removeFromWatchList={removeFromWatchList}
+          watched={isWatched}
+          data={data}
+          activeTab={activeTab}
+        />
       </span>
-      <span className={`${activeTab === 'active' ? grid['col-xs-2'] : grid['col-xs-3']}`}>
+      <span className={`${activeTab === 'active' ? grid['col-xs-2'] : (activeTab === 'watched' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']}`)}`}>
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>
-      <span className={activeTab !== 'sanctioned' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']} ${styles.noEllipsis}`}>
+      <span className={activeTab !== 'sanctioned' ? (activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`) : `${grid['col-xs-3']} ${styles.noEllipsis}`}>
         {`#${data.rank}`}
       </span>
       {activeTab !== 'sanctioned' && (
@@ -144,7 +152,7 @@ const DelegateRow = ({
           <DelegateWeight value={data.totalVotesReceived} />
         </span>
       )}
-      {activeTab === 'active' ? (
+      {(activeTab === 'active' || activeTab === 'watched') && (
         <>
           <span className={`${grid['col-xs-2']} ${styles.noEllipsis}`}>
             {getForgingTime(data.forgingTime)}
@@ -153,8 +161,9 @@ const DelegateRow = ({
             <RoundStatus data={data} t={t} formattedForgingTime={formattedForgingTime} />
           </span>
         </>
-      ) : (
-        <span className={`${grid['col-xs-2']}`}>
+      )}
+      {(activeTab === 'watched' || activeTab !== 'active') && (
+        <span className={activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`}>
           <span className={`${styles.delegateStatus} ${styles[data.status]}`}>{data.status}</span>
         </span>
       )}

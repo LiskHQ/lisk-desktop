@@ -1,6 +1,8 @@
+/* eslint-disable no-nested-ternary */
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from '../delegates.css';
 
+// eslint-disable-next-line complexity
 export default (activeTab, changeSort, t) => ([
   {
     title: t('Delegate'),
@@ -8,7 +10,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Productivity'),
-    classList: activeTab === 'active' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']}`,
+    classList: activeTab === 'active' || activeTab === 'watched' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']}`,
     tooltip: {
       title: t('Productivity'),
       message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
@@ -17,7 +19,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Rank'),
-    classList: activeTab === 'sanctioned' ? `${grid['col-xs-3']}` : `${grid['col-xs-2']}`,
+    classList: activeTab === 'sanctioned' ? `${grid['col-xs-3']}` : activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`,
     sort: {
       fn: changeSort,
       key: 'rank',
@@ -34,7 +36,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Forging time'),
-    classList: activeTab === 'active' ? `${grid['col-xs-2']}` : 'hidden',
+    classList: activeTab === 'active' || activeTab === 'watched' ? `${grid['col-xs-2']}` : 'hidden',
     sort: {
       fn: changeSort,
       key: 'forgingTime',
@@ -42,14 +44,14 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Round state'),
-    classList: activeTab === 'active'
+    classList: activeTab === 'active' || activeTab === 'watched'
       ? `${grid['col-xs-1']} ${styles.statusTitle} ${styles.roundStateHeader}`
       : 'hidden',
   },
   {
     title: t('Status'),
-    classList: activeTab !== 'active'
-      ? `${grid['col-xs-2']}`
-      : 'hidden',
+    classList: activeTab === 'watched'
+      ? `${grid['col-xs-1']}`
+      : activeTab !== 'active' ? `${grid['col-xs-2']}` : 'hidden',
   },
 ]);
