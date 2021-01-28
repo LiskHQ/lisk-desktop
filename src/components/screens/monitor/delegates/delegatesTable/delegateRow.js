@@ -41,32 +41,35 @@ const getForgingTime = (data) => {
 
 const DelegateDetails = ({
   watched = false, data, activeTab, removeFromWatchList, addToWatchList,
-}) => (
-  <div className={styles.delegateColumn}>
-    {watched
-      ? (
-        <span onClick={removeFromWatchList}>
-          <Icon name="eyeActive" className={`${activeTab !== 'active' && 'hidden'}`} />
-        </span>
-      )
-      : (
-        <span onClick={addToWatchList}>
-          <Icon name="eyeInactive" className={`${activeTab !== 'active' && 'hidden'}`} />
-        </span>
-      )
+}) => {
+  const showEyeIcon = activeTab === 'active' || activeTab === 'watched';
+  return (
+    <div className={styles.delegateColumn}>
+      {watched
+        ? (
+          <span onClick={removeFromWatchList}>
+            <Icon name="eyeActive" className={`${!showEyeIcon && 'hidden'}`} />
+          </span>
+        )
+        : (
+          <span onClick={addToWatchList}>
+            <Icon name="eyeInactive" className={`${!showEyeIcon && 'hidden'}`} />
+          </span>
+        )
     }
-    <div className={`${styles.delegateDetails}`}>
-      <AccountVisual address={data.address} />
-      <div>
-        <p className={styles.delegateName}>
-          {data.username}
-        </p>
-        <p className={`${styles.delegateAddress} showOnLargeViewPort`}>{data.address}</p>
-        <p className={`${styles.delegateAddress} hideOnLargeViewPort`}>{data.address && data.address.replace(regex.lskAddressTrunk, '$1...$3')}</p>
+      <div className={`${styles.delegateDetails}`}>
+        <AccountVisual address={data.address} />
+        <div>
+          <p className={styles.delegateName}>
+            {data.username}
+          </p>
+          <p className={`${styles.delegateAddress} showOnLargeViewPort`}>{data.address}</p>
+          <p className={`${styles.delegateAddress} hideOnLargeViewPort`}>{data.address && data.address.replace(regex.lskAddressTrunk, '$1...$3')}</p>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const RoundStatus = ({ data, t, formattedForgingTime }) => (
   <>
@@ -110,7 +113,7 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
 );
 
 const DelegateRow = ({
-  data, className, t, activeTab, watchList,
+  data, className, t, activeTab, watchList, setActiveTab,
 }) => {
   const formattedForgingTime = data.forgingTime && data.forgingTime.time;
   const dispatch = useDispatch();
@@ -119,6 +122,9 @@ const DelegateRow = ({
   const removeFromWatchList = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (watchList.length === 1) {
+      setActiveTab('active');
+    }
     dispatch(removedFromWatchList({ address: data.address }));
   };
 

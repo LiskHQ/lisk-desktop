@@ -169,6 +169,7 @@ const DelegatesMonitor = ({
               ? <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
               : (
                 <DelegatesTable
+                  setActiveTab={setActiveTab}
                   delegates={delegatesWithForgingTimes}
                   watchList={watchList}
                   watchedDelegates={watchedDelegates}

@@ -18,7 +18,7 @@ const TableWrapper = compose(
   }),
 )(({
   delegates, handleLoadMore, t, activeTab,
-  changeSort, sort, canLoadMore, watchList,
+  changeSort, sort, canLoadMore, watchList, setActiveTab,
 }) => (
   <Table
     data={delegates.data}
@@ -29,6 +29,7 @@ const TableWrapper = compose(
       t,
       activeTab,
       watchList,
+      setActiveTab,
     }}
     header={header(activeTab, changeSort, t)}
     currentSort={sort}
@@ -66,6 +67,7 @@ const selectDelegates = ({
 };
 
 const DelegatesTable = ({
+  setActiveTab,
   delegates,
   watchList,
   watchedDelegates,
@@ -77,8 +79,6 @@ const DelegatesTable = ({
   sort,
   t,
 }) => {
-  console.log('watchedDelegates');
-  console.log(watchedDelegates);
   const handleLoadMore = () => {
     delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
       ...acc,
@@ -96,10 +96,10 @@ const DelegatesTable = ({
     activeTab, delegates, standByDelegates, sanctionedDelegates, watchedDelegates, filters,
   });
 
-  console.log('delegates to show', delegatesToShow);
   return (
     <TableWrapper
       delegates={delegatesToShow}
+      setActiveTab={setActiveTab}
       watchList={watchList}
       handleLoadMore={handleLoadMore}
       t={t}
