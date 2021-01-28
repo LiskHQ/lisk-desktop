@@ -24,7 +24,7 @@ const VotesItemsList = ({ votes, delegates }) => {
                 />
               ))}
             </span>
-            {!showAll && (
+            {!showAll && votes.length > 2 && (
               <button
                 className={`${styles.loadMoreVotesBtn} ignore-dialog-click`}
                 onClick={() => setShowAll(true)}>
