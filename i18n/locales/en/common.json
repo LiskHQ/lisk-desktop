@@ -550,6 +550,7 @@
   "{{num}} week": "{{num}} week",
   "{{num}} year": "{{num}} year",
   "{{passphraseName}} paper wallet": "{{passphraseName}} paper wallet",
+  "{{restVotes}} more...": "{{restVotes}} more...",
   "{{token}} balance": "{{token}} balance",
   "{{transactions}} transactions": "{{transactions}} transactions"
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
 import { DateTimeFromTimestamp } from '../../../../toolbox/timestamp';
@@ -9,6 +10,7 @@ import styles from '../delegates.css';
 
 const VotesItemsList = ({ votes, delegates }) => {
   const [showAll, setShowAll] = useState(false);
+  const { t } = useTranslation();
   return (
     <>
       {
@@ -27,8 +29,9 @@ const VotesItemsList = ({ votes, delegates }) => {
             {!showAll && votes.length > 2 && (
               <button
                 className={`${styles.loadMoreVotesBtn} ignore-dialog-click`}
-                onClick={() => setShowAll(true)}>
-                {votes.length - 2} more...
+                onClick={() => setShowAll(true)}
+              >
+                  {t('{{restVotes}} more...', { restVotes: votes.length - 2 })}
               </button>
             )}
           </span>
