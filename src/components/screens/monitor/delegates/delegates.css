@@ -110,6 +110,9 @@
       display: flex;
 
       & > .eyeIcon {
+        display: flex;
+        position: relative;
+
         &.watchedDelegate {
           & > img {
             visibility: visible !important;
@@ -121,7 +124,6 @@
           margin-right: 12px;
           visibility: hidden;
           opacity: 0;
-          position: relative;
         }
       }
     }
@@ -209,8 +211,4 @@
     color: var(--color-blue-gray);
     background-color: var(--color-blue-manatee-transparent);
   }
-}
-
-.eyeIcon {
-  display: flex;
 }
