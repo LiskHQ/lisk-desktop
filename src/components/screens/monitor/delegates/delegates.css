@@ -49,7 +49,7 @@
 }
 
 .voteRow {
-  align-items: flex-start;
+  align-items: center;
 }
 
 .votesColumnTitle {
@@ -64,7 +64,7 @@
     display: inline-block;
     width: 100%;
     text-align: left;
-    padding-bottom: var(--vertical-padding-l);
+    padding-bottom: 0;
   }
 
   & .icon {
@@ -80,13 +80,15 @@
   }
 
   & .delegatesList {
-    display: inline-block;
+    display: flex;
     width: calc(100% - 20px);
-    vertical-align: top;
     word-break: break-word;
+    flex-wrap: wrap;
 
     & span {
       display: inline;
+      margin-top: 0;
+      margin-bottom: 3px;
 
       &:not(:last-child)::after {
         content: '•';
@@ -210,5 +212,19 @@
   &.non-eligible {
     color: var(--color-blue-gray);
     background-color: var(--color-blue-manatee-transparent);
+  }
+}
+
+.loadMoreVotesBtn {
+  @mixin contentLarge semi-bold;
+
+  background-color: transparent;
+  border: unset;
+  color: var(--color-ultramarine-blue);
+  cursor: pointer;
+  margin-top: 9px;
+
+  &:hover {
+    color: var(--color-maastricht-blue);
   }
 }

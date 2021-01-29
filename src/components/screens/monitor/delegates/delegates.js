@@ -87,7 +87,7 @@ const DelegatesMonitor = ({
       const dataAddresses = votesList.map(vote => vote.delegateAddress);
       return acc.concat(dataAddresses);
     }, []);
-    if (addressList.length > 1) {
+    if (addressList.length > 0) {
       votedDelegates.loadData({ addressList });
     }
   }, [votes.data]);
