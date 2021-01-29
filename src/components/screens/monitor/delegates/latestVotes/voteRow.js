@@ -28,8 +28,12 @@ const VotesItemsList = ({ votes = [], delegates }) => {
             </span>
             {!showAll && votes.length > 2 && (
               <button
-                className={`${styles.loadMoreVotesBtn} ignore-dialog-click`}
-                onClick={() => setShowAll(true)}
+                className={`${styles.loadMoreVotesBtn}`}
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  evt.stopPropagation();
+                  setShowAll(true);
+                }}
               >
                   {t('{{restVotes}} more...', { restVotes: votes.length - 2 })}
               </button>
