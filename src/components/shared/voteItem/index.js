@@ -29,7 +29,7 @@ const VoteItem = ({
       <Link
         to={`${accountPath}?address=${address}`}
       >
-        <span className={`${styles.primaryText}`}>
+        <span className={styles.primaryText}>
           {title || (truncate ? truncateAddress(address) : address)}
         </span>
       </Link>
