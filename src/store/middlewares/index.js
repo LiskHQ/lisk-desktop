@@ -9,6 +9,7 @@ import block from './block';
 import settings from './settings';
 import bookmarks from './bookmarks';
 import network from './network';
+import watchList from './watchList';
 
 export default [
   // notificationMiddleware,
@@ -20,5 +21,6 @@ export default [
   settings,
   block,
   voting,
+  watchList,
   thunk,
 ];

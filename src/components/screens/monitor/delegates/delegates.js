@@ -54,6 +54,8 @@ const sanctionedDelegates = {
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
   votedDelegates,
+  watchedDelegates,
+  watchList,
   chartActiveAndStandbyData,
   chartRegisteredDelegatesData,
   standByDelegates,
@@ -72,6 +74,12 @@ const DelegatesMonitor = ({
       data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
     ),
   };
+  const watchedDelegatesWithForgingTimes = {
+    ...watchedDelegates,
+    data: watchedDelegates.data.map(
+      data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
+    ),
+  };
 
   useEffect(() => {
     const addressList = votes.data && votes.data.reduce((acc, data) => {
@@ -84,6 +92,12 @@ const DelegatesMonitor = ({
     }
   }, [votes.data]);
 
+  useEffect(() => {
+    if (watchList.length) {
+      watchedDelegates.loadData({ addressList: watchList });
+    }
+  }, [watchList.length]);
+
   const handleFilter = ({ target: { value } }) => {
     applyFilters({
       ...filters,
@@ -94,29 +108,37 @@ const DelegatesMonitor = ({
     tabs: [
       {
         value: 'active',
-        name: ('Inside round'),
+        name: t('Inside round'),
         className: 'active',
       },
       {
         value: 'standby',
-        name: ('Outside round'),
+        name: t('Outside round'),
         className: 'standby',
       },
-
       {
         value: 'sanctioned',
-        name: ('Sanctioned'),
+        name: t('Sanctioned'),
         className: 'sanctioned',
       },
       {
         value: 'votes',
-        name: ('Latest votes'),
+        name: t('Latest votes'),
         className: 'votes',
       },
+
     ],
     active: activeTab,
     onClick: ({ value }) => setActiveTab(value),
   };
+
+  if (watchList.length) {
+    tabs.tabs.push({
+      value: 'watched',
+      name: t('Watched'),
+      className: 'watched',
+    });
+  }
 
   return (
     <div>
@@ -153,7 +175,10 @@ const DelegatesMonitor = ({
               ? <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
               : (
                 <DelegatesTable
+                  setActiveTab={setActiveTab}
                   delegates={delegatesWithForgingTimes}
+                  watchList={watchList}
+                  watchedDelegates={watchedDelegatesWithForgingTimes}
                   standByDelegates={standByDelegates}
                   sanctionedDelegates={sanctionedDelegates}
                   filters={filters}

@@ -63,6 +63,14 @@ describe('Delegates monitor page', () => {
         clearData: jest.fn(),
         urlSearchParams: {},
       },
+      watchedDelegates: {
+        isLoading: true,
+        data: [],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      watchList: [],
       chartActiveAndStandbyData: {
         isLoading: false,
         data: '589',

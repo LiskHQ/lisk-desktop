@@ -1,7 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
+import { useDispatch } from 'react-redux';
 import routes from '../../../../../constants/routes';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import Icon from '../../../../toolbox/icon';
@@ -10,6 +12,7 @@ import { formatAmountBasedOnLocale } from '../../../../../utils/formattedNumber'
 import regex from '../../../../../utils/regex';
 import styles from '../delegates.css';
 import DelegateWeight from './delegateWeight';
+import { addedToWatchList, removedFromWatchList } from '../../../../../actions/watchList';
 
 const roundStatus = {
   forging: 'Forging',
@@ -37,24 +40,28 @@ const getForgingTime = (data) => {
   return `${minutes}${seconds} ago`;
 };
 
-const DelegateDetails = ({ watched = false, data, activeTab }) => (
-  <div className={styles.delegateColumn}>
-    {watched
-      ? <Icon name="eyeActive" className={`${activeTab !== 'active' && 'hidden'}`} />
-      : <Icon name="eyeInactive" className={`${activeTab !== 'active' && 'hidden'}`} />
-    }
-    <div className={`${styles.delegateDetails}`}>
-      <AccountVisual address={data.address} />
-      <div>
-        <p className={styles.delegateName}>
-          {data.username}
-        </p>
-        <p className={`${styles.delegateAddress} showOnLargeViewPort`}>{data.address}</p>
-        <p className={`${styles.delegateAddress} hideOnLargeViewPort`}>{data.address && data.address.replace(regex.lskAddressTrunk, '$1...$3')}</p>
+const DelegateDetails = ({
+  watched = false, data, activeTab, removeFromWatchList, addToWatchList,
+}) => {
+  const showEyeIcon = activeTab === 'active' || activeTab === 'watched';
+  return (
+    <div className={styles.delegateColumn}>
+      <span className={`${styles.eyeIcon} ${!showEyeIcon && 'hidden'} ${watched && showEyeIcon && styles.watchedDelegate}`} onClick={watched ? removeFromWatchList : addToWatchList}>
+        <Icon name={watched ? 'eyeActive' : 'eyeInactive'} />
+      </span>
+      <div className={`${styles.delegateDetails}`}>
+        <AccountVisual address={data.address} />
+        <div>
+          <p className={styles.delegateName}>
+            {data.username}
+          </p>
+          <p className={`${styles.delegateAddress} showOnLargeViewPort`}>{data.address}</p>
+          <p className={`${styles.delegateAddress} hideOnLargeViewPort`}>{data.address && data.address.replace(regex.lskAddressTrunk, '$1...$3')}</p>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const RoundStatus = ({ data, t, formattedForgingTime }) => (
   <>
@@ -81,26 +88,45 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
       </p>
     </Tooltip>
     {data.isBanned && (
-    <Tooltip
-      position="left"
-      size="maxContent"
-      content={<Icon className={styles.statusIcon} name="delegateWarning" />}
-      footer={(
-        <p>{formattedForgingTime}</p>
-      )}
-    >
-      <p>
-        {t('This delegate will be punished in upcoming rounds')}
-      </p>
-    </Tooltip>
+      <Tooltip
+        position="left"
+        size="maxContent"
+        content={<Icon className={styles.statusIcon} name="delegateWarning" />}
+        footer={(
+          <p>{formattedForgingTime}</p>
+        )}
+      >
+        <p>
+          {t('This delegate will be punished in upcoming rounds')}
+        </p>
+      </Tooltip>
     )}
   </>
 );
 
+// eslint-disable-next-line complexity
 const DelegateRow = ({
-  data, className, t, activeTab,
+  data, className, t, activeTab, watchList, setActiveTab,
 }) => {
   const formattedForgingTime = data.forgingTime && data.forgingTime.time;
+  const dispatch = useDispatch();
+
+  const isWatched = watchList.find(address => address === data.address);
+
+  const removeFromWatchList = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (watchList.length === 1) {
+      setActiveTab('active');
+    }
+    dispatch(removedFromWatchList({ address: data.address }));
+  };
+
+  const addToWatchList = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(addedToWatchList({ address: data.address }));
+  };
 
   return (
     <Link
@@ -108,12 +134,18 @@ const DelegateRow = ({
       to={`${routes.account.path}?address=${data.address}`}
     >
       <span className={activeTab !== 'sanctioned' ? `${grid['col-xs-3']}` : `${grid['col-xs-4']}`}>
-        <DelegateDetails data={data} activeTab={activeTab} />
+        <DelegateDetails
+          addToWatchList={addToWatchList}
+          removeFromWatchList={removeFromWatchList}
+          watched={isWatched}
+          data={data}
+          activeTab={activeTab}
+        />
       </span>
-      <span className={`${activeTab === 'active' ? grid['col-xs-2'] : grid['col-xs-3']}`}>
+      <span className={`${activeTab === 'active' ? grid['col-xs-2'] : (activeTab === 'watched' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']}`)}`}>
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>
-      <span className={activeTab !== 'sanctioned' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']} ${styles.noEllipsis}`}>
+      <span className={activeTab !== 'sanctioned' ? (activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`) : `${grid['col-xs-3']} ${styles.noEllipsis}`}>
         {`#${data.rank}`}
       </span>
       {activeTab !== 'sanctioned' && (
@@ -121,7 +153,7 @@ const DelegateRow = ({
           <DelegateWeight value={data.totalVotesReceived} />
         </span>
       )}
-      {activeTab === 'active' ? (
+      {(activeTab === 'active' || activeTab === 'watched') && (
         <>
           <span className={`${grid['col-xs-2']} ${styles.noEllipsis}`}>
             {getForgingTime(data.forgingTime)}
@@ -130,8 +162,9 @@ const DelegateRow = ({
             <RoundStatus data={data} t={t} formattedForgingTime={formattedForgingTime} />
           </span>
         </>
-      ) : (
-        <span className={`${grid['col-xs-2']}`}>
+      )}
+      {(activeTab === 'watched' || activeTab !== 'active') && (
+        <span className={activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`}>
           <span className={`${styles.delegateStatus} ${styles[data.status]}`}>{data.status}</span>
         </span>
       )}

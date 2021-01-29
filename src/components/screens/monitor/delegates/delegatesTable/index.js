@@ -15,7 +15,7 @@ const TableWrapper = compose(
   }),
 )(({
   delegates, handleLoadMore, t, activeTab,
-  changeSort, sort, canLoadMore,
+  changeSort, sort, canLoadMore, watchList, setActiveTab,
 }) => (
   <Table
     data={delegates.data}
@@ -25,6 +25,8 @@ const TableWrapper = compose(
     additionalRowProps={{
       t,
       activeTab,
+      watchList,
+      setActiveTab,
     }}
     header={header(activeTab, changeSort, t)}
     currentSort={sort}
@@ -40,22 +42,32 @@ const filterDelegates = (delegates, filters) => ({
 });
 
 const selectDelegates = ({
-  activeTab, delegates, standByDelegates, sanctionedDelegates, filters,
+  activeTab, delegates, standByDelegates, sanctionedDelegates,
+  watchedDelegates, filters,
 }) => {
-  if (activeTab === 'active') {
-    return filterDelegates(delegates, filters);
+  switch (activeTab) {
+    case 'active':
+      return filterDelegates(delegates, filters);
+
+    case 'standby':
+      return filterDelegates(standByDelegates, filters);
+
+    case 'sanctioned':
+      return filterDelegates(sanctionedDelegates, filters);
+
+    case 'watched':
+      return filterDelegates(watchedDelegates, filters);
+
+    default:
+      return undefined;
   }
-  if (activeTab === 'standby') {
-    return filterDelegates(standByDelegates, filters);
-  }
-  if (activeTab === 'sanctioned') {
-    return filterDelegates(sanctionedDelegates, filters);
-  }
-  return undefined;
 };
 
 const DelegatesTable = ({
+  setActiveTab,
   delegates,
+  watchList,
+  watchedDelegates,
   standByDelegates,
   sanctionedDelegates,
   activeTab,
@@ -73,17 +85,19 @@ const DelegatesTable = ({
     }));
   };
 
-  const canLoadMore = activeTab === 'active' || !standByDelegates.meta
+  const canLoadMore = activeTab === 'active' || activeTab === 'watched' || !standByDelegates.meta
     ? false
     : standByDelegates.data.length < (standByDelegates.meta.total - standByDelegates.meta.offset);
 
   const delegatesToShow = selectDelegates({
-    activeTab, delegates, standByDelegates, sanctionedDelegates, filters,
+    activeTab, delegates, standByDelegates, sanctionedDelegates, watchedDelegates, filters,
   });
 
   return (
     <TableWrapper
       delegates={delegatesToShow}
+      setActiveTab={setActiveTab}
+      watchList={watchList}
       handleLoadMore={handleLoadMore}
       t={t}
       activeTab={activeTab}

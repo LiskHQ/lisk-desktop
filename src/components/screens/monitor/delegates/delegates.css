@@ -109,11 +109,22 @@
     & > .delegateColumn {
       display: flex;
 
-      & > img {
-        margin-right: 12px;
-        visibility: hidden;
-        opacity: 0;
+      & > .eyeIcon {
+        display: flex;
         position: relative;
+
+        &.watchedDelegate {
+          & > img {
+            visibility: visible !important;
+            opacity: 1 !important;
+          }
+        }
+
+        & > img {
+          margin-right: 12px;
+          visibility: hidden;
+          opacity: 0;
+        }
       }
     }
   }
@@ -128,7 +139,7 @@
   }
 
   &:hover {
-    & > span > .delegateColumn > img {
+    & > span > .delegateColumn > .eyeIcon > img {
       visibility: visible;
       opacity: 1;
     }
