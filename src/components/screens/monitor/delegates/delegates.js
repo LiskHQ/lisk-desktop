@@ -74,6 +74,12 @@ const DelegatesMonitor = ({
       data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
     ),
   };
+  const watchedDelegatesWithForgingTimes = {
+    ...watchedDelegates,
+    data: watchedDelegates.data.map(
+      data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
+    ),
+  };
 
   useEffect(() => {
     const addressList = votes.data && votes.data.reduce((acc, data) => {
@@ -172,7 +178,7 @@ const DelegatesMonitor = ({
                   setActiveTab={setActiveTab}
                   delegates={delegatesWithForgingTimes}
                   watchList={watchList}
-                  watchedDelegates={watchedDelegates}
+                  watchedDelegates={watchedDelegatesWithForgingTimes}
                   standByDelegates={standByDelegates}
                   sanctionedDelegates={sanctionedDelegates}
                   filters={filters}

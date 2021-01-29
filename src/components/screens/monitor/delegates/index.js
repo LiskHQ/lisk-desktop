@@ -136,7 +136,7 @@ const ComposedDelegates = compose(
 
       watchedDelegates: {
         apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
-        defaultData: {},
+        defaultData: [],
         getApiParams: state => ({ addressList: state.watchList }),
         transformResponse: response => response.data,
       },
