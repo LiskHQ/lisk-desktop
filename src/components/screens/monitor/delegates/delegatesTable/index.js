@@ -12,9 +12,6 @@ const TableWrapper = compose(
       if (!b.forgingTime) return -1;
       return ((a.forgingTime.time > b.forgingTime.time) ? 1 : -1) * (direction === 'asc' ? 1 : -1);
     },
-    rank: () => {
-
-    },
   }),
 )(({
   delegates, handleLoadMore, t, activeTab,
