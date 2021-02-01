@@ -16,7 +16,7 @@ import Dialog from '../../toolbox/dialog/dialog';
 import styles from './transactionDetails.css';
 
 const Transactions = ({
-  t, activeToken, netCode, transaction,
+  t, activeToken, netCode, transaction, votedDelegates,
 }) => {
   const { error, isLoading, data } = transaction;
   const addresses = data && [data.recipientId, data.senderId];
@@ -57,7 +57,7 @@ const Transactions = ({
             t={t}
           />
           <Message activeToken={activeToken} transaction={data} t={t} />
-          <TransactionVotes transaction={data} t={t} />
+          <TransactionVotes transaction={data} t={t} votedDelegates={votedDelegates} />
           <DelegateUsername transaction={data} t={t} />
         </BoxContent>
       </Box>
