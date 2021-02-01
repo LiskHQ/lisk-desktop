@@ -121,7 +121,6 @@ describe('autoUpdater', () => {
 
   it('should show info box when update downloaded', () => {
     const dialogSpy = spy(params.dialog, 'showMessageBox');
-
     autoUpdater(params);
     callbacks['update-downloaded']({ version });
 

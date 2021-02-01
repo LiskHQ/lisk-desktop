@@ -1,6 +1,9 @@
-import * as delegate from './index';
+import accounts from '../../../../test/constants/accounts';
 import http from '../http';
 import ws, { subscribe, unsubscribe } from '../ws';
+import { extractAddress } from '../../account';
+
+import * as delegate from './index';
 
 jest.mock('../http');
 jest.mock('../ws');
@@ -38,6 +41,33 @@ describe('API: LSK Delegates', () => {
         baseUrl: undefined,
         path: delegate.httpPaths.delegates,
         params,
+        network,
+      });
+    });
+
+    it('should return delegate data with username when it is passed', async () => {
+      const expectedResponse = { username: 'del1', data: {} };
+      const params = { username: 'del1' };
+      setApiResponseData(expectedResponse, http);
+      await expect(delegate.getDelegate({ params, network })).resolves.toEqual(expectedResponse);
+      expect(http).toHaveBeenCalledWith({
+        baseUrl: undefined,
+        path: delegate.httpPaths.delegates,
+        params,
+        network,
+      });
+    });
+
+    it('should return delegate data with address when publicKey is passed', async () => {
+      const address = accounts.genesis.address;
+      const expectedResponse = { address: extractAddress(address), data: {} };
+      const params = { publicKey: accounts.genesis.publicKey };
+      setApiResponseData(expectedResponse, http);
+      await expect(delegate.getDelegate({ params, network })).resolves.toEqual(expectedResponse);
+      expect(http).toHaveBeenCalledWith({
+        baseUrl: undefined,
+        path: delegate.httpPaths.delegates,
+        params: { address },
         network,
       });
     });
