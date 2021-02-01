@@ -23,17 +23,17 @@ import {
 const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
   const host = useSelector(state => getActiveTokenAccount(state));
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
-  const lockedInUnovtes = activeToken === tokenMap.LSK.key && isWalletRoute && host
+  const lockedInUnvotes = activeToken === tokenMap.LSK.key && isWalletRoute && host
     ? calculateBalanceLockedInUnvotes(host.unlocking) : undefined;
 
-  if (lockedInUnovtes + lockedInVotes > 0) {
+  if (lockedInUnvotes + lockedInVotes > 0) {
     return (
       <DialogLink
         className={`${styles.lockedBalance} open-unlock-balance-dialog`}
         component="lockedBalance"
       >
         <Icon name="lock" />
-        {`${fromRawLsk(lockedInUnovtes + lockedInVotes)} ${tokenMap.LSK.key}`}
+        {`${fromRawLsk(lockedInUnvotes + lockedInVotes)} ${tokenMap.LSK.key}`}
       </DialogLink>
     );
   }
