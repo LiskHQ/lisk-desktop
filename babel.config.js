@@ -15,6 +15,8 @@ module.exports = {
     }],
     'transform-class-properties',
     'react-hot-loader/babel',
+    '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-proposal-nullish-coalescing-operator',
   ],
   env: {
     test: {
