@@ -15,7 +15,7 @@ export default {
         const [protocol, rest] = url.split(':/');
         const [normalizedUrl, searchParams] = rest.split('?');
 
-        if (protocol && protocol.toLowerCase() === 'lisk' && normalizedUrl) {
+        if (protocol?.toLowerCase() === 'lisk' && normalizedUrl) {
           let redirectUrl = normalizedUrl;
           if (normalizedUrl.match(sendRegex)) {
             redirectUrl = sendRedirect + (searchParams ? `&${searchParams}` : '');

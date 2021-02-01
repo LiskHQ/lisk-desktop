@@ -35,7 +35,7 @@ class Register extends React.Component {
 
   componentDidUpdate() {
     const { account, token, history } = this.props;
-    if (account && account.info && account.info[token.active].address) {
+    if (account?.info?.[token.active].address) {
       history.push(routes.dashboard.path);
     }
   }

@@ -20,7 +20,7 @@ const blockListener = ({ getState, dispatch }) => {
 
   let windowIsFocused = true;
   const { ipc } = window;
-  if (ipc && ipc.on) {
+  if (ipc?.on) {
     ipc.on('blur', () => { windowIsFocused = false; });
     ipc.on('focus', () => { windowIsFocused = true; });
   }

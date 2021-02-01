@@ -31,7 +31,7 @@ class SelectAccount extends React.Component {
 
   componentDidUpdate() {
     // istanbul ignore else
-    if (this.props.account && this.props.account.address) {
+    if (this.props.account?.address) {
       this.props.history.push(`${routes.dashboard.path}`);
     }
     const { devices, device } = this.props;

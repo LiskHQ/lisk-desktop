@@ -222,8 +222,7 @@ export const getForgers = ({
  * @param {Function} onReconnect - Function to be called when reconnect event fires
  */
 export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) => {
-  const node = network && network.networks
-  && network.networks.LSK && network.networks.LSK.serviceUrl;
+  const node = network?.networks?.LSK?.serviceUrl;
   if (node) {
     subscribe(
       `${node}/blockchain`, wsMethods.forgersRound, callback, onDisconnect, onReconnect,

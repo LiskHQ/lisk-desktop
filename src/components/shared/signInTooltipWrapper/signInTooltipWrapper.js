@@ -8,7 +8,7 @@ const SignInTooltipWrapper = ({
   children, account, t, history, position = 'bottom left',
 }) => {
   const { pathname, search } = history.location;
-  return account && account.info
+  return account?.info
     ? children
     : (
       <Tooltip
