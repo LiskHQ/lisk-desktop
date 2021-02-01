@@ -14,7 +14,7 @@ export const IPC_MESSAGES = {
   EXIT: 'exit',
   GET_ADDRESS: 'GET_ADDRESS',
   GET_CONNECTED_DEVICES_LIST: 'getConnectedDevicesList',
-  GET_PUBLICK_KEY: 'GET_PUBLICKEY',
+  GET_PUBLIC_KEY: 'GET_PUBLICKEY',
   HW_COMMAND: 'hwCommand',
   HW_CONNECTED: 'hwConnected',
   HW_DISCONNECTED: 'hwDisconnected',
@@ -23,7 +23,7 @@ export const IPC_MESSAGES = {
   VALIDATE_PIN: 'validateTrezorPin',
 };
 export const FUNCTION_TYPES = {
-  [IPC_MESSAGES.GET_PUBLICK_KEY]: 'getPublicKey',
+  [IPC_MESSAGES.GET_PUBLIC_KEY]: 'getPublicKey',
   [IPC_MESSAGES.GET_ADDRESS]: 'getAddress',
   [IPC_MESSAGES.SIGN_TRANSACTION]: 'signTransaction',
 };
