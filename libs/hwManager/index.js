@@ -3,7 +3,8 @@ import manufacturers from './manufacturers';
 import { publish, subscribe } from './utils';
 import { IPC_MESSAGES, FUNCTION_TYPES } from './constants';
 
-class HwManager {
+// eslint-disable-next-line import/prefer-default-export
+export class HwManager {
   constructor({
     transports = {},
     pubSub = {},
@@ -163,5 +164,3 @@ class HwManager {
     });
   }
 }
-
-export default HwManager;
