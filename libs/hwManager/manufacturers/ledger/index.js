@@ -92,7 +92,7 @@ const checkIfInsideLiskApp = async ({
     transport = await transporter.open(device.path);
     const liskLedger = new DposLedger(transport);
     const ledgerAccount = getLedgerAccount();
-    const account = await liskLedger.getPubKey(ledgerAccount);
+    const account = await liskLedger.getPubKey(ledgerAccount.derivePath());
     device.openApp = !!account;
   } catch (e) {
     device.openApp = false;
