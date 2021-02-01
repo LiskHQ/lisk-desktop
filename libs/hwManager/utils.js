@@ -34,17 +34,21 @@ export const publish = (sender, { event, payload }) => {
 };
 
 /**
- * Subscribe to a event throught the receiver
+ * Subscribe to a event through the receiver
  * @param {any} receiver - Subscriber that should be subscribed to the the event
  * @param {object} data - Object containing the event and the action
  * @param {string} data.event - Event name to be subscribed to thoguht the receiver
  * @param {function} data.action - Function that should be executed when event is triggered
  */
-export const subscribe = (receiver, { event, action }) => (!receiver ? receiver
-  : createCommand(receiver, {
+export const subscribe = (receiver, { event, action }) => {
+  if (!receiver) {
+    return receiver;
+  }
+  return createCommand(receiver, {
     command: event,
     fn: action,
-  }));
+  });
+};
 
 
 export default {
