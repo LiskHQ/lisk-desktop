@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "1.27.1",
+  "version": "1.27.2",
   "productName": "Lisk",
   "description": "Lisk",
   "homepage": "https://github.com/LiskHQ/lisk-desktop",
@@ -63,7 +63,7 @@
     "browser-or-node": "1.1.0",
     "chart.js": "2.9.2",
     "cheerio": "1.0.0-rc.2",
-    "dpos-ledger-api": "2.0.0",
+    "dpos-ledger-api": "2.0.1",
     "electron-localshortcut": "3.1.0",
     "electron-store": "5.1.1",
     "express": "4.16.4",
