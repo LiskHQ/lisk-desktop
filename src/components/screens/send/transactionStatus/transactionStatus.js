@@ -121,10 +121,11 @@ class TransactionStatus extends React.Component {
             isHardwareWalletError || transactions.broadcastedTransactionsError.length
               ? (
                 <SecondaryButton
-                  label={t('Retry')}
                   className={`${styles.btn} retry`}
                   onClick={this.onRetry}
-                />
+                >
+                  {t('Retry')}
+                </SecondaryButton>
               )
               : null
           }
