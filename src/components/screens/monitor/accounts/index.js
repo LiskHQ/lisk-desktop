@@ -12,18 +12,19 @@ import withData from '../../../../utils/withData';
 import { getAccounts } from '../../../../utils/api/account';
 import { getNetworkStatus } from '../../../../utils/api/network';
 
+const LIMIT = 30;
+
 export const AccountsPure = ({
   accounts,
   networkStatus,
   t,
 }) => {
-  console.log(accounts.meta);
   /* istanbul ignore next */
   const handleLoadMore = () => {
     accounts.loadData({ offset: accounts.meta.count + accounts.meta.offset });
   };
   const supply = networkStatus.data.supply;
-  const canLoadMore = accounts.meta ? accounts.data.length < accounts.meta.total : false;
+  const canLoadMore = accounts.meta ? accounts.meta.count === LIMIT : false;
 
   return (
     <Box main isLoading={accounts.isLoading} className="accounts-box">
@@ -54,7 +55,7 @@ export default compose(
           network,
           params: {
             ...params,
-            limit: params.limit || 30,
+            limit: params.limit || LIMIT,
             offset: params.offset || 0,
           },
         }),
