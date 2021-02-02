@@ -20,7 +20,7 @@ export default ({ // eslint-disable-line max-statements
     console.error(error);
     if (updater.error !== error) {
       updater.error = error;
-      if (error && error.toString().indexOf('404 Not Found') === -1) {
+      if (error?.toString().indexOf('404 Not Found') === -1) {
         // this condition is because of https://github.com/LiskHQ/lisk-desktop/issues/647
         dialog.showErrorBox(`${i18n.t('Error')}: `, error.toString());
       }
@@ -33,7 +33,7 @@ export default ({ // eslint-disable-line max-statements
     logMessage = `${logMessage} (${progressObj.transferred}/${progressObj.total})`;
     // eslint-disable-next-line no-console
     console.log(logMessage);
-    if (win && win.browser) {
+    if (win?.browser) {
       win.browser.setProgressBar(progressObj.transferred / progressObj.total);
     }
   });
@@ -75,6 +75,7 @@ export default ({ // eslint-disable-line max-statements
       message: i18n.t('Updates downloaded, application has to be restarted to apply the updates.'),
     }).then((result) => {
       const buttonIndex = result.response;
+      /* istanbul ignore next */
       if (buttonIndex === 0) {
         autoUpdater.quitAndInstall();
       }

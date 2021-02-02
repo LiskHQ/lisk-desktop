@@ -39,14 +39,14 @@ const TransactionAsset = ({
   let className = '';
   switch (type) {
     case registerDelegateTxType:
-      data = asset && asset.delegate ? asset.delegate.username : username;
+      data = asset?.delegate?.username ?? username;
       break;
     case voteTxType:
       className = styles.delegateVote;
-      data = asset && asset.votes ? generateVotes(asset) : data;
+      data = asset?.votes ? generateVotes(asset) : data;
       break;
     default:
-      data = asset && asset.data ? asset.data : data;
+      data = asset?.data ?? data;
       break;
   }
 

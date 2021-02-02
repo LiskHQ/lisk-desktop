@@ -77,7 +77,7 @@ const Wallet = ({
             tabId="voting"
           />
         ) : null}
-        {account.data && account.data.isDelegate
+        {account.data?.isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"

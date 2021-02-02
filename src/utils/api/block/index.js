@@ -107,8 +107,7 @@ export const getBlocks = ({
  * @param {Function} onReconnect - Function to be called when reconnect event fires
  */
 export const blockSubscribe = (network, callback, onDisconnect, onReconnect) => {
-  const node = network && network.networks
-  && network.networks.LSK && network.networks.LSK.serviceUrl;
+  const node = network?.networks?.LSK?.serviceUrl;
   if (node) {
     subscribe(
       `${node}/blockchain`, wsMethods.blocksChange, callback, onDisconnect, onReconnect,

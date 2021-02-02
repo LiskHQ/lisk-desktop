@@ -15,7 +15,7 @@ export const createCommand = (subscriber, { command, fn }) => {
     event.sender.send(`${command}.${RESPONSE}`, {
       success: !error,
       data,
-      error: error && error.toString(),
+      error: error?.toString(),
     });
   });
 };

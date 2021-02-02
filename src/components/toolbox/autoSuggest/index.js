@@ -118,7 +118,7 @@ class AutoSuggest extends React.Component {
       this.props.onChangeDelayed();
     }, 300);
 
-    if (e && e.target && e.target.value === '') this.resetListIndex();
+    if (e?.target?.value === '') this.resetListIndex();
     this.props.onChange(e);
   }
 

@@ -40,7 +40,18 @@ describe('externalLinks', () => {
     expect(history.replace).toHaveBeenCalledWith(routes.register.path);
   });
 
-  it('opens send modal', () => {
+  it('opens send modal without query params', () => {
+    const callbacks = {};
+    window.ipc = {
+      on: (event, callback) => { callbacks[event] = callback; },
+    };
+
+    externalLinks.init();
+    callbacks.openUrl({}, 'lisk://wallet');
+    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=send');
+  });
+
+  it('opens send modal with query params', () => {
     const callbacks = {};
     window.ipc = {
       on: (event, callback) => { callbacks[event] = callback; },
