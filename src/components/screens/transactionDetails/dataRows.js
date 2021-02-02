@@ -78,34 +78,6 @@ export const Recipient = ({
   );
 };
 
-export const FeeAndAmount = ({
-  transaction, activeToken, addresses, t,
-}) => (
-  <BoxRow>
-    { transaction.type === transactionTypes().transfer.code.legacy
-      ? (
-        <div className={styles.value}>
-          <span className={styles.label}>
-            {t('Amount')}
-          </span>
-          <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
-            <span className="tx-amount">
-              <LiskAmount val={transaction.amount} token={activeToken} />
-            </span>
-          </DiscreetMode>
-        </div>
-      ) : null }
-    <div className={styles.value}>
-      <span className={styles.label}>
-        {t('Transaction fee')}
-      </span>
-      <span className="tx-fee">
-        <LiskAmount val={transaction.fee} token={activeToken} />
-      </span>
-    </div>
-  </BoxRow>
-);
-
 export const TransactionId = ({ id, t }) => (
   <BoxRow>
     <div className={`${styles.value}`}>
@@ -133,16 +105,21 @@ export const AmountAndDate = ({
   if (transaction.amount === undefined && transaction.asset.amount === undefined) return null;
   return (
     <BoxRow>
-      <div className={styles.value}>
-        <span className={styles.label}>
-          {t('Amount of Transaction')}
-        </span>
-        <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
-          <span className="tx-amount">
-            <LiskAmount val={getTxAmount(transaction)} token={activeToken} />
-          </span>
-        </DiscreetMode>
-      </div>
+      { transaction.title === 'transfer'
+        ? (
+          <div className={styles.value}>
+            <span className={styles.label}>
+              {t('Amount of Transaction')}
+            </span>
+            <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
+              <span className="tx-amount">
+                <LiskAmount val={getTxAmount(transaction)} token={activeToken} />
+              </span>
+            </DiscreetMode>
+          </div>
+        )
+        : null
+      }
       <div className={styles.value}>
         <span className={styles.label}>{t('Date')}</span>
         <span className={`${styles.date} tx-date`}>
