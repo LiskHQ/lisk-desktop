@@ -61,7 +61,7 @@ const App = ({ history }) => {
         <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
           <section className="scrollContainer">
             <FlashMessageHolder />
-            <InitializationMessage history={history} />
+            {/* <InitializationMessage history={history} /> */}
             <div className={`${styles.mainContent} ${styles.mainBox}`}>
               <Switch>
                 {
