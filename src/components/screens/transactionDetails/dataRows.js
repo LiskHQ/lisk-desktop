@@ -105,7 +105,7 @@ export const AmountAndDate = ({
   if (transaction.amount === undefined && transaction.asset.amount === undefined) return null;
   return (
     <BoxRow>
-      { transaction.title === 'transfer'
+      { transaction.title === 'transfer' || transaction.title === 'unlockToken'
         ? (
           <div className={styles.value}>
             <span className={styles.label}>
