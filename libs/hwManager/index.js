@@ -3,7 +3,8 @@ import manufacturers from './manufacturers';
 import { publish, subscribe } from './utils';
 import { IPC_MESSAGES, FUNCTION_TYPES } from './constants';
 
-class HwManager {
+// eslint-disable-next-line import/prefer-default-export
+export class HwManager {
   constructor({
     transports = {},
     pubSub = {},
@@ -26,8 +27,8 @@ class HwManager {
       event: IPC_MESSAGES.CHECK_LEDGER,
       action: async ({ id }) => {
         const device = this.getDeviceById(id);
-        this.updateDevice(await manufacturers[device.manufactor].checkIfInsideLiskApp({
-          transporter: this.transports[device.manufactor],
+        this.updateDevice(await manufacturers[device.manufacturer].checkIfInsideLiskApp({
+          transporter: this.transports[device.manufacturer],
           device,
         }));
       },
@@ -38,7 +39,7 @@ class HwManager {
       action: async ({ action, data }) => {
         const device = this.getDeviceById(data.deviceId);
         const functionName = FUNCTION_TYPES[action];
-        const manufactureName = device.manufactor;
+        const manufactureName = device.manufacturer;
         return manufacturers[manufactureName][functionName](
           this.transports[manufactureName],
           {
@@ -163,5 +164,3 @@ class HwManager {
     });
   }
 }
-
-export default HwManager;

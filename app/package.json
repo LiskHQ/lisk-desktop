@@ -1,6 +1,6 @@
 {
   "name": "lisk-desktop",
-  "version": "1.27.1",
+  "version": "1.27.2",
   "productName": "Lisk",
   "description": "Lisk",
   "main": "./build/main.js",
@@ -9,9 +9,9 @@
     "email": "admin@lisk.io"
   },
   "dependencies": {
-    "get-port": "^4.1.0",
-    "node-abi": "^2.7.1",
-    "node-hid": "^1.2.0",
-    "usb": "^1.6.2"
+    "get-port": "5.1.1",
+    "node-abi": "2.19.3",
+    "node-hid": "2.1.1",
+    "usb": "1.6.3"
   }
 }

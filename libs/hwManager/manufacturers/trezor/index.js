@@ -12,7 +12,7 @@ import {
 
 /**
  * addDevice - function - Add a new device to the devices list.
- * @param {object} device - Device object comming from the trezor library
+ * @param {object} device - Device object coming from the trezor library
  * @param {function} add - Function that use for main file to include the device in the main list.
  */
 const addDevice = (device, { add }) => {
@@ -23,14 +23,14 @@ const addDevice = (device, { add }) => {
       ? TREZOR.models.Trezor_Model_One
       : TREZOR.models.Trezor_Model_T,
     path: device.originalDescriptor.path,
-    manufactor: TREZOR.name,
+    manufacturer: TREZOR.name,
     openApp: true,
   });
 };
 
 /**
- * removeDevice - funcion - Remove a device from the main list and the device array.
- * @param {object} device - Device object comming from the trezor library
+ * removeDevice - function - Remove a device from the main list and the device array.
+ * @param {object} device - Device object coming from the trezor library
  * @param {function} remove - Function for remove a device from the main list.
  */
 const removeDevice = (device, { remove }) => {
