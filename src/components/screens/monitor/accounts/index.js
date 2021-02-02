@@ -12,6 +12,8 @@ import withData from '../../../../utils/withData';
 import { getAccounts } from '../../../../utils/api/account';
 import { getNetworkStatus } from '../../../../utils/api/network';
 
+const LIMIT = 30;
+
 export const AccountsPure = ({
   accounts,
   networkStatus,
@@ -19,10 +21,10 @@ export const AccountsPure = ({
 }) => {
   /* istanbul ignore next */
   const handleLoadMore = () => {
-    accounts.loadData({ offset: accounts.data.length });
+    accounts.loadData({ offset: accounts.meta.count + accounts.meta.offset });
   };
   const supply = networkStatus.data.supply;
-  const canLoadMore = accounts.meta ? accounts.meta.count === 30 : false;
+  const canLoadMore = accounts.meta ? accounts.meta.count === LIMIT : false;
 
   return (
     <Box main isLoading={accounts.isLoading} className="accounts-box">
@@ -49,7 +51,14 @@ export default compose(
   withData(
     {
       accounts: {
-        apiUtil: network => getAccounts({ network, params: { sort: 'balance:desc' } }),
+        apiUtil: (network, params) => getAccounts({
+          network,
+          params: {
+            ...params,
+            limit: params.limit || LIMIT,
+            offset: params.offset || 0,
+          },
+        }),
         defaultData: [],
         autoload: true,
         transformResponse: (response, accounts, urlSearchParams) => (
