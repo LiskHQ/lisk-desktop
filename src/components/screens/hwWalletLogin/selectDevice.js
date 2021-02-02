@@ -44,7 +44,7 @@ class SelectDevice extends React.Component {
             <div key={device.deviceId} className={`${styles.device_box} hw-device`}>
               <Icon
                 className={styles.device_image}
-                name={`icon${device.manufactor}Device`}
+                name={`icon${device.manufacturer}Device`}
               />
               <p>{device.model}</p>
 
