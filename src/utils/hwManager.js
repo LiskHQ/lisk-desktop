@@ -7,8 +7,8 @@ import {
   getAddress,
   getPublicKey,
   signTransaction,
-  subscribeToDeviceConnceted,
-  subscribeToDeviceDisonnceted,
+  subscribeToDeviceConnected,
+  subscribeToDeviceDisconnected,
   subscribeToDevicesList,
   validatePin,
 } from '../../libs/hwManager/communication';
@@ -114,8 +114,8 @@ export {
   getPublicKey,
   signSendTransaction,
   signVoteTransaction,
-  subscribeToDeviceConnceted,
-  subscribeToDeviceDisonnceted,
+  subscribeToDeviceConnected,
+  subscribeToDeviceDisconnected,
   subscribeToDevicesList,
   validatePin,
 };

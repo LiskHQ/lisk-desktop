@@ -17,7 +17,7 @@ let devices = [];
 /**
  * addDevice - function - Add a new device to the devices list.
  * @param {object} device - Device object coming from the ledger library
- * @param {string} path - Path of the device used for the library to recognize it (dscriptor)
+ * @param {string} path - Path of the device used for the library to recognize it (descriptor)
  * @param {function} add - Function that use for main file to include the device in the main list.
  */
 const addDevice = (device, path, { add }) => {
@@ -26,7 +26,7 @@ const addDevice = (device, path, { add }) => {
     label: device.productName,
     model: device.productName,
     path,
-    manufactor: LEDGER.name,
+    manufacturer: LEDGER.name,
   };
 
   devices.push(newDevice);
@@ -34,7 +34,7 @@ const addDevice = (device, path, { add }) => {
 };
 
 /**
- * removeDevice - funcion - Remove a device from the main list and the device array.
+ * removeDevice - function - Remove a device from the main list and the device array.
  * @param {object} transport - Library use for get information about ledger.
  * @param {function} remove - Function for remove a device from the main list.
  */
@@ -76,7 +76,7 @@ const getLedgerAccount = (index = 0) => {
 };
 
 /**
- * checkIfInsideLiskApp - function - Validate if after useing the pin to unblock ledger device
+ * checkIfInsideLiskApp - function - Validate if after using the pin to unblock ledger device
  * the user is inside the LSK App, if not then will show the device as connected but not
  * able to get accounts from the device.
  * @param {object} param - Object with 2 elements, a transport and device.

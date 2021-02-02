@@ -7,7 +7,7 @@ import {
   getDeviceList,
   getPublicKey,
 } from '../../../libs/hwManager/communication';
-import { subscribeToDeviceConnceted, subscribeToDeviceDisonnceted } from '../../utils/hwManager';
+import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '../../utils/hwManager';
 import Dialog from '../../components/toolbox/dialog/dialog';
 import DialogHolder from '../../components/toolbox/dialog/holder';
 import actionTypes from '../../constants/actions';
@@ -61,19 +61,19 @@ const hwWalletMiddleware = store => next => (action) => {
     autoLogInIfNecessary(store);
 
     /**
-     * subscribeToDeviceConnceted - Function -> To detect any new hw wallet device connection
+     * subscribeToDeviceConnected - Function -> To detect any new hw wallet device connection
      * @param {fn} function - callback function to execute toast dispatch after receive the data
      */
-    subscribeToDeviceConnceted((response) => {
+    subscribeToDeviceConnected((response) => {
       toast.success(`${response.model} connected`);
     });
 
     /**
-     * subscribeToDeviceDisonnceted - Function -> To detect any hw wallet disconnection
+     * subscribeToDeviceDisconnected - Function -> To detect any hw wallet disconnection
      * @param {fn} function - callback function to execute toast dispatch after receive the data
      * and in case user is SignIn trigger the logout Dialog and toast message.
      */
-    subscribeToDeviceDisonnceted((response) => {
+    subscribeToDeviceDisconnected((response) => {
       const { account, settings } = store.getState();
       const activeToken = settings.token.active || 'LSK';
 

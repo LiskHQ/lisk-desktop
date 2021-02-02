@@ -27,7 +27,7 @@ const executeCommand = (action, payload) => (
  * Use for get the public key from the device for a specific account(s)
  * @param {object} data -> Object that contain the information about the device and data
  * @param {string} data.deviceId -> Id of the hw device
- * @param {number} data.index -> index of the account of wich will extact information
+ * @param {number} data.index -> index of the account of which will extract information
  * @param {boolean} data.showOnDevice -> Boolean value to inform device if show or
  * not information in screen
  */
@@ -43,7 +43,7 @@ const getPublicKey = async (data) => {
  * Use for get the Address from the account
  * @param {object} data -> Object that contain the information about the device and data
  * @param {string} data.deviceId -> Id of the hw device
- * @param {number} data.index -> index of the account of wich will extact information
+ * @param {number} data.index -> index of the account of which will extract information
  * @param {boolean} data.showOnDevice -> Boolean value to inform device if show or
  * not information in screen
  */
@@ -59,7 +59,7 @@ const getAddress = async (data) => {
  * Use for sign a transaction, this could be send or vote
  * @param {object} data -> Object that contain the information about the device and data
  * @param {string} data.deviceId -> Id of the hw device
- * @param {number} data.index -> index of the account of wich will extact information
+ * @param {number} data.index -> index of the account of which will extract information
  * @param {object} data.tx -> Object with all transaction information
  */
 const signTransaction = async (data) => {
@@ -84,20 +84,20 @@ const checkIfInsideLiskApp = async data => (
 );
 
 /**
- * subscribeToDeviceConnceted - Function.
+ * subscribeToDeviceConnected - Function.
  * Always listen for get the information of the new connected device
  * @param {function} fn -> callback function
  */
-const subscribeToDeviceConnceted = (fn) => {
+const subscribeToDeviceConnected = (fn) => {
   IPC.on(IPC_MESSAGES.HW_CONNECTED, (event, response) => fn(response));
 };
 
 /**
- * subscribeToDeviceDisonnceted - Function.
+ * subscribeToDeviceDisconnected - Function.
  * Always listen for get the information of the disconnected device
  * @param {function} fn -> callback function
  */
-const subscribeToDeviceDisonnceted = (fn) => {
+const subscribeToDeviceDisconnected = (fn) => {
   IPC.on(IPC_MESSAGES.HW_DISCONNECTED, (event, response) => fn(response));
 };
 
@@ -108,7 +108,7 @@ const getDeviceList = () => (
 
 /**
  * subscribeToDevicesList - Function.
- * Allways listen for any new change on the devices list
+ * Always listen for any new change on the devices list
  * @param {function} fn -> callback function
  */
 const subscribeToDevicesList = (fn) => {
@@ -138,8 +138,8 @@ export {
   signTransaction,
   checkIfInsideLiskApp,
   getDeviceList,
-  subscribeToDeviceConnceted,
-  subscribeToDeviceDisonnceted,
+  subscribeToDeviceConnected,
+  subscribeToDeviceDisconnected,
   subscribeToDevicesList,
   validatePin,
   getAddress,

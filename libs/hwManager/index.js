@@ -27,8 +27,8 @@ export class HwManager {
       event: IPC_MESSAGES.CHECK_LEDGER,
       action: async ({ id }) => {
         const device = this.getDeviceById(id);
-        this.updateDevice(await manufacturers[device.manufactor].checkIfInsideLiskApp({
-          transporter: this.transports[device.manufactor],
+        this.updateDevice(await manufacturers[device.manufacturer].checkIfInsideLiskApp({
+          transporter: this.transports[device.manufacturer],
           device,
         }));
       },
@@ -39,7 +39,7 @@ export class HwManager {
       action: async ({ action, data }) => {
         const device = this.getDeviceById(data.deviceId);
         const functionName = FUNCTION_TYPES[action];
-        const manufactureName = device.manufactor;
+        const manufactureName = device.manufacturer;
         return manufacturers[manufactureName][functionName](
           this.transports[manufactureName],
           {

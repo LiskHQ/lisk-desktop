@@ -14,7 +14,7 @@ export const IPC_MESSAGES = {
   EXIT: 'exit',
   GET_ADDRESS: 'GET_ADDRESS',
   GET_CONNECTED_DEVICES_LIST: 'getConnectedDevicesList',
-  GET_PUBLIC_KEY: 'GET_PUBLICKEY',
+  GET_PUBLIC_KEY: 'GET_PUBLIC_KEY',
   HW_COMMAND: 'hwCommand',
   HW_CONNECTED: 'hwConnected',
   HW_DISCONNECTED: 'hwDisconnected',
