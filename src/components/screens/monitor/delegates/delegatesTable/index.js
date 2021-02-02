@@ -1,7 +1,30 @@
 import React from 'react';
+import { compose } from 'redux';
+import withLocalSort from '../../../../../utils/withLocalSort';
 import Table from '../../../../toolbox/table';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
+
+const TableWrapper = compose(
+  withLocalSort('delegates', 'rank:asc'),
+)(({
+  delegates, handleLoadMore, t, activeTab,
+  changeSort, sort, canLoadMore, forgingTimes,
+}) => (
+  <Table
+    data={delegates.data}
+    isLoading={delegates.isLoading}
+    row={DelegateRow}
+    loadData={handleLoadMore}
+    additionalRowProps={{
+      t,
+      forgingTimes,
+    }}
+    header={header(activeTab, changeSort, t)}
+    currentSort={sort}
+    canLoadMore={canLoadMore}
+  />
+));
 
 const filterDelegates = (delegates, filters) => ({
   ...delegates,
@@ -38,17 +61,14 @@ const DelegatesTable = ({
     : filterDelegates(standByDelegates, filters);
 
   return (
-    <Table
-      data={delegates.data}
-      isLoading={delegates.isLoading}
-      row={DelegateRow}
-      loadData={handleLoadMore}
-      additionalRowProps={{
-        t,
-        forgingTimes,
-      }}
-      header={header(activeTab, changeSort, t)}
-      currentSort={sort}
+    <TableWrapper
+      delegates={delegates}
+      activeTab={activeTab}
+      handleLoadMore={handleLoadMore}
+      t={t}
+      forgingTimes={forgingTimes}
+      changeSort={changeSort}
+      sort={sort}
       canLoadMore={canLoadMore}
     />
   );

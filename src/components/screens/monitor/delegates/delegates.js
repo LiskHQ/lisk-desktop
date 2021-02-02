@@ -20,11 +20,9 @@ const DelegatesMonitor = ({
   standByDelegates,
   networkStatus,
   applyFilters,
-  changeSort,
   delegates,
   filters,
   votes,
-  sort,
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
@@ -105,10 +103,8 @@ const DelegatesMonitor = ({
               : (
                 <DelegatesTable
                   standByDelegates={standByDelegates}
-                  changeSort={changeSort}
                   delegates={delegates}
                   filters={filters}
-                  sort={sort}
                   t={t}
                   activeTab={activeTab}
                   forgingTimes={forgingTimes}
