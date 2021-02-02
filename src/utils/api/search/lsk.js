@@ -79,7 +79,7 @@ export const search = ({ network, params, baseUrl }) => {
   }
   return getDelegates({
     network,
-    params: { address: params.query },
+    params: { search: params.query, limit: 4 },
     baseUrl,
   }).then(res => ({ data: { delegates: res.data }, meta: res.meta }));
 };
