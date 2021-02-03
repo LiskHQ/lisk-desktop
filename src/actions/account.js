@@ -40,38 +40,11 @@ export const passphraseUsed = data => ({
   data,
 });
 
-/**
- * This action is used to update account balance when new block was forged and
- * account middleware detected that it contains a transaction that affects balance
- * of the active account
- *
- * @param {Object} data
- * @param {Object} data.account - current account with address and publicKey
- */
-export const accountDataUpdated = ({ account }) =>
-  async (dispatch, getState) => {
-    const network = getState().network;
-    const activeToken = getState().settings.token.active;
-    const [error, result] = await to(getAccount({
-      network,
-      address: account.address,
-      publicKey: account.publicKey,
-    }, activeToken));
-    if (result) {
-      dispatch(accountUpdated(result));
-      dispatch(networkStatusUpdated({ online: true }));
-    } else {
-      dispatch(networkStatusUpdated({ online: false, code: error.error.code }));
-    }
-  };
-
-
-async function getAccounts(tokens, options) {
-  return tokens.reduce(async (accountsPromise, token) => {
+async function getAccounts({ network, params }) {
+  return Object.keys(params).reduce(async (accountsPromise, token) => {
     const accounts = await accountsPromise;
-    const { network, ...params } = options;
     const baseUrl = network.networks[token].serviceUrl;
-    const account = await getAccount({ params, network, baseUrl }, token);
+    const account = await getAccount({ network, baseUrl, params: params[token] }, token);
     return {
       ...accounts,
       [token]: account,
@@ -79,22 +52,39 @@ async function getAccounts(tokens, options) {
   }, Promise.resolve({}));
 }
 
-export const updateEnabledTokenAccount = token => async (dispatch, getState) => {
-  const { network, account } = getState();
-  const activeToken = getState().settings.token.active;
-  if (token !== tokenMap.LSK.key) {
-    const [error, result] = await to(getAccount({
-      token,
-      network,
-      passphrase: account.passphrase,
-    }, activeToken));
-    if (error) {
-      toast.error(getConnectionErrorMessage(error));
+/**
+ * This action is used to update account balance when new block was forged and
+ * account middleware detected that it contains a transaction that affects balance
+ * of the active account
+ *
+ * @param {String} tokensTypes - Options of 'enabled' and 'active'
+ */
+export const accountDataUpdated = tokensTypes =>
+  async (dispatch, getState) => {
+    const state = getState();
+    const { network, settings, account } = state;
+    const activeTokens = tokensTypes === 'enabled'
+      ? Object.keys(settings.token.list)
+        .filter(key => settings.token.list[key])
+      : [settings.token.active];
+
+    const params = activeTokens.reduce((acc, token) => {
+      acc[token] = { address: account.info[token].address };
+      return acc;
+    }, {});
+
+    const [error, info] = await to(getAccounts({ network, params }));
+
+    if (info) {
+      dispatch({
+        type: actionTypes.accountUpdated,
+        data: info,
+      });
+      dispatch(networkStatusUpdated({ online: true }));
     } else {
-      dispatch(accountUpdated(result));
+      dispatch(networkStatusUpdated({ online: false, code: error.error.code }));
     }
-  }
-};
+  };
 
 /**
  * This action is used on login to fetch account info for all enabled token
@@ -109,11 +99,13 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
   const { network, settings } = getState();
   dispatch(accountLoading());
 
-  const activeTokens = Object.keys(settings.token.list)
-    .filter(key => settings.token.list[key]);
-  const [error, info] = await to(getAccounts(activeTokens, {
-    network, publicKey, passphrase,
-  }));
+  const params = Object.keys(settings.token.list)
+    .filter(key => settings.token.list[key])
+    .reduce((acc, token) => {
+      acc[token] = { passphrase, publicKey };
+      return acc;
+    }, {});
+  const [error, info] = await to(getAccounts({ network, params }));
 
   if (error) {
     toast.error(getConnectionErrorMessage(error));
@@ -122,12 +114,15 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
     const loginType = hwInfo
       ? ['trezor', 'ledger'].find(item => hwInfo.deviceModel.toLowerCase().indexOf(item) > -1)
       : 'passphrase';
-    dispatch(accountLoggedIn({
-      passphrase,
-      loginType: loginTypes[loginType].code,
-      hwInfo: hwInfo || {},
-      date: new Date(),
-      info,
-    }));
+    dispatch({
+      type: actionTypes.accountLoggedIn,
+      data: {
+        passphrase,
+        loginType: loginTypes[loginType].code,
+        hwInfo: hwInfo || {},
+        date: new Date(),
+        info,
+      },
+    });
   }
 };
