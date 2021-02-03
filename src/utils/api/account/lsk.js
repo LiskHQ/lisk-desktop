@@ -1,7 +1,7 @@
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';
-import { extractAddress } from '../../account';
+import { extractAddress, extractPublicKey } from '../../account';
 import regex from '../../regex';
 import { tokenMap } from '../../../constants/tokens';
 
@@ -71,6 +71,7 @@ export const getAccount = async ({
     address: normParams.address,
     balance: 0,
     token: tokenMap.LSK.key,
+    publicKey: params.publicKey || extractPublicKey(params.passphrase),
   };
 
   try {
@@ -81,7 +82,10 @@ export const getAccount = async ({
       baseUrl,
     });
     if (response.data[0]) {
-      account = response.data[0];
+      account = {
+        ...response.data[0],
+        publicKey: account.publicKey,
+      };
     }
   } catch (e) {
     // eslint-disable-next-line no-console
