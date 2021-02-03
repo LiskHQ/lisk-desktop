@@ -30,7 +30,7 @@ import { getTransactions } from '../../utils/api/transaction';
  */
 const delay = () => new Promise((resolve) => {
   setTimeout(() => {
-    resolve(true);
+    resolve();
   }, 100);
 });
 
