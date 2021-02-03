@@ -26,7 +26,7 @@ const DelegatesMonitor = ({
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
-  const { forgingTimes, totalBlocks } = useSelector(state => state.blocks);
+  const { forgingTimes, total } = useSelector(state => state.blocks);
 
   useEffect(() => {
     const addressList = votes.data && votes.data.reduce((acc, data) => {
@@ -73,7 +73,7 @@ const DelegatesMonitor = ({
         chartActiveAndStandby={chartActiveAndStandbyData}
         chartRegisteredDelegates={chartRegisteredDelegatesData}
         t={t}
-        totalBlocks={totalBlocks}
+        totalBlocks={total}
         supply={networkStatus.data.supply}
       />
       <ForgingDetails
