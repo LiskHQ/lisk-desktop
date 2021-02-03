@@ -142,15 +142,9 @@ const accountMiddleware = store => next => async (action) => {
       store.dispatch(settingsUpdated({ token: { active: tokenMap.LSK.key } }));
       store.dispatch(emptyTransactionsData());
       break;
-    case actionTypes.settingsUpdated: {
-      const tokensList = action.data.token && action.data.token.list;
-      const token = tokensList && Object.keys(tokensList)
-        .find(t => tokensList[t]);
-      if (tokensList && tokensList[token]) {
-        store.dispatch(updateEnabledTokenAccount(token));
-      }
+    case actionTypes.settingsUpdated:
+      store.dispatch(accountDataUpdated('enabled'));
       break;
-    }
     /* istanbul ignore next */
     default: break;
   }
