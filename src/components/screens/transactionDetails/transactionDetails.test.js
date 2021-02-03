@@ -63,6 +63,10 @@ describe('Transaction Details Component', () => {
     match: {
       url: `/transactions/${transaction.id}`,
     },
+    votedDelegates: {
+      data: {},
+      loadData: jest.fn(),
+    },
   };
 
   describe('Transfer transactions', () => {
