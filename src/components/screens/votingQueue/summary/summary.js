@@ -17,7 +17,12 @@ const ItemList = ({ items, heading }) => (
     <span className={styles.contentHeading}>{heading}</span>
     <div className={styles.voteItems}>
       {Object.keys(items).map(address => (
-        <VoteItem key={`vote-item-${address}`} address={address} vote={items[address]} />
+        <VoteItem
+          key={`vote-item-${address}`}
+          address={address}
+          vote={items[address]}
+          title={items[address].username}
+        />
       ))}
     </div>
   </div>
@@ -58,7 +63,8 @@ const getResultProps = ({ added, removed, edited }) => {
 };
 
 const Summary = ({
-  t, removed = {}, edited = {}, added = {}, fee, account, prevStep, nextStep, transactions, ...props
+  t, removed = {}, edited = {}, added = {},
+  fee, account, prevStep, nextStep, transactions, ...props
 }) => {
   const addedLength = Object.keys(added).length;
   const editedLength = Object.keys(edited).length;

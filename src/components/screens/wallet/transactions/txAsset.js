@@ -4,12 +4,13 @@ import transactionTypes from '../../../../constants/transactionTypes';
 import VoteItem from '../../../shared/voteItem';
 import styles from './transactions.css';
 
-const generateVotes = (asset) => {
+const generateVotes = (asset, delegates) => {
   const voteElements = asset.votes.slice(0, 2).map(vote => (
     <VoteItem
       key={`vote-${vote.delegateAddress}`}
       vote={{ confirmed: vote.amount }}
       address={vote.delegateAddress}
+      title={delegates[vote.delegateAddress] && delegates[vote.delegateAddress].username}
       truncate
     />
   ));
@@ -30,7 +31,7 @@ const voteTxType = transactionTypes().vote.code.new;
 const registerDelegateTxType = transactionTypes().registerDelegate.code.new;
 
 const TransactionAsset = ({
-  transaction,
+  transaction, delegates,
 }) => {
   const {
     asset, username, type, token,
@@ -43,7 +44,7 @@ const TransactionAsset = ({
       break;
     case voteTxType:
       className = styles.delegateVote;
-      data = asset && asset.votes ? generateVotes(asset) : data;
+      data = asset && asset.votes ? generateVotes(asset, delegates) : data;
       break;
     default:
       data = asset && asset.data ? asset.data : data;

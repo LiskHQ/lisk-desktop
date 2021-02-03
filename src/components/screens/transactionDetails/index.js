@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getActiveTokenAccount } from '../../../utils/account';
 import { getTransaction } from '../../../utils/api/transaction';
+import { getDelegates } from '../../../utils/api/delegate';
 import withData from '../../../utils/withData';
 import TransactionDetails from './transactionDetails';
 import { parseSearchParams } from '../../../utils/searchParams';
@@ -25,6 +26,17 @@ const apis = {
     }),
     transformResponse: response => response.data[0] || {},
     autoload: true,
+  },
+  votedDelegates: {
+    apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+    defaultData: {},
+    transformResponse: (response) => {
+      const responseMap = response.data.reduce((acc, delegate) => {
+        acc[delegate.address] = delegate;
+        return acc;
+      }, {});
+      return responseMap;
+    },
   },
 };
 
