@@ -13,7 +13,7 @@ import './variables.css';
 import OfflineWrapper from '../components/shared/offlineWrapper';
 import CustomRoute from '../components/shared/customRoute';
 import NotFound from '../components/shared/notFound';
-import InitializationMessage from '../components/shared/initializationMessage';
+// import InitializationMessage from '../components/shared/initializationMessage';
 import routes from '../constants/routes';
 import NavigationBars from '../components/shared/navigationBars';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
