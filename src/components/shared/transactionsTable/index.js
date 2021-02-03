@@ -33,7 +33,7 @@ const TransactionsTable = ({
       ...acc,
       ...(filters[key] && { [key]: key === 'type' ? transactionTypes.getByCode(Number(filters[key])).outgoingCode : filters[key] }),
     }), {
-      offset: transactions.data.length,
+      offset: transactions.meta.count + transactions.meta.offset,
       sort,
     });
     transactions.loadData(params);

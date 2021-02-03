@@ -8,7 +8,14 @@ export default compose(
   withData({
     transactions: {
       apiUtil: (network, { token, ...params }) =>
-        getTransactions({ network, params }, token),
+        getTransactions({
+          network,
+          params: {
+            ...params,
+            limit: params.limit || 30,
+            offset: params.offset || 0,
+          },
+        }, token),
       getApiParams: state => ({
         token: state.settings.token.active,
       }),
