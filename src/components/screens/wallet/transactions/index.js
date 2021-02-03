@@ -58,7 +58,7 @@ const Transactions = ({
 
   useEffect(() => {
     const addressList = transactions.data && transactions.data.reduce((acc, data) => {
-      if (data.type === 13) {
+      if (data.title === 'vote') {
         const votesList = data.asset.votes || [];
         const dataAddresses = votesList.map(vote => vote.delegateAddress);
         return acc.concat(dataAddresses);

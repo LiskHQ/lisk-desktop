@@ -8,7 +8,7 @@ const transactionVotes = ({ t, transaction, votedDelegates }) => {
   if (transaction.title !== 'vote') return null;
 
   useEffect(() => {
-    if (transaction.type === 13) {
+    if (transaction.title === 'vote') {
       const votesList = transaction.asset.votes || [];
       const addressList = votesList.map(vote => vote.delegateAddress);
       if (addressList.length > 0) {
