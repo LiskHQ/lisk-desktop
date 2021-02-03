@@ -57,6 +57,7 @@ export default compose(
             ...params,
             limit: params.limit || LIMIT,
             offset: params.offset || 0,
+            sort: 'balance:desc',
           },
         }),
         defaultData: [],
