@@ -24,17 +24,16 @@ describe('Reducer: account(state, action)', () => {
     const action = {
       type: actionTypes.accountUpdated,
       data: {
-        address: state.address,
-        balance: 100000000,
-        token: 'LSK',
+        LSK: {
+          address: state.address,
+          balance: 100000000,
+        },
       },
     };
     const changedAccount = account(state, action);
     expect(changedAccount).toEqual({
       ...state,
-      info: {
-        LSK: action.data,
-      },
+      info: action.data,
     });
   });
 

@@ -72,45 +72,37 @@ describe('actions: account', () => {
           token: {
             active: 'LSK',
           },
+          list: [
+            { LSK: true },
+            { BTC: false },
+          ],
+        },
+        account: {
+          passphrase: accounts.genesis.passphrase,
+          info: {
+            LSK: {
+              address: accounts.genesis.address,
+              publicKey: accounts.genesis.publicKey,
+              balance: 0,
+            },
+          },
         },
       });
     });
 
-    it(`should call account API methods on ${actionTypes.newBlockCreated} action when online`, async () => {
+    it('should call account API methods on newBlockCreated action when online', async () => {
       accountApi.getAccount.mockResolvedValue({ balance: 10e8 });
 
-      const data = {
-        windowIsFocused: false,
-        transactions: {
-          pending: [{
-            id: 12498250891724098,
-          }],
-          confirmed: [],
-          account: { address: accounts.second_passphrase_account.address, balance: 0 },
-        },
-        account: { address: accounts.genesis.address, balance: 0 },
-      };
-
-      await accountDataUpdated(data)(dispatch, getState);
+      await accountDataUpdated('active')(dispatch, getState);
       expect(dispatch).toHaveBeenCalledTimes(2);
       expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({ online: true });
     });
 
-    it(`should call account API methods on ${actionTypes.newBlockCreated} action when offline`, async () => {
+    it('should call account API methods on newBlockCreated action when offline', async () => {
       const code = 'EUNAVAILABLE';
       accountApi.getAccount.mockRejectedValue({ error: { code } });
 
-      const data = {
-        windowIsFocused: true,
-        transactions: {
-          pending: [{ id: 12498250891724098 }],
-          confirmed: [],
-          account: { address: accounts.second_passphrase_account.address, balance: 0 },
-        },
-        account: { address: accounts.genesis.address },
-      };
-
-      await accountDataUpdated(data)(dispatch, getState);
+      await accountDataUpdated('active')(dispatch, getState);
       expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({
         online: false, code,
       });
