@@ -173,7 +173,7 @@ describe('API: LSK Account', () => {
       });
     });
 
-    it('should return empty account if the API returns 404', async () => {
+    it('should return an account if the API returns 404', async () => {
       http.mockImplementation(() => Promise.reject(Error('Account not found.')));
       // Checks the baseUrl too
       const result = await getAccount({
@@ -188,6 +188,7 @@ describe('API: LSK Account', () => {
         address,
         balance: 0,
         token: 'LSK',
+        publicKey,
       });
     });
   });
