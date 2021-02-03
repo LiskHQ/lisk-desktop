@@ -175,7 +175,6 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
       data: transaction,
     });
 
-    console.log(transaction);
     if (activeToken !== tokenMap.BTC.key) {
       dispatch(addNewPendingTransaction({
         ...transaction,
