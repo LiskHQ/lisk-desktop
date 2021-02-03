@@ -1,15 +1,11 @@
 import { toast } from 'react-toastify';
 import actionTypes from '../constants/actions';
 import {
-  accountUpdated,
   accountLoggedOut,
-  removePassphrase,
   accountDataUpdated,
-  updateEnabledTokenAccount,
   login,
 } from './account';
 import * as accountApi from '../utils/api/account';
-import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
 import * as networkActions from './network';
 
@@ -47,20 +43,6 @@ describe('actions: account', () => {
     networkActions.networkStatusUpdated.mockReset();
   });
 
-  describe('accountUpdated', () => {
-    it('should create an action to set values to account', () => {
-      const data = {
-        passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
-      };
-
-      const expectedAction = {
-        data,
-        type: actionTypes.accountUpdated,
-      };
-      expect(accountUpdated(data)).toEqual(expectedAction);
-    });
-  });
-
   describe('accountLoggedOut', () => {
     it('should create an action to reset the account', () => {
       const expectedAction = {
@@ -68,23 +50,6 @@ describe('actions: account', () => {
       };
 
       expect(accountLoggedOut()).toEqual(expectedAction);
-    });
-  });
-
-  describe('removePassphrase', () => {
-    it('should create an action to remove passphrase', () => {
-      const data = {
-        publicKey: accounts.genesis.publicKey,
-        network: networks.testnet,
-        address: accounts.genesis.address,
-      };
-
-      const expectedAction = {
-        data,
-        type: actionTypes.removePassphrase,
-      };
-
-      expect(removePassphrase(data)).toEqual(expectedAction);
     });
   });
 
@@ -203,50 +168,6 @@ describe('actions: account', () => {
       accountApi.getAccount.mockRejectedValue({ message: 'custom error' });
       await login({ passphrase })(dispatch, getState);
       expect(toast.error).toHaveBeenNthCalledWith(1, 'Unable to connect to the node, no response from the server.');
-    });
-  });
-
-  describe('updateEnabledTokenAccount', () => {
-    let state;
-    const getState = () => (state);
-    const {
-      address,
-      balance,
-      passphrase,
-    } = accounts.genesis;
-
-    beforeEach(() => {
-      state = {
-        account: {
-          passphrase,
-        },
-        network,
-        settings: {
-          autoLog: true,
-          token: {
-            list: {
-              LSK: true,
-              BTC: true,
-            },
-          },
-        },
-      };
-    });
-
-    it('should call account api and dispatch accountUpdated ', async () => {
-      accountApi.getAccount.mockResolvedValue({ balance, address });
-      await updateEnabledTokenAccount('BTC')(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.accountUpdated,
-        data: expect.objectContaining({ address, balance }),
-      });
-    });
-
-    it('should fire an error toast if getAccount fails ', async () => {
-      jest.spyOn(toast, 'error');
-      accountApi.getAccount.mockRejectedValue({ message: 'custom error' });
-      await updateEnabledTokenAccount('BTC')(dispatch, getState);
-      expect(toast.error).toHaveBeenCalled();
     });
   });
 });
