@@ -35,7 +35,7 @@ const BalanceTable = ({
         </li>
       )
     }
-    {account.unlocking.length > 0
+    {account.unlocking && account.unlocking.length > 0
       && (
       <UnlockingList
         unlocking={account.unlocking}
