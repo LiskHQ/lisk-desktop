@@ -69,7 +69,7 @@ const ComposedDelegates = compose(
           params: {
             ...params,
             limit: params.limit || 30,
-            offset: params.offset || 101,
+            offset: typeof params.offset !== 'undefined' ? params.offset : 101,
           },
         }),
         defaultData: [],

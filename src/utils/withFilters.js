@@ -24,7 +24,7 @@ function withFilters(apiName, initialFilters, initialSort) {
         this.setState({ filters: f });
         this.props[apiName].loadData(Object.keys(filters).reduce((acc, key) => ({
           ...acc,
-          ...(filters[key] && { [key]: key === 'type' ? transactionTypes.getByCode(Number(filters[key])).outgoingCode : filters[key] }),
+          ...(typeof filters[key] !== 'undefined' && { [key]: key === 'type' ? transactionTypes.getByCode(Number(filters[key])).outgoingCode : filters[key] }),
         }), {}));
       }
 
