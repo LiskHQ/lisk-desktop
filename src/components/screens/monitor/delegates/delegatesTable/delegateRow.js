@@ -44,11 +44,11 @@ const DelegateRow = ({
       <span className={`${grid['col-xs-2']} ${grid['col-md-2']}`}>
         {data.username}
       </span>
-      <span className={data.rank > 101 ? `${grid['col-xs-6']} ${grid['col-md-6']}` : `${grid['col-xs-3']} ${grid['col-md-3']}`}>
+      <span className={data.status !== 'active' ? `${grid['col-xs-6']} ${grid['col-md-6']}` : `${grid['col-xs-3']} ${grid['col-md-3']}`}>
         <AccountVisualWithAddress address={data.address} />
       </span>
       {
-        data.rank <= 101 ? (
+        data.status === 'active' ? (
           <Fragment>
             <span className={`${grid['col-xs-2']} ${grid['col-md-2']} ${styles.noEllipsis}`}>
               {formattedForgingTime}

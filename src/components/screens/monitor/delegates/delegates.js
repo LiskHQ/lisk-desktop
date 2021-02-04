@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import Overview from './overview';
-import { Input } from '../../../toolbox/inputs';
+// import { Input } from '../../../toolbox/inputs';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -19,7 +19,7 @@ const DelegatesMonitor = ({
   chartRegisteredDelegatesData,
   standByDelegates,
   networkStatus,
-  applyFilters,
+  // applyFilters,
   delegates,
   filters,
   votes,
@@ -39,12 +39,14 @@ const DelegatesMonitor = ({
     }
   }, [votes.data]);
 
-  const handleFilter = ({ target: { value } }) => {
+  /* const handleFilter = ({ target: { value } }) => {
     applyFilters({
       ...filters,
       search: value,
+      offset: 0,
+      limit: 101,
     });
-  };
+  }; */
   const tabs = {
     tabs: [
       {
@@ -86,7 +88,7 @@ const DelegatesMonitor = ({
             ? <h2>{tabs.tabs[0].name}</h2>
             : <BoxTabs {...tabs} />
           }
-          <span className={activeTab === 'votes' ? 'hidden' : ''}>
+          {/* <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
               onChange={handleFilter}
               value={filters.search}
@@ -94,7 +96,7 @@ const DelegatesMonitor = ({
               size="m"
               placeholder={t('Filter by name...')}
             />
-          </span>
+        </span> */}
         </BoxHeader>
         <BoxContent className={styles.content}>
           {
