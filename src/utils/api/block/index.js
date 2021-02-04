@@ -63,6 +63,8 @@ const blocksFilters = {
   },
 };
 
+const transformDateToUnixTimestamp = date => new Date(date).valueOf() / 1000;
+
 /**
  * Retrieves blocks list.
  *
@@ -84,6 +86,15 @@ export const getBlocks = ({
 }) => {
   // Use HTTP to retrieve accounts with given sorting and pagination parameters
   const normParams = {};
+
+  if (typeof params.dateFrom === 'string') {
+    params.dateFrom = transformDateToUnixTimestamp(params.dateFrom);
+  }
+
+  if (typeof params.dateTo === 'string') {
+    params.dateTo = transformDateToUnixTimestamp(params.dateTo);
+  }
+
   Object.keys(params).forEach((key) => {
     if (blocksFilters[key].test(params[key])) {
       normParams[blocksFilters[key].key] = params[key];
