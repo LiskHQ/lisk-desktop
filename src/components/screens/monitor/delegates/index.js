@@ -16,7 +16,6 @@ import { tokenMap } from '../../../../constants/tokens';
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
 const standByDelegatesKey = 'standByDelegates';
-const numberOfActiveDelegates = 103;
 
 const transformDelegatesResponse = (response, oldData = []) => (
   [...oldData, ...response.data.filter(
@@ -70,7 +69,7 @@ const ComposedDelegates = compose(
           params: {
             ...params,
             limit: params.limit || 30,
-            offset: params.offset || numberOfActiveDelegates,
+            offset: params.offset || 101,
           },
         }),
         defaultData: [],
