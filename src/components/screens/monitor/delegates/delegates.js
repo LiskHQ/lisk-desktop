@@ -19,7 +19,7 @@ const DelegatesMonitor = ({
   chartRegisteredDelegatesData,
   standByDelegates,
   networkStatus,
-  applyFilters,
+  // applyFilters,
   delegates,
   filters,
   votes,
