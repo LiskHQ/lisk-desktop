@@ -13,7 +13,7 @@ import transactionTypes from '../../../../constants/transactionTypes';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
 import { tokenMap } from '../../../../constants/tokens';
 
-const defaultUrlSearchParams = { search: '', offset: 0, limit: 101 };
+const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
 const standByDelegatesKey = 'standByDelegates';
 
@@ -68,7 +68,7 @@ const ComposedDelegates = compose(
           network,
           params: {
             ...params,
-            limit: params.limit || 30,
+            limit: params.limit || 10,
             offset: typeof params.offset !== 'undefined' ? params.offset : 101,
           },
         }),

@@ -43,6 +43,8 @@ const DelegatesMonitor = ({
     applyFilters({
       ...filters,
       search: value,
+      offset: 0,
+      limit: 101,
     });
   };
   const tabs = {
