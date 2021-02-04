@@ -54,7 +54,7 @@ const DelegatesTable = ({
 
   const canLoadMore = activeTab === 'active' || !standByDelegates.meta
     ? false
-    : standByDelegates.data.length < (standByDelegates.meta.total - standByDelegates.meta.offset);
+    : standByDelegates.meta.count + standByDelegates.meta.offset < standByDelegates.meta.total;
 
   delegates = activeTab === 'active'
     ? filterDelegates(delegates, filters)
