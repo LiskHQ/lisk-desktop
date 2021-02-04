@@ -88,7 +88,7 @@ const DelegatesMonitor = ({
             ? <h2>{tabs.tabs[0].name}</h2>
             : <BoxTabs {...tabs} />
           }
-          <span className={activeTab === 'votes' ? 'hidden' : ''}>
+          {/* <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
               onChange={handleFilter}
               value={filters.search}
@@ -96,7 +96,7 @@ const DelegatesMonitor = ({
               size="m"
               placeholder={t('Filter by name...')}
             />
-          </span>
+        </span> */}
         </BoxHeader>
         <BoxContent className={styles.content}>
           {
