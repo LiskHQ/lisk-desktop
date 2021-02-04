@@ -68,7 +68,7 @@ const ComposedDelegates = compose(
           network,
           params: {
             ...params,
-            limit: params.limit || 10,
+            limit: params.limit || 30,
             offset: typeof params.offset !== 'undefined' ? params.offset : 101,
           },
         }),
