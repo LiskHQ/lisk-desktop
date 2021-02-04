@@ -13,7 +13,7 @@ import transactionTypes from '../../../../constants/transactionTypes';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
 import { tokenMap } from '../../../../constants/tokens';
 
-const defaultUrlSearchParams = { search: '' };
+const defaultUrlSearchParams = { search: '', offset: 0, limit: 101 };
 const delegatesKey = 'delegates';
 const standByDelegatesKey = 'standByDelegates';
 
