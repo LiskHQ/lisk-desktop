@@ -7,8 +7,7 @@ import { firstBlockTime } from '../constants/datetime';
  * @returns {Number} - timestamp in Unix timestamp format
  */
 export const getUnixTimestampFromValue = value =>
-  ((moment(firstBlockTime).format('x') / 1000) + +moment(value).format('x')) * 1000;
-
+  +moment(value).format('x') * 1000;
 
 /**
  * returns timestamp from first block not considering time
