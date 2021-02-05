@@ -58,14 +58,16 @@ const Overview = ({
         />
       </div>
       <div className={`${grid['col-xs-12']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.balanceChart}`}>
-        <BalanceChart
-          t={t}
-          transactions={transactions}
-          token={activeToken}
-          isDiscreetMode={discreetMode && host === address}
-          balance={balance}
-          address={address}
-        />
+        {address && (
+          <BalanceChart
+            t={t}
+            transactions={transactions}
+            token={activeToken}
+            isDiscreetMode={discreetMode && host === address}
+            balance={balance}
+            address={address}
+          />
+        )}
       </div>
     </section>
   );
