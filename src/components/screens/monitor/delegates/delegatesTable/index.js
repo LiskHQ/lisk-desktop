@@ -76,22 +76,20 @@ const DelegatesTable = ({
   sort,
   t,
 }) => {
-  const handleLoadMore = () => {
-    delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
-      ...acc,
-      ...(filters[key] && { [key]: filters[key] }),
-    }), {
-      offset: standByDelegates.meta.count + standByDelegates.meta.offset,
-    }));
-  };
-
-  const canLoadMore = activeTab === 'active' || activeTab === 'watched' || !standByDelegates.meta
-    ? false
-    : standByDelegates.meta.count + standByDelegates.meta.offset < standByDelegates.meta.total;
-
   const delegatesToShow = selectDelegates({
     activeTab, delegates, standByDelegates, sanctionedDelegates, watchedDelegates, filters,
   });
+
+  const canLoadMore = activeTab === 'standby' && standByDelegates.data.length < (standByDelegates.meta.total - standByDelegates.meta.offset);
+
+  const handleLoadMore = () => {
+    delegatesToShow.loadData(Object.keys(filters).reduce((acc, key) => ({
+      ...acc,
+      ...(filters[key] && { [key]: filters[key] }),
+    }), {
+      offset: delegatesToShow.meta.count + delegatesToShow.meta.offset,
+    }));
+  };
 
   return (
     <TableWrapper

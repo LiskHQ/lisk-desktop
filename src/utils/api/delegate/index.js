@@ -120,7 +120,6 @@ export const getDelegates = ({
     }
   });
 
-  console.log(normParams, baseUrl, network);
   return http({
     path: httpPaths.delegates,
     params: normParams,

@@ -77,8 +77,7 @@ const ComposedDelegates = compose(
           params: {
             ...params,
             limit: params.limit || 30,
-            offset: params.offset || numberOfActiveDelegates,
-            status: 'standy',
+            status: 'standby',
           },
         }),
         defaultData: [],
