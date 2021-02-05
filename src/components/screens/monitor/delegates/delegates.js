@@ -12,48 +12,10 @@ import LatestVotes from './latestVotes';
 import DelegatesTable from './delegatesTable';
 import ForgingDetails from './forgingDetails';
 
-const sanctionedDelegates = {
-  data: [
-    {
-      address: '1L',
-      delegateWeight: '1000000000000',
-      missedBlocks: 0,
-      producedBlocks: 68,
-      productivity: '100',
-      publicKey: 'c678d19210ebf71914652d6644da5ee42e0c80948c4b520dba9f3d4514b213b2',
-      rank: '1',
-      rewards: '0',
-      username: 'genesis_31',
-      vote: '1000000000000',
-      totalVotesReceived: '0',
-      isBanned: false,
-      status: 'punished',
-      lastForgedHeight: 0,
-      consecutiveMissedBlocks: 0,
-    },
-    {
-      address: '2L',
-      delegateWeight: '1000000000000',
-      missedBlocks: 0,
-      producedBlocks: 68,
-      productivity: '100',
-      publicKey: 'c678d19210ebf71914652d6644da5ee42e0c80948c4b520dba9f3d4514b213b2',
-      rank: 2,
-      rewards: '0',
-      username: 'genesis_31',
-      vote: '1000000000000',
-      totalVotesReceived: '0',
-      isBanned: true,
-      status: 'banned',
-      lastForgedHeight: 0,
-      consecutiveMissedBlocks: 0,
-    },
-  ],
-};
-
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
   votedDelegates,
+  sanctionedDelegates,
   watchedDelegates,
   watchList,
   chartActiveAndStandbyData,

@@ -120,6 +120,13 @@ const ComposedDelegates = compose(
         transformResponse: response => response,
       },
 
+      sanctionedDelegates: {
+        apiUtil: (network, params) => getDelegates({ network, params: { ...params, status: 'punished,banned' } }),
+        defaultData: [],
+        autoload: true,
+        transformResponse: response => response.data,
+      },
+
       votedDelegates: {
         apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
         defaultData: {},
