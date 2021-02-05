@@ -2,6 +2,7 @@ import { subscribe, unsubscribe } from '../ws';
 import http from '../http';
 import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
+import { transformStringDateToUnixTimestamp } from '../../datetime';
 
 const httpPrefix = '/api/v1';
 
@@ -63,8 +64,6 @@ const blocksFilters = {
   },
 };
 
-const transformDateToUnixTimestamp = date => new Date(date).valueOf() / 1000;
-
 /**
  * Retrieves blocks list.
  *
@@ -88,11 +87,11 @@ export const getBlocks = ({
   const normParams = {};
 
   if (typeof params.dateFrom === 'string') {
-    params.dateFrom = transformDateToUnixTimestamp(params.dateFrom);
+    params.dateFrom = transformStringDateToUnixTimestamp(params.dateFrom);
   }
 
   if (typeof params.dateTo === 'string') {
-    params.dateTo = transformDateToUnixTimestamp(params.dateTo);
+    params.dateTo = transformStringDateToUnixTimestamp(params.dateTo);
   }
 
   Object.keys(params).forEach((key) => {

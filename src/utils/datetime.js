@@ -49,9 +49,12 @@ export const convertUnixSecondsToLiskEpochSeconds = timestamp => (
   moment(timestamp * 1000).unix() - moment(firstBlockTime).unix()
 );
 
+export const transformStringDateToUnixTimestamp = date => new Date(moment(date, 'DD-MM-YYYY').format('MM/DD/YYYY')).valueOf() / 1000;
+
 export default {
   convertUnixSecondsToLiskEpochSeconds,
   getDateTimestampFromFirstBlock,
   formatInputToDate,
   firstBlockTime,
+  transformStringDateToUnixTimestamp,
 };
