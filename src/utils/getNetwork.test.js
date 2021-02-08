@@ -2,6 +2,7 @@ import { constants } from '@liskhq/lisk-client';
 import {
   getNetworksList,
   getNetworkNameBasedOnNethash,
+  getConnectionErrorMessage,
 } from './getNetwork';
 
 describe('Utils: getNetwork', () => {
@@ -53,6 +54,14 @@ describe('Utils: getNetwork', () => {
         },
       };
       expect(getNetworkNameBasedOnNethash(network, 'LSK')).toEqual('customNode');
+    });
+  });
+
+  describe('getConnectionErrorMessage', () => {
+    it('should display the error message if presented', () => {
+      expect(getConnectionErrorMessage({
+        message: 'sample error message',
+      })).toEqual('Unable to connect to the node, Error: sample error message');
     });
   });
 });

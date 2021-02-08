@@ -2,6 +2,7 @@ import { subscribe, unsubscribe } from '../ws';
 import http from '../http';
 import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
+import { transformStringDateToUnixTimestamp } from '../../datetime';
 
 const httpPrefix = '/api/v1';
 
@@ -84,6 +85,15 @@ export const getBlocks = ({
 }) => {
   // Use HTTP to retrieve accounts with given sorting and pagination parameters
   const normParams = {};
+
+  if (typeof params.dateFrom === 'string') {
+    params.dateFrom = transformStringDateToUnixTimestamp(params.dateFrom);
+  }
+
+  if (typeof params.dateTo === 'string') {
+    params.dateTo = transformStringDateToUnixTimestamp(params.dateTo);
+  }
+
   Object.keys(params).forEach((key) => {
     if (blocksFilters[key].test(params[key])) {
       normParams[blocksFilters[key].key] = params[key];

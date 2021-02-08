@@ -100,7 +100,6 @@ describe('Account middleware', () => {
 
   jest.useFakeTimers();
   jest.spyOn(transactionsActions, 'transactionsRetrieved');
-  jest.spyOn(accountActions, 'updateEnabledTokenAccount');
   const accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
   window.Notification = () => { };
   const windowNotificationSpy = jest.spyOn(window, 'Notification');
@@ -247,7 +246,7 @@ describe('Account middleware', () => {
         data: { token: { list: { BTC: true } } },
       };
       middleware(store)(next)(settingsUpdatedAction);
-      expect(accountActions.updateEnabledTokenAccount).toHaveBeenCalledWith('BTC');
+      expect(accountActions.accountDataUpdated).toHaveBeenCalledWith('enabled');
       expect(store.dispatch).toHaveBeenCalled();
     });
   });

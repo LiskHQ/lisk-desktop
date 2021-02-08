@@ -19,7 +19,6 @@ import Delegates from './delegates';
 const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
 const standByDelegatesKey = 'standByDelegates';
-const numberOfActiveDelegates = 103;
 
 const transformDelegatesResponse = (response, oldData = []) => (
   [...oldData, ...response.data.filter(
@@ -78,7 +77,7 @@ const ComposedDelegates = compose(
           params: {
             ...params,
             limit: params.limit || 30,
-            offset: params.offset || numberOfActiveDelegates,
+            offset: typeof params.offset !== 'undefined' ? params.offset : 101,
           },
         }),
         defaultData: [],
@@ -115,7 +114,7 @@ const ComposedDelegates = compose(
       },
 
       networkStatus: {
-        apiUtil: getNetworkStatus,
+        apiUtil: network => getNetworkStatus({ network }),
         defaultData: {},
         autoload: true,
         transformResponse: response => response,

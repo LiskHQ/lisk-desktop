@@ -15,7 +15,7 @@ import styles from './transactions.css';
 
 // eslint-disable-next-line complexity
 const TransactionRow = ({
-  data, className, t, host,
+  data, className, t, host, delegates,
 }) => {
   const {
     bookmarks,
@@ -66,7 +66,7 @@ const TransactionRow = ({
         isLSK
           ? (
             <span className={`${grid['col-xs-4']} ${grid['col-md-4']}`}>
-              <TransactionAsset t={t} transaction={data} />
+              <TransactionAsset t={t} transaction={data} delegates={delegates} />
             </span>
           )
           : null

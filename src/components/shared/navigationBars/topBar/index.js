@@ -2,8 +2,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { accountLoggedOut, accountUpdated } from '../../../../actions/account';
-import accountConfig from '../../../../constants/account';
+import { accountLoggedOut, passphraseUsed } from '../../../../actions/account';
 import TopBar from './topBar';
 
 const mapStateToProps = state => ({
@@ -18,7 +17,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   logOut: accountLoggedOut,
-  resetTimer: () => accountUpdated({ expireTime: Date.now() + accountConfig.lockDuration }),
+  resetTimer: () => passphraseUsed(new Date()),
 };
 
 export default withRouter(

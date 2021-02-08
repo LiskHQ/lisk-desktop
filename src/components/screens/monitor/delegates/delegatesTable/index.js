@@ -27,6 +27,7 @@ const TableWrapper = compose(
       activeTab,
       watchList,
       setActiveTab,
+      forgingTimes,
     }}
     header={header(activeTab, changeSort, t)}
     currentSort={sort}
@@ -87,7 +88,7 @@ const DelegatesTable = ({
 
   const canLoadMore = activeTab === 'active' || activeTab === 'watched' || !standByDelegates.meta
     ? false
-    : standByDelegates.data.length < (standByDelegates.meta.total - standByDelegates.meta.offset);
+    : standByDelegates.meta.count + standByDelegates.meta.offset < standByDelegates.meta.total;
 
   const delegatesToShow = selectDelegates({
     activeTab, delegates, standByDelegates, sanctionedDelegates, watchedDelegates, filters,

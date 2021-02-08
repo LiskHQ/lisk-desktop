@@ -67,7 +67,7 @@ const DelegatesMonitor = ({
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
-  const { forgingTimes, totalBlocks } = useSelector(state => state.blocks);
+  const { forgingTimes, total } = useSelector(state => state.blocks);
   const delegatesWithForgingTimes = {
     ...delegates,
     data: delegates.data.map(
@@ -102,8 +102,11 @@ const DelegatesMonitor = ({
     applyFilters({
       ...filters,
       search: value,
+      offset: 0,
+      limit: 101,
     });
   };
+
   const tabs = {
     tabs: [
       {
@@ -146,7 +149,7 @@ const DelegatesMonitor = ({
         chartActiveAndStandby={chartActiveAndStandbyData}
         chartRegisteredDelegates={chartRegisteredDelegatesData}
         t={t}
-        totalBlocks={totalBlocks}
+        totalBlocks={total}
         supply={networkStatus.data.supply}
       />
       <ForgingDetails

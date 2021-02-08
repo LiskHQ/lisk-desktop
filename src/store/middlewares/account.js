@@ -1,6 +1,5 @@
 import {
   accountDataUpdated,
-  updateEnabledTokenAccount,
 } from '../../actions/account';
 import {
   emptyTransactionsData,
@@ -21,11 +20,19 @@ import transactionTypes from '../../constants/transactionTypes';
 import { tokenMap } from '../../constants/tokens';
 import { getTransactions } from '../../utils/api/transaction';
 
-const updateAccountData = (store) => {
-  const account = getActiveTokenAccount(store.getState());
-
-  store.dispatch(accountDataUpdated({ account }));
-};
+/**
+ * After a new block is created and broadcasted
+ * it takes a few ms for Lisk Service
+ * to update transactions index, so we need to wait
+ * before retrieving the the transaction by blockId
+ *
+ * @returns {Promise} resolves with True after 100ms
+ */
+const delay = () => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve();
+  }, 100);
+});
 
 const getRecentTransactionOfType = (transactionsList, type) => (
   transactionsList.filter(transaction => (
@@ -73,6 +80,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
   const { numberOfTransactions, id } = action.data.block;
 
   if (numberOfTransactions) {
+    await delay();
     const { data: txs } = await getTransactions({ network, params: { blockId: id } }, token.active);
     const blockContainsRelevantTransaction = txs.filter((transaction) => {
       if (!transaction) return false;
@@ -87,17 +95,11 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
       && transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
 
     if (blockContainsRelevantTransaction || recentBtcTransaction) {
-      // it was not getting the account with secondPublicKey right
-      // after a new block with second passphrase registration transaction was received
-      // Adding timeout explained in
-      // https://github.com/LiskHQ/lisk-desktop/pull/1609
-      setTimeout(() => {
-        updateAccountData(store);
-        store.dispatch(transactionsRetrieved({
-          address: account.address,
-          filters: transactions.filters,
-        }));
-      }, 500);
+      store.dispatch(accountDataUpdated());
+      store.dispatch(transactionsRetrieved({
+        address: account.address,
+        filters: transactions.filters,
+      }));
     }
   }
 };
@@ -140,15 +142,9 @@ const accountMiddleware = store => next => async (action) => {
       store.dispatch(settingsUpdated({ token: { active: tokenMap.LSK.key } }));
       store.dispatch(emptyTransactionsData());
       break;
-    case actionTypes.settingsUpdated: {
-      const tokensList = action.data.token && action.data.token.list;
-      const token = tokensList && Object.keys(tokensList)
-        .find(t => tokensList[t]);
-      if (tokensList && tokensList[token]) {
-        store.dispatch(updateEnabledTokenAccount(token));
-      }
+    case actionTypes.settingsUpdated:
+      store.dispatch(accountDataUpdated('enabled'));
       break;
-    }
     /* istanbul ignore next */
     default: break;
   }

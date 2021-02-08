@@ -7,8 +7,7 @@ import { firstBlockTime } from '../constants/datetime';
  * @returns {Number} - timestamp in Unix timestamp format
  */
 export const getUnixTimestampFromValue = value =>
-  ((moment(firstBlockTime).format('x') / 1000) + +moment(value).format('x')) * 1000;
-
+  +moment(value).format('x') * 1000;
 
 /**
  * returns timestamp from first block not considering time
@@ -49,9 +48,17 @@ export const convertUnixSecondsToLiskEpochSeconds = timestamp => (
   moment(timestamp * 1000).unix() - moment(firstBlockTime).unix()
 );
 
+/**
+ * Converts a date in DD-MM-YYYY format to timestamp
+ * @param {String} date - Date in DD-MM-YYYY format
+ * @returns {Number} - Unix timestamp
+ */
+export const transformStringDateToUnixTimestamp = date => new Date(moment(date, 'DD-MM-YYYY').format('MM/DD/YYYY')).valueOf() / 1000;
+
 export default {
   convertUnixSecondsToLiskEpochSeconds,
   getDateTimestampFromFirstBlock,
   formatInputToDate,
   firstBlockTime,
+  transformStringDateToUnixTimestamp,
 };

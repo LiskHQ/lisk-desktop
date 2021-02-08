@@ -80,16 +80,16 @@ const validateVotes = (votes, balance, fee, t) => {
 const getVoteStats = votes =>
   Object.keys(votes)
     .reduce((stats, address) => {
-      const { confirmed, unconfirmed } = votes[address];
+      const { confirmed, unconfirmed, username } = votes[address];
       if (!confirmed && unconfirmed) {
         // new vote
-        stats.added[address] = { unconfirmed };
+        stats.added[address] = { unconfirmed, username };
       } else if (confirmed && !unconfirmed) {
         // removed vote
-        stats.removed[address] = { confirmed };
+        stats.removed[address] = { confirmed, username };
       } else if (confirmed !== unconfirmed) {
         // edited vote
-        stats.edited[address] = { unconfirmed, confirmed };
+        stats.edited[address] = { unconfirmed, confirmed, username };
       }
       return stats;
     }, { added: {}, edited: {}, removed: {} });
