@@ -27,7 +27,6 @@ const TableWrapper = compose(
       activeTab,
       watchList,
       setActiveTab,
-      forgingTimes,
     }}
     header={header(activeTab, changeSort, t)}
     currentSort={sort}
