@@ -36,7 +36,7 @@ class SelectDevice extends React.Component {
     return (
       <div>
         <h1>{t('Found several devices, choose the one you’d like to access')}</h1>
-        <p>{t('Lisk currently supports Ledger Nano S, Ledger Nano X and Trezor Model T wallets')}</p>
+        <p>{t('Lisk currently supports Ledger Nano S, Ledger Nano X, Trezor One and Trezor T wallets.')}</p>
 
         <div className={`${styles.deviceContainer} hw-container`}>
           {
