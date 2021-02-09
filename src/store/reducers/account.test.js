@@ -45,6 +45,18 @@ describe('Reducer: account(state, action)', () => {
     expect(changedAccount).toEqual({ afterLogout: true });
   });
 
+  it('should return account object with changes if action.type = actionTypes.timerReset', () => {
+    const action = {
+      type: actionTypes.timerReset,
+      data: new Date('2021-02-09T15:37:25.880Z'),
+    };
+    const changedAccount = account(state, action);
+    expect(changedAccount).toEqual({
+      ...state,
+      expireTime: new Date('2021-02-09T15:47:25.880Z'),
+    });
+  });
+
   it('should return loading account object if action.type = actionTypes.accountLoading', () => {
     const action = {
       type: actionTypes.accountLoading,

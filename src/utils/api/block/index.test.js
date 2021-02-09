@@ -66,10 +66,12 @@ describe('Block api module', () => {
     });
 
     it('should handle filters correctly', async () => {
+      const dateFrom = Date.now() - 1000;
+      const dateTo = Date.now();
       const params = {
         addressList: ['1059876081639179984L', '2059876081639179984L'],
-        dateFrom: '02.02.2021',
-        dateTo: '04.02.2021',
+        dateFrom,
+        dateTo,
         generatorAddress: '5059876081639179984L',
         limit: 50,
         offset: 100,
@@ -77,8 +79,8 @@ describe('Block api module', () => {
       };
       const expectedParams = {
         addressList: params.addressList,
-        from: 1612220400,
-        to: 1612393200,
+        from: dateFrom,
+        to: dateTo,
         generatorAddress: params.generatorAddress,
         limit: params.limit,
         offset: params.offset,
@@ -97,30 +99,6 @@ describe('Block api module', () => {
       delete params.dateTo;
       delete expectedParams.addressList;
       delete expectedParams.to;
-      block.getBlocks({ params, baseUrl, network });
-      expect(http).toHaveBeenCalledWith({
-        path: block.httpPaths.block,
-        params: expectedParams,
-        baseUrl,
-        network,
-      });
-    });
-
-    it('should handle filters correctly if dateTo and dateFrom are passed as string', async () => {
-      const dateFrom = '01-01-2000';
-      const dateTo = '02-02-2000';
-      const params = {
-        addressList: ['1059876081639179984L', '2059876081639179984L'],
-        dateFrom,
-        dateTo,
-      };
-      const expectedParams = {
-        addressList: params.addressList,
-        from: new Date(dateFrom).valueOf() / 1000,
-        to: new Date(dateTo).valueOf() / 1000,
-      };
-      const baseUrl = 'https://url.io';
-      const network = {};
       block.getBlocks({ params, baseUrl, network });
       expect(http).toHaveBeenCalledWith({
         path: block.httpPaths.block,
