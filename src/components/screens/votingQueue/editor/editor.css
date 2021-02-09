@@ -3,7 +3,7 @@
     display: flex;
     width: auto;
     padding: 0;
-    margin: 20px;
+    margin: 0px 20px 20px 20px;
     border-radius: 0;
     border-bottom: 1px solid var(--color-platinum);
   }
@@ -75,13 +75,12 @@
 
 .contentScrollable {
   margin-top: 10px;
-  overflow: scroll;
+  overflow-y: auto;
   max-height: 290px;
-  display: flex;
-  flex-direction: column;
 
   & header {
-    padding: 0 0 20px 0;
+    padding: 21px 0 20px 0;
+    margin-top: 10px;
   }
 }
 

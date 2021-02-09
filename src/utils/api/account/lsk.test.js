@@ -52,6 +52,7 @@ describe('API: LSK Account', () => {
       const params = {
         limit: 10,
         offset: 10,
+        sort: 'balance:desc',
       };
       // Checks the baseUrl too
       const response = await getAccounts({
@@ -149,6 +150,22 @@ describe('API: LSK Account', () => {
       expect(http).toHaveBeenCalledWith({
         network,
         params: { address },
+        baseUrl: undefined,
+        path,
+      });
+    });
+
+    it('should call http without parameters', async () => {
+      http.mockImplementation(() => Promise.resolve({ data: [{}] }));
+      // Checks with no baseUrl
+      await getAccount({
+        network,
+        params: { },
+      });
+
+      expect(http).toHaveBeenCalledWith({
+        network,
+        params: { },
         baseUrl: undefined,
         path,
       });

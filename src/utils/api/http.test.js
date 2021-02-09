@@ -52,6 +52,16 @@ describe('HTTP', () => {
     expect(response).toEqual(expectedResponse);
   });
 
+  it('should throw error when response.ok is false', async () => {
+    const statusText = 'Response.ok is false';
+    global.fetch = jest.fn(() => Promise.resolve({
+      ok: false,
+      status: 200,
+      statusText,
+    }));
+    await expect(http(data)).rejects.toEqual(Error(statusText));
+  });
+
   it('should throw error', async () => {
     const statusText = 'Error processing the HTTP call.';
     global.fetch = jest.fn().mockReturnValueOnce(Promise.reject(statusText));

@@ -135,7 +135,7 @@ describe('API: LSK Delegates', () => {
     it('should return delegates list when filters are passed and call through http', async () => {
       const expectedResponse = [{}, {}, {}];
       const params = {
-        limit: 10, offset: 2, search: 'asd', status: 'active',
+        limit: 10, offset: 2, search: 't', sort: 'productivity:asc', status: 'active',
       };
       setApiResponseData(expectedResponse, http);
       await expect(

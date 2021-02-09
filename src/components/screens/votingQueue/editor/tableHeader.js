@@ -13,9 +13,8 @@ const header = t => ([
     title: t('New Vote Amount'),
     classList: styles.newAmountColumn,
     tooltip: {
-      title: t('title'),
-      message: t('message'),
-      position: 'bottom',
+      message: t('The updated amount after voting'),
+      position: 'left',
     },
   },
   {
