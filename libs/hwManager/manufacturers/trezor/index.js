@@ -132,6 +132,30 @@ const signTransaction = (transporter, { device, data }) => {
   });
 };
 
+const signMessage = (transporter, { device, data }) => {
+  const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
+  if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
+
+  return new Promise((resolve, reject) => {
+    trezorDevice.waitForSessionAndRun(async (session) => {
+      try {
+        const { message } = await session.typedCall(
+          'LiskSignMessage',
+          'LiskMessageSignature',
+          {
+            address_n: getHardenedPath(data.index),
+            // eslint-disable-next-line new-cap
+            message: new Buffer.alloc(64, data.message, 'utf8').toString('hex'),
+          },
+        );
+        return resolve(message.signature);
+      } catch (err) {
+        return reject();
+      }
+    });
+  });
+};
+
 const checkIfInsideLiskApp = async ({ device }) => device;
 
 export default {
@@ -140,4 +164,5 @@ export default {
   getPublicKey,
   listener,
   signTransaction,
+  signMessage,
 };

@@ -20,10 +20,12 @@ export const IPC_MESSAGES = {
   HW_DISCONNECTED: 'hwDisconnected',
   MISSING_PIN: 'pin_not_provided_from_ui',
   SIGN_TRANSACTION: 'SIGN_TX',
+  SIGN_MSG: 'SIGN_MSG',
   VALIDATE_PIN: 'validateTrezorPin',
 };
 export const FUNCTION_TYPES = {
   [IPC_MESSAGES.GET_PUBLIC_KEY]: 'getPublicKey',
   [IPC_MESSAGES.GET_ADDRESS]: 'getAddress',
   [IPC_MESSAGES.SIGN_TRANSACTION]: 'signTransaction',
+  [IPC_MESSAGES.SIGN_MSG]: 'signMessage',
 };
