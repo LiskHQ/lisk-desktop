@@ -11,6 +11,7 @@ import {
   subscribeToDeviceDisconnected,
   subscribeToDevicesList,
   validatePin,
+  signMessage,
 } from '../../libs/hwManager/communication';
 import { splitVotesIntoRounds } from './voting';
 
@@ -107,6 +108,26 @@ const signVoteTransaction = async (
   }
 };
 
+const signMessageByHW = async ({
+  account,
+  message,
+}) => {
+  try {
+    const signature = await signMessage({
+      deviceId: account.hwInfo.deviceId,
+      index: account.hwInfo.derivationIndex,
+      message,
+    });
+
+    return signature;
+  } catch (error) {
+    throw new Error(i18next.t(
+      'The message signature has been canceled on your {{model}}',
+      { model: account.hwInfo.deviceModel },
+    ));
+  }
+};
+
 export {
   checkIfInsideLiskApp,
   getAccountsFromDevice,
@@ -118,4 +139,5 @@ export {
   subscribeToDeviceDisconnected,
   subscribeToDevicesList,
   validatePin,
+  signMessageByHW,
 };
