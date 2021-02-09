@@ -66,23 +66,23 @@ describe('Block api module', () => {
     });
 
     it('should handle filters correctly', async () => {
-      const dateFrom = Date.now() - 1000;
-      const dateTo = Date.now();
       const params = {
         addressList: ['1059876081639179984L', '2059876081639179984L'],
-        dateFrom,
-        dateTo,
+        dateFrom: '02.02.2021',
+        dateTo: '04.02.2021',
         generatorAddress: '5059876081639179984L',
         limit: 50,
         offset: 100,
+        sort: 'height:desc',
       };
       const expectedParams = {
         addressList: params.addressList,
-        from: dateFrom,
-        to: dateTo,
+        from: 1612220400,
+        to: 1612393200,
         generatorAddress: params.generatorAddress,
         limit: params.limit,
         offset: params.offset,
+        sort: 'height:desc',
       };
       const baseUrl = 'https://url.io';
       const network = {};
