@@ -1,11 +1,11 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
-  width: calc(100% - 444px);
+  width: calc(100% - 456px);
   box-sizing: border-box;
   position: absolute;
   top: 0px;
-  left: 222px;
+  left: 266px;
 
   & .icon {
     left: 10px;

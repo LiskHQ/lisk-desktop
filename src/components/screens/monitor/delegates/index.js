@@ -77,15 +77,12 @@ const ComposedDelegates = compose(
           params: {
             ...params,
             limit: params.limit || 30,
-            offset: typeof params.offset !== 'undefined' ? params.offset : 101,
+            status: 'standby',
           },
         }),
         defaultData: [],
         autoload: true,
-        transformResponse: (response, oldData) => transformDelegatesResponse({
-          data: response.data.filter(delegate => delegate.status === 'standby'),
-          meta: response.meta,
-        }, oldData),
+        transformResponse: transformDelegatesResponse,
       },
 
       chartActiveAndStandbyData: {
@@ -118,6 +115,13 @@ const ComposedDelegates = compose(
         defaultData: {},
         autoload: true,
         transformResponse: response => response,
+      },
+
+      sanctionedDelegates: {
+        apiUtil: (network, params) => getDelegates({ network, params: { ...params, status: 'punished,banned' } }),
+        defaultData: [],
+        autoload: true,
+        transformResponse: response => response.data,
       },
 
       votedDelegates: {

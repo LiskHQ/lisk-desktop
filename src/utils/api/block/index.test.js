@@ -106,6 +106,30 @@ describe('Block api module', () => {
       });
     });
 
+    it('should handle filters correctly if dateTo and dateFrom are passed as string', async () => {
+      const dateFrom = '01-01-2000';
+      const dateTo = '02-02-2000';
+      const params = {
+        addressList: ['1059876081639179984L', '2059876081639179984L'],
+        dateFrom,
+        dateTo,
+      };
+      const expectedParams = {
+        addressList: params.addressList,
+        from: new Date(dateFrom).valueOf() / 1000,
+        to: new Date(dateTo).valueOf() / 1000,
+      };
+      const baseUrl = 'https://url.io';
+      const network = {};
+      block.getBlocks({ params, baseUrl, network });
+      expect(http).toHaveBeenCalledWith({
+        path: block.httpPaths.block,
+        params: expectedParams,
+        baseUrl,
+        network,
+      });
+    });
+
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
       http.mockImplementation(() => Promise.reject(new Error(expectedResponse.message)));

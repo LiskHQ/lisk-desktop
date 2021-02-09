@@ -59,6 +59,15 @@ describe('Delegates monitor page', () => {
       standByDelegates: {
         isLoading: true,
         data: [],
+        meta: { total: 100, count: 10, offset: 0 },
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      sanctionedDelegates: {
+        isLoading: true,
+        data: [],
+
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
@@ -121,7 +130,7 @@ describe('Delegates monitor page', () => {
     expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Inside round');
   });
 
-  it('allows to switch to stand by delegates', () => {
+  it('allows to switch to standby delegates', () => {
     wrapper = setup(props);
     switchTab('standby');
     expect(wrapper.find('.tab.standby')).toHaveClassName('active');
