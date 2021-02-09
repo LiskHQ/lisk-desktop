@@ -258,7 +258,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
     ))
     : await to(signSendTransaction(account, { ...data, timeOffset }, apiVersion));
 
-  if (error) {
+  if (error || (account.loginType !== loginType.normal && !tx.signature)) {
     return dispatch({
       type: actionTypes.transactionCreatedError,
       data: error,
