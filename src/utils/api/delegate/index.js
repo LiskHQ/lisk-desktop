@@ -51,6 +51,7 @@ const txFilters = {
   limit: { key: 'limit', test: num => (typeof num === 'number') },
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
   search: { key: 'search', test: str => (typeof str === 'string' && str.length > 0) },
+  status: { key: 'status', test: str => (typeof str === 'string' && str.length > 0) },
   sort: {
     key: 'sort',
     test: str => [
