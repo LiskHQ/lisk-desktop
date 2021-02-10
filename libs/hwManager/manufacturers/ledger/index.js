@@ -146,10 +146,27 @@ const signTransaction = async (transporter, { device, data }) => {
   }
 };
 
+// eslint-disable-next-line max-statements
+const signMessage = async (transporter, { device, data }) => {
+  let transport = null;
+  try {
+    transport = await transporter.open(device.path);
+    const liskLedger = new DposLedger(transport);
+    const ledgerAccount = getLedgerAccount(data.index);
+    const signature = await liskLedger.signMSG(ledgerAccount, data.message);
+    transport.close();
+    return getBufferToHex(signature.slice(0, 64));
+  } catch (error) {
+    if (transport) transport.close();
+    throw new Error(error);
+  }
+};
+
 export default {
   checkIfInsideLiskApp,
   getAddress,
   getPublicKey,
   listener,
   signTransaction,
+  signMessage,
 };

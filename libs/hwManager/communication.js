@@ -74,6 +74,25 @@ const signTransaction = async (data) => {
 };
 
 /**
+ * signMessage - Function.
+ * Use for sign a random message
+ * @param {object} data -> Object that contain the information about the device and data
+ * @param {string} data.deviceId -> Id of the hw device
+ * @param {number} data.index -> index of the account of which will extract information
+ * @param {object} data.message -> Object with all transaction information
+ */
+const signMessage = async (data) => {
+  const response = await executeCommand(
+    IPC_MESSAGES.HW_COMMAND,
+    {
+      action: IPC_MESSAGES.SIGN_MSG,
+      data,
+    },
+  );
+  return response;
+};
+
+/**
  * checkIfInsideLiskApp - Function.
  * To check if Lisk App is open on the device
  * @param {object} data -> Object that contain the information about the device and data
@@ -143,4 +162,5 @@ export {
   subscribeToDevicesList,
   validatePin,
   getAddress,
+  signMessage,
 };
