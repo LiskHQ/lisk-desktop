@@ -47,7 +47,7 @@ const SignMessageInput = ({ nextStep, t, history }) => {
             className={styles.textarea}
             name="message"
             onChange={onChange}
-            value={message.value}
+            value={message}
           />
         </label>
       </BoxContent>
