@@ -2,6 +2,8 @@
 
 .wrapper {
   width: 720px;
+  overflow-y: scroll;
+  max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
 
   & > footer {
     align-items: center;

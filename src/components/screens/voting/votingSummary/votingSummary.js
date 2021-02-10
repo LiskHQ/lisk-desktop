@@ -43,8 +43,8 @@ const VotingSummary = ({
                 ...(success ? {
                   title: t('Votes submitted'),
                   illustration: 'votingSuccess',
-                  message: t('You’ll see it in Delegates and it will be confirmed in a matter of minutes.'),
-                  primaryButon: {
+                  message: t('You’ll see it in Voting and it will be confirmed in a matter of minutes.'),
+                  primaryButton: {
                     title: t('Close'),
                     className: 'close-dialog-button',
                     onClick: () => {
@@ -55,7 +55,7 @@ const VotingSummary = ({
                   title: t('Voting failed'),
                   illustration: 'votingError',
                   message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
-                  primaryButon: {
+                  primaryButton: {
                     title: t('Back to Voting Table'),
                     onClick: () => {
                       history.push(routes.voting.path);
