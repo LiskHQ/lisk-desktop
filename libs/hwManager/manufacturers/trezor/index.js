@@ -145,7 +145,7 @@ const signMessage = (transporter, { device, data }) => {
           {
             address_n: getHardenedPath(data.index),
             // eslint-disable-next-line new-cap
-            message: new Buffer.alloc(64, data.message, 'utf8').toString('hex'),
+            message: new Buffer.from(data.message, 'utf8').toString('hex'),
           },
         );
         return resolve(message.signature);
