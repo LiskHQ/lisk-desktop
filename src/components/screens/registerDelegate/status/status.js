@@ -89,7 +89,7 @@ class Status extends React.Component {
           success={isTransactionSuccess}
           title={displayTemplate.title}
           message={displayTemplate.message}
-          primaryButon={displayTemplate.button}
+          primaryButton={displayTemplate.button}
           className={styles.content}
           t={t}
         />

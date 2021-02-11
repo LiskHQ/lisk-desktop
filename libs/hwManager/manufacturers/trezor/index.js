@@ -2,6 +2,7 @@
 import {
   IPC_MESSAGES,
   PIN,
+  PASSPHRASE,
 } from '../../constants';
 import { TREZOR } from './constants';
 import {
@@ -11,7 +12,7 @@ import {
 
 /**
  * addDevice - function - Add a new device to the devices list.
- * @param {object} device - Device object comming from the trezor library
+ * @param {object} device - Device object coming from the trezor library
  * @param {function} add - Function that use for main file to include the device in the main list.
  */
 const addDevice = (device, { add }) => {
@@ -22,14 +23,14 @@ const addDevice = (device, { add }) => {
       ? TREZOR.models.Trezor_Model_One
       : TREZOR.models.Trezor_Model_T,
     path: device.originalDescriptor.path,
-    manufactor: TREZOR.name,
+    manufacturer: TREZOR.name,
     openApp: true,
   });
 };
 
 /**
- * removeDevice - funcion - Remove a device from the main list and the device array.
- * @param {object} device - Device object comming from the trezor library
+ * removeDevice - function - Remove a device from the main list and the device array.
+ * @param {object} device - Device object coming from the trezor library
  * @param {function} remove - Function for remove a device from the main list.
  */
 const removeDevice = (device, { remove }) => {
@@ -38,6 +39,10 @@ const removeDevice = (device, { remove }) => {
 
 const onPinCallback = (device, { pinCallback }) => {
   device.on(PIN, (type, callback) => pinCallback(type, callback));
+};
+
+const onPassphraseCallback = (device, { passphraseCallback }) => {
+  device.on(PASSPHRASE, callback => passphraseCallback(callback));
 };
 
 /**
@@ -51,6 +56,7 @@ const listener = (transport, actions) => {
   transport.on(IPC_MESSAGES.CONNECT, (device) => {
     addDevice(device, actions);
     onPinCallback(device, actions);
+    onPassphraseCallback(device, actions);
   });
   transport.on(IPC_MESSAGES.DISCONNECT, (device) => { removeDevice(device, actions); });
   transport.on(IPC_MESSAGES.ERROR, (error) => { throw new Error(error); });
@@ -126,6 +132,30 @@ const signTransaction = (transporter, { device, data }) => {
   });
 };
 
+const signMessage = (transporter, { device, data }) => {
+  const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
+  if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
+
+  return new Promise((resolve, reject) => {
+    trezorDevice.waitForSessionAndRun(async (session) => {
+      try {
+        const { message } = await session.typedCall(
+          'LiskSignMessage',
+          'LiskMessageSignature',
+          {
+            address_n: getHardenedPath(data.index),
+            // eslint-disable-next-line new-cap
+            message: new Buffer.from(data.message, 'utf8').toString('hex'),
+          },
+        );
+        return resolve(message.signature);
+      } catch (err) {
+        return reject();
+      }
+    });
+  });
+};
+
 const checkIfInsideLiskApp = async ({ device }) => device;
 
 export default {
@@ -134,4 +164,5 @@ export default {
   getPublicKey,
   listener,
   signTransaction,
+  signMessage,
 };

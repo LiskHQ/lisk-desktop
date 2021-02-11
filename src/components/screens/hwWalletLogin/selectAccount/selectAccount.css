@@ -48,6 +48,8 @@
 
     & .accountTitle {
       @mixin contentNormal bold;
+
+      color: var(--color-maastricht-blue);
     }
 
     & .editBtn {

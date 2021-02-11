@@ -22,9 +22,11 @@ class RequestPin extends React.Component {
   }
 
   componentDidMount() {
+    this.mounted = true;
     const { nextStep, deviceId } = this.props;
-    if (this.selectedDevice.model !== 'Trezor Model One') nextStep({ deviceId });
-    else this.checkDeviceUnlocked();
+    if (this.selectedDevice.model !== 'Trezor Model One') {
+      nextStep({ deviceId });
+    } else this.checkDeviceUnlocked();
   }
 
   async checkDeviceUnlocked() {
@@ -64,9 +66,13 @@ class RequestPin extends React.Component {
       this.setState({
         isLoading: false, error: true, feedback: t('Invalid PIN'), pin: '',
       });
-    } else {
+    } else if (this.mounted) {
       nextStep({ deviceId });
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   render() {
