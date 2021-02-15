@@ -195,7 +195,7 @@ export const getRegisteredDelegates = async ({ network }) => {
 export const getTransactionStats = ({ network, params: { period } }) => {
   const normParams = {
     week: { path: 'day', limit: 7 },
-    month: { path: 'day', limit: 30 },
+    month: { path: 'month', limit: 6 },
     year: { path: 'month', limit: 12 },
   };
 
