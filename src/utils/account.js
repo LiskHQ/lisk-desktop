@@ -28,3 +28,8 @@ export const getActiveTokenAccount = state => ({
       : tokenMap.LSK.key
   ]) || {}),
 });
+
+export const isAccountInitialized = account => account
+  && account.info
+  && account.info.LSK
+  && !!account.info.LSK.serverPublicKey;

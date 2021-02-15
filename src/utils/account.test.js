@@ -1,5 +1,7 @@
 import { expect } from 'chai';
-import { extractPublicKey, extractAddress, getActiveTokenAccount } from './account';
+import {
+  extractPublicKey, extractAddress, getActiveTokenAccount, isAccountInitialized,
+} from './account';
 
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
@@ -50,6 +52,20 @@ describe('Utils: Account', () => {
         ...account,
         ...account.info[activeToken],
       });
+    });
+  });
+
+  describe('isAccountInitialzed', () => {
+    it('should return true if initialized', () => {
+      const result = isAccountInitialized({ info: { LSK: { serverPublicKey: 'some key' } } });
+      // eslint-disable-next-line no-unused-expressions
+      expect(result).to.be.true;
+    });
+
+    it('should return false if not initialized', () => {
+      const result = isAccountInitialized({ info: { LSK: { serverPublicKey: '' } } });
+      // eslint-disable-next-line no-unused-expressions
+      expect(result).to.be.false;
     });
   });
 });

@@ -9,7 +9,7 @@ import {
 } from '../../actions/transactions';
 import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
-import { getActiveTokenAccount } from '../../utils/account';
+import { getActiveTokenAccount, isAccountInitialized } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
 import { loadVotes } from '../../actions/voting';
 import { networkSet, networkStatusUpdated } from '../../actions/network';
@@ -114,11 +114,12 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
       }));
     }, 500);
 
-    if (!account.isAccountInitialised) {
+    if (!isAccountInitialized(account)) {
       const isAccountNowInitialized = relevantTransactions.filter(tx =>
         tx.senderId === account.address).length > 0;
 
       if (isAccountNowInitialized) {
+        /* istanbul ignore next */
         removeSearchParamsFromUrl(history, ['modal', 'initialization']);
         return;
       }
@@ -127,7 +128,9 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
         tx.type === transactionTypes().send.code).reduce((sum, tx) => Number(tx.amount) + sum, 0);
       const isBalanceEnough = Number(account.balance)
         + pendingBalance >= balanceNeededForInitialization;
+
       if (isBalanceEnough) {
+        /* istanbul ignore next */
         addSearchParamsToUrl(history, { modal: 'send', initialization: true });
       }
     }
