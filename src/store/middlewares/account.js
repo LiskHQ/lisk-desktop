@@ -25,7 +25,7 @@ import { tokenMap } from '../../constants/tokens';
 import { addSearchParamsToUrl } from '../../utils/searchParams';
 import history from '../../history';
 
-const balanceNeededForInitialisation = 2e7;
+const balanceNeededForInitialization = 2e7;
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -118,11 +118,9 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
       const pendingBalance = relevantTransactions.filter(tx =>
         tx.type === transactionTypes().send.code).reduce((sum, tx) => Number(tx.amount) + sum, 0);
       const isBalanceEnough = Number(account.balance)
-      + pendingBalance > balanceNeededForInitialisation;
+        + pendingBalance > balanceNeededForInitialization;
       if (isBalanceEnough) {
-        addSearchParamsToUrl(history, {
-          modal: 'send', amount: 0.1, message: 'Account Initialisation', recipient: account.info.LSK.address, initialisation: true,
-        });
+        addSearchParamsToUrl(history, { modal: 'send', initialization: true });
       }
     }
   }

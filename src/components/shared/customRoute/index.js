@@ -24,16 +24,16 @@ const CustomRoute = ({
   const isAccountInitialised = useSelector(state => state.account.isAccountInitialised);
   const { search = '' } = history.location;
 
-  if (!networkIsSet) return null;
-
-  Piwik.tracking(history, settings);
-
   if (!isAccountInitialised) {
     // @todo add screen here...
     // eslint-disable-next-line no-console
-    console.log('Account is unitialised');
-    // return <AccountInitialisationScreen />;
+    console.log('Account is unitialized');
+    // return <AccounInitializationScreen />;
   }
+
+  if (!networkIsSet) return null;
+
+  Piwik.tracking(history, settings);
 
   if (forbiddenTokens.indexOf(settings.token.active) !== -1) {
     return <Redirect to={`${routes.dashboard.path}`} />;

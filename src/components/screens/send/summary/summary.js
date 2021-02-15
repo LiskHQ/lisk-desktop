@@ -70,23 +70,24 @@ class Summary extends React.Component {
 
   render() {
     const {
-      fields, t, token, account,
+      fields, t, token, account, isInitialization,
     } = this.props;
     const amount = fields.amount.value;
 
     return (
       <TransactionSummary
-        title={t('Transaction summary')}
+        title={isInitialization ? t('Initialization summary ') : t('Transaction summary')}
         t={t}
         account={account}
         confirmButton={{
-          label: t('Send {{amount}} {{token}}', { amount, token }),
+          label: isInitialization ? t('Send') : t('Send {{amount}} {{token}}', { amount, token }),
           onClick: this.submitTransaction,
         }}
         cancelButton={{
           label: t('Edit transaction'),
           onClick: this.prevStep,
         }}
+        showCancelButton={!isInitialization}
         fee={fromRawLsk(fields.fee.value)}
         token={token}
       >
