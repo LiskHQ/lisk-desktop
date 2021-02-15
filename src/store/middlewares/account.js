@@ -22,6 +22,10 @@ import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import { txAdapter } from '../../utils/api/lsk/adapters';
 import { tokenMap } from '../../constants/tokens';
+import { addSearchParamsToUrl } from '../../utils/searchParams';
+import history from '../../history';
+
+const balanceNeededForInitialisation = 2e7;
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -76,17 +80,20 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
   });
 };
 
+// eslint-disable-next-line max-statements
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
   const { transactions, settings: { token } } = state;
   const account = getActiveTokenAccount(store.getState());
 
   const txs = (action.data.block.transactions || []).map(txAdapter);
-  const blockContainsRelevantTransaction = txs.filter((transaction) => {
+  const relevantTransactions = txs.filter((transaction) => {
     const sender = transaction ? transaction.senderId : null;
     const recipient = transaction ? transaction.recipientId : null;
     return account.address === recipient || account.address === sender;
-  }).length > 0;
+  });
+
+  const blockContainsRelevantTransaction = relevantTransactions.length > 0;
 
   showNotificationsForIncomingTransactions(txs, account, token.active);
 
@@ -106,6 +113,18 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
         filters: transactions.filters,
       }));
     }, 500);
+
+    if (!account.isAccountInitialised) {
+      const pendingBalance = relevantTransactions.filter(tx =>
+        tx.type === transactionTypes().send.code).reduce((sum, tx) => Number(tx.amount) + sum, 0);
+      const isBalanceEnough = Number(account.balance)
+      + pendingBalance > balanceNeededForInitialisation;
+      if (isBalanceEnough) {
+        addSearchParamsToUrl(history, {
+          modal: 'send', amount: 0.1, message: 'Account Initialisation', recipient: account.info.LSK.address, initialisation: true,
+        });
+      }
+    }
   }
 };
 
