@@ -1,21 +1,58 @@
 @import './../../../app/mixins.css';
 
 .register {
-  align-items: center;
   display: flex;
-  flex-grow: 1;
-  margin: 0;
-  min-height: 100%;
+  flex-direction: column;
   justify-content: center;
-  text-align: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-grow: 1;
   width: 100%;
+
+  & .warning {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.alignStart {
+  justify-content: flex-start;
+}
+
+.warningContent {
+  margin-left: 10px;
+  display: flex;
+  text-align: start;
+  flex-direction: column;
+}
+
+.warningIcon {
+  display: flex;
+  align-items: flex-start;
+}
+
+.warningSubheading {
+  @mixin contentLargest semi-bold;
+
+  color: var(--color-maastricht-blue);
+  margin-top: 0;
+}
+
+.warningPara {
+  @mixin contentLargest;
+
+  color: var(--color-maastricht-blue);
+  line-height: 24px;
+  text-align: start;
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .wrapper {
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 80px 0;
+  padding: 20px 0;
   width: 100%;
   max-width: 878px;
 

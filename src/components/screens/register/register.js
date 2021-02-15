@@ -1,5 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { Link } from 'react-router-dom';
 import { generatePassphrase } from '../../../utils/passphrase';
 import { extractAddress } from '../../../utils/account';
 import ChooseAvatar from './chooseAvatar';
@@ -10,6 +11,9 @@ import routes from '../../../constants/routes';
 import styles from './register.css';
 import MultiStep from '../../../../libs/multiStep';
 import MultiStepProgressBar from '../../shared/multiStepProgressBar';
+import Icon from '../../toolbox/icon';
+import Box from '../../toolbox/box';
+import BoxContent from '../../toolbox/box/content';
 
 class Register extends React.Component {
   constructor() {
@@ -17,9 +21,11 @@ class Register extends React.Component {
     this.state = {
       accounts: [],
       selectedAccount: {},
+      showWarning: false,
     };
 
     this.handleSelectAvatar = this.handleSelectAvatar.bind(this);
+    this.onConfirmPassphrase = this.onConfirmPassphrase.bind(this);
   }
 
   componentDidMount() {
@@ -45,11 +51,53 @@ class Register extends React.Component {
     this.setState({ selectedAccount });
   }
 
+  onConfirmPassphrase() {
+    this.setState({ showWarning: true });
+  }
+
   render() {
-    const { accounts, selectedAccount } = this.state;
+    const { accounts, selectedAccount, showWarning } = this.state;
     return (
-      <React.Fragment>
-        <div className={`${styles.register} ${grid.row}`}>
+      <>
+        <div className={`${grid.row} ${styles.register} ${showWarning ? styles.alignStart : ''}`}>
+          {showWarning && (
+            <Box>
+              <BoxContent className={styles.warning}>
+                <span className={styles.warningIcon}>
+                  <Icon name="warningYellow" width="24px" />
+                </span>
+                <div className={styles.warningContent}>
+                  <p className={styles.warningSubheading}>
+                     WARNING: Do not deposit large amounts until your account has been initialized
+                  </p>
+                  <p className={styles.warningPara}>
+                    To initialize your account, you simply need to send at least one
+                    outgoing transaction.
+                  </p>
+                  <p className={styles.warningPara}>
+                    Upon making your first deposit, Lisk Desktop will prompt you to send such an
+                    outgoing transaction, costing only 0.1 LSK in fees. Once you have sent
+                    this transaction, your account will be initialized.
+                  </p>
+                  <p className={styles.warningPara}>
+                    If you do not initialize your account, then your account will remain vulnerable
+                    to address collision attacks and at risk of being compromised.
+                  </p>
+                  <p className={styles.warningPara}>
+                    Please read the following
+                    {' '}
+                    <Link to="">
+                        blog post
+                      {' '}
+                      <Icon name="linkIcon" />
+                    </Link>
+                    {' '}
+                    for more information.
+                  </p>
+                </div>
+              </BoxContent>
+            </Box>
+          )}
           <MultiStep
             navStyles={{ multiStepWrapper: styles.wrapper }}
             progressBar={MultiStepProgressBar}
@@ -65,13 +113,14 @@ class Register extends React.Component {
             <ConfirmPassphrase
               account={selectedAccount}
               passphrase={selectedAccount.passphrase}
+              onConfirmPassphrase={this.onConfirmPassphrase}
             />
             <AccountCreated
               account={selectedAccount}
             />
           </MultiStep>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }
