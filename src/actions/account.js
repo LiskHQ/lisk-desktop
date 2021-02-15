@@ -199,7 +199,9 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
     toast.error(getConnectionErrorMessage(error));
     dispatch(accountLoggedOut());
   } else {
+    const isAccountInitialised = !!(info && info.LSK && info.LSK.serverPublicKey);
     dispatch(accountLoggedIn({
+      isAccountInitialised,
       passphrase,
       loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
       hwInfo: hwInfo || {},
