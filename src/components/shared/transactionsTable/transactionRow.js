@@ -9,13 +9,9 @@ import LiskAmount from '../liskAmount';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import DialogLink from '../../toolbox/dialog/link';
 import styles from './transactionsTable.css';
+import { getTxAmount } from '../../../utils/api/transaction/lsk';
 
 const roundSize = 103;
-
-const getUnlockedBalance = (unlockingObjects = []) => unlockingObjects.reduce(
-  (sum, unlocking) => sum + parseInt(unlocking.amount, 10),
-  0,
-);
 
 const TransactionRow = ({ data, className, t }) => (
   <DialogLink
@@ -44,7 +40,7 @@ const TransactionRow = ({ data, className, t }) => (
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-2']} ${styles.amount}`}>
       <LiskAmount
-        val={data.title !== 'unlockToken' ? data.amount : getUnlockedBalance(data.asset?.unlockingObjects)}
+        val={getTxAmount(data)}
         token={tokenMap.LSK.key}
       />
       <span className={`${styles.fee} hideOnLargeViewPort`}>

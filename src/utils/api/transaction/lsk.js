@@ -214,10 +214,17 @@ export const getTransactionStats = ({ network, params: { period } }) => {
  */
 export const getTxAmount = (transaction) => {
   let amount = transaction.amount !== undefined ? transaction.amount : transaction.asset.amount;
-  if (!amount && transaction.type === transactionTypes().unlockToken.code.legacy) {
+  if (transaction.title === 'unlockToken') {
     amount = 0;
     transaction.asset.unlockingObjects.forEach((unlockedObject) => {
       amount += parseInt(unlockedObject.amount, 10);
+    });
+    amount = `${amount}`;
+  }
+  if (transaction.title === 'vote') {
+    amount = 0;
+    transaction.asset.votes.forEach((vote) => {
+      amount += parseInt(vote.amount, 10);
     });
     amount = `${amount}`;
   }
