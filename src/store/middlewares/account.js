@@ -22,7 +22,7 @@ import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import { txAdapter } from '../../utils/api/lsk/adapters';
 import { tokenMap } from '../../constants/tokens';
-import { addSearchParamsToUrl } from '../../utils/searchParams';
+import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '../../utils/searchParams';
 import history from '../../history';
 
 const balanceNeededForInitialization = 2e7;
@@ -115,10 +115,18 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     }, 500);
 
     if (!account.isAccountInitialised) {
+      const isAccountNowInitialized = relevantTransactions.filter(tx =>
+        tx.senderId === account.address).length > 0;
+
+      if (isAccountNowInitialized) {
+        removeSearchParamsFromUrl(history, ['modal', 'initialization']);
+        return;
+      }
+
       const pendingBalance = relevantTransactions.filter(tx =>
         tx.type === transactionTypes().send.code).reduce((sum, tx) => Number(tx.amount) + sum, 0);
       const isBalanceEnough = Number(account.balance)
-        + pendingBalance > balanceNeededForInitialization;
+        + pendingBalance >= balanceNeededForInitialization;
       if (isBalanceEnough) {
         addSearchParamsToUrl(history, { modal: 'send', initialization: true });
       }

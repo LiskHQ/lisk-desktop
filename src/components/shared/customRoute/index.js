@@ -21,8 +21,12 @@ const CustomRoute = ({
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
-  const isAccountInitialised = useSelector(state => state.account.isAccountInitialised);
   const { search = '' } = history.location;
+  const isAccountInitialised = useSelector(state =>
+    state.account
+    && state.account.info
+    && state.account.info.LSK
+    && state.account.info.LSK.serverPublicKey);
 
   if (!isAccountInitialised) {
     // @todo add screen here...
