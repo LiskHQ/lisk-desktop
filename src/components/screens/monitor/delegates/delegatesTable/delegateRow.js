@@ -24,7 +24,7 @@ const roundStatus = {
 const icons = {
   forging: 'delegateForged',
   awaitingSlot: 'delegateAwaiting',
-  notForging: 'delegateAwaiting',
+  notForging: 'delegateMissed',
   missedBlock: 'delegateMissed',
 };
 
