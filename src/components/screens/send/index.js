@@ -22,7 +22,7 @@ const Send = ({ history }) => {
 
   if (isInitialization) {
     return (
-      <Dialog hasClose={!isInitialization || isAccountInitialized}>
+      <Dialog hasClose={isAccountInitialized}>
         <MultiStep
           key="send"
           finalCallback={backToWallet}
