@@ -28,6 +28,7 @@ import SearchBar from '../components/shared/searchBar';
 import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
 // eslint-disable-next-line import/no-named-as-default
 import DeviceDisconnectDialog from '../components/screens/deviceDisconnectDialog';
+import Initialization from '../components/screens/initialization';
 
 export default {
   wallet: {
@@ -124,6 +125,12 @@ export default {
     exact: true,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
+  },
+  initialization: {
+    path: '/initialization',
+    component: Initialization,
+    isPrivate: true,
+    forbiddenTokens: [],
   },
   dashboard: {
     path: '/',

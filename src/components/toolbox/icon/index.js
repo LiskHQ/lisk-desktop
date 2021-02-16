@@ -130,6 +130,7 @@ import initialiseIcon from '../../../assets/images/icons/initialise-icon.svg';
 import initialiseRegistration from '../../../assets/images/icons/initialise-registration.svg';
 import warningYellow from '../../../assets/images/icons/warning-yellow.svg';
 import linkIcon from '../../../assets/images/icons/link-icon.svg';
+import shieldInitialization from '../../../assets/images/icons/shield-initialization.svg';
 
 export const icons = {
   academy,
@@ -261,6 +262,7 @@ export const icons = {
   initialiseRegistration,
   warningYellow,
   linkIcon,
+  shieldInitialization,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
