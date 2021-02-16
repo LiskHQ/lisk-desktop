@@ -31,11 +31,18 @@ const CustomRoute = ({
     && account.info.LSK
     && account.info.LSK.serverPublicKey;
 
-  if (!networkIsSet) return null;
+  if (!networkIsSet) {
+    return null;
+  }
 
   Piwik.tracking(history, settings);
 
-  if (isAuthenticated && !isAccountInitialised && hasEnoughBalanceForInitialization(account.info.LSK.balance)) {
+  if (
+    isAuthenticated
+    && !isAccountInitialised
+    && hasEnoughBalanceForInitialization(account.info.LSK.balance)
+    && history.location.pathname !== routes.initialization.path
+  ) {
     return (
       <Redirect to={routes.initialization.path} />
     );
