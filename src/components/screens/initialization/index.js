@@ -9,19 +9,27 @@ const Initialization = ({ t }) => {
   return (
     <div className={styles.container}>
       <Icon name="shieldInitialization" className={styles.headerIcon} />
-      <p>{t('Initialize your account')}</p>
-      <p>{t('Your account is not safe until you initialize it. It takes 1 minute of your time and 0.1 LSK to protect your account. ')}</p>
-      <p>{t('You can learn more')}
-        <button
+      <p className={styles.header}>{t('Initialize your account')}</p>
+      <p className={styles.text}>
+        {t('Your account is not safe until you initialize it.')}
+        <br />
+        {t('It takes 1 minute of your time and 0.1 LSK to protect your account.')}
+        <br />
+        <br />
+        <br />
+        {t('You can learn more')}
+        {' '}
+        <span
+          className={styles.link}
           onClick={() => {
             window.open('https://lisk.io/blog/announcement/lisk-account-initialization', '_blank', 'rel="noopener noreferrer');
           }}
         >
           here
-        </button>
+        </span>
       </p>
       <DialogLink component="send">
-        <PrimaryButton>{t('Initialize')}</PrimaryButton>
+        <PrimaryButton className={styles.button}>{t('Initialize')}</PrimaryButton>
       </DialogLink>
     </div>
   );
