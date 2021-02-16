@@ -119,18 +119,18 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
         tx.senderId === account.address).length > 0;
 
       if (isAccountNowInitialized) {
-        /* istanbul ignore next */
         removeSearchParamsFromUrl(history, ['modal', 'initialization']);
+        /* istanbul ignore next */
         return;
       }
 
-      const pendingBalance = relevantTransactions.filter(tx =>
-        tx.type === transactionTypes().send.code).reduce((sum, tx) => Number(tx.amount) + sum, 0);
-      const isBalanceEnough = Number(account.balance)
+      const pendingBalance = relevantTransactions
+        .filter(tx => tx.type === transactionTypes().send.code)
+        .reduce((sum, tx) => Number(tx.amount) + sum, 0);
+      const isBalanceEnough = Number(account.balance || '0')
         + pendingBalance >= balanceNeededForInitialization;
 
       if (isBalanceEnough) {
-        /* istanbul ignore next */
         addSearchParamsToUrl(history, { modal: 'send', initialization: true });
       }
     }
