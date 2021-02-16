@@ -5,34 +5,32 @@ import { PrimaryButton } from '../../toolbox/buttons';
 import DialogLink from '../../toolbox/dialog/link';
 import styles from './initialization.css';
 
-const Initialization = ({ t }) => {
-  return (
-    <div className={styles.container}>
-      <Icon name="shieldInitialization" className={styles.headerIcon} />
-      <p className={styles.header}>{t('Initialize your account')}</p>
-      <p className={styles.text}>
-        {t('Your account is not safe until you initialize it.')}
-        <br />
-        {t('It takes 1 minute of your time and 0.1 LSK to protect your account.')}
-        <br />
-        <br />
-        <br />
-        {t('You can learn more')}
-        {' '}
-        <span
-          className={styles.link}
-          onClick={() => {
-            window.open('https://lisk.io/blog/announcement/lisk-account-initialization', '_blank', 'rel="noopener noreferrer');
-          }}
-        >
-          here
-        </span>
-      </p>
-      <DialogLink component="send">
-        <PrimaryButton className={styles.button}>{t('Initialize')}</PrimaryButton>
-      </DialogLink>
-    </div>
-  );
-};
+const Initialization = ({ t }) => (
+  <div className={styles.container}>
+    <Icon name="shieldInitialization" className={styles.headerIcon} />
+    <p className={styles.header}>{t('Initialize your account')}</p>
+    <p className={styles.text}>
+      {t('Your account is not safe until you initialize it.')}
+      <br />
+      {t('It takes 1 minute of your time and 0.1 LSK to protect your account.')}
+      <br />
+      <br />
+      <br />
+      {t('You can learn more')}
+      {' '}
+      <span
+        className={styles.link}
+        onClick={() => {
+          window.open('https://lisk.io/blog/announcement/lisk-account-initialization', '_blank', 'rel="noopener noreferrer');
+        }}
+      >
+        here
+      </span>
+    </p>
+    <DialogLink component="send">
+      <PrimaryButton className={styles.button}>{t('Initialize')}</PrimaryButton>
+    </DialogLink>
+  </div>
+);
 
 export default withTranslation()(Initialization);
