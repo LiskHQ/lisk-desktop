@@ -27,7 +27,10 @@ const Initialization = ({ t }) => (
         here
       </span>
     </p>
-    <DialogLink component="send">
+    <DialogLink
+      component="send"
+      data={{ initialization: true }}
+    >
       <PrimaryButton className={styles.button}>{t('Initialize')}</PrimaryButton>
     </DialogLink>
   </div>
