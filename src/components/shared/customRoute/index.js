@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
@@ -6,6 +7,8 @@ import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../../utils/piwik';
 import routes from '../../../constants/routes';
+
+const hasEnoughBalance = (balance = 0) => balance > 2e7;
 
 // eslint-disable-next-line max-statements
 const CustomRoute = ({
@@ -17,27 +20,27 @@ const CustomRoute = ({
   t,
   history,
 }) => {
-  const settings = useSelector(state => state.settings);
-  const isAuthenticated = useSelector(state =>
-    (state.account.info && state.account.info[settings.token.active]));
-  const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
   const { search = '' } = history.location;
-  const isAccountInitialised = useSelector(state =>
-    state.account
-    && state.account.info
-    && state.account.info.LSK
-    && state.account.info.LSK.serverPublicKey);
 
-  if (!isAccountInitialised) {
-    // @todo add screen here...
-    // eslint-disable-next-line no-console
-    console.log('Account is unitialized');
-    // return <AccounInitializationScreen />;
-  }
+  const settings = useSelector(state => state.settings);
+  const account = useSelector(state => state.account);
+  const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
+
+  const isAuthenticated = account.info && account.info[settings.token.active];
+  const isAccountInitialised = account
+    && account.info
+    && account.info.LSK
+    && account.info.LSK.serverPublicKey;
 
   if (!networkIsSet) return null;
 
   Piwik.tracking(history, settings);
+
+  if (isAuthenticated && !isAccountInitialised && hasEnoughBalance(account.info.LSK.balance)) {
+    return (
+      <Redirect to={routes.initialization.path} />
+    );
+  }
 
   if (forbiddenTokens.indexOf(settings.token.active) !== -1) {
     return <Redirect to={`${routes.dashboard.path}`} />;
