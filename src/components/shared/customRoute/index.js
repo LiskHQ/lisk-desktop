@@ -26,8 +26,7 @@ const CustomRoute = ({
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
 
   const isAuthenticated = account.info && account.info[settings.token.active];
-  const isAccountInitialised = account
-    && account.info
+  const isAccountInitialised = account.info
     && account.info.LSK
     && account.info.LSK.serverPublicKey;
 
