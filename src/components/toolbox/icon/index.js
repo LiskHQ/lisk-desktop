@@ -125,6 +125,7 @@ import totalBlocks from '../../../assets/images/icons/total-blocks.svg';
 import blocksForged from '../../../assets/images/icons/blocks-forged.svg';
 import distribution from '../../../assets/images/icons/distribution.svg';
 import clock from '../../../assets/images/icons/clock.svg';
+import shieldInitialization from '../../../assets/images/icons/shield-initialization.svg';
 
 export const icons = {
   academy,
@@ -251,6 +252,7 @@ export const icons = {
   distribution,
   clock,
   searchInput,
+  shieldInitialization,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
