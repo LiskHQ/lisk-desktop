@@ -1,6 +1,5 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Link } from 'react-router-dom';
 import { generatePassphrase } from '../../../utils/passphrase';
 import { extractAddress } from '../../../utils/account';
 import ChooseAvatar from './chooseAvatar';
@@ -86,11 +85,11 @@ class Register extends React.Component {
                   <p className={styles.warningPara}>
                     Please read the following
                     {' '}
-                    <Link to="">
+                    <a href="https://lisk.io/blog/announcement/lisk-account-initialization" target="_blank">
                         blog post
                       {' '}
                       <Icon name="linkIcon" />
-                    </Link>
+                    </a>
                     {' '}
                     for more information.
                   </p>
