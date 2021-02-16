@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import {
-  extractPublicKey, extractAddress, getActiveTokenAccount, isAccountInitialized, hasEnoughBalanceForInitialization,
+  extractPublicKey, extractAddress, getActiveTokenAccount, isAccountInitialized,
+  hasEnoughBalanceForInitialization,
 } from './account';
 
 describe('Utils: Account', () => {
