@@ -1,5 +1,6 @@
 import liskClient from 'Utils/lisk-client'; // eslint-disable-line
 import { tokenMap } from '../constants/tokens';
+import { balanceNeededForInitialization } from '../constants/account';
 
 export const extractPublicKey = (passphrase, apiVersion) => {
   const Lisk = liskClient(apiVersion);
@@ -33,3 +34,6 @@ export const isAccountInitialized = account => account
   && account.info
   && account.info.LSK
   && !!account.info.LSK.serverPublicKey;
+
+export const hasEnoughBalanceForInitialization = (balance = 0) =>
+  Number(balance) >= balanceNeededForInitialization;

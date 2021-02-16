@@ -7,8 +7,7 @@ import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../../utils/piwik';
 import routes from '../../../constants/routes';
-
-const hasEnoughBalance = (balance = 0) => balance > 2e7;
+import { hasEnoughBalanceForInitialization } from '../../../utils/account';
 
 // eslint-disable-next-line max-statements
 const CustomRoute = ({
@@ -36,7 +35,7 @@ const CustomRoute = ({
 
   Piwik.tracking(history, settings);
 
-  if (isAuthenticated && !isAccountInitialised && hasEnoughBalance(account.info.LSK.balance)) {
+  if (isAuthenticated && !isAccountInitialised && hasEnoughBalanceForInitialization(account.info.LSK.balance)) {
     return (
       <Redirect to={routes.initialization.path} />
     );

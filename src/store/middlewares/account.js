@@ -9,7 +9,7 @@ import {
 } from '../../actions/transactions';
 import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
-import { getActiveTokenAccount, isAccountInitialized } from '../../utils/account';
+import { getActiveTokenAccount, hasEnoughBalanceForInitialization, isAccountInitialized } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
 import { loadVotes } from '../../actions/voting';
 import { networkSet, networkStatusUpdated } from '../../actions/network';
@@ -24,8 +24,6 @@ import { txAdapter } from '../../utils/api/lsk/adapters';
 import { tokenMap } from '../../constants/tokens';
 import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '../../utils/searchParams';
 import history from '../../history';
-
-const balanceNeededForInitialization = 2e7;
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -127,10 +125,11 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
       const pendingBalance = relevantTransactions
         .filter(tx => tx.type === transactionTypes().send.code)
         .reduce((sum, tx) => Number(tx.amount) + sum, 0);
-      const isBalanceEnough = Number(account.balance || '0')
-        + pendingBalance >= balanceNeededForInitialization;
+      const hasEnoughBalance = hasEnoughBalanceForInitialization(
+        Number(account.balance || '0') + pendingBalance,
+      );
 
-      if (isBalanceEnough) {
+      if (hasEnoughBalance) {
         addSearchParamsToUrl(history, { modal: 'send', initialization: true });
       }
     }
