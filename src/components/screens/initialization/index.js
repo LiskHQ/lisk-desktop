@@ -7,7 +7,7 @@ import styles from './initialization.css';
 
 const Initialization = ({ t }) => (
   <div className={styles.container}>
-    <Icon name="shieldInitialization" className={styles.headerIcon} />
+    <Icon name="initialiseRegistration" className={styles.headerIcon} />
     <p className={styles.header}>{t('Initialize your account')}</p>
     <p className={styles.text}>
       {t('Your account is not safe until you initialize it.')}
