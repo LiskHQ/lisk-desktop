@@ -14,9 +14,11 @@ import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
 import { tokenMap } from '../../constants/tokens';
-import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '../../utils/searchParams';
+import { removeSearchParamsFromUrl } from '../../utils/searchParams';
+import history from '../../history';
 
 jest.mock('../../utils/searchParams');
+jest.mock('../../history');
 
 describe('Account middleware', () => {
   let store;
@@ -143,7 +145,7 @@ describe('Account middleware', () => {
 
   it('should call the modal show function if new transaction received to uninitialsed account', () => {
     middleware(store)(next)(newBlockCreated);
-    expect(addSearchParamsToUrl).toHaveBeenCalled();
+    expect(history.push).toHaveBeenCalledWith('/wallet?modal=send&initialization=true');
   });
 
   it('should call the modal remove function if initialisation transaction received to uninitialsed account', () => {
@@ -165,6 +167,7 @@ describe('Account middleware', () => {
 
     testBlock.data.block.transactions.push(initializationTx);
     middleware(store)(next)(newBlockCreated);
+    jest.advanceTimersByTime(1000);
     expect(removeSearchParamsFromUrl).toHaveBeenCalled();
   });
 

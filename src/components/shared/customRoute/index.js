@@ -8,6 +8,7 @@ import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../../utils/piwik';
 import routes from '../../../constants/routes';
 import { hasEnoughBalanceForInitialization } from '../../../utils/account';
+import { selectSearchParamValue } from '../../../utils/searchParams';
 
 // eslint-disable-next-line max-statements
 const CustomRoute = ({
@@ -24,6 +25,7 @@ const CustomRoute = ({
   const settings = useSelector(state => state.settings);
   const account = useSelector(state => state.account);
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
+  const hasPendingTransactions = useSelector(state => Boolean(state.transactions.pending.length));
 
   const isAuthenticated = account.info && account.info[settings.token.active];
   const isAccountInitialised = account.info
@@ -41,6 +43,8 @@ const CustomRoute = ({
     && !isAccountInitialised
     && hasEnoughBalanceForInitialization(account.info.LSK.balance)
     && history.location.pathname !== routes.initialization.path
+    && !selectSearchParamValue(history.location.search, 'initialization')
+    && !hasPendingTransactions
   ) {
     return (
       <Redirect to={routes.initialization.path} />

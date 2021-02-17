@@ -30,6 +30,7 @@ describe('CustomRoute', () => {
       name: 'testnet',
       serviceUrl: 'someUrl',
     },
+    transactions: { pending: [] },
   };
 
   beforeEach(() => {
