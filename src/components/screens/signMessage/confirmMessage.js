@@ -9,7 +9,7 @@ import BoxFooter from '../../toolbox/box/footer';
 import BoxHeader from '../../toolbox/box/header';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
 import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons';
-import { loginType } from '../../../constants/loginTypes';
+import loginType from '../../../constants/loginTypes';
 import { signMessageByHW } from '../../../utils/hwManager';
 import LoadingIcon from '../hwWalletLogin/loadingIcon';
 
@@ -105,7 +105,7 @@ const ConfirmMessage = ({
   };
 
   useEffect(() => {
-    if (account.loginType === loginType.normal) {
+    if (account.loginType === loginType.passphrase.code) {
       setSignature(signUsingPassphrase(Lisk));
     } else {
       signUsingHW(Lisk)
@@ -115,7 +115,8 @@ const ConfirmMessage = ({
     return () => clearTimeout(ref.current);
   }, []);
 
-  const confirmationPending = account.loginType !== loginType.normal && !error && !signature;
+  const confirmationPending = account.loginType !== loginType.passphrase.code
+    && !error && !signature;
 
   return (
     <Box>
