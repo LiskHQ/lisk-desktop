@@ -86,6 +86,7 @@
 }
 
 .titleHolder {
+  max-height: fit-content;
   color: var(--color-content);
   font-family: var(--heading-font);
   text-align: center;
@@ -117,9 +118,10 @@
   }
 }
 
-.PassphraseBackupContainer {
+.passphraseBackupContainer {
   width: 100%;
   margin: 20px 0;
+  max-height: fit-content;
 }
 
 .buttonsHolder {
