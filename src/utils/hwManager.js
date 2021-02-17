@@ -7,10 +7,11 @@ import {
   getAddress,
   getPublicKey,
   signTransaction,
-  subscribeToDeviceConnceted,
-  subscribeToDeviceDisonnceted,
+  subscribeToDeviceConnected,
+  subscribeToDeviceDisconnected,
   subscribeToDevicesList,
   validatePin,
+  signMessage,
 } from '../../libs/hwManager/communication';
 
 /**
@@ -99,6 +100,33 @@ const signVoteTransaction = async (
   }
 };
 
+const signMessageByHW = async ({
+  account,
+  message,
+}) => {
+  try {
+    const signature = await signMessage({
+      deviceId: account.hwInfo.deviceId,
+      index: account.hwInfo.derivationIndex,
+      message,
+    });
+
+    if (!signature) {
+      throw new Error(i18next.t(
+        'The message signature has been canceled on your {{model}}',
+        { model: account.hwInfo.deviceModel },
+      ));
+    }
+
+    return signature;
+  } catch (error) {
+    throw new Error(i18next.t(
+      'The message signature has been canceled on your {{model}}',
+      { model: account.hwInfo.deviceModel },
+    ));
+  }
+};
+
 export {
   checkIfInsideLiskApp,
   getAccountsFromDevice,
@@ -106,8 +134,9 @@ export {
   getPublicKey,
   signSendTransaction,
   signVoteTransaction,
-  subscribeToDeviceConnceted,
-  subscribeToDeviceDisonnceted,
+  subscribeToDeviceConnected,
+  subscribeToDeviceDisconnected,
   subscribeToDevicesList,
   validatePin,
+  signMessageByHW,
 };

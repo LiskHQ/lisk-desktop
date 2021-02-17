@@ -26,6 +26,8 @@ import SearchBar from '../components/shared/searchBar';
 import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
 import EditVote from '../components/screens/editVote';
 import VotingQueue from '../components/screens/votingQueue';
+// eslint-disable-next-line import/no-named-as-default
+import DeviceDisconnectDialog from '../components/screens/deviceDisconnectDialog';
 
 export default {
   wallet: {
@@ -196,5 +198,10 @@ export const modals = {
     component: VotingQueue,
     isPrivate: true,
     forbiddenTokens: [],
+  },
+  deviceDisconnectDialog: {
+    component: DeviceDisconnectDialog,
+    isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
 };

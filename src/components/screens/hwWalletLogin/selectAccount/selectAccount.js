@@ -7,6 +7,7 @@ import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import routes from '../../../../constants/routes';
 import styles from './selectAccount.css';
+import { tokenMap } from '../../../../constants/tokens';
 
 class SelectAccount extends React.Component {
   constructor(props) {
@@ -111,7 +112,7 @@ class SelectAccount extends React.Component {
 
     settingsUpdated({
       token: {
-        active: 'LSK',
+        active: tokenMap.LSK.key,
         list: { BTC: false, LSK: true },
       },
     });
