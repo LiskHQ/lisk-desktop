@@ -24,7 +24,13 @@ describe('Initialization', () => {
 
   it('Opens send modal', () => {
     wrapper.find(styles.button).first().simulate('click');
-    expect(addSearchParamsToUrl).toHaveBeenNthCalledWith(1, expect.objectContaining({ }), { modal: 'send' });
+    expect(
+      addSearchParamsToUrl,
+    ).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({ }),
+      { modal: 'send', initialization: true },
+    );
   });
 
   it('Opens lisk blog windows', () => {
