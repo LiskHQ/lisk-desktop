@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import ConfirmMessage from './confirmMessage';
 import accounts from '../../../../test/constants/accounts';
-import { loginType } from '../../../constants/hwConstants';
+import loginType from '../../../constants/loginTypes';
 import * as hwManager from '../../../utils/hwManager';
 
 jest.mock('../../../utils/hwManager');
