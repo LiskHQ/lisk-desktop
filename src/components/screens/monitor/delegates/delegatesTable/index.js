@@ -80,7 +80,7 @@ const DelegatesTable = ({
     activeTab, delegates, standByDelegates, sanctionedDelegates, watchedDelegates, filters,
   });
 
-  const canLoadMore = activeTab === 'standby' && standByDelegates.data.length < (standByDelegates.meta.total - standByDelegates.meta.offset);
+  const canLoadMore = activeTab === 'standby' && (standByDelegates.meta?.offset + standByDelegates.meta?.count) < standByDelegates.meta?.total;
 
   const handleLoadMore = () => {
     delegatesToShow.loadData(Object.keys(filters).reduce((acc, key) => ({
