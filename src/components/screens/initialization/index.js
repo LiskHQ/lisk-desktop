@@ -21,7 +21,7 @@ const Initialization = ({ t }) => (
       <span
         className={styles.link}
         onClick={() => {
-          window.open('https://lisk.io/blog/announcement/lisk-account-initialization', '_blank', 'rel="noopener noreferrer');
+          window.open('https://lisk.io/blog/announcement/lisk-account-initialization', '_blank', 'rel=noopener noreferrer');
         }}
       >
         here

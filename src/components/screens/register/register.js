@@ -85,11 +85,14 @@ class Register extends React.Component {
                   <p className={styles.warningPara}>
                     Please read the following
                     {' '}
-                    <a href="https://lisk.io/blog/announcement/lisk-account-initialization" target="_blank">
+                    <span
+                      className={styles.link}
+                      onClick={() => window.open('https://lisk.io/blog/announcement/lisk-account-initialization', '_blank', 'rel=noopener noreferrer')}
+                    >
                         blog post
                       {' '}
                       <Icon name="linkIcon" />
-                    </a>
+                    </span>
                     {' '}
                     for more information.
                   </p>

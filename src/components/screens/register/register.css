@@ -138,3 +138,8 @@
 .continueBtn {
   @mixin contentLargest bold;
 }
+
+.link {
+  color: var(--color-link-active);
+  cursor: pointer;
+}

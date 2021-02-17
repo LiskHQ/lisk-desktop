@@ -38,7 +38,7 @@ describe('Initialization', () => {
     expect(window.open).toHaveBeenCalledWith(
       'https://lisk.io/blog/announcement/lisk-account-initialization',
       '_blank',
-      'rel="noopener noreferrer',
+      'rel=noopener noreferrer',
     );
   });
 });
