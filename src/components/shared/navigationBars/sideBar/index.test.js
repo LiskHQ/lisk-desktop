@@ -87,4 +87,26 @@ describe('SideBar', () => {
     expect(wrapper.find('a').at(6)).not.toHaveClassName('disabled');
     expect(wrapper.find('a').at(7)).not.toHaveClassName('disabled');
   });
+
+  it('renders 8 disabled menu items on Initialization screen', () => {
+    wrapper = mountWithRouter(
+      SideBar,
+      {
+        ...myProps,
+        isUserLogout: false,
+        location: {
+          pathname: routes.initialization.path,
+        },
+      },
+    );
+    expect(wrapper).toContainMatchingElements(8, 'a');
+    expect(wrapper.find('a').at(0)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(1)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(2)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(3)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(4)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(5)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(6)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(7)).toHaveClassName('disabled');
+  });
 });

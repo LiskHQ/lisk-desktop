@@ -1,5 +1,8 @@
 import { expect } from 'chai';
-import { extractPublicKey, extractAddress, getActiveTokenAccount } from './account';
+import {
+  extractPublicKey, extractAddress, getActiveTokenAccount, isAccountInitialized,
+  hasEnoughBalanceForInitialization,
+} from './account';
 
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
@@ -50,6 +53,34 @@ describe('Utils: Account', () => {
         ...account,
         ...account.info[activeToken],
       });
+    });
+  });
+
+  describe('isAccountInitialzed', () => {
+    it('should return true if initialized', () => {
+      const result = isAccountInitialized({ info: { LSK: { serverPublicKey: 'some key' } } });
+      // eslint-disable-next-line no-unused-expressions
+      expect(result).to.be.true;
+    });
+
+    it('should return false if not initialized', () => {
+      const result = isAccountInitialized({ info: { LSK: { serverPublicKey: '' } } });
+      // eslint-disable-next-line no-unused-expressions
+      expect(result).to.be.false;
+    });
+  });
+
+  describe('hasEnoughBalanceForInitialization', () => {
+    it('should return true if balance is enough', () => {
+      const result = hasEnoughBalanceForInitialization('200000000');
+      // eslint-disable-next-line no-unused-expressions
+      expect(result).to.be.true;
+    });
+
+    it('should return false if balance is not enough', () => {
+      const result = hasEnoughBalanceForInitialization('0');
+      // eslint-disable-next-line no-unused-expressions
+      expect(result).to.be.false;
     });
   });
 });

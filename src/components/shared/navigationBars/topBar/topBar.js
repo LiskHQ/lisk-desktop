@@ -92,7 +92,9 @@ const TokenSelector = ({ token, history, t }) => {
         <Icon
           name={`${token.toLowerCase()}Icon`}
           className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.disabled}`}
-          onClick={activateToken}
+          onClick={
+            history.location.pathname !== routes.initialization.path ? activateToken : () => {}
+          }
         />
       )}
     >

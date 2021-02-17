@@ -19,6 +19,12 @@ transfer 1 94495548317450502L without-initialization
 
 sleep 10
 
+lisk transaction:broadcast $(lisk transaction:create:transfer 0.1 544792633152563672L --data=account-initialization \
+--passphrase="pass:right cat soul renew under climb middle maid powder churn cram coconut")
+
+lisk transaction:broadcast $(lisk transaction:create:transfer 0.1 4264113712245538326L --data=account-initialization \
+--passphrase="pass:dolphin inhale planet talk insect release maze engine guilt loan attend lawn")
+
 lisk transaction:broadcast $(lisk transaction:create:second-passphrase \
 --passphrase="pass:awkward service glimpse punch genre calm grow life bullet boil match like" \
 --second-passphrase="pass:forest around decrease farm vanish permit hotel clay senior matter endorse domain")

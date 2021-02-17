@@ -32,7 +32,7 @@ const MenuLink = ({
   data, isUserLogout, pathname, sideBarExpanded,
 }) => {
   if (data.modal) {
-    const className = `${styles.item} ${isUserLogout && modals[data.id].isPrivate ? `${styles.disabled} disabled` : ''}`;
+    const className = `${styles.item} ${(isUserLogout && modals[data.id].isPrivate) || pathname === routes.initialization.path ? `${styles.disabled} disabled` : ''}`;
     return (
       <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${className}`}>
         <Inner data={data} modal={data.id} sideBarExpanded={sideBarExpanded} />
@@ -40,7 +40,7 @@ const MenuLink = ({
     );
   }
 
-  const className = `${styles.item} ${isUserLogout && routes[data.id].isPrivate ? `${styles.disabled} disabled` : ''}`;
+  const className = `${styles.item} ${(isUserLogout && routes[data.id].isPrivate) || pathname === routes.initialization.path ? `${styles.disabled} disabled` : ''}`;
   return (
     <NavLink
       to={data.path}

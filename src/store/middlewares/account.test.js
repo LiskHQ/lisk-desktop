@@ -14,6 +14,11 @@ import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
 import { tokenMap } from '../../constants/tokens';
+import { removeSearchParamsFromUrl } from '../../utils/searchParams';
+import history from '../../history';
+
+jest.mock('../../utils/searchParams');
+jest.mock('../../history');
 
 describe('Account middleware', () => {
   let store;
@@ -136,6 +141,34 @@ describe('Account middleware', () => {
       address: data.account.address,
       filters: undefined,
     });
+  });
+
+  it('should call the modal show function if new transaction received to uninitialsed account', () => {
+    middleware(store)(next)(newBlockCreated);
+    expect(history.push).toHaveBeenCalledWith('/wallet?modal=send&initialization=true');
+  });
+
+  it('should call the modal remove function if initialisation transaction received to uninitialsed account', () => {
+    const initializationTx = {
+      senderId: 'sample_address',
+      recipientId: 'sample_address',
+      asset: { data: 'Initialization' },
+      amount: 10e8,
+      type: 0,
+    };
+
+    const testBlock = {
+      type: actionTypes.newBlockCreated,
+      data: {
+        windowIsFocused: true,
+        block,
+      },
+    };
+
+    testBlock.data.block.transactions.push(initializationTx);
+    middleware(store)(next)(newBlockCreated);
+    jest.advanceTimersByTime(1000);
+    expect(removeSearchParamsFromUrl).toHaveBeenCalled();
   });
 
   it(`should call account BTC API methods on ${actionTypes.newBlockCreated} action when BTC is the active token`, () => {

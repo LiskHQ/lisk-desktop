@@ -9,7 +9,7 @@ import {
 } from '../../actions/transactions';
 import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
-import { getActiveTokenAccount } from '../../utils/account';
+import { getActiveTokenAccount, hasEnoughBalanceForInitialization, isAccountInitialized } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
 import { loadVotes } from '../../actions/voting';
 import { networkSet, networkStatusUpdated } from '../../actions/network';
@@ -22,6 +22,9 @@ import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import { txAdapter } from '../../utils/api/lsk/adapters';
 import { tokenMap } from '../../constants/tokens';
+import { removeSearchParamsFromUrl } from '../../utils/searchParams';
+import history from '../../history';
+import routes from '../../constants/routes';
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -76,17 +79,20 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
   });
 };
 
+// eslint-disable-next-line max-statements
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
   const { transactions, settings: { token } } = state;
   const account = getActiveTokenAccount(store.getState());
 
   const txs = (action.data.block.transactions || []).map(txAdapter);
-  const blockContainsRelevantTransaction = txs.filter((transaction) => {
+  const relevantTransactions = txs.filter((transaction) => {
     const sender = transaction ? transaction.senderId : null;
     const recipient = transaction ? transaction.recipientId : null;
     return account.address === recipient || account.address === sender;
-  }).length > 0;
+  });
+
+  const blockContainsRelevantTransaction = relevantTransactions.length > 0;
 
   showNotificationsForIncomingTransactions(txs, account, token.active);
 
@@ -98,6 +104,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // after a new block with second passphrase registration transaction was received
     // Adding timeout explained in
     // https://github.com/LiskHQ/lisk-desktop/pull/1609
+    // eslint-disable-next-line max-statements
     setTimeout(() => {
       updateAccountData(store);
       store.dispatch(updateTransactions({
@@ -105,6 +112,28 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
         address: account.address,
         filters: transactions.filters,
       }));
+
+      if (!isAccountInitialized(account)) {
+        const isAccountNowInitialized = relevantTransactions.filter(tx =>
+          tx.senderId === account.address).length > 0;
+
+        if (isAccountNowInitialized) {
+          removeSearchParamsFromUrl(history, ['modal', 'initialization']);
+          /* istanbul ignore next */
+          return;
+        }
+
+        const pendingBalance = relevantTransactions
+          .filter(tx => tx.type === transactionTypes().send.code)
+          .reduce((sum, tx) => Number(tx.amount) + sum, 0);
+        const hasEnoughBalance = hasEnoughBalanceForInitialization(
+          Number(account.balance || '0') + pendingBalance,
+        );
+
+        if (hasEnoughBalance) {
+          history.push(`${routes.wallet.path}?modal=send&initialization=true`);
+        }
+      }
     }, 500);
   }
 };

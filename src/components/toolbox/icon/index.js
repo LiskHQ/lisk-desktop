@@ -125,6 +125,11 @@ import totalBlocks from '../../../assets/images/icons/total-blocks.svg';
 import blocksForged from '../../../assets/images/icons/blocks-forged.svg';
 import distribution from '../../../assets/images/icons/distribution.svg';
 import clock from '../../../assets/images/icons/clock.svg';
+import liskIcon from '../../../assets/images/icons/lisk-icon.svg';
+import initialiseIcon from '../../../assets/images/icons/initialise-icon.svg';
+import initialiseRegistration from '../../../assets/images/icons/initialise-registration.svg';
+import warningYellow from '../../../assets/images/icons/warning-yellow.svg';
+import linkIcon from '../../../assets/images/icons/link-icon.svg';
 
 export const icons = {
   academy,
@@ -251,6 +256,11 @@ export const icons = {
   distribution,
   clock,
   searchInput,
+  liskIcon,
+  initialiseIcon,
+  initialiseRegistration,
+  warningYellow,
+  linkIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
