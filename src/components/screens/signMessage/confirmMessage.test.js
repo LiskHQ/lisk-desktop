@@ -18,7 +18,7 @@ const updateWrapperAsync = async wrapper => new Promise((resolve) => {
 describe('Confirm Message Component', () => {
   const accountWithPassphrase = {
     ...accounts.genesis,
-    loginType: loginType.normal,
+    loginType: loginType.passphrase.code,
   };
   const accountWithHW = {
     ...accounts.genesis,
