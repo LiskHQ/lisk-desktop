@@ -229,30 +229,29 @@ describe('Reducer: transactions(state, action)', () => {
 
   it('should add broadcastedTransactionsError', () => {
     const networkError = { message: 'network error' };
-    const transaction1 = { id: 111 };
-    const transaction2 = { id: 222 };
     const state = {
       transactionsCreated: [],
       broadcastedTransactionsError: [],
     };
-    const action = {
+    let changedState = transactions(state, {
       type: actionTypes.broadcastedTransactionError,
-      data: { transaction1, networkError },
-    };
-    const action2 = {
-      type: actionTypes.broadcastedTransactionError,
-      data: { transaction2, networkError },
-    };
-    let changedState = transactions(state, action);
-    expect(changedState).toEqual({
-      ...state,
-      broadcastedTransactionsError: [{ networkError, transaction1 }],
+      data: { transaction: mockTransactions[0], error: networkError },
     });
-    changedState = transactions(state, action2);
     expect(changedState).toEqual({
       ...state,
       broadcastedTransactionsError: [
-        { networkError, transaction1 }, { networkError, transaction2 },
+        { error: networkError, transaction: mockTransactions[0] },
+      ],
+    });
+    changedState = transactions(changedState, {
+      type: actionTypes.broadcastedTransactionError,
+      data: { transaction: mockTransactions[1], error: networkError },
+    });
+    expect(changedState).toEqual({
+      ...state,
+      broadcastedTransactionsError: [
+        { error: networkError, transaction: mockTransactions[0] },
+        { error: networkError, transaction: mockTransactions[1] },
       ],
     });
   });
@@ -260,19 +259,18 @@ describe('Reducer: transactions(state, action)', () => {
   it('should not stack the same transaction in broadcastedTransactionsError and should replace it with the latest error', () => {
     const networkError = { message: 'network error' };
     const apiError = { message: 'API error' };
-    const transaction = { id: 111 };
     const state = {
       transactionsCreated: [],
-      broadcastedTransactionsError: [{ networkError, transaction }],
+      broadcastedTransactionsError: [{ error: networkError, transaction: mockTransactions[0] }],
     };
     const action = {
       type: actionTypes.broadcastedTransactionError,
-      data: { transaction, apiError },
+      data: { transaction: mockTransactions[0], error: apiError },
     };
     const changedState = transactions(state, action);
     expect(changedState).toEqual({
       ...state,
-      broadcastedTransactionsError: [{ apiError, transaction }],
+      broadcastedTransactionsError: [{ error: apiError, transaction: mockTransactions[0] }],
     });
   });
 
