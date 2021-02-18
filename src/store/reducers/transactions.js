@@ -104,8 +104,13 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         ...state,
         transactionsCreated: state.transactionsCreated.filter(tx => tx.id !== action.data.id),
         broadcastedTransactionsError: state.broadcastedTransactionsError
-          .some(tx => tx.transaction.id === action.data.id)
-          ? state.broadcastedTransactionsError
+          .some(tx => tx.transaction.id === action.data.transaction.id)
+          ? state.broadcastedTransactionsError.map((tx) => {
+            if (tx.transaction.id === action.data.transaction.id) {
+              return action.data;
+            }
+            return tx;
+          })
           : [...state.broadcastedTransactionsError, action.data],
       };
     // TODO can be remove after use HOC for send tx
