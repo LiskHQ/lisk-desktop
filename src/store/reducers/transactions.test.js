@@ -228,18 +228,22 @@ describe('Reducer: transactions(state, action)', () => {
   });
 
   it.only('should not stack the same transaction in broadcastedTransactionsError', () => {
-    const error = { message: 'test' };
+    const networkError = { message: 'network error' };
+    const apiError = { message: 'API error' };
     const transaction = { id: 111 };
     const state = {
       transactionsCreated: [],
-      broadcastedTransactionsError: [{ error, transaction }],
+      broadcastedTransactionsError: [{ networkError, transaction }],
     };
     const action = {
       type: actionTypes.broadcastedTransactionError,
-      data: { transaction, error },
+      data: { transaction, apiError },
     };
     const changedState = transactions(state, action);
-    expect(changedState).toEqual(state);
+    expect(changedState).toEqual({
+      ...state,
+      broadcastedTransactionsError: [{ apiError, transaction }],
+    });
   });
 
   // it('Should update transactions reducer for TransactionCreatedSuccess on RETRY', () => {
