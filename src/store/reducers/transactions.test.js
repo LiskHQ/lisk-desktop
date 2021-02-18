@@ -251,11 +251,13 @@ describe('Reducer: transactions(state, action)', () => {
     changedState = transactions(state, action2);
     expect(changedState).toEqual({
       ...state,
-      broadcastedTransactionsError: [{ networkError, transaction1 }, { networkError, transaction2 }],
+      broadcastedTransactionsError: [
+        { networkError, transaction1 }, { networkError, transaction2 },
+      ],
     });
   });
 
-  it('should not stack the same transaction in broadcastedTransactionsError', () => {
+  it('should not stack the same transaction in broadcastedTransactionsError and should replace it with the latest error', () => {
     const networkError = { message: 'network error' };
     const apiError = { message: 'API error' };
     const transaction = { id: 111 };
