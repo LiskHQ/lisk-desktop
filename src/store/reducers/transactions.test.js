@@ -227,6 +227,21 @@ describe('Reducer: transactions(state, action)', () => {
     expect(changedState.transactionsCreatedFailed).toEqual([]);
   });
 
+  it.only('should not stack the same transaction in broadcastedTransactionsError', () => {
+    const error = { message: 'test' };
+    const transaction = { id: 111 };
+    const state = {
+      transactionsCreated: [],
+      broadcastedTransactionsError: [{ error, transaction }],
+    };
+    const action = {
+      type: actionTypes.broadcastedTransactionError,
+      data: { transaction, error },
+    };
+    const changedState = transactions(state, action);
+    expect(changedState).toEqual(state);
+  });
+
   // it('Should update transactions reducer for TransactionCreatedSuccess on RETRY', () => {
   //   const tx = {
   //     id: '12312334',
