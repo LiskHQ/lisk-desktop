@@ -227,7 +227,35 @@ describe('Reducer: transactions(state, action)', () => {
     expect(changedState.transactionsCreatedFailed).toEqual([]);
   });
 
-  it.only('should not stack the same transaction in broadcastedTransactionsError', () => {
+  it('should add broadcastedTransactionsError', () => {
+    const networkError = { message: 'network error' };
+    const transaction1 = { id: 111 };
+    const transaction2 = { id: 222 };
+    const state = {
+      transactionsCreated: [],
+      broadcastedTransactionsError: [],
+    };
+    const action = {
+      type: actionTypes.broadcastedTransactionError,
+      data: { transaction1, networkError },
+    };
+    const action2 = {
+      type: actionTypes.broadcastedTransactionError,
+      data: { transaction2, networkError },
+    };
+    let changedState = transactions(state, action);
+    expect(changedState).toEqual({
+      ...state,
+      broadcastedTransactionsError: [{ networkError, transaction1 }],
+    });
+    changedState = transactions(state, action2);
+    expect(changedState).toEqual({
+      ...state,
+      broadcastedTransactionsError: [{ networkError, transaction1 }, { networkError, transaction2 }],
+    });
+  });
+
+  it('should not stack the same transaction in broadcastedTransactionsError', () => {
     const networkError = { message: 'network error' };
     const apiError = { message: 'API error' };
     const transaction = { id: 111 };
