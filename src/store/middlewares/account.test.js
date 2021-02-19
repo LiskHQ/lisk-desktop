@@ -14,10 +14,15 @@ import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
 import { tokenMap } from '../../constants/tokens';
-import { removeSearchParamsFromUrl } from '../../utils/searchParams';
+import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '../../utils/searchParams';
 import history from '../../history';
+import routes from '../../constants/routes';
 
-jest.mock('../../utils/searchParams');
+jest.mock('../../utils/searchParams', () => ({
+  selectSearchParamValue: jest.fn(() => ({ initilization: true })),
+  removeSearchParamsFromUrl: jest.fn(),
+  addSearchParamsToUrl: jest.fn(),
+}));
 jest.mock('../../history');
 
 describe('Account middleware', () => {
@@ -143,32 +148,35 @@ describe('Account middleware', () => {
     });
   });
 
-  it('should call the modal show function if new transaction received to uninitialsed account', () => {
-    middleware(store)(next)(newBlockCreated);
-    expect(history.push).toHaveBeenCalledWith('/wallet?modal=send&initialization=true');
+  it('should do nothing if uninitialsed account logs in with insufficient balance', () => {
+    const action = {
+      type: actionTypes.accountLoggedIn,
+      data: { info: { LSK: { serverPublicKey: '', balance: '0' } } },
+    };
+    middleware(store)(next)(action);
+    expect(history.push).not.toHaveBeenCalledWith('/wallet?modal=send&initialization=true');
+    expect(history.push).not.toHaveBeenCalledWith('initialization');
   });
 
-  it('should call the modal remove function if initialisation transaction received to uninitialsed account', () => {
-    const initializationTx = {
-      senderId: 'sample_address',
-      recipientId: 'sample_address',
-      asset: { data: 'Initialization' },
-      amount: 10e8,
-      type: 0,
+  it('should redirect to the initialization screen if uninitialsed account logs in with enough balance', () => {
+    const action = {
+      type: actionTypes.accountLoggedIn,
+      data: { info: { LSK: { serverPublicKey: '', balance: '2e8' } } },
     };
+    middleware(store)(next)(action);
+    expect(history.push).toHaveBeenCalledWith(routes.initialization.path);
+  });
 
-    const testBlock = {
-      type: actionTypes.newBlockCreated,
-      data: {
-        windowIsFocused: true,
-        block,
-      },
+
+  it('should call the modal remove function if if actionTypes.accountUpdated is called with enough balance', () => {
+    const action = {
+      type: actionTypes.accountUpdated,
+      data: { serverPublicKey: 'some_key', balance: '2e8' },
     };
-
-    testBlock.data.block.transactions.push(initializationTx);
-    middleware(store)(next)(newBlockCreated);
-    jest.advanceTimersByTime(1000);
+    middleware(store)(next)(action);
+    expect(addSearchParamsToUrl).not.toHaveBeenCalled();
     expect(removeSearchParamsFromUrl).toHaveBeenCalled();
+    expect(history.push).toHaveBeenCalledWith(routes.wallet.path);
   });
 
   it(`should call account BTC API methods on ${actionTypes.newBlockCreated} action when BTC is the active token`, () => {
