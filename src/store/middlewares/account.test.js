@@ -176,6 +176,7 @@ describe('Account middleware', () => {
     middleware(store)(next)(action);
     expect(addSearchParamsToUrl).not.toHaveBeenCalled();
     expect(removeSearchParamsFromUrl).toHaveBeenCalled();
+    expect(history.push).toHaveBeenCalledWith(routes.wallet.path);
   });
 
   it(`should call account BTC API methods on ${actionTypes.newBlockCreated} action when BTC is the active token`, () => {

@@ -226,6 +226,7 @@ const checkAccountInitializationState = (action) => {
 
   if (serverPublicKey) {
     if (initialization) {
+      history.push(routes.wallet.path);
       removeSearchParamsFromUrl(history, ['modal', 'initialization']);
     }
   } else if (hasEnoughBalanceForInitialization(balance)) {
