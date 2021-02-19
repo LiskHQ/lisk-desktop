@@ -38,11 +38,11 @@ const transformVotesResponse = (response, oldData = []) => (
  * delegate in the month
  */
 const transformChartResponse = (response) => {
-  const responseFormatted = response.data.reduce((acc, delegate) => {
-    const newDelegate = { ...delegate, timestamp: moment(delegate.timestamp * 1000).startOf('month').toISOString() };
+  const responseFormatted = response.data.reduce((acc, transaction) => {
+    const newTransaction = { ...transaction, timestamp: moment(transaction.timestamp * 1000).startOf('month').toISOString() };
     return {
       ...acc,
-      [newDelegate.timestamp]: ((acc[newDelegate.timestamp] || 0) + 1),
+      [newTransaction.timestamp]: ((acc[newTransaction.timestamp] || 0) + 1),
     };
   }, {});
 
@@ -93,7 +93,14 @@ const ComposedDelegates = compose(
       },
 
       chartRegisteredDelegatesData: {
-        apiUtil: network => getDelegates({ network, params: { limit: 100 } }),
+        apiUtil: network => getTransactions({
+          network,
+          params: {
+            limit: 100,
+            type: 10,
+            sort: 'timestamp:desc',
+          },
+        }, tokenMap.LSK.key),
         defaultData: [],
         autoload: true,
         transformResponse: transformChartResponse,
