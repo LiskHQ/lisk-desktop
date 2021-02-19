@@ -19,7 +19,7 @@ class BlocksOverview extends React.Component {
 
   changeTab = ({ value }) => {
     this.setState({ activeTab: value });
-    this.props.blocks.loadData({ limit: value.toString() });
+    this.props.blocks.loadData({ limit: value });
   }
 
   render() {
