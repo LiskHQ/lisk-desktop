@@ -17,7 +17,7 @@ import { addedToWatchList, removedFromWatchList } from '../../../../../actions/w
 const roundStatus = {
   forging: 'Forging',
   awaitingSlot: 'Awaiting slot',
-  notForging: 'Not forging',
+  notForging: 'Missed block',
   missedBlock: 'Missed block',
 };
 
