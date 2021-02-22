@@ -63,6 +63,7 @@ const getAccountParams = (params) => {
  *
  * @returns {Promise}
  */
+// eslint-disable-next-line max-statements
 export const getAccount = async ({
   network, params, baseUrl,
 }) => {
@@ -71,8 +72,18 @@ export const getAccount = async ({
     address: normParams.address,
     balance: 0,
     token: tokenMap.LSK.key,
-    publicKey: params.publicKey || extractPublicKey(params.passphrase),
   };
+
+  if (params.publicKey) {
+    account.publicKey = params.publicKey;
+  } else if (params.passphrase) {
+    const publicKey = extractPublicKey(params.passphrase);
+    if (publicKey) {
+      account.publicKey = publicKey;
+    } else {
+      throw Error('Invalid Passphrase');
+    }
+  }
 
   try {
     const response = await http({
@@ -84,7 +95,7 @@ export const getAccount = async ({
     if (response.data[0]) {
       account = {
         ...response.data[0],
-        publicKey: account.publicKey,
+        publicKey: response.data[0].publicKey ?? account.publicKey,
       };
     }
   } catch (e) {
