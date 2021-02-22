@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { getDelegates, getForgers } from '../../../../utils/api/delegate';
+import { getDelegates } from '../../../../utils/api/delegate';
 import { getNetworkStatus } from '../../../../utils/api/network';
 import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
