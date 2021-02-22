@@ -21,7 +21,7 @@ const mapDispatchToProps = {
 
 const apis = {
   recipientAccount: {
-    apiUtil: (network, params) => getAccount({ network, params }, params.token),
+    apiUtil: (network, { token, ...params }) => getAccount({ network, params }, token),
     getApiParams: state => ({
       token: state.settings.token.active,
     }),
