@@ -111,7 +111,7 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
     } else {
       forgingTimes[item.publicKey] = {
         time: -1,
-        status: 'notForging',
+        status: 'missedBlock',
         tense: 'past',
       };
     }
