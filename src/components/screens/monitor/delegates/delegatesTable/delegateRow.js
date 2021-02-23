@@ -17,14 +17,12 @@ import { addedToWatchList, removedFromWatchList } from '../../../../../actions/w
 const roundStatus = {
   forging: 'Forging',
   awaitingSlot: 'Awaiting slot',
-  notForging: 'Missed block',
   missedBlock: 'Missed block',
 };
 
 const icons = {
   forging: 'delegateForged',
   awaitingSlot: 'delegateAwaiting',
-  notForging: 'delegateMissed',
   missedBlock: 'delegateMissed',
 };
 
@@ -68,7 +66,7 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
     <Tooltip
       title={data.forgingTime
         ? t(roundStatus[data.forgingTime.status])
-        : t(roundStatus.notForging)}
+        : t(roundStatus.missedBlock)}
       position="left"
       size="maxContent"
       content={(
@@ -76,7 +74,7 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
           className={styles.statusIcon}
           name={data.forgingTime
             ? t(icons[data.forgingTime.status])
-            : t(icons.notForging)}
+            : t(icons.missedBlock)}
         />
       )}
       footer={(

@@ -84,7 +84,7 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
   latestBlocks.forEach((item, index) => {
     if (index > forgedInRoundNum && !forgingTimes[item.generatorPublicKey]) {
       // if I can't find it in the previous round
-      if (index >= forgedInRoundNum + 103 && latestBlocks.indexOf(item) === index) {
+      if (index >= forgedInRoundNum + MAX_BLOCKS_FORGED && latestBlocks.indexOf(item) === index) {
         forgingTimes[item.generatorPublicKey] = {
           time: (index + 1) * 10,
           status: 'missedBlock',
