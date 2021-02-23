@@ -31,7 +31,7 @@ import { getTransactions } from '../../utils/api/transaction';
 const delay = () => new Promise((resolve) => {
   setTimeout(() => {
     resolve();
-  }, 1000);
+  }, 1500);
 });
 
 const getRecentTransactionOfType = (transactionsList, type) => (
