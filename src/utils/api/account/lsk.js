@@ -95,7 +95,7 @@ export const getAccount = async ({
     if (response.data[0]) {
       account = {
         ...response.data[0],
-        publicKey: response.data[0].publicKey ?? account.publicKey,
+        publicKey: response.data[0].publicKey || account.publicKey,
       };
     }
   } catch (e) {
