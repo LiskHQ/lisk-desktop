@@ -196,7 +196,7 @@ describe('Transaction Details Component', () => {
   });
 
   describe('Unlock transaction', () => {
-    it.only('Should render unlock LSK details', () => {
+    it('Should render unlock LSK details', () => {
       const unlockTx = {
         data: {
           type: 14,
