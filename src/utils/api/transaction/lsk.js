@@ -213,7 +213,7 @@ export const getTransactionStats = ({ network, params: { period } }) => {
  * @returns {String} Amount in beddows/satoshi
  */
 export const getTxAmount = (transaction) => {
-  let amount = transaction.amount !== undefined ? transaction.amount : transaction.asset.amount;
+  let amount = transaction.amount ?? transaction.asset.amount;
   if (transaction.title === 'unlockToken') {
     amount = 0;
     transaction.asset.unlockingObjects.forEach((unlockedObject) => {

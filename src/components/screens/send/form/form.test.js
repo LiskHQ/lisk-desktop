@@ -141,11 +141,14 @@ describe('Form', () => {
     it('Should show converter on correct input', () => {
       const evt = { target: { name: 'amount', value: 1 } };
       let amountField = wrapper.find('.fieldGroup').at(1);
+
       expect(amountField).not.toContainMatchingElement('.converted-price');
+
       amountField.find('input').simulate('change', evt);
       act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
+
       expect(amountField).toContainMatchingElement('.converted-price');
     });
 
@@ -156,6 +159,7 @@ describe('Form', () => {
       act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
+
       expect(amountField.find('input').prop('value')).toEqual('0.1');
     });
 
@@ -165,6 +169,7 @@ describe('Form', () => {
       act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
+
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
       expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
@@ -172,6 +177,7 @@ describe('Form', () => {
       act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
+
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
       expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
@@ -179,6 +185,7 @@ describe('Form', () => {
       act(() => { jest.advanceTimersByTime(300); });
       await flushPromises();
       wrapper.update();
+
       expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
     });
 
@@ -188,6 +195,7 @@ describe('Form', () => {
       amountField.find('input').simulate('change', evt);
       act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
+
       expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount will result in a wallet with less than the minimum balance.');
       expect(wrapper.find('button.btn-submit')).toBeDisabled();
     });
@@ -198,6 +206,7 @@ describe('Form', () => {
       wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
       act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
+
       expect(wrapper.find('.amount Feedback')).toHaveText('');
       expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     });
@@ -217,6 +226,7 @@ describe('Form', () => {
       act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
       referenceField = wrapper.find('.fieldGroup').at(2);
+
       expect(referenceField.find('.feedback.error')).toHaveClassName('show error');
     });
   });

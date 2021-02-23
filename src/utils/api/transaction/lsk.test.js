@@ -205,7 +205,8 @@ describe('API: LSK Transactions', () => {
 
     it('should return amount of unlock in Beddows', () => {
       const tx = {
-        type: transactionTypes().unlockToken.code.legacy,
+        title: transactionTypes().unlockToken.key,
+        type: transactionTypes().unlockToken.code.new,
         asset: {
           unlockingObjects: [
             {
