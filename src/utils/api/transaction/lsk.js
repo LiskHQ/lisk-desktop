@@ -239,7 +239,7 @@ const txTypeClassMap = {
   unlockToken: Lisk.transaction.UnlockTransaction,
 };
 
-// eslint-disable-next-line max-statements
+/* istanbul ignore next */
 export const createTransactionInstance = (rawTx, type) => {
   const FEE_BYTES_PLACEHOLDER = '18446744073709551615';
   const SIGNATURE_BYTES_PLACEHOLDER = '204514eb1152355799ece36d17037e5feb4871472c60763bdafe67eb6a38bec632a8e2e62f84a32cf764342a4708a65fbad194e37feec03940f0ff84d3df2a05';

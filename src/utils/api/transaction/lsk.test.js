@@ -145,7 +145,7 @@ describe('API: LSK Transactions', () => {
 
     it('should throw if any of the API endpoints throw', async () => {
       // Mock promise failure
-      ws.mockRejectedValue(new Error('Error fetching data.'));
+      ws.mockRejectedValue(Error('Error fetching data.'));
 
       // call and anticipate failure
       await expect(getRegisteredDelegates({ network }))
@@ -201,6 +201,25 @@ describe('API: LSK Transactions', () => {
       };
 
       expect(getTxAmount(tx)).toEqual(tx.amount);
+    });
+
+    it('should return amount of votes in Beddows', () => {
+      const tx = {
+        title: transactionTypes().vote.key,
+        type: transactionTypes().vote.code.new,
+        asset: {
+          votes: [
+            {
+              amount: '100000000',
+            },
+            {
+              amount: '100000000',
+            },
+          ],
+        },
+      };
+
+      expect(getTxAmount(tx)).toEqual('200000000');
     });
 
     it('should return amount of unlock in Beddows', () => {
