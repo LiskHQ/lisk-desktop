@@ -228,6 +228,7 @@ export const getTxAmount = (transaction) => {
     });
     amount = `${amount}`;
   }
+
   return amount;
 };
 

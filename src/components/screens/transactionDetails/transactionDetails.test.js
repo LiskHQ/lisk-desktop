@@ -196,7 +196,7 @@ describe('Transaction Details Component', () => {
   });
 
   describe('Unlock transaction', () => {
-    it('Should render unlock LSK details', () => {
+    it.only('Should render unlock LSK details', () => {
       const unlockTx = {
         data: {
           type: 14,
@@ -204,7 +204,16 @@ describe('Transaction Details Component', () => {
           recipientId: '',
           id: 123,
           asset: {
-            amount: 50,
+            unlockingObjects: [
+              {
+                amount: 100,
+              }, {
+                amount: 20,
+              },
+              {
+                amount: -10,
+              },
+            ],
           },
           title: 'unlockToken',
         },
