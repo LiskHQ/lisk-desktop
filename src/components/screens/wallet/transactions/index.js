@@ -28,13 +28,14 @@ const Transactions = ({
   isWallet,
   votedDelegates,
 }) => {
+  const count = transactions.meta.count;
   /* istanbul ignore next */
   const handleLoadMore = () => {
     transactions.loadData({ offset: transactions.data.length, sort });
   };
 
   const canLoadMore = transactions.meta
-    ? transactions.meta.count > transactions.data.length
+    ? count > transactions.data.length
     : false;
 
   const formatters = {
@@ -85,7 +86,11 @@ const Transactions = ({
       />
       <BoxContent className={`${styles.content} transaction-results`}>
         <Table
-          data={pending.concat(transactions.data)}
+          data={
+            pending.concat(
+              transactions.data.slice(transactions.data.length - count, transactions.data.length),
+            )
+          }
           isLoading={transactions.isLoading}
           row={TransactionRow}
           loadData={handleLoadMore}

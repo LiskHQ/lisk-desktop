@@ -86,7 +86,7 @@ const Wallet = ({ t, history }) => {
       <Overview
         isWalletRoute
         activeToken={activeToken}
-        transactions={transactions.data}
+        transactions={confirmed}
         discreetMode={discreetMode}
         account={account.info[activeToken]}
         hwInfo={account.hwInfo}
