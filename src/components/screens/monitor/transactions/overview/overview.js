@@ -179,7 +179,24 @@ const Overview = ({ t, txStats }) => {
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Distribution of transaction types')}</h2>
           <div className={`${styles.graph} showOnLargeViewPort`}>
-            <DoughnutChart data={distributionChartData} options={{ legend: { display: true } }} />
+            <DoughnutChart
+              data={distributionChartData}
+              options={{
+                legend: {
+                  display: true,
+                  labels: {
+                    generateLabels: () => transactionTypes
+                      .getListOf('title')
+                      .map((label, i) => ({
+                        text: label
+                          .replace('Second passphrase registration', '2nd passphrase reg.')
+                          .replace('Multisignature creation', 'Multisig. creation'),
+                        fillStyle: colorPalette[i],
+                      })),
+                  },
+                },
+              }}
+            />
           </div>
           <div className={`${styles.graph} hideOnLargeViewPort`}>
             <DoughnutChart

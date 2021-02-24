@@ -24,12 +24,16 @@ const AmountField = ({
     setAmountField(target, maxAmount);
   };
 
+  const ignoreClicks = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <label className={[
       styles.fieldGroup, amount.error && styles.error, className,
     ].filter(Boolean).join(' ')}
     >
-      <div className={`${styles.amountFieldHeader}`}>
+      <div className={`${styles.amountFieldHeader}`} onClick={ignoreClicks}>
         { title && <span className={`${styles.fieldLabel}`}>{title}</span> }
         {
           maxAmount && (

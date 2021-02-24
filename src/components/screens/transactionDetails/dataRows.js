@@ -102,7 +102,14 @@ export const TransactionId = ({ id, t }) => (
 export const AmountAndDate = ({
   transaction, activeToken, t, addresses,
 }) => {
-  if (transaction.amount === undefined && transaction.asset.amount === undefined) return null;
+  if (
+    transaction.amount === undefined
+    && transaction.asset.amount === undefined
+    && transaction.type !== transactionTypes().unlockToken.code.new
+  ) {
+    return null;
+  }
+
   return (
     <BoxRow>
       { transaction.title === 'transfer' || transaction.title === 'unlockToken'

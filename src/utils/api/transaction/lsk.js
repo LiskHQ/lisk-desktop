@@ -195,7 +195,7 @@ export const getRegisteredDelegates = async ({ network }) => {
 export const getTransactionStats = ({ network, params: { period } }) => {
   const normParams = {
     week: { path: 'day', limit: 7 },
-    month: { path: 'day', limit: 30 },
+    month: { path: 'month', limit: 6 },
     year: { path: 'month', limit: 12 },
   };
 
@@ -213,14 +213,22 @@ export const getTransactionStats = ({ network, params: { period } }) => {
  * @returns {String} Amount in beddows/satoshi
  */
 export const getTxAmount = (transaction) => {
-  let amount = transaction.amount !== undefined ? transaction.amount : transaction.asset.amount;
-  if (!amount && transaction.type === transactionTypes().unlockToken.code.legacy) {
+  let amount = transaction.amount ?? transaction.asset.amount;
+  if (transaction.title === 'unlockToken') {
     amount = 0;
     transaction.asset.unlockingObjects.forEach((unlockedObject) => {
       amount += parseInt(unlockedObject.amount, 10);
     });
     amount = `${amount}`;
   }
+  if (transaction.title === 'vote') {
+    amount = 0;
+    transaction.asset.votes.forEach((vote) => {
+      amount += parseInt(vote.amount, 10);
+    });
+    amount = `${amount}`;
+  }
+
   return amount;
 };
 
@@ -231,7 +239,7 @@ const txTypeClassMap = {
   unlockToken: Lisk.transaction.UnlockTransaction,
 };
 
-// eslint-disable-next-line max-statements
+/* istanbul ignore next */
 export const createTransactionInstance = (rawTx, type) => {
   const FEE_BYTES_PLACEHOLDER = '18446744073709551615';
   const SIGNATURE_BYTES_PLACEHOLDER = '204514eb1152355799ece36d17037e5feb4871472c60763bdafe67eb6a38bec632a8e2e62f84a32cf764342a4708a65fbad194e37feec03940f0ff84d3df2a05';

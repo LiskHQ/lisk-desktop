@@ -48,7 +48,7 @@ const Wallet = ({ t, history }) => {
   const activeToken = useSelector(state => state.settings.token.active);
   const { discreetMode } = useSelector(state => state.settings);
   const isLoading = useSelector(
-    state => state.loading.indexOf(actionTypes.getTransactions) > -1,
+    state => state.loading.indexOf(actionTypes.transactionsRetrieved) > -1,
   );
   const { confirmed, pending, count } = useSelector(state => state.transactions);
   const transactions = {
