@@ -10,6 +10,7 @@ import FilterBar from '../../../shared/filterBar';
 import withFilters from '../../../../utils/withFilters';
 import withData from '../../../../utils/withData';
 import { getDelegates } from '../../../../utils/api/delegate';
+import { fromRawLsk } from '../../../../utils/lsk';
 import TransactionRow from './transactionRow';
 import FilterDropdown from './filterDropdown';
 
@@ -41,8 +42,8 @@ const Transactions = ({
   const formatters = {
     dateFrom: value => `${t('From')}: ${value}`,
     dateTo: value => `${t('To')}: ${value}`,
-    amountFrom: value => `> ${value} ${activeToken}`,
-    amountTo: value => `< ${value} ${activeToken}`,
+    amountFrom: value => `> ${fromRawLsk(value)} ${activeToken}`,
+    amountTo: value => `< ${fromRawLsk(value)} ${activeToken}`,
     message: value => `${t('Message')}: ${value}`,
   };
 

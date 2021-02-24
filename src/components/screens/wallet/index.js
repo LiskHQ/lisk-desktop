@@ -27,7 +27,7 @@ const transformParams = params => Object.keys(params)
     if (item === 'dateFrom' || item === 'dateTo') {
       acc.filters[item] = transformStringDateToUnixTimestamp(params[item]);
     } else {
-      acc[item] = params[item];
+      acc.filters[item] = params[item];
     }
 
     return acc;
