@@ -12,7 +12,6 @@ import VotesTab from './votes';
 import Transactions from './transactions';
 import { isEmpty } from '../../../utils/helpers';
 import actionTypes from '../../../constants/actions';
-import { toRawLsk } from '../../../utils/lsk';
 import { transformStringDateToUnixTimestamp } from '../../../utils/datetime';
 import routes from '../../../constants/routes';
 
@@ -25,9 +24,7 @@ import routes from '../../../constants/routes';
  */
 const transformParams = params => Object.keys(params)
   .reduce((acc, item) => {
-    if (item === 'amountFrom' || item === 'amountTo') {
-      acc.filters[item] = toRawLsk(params[item]);
-    } else if (item === 'dateFrom' || item === 'dateTo') {
+    if (item === 'dateFrom' || item === 'dateTo') {
       acc.filters[item] = transformStringDateToUnixTimestamp(params[item]);
     } else {
       acc[item] = params[item];

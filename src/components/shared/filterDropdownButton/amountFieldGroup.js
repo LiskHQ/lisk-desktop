@@ -3,6 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { Input } from '../../toolbox/inputs';
 import Feedback from '../../toolbox/feedback/feedback';
 import styles from './filters.css';
+import { toRawLsk, fromRawLsk } from '../../../utils/lsk';
 
 class AmountFieldGroup extends React.Component {
   constructor() {
@@ -72,7 +73,7 @@ class AmountFieldGroup extends React.Component {
 
     const fields = {
       ...fieldsObj,
-      [target.name]: { value, loading: true },
+      [target.name]: { value: toRawLsk(value), loading: true },
     };
 
     this.setState({ fields });
@@ -99,7 +100,7 @@ class AmountFieldGroup extends React.Component {
           autoComplete="off"
           onChange={this.handleFieldChange}
           name={name}
-          value={filters[name]}
+          value={filters[name] ? fromRawLsk(filters[name]) : ''}
           placeholder={placeholder}
           className={`${styles.input} ${field.error ? 'error' : ''} ${name}Input`}
           isLoading={field.loading}

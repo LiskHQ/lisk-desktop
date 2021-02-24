@@ -3,14 +3,11 @@ import { withTranslation } from 'react-i18next';
 import Transactions from './transactions';
 import withData from '../../../../utils/withData';
 import { getTransactions } from '../../../../utils/api/transaction';
-import { toRawLsk } from '../../../../utils/lsk';
 import { transformStringDateToUnixTimestamp } from '../../../../utils/datetime';
 
 const transformParams = params => Object.keys(params)
   .reduce((acc, item) => {
-    if (item === 'amountFrom' || item === 'amountTo') {
-      acc[item] = toRawLsk(params[item]);
-    } else if (item === 'dateFrom' || item === 'dateTo') {
+    if (item === 'dateFrom' || item === 'dateTo') {
       acc[item] = transformStringDateToUnixTimestamp(params[item]);
     } else {
       acc[item] = params[item];
