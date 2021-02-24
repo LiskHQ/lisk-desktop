@@ -148,7 +148,7 @@ const DelegateRow = ({
       </span>
       {activeTab !== 'sanctioned' && (
         <span className={`${grid['col-xs-2']}`}>
-          <DelegateWeight value={data.totalVotesReceived} />
+          <DelegateWeight value={data.delegateWeight} />
         </span>
       )}
       {(activeTab === 'active' || activeTab === 'watched') && (

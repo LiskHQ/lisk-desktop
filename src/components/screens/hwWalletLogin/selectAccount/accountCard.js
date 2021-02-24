@@ -29,13 +29,23 @@ const AccountCard = ({
               className="account-name"
               placeholder={t('Account name')}
             />
-            <PrimaryButton className={`${styles.saveBtn} save-account`} onClick={() => onSaveNameAccounts()}>{t('Save')}</PrimaryButton>
+            <PrimaryButton
+              className={`${styles.saveBtn} save-account`}
+              onClick={() => onSaveNameAccounts()}
+            >
+              {t('Save')}
+            </PrimaryButton>
           </React.Fragment>
         )
         : (
           <React.Fragment>
-            <span className={`${styles.accountTitle} account-name`}>{account.name === null ? t('Unnamed account') : account.name}</span>
-            <SecondaryButton className={`${styles.editBtn} edit-account`} onClick={() => onEditAccount(index)}>
+            <span className={`${styles.accountTitle} account-name`}>
+              {account.name === null ? t('Unnamed account') : account.name}
+            </span>
+            <SecondaryButton
+              className={`${styles.editBtn} edit-account`}
+              onClick={() => onEditAccount(index)}
+            >
               {t('Edit')}
               <Icon name="edit" />
             </SecondaryButton>
@@ -60,7 +70,10 @@ const AccountCard = ({
         <span>{t('Balance')}</span>
       </div>
 
-      <PrimaryButton className="select-account" onClick={() => onSelectAccount(account, index)}>
+      <PrimaryButton
+        className="select-account"
+        onClick={() => onSelectAccount(account, index)}
+      >
         {t('Select this account')}
       </PrimaryButton>
     </div>

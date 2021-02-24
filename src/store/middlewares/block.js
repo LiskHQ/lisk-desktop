@@ -5,6 +5,8 @@ import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
 import { forgersSubscribe, forgersUnsubscribe, getDelegates } from '../../utils/api/delegate';
 import { tokenMap } from '../../constants/tokens';
 
+const oneMinute = 1000 * 60;
+
 const generateOnDisconnect = dispatch => () => {
   dispatch(networkStatusUpdated({ online: false }));
 };
@@ -18,25 +20,17 @@ const blockListener = ({ getState, dispatch }) => {
   const state = getState();
   blockUnsubscribe();
 
-  let windowIsFocused = true;
-  const { ipc } = window;
-  if (ipc?.on) {
-    ipc.on('blur', () => { windowIsFocused = false; });
-    ipc.on('focus', () => { windowIsFocused = true; });
-  }
-
   // eslint-disable-next-line max-statements
   const callback = (block) => {
     const { settings, network, blocks } = getState();
     const activeToken = settings.token && state.settings.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;
     const now = new Date();
-    const oneMinute = 1000 * 60;
 
     if ((activeToken !== tokenMap.BTC.key) || now - lastBtcUpdate > oneMinute) {
       dispatch({
         type: actionTypes.newBlockCreated,
-        data: { block, windowIsFocused },
+        data: { block },
       });
       if (activeToken === tokenMap.BTC.key) {
         dispatch({

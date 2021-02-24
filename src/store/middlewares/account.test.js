@@ -51,10 +51,7 @@ const transactionsRetrievedAction = {
 
 const newBlockCreated = {
   type: actionTypes.newBlockCreated,
-  data: {
-    windowIsFocused: true,
-    block,
-  },
+  data: { block },
 };
 
 const network = {

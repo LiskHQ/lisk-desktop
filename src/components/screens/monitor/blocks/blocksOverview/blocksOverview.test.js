@@ -21,10 +21,10 @@ describe('Blocks Overview', () => {
     expect(wrapper.find('.box-tabs .tab').at(1)).toIncludeText('Last 50 blocks');
     expect(wrapper.find('.box-tabs .tab').at(2)).toIncludeText('Last 100 blocks');
     wrapper.find('.box-tabs ul li').at(1).simulate('click');
-    expect(props.blocks.loadData).toBeCalledWith({ limit: '50' });
+    expect(props.blocks.loadData).toBeCalledWith({ limit: 50 });
     wrapper.find('.box-tabs ul li').at(2).simulate('click');
-    expect(props.blocks.loadData).toBeCalledWith({ limit: '100' });
+    expect(props.blocks.loadData).toBeCalledWith({ limit: 100 });
     wrapper.find('.box-tabs ul li').at(0).simulate('click');
-    expect(props.blocks.loadData).toBeCalledWith({ limit: '10' });
+    expect(props.blocks.loadData).toBeCalledWith({ limit: 10 });
   });
 });

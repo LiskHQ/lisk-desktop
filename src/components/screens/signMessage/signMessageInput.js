@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons';
 import { parseSearchParams } from '../../../utils/searchParams';
@@ -11,68 +11,54 @@ import BoxInfoText from '../../toolbox/box/infoText';
 import Piwik from '../../../utils/piwik';
 import styles from './signMessage.css';
 
-class SignMessageInput extends React.Component {
-  constructor(props) {
-    super(props);
+const SignMessageInput = ({ nextStep, t, history }) => {
+  const [message, setMessage] = useState('');
+  useEffect(() => {
+    const params = parseSearchParams(history.location.search);
+    if (typeof params.message === 'string' && params.message.length) {
+      setMessage(params.message);
+    }
+  }, []);
 
-    const { message } = parseSearchParams(props.history.location.search);
-    this.state = {
-      message: {
-        value: message || '',
-      },
-    };
+  const onChange = ({ target: { value } }) => {
+    setMessage(value);
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.nextStep = this.nextStep.bind(this);
-  }
-
-  handleChange({ target: { name, value } }) {
-    this.setState({
-      [name]: {
-        value,
-      },
-    });
-  }
-
-  nextStep() {
+  const onClick = () => {
     Piwik.trackingEvent('SignMessageInput', 'button', 'Next step');
-    this.props.nextStep({ message: this.state.message.value });
-  }
+    nextStep({ message });
+  };
 
-  render() {
-    const { t } = this.props;
-    const { message } = this.state;
-    return (
-      <Box>
-        <BoxHeader>
-          <h1>{t('Sign a message')}</h1>
-        </BoxHeader>
-        <BoxContent className={styles.noPadding}>
-          <BoxInfoText>
-            <span>{t('The sign message tool allows you to prove ownership of a transaction')}</span>
-            <Tooltip className={styles.tooltip} position="bottom left" indent>
-              <p>{t('Recipients will be able to confirm the transfer  by viewing the signature which verifies the ownership without exposing any sensitive account information.')}</p>
-            </Tooltip>
-          </BoxInfoText>
-          <label className={styles.fieldGroup}>
-            <span>{t('Message')}</span>
-            <AutoResizeTextarea
-              className={styles.textarea}
-              name="message"
-              onChange={this.handleChange}
-              value={message.value}
-            />
-          </label>
-        </BoxContent>
-        <BoxFooter direction="horizontal">
-          <PrimaryButton className="next" onClick={this.nextStep}>
-            {t('Continue')}
-          </PrimaryButton>
-        </BoxFooter>
-      </Box>
-    );
-  }
-}
+  return (
+    <Box>
+      <BoxHeader>
+        <h1>{t('Sign a message')}</h1>
+      </BoxHeader>
+      <BoxContent className={styles.noPadding}>
+        <BoxInfoText>
+          <span>{t('The sign message tool allows you to prove ownership of a transaction')}</span>
+          <Tooltip className={styles.tooltip} position="bottom">
+            <p>{t('Recipients will be able to confirm the transfer  by viewing the signature which verifies the ownership without exposing any sensitive account information.')}</p>
+          </Tooltip>
+        </BoxInfoText>
+        <label className={styles.fieldGroup}>
+          <span>{t('Message')}</span>
+          <AutoResizeTextarea
+            className={styles.textarea}
+            name="message"
+            onChange={onChange}
+            value={message}
+          />
+        </label>
+      </BoxContent>
+      <BoxFooter direction="horizontal">
+        <PrimaryButton className="next" onClick={onClick}>
+          {t('Continue')}
+        </PrimaryButton>
+      </BoxFooter>
+    </Box>
+  );
+};
 
 
 export default SignMessageInput;

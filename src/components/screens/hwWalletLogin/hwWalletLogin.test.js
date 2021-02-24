@@ -4,14 +4,16 @@ import * as hwManager from '../../../utils/hwManager';
 import HwWalletLogin from './hwWalletLogin';
 
 jest.mock('../../../utils/hwManager', () => ({
-  subscribeToDevicesList: jest.fn((fn) => {
-    const devices = [
-      { deviceId: 1, openApp: false, model: 'Ledger' },
-      { deviceId: 2, model: 'Trezor' },
-      { deviceId: 3, openApp: true, model: 'Ledger' },
-    ];
-    setTimeout(() => fn(devices), 100);
-  }),
+  subscribeToDevicesList: jest.fn().mockImplementation(fn => new Promise((resolve) => {
+    fn([
+      { deviceId: 1, openApp: false, manufacturer: 'Ledger' },
+      { deviceId: 2, manufacturer: 'Trezor' },
+      { deviceId: 3, openApp: true, manufacturer: 'Ledger' },
+    ]);
+    resolve({
+      unsubscribe: jest.fn(),
+    });
+  })),
 }));
 
 describe('HwWalletLogin', () => {
@@ -43,11 +45,9 @@ describe('HwWalletLogin', () => {
     t: key => key,
   };
 
-  it('should render Loading component and call hwManager.subscribeToDevicesList ', async () => {
+  it('should render Loading component and call hwManager.subscribeToDevicesList', async () => {
     wrapper = mount(<HwWalletLogin {...props} />);
-    expect(wrapper).toContainMatchingElement('Loading');
     expect(hwManager.subscribeToDevicesList).toBeCalled();
-    jest.runAllTimers();
     wrapper.update();
     expect(wrapper).not.toContainMatchingElement('Loading');
   });

@@ -15,6 +15,8 @@ import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideToo
 import { colorPalette } from '../../../../constants/chartConstants';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
 
+const FORGERS_TO_SHOW = 6;
+
 const getForgingStats = (data) => {
   const statuses = {
     forging: 0,
@@ -81,6 +83,13 @@ const ForgingDetails = ({
     },
   };
 
+  const forgersListToShow = awaitingForgers.slice(forgedInRound, forgedInRound + FORGERS_TO_SHOW);
+
+  if (forgersListToShow.length < FORGERS_TO_SHOW) {
+    forgersListToShow.push(
+      ...awaitingForgers.slice(0, FORGERS_TO_SHOW - forgersListToShow.length),
+    );
+  }
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
@@ -147,8 +156,7 @@ const ForgingDetails = ({
             <h2 className={styles.title}>{t('Next forgers')}</h2>
             <nav className={styles.list}>
               {
-                awaitingForgers
-                  .slice(forgedInRound, forgedInRound + 6)
+                forgersListToShow
                   .map(forger => (
                     <Forger key={forger.address} forger={forger} />
                   ))

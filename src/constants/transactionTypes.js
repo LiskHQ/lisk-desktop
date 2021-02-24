@@ -43,7 +43,7 @@ const transactionTypes = (t = str => str) => ({
       legacy: 3,
       new: 13,
     },
-    outgoingCode: 11,
+    outgoingCode: 13,
     title: t('Delegate vote'),
     senderLabel: t('Voter'),
     key: 'vote',
