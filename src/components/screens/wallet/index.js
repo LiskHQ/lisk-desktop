@@ -13,6 +13,7 @@ import Transactions from './transactions';
 import { isEmpty } from '../../../utils/helpers';
 import actionTypes from '../../../constants/actions';
 import { toRawLsk } from '../../../utils/lsk';
+import { transformStringDateToUnixTimestamp } from '../../../utils/datetime';
 import routes from '../../../constants/routes';
 
 /**
@@ -27,7 +28,7 @@ const transformParams = params => Object.keys(params)
     if (item === 'amountFrom' || item === 'amountTo') {
       acc.filters[item] = toRawLsk(params[item]);
     } else if (item === 'dateFrom' || item === 'dateTo') {
-      acc.filters[item] = params[item];
+      acc.filters[item] = transformStringDateToUnixTimestamp(params[item]);
     } else {
       acc[item] = params[item];
     }

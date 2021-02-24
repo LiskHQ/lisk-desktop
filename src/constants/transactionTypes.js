@@ -14,18 +14,6 @@ const transactionTypes = (t = str => str) => ({
     nameFee: 0,
     hardCap: 1e7, // rawLSK
   },
-  setSecondPassphrase: {
-    code: {
-      legacy: 1,
-      new: 9,
-    },
-    outgoingCode: 9,
-    title: t('Second passphrase registration'),
-    senderLabel: t('Account'),
-    key: 'secondPassphrase',
-    nameFee: 0,
-    hardCap: 5e8, // rawLSK
-  },
   registerDelegate: {
     code: {
       legacy: 2,
@@ -43,7 +31,7 @@ const transactionTypes = (t = str => str) => ({
       legacy: 3,
       new: 13,
     },
-    outgoingCode: 11,
+    outgoingCode: 13,
     title: t('Delegate vote'),
     senderLabel: t('Voter'),
     key: 'vote',
