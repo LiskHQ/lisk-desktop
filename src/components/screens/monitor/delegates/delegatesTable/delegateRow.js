@@ -17,14 +17,12 @@ import { addedToWatchList, removedFromWatchList } from '../../../../../actions/w
 const roundStatus = {
   forging: 'Forging',
   awaitingSlot: 'Awaiting slot',
-  notForging: 'Not forging',
   missedBlock: 'Missed block',
 };
 
 const icons = {
   forging: 'delegateForged',
   awaitingSlot: 'delegateAwaiting',
-  notForging: 'delegateAwaiting',
   missedBlock: 'delegateMissed',
 };
 
@@ -87,7 +85,7 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
     <Tooltip
       title={data.forgingTime
         ? t(roundStatus[data.forgingTime.status])
-        : t(roundStatus.notForging)}
+        : t(roundStatus.missedBlock)}
       position="left"
       size="maxContent"
       content={(
@@ -129,7 +127,7 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
 const DelegateRow = ({
   data, className, t, activeTab, watchList, setActiveTab,
 }) => {
-  const formattedForgingTime = data.forgingTime && data.forgingTime.time;
+  const formattedForgingTime = data.forgingTime && getForgingTime(data.forgingTime);
   const dispatch = useDispatch();
 
   const isWatched = watchList.find(address => address === data.address);
@@ -178,7 +176,7 @@ const DelegateRow = ({
       {(activeTab === 'active' || activeTab === 'watched') && (
         <>
           <span className={`${grid['col-xs-2']} ${styles.noEllipsis}`}>
-            {getForgingTime(data.forgingTime)}
+            {formattedForgingTime}
           </span>
           <span className={`${grid['col-xs-1']} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
             <RoundStatus data={data} t={t} formattedForgingTime={formattedForgingTime} />

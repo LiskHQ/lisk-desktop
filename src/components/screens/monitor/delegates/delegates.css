@@ -182,7 +182,7 @@
 }
 
 .statusIcon {
-  height: 17px;
+  max-height: 17px;
 }
 
 .delegateHeader {
