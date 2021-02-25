@@ -9,6 +9,7 @@ import LiskAmount from '../liskAmount';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import DialogLink from '../../toolbox/dialog/link';
 import styles from './transactionsTable.css';
+import { getTxAmount } from '../../../utils/api/transaction/lsk';
 
 const roundSize = 103;
 
@@ -38,7 +39,10 @@ const TransactionRow = ({ data, className, t }) => (
       <DateTimeFromTimestamp time={data.timestamp * 1000} token={tokenMap.BTC.key} />
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-2']} ${styles.amount}`}>
-      <LiskAmount val={data.amount} token={tokenMap.LSK.key} />
+      <LiskAmount
+        val={getTxAmount(data)}
+        token={tokenMap.LSK.key}
+      />
       <span className={`${styles.fee} hideOnLargeViewPort`}>
         <LiskAmount val={data.fee} token={tokenMap.LSK.key} />
       </span>

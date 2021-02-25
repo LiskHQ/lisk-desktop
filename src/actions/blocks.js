@@ -65,12 +65,12 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
   const { network } = getState();
   const { latestBlocks } = getState().blocks;
   const forgedInRoundNum = latestBlocks[0].height % MAX_BLOCKS_FORGED;
-  const awaitingForgers = nextForgers || await retrieveNextForgers(network);
+  const awaitingForgers = nextForgers ?? await retrieveNextForgers(network);
 
   // First I define the delegates who forged in this round.
   // Their status is forging with no doubt
   const forgingTimes = latestBlocks
-    .filter((_, i) => i <= forgedInRoundNum)
+    .slice(0, forgedInRoundNum + 1)
     .reduce((acc, item, index) => {
       acc[item.generatorPublicKey] = {
         time: (index + 1) * 10,
@@ -79,12 +79,13 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
       };
       return acc;
     }, {});
+
   // Then I have to figure out which ones forged
   // last round and which ones did the round before
   latestBlocks.forEach((item, index) => {
     if (index > forgedInRoundNum && !forgingTimes[item.generatorPublicKey]) {
       // if I can't find it in the previous round
-      if (index >= forgedInRoundNum + 101 && latestBlocks.indexOf(item) === index) {
+      if (index >= forgedInRoundNum + MAX_BLOCKS_FORGED && latestBlocks.indexOf(item) === index) {
         forgingTimes[item.generatorPublicKey] = {
           time: (index + 1) * 10,
           status: 'missedBlock',
@@ -99,23 +100,26 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
       }
     }
   });
+
   // now from the list of forgers, they're all awaiting slot,
   // unless they didn't forge for in the last 2 rounds.
-  awaitingForgers.filter((item, index) => index < forgedInRoundNum).forEach((item, index) => {
-    if (forgingTimes[item.publicKey]) {
-      forgingTimes[item.publicKey] = {
-        time: index * 10,
-        status: 'awaitingSlot',
-        tense: 'future',
-      };
-    } else {
-      forgingTimes[item.publicKey] = {
-        time: -1,
-        status: 'notForging',
-        tense: 'past',
-      };
-    }
-  });
+  awaitingForgers
+    .slice(0, forgedInRoundNum)
+    .forEach((item, index) => {
+      if (forgingTimes[item.publicKey]) {
+        forgingTimes[item.publicKey] = {
+          time: index * 10,
+          status: 'awaitingSlot',
+          tense: 'future',
+        };
+      } else {
+        forgingTimes[item.publicKey] = {
+          time: -1,
+          status: 'notForging',
+          tense: 'past',
+        };
+      }
+    });
 
   dispatch({
     type: actionTypes.forgingTimesRetrieved,

@@ -9,7 +9,7 @@ export default compose(
   withRouter,
   withData({
     blocks: {
-      apiUtil: getBlocks,
+      apiUtil: (network, params) => getBlocks({ network, params }),
       transformResponse: response => response.data,
       defaultUrlSearchParams: { limit: '10' },
       defaultData: [],

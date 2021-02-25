@@ -31,7 +31,7 @@ import { getTransactions } from '../../utils/api/transaction';
 const delay = () => new Promise((resolve) => {
   setTimeout(() => {
     resolve();
-  }, 100);
+  }, 1500);
 });
 
 const getRecentTransactionOfType = (transactionsList, type) => (
@@ -81,12 +81,15 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
 
   if (numberOfTransactions) {
     await delay();
-    const { data: txs } = await getTransactions({ network, params: { blockId: id } }, token.active);
+    const { data: txs } = await getTransactions({
+      network,
+      params: { blockId: id },
+    }, token.active);
+
     const blockContainsRelevantTransaction = txs.filter((transaction) => {
       if (!transaction) return false;
       return (
-        account.address === transaction.senderId
-        || account.address === transaction.recipientId
+        account.address === transaction.senderId || account.address === transaction.recipientId
       );
     }).length > 0;
 

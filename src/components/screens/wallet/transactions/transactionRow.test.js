@@ -7,11 +7,14 @@ describe('Single Transaction Component', () => {
   const unlockTx = {
     data: {
       senderId: accounts.genesis.address,
-      recipientId: '',
-      amount: '50',
       asset: {
-        data: 'Transaction message',
-        recipientId: '',
+        unlockingObjects: [
+          {
+            amount: '80000000000',
+            unvoteHeight: 34482,
+            delegateAddress: '642631452659250689L',
+          },
+        ],
       },
       confirmation: 1,
       type: 14,
