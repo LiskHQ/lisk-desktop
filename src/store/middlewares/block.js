@@ -1,6 +1,6 @@
 import actionTypes from '../../constants/actions';
 import { networkStatusUpdated } from '../../actions/network';
-import { olderBlocksRetrieved, forgingTimesRetrieved, updateForgingTimes } from '../../actions/blocks';
+import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
 import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
 import { forgersSubscribe, forgersUnsubscribe, getDelegates } from '../../utils/api/delegate';
 import { tokenMap } from '../../constants/tokens';
