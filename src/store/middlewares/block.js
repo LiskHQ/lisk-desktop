@@ -42,6 +42,8 @@ const blockListener = ({ getState, dispatch }) => {
 
     if (Object.keys(blocks.forgingTimes).length === 0 || blocks.awaitingForgers.length === 0) {
       dispatch(forgingTimesRetrieved());
+    } else {
+      dispatch(forgingTimesRetrieved(blocks.awaitingForgers));
     }
   };
 
