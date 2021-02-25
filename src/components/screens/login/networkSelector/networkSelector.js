@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import { Input } from '../../../toolbox/inputs';
@@ -7,13 +7,23 @@ import { getNetworksList } from '../../../../utils/getNetwork';
 import networks, { networkKeys } from '../../../../constants/networks';
 import keyCodes from '../../../../constants/keyCodes';
 import DropdownButton from '../../../toolbox/dropdownButton';
-import { tokenMap } from '../../../../constants/tokens';
-import { getNetworkConfig } from '../../../../utils/api/network';
 import { getApiClient } from '../../../../utils/api/apiClient';
 
 import styles from './networkSelector.css';
 
 const networkList = getNetworksList();
+
+const getNetwork = (name, url) => {
+  const { nodes, initialSupply } = networks[name];
+  const address = name === networkKeys.customNode
+    ? addHttp(url) : nodes[0];
+
+  return {
+    name,
+    initialSupply,
+    address,
+  };
+};
 
 const getInitialState = (address) => {
   const { liskCoreUrl } = getAutoLogInData();
@@ -28,7 +38,7 @@ const getInitialState = (address) => {
 
 // eslint-disable-next-line max-statements
 const NetworkSelector = ({
-  t, selectedNetworkName, selectedNetwork, selectedAddress, networkSelected, settingsUpdated,
+  t, selectedNetworkName, selectedAddress, networkSelected, settingsUpdated,
 }) => {
   const childRef = useRef(null);
   const [state, _setState] = useState(() => getInitialState(selectedAddress));
@@ -43,43 +53,31 @@ const NetworkSelector = ({
     });
   };
 
-  const getNetwork = (name) => {
-    const { nodes, initialSupply } = networks[name];
-    const address = name === networkKeys.customNode
-      ? addHttp(state.address) : nodes[0];
-
-    return {
-      name,
-      initialSupply,
-      address,
-    };
+  const setIsValid = (isValid) => {
+    setState({ isValid });
   };
 
   const changeNetworkInSettings = (networkName) => {
-    const { name, address } = getNetwork(networkName);
+    const { name, address } = getNetwork(networkName, state.address);
     if (address !== 'http://') {
       settingsUpdated({ network: { name, address } });
     }
   };
 
-  const onChangeNetwork = (networkName) => {
-    if (networkName !== networkKeys.customNode) {
-      changeNetworkInSettings(networkName);
+  const onSelectNetwork = (name) => {
+    if (name !== networkKeys.customNode) {
+      changeNetworkInSettings(name);
     } else {
       setState({ isCustomSelected: true });
     }
   };
 
-  const setIsValid = (validity) => {
-    setState({ isValid: validity });
-  };
-
   // eslint-disable-next-line max-statements
   const validateCorrectNode = async (networkName) => {
-    const networkToSet = getNetwork(networkName);
+    const networkToSet = getNetwork(networkName, state.address);
 
     if (networkName === networkKeys.customNode) {
-      const liskApiClient = getApiClient({ address: state.address });
+      const liskApiClient = getApiClient({ address: networkToSet.address });
       try {
         const response = await liskApiClient.node.getConstants();
         if (response.data) {
@@ -105,25 +103,6 @@ const NetworkSelector = ({
     setState({ isValidationLoading: true });
     validateCorrectNode(networkKeys.customNode);
   };
-
-  const checkNodeStatus = () => {
-    getNetworkConfig({
-      name: selectedNetworkName,
-      address: state.address,
-    }, tokenMap.LSK.key).then((response) => {
-      if (response) {
-        if (selectedNetwork.name === networkKeys.customNode) {
-          setIsValid(false);
-        } else {
-          setIsValid(true);
-        }
-      }
-    });
-  };
-
-  useEffect(() => {
-    checkNodeStatus();
-  }, [selectedNetworkName]);
 
   const {
     address,
@@ -152,7 +131,7 @@ const NetworkSelector = ({
                 <span
                   className={`${styles.networkSpan} address`}
                   key={key}
-                  onClick={() => onChangeNetwork(network.name)}
+                  onClick={() => onSelectNetwork(networkKeys.customNode)}
                 >
                   {network.label}
                   <div className={styles.inputWrapper}>
@@ -203,7 +182,7 @@ const NetworkSelector = ({
             return (
               <span
                 onClick={() => {
-                  onChangeNetwork(network.name);
+                  onSelectNetwork(network.name);
                   validateCorrectNode(network.name);
                   setState({ connected: false });
                   childRef.current.toggleDropdown(false);
