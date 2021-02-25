@@ -56,7 +56,7 @@ const Transactions = ({
   };
 
   const canLoadMore = transactions.data.meta
-    ? transactions.data.meta?.count > transactions.data.data.length
+    ? transactions.data.meta.count > transactions.data.data.length
     : false;
 
   const formatters = {
