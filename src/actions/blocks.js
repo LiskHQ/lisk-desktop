@@ -66,56 +66,36 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
   const { latestBlocks } = getState().blocks;
   const forgedInRoundNum = latestBlocks[0].height % MAX_BLOCKS_FORGED;
   const awaitingForgers = nextForgers ?? await retrieveNextForgers(network);
+  const forgingTimes = {};
 
-  // First I define the delegates who forged in this round.
-  // Their status is forging with no doubt
-  const forgingTimes = latestBlocks
-    .slice(0, forgedInRoundNum + 1)
-    .reduce((acc, item, index) => {
-      acc[item.generatorPublicKey] = {
-        time: (index + 1) * 10,
-        status: 'forging',
-        tense: 'past',
-      };
-      return acc;
-    }, {});
-
-  // Then I have to figure out which ones forged
-  // last round and which ones did the round before
-  latestBlocks.forEach((item, index) => {
-    if (index > forgedInRoundNum && !forgingTimes[item.generatorPublicKey]) {
-      // if I can't find it in the previous round
-      if (index >= forgedInRoundNum + MAX_BLOCKS_FORGED && latestBlocks.indexOf(item) === index) {
-        forgingTimes[item.generatorPublicKey] = {
-          time: (index + 1) * 10,
-          status: 'missedBlock',
-          tense: 'past',
-        };
-      } else {
-        forgingTimes[item.generatorPublicKey] = {
-          time: (index + 1) * 10,
-          status: 'awaitingSlot',
-          tense: 'past',
-        };
-      }
-    }
-  });
-
-  // now from the list of forgers, they're all awaiting slot,
-  // unless they didn't forge for in the last 2 rounds.
+  // First we set awaitingForgers as awaitingSlot or missedBlock
+  // depending if they are upfront the current round number
   awaitingForgers
-    .slice(0, forgedInRoundNum)
     .forEach((item, index) => {
-      if (forgingTimes[item.publicKey]) {
+      if (index >= forgedInRoundNum) {
         forgingTimes[item.publicKey] = {
-          time: index * 10,
+          time: (index - forgedInRoundNum + 1) * 10,
           status: 'awaitingSlot',
           tense: 'future',
         };
       } else {
         forgingTimes[item.publicKey] = {
           time: -1,
-          status: 'notForging',
+          status: 'missedBlock',
+          tense: 'past',
+        };
+      }
+    });
+
+  // Now we iterate the latest blocks and if we find some of the ones
+  // that we putted on missedBlock we set them to forging
+  latestBlocks
+    .slice(0, forgedInRoundNum)
+    .forEach((item, index) => {
+      if (forgingTimes[item.generatorPublicKey]?.status === 'missedBlock') {
+        forgingTimes[item.generatorPublicKey] = {
+          time: index * 10,
+          status: 'forging',
           tense: 'past',
         };
       }
