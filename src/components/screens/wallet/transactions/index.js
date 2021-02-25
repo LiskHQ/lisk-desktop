@@ -50,16 +50,6 @@ const Transactions = ({
     }
   }, [transactions.data.data]);
 
-  useEffect(() => {
-    if (!transactions.data.data.length && address) {
-      transactions.loadData({
-        offset: 0,
-        limit: 30,
-        address,
-      });
-    }
-  }, [address]);
-
   /* istanbul ignore next */
   const handleLoadMore = () => {
     transactions.loadData({ offset: transactions.data.data.length, sort });
@@ -147,11 +137,13 @@ export default compose(
     transactions: {
       apiUtil: (network, { token, ...params }) =>
         getTransactions({ network, params: transformParams(params) }, token),
-      getApiParams: state => ({
+      getApiParams: (state, { address, sort }) => ({
         token: state.settings.token.active,
+        address,
+        sort,
       }),
       defaultData: { data: [], meta: {} },
-      autoload: false,
+      autoload: true,
     },
     votedDelegates: {
       apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
