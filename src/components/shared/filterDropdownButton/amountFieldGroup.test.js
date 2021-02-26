@@ -32,7 +32,7 @@ describe('AmountFieldGroup', () => {
       amountFrom: {
         error: false,
         loading: false,
-        value: '123',
+        value: 12300000000,
       },
     };
     wrapper.find('.amountFromInput input').simulate('change', { target: { name: 'amountFrom', value: '123' } });

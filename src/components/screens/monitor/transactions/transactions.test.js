@@ -1,6 +1,7 @@
 import TransactionsPure from './transactions';
 import transactions from '../../../../../test/constants/transactions';
 import { mountWithRouter } from '../../../../utils/testHelpers';
+import { toRawLsk } from '../../../../utils/lsk';
 
 describe('Transactions monitor page', () => {
   const props = {
@@ -72,7 +73,7 @@ describe('Transactions monitor page', () => {
     wrapper.find('button.load-more').simulate('click');
 
     expect(props.transactions.loadData).toHaveBeenCalledWith({
-      offset: transactions.length, amountFrom, sort,
+      offset: transactions.length, amountFrom: toRawLsk(amountFrom), sort,
     });
   });
 

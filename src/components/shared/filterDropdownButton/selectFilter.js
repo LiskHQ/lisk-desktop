@@ -9,7 +9,7 @@ const SelectFilter = ({
 }) => {
   const txTypes = transactionTypes();
   const options = Object.keys(txTypes)
-    .map(key => ({ value: txTypes[key].code.legacy, label: txTypes[key].title }));
+    .map(key => ({ value: txTypes[key].outgoingCode, label: txTypes[key].title }));
   options.unshift({ value: '', label: placeholder });
 
   const onChange = (value) => {

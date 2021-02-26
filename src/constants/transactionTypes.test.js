@@ -28,7 +28,6 @@ describe('Constants: transactionTypes', () => {
     const keysList = transactionTypes.getListOf('key');
     expect(keysList).toEqual([
       'transfer',
-      'secondPassphrase',
       'registerDelegate',
       'vote',
       'createMultiSig',
