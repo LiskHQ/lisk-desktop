@@ -21,7 +21,6 @@ const getForgingStats = (data) => {
   const statuses = {
     forging: 0,
     awaitingSlot: 0,
-    notForging: 0,
     missedBlock: 0,
   };
   Object.values(data)
@@ -55,7 +54,6 @@ const ForgingDetails = ({
   const delegatesForgedLabels = [
     t('Forging'),
     t('Awaiting slot'),
-    t('Not forging'),
     t('Missed block'),
   ];
   const { latestBlocks, awaitingForgers } = useSelector(state => state.blocks);

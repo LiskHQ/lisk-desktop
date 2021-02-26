@@ -204,7 +204,11 @@
   border-radius: 3px;
   line-height: 12px;
   letter-spacing: 0.2px;
-  text-transform: capitalize;
+
+  &.active {
+    color: var(--color-jade-green);
+    background-color: var(--color-jade-green-transparent);
+  }
 
   &.standby {
     color: var(--color-ink-blue);
