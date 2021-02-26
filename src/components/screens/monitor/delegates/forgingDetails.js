@@ -21,7 +21,6 @@ const getForgingStats = (data) => {
   const statuses = {
     forging: 0,
     awaitingSlot: 0,
-    notForging: 0,
     missedBlock: 0,
   };
   Object.values(data)
