@@ -102,6 +102,15 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
   </>
 );
 
+const DelegateStatus = ({ activeTab, data }) => {
+  const status = data.delegateWeight < 100000000000 ? 'non-eligible' : data.status;
+  return (
+    <span className={activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`}>
+      <span className={`${styles.delegateStatus} ${styles[status]}`}>{status}</span>
+    </span>
+  );
+};
+
 // eslint-disable-next-line complexity
 const DelegateRow = ({
   data, className, t, activeTab, watchList, setActiveTab,
@@ -161,11 +170,7 @@ const DelegateRow = ({
           </span>
         </>
       )}
-      {(activeTab === 'watched' || activeTab !== 'active') && (
-        <span className={activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`}>
-          <span className={`${styles.delegateStatus} ${styles[data.status]}`}>{data.status}</span>
-        </span>
-      )}
+      {(activeTab === 'watched' || activeTab !== 'active') && <DelegateStatus data={data} activeTab={activeTab} />}
     </Link>
   );
 };
