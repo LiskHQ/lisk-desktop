@@ -50,6 +50,10 @@ const Transactions = ({
     }
   }, [transactions.data.data]);
 
+  useEffect(() => {
+    transactions.loadData();
+  }, [pending.length]);
+
   /* istanbul ignore next */
   const handleLoadMore = () => {
     transactions.loadData({ offset: transactions.data.data.length, sort });
