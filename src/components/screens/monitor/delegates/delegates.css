@@ -193,6 +193,11 @@
   line-height: 12px;
   letter-spacing: 0.2px;
 
+  &.active {
+    color: var(--color-jade-green);
+    background-color: var(--color-jade-green-transparent);
+  }
+
   &.standby {
     color: var(--color-ink-blue);
     background-color: var(--color-active-tab);

@@ -27,6 +27,7 @@ const icons = {
 };
 
 const delegateStatus = {
+  active: 'Active',
   standby: 'Standby',
   banned: 'Banned',
   punished: 'Punished',
@@ -110,6 +111,7 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
 );
 
 const DelegateStatus = ({ activeTab, data }) => {
+  console.log(data);
   const status = data.delegateWeight < 100000000000 ? 'non-eligible' : data.status;
   return (
     <span className={activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`}>
