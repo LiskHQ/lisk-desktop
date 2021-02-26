@@ -135,6 +135,10 @@
 
       & .tooltipContainer {
         left: -40px;
+
+        & > main > .watchedTooltip {
+          @mixin contentNormal bold;
+        }
       }
     }
   }

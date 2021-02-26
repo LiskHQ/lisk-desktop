@@ -61,7 +61,7 @@ const DelegateDetails = ({
           </span>
         )}
       >
-        <p>
+        <p className={styles.watchedTooltip}>
           {watched ? t('Remove from watched') : t('Add to watched')}
         </p>
       </Tooltip>
