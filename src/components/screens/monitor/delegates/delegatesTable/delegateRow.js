@@ -26,6 +26,13 @@ const icons = {
   missedBlock: 'delegateMissed',
 };
 
+const delegateStatus = {
+  standby: 'Standby',
+  banned: 'Banned',
+  punished: 'Punished',
+  'non-eligible': 'Non-eligible to forge',
+};
+
 const getForgingTime = (data) => {
   if (!data || data.time === -1) return '-';
   if (data.time === 0) return 'now';
@@ -106,7 +113,7 @@ const DelegateStatus = ({ activeTab, data }) => {
   const status = data.delegateWeight < 100000000000 ? 'non-eligible' : data.status;
   return (
     <span className={activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`}>
-      <span className={`${styles.delegateStatus} ${styles[status]}`}>{status}</span>
+      <span className={`${styles.delegateStatus} ${styles[status]}`}>{delegateStatus[status]}</span>
     </span>
   );
 };

@@ -192,7 +192,6 @@
   border-radius: 3px;
   line-height: 12px;
   letter-spacing: 0.2px;
-  text-transform: capitalize;
 
   &.standby {
     color: var(--color-ink-blue);
