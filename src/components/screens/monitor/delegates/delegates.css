@@ -103,7 +103,7 @@
   & > span {
     white-space: nowrap;
     text-overflow: ellipsis;
-    overflow: hidden;
+    overflow: inherit;
     display: block;
     padding-right: 8px;
     padding-left: 8px;
@@ -111,21 +111,33 @@
     & > .delegateColumn {
       display: flex;
 
-      & > .eyeIcon {
-        display: flex;
-        position: relative;
+      & > .eyeIconTooltip {
+        align-self: center;
+        margin-right: 10px;
 
-        &.watchedDelegate {
+        & > .eyeIcon {
+          display: flex;
+          position: relative;
+
+          &.watchedDelegate {
+            & > img {
+              visibility: visible !important;
+              opacity: 1 !important;
+            }
+          }
+
           & > img {
-            visibility: visible !important;
-            opacity: 1 !important;
+            visibility: hidden;
+            opacity: 0;
           }
         }
+      }
 
-        & > img {
-          margin-right: 12px;
-          visibility: hidden;
-          opacity: 0;
+      & .tooltipContainer {
+        left: -40px;
+
+        & > main > .watchedTooltip {
+          @mixin contentNormal bold;
         }
       }
     }
@@ -141,7 +153,7 @@
   }
 
   &:hover {
-    & > span > .delegateColumn > .eyeIcon > img {
+    & > span > .delegateColumn > .eyeIconTooltip > .eyeIcon > img {
       visibility: visible;
       opacity: 1;
     }

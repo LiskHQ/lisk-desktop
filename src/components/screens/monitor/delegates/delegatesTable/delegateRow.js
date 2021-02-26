@@ -38,15 +38,34 @@ const getForgingTime = (data) => {
   return `${minutes}${seconds} ago`;
 };
 
+// eslint-disable-next-line complexity
 const DelegateDetails = ({
-  watched = false, data, activeTab, removeFromWatchList, addToWatchList,
+  t, watched = false, data, activeTab, removeFromWatchList, addToWatchList,
 }) => {
-  const showEyeIcon = activeTab === 'active' || activeTab === 'watched';
+  const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'watched';
   return (
     <div className={styles.delegateColumn}>
-      <span className={`${styles.eyeIcon} ${!showEyeIcon && 'hidden'} ${watched && showEyeIcon && styles.watchedDelegate}`} onClick={watched ? removeFromWatchList : addToWatchList}>
-        <Icon name={watched ? 'eyeActive' : 'eyeInactive'} />
-      </span>
+      <Tooltip
+        tooltipClassName={styles.tooltipContainer}
+        className={styles.eyeIconTooltip}
+        position="bottom right"
+        size="s"
+        content={(
+          <span
+            className={`
+              ${styles.eyeIcon} ${!showEyeIcon ? 'hidden' : ''} ${watched && showEyeIcon ? styles.watchedDelegate : ''}
+            `}
+            onClick={watched ? removeFromWatchList : addToWatchList}
+          >
+            <Icon name={watched ? 'eyeActive' : 'eyeInactive'} />
+          </span>
+        )}
+      >
+        <p className={styles.watchedTooltip}>
+          {watched ? t('Remove from watched') : t('Add to watched')}
+        </p>
+      </Tooltip>
+
       <div className={`${styles.delegateDetails}`}>
         <AccountVisual address={data.address} />
         <div>
@@ -72,9 +91,11 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
       content={(
         <Icon
           className={styles.statusIcon}
-          name={data.forgingTime
-            ? t(icons[data.forgingTime.status])
-            : t(icons.missedBlock)}
+          name={
+            data.forgingTime
+              ? icons[data.forgingTime.status]
+              : icons.notForging
+          }
         />
       )}
       footer={(
@@ -128,16 +149,17 @@ const DelegateRow = ({
 
   return (
     <Link
-      className={`${grid.row} ${className} delegate-row ${styles.tableRow}`}
+      className={`${className} delegate-row ${styles.tableRow}`}
       to={`${routes.account.path}?address=${data.address}`}
     >
       <span className={activeTab !== 'sanctioned' ? `${grid['col-xs-3']}` : `${grid['col-xs-4']}`}>
         <DelegateDetails
+          t={t}
+          data={data}
+          watched={isWatched}
+          activeTab={activeTab}
           addToWatchList={addToWatchList}
           removeFromWatchList={removeFromWatchList}
-          watched={isWatched}
-          data={data}
-          activeTab={activeTab}
         />
       </span>
       <span className={`${activeTab === 'active' ? grid['col-xs-2'] : (activeTab === 'watched' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']}`)}`}>
