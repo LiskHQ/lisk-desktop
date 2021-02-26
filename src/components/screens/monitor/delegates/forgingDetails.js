@@ -55,7 +55,6 @@ const ForgingDetails = ({
   const delegatesForgedLabels = [
     t('Forging'),
     t('Awaiting slot'),
-    t('Not forging'),
     t('Missed block'),
   ];
   const { latestBlocks, awaitingForgers } = useSelector(state => state.blocks);
