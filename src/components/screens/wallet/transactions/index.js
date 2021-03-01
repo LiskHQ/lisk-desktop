@@ -11,7 +11,7 @@ import FilterBar from '../../../shared/filterBar';
 import withFilters from '../../../../utils/withFilters';
 import withData from '../../../../utils/withData';
 import { getDelegates } from '../../../../utils/api/delegate';
-import { fromRawLsk } from '../../../../utils/lsk';
+import { toRawLsk } from '../../../../utils/lsk';
 import { transformStringDateToUnixTimestamp } from '../../../../utils/datetime';
 import { getTransactions } from '../../../../utils/api/transaction';
 import TransactionRow from './transactionRow';
@@ -66,8 +66,8 @@ const Transactions = ({
   const formatters = {
     dateFrom: value => `${t('From')}: ${value}`,
     dateTo: value => `${t('To')}: ${value}`,
-    amountFrom: value => `> ${fromRawLsk(value)} ${activeToken}`,
-    amountTo: value => `< ${fromRawLsk(value)} ${activeToken}`,
+    amountFrom: value => `> ${value} ${activeToken}`,
+    amountTo: value => `< ${value} ${activeToken}`,
     message: value => `${t('Message')}: ${value}`,
   };
 
@@ -130,7 +130,7 @@ const transformParams = params => Object.keys(params)
     if (item === 'dateFrom' || item === 'dateTo') {
       acc[item] = transformStringDateToUnixTimestamp(params[item]);
     } else {
-      acc[item] = params[item];
+      acc[item] = toRawLsk(params[item]);
     }
 
     return acc;

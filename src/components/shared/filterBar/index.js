@@ -3,7 +3,6 @@ import moment from 'moment';
 import { SecondaryButton } from '../../toolbox/buttons';
 import { tokenMap } from '../../../constants/tokens';
 import i18n from '../../../i18n';
-import { fromRawLsk } from '../../../utils/lsk';
 
 import styles from './filterBar.css';
 
@@ -42,8 +41,8 @@ const FilterBar = ({
   formatters = {
     dateFrom: value => `${t('from')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
     dateTo: value => `${t('to')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
-    amountFrom: value => `> ${fromRawLsk(value)} ${tokenMap.LSK.key}`,
-    amountTo: value => `< ${fromRawLsk(value)} ${tokenMap.LSK.key}`,
+    amountFrom: value => `> ${value} ${tokenMap.LSK.key}`,
+    amountTo: value => `< ${value} ${tokenMap.LSK.key}`,
     ...formatters,
   };
 
