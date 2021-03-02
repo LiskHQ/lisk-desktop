@@ -60,7 +60,6 @@ const filters = {
   amountTo: { key: 'max', test: num => parseFloat(num) > 0 },
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
-  message: { key: 'message', test: str => (typeof str === 'string') },
   type: { key: 'type', test: num => parseInt(num, 10) > 0 },
   height: { key: 'height', test: num => parseInt(num, 10) > 0 },
   sort: {

@@ -4,11 +4,14 @@ import Transactions from './transactions';
 import withData from '../../../../utils/withData';
 import { getTransactions } from '../../../../utils/api/transaction';
 import { transformStringDateToUnixTimestamp } from '../../../../utils/datetime';
+import { toRawLsk } from '../../../../utils/lsk';
 
 const transformParams = params => Object.keys(params)
   .reduce((acc, item) => {
     if (item === 'dateFrom' || item === 'dateTo') {
       acc[item] = transformStringDateToUnixTimestamp(params[item]);
+    } else if (item === 'amountFrom' || item === 'amountTo') {
+      acc[item] = toRawLsk(params[item]);
     } else {
       acc[item] = params[item];
     }

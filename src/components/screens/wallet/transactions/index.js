@@ -56,11 +56,15 @@ const Transactions = ({
 
   /* istanbul ignore next */
   const handleLoadMore = () => {
-    transactions.loadData({ offset: transactions.data.data.length, sort });
+    transactions.loadData({
+      offset: transactions.data.meta.count + transactions.data.meta.offset,
+      sort,
+      ...filters,
+    });
   };
 
   const canLoadMore = transactions.data.meta
-    ? transactions.data.meta.count > transactions.data.data.length
+    ? transactions.data.meta.total > transactions.data.meta.count + transactions.data.meta.offset
     : false;
 
   const formatters = {
@@ -129,8 +133,10 @@ const transformParams = params => Object.keys(params)
   .reduce((acc, item) => {
     if (item === 'dateFrom' || item === 'dateTo') {
       acc[item] = transformStringDateToUnixTimestamp(params[item]);
-    } else {
+    } else if (item === 'amountFrom' || item === 'amountTo') {
       acc[item] = toRawLsk(params[item]);
+    } else {
+      acc[item] = params[item];
     }
 
     return acc;
@@ -148,6 +154,11 @@ export default compose(
       }),
       defaultData: { data: [], meta: {} },
       autoload: true,
+      transformResponse: (response, oldData, urlSearchParams) => (
+        urlSearchParams.offset
+          ? { data: [...oldData.data, ...response.data], meta: response.meta }
+          : response
+      ),
     },
     votedDelegates: {
       apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
