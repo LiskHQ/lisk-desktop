@@ -91,7 +91,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         ...state,
         transactionsCreated: state.transactionsCreated.filter(tx => tx.id !== action.data.id),
         broadcastedTransactionsError: state.broadcastedTransactionsError
-          .some(tx => tx.transaction.id === action.dta.id)
+          .some(tx => tx.transaction.id === action.data.id)
           ? state.broadcastedTransactionsError
           : [...state.broadcastedTransactionsError, action.data],
       };

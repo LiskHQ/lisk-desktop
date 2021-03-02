@@ -60,8 +60,8 @@ const filters = {
   amountTo: { key: 'max', test: num => parseFloat(num) > 0 },
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
-  message: { key: 'message', test: str => (typeof str === 'string') },
   type: { key: 'type', test: num => parseInt(num, 10) > 0 },
+  height: { key: 'height', test: num => parseInt(num, 10) > 0 },
   sort: {
     key: 'sort',
     test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
@@ -86,7 +86,7 @@ const filters = {
  * @param {Number} data.params.limit Used for pagination
  * @param {String} data.params.sort an option of 'amount:asc',
  * 'amount:desc', 'timestamp:asc', 'timestamp:desc',
- * @param {Object} data.params.blockId The id of the block whose transaction we want.
+ * @param {Object} data.params.height The height of the block whose transaction we want.
  * If passed, all other parameter will be ignored.
  * @returns {Promise} Transactions list API call
  */

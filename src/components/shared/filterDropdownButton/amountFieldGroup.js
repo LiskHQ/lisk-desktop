@@ -99,7 +99,7 @@ class AmountFieldGroup extends React.Component {
           autoComplete="off"
           onChange={this.handleFieldChange}
           name={name}
-          value={filters[name]}
+          value={filters[name] ? filters[name] : ''}
           placeholder={placeholder}
           className={`${styles.input} ${field.error ? 'error' : ''} ${name}Input`}
           isLoading={field.loading}

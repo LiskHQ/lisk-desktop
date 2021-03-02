@@ -43,7 +43,7 @@ const TransactionsTable = ({
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
     type: value => `${t('Type')}: ${transactionTypes.getByCode(Number(value)).title}`,
-    sender: value => `${t('Sender')}: ${value}`,
+    address: value => `${t('Address')}: ${value}`,
     recipient: value => `${t('Recipient')}: ${value}`,
   };
 
@@ -104,7 +104,7 @@ const defaultFilters = {
   type: '',
   height: '',
   recipient: '',
-  sender: '',
+  address: '',
 };
 
 const defaultSort = 'timestamp:desc';

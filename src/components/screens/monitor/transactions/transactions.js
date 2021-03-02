@@ -11,9 +11,9 @@ const fields = t => [{
   name: 'amount',
   type: 'number-range',
 }, {
-  label: t('Sender'),
+  label: t('Address'),
   placeholder: t('Address or Public key'),
-  name: 'sender',
+  name: 'address',
   type: 'address',
 }, {
   label: t('Message'),
@@ -47,7 +47,7 @@ const Transactions = ({ t, transactions }) => {
     type: '',
     height: '',
     recipient: '',
-    sender: '',
+    address: '',
   };
   const canLoadMore = transactions.meta
     ? transactions.data.length < transactions.meta.total
