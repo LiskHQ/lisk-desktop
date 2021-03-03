@@ -134,7 +134,12 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
 const DelegateStatus = ({ activeTab, data }) => {
   const status = data.delegateWeight < 100000000000 ? 'non-eligible' : data.status;
   return (
-    <span className={activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`}>
+    <span className={
+      activeTab === 'watched'
+        ? `${grid['col-xs-1']}`
+        : activeTab === 'sanctioned' ? `${grid['col-xs-4']}`
+          : activeTab !== 'active' ? `${grid['col-xs-3']}` : 'hidden'}
+    >
       <span className={`${styles.delegateStatus} ${styles[status]}`}>{delegateStatus[status]}</span>
     </span>
   );
@@ -169,7 +174,7 @@ const DelegateRow = ({
       className={`${className} delegate-row ${styles.tableRow}`}
       to={`${routes.account.path}?address=${data.address}`}
     >
-      <span className={activeTab !== 'sanctioned' ? `${grid['col-xs-3']}` : `${grid['col-xs-4']}`}>
+      <span className={grid['col-xs-4']}>
         <DelegateDetails
           t={t}
           data={data}
@@ -179,12 +184,22 @@ const DelegateRow = ({
           removeFromWatchList={removeFromWatchList}
         />
       </span>
-      <span className={`${activeTab === 'active' ? grid['col-xs-2'] : (activeTab === 'watched' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']}`)}`}>
+      <span className={
+        activeTab === 'active' || activeTab === 'watched'
+          ? `${grid['col-xs-2']}`
+          : activeTab === 'sanctioned' ? `${grid['col-xs-4']}`
+            : `${grid['col-xs-3']}`}
+      >
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>
-      <span className={activeTab !== 'sanctioned' ? (activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`) : `${grid['col-xs-3']} ${styles.noEllipsis}`}>
+      {/*
+      <span
+        className={activeTab !== 'sanctioned' ?
+          (activeTab === 'watched' ? `${grid['col-xs-1']}` :
+          `${grid['col-xs-2']}`) : `${grid['col-xs-3']} ${styles.noEllipsis}`}
+      >
         {`#${data.rank}`}
-      </span>
+      </span> */}
       {activeTab !== 'sanctioned' && (
         <span className={`${grid['col-xs-2']}`}>
           <DelegateWeight value={data.delegateWeight} />
@@ -192,7 +207,14 @@ const DelegateRow = ({
       )}
       {(activeTab === 'active' || activeTab === 'watched') && (
         <>
-          <span className={`${grid['col-xs-2']} ${styles.noEllipsis}`}>
+          <span className={`
+            ${activeTab === 'active'
+            ? `${grid['col-xs-3']}`
+            : activeTab === 'watched' ? `${grid['col-xs-2']}`
+              : 'hidden'}
+            ${styles.noEllipsis}
+            `}
+          >
             {formattedForgingTime}
           </span>
           <span className={`${grid['col-xs-1']} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>

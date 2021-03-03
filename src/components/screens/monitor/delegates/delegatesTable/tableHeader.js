@@ -6,25 +6,33 @@ import styles from '../delegates.css';
 export default (activeTab, changeSort, t) => ([
   {
     title: t('Delegate'),
-    classList: `${activeTab === 'sanctioned' ? grid['col-xs-4'] : grid['col-xs-3']} ${styles.delegateHeader}`,
+    classList: `${grid['col-xs-4']} ${styles.delegateHeader}`,
   },
   {
     title: t('Productivity'),
-    classList: activeTab === 'active' || activeTab === 'watched' ? `${grid['col-xs-2']}` : `${grid['col-xs-3']}`,
+    classList: activeTab === 'active' || activeTab === 'watched'
+      ? `${grid['col-xs-2']}`
+      : activeTab === 'sanctioned' ? `${grid['col-xs-4']}`
+        : `${grid['col-xs-3']}`,
     tooltip: {
       title: t('Productivity'),
       message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
       position: 'top',
     },
   },
+  /*
   {
     title: t('Rank'),
-    classList: activeTab === 'sanctioned' ? `${grid['col-xs-3']}` : activeTab === 'watched' ? `${grid['col-xs-1']}` : `${grid['col-xs-2']}`,
+    classList: activeTab === 'sanctioned'
+      ? `${grid['col-xs-3']}`
+      : activeTab === 'watched' ? `${grid['col-xs-1']}`
+        : `${grid['col-xs-2']}`,
     sort: {
       fn: changeSort,
       key: 'rank',
     },
   },
+  */
   {
     title: t('Delegate weight'),
     classList: activeTab === 'sanctioned' ? 'hidden' : `${grid['col-xs-2']} ${styles.voteWeight}`,
@@ -36,7 +44,10 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Forging time'),
-    classList: activeTab === 'active' || activeTab === 'watched' ? `${grid['col-xs-2']}` : 'hidden',
+    classList: activeTab === 'active'
+      ? `${grid['col-xs-3']}`
+      : activeTab === 'watched' ? `${grid['col-xs-2']}`
+        : 'hidden',
     sort: {
       fn: changeSort,
       key: 'forgingTime',
@@ -52,6 +63,7 @@ export default (activeTab, changeSort, t) => ([
     title: t('Status'),
     classList: activeTab === 'watched'
       ? `${grid['col-xs-1']}`
-      : activeTab !== 'active' ? `${grid['col-xs-2']}` : 'hidden',
+      : activeTab === 'sanctioned' ? `${grid['col-xs-4']}`
+        : activeTab !== 'active' ? `${grid['col-xs-3']}` : 'hidden',
   },
 ]);
