@@ -9,9 +9,10 @@ const reactConfig = require('./webpack.config.react');
 /* eslint-enable import/no-extraneous-dependencies */
 
 module.exports = merge(baseConfig, reactConfig, {
+  mode: 'development',
   output: {
     path: resolve(__dirname, '../app', '../dist'),
-    filename: 'bundle.[name].[hash].js',
+    filename: 'bundle.[name].[contenthash].js',
   },
   devServer: {
     contentBase: 'src',
@@ -21,14 +22,6 @@ module.exports = merge(baseConfig, reactConfig, {
     host: '0.0.0.0',
   },
   plugins: [
-    new webpack.DefinePlugin({
-      PRODUCTION: false,
-      TEST: false,
-      // because of https://fb.me/react-minification
-      'process.env': {
-        NODE_ENV: null,
-      },
-    }),
-    new webpack.IgnorePlugin(/\.\/locale$/),
+    new webpack.IgnorePlugin({ resourceRegExp: /\.\/locale$/ }),
   ],
 });

@@ -4,7 +4,7 @@ const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const InlineChunkHtmlPlugin = require('inline-chunk-html-plugin');
 const fs = require('fs');
 const path = require('path');
 const reactToolboxVariables = require('./reactToolbox.config');
@@ -55,12 +55,6 @@ const headCssLoader = {
 
 const MiniCssExtractPluginLoader = {
   loader: MiniCssExtractPlugin.loader,
-  options: {
-    // only enable hot in development
-    hmr: process.env.DEBUG,
-    // if hmr does not work, this is a forceful method.
-    reloadAll: false,
-  },
 };
 
 const reactToastifyLoader = {
@@ -105,6 +99,7 @@ const postCssLoader = {
 };
 
 module.exports = {
+  mode: 'development',
   entry: entries,
   devtool: 'source-map',
   devServer: {
@@ -118,7 +113,7 @@ module.exports = {
       VERSION: `"${bundleVersion}"`,
     }),
     new StyleLintPlugin({
-      context: `${resolve(__dirname, '../src')}/`,
+      context: `${resolve(__dirname, '../src')}`,
       files: '**/*.css',
       config: stylelintrc,
     }),
@@ -130,8 +125,6 @@ module.exports = {
     // }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      allChunks: true,
-      id: 2,
       chunkFilename: '[name].css',
     }),
     new HtmlWebpackPlugin({
@@ -141,12 +134,12 @@ module.exports = {
       inlineSource: '.(css)$',
       excludeChunks: ['head'],
       parameters: {
-        style: 'styles.[hash].css',
-        bundle: 'bundle.vendor.[hash].js',
-        app: 'bundle.app.[hash].js',
+        style: 'styles.[contenthash].css',
+        bundle: 'bundle.vendor.[contenthash].js',
+        app: 'bundle.app.[contenthash].js',
       },
     }),
-    new HtmlWebpackInlineSourcePlugin(),
+    new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
     new I18nScannerPlugin({
       translationFunctionNames: ['i18next.t', 'props.t', 'this.props.t', 't'],
       outputFilePath: './i18n/locales/en/common.json',

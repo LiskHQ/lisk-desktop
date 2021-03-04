@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
@@ -11,7 +10,7 @@ const reactConfig = require('./webpack.config.react');
 module.exports = merge(baseConfig, reactConfig, {
   output: {
     path: resolve(__dirname, '../app', '../app/build'),
-    filename: 'bundle.[name].[hash].js',
+    filename: 'bundle.[name].[contenthash].js',
   },
   mode: 'production',
   optimization: {
@@ -28,14 +27,6 @@ module.exports = merge(baseConfig, reactConfig, {
     },
   },
   plugins: [
-    new webpack.DefinePlugin({
-      PRODUCTION: true,
-      TEST: false,
-      // because of https://fb.me/react-minification
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
-    }),
     new NamedModulesPlugin(),
   ],
 });
