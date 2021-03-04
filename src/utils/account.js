@@ -1,4 +1,4 @@
-import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
+import { passphrase, cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 
 import { tokenMap } from '../constants/tokens';
 import regex from './regex';
@@ -25,11 +25,11 @@ export const extractPublicKey = (passphrase) => {
  * publicKey and false for a given invalid passphrase
  */
 export const extractAddress = (data) => {
-  if (Lisk.passphrase.Mnemonic.validateMnemonic(data)) {
-    return Lisk.cryptography.getAddressFromPassphrase(data);
+  if (passphrase.Mnemonic.validateMnemonic(data)) {
+    return cryptography.getAddressFromPassphrase(data);
   }
   if (regex.publicKey.test(data)) {
-    return Lisk.cryptography.getAddressFromPublicKey(data);
+    return cryptography.getAddressFromPublicKey(data);
   }
   return false;
 };

@@ -13,12 +13,12 @@ const httpPaths = {
 };
 // eslint-disable-next-line max-statements
 const getServiceUrl = (nodeUrl, nethash) => {
-  if (nethash === Lisk.constants.MAINNET_NETHASH) {
-    return 'https://mainnet-service.lisk.io';
-  }
-  if (nethash === Lisk.constants.TESTNET_NETHASH) {
-    return 'https://testnet-service.lisk.io';
-  }
+  // if (nethash === Lisk.constants.MAINNET_NETHASH) {
+  //   return 'https://mainnet-service.lisk.io';
+  // }
+  // if (nethash === Lisk.constants.TESTNET_NETHASH) {
+  //   return 'https://testnet-service.lisk.io';
+  // }
   if (/localhost|liskdev.net|127.0.0.1:\d{2,4}$/.test(nodeUrl)) {
     const serviceUrl = window.localStorage.getItem('serviceUrl');
     if (serviceUrl) {
