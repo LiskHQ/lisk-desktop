@@ -204,6 +204,8 @@
   border-radius: 3px;
   line-height: 12px;
   letter-spacing: 0.2px;
+  white-space: pre-wrap;
+  display: inline-block;
 
   &.active {
     color: var(--color-jade-green);
