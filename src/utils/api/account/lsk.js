@@ -5,7 +5,7 @@ import { extractAddress, extractPublicKey } from '../../account';
 import regex from '../../regex';
 import { tokenMap } from '../../../constants/tokens';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 const httpPaths = {
   account: `${httpPrefix}/accounts`,
@@ -74,6 +74,7 @@ export const getAccount = async ({
     token: tokenMap.LSK.key,
   };
 
+  
   if (params.publicKey) {
     account.publicKey = params.publicKey;
   } else if (params.passphrase) {
@@ -84,6 +85,8 @@ export const getAccount = async ({
       throw Error('Invalid Passphrase');
     }
   }
+
+  console.log(normParams);
 
   try {
     const response = await http({

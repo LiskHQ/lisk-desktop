@@ -1,17 +1,15 @@
-import Lisk from '@liskhq/lisk-client';
-
 import http from '../http';
 import networks, { networkKeys } from '../../../constants/networks';
 import { getApiClient } from '../apiClient';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 const httpPaths = {
   peers: `${httpPrefix}/peers/connected`,
   networkStatus: `${httpPrefix}/network/status`,
   networkStatistics: `${httpPrefix}/network/statistics`,
 };
-// eslint-disable-next-line max-statements
+
 const getServiceUrl = (nodeUrl, nethash) => {
   // if (nethash === Lisk.constants.MAINNET_NETHASH) {
   //   return 'https://mainnet-service.lisk.io';
@@ -46,20 +44,23 @@ export const getNetworkConfig = (network) => {
     networkConfig.nodes = [network.address];
   }
   const nodeUrl = networkConfig.nodes[0];
-  const apiClient = getApiClient(network);
+  console.log({ nodeUrl });
+  return getApiClient(network).then(apiClient => {
+    return apiClient.node.getNodeInfo()
+      .then((response) => {
+        const nethash = response.nethash;
+        const serviceUrl = getServiceUrl(nodeUrl, nethash);
 
-  return apiClient.node.getConstants()
-    .then((response) => {
-      const nethash = response.data.nethash;
-      const serviceUrl = getServiceUrl(nodeUrl, nethash);
-      return ({
-        ...networkConfig,
-        nodeUrl,
-        nethash,
-        serviceUrl,
-        networkIdentifier: response.data.networkId,
+        return ({
+          ...networkConfig,
+          nodeUrl,
+          nethash,
+          serviceUrl,
+          networkIdentifier: response.networkIdentifier,
+        });
       });
-    });
+  });
+
 };
 
 const peerFilters = {

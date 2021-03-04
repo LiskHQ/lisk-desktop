@@ -1,6 +1,6 @@
 import http from '../http';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 export const httpPaths = {
   prices: `${httpPrefix}/market/prices`,

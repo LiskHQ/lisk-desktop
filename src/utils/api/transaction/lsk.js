@@ -12,7 +12,7 @@ import { validateAddress } from '../../validators';
 import { getApiClient } from '../apiClient';
 import schema from '../../../constants/schemas/transfer';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 const httpPaths = {
   feeEstimates: `${httpPrefix}/fee_estimates`,
