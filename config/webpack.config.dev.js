@@ -4,7 +4,7 @@ const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
-
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 /* eslint-enable import/no-extraneous-dependencies */
 
@@ -22,6 +22,7 @@ module.exports = merge(baseConfig, reactConfig, {
     host: '0.0.0.0',
   },
   plugins: [
+    new ESLintPlugin(),
     new webpack.IgnorePlugin({ resourceRegExp: /\.\/locale$/ }),
   ],
 });
