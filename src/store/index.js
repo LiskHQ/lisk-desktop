@@ -3,7 +3,6 @@ import {
 } from 'redux';
 
 import actionTypes from '../constants/actions';
-import env from '../constants/env';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
 
@@ -14,7 +13,7 @@ const store = createStore(App, composeEnhancers(applyMiddleware(...middleWares))
 
 // ignore this in coverage because it is not run in tests, because it causes mock issues
 /* istanbul ignore if */
-if (!env.test) {
+if (!process.env.test) {
   store.dispatch({ type: actionTypes.storeCreated });
 }
 

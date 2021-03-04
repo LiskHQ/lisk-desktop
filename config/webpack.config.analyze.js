@@ -15,12 +15,5 @@ module.exports = merge(baseConfig, reactConfig, {
   devtool: 'inline-source-map',
   plugins: [
     new BundleAnalyzerPlugin(),
-    new webpack.DefinePlugin({
-      PRODUCTION: false,
-      // because of https://fb.me/react-minification
-      'process.env': {
-        NODE_ENV: null,
-      },
-    }),
   ],
 });

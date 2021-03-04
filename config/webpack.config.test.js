@@ -19,15 +19,5 @@ module.exports = merge(baseConfig, reactConfig, {
     filename: 'bundle.js',
   },
   devtool: 'inline-source-map',
-  plugins: [
-    new webpack.DefinePlugin({
-      PRODUCTION: false,
-      TEST: true,
-      // because of https://fb.me/react-minification
-      'process.env': {
-        NODE_ENV: null,
-      },
-    }),
-  ],
   externals,
 });

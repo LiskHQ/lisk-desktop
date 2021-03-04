@@ -8,19 +8,18 @@ import App from './app';
 import store from './store';
 import i18n from './i18n'; // initialized i18next instance
 import externalLinks from './utils/externalLinks';
-import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
 
-if (env.development) {
+if (process.env.development) {
   const whyDidYouRender = require('@welldone-software/why-did-you-render'); //eslint-disable-line
   whyDidYouRender(React);
 }
 
-if (env.production) {
+if (process.env.production) {
   externalLinks.init();
 }
 
-if (!env.test) {
+if (!process.env.test) {
   ipcLocale.init(i18n);
 }
 
