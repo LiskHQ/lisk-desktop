@@ -44,23 +44,19 @@ export const getNetworkConfig = (network) => {
     networkConfig.nodes = [network.address];
   }
   const nodeUrl = networkConfig.nodes[0];
-  console.log({ nodeUrl });
-  return getApiClient(network).then(apiClient => {
-    return apiClient.node.getNodeInfo()
-      .then((response) => {
-        const nethash = response.nethash;
-        const serviceUrl = getServiceUrl(nodeUrl, nethash);
+  return getApiClient(network).then(apiClient =>
+    apiClient.node.getNodeInfo().then((response) => {
+      const nethash = response.nethash;
+      const serviceUrl = getServiceUrl(nodeUrl, nethash);
 
-        return ({
-          ...networkConfig,
-          nodeUrl,
-          nethash,
-          serviceUrl,
-          networkIdentifier: response.networkIdentifier,
-        });
+      return ({
+        ...networkConfig,
+        nodeUrl,
+        nethash,
+        serviceUrl,
+        networkIdentifier: response.networkIdentifier,
       });
-  });
-
+    }));
 };
 
 const peerFilters = {
