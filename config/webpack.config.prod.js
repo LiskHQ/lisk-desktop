@@ -2,7 +2,6 @@
 const TerserPlugin = require('terser-webpack-plugin');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
-const { NamedModulesPlugin } = require('webpack');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
 /* eslint-enable import/no-extraneous-dependencies */
@@ -14,6 +13,7 @@ module.exports = merge(baseConfig, reactConfig, {
   },
   mode: 'production',
   optimization: {
+    moduleIds: 'named',
     minimizer: [new TerserPlugin({ test: /\.js(\?.*)?$/i })],
     runtimeChunk: 'single', // enable "runtime" chunk
     splitChunks: {
@@ -26,7 +26,4 @@ module.exports = merge(baseConfig, reactConfig, {
       },
     },
   },
-  plugins: [
-    new NamedModulesPlugin(),
-  ],
 });

@@ -131,9 +131,8 @@ module.exports = {
       template: './src/index.html',
       VERSION: bundleVersion,
       inject: false,
-      inlineSource: '.(css)$',
       excludeChunks: ['head'],
-      parameters: {
+      templateParameters: {
         style: 'styles.[contenthash].css',
         bundle: 'bundle.vendor.[contenthash].js',
         app: 'bundle.app.[contenthash].js',

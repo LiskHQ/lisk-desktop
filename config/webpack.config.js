@@ -18,16 +18,12 @@ module.exports = {
   externals: {
     'node-hid': 'commonjs node-hid',
     usb: 'commonjs usb',
+    bufferutil: 'bufferutil',
+    'utf-8-validate': 'utf-8-validate',
+    express: 'express',
   },
   module: {
     rules: [
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {},
-      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
