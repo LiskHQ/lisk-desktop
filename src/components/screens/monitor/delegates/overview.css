@@ -165,3 +165,22 @@
     }
   }
 }
+
+.progressBar {
+  width: 50%;
+  height: 5px;
+
+  & > div {
+    display: inline-block;
+    height: 100%;
+    border-radius: 50px;
+
+    &.lineForged {
+      background-color: var(--color-ink-blue);
+    }
+
+    &.lineRemaining {
+      background-color: var(--color-primary-very-light);
+    }
+  }
+}

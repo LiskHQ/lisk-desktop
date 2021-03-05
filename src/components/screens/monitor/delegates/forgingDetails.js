@@ -2,6 +2,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import { DoughnutChart } from '../../../toolbox/charts';
 import AccountVisual from '../../../toolbox/accountVisual';
 import routes from '../../../../constants/routes';
@@ -42,11 +43,19 @@ const Forger = ({ forger }) => (
   </div>
 );
 
-const getPassedMinutes = forgedBlocks => (
-  `${String(Math.floor(forgedBlocks / 6)).padStart(2, '0')}:${String(forgedBlocks % 6).padEnd(2, '0')}`
+const ProgressBar = ({ forgedInRound }) => (
+  <div className={styles.progressBar}>
+    <div className={styles.lineForged} style={{ width: `${(forgedInRound / MAX_BLOCKS_FORGED) * 100}%` }} />
+    <div className={styles.lineRemaining} style={{ width: `${((MAX_BLOCKS_FORGED - forgedInRound) / MAX_BLOCKS_FORGED) * 100}%` }} />
+  </div>
 );
 
-const timeForMaxBlocksForged = getPassedMinutes(MAX_BLOCKS_FORGED);
+const getPassedMinutes = (lastBlock = {}, firstRoundBlock = {}) => {
+  const seconds = lastBlock.timestamp - firstRoundBlock.timestamp;
+  if (!seconds) return '00:00';
+  const duration = moment.duration({ seconds });
+  return `${duration.minutes().toLocaleString('en-US', { minimumIntegerDigits: 2 })}:${duration.seconds().toLocaleString('en-US', { minimumIntegerDigits: 2 })}`;
+};
 
 const ForgingDetails = ({
   t, chartDelegatesForging,
@@ -143,9 +152,10 @@ const ForgingDetails = ({
               />
               <NumericInfo
                 title="Minutes passed"
-                value={`${getPassedMinutes(forgedInRound)} / ${timeForMaxBlocksForged}`}
+                value={`${getPassedMinutes(latestBlocks[0], latestBlocks[forgedInRound])}`}
                 icon="clock"
               />
+              <ProgressBar forgedInRound={forgedInRound} />
             </div>
           </div>
         </div>
