@@ -183,7 +183,7 @@
   border-radius: 43px;
 
   & > .lineForged {
-    background-color: var(--color-ink-blue);
+    background-color: var(--color-strong-ink-blue);
     border-radius: 43px;
   }
 }
