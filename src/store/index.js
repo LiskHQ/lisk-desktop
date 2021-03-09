@@ -5,6 +5,7 @@ import {
 import actionTypes from '../constants/actions';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
+import env from '../env';
 
 const App = combineReducers(reducers);
 
@@ -13,7 +14,7 @@ const store = createStore(App, composeEnhancers(applyMiddleware(...middleWares))
 
 // ignore this in coverage because it is not run in tests, because it causes mock issues
 /* istanbul ignore if */
-if (!process.env.test) {
+if (!env.test) {
   store.dispatch({ type: actionTypes.storeCreated });
 }
 
