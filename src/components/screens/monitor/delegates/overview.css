@@ -161,7 +161,7 @@
 
     & p {
       color: var(--color-maastricht-blue);
-      margin-top: 8px;  
+      margin-top: 8px;
 
       &.blue {
         color: var(--color-ink-blue);
