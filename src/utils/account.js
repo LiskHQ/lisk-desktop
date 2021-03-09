@@ -12,7 +12,7 @@ import regex from './regex';
  */
 export const extractPublicKey = (passphrase) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
-    return cryptography.getKeys(passphrase).publicKey;
+    return cryptography.getKeys(passphrase).publicKey.toString('hex');
   }
   return false;
 };
@@ -26,10 +26,10 @@ export const extractPublicKey = (passphrase) => {
  */
 export const extractAddress = (data) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
-    return cryptography.getBase32AddressFromPassphrase(data).toString("hex");
+    return cryptography.getBase32AddressFromPassphrase(data).toString('hex');
   }
   if (regex.publicKey.test(data)) {
-    return cryptography.getBase32AddressFromPublicKey(data).toString("hex");
+    return cryptography.getBase32AddressFromPublicKey(data).toString('hex');
   }
   return false;
 };
