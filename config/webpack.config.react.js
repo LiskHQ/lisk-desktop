@@ -23,11 +23,6 @@ const getLocales = (url) => {
 
 const langRegex = getLocales('../i18n/languages.js');
 
-const entries = {
-  app: `${resolve(__dirname, '../src')}/main.js`,
-  head: `${resolve(__dirname, '../src/assets/css')}/styles.head.css`,
-};
-
 const cssLoader = {
   loader: 'css-loader',
   options: {
@@ -38,6 +33,7 @@ const cssLoader = {
     },
   },
 };
+
 const headCssLoader = {
   loader: 'css-loader',
   options: {
@@ -91,7 +87,10 @@ const postCssLoader = {
 
 module.exports = {
   mode: 'development',
-  entry: entries,
+  entry: {
+    app: `${resolve(__dirname, '../src')}/main.js`,
+    head: `${resolve(__dirname, '../src/assets/css')}/styles.head.css`,
+  },
   devtool: 'source-map',
   devServer: {
     contentBase: 'src',
