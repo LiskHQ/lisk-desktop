@@ -19,7 +19,8 @@ import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
 
 const FORGERS_TO_SHOW = 6;
 
-const getForgingStats = (data) => {
+const getForgingStats = (data, forgedInRound) => {
+  if (forgedInRound === 0) return [0, 103, 0];
   const statuses = {
     forging: 0,
     awaitingSlot: 0,
@@ -74,11 +75,10 @@ const ForgingDetails = ({
     datasets: [
       {
         label: 'status',
-        data: getForgingStats(chartDelegatesForging),
+        data: getForgingStats(chartDelegatesForging, forgedInRound),
       },
     ],
   };
-  console.log(chartDelegatesForging, getForgingStats(chartDelegatesForging));
 
   const doughnutChartOptions = {
     tooltips: {
