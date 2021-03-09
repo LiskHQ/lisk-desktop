@@ -13,6 +13,7 @@ import styles from './overview.css';
 import NumericInfo from './numericInfo';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
+import Icon from '../../../toolbox/icon';
 import { colorPalette } from '../../../../constants/chartConstants';
 import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
 
@@ -46,7 +47,6 @@ const Forger = ({ forger }) => (
 const ProgressBar = ({ forgedInRound }) => (
   <div className={styles.progressBar}>
     <div className={styles.lineForged} style={{ width: `${(forgedInRound / MAX_BLOCKS_FORGED) * 100}%` }} />
-    <div className={styles.lineRemaining} style={{ width: `${((MAX_BLOCKS_FORGED - forgedInRound) / MAX_BLOCKS_FORGED) * 100}%` }} />
   </div>
 );
 
@@ -78,6 +78,7 @@ const ForgingDetails = ({
       },
     ],
   };
+  console.log(chartDelegatesForging, getForgingStats(chartDelegatesForging));
 
   const doughnutChartOptions = {
     tooltips: {
@@ -145,17 +146,22 @@ const ForgingDetails = ({
               <span>{t('Round status')}</span>
             </h2>
             <div className={styles.list}>
-              <NumericInfo
-                title="Blocks forged"
-                value={`${forgedInRound} / ${MAX_BLOCKS_FORGED}`}
-                icon="blocksForged"
-              />
+              <section className={styles.numericInfo}>
+                <Icon name="blocksForged" />
+                <main className={styles.main}>
+                  <h6>{t('Blocks forged')}</h6>
+                  <ProgressBar forgedInRound={forgedInRound} />
+                  <p className={styles.blue}>
+                    {`${forgedInRound} / `}
+                    <span>{` ${MAX_BLOCKS_FORGED}`}</span>
+                  </p>
+                </main>
+              </section>
               <NumericInfo
                 title="Minutes passed"
                 value={`${getPassedMinutes(latestBlocks[0], latestBlocks[forgedInRound])}`}
                 icon="clock"
               />
-              <ProgressBar forgedInRound={forgedInRound} />
             </div>
           </div>
         </div>

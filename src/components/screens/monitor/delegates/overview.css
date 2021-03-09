@@ -161,26 +161,29 @@
 
     & p {
       color: var(--color-maastricht-blue);
-      margin-top: 2px;
+      margin-top: 8px;  
+
+      &.blue {
+        color: var(--color-ink-blue);
+      }
+
+      & > span {
+        color: var(--color-slate-gray);
+      }
     }
   }
 }
 
 .progressBar {
-  width: 50%;
+  margin-top: 8px;
+  width: 150px;
   height: 5px;
+  display: flex;
+  background-color: var(--color-very-light-gray);
+  border-radius: 43px;
 
-  & > div {
-    display: inline-block;
-    height: 100%;
-    border-radius: 50px;
-
-    &.lineForged {
-      background-color: var(--color-ink-blue);
-    }
-
-    &.lineRemaining {
-      background-color: var(--color-primary-very-light);
-    }
+  & > .lineForged {
+    background-color: var(--color-ink-blue);
+    border-radius: 43px;
   }
 }
