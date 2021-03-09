@@ -5,7 +5,6 @@ export default {
 
     if (ipc) {
       if (!i18n.language) {
-        // ipc.send('request-locale');
         i18n.changeLanguage('en');
       }
 

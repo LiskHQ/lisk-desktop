@@ -105,6 +105,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
       acc[token] = { passphrase, publicKey };
       return acc;
     }, {});
+
   const [error, info] = await to(getAccounts({ network, params }));
 
   if (error) {

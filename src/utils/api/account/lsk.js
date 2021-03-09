@@ -5,7 +5,7 @@ import { extractAddress, extractPublicKey } from '../../account';
 import regex from '../../regex';
 import { tokenMap } from '../../../constants/tokens';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 const httpPaths = {
   account: `${httpPrefix}/accounts`,

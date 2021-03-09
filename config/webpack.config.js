@@ -1,24 +1,28 @@
 const { resolve } = require('path');
-const webpack = require('webpack'); // eslint-disable-line
+const webpack = require('webpack');
+
+const { ProvidePlugin } = require('webpack');
 
 module.exports = {
-  node: {
-    fs: 'empty',
-    child_process: 'empty',
+  mode: 'development',
+  resolve: {
+    fallback: {
+      net: false,
+      fs: false,
+      crypto: require.resolve('crypto-browserify'),
+      stream: require.resolve('stream-browserify'),
+      path: require.resolve('path-browserify'),
+    },
   },
   externals: {
     'node-hid': 'commonjs node-hid',
     usb: 'commonjs usb',
+    bufferutil: 'bufferutil',
+    'utf-8-validate': 'utf-8-validate',
+    express: 'express',
   },
   module: {
     rules: [
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {},
-      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -74,40 +78,15 @@ module.exports = {
     ],
   },
   optimization: {
-    namedChunks: true,
     splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      name: false,
-      cacheGroups: {
-        vendor: {
-          name: 'vendor',
-          test: /[\\/]node_modules[\\/]/,
-        },
-        head: {
-          name: 'head',
-          priority: 1,
-          test: /styles\.head\.css$/,
-        },
-        styles: {
-          name: 'styles',
-          priority: 2,
-          test: /^((?!styles\.head).)*\.css$/,
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-        },
-      },
+      chunks: 'all',
     },
   },
   plugins: [
+    new ProvidePlugin({
+      process: 'process/browser.js',
+      Buffer: ['buffer', 'Buffer'],
+    }),
     new webpack.EnvironmentPlugin({
       NACL_FAST: 'disable',
     }),

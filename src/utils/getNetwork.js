@@ -1,4 +1,4 @@
-import Lisk from '@liskhq/lisk-client';
+// import { } from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import networks, { networkKeys } from '../constants/networks';
 import { tokenMap } from '../constants/tokens';
@@ -11,22 +11,22 @@ export const getNetworksList = () =>
     }));
 
 
-export const getNetworkNameBasedOnNethash = (network, token = 'LSK') => {
-  const isCustomNode = network.name === networkKeys.customNode;
-  const isBtc = token === tokenMap.BTC.key;
+export const getNetworkNameBasedOnNethash = (network, token = 'LSK') =>
+// const isCustomNode = network.name === networkKeys.customNode;
+// const isBtc = token === tokenMap.BTC.key;
 
-  if (isCustomNode && !isBtc) {
-    const { nethash } = network.networks[token];
-    const testNet = nethash === Lisk.constants.TESTNET_NETHASH ? 'testNet' : '';
-    const mainNet = nethash === Lisk.constants.MAINNET_NETHASH ? 'mainNet' : '';
-    return networkKeys[mainNet || testNet] || network.name;
-  }
+// if (isCustomNode && !isBtc) {
+//   const { nethash } = network.networks[token];
+//   const testNet = nethash === Lisk.constants.TESTNET_NETHASH ? 'testNet' : '';
+//   const mainNet = nethash === Lisk.constants.MAINNET_NETHASH ? 'mainNet' : '';
+//   return networkKeys[mainNet || testNet] || network.name;
+// }
 
-  if (isCustomNode && isBtc) {
-    return networkKeys.testNet;
-  }
-  return network.name;
-};
+  // if (isCustomNode && isBtc) {
+  //   return networkKeys.testNet;
+  // }
+  network.name
+;
 
 /**
  * Returns human readable error messages

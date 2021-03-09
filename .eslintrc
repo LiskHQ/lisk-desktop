@@ -15,12 +15,12 @@
     "beforeEach": true,
     "afterEach": true,
     "ipc": true,
-    "PRODUCTION": true,
-    "TEST": true,
     "jest": true,
-    "expect": true
+    "expect": true,
+    "PRODUCTION": true
   },
   "env": {
+    "es2020": true,
     "browser": true,
     "node": true
   },
@@ -70,16 +70,7 @@
     "react/prop-types": "off",
     "no-plusplus": "off",
     "no-underscore-dangle": "off",
-    "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": [
-        "./src/**/*.test.js",
-        "./test/**/*.js",
-        "./src/**/*.stories.js",
-        "./src/tests.js",
-        "./src/i18n-scanner.js"
-        ]
-      }
-    ],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "linebreak-style": 0,
     "no-param-reassign": "off",
     "complexity": ["error", 10],

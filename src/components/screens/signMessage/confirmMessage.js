@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
+import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styles from './signMessage.css';
 import Box from '../../toolbox/box';
@@ -78,12 +78,12 @@ const ConfirmMessage = ({
   };
 
   const signUsingPassphrase = () => {
-    const signedMessage = Lisk.cryptography.signMessageWithPassphrase(
+    const signedMessage = cryptography.signMessageWithPassphrase(
       message,
       account.passphrase,
       account.publicKey,
     );
-    const result = Lisk.cryptography.printSignedMessage({
+    const result = cryptography.printSignedMessage({
       message,
       publicKey: account.publicKey,
       signature: signedMessage.signature,
@@ -96,7 +96,7 @@ const ConfirmMessage = ({
       account,
       message,
     });
-    const result = Lisk.cryptography.printSignedMessage({
+    const result = cryptography.printSignedMessage({
       message,
       publicKey: account.publicKey,
       signature: signedMessage,
@@ -106,9 +106,9 @@ const ConfirmMessage = ({
 
   useEffect(() => {
     if (account.loginType === loginType.passphrase.code) {
-      setSignature(signUsingPassphrase(Lisk));
+      setSignature(signUsingPassphrase());
     } else {
-      signUsingHW(Lisk)
+      signUsingHW()
         .then(setSignature)
         .catch(setError);
     }

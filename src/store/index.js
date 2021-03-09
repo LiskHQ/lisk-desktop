@@ -3,9 +3,9 @@ import {
 } from 'redux';
 
 import actionTypes from '../constants/actions';
-import env from '../constants/env';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
+import env from '../env';
 
 const App = combineReducers(reducers);
 

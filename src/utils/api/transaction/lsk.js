@@ -1,17 +1,18 @@
 /* eslint-disable max-lines */
-import Lisk from '@liskhq/lisk-client';
+import  { transactions } from '@liskhq/lisk-client';
 
 import http from '../http';
 import ws from '../ws';
-import transactionTypes, { minFeePerByte } from '../../../constants/transactionTypes';
+import transactionTypes from '../../../constants/transactionTypes';
 import { getDelegates } from '../delegate';
 import regex from '../../regex';
 import { tokenMap } from '../../../constants/tokens';
 import { fromRawLsk } from '../../lsk';
 import { validateAddress } from '../../validators';
 import { getApiClient } from '../apiClient';
+import schema from '../../../constants/schemas/transfer';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 const httpPaths = {
   feeEstimates: `${httpPrefix}/fee_estimates`,
@@ -232,51 +233,6 @@ export const getTxAmount = (transaction) => {
   return amount;
 };
 
-const txTypeClassMap = {
-  transfer: Lisk.transactions.TransferTransaction,
-  registerDelegate: Lisk.transactions.DelegateTransaction,
-  vote: Lisk.transactions.VoteTransaction,
-  unlockToken: Lisk.transaction.UnlockTransaction,
-};
-
-/* istanbul ignore next */
-export const createTransactionInstance = (rawTx, type) => {
-  const FEE_BYTES_PLACEHOLDER = '18446744073709551615';
-  const SIGNATURE_BYTES_PLACEHOLDER = '204514eb1152355799ece36d17037e5feb4871472c60763bdafe67eb6a38bec632a8e2e62f84a32cf764342a4708a65fbad194e37feec03940f0ff84d3df2a05';
-  const asset = {
-    data: rawTx.data,
-  };
-
-  switch (type) {
-    case 'transfer':
-      asset.recipientId = rawTx.recipient;
-      asset.amount = rawTx.amount;
-      break;
-    case 'registerDelegate':
-      asset.username = rawTx.username || 'abcde';
-      break;
-    case 'vote':
-      asset.votes = rawTx.votes;
-      break;
-    case 'unlockToken':
-      asset.unlockingObjects = rawTx.unlockingObjects;
-      break;
-    default:
-      break;
-  }
-
-  const TxClass = txTypeClassMap[type];
-  const tx = new TxClass({
-    senderPublicKey: rawTx.senderPublicKey,
-    nonce: rawTx.nonce,
-    asset,
-    fee: FEE_BYTES_PLACEHOLDER,
-    signatures: [SIGNATURE_BYTES_PLACEHOLDER],
-  });
-
-  return tx;
-};
-
 /**
  * creates a new transaction
  *
@@ -349,7 +305,8 @@ export const getTransactionBaseFees = network =>
       };
     });
 
-export const getMinTxFee = tx => Number(tx.minFee.toString());
+
+export const minFeePerByte = 1000;
 
 /**
  * Returns the actual tx fee based on given tx details
@@ -363,9 +320,24 @@ export const getMinTxFee = tx => Number(tx.minFee.toString());
 export const getTransactionFee = async ({
   txData, selectedPriority,
 }) => {
-  const { txType, ...data } = txData;
-  const tx = createTransactionInstance(data, txType);
-  const minFee = getMinTxFee(tx);
+  const { moduleID, ...data } = txData;
+  // 1. get schema from service and cache it
+  // in desktop and create transaction ourselves
+  // store schemas locally for now 
+  
+  // probably not the best idea 
+  // 2. expose the ws port of core from service and use apiclient like below
+
+  // const client = await Lisk.apiClient.createClient();
+  // client.transaction.create()
+
+  // get the min fee from tx instance client.transaction.minFee(tx)
+
+  // and then sign the transaction using a method outside of apiclient
+  // const asset = client.schemas.transactionsAssets.find(asset => asset.moduleID === moduleID);
+  // const minFee = transactions.computeMinFee(asset.schema, data);
+
+  const minFee = transactions.computeMinFee(schema, data);
   const feePerByte = selectedPriority.value;
   const hardCap = transactionTypes.getHardCap(txType);
 

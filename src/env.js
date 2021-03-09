@@ -1,7 +1,6 @@
 const env = {
   production: PRODUCTION,
-  development: (!PRODUCTION && !TEST),
-  test: TEST,
+  development: !PRODUCTION,
 };
 
 export default env;
