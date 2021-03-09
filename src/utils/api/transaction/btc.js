@@ -328,9 +328,9 @@ export const create = ({
       txb.sign(i, keyPair);
     }
 
-    resolve(txb.build().toHex());
+    return resolve(txb.build().toHex());
   } catch (error) {
-    reject(error);
+    return reject(error);
   }
 });
 
