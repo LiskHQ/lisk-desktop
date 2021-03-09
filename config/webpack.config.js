@@ -1,7 +1,6 @@
 const { resolve } = require('path');
-const webpack = require('webpack'); // eslint-disable-line
+const webpack = require('webpack');
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 const { ProvidePlugin } = require('webpack');
 
 module.exports = {
@@ -81,34 +80,6 @@ module.exports = {
   optimization: {
     splitChunks: {
       chunks: 'all',
-      // minSize: 30000,
-      // maxSize: 0,
-      // minChunks: 1,
-      // maxAsyncRequests: 5,
-      // maxInitialRequests: 3,
-      // automaticNameDelimiter: '~',
-      // name: false,
-      // cacheGroups: {
-      //   defaultVendors: {
-      //     name: 'vendor',
-      //     test: /[\\/]node_modules[\\/]/,
-      //   },
-      //   head: {
-      //     name: 'head',
-      //     priority: 1,
-      //     test: /styles\.head\.css$/,
-      //   },
-      //   styles: {
-      //     name: 'styles',
-      //     priority: 2,
-      //     test: /^((?!styles\.head).)*\.css$/,
-      //   },
-      //   default: {
-      //     minChunks: 2,
-      //     priority: -20,
-      //     reuseExistingChunk: true,
-      //   },
-      // },
     },
   },
   plugins: [
