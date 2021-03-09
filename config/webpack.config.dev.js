@@ -7,8 +7,6 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
 
-/* eslint-enable import/no-extraneous-dependencies */
-
 module.exports = merge(baseConfig, reactConfig, {
   mode: 'development',
   output: {

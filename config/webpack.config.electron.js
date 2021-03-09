@@ -2,7 +2,6 @@
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
-/* eslint-enable import/no-extraneous-dependencies */
 
 module.exports = merge(baseConfig, {
   mode: 'production',
