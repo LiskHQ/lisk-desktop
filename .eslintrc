@@ -16,7 +16,8 @@
     "afterEach": true,
     "ipc": true,
     "jest": true,
-    "expect": true
+    "expect": true,
+    "PRODUCTION": true
   },
   "env": {
     "es2020": true,

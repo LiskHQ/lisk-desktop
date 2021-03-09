@@ -6,22 +6,21 @@ import { I18nextProvider } from 'react-i18next';
 import { applyDeviceClass } from './utils/applyDeviceClass';
 import App from './app';
 import store from './store';
-import i18n from './i18n'; // initialized i18next instance
+import i18n from './i18n';
 import externalLinks from './utils/externalLinks';
 import ipcLocale from './utils/ipcLocale';
+import env from './env';
 
-if (process.env.development) {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render'); //eslint-disable-line
+if (env.development) {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
   whyDidYouRender(React);
 }
 
-if (process.env.production) {
+if (env.production) {
   externalLinks.init();
 }
 
-if (!process.env.test) {
-  ipcLocale.init(i18n);
-}
+ipcLocale.init(i18n);
 
 const rootElement = document.getElementById('app');
 

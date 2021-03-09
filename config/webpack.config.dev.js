@@ -5,6 +5,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
+const version = require('../package.json').version;
 
 module.exports = merge(baseConfig, reactConfig, {
   mode: 'development',
@@ -25,5 +26,9 @@ module.exports = merge(baseConfig, reactConfig, {
       context: '../',
     }),
     new webpack.IgnorePlugin({ resourceRegExp: /\.\/locale$/ }),
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify(false),
+      VERSION: JSON.stringify(version),
+    }),
   ],
 });

@@ -1,8 +1,10 @@
+const { webpack } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
+const version = require('../package.json').version;
 
 module.exports = merge(baseConfig, reactConfig, {
   output: {
@@ -24,4 +26,10 @@ module.exports = merge(baseConfig, reactConfig, {
       },
     },
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify(true),
+      VERSION: JSON.stringify(version),
+    }),
+  ],
 });
