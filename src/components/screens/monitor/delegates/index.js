@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { getDelegates } from '../../../../utils/api/delegate';
+import { getDelegates, getForgers } from '../../../../utils/api/delegate';
 import { getNetworkStatus } from '../../../../utils/api/network';
 import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
@@ -63,8 +63,8 @@ const ComposedDelegates = compose(
   withData(
     {
       [delegatesKey]: {
-        apiUtil: (network, params) => getDelegates(
-          { network, params: { ...params, status: 'active', limit: MAX_BLOCKS_FORGED } },
+        apiUtil: (network, params) => getForgers(
+          { network, params: { ...params, limit: MAX_BLOCKS_FORGED } },
         ),
         defaultData: [],
         autoload: true,
