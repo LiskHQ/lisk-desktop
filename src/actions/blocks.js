@@ -74,9 +74,8 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
     .forEach((item) => {
       if (!forgingTimes[item.generatorPublicKey]) {
         forgingTimes[item.generatorPublicKey] = {
-          time: latestBlocks[0].timestamp - item.timestamp,
+          time: -(latestBlocks[0].timestamp - item.timestamp),
           status: 'forging',
-          tense: 'past',
         };
       }
     });
@@ -90,13 +89,11 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
         forgingTimes[item.publicKey] = {
           time: (index - forgedInRoundNum + 1) * 10,
           status: 'awaitingSlot',
-          tense: 'future',
         };
       } else if (!forgingTimes[item.publicKey]) {
         forgingTimes[item.publicKey] = {
-          time: -1,
+          time: false,
           status: 'missedBlock',
-          tense: 'past',
         };
       }
     });

@@ -6,10 +6,10 @@ import DelegateRow from './delegateRow';
 import header from './tableHeader';
 
 const TableWrapper = compose(
-  withLocalSort('delegates', 'rank:asc', {
+  withLocalSort('delegates', 'forgingTime:asc', {
     forgingTime: (a, b, direction) => {
-      if (!a.forgingTime || a.forgingTime.time === -1) return 1;
-      if (!b.forgingTime || b.forgingTime.time === -1) return -1;
+      if (!a.forgingTime || a.forgingTime.time === false) return 1;
+      if (!b.forgingTime || b.forgingTime.time === false) return -1;
       return ((a.forgingTime.time > b.forgingTime.time) ? 1 : -1) * (direction === 'asc' ? 1 : -1);
     },
   }),
