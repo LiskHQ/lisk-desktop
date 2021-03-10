@@ -9,15 +9,17 @@ const initialSupply = 10000000000000000;
 const networks = {
   [networkKeys.mainNet]: {
     label: 'Mainnet',
-    serviceUrl: '', // @todo add service url for mainnet when defined
+    serviceUrl: 'https://mainnet-service.lisk.io',
   },
   [networkKeys.testNet]: {
     label: 'Testnet',
-    serviceUrl: '', // @todo add service url for testnet when defined
+    serviceUrl: 'https://mainnet-service.lisk.io',
   },
   [networkKeys.customNode]: {
     label: 'Custom Node',
-    serviceUrl: 'localhost:9901', // a default value. would usually be the one entered by the user
+
+    // a default value, to keep the object signature consistent
+    serviceUrl: 'localhost:9901',
   },
 };
 
