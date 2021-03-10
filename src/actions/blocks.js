@@ -67,6 +67,10 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
   const forgedInRoundNum = latestBlocks[0].height % MAX_BLOCKS_FORGED;
   const awaitingForgers = nextForgers ?? await retrieveNextForgers(network);
   const forgingTimes = {};
+  
+  const delegateNames = awaitingForgers.reduce((acc, del) => ({ ...acc, [del.publicKey]: del.username }), {});
+  const latestBlock = latestBlocks[0];
+  console.log('Last block genID', delegateNames[latestBlock.generatorPublicKey]);
 
   // First we iterate the latest blocks and set the forging time
   latestBlocks
