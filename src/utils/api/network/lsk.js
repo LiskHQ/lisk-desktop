@@ -50,7 +50,7 @@ export const getNetworkConfig = ({ name, address }) => {
   const serviceUrl = getServiceUrl({ name, address });
   return getNetworkStatus({ baseUrl: serviceUrl })
     .then(response => ({
-      ...response,
+      ...response.data,
       serviceUrl,
     }))
     .catch((err) => {
