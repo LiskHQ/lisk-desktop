@@ -92,7 +92,7 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
         };
       } else if (!forgingTimes[item.publicKey]) {
         forgingTimes[item.publicKey] = {
-          time: false,
+          time: undefined,
           status: 'missedBlock',
         };
       }

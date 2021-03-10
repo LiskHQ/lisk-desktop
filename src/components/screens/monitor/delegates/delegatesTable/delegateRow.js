@@ -35,7 +35,7 @@ const delegateStatus = {
 };
 
 const getForgingTime = (data) => {
-  if (!data || data.time === false) return '-';
+  if (!data || data.time === undefined) return '-';
   if (data.time === 0) return 'now';
   const { time } = data;
   const absTime = Math.abs(time);

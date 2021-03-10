@@ -51,11 +51,13 @@ const ProgressBar = ({ forgedInRound }) => (
   </div>
 );
 
+const formatToTwoDigits = str => str.toLocaleString('en-US', { minimumIntegerDigits: 2 });
+
 const getPassedMinutes = (lastBlock = {}, firstRoundBlock = {}) => {
   const seconds = lastBlock.timestamp - firstRoundBlock.timestamp;
   if (!seconds) return '00:00';
   const duration = moment.duration({ seconds });
-  return `${duration.minutes().toLocaleString('en-US', { minimumIntegerDigits: 2 })}:${duration.seconds().toLocaleString('en-US', { minimumIntegerDigits: 2 })}`;
+  return `${formatToTwoDigits(duration.minutes())}:${formatToTwoDigits(duration.seconds())}`;
 };
 
 const ForgingDetails = ({
