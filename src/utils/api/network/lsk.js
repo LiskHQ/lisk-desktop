@@ -60,6 +60,21 @@ export const getNetworkConfig = ({ name, address }) => {
     });
 };
 
+/**
+ * Retrieves status useful statistics about the network
+ *
+ * @param {Object} data
+ * @param {Object} data.network The network config from the Redux store
+ *
+ * @returns {Promise}
+ */
+export const getNetworkStatistics = ({
+  network,
+}) => http({
+  path: httpPaths.networkStatistics,
+  network,
+});
+
 const peerFilters = {
   version: { key: 'version', test: str => (typeof str === 'string') },
   height: { key: 'height', test: num => (typeof num === 'number' && num > 0) },
@@ -107,18 +122,3 @@ export const getConnectedPeers = ({
     params,
   });
 };
-
-/**
- * Retrieves status useful statistics about the network
- *
- * @param {Object} data
- * @param {Object} data.network The network config from the Redux store
- *
- * @returns {Promise}
- */
-export const getNetworkStatistics = ({
-  network,
-}) => http({
-  path: httpPaths.networkStatistics,
-  network,
-});
