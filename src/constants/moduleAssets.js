@@ -9,15 +9,6 @@ const moduleAssets = {
 
 const MODULE_ASSETS = Object.freeze(moduleAssets);
 
-const getModuleAssetSenderLabels = (t = str => str) => ({
-  [MODULE_ASSETS.trasfer]: t('Sender'),
-  [MODULE_ASSETS.reclaimLSK]: t('Sender'),
-  [MODULE_ASSETS.unlockToken]: t('Sender'),
-  [MODULE_ASSETS.voteDelegate]: t('Voter'),
-  [MODULE_ASSETS.registerDelegate]: t('Account nickname'),
-  [MODULE_ASSETS.registerMultisignatureGroup]: t('Registrant'),
-});
-
 const maxAssetFee = {
   [MODULE_ASSETS.trasfer]: 1e7,
 
@@ -31,4 +22,4 @@ const maxAssetFee = {
   [MODULE_ASSETS.registerMultisignatureGroup]: 5e8,
 };
 
-export { MODULE_ASSETS, getModuleAssetSenderLabels, maxAssetFee };
+export { MODULE_ASSETS, maxAssetFee };
