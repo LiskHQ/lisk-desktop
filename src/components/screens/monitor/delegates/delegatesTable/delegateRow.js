@@ -35,12 +35,13 @@ const delegateStatus = {
 };
 
 const getForgingTime = (data) => {
-  if (!data || data.time === -1) return '-';
+  if (!data || data.time === undefined) return '-';
   if (data.time === 0) return 'now';
-  const { time, tense } = data;
-  const minutes = time / 60 >= 1 ? `${Math.floor(time / 60)}m ` : '';
-  const seconds = time % 60 >= 1 ? `${time % 60}s` : '';
-  if (tense === 'future') {
+  const { time } = data;
+  const absTime = Math.abs(time);
+  const minutes = absTime / 60 >= 1 ? `${Math.floor(absTime / 60)}m ` : '';
+  const seconds = absTime % 60 >= 1 ? `${absTime % 60}s` : '';
+  if (data.time > 0) {
     return `in ${minutes}${seconds}`;
   }
   return `${minutes}${seconds} ago`;

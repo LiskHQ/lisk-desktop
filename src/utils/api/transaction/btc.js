@@ -255,7 +255,7 @@ export const create = ({
   amount,
   selectedFeePerByte,
   network,
-  // eslint-disable-next-line max-statements
+  // eslint-disable-next-line max-statements, consistent-return
 }) => new Promise(async (resolve, reject) => {
   try {
     const config = getNetworkConfig(tokenMap.LSK.key, network);
@@ -282,6 +282,7 @@ export const create = ({
 
     if (unspentTxOutsTotal < estimatedTotal) {
       reject(new Error('Insufficient (estimated) balance'));
+      return null;
     }
 
     // Find unspent txOuts to spend for this tx

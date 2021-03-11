@@ -68,35 +68,32 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
   const awaitingForgers = nextForgers ?? await retrieveNextForgers(network);
   const forgingTimes = {};
 
-  // First we set awaitingForgers as awaitingSlot or missedBlock
-  // depending if they are upfront the current round number
+  // First we iterate the latest blocks and set the forging time
+  latestBlocks
+    .slice(0, forgedInRoundNum)
+    .forEach((item) => {
+      if (!forgingTimes[item.generatorPublicKey]) {
+        forgingTimes[item.generatorPublicKey] = {
+          time: -(latestBlocks[0].timestamp - item.timestamp),
+          status: 'forging',
+        };
+      }
+    });
+
+  // Now we set awaitingForgers as awaitingSlot if they are upfront
+  // of the current number and to missed block in case that they did
+  // not forge
   awaitingForgers
     .forEach((item, index) => {
       if (index >= forgedInRoundNum) {
         forgingTimes[item.publicKey] = {
           time: (index - forgedInRoundNum + 1) * 10,
           status: 'awaitingSlot',
-          tense: 'future',
         };
-      } else {
+      } else if (!forgingTimes[item.publicKey]) {
         forgingTimes[item.publicKey] = {
-          time: -1,
+          time: undefined,
           status: 'missedBlock',
-          tense: 'past',
-        };
-      }
-    });
-
-  // Now we iterate the latest blocks and if we find some of the ones
-  // that we putted on missedBlock we set them to forging
-  latestBlocks
-    .slice(0, forgedInRoundNum)
-    .forEach((item, index) => {
-      if (forgingTimes[item.generatorPublicKey]?.status === 'missedBlock') {
-        forgingTimes[item.generatorPublicKey] = {
-          time: index * 10,
-          status: 'forging',
-          tense: 'past',
         };
       }
     });
