@@ -1,11 +1,20 @@
-const { resolve } = require('path');
 const webpack = require('webpack');
-
+const { resolve } = require('path');
 const { ProvidePlugin } = require('webpack');
 
 module.exports = {
   mode: 'development',
   resolve: {
+    alias: {
+      utils: resolve(__dirname, '../src/utils'),
+      api: resolve(__dirname, '../src/utils/api/'),
+      constants: resolve(__dirname, '../src/constants'),
+      shared: resolve(__dirname, '../src/components/shared'),
+      screens: resolve(__dirname, '../src/components/screens'),
+      toolbox: resolve(__dirname, '../src/components/toolbox'),
+      actions: resolve(__dirname, '../src/actions'),
+      store: resolve(__dirname, '../src/store'),
+    },
     fallback: {
       net: false,
       fs: false,
@@ -28,9 +37,6 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         resolve: {
-          alias: {
-            Utils: resolve(__dirname, '../src/utils/api/'),
-          },
           extensions: ['.js'],
         },
         options: {

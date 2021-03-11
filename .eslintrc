@@ -24,6 +24,23 @@
     "browser": true,
     "node": true
   },
+  "settings": {
+    "import/resolver" : {
+      "alias" : {
+        "map" : [
+          ["store", "./src/store"],
+          ["utils", "./src/utils/"],
+          ["api", "./src/utils/api/"],
+          ["actions", "./src/actions"],
+          ["constants", "./src/constants/"],
+          ["shared", "./src/components/shared"],
+          ["screens", "./src/components/screens/"],
+          ["toolbox", "./src/components/toolbox/"]
+        ],
+        "extensions": [".js"]
+      }
+    }
+  },
   "rules": {
     "import/named": "off",
     "jsx-a11y/alt-text": "off",
