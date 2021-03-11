@@ -255,7 +255,7 @@ export const create = ({
   amount,
   selectedFeePerByte,
   network,
-  // eslint-disable-next-line max-statements
+  // eslint-disable-next-line max-statements, consistent-return
 }) => new Promise(async (resolve, reject) => {
   try {
     const config = getNetworkConfig(tokenMap.LSK.key, network);
@@ -330,10 +330,8 @@ export const create = ({
     }
 
     resolve(txb.build().toHex());
-    return null;
   } catch (error) {
     reject(error);
-    return null;
   }
 });
 
