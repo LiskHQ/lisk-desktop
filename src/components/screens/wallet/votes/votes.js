@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import routes from 'constants';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import { Input } from '../../../toolbox/inputs';
-import routes from '../../../../constants/routes';
 import styles from './votes.css';
 import Table from '../../../toolbox/table';
 import VoteRow from './voteRow';

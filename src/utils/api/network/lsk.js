@@ -1,5 +1,5 @@
 import http from '../http';
-import networks, { networkKeys } from '../../../constants/networks';
+import networks, { networkKeys } from 'constants';
 
 const httpPrefix = '/api/v2';
 

@@ -4,7 +4,7 @@ import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
 import BoxRow from '../../toolbox/box/row';
 import LiskAmount from '../liskAmount';
-import { tokenMap } from '../../../constants/tokens';
+import { tokenMap } from 'constants';
 import DiscreetMode from '../discreetMode';
 import styles from './walletDetails.css';
 import Icon from '../../toolbox/icon';

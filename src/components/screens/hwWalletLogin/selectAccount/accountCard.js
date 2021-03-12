@@ -5,7 +5,7 @@ import LiskAmount from '../../../shared/liskAmount';
 import { Input } from '../../../toolbox/inputs';
 import styles from './selectAccount.css';
 import Icon from '../../../toolbox/icon';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from 'constants';
 
 const AccountCard = ({
   account,

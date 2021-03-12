@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { DoughnutChart } from '../../../toolbox/charts';
 import AccountVisual from '../../../toolbox/accountVisual';
-import routes from '../../../../constants/routes';
+import routes from 'constants';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -12,8 +12,8 @@ import styles from './overview.css';
 import NumericInfo from './numericInfo';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
-import { colorPalette } from '../../../../constants/chartConstants';
-import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
+import { colorPalette } from 'constants';
+import { MAX_BLOCKS_FORGED } from 'constants';
 
 const FORGERS_TO_SHOW = 6;
 

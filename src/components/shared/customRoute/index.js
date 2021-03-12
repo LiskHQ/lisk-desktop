@@ -5,7 +5,7 @@ import { Redirect, Route } from 'react-router-dom';
 import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../../utils/piwik';
-import routes from '../../../constants/routes';
+import routes from 'constants';
 
 const checkNetwork = state =>
   !!state.network.name

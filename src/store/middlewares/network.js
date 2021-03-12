@@ -1,8 +1,8 @@
 import { networkConfigSet } from '../../actions/network';
 import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
 import { login } from '../../actions/account';
-import actionsType from '../../constants/actions';
-import settings from '../../constants/settings';
+import actionsType from 'constants';
+import settings from 'constants';
 
 const network = ({ dispatch }) => next => async (action) => {
   next(action);

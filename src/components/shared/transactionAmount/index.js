@@ -3,7 +3,7 @@ import React from 'react';
 import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
 import styles from './transactionAmount.css';
-import transactionTypes from '../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 
 const TransactionAmount = ({
   recipient, type, token, showRounded, showInt, host, amount,

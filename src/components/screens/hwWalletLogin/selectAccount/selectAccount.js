@@ -5,9 +5,9 @@ import { TertiaryButton } from '../../../toolbox/buttons';
 import { getAccountsFromDevice } from '../../../../utils/hwManager';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
-import routes from '../../../../constants/routes';
+import routes from 'constants';
 import styles from './selectAccount.css';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from 'constants';
 
 class SelectAccount extends React.Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import React from 'react';
 import Piwik from '../../../utils/piwik';
 import { PrimaryButton } from '../../toolbox/buttons';
 import Icon from '../../toolbox/icon';
-import routes from '../../../constants/routes';
+import routes from 'constants';
 import styles from './termsOfUse.css';
 
 class TermsOfUse extends React.Component {

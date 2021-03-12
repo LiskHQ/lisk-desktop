@@ -11,9 +11,9 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './selectNameAndFee.css';
 import TransactionPriority from '../../../shared/transactionPriority/transactionPriority';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from 'constants';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import transactionTypes from '../../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 
 const token = tokenMap.LSK.key;
 const txType = transactionTypes().registerDelegate.key;

@@ -10,9 +10,9 @@ import { getNetworkStatus } from '../../../../utils/api/network';
 import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
-import transactionTypes from '../../../../constants/transactionTypes';
-import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
-import { tokenMap } from '../../../../constants/tokens';
+import transactionTypes from 'constants';
+import { MAX_BLOCKS_FORGED } from 'constants';
+import { tokenMap } from 'constants';
 
 import Delegates from './delegates';
 

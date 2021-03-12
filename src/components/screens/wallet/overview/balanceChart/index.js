@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
+import { tokenMap } from 'constants';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
 import BoxEmptyState from '../../../../toolbox/box/emptyState';
 import * as ChartUtils from '../../../../../utils/balanceChart';
-import { tokenMap } from '../../../../../constants/tokens';
 import i18n from '../../../../../i18n';
 import { LineChart } from '../../../../toolbox/charts';
 import Icon from '../../../../toolbox/icon';

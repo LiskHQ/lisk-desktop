@@ -11,13 +11,13 @@ import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData } from '../../utils/login';
 import { votesRetrieved } from '../../actions/voting';
 import { networkSelected, networkStatusUpdated } from '../../actions/network';
-import actionTypes from '../../constants/actions';
+import actionTypes from 'constants';
 import analytics from '../../utils/analytics';
 import i18n from '../../i18n';
-import networks, { networkKeys } from '../../constants/networks';
-import settings from '../../constants/settings';
-import transactionTypes from '../../constants/transactionTypes';
-import { tokenMap } from '../../constants/tokens';
+import networks, { networkKeys } from 'constants';
+import settings from 'constants';
+import transactionTypes from 'constants';
+import { tokenMap } from 'constants';
 import { getTransactions } from '../../utils/api/transaction';
 
 /**

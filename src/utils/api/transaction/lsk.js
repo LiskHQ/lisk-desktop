@@ -1,16 +1,16 @@
 /* eslint-disable max-lines */
-import  { transactions } from '@liskhq/lisk-client';
+import { transactions } from '@liskhq/lisk-client';
 
+import transactionTypes from 'constants';
+import { tokenMap } from 'constants';
+import schema from 'constants/transfer';
 import http from '../http';
 import ws from '../ws';
-import transactionTypes from '../../../constants/transactionTypes';
 import { getDelegates } from '../delegate';
 import regex from '../../regex';
-import { tokenMap } from '../../../constants/tokens';
 import { fromRawLsk } from '../../lsk';
 import { validateAddress } from '../../validators';
 import { getApiClient } from '../apiClient';
-import schema from '../../../constants/schemas/transfer';
 
 const httpPrefix = '/api/v2';
 
@@ -323,9 +323,9 @@ export const getTransactionFee = async ({
   const { moduleID, ...data } = txData;
   // 1. get schema from service and cache it
   // in desktop and create transaction ourselves
-  // store schemas locally for now 
-  
-  // probably not the best idea 
+  // store schemas locally for now
+
+  // probably not the best idea
   // 2. expose the ws port of core from service and use apiclient like below
 
   // const client = await Lisk.apiClient.createClient();

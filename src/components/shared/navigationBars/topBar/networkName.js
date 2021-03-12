@@ -1,5 +1,5 @@
 import React from 'react';
-import { networkKeys } from '../../../../constants/networks';
+import { networkKeys } from 'constants';
 import { getNetworkNameBasedOnNethash } from '../../../../utils/getNetwork';
 import styles from './network.css';
 

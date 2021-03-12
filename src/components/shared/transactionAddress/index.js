@@ -1,6 +1,6 @@
 import React from 'react';
 
-import transactionTypes from '../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 import styles from './transactionAddress.css';
 import { truncateAddress } from '../../../utils/account';
 

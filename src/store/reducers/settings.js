@@ -1,5 +1,5 @@
-import actionTypes from '../../constants/actions';
-import { tokenKeys } from '../../constants/tokens';
+import actionTypes from 'constants';
+import { tokenKeys } from 'constants';
 import { deepMergeObj } from '../../utils/helpers';
 
 export const channels = {

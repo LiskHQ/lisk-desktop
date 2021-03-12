@@ -6,7 +6,7 @@ import BoxContent from '../../../../toolbox/box/content';
 import BoxTabs from '../../../../toolbox/tabs';
 import { DoughnutChart, BarChart } from '../../../../toolbox/charts';
 import styles from './blocksOverview.css';
-import { chartStyles } from '../../../../../constants/chartConstants';
+import { chartStyles } from 'constants';
 import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
 
 class BlocksOverview extends React.Component {

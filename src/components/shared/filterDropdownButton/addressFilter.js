@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import styles from './filters.css';
 import { Input } from '../../toolbox/inputs';
 import { validateAddress, validateLSKPublicKey } from '../../../utils/validators';
-import { tokenMap } from '../../../constants/tokens';
+import { tokenMap } from 'constants';
 
 class AddressFilter extends React.Component {
   constructor() {

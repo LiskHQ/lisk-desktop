@@ -1,5 +1,5 @@
-import actionTypes from '../../constants/actions';
-import accountConfig from '../../constants/account';
+import actionTypes from 'constants';
+import accountConfig from 'constants';
 
 /**
  *

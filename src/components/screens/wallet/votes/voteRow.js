@@ -1,11 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { tokenMap } from 'constants';
 import AccountVisual from '../../../toolbox/accountVisual';
 import tableStyles from '../../../toolbox/table/table.css';
 import LiskAmount from '../../../shared/liskAmount';
 import styles from './votes.css';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
-import { tokenMap } from '../../../../constants/tokens';
 import DialogLink from '../../../toolbox/dialog/link';
 import Spinner from '../../../toolbox/spinner';
 import Icon from '../../../toolbox/icon';

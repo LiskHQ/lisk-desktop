@@ -7,7 +7,7 @@ import RequestPin from './requestPin';
 import SelectAccount from './selectAccount';
 import SelectDevice from './selectDevice';
 import UnlockDevice from './unlockDevice';
-import routes from '../../../constants/routes';
+import routes from 'constants';
 import styles from './hwWalletLogin.css';
 
 const HardwareWalletLogin = ({

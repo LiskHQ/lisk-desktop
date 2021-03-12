@@ -1,5 +1,5 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from 'constants';
 
 export default (t, activeToken, changeSort) => {
   const isLSK = activeToken === tokenMap.LSK.key;

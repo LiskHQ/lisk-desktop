@@ -3,8 +3,8 @@ import {
   IPC_MESSAGES,
   PIN,
   PASSPHRASE,
-} from '../../constants';
-import { TREZOR } from './constants';
+} from 'constants';
+import { TREZOR } from 'constants';
 import {
   getHardenedPath,
   toTrezorGrammar,

@@ -2,6 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
+import transactionTypes from 'constants';
+import actionTypes from 'constants';
+import { tokenMap } from 'constants';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
@@ -11,10 +14,7 @@ import { toRawLsk } from '../../../../utils/lsk';
 import Piwik from '../../../../utils/piwik';
 import { getUnlockableUnlockingObjects } from '../../../../utils/account';
 import { create } from '../../../../utils/api/transaction';
-import transactionTypes from '../../../../constants/transactionTypes';
-import actionTypes from '../../../../constants/actions';
 import LiskAmount from '../../../shared/liskAmount';
-import { tokenMap } from '../../../../constants/tokens';
 import styles from './lockedBalance.css';
 
 const ButtonTitle = ({ unlockableBalance, t }) => {

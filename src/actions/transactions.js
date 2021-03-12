@@ -1,13 +1,13 @@
 /* eslint-disable max-lines */
 import to from 'await-to-js';
 
-import actionTypes from '../constants/actions';
-import { tokenMap } from '../constants/tokens';
-import transactionTypes from '../constants/transactionTypes';
+import actionTypes from 'constants';
+import { tokenMap } from 'constants';
+import transactionTypes from 'constants';
+import loginTypes from 'constants';
 import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
-import loginTypes from '../constants/loginTypes';
 import { getTransactions, create, broadcast } from '../utils/api/transaction';
 import { signSendTransaction } from '../utils/hwManager';
 

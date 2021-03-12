@@ -4,7 +4,7 @@ import Box from '../../toolbox/box';
 import BoxContent from '../../toolbox/box/content';
 import BoxHeader from '../../toolbox/box/header';
 import FilterBar from '../filterBar';
-import transactionTypes from '../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 import FilterDropdownButton from '../filterDropdownButton';
 import LoadLatestButton from '../loadLatestButton';
 import Table from '../../toolbox/table';

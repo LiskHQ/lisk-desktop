@@ -1,5 +1,5 @@
 import { votesRetrieved } from '../../actions/voting';
-import actionTypes from '../../constants/actions';
+import actionTypes from 'constants';
 
 const votingMiddleware = store => next => (action) => {
   next(action);

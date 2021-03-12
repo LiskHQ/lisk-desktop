@@ -6,7 +6,7 @@ import {
   getPublicKey,
 } from '../../../libs/hwManager/communication';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '../../utils/hwManager';
-import actionTypes from '../../constants/actions';
+import actionTypes from 'constants';
 import { addSearchParamsToUrl } from '../../utils/searchParams';
 import history from '../../history';
 

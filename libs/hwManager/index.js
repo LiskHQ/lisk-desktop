@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import manufacturers from './manufacturers';
 import { publish, subscribe } from './utils';
-import { IPC_MESSAGES, FUNCTION_TYPES } from './constants';
+import { IPC_MESSAGES, FUNCTION_TYPES } from 'constants';
 
 // eslint-disable-next-line import/prefer-default-export
 export class HwManager {

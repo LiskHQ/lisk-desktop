@@ -8,7 +8,7 @@ import { getBlock } from '../../../../utils/api/block';
 import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
 import { selectSearchParamValue } from '../../../../utils/searchParams';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from 'constants';
 
 const mapStateToProps = (state, ownProps) => ({
   id: selectSearchParamValue(ownProps.history.location.search, 'id'),

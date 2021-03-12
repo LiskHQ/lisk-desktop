@@ -1,6 +1,6 @@
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 
-import { tokenMap } from '../constants/tokens';
+import { tokenMap } from 'constants';
 import regex from './regex';
 
 /**

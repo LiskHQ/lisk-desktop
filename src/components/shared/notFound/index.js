@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import styles from './notFound.css';
 import { PrimaryButton } from '../../toolbox/buttons';
 import Illustration from '../../toolbox/illustration';
-import routes from '../../../constants/routes';
+import routes from 'constants';
 
 const NotFound = ({ t }) => (
   <section className={styles.notFoundPage}>

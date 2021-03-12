@@ -2,6 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
+import { tokenMap } from 'constants';
 import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
@@ -13,7 +14,6 @@ import Icon from '../../../../toolbox/icon';
 import styles from './balanceInfo.css';
 import { fromRawLsk } from '../../../../../utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
-import { tokenMap } from '../../../../../constants/tokens';
 import {
   calculateBalanceLockedInUnvotes,
   calculateBalanceLockedInVotes,

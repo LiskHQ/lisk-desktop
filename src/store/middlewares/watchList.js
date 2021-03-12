@@ -1,4 +1,4 @@
-import actionTypes from '../../constants/actions';
+import actionTypes from 'constants';
 import { setInStorage } from '../../utils/localJSONStorage';
 
 const watchList = ({ getState }) => next => (action) => {

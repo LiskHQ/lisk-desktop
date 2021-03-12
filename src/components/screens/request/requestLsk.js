@@ -1,6 +1,6 @@
 import React from 'react';
+import { messageMaxLength } from 'constants';
 import { Input, AutoResizeTextarea } from '../../toolbox/inputs';
-import { messageMaxLength } from '../../../constants/transactions';
 import CircularProgress from '../../toolbox/circularProgress/circularProgress';
 import Converter from '../../shared/converter';
 import RequestWrapper from './requestWrapper';

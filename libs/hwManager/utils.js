@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { to } from 'await-to-js';
-import { REQUEST, RESPONSE } from './constants';
+import { REQUEST, RESPONSE } from 'constants';
 
 /**
  * Create a listener to a function that send a response back to the sender

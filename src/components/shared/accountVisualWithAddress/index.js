@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import styles from './accountVisualWithAddress.css';
 import Icon from '../../toolbox/icon';
-import transactionTypes from '../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 import AccountVisual from '../../toolbox/accountVisual';
 import regex from '../../../utils/regex';
 

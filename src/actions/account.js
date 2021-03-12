@@ -1,10 +1,10 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
+import loginTypes from 'constants';
+import actionTypes from 'constants';
 import { getAccount } from '../utils/api/account';
 import { getConnectionErrorMessage } from '../utils/getNetwork';
-import loginTypes from '../constants/loginTypes';
 import { networkStatusUpdated } from './network';
-import actionTypes from '../constants/actions';
 
 /**
  * Trigger this action to log out of the account

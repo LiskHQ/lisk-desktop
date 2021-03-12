@@ -14,7 +14,7 @@ import Overview from './overview';
 import withLocalSort from '../../../../utils/withLocalSort';
 import { getNetworkStatistics, getConnectedPeers } from '../../../../utils/api/network';
 import withData from '../../../../utils/withData';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from 'constants';
 
 /**
  * Compares two version values to and returns

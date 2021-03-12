@@ -3,7 +3,7 @@ import AccountVisual from '../../toolbox/accountVisual';
 import Icon from '../../toolbox/icon';
 import reg from '../../../utils/regex';
 import styles from './transactionTypeFigure.css';
-import transactionTypes from '../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 
 const TransactionTypeFigure = ({
   transactionType, address, avatarSize = 40, className = '', icon,

@@ -1,4 +1,4 @@
-import { tokenMap } from '../../constants/tokens';
+import { tokenMap } from 'constants';
 
 const functionMapper = (lskFunctions, btcFunction) => {
   const lskNames = Object.keys(lskFunctions);

@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useSelector } from 'react-redux';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from 'constants';
 import LiskAmount from '../../../shared/liskAmount';
 import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
 import TransactionAddress from '../../../shared/transactionAddress';

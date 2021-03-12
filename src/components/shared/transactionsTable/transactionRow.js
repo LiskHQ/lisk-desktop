@@ -1,8 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
-import { tokenMap } from '../../../constants/tokens';
-import transactionTypes from '../../../constants/transactionTypes';
+import { tokenMap } from 'constants';
+import transactionTypes from 'constants';
 import AccountVisualWithAddress from '../accountVisualWithAddress';
 import Icon from '../../toolbox/icon';
 import LiskAmount from '../liskAmount';

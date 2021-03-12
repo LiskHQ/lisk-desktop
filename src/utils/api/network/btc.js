@@ -1,5 +1,5 @@
 import * as bitcoin from 'bitcoinjs-lib';
-import networks from '../../../constants/networks';
+import networks from 'constants';
 
 /**
  * Returns network code for a given network name

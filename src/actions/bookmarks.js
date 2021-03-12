@@ -1,5 +1,5 @@
-import actionTypes from '../constants/actions';
-import { tokenMap } from '../constants/tokens';
+import actionTypes from 'constants';
+import { tokenMap } from 'constants';
 import { getFromStorage } from '../utils/localJSONStorage';
 import { emptyBookmarks } from '../utils/bookmarks';
 

@@ -6,7 +6,7 @@ import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
-import routes from '../../../constants/routes';
+import routes from 'constants';
 import styles from './register.css';
 import MultiStep from '../../../../libs/multiStep';
 import MultiStepProgressBar from '../../shared/multiStepProgressBar';

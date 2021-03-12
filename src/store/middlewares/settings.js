@@ -1,4 +1,4 @@
-import actionsType from '../../constants/actions';
+import actionsType from 'constants';
 import { pricesRetrieved } from '../../actions/service';
 import { emptyTransactionsData } from '../../actions/transactions';
 import { setInStorage } from '../../utils/localJSONStorage';

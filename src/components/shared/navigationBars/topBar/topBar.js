@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import routes from '../../../../constants/routes';
+import routes from 'constants';
 import NavigationButtons from './navigationButtons';
 import Network from './networkName';
 import styles from './topBar.css';

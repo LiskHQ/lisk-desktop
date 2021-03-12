@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Given } from 'cypress-cucumber-preprocessor/steps';
-import urls from '../../../constants/urls';
-import ss from '../../../constants/selectors';
+import urls from 'constants';
+import ss from 'constants';
 
 const txConfirmationTimeout = 12000;
 const txDelegateRegPrice = 25;

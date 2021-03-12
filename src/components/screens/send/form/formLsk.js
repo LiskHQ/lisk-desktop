@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AutoResizeTextarea } from '../../../toolbox/inputs';
-import { messageMaxLength } from '../../../../constants/transactions';
+import { messageMaxLength } from 'constants';
 import CircularProgress from '../../../toolbox/circularProgress/circularProgress';
 import FormBase from './formBase';
 import Icon from '../../../toolbox/icon';
@@ -13,7 +13,7 @@ import { toRawLsk } from '../../../../utils/lsk';
 import TransactionPriority from '../../../shared/transactionPriority';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 import useTransactionPriority from './useTransactionPriority';
-import transactionTypes from '../../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 
 const txType = transactionTypes().transfer.key;
 

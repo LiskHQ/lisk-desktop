@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import transactionTypes from '../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 import styles from './filters.css';
 import Select from '../../toolbox/select';
 

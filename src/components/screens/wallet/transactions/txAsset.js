@@ -1,5 +1,5 @@
 import React from 'react';
-import transactionTypes from '../../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 
 import VoteItem from '../../../shared/voteItem';
 import styles from './transactions.css';

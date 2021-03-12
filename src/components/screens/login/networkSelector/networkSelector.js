@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
 
+import networks, { networkKeys } from 'constants';
+import keyCodes from 'constants';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import { Input } from '../../../toolbox/inputs';
 import { addHttp, getAutoLogInData } from '../../../../utils/login';
 import { getNetworksList } from '../../../../utils/getNetwork';
-import networks, { networkKeys } from '../../../../constants/networks';
-import keyCodes from '../../../../constants/keyCodes';
 import DropdownButton from '../../../toolbox/dropdownButton';
 import { getApiClient } from '../../../../utils/api/apiClient';
 

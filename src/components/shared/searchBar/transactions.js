@@ -1,7 +1,7 @@
 import React from 'react';
 import LiskAmount from '../liskAmount';
 import styles from './transactionsAndBlocks.css';
-import transactionTypes from '../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 import Icon from '../../toolbox/icon';
 
 const getTxConfig = (t, transactions) => {

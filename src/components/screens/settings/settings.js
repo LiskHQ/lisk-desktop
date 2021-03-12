@@ -7,8 +7,8 @@ import BoxContent from '../../toolbox/box/content';
 import CheckBox from '../../toolbox/checkBox';
 import Piwik from '../../../utils/piwik';
 import Select from '../../toolbox/select';
-import links from '../../../constants/externalLinks';
-import settingsConst from '../../../constants/settings';
+import links from 'constants';
+import settingsConst from 'constants';
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './settings.css';
 

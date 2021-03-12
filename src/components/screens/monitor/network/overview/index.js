@@ -9,7 +9,7 @@ import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './overview.css';
 import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
-import { colorPalette } from '../../../../../constants/chartConstants';
+import { colorPalette } from 'constants';
 
 const createChartData = (data, t) => {
   const list = {

@@ -6,8 +6,8 @@ import {
 } from './utils';
 import {
   ADD_DEVICE,
-} from '../../constants';
-import { LEDGER } from './constants';
+} from 'constants';
+import { LEDGER } from 'constants';
 
 // ============================================ //
 //              DEVICES LIST

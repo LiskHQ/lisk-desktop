@@ -1,6 +1,6 @@
 import React from 'react';
+import { tokenMap } from 'constants';
 import LiskAmount from '../liskAmount';
-import { tokenMap } from '../../../constants/tokens';
 /**
  * This component acts as an adapter for diversions in consecutive versions of API
  * @param {Object} data The delegate information

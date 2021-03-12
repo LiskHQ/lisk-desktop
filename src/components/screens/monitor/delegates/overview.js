@@ -9,7 +9,7 @@ import NumericInfo from './numericInfo';
 import styles from './overview.css';
 import { fromRawLsk } from '../../../../utils/lsk';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
-import { colorPalette } from '../../../../constants/chartConstants';
+import { colorPalette } from 'constants';
 
 const Overview = ({
   chartActiveAndStandby,

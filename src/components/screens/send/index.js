@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import routes from 'constants';
 import MultiStep from '../../shared/multiStep';
 import Form from './form';
 import Summary from './summary';
 import TransactionStatus from './transactionStatus';
-import routes from '../../../constants/routes';
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './send.css';
 import { parseSearchParams } from '../../../utils/searchParams';

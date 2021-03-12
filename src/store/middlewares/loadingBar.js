@@ -1,4 +1,4 @@
-import actionsType from '../../constants/actions';
+import actionsType from 'constants';
 
 const ignoredLoadingActionKeys = [
   'transactions', // because this is called every 10 seconds and the app doesn't look good with so much loading going on.

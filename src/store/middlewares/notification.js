@@ -1,4 +1,4 @@
-import actionTypes from '../../constants/actions';
+import actionTypes from 'constants';
 import Notification from '../../utils/notification';
 
 const notificationMiddleware = (store) => {

@@ -1,7 +1,7 @@
 import React from 'react';
+import loginTypes from 'constants';
 import DemoRenderer from '../demoRenderer';
 import HardwareWalletIllustration from '.';
-import loginTypes from '../../../constants/loginTypes';
 
 const HardwareWalletIllustrationDemo = () => (
   <React.Fragment>

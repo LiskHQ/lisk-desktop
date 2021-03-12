@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TertiaryButton } from '../../toolbox/buttons';
-import routes from '../../../constants/routes';
+import routes from 'constants';
 import LoadingIcon from './loadingIcon';
 
 class Loading extends React.Component {

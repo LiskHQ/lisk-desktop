@@ -3,7 +3,7 @@ import React from 'react';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
 import { getPublicKey, validatePin } from '../../../utils/hwManager';
-import externalLinks from '../../../constants/externalLinks';
+import externalLinks from 'constants';
 import styles from './requestPin.css';
 
 class RequestPin extends React.Component {

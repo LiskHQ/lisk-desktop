@@ -1,6 +1,6 @@
 import React from 'react';
 
-import routes from '../../../../constants/routes';
+import routes from 'constants';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
 import DialogLink from '../../../toolbox/dialog/link';

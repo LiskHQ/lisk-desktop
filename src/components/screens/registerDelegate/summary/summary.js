@@ -4,10 +4,10 @@ import to from 'await-to-js';
 import TransactionSummary from '../../../shared/transactionSummary';
 import AccountVisual from '../../../toolbox/accountVisual';
 import { create } from '../../../../utils/api/transaction';
-import transactionTypes from '../../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 import { toRawLsk } from '../../../../utils/lsk';
 import styles from './summary.css';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from 'constants';
 
 class Summary extends React.Component {
   constructor(props) {

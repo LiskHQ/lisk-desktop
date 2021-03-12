@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import transactionTypes from 'constants';
 import TransactionPriority from '../../../shared/transactionPriority';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import transactionTypes from '../../../../constants/transactionTypes';
 import {
   calculateBalanceLockedInVotes,
   calculateUnlockableBalance,

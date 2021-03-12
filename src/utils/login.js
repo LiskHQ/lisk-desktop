@@ -1,6 +1,6 @@
 import i18next from 'i18next';
-import settings from '../constants/settings';
-import networks from '../constants/networks';
+import settings from 'constants';
+import networks from 'constants';
 
 // https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 const pattern = new RegExp(/[-a-zA-Z0-9@:%_+.~#?&/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&/=]*)?/gi);
