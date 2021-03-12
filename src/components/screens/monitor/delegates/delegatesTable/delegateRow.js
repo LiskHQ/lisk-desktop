@@ -12,7 +12,7 @@ import { formatAmountBasedOnLocale } from 'utils/formattedNumber';
 import regex from 'utils/regex';
 import styles from '../delegates.css';
 import DelegateWeight from './delegateWeight';
-import { addedToWatchList, removedFromWatchList } from '../../../../../actions/watchList';
+import { addedToWatchList, removedFromWatchList } from 'actions/watchList';
 
 const roundStatus = {
   forging: 'Forging',

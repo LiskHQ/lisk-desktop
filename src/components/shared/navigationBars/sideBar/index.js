@@ -7,7 +7,7 @@ import routes, { modals } from 'constants';
 import Icon from '../../../toolbox/icon';
 import styles from './sideBar.css';
 import Piwik from 'utils/piwik';
-import { accountLoggedOut } from '../../../../actions/account';
+import { accountLoggedOut } from 'actions/account';
 import DialogLink from '../../../toolbox/dialog/link';
 import AutoSignOut from './autoSignOut';
 

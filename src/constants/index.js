@@ -12,7 +12,7 @@ export { default as settings } from './settings';
 export { default as tokens } from './tokens';
 export { default as transactions } from './transactions';
 export { default as account } from './account';
-export { default as actions } from './actions';
+export { default as actions } from 'actions';
 export { chartStyles, colorPalette } from './chart';
 export { default as datetime } from './datetime';
 export { MAX_BLOCKS_FORGED } from './delegates';

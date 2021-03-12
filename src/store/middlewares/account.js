@@ -1,20 +1,20 @@
 import {
   networks, actionTypes, networkKeys, settings, transactionTypes, tokenMap,
 } from 'constants';
-import { accountDataUpdated } from '../../actions/account';
+import { accountDataUpdated } from 'actions/account';
 import {
   emptyTransactionsData,
   transactionsRetrieved,
-} from '../../actions/transactions';
-import { settingsUpdated } from '../../actions/settings';
+} from 'actions/transactions';
+import { settingsUpdated } from 'actions/settings';
 import { fromRawLsk } from 'utils/lsk';
 import { getActiveTokenAccount } from 'utils/account';
 import { getAutoLogInData } from 'utils/login';
-import { votesRetrieved } from '../../actions/voting';
-import { networkSelected, networkStatusUpdated } from '../../actions/network';
+import { votesRetrieved } from 'actions/voting';
+import { networkSelected, networkStatusUpdated } from 'actions/network';
 import analytics from 'utils/analytics';
-import i18n from '../../i18n';
 import { getTransactions } from 'utils/api/transaction';
+import i18n from '../../i18n';
 
 /**
  * After a new block is created and broadcasted

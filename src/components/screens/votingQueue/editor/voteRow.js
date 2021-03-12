@@ -8,7 +8,7 @@ import Icon from '../../../toolbox/icon';
 import LiskAmount from '../../../shared/liskAmount';
 import { tokenMap } from 'constants';
 import useVoteAmountField from '../../editVote/useVoteAmountField';
-import { voteEdited } from '../../../../actions/voting';
+import { voteEdited } from 'actions/voting';
 import { fromRawLsk, toRawLsk } from 'utils/lsk';
 import AmountField from '../../../shared/amountField';
 import styles from './editor.css';

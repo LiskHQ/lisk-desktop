@@ -3,10 +3,10 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import htmlStringToReact from 'utils/htmlStringToReact';
 import regex from 'utils/regex';
+import { addSearchParamsToUrl } from 'utils/searchParams';
+import { appUpdateAvaiable } from 'actions/appUpdates';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import NewReleaseMessage from '../components/shared/newReleaseMessage/newReleaseMessage';
-import { addSearchParamsToUrl } from 'utils/searchParams';
-import { appUpdateAvaiable } from '../actions/appUpdates';
 
 
 const useIpc = (history) => {

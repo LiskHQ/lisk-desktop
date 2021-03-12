@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import routes from 'constants';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
-import { settingsUpdated } from '../../../../actions/settings';
+import { settingsUpdated } from 'actions/settings';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import { tokenMap } from 'constants';
 

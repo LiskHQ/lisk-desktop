@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { accountLoggedOut, passphraseUsed } from '../../../../actions/account';
+import { accountLoggedOut, passphraseUsed } from 'actions/account';
 import TopBar from './topBar';
 
 const mapStateToProps = state => ({

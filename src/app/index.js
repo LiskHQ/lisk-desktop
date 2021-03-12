@@ -19,9 +19,9 @@ import NavigationBars from '../components/shared/navigationBars';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import DialogHolder from '../components/toolbox/dialog/holder';
 import ThemeContext from '../contexts/theme';
-import { settingsRetrieved } from '../actions/settings';
-import { bookmarksRetrieved } from '../actions/bookmarks';
-import { watchListRetrieved } from '../actions/watchList';
+import { settingsRetrieved } from 'actions/settings';
+import { bookmarksRetrieved } from 'actions/bookmarks';
+import { watchListRetrieved } from 'actions/watchList';
 import useIpc from '../hooks/useIpc';
 
 const App = ({ history }) => {

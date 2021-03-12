@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { getAccount } from 'utils/api/account';
 import { getActiveTokenAccount } from 'utils/account';
-import { transactionBroadcasted, resetTransactionResult } from '../../../../actions/transactions';
-import TransactionStatus from './transactionStatus';
+import { transactionBroadcasted, resetTransactionResult } from 'actions/transactions';
 import withData from 'utils/withData';
+import TransactionStatus from './transactionStatus';
 
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),

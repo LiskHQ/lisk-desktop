@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import ResultComponent from './result';
-import { transactionBroadcasted } from '../../../../actions/transactions';
+import { transactionBroadcasted } from 'actions/transactions';
 
 const Result = (props) => {
   const { t } = useTranslation();
