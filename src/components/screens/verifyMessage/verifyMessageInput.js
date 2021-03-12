@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons';
-import { parseSearchParams } from '../../../utils/searchParams';
+import { parseSearchParams } from 'utils/searchParams';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';

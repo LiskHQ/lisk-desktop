@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import { modals } from 'constants';
+import { parseSearchParams, removeSearchParamsFromUrl } from 'utils/searchParams';
 import styles from './dialog.css';
-import { parseSearchParams, removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
 // eslint-disable-next-line max-statements
 const DialogHolder = ({ history }) => {

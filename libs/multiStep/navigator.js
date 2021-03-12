@@ -7,7 +7,7 @@ import {
   isActiveGroup,
   groupSteps,
   noGroupTitle,
-} from './utils';
+} from 'utils';
 
 const MultiStepNav = ({
   steps,

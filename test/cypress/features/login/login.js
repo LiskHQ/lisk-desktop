@@ -2,7 +2,7 @@
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import { networks, ss, urls, accounts } from 'constants'
 import numeral from 'numeral';
-import { fromRawLsk } from '../../../../src/utils/lsk';
+import { fromRawLsk } from 'utils/lsk';
 
 Given(/^showNetwork setting is true$/, function () {
   cy.mergeObjectWithLocalStorage('settings', { showNetwork: true });

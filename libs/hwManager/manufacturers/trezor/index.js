@@ -8,7 +8,7 @@ import { TREZOR } from 'constants';
 import {
   getHardenedPath,
   toTrezorGrammar,
-} from './utils';
+} from 'utils';
 
 /**
  * addDevice - function - Add a new device to the devices list.

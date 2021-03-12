@@ -4,7 +4,7 @@ import { tokenMap } from 'constants';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
 import BoxEmptyState from '../../../../toolbox/box/emptyState';
-import * as ChartUtils from '../../../../../utils/balanceChart';
+import * as Chartutils from 'utils/balanceChart';
 import i18n from '../../../../../i18n';
 import { LineChart } from '../../../../toolbox/charts';
 import Icon from '../../../../toolbox/icon';
@@ -24,14 +24,14 @@ const BalanceGraph = ({
 
   useEffect(() => {
     if (transactions.length && balance !== undefined) {
-      const format = ChartUtils.getChartDateFormat(transactions);
-      setOptions(ChartUtils.graphOptions({
+      const format = Chartutils.getChartDateFormat(transactions);
+      setOptions(Chartutils.graphOptions({
         format,
         token,
         locale: i18n.language,
       }));
 
-      setData(ChartUtils.getBalanceData({
+      setData(Chartutils.getBalanceData({
         transactions,
         balance,
         address,

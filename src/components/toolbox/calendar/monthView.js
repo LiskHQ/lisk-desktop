@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { validations, generateDayPlaceholder } from './calendarUtils';
+import { validations, generateDayPlaceholder } from './calendarutils';
 import styles from './calendar.css';
 import Icon from '../icon';
 

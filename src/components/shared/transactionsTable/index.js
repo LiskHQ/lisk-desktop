@@ -9,7 +9,7 @@ import FilterDropdownButton from '../filterDropdownButton';
 import LoadLatestButton from '../loadLatestButton';
 import Table from '../../toolbox/table';
 import styles from './transactionsTable.css';
-import withFilters from '../../../utils/withFilters';
+import withFilters from 'utils/withFilters';
 import TransactionRow from './transactionRow';
 import header from './tableHeader';
 

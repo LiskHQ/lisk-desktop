@@ -8,9 +8,9 @@ import Table from '../../../toolbox/table';
 import styles from './accounts.css';
 import header from './tableHeader';
 import AccountRow from './accountRow';
-import withData from '../../../../utils/withData';
-import { getAccounts } from '../../../../utils/api/account';
-import { getNetworkStatus } from '../../../../utils/api/network';
+import withData from 'utils/withData';
+import { getAccounts } from 'utils/api/account';
+import { getNetworkStatus } from 'utils/api/network';
 
 const LIMIT = 30;
 

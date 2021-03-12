@@ -9,10 +9,10 @@ import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import BoxHeader from '../../../toolbox/box/header';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { toRawLsk } from '../../../../utils/lsk';
-import Piwik from '../../../../utils/piwik';
-import { getUnlockableUnlockingObjects } from '../../../../utils/account';
-import { create } from '../../../../utils/api/transaction';
+import { toRawLsk } from 'utils/lsk';
+import Piwik from 'utils/piwik';
+import { getUnlockableUnlockingObjects } from 'utils/account';
+import { create } from 'utils/api/transaction';
 import LiskAmount from '../../../shared/liskAmount';
 import styles from './lockedBalance.css';
 

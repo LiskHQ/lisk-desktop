@@ -7,7 +7,7 @@ import Transactions from './transactions';
 import { routes, keyCodes } from 'constants'
 import styles from './searchBar.css';
 import Blocks from './blocks';
-import { addSearchParamsToUrl } from '../../../utils/searchParams';
+import { addSearchParamsToUrl } from 'utils/searchParams';
 
 class SearchBar extends React.Component {
   constructor() {

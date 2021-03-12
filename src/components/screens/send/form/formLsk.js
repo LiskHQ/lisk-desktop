@@ -9,7 +9,7 @@ import styles from './form.css';
 import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
-import { toRawLsk } from '../../../../utils/lsk';
+import { toRawLsk } from 'utils/lsk';
 import TransactionPriority from '../../../shared/transactionPriority';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 import useTransactionPriority from './useTransactionPriority';

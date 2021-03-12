@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from './navigator';
 import { Element } from './element';
-import { getStyles } from './utils';
+import { getStyles } from 'utils';
 
 /**
  *

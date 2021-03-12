@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import FlashMessage from '../../toolbox/flashMessage/flashMessage';
-import { addSearchParamsToUrl } from '../../../utils/searchParams';
+import { addSearchParamsToUrl } from 'utils/searchParams';
 
 const AnalyticsMessage = ({ t, history }) => (
   <FlashMessage shouldShow hasCloseAction={false}>

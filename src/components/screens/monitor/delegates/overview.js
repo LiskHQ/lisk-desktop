@@ -7,7 +7,7 @@ import BoxEmptyState from '../../../toolbox/box/emptyState';
 import { DoughnutChart, LineChart } from '../../../toolbox/charts';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
-import { fromRawLsk } from '../../../../utils/lsk';
+import { fromRawLsk } from 'utils/lsk';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
 import { colorPalette } from 'constants';
 

@@ -4,10 +4,10 @@ import {
   actionTypes, tokenMap, transactionTypes, loginTypes,
 } from 'constants';
 import { loadingStarted, loadingFinished } from './loading';
-import { extractAddress } from '../utils/account';
+import { extractAddress } from 'utils/account';
 import { passphraseUsed } from './account';
-import { getTransactions, create, broadcast } from '../utils/api/transaction';
-import { signSendTransaction } from '../utils/hwManager';
+import { getTransactions, create, broadcast } from 'utils/api/transaction';
+import { signSendTransaction } from 'utils/hwManager';
 
 // ========================================= //
 //            ACTION CREATORS

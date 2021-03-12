@@ -4,10 +4,10 @@ import networks, { networkKeys } from 'constants';
 import keyCodes from 'constants';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import { Input } from '../../../toolbox/inputs';
-import { addHttp, getAutoLogInData } from '../../../../utils/login';
-import { getNetworksList } from '../../../../utils/getNetwork';
+import { addHttp, getAutoLogInData } from 'utils/login';
+import { getNetworksList } from 'utils/getNetwork';
 import DropdownButton from '../../../toolbox/dropdownButton';
-import { getApiClient } from '../../../../utils/api/apiClient';
+import { getApiClient } from 'utils/api/apiClient';
 
 import styles from './networkSelector.css';
 

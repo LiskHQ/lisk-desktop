@@ -2,12 +2,12 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getActiveTokenAccount } from '../../../utils/account';
-import { getTransaction } from '../../../utils/api/transaction';
-import { getDelegates } from '../../../utils/api/delegate';
-import withData from '../../../utils/withData';
+import { getActiveTokenAccount } from 'utils/account';
+import { getTransaction } from 'utils/api/transaction';
+import { getDelegates } from 'utils/api/delegate';
+import withData from 'utils/withData';
 import TransactionDetails from './transactionDetails';
-import { parseSearchParams } from '../../../utils/searchParams';
+import { parseSearchParams } from 'utils/searchParams';
 
 const mapStateToProps = (state, ownProps) => ({
   address: getActiveTokenAccount(state).address,

@@ -2,8 +2,8 @@ import React from 'react';
 import 'numeral/locales';
 import FlashMessage from '../../toolbox/flashMessage/flashMessage';
 import FlashMessageHolder from '../../toolbox/flashMessage/holder';
-import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
-import { addSearchParamsToUrl } from '../../../utils/searchParams';
+import { formatAmountBasedOnLocale } from 'utils/formattedNumber';
+import { addSearchParamsToUrl } from 'utils/searchParams';
 
 export const InitializationMessageRenderer = ({
   account,

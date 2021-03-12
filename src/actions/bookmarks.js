@@ -1,6 +1,6 @@
 import { actionTypes, tokenMap } from 'constants';
-import { getFromStorage } from '../utils/localJSONStorage';
-import { emptyBookmarks } from '../utils/bookmarks';
+import { getFromStorage } from 'utils/localJSONStorage';
+import { emptyBookmarks } from 'utils/bookmarks';
 
 /**
  * An action to dispatch settingsRetrieved

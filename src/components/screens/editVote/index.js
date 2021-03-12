@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectSearchParamValue, removeSearchParamsFromUrl } from '../../../utils/searchParams';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from 'utils/searchParams';
 import { voteEdited } from '../../../actions/voting';
 import Dialog from '../../toolbox/dialog/dialog';
 import Box from '../../toolbox/box';
@@ -14,7 +14,7 @@ import BoxInfoText from '../../toolbox/box/infoText';
 import AmountField from '../../shared/amountField';
 import useVoteAmountField from './useVoteAmountField';
 import { PrimaryButton, WarningButton } from '../../toolbox/buttons';
-import { toRawLsk, fromRawLsk } from '../../../utils/lsk';
+import { toRawLsk, fromRawLsk } from 'utils/lsk';
 
 import styles from './editVote.css';
 

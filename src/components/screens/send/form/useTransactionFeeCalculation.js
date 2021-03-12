@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { tokenMap, minBalance } from 'constants';
 import {
   getTransactionFee,
-} from '../../../../utils/api/transaction';
-import { toRawLsk } from '../../../../utils/lsk';
+} from 'utils/api/transaction';
+import { toRawLsk } from 'utils/lsk';
 
 const calculateAvailableBalance = (balance, token) => {
   if (token !== tokenMap.LSK.key) return balance;

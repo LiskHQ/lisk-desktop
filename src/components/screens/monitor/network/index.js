@@ -11,9 +11,9 @@ import header from './tableHeader';
 import Map from './map';
 import PeerRow from './peerRow';
 import Overview from './overview';
-import withLocalSort from '../../../../utils/withLocalSort';
-import { getNetworkStatistics, getConnectedPeers } from '../../../../utils/api/network';
-import withData from '../../../../utils/withData';
+import withLocalSort from 'utils/withLocalSort';
+import { getNetworkStatistics, getConnectedPeers } from 'utils/api/network';
+import withData from 'utils/withData';
 import { tokenMap } from 'constants';
 
 /**

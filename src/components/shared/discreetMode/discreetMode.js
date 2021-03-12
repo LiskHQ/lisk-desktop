@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import routes from 'constants';
 import styles from './discreetMode.css';
-import { getTokenFromAddress } from '../../../utils/api/transaction';
-import { selectSearchParamValue } from '../../../utils/searchParams';
+import { getTokenFromAddress } from 'utils/api/transaction';
+import { selectSearchParamValue } from 'utils/searchParams';
 
 class DiscreetMode extends Component {
   handleBlurOnOtherWalletPage() {

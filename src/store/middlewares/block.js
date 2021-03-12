@@ -1,9 +1,9 @@
 import actionTypes from 'constants';
-import { networkStatusUpdated } from '../../actions/network';
-import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
-import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
-import { forgersSubscribe, forgersUnsubscribe, getDelegates } from '../../utils/api/delegate';
+import { blockSubscribe, blockUnsubscribe } from 'utils/api/block';
+import { forgersSubscribe, forgersUnsubscribe, getDelegates } from 'utils/api/delegate';
 import { tokenMap } from 'constants';
+import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
+import { networkStatusUpdated } from '../../actions/network';
 
 const oneMinute = 1000 * 60;
 

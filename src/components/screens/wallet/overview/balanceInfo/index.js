@@ -12,13 +12,13 @@ import Converter from '../../../../shared/converter';
 import DialogLink from '../../../../toolbox/dialog/link';
 import Icon from '../../../../toolbox/icon';
 import styles from './balanceInfo.css';
-import { fromRawLsk } from '../../../../../utils/lsk';
+import { fromRawLsk } from 'utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
 import {
   calculateBalanceLockedInUnvotes,
   calculateBalanceLockedInVotes,
   getActiveTokenAccount,
-} from '../../../../../utils/account';
+} from 'utils/account';
 
 const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
   const host = useSelector(state => getActiveTokenAccount(state));

@@ -11,7 +11,7 @@ import {
   Illustration, AmountAndDate, FeeAndConfirmation,
   DelegateUsername,
 } from './dataRows';
-import { isEmpty } from '../../../utils/helpers';
+import { isEmpty } from 'utils/helpers';
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './transactionDetails.css';
 

@@ -11,7 +11,7 @@ import VoteRow from './voteRow';
 import header from './votesTableHeader';
 import DialogLink from '../../../toolbox/dialog/link';
 import { SecondaryButton } from '../../../toolbox/buttons';
-import { isEmpty } from '../../../../utils/helpers';
+import { isEmpty } from 'utils/helpers';
 
 const getMessages = t => ({
   all: t('This account doesn’t have any votes.'),

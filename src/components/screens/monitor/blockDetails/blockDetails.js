@@ -12,7 +12,7 @@ import LabeledValue from '../../../toolbox/labeledValue';
 import LiskAmount from '../../../shared/liskAmount';
 import TransactionsTable from '../../../shared/transactionsTable';
 import routes from 'constants';
-import regex from '../../../../utils/regex';
+import regex from 'utils/regex';
 import styles from './blockDetails.css';
 
 const BlockDetails = ({

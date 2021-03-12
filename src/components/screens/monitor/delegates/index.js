@@ -5,11 +5,11 @@ import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { getDelegates } from '../../../../utils/api/delegate';
-import { getNetworkStatus } from '../../../../utils/api/network';
-import { getTransactions } from '../../../../utils/api/transaction';
-import withData from '../../../../utils/withData';
-import withFilters from '../../../../utils/withFilters';
+import { getDelegates } from 'utils/api/delegate';
+import { getNetworkStatus } from 'utils/api/network';
+import { getTransactions } from 'utils/api/transaction';
+import withData from 'utils/withData';
+import withFilters from 'utils/withFilters';
 import { transactionTypes, MAX_BLOCKS_FORGED } from 'constants'
 import { tokenMap } from 'constants';
 

@@ -4,7 +4,7 @@ import React from 'react';
 import AccountVisual from '../../toolbox/accountVisual';
 import routes from 'constants';
 import styles from './transactionDetails.css';
-import { validateAddress } from '../../../utils/validators';
+import { validateAddress } from 'utils/validators';
 
 const AccountInfo = ({
   address,

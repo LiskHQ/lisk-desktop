@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { validateAmountFormat } from '../../../utils/validators';
-import regex from '../../../utils/regex';
+import { validateAmountFormat } from 'utils/validators';
+import regex from 'utils/regex';
 import { tokenMap } from 'constants';
 
 let loaderTimeout = null;

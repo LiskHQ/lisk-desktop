@@ -9,7 +9,7 @@ import {
   calculateUnlockableBalance,
   getActiveTokenAccount,
   getUnlockableUnlockingObjects,
-} from '../../../../utils/account';
+} from 'utils/account';
 import Form from './form';
 import BalanceTable from './balanceTable';
 

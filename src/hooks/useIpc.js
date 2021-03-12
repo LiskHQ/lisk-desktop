@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import htmlStringToReact from '../utils/htmlStringToReact';
-import regex from '../utils/regex';
+import htmlStringToReact from 'utils/htmlStringToReact';
+import regex from 'utils/regex';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import NewReleaseMessage from '../components/shared/newReleaseMessage/newReleaseMessage';
-import { addSearchParamsToUrl } from '../utils/searchParams';
+import { addSearchParamsToUrl } from 'utils/searchParams';
 import { appUpdateAvaiable } from '../actions/appUpdates';
 
 

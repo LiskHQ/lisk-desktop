@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import routes from 'constants';
 import { SecondaryButton } from '../../../toolbox/buttons';
-import { getActiveTokenAccount } from '../../../../utils/account';
+import { getActiveTokenAccount } from 'utils/account';
 import { tokenMap } from 'constants';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';

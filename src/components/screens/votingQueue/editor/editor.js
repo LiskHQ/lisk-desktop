@@ -6,7 +6,7 @@ import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import TransactionPriority from '../../../shared/transactionPriority';
 import { tokenMap } from 'constants';
-import { toRawLsk } from '../../../../utils/lsk';
+import { toRawLsk } from 'utils/lsk';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import Table from '../../../toolbox/table';

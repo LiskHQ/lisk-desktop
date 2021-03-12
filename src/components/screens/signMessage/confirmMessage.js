@@ -10,7 +10,7 @@ import BoxFooter from '../../toolbox/box/footer';
 import BoxHeader from '../../toolbox/box/header';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
 import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons';
-import { signMessageByHW } from '../../../utils/hwManager';
+import { signMessageByHW } from 'utils/hwManager';
 import LoadingIcon from '../hwWalletLogin/loadingIcon';
 
 const ConfirmationPending = ({ t, account }) => (

@@ -6,8 +6,8 @@ import Icon from '../../../toolbox/icon';
 import DialogLink from '../../../toolbox/dialog/link';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
-import { selectSearchParamValue } from '../../../../utils/searchParams';
-import regex from '../../../../utils/regex';
+import { selectSearchParamValue } from 'utils/searchParams';
+import regex from 'utils/regex';
 
 /**
  * Extracts only one search param out of the url that is relevant

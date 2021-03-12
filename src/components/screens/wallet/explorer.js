@@ -3,14 +3,14 @@ import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import withData from '../../../utils/withData';
+import withData from 'utils/withData';
 import Overview from './overview';
-import { getAccount } from '../../../utils/api/account';
+import { getAccount } from 'utils/api/account';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
-import { selectSearchParamValue } from '../../../utils/searchParams';
+import { selectSearchParamValue } from 'utils/searchParams';
 
 const Wallet = ({
   t, account, history,

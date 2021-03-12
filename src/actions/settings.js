@@ -1,5 +1,5 @@
 import actionTypes from 'constants';
-import { getFromStorage } from '../utils/localJSONStorage';
+import { getFromStorage } from 'utils/localJSONStorage';
 import { initialState } from '../store/reducers/settings';
 
 /**

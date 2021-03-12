@@ -8,8 +8,8 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 import Spinner from '../../toolbox/spinner';
 import {
   formatAmountBasedOnLocale,
-} from '../../../utils/formattedNumber';
-import { toRawLsk, fromRawLsk } from '../../../utils/lsk';
+} from 'utils/formattedNumber';
+import { toRawLsk, fromRawLsk } from 'utils/lsk';
 import transactionTypes from 'constants';
 
 const CUSTOM_FEE_INDEX = 3;

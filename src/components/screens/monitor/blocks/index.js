@@ -3,8 +3,8 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import Blocks from './blocks';
-import { getBlocks } from '../../../../utils/api/block';
-import withData from '../../../../utils/withData';
+import { getBlocks } from 'utils/api/block';
+import withData from 'utils/withData';
 
 const ComposedBlocks = compose(
   withRouter,

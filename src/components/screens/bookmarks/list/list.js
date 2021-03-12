@@ -11,7 +11,7 @@ import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import EmptyState from './emptyState';
-import { truncateAddress } from '../../../../utils/account';
+import { truncateAddress } from 'utils/account';
 import styles from './list.css';
 import Icon from '../../../toolbox/icon';
 

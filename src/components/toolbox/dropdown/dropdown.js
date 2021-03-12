@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { flattenArray } from 'utils/helpers';
 import styles from './dropdown.css';
 import Separator from './separator';
-import { flattenArray } from '../../../utils/helpers';
 
 const Dropdown = ({
   showDropdown, className, showArrow, active, children, align,

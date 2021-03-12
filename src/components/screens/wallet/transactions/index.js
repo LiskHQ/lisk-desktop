@@ -8,12 +8,12 @@ import Table from '../../../toolbox/table';
 import styles from './transactions.css';
 import header from './tableHeader';
 import FilterBar from '../../../shared/filterBar';
-import withFilters from '../../../../utils/withFilters';
-import withData from '../../../../utils/withData';
-import { getDelegates } from '../../../../utils/api/delegate';
-import { toRawLsk } from '../../../../utils/lsk';
-import { transformStringDateToUnixTimestamp } from '../../../../utils/datetime';
-import { getTransactions } from '../../../../utils/api/transaction';
+import withFilters from 'utils/withFilters';
+import withData from 'utils/withData';
+import { getDelegates } from 'utils/api/delegate';
+import { toRawLsk } from 'utils/lsk';
+import { transformStringDateToUnixTimestamp } from 'utils/datetime';
+import { getTransactions } from 'utils/api/transaction';
 import TransactionRow from './transactionRow';
 import FilterDropdown from './filterDropdown';
 

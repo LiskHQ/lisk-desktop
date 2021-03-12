@@ -6,7 +6,7 @@ import { tokenMap } from 'constants';
 import LiskAmount from '../../../shared/liskAmount';
 import routes from 'constants';
 import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
-import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
+import { formatAmountBasedOnLocale } from 'utils/formattedNumber';
 import styles from './accounts.css';
 
 const getOwnerName = (account) => {

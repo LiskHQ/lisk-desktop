@@ -8,7 +8,7 @@ import LiskAmount from '../liskAmount';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import DialogLink from '../../toolbox/dialog/link';
 import styles from './transactionsTable.css';
-import { getTxAmount } from '../../../utils/api/transaction/lsk';
+import { getTxAmount } from 'utils/api/transaction/lsk';
 
 const roundSize = 103;
 

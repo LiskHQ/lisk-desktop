@@ -4,7 +4,7 @@ import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
-import Piwik from '../../../../utils/piwik';
+import Piwik from 'utils/piwik';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';

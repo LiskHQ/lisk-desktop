@@ -1,8 +1,8 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import { loginTypes, actionTypes } from 'constants';
-import { getAccount } from '../utils/api/account';
-import { getConnectionErrorMessage } from '../utils/getNetwork';
+import { getAccount } from 'utils/api/account';
+import { getConnectionErrorMessage } from 'utils/getNetwork';
 import { networkStatusUpdated } from './network';
 
 /**

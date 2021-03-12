@@ -1,10 +1,10 @@
 import to from 'await-to-js';
 import { actionTypes, loginTypes } from 'constants';
 import { tokenMap } from 'constants';
-import { create } from '../utils/api/transaction';
+import { create } from 'utils/api/transaction';
+import { signVoteTransaction } from 'utils/hwManager';
+import { getVotes } from 'utils/api/delegate';
 import { passphraseUsed } from './account';
-import { signVoteTransaction } from '../utils/hwManager';
-import { getVotes } from '../utils/api/delegate';
 
 /**
  * Clears the existing changes on votes.

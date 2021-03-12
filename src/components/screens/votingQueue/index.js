@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import MultiStep from '../../shared/multiStep';
-import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
+import { removeSearchParamsFromUrl } from 'utils/searchParams';
 import processLaunchProtocol from '../../../actions/urlProcessor';
 
 import Editor from './editor';

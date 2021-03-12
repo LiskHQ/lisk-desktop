@@ -8,7 +8,7 @@ import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
 import DialogLink from '../../../toolbox/dialog/link';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { isEmpty } from '../../../../utils/helpers';
+import { isEmpty } from 'utils/helpers';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import Search from './search';
 import Toggle from './toggle';

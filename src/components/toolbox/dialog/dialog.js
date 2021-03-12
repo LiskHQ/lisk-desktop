@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { removeSearchParamsFromUrl } from 'utils/searchParams';
 import Title from './title';
 import Description from './description';
 import Options from './options';
 import styles from './dialog.css';
-import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
 const Dialog = ({
   children, hasClose, className, history,

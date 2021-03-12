@@ -2,7 +2,7 @@ import { to } from 'await-to-js';
 import React from 'react';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
-import { getPublicKey, validatePin } from '../../../utils/hwManager';
+import { getPublicKey, validatePin } from 'utils/hwManager';
 import externalLinks from 'constants';
 import styles from './requestPin.css';
 

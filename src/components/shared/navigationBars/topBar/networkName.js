@@ -1,6 +1,6 @@
 import React from 'react';
 import { networkKeys } from 'constants';
-import { getNetworkNameBasedOnNethash } from '../../../../utils/getNetwork';
+import { getNetworkNameBasedOnNethash } from 'utils/getNetwork';
 import styles from './network.css';
 
 const Network = ({ network, t, token }) => {

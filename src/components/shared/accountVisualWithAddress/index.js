@@ -7,7 +7,7 @@ import styles from './accountVisualWithAddress.css';
 import Icon from '../../toolbox/icon';
 import transactionTypes from 'constants';
 import AccountVisual from '../../toolbox/accountVisual';
-import regex from '../../../utils/regex';
+import regex from 'utils/regex';
 
 class AccountVisualWithAddress extends React.Component {
   getTransformedAddress(address) {

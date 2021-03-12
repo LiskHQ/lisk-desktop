@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { removeSearchParamsFromUrl } from 'utils/searchParams';
 import styles from './dialog.css';
-import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
 const Options = ({ history, children, align }) => {
   const options = (Array.isArray(children)

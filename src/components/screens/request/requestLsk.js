@@ -6,10 +6,10 @@ import Converter from '../../shared/converter';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
 import Icon from '../../toolbox/icon';
-import { validateAmountFormat } from '../../../utils/validators';
+import { validateAmountFormat } from 'utils/validators';
 import i18n from '../../../i18n';
-import regex from '../../../utils/regex';
-import { sizeOfString } from '../../../utils/helpers';
+import regex from 'utils/regex';
+import { sizeOfString } from 'utils/helpers';
 
 class RequestLsk extends React.Component {
   constructor(props) {

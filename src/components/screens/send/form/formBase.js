@@ -6,7 +6,7 @@ import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import BoxHeader from '../../../toolbox/box/header';
-import Piwik from '../../../../utils/piwik';
+import Piwik from 'utils/piwik';
 import styles from './form.css';
 
 const FormBase = ({

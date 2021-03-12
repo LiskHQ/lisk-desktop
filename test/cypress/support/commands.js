@@ -24,7 +24,7 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import { networks, settings } from 'constants'
-import { deepMergeObj } from '../../../src/utils/helpers';
+import { deepMergeObj } from 'utils/helpers';
 
 before(() => {
   // Check if lisk core is running
