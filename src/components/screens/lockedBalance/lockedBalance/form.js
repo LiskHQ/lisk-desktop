@@ -2,8 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
-import transactionTypes from 'constants';
-import actionTypes from 'constants';
+import { transactionTypes, actionTypes } from 'constants'
 import { tokenMap } from 'constants';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';

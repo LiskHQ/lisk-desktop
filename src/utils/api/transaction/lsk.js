@@ -1,8 +1,7 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
 
-import transactionTypes from 'constants';
-import { tokenMap } from 'constants';
+import { transactionTypes, tokenMap } from 'constants';
 import schema from 'constants/transfer';
 import http from '../http';
 import ws from '../ws';

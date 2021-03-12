@@ -1,8 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import Converter from './converter';
-import settings from 'constants';
-import { tokenMap } from 'constants';
+import { settings, tokenMap } from 'constants'
 
 const mapStateToProps = state => ({
   currency: state.settings.currency || 'EUR',

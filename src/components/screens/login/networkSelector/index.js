@@ -2,8 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import networks from 'constants';
-import { tokenMap } from 'constants';
+import { networks, tokenMap } from 'constants'
 import NetworkSelectorComp from './networkSelector';
 import { networkSelected } from '../../../../actions/network';
 import { settingsUpdated } from '../../../../actions/settings';

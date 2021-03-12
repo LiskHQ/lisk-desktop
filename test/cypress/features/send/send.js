@@ -1,9 +1,6 @@
 /* eslint-disable */
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import networks from 'constants';
-import ss from 'constants';
-import urls from 'constants';
-import accounts from 'constants';
+import { networks, ss, urls, accounts } from 'constants'
 import compareBalances from '../../utils/compareBalances';
 
 const transactionFee = 0.0026;

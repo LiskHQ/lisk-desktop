@@ -1,5 +1,4 @@
-import actionTypes from 'constants';
-import { MAX_BLOCKS_FORGED } from 'constants';
+import { actionTypes, MAX_BLOCKS_FORGED } from 'constants'
 import { convertUnixSecondsToLiskEpochSeconds } from '../utils/datetime';
 import { getBlocks } from '../utils/api/block';
 import { getForgers } from '../utils/api/delegate';

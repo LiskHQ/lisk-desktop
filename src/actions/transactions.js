@@ -1,10 +1,8 @@
-/* eslint-disable max-lines */
 import to from 'await-to-js';
 
-import actionTypes from 'constants';
-import { tokenMap } from 'constants';
-import transactionTypes from 'constants';
-import loginTypes from 'constants';
+import {
+  actionTypes, tokenMap, transactionTypes, loginTypes,
+} from 'constants';
 import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';

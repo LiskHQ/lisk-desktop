@@ -12,8 +12,7 @@ import styles from './overview.css';
 import NumericInfo from './numericInfo';
 import BoxEmptyState from '../../../toolbox/box/emptyState';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
-import { colorPalette } from 'constants';
-import { MAX_BLOCKS_FORGED } from 'constants';
+import { colorPalette, MAX_BLOCKS_FORGED } from 'constants'
 
 const FORGERS_TO_SHOW = 6;
 

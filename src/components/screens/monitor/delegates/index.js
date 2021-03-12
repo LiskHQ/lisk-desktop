@@ -10,8 +10,7 @@ import { getNetworkStatus } from '../../../../utils/api/network';
 import { getTransactions } from '../../../../utils/api/transaction';
 import withData from '../../../../utils/withData';
 import withFilters from '../../../../utils/withFilters';
-import transactionTypes from 'constants';
-import { MAX_BLOCKS_FORGED } from 'constants';
+import { transactionTypes, MAX_BLOCKS_FORGED } from 'constants'
 import { tokenMap } from 'constants';
 
 import Delegates from './delegates';

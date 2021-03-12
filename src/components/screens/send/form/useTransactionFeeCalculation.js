@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { tokenMap } from 'constants';
-import { minBalance } from 'constants';
+import { tokenMap, minBalance } from 'constants';
 import {
   getTransactionFee,
 } from '../../../../utils/api/transaction';

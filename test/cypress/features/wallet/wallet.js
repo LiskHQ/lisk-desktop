@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import networks from 'constants';
-import ss from 'constants';
+import { networks, ss } from 'constants'
 import accounts from 'constants';
 
 Then(/^I should see 30 transactions$/, function () {

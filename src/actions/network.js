@@ -1,5 +1,4 @@
-import actionTypes from 'constants';
-import { tokenKeys } from 'constants';
+import { actionTypes, tokenKeys } from 'constants';
 import { getNetworkConfig } from '../utils/api/network';
 
 /**

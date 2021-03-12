@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { Given } from 'cypress-cucumber-preprocessor/steps';
-import urls from 'constants';
-import ss from 'constants';
+import { urls, ss } from 'constants'
 
 When(/^I pick an avatar$/, function () {
   cy.get(ss.chooseAvatar).first().click();

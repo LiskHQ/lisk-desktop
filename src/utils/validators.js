@@ -1,8 +1,7 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import numeral from 'numeral';
 import { cryptography } from '@liskhq/lisk-client';
-import { tokenMap } from 'constants';
-import { minBalance } from 'constants';
+import { tokenMap, minBalance } from 'constants';
 import { toRawLsk } from './lsk';
 import i18n from '../i18n';
 import reg from './regex';
