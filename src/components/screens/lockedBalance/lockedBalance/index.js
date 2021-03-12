@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import transactionTypes from 'constants';
-import TransactionPriority from '../../../shared/transactionPriority';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import {
   calculateBalanceLockedInVotes,
   calculateUnlockableBalance,
   getActiveTokenAccount,
   getUnlockableUnlockingObjects,
 } from 'utils/account';
+import TransactionPriority from '../../../shared/transactionPriority';
+import useTransactionPriority from '../../send/form/useTransactionPriority';
+import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import Form from './form';
 import BalanceTable from './balanceTable';
 

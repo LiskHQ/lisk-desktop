@@ -1,5 +1,7 @@
 // istanbul ignore file
 import React from 'react';
+import { fromRawLsk } from 'utils/lsk';
+import { colorPalette } from 'constants';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -7,9 +9,7 @@ import BoxEmptyState from '../../../toolbox/box/emptyState';
 import { DoughnutChart, LineChart } from '../../../toolbox/charts';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
-import { fromRawLsk } from 'utils/lsk';
 import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
-import { colorPalette } from 'constants';
 
 const Overview = ({
   chartActiveAndStandby,

@@ -5,8 +5,8 @@ import htmlStringToReact from 'utils/htmlStringToReact';
 import regex from 'utils/regex';
 import { addSearchParamsToUrl } from 'utils/searchParams';
 import { appUpdateAvaiable } from 'actions/appUpdates';
-import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
-import NewReleaseMessage from '../components/shared/newReleaseMessage/newReleaseMessage';
+import FlashMessageHolder from 'toolbox/flashMessage/holder';
+import NewReleaseMessage from 'shared/newReleaseMessage/newReleaseMessage';
 
 
 const useIpc = (history) => {

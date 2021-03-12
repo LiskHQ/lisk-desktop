@@ -1,13 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import routes from 'constants';
+import { parseSearchParams } from 'utils/searchParams';
 import MultiStep from '../../shared/multiStep';
 import Form from './form';
 import Summary from './summary';
 import TransactionStatus from './transactionStatus';
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './send.css';
-import { parseSearchParams } from 'utils/searchParams';
 
 const Send = ({ history }) => {
   // istanbul ignore next

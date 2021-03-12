@@ -1,13 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { routes, keyCodes } from 'constants';
+import { addSearchParamsToUrl } from 'utils/searchParams';
 import { Input } from '../../toolbox/inputs';
 import Accounts from './accounts';
 import Delegates from './delegates';
 import Transactions from './transactions';
-import { routes, keyCodes } from 'constants'
 import styles from './searchBar.css';
 import Blocks from './blocks';
-import { addSearchParamsToUrl } from 'utils/searchParams';
 
 class SearchBar extends React.Component {
   constructor() {

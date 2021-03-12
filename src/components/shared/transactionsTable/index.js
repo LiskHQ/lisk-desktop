@@ -1,15 +1,15 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
+import transactionTypes from 'constants';
+import withFilters from 'utils/withFilters';
 import Box from '../../toolbox/box';
 import BoxContent from '../../toolbox/box/content';
 import BoxHeader from '../../toolbox/box/header';
 import FilterBar from '../filterBar';
-import transactionTypes from 'constants';
 import FilterDropdownButton from '../filterDropdownButton';
 import LoadLatestButton from '../loadLatestButton';
 import Table from '../../toolbox/table';
 import styles from './transactionsTable.css';
-import withFilters from 'utils/withFilters';
 import TransactionRow from './transactionRow';
 import header from './tableHeader';
 

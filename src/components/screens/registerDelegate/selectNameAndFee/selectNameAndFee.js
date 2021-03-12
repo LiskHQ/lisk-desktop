@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { getDelegate } from 'utils/api/delegate';
+import regex from 'utils/regex';
+import { tokenMap } from 'constants';
+import transactionTypes from 'constants';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { getDelegate } from 'utils/api/delegate';
-import regex from 'utils/regex';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './selectNameAndFee.css';
 import TransactionPriority from '../../../shared/transactionPriority/transactionPriority';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
-import { tokenMap } from 'constants';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import transactionTypes from 'constants';
 
 const token = tokenMap.LSK.key;
 const txType = transactionTypes().registerDelegate.key;

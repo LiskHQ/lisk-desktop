@@ -1,13 +1,13 @@
 import { to } from 'await-to-js';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { TertiaryButton } from '../../../toolbox/buttons';
 import { getAccountsFromDevice } from 'utils/hwManager';
+import routes from 'constants';
+import { tokenMap } from 'constants';
+import { TertiaryButton } from '../../../toolbox/buttons';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
-import routes from 'constants';
 import styles from './selectAccount.css';
-import { tokenMap } from 'constants';
 
 class SelectAccount extends React.Component {
   constructor(props) {

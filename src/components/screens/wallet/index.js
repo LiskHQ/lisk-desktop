@@ -3,13 +3,13 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { parseSearchParams, addSearchParamsToUrl } from 'utils/searchParams';
-import Overview from './overview';
 import { transactionsRetrieved } from 'actions/transactions';
+import { isEmpty } from 'utils/helpers';
+import Overview from './overview';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
-import { isEmpty } from 'utils/helpers';
 
 const Wallet = ({ t, history }) => {
   const dispatch = useDispatch();

@@ -8,20 +8,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { hot } from 'react-hot-loader/root';//eslint-disable-line
-import styles from './app.css';
 import './variables.css';
-import OfflineWrapper from '../components/shared/offlineWrapper';
-import CustomRoute from '../components/shared/customRoute';
-import NotFound from '../components/shared/notFound';
-// import InitializationMessage from '../components/shared/initializationMessage';
+import OfflineWrapper from 'shared/offlineWrapper';
+import CustomRoute from 'shared/customRoute';
+import NotFound from 'shared/notFound';
+// import InitializationMessage from 'shared/initializationMessage';
 import routes from 'constants';
-import NavigationBars from '../components/shared/navigationBars';
-import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
-import DialogHolder from '../components/toolbox/dialog/holder';
-import ThemeContext from '../contexts/theme';
+import NavigationBars from 'shared/navigationBars';
+import FlashMessageHolder from 'toolbox/flashMessage/holder';
+import DialogHolder from 'toolbox/dialog/holder';
 import { settingsRetrieved } from 'actions/settings';
 import { bookmarksRetrieved } from 'actions/bookmarks';
 import { watchListRetrieved } from 'actions/watchList';
+import ThemeContext from '../contexts/theme';
+import styles from './app.css';
 import useIpc from '../hooks/useIpc';
 
 const App = ({ history }) => {

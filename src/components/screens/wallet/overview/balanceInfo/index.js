@@ -3,6 +3,12 @@ import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { tokenMap } from 'constants';
+import { fromRawLsk } from 'utils/lsk';
+import {
+  calculateBalanceLockedInUnvotes,
+  calculateBalanceLockedInVotes,
+  getActiveTokenAccount,
+} from 'utils/account';
 import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
@@ -12,13 +18,7 @@ import Converter from '../../../../shared/converter';
 import DialogLink from '../../../../toolbox/dialog/link';
 import Icon from '../../../../toolbox/icon';
 import styles from './balanceInfo.css';
-import { fromRawLsk } from 'utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
-import {
-  calculateBalanceLockedInUnvotes,
-  calculateBalanceLockedInVotes,
-  getActiveTokenAccount,
-} from 'utils/account';
 
 const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
   const host = useSelector(state => getActiveTokenAccount(state));

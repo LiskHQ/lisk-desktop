@@ -1,13 +1,13 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { isEmpty } from 'utils/helpers';
+import Piwik from 'utils/piwik';
+import { links, settingsConst } from 'constants';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
 import CheckBox from '../../toolbox/checkBox';
-import Piwik from 'utils/piwik';
 import Select from '../../toolbox/select';
-import { links, settingsConst } from 'constants'
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './settings.css';
 

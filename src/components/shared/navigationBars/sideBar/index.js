@@ -4,10 +4,10 @@ import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import menuLinks from 'constants';
 import routes, { modals } from 'constants';
-import Icon from '../../../toolbox/icon';
-import styles from './sideBar.css';
 import Piwik from 'utils/piwik';
 import { accountLoggedOut } from 'actions/account';
+import Icon from '../../../toolbox/icon';
+import styles from './sideBar.css';
 import DialogLink from '../../../toolbox/dialog/link';
 import AutoSignOut from './autoSignOut';
 

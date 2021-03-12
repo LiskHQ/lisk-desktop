@@ -1,13 +1,13 @@
 import React from 'react';
 import to from 'await-to-js';
 
-import TransactionSummary from '../../../shared/transactionSummary';
-import AccountVisual from '../../../toolbox/accountVisual';
 import { create } from 'utils/api/transaction';
 import transactionTypes from 'constants';
 import { toRawLsk } from 'utils/lsk';
-import styles from './summary.css';
 import { tokenMap } from 'constants';
+import styles from './summary.css';
+import AccountVisual from '../../../toolbox/accountVisual';
+import TransactionSummary from '../../../shared/transactionSummary';
 
 class Summary extends React.Component {
   constructor(props) {

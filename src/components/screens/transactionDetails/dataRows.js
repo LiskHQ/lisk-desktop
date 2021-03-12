@@ -1,16 +1,16 @@
 import React from 'react';
+import { tokenMap } from 'constants';
+import transactionTypes from 'constants';
+import { getTxAmount } from 'utils/api/transaction';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import TransactionTypeFigure from '../../shared/transactionTypeFigure';
-import { tokenMap } from 'constants';
 import AccountInfo from './accountInfo';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import DiscreetMode from '../../shared/discreetMode';
 import LiskAmount from '../../shared/liskAmount';
-import transactionTypes from 'constants';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
-import { getTxAmount } from 'utils/api/transaction';
 
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'

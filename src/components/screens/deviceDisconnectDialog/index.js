@@ -3,9 +3,9 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 
+import { selectSearchParamValue } from 'utils/searchParams';
 import Dialog from '../../toolbox/dialog/dialog';
 import { PrimaryButton } from '../../toolbox/buttons';
-import { selectSearchParamValue } from 'utils/searchParams';
 
 import styles from './styles.css';
 

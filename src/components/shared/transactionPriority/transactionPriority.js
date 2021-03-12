@@ -1,16 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import styles from './transactionPriority.css';
 import { tokenMap } from 'constants';
-import Input from '../../toolbox/inputs/input';
-import Icon from '../../toolbox/icon';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import Spinner from '../../toolbox/spinner';
 import {
   formatAmountBasedOnLocale,
 } from 'utils/formattedNumber';
 import { toRawLsk, fromRawLsk } from 'utils/lsk';
 import transactionTypes from 'constants';
+import styles from './transactionPriority.css';
+import Input from '../../toolbox/inputs/input';
+import Icon from '../../toolbox/icon';
+import Tooltip from '../../toolbox/tooltip/tooltip';
+import Spinner from '../../toolbox/spinner';
 
 const CUSTOM_FEE_INDEX = 3;
 

@@ -4,9 +4,9 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { transactionBroadcasted } from 'actions/transactions';
+import { removeSearchParamsFromUrl } from 'utils/searchParams';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import TransactionResult from '../../../shared/transactionResult';
-import { removeSearchParamsFromUrl } from 'utils/searchParams';
 import styles from './status.css';
 import displayTemplate from './displayTemplate';
 

@@ -3,10 +3,10 @@ import { BigNumber } from 'bignumber.js';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from 'constants';
-import LiskAmount from '../../../shared/liskAmount';
 import routes from 'constants';
-import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import { formatAmountBasedOnLocale } from 'utils/formattedNumber';
+import LiskAmount from '../../../shared/liskAmount';
+import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import styles from './accounts.css';
 
 const getOwnerName = (account) => {

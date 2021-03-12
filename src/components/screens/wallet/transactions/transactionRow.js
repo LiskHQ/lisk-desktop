@@ -1,8 +1,9 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useSelector } from 'react-redux';
-import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import { tokenMap } from 'constants';
+import { getTxAmount } from 'utils/api/transaction';
+import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import LiskAmount from '../../../shared/liskAmount';
 import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
 import TransactionAddress from '../../../shared/transactionAddress';
@@ -10,7 +11,6 @@ import TransactionAmount from '../../../shared/transactionAmount';
 import Spinner from '../../../toolbox/spinner';
 import TransactionAsset from './txAsset';
 import DialogLink from '../../../toolbox/dialog/link';
-import { getTxAmount } from 'utils/api/transaction';
 import styles from './transactions.css';
 
 // eslint-disable-next-line complexity

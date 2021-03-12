@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import routes from 'constants';
+import { isEmpty } from 'utils/helpers';
 import NavigationButtons from './navigationButtons';
 import Network from './networkName';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
 import DialogLink from '../../../toolbox/dialog/link';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { isEmpty } from 'utils/helpers';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import Search from './search';
 import Toggle from './toggle';

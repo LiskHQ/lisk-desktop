@@ -1,6 +1,9 @@
 import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
+import withData from 'utils/withData';
+import { getAccounts } from 'utils/api/account';
+import { getNetworkStatus } from 'utils/api/network';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -8,9 +11,6 @@ import Table from '../../../toolbox/table';
 import styles from './accounts.css';
 import header from './tableHeader';
 import AccountRow from './accountRow';
-import withData from 'utils/withData';
-import { getAccounts } from 'utils/api/account';
-import { getNetworkStatus } from 'utils/api/network';
 
 const LIMIT = 30;
 

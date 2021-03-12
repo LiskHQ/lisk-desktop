@@ -3,11 +3,11 @@ import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from 'utils/hwManager';
 import actionTypes from 'constants';
 import { addSearchParamsToUrl } from 'utils/searchParams';
+import { accountLoggedOut, login } from 'actions/account';
 import {
   getDeviceList,
   getPublicKey,
 } from '../../../libs/hwManager/communication';
-import { accountLoggedOut, login } from 'actions/account';
 import history from '../../history';
 
 async function autoLogInIfNecessary(store) {

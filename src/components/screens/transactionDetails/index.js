@@ -6,8 +6,8 @@ import { getActiveTokenAccount } from 'utils/account';
 import { getTransaction } from 'utils/api/transaction';
 import { getDelegates } from 'utils/api/delegate';
 import withData from 'utils/withData';
-import TransactionDetails from './transactionDetails';
 import { parseSearchParams } from 'utils/searchParams';
+import TransactionDetails from './transactionDetails';
 
 const mapStateToProps = (state, ownProps) => ({
   address: getActiveTokenAccount(state).address,

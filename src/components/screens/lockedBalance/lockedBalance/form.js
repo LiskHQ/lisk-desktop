@@ -2,17 +2,17 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
-import { transactionTypes, actionTypes } from 'constants'
+import { transactionTypes, actionTypes } from 'constants';
 import { tokenMap } from 'constants';
+import { toRawLsk } from 'utils/lsk';
+import Piwik from 'utils/piwik';
+import { getUnlockableUnlockingObjects } from 'utils/account';
+import { create } from 'utils/api/transaction';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import BoxHeader from '../../../toolbox/box/header';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { toRawLsk } from 'utils/lsk';
-import Piwik from 'utils/piwik';
-import { getUnlockableUnlockingObjects } from 'utils/account';
-import { create } from 'utils/api/transaction';
 import LiskAmount from '../../../shared/liskAmount';
 import styles from './lockedBalance.css';
 

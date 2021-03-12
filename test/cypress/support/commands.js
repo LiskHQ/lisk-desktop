@@ -23,7 +23,7 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-import { networks, settings } from 'constants'
+import { networks, settings } from 'constants';
 import { deepMergeObj } from 'utils/helpers';
 
 before(() => {

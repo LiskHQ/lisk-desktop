@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { tokenMap, routes } from 'constants'
+import { tokenMap, routes } from 'constants';
+import { truncateAddress } from 'utils/account';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import AccountVisual from '../../../toolbox/accountVisual';
@@ -11,7 +12,6 @@ import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import EmptyState from './emptyState';
-import { truncateAddress } from 'utils/account';
 import styles from './list.css';
 import Icon from '../../../toolbox/icon';
 

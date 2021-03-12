@@ -1,6 +1,7 @@
 import React from 'react';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
 import { extractPublicKey } from 'utils/account';
+import { formatAmountBasedOnLocale } from 'utils/formattedNumber';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
@@ -10,7 +11,6 @@ import HardwareWalletIllustration from '../../toolbox/hardwareWalletIllustration
 import PassphraseInput from '../../toolbox/passphraseInput';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './transactionSummary.css';
-import { formatAmountBasedOnLocale } from 'utils/formattedNumber';
 
 class TransactionSummary extends React.Component {
   constructor(props) {

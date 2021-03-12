@@ -3,9 +3,9 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import SearchBar from './searchBar';
 import { search } from 'utils/api/search';
 import withData from 'utils/withData';
+import SearchBar from './searchBar';
 
 const mapStateToProps = state => ({
   activeToken: state.settings.token.active,

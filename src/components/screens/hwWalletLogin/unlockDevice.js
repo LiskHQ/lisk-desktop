@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { TertiaryButton } from '../../toolbox/buttons';
 import { checkIfInsideLiskApp } from 'utils/hwManager';
+import { TertiaryButton } from '../../toolbox/buttons';
 import Illustration from '../../toolbox/illustration';
 import Spinner from '../../toolbox/spinner';
 import styles from './hwWalletLogin.css';

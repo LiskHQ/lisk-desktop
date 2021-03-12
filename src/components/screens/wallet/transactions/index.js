@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
+import withFilters from 'utils/withFilters';
+import withData from 'utils/withData';
+import { getDelegates } from 'utils/api/delegate';
+import { toRawLsk } from 'utils/lsk';
+import { transformStringDateToUnixTimestamp } from 'utils/datetime';
+import { getTransactions } from 'utils/api/transaction';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -8,12 +14,6 @@ import Table from '../../../toolbox/table';
 import styles from './transactions.css';
 import header from './tableHeader';
 import FilterBar from '../../../shared/filterBar';
-import withFilters from 'utils/withFilters';
-import withData from 'utils/withData';
-import { getDelegates } from 'utils/api/delegate';
-import { toRawLsk } from 'utils/lsk';
-import { transformStringDateToUnixTimestamp } from 'utils/datetime';
-import { getTransactions } from 'utils/api/transaction';
 import TransactionRow from './transactionRow';
 import FilterDropdown from './filterDropdown';
 
