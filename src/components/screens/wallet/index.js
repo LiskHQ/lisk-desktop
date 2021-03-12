@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { parseSearchParams, addSearchParamsToUrl } from 'utils/searchParams';
-import { transactionsRetrieved } from 'actions/transactions';
+import { transactionsRetrieved } from 'actions';
 import { isEmpty } from 'utils/helpers';
 import Overview from './overview';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';

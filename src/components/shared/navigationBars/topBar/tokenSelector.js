@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import routes from 'constants';
-import { settingsUpdated } from 'actions/settings';
+import { settingsUpdated } from 'actions';
 import { tokenMap } from 'constants';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';

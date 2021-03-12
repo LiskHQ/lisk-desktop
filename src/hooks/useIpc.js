@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import htmlStringToReact from 'utils/htmlStringToReact';
 import regex from 'utils/regex';
 import { addSearchParamsToUrl } from 'utils/searchParams';
-import { appUpdateAvaiable } from 'actions/appUpdates';
+import { appUpdateAvaiable } from 'actions';
 import FlashMessageHolder from 'toolbox/flashMessage/holder';
 import NewReleaseMessage from 'shared/newReleaseMessage/newReleaseMessage';
 

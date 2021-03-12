@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { transactionBroadcasted } from 'actions/transactions';
+import { transactionBroadcasted } from 'actions';
 import { getActiveTokenAccount } from 'utils/account';
 import registerDelegate from './registerDelegate';
 

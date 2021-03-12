@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { settingsUpdated } from 'actions/settings';
+import { settingsUpdated } from 'actions';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';

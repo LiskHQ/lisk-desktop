@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
 import { getActiveTokenAccount } from 'utils/account';
-import { transactionCreated, resetTransactionResult } from 'actions/transactions';
+import { transactionCreated, resetTransactionResult } from 'actions';
 import Summary from './summary';
 
 const mapStateToProps = state => ({

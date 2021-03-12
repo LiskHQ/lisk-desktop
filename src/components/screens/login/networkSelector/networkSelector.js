@@ -1,13 +1,12 @@
 import React, { useRef, useState } from 'react';
 
-import networks, { networkKeys } from 'constants';
-import keyCodes from 'constants';
+import { networks, networkKeys, keyCodes } from 'constants';
 import { addHttp, getAutoLogInData } from 'utils/login';
 import { getNetworksList } from 'utils/getNetwork';
 import { getApiClient } from 'utils/api/apiClient';
-import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
-import { Input } from '../../../toolbox/inputs';
-import DropdownButton from '../../../toolbox/dropdownButton';
+import { PrimaryButton, SecondaryButton } from 'toolbox/buttons';
+import { Input } from 'toolbox/inputs';
+import DropdownButton from 'toolbox/dropdownButton';
 
 import styles from './networkSelector.css';
 

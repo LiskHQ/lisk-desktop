@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { tokenMap } from 'constants';
-import { voteEdited } from 'actions/voting';
+import { voteEdited } from 'actions';
 import { fromRawLsk, toRawLsk } from 'utils/lsk';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';

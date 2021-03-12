@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import menuLinks from 'constants';
 import routes, { modals } from 'constants';
 import Piwik from 'utils/piwik';
-import { accountLoggedOut } from 'actions/account';
+import { accountLoggedOut } from 'actions';
 import Icon from '../../../toolbox/icon';
 import styles from './sideBar.css';
 import DialogLink from '../../../toolbox/dialog/link';

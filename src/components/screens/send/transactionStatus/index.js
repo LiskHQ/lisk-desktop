@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { getAccount } from 'utils/api/account';
 import { getActiveTokenAccount } from 'utils/account';
-import { transactionBroadcasted, resetTransactionResult } from 'actions/transactions';
+import { transactionBroadcasted, resetTransactionResult } from 'actions';
 import withData from 'utils/withData';
 import TransactionStatus from './transactionStatus';
 

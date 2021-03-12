@@ -7,8 +7,8 @@ import * as reducers from './reducers';
 import middleWares from './middlewares';
 
 const App = combineReducers(reducers);
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(App, composeEnhancers(applyMiddleware(...middleWares)));
 
 store.dispatch({ type: actionTypes.storeCreated });
