@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { applyDeviceClass } from 'utils/applyDeviceClass';
 import App from './app';
-import store from './store';
+import store from 'store';
 import i18n from './i18n';
 import externalLinks from 'utils/externalLinks';
 import ipcLocale from 'utils/ipcLocale';
