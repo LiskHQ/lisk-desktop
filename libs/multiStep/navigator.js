@@ -5,7 +5,7 @@ import {
   isActiveGroup,
   groupSteps,
   noGroupTitle,
-} from 'utils';
+} from './utils';
 import NavigatorButton from './navigatorButton';
 import { Element } from './element';
 

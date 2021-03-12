@@ -3,12 +3,12 @@ import {
   IPC_MESSAGES,
   PIN,
   PASSPHRASE,
-} from 'constants';
-import { TREZOR } from 'constants';
+} from '../../constants';
+import { TREZOR } from './constants';
 import {
   getHardenedPath,
   toTrezorGrammar,
-} from 'utils';
+} from './utils';
 
 /**
  * addDevice - function - Add a new device to the devices list.

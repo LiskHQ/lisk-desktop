@@ -3,11 +3,11 @@ import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
 import {
   getBufferToHex,
   getTransactionBytes,
-} from 'utils';
+} from './utils';
 import {
   ADD_DEVICE,
-} from 'constants';
-import { LEDGER } from 'constants';
+} from '../../constants';
+import { LEDGER } from './constants';
 
 // ============================================ //
 //              DEVICES LIST

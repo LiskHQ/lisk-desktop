@@ -2,7 +2,7 @@
  * This file is use for the exchange messages with the HWManager.
  * The communication message is through IPC (window.ipc)
  */
-import { IPC_MESSAGES, RESPONSE, REQUEST } from 'constants';
+import { IPC_MESSAGES, RESPONSE, REQUEST } from './constants';
 
 const IPC = window.ipc;
 

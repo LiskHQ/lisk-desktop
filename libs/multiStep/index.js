@@ -1,5 +1,5 @@
 import React from 'react';
-import { getStyles } from 'utils';
+import { getStyles } from './utils';
 import Nav from './navigator';
 import { Element } from './element';
 
