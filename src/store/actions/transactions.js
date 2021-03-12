@@ -9,10 +9,6 @@ import { signSendTransaction } from 'utils/hwManager';
 import { passphraseUsed } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
-// ========================================= //
-//            ACTION CREATORS
-// ========================================= //
-
 /**
  * Action trigger when user logout from the application
  * the transactions reducer is set to initial state
