@@ -31,7 +31,7 @@
           ["store", "./src/store"],
           ["utils", "./src/utils/"],
           ["api", "./src/utils/api/"],
-          ["actions", "./src/actions"],
+          ["actions", "./src/store/actions"],
           ["constants", "./src/constants/"],
           ["shared", "./src/components/shared"],
           ["screens", "./src/components/screens/"],
