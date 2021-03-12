@@ -1,6 +1,5 @@
 import http from '../http';
 import networks, { networkKeys } from '../../../constants/networks';
-import { getApiClient } from '../apiClient';
 
 const httpPrefix = '/api/v2';
 
@@ -10,22 +9,31 @@ const httpPaths = {
   networkStatistics: `${httpPrefix}/network/statistics`,
 };
 
-const getServiceUrl = (nodeUrl, nethash) => {
-  // if (nethash === Lisk.constants.MAINNET_NETHASH) {
-  //   return 'https://mainnet-service.lisk.io';
-  // }
-  // if (nethash === Lisk.constants.TESTNET_NETHASH) {
-  //   return 'https://testnet-service.lisk.io';
-  // }
-  if (/localhost|liskdev.net|127.0.0.1:\d{2,4}$/.test(nodeUrl)) {
+/**
+ * Retrieves status information of the network
+ *
+ * @param {Object} data
+ * @param {Object} data.network The network config from the Redux store
+ *
+ * @returns {Promise}
+ */
+export const getNetworkStatus = ({
+  baseUrl,
+}) => http({
+  baseUrl,
+  path: httpPaths.networkStatus,
+});
+
+const getServiceUrl = ({ name, address = 'http://localhost:4000' }) => {
+  if ([networkKeys.mainNet, networkKeys.testNet].includes(name)) {
+    return networks[name].serviceUrl;
+  }
+  if (name === networkKeys.customNode) {
     const serviceUrl = window.localStorage.getItem('serviceUrl');
     if (serviceUrl) {
       return serviceUrl;
     }
-    return nodeUrl.replace(/:\d{2,4}/, ':9901');
-  }
-  if (/\.(liskdev.net|lisk.io)$/.test(nodeUrl)) {
-    return nodeUrl.replace(/\.(liskdev.net|lisk.io)$/, $1 => `-service${$1}`);
+    return address.replace(/:\d{2,4}/, ':9901');
   }
   throw Error('The node url entered does not have a corresponding service url');
 };
@@ -38,26 +46,34 @@ const getServiceUrl = (nodeUrl, nethash) => {
  * @param {String} network.nodeUrl - a valid URL pointing to a running node
  * @returns {Promise}
  */
-export const getNetworkConfig = (network) => {
-  const { label, code, ...networkConfig } = networks[network.name];
-  if (network.name === networkKeys.customNode) {
-    networkConfig.nodes = [network.address];
-  }
-  const nodeUrl = networkConfig.nodes[0];
-  return getApiClient(network).then(apiClient =>
-    apiClient.node.getNodeInfo().then((response) => {
-      const nethash = response.nethash;
-      const serviceUrl = getServiceUrl(nodeUrl, nethash);
-
-      return ({
-        ...networkConfig,
-        nodeUrl,
-        nethash,
-        serviceUrl,
-        networkIdentifier: response.networkIdentifier,
-      });
-    }));
+export const getNetworkConfig = ({ name, address }) => {
+  const serviceUrl = getServiceUrl({ name, address });
+  return getNetworkStatus({ baseUrl: serviceUrl })
+    .then(response => ({
+      ...response.data,
+      serviceUrl,
+    }))
+    .catch((err) => {
+      // eslint-disable-next-line no-console
+      console.error(err);
+      throw Error(`Can not connect to ${address}`);
+    });
 };
+
+/**
+ * Retrieves status useful statistics about the network
+ *
+ * @param {Object} data
+ * @param {Object} data.network The network config from the Redux store
+ *
+ * @returns {Promise}
+ */
+export const getNetworkStatistics = ({
+  network,
+}) => http({
+  path: httpPaths.networkStatistics,
+  network,
+});
 
 const peerFilters = {
   version: { key: 'version', test: str => (typeof str === 'string') },
@@ -106,33 +122,3 @@ export const getConnectedPeers = ({
     params,
   });
 };
-
-/**
- * Retrieves status information of the network
- *
- * @param {Object} data
- * @param {Object} data.network The network config from the Redux store
- *
- * @returns {Promise}
- */
-export const getNetworkStatus = ({
-  network,
-}) => http({
-  path: httpPaths.networkStatus,
-  network,
-});
-
-/**
- * Retrieves status useful statistics about the network
- *
- * @param {Object} data
- * @param {Object} data.network The network config from the Redux store
- *
- * @returns {Promise}
- */
-export const getNetworkStatistics = ({
-  network,
-}) => http({
-  path: httpPaths.networkStatistics,
-  network,
-});
