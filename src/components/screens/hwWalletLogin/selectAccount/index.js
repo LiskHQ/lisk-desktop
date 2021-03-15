@@ -1,7 +1,7 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
-import { settingsUpdated, login } from 'actions';
-import { getActiveTokenAccount } from 'utils/account';
+import { settingsUpdated, login } from '@actions';
+import { getActiveTokenAccount } from '@utils/account';
 import SelectAccount from './selectAccount';
 
 const mapStateToProps = state => ({

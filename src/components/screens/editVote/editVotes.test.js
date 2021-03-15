@@ -1,4 +1,4 @@
-import * as votingActions from 'actions';
+import * as votingActions from '@actions';
 import { mountWithRouterAndStore } from '../../../utils/testHelpers';
 import EditVote from './index';
 

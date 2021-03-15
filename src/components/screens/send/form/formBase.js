@@ -1,5 +1,5 @@
 import React from 'react';
-import Piwik from 'utils/piwik';
+import Piwik from '@utils/piwik';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import AmountField from '../../../shared/amountField';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';

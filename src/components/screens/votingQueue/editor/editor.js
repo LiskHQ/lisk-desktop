@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 
-import { tokenMap } from 'constants';
-import { toRawLsk } from 'utils/lsk';
+import { tokenMap } from '@constants';
+import { toRawLsk } from '@utils/lsk';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';

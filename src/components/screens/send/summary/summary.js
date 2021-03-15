@@ -1,7 +1,7 @@
 import React from 'react';
-import loginTypes from 'constants';
-import { toRawLsk } from 'utils/lsk';
-import Piwik from 'utils/piwik';
+import loginTypes from '@constants';
+import { toRawLsk } from '@utils/lsk';
+import Piwik from '@utils/piwik';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Converter from '../../../shared/converter';
 import TransactionSummary from '../../../shared/transactionSummary';

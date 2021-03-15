@@ -1,6 +1,6 @@
 import React from 'react';
-import { tokenMap, transactionTypes } from 'constants';
-import { getTxAmount } from 'utils/api/transaction';
+import { tokenMap, transactionTypes } from '@constants';
+import { getTxAmount } from '@utils/api/transaction';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import TransactionTypeFigure from '../../shared/transactionTypeFigure';
 import AccountInfo from './accountInfo';

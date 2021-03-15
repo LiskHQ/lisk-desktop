@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import actionTypes from 'constants';
+import actionTypes from '@constants';
 import {
   loadingStarted,
   loadingFinished,

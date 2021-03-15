@@ -1,4 +1,4 @@
-import { actionTypes, tokenKeys } from 'constants';
+import { actionTypes, tokenKeys } from '@constants';
 
 export const INITIAL_STATE = {
   priceTicker: tokenKeys.reduce((info, tokenKey) => ({

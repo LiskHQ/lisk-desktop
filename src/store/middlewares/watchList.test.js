@@ -1,4 +1,4 @@
-import actionTypes from 'constants';
+import actionTypes from '@constants';
 import middleware from './watchList';
 import { setInStorage } from '../../utils/localJSONStorage';
 

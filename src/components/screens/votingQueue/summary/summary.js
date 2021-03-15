@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import Piwik from 'utils/piwik';
+import Piwik from '@utils/piwik';
 import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';

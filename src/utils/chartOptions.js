@@ -2,7 +2,7 @@ import lodashMerge from 'lodash.merge';
 import {
   chartStyles,
   colorPalette,
-} from 'constants';
+} from '@constants';
 
 const merge = (...args) => lodashMerge({}, ...args);
 

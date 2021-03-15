@@ -1,7 +1,7 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
-import transactionTypes from 'constants';
-import withFilters from 'utils/withFilters';
+import { MODULE_ASSETS } from '@constants';
+import withFilters from '@utils/withFilters';
 import Box from '../../toolbox/box';
 import BoxContent from '../../toolbox/box/content';
 import BoxHeader from '../../toolbox/box/header';

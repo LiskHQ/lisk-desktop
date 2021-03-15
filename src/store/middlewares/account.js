@@ -1,15 +1,15 @@
 import {
   networks, actionTypes, networkKeys, settings, transactionTypes, tokenMap,
-} from 'constants';
-import { fromRawLsk } from 'utils/lsk';
-import { getActiveTokenAccount } from 'utils/account';
-import { getAutoLogInData } from 'utils/login';
+} from '@constants';
+import { fromRawLsk } from '@utils/lsk';
+import { getActiveTokenAccount } from '@utils/account';
+import { getAutoLogInData } from '@utils/login';
 import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
-} from 'actions';
-import analytics from 'utils/analytics';
-import { getTransactions } from 'utils/api/transaction';
+} from '@actions';
+import analytics from '@utils/analytics';
+import { getTransactions } from '@utils/api/transaction';
 import i18n from '../../i18n';
 
 /**

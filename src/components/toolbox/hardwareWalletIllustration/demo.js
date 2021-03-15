@@ -1,5 +1,5 @@
 import React from 'react';
-import loginTypes from 'constants';
+import loginTypes from '@constants';
 import DemoRenderer from '../demoRenderer';
 import HardwareWalletIllustration from '.';
 

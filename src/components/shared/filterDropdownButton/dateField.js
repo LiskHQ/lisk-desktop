@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { firstBlockTime } from 'constants';
+import { firstBlockTime } from '@constants';
 import { Input } from '../../toolbox/inputs';
 import Calendar from '../../toolbox/calendar/calendar';
 import Dropdown from '../../toolbox/dropdown/dropdown';

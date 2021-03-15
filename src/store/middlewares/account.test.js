@@ -1,8 +1,8 @@
 import {
   accountDataUpdated, transactionsRetrieved, votesRetrieved, settingsUpdated,
-} from 'actions';
+} from '@actions';
 
-import { tokenMap, actionTypes, transactionTypes } from 'constants';
+import { tokenMap, actionTypes, transactionTypes } from '@constants';
 import middleware from './account';
 import * as transactionApi from '../../utils/api/transaction';
 

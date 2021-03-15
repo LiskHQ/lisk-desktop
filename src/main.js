@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import { applyDeviceClass } from 'utils/applyDeviceClass';
-import store from 'store';
-import externalLinks from 'utils/externalLinks';
-import ipcLocale from 'utils/ipcLocale';
+import { applyDeviceClass } from '@utils/applyDeviceClass';
+import store from '@store';
+import externalLinks from '@utils/externalLinks';
+import ipcLocale from '@utils/ipcLocale';
 import i18n from './i18n';
 import App from './app';
 

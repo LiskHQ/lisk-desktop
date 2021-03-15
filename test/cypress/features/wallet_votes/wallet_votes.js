@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import { networks, ss } from 'constants'
-import accounts from 'constants';
+import { networks, ss } from '@constants'
+import accounts from '@constants';
 
 Then(/^I open votes tab$/, function () {
   cy.get(ss.votesTab).click();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import routes from 'constants';
+import routes from '@constants';
 import styles from './navigationButtons.css';
 import Icon from '../../../toolbox/icon';
 

@@ -1,4 +1,4 @@
-import { tokenMap } from 'constants';
+import { tokenMap } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';

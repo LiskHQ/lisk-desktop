@@ -1,4 +1,4 @@
-import { MODULE_ASSETS } from 'constants';
+import { MODULE_ASSETS } from '@constants';
 
 const getModuleAssetSenderLabels = (t = str => str) => ({
   [MODULE_ASSETS.transfer]: t('Sender'),

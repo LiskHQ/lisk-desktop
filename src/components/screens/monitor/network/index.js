@@ -1,10 +1,10 @@
 import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import withLocalSort from 'utils/withLocalSort';
-import { getNetworkStatistics, getConnectedPeers } from 'utils/api/network';
-import withData from 'utils/withData';
-import { tokenMap } from 'constants';
+import withLocalSort from '@utils/withLocalSort';
+import { getNetworkStatistics, getConnectedPeers } from '@utils/api/network';
+import withData from '@utils/withData';
+import { tokenMap } from '@constants';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';

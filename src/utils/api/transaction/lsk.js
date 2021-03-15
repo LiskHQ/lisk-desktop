@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
 
-import { schema, transactionTypes, tokenMap } from 'constants';
+import { schema, MODULE_ASSETS, tokenMap } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { getDelegates } from '../delegate';
@@ -65,6 +65,7 @@ const filters = {
     test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
   },
 };
+
 /**
  * Retrieves the list of transactions for given parameters
  *
@@ -94,6 +95,7 @@ export const getTransactions = ({
   baseUrl,
 }) => {
   const typeConfig = params.type && transactionTypes()[params.type];
+
   // if type, correct the type and use WS
   if (typeConfig) {
     const requests = Object.values(typeConfig.code).map(type => ({
@@ -267,13 +269,13 @@ export const create = ({
  */
 export const broadcast = ({ transaction, network }) => new Promise(
   async (resolve, reject) => {
-    try {
-      const client = getApiClient(network);
-      const response = await client.transactions.broadcast(transaction);
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
+    // try {
+    //   const client = getApiClient(network);
+    //   const response = await client.transactions.broadcast(transaction);
+    //   resolve(response);
+    // } catch (error) {
+    //   reject(error);
+    // }
   },
 );
 

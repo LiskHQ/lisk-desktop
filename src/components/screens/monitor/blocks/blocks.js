@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import withFilters from 'utils/withFilters';
+import withFilters from '@utils/withFilters';
 import BlockFilterDropdown from './blockFilterDropdown';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';

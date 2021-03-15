@@ -1,6 +1,6 @@
-import { actionsType, settings } from 'constants';
-import { getAutoLogInData, shouldAutoLogIn } from 'utils/login';
-import { networkConfigSet, login } from 'actions';
+import { actionsType, settings } from '@constants';
+import { getAutoLogInData, shouldAutoLogIn } from '@utils/login';
+import { networkConfigSet, login } from '@actions';
 
 const network = ({ dispatch }) => next => async (action) => {
   next(action);

@@ -3,11 +3,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { getBlock } from 'utils/api/block';
-import { getTransactions } from 'utils/api/transaction';
-import withData from 'utils/withData';
-import { selectSearchParamValue } from 'utils/searchParams';
-import { tokenMap } from 'constants';
+import { getBlock } from '@utils/api/block';
+import { getTransactions } from '@utils/api/transaction';
+import withData from '@utils/withData';
+import { selectSearchParamValue } from '@utils/searchParams';
+import { tokenMap } from '@constants';
 import BlockDetails from './blockDetails';
 
 const mapStateToProps = (state, ownProps) => ({

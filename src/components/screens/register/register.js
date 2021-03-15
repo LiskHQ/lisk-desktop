@@ -1,8 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { generatePassphrase } from 'utils/passphrase';
-import { extractAddress } from 'utils/account';
-import routes from 'constants';
+import { generatePassphrase } from '@utils/passphrase';
+import { extractAddress } from '@utils/account';
+import routes from '@constants';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';

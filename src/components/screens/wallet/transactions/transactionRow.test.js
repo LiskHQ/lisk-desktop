@@ -1,4 +1,4 @@
-import transactionTypes from 'constants';
+import { MODULE_ASSETS } from '@constants';
 import { mountWithRouter } from '../../../../utils/testHelpers';
 import TransactionRow from './transactionRow';
 import accounts from '../../../../../test/constants/accounts';

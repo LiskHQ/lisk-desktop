@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 import CopyToClipboard from 'react-copy-to-clipboard';
-import loginType from 'constants';
-import { signMessageByHW } from 'utils/hwManager';
+import loginType from '@constants';
+import { signMessageByHW } from '@utils/hwManager';
 import styles from './signMessage.css';
 import Box from '../../toolbox/box';
 import BoxInfoText from '../../toolbox/box/infoText';

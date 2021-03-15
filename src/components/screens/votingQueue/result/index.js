@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { transactionBroadcasted } from 'actions';
+import { transactionBroadcasted } from '@actions';
 import ResultComponent from './result';
 
 const Result = (props) => {

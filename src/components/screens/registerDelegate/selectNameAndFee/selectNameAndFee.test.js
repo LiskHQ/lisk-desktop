@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import networks from 'constants';
+import networks from '@constants';
 import SelectNameAndFee from './selectNameAndFee';
 import * as delegatesApi from '../../../../utils/api/delegate';
 import accounts from '../../../../../test/constants/accounts';

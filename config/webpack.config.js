@@ -6,14 +6,14 @@ module.exports = {
   mode: 'development',
   resolve: {
     alias: {
-      utils: resolve(__dirname, '../src/utils'),
-      api: resolve(__dirname, '../src/utils/api/'),
-      constants: resolve(__dirname, '../src/constants'),
-      shared: resolve(__dirname, '../src/components/shared'),
-      screens: resolve(__dirname, '../src/components/screens'),
-      toolbox: resolve(__dirname, '../src/components/toolbox'),
-      actions: resolve(__dirname, '../src/store/actions'),
-      store: resolve(__dirname, '../src/store'),
+      '@utils': resolve(__dirname, '../src/utils'),
+      '@api': resolve(__dirname, '../src/utils/api/'),
+      '@constants': resolve(__dirname, '../src/constants'),
+      '@shared': resolve(__dirname, '../src/components/shared'),
+      '@screens': resolve(__dirname, '../src/components/screens'),
+      '@toolbox': resolve(__dirname, '../src/components/toolbox'),
+      '@actions': resolve(__dirname, '../src/store/actions'),
+      '@store': resolve(__dirname, '../src/store'),
     },
     fallback: {
       net: false,

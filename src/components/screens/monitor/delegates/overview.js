@@ -1,7 +1,7 @@
 // istanbul ignore file
 import React from 'react';
-import { fromRawLsk } from 'utils/lsk';
-import { colorPalette } from 'constants';
+import { fromRawLsk } from '@utils/lsk';
+import { colorPalette } from '@constants';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';

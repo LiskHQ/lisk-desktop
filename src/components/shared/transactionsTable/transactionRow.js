@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { tokenMap, transactionTypes } from 'constants';
-import { getTxAmount } from 'utils/api/transaction/lsk';
+import { tokenMap, transactionTypes } from '@constants';
+import { getTxAmount } from '@utils/api/transaction/lsk';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import AccountVisualWithAddress from '../accountVisualWithAddress';
 import Icon from '../../toolbox/icon';

@@ -2,7 +2,7 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import { BigNumber } from 'bignumber.js';
 
-import { tokenMap } from 'constants';
+import { tokenMap } from '@constants';
 import { validateAddress } from '../../validators';
 import { extractAddress, getDerivedPathFromPassphrase } from '../account';
 import { fromRawLsk } from '../../lsk';

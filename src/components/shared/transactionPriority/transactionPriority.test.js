@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap, transactionTypes } from 'constants';
+import { tokenMap, transactionTypes } from '@constants';
 import TransactionPriority from '.';
 
 const baseFees = {

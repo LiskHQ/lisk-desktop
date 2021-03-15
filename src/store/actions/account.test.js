@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import actionTypes from 'constants';
+import actionTypes from '@constants';
 import {
   accountLoggedOut,
   accountDataUpdated,

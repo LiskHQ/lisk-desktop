@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import transactionTypes from 'constants';
+import { MODULE_ASSETS } from '@constants';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
-// import transactionTypes from 'constants';
+// import { MODULE_ASSETS } from '@constants';
 import { mountWithRouter } from '../../../utils/testHelpers';
 
 describe('Transaction Details Component', () => {

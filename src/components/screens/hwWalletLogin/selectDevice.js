@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import routes from 'constants';
+import routes from '@constants';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
 import styles from './selectDevice.css';
 import Icon from '../../toolbox/icon';

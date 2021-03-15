@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { votesSubmitted } from 'actions';
+import { votesSubmitted } from '@actions';
 import SummaryComponent from './summary';
 
 const Summary = (props) => {

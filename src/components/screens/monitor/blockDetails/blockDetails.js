@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import { tokenMap, routes } from 'constants';
-import regex from 'utils/regex';
+import { tokenMap, routes } from '@constants';
+import regex from '@utils/regex';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';

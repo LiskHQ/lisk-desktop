@@ -1,5 +1,5 @@
 import React from 'react';
-import transactionTypes from 'constants';
+import { MODULE_ASSETS } from '@constants';
 import LiskAmount from '../liskAmount';
 import styles from './transactionsAndBlocks.css';
 import Icon from '../../toolbox/icon';

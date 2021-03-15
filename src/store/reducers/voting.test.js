@@ -1,4 +1,4 @@
-import actionTypes from 'constants';
+import actionTypes from '@constants';
 import voting from './voting';
 
 describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-statements

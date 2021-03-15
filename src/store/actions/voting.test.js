@@ -1,4 +1,4 @@
-import { actionTypes, networks, loginTypes } from 'constants';
+import { actionTypes, networks, loginTypes } from '@constants';
 import {
   voteEdited,
   votesCleared,

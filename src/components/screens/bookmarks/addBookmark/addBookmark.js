@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { tokenMap } from 'constants';
-import { validateAddress } from 'utils/validators';
-import { getIndexOfBookmark } from 'utils/bookmarks';
-import { selectSearchParamValue, removeSearchParamsFromUrl } from 'utils/searchParams';
+import { tokenMap } from '@constants';
+import { validateAddress } from '@utils/validators';
+import { getIndexOfBookmark } from '@utils/bookmarks';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
 import Fields from './fields';
 import ModalWrapper from '../modalWrapper';
 import Box from '../../../toolbox/box';

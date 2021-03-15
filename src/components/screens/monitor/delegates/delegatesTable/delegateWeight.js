@@ -1,6 +1,6 @@
 import React from 'react';
-import { formatAmountBasedOnLocale } from 'utils/formattedNumber';
-import { fromRawLsk } from 'utils/lsk';
+import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
+import { fromRawLsk } from '@utils/lsk';
 
 const DelegateWeight = ({ value }) => {
   const formatted = formatAmountBasedOnLocale({

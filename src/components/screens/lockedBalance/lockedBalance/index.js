@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import transactionTypes from 'constants';
+import { MODULE_ASSETS } from '@constants';
 import {
   calculateBalanceLockedInVotes,
   calculateUnlockableBalance,
   getActiveTokenAccount,
   getUnlockableUnlockingObjects,
-} from 'utils/account';
+} from '@utils/account';
 import TransactionPriority from '../../../shared/transactionPriority';
 import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';

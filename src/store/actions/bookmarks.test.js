@@ -1,4 +1,4 @@
-import { tokenMap, actionTypes } from 'constants';
+import { tokenMap, actionTypes } from '@constants';
 import {
   bookmarkAdded,
   bookmarkRemoved,

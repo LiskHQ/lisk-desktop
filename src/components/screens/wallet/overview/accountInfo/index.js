@@ -1,7 +1,7 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
-import { getAddress } from 'utils/hwManager';
-import { isEmpty } from 'utils/helpers';
+import { getAddress } from '@utils/hwManager';
+import { isEmpty } from '@utils/helpers';
 import AccountVisual from '../../../../toolbox/accountVisual';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';

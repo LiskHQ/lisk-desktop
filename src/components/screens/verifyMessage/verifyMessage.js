@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import routes from 'constants';
+import routes from '@constants';
 import MultiStep from '../../shared/multiStep';
 import Result from './result';
 import VerifyMessageInput from './verifyMessageInput';

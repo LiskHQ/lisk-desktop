@@ -1,8 +1,8 @@
 import { to } from 'await-to-js';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { getAccountsFromDevice } from 'utils/hwManager';
-import { tokenMap, routes } from 'constants';
+import { getAccountsFromDevice } from '@utils/hwManager';
+import { tokenMap, routes } from '@constants';
 import { TertiaryButton } from '../../../toolbox/buttons';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';

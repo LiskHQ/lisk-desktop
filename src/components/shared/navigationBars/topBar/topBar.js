@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import routes from 'constants';
-import { isEmpty } from 'utils/helpers';
+import routes from '@constants';
+import { isEmpty } from '@utils/helpers';
 import NavigationButtons from './navigationButtons';
 import Network from './networkName';
 import styles from './topBar.css';

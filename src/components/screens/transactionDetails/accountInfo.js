@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
-import routes from 'constants';
-import { validateAddress } from 'utils/validators';
+import routes from '@constants';
+import { validateAddress } from '@utils/validators';
 import AccountVisual from '../../toolbox/accountVisual';
 import styles from './transactionDetails.css';
 

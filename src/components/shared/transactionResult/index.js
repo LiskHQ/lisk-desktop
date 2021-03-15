@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import React from 'react';
-import { getErrorReportMailto } from 'utils/helpers';
+import { getErrorReportMailto } from '@utils/helpers';
 import { TertiaryButton } from '../../toolbox/buttons';
 import styles from './transactionResult.css';
 import Illustration from '../../toolbox/illustration';

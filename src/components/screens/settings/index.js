@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { settingsUpdated, timerReset } from 'actions';
-import { getActiveTokenAccount } from 'utils/account';
+import { settingsUpdated, timerReset } from '@actions';
+import { getActiveTokenAccount } from '@utils/account';
 import Settings from './settings';
 
 const mapStateToProps = state => ({

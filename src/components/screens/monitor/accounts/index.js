@@ -1,9 +1,9 @@
 import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import withData from 'utils/withData';
-import { getAccounts } from 'utils/api/account';
-import { getNetworkStatus } from 'utils/api/network';
+import withData from '@utils/withData';
+import { getAccounts } from '@utils/api/account';
+import { getNetworkStatus } from '@utils/api/network';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';

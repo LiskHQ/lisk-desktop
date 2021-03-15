@@ -2,10 +2,10 @@ import to from 'await-to-js';
 
 import {
   actionTypes, tokenMap, transactionTypes, loginTypes,
-} from 'constants';
-import { extractAddress } from 'utils/account';
-import { getTransactions, create, broadcast } from 'utils/api/transaction';
-import { signSendTransaction } from 'utils/hwManager';
+} from '@constants';
+import { extractAddress } from '@utils/account';
+import { getTransactions, create, broadcast } from '@utils/api/transaction';
+import { signSendTransaction } from '@utils/hwManager';
 import { passphraseUsed } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 

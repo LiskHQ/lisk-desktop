@@ -4,8 +4,8 @@ import React, {
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { modals } from 'constants';
-import { parseSearchParams, removeSearchParamsFromUrl } from 'utils/searchParams';
+import { modals } from '@constants';
+import { parseSearchParams, removeSearchParamsFromUrl } from '@utils/searchParams';
 import styles from './dialog.css';
 
 // eslint-disable-next-line max-statements

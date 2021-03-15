@@ -1,4 +1,4 @@
-import actionTypes from 'constants';
+import actionTypes from '@constants';
 import appUpdates from './appUpdates';
 
 describe('Reducer: appUpdates(state, action)', () => {

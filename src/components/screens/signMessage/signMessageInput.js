@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { parseSearchParams } from 'utils/searchParams';
-import Piwik from 'utils/piwik';
+import { parseSearchParams } from '@utils/searchParams';
+import Piwik from '@utils/piwik';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons';
 import Box from '../../toolbox/box';

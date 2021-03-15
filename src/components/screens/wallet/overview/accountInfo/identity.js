@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { truncateAddress } from 'utils/account';
+import { truncateAddress } from '@utils/account';
 import styles from './accountInfo.css';
 
 /**

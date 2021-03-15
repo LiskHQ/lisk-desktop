@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
-import { tokenMap } from 'constants';
-import * as Chartutils from 'utils/balanceChart';
+import { tokenMap } from '@constants';
+import * as Chartutils from '@utils/balanceChart';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';
 import BoxEmptyState from '../../../../toolbox/box/emptyState';

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { removeSearchParamsFromUrl } from 'utils/searchParams';
+import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import LiskAmount from '../../../shared/liskAmount';
 import Box from '../../../toolbox/box';
 import BoxFooter from '../../../toolbox/box/footer';

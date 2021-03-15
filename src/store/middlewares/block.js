@@ -1,7 +1,7 @@
-import { blockSubscribe, blockUnsubscribe } from 'utils/api/block';
-import { forgersSubscribe, forgersUnsubscribe, getDelegates } from 'utils/api/delegate';
-import { tokenMap, actionTypes } from 'constants';
-import { olderBlocksRetrieved, forgingTimesRetrieved, networkStatusUpdated } from 'actions';
+import { blockSubscribe, blockUnsubscribe } from '@utils/api/block';
+import { forgersSubscribe, forgersUnsubscribe, getDelegates } from '@utils/api/delegate';
+import { tokenMap, actionTypes } from '@constants';
+import { olderBlocksRetrieved, forgingTimesRetrieved, networkStatusUpdated } from '@actions';
 
 const oneMinute = 1000 * 60;
 

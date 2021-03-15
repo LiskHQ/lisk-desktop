@@ -1,7 +1,7 @@
 import React from 'react';
 
-import transactionTypes from 'constants';
-import { truncateAddress } from 'utils/account';
+import { MODULE_ASSETS } from '@constants';
+import { truncateAddress } from '@utils/account';
 import styles from './transactionAddress.css';
 
 const Address = ({

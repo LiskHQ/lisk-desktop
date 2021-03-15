@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getIndexOfBookmark } from 'utils/bookmarks';
+import { getIndexOfBookmark } from '@utils/bookmarks';
 import { SecondaryButton, PrimaryButton } from '../../../toolbox/buttons';
 import TransactionResult from '../../../shared/transactionResult';
 import statusMessage from './statusMessages';

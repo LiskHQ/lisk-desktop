@@ -1,6 +1,6 @@
 import React from 'react';
-import { extractPublicKey } from 'utils/account';
-import { formatAmountBasedOnLocale } from 'utils/formattedNumber';
+import { extractPublicKey } from '@utils/account';
+import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';

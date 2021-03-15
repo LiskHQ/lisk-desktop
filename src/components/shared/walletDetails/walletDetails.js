@@ -1,5 +1,5 @@
 import React from 'react';
-import { tokenMap } from 'constants';
+import { tokenMap } from '@constants';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';

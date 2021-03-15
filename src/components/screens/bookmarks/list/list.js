@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { tokenMap, routes } from 'constants';
-import { truncateAddress } from 'utils/account';
+import { tokenMap, routes } from '@constants';
+import { truncateAddress } from '@utils/account';
 import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import AccountVisual from '../../../toolbox/accountVisual';

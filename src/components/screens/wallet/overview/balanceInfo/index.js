@@ -2,13 +2,13 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { tokenMap } from 'constants';
-import { fromRawLsk } from 'utils/lsk';
+import { tokenMap } from '@constants';
+import { fromRawLsk } from '@utils/lsk';
 import {
   calculateBalanceLockedInUnvotes,
   calculateBalanceLockedInVotes,
   getActiveTokenAccount,
-} from 'utils/account';
+} from '@utils/account';
 import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
 import Box from '../../../../toolbox/box';
 import BoxContent from '../../../../toolbox/box/content';

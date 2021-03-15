@@ -1,7 +1,7 @@
 import React from 'react';
 import i18next from 'i18next';
 import { mount } from 'enzyme';
-import routes from 'constants';
+import routes from '@constants';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
 

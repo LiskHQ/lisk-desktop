@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import htmlStringToReact from 'utils/htmlStringToReact';
-import regex from 'utils/regex';
-import { addSearchParamsToUrl } from 'utils/searchParams';
-import { appUpdateAvaiable } from 'actions';
-import FlashMessageHolder from 'toolbox/flashMessage/holder';
-import NewReleaseMessage from 'shared/newReleaseMessage/newReleaseMessage';
+import htmlStringToReact from '@utils/htmlStringToReact';
+import regex from '@utils/regex';
+import { addSearchParamsToUrl } from '@utils/searchParams';
+import { appUpdateAvaiable } from '@actions';
+import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import NewReleaseMessage from '@shared/newReleaseMessage/newReleaseMessage';
 
 
 const useIpc = (history) => {

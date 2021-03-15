@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { getTransactionBaseFees } from 'utils/api/transaction';
+import { getTransactionBaseFees } from '@utils/api/transaction';
 
 // eslint-disable-next-line max-statements
 const useTransactionPriority = (token) => {

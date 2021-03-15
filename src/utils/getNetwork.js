@@ -1,7 +1,6 @@
 // import { } from '@liskhq/lisk-client';
 import i18next from 'i18next';
-import networks, { networkKeys } from 'constants';
-import { tokenMap } from 'constants';
+import { networks, tokenMap, networkKeys } from '@constants';
 
 export const getNetworksList = () =>
   Object.values(networkKeys)

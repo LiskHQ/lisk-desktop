@@ -1,4 +1,4 @@
-import actionsType from 'constants';
+import actionsType from '@constants';
 
 const ignoredLoadingActionKeys = [
   'transactions',

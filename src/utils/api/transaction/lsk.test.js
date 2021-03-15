@@ -1,4 +1,4 @@
-import transactionTypes from 'constants';
+import { MODULE_ASSETS } from '@constants';
 import {
   getTransaction,
   getTransactions,

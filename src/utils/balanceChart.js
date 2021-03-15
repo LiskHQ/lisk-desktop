@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { tokenMap } from 'constants';
+import { tokenMap } from '@constants';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 import { getTokenFromAddress } from './api/transaction';

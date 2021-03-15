@@ -1,6 +1,6 @@
 import React from 'react';
-import transactionTypes from 'constants';
-import { toRawLsk } from 'utils/lsk';
+import { MODULE_ASSETS } from '@constants';
+import { toRawLsk } from '@utils/lsk';
 import FormBase from './formBase';
 import TransactionPriority from '../../../shared/transactionPriority';
 import useAmountField from './useAmountField';

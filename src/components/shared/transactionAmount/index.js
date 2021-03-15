@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import transactionTypes from 'constants';
+import { MODULE_ASSETS } from '@constants';
 import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
 import styles from './transactionAmount.css';

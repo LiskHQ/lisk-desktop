@@ -1,5 +1,5 @@
 /* global Cypress */
-import nets from 'constants';
+import nets from '@constants';
 
 const networks = {
   mainnet: { ...nets.mainnet, node: nets.mainnet.nodes[0] },

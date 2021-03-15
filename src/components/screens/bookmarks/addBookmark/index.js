@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from 'actions';
-import { getAccount } from 'utils/api/account';
-import withData from 'utils/withData';
-import { selectSearchParamValue } from 'utils/searchParams';
+import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from '@actions';
+import { getAccount } from '@utils/api/account';
+import withData from '@utils/withData';
+import { selectSearchParamValue } from '@utils/searchParams';
 import AddBookmark from './addBookmark';
 
 const mapStateToProps = state => ({

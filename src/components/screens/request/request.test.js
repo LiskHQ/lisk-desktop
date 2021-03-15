@@ -1,5 +1,5 @@
 import React from 'react';
-import { tokenMap } from 'constants';
+import { tokenMap } from '@constants';
 import { mountWithRouter } from '../../../utils/testHelpers';
 import Request from '.';
 import accounts from '../../../../test/constants/accounts';

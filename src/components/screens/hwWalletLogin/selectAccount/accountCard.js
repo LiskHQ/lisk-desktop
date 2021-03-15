@@ -1,5 +1,5 @@
 import React from 'react';
-import { tokenMap } from 'constants';
+import { tokenMap } from '@constants';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import AccountVisual from '../../../toolbox/accountVisual';
 import LiskAmount from '../../../shared/liskAmount';

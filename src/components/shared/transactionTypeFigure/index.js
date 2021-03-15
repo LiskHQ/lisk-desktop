@@ -1,6 +1,6 @@
 import React from 'react';
-import reg from 'utils/regex';
-import transactionTypes from 'constants';
+import reg from '@utils/regex';
+import { MODULE_ASSETS } from '@constants';
 import AccountVisual from '../../toolbox/accountVisual';
 import Icon from '../../toolbox/icon';
 import styles from './transactionTypeFigure.css';

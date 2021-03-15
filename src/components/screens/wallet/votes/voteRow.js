@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { tokenMap } from 'constants';
-import { formatAmountBasedOnLocale } from 'utils/formattedNumber';
+import { tokenMap } from '@constants';
+import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import AccountVisual from '../../../toolbox/accountVisual';
 import tableStyles from '../../../toolbox/table/table.css';
 import LiskAmount from '../../../shared/liskAmount';

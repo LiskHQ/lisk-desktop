@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getDelegate } from 'utils/api/delegate';
-import regex from 'utils/regex';
-import { tokenMap, transactionTypes } from 'constants';
+import { getDelegate } from '@utils/api/delegate';
+import regex from '@utils/regex';
+import { tokenMap, transactionTypes } from '@constants';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';

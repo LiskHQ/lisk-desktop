@@ -3,9 +3,9 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectSearchParamValue, removeSearchParamsFromUrl } from 'utils/searchParams';
-import { voteEdited } from 'actions';
-import { toRawLsk, fromRawLsk } from 'utils/lsk';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
+import { voteEdited } from '@actions';
+import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Dialog from '../../toolbox/dialog/dialog';
 import Box from '../../toolbox/box';
 import BoxContent from '../../toolbox/box/content';

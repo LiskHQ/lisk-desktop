@@ -1,8 +1,8 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import { isEmpty } from 'utils/helpers';
-import Piwik from 'utils/piwik';
-import { links, settingsConst } from 'constants';
+import { isEmpty } from '@utils/helpers';
+import Piwik from '@utils/piwik';
+import { links, settingsConst } from '@constants';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';

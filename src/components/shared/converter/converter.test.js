@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap } from 'constants';
+import { tokenMap } from '@constants';
 import Converter from './converter';
 
 describe('Converter', () => {

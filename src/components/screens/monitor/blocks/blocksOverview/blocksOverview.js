@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { chartStyles } from 'constants';
+import { chartStyles } from '@constants';
 import Box from '../../../../toolbox/box';
 import BoxHeader from '../../../../toolbox/box/header';
 import BoxContent from '../../../../toolbox/box/content';

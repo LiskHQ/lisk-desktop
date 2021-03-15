@@ -1,5 +1,5 @@
 import React from 'react';
-import transactionTypes from 'constants';
+import { MODULE_ASSETS } from '@constants';
 
 function withFilters(apiName, initialFilters, initialSort) {
   return function (ChildComponent) {

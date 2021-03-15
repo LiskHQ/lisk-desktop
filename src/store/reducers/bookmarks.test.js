@@ -3,8 +3,8 @@ import {
   bookmarkAdded,
   bookmarkUpdated,
   bookmarkRemoved,
-} from 'actions';
-import actionTypes from 'constants';
+} from '@actions';
+import actionTypes from '@constants';
 import bookmarks from './bookmarks';
 import accounts from '../../../test/constants/accounts';
 
