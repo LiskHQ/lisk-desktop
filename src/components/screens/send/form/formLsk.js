@@ -40,8 +40,8 @@ const FormLsk = (props) => {
       amount: toRawLsk(amount.value),
       txType,
       recipient: recipient.value,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+      nonce: account?.sequence?.nonce,
+      senderPublicKey: account.publicKey, // TODO set publicKey
       data: reference.value,
     },
   });

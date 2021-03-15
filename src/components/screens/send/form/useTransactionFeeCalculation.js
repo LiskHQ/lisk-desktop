@@ -24,7 +24,7 @@ const useTransactionFeeCalculation = ({
     feedback: '',
   };
   const initialMaxAmount = {
-    value: account.balance,
+    value: account?.token?.balance,
     error: false,
     feedback: '',
   };
@@ -36,7 +36,7 @@ const useTransactionFeeCalculation = ({
     const res = await getTransactionFee(param, token);
     if (name === 'fee') setFee(res);
     else if (name === 'maxAmount') {
-      const availableBalance = calculateAvailableBalance(account.balance, token);
+      const availableBalance = calculateAvailableBalance(account?.token?.balance, token);
       setMaxAmount({
         ...res,
         value: availableBalance - toRawLsk(res.value),
@@ -52,7 +52,7 @@ const useTransactionFeeCalculation = ({
     }, 'fee');
 
     setFeeState({
-      token, account, network, txData: { ...txData, amount: account.balance }, selectedPriority,
+      token, account, network, txData: { ...txData, amount: account?.token?.balance }, selectedPriority,
     }, 'maxAmount');
 
     setFeeState({

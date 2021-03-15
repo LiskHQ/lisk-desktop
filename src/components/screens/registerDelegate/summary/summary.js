@@ -28,10 +28,10 @@ class Summary extends React.Component {
     const data = {
       account,
       username: nickname,
-      passphrase: account.passphrase,
+      passphrase: account.passphrase, // TODO set passphrase
       fee: toRawLsk(parseFloat(fee)),
       network,
-      nonce: account.nonce,
+      nonce: account?.sequence?.nonce,
       transactionType: transactionTypes().registerDelegate.key,
     };
 

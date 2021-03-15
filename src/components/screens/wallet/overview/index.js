@@ -23,8 +23,8 @@ const Overview = ({
   discreetMode, isWalletRoute, account,
 }) => {
   const address = getProp(account, 'address', '');
-  const publicKey = getProp(account, 'publicKey', '');
-  const balance = getProp(account, 'balance', 0);
+  const publicKey = getProp(account, 'publicKey', ''); // TODO set publickKey
+  const balance = account?.token?.balance || 0;
   const { confirmed } = useSelector(state => state.transactions);
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
@@ -51,7 +51,7 @@ const Overview = ({
           activeToken={activeToken}
           address={address}
           account={account}
-          username={account.delegate && account.delegate.username}
+          username={account?.dpos?.delegate?.username}
           bookmark={bookmark}
           publicKey={publicKey}
           host={host}
@@ -64,7 +64,7 @@ const Overview = ({
           balance={balance}
           isDiscreetMode={discreetMode}
           isWalletRoute={isWalletRoute}
-          username={account.delegate && account.delegate.username}
+          username={account?.dpos?.delegate?.username}
           address={address}
         />
       </div>
