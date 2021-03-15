@@ -1,4 +1,4 @@
-import actionTypes from '@constants';
+import { actionTypes } from '@constants';
 import service, { INITIAL_STATE } from './service';
 
 describe('reducers: service', () => {

@@ -1,4 +1,4 @@
-import actionTypes from '@constants';
+import { actionTypes } from '@constants';
 import { pricesRetrieved } from './service';
 import { initialState as settings } from '../reducers/settings';
 import prices from '../../../test/constants/prices';

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 import CopyToClipboard from 'react-copy-to-clipboard';
-import loginType from '@constants';
+import { loginTypes } from '@constants';
 import { signMessageByHW } from '@utils/hwManager';
 import styles from './signMessage.css';
 import Box from '../../toolbox/box';
@@ -105,7 +105,7 @@ const ConfirmMessage = ({
   };
 
   useEffect(() => {
-    if (account.loginType === loginType.passphrase.code) {
+    if (account.loginType === loginTypes.passphrase.code) {
       setSignature(signUsingPassphrase());
     } else {
       signUsingHW()
@@ -115,7 +115,7 @@ const ConfirmMessage = ({
     return () => clearTimeout(ref.current);
   }, []);
 
-  const confirmationPending = account.loginType !== loginType.passphrase.code
+  const confirmationPending = account.loginType !== loginTypes.passphrase.code
     && !error && !signature;
 
   return (

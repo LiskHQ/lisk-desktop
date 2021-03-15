@@ -1,4 +1,4 @@
-import actionsType from '@constants';
+import { actionTypes } from '@constants';
 
 const ignoredLoadingActionKeys = [
   'transactions',
@@ -6,8 +6,8 @@ const ignoredLoadingActionKeys = [
 
 const loadingBarMiddleware = () => next => (action) => {
   switch (action.type) {
-    case actionsType.loadingStarted:
-    case actionsType.loadingFinished:
+    case actionTypes.loadingStarted:
+    case actionTypes.loadingFinished:
       if (ignoredLoadingActionKeys.indexOf(action.data) === -1) {
         next(action);
       }

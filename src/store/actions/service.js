@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import { toast } from 'react-toastify';
-import actionTypes from '@constants';
+import { actionTypes } from '@constants';
 import { getPrices } from '@utils/api/market';
 
 const tickerReducer = (acc, key) => ({

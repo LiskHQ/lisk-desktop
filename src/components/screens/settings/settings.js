@@ -2,7 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { isEmpty } from '@utils/helpers';
 import Piwik from '@utils/piwik';
-import { links, settingsConst } from '@constants';
+import { externalLinks, settings as settingsConst } from '@constants';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
@@ -181,7 +181,7 @@ class Settings extends React.Component {
                     {t('Anonymous analytics collection')}
                   </span>
                   <p>{t('Help improve Lisk by allowing Lisk to gather anonymous usage data used for analytical purposes.')}</p>
-                  <a target="_blank" href={links.privacyPolicy} className={styles.link}>
+                  <a target="_blank" href={externalLinks.privacyPolicy} className={styles.link}>
                     {t('Privacy Policy')}
                   </a>
                 </div>

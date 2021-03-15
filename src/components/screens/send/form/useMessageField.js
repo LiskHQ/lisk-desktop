@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { messageMaxLength } from '@constants';
+import { transactions } from '@constants';
 import { sizeOfString } from '@utils/helpers';
+
+const messageMaxLength = transactions.messageMaxLength;
 
 const useMessageField = (initialValue) => {
   const { t } = useTranslation();

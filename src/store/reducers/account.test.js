@@ -1,5 +1,5 @@
 import { useFakeTimers } from 'sinon';
-import actionTypes from '@constants';
+import { actionTypes } from '@constants';
 import account from './account';
 import accounts from '../../../test/constants/accounts';
 

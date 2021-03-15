@@ -1,5 +1,5 @@
 import { olderBlocksRetrieved } from '@actions';
-import actionTypes from '@constants';
+import { actionTypes } from '@constants';
 import middleware from './block';
 import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
 import { forgersSubscribe, forgersUnsubscribe } from '../../utils/api/delegate';

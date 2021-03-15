@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import routes from '@constants';
+import { routes } from '@constants';
 import { parseSearchParams } from '@utils/searchParams';
 import MultiStep from '../../shared/multiStep';
 import Form from './form';

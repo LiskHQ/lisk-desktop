@@ -1,5 +1,5 @@
 import React from 'react';
-import routes from '@constants';
+import { routes } from '@constants';
 import TopBar from './topBar';
 import accounts from '../../../../../test/constants/accounts';
 import DialogHolder from '../../../toolbox/dialog/holder';

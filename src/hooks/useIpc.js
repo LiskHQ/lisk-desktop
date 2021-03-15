@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import htmlStringToReact from '@utils/htmlStringToReact';
 import regex from '@utils/regex';
 import { addSearchParamsToUrl } from '@utils/searchParams';
-import { appUpdateAvaiable } from '@actions';
+import { appUpdateAvailable } from '@actions';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import NewReleaseMessage from '@shared/newReleaseMessage/newReleaseMessage';
 
@@ -19,7 +19,7 @@ const useIpc = (history) => {
   useEffect(() => {
     ipc.on('update:available', (action, { version, releaseNotes }) => {
       const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
-      dispatch(appUpdateAvaiable({
+      dispatch(appUpdateAvailable({
         version, ipc, releaseNotes,
       }));
 

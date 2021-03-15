@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
-import actionTypes from '@constants';
+import { actionTypes } from '@constants';
 import middleware from './notification';
 import Notification from '../../utils/notification';
 

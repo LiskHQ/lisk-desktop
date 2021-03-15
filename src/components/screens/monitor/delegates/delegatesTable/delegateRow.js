@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { useDispatch } from 'react-redux';
-import routes from '@constants';
+import { routes } from '@constants';
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import regex from '@utils/regex';
 import { addedToWatchList, removedFromWatchList } from '@actions';

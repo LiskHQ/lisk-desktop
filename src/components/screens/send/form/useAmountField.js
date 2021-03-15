@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
-import { tokenMap, minBalance } from '@constants';
+import { tokenMap, transactions } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import { validateAmountFormat } from '@utils/validators';
 import regex from '@utils/regex';
 
+const minBalance = transactions.minBalance;
 let loaderTimeout = null;
 
 const baseState = {

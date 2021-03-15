@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import actionType from '@constants';
+import { actionType } from '@constants';
 import middleware from './loadingBar';
 
 

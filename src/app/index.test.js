@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { expect } from 'chai';
 import configureStore from 'redux-mock-store';
 import { I18nextProvider } from 'react-i18next';
-import routes from '@constants';
+import { routes } from '@constants';
 import i18n from '../i18n'; // initialized i18next instance
 import App from '.';
 import Login from '../components/screens/login/login';

@@ -1,5 +1,5 @@
 import { resetTransactionResult } from '@actions';
-import actionTypes from '@constants';
+import { actionTypes } from '@constants';
 import transactions from './transactions';
 
 describe('Reducer: transactions', () => {

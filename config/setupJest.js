@@ -11,7 +11,7 @@ import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
 import ReactRouterDom from 'react-router-dom';
 import * as ReactRedux from 'react-redux';
-import defaultState from '@constants';
+import { defaultState } from '@constants';
 import { deepMergeObj } from '@utils/helpers';
 
 require('jest-localstorage-mock');

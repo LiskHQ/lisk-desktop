@@ -1,4 +1,4 @@
-import actionTypes from '@constants';
+import { actionTypes } from '@constants';
 import { networkSelected, networkConfigSet, networkStatusUpdated } from './network';
 import { getNetworkConfig } from '../../utils/api/network';
 

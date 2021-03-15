@@ -1,6 +1,6 @@
 import React from 'react';
 
-import routes from '@constants';
+import { routes } from '@constants';
 import { selectSearchParamValue } from '@utils/searchParams';
 import regex from '@utils/regex';
 import styles from './topBar.css';

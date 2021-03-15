@@ -1,7 +1,7 @@
 // istanbul ignore file
 import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@utils/hwManager';
-import actionTypes from '@constants';
+import { actionTypes } from '@constants';
 import { addSearchParamsToUrl } from '@utils/searchParams';
 import { accountLoggedOut, login } from '@actions';
 import {

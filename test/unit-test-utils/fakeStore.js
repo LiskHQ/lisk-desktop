@@ -1,5 +1,5 @@
 import configureStore from 'redux-mock-store';
-import delegates from '@constants';
+import { delegates } from '@constants';
 
 const forgingTimes = delegates.reduce((acc, item, index) => {
   acc[item.account.publicKey] = {
