@@ -1,5 +1,5 @@
+import actionTypes from 'constants';
 import appUpdates from './appUpdates';
-import actionTypes from '../../constants/actions';
 
 describe('Reducer: appUpdates(state, action)', () => {
   it('should return account object with changes if action.type = actionTypes.appUpdateAvailable', () => {

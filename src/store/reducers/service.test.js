@@ -1,5 +1,5 @@
+import actionTypes from 'constants';
 import service, { INITIAL_STATE } from './service';
-import actionTypes from '../../constants/actions';
 
 describe('reducers: service', () => {
   let state;

@@ -1,6 +1,6 @@
 import React from 'react';
 import TopBar from './topBar';
-import routes from '../../../../constants/routes';
+import routes from 'constants';
 import accounts from '../../../../../test/constants/accounts';
 import DialogHolder from '../../../toolbox/dialog/holder';
 import { mountWithRouter } from '../../../../utils/testHelpers';

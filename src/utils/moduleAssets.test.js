@@ -1,4 +1,4 @@
-import { MODULE_ASSETS } from '../constants/moduleAssets';
+import { MODULE_ASSETS } from 'constants';
 import { getModuleAssetSenderLabels } from './moduleAssets';
 
 describe('Utils: moduleAssets', () => {

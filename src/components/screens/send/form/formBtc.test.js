@@ -8,7 +8,7 @@ import {
   getTransactionFee,
   getTransactionBaseFees,
 } from '../../../../utils/api/transaction';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from 'constants';
 import Form from './formBtc';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';

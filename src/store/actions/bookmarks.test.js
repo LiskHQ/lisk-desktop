@@ -3,9 +3,9 @@ import {
   bookmarkRemoved,
   bookmarkUpdated,
 } from './bookmarks';
-import actionTypes from '../constants/actions';
+import actionTypes from 'constants';
 import accounts from '../../test/constants/accounts';
-import { tokenMap } from '../constants/tokens';
+import { tokenMap } from 'constants';
 
 describe('actions: boomarks', () => {
   const data = {

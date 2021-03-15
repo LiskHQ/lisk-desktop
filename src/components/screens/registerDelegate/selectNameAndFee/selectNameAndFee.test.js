@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import SelectNameAndFee from './selectNameAndFee';
 import * as delegatesApi from '../../../../utils/api/delegate';
-import networks from '../../../../constants/networks';
+import networks from 'constants';
 import accounts from '../../../../../test/constants/accounts';
 import { getTransactionBaseFees, getTransactionFee } from '../../../../utils/api/transaction';
 import { fromRawLsk } from '../../../../utils/lsk';

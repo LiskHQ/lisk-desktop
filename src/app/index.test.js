@@ -9,7 +9,7 @@ import i18n from '../i18n'; // initialized i18next instance
 import App from '.';
 import Login from '../components/screens/login/login';
 import Wallet from '../components/screens/wallet';
-import routes from '../constants/routes';
+import routes from 'constants';
 
 const fakeStore = configureStore();
 

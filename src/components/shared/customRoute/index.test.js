@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
 import CustomRoute from './index';
-import routes from '../../../constants/routes';
+import routes from 'constants';
 
 const Public = () => <h1>Public</h1>;
 const Private = () => <h1>Private</h1>;

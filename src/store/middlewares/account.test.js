@@ -3,10 +3,10 @@ import * as transactionsActions from 'actions';
 import * as votingActions from 'actions';
 import * as settingsActions from 'actions';
 import * as transactionApi from '../../utils/api/transaction';
-import actionTypes from '../../constants/actions';
+import actionTypes from 'constants';
 import middleware from './account';
-import transactionTypes from '../../constants/transactionTypes';
-import { tokenMap } from '../../constants/tokens';
+import transactionTypes from 'constants';
+import { tokenMap } from 'constants';
 
 jest.mock('../../utils/api/transaction', () => ({
   getTransactions: jest.fn(),

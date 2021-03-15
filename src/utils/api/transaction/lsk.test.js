@@ -9,7 +9,7 @@ import {
 import http from '../http';
 import ws from '../ws';
 import * as delegates from '../delegate';
-import transactionTypes from '../../../constants/transactionTypes';
+import transactionTypes from 'constants';
 
 jest.mock('../http', () => ({
   __esModule: true,

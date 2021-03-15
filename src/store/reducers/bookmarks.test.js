@@ -1,11 +1,11 @@
 import { expect } from 'chai';
-import bookmarks from './bookmarks';
 import {
   bookmarkAdded,
   bookmarkUpdated,
   bookmarkRemoved,
 } from 'actions';
-import actionTypes from '../../constants/actions';
+import bookmarks from './bookmarks';
+import actionTypes from 'constants';
 import accounts from '../../../test/constants/accounts';
 
 describe('Reducer: bookmarks(state, action)', () => {

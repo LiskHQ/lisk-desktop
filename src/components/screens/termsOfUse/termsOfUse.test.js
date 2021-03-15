@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import TermsOfUse from './termsOfUse';
-import routes from '../../../constants/routes';
+import routes from 'constants';
 
 describe('TermsOfUse', () => {
   let wrapper;

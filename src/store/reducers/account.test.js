@@ -1,7 +1,7 @@
 import { useFakeTimers } from 'sinon';
 import account from './account';
 import accounts from '../../../test/constants/accounts';
-import actionTypes from '../../constants/actions';
+import actionTypes from 'constants';
 
 describe('Reducer: account(state, action)', () => {
   let state;

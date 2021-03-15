@@ -1,5 +1,5 @@
+import actionTypes from 'constants';
 import bookmarksMiddleware from './bookmarks';
-import actionTypes from '../../constants/actions';
 import accounts from '../../../test/constants/accounts';
 import * as localJSONStorage from '../../utils/localJSONStorage';
 

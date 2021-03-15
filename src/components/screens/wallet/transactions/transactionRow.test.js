@@ -1,7 +1,7 @@
+import transactionTypes from 'constants';
 import { mountWithRouter } from '../../../../utils/testHelpers';
 import TransactionRow from './transactionRow';
 import accounts from '../../../../../test/constants/accounts';
-import transactionTypes from '../../../../constants/transactionTypes';
 
 describe('Single Transaction Component', () => {
   const unlockTx = {

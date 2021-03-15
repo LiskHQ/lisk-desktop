@@ -1,6 +1,6 @@
+import actionTypes from 'constants';
 import { pricesRetrieved } from './service';
 import { initialState as settings } from '../store/reducers/settings';
-import actionTypes from '../constants/actions';
 import prices from '../../test/constants/prices';
 import * as marketApi from '../utils/api/market';
 

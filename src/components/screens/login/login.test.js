@@ -1,9 +1,9 @@
 import React from 'react';
 import i18next from 'i18next';
 import { mount } from 'enzyme';
+import routes from 'constants';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
-import routes from '../../../constants/routes';
 
 describe('Login', () => {
   let wrapper;
