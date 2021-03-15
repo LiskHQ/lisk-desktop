@@ -1,7 +1,6 @@
+import { service, transactions } from 'actions';
 import settingsMiddleware from './settings';
 import actionTypes from '../../constants/actions';
-import * as service from '../../actions/service';
-import * as transactions from '../../actions/transactions';
 
 jest.mock('../../actions/service');
 jest.mock('../../actions/settings');

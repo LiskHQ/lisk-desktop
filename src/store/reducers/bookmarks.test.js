@@ -4,7 +4,7 @@ import {
   bookmarkAdded,
   bookmarkUpdated,
   bookmarkRemoved,
-} from '../../actions/bookmarks';
+} from 'actions';
 import actionTypes from '../../constants/actions';
 import accounts from '../../../test/constants/accounts';
 

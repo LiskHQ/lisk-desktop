@@ -1,7 +1,7 @@
-import * as accountActions from '../../actions/account';
-import * as transactionsActions from '../../actions/transactions';
-import * as votingActions from '../../actions/voting';
-import * as settingsActions from '../../actions/settings';
+import * as accountActions from 'actions';
+import * as transactionsActions from 'actions';
+import * as votingActions from 'actions';
+import * as settingsActions from 'actions';
 import * as transactionApi from '../../utils/api/transaction';
 import actionTypes from '../../constants/actions';
 import middleware from './account';

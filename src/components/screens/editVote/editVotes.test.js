@@ -1,5 +1,5 @@
+import * as votingActions from 'actions';
 import { mountWithRouterAndStore } from '../../../utils/testHelpers';
-import * as votingActions from '../../../actions/voting';
 import EditVote from './index';
 
 jest.mock('../../../actions/voting', () => ({
