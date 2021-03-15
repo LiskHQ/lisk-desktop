@@ -10,7 +10,7 @@ import './variables.css';
 import OfflineWrapper from '@shared/offlineWrapper';
 import CustomRoute from '@shared/customRoute';
 import NotFound from '@shared/notFound';
-import routes from '@constants';
+import { routes } from '@constants';
 import NavigationBars from '@shared/navigationBars';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DialogHolder from '@toolbox/dialog/holder';
