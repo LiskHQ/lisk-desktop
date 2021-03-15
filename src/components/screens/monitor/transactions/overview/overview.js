@@ -1,10 +1,9 @@
 // istanbul ignore file
 import React, { useState } from 'react';
 import moment from 'moment';
-import transactionTypes from 'constants';
 import { fromRawLsk } from 'utils/lsk';
 import { kFormatter } from 'utils/helpers';
-import { colorPalette, chartStyles } from 'constants';
+import { colorPalette, chartStyles, transactionTypes } from 'constants';
 import Box from '../../../../toolbox/box';
 import BoxTabs from '../../../../toolbox/tabs';
 import BoxHeader from '../../../../toolbox/box/header';

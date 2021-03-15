@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import TermsOfUse from './termsOfUse';
 import routes from 'constants';
+import TermsOfUse from './termsOfUse';
 
 describe('TermsOfUse', () => {
   let wrapper;

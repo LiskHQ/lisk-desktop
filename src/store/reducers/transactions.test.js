@@ -1,6 +1,6 @@
 import { resetTransactionResult } from 'actions';
-import transactions from './transactions';
 import actionTypes from 'constants';
+import transactions from './transactions';
 
 describe('Reducer: transactions', () => {
   const defaultState = {

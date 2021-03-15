@@ -1,5 +1,5 @@
-import { validateAddress, validateLSKPublicKey, validateAmountFormat } from './validators';
 import networks from 'constants';
+import { validateAddress, validateLSKPublicKey, validateAmountFormat } from './validators';
 import accounts from '../../test/constants/accounts';
 import i18n from '../i18n';
 

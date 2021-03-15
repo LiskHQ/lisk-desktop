@@ -1,4 +1,4 @@
-import actionTypes from 'constants';
+import { actionTypes, networks, loginTypes } from 'constants';
 import {
   voteEdited,
   votesCleared,
@@ -6,11 +6,9 @@ import {
   votesConfirmed,
   votesRetrieved,
 } from './voting';
-import networks from 'constants';
-import * as TransactionApi from '../utils/api/transaction';
-import * as delegateApi from '../utils/api/delegate';
-import sampleVotes from '../../test/constants/votes';
-import loginTypes from 'constants';
+import * as TransactionApi from '../../utils/api/transaction';
+import * as delegateApi from '../../utils/api/delegate';
+import sampleVotes from '../../../test/constants/votes';
 
 jest.mock('../utils/api/transaction', () => ({
   create: jest.fn(),

@@ -1,6 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import networks from 'constants';
-import { tokenMap } from 'constants';
+import { tokenMap, networks } from 'constants';
 import { mountWithProps } from '../../../../utils/testHelpers';
 import LockedBalance from './index';
 import accounts from '../../../../../test/constants/accounts';

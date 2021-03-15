@@ -3,8 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { networks, tokenMap } from 'constants';
-import { networkSelected } from 'actions';
-import { settingsUpdated } from 'actions';
+import { networkSelected, settingsUpdated } from 'actions';
 import NetworkSelectorComp from './networkSelector';
 
 const NetworkSelector = (props) => {

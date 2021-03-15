@@ -1,6 +1,5 @@
 import to from 'await-to-js';
-import { actionTypes, loginTypes } from 'constants';
-import { tokenMap } from 'constants';
+import { actionTypes, loginTypes, tokenMap } from 'constants';
 import { create } from 'utils/api/transaction';
 import { signVoteTransaction } from 'utils/hwManager';
 import { getVotes } from 'utils/api/delegate';

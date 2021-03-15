@@ -1,15 +1,13 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
 
-import { transactionTypes, tokenMap } from 'constants';
-import schema from 'constants/transfer';
+import { schema, transactionTypes, tokenMap } from 'constants';
 import http from '../http';
 import ws from '../ws';
 import { getDelegates } from '../delegate';
 import regex from '../../regex';
 import { fromRawLsk } from '../../lsk';
 import { validateAddress } from '../../validators';
-import { getApiClient } from '../apiClient';
 
 const httpPrefix = '/api/v2';
 

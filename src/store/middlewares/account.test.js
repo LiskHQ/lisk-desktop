@@ -1,12 +1,10 @@
-import * as accountActions from 'actions';
-import * as transactionsActions from 'actions';
-import * as votingActions from 'actions';
-import * as settingsActions from 'actions';
-import * as transactionApi from '../../utils/api/transaction';
-import actionTypes from 'constants';
+import {
+  accountDataUpdated, transactionsRetrieved, votesRetrieved, settingsUpdated,
+} from 'actions';
+
+import { tokenMap, actionTypes, transactionTypes } from 'constants';
 import middleware from './account';
-import transactionTypes from 'constants';
-import { tokenMap } from 'constants';
+import * as transactionApi from '../../utils/api/transaction';
 
 jest.mock('../../utils/api/transaction', () => ({
   getTransactions: jest.fn(),
@@ -131,7 +129,7 @@ describe('Account middleware', () => {
       const promise = middleware(store)(next);
       promise(newBlockCreated).then(() => {
         jest.runOnlyPendingTimers();
-        expect(transactionsActions.transactionsRetrieved)
+        expect(transactionsRetrieved)
           .toHaveBeenCalledWith({
             address, filters: undefined, pendingTransactions: state.transactions.pending,
           });
@@ -229,7 +227,7 @@ describe('Account middleware', () => {
         type: actionTypes.accountLoggedOut,
       };
       middleware(store)(next)(accountLoggedOutAction);
-      expect(settingsActions.settingsUpdated).toHaveBeenCalledWith(
+      expect(settingsUpdated).toHaveBeenCalledWith(
         { token: { active: tokenMap.LSK.key } },
       );
       expect(store.dispatch).toHaveBeenCalledWith({ type: actionTypes.emptyTransactionsData });
@@ -243,7 +241,7 @@ describe('Account middleware', () => {
         data: { token: { list: { BTC: true } } },
       };
       middleware(store)(next)(settingsUpdatedAction);
-      expect(accountActions.accountDataUpdated).toHaveBeenCalledWith('enabled');
+      expect(accountDataUpdated).toHaveBeenCalledWith('enabled');
       expect(store.dispatch).toHaveBeenCalled();
     });
   });

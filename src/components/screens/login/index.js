@@ -2,8 +2,7 @@
 import { connect } from 'react-redux';
 import { setDefaults, withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from 'utils/account';
-import { login } from 'actions';
-import { settingsUpdated } from 'actions';
+import { login, settingsUpdated } from 'actions';
 import Login from './login';
 
 setDefaults({

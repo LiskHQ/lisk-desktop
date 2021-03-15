@@ -4,8 +4,8 @@ import {
   bookmarkUpdated,
   bookmarkRemoved,
 } from 'actions';
-import bookmarks from './bookmarks';
 import actionTypes from 'constants';
+import bookmarks from './bookmarks';
 import accounts from '../../../test/constants/accounts';
 
 describe('Reducer: bookmarks(state, action)', () => {

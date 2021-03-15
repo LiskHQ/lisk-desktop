@@ -2,7 +2,7 @@ import actionTypes from 'constants';
 import {
   transactionsRetrieved,
 } from './transactions';
-import * as transactionsApi from '../utils/api/transaction';
+import * as transactionsApi from '../../utils/api/transaction';
 
 jest.mock('../utils/api/transaction');
 jest.mock('../utils/api/delegate');

@@ -1,11 +1,10 @@
+import { tokenMap, actionTypes } from 'constants';
 import {
   bookmarkAdded,
   bookmarkRemoved,
   bookmarkUpdated,
 } from './bookmarks';
-import actionTypes from 'constants';
-import accounts from '../../test/constants/accounts';
-import { tokenMap } from 'constants';
+import accounts from '../../../test/constants/accounts';
 
 describe('actions: boomarks', () => {
   const data = {

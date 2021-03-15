@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Converter from './converter';
 import { tokenMap } from 'constants';
+import Converter from './converter';
 
 describe('Converter', () => {
   let wrapper;

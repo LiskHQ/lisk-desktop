@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import routes from 'constants';
 
 import { truncateAddress } from 'utils/account';
-import { tokenMap } from 'constants';
+import { routes, tokenMap } from 'constants';
 import LiskAmount from '../liskAmount';
 
 import styles from './styles.css';

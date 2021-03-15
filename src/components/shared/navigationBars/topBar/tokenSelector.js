@@ -1,9 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import routes from 'constants';
 import { settingsUpdated } from 'actions';
-import { tokenMap } from 'constants';
+import { routes, tokenMap } from 'constants';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
 import Tooltip from '../../../toolbox/tooltip/tooltip';

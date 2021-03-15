@@ -1,9 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap } from 'constants';
+import { tokenMap, keyCodes } from 'constants';
 import AccountVisual from '../accountVisual';
 import AutoSuggest from './index';
-import keyCodes from 'constants';
 
 describe('Recipient Input', () => {
   let wrapper;

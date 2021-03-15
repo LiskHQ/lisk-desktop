@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import middleware from './loadingBar';
 import actionType from 'constants';
+import middleware from './loadingBar';
 
 
 describe('LoadingBar middleware', () => {

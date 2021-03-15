@@ -2,8 +2,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import routes from 'constants';
-import { colorPalette, MAX_BLOCKS_FORGED } from 'constants';
+import { routes, colorPalette, MAX_BLOCKS_FORGED } from 'constants';
 import { DoughnutChart } from '../../../toolbox/charts';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';

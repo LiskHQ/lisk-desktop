@@ -2,9 +2,8 @@ import React from 'react';
 import to from 'await-to-js';
 
 import { create } from 'utils/api/transaction';
-import transactionTypes from 'constants';
 import { toRawLsk } from 'utils/lsk';
-import { tokenMap } from 'constants';
+import { tokenMap, transactionTypes } from 'constants';
 import styles from './summary.css';
 import AccountVisual from '../../../toolbox/accountVisual';
 import TransactionSummary from '../../../shared/transactionSummary';

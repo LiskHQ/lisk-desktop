@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { messageMaxLength } from 'constants';
+import { messageMaxLength, transactionTypes } from 'constants';
 import { toRawLsk } from 'utils/lsk';
-import transactionTypes from 'constants';
 import { AutoResizeTextarea } from '../../../toolbox/inputs';
 import CircularProgress from '../../../toolbox/circularProgress/circularProgress';
 import FormBase from './formBase';

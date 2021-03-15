@@ -1,25 +1,20 @@
 /* istanbul ignore file */
-// Coverage of this file is ignored because it's a central integration point
-// of the whole app. If anything goes wrong here, e2e tests will fail,
-// so it's covered by e2e tests.
+// This is covered by e2e tests
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { hot } from 'react-hot-loader/root';//eslint-disable-line
+import { hot } from 'react-hot-loader/root';
 import './variables.css';
 import OfflineWrapper from 'shared/offlineWrapper';
 import CustomRoute from 'shared/customRoute';
 import NotFound from 'shared/notFound';
-// import InitializationMessage from 'shared/initializationMessage';
 import routes from 'constants';
 import NavigationBars from 'shared/navigationBars';
 import FlashMessageHolder from 'toolbox/flashMessage/holder';
 import DialogHolder from 'toolbox/dialog/holder';
-import { settingsRetrieved } from 'actions';
-import { bookmarksRetrieved } from 'actions';
-import { watchListRetrieved } from 'actions';
+import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from 'actions';
 import ThemeContext from '../contexts/theme';
 import styles from './app.css';
 import useIpc from '../hooks/useIpc';

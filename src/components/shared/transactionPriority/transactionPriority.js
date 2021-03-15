@@ -1,11 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { tokenMap } from 'constants';
+import { tokenMap, transactionTypes } from 'constants';
 import {
   formatAmountBasedOnLocale,
 } from 'utils/formattedNumber';
 import { toRawLsk, fromRawLsk } from 'utils/lsk';
-import transactionTypes from 'constants';
 import styles from './transactionPriority.css';
 import Input from '../../toolbox/inputs/input';
 import Icon from '../../toolbox/icon';

@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import transactionTypes from 'constants';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
 // import transactionTypes from 'constants';
 import { mountWithRouter } from '../../../utils/testHelpers';
-import transactionTypes from 'constants';
 
 describe('Transaction Details Component', () => {
   const transaction = {
