@@ -48,7 +48,7 @@ const AccountRow = ({ data, className, supply }) => (
       <LiskAmount val={data.balance} showInt token={tokenMap.LSK.key} />
     </span>
     <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
-      <BalanceShare balance={data.balance} supply={supply} />
+      <BalanceShare balance={data?.token?.balance} supply={supply} />
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-2']}`}>
       {getOwnerName(data)}

@@ -5,7 +5,7 @@ import styles from './accountsAndDeletegates.css';
 const Accounts = ({
   accounts, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
-  const isDelegate = accounts.some(account => account.delegate);
+  const isDelegate = accounts.some(account => account.dpos?.delegate);
 
   return (
     <div className={`${styles.wrapper} accounts`}>
@@ -30,7 +30,7 @@ const Accounts = ({
                     <Fragment>
                       <div>
                         <span className={`${styles.accountTitle} account-title`}>
-                          {account.delegate.username}
+                          {account.dpos?.delegate.username}
                         </span>
                       </div>
                       <span className={styles.accountSubtitle}>{account.address}</span>
@@ -47,7 +47,7 @@ const Accounts = ({
               {isDelegate
                 ? (
                   <span className={`${styles.tag} tag`}>
-                    {t('Delegate #{{rank}}', { rank: account.delegate.rank })}
+                    {t('Delegate #{{rank}}', { rank: account.dpos?.delegate.rank })}
                   </span>
                 )
                 : null }
