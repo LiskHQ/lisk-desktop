@@ -9,7 +9,7 @@ export const httpPaths = {
   delegates: `${httpPrefix}/delegates`,
   votesSent: `${httpPrefix}/votes_sent`,
   votesReceived: `${httpPrefix}/votes_received`,
-  forgers: `${httpPrefix}/delegates/next_forgers`,
+  forgers: `${httpPrefix}/forgers`,
 };
 
 export const wsMethods = {

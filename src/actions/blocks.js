@@ -67,6 +67,7 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
   const forgedInRoundNum = latestBlocks[0].height % MAX_BLOCKS_FORGED;
   const awaitingForgers = nextForgers ?? await retrieveNextForgers(network);
   const forgingTimes = {};
+  const latestBlockTimestamp = latestBlocks[0].timestamp;
 
   // First we iterate the latest blocks and set the forging time
   latestBlocks
@@ -74,7 +75,7 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
     .forEach((item) => {
       if (!forgingTimes[item.generatorPublicKey]) {
         forgingTimes[item.generatorPublicKey] = {
-          time: -(latestBlocks[0].timestamp - item.timestamp),
+          time: -(latestBlockTimestamp - item.timestamp),
           status: 'forging',
         };
       }
@@ -87,7 +88,7 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
     .forEach((item, index) => {
       if (index >= forgedInRoundNum) {
         forgingTimes[item.publicKey] = {
-          time: (index - forgedInRoundNum + 1) * 10,
+          time: item.nextForgingTime - latestBlockTimestamp,
           status: 'awaitingSlot',
         };
       } else if (!forgingTimes[item.publicKey]) {

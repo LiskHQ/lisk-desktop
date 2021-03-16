@@ -133,7 +133,7 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
 );
 
 const DelegateStatus = ({ activeTab, data }) => {
-  const status = data.delegateWeight < 100000000000 ? 'non-eligible' : data.status;
+  const status = data.totalVotesReceived < 100000000000 ? 'non-eligible' : data.status;
   return (
     <span className={
       activeTab === 'watched'
@@ -203,7 +203,7 @@ const DelegateRow = ({
       </span> */}
       {activeTab !== 'sanctioned' && (
         <span className={`${grid['col-xs-2']}`}>
-          <DelegateWeight value={data.delegateWeight} />
+          <DelegateWeight value={data.totalVotesReceived} />
         </span>
       )}
       {(activeTab === 'active' || activeTab === 'watched') && (
