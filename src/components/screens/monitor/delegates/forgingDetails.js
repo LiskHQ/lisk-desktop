@@ -4,18 +4,16 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { routes, colorPalette, MAX_BLOCKS_FORGED } from '@constants';
-import { DoughnutChart } from '../../../toolbox/charts';
-import AccountVisual from '../../../toolbox/accountVisual';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
+import { DoughnutChart } from '@toolbox/charts';
+import AccountVisual from '@toolbox/accountVisual';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
 import styles from './overview.css';
 import NumericInfo from './numericInfo';
-import BoxEmptyState from '../../../toolbox/box/emptyState';
-import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
-import Icon from '../../../toolbox/icon';
-import { colorPalette } from '../../../../constants/chartConstants';
-import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
+import BoxEmptyState from '@toolbox/box/emptyState';
+import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
+import Icon from '@toolbox/icon';
 
 const FORGERS_TO_SHOW = 6;
 
