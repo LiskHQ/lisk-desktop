@@ -2,11 +2,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { networks, tokenMap } from '@constants';
+import { networkSelected, settingsUpdated } from '@actions';
 import NetworkSelectorComp from './networkSelector';
-import { networkSelected } from '../../../../actions/network';
-import { settingsUpdated } from '../../../../actions/settings';
-import networks from '../../../../constants/networks';
-import { tokenMap } from '../../../../constants/tokens';
 
 const NetworkSelector = (props) => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
+import { tokenMap } from '@constants';
 import { subscribe, unsubscribe } from '../ws';
 import http from '../http';
-import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
 import { transformStringDateToUnixTimestamp } from '../../datetime';
 

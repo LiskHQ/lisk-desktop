@@ -1,6 +1,6 @@
 import React from 'react';
+import { isReactComponent } from '@utils/helpers';
 import styles from '../box/emptyState.css';
-import { isReactComponent } from '../../../utils/helpers';
 import Illustration from '../illustration';
 
 const Empty = ({

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import routes from '../../../../constants/routes';
+import { routes } from '@constants';
+import { selectSearchParamValue } from '@utils/searchParams';
+import regex from '@utils/regex';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
 import DialogLink from '../../../toolbox/dialog/link';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
-import { selectSearchParamValue } from '../../../../utils/searchParams';
-import regex from '../../../../utils/regex';
 
 /**
  * Extracts only one search param out of the url that is relevant

@@ -1,12 +1,12 @@
 import { toast } from 'react-toastify';
-import actionTypes from '../constants/actions';
+import { actionTypes } from '@constants';
 import {
   accountLoggedOut,
   accountDataUpdated,
   login,
 } from './account';
-import * as accountApi from '../utils/api/account';
-import accounts from '../../test/constants/accounts';
+import * as accountApi from '../../utils/api/account';
+import accounts from '../../../test/constants/accounts';
 import * as networkActions from './network';
 
 jest.mock('i18next', () => ({

@@ -1,3 +1,4 @@
+import { MODULE_ASSETS } from '@constants';
 import {
   getTransaction,
   getTransactions,
@@ -9,7 +10,6 @@ import {
 import http from '../http';
 import ws from '../ws';
 import * as delegates from '../delegate';
-import transactionTypes from '../../../constants/transactionTypes';
 
 jest.mock('../http', () => ({
   __esModule: true,
@@ -205,8 +205,8 @@ describe('API: LSK Transactions', () => {
 
     it('should return amount of votes in Beddows', () => {
       const tx = {
-        title: transactionTypes().vote.key,
-        type: transactionTypes().vote.code.new,
+        title: MODULE_ASSETS().vote.key,
+        type: MODULE_ASSETS().vote.code.new,
         asset: {
           votes: [
             {
@@ -224,8 +224,8 @@ describe('API: LSK Transactions', () => {
 
     it('should return amount of unlock in Beddows', () => {
       const tx = {
-        title: transactionTypes().unlockToken.key,
-        type: transactionTypes().unlockToken.code.new,
+        title: MODULE_ASSETS().unlockToken.key,
+        type: MODULE_ASSETS().unlockToken.code.new,
         asset: {
           unlockingObjects: [
             {

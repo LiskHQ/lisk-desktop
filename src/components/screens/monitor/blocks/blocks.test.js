@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import Blocks from './blocks';
 import blocks from '../../../../../test/constants/blocks';
 
-jest.mock('../../../../constants/monitor', () => ({ DEFAULT_LIMIT: 6 }));
+jest.mock('constants', () => ({ DEFAULT_LIMIT: 6 }));
 
 describe('Blocks page', () => {
   let props;

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
+import { keyCodes } from '@constants';
 import { Input } from '../inputs';
-import keyCodes from '../../../constants/keyCodes';
 import styles from './autoSuggest.css';
 
 class AutoSuggest extends React.Component {

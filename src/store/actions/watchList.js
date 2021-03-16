@@ -1,5 +1,5 @@
-import actionTypes from '../constants/actions';
-import { getFromStorage } from '../utils/localJSONStorage';
+import { actionTypes } from '@constants';
+import { getFromStorage } from '@utils/localJSONStorage';
 
 export const watchListRetrieved = () => (dispatch) => {
   getFromStorage('delegateWatchList', [], (data) => {

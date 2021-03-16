@@ -1,6 +1,6 @@
 import setVotesByLaunchProtocol from './urlProcessor';
 import { voteEdited } from './voting';
-import * as accounts from '../utils/api/account';
+import * as accounts from '../../utils/api/account';
 
 jest.mock('../utils/api/account', () => ({
   getAccount: jest.fn().mockImplementation(data => Promise.resolve({ address: '12L', username: data.username })),

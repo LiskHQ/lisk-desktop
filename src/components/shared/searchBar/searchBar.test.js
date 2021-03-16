@@ -1,4 +1,4 @@
-import keyCodes from '../../../constants/keyCodes';
+import { keyCodes } from '@constants';
 import SearchBar from './searchBar';
 import { mountWithRouter } from '../../../utils/testHelpers';
 

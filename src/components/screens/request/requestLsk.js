@@ -1,15 +1,15 @@
 import React from 'react';
+import { maxMessageLength } from '@constants';
+import { validateAmountFormat } from '@utils/validators';
+import regex from '@utils/regex';
+import { sizeOfString } from '@utils/helpers';
 import { Input, AutoResizeTextarea } from '../../toolbox/inputs';
-import { messageMaxLength } from '../../../constants/transactions';
 import CircularProgress from '../../toolbox/circularProgress/circularProgress';
 import Converter from '../../shared/converter';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
 import Icon from '../../toolbox/icon';
-import { validateAmountFormat } from '../../../utils/validators';
 import i18n from '../../../i18n';
-import regex from '../../../utils/regex';
-import { sizeOfString } from '../../../utils/helpers';
 
 class RequestLsk extends React.Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class RequestLsk extends React.Component {
     const byteCount = sizeOfString(target.value);
     const error = target.name === 'amount'
       ? validateAmountFormat({ value: target.value, locale: i18n.language }).message
-      : byteCount > messageMaxLength;
+      : byteCount > maxMessageLength;
     let feedback = '';
 
     if (target.name === 'amount') {
@@ -62,7 +62,7 @@ class RequestLsk extends React.Component {
       target.value = leadingPoint.test(target.value) ? `0${target.value}` : target.value;
       feedback = error || feedback;
     } else if (target.name === 'reference' && byteCount > 0) {
-      feedback = t('{{length}} bytes left', { length: messageMaxLength - byteCount });
+      feedback = t('{{length}} bytes left', { length: maxMessageLength - byteCount });
     }
 
     const field = {
@@ -157,7 +157,7 @@ class RequestLsk extends React.Component {
               className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`}
             />
             <CircularProgress
-              max={messageMaxLength}
+              max={maxMessageLength}
               value={byteCount}
               className={styles.byteCounter}
             />
@@ -165,7 +165,7 @@ class RequestLsk extends React.Component {
               className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
               name={fields.reference.error ? 'alertIcon' : 'okIcon'}
             />
-            <span className={`${styles.feedback} ${messageMaxLength - byteCount < 10 ? styles.error : ''}`}>
+            <span className={`${styles.feedback} ${maxMessageLength - byteCount < 10 ? styles.error : ''}`}>
               {fields.reference.feedback}
             </span>
           </span>

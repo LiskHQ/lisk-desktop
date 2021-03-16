@@ -1,11 +1,11 @@
 import React from 'react';
+import { tokenMap } from '@constants';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import AccountVisual from '../../../toolbox/accountVisual';
 import LiskAmount from '../../../shared/liskAmount';
 import { Input } from '../../../toolbox/inputs';
 import styles from './selectAccount.css';
 import Icon from '../../../toolbox/icon';
-import { tokenMap } from '../../../../constants/tokens';
 
 const AccountCard = ({
   account,

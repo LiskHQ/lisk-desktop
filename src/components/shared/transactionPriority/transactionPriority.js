@@ -1,16 +1,15 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { tokenMap, MODULE_ASSETS } from '@constants';
+import {
+  formatAmountBasedOnLocale,
+} from '@utils/formattedNumber';
+import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import styles from './transactionPriority.css';
-import { tokenMap } from '../../../constants/tokens';
 import Input from '../../toolbox/inputs/input';
 import Icon from '../../toolbox/icon';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import Spinner from '../../toolbox/spinner';
-import {
-  formatAmountBasedOnLocale,
-} from '../../../utils/formattedNumber';
-import { toRawLsk, fromRawLsk } from '../../../utils/lsk';
-import transactionTypes from '../../../constants/transactionTypes';
 
 const CUSTOM_FEE_INDEX = 3;
 
@@ -64,7 +63,7 @@ const TransactionPriority = ({
 
   let hardCap = 0;
   if (token === tokenMap.LSK.key) {
-    hardCap = transactionTypes.getHardCap(txType);
+    hardCap = MODULE_ASSETS.getHardCap(txType);
   }
 
   const onClickPriority = (e) => {

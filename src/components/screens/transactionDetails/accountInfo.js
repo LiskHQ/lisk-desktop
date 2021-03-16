@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { routes } from '@constants';
+import { validateAddress } from '@utils/validators';
 import AccountVisual from '../../toolbox/accountVisual';
-import routes from '../../../constants/routes';
 import styles from './transactionDetails.css';
-import { validateAddress } from '../../../utils/validators';
 
 const AccountInfo = ({
   address,

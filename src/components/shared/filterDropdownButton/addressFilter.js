@@ -1,9 +1,9 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import { validateAddress, validateLSKPublicKey } from '@utils/validators';
+import { tokenMap } from '@constants';
 import styles from './filters.css';
 import { Input } from '../../toolbox/inputs';
-import { validateAddress, validateLSKPublicKey } from '../../../utils/validators';
-import { tokenMap } from '../../../constants/tokens';
 
 class AddressFilter extends React.Component {
   constructor() {

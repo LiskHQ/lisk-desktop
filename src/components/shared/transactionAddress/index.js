@@ -1,8 +1,8 @@
 import React from 'react';
 
-import transactionTypes from '../../../constants/transactionTypes';
+import { MODULE_ASSETS } from '@constants';
+import { truncateAddress } from '@utils/account';
 import styles from './transactionAddress.css';
-import { truncateAddress } from '../../../utils/account';
 
 const Address = ({
   bookmark, address, className,
@@ -23,15 +23,15 @@ const Address = ({
 };
 
 const TransactionAddress = ({
-  address, bookmarks, transactionType, token,
+  address, bookmarks, moduleAssetName, token,
 }) => {
   const bookmark = bookmarks[token].find(acc => acc.address === address);
 
   return (
     <div className={`${styles.wrapper} transaction-address`}>
       {
-        transactionType !== transactionTypes().transfer.key
-          ? <span>{transactionTypes.getByCode(transactionType).title}</span>
+        moduleAssetName !== MODULE_ASSETS.transfer
+          ? <span>{moduleAssetName}</span>
           : <Address address={address} bookmark={bookmark} />
       }
       {bookmark && <Address address={address} className={styles.subTitle} />}

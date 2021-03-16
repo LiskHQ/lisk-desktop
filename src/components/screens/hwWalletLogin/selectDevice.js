@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { routes } from '@constants';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
-import routes from '../../../constants/routes';
 import styles from './selectDevice.css';
 import Icon from '../../toolbox/icon';
 

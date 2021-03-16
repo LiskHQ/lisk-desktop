@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
+import { firstBlockTime } from '@constants';
 import DemoRenderer from '../demoRenderer';
 import Calendar from './calendar';
-import { firstBlockTime } from '../../../constants/datetime';
 
 /* eslint-disable-next-line no-console */
 const onDateSelected = console.log;

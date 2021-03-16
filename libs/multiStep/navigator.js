@@ -1,6 +1,4 @@
 import React from 'react';
-import NavigatorButton from './navigatorButton';
-import { Element } from './element';
 import {
   backButtonFn,
   isActiveStep,
@@ -8,6 +6,8 @@ import {
   groupSteps,
   noGroupTitle,
 } from './utils';
+import NavigatorButton from './navigatorButton';
+import { Element } from './element';
 
 const MultiStepNav = ({
   steps,
