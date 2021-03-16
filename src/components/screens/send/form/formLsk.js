@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { transactions, transactionTypes } from '@constants';
+import { transactions, MODULE_ASSETS } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import { AutoResizeTextarea } from '../../../toolbox/inputs';
 import CircularProgress from '../../../toolbox/circularProgress/circularProgress';
@@ -15,7 +15,7 @@ import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 import useTransactionPriority from './useTransactionPriority';
 
 const maxMessageLength = transactions.maxMessageLength;
-const txType = transactionTypes().transfer.key;
+const txType = MODULE_ASSETS().transfer.key;
 
 // eslint-disable-next-line max-statements
 const FormLsk = (props) => {

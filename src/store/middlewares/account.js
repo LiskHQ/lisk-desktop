@@ -1,5 +1,5 @@
 import {
-  networks, actionTypes, networkKeys, settings, transactionTypes, tokenMap,
+  networks, actionTypes, networkKeys, settings, MODULE_ASSETS, tokenMap,
 } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
 import { getActiveTokenAccount } from '@utils/account';
@@ -37,7 +37,7 @@ const getRecentTransactionOfType = (transactionsList, type) => (
 const votePlaced = (store, action) => {
   const voteTransaction = getRecentTransactionOfType(
     action.data.confirmed,
-    transactionTypes().vote.code.legacy,
+    MODULE_ASSETS().vote.code.legacy,
   );
 
   if (voteTransaction) {
@@ -48,7 +48,7 @@ const votePlaced = (store, action) => {
 const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
   transaction
   && transaction.recipientId === account.address
-  && transaction.type === transactionTypes().transfer.code.legacy
+  && transaction.type === MODULE_ASSETS().transfer.code.legacy
 ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {

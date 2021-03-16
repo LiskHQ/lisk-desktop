@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
-import { transactionTypes, actionTypes, tokenMap } from '@constants';
+import { MODULE_ASSETS, actionTypes, tokenMap } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import { getUnlockableUnlockingObjects } from '@utils/account';
@@ -58,7 +58,7 @@ const Form = ({
     const [error, tx] = await to(
       create({
         ...txData,
-        transactionType: transactionTypes().unlockToken.key,
+        transactionType: MODULE_ASSETS().unlockToken.key,
         network,
       }, tokenMap.LSK.key),
     );

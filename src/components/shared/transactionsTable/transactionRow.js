@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { tokenMap, transactionTypes } from '@constants';
+import { tokenMap, MODULE_ASSETS } from '@constants';
 import { getTxAmount } from '@utils/api/transaction/lsk';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import AccountVisualWithAddress from '../accountVisualWithAddress';
@@ -54,7 +54,7 @@ const TransactionRow = ({ data, className, t }) => (
         content={<LiskAmount val={data.fee} token={tokenMap.LSK.key} />}
         size="s"
       >
-        <p>{`${data.type} - ${transactionTypes.getByCode(data.title).title}`}</p>
+        <p>{`${data.type} - ${MODULE_ASSETS.getByCode(data.title).title}`}</p>
       </Tooltip>
     </span>
     <span className={grid['col-xs-1']}>

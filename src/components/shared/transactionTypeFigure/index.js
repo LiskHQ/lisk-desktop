@@ -18,7 +18,7 @@ const TransactionTypeFigure = ({
     <div className={`${styles.wrapper} ${className} transaction-image`}>
       { icon ? <Icon name={icon} className={styles.inOutIcon} /> : null }
       {
-        transactionType === transactionTypes().transfer.key
+        transactionType === MODULE_ASSETS().transfer.key
           ? renderAvatar()
           : <Icon name={transactionType || 'txDefault'} className={styles.transactionIcon} />
       }

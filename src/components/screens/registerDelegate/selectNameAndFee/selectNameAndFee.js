@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getDelegate } from '@utils/api/delegate';
 import regex from '@utils/regex';
-import { tokenMap, transactionTypes } from '@constants';
+import { tokenMap, MODULE_ASSETS } from '@constants';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -15,7 +15,7 @@ import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 
 const token = tokenMap.LSK.key;
-const txType = transactionTypes().registerDelegate.key;
+const txType = MODULE_ASSETS().registerDelegate.key;
 
 // eslint-disable-next-line max-statements
 const SelectNameAndFee = ({ account, ...props }) => {

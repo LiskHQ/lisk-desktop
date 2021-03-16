@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { fromRawLsk } from '@utils/lsk';
 import { kFormatter } from '@utils/helpers';
-import { colorPalette, chartStyles, transactionTypes } from '@constants';
+import { colorPalette, chartStyles, MODULE_ASSETS } from '@constants';
 import Box from '../../../../toolbox/box';
 import BoxTabs from '../../../../toolbox/tabs';
 import BoxHeader from '../../../../toolbox/box/header';
@@ -142,7 +142,7 @@ const Overview = ({ t, txStats }) => {
   };
 
   const distributionChartData = {
-    labels: transactionTypes
+    labels: MODULE_ASSETS
       .getListOf('title')
       .map(item => item
         .replace('Second passphrase registration', '2nd passphrase reg.')
@@ -184,7 +184,7 @@ const Overview = ({ t, txStats }) => {
                 legend: {
                   display: true,
                   labels: {
-                    generateLabels: () => transactionTypes
+                    generateLabels: () => MODULE_ASSETS
                       .getListOf('title')
                       .map((label, i) => ({
                         text: label
@@ -205,7 +205,7 @@ const Overview = ({ t, txStats }) => {
           </div>
           <div className="hideOnLargeViewPort">
             <GuideTooltip>
-              {transactionTypes
+              {MODULE_ASSETS
                 .getListOf('title')
                 .map((label, i) => (
                   <GuideTooltipItem

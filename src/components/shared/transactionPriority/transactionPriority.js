@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { tokenMap, transactionTypes } from '@constants';
+import { tokenMap, MODULE_ASSETS } from '@constants';
 import {
   formatAmountBasedOnLocale,
 } from '@utils/formattedNumber';
@@ -63,7 +63,7 @@ const TransactionPriority = ({
 
   let hardCap = 0;
   if (token === tokenMap.LSK.key) {
-    hardCap = transactionTypes.getHardCap(txType);
+    hardCap = MODULE_ASSETS.getHardCap(txType);
   }
 
   const onClickPriority = (e) => {

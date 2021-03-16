@@ -46,7 +46,7 @@ export const getTransaction = ({
   baseUrl,
 }).then((response) => {
   const data = response.data.map((tx) => {
-    tx.title = transactionTypes.getByCode(tx.type).key;
+    tx.title = MODULE_ASSETS.getByCode(tx.type).key;
     return tx;
   });
 
@@ -97,7 +97,7 @@ export const getTransactions = ({
   params,
   baseUrl,
 }) => {
-  const typeConfig = params.type && transactionTypes()[params.type];
+  const typeConfig = params.type && MODULE_ASSETS()[params.type];
 
   // if type, correct the type and use WS
   if (typeConfig) {
@@ -109,7 +109,7 @@ export const getTransactions = ({
     return ws({ baseUrl: network.serviceUrl, requests })
       .then((response) => {
         const data = response.data.map((tx) => {
-          tx.title = transactionTypes.getByCode(tx.type).key;
+          tx.title = MODULE_ASSETS.getByCode(tx.type).key;
           return tx;
         });
 
@@ -142,7 +142,7 @@ export const getTransactions = ({
   })
     .then((response) => {
       const data = response.data.map((tx) => {
-        tx.title = transactionTypes.getByCode(tx.type).key;
+        tx.title = MODULE_ASSETS.getByCode(tx.type).key;
         return tx;
       });
 
