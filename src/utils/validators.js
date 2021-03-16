@@ -1,7 +1,7 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import numeral from 'numeral';
 import { cryptography } from '@liskhq/lisk-client';
-import { tokenMap, transactions } from '@constants';
+import { tokenMap, minAccountBalance } from '@constants';
 import { toRawLsk } from './lsk';
 import i18n from '../i18n';
 import reg from './regex';
@@ -97,7 +97,7 @@ export const validateAmountFormat = ({
       message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
-        return funds - rawValue < transactions.minBalance;
+        return funds - rawValue < minAccountBalance;
       },
     },
   };

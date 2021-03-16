@@ -6,7 +6,7 @@ export * from './network';
 export * from './service';
 export * from './settings';
 export * from './transactions';
-export { default as urlProcessor } from './urlProcessor';
+export { default as processLaunchProtocol } from './urlProcessor';
 export * from './voting';
 export * from './watchList';
 export * from './appUpdates';

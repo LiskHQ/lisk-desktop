@@ -10,7 +10,7 @@ export { default as piwikOptions } from './piwik';
 export { default as quickTips } from './quickTips';
 export { default as settings } from './settings';
 export { tokenKeys, tokenMap } from './tokens';
-export { default as transactions } from './transactions';
+export * from './transactions';
 export { default as account } from './account';
 export { default as actionTypes } from './actionTypes';
 export { chartStyles, colorPalette } from './chart';

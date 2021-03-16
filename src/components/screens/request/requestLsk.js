@@ -1,5 +1,5 @@
 import React from 'react';
-import { transactions } from '@constants';
+import { maxMessageLength } from '@constants';
 import { validateAmountFormat } from '@utils/validators';
 import regex from '@utils/regex';
 import { sizeOfString } from '@utils/helpers';
@@ -10,8 +10,6 @@ import RequestWrapper from './requestWrapper';
 import styles from './request.css';
 import Icon from '../../toolbox/icon';
 import i18n from '../../../i18n';
-
-const maxMessageLength = transactions.maxMessageLength;
 
 class RequestLsk extends React.Component {
   constructor(props) {
