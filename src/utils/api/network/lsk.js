@@ -46,7 +46,7 @@ const getServiceUrl = ({ name, address = 'http://localhost:4000' }) => {
  * @param {String} network.nodeUrl - a valid URL pointing to a running node
  * @returns {Promise}
  */
-export const getNetworkConfig = async ({ name, address }) => {
+export const getNetworkConfig = ({ name, address }) => {
   const serviceUrl = getServiceUrl({ name, address });
   return getNetworkStatus({ baseUrl: serviceUrl })
     .then(response => ({
