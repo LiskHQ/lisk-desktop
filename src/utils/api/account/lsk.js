@@ -8,7 +8,7 @@ import { tokenMap } from '../../../constants/tokens';
 const httpPrefix = '/api/v2';
 
 const httpPaths = {
-  account: `${httpPrefix}/accounts`,
+  account: `${httpPrefix}/accounts/:address`,
   accounts: `${httpPrefix}/accounts`,
 };
 
@@ -87,9 +87,9 @@ export const getAccount = async ({
 
   try {
     const response = await http({
-      path: httpPaths.account,
+      path: httpPaths.account.replace(':address', normParams.address),
       network,
-      params: normParams,
+      // params: normParams,
       baseUrl,
     });
     if (response.data[0]) {
