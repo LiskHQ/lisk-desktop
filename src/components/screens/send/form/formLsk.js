@@ -14,7 +14,7 @@ import TransactionPriority from '../../../shared/transactionPriority';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 import useTransactionPriority from './useTransactionPriority';
 
-const messageMaxLength = transactions.messageMaxLength;
+const maxMessageLength = transactions.maxMessageLength;
 const txType = transactionTypes().transfer.key;
 
 // eslint-disable-next-line max-statements
@@ -79,7 +79,7 @@ const FormLsk = (props) => {
             className={`${styles.textarea} ${reference.error ? 'error' : ''} message`}
           />
           <CircularProgress
-            max={messageMaxLength}
+            max={maxMessageLength}
             value={reference.byteCount}
             className={`${styles.byteCounter} ${reference.error ? styles.hide : ''}`}
           />
@@ -88,7 +88,7 @@ const FormLsk = (props) => {
             name={reference.error ? 'alertIcon' : 'okIcon'}
           />
         </span>
-        <span className={`${styles.feedback} ${reference.error || messageMaxLength - reference.byteCount < 10 ? 'error' : ''} ${styles.show}`}>
+        <span className={`${styles.feedback} ${reference.error || maxMessageLength - reference.byteCount < 10 ? 'error' : ''} ${styles.show}`}>
           {reference.feedback}
           <Tooltip
             position="left"

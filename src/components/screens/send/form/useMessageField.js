@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { transactions } from '@constants';
 import { sizeOfString } from '@utils/helpers';
 
-const messageMaxLength = transactions.messageMaxLength;
+const maxMessageLength = transactions.maxMessageLength;
 
 const useMessageField = (initialValue) => {
   const { t } = useTranslation();
@@ -18,9 +18,9 @@ const useMessageField = (initialValue) => {
     const byteCount = sizeOfString(value);
     setMessage({
       byteCount,
-      error: byteCount > messageMaxLength,
+      error: byteCount > maxMessageLength,
       value,
-      feedback: t('{{length}} bytes left', { length: messageMaxLength - byteCount }),
+      feedback: t('{{length}} bytes left', { length: maxMessageLength - byteCount }),
     });
   };
 

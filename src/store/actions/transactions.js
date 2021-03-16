@@ -104,7 +104,6 @@ export const transactionCreated = data => async (dispatch, getState) => {
   const {
     account, settings, network,
   } = getState();
-  // const timeOffset = getTimeOffset(state.blocks.latestBlocks);
   const activeToken = settings.token.active;
 
   const [error, tx] = account.loginType === loginTypes.passphrase.code
