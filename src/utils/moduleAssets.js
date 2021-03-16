@@ -1,6 +1,6 @@
 import { MODULE_ASSETS, ASSET_SCHEMA_MAP } from '@constants';
 
-const getModuleAssetSenderLabels = (t = str => str) => ({
+const getModuleAssetSenderLabel = (t = str => str) => ({
   [MODULE_ASSETS.transfer]: t('Sender'),
   [MODULE_ASSETS.reclaimLSK]: t('Sender'),
   [MODULE_ASSETS.unlockToken]: t('Sender'),
@@ -13,4 +13,4 @@ const getModuleAssetSenderLabels = (t = str => str) => ({
 const selectSchema = moduleAssetType => ASSET_SCHEMA_MAP[moduleAssetType];
 
 // eslint-disable-next-line import/prefer-default-export
-export { selectSchema, getModuleAssetSenderLabels };
+export { selectSchema, getModuleAssetSenderLabel };

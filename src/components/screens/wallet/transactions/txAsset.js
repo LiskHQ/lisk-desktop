@@ -27,8 +27,8 @@ const generateVotes = (asset, delegates) => {
   );
 };
 
-const voteTxType = transactionTypes().vote.code.new;
-const registerDelegateTxType = transactionTypes().registerDelegate.code.new;
+const voteAssetType = MODULE_ASSETS.voteDelegate;
+const registerDelegateAssetType = MODULE_ASSETS.registerDelegate;
 
 const TransactionAsset = ({
   transaction, delegates,
@@ -39,10 +39,10 @@ const TransactionAsset = ({
   let data = token !== 'BTC' ? '-' : '';
   let className = '';
   switch (type) {
-    case registerDelegateTxType:
+    case registerDelegateAssetType:
       data = asset?.delegate?.username ?? username;
       break;
-    case voteTxType:
+    case voteAssetType:
       className = styles.delegateVote;
       data = asset?.votes ? generateVotes(asset, delegates) : data;
       break;

@@ -8,7 +8,7 @@ import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 import useTransactionPriority from './useTransactionPriority';
 import useRecipientField from './useRecipientField';
 
-const txType = transactionTypes().transfer.key;
+const txType = MODULE_ASSETS.transfer;
 
 const FormBtc = (props) => {
   const {

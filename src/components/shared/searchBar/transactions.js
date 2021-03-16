@@ -5,7 +5,7 @@ import styles from './transactionsAndBlocks.css';
 import Icon from '../../toolbox/icon';
 
 const getTxConfig = (t, transactions) => {
-  const config = transactionTypes()[transactions[0].title];
+  const config = MODULE_ASSETS[transactions[0].moduleAssetName];
   const { amount, fee } = transactions[0];
 
   return {

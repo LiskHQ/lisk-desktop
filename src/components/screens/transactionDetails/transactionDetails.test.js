@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import { MODULE_ASSETS } from '@constants';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
-// import { MODULE_ASSETS } from '@constants';
 import { mountWithRouter } from '../../../utils/testHelpers';
 
 describe('Transaction Details Component', () => {
@@ -25,7 +24,7 @@ describe('Transaction Details Component', () => {
   };
   const voteTransaction = {
     data: {
-      type: transactionTypes().vote.code.new,
+      type: MODULE_ASSETS.voteDelegate,
       amount: '0',
       fee: 1e8,
       senderId: accounts.genesis.address,
