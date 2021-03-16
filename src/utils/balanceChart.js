@@ -1,9 +1,9 @@
 import moment from 'moment';
+import { tokenMap } from '@constants';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 import { getTokenFromAddress } from './api/transaction';
 import i18n from '../i18n';
-import { tokenMap } from '../constants/tokens';
 
 const formats = {
   second: i18n.t('MMM DD YYYY hh:mm:ss'),

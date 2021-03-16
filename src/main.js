@@ -3,26 +3,23 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import { applyDeviceClass } from './utils/applyDeviceClass';
+import { applyDeviceClass } from '@utils/applyDeviceClass';
+import store from '@store';
+import externalLinks from '@utils/externalLinks';
+import ipcLocale from '@utils/ipcLocale';
+import i18n from './i18n';
 import App from './app';
-import store from './store';
-import i18n from './i18n'; // initialized i18next instance
-import externalLinks from './utils/externalLinks';
-import env from './constants/env';
-import ipcLocale from './utils/ipcLocale';
 
-if (env.development) {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render'); //eslint-disable-line
-  whyDidYouRender(React);
-}
-
-if (env.production) {
+if (PRODUCTION) {
   externalLinks.init();
 }
 
-if (!env.test) {
-  ipcLocale.init(i18n);
+if (!PRODUCTION) {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
+  whyDidYouRender(React);
 }
+
+ipcLocale.init(i18n);
 
 const rootElement = document.getElementById('app');
 

@@ -3,7 +3,7 @@ import ws, { subscribe, unsubscribe } from '../ws';
 import { extractAddress } from '../../account';
 import regex from '../../regex';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 export const httpPaths = {
   delegates: `${httpPrefix}/delegates`,

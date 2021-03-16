@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { isEmpty } from '@utils/helpers';
+import withData from '@utils/withData';
+import { getTransactions } from '@utils/api/transaction';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
-import { isEmpty } from '../../../../utils/helpers';
-import withData from '../../../../utils/withData';
-import { getTransactions } from '../../../../utils/api/transaction';
 import styles from './overview.css';
 
 const getProp = (dic, prop, defaultValue) => {

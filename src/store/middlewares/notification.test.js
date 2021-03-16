@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
+import { actionTypes } from '@constants';
 import middleware from './notification';
-import actionTypes from '../../constants/actions';
 import Notification from '../../utils/notification';
 
 describe('Notification middleware', () => {

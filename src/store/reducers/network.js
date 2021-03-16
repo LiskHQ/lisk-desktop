@@ -1,4 +1,4 @@
-import actionTypes from '../../constants/actions';
+import { actionTypes } from '@constants';
 
 const initialState = {
   status: {},

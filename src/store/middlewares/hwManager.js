@@ -1,13 +1,13 @@
 // istanbul ignore file
 import { toast } from 'react-toastify';
-import { accountLoggedOut, login } from '../../actions/account';
+import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@utils/hwManager';
+import { actionTypes } from '@constants';
+import { addSearchParamsToUrl } from '@utils/searchParams';
+import { accountLoggedOut, login } from '@actions';
 import {
   getDeviceList,
   getPublicKey,
 } from '../../../libs/hwManager/communication';
-import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '../../utils/hwManager';
-import actionTypes from '../../constants/actions';
-import { addSearchParamsToUrl } from '../../utils/searchParams';
 import history from '../../history';
 
 async function autoLogInIfNecessary(store) {

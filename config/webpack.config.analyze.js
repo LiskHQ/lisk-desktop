@@ -1,11 +1,8 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const { resolve } = require('path');
 const merge = require('webpack-merge');
-const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
-/* eslint-enable import/no-extraneous-dependencies */
 
 module.exports = merge(baseConfig, reactConfig, {
   output: {
@@ -15,12 +12,5 @@ module.exports = merge(baseConfig, reactConfig, {
   devtool: 'inline-source-map',
   plugins: [
     new BundleAnalyzerPlugin(),
-    new webpack.DefinePlugin({
-      PRODUCTION: false,
-      // because of https://fb.me/react-minification
-      'process.env': {
-        NODE_ENV: null,
-      },
-    }),
   ],
 });

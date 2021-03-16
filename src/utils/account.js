@@ -1,37 +1,35 @@
-import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
+import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 
-import { tokenMap } from '../constants/tokens';
+import { tokenMap } from '@constants';
 import regex from './regex';
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
  *
  * @param {String} passphrase - Valid Mnemonic passphrase
- * @returns {String|Boolean} - Extracted publicKey for a given valid passphrase or
- * false for a given invalid passphrase
+ * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
 export const extractPublicKey = (passphrase) => {
-  if (Lisk.passphrase.Mnemonic.validateMnemonic(passphrase)) {
-    return Lisk.cryptography.getKeys(passphrase).publicKey;
+  if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
+    return cryptography.getKeys(passphrase).publicKey.toString('hex');
   }
-  return false;
+  return undefined;
 };
 
 /**
  * Extracts Lisk address from given passphrase or publicKey
  *
  * @param {String} data - passphrase or public key
- * @returns {String|Boolean} - Extracted address for a given valid passphrase or
- * publicKey and false for a given invalid passphrase
+ * @returns {String?} - Extracted address for a given valid passphrase or publicKey
  */
 export const extractAddress = (data) => {
-  if (Lisk.passphrase.Mnemonic.validateMnemonic(data)) {
-    return Lisk.cryptography.getAddressFromPassphrase(data);
+  if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
+    return cryptography.getBase32AddressFromPassphrase(data).toString('hex');
   }
   if (regex.publicKey.test(data)) {
-    return Lisk.cryptography.getAddressFromPublicKey(data);
+    return cryptography.getBase32AddressFromPublicKey(data).toString('hex');
   }
-  return false;
+  return undefined;
 };
 
 export const getActiveTokenAccount = state => ({

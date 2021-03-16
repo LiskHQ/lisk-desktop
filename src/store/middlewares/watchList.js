@@ -1,5 +1,5 @@
-import actionTypes from '../../constants/actions';
-import { setInStorage } from '../../utils/localJSONStorage';
+import { actionTypes } from '@constants';
+import { setInStorage } from '@utils/localJSONStorage';
 
 const watchList = ({ getState }) => next => (action) => {
   switch (action.type) {

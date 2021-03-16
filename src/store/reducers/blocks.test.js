@@ -1,6 +1,6 @@
 import { expect } from 'chai';
+import { actionTypes } from '@constants';
 import blocksReducer from './blocks';
-import actionTypes from '../../constants/actions';
 
 
 describe('Reducer: blocks(state, action)', () => {

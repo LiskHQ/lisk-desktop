@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { subscribeToDevicesList } from '../../../utils/hwManager';
+import { subscribeToDevicesList } from '@utils/hwManager';
+import { routes } from '@constants';
 import Loading from './loading';
 import MultiStep from '../../shared/multiStep';
 import RequestPin from './requestPin';
 import SelectAccount from './selectAccount';
 import SelectDevice from './selectDevice';
 import UnlockDevice from './unlockDevice';
-import routes from '../../../constants/routes';
 import styles from './hwWalletLogin.css';
 
 const HardwareWalletLogin = ({

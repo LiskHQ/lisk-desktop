@@ -1,12 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import routes from '../../../../constants/routes';
+import { settingsUpdated } from '@actions';
+import { routes, tokenMap } from '@constants';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
-import { settingsUpdated } from '../../../../actions/settings';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
-import { tokenMap } from '../../../../constants/tokens';
 
 const TokenSelector = ({ token, history, t }) => {
   const dispatch = useDispatch();

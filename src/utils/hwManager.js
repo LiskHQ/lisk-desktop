@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import Lisk from '@liskhq/lisk-client';
+// import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import { getAccount } from './api/account';
 import {
@@ -38,26 +38,26 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
  * This function is used for sign a send transaction.
  */
 const signSendTransaction = async (account, data) => {
-  const { transfer, utils } = Lisk.transaction;
-  const transactionObject = {
-    ...transfer(data),
-    senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,
-  };
+  // const { transfer, utils } = Lisk.transaction;
+  // const transactionObject = {
+  //   ...transfer(data),
+  //   senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,
+  // };
 
-  const transaction = {
-    deviceId: account.hwInfo.deviceId,
-    index: account.hwInfo.derivationIndex,
-    tx: transactionObject,
-  };
+  // const transaction = {
+  //   deviceId: account.hwInfo.deviceId,
+  //   index: account.hwInfo.derivationIndex,
+  //   tx: transactionObject,
+  // };
 
-  try {
-    const signature = await signTransaction(transaction);
-    const signedTransaction = { ...transactionObject, signature };
-    const result = { ...signedTransaction, id: utils.getTransactionId(signedTransaction) };
-    return result;
-  } catch (error) {
-    throw new Error(error);
-  }
+  // try {
+  //   const signature = await signTransaction(transaction);
+  //   const signedTransaction = { ...transactionObject, signature };
+  //   const result = { ...signedTransaction, id: utils.getTransactionId(signedTransaction) };
+  //   return result;
+  // } catch (error) {
+  //   throw new Error(error);
+  // }
 };
 
 /**

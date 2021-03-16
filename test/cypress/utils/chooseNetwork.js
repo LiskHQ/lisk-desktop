@@ -1,5 +1,4 @@
-import networks from '../../constants/networks';
-import ss from '../../constants/selectors';
+import { networks, ss } from '@constants';
 
 export default function chooseNetwork(network) {
   switch (network) {

@@ -1,6 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
+import { tokenMap } from '@constants';
 import { fromRawLsk } from '../../../../utils/lsk';
 import {
   getUnspentTransactionOutputs,
@@ -8,7 +9,6 @@ import {
   getTransactionFee,
   getTransactionBaseFees,
 } from '../../../../utils/api/transaction';
-import { tokenMap } from '../../../../constants/tokens';
 import Form from './formBtc';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';

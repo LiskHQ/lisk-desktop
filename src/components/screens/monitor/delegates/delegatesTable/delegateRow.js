@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { useDispatch } from 'react-redux';
-import routes from '../../../../../constants/routes';
+import { routes } from '@constants';
+import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
+import regex from '@utils/regex';
+import { addedToWatchList, removedFromWatchList } from '@actions';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import Icon from '../../../../toolbox/icon';
 import AccountVisual from '../../../../toolbox/accountVisual';
-import { formatAmountBasedOnLocale } from '../../../../../utils/formattedNumber';
-import regex from '../../../../../utils/regex';
 import styles from '../delegates.css';
 import DelegateWeight from './delegateWeight';
-import { addedToWatchList, removedFromWatchList } from '../../../../../actions/watchList';
 
 const roundStatus = {
   forging: 'Forging',

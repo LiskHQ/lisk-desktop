@@ -1,8 +1,8 @@
 import bitcoin from 'bitcoinjs-lib';
-import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
+import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
 import bip32 from 'bip32';
 
-import { tokenMap } from '../../../constants/tokens';
+import { tokenMap } from '@constants';
 import http from '../http';
 
 /**
@@ -13,7 +13,7 @@ import http from '../http';
  * @returns {String} derivation path
  */
 export const getDerivedPathFromPassphrase = (passphrase, network) => {
-  const seed = Lisk.passphrase.Mnemonic.mnemonicToSeedSync(passphrase);
+  const seed = LiskPassphrase.Mnemonic.mnemonicToSeedSync(passphrase);
   return bip32.fromSeed(seed, network.networks.BTC.network)
     .derivePath(network.networks.BTC.derivationPath);
 };

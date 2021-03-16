@@ -1,10 +1,10 @@
+import { tokenMap } from '@constants';
 import { subscribe, unsubscribe } from '../ws';
 import http from '../http';
-import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
 import { transformStringDateToUnixTimestamp } from '../../datetime';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 export const httpPaths = {
   block: `${httpPrefix}/blocks`,

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
+import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { loginTypes } from '@constants';
+import { signMessageByHW } from '@utils/hwManager';
 import styles from './signMessage.css';
 import Box from '../../toolbox/box';
 import BoxInfoText from '../../toolbox/box/infoText';
@@ -9,8 +11,6 @@ import BoxFooter from '../../toolbox/box/footer';
 import BoxHeader from '../../toolbox/box/header';
 import { AutoResizeTextarea } from '../../toolbox/inputs';
 import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons';
-import loginType from '../../../constants/loginTypes';
-import { signMessageByHW } from '../../../utils/hwManager';
 import LoadingIcon from '../hwWalletLogin/loadingIcon';
 
 const ConfirmationPending = ({ t, account }) => (
@@ -78,12 +78,12 @@ const ConfirmMessage = ({
   };
 
   const signUsingPassphrase = () => {
-    const signedMessage = Lisk.cryptography.signMessageWithPassphrase(
+    const signedMessage = cryptography.signMessageWithPassphrase(
       message,
       account.passphrase,
       account.publicKey,
     );
-    const result = Lisk.cryptography.printSignedMessage({
+    const result = cryptography.printSignedMessage({
       message,
       publicKey: account.publicKey,
       signature: signedMessage.signature,
@@ -96,7 +96,7 @@ const ConfirmMessage = ({
       account,
       message,
     });
-    const result = Lisk.cryptography.printSignedMessage({
+    const result = cryptography.printSignedMessage({
       message,
       publicKey: account.publicKey,
       signature: signedMessage,
@@ -105,17 +105,17 @@ const ConfirmMessage = ({
   };
 
   useEffect(() => {
-    if (account.loginType === loginType.passphrase.code) {
-      setSignature(signUsingPassphrase(Lisk));
+    if (account.loginType === loginTypes.passphrase.code) {
+      setSignature(signUsingPassphrase());
     } else {
-      signUsingHW(Lisk)
+      signUsingHW()
         .then(setSignature)
         .catch(setError);
     }
     return () => clearTimeout(ref.current);
   }, []);
 
-  const confirmationPending = account.loginType !== loginType.passphrase.code
+  const confirmationPending = account.loginType !== loginTypes.passphrase.code
     && !error && !signature;
 
   return (

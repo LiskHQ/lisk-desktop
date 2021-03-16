@@ -1,6 +1,7 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { isEmpty } from '@utils/helpers';
 import Box from '../../toolbox/box';
 import BoxHeader from '../../toolbox/box/header';
 import BoxContent from '../../toolbox/box/content';
@@ -11,7 +12,6 @@ import {
   Illustration, AmountAndDate, FeeAndConfirmation,
   DelegateUsername,
 } from './dataRows';
-import { isEmpty } from '../../../utils/helpers';
 import Dialog from '../../toolbox/dialog/dialog';
 import styles from './transactionDetails.css';
 

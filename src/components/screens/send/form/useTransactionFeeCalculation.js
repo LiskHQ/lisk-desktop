@@ -1,16 +1,15 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { tokenMap, minAccountBalance } from '@constants';
 import {
   getTransactionFee,
-} from '../../../../utils/api/transaction';
-import { toRawLsk } from '../../../../utils/lsk';
-import { tokenMap } from '../../../../constants/tokens';
-import { minBalance } from '../../../../constants/transactions';
+} from '@utils/api/transaction';
+import { toRawLsk } from '@utils/lsk';
 
 const calculateAvailableBalance = (balance, token) => {
   if (token !== tokenMap.LSK.key) return balance;
-  if (balance <= minBalance) return balance;
-  return balance - minBalance;
+  if (balance <= minAccountBalance) return balance;
+  return balance - minAccountBalance;
 };
 
 const useTransactionFeeCalculation = ({

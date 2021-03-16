@@ -1,5 +1,4 @@
-import actionTypes from '../../constants/actions';
-import accountConfig from '../../constants/account';
+import { actionTypes, account as accountConstants } from '@constants';
 
 /**
  *
@@ -20,11 +19,14 @@ const account = (state = {}, action) => {
         },
       };
     case actionTypes.passphraseUsed:
-      return { ...state, expireTime: new Date(action.data.getTime() + accountConfig.lockDuration) };
+      return {
+        ...state,
+        expireTime: new Date(action.data.getTime() + accountConstants.lockDuration),
+      };
     case actionTypes.accountLoggedIn:
       return {
         ...action.data,
-        expireTime: new Date(action.data.date.getTime() + accountConfig.lockDuration),
+        expireTime: new Date(action.data.date.getTime() + accountConstants.lockDuration),
         votes: state.votes,
       };
     case actionTypes.accountLoggedOut:
@@ -34,7 +36,7 @@ const account = (state = {}, action) => {
     case actionTypes.timerReset:
       return {
         ...state,
-        expireTime: new Date(action.data.getTime() + accountConfig.lockDuration),
+        expireTime: new Date(action.data.getTime() + accountConstants.lockDuration),
       };
     case actionTypes.accountLoading:
       return {

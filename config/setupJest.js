@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import chai from 'chai';
 import sinonChai from 'sinon-chai';
@@ -12,10 +11,8 @@ import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
 import ReactRouterDom from 'react-router-dom';
 import * as ReactRedux from 'react-redux';
-import { deepMergeObj } from '../src/utils/helpers';
-// TODO remove next line after upgrading node version to at least 7
-import 'es7-object-polyfill';
-import defaultState from '../test/constants/defaultState';
+import { defaultState } from '@constants';
+import { deepMergeObj } from '@utils/helpers';
 
 require('jest-localstorage-mock');
 
@@ -25,11 +22,9 @@ chai.use(sinonChai);
 chai.use(chaiEnzyme());
 chai.use(chaiAsPromised);
 sinonStubPromise(sinon);
-// eslint-disable-next-line no-undef
 jest.useFakeTimers();
 
 ReactRouterDom.Link = jest.fn(
-  // eslint-disable-next-line react/display-name
   ({
     children, to, activeClassName, ...props
   }) => (
@@ -38,7 +33,6 @@ ReactRouterDom.Link = jest.fn(
 );
 
 ReactRouterDom.withRouter = jest.fn((Component => (
-  // eslint-disable-next-line react/display-name
   props => (
     <Component {...{
       history: {
@@ -118,7 +112,6 @@ jest.mock('react-i18next', () => {
   }
   return {
     withTranslation: jest.fn(() => (Component => (
-      // eslint-disable-next-line react/display-name
       props => (
         <Component {...{
           ...props,

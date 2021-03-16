@@ -1,7 +1,7 @@
+import { MODULE_ASSETS } from '@constants';
 import { mountWithRouter } from '../../../../utils/testHelpers';
 import TransactionRow from './transactionRow';
 import accounts from '../../../../../test/constants/accounts';
-import transactionTypes from '../../../../constants/transactionTypes';
 
 describe('Single Transaction Component', () => {
   const unlockTx = {
@@ -35,7 +35,7 @@ describe('Single Transaction Component', () => {
       },
     );
     expect(wrapper).toContainMatchingElement('.transaction-image');
-    expect(wrapper.find('.transaction-address').text()).toEqual(transactionTypes().unlockToken.title);
+    expect(wrapper.find('.transaction-address').text()).toEqual(MODULE_ASSETS.unlockToken);
     expect(wrapper).toContainMatchingElement('.transaction-amount');
   });
 });
