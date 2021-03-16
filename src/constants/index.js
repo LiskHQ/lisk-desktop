@@ -3,7 +3,7 @@
 export * from './schemas';
 export { default as loginTypes } from './loginTypes';
 export { default as keyCodes } from './keyCodes';
-export { MODULE_ASSETS, maxAssetFee } from './moduleAssets';
+export * from './moduleAssets';
 export { DEFAULT_LIMIT } from './monitor';
 export { default as networks, networkKeys } from './networks';
 export { default as piwikOptions } from './piwik';
