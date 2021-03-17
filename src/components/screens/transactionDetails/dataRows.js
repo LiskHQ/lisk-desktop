@@ -29,7 +29,7 @@ export const Illustration = ({
   transaction,
 }) => {
   const TypeInfo = MODULE_ASSETS.getByCode(transaction.title);
-  if (transaction.title === MODULE_ASSETS().transfer.key) return null;
+  if (transaction.title === MODULE_ASSETS.transfer) return null;
   return (
     <BoxRow className={styles.summaryHeader}>
       <TransactionTypeFigure
@@ -63,7 +63,7 @@ export const Sender = ({
 export const Recipient = ({
   activeToken, network, transaction, t,
 }) => {
-  if (transaction.type !== MODULE_ASSETS().transfer.code.legacy) return null;
+  if (transaction.type !== MODULE_ASSETS.transfer) return null;
   return (
     <BoxRow className={styles.detailsWrapper}>
       <AccountInfo
@@ -104,7 +104,7 @@ export const AmountAndDate = ({
   if (
     transaction.amount === undefined
     && transaction.asset.amount === undefined
-    && transaction.type !== MODULE_ASSETS().unlockToken.code.new
+    && transaction.type !== MODULE_ASSETS.unlockToken
   ) {
     return null;
   }

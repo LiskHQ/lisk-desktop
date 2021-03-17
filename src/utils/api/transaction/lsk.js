@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
 
-import { tokenMap } from '@constants';
+import { tokenMap, MODULE_ASSETS } from '@constants';
 import { selectSchema } from '@utils/moduleAssets';
 import { MAX_ASSET_FEE } from '@constants/moduleAssets';
 
@@ -97,7 +97,7 @@ export const getTransactions = ({
   params,
   baseUrl,
 }) => {
-  const typeConfig = params.type && MODULE_ASSETS()[params.type];
+  const typeConfig = params.type && MODULE_ASSETS[params.type];
 
   // if type, correct the type and use WS
   if (typeConfig) {
@@ -156,17 +156,17 @@ export const getRegisteredDelegates = async ({ network }) => {
     network,
     params: { limit: 1 },
   });
-  const transactions = await getTransactions({
+  const responsetransactions = await getTransactions({
     network,
     params: { type: 'registerDelegate', limit: 100 },
   });
 
-  if (delegates.error || transactions.error) {
+  if (delegates.error || responsetransactions.error) {
     return Error('Error fetching data.');
   }
 
   // get number of registration in each month
-  const monthStats = transactions.data
+  const monthStats = responsetransactions.data
     .map((tx) => {
       const date = new Date(tx.timestamp * 1000);
       return `${date.getFullYear()}-${date.getMonth() + 1}`;

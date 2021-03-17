@@ -108,7 +108,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
 
   const [error, tx] = account.loginType === loginTypes.passphrase.code
     ? await to(create(
-      { ...data, network, transactionType: MODULE_ASSETS().transfer.key },
+      { ...data, network, transactionType: MODULE_ASSETS.transfer },
       activeToken,
     ))
     : await to(signSendTransaction(account, data));

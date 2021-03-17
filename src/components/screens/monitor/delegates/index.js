@@ -4,8 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { connect } from 'react-redux';
-
-import { getDelegates } from '@utils/api/delegate';
+import { getForgers, getDelegates } from '@utils/api/delegate';
 import { getNetworkStatus } from '@utils/api/network';
 import { getTransactions } from '@utils/api/transaction';
 import withData from '@utils/withData';
@@ -61,8 +60,8 @@ const ComposedDelegates = compose(
   withData(
     {
       [delegatesKey]: {
-        apiUtil: (network, params) => getDelegates(
-          { network, params: { ...params, status: 'active', limit: MAX_BLOCKS_FORGED } },
+        apiUtil: (network, params) => getForgers(
+          { network, params: { ...params, limit: MAX_BLOCKS_FORGED } },
         ),
         defaultData: [],
         autoload: true,
@@ -107,7 +106,7 @@ const ComposedDelegates = compose(
       votes: {
         apiUtil: (network, params) => getTransactions({
           network,
-          params: { ...params, type: MODULE_ASSETS().vote.code.new, sort: 'timestamp:desc' },
+          params: { ...params, type: MODULE_ASSETS.voteDelegate, sort: 'timestamp:desc' },
         }, tokenMap.LSK.key),
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,

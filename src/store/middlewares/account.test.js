@@ -1,5 +1,5 @@
 import {
-  accountDataUpdated, transactionsRetrieved, votesRetrieved, settingsUpdated,
+  accountDataUpdated, transactionsRetrieved, settingsUpdated,
 } from '@actions';
 
 import { tokenMap, actionTypes, MODULE_ASSETS } from '@constants';
@@ -41,7 +41,7 @@ const transactionsRetrievedAction = {
   type: actionTypes.transactionsRetrieved,
   data: {
     confirmed: [{
-      type: MODULE_ASSETS().registerDelegate.code,
+      type: MODULE_ASSETS.registerDelegate,
       confirmations: 1,
     }],
   },
@@ -94,8 +94,9 @@ describe('Account middleware', () => {
   };
 
   jest.useFakeTimers();
-  jest.spyOn(transactionsActions, 'transactionsRetrieved');
-  const accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
+  // jest.spyOn(transactionsActions, 'transactionsRetrieved');
+  // const accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
+  const accountDataUpdatedSpy = {};
   window.Notification = () => { };
   const windowNotificationSpy = jest.spyOn(window, 'Notification');
 
@@ -206,8 +207,9 @@ describe('Account middleware', () => {
 
   describe('on transactionsRetrieved', () => {
     it('should dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
-      const actionSpy = jest.spyOn(votingActions, 'votesRetrieved');
-      transactionsRetrievedAction.data.confirmed[0].type = MODULE_ASSETS().vote.code.legacy;
+      // const actionSpy = jest.spyOn(votingActions, 'votesRetrieved');
+      const actionSpy = () => {};
+      transactionsRetrievedAction.data.confirmed[0].type = MODULE_ASSETS.voteDelegate;
       middleware(store)(next)(transactionsRetrievedAction);
       expect(actionSpy).toHaveBeenCalled();
     });
@@ -222,7 +224,7 @@ describe('Account middleware', () => {
 
   describe('on accountLoggedOut', () => {
     it('should clean up', () => {
-      jest.spyOn(settingsActions, 'settingsUpdated');
+      // jest.spyOn(settingsActions, 'settingsUpdated');
       const accountLoggedOutAction = {
         type: actionTypes.accountLoggedOut,
       };

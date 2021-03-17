@@ -15,7 +15,7 @@ import useTransactionPriority from '../../send/form/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 
 const token = tokenMap.LSK.key;
-const txType = MODULE_ASSETS().registerDelegate.key;
+const txType = MODULE_ASSETS.registerDelegate;
 
 // eslint-disable-next-line max-statements
 const SelectNameAndFee = ({ account, ...props }) => {
