@@ -1,5 +1,5 @@
+import { actionTypes } from '@constants';
 import network from './network';
-import actionTypes from '../../constants/actions';
 
 
 describe('Reducer: network(state, action)', () => {

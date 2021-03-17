@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { AccountsPure } from './index';
 import accounts from '../../../../../test/constants/accounts';
 
-jest.mock('../../../../constants/monitor', () => ({ DEFAULT_LIMIT: 4 }));
+jest.mock('constants', () => ({ DEFAULT_LIMIT: 4 }));
 
 const accountsApiResponse = Object.values(accounts);
 

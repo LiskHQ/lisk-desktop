@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import TransactionPriority from '../../../shared/transactionPriority';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import transactionTypes from '../../../../constants/transactionTypes';
 import {
   calculateBalanceLockedInVotes,
   calculateUnlockableBalance,
   getActiveTokenAccount,
   getUnlockableUnlockingObjects,
-} from '../../../../utils/account';
+} from '@utils/account';
+import { MODULE_ASSETS } from '@constants/moduleAssets';
+import TransactionPriority from '../../../shared/transactionPriority';
+import useTransactionPriority from '../../send/form/useTransactionPriority';
+import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import Form from './form';
 import BalanceTable from './balanceTable';
 
-const txType = transactionTypes().unlockToken.key;
+const txType = MODULE_ASSETS.unlockToken;
 
 const LockedBalance = (props) => {
   const account = useSelector(state => getActiveTokenAccount(state));

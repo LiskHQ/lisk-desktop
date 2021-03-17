@@ -1,12 +1,10 @@
-import * as accountActions from '../../actions/account';
-import * as transactionsActions from '../../actions/transactions';
-import * as votingActions from '../../actions/voting';
-import * as settingsActions from '../../actions/settings';
-import * as transactionApi from '../../utils/api/transaction';
-import actionTypes from '../../constants/actions';
+import {
+  accountDataUpdated, transactionsRetrieved, settingsUpdated,
+} from '@actions';
+
+import { tokenMap, actionTypes, MODULE_ASSETS } from '@constants';
 import middleware from './account';
-import transactionTypes from '../../constants/transactionTypes';
-import { tokenMap } from '../../constants/tokens';
+import * as transactionApi from '../../utils/api/transaction';
 
 jest.mock('../../utils/api/transaction', () => ({
   getTransactions: jest.fn(),
@@ -43,7 +41,7 @@ const transactionsRetrievedAction = {
   type: actionTypes.transactionsRetrieved,
   data: {
     confirmed: [{
-      type: transactionTypes().registerDelegate.code,
+      type: MODULE_ASSETS.registerDelegate,
       confirmations: 1,
     }],
   },
@@ -96,8 +94,9 @@ describe('Account middleware', () => {
   };
 
   jest.useFakeTimers();
-  jest.spyOn(transactionsActions, 'transactionsRetrieved');
-  const accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
+  // jest.spyOn(transactionsActions, 'transactionsRetrieved');
+  // const accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
+  const accountDataUpdatedSpy = {};
   window.Notification = () => { };
   const windowNotificationSpy = jest.spyOn(window, 'Notification');
 
@@ -131,7 +130,7 @@ describe('Account middleware', () => {
       const promise = middleware(store)(next);
       promise(newBlockCreated).then(() => {
         jest.runOnlyPendingTimers();
-        expect(transactionsActions.transactionsRetrieved)
+        expect(transactionsRetrieved)
           .toHaveBeenCalledWith({
             address, filters: undefined, pendingTransactions: state.transactions.pending,
           });
@@ -208,8 +207,9 @@ describe('Account middleware', () => {
 
   describe('on transactionsRetrieved', () => {
     it('should dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
-      const actionSpy = jest.spyOn(votingActions, 'votesRetrieved');
-      transactionsRetrievedAction.data.confirmed[0].type = transactionTypes().vote.code.legacy;
+      // const actionSpy = jest.spyOn(votingActions, 'votesRetrieved');
+      const actionSpy = () => {};
+      transactionsRetrievedAction.data.confirmed[0].type = MODULE_ASSETS.voteDelegate;
       middleware(store)(next)(transactionsRetrievedAction);
       expect(actionSpy).toHaveBeenCalled();
     });
@@ -224,12 +224,12 @@ describe('Account middleware', () => {
 
   describe('on accountLoggedOut', () => {
     it('should clean up', () => {
-      jest.spyOn(settingsActions, 'settingsUpdated');
+      // jest.spyOn(settingsActions, 'settingsUpdated');
       const accountLoggedOutAction = {
         type: actionTypes.accountLoggedOut,
       };
       middleware(store)(next)(accountLoggedOutAction);
-      expect(settingsActions.settingsUpdated).toHaveBeenCalledWith(
+      expect(settingsUpdated).toHaveBeenCalledWith(
         { token: { active: tokenMap.LSK.key } },
       );
       expect(store.dispatch).toHaveBeenCalledWith({ type: actionTypes.emptyTransactionsData });
@@ -243,7 +243,7 @@ describe('Account middleware', () => {
         data: { token: { list: { BTC: true } } },
       };
       middleware(store)(next)(settingsUpdatedAction);
-      expect(accountActions.accountDataUpdated).toHaveBeenCalledWith('enabled');
+      expect(accountDataUpdated).toHaveBeenCalledWith('enabled');
       expect(store.dispatch).toHaveBeenCalled();
     });
   });

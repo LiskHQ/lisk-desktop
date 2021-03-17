@@ -1,7 +1,9 @@
-export const messageMaxLength = 64;
-export const minBalance = 5000000;
+const maxMessageLength = 64;
+const minAccountBalance = 5000000;
+const minFeePerByte = 1000;
 
-export default {
-  messageMaxLength,
-  minBalance,
+export {
+  maxMessageLength,
+  minAccountBalance,
+  minFeePerByte,
 };

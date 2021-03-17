@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { tokenMap } from '@constants';
+import { validateAddress } from '@utils/validators';
+import { getIndexOfBookmark } from '@utils/bookmarks';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
 import Fields from './fields';
 import ModalWrapper from '../modalWrapper';
-import { validateAddress } from '../../../../utils/validators';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import styles from './addBookmark.css';
-import { getIndexOfBookmark } from '../../../../utils/bookmarks';
-import { tokenMap } from '../../../../constants/tokens';
 import Icon from '../../../toolbox/icon';
-import { selectSearchParamValue, removeSearchParamsFromUrl } from '../../../../utils/searchParams';
 
 class AddBookmark extends React.Component {
   constructor(props) {

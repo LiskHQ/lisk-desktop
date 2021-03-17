@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { useDispatch } from 'react-redux';
-import routes from '../../../../../constants/routes';
+import { routes } from '@constants';
+import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
+import regex from '@utils/regex';
+import { addedToWatchList, removedFromWatchList } from '@actions';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import Icon from '../../../../toolbox/icon';
 import AccountVisual from '../../../../toolbox/accountVisual';
-import { formatAmountBasedOnLocale } from '../../../../../utils/formattedNumber';
-import regex from '../../../../../utils/regex';
 import styles from '../delegates.css';
 import DelegateWeight from './delegateWeight';
-import { addedToWatchList, removedFromWatchList } from '../../../../../actions/watchList';
 
 const roundStatus = {
   forging: 'Forging',
@@ -35,12 +35,13 @@ const delegateStatus = {
 };
 
 const getForgingTime = (data) => {
-  if (!data || data.time === -1) return '-';
+  if (!data || data.time === undefined) return '-';
   if (data.time === 0) return 'now';
-  const { time, tense } = data;
-  const minutes = time / 60 >= 1 ? `${Math.floor(time / 60)}m ` : '';
-  const seconds = time % 60 >= 1 ? `${time % 60}s` : '';
-  if (tense === 'future') {
+  const { time } = data;
+  const absTime = Math.abs(time);
+  const minutes = absTime / 60 >= 1 ? `${Math.floor(absTime / 60)}m ` : '';
+  const seconds = absTime % 60 >= 1 ? `${absTime % 60}s` : '';
+  if (data.time > 0) {
     return `in ${minutes}${seconds}`;
   }
   return `${minutes}${seconds} ago`;
@@ -132,7 +133,7 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
 );
 
 const DelegateStatus = ({ activeTab, data }) => {
-  const status = data.delegateWeight < 100000000000 ? 'non-eligible' : data.status;
+  const status = data.totalVotesReceived < 100000000000 ? 'non-eligible' : data.status;
   return (
     <span className={
       activeTab === 'watched'
@@ -202,7 +203,7 @@ const DelegateRow = ({
       </span> */}
       {activeTab !== 'sanctioned' && (
         <span className={`${grid['col-xs-2']}`}>
-          <DelegateWeight value={data.delegateWeight} />
+          <DelegateWeight value={data.totalVotesReceived} />
         </span>
       )}
       {(activeTab === 'active' || activeTab === 'watched') && (

@@ -1,13 +1,12 @@
 import React from 'react';
 import to from 'await-to-js';
 
-import TransactionSummary from '../../../shared/transactionSummary';
-import AccountVisual from '../../../toolbox/accountVisual';
-import { create } from '../../../../utils/api/transaction';
-import transactionTypes from '../../../../constants/transactionTypes';
-import { toRawLsk } from '../../../../utils/lsk';
+import { create } from '@utils/api/transaction';
+import { toRawLsk } from '@utils/lsk';
+import { tokenMap, MODULE_ASSETS } from '@constants';
 import styles from './summary.css';
-import { tokenMap } from '../../../../constants/tokens';
+import AccountVisual from '../../../toolbox/accountVisual';
+import TransactionSummary from '../../../shared/transactionSummary';
 
 class Summary extends React.Component {
   constructor(props) {
@@ -33,6 +32,8 @@ class Summary extends React.Component {
       network,
       nonce: account?.sequence?.nonce,
       transactionType: transactionTypes().registerDelegate.key,
+      nonce: account.nonce,
+      transactionType: MODULE_ASSETS.registerDelegate,
     };
 
     const [error, tx] = await to(

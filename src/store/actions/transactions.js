@@ -1,19 +1,13 @@
-/* eslint-disable max-lines */
 import to from 'await-to-js';
 
-import actionTypes from '../constants/actions';
-import { tokenMap } from '../constants/tokens';
-import transactionTypes from '../constants/transactionTypes';
-import { loadingStarted, loadingFinished } from './loading';
-import { extractAddress } from '../utils/account';
+import {
+  actionTypes, tokenMap, MODULE_ASSETS, loginTypes,
+} from '@constants';
+import { extractAddress } from '@utils/account';
+import { getTransactions, create, broadcast } from '@utils/api/transaction';
+import { signSendTransaction } from '@utils/hwManager';
 import { passphraseUsed } from './account';
-import loginTypes from '../constants/loginTypes';
-import { getTransactions, create, broadcast } from '../utils/api/transaction';
-import { signSendTransaction } from '../utils/hwManager';
-
-// ========================================= //
-//            ACTION CREATORS
-// ========================================= //
+import { loadingStarted, loadingFinished } from './loading';
 
 /**
  * Action trigger when user logout from the application
@@ -110,12 +104,11 @@ export const transactionCreated = data => async (dispatch, getState) => {
   const {
     account, settings, network,
   } = getState();
-  // const timeOffset = getTimeOffset(state.blocks.latestBlocks);
   const activeToken = settings.token.active;
 
   const [error, tx] = account.loginType === loginTypes.passphrase.code
     ? await to(create(
-      { ...data, network, transactionType: transactionTypes().transfer.key },
+      { ...data, network, transactionType: MODULE_ASSETS.transfer },
       activeToken,
     ))
     : await to(signSendTransaction(account, data));
@@ -177,7 +170,7 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
     if (activeToken !== tokenMap.BTC.key) {
       dispatch(addNewPendingTransaction({
         ...transaction,
-        title: transactionTypes.getByCode(transaction.type).key,
+        title: MODULE_ASSETS.getByCode(transaction.type).key,
         amount: transaction.asset.amount,
         recipientId: transaction.asset.recipientId,
       }));

@@ -2,7 +2,7 @@ import bitcoin from 'bitcoinjs-lib';
 import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
 import bip32 from 'bip32';
 
-import { tokenMap } from '../../../constants/tokens';
+import { tokenMap } from '@constants';
 import http from '../http';
 
 /**

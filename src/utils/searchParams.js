@@ -6,13 +6,15 @@
 export const parseSearchParams = (search) => {
   const searchParams = new URLSearchParams(search);
   const parsedParams = {};
-  // eslint-disable-next-line no-restricted-syntax
+
+  // eslint-disable-next-line no-restricted-syntax, no-unused-vars
   for (const [key, value] of searchParams.entries()) {
     const values = value.split(',');
     if (values.length > 1) {
       parsedParams[key] = values;
     } else { parsedParams[key] = value; }
   }
+
   return parsedParams;
 };
 

@@ -1,5 +1,6 @@
 // istanbul ignore file
 import React from 'react';
+import { colorPalette } from '@constants';
 import Box from '../../../../toolbox/box';
 import BoxHeader from '../../../../toolbox/box/header';
 import BoxContent from '../../../../toolbox/box/content';
@@ -9,7 +10,6 @@ import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './overview.css';
 import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
-import { colorPalette } from '../../../../../constants/chartConstants';
 
 const createChartData = (data, t) => {
   const list = {

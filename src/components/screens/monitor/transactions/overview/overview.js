@@ -1,18 +1,17 @@
 // istanbul ignore file
 import React, { useState } from 'react';
 import moment from 'moment';
+import { fromRawLsk } from '@utils/lsk';
+import { kFormatter } from '@utils/helpers';
+import { colorPalette, chartStyles, MODULE_ASSETS } from '@constants';
 import Box from '../../../../toolbox/box';
 import BoxTabs from '../../../../toolbox/tabs';
 import BoxHeader from '../../../../toolbox/box/header';
 import BoxContent from '../../../../toolbox/box/content';
-import transactionTypes from '../../../../../constants/transactionTypes';
 import { DoughnutChart, BarChart } from '../../../../toolbox/charts';
-import { fromRawLsk } from '../../../../../utils/lsk';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
-import { kFormatter } from '../../../../../utils/helpers';
 import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
-import { colorPalette, chartStyles } from '../../../../../constants/chartConstants';
 
 const options = {
   responsive: true,
@@ -143,7 +142,7 @@ const Overview = ({ t, txStats }) => {
   };
 
   const distributionChartData = {
-    labels: transactionTypes
+    labels: MODULE_ASSETS
       .getListOf('title')
       .map(item => item
         .replace('Second passphrase registration', '2nd passphrase reg.')
@@ -185,7 +184,7 @@ const Overview = ({ t, txStats }) => {
                 legend: {
                   display: true,
                   labels: {
-                    generateLabels: () => transactionTypes
+                    generateLabels: () => MODULE_ASSETS
                       .getListOf('title')
                       .map((label, i) => ({
                         text: label
@@ -206,7 +205,7 @@ const Overview = ({ t, txStats }) => {
           </div>
           <div className="hideOnLargeViewPort">
             <GuideTooltip>
-              {transactionTypes
+              {MODULE_ASSETS
                 .getListOf('title')
                 .map((label, i) => (
                   <GuideTooltipItem

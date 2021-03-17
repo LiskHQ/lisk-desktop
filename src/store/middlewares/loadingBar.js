@@ -1,13 +1,13 @@
-import actionsType from '../../constants/actions';
+import { actionTypes } from '@constants';
 
 const ignoredLoadingActionKeys = [
-  'transactions', // because this is called every 10 seconds and the app doesn't look good with so much loading going on.
+  'transactions',
 ];
 
 const loadingBarMiddleware = () => next => (action) => {
   switch (action.type) {
-    case actionsType.loadingStarted:
-    case actionsType.loadingFinished:
+    case actionTypes.loadingStarted:
+    case actionTypes.loadingFinished:
       if (ignoredLoadingActionKeys.indexOf(action.data) === -1) {
         next(action);
       }

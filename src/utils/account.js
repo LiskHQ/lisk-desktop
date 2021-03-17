@@ -1,28 +1,26 @@
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 
-import { tokenMap } from '../constants/tokens';
+import { tokenMap } from '@constants';
 import regex from './regex';
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
  *
  * @param {String} passphrase - Valid Mnemonic passphrase
- * @returns {String|Boolean} - Extracted publicKey for a given valid passphrase or
- * false for a given invalid passphrase
+ * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
 export const extractPublicKey = (passphrase) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
     return cryptography.getKeys(passphrase).publicKey.toString('hex');
   }
-  return false;
+  return undefined;
 };
 
 /**
  * Extracts Lisk address from given passphrase or publicKey
  *
  * @param {String} data - passphrase or public key
- * @returns {String|Boolean} - Extracted address for a given valid passphrase or
- * publicKey and false for a given invalid passphrase
+ * @returns {String?} - Extracted address for a given valid passphrase or publicKey
  */
 export const extractAddress = (data) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
@@ -31,7 +29,7 @@ export const extractAddress = (data) => {
   if (regex.publicKey.test(data)) {
     return cryptography.getBase32AddressFromPublicKey(data).toString('hex');
   }
-  return false;
+  return undefined;
 };
 
 export const getActiveTokenAccount = state => ({

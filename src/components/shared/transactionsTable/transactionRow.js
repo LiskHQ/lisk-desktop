@@ -1,15 +1,14 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { tokenMap, MODULE_ASSETS } from '@constants';
+import { getTxAmount } from '@utils/api/transaction/lsk';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
-import { tokenMap } from '../../../constants/tokens';
-import transactionTypes from '../../../constants/transactionTypes';
 import AccountVisualWithAddress from '../accountVisualWithAddress';
 import Icon from '../../toolbox/icon';
 import LiskAmount from '../liskAmount';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import DialogLink from '../../toolbox/dialog/link';
 import styles from './transactionsTable.css';
-import { getTxAmount } from '../../../utils/api/transaction/lsk';
 
 const roundSize = 103;
 
@@ -55,7 +54,7 @@ const TransactionRow = ({ data, className, t }) => (
         content={<LiskAmount val={data.fee} token={tokenMap.LSK.key} />}
         size="s"
       >
-        <p>{`${data.type} - ${transactionTypes.getByCode(data.title).title}`}</p>
+        <p>{`${data.type} - ${MODULE_ASSETS.getByCode(data.title).title}`}</p>
       </Tooltip>
     </span>
     <span className={grid['col-xs-1']}>

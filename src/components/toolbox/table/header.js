@@ -1,8 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { isReactComponent } from '@utils/helpers';
 import Tooltip from '../tooltip/tooltip';
 import styles from './table.css';
-import { isReactComponent } from '../../../utils/helpers';
 
 const Tip = ({ data }) => {
   if (!data || typeof data !== 'object' || isReactComponent(data.message)) return null;

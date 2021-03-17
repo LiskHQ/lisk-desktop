@@ -9,7 +9,7 @@ const mockHistory = {
   push: jest.fn(),
 };
 
-jest.mock('../../../constants/routes', () => ({
+jest.mock('constants', () => ({
   modals: {
     testDialog: {
       component: () => (

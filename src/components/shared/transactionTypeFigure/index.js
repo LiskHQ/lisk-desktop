@@ -1,9 +1,9 @@
 import React from 'react';
+import reg from '@utils/regex';
+import { MODULE_ASSETS } from '@constants';
 import AccountVisual from '../../toolbox/accountVisual';
 import Icon from '../../toolbox/icon';
-import reg from '../../../utils/regex';
 import styles from './transactionTypeFigure.css';
-import transactionTypes from '../../../constants/transactionTypes';
 
 const TransactionTypeFigure = ({
   transactionType, address, avatarSize = 40, className = '', icon,
@@ -18,7 +18,7 @@ const TransactionTypeFigure = ({
     <div className={`${styles.wrapper} ${className} transaction-image`}>
       { icon ? <Icon name={icon} className={styles.inOutIcon} /> : null }
       {
-        transactionType === transactionTypes().transfer.key
+        transactionType === MODULE_ASSETS.transfer
           ? renderAvatar()
           : <Icon name={transactionType || 'txDefault'} className={styles.transactionIcon} />
       }

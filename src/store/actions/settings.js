@@ -1,6 +1,6 @@
-import actionTypes from '../constants/actions';
-import { getFromStorage } from '../utils/localJSONStorage';
-import { initialState } from '../store/reducers/settings';
+import { actionTypes } from '@constants';
+import { getFromStorage } from '@utils/localJSONStorage';
+import { initialState } from '@store/reducers/settings';
 
 /**
  * An action to dispatch settingsRetrieved

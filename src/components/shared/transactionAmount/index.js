@@ -1,19 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { MODULE_ASSETS } from '@constants';
 import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
 import styles from './transactionAmount.css';
-import transactionTypes from '../../../constants/transactionTypes';
 
 const TransactionAmount = ({
   recipient, type, token, showRounded, showInt, host, amount,
 }) => {
   const isIncoming = host === recipient
-    || type === transactionTypes().unlockToken.code.new;
+    || type === MODULE_ASSETS.unlockToken;
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
-      { type === transactionTypes().transfer.code.new
-        || type === transactionTypes().unlockToken.code.new
+      { type === MODULE_ASSETS.transfer
+        || type === MODULE_ASSETS.unlockToken
         ? (
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <span className={isIncoming ? styles.receive : ''}>

@@ -2,19 +2,17 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
+import { MODULE_ASSETS, actionTypes, tokenMap } from '@constants';
+import { toRawLsk } from '@utils/lsk';
+import Piwik from '@utils/piwik';
+import { getUnlockableUnlockingObjects } from '@utils/account';
+import { create } from '@utils/api/transaction';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import BoxHeader from '../../../toolbox/box/header';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import { toRawLsk } from '../../../../utils/lsk';
-import Piwik from '../../../../utils/piwik';
-import { getUnlockableUnlockingObjects } from '../../../../utils/account';
-import { create } from '../../../../utils/api/transaction';
-import transactionTypes from '../../../../constants/transactionTypes';
-import actionTypes from '../../../../constants/actions';
 import LiskAmount from '../../../shared/liskAmount';
-import { tokenMap } from '../../../../constants/tokens';
 import styles from './lockedBalance.css';
 
 const ButtonTitle = ({ unlockableBalance, t }) => {
@@ -60,7 +58,7 @@ const Form = ({
     const [error, tx] = await to(
       create({
         ...txData,
-        transactionType: transactionTypes().unlockToken.key,
+        transactionType: MODULE_ASSETS.unlockToken,
         network,
       }, tokenMap.LSK.key),
     );

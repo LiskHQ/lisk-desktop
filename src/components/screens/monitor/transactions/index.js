@@ -1,10 +1,10 @@
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
+import withData from '@utils/withData';
+import { getTransactions } from '@utils/api/transaction';
+import { transformStringDateToUnixTimestamp } from '@utils/datetime';
+import { toRawLsk } from '@utils/lsk';
 import Transactions from './transactions';
-import withData from '../../../../utils/withData';
-import { getTransactions } from '../../../../utils/api/transaction';
-import { transformStringDateToUnixTimestamp } from '../../../../utils/datetime';
-import { toRawLsk } from '../../../../utils/lsk';
 
 const transformParams = params => Object.keys(params)
   .reduce((acc, item) => {

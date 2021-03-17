@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
+import { firstBlockTime } from '@constants';
 import { Input } from '../../toolbox/inputs';
-import { firstBlockTime } from '../../../constants/datetime';
 import Calendar from '../../toolbox/calendar/calendar';
 import Dropdown from '../../toolbox/dropdown/dropdown';
 import OutsideClickHandler from '../../toolbox/outsideClickHandler';

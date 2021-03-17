@@ -4,15 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { connect } from 'react-redux';
-
-import { getDelegates } from '../../../../utils/api/delegate';
-import { getNetworkStatus } from '../../../../utils/api/network';
-import { getTransactions } from '../../../../utils/api/transaction';
-import withData from '../../../../utils/withData';
-import withFilters from '../../../../utils/withFilters';
-import transactionTypes from '../../../../constants/transactionTypes';
-import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
-import { tokenMap } from '../../../../constants/tokens';
+import { getForgers, getDelegates } from '@utils/api/delegate';
+import { getNetworkStatus } from '@utils/api/network';
+import { getTransactions } from '@utils/api/transaction';
+import withData from '@utils/withData';
+import withFilters from '@utils/withFilters';
+import { MODULE_ASSETS, MAX_BLOCKS_FORGED, tokenMap } from '@constants';
 
 import Delegates from './delegates';
 
@@ -63,8 +60,8 @@ const ComposedDelegates = compose(
   withData(
     {
       [delegatesKey]: {
-        apiUtil: (network, params) => getDelegates(
-          { network, params: { ...params, status: 'active', limit: MAX_BLOCKS_FORGED } },
+        apiUtil: (network, params) => getForgers(
+          { network, params: { ...params, limit: MAX_BLOCKS_FORGED } },
         ),
         defaultData: [],
         autoload: true,
@@ -109,7 +106,7 @@ const ComposedDelegates = compose(
       votes: {
         apiUtil: (network, params) => getTransactions({
           network,
-          params: { ...params, type: transactionTypes().vote.code.new, sort: 'timestamp:desc' },
+          params: { ...params, type: MODULE_ASSETS.voteDelegate, sort: 'timestamp:desc' },
         }, tokenMap.LSK.key),
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,

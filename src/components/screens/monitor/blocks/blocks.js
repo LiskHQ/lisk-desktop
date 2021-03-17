@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import withFilters from '@utils/withFilters';
 import BlockFilterDropdown from './blockFilterDropdown';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
@@ -8,7 +9,6 @@ import FilterBar from '../../../shared/filterBar';
 import LoadLatestButton from '../../../shared/loadLatestButton';
 import Table from '../../../toolbox/table';
 import styles from './blocks.css';
-import withFilters from '../../../../utils/withFilters';
 import BlocksOverview from './blocksOverview';
 import BlockRow from './blockRow';
 import header from './tableHeader';

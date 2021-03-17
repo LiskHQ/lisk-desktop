@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
+import { routes } from '@constants';
 import accounts from '../../../../../test/constants/accounts';
-import routes from '../../../../constants/routes';
 import Votes from './votes';
 
 

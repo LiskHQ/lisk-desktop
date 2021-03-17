@@ -2,10 +2,10 @@
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import withData from '@utils/withData';
+import { getDelegates, getVoters } from '@utils/api/delegate';
+import { getBlocks } from '@utils/api/block';
 import DelegateProfile from './delegateProfile';
-import withData from '../../../../utils/withData';
-import { getDelegates, getVoters } from '../../../../utils/api/delegate';
-import { getBlocks } from '../../../../utils/api/block';
 
 const mapStateToProps = state => ({
   awaitingForgers: state.blocks.awaitingForgers,

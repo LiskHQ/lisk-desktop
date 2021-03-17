@@ -1,8 +1,7 @@
-import actionTypes from '../constants/actions';
-import { MAX_BLOCKS_FORGED } from '../constants/delegates';
-import { convertUnixSecondsToLiskEpochSeconds } from '../utils/datetime';
-import { getBlocks } from '../utils/api/block';
-import { getForgers } from '../utils/api/delegate';
+import { actionTypes, MAX_BLOCKS_FORGED } from '@constants';
+import { convertUnixSecondsToLiskEpochSeconds } from '@utils/datetime';
+import { getBlocks } from '@utils/api/block';
+import { getForgers } from '@utils/api/delegate';
 
 /**
  * Retrieves latest blocks from Lisk Service.
@@ -67,36 +66,34 @@ export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) =
   const forgedInRoundNum = latestBlocks[0].height % MAX_BLOCKS_FORGED;
   const awaitingForgers = nextForgers ?? await retrieveNextForgers(network);
   const forgingTimes = {};
+  const latestBlockTimestamp = latestBlocks[0].timestamp;
 
-  // First we set awaitingForgers as awaitingSlot or missedBlock
-  // depending if they are upfront the current round number
-  awaitingForgers
-    .forEach((item, index) => {
-      if (index >= forgedInRoundNum) {
-        forgingTimes[item.publicKey] = {
-          time: (index - forgedInRoundNum + 1) * 10,
-          status: 'awaitingSlot',
-          tense: 'future',
-        };
-      } else {
-        forgingTimes[item.publicKey] = {
-          time: -1,
-          status: 'missedBlock',
-          tense: 'past',
+  // First we iterate the latest blocks and set the forging time
+  latestBlocks
+    .slice(0, forgedInRoundNum)
+    .forEach((item) => {
+      if (!forgingTimes[item.generatorPublicKey]) {
+        forgingTimes[item.generatorPublicKey] = {
+          time: -(latestBlockTimestamp - item.timestamp),
+          status: 'forging',
         };
       }
     });
 
-  // Now we iterate the latest blocks and if we find some of the ones
-  // that we putted on missedBlock we set them to forging
-  latestBlocks
-    .slice(0, forgedInRoundNum)
+  // Now we set awaitingForgers as awaitingSlot if they are upfront
+  // of the current number and to missed block in case that they did
+  // not forge
+  awaitingForgers
     .forEach((item, index) => {
-      if (forgingTimes[item.generatorPublicKey]?.status === 'missedBlock') {
-        forgingTimes[item.generatorPublicKey] = {
-          time: index * 10,
-          status: 'forging',
-          tense: 'past',
+      if (index >= forgedInRoundNum) {
+        forgingTimes[item.publicKey] = {
+          time: item.nextForgingTime - latestBlockTimestamp,
+          status: 'awaitingSlot',
+        };
+      } else if (!forgingTimes[item.publicKey]) {
+        forgingTimes[item.publicKey] = {
+          time: undefined,
+          status: 'missedBlock',
         };
       }
     });

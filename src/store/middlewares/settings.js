@@ -1,16 +1,15 @@
-import actionsType from '../../constants/actions';
-import { pricesRetrieved } from '../../actions/service';
-import { emptyTransactionsData } from '../../actions/transactions';
-import { setInStorage } from '../../utils/localJSONStorage';
+import { actionTypes } from '@constants';
+import { setInStorage } from '@utils/localJSONStorage';
+import { pricesRetrieved, emptyTransactionsData } from '@actions';
 
 const settings = store => next => (action) => {
   const { token } = store.getState().settings;
   next(action);
   switch (action.type) {
-    case actionsType.networkConfigSet:
+    case actionTypes.networkConfigSet:
       store.dispatch(pricesRetrieved());
       break;
-    case actionsType.settingsUpdated:
+    case actionTypes.settingsUpdated:
       if (action.data.token && action.data.token.active !== token.active) {
         store.dispatch(emptyTransactionsData());
       }

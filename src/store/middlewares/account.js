@@ -1,24 +1,16 @@
 import {
-  accountDataUpdated,
-} from '../../actions/account';
+  networks, actionTypes, networkKeys, settings, MODULE_ASSETS, tokenMap,
+} from '@constants';
+import { fromRawLsk } from '@utils/lsk';
+import { getActiveTokenAccount } from '@utils/account';
+import { getAutoLogInData } from '@utils/login';
 import {
-  emptyTransactionsData,
-  transactionsRetrieved,
-} from '../../actions/transactions';
-import { settingsUpdated } from '../../actions/settings';
-import { fromRawLsk } from '../../utils/lsk';
-import { getActiveTokenAccount } from '../../utils/account';
-import { getAutoLogInData } from '../../utils/login';
-import { votesRetrieved } from '../../actions/voting';
-import { networkSelected, networkStatusUpdated } from '../../actions/network';
-import actionTypes from '../../constants/actions';
-import analytics from '../../utils/analytics';
+  settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
+  emptyTransactionsData, transactionsRetrieved, votesRetrieved,
+} from '@actions';
+import analytics from '@utils/analytics';
+import { getTransactions } from '@utils/api/transaction';
 import i18n from '../../i18n';
-import networks, { networkKeys } from '../../constants/networks';
-import settings from '../../constants/settings';
-import transactionTypes from '../../constants/transactionTypes';
-import { tokenMap } from '../../constants/tokens';
-import { getTransactions } from '../../utils/api/transaction';
 
 /**
  * After a new block is created and broadcasted
@@ -45,7 +37,7 @@ const getRecentTransactionOfType = (transactionsList, type) => (
 const votePlaced = (store, action) => {
   const voteTransaction = getRecentTransactionOfType(
     action.data.confirmed,
-    transactionTypes().vote.code.legacy,
+    MODULE_ASSETS.voteDelegate,
   );
 
   if (voteTransaction) {
@@ -56,7 +48,7 @@ const votePlaced = (store, action) => {
 const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
   transaction
   && transaction.recipientId === account.address
-  && transaction.type === transactionTypes().transfer.code.legacy
+  && transaction.type === MODULE_ASSETS.transfer
 ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {

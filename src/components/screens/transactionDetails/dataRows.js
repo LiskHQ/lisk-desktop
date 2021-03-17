@@ -1,16 +1,15 @@
 import React from 'react';
+import { tokenMap, MODULE_ASSETS } from '@constants';
+import { getTxAmount } from '@utils/api/transaction';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import TransactionTypeFigure from '../../shared/transactionTypeFigure';
-import { tokenMap } from '../../../constants/tokens';
 import AccountInfo from './accountInfo';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import DiscreetMode from '../../shared/discreetMode';
 import LiskAmount from '../../shared/liskAmount';
-import transactionTypes from '../../../constants/transactionTypes';
 import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
-import { getTxAmount } from '../../../utils/api/transaction';
 
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
@@ -29,8 +28,8 @@ const getTxAsset = (tx) => {
 export const Illustration = ({
   transaction,
 }) => {
-  const TypeInfo = transactionTypes.getByCode(transaction.title);
-  if (transaction.title === transactionTypes().transfer.key) return null;
+  const TypeInfo = MODULE_ASSETS.getByCode(transaction.title);
+  if (transaction.title === MODULE_ASSETS.transfer) return null;
   return (
     <BoxRow className={styles.summaryHeader}>
       <TransactionTypeFigure
@@ -45,7 +44,7 @@ export const Illustration = ({
 export const Sender = ({
   transaction, activeToken, network,
 }) => {
-  const { senderLabel } = transactionTypes.getByCode(transaction.type || 0);
+  const { senderLabel } = MODULE_ASSETS.getByCode(transaction.type || 0);
 
   return (
     <BoxRow className={styles.detailsWrapper}>
@@ -64,7 +63,7 @@ export const Sender = ({
 export const Recipient = ({
   activeToken, network, transaction, t,
 }) => {
-  if (transaction.type !== transactionTypes().transfer.code.legacy) return null;
+  if (transaction.type !== MODULE_ASSETS.transfer) return null;
   return (
     <BoxRow className={styles.detailsWrapper}>
       <AccountInfo
@@ -105,7 +104,7 @@ export const AmountAndDate = ({
   if (
     transaction.amount === undefined
     && transaction.asset.amount === undefined
-    && transaction.type !== transactionTypes().unlockToken.code.new
+    && transaction.type !== MODULE_ASSETS.unlockToken
   ) {
     return null;
   }
