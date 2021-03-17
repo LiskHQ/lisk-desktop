@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { maxMessageLength, MODULE_ASSETS } from '@constants';
 import { toRawLsk } from '@utils/lsk';
+import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';
 import { AutoResizeTextarea } from '../../../toolbox/inputs';
 import CircularProgress from '../../../toolbox/circularProgress/circularProgress';
 import FormBase from './formBase';
@@ -10,9 +11,6 @@ import styles from './form.css';
 import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
-import TransactionPriority from '../../../shared/transactionPriority';
-import useTransactionFeeCalculation from './useTransactionFeeCalculation';
-import useTransactionPriority from './useTransactionPriority';
 
 const txType = MODULE_ASSETS.transfer;
 
@@ -35,7 +33,7 @@ const FormLsk = (props) => {
     token,
     account,
     priorityOptions,
-    txData: {
+    transaction: {
       amount: toRawLsk(amount.value),
       txType,
       recipient: recipient.value,

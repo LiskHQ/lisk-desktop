@@ -3,7 +3,7 @@ import { tokenMap, networks } from '@constants';
 import { mountWithProps } from '../../../../utils/testHelpers';
 import LockedBalance from './index';
 import accounts from '../../../../../test/constants/accounts';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
+import useTransactionPriority from '../../../shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import { create } from '../../../../utils/api/transaction';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';

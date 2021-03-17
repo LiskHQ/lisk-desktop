@@ -7,9 +7,8 @@ import {
   getUnlockableUnlockingObjects,
 } from '@utils/account';
 import { MODULE_ASSETS } from '@constants/moduleAssets';
-import TransactionPriority from '../../../shared/transactionPriority';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
+import TransactionPriority, { useTransactionFeeCalculation } from '@shared/transactionPriority';
+import useTransactionPriority from '../../../shared/transactionPriority/useTransactionPriority';
 import Form from './form';
 import BalanceTable from './balanceTable';
 
@@ -32,7 +31,7 @@ const LockedBalance = (props) => {
     token,
     account,
     priorityOptions,
-    txData: {
+    transaction: {
       txType,
       senderPublicKey: account.publicKey,
       nonce: account.nonce,
