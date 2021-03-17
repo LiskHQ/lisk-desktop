@@ -31,8 +31,6 @@ class Summary extends React.Component {
       fee: toRawLsk(parseFloat(fee)),
       network,
       nonce: account?.sequence?.nonce,
-      transactionType: transactionTypes().registerDelegate.key,
-      nonce: account.nonce,
       transactionType: MODULE_ASSETS.registerDelegate,
     };
 
