@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { tokenMap, minAccountBalance } from '@constants';
 import {
   getTransactionFee,
@@ -7,70 +7,112 @@ import {
 import { toRawLsk } from '@utils/lsk';
 
 const calculateAvailableBalance = (balance, token) => {
-  if (token !== tokenMap.LSK.key) return balance;
-  if (balance <= minAccountBalance) return balance;
+  if (token !== tokenMap.LSK.key) {
+    return balance;
+  }
+  if (balance <= minAccountBalance) {
+    return balance;
+  }
   return balance - minAccountBalance;
 };
 
-const useTransactionFeeCalculation = ({
-  selectedPriority, txData, token, account, priorityOptions,
-}) => {
-  const network = useSelector(state => state.network);
+const initialFee = {
+  value: 0,
+  error: false,
+  feedback: '',
+};
 
-  const initialFee = {
-    value: 0,
-    error: false,
-    feedback: '',
-  };
-  const initialMaxAmount = {
+const getInitialState = account => ({
+  fee: initialFee,
+  minFee: initialFee,
+  maxAmount: {
     value: account.balance,
     error: false,
     feedback: '',
-  };
-  const [fee, setFee] = useState(initialFee);
-  const [maxAmount, setMaxAmount] = useState(initialMaxAmount);
-  const [minFee, setMinFee] = useState(initialFee);
+  },
+});
 
-  const setFeeState = async (param, name) => {
-    const res = await getTransactionFee(param, token);
-    if (name === 'fee') setFee(res);
-    else if (name === 'maxAmount') {
-      const availableBalance = calculateAvailableBalance(account.balance, token);
-      setMaxAmount({
-        ...res,
-        value: availableBalance - toRawLsk(res.value),
-      });
-    } else {
-      setMinFee(res);
+const actionTypes = {
+  setFee: 'SET_FEE',
+  setMinFee: 'SET_MIN_FEE',
+  setMaxAmount: 'SET_MAX_AMOUNT',
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case actionTypes.setFee:
+      return { ...state, fee: action.payload.response };
+
+    case actionTypes.setMinFee:
+      return { ...state, minFee: action.payload.response };
+
+    case actionTypes.setMaxAmount: {
+      const balance = action.payload.account.balance;
+      const token = action.payload.token;
+      const availableBalance = calculateAvailableBalance(balance, token);
+      const result = {
+        ...action.response,
+        value: availableBalance - toRawLsk(action.params.value),
+      };
+
+      return { ...state, ...result };
     }
+
+    default:
+      throw Error(`reducer not implemented for ${action}`);
+  }
+};
+
+const useTransactionFeeCalculation = ({
+  selectedPriority, transaction, token, account, priorityOptions,
+}) => {
+  const network = useSelector(state => state.network);
+  const [state, dispatch] = useReducer(reducer, account, getInitialState);
+
+  const findTransactionFee = async (actionType, params) => {
+    const response = await getTransactionFee(params, token);
+    dispatch({ type: actionType, payload: { response, account, token } });
   };
 
   useEffect(() => {
-    setFeeState({
-      token, account, network, txData, selectedPriority,
-    }, 'fee');
+    findTransactionFee(
+      actionTypes.setFee,
+      {
+        token, account, network, transaction, selectedPriority,
+      },
+    );
 
-    setFeeState({
-      token, account, network, txData: { ...txData, amount: account.balance }, selectedPriority,
-    }, 'maxAmount');
+    findTransactionFee(
+      actionTypes.setMaxAmount,
+      {
+        token,
+        account,
+        network,
+        selectedPriority,
+        transaction: { ...transaction, amount: account.balance },
+      },
+    );
 
-    setFeeState({
-      token,
-      account,
-      network,
-      txData,
-      selectedPriority: priorityOptions[0],
-    }, 'minFee');
+    findTransactionFee(
+      actionTypes.setMinFee,
+      {
+        token,
+        account,
+        network,
+        transaction,
+        selectedPriority: priorityOptions[0],
+      },
+    );
   }, [
-    txData.amount,
-    txData.data,
-    txData.recipient,
-    txData.username,
+    transaction.amount,
+    transaction.data,
+    transaction.recipient,
+    transaction.username,
     selectedPriority.selectedIndex,
     selectedPriority.value,
   ]);
 
-  return { fee, maxAmount, minFee };
+  return state;
 };
 
 export default useTransactionFeeCalculation;
