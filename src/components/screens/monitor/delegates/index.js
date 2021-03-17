@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { getForgers } from '@utils/api/delegate';
+import { getForgers, getDelegates } from '@utils/api/delegate';
 import { getNetworkStatus } from '@utils/api/network';
 import { getTransactions } from '@utils/api/transaction';
 import withData from '@utils/withData';

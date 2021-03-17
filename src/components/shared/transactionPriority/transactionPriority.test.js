@@ -24,7 +24,7 @@ describe('TransactionPriority', () => {
     setSelectedPriority: jest.fn(),
     fee,
     setCustomFee: jest.fn(),
-    txType: MODULE_ASSETS().transfer.key,
+    txType: MODULE_ASSETS.transfer,
     loadError: false,
     isloading: false,
   };

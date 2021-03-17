@@ -205,8 +205,8 @@ describe('API: LSK Transactions', () => {
 
     it('should return amount of votes in Beddows', () => {
       const tx = {
-        title: MODULE_ASSETS().vote.key,
-        type: MODULE_ASSETS().vote.code.new,
+        title: MODULE_ASSETS.voteDelegate,
+        type: MODULE_ASSETS.voteDelegate,
         asset: {
           votes: [
             {
@@ -224,8 +224,8 @@ describe('API: LSK Transactions', () => {
 
     it('should return amount of unlock in Beddows', () => {
       const tx = {
-        title: MODULE_ASSETS().unlockToken.key,
-        type: MODULE_ASSETS().unlockToken.code.new,
+        title: MODULE_ASSETS.unlockToken,
+        type: MODULE_ASSETS.unlockToken,
         asset: {
           unlockingObjects: [
             {
