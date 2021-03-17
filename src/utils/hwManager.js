@@ -71,6 +71,7 @@ const signVoteTransaction = async (
   timeOffset,
   networkIdentifier,
 ) => {
+  // eslint-disable-next-line no-undef
   const { castVotes, utils } = Lisk.transaction;
 
   try {
