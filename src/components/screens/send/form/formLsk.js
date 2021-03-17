@@ -14,7 +14,7 @@ import TransactionPriority from '../../../shared/transactionPriority';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 import useTransactionPriority from './useTransactionPriority';
 
-const txType = MODULE_ASSETS().transfer.key;
+const txType = MODULE_ASSETS.transfer;
 
 // eslint-disable-next-line max-statements
 const FormLsk = (props) => {
