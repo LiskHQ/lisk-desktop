@@ -9,11 +9,11 @@ import AccountVisual from '@toolbox/accountVisual';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
-import styles from './overview.css';
-import NumericInfo from './numericInfo';
 import BoxEmptyState from '@toolbox/box/emptyState';
 import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
 import Icon from '@toolbox/icon';
+import NumericInfo from './numericInfo';
+import styles from './overview.css';
 
 const FORGERS_TO_SHOW = 6;
 

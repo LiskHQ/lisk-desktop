@@ -31,7 +31,7 @@ class Summary extends React.Component {
       fee: toRawLsk(parseFloat(fee)),
       network,
       nonce: account.nonce,
-      transactionType: MODULE_ASSETS().registerDelegate.key,
+      transactionType: MODULE_ASSETS.registerDelegate,
     };
 
     const [error, tx] = await to(

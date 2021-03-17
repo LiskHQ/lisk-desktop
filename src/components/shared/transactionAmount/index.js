@@ -9,11 +9,11 @@ const TransactionAmount = ({
   recipient, type, token, showRounded, showInt, host, amount,
 }) => {
   const isIncoming = host === recipient
-    || type === MODULE_ASSETS().unlockToken.code.new;
+    || type === MODULE_ASSETS.unlockToken;
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
-      { type === MODULE_ASSETS().transfer.code.new
-        || type === MODULE_ASSETS().unlockToken.code.new
+      { type === MODULE_ASSETS.transfer
+        || type === MODULE_ASSETS.unlockToken
         ? (
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <span className={isIncoming ? styles.receive : ''}>

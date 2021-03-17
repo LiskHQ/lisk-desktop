@@ -37,7 +37,7 @@ const getRecentTransactionOfType = (transactionsList, type) => (
 const votePlaced = (store, action) => {
   const voteTransaction = getRecentTransactionOfType(
     action.data.confirmed,
-    MODULE_ASSETS().vote.code.legacy,
+    MODULE_ASSETS.voteDelegate,
   );
 
   if (voteTransaction) {
@@ -48,7 +48,7 @@ const votePlaced = (store, action) => {
 const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
   transaction
   && transaction.recipientId === account.address
-  && transaction.type === MODULE_ASSETS().transfer.code.legacy
+  && transaction.type === MODULE_ASSETS.transfer
 ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {

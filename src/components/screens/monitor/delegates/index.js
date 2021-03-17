@@ -106,7 +106,7 @@ const ComposedDelegates = compose(
       votes: {
         apiUtil: (network, params) => getTransactions({
           network,
-          params: { ...params, type: MODULE_ASSETS().vote.code.new, sort: 'timestamp:desc' },
+          params: { ...params, type: MODULE_ASSETS.voteDelegate, sort: 'timestamp:desc' },
         }, tokenMap.LSK.key),
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,

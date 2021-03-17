@@ -97,7 +97,7 @@ export const getTransactions = ({
   params,
   baseUrl,
 }) => {
-  const typeConfig = params.type && MODULE_ASSETS()[params.type];
+  const typeConfig = params.type && MODULE_ASSETS[params.type];
 
   // if type, correct the type and use WS
   if (typeConfig) {
