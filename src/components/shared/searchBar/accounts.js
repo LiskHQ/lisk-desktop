@@ -5,7 +5,7 @@ import styles from './accountsAndDeletegates.css';
 const Accounts = ({
   accounts, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
-  const isDelegate = accounts.some(account => account.dpos?.delegate);
+  const isDelegate = accounts.some(account => account.dpos?.isDelegate);
 
   return (
     <div className={`${styles.wrapper} accounts`}>

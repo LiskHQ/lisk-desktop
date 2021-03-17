@@ -64,7 +64,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
   };
 
   const checkIfUserIsDelegate = () => {
-    if (account?.dpos?.delegate) {
+    if (account?.isDelegate) {
       setState({
         inputDisabled: true,
         error: t('You have already registered as a delegate.'),
