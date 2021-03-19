@@ -42,9 +42,9 @@ const SelectNameAndFee = ({ account, ...props }) => {
     account,
     priorityOptions,
     txData: {
-      txType,
+      moduleAssetType: txType,
       nonce: account?.sequence?.nonce,
-      senderPublicKey: account?.summary?.publicKey, // TODO set publicKey
+      senderPublicKey: account?.summary?.publicKey,
       username: state.nickname,
     },
   });

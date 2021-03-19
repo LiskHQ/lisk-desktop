@@ -50,7 +50,7 @@ const Form = ({
     const txData = {
       nonce: account?.sequence?.nonce,
       fee: `${toRawLsk(parseFloat(selectedFee))}`,
-      passphrase: account.passphrase, // TODO set passphrase
+      passphrase: account.passphrase,
       unlockingObjects: getUnlockableUnlockingObjects(account?.dpos?.unlocking, currentBlockHeight),
       network,
     };
