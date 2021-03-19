@@ -12,7 +12,7 @@ import useTransactionPriority from '../../../shared/transactionPriority/useTrans
 import Form from './form';
 import BalanceTable from './balanceTable';
 
-const txType = MODULE_ASSETS.unlockToken;
+const moduleAssetType = MODULE_ASSETS.unlockToken;
 
 const LockedBalance = (props) => {
   const account = useSelector(state => getActiveTokenAccount(state));
@@ -32,7 +32,7 @@ const LockedBalance = (props) => {
     account,
     priorityOptions,
     transaction: {
-      txType,
+      moduleAssetType,
       senderPublicKey: account.publicKey,
       nonce: account.nonce,
       passphrase: account.passphrase,

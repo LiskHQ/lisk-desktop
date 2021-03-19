@@ -12,7 +12,7 @@ import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
 
-const txType = MODULE_ASSETS.transfer;
+const moduleAssetType = MODULE_ASSETS.transfer;
 
 // eslint-disable-next-line max-statements
 const FormLsk = (props) => {
@@ -34,10 +34,10 @@ const FormLsk = (props) => {
     account,
     priorityOptions,
     transaction: {
+      moduleAssetType,
       amount: toRawLsk(amount.value),
-      txType,
-      recipient: recipient.value,
-      nonce: account.nonce,
+      recipientAddress: recipient.value,
+      nonce: account.sequence.nonce,
       senderPublicKey: account.publicKey,
       data: reference.value,
     },
@@ -106,7 +106,7 @@ const FormLsk = (props) => {
         fee={fee}
         minFee={minFee.value}
         customFee={customFee ? customFee.value : undefined}
-        txType={txType}
+        moduleAssetType={moduleAssetType}
         setCustomFee={changeCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}

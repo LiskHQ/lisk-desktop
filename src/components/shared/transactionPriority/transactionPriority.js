@@ -48,7 +48,7 @@ const isCustomFeeValid = (value, hardCap, minFee) => {
 const TransactionPriority = ({
   t,
   token,
-  txType,
+  moduleAssetType,
   fee,
   minFee,
   customFee,
@@ -65,7 +65,7 @@ const TransactionPriority = ({
 
   let maxFee = 0;
   if (token === tokenMap.LSK.key) {
-    maxFee = MAX_ASSET_FEE[txType];
+    maxFee = MAX_ASSET_FEE[moduleAssetType];
   }
 
   const onClickPriority = (e) => {
@@ -221,7 +221,7 @@ TransactionPriority.propTypes = {
   fee: PropTypes.object,
   customFee: PropTypes.number,
   minFee: PropTypes.number,
-  txType: PropTypes.string,
+  moduleAssetType: PropTypes.string,
   className: PropTypes.string,
 };
 

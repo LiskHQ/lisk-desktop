@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { transactions } from '@liskhq/lisk-client';
+import { cryptography, transactions } from '@liskhq/lisk-client';
 
 import { tokenMap, MODULE_ASSETS } from '@constants';
 import { selectSchema } from '@utils/moduleAssets';
@@ -9,13 +9,12 @@ import http from '../http';
 import ws from '../ws';
 import { getDelegates } from '../delegate';
 import regex from '../../regex';
-import { fromRawLsk } from '../../lsk';
 import { validateAddress } from '../../validators';
 
 const httpPrefix = '/api/v2';
 
 const httpPaths = {
-  feeEstimates: `${httpPrefix}/fee_estimates`,
+  fees: `${httpPrefix}/fees`,
   transactions: `${httpPrefix}/transactions`,
   transaction: `${httpPrefix}/transactions`,
   transactionStats: `${httpPrefix}/transactions/statistics`,
@@ -263,6 +262,7 @@ export const create = ({
     nonce: BigInt(nonce),
     fee: BigInt(fee),
     asset: {
+      // @todo convert this also
       recipientAddress: Buffer.from(recipientId, 'hex'),
       amount: BigInt(amount),
       data,
@@ -334,7 +334,7 @@ export const broadcast = ({ signedTransaction, network }) => {
  */
 export const getTransactionBaseFees = network =>
   http({
-    path: httpPaths.feeEstimates,
+    path: httpPaths.fees,
     searchParams: {},
     network,
   })
@@ -350,6 +350,10 @@ export const getTransactionBaseFees = network =>
 
 export const minFeePerByte = 1000;
 
+const DUMMY_RECIPIENT_ADDRESS = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+const DEFAULT_NUMBER_OF_SIGNATURES = 1;
+const DEFAULT_SIGNATURE_BYTE_SIZE = 64;
+
 /**
  * Returns the actual tx fee based on given tx details
  * and selected processing speed
@@ -360,28 +364,55 @@ export const minFeePerByte = 1000;
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
-  transaction, moduleAssetType, selectedPriority,
+  transaction, selectedPriority,
 }) => {
-  const schema = selectSchema(moduleAssetType);
-  const minFee = transactions.computeMinFee(schema, transaction);
+  const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
+  const {
+    moduleAssetType, senderPublicKey, nonce, amount, recipientAddress, data,
+  } = transaction;
+  const [moduleID, assetID] = moduleAssetType.split(':');
+  const schema = selectSchema(moduleAssetType);
   const maxAssetFee = MAX_ASSET_FEE[moduleAssetType];
 
-  // Tie breaker is only meant for Medium and high processing speeds
+  const transactionObject = {
+    moduleID,
+    assetID,
+    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
+    nonce: BigInt(nonce),
+    asset: {
+      recipientAddress: cryptography
+        .getAddressFromBase32Address(recipientAddress || DUMMY_RECIPIENT_ADDRESS),
+      amount: BigInt(amount),
+      data,
+    },
+  };
+
+  const minFee = transactions.computeMinFee(schema, transactionObject);
+
+  // tie breaker is only meant for medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : minFeePerByte * feePerByte * Math.random();
 
-  const size = transaction.getBytes().length;
-  let value = minFee + feePerByte * size + tieBreaker;
+  const size = transactions.getBytes(schema, {
+    ...transactionObject,
+    signatures: new Array(numberOfSignatures).fill(
+      Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE),
+    ),
+  }).length;
 
-  if (value > maxAssetFee) {
-    value = maxAssetFee;
+  let fee = minFee + BigInt(size * feePerByte) + BigInt(tieBreaker);
+
+  const maxFee = BigInt(maxAssetFee);
+  if (fee > maxFee) {
+    fee = maxFee;
   }
 
-  const roundedValue = parseFloat(Number(fromRawLsk(value)).toFixed(8));
+  const roundedValue = transactions.convertBeddowsToLSK(fee.toString());
+
   const feedback = transaction.amount === ''
     ? '-'
-    : `${(value ? '' : 'Invalid amount')}`;
+    : `${(roundedValue ? '' : 'Invalid amount')}`;
 
   return {
     value: roundedValue,
