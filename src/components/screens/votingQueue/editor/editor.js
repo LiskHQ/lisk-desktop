@@ -127,7 +127,7 @@ const Editor = ({
   });
 
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
-  const feedback = validateVotes(votes, account?.token?.balance, fee.value, t);
+  const feedback = validateVotes(votes, account.token?.balance, fee.value, t);
 
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 

@@ -85,7 +85,7 @@ const ConfirmMessage = ({
     );
     const result = cryptography.printSignedMessage({
       message,
-      publicKey: account?.summary?.publicKey,
+      publicKey: account.summary?.publicKey,
       signature: signedMessage.signature,
     });
     return result;
@@ -98,7 +98,7 @@ const ConfirmMessage = ({
     });
     const result = cryptography.printSignedMessage({
       message,
-      publicKey: account?.summary?.publicKey,
+      publicKey: account.summary?.publicKey,
       signature: signedMessage,
     });
     return result;
