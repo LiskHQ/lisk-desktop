@@ -22,18 +22,15 @@ const Overview = ({
   t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
-  const address = getProp(account, 'address', '');
-  const publicKey = getProp(account, 'publicKey', ''); // TODO set publickKey
-  const balance = account?.token?.balance || 0;
+  const address = account?.summary?.address;
+  const publicKey = account?.summary?.publicKey;
+  const balance = account?.summary?.balance || 0;
   const { confirmed } = useSelector(state => state.transactions);
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );
   const host = useSelector(
-    state => (state.account
-      && state.account.info
-      && state.account.info[activeToken]
-      && state.account.info[activeToken].address) || '',
+    state => (state.account?.info[activeToken]?.summary?.address || ''),
   );
 
   useEffect(() => {
