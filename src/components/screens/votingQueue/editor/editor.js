@@ -121,7 +121,7 @@ const Editor = ({
     txData: {
       txType,
       nonce: account?.sequence?.nonce,
-      senderPublicKey: account.publicKey,
+      senderPublicKey: account?.summary?.publicKey,
       votes: normalizedVotes,
     },
   });

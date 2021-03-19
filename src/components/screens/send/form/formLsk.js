@@ -40,7 +40,7 @@ const FormLsk = (props) => {
       txType,
       recipient: recipient.value,
       nonce: account?.sequence?.nonce,
-      senderPublicKey: account.publicKey, // TODO set publicKey
+      senderPublicKey: account?.summary?.publicKey,
       data: reference.value,
     },
   });

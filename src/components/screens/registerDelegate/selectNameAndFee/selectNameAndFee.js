@@ -44,7 +44,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
     txData: {
       txType,
       nonce: account?.sequence?.nonce,
-      senderPublicKey: account.publicKey, // TODO set publicKey
+      senderPublicKey: account?.summary?.publicKey, // TODO set publicKey
       username: state.nickname,
     },
   });

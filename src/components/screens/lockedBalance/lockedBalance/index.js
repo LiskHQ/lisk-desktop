@@ -34,7 +34,7 @@ const LockedBalance = (props) => {
     priorityOptions,
     txData: {
       txType,
-      senderPublicKey: account.publicKey, // TODO set public key
+      senderPublicKey: account?.summary?.publicKey, // TODO set public key
       nonce: account?.sequence?.nonce,
       passphrase: account.passphrase, // TODO set passphrase
       unlockingObjects: getUnlockableUnlockingObjects(account?.dpos?.unlocking, currentBlockHeight),
