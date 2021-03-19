@@ -10,13 +10,16 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
+import {
+  useAccount, useActiveToken, useSettings, useTransactions,
+} from '../../../hooks/selectors';
 
 const Wallet = ({ t, history }) => {
   const dispatch = useDispatch();
-  const account = useSelector(state => state.account);
-  const activeToken = useSelector(state => state.settings.token.active);
-  const { discreetMode } = useSelector(state => state.settings);
-  const { confirmed, pending } = useSelector(state => state.transactions);
+  const account = useAccount();
+  const activeToken = useActiveToken();
+  const { discreetMode } = useSettings();
+  const { confirmed, pending } = useTransactions();
 
   useEffect(() => {
     if (!confirmed.length && account.info && !isEmpty(account.info)) {

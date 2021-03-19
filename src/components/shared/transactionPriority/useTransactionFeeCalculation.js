@@ -24,27 +24,27 @@ const useTransactionFeeCalculation = ({
       },
     );
 
-    findTransactionFee(
-      actionTypes.setMaxAmount,
-      {
-        token,
-        account,
-        network,
-        selectedPriority,
-        transaction: { ...transaction, amount: account.balance },
-      },
-    );
+    // findTransactionFee(
+    //   actionTypes.setMaxAmount,
+    //   {
+    //     token,
+    //     account,
+    //     network,
+    //     selectedPriority,
+    //     transaction: { ...transaction, amount: account.balance },
+    //   },
+    // );
 
-    findTransactionFee(
-      actionTypes.setMinFee,
-      {
-        token,
-        account,
-        network,
-        transaction,
-        selectedPriority: priorityOptions[0],
-      },
-    );
+    // findTransactionFee(
+    //   actionTypes.setMinFee,
+    //   {
+    //     token,
+    //     account,
+    //     network,
+    //     transaction,
+    //     selectedPriority: priorityOptions[0],
+    //   },
+    // );
   }, [
     transaction.amount,
     transaction.data,

@@ -3,32 +3,23 @@ import { useSelector } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { isEmpty } from '@utils/helpers';
 import withData from '@utils/withData';
 import { getTransactions } from '@utils/api/transaction';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
 import styles from './overview.css';
-
-const getProp = (dic, prop, defaultValue) => {
-  if (!dic || isEmpty(dic)) {
-    return defaultValue;
-  }
-  return dic[prop];
-};
+import { selectBookmark, selectLoggedInAccount, selectTransactions } from '../../../../store/selectors';
 
 const Overview = ({
   t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
-  const address = account.info.LSK.summary.address;
-  const publicKey = getProp(account, 'publicKey', '');
-  const balance = getProp(account, 'balance', 0);
-  const { confirmed } = useSelector(state => state.transactions);
-  const bookmark = useSelector(
-    state => state.bookmarks[activeToken].find(item => (item.address === address)),
-  );
+  const { address, publicKey, balance } = selectLoggedInAccount();
+
+  const { confirmed } = selectTransactions();
+  const bookmark = selectBookmark(address)();
+
   const host = useSelector(
     state => (state.account
       && state.account.info
