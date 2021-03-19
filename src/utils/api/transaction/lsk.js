@@ -1,7 +1,10 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
 
-import { tokenMap, MODULE_ASSETS } from '@constants';
+import {
+  tokenMap, MODULE_ASSETS, minFeePerByte, DEFAULT_NUMBER_OF_SIGNATURES,
+  DUMMY_RECIPIENT_ADDRESS, DEFAULT_SIGNATURE_BYTE_SIZE,
+} from '@constants';
 import { selectSchema } from '@utils/moduleAssets';
 import { extractAddress } from '@utils/account';
 import { MAX_ASSET_FEE } from '@constants/moduleAssets';
@@ -235,6 +238,32 @@ export const getTxAmount = (transaction) => {
   return amount;
 };
 
+const createTransactionObject = (rawTransction, moduleAssetType) => {
+  const [moduleID, assetID] = moduleAssetType.split(':');
+  const {
+    senderPublicKey, nonce, amount, recipientAddress, data, fee, signatures,
+  } = rawTransction;
+
+  const transaction = {
+    moduleID,
+    assetID,
+    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
+    nonce: BigInt(nonce),
+    fee,
+    signatures,
+  };
+
+  if (moduleAssetType === MODULE_ASSETS.transfer) {
+    transaction.asset = {
+      recipientAddress: extractAddress(recipientAddress),
+      amount: BigInt(amount),
+      data,
+    };
+  }
+
+  return transaction;
+};
+
 /**
  * creates a new transaction
  *
@@ -249,26 +278,12 @@ export const create = ({
   ...transactionObject
 }) => new Promise((resolve, reject) => {
   const { networkIdentifier } = network.networks.LSK;
-
-  const [moduleID, assetID] = moduleAssetType.split(':');
   const {
-    passphrase, senderPublicKey, nonce, amount, recipientId, data, fee,
+    passphrase, rawTransction,
   } = transactionObject;
 
   const schema = selectSchema(moduleAssetType);
-  const transaction = {
-    moduleID,
-    assetID,
-    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
-    nonce: BigInt(nonce),
-    fee: BigInt(fee),
-    asset: {
-      // @todo convert this also
-      recipientAddress: Buffer.from(recipientId, 'hex'),
-      amount: BigInt(amount),
-      data,
-    },
-  };
+  const transaction = createTransactionObject(rawTransction, moduleAssetType);
 
   try {
     const signedTransaction = transactions.signTransaction(
@@ -348,13 +363,6 @@ export const getTransactionBaseFees = network =>
       };
     });
 
-
-export const minFeePerByte = 1000;
-
-const DUMMY_RECIPIENT_ADDRESS = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
-const DEFAULT_NUMBER_OF_SIGNATURES = 1;
-const DEFAULT_SIGNATURE_BYTE_SIZE = 64;
-
 /**
  * Returns the actual tx fee based on given tx details
  * and selected processing speed
@@ -370,25 +378,18 @@ export const getTransactionFee = async ({
   const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
   const {
-    moduleAssetType, senderPublicKey, nonce, amount, recipientAddress, data,
+    moduleAssetType, ...rawTransction
   } = transaction;
-  const [moduleID, assetID] = moduleAssetType.split(':');
+
   const schema = selectSchema(moduleAssetType);
   const maxAssetFee = MAX_ASSET_FEE[moduleAssetType];
 
-  const transactionObject = {
-    moduleID,
-    assetID,
-    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
-    nonce: BigInt(nonce),
-    asset: {
-      recipientAddress: extractAddress(recipientAddress || DUMMY_RECIPIENT_ADDRESS),
-      amount: BigInt(amount),
-      data,
-    },
-  };
+  const transactionObject = createTransactionObject(rawTransction, moduleAssetType);
 
-  const minFee = transactions.computeMinFee(schema, transactionObject);
+  const minFee = transactions.computeMinFee(schema, {
+    ...transactionObject,
+    signatures: undefined,
+  });
 
   // tie breaker is only meant for medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
