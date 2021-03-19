@@ -3,18 +3,18 @@ import {
 } from './schemas';
 
 const moduleAssets = {
-  transfer: 'token:transfer',
+  transfer: '2:0',
   // reclaimLSK: 'legacyAccount:reclaimLSK',
-  unlockToken: 'dpos:unlockToken',
-  voteDelegate: 'dpos:voteDelegate',
-  registerDelegate: 'dpos:registerDelegate',
-  registerMultisignatureGroup: 'keys:registerMultisignatureGroup',
+  unlockToken: '5:2',
+  voteDelegate: '5:1',
+  registerDelegate: '5:0',
+  registerMultisignatureGroup: '4:0',
 };
 
 const MODULE_ASSETS = Object.freeze(moduleAssets);
 
 const assetSchemaMap = {
-  [MODULE_ASSETS.trasfer]: TransferSchema,
+  [MODULE_ASSETS.transfer]: TransferSchema,
 
   // @todo verify, is this a simple transfer transaction? and can we use the same max fee
   // [MODULE_ASSETS.reclaimLSK]: ReclaimSchema,
@@ -29,7 +29,7 @@ const assetSchemaMap = {
 const ASSET_SCHEMA_MAP = Object.freeze(assetSchemaMap);
 
 const maxAssetFee = {
-  [MODULE_ASSETS.trasfer]: 1e7,
+  [MODULE_ASSETS.transfer]: 1e7,
 
   // @todo verify, is this a simple transfer transaction? and can we use the same max fee
   // [MODULE_ASSETS.reclaimLSK]: 1e7,
