@@ -1,8 +1,9 @@
 /* eslint-disable max-lines */
-import { cryptography, transactions } from '@liskhq/lisk-client';
+import { transactions } from '@liskhq/lisk-client';
 
 import { tokenMap, MODULE_ASSETS } from '@constants';
 import { selectSchema } from '@utils/moduleAssets';
+import { extractAddress } from '@utils/account';
 import { MAX_ASSET_FEE } from '@constants/moduleAssets';
 
 import http from '../http';
@@ -381,8 +382,7 @@ export const getTransactionFee = async ({
     senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
     nonce: BigInt(nonce),
     asset: {
-      recipientAddress: cryptography
-        .getAddressFromBase32Address(recipientAddress || DUMMY_RECIPIENT_ADDRESS),
+      recipientAddress: extractAddress(recipientAddress || DUMMY_RECIPIENT_ADDRESS),
       amount: BigInt(amount),
       data,
     },
