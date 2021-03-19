@@ -9,8 +9,8 @@ import { selectSearchParamValue } from '@utils/searchParams';
 import { isEmpty } from '@utils/helpers';
 import Overview from './overview';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
-import DelegateTab from './delegateProfile';
-import VotesTab from './votes';
+// import DelegateTab from './delegateProfile';
+// import VotesTab from './votes';
 import Transactions from './transactions';
 
 const Wallet = ({
@@ -42,7 +42,8 @@ const Wallet = ({
           tabId="transactions"
           address={selectSearchParamValue(history.location.search, 'address')}
         />
-        {/*{activeToken !== 'BTC' ? (
+        {/*
+        {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
             address={selectSearchParamValue(history.location.search, 'address')}
@@ -59,7 +60,7 @@ const Wallet = ({
               address={selectSearchParamValue(history.location.search, 'address')}
             />
           )
-          : null}*/}
+          : null} */}
       </TabsContainer>
     </section>
   );

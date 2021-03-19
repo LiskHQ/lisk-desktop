@@ -25,7 +25,6 @@ export const getNetworkStatus = ({
 });
 
 const getServiceUrl = ({ name, address = 'http://localhost:4000' }) => {
-  return 'http://service-v5.liskdev.net';
   if ([networkKeys.mainNet, networkKeys.testNet].includes(name)) {
     return networks[name].serviceUrl;
   }

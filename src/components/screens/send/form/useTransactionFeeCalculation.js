@@ -51,7 +51,11 @@ const useTransactionFeeCalculation = ({
     }, 'fee');
 
     setFeeState({
-      token, account, network, txData: { ...txData, amount: account?.token?.balance }, selectedPriority,
+      token,
+      account,
+      network,
+      txData: { ...txData, amount: account?.token?.balance },
+      selectedPriority,
     }, 'maxAmount');
 
     setFeeState({
