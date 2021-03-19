@@ -36,8 +36,7 @@ describe('Form', () => {
       t: v => v,
       account: {
         ...accounts.genesis,
-        nonce: '1',
-        balance: '5000000000',
+        token: { balance: '5000000000' },
       },
       bookmarks,
       network: {

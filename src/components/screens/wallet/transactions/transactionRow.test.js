@@ -6,7 +6,7 @@ import accounts from '../../../../../test/constants/accounts';
 describe('Single Transaction Component', () => {
   const unlockTx = {
     data: {
-      senderId: accounts.genesis.address,
+      senderId: accounts.genesis.summary.address,
       asset: {
         unlockingObjects: [
           {
@@ -30,7 +30,7 @@ describe('Single Transaction Component', () => {
       TransactionRow,
       {
         t: v => v,
-        host: accounts.genesis.address,
+        host: accounts.genesis.summary.address,
         data: unlockTx.data,
       },
     );

@@ -15,8 +15,10 @@ describe('Summary', () => {
     props = {
       t: i18n.t,
       account: {
-        address: accounts.second_passphrase_account.address,
-        secondPublicKey: accounts.second_passphrase_account.secondPublicKey,
+        summary: {
+          address: accounts.second_passphrase_account.address,
+          secondPublicKey: accounts.second_passphrase_account.secondPublicKey,
+        },
         hwInfo: {
           deviceModel: 'Ledger Nano S',
         },

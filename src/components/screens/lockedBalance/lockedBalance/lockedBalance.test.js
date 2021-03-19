@@ -57,9 +57,11 @@ describe('Unlock LSK modal', () => {
       info: {
         LSK: {
           ...accounts.genesis,
-          unlocking: initUnlocking,
-          votes: initVotes,
-          nonce: '178',
+          dpos: {
+            unlocking: initUnlocking,
+            sentVotes: initVotes,
+          },
+          sequence: { nonce: '178' },
         },
       },
     },
