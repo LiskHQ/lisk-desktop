@@ -22,7 +22,10 @@ const Overview = ({
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );
   const host = useSelector(
-    state => (state.account?.info[activeToken]?.summary?.address || ''),
+    state => (state.account
+      && state.account.info
+      && state.account.info[activeToken]
+      && state.account.info[activeToken].summary?.address) || '',
   );
 
   useEffect(() => {
