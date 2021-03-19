@@ -4,6 +4,7 @@ import { Redirect, Route } from 'react-router-dom';
 
 import Piwik from '@utils/piwik';
 import { routes } from '@constants';
+import { selectSearchParamValue } from '@utils/searchParams';
 import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
@@ -28,6 +29,7 @@ const CustomRoute = ({
     (state.account.info && state.account.info[settings.token.active]));
   const isNetworkSet = useSelector(checkNetwork);
   const { search = '' } = history.location;
+  const referrer = selectSearchParamValue(search, 'referrer');
 
   if (!isNetworkSet) {
     return null;
@@ -45,6 +47,10 @@ const CustomRoute = ({
         to={`${routes.login.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(/^\?/, '')}`}
       />
     );
+  }
+
+  if (referrer && isAuthenticated) {
+    return <Redirect to={referrer} />;
   }
 
   return (
