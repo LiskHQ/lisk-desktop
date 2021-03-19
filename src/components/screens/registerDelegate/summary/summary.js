@@ -27,11 +27,11 @@ class Summary extends React.Component {
     const data = {
       account,
       username: nickname,
-      passphrase: account.passphrase, // TODO set passphrase
+      passphrase: account.passphrase,
       fee: toRawLsk(parseFloat(fee)),
       network,
       nonce: account?.sequence?.nonce,
-      transactionType: MODULE_ASSETS.registerDelegate,
+      moduleAssetType: MODULE_ASSETS.registerDelegate,
     };
 
     const [error, tx] = await to(
