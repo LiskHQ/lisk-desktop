@@ -34,7 +34,7 @@ const MyAccount = ({
               <DiscreetMode>
                 <span className={styles.amounts}>
                   <LiskAmount
-                    val={coin.token === tokenMap.BTC.key ? coin.balance : coin?.summary?.balance}
+                    val={coin.token === tokenMap.BTC.key ? coin.balance : coin.summary?.balance}
                     token={coin.token === tokenMap.BTC.key ? coin.token : tokenMap.LSK.key}
                   />
                 </span>

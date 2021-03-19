@@ -21,7 +21,7 @@ const LockedBalance = (props) => {
   const currentBlockHeight = useSelector(state => state.blocks.latestBlocks[0].height || 0);
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   const unlockableBalance = calculateUnlockableBalance(
-    account?.dpos?.unlocking, currentBlockHeight,
+    account.dpos?.unlocking, currentBlockHeight,
   );
   const [customFee, setCustomFee] = useState();
   const [
@@ -36,10 +36,10 @@ const LockedBalance = (props) => {
     priorityOptions,
     txData: {
       moduleAssetType: txType,
-      senderPublicKey: account?.summary?.publicKey,
-      nonce: account?.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
+      nonce: account.sequence?.nonce,
       passphrase: account.passphrase,
-      unlockingObjects: getUnlockableUnlockingObjects(account?.dpos?.unlocking, currentBlockHeight),
+      unlockingObjects: getUnlockableUnlockingObjects(account.dpos?.unlocking, currentBlockHeight),
     },
   });
 

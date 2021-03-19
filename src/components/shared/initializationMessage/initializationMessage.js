@@ -16,8 +16,8 @@ export const InitializationMessageRenderer = ({
     settings.token.active === 'LSK'
     && account.info
     && account.info.LSK
-    && !(account.info.LSK?.summary?.publicKey
-      || account.info.LSK?.token?.balance === 0
+    && !(account.info.LSK.summary?.publicKey
+      || account.info.LSK.token?.balance === 0
       || pendingTransactions.length > 0)
   );
 

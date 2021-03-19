@@ -48,10 +48,10 @@ const Form = ({
     Piwik.trackingEvent('Send_UnlockTransaction', 'button', 'Next step');
     const selectedFee = customFee ? customFee.value : fee.value;
     const txData = {
-      nonce: account?.sequence?.nonce,
+      nonce: account.sequence?.nonce,
       fee: `${toRawLsk(parseFloat(selectedFee))}`,
       passphrase: account.passphrase,
-      unlockingObjects: getUnlockableUnlockingObjects(account?.dpos?.unlocking, currentBlockHeight),
+      unlockingObjects: getUnlockableUnlockingObjects(account.dpos?.unlocking, currentBlockHeight),
       network,
     };
 

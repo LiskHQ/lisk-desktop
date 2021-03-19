@@ -94,7 +94,7 @@ const AccountInfo = ({
                     component="addBookmark"
                     data={username ? {
                       formAddress: address,
-                      label: account?.dpos?.delegate?.username,
+                      label: account.dpos?.delegate?.username,
                       isDelegate: account.isDelegate,
                     } : {
                       formAddress: address,

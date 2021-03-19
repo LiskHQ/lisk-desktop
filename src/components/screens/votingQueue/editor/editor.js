@@ -120,8 +120,8 @@ const Editor = ({
     priorityOptions,
     txData: {
       txType,
-      nonce: account?.sequence?.nonce,
-      senderPublicKey: account?.summary?.publicKey,
+      nonce: account.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
       votes: normalizedVotes,
     },
   });

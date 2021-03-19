@@ -30,7 +30,7 @@ class Summary extends React.Component {
       passphrase: account.passphrase,
       fee: toRawLsk(parseFloat(fee)),
       network,
-      nonce: account?.sequence?.nonce,
+      nonce: account.sequence?.nonce,
       moduleAssetType: MODULE_ASSETS.registerDelegate,
     };
 

@@ -81,7 +81,7 @@ const ConfirmMessage = ({
     const signedMessage = cryptography.signMessageWithPassphrase(
       message,
       account.passphrase,
-      account?.summary?.publicKey,
+      account.summary?.publicKey,
     );
     const result = cryptography.printSignedMessage({
       message,

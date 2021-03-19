@@ -95,7 +95,7 @@ const Summary = ({
       passphrase: account.passphrase,
       senderPublicKey: account.info.LSK.publicKey,
       fee: String(fee),
-      nonce: account.info.LSK?.sequence?.nonce,
+      nonce: account.info.LSK.sequence?.nonce,
       votes: normalizedVotes,
     });
   };
