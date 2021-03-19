@@ -29,7 +29,7 @@ const assetSchemaMap = {
 const ASSET_SCHEMA_MAP = Object.freeze(assetSchemaMap);
 
 const maxAssetFee = {
-  [MODULE_ASSETS.trasfer]: 1e7,
+  [MODULE_ASSETS.transfer]: 1e7,
 
   // @todo verify, is this a simple transfer transaction? and can we use the same max fee
   // [MODULE_ASSETS.reclaimLSK]: 1e7,
