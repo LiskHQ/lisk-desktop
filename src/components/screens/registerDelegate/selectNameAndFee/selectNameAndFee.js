@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { getDelegate } from '@utils/api/delegate';
 import regex from '@utils/regex';
 import { tokenMap, MODULE_ASSETS } from '@constants';
+import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -10,9 +11,6 @@ import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './selectNameAndFee.css';
-import TransactionPriority from '../../../shared/transactionPriority/transactionPriority';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 
 const token = tokenMap.LSK.key;
 const txType = MODULE_ASSETS.registerDelegate;
@@ -41,7 +39,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
     token,
     account,
     priorityOptions,
-    txData: {
+    transaction: {
       txType,
       nonce: account.nonce,
       senderPublicKey: account.publicKey,
@@ -54,7 +52,6 @@ const SelectNameAndFee = ({ account, ...props }) => {
       { ..._state, ...newState }
     ),
   );
-
 
   const getNicknameFromPrevState = () => {
     if (Object.entries(prevState).length) {

@@ -7,13 +7,12 @@ import {
   getUnlockableUnlockingObjects,
 } from '@utils/account';
 import { MODULE_ASSETS } from '@constants/moduleAssets';
-import TransactionPriority from '../../../shared/transactionPriority';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
+import TransactionPriority, { useTransactionFeeCalculation } from '@shared/transactionPriority';
+import useTransactionPriority from '../../../shared/transactionPriority/useTransactionPriority';
 import Form from './form';
 import BalanceTable from './balanceTable';
 
-const txType = MODULE_ASSETS.unlockToken;
+const moduleAssetType = MODULE_ASSETS.unlockToken;
 
 const LockedBalance = (props) => {
   const account = useSelector(state => getActiveTokenAccount(state));
@@ -32,8 +31,8 @@ const LockedBalance = (props) => {
     token,
     account,
     priorityOptions,
-    txData: {
-      txType,
+    transaction: {
+      moduleAssetType,
       senderPublicKey: account.publicKey,
       nonce: account.nonce,
       passphrase: account.passphrase,

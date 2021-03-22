@@ -22,7 +22,7 @@ const Overview = ({
   t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
-  const address = getProp(account, 'address', '');
+  const address = account.info.LSK.summary.address;
   const publicKey = getProp(account, 'publicKey', '');
   const balance = getProp(account, 'balance', 0);
   const { confirmed } = useSelector(state => state.transactions);
