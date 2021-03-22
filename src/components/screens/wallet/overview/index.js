@@ -9,16 +9,16 @@ import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
 import styles from './overview.css';
-import { selectBookmark, selectLoggedInAccount, selectTransactions } from '../../../../store/selectors';
 
 const Overview = ({
   t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
-  const { address, publicKey, balance } = selectLoggedInAccount();
-
-  const { confirmed } = selectTransactions();
-  const bookmark = selectBookmark(address)();
+  const { address, publicKey, balance } = account.info.LSK.summary;
+  const { confirmed } = useSelector(state => state.transactions);
+  const bookmark = useSelector(
+    state => state.bookmarks[activeToken].find(item => (item.address === address)),
+  );
 
   const host = useSelector(
     state => (state.account
