@@ -60,7 +60,7 @@ class SelectAccount extends React.Component {
       const hwAccounts = accounts.map((account, index) => ({
         ...account,
         name: this.getNameFromAccount(account.address),
-        shouldShow: !!account.balance || index === 0,
+        shouldShow: !!account.token?.balance || index === 0,
       }));
       this.setState({ hwAccounts });
     }

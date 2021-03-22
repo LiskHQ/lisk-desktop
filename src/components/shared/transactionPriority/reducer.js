@@ -22,7 +22,7 @@ const getInitialState = account => ({
   fee: initialFee,
   minFee: initialFee,
   maxAmount: {
-    value: account.balance,
+    value: account.token?.balance,
     error: false,
     feedback: '',
   },

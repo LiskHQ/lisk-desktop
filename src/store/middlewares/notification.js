@@ -14,7 +14,7 @@ const notificationMiddleware = (store) => {
       case actionTypes.accountUpdated: {
         const amount = state.settings.token.active === tokenMap.LSK.key
           ? action.data.token.balance - account.token.balance
-          : action.data.balance - account.balance;
+          : action.data.balance - account.token?.balance;
         if (amount > 0) {
           notify.about('deposit', amount);
         }

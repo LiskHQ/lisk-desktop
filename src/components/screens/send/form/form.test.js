@@ -180,7 +180,7 @@ describe('Form', () => {
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
       expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
-      amountField.find('input').simulate('change', { target: { name: 'amount', value: props.account.balance + 2 } });
+      amountField.find('input').simulate('change', { target: { name: 'amount', value: props.account.token?.balance + 2 } });
       act(() => { jest.advanceTimersByTime(300); });
       await flushPromises();
       wrapper.update();
