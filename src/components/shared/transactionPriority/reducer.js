@@ -6,10 +6,7 @@ const calculateAvailableBalance = (balance, token) => {
   if (token !== tokenMap.LSK.key) {
     return balance;
   }
-  if (balance <= minAccountBalance) {
-    return balance;
-  }
-  return balance - minAccountBalance;
+  return Math.max(balance - minAccountBalance, 0);
 };
 
 const initialFee = {
