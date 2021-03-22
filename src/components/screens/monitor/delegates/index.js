@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { getForgers, getDelegates } from '@utils/api/delegate';
+import { getForgers } from '@utils/api/delegate';
+import { getAccounts } from '@utils/api/account';
 import { getNetworkStatus } from '@utils/api/network';
 import { getTransactions } from '@utils/api/transaction';
 import withData from '@utils/withData';
@@ -69,12 +70,13 @@ const ComposedDelegates = compose(
       },
 
       [standByDelegatesKey]: {
-        apiUtil: (network, params) => getDelegates({
+        apiUtil: (network, params) => getAccounts({
           network,
           params: {
             ...params,
             limit: params.limit || 30,
             status: 'standby',
+            isDelegate: true,
           },
         }),
         defaultData: [],
@@ -83,7 +85,7 @@ const ComposedDelegates = compose(
       },
 
       chartActiveAndStandbyData: {
-        apiUtil: network => getDelegates({ network, params: { limit: 1 } }),
+        apiUtil: network => getAccounts({ network, params: { limit: 1, isDelegate: true } }),
         defaultData: [],
         autoload: true,
         transformResponse: response => response.meta.total,
@@ -122,14 +124,15 @@ const ComposedDelegates = compose(
       },
 
       sanctionedDelegates: {
-        apiUtil: (network, params) => getDelegates({ network, params: { ...params, status: 'punished,banned' } }),
+        apiUtil: (network, params) => getAccounts({ network, params: { ...params, status: 'punished,banned', isDelegate: true } }),
         defaultData: [],
         autoload: true,
         transformResponse: response => response.data,
       },
 
       votedDelegates: {
-        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        apiUtil: ({ networks }, params) =>
+          getAccounts({ network: networks.LSK, params: { ...params, isDelegate: true } }),
         defaultData: {},
         transformResponse: (response) => {
           const transformedResponse = transformDelegatesResponse(response);
@@ -142,7 +145,7 @@ const ComposedDelegates = compose(
       },
 
       watchedDelegates: {
-        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        apiUtil: ({ networks }, params) => getAccounts({ network: networks.LSK, params }),
         defaultData: [],
         getApiParams: state => ({ addressList: state.watchList }),
         transformResponse: response => response.data,

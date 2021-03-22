@@ -109,6 +109,8 @@ export const getAccount = async ({
 const accountFilters = {
   limit: { key: 'limit', test: num => (typeof num === 'number') },
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
+  isDelegate: { key: 'isDelegate', test: bol => (typeof bol === 'boolean') },
+  status: { key: 'status', test: str => (typeof str === 'string' && str.length > 0) },
   sort: {
     key: 'sort',
     test: str => ['balance:asc', 'balance:desc'].includes(str),
