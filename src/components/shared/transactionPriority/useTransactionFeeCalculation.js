@@ -31,7 +31,7 @@ const useTransactionFeeCalculation = ({
         account,
         network,
         selectedPriority,
-        transaction: { ...transaction, amount: account.balance },
+        transaction: { ...transaction, amount: account.token?.balance },
       },
     );
 

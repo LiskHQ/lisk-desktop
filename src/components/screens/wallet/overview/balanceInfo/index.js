@@ -24,7 +24,7 @@ const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
   const host = useSelector(state => getActiveTokenAccount(state));
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   const lockedInUnvotes = activeToken === tokenMap.LSK.key && isWalletRoute && host
-    ? calculateBalanceLockedInUnvotes(host.unlocking) : undefined;
+    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking) : undefined;
 
   if (lockedInUnvotes + lockedInVotes > 0) {
     return (

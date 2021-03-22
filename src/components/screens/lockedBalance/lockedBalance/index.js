@@ -19,7 +19,9 @@ const LockedBalance = (props) => {
   const token = useSelector(state => state.settings.token.active);
   const currentBlockHeight = useSelector(state => state.blocks.latestBlocks[0].height || 0);
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
-  const unlockableBalance = calculateUnlockableBalance(account.unlocking, currentBlockHeight);
+  const unlockableBalance = calculateUnlockableBalance(
+    account.dpos?.unlocking, currentBlockHeight,
+  );
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority,
@@ -33,10 +35,10 @@ const LockedBalance = (props) => {
     priorityOptions,
     transaction: {
       moduleAssetType,
-      senderPublicKey: account.publicKey,
-      nonce: account.nonce,
+      senderPublicKey: account.summary?.publicKey,
+      nonce: account.sequence?.nonce,
       passphrase: account.passphrase,
-      unlockingObjects: getUnlockableUnlockingObjects(account.unlocking, currentBlockHeight),
+      unlockingObjects: getUnlockableUnlockingObjects(account.dpos?.unlocking, currentBlockHeight),
     },
   });
 
@@ -62,7 +64,7 @@ const LockedBalance = (props) => {
         fee={fee}
         minFee={minFee.value}
         customFee={customFee ? customFee.value : undefined}
-        txType={txType}
+        txType={moduleAssetType}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}

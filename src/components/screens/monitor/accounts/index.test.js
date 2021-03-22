@@ -38,8 +38,10 @@ describe('Top Accounts Monitor Page', () => {
       data: [
         {
           address: '1234567L',
-          delegate: {
-            username: 'geenesis',
+          dpos: {
+            delegate: {
+              username: 'geenesis',
+            },
           },
           knowledge: {
             owner: 'Lisk',

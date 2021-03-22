@@ -47,7 +47,7 @@ const votePlaced = (store, action) => {
 
 const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
   transaction
-  && transaction.recipientId === account.address
+  && transaction.recipientId === account.summary?.address
   && transaction.type === MODULE_ASSETS.transfer
 ));
 
@@ -81,7 +81,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
     const blockContainsRelevantTransaction = txs.filter((transaction) => {
       if (!transaction) return false;
       return (
-        account.address === transaction.senderId || account.address === transaction.recipientId
+        account.summary?.address === transaction.senderId || account.summary?.address === transaction.recipientId
       );
     }).length > 0;
 
@@ -92,7 +92,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
     if (blockContainsRelevantTransaction || recentBtcTransaction) {
       store.dispatch(accountDataUpdated());
       store.dispatch(transactionsRetrieved({
-        address: account.address,
+        address: account.summary?.address,
         filters: transactions.filters,
       }));
     }
