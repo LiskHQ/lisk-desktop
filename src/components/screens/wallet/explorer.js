@@ -11,12 +11,13 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
+import { useActiveToken, useSettings } from '../../../hooks/selectors';
 
 const Wallet = ({
   t, account, history,
 }) => {
-  const activeToken = useSelector(state => state.settings.token.active);
-  const { discreetMode } = useSelector(state => state.settings);
+  const activeToken = useActiveToken();
+  const { discreetMode } = useSettings();
 
   useEffect(() => {
     account.loadData();
