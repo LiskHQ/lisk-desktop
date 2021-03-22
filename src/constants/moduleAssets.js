@@ -3,12 +3,12 @@ import {
 } from './schemas';
 
 const moduleAssets = {
-  transfer: 'token:transfer',
+  transfer: '2:0',
   // reclaimLSK: 'legacyAccount:reclaimLSK',
-  unlockToken: 'dpos:unlockToken',
-  voteDelegate: 'dpos:voteDelegate',
-  registerDelegate: 'dpos:registerDelegate',
-  registerMultisignatureGroup: 'keys:registerMultisignatureGroup',
+  unlockToken: '5:2',
+  voteDelegate: '5:1',
+  registerDelegate: '5:0',
+  registerMultisignatureGroup: '4:0',
 };
 
 const MODULE_ASSETS = Object.freeze(moduleAssets);

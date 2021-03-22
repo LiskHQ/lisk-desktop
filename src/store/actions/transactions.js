@@ -99,7 +99,6 @@ export const resetTransactionResult = () => ({
  * @param {Number} data.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} data.reference - Data field for LSK transactions
  */
-// TODO remove this function once create and broadcast HOC be implemented
 export const transactionCreated = data => async (dispatch, getState) => {
   const {
     account, settings, network,
