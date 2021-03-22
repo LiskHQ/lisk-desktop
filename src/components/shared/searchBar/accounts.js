@@ -19,10 +19,10 @@ const Accounts = ({
             key={index}
             data-index={index}
             className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} account-row`}
-            onClick={() => onSelectedRow(account.address)}
+            onClick={() => onSelectedRow(account.summary?.address)}
             onMouseEnter={updateRowItemIndex}
           >
-            <AccountVisual address={account.address} />
+            <AccountVisual address={account.summary?.address} />
             <div className={styles.accountInformation}>
               {
                 isDelegate
@@ -33,12 +33,12 @@ const Accounts = ({
                           {account.dpos?.delegate.username}
                         </span>
                       </div>
-                      <span className={styles.accountSubtitle}>{account.address}</span>
+                      <span className={styles.accountSubtitle}>{account.summary?.address}</span>
                     </Fragment>
                   )
                   : (
                     <span className={`${styles.accountTitle} account-title`}>
-                      {account.address}
+                      {account.summary?.address}
                     </span>
                   )
               }

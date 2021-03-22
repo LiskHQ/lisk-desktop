@@ -76,11 +76,11 @@ class Summary extends React.Component {
           <div className={styles.userInformation}>
             <AccountVisual
               className={styles.accountVisual}
-              address={account.address}
+              address={account.summary?.address}
               size={25}
             />
             <span className={`${styles.nickname} nickname`}>{nickname}</span>
-            <span className={`${styles.address} address`}>{account.address}</span>
+            <span className={`${styles.address} address`}>{account.summary?.address}</span>
           </div>
         </section>
       </TransactionSummary>

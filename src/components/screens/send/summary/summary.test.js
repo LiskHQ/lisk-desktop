@@ -16,7 +16,7 @@ describe('Summary', () => {
       t: i18n.t,
       account: {
         summary: {
-          address: accounts.second_passphrase_account.address,
+          address: accounts.second_passphrase_account.summary?.address,
           secondPublicKey: accounts.second_passphrase_account.secondPublicKey,
         },
         hwInfo: {

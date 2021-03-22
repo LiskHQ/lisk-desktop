@@ -34,7 +34,7 @@ describe('TransactionSummary', () => {
     const wrapper = mount(<TransactionSummary {...{
       ...props,
       account: {
-        address: accounts.second_passphrase_account.address,
+        address: accounts.second_passphrase_account.summary?.address,
         secondPublicKey: accounts.second_passphrase_account.secondPublicKey,
       },
     }}
