@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { tokenMap } from '@constants';
+import { tokenMap, MAX_ASSET_FEE } from '@constants';
 import {
   formatAmountBasedOnLocale,
 } from '@utils/formattedNumber';
@@ -28,11 +28,11 @@ const getRelevantPriorityOptions = (options, token) =>
     index !== CUSTOM_FEE_INDEX
   || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key));
 
-const isCustomFeeValid = (value, hardCap, minFee) => {
+const isCustomFeeValid = (value, maxFee, minFee) => {
   if (!value) return false;
   const rawValue = toRawLsk(parseFloat(value));
 
-  if (rawValue > hardCap) {
+  if (rawValue > maxFee) {
     return false;
   }
 
@@ -64,7 +64,7 @@ const TransactionPriority = ({
 
   let maxFee = 0;
   if (token === tokenMap.LSK.key) {
-    hardCap = MODULE_ASSETS.getHardCap(txType);
+    maxFee = MAX_ASSET_FEE[moduleAssetType];
   }
 
   const onClickPriority = (e) => {
