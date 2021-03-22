@@ -6,18 +6,18 @@ import { withTranslation } from 'react-i18next';
 import withData from '@utils/withData';
 import { getAccount } from '@utils/api/account';
 import { selectSearchParamValue } from '@utils/searchParams';
+import { selectActiveToken, selectSettings } from '@store/selectors';
 import Overview from './overview';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
-import { useActiveToken, useSettings } from '../../../hooks/selectors';
 
 const Wallet = ({
   t, account, history,
 }) => {
-  const activeToken = useActiveToken();
-  const { discreetMode } = useSettings();
+  const activeToken = useSelector(selectActiveToken);
+  const { discreetMode } = useSelector(selectSettings);
 
   useEffect(() => {
     account.loadData();
