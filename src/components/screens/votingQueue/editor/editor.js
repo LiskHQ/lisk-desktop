@@ -119,14 +119,14 @@ const Editor = ({
     priorityOptions,
     transaction: {
       txType,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+      nonce: account.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
       votes: normalizedVotes,
     },
   });
 
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
-  const feedback = validateVotes(votes, account.balance, fee.value, t);
+  const feedback = validateVotes(votes, account.token?.balance, fee.value, t);
 
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 

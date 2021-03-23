@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import withData from '@utils/withData';
 import { getTransactions } from '@utils/api/transaction';
+import { selectTransactions } from '@store/selectors';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
@@ -14,8 +15,8 @@ const Overview = ({
   t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
-  const { address, publicKey, balance } = account.info.LSK.summary;
-  const { confirmed } = useSelector(state => state.transactions);
+  const { address, publicKey, balance = 0 } = account.summary ?? {};
+  const { confirmed } = useSelector(selectTransactions);
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );
@@ -24,7 +25,7 @@ const Overview = ({
     state => (state.account
       && state.account.info
       && state.account.info[activeToken]
-      && state.account.info[activeToken].address) || '',
+      && state.account.info[activeToken].summary?.address) || '',
   );
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const Overview = ({
           activeToken={activeToken}
           address={address}
           account={account}
-          username={account.delegate && account.delegate.username}
+          username={account?.dpos?.delegate?.username}
           bookmark={bookmark}
           publicKey={publicKey}
           host={host}
@@ -55,7 +56,7 @@ const Overview = ({
           balance={balance}
           isDiscreetMode={discreetMode}
           isWalletRoute={isWalletRoute}
-          username={account.delegate && account.delegate.username}
+          username={account?.dpos?.delegate?.username}
           address={address}
         />
       </div>

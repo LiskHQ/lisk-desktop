@@ -19,7 +19,7 @@ const getInitialState = account => ({
   fee: initialFee,
   minFee: initialFee,
   maxAmount: {
-    value: account.balance,
+    value: account.token?.balance,
     error: false,
     feedback: '',
   },
@@ -40,7 +40,7 @@ const reducer = (state, action) => {
       return { ...state, minFee: action.payload.response };
 
     case actionTypes.setMaxAmount: {
-      const balance = action.payload.account.balance;
+      const balance = action.payload.account.token?.balance;
       const token = action.payload.token;
       const availableBalance = calculateAvailableBalance(balance, token);
       const result = {

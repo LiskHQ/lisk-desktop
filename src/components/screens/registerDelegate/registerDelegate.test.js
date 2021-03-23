@@ -17,8 +17,11 @@ describe('RegisterDelegate', () => {
     account: {
       info: {
         LSK: {
-          address: '123456789L',
-          balance: 11000,
+          summary: {
+            address: '123456789L',
+            balance: 11000,
+          },
+          token: { balance: 11000 },
         },
       },
     },

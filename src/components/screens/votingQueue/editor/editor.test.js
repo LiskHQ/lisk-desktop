@@ -22,8 +22,8 @@ describe('VotingQueue.Editor', () => {
   }, {});
 
   const expensiveVotes = {
-    '12345L': { confirmed: 0, unconfirmed: Math.floor(accounts.genesis.balance / 2) },
-    '123456L': { confirmed: 0, unconfirmed: Math.floor(accounts.genesis.balance / 2) },
+    '12345L': { confirmed: 0, unconfirmed: Math.floor(Math.parseInt(accounts.genesis.token.balance, 10) / 2) },
+    '123456L': { confirmed: 0, unconfirmed: Math.floor(Math.parseInt(accounts.genesis.token.balance, 10) / 2) },
   };
 
   it('Render only the changed votes', () => {

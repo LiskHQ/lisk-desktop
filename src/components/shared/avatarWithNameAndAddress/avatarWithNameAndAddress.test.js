@@ -19,6 +19,6 @@ describe('AvatarWithNameAndAddress', () => {
     const wrapper = mount(<AvatarWithNameAndAddress {...props} />);
     const html = wrapper.html();
     expect(html).toContain(props.username);
-    expect(html).toContain(props.account.address);
+    expect(html).toContain(props.account.summary?.address);
   });
 });

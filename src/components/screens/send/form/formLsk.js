@@ -37,8 +37,8 @@ const FormLsk = (props) => {
       moduleAssetType,
       amount: toRawLsk(amount.value),
       recipientAddress: recipient.value,
-      nonce: account.sequence.nonce,
-      senderPublicKey: account.publicKey,
+      nonce: account.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
       data: reference.value,
     },
   });

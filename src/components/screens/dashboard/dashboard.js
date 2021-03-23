@@ -25,7 +25,7 @@ const getOnboardingSlides = t => [{
 }];
 
 const Dashboard = ({ account, t }) => {
-  const isLoggedIn = !!(account.address);
+  const isLoggedIn = !!(account?.summary?.address);
 
   return (
     <React.Fragment>

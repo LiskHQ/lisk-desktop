@@ -41,8 +41,8 @@ const SelectNameAndFee = ({ account, ...props }) => {
     priorityOptions,
     transaction: {
       txType,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+      nonce: account.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
       username: state.nickname,
     },
   });
@@ -60,7 +60,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
   };
 
   const checkIfUserIsDelegate = () => {
-    if (account && account.isDelegate) {
+    if (account?.isDelegate) {
       setState({
         inputDisabled: true,
         error: t('You have already registered as a delegate.'),
@@ -69,8 +69,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
   };
 
   const hasUserEnoughFunds = () => {
-    const hasFunds = account
-      && account.balance >= fee.value;
+    const hasFunds = account?.token?.balance >= fee.value;
 
     if (!hasFunds) {
       setState({
