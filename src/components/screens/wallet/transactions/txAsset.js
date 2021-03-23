@@ -1,5 +1,5 @@
 import React from 'react';
-import { MODULE_ASSETS } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 
 import VoteItem from '../../../shared/voteItem';
 import styles from './transactions.css';
@@ -27,8 +27,8 @@ const generateVotes = (asset, delegates) => {
   );
 };
 
-const voteAssetType = MODULE_ASSETS.voteDelegate;
-const registerDelegateAssetType = MODULE_ASSETS.registerDelegate;
+const voteAssetType = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
+const registerDelegateAssetType = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
 
 const TransactionAsset = ({
   transaction, delegates,

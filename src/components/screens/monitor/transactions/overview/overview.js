@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { fromRawLsk } from '@utils/lsk';
 import { kFormatter } from '@utils/helpers';
-import { colorPalette, chartStyles, MODULE_ASSETS } from '@constants';
+import { colorPalette, chartStyles, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { getModuleAssetTitle } from '@utils/moduleAssets';
 import Box from '../../../../toolbox/box';
 import BoxTabs from '../../../../toolbox/tabs';
 import BoxHeader from '../../../../toolbox/box/header';
@@ -12,6 +13,8 @@ import { DoughnutChart, BarChart } from '../../../../toolbox/charts';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import styles from './overview.css';
 import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
+
+const listOfLabels = Object.values(getModuleAssetTitle());
 
 const options = {
   responsive: true,
@@ -142,11 +145,9 @@ const Overview = ({ t, txStats }) => {
   };
 
   const distributionChartData = {
-    labels: MODULE_ASSETS
-      .getListOf('title')
+    labels: listOfLabels
       .map(item => item
-        .replace('Second passphrase registration', '2nd passphrase reg.')
-        .replace('Multisignature creation', 'Multisig. creation')),
+        .replace('Register Multisignature Group', 'Multisig. creation')),
     datasets: [
       {
         data: distributionByType,
@@ -184,14 +185,13 @@ const Overview = ({ t, txStats }) => {
                 legend: {
                   display: true,
                   labels: {
-                    generateLabels: () => MODULE_ASSETS
-                      .getListOf('title')
-                      .map((label, i) => ({
-                        text: label
-                          .replace('Second passphrase registration', '2nd passphrase reg.')
-                          .replace('Multisignature creation', 'Multisig. creation'),
-                        fillStyle: colorPalette[i],
-                      })),
+                    generateLabels: () =>
+                      listOfLabels
+                        .map((label, i) => ({
+                          text: label
+                            .replace('Register Multisignature Group', 'Multisig. creation'),
+                          fillStyle: colorPalette[i],
+                        })),
                   },
                 },
               }}
@@ -205,15 +205,13 @@ const Overview = ({ t, txStats }) => {
           </div>
           <div className="hideOnLargeViewPort">
             <GuideTooltip>
-              {MODULE_ASSETS
-                .getListOf('title')
+              {listOfLabels
                 .map((label, i) => (
                   <GuideTooltipItem
                     key={`transaction-GuideTooltip${i}`}
                     color={colorPalette[i]}
                     label={label
-                      .replace('Second passphrase registration', '2nd passphrase reg.')
-                      .replace('Multisignature creation', 'Multisig. creation')
+                      .replace('Register Multisignature Group', 'Multisig. creation')
                     }
                   />
                 ))
