@@ -9,7 +9,7 @@ import { getNetworkStatus } from '@utils/api/network';
 import { getTransactions } from '@utils/api/transaction';
 import withData from '@utils/withData';
 import withFilters from '@utils/withFilters';
-import { MODULE_ASSETS, MAX_BLOCKS_FORGED, tokenMap } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, MAX_BLOCKS_FORGED, tokenMap } from '@constants';
 
 import Delegates from './delegates';
 
@@ -106,7 +106,7 @@ const ComposedDelegates = compose(
       votes: {
         apiUtil: (network, params) => getTransactions({
           network,
-          params: { ...params, type: MODULE_ASSETS.voteDelegate, sort: 'timestamp:desc' },
+          params: { ...params, type: MODULE_ASSETS_NAME_ID_MAP.voteDelegate, sort: 'timestamp:desc' },
         }, tokenMap.LSK.key),
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,

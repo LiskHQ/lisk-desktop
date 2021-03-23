@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MODULE_ASSETS } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
 import { mountWithRouter } from '../../../utils/testHelpers';
@@ -24,7 +24,7 @@ describe('Transaction Details Component', () => {
   };
   const voteTransaction = {
     data: {
-      type: MODULE_ASSETS.voteDelegate,
+      type: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
       amount: '0',
       fee: 1e8,
       senderId: accounts.genesis.address,
@@ -223,7 +223,7 @@ describe('Transaction Details Component', () => {
         { id: transaction.id },
       );
       expect(wrapper).toContainMatchingElement('.transaction-image');
-      expect(wrapper.find('.tx-header').text()).toEqual(MODULE_ASSETS.unlockToken);
+      expect(wrapper.find('.tx-header').text()).toEqual(MODULE_ASSETS_NAME_ID_MAP.unlockToken);
       expect(wrapper).toContainMatchingElement('.transaction-id');
       expect(wrapper).toContainMatchingElement('.tx-amount');
       expect(wrapper).toContainMatchingElement('.tx-fee');

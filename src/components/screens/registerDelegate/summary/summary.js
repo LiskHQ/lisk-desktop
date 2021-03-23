@@ -3,7 +3,7 @@ import to from 'await-to-js';
 
 import { create } from '@utils/api/transaction';
 import { toRawLsk } from '@utils/lsk';
-import { tokenMap, MODULE_ASSETS } from '@constants';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import styles from './summary.css';
 import AccountVisual from '../../../toolbox/accountVisual';
 import TransactionSummary from '../../../shared/transactionSummary';
@@ -31,7 +31,7 @@ class Summary extends React.Component {
       fee: toRawLsk(parseFloat(fee)),
       network,
       nonce: account.sequence?.nonce,
-      moduleAssetType: MODULE_ASSETS.registerDelegate,
+      moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
     };
 
     const [error, tx] = await to(

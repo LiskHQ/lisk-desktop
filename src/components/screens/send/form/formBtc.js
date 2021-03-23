@@ -1,12 +1,12 @@
 import React from 'react';
-import { MODULE_ASSETS } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';
 import FormBase from './formBase';
 import useAmountField from './useAmountField';
 import useRecipientField from './useRecipientField';
 
-const txType = MODULE_ASSETS.transfer;
+const txType = MODULE_ASSETS_NAME_ID_MAP.transfer;
 
 const FormBtc = (props) => {
   const {

@@ -1,6 +1,7 @@
 import React from 'react';
-import { tokenMap, MODULE_ASSETS } from '@constants';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { getTxAmount } from '@utils/api/transaction';
+import { getModuleAssetSenderLabel } from '@utils/moduleAssets';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import TransactionTypeFigure from '../../shared/transactionTypeFigure';
 import AccountInfo from './accountInfo';
@@ -28,8 +29,8 @@ const getTxAsset = (tx) => {
 export const Illustration = ({
   transaction,
 }) => {
-  const TypeInfo = MODULE_ASSETS.getByCode(transaction.title);
-  if (transaction.title === MODULE_ASSETS.transfer) return null;
+  const TypeInfo = MODULE_ASSETS_NAME_ID_MAP[transaction.moduleAssetId];
+  if (transaction.title === MODULE_ASSETS_NAME_ID_MAP.transfer) return null;
   return (
     <BoxRow className={styles.summaryHeader}>
       <TransactionTypeFigure
@@ -44,7 +45,7 @@ export const Illustration = ({
 export const Sender = ({
   transaction, activeToken, network,
 }) => {
-  const { senderLabel } = MODULE_ASSETS.getByCode(transaction.type || 0);
+  const { senderLabel } = getModuleAssetSenderLabel[transaction.moduleAssetId];
 
   return (
     <BoxRow className={styles.detailsWrapper}>
@@ -63,7 +64,7 @@ export const Sender = ({
 export const Recipient = ({
   activeToken, network, transaction, t,
 }) => {
-  if (transaction.type !== MODULE_ASSETS.transfer) return null;
+  if (transaction.type !== MODULE_ASSETS_NAME_ID_MAP.transfer) return null;
   return (
     <BoxRow className={styles.detailsWrapper}>
       <AccountInfo
@@ -104,7 +105,7 @@ export const AmountAndDate = ({
   if (
     transaction.amount === undefined
     && transaction.asset.amount === undefined
-    && transaction.type !== MODULE_ASSETS.unlockToken
+    && transaction.type !== MODULE_ASSETS_NAME_ID_MAP.unlockToken
   ) {
     return null;
   }
