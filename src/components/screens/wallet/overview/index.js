@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import withData from '@utils/withData';
 import { getTransactions } from '@utils/api/transaction';
+import { selectTransactions } from '@store/selectors';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
@@ -14,13 +15,12 @@ const Overview = ({
   t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
-  const address = account?.summary?.address;
-  const publicKey = account?.summary?.publicKey;
-  const balance = account?.summary?.balance || 0;
-  const { confirmed } = useSelector(state => state.transactions);
+  const { address, publicKey, balance = 0 } = account.summary ?? {};
+  const { confirmed } = useSelector(selectTransactions);
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );
+
   const host = useSelector(
     state => (state.account
       && state.account.info

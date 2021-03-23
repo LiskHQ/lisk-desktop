@@ -1,10 +1,16 @@
 /* istanbul ignore file */
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { parseSearchParams, addSearchParamsToUrl } from '@utils/searchParams';
 import { transactionsRetrieved } from '@actions';
 import { isEmpty } from '@utils/helpers';
+import {
+  selectAccount,
+  selectActiveToken,
+  selectSettings,
+  selectTransactions,
+} from '@store/selectors';
 import Overview from './overview';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
@@ -13,10 +19,10 @@ import Transactions from './transactions';
 
 const Wallet = ({ t, history }) => {
   const dispatch = useDispatch();
-  const account = useSelector(state => state.account);
-  const activeToken = useSelector(state => state.settings.token.active);
-  const { discreetMode } = useSelector(state => state.settings);
-  const { confirmed, pending } = useSelector(state => state.transactions);
+  const account = useSelector(selectAccount);
+  const activeToken = useSelector(selectActiveToken);
+  const { discreetMode } = useSelector(selectSettings);
+  const { confirmed, pending } = useSelector(selectTransactions);
 
   useEffect(() => {
     if (!confirmed.length && account.info && !isEmpty(account.info)) {
