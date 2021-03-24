@@ -24,6 +24,14 @@ const transformDelegatesResponse = (response, oldData = []) => (
   )]
 );
 
+const transformAccountsIsDelegateResponse = (response, oldData = []) => {
+  response.data = response.data.map(del => ({
+    address: del.summary.address,
+    ...del.dpos.delegate,
+  }));
+  return transformDelegatesResponse(response, oldData);
+};
+
 const transformVotesResponse = (response, oldData = []) => (
   [...oldData, ...response.data.filter(
     vote => !oldData.find(({ id }) => id === vote.id),
@@ -81,7 +89,7 @@ const ComposedDelegates = compose(
         }),
         defaultData: [],
         autoload: true,
-        transformResponse: transformDelegatesResponse,
+        transformResponse: transformAccountsIsDelegateResponse,
       },
 
       chartActiveAndStandbyData: {
@@ -127,7 +135,7 @@ const ComposedDelegates = compose(
         apiUtil: (network, params) => getAccounts({ network, params: { ...params, status: 'punished,banned', isDelegate: true } }),
         defaultData: [],
         autoload: true,
-        transformResponse: response => response.data,
+        transformResponse: transformAccountsIsDelegateResponse,
       },
 
       votedDelegates: {
@@ -137,7 +145,7 @@ const ComposedDelegates = compose(
         transformResponse: (response) => {
           const transformedResponse = transformDelegatesResponse(response);
           const responseMap = transformedResponse.reduce((acc, delegate) => {
-            acc[delegate.address] = delegate;
+            acc[delegate.address] = delegate.summary?.address;
             return acc;
           }, {});
           return responseMap;
@@ -145,10 +153,10 @@ const ComposedDelegates = compose(
       },
 
       watchedDelegates: {
-        apiUtil: ({ networks }, params) => getAccounts({ network: networks.LSK, params }),
+        apiUtil: (network, params) => getAccounts({ network, params }),
         defaultData: [],
         getApiParams: state => ({ addressList: state.watchList }),
-        transformResponse: response => response.data,
+        transformResponse: transformAccountsIsDelegateResponse,
       },
     },
   ),
