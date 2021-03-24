@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withFilters from '@utils/withFilters';
 import withData from '@utils/withData';
-import { getAccounts } from '@utils/api/account';
+import { getDelegates } from '@utils/api/delegate';
 import { toRawLsk } from '@utils/lsk';
 import { transformStringDateToUnixTimestamp } from '@utils/datetime';
 import { getTransactions } from '@utils/api/transaction';
@@ -161,8 +161,7 @@ export default compose(
       ),
     },
     votedDelegates: {
-      apiUtil: (network, params) =>
-        getAccounts({ network, params: { ...params, isDelegate: true } }),
+      apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
       defaultData: [],
       transformResponse: (response) => {
         const responseMap = response.data.reduce((acc, delegate) => {
