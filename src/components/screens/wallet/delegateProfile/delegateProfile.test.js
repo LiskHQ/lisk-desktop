@@ -8,19 +8,7 @@ describe('Delegate Profile', () => {
   let wrapper;
   const props = {
     delegate: {
-      data: {
-        account: delegate,
-        approval: 98.63,
-        missedBlocks: 10,
-        producedBlocks: 304,
-        productivity: 96.82,
-        rank: 1,
-        rewards: '140500000000',
-        username: delegate.username,
-        voteWeight: '9876965713168313',
-        lastBlock: 0,
-        txDelegateRegister: { timestamp: 0 },
-      },
+      data: delegate,
       loadData: jest.fn(),
     },
     voters: {

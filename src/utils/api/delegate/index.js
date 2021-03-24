@@ -6,7 +6,7 @@ import regex from '../../regex';
 const httpPrefix = '/api/v2';
 
 export const httpPaths = {
-  delegates: `${httpPrefix}/delegates`,
+  delegates: `${httpPrefix}/accounts`,
   votesSent: `${httpPrefix}/votes_sent`,
   votesReceived: `${httpPrefix}/votes_received`,
   forgers: `${httpPrefix}/forgers`,
@@ -42,7 +42,7 @@ export const getDelegate = ({
   params = {}, network, baseUrl,
 }) => http({
   path: httpPaths.delegates,
-  params: getDelegateProps(params),
+  params: { ...getDelegateProps(params), isDelegate: true },
   network,
   baseUrl,
 });
@@ -113,7 +113,7 @@ export const getDelegates = ({
   }
 
   // Use HTTP to retrieve accounts with given sorting and pagination parameters
-  const normParams = {};
+  const normParams = { isDelegate: true };
   Object.keys(params).forEach((key) => {
     if (txFilters[key].test(params[key])) {
       normParams[txFilters[key].key] = params[key];

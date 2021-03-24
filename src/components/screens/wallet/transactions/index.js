@@ -165,7 +165,7 @@ export default compose(
       defaultData: [],
       transformResponse: (response) => {
         const responseMap = response.data.reduce((acc, delegate) => {
-          acc[delegate.address] = delegate;
+          acc[delegate.address] = delegate.summary?.address;
           return acc;
         }, {});
         return responseMap;
