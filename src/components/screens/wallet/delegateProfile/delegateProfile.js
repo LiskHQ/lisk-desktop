@@ -36,8 +36,6 @@ const DelegateProfile = ({
     lastBlockForged.loadData({ height: delegate.data.dpos?.delegate?.lastForgedHeight });
   }, [delegate.data.dpos?.delegate?.lastForgedHeight]);
 
-  console.log(delegate.data);
-
   return (
     <section className={`${styles.container} container`}>
       <Box className={`${grid.row} ${styles.statsContainer} stats-container`}>

@@ -3,10 +3,8 @@ import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import withData from '@utils/withData';
-import { getVoters } from '@utils/api/delegate';
-import { getAccount } from '@utils/api/account';
+import { getVoters, getDelegate } from '@utils/api/delegate';
 import { getBlocks } from '@utils/api/block';
-import { tokenMap } from '@constants';
 import DelegateProfile from './delegateProfile';
 
 const mapStateToProps = state => ({
@@ -16,13 +14,12 @@ const mapStateToProps = state => ({
 
 const apis = {
   delegate: {
-    apiUtil: (network, params) =>
-      getAccount({ network, params }, tokenMap.LSK.key),
+    apiUtil: (network, params) => getDelegate({ network, params }),
     defaultData: {},
     getApiParams: (_, ownProps) => ({
       address: ownProps.address,
-      isDelegate: true,
     }),
+    transformResponse: response => response.data[0],
   },
   voters: {
     apiUtil: (network, params) => getVoters({ network, params }),
