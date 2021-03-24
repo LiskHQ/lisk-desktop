@@ -1,5 +1,5 @@
 export default {
-  address: /^[1-9]\d{0,19}L$/,
+  address: /^lsk[a-z0-9]{0,38}$/,
   publicKey: /^[0-9a-f]{64}$/,
   delegateName: /^[a-z0-9!@$&_.]{3,20}$/,
   transactionId: /^[1-9]\d{0,19}$/,

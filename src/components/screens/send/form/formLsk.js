@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { maxMessageLength, MODULE_ASSETS } from '@constants';
 import { toRawLsk } from '@utils/lsk';
+import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';
 import { AutoResizeTextarea } from '../../../toolbox/inputs';
 import CircularProgress from '../../../toolbox/circularProgress/circularProgress';
 import FormBase from './formBase';
@@ -10,11 +11,8 @@ import styles from './form.css';
 import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
-import TransactionPriority from '../../../shared/transactionPriority';
-import useTransactionFeeCalculation from './useTransactionFeeCalculation';
-import useTransactionPriority from './useTransactionPriority';
 
-const txType = MODULE_ASSETS.transfer;
+const moduleAssetType = MODULE_ASSETS.transfer;
 
 // eslint-disable-next-line max-statements
 const FormLsk = (props) => {
@@ -35,12 +33,12 @@ const FormLsk = (props) => {
     token,
     account,
     priorityOptions,
-    txData: {
+    transaction: {
+      moduleAssetType,
       amount: toRawLsk(amount.value),
-      txType,
-      recipient: recipient.value,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+      recipientAddress: recipient.value,
+      nonce: account.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
       data: reference.value,
     },
   });
@@ -108,7 +106,7 @@ const FormLsk = (props) => {
         fee={fee}
         minFee={minFee.value}
         customFee={customFee ? customFee.value : undefined}
-        txType={txType}
+        moduleAssetType={moduleAssetType}
         setCustomFee={changeCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}

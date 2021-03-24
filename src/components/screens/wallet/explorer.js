@@ -6,21 +6,25 @@ import { withTranslation } from 'react-i18next';
 import withData from '@utils/withData';
 import { getAccount } from '@utils/api/account';
 import { selectSearchParamValue } from '@utils/searchParams';
+import { isEmpty } from '@utils/helpers';
+import { selectActiveToken, selectSettings } from '@store/selectors';
 import Overview from './overview';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
-import DelegateTab from './delegateProfile';
-import VotesTab from './votes';
+// import DelegateTab from './delegateProfile';
+// import VotesTab from './votes';
 import Transactions from './transactions';
 
 const Wallet = ({
   t, account, history,
 }) => {
-  const activeToken = useSelector(state => state.settings.token.active);
-  const { discreetMode } = useSelector(state => state.settings);
+  const activeToken = useSelector(selectActiveToken);
+  const { discreetMode } = useSelector(selectSettings);
 
   useEffect(() => {
     account.loadData();
   }, [history.location.search]);
+
+  if (!account || !account.data || isEmpty(account.data)) return (<div />);
 
   return (
     <section>
@@ -39,6 +43,7 @@ const Wallet = ({
           tabId="transactions"
           address={selectSearchParamValue(history.location.search, 'address')}
         />
+        {/*
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
@@ -47,7 +52,7 @@ const Wallet = ({
             tabId="voting"
           />
         ) : null}
-        {account.data?.isDelegate
+        {account.data?.summary?.isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
@@ -56,7 +61,7 @@ const Wallet = ({
               address={selectSearchParamValue(history.location.search, 'address')}
             />
           )
-          : null}
+          : null} */}
       </TabsContainer>
     </section>
   );

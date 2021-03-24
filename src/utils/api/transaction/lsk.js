@@ -1,21 +1,24 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
 
-import { tokenMap, MODULE_ASSETS } from '@constants';
+import {
+  tokenMap, MODULE_ASSETS, minFeePerByte, DEFAULT_NUMBER_OF_SIGNATURES,
+  DUMMY_RECIPIENT_ADDRESS, DEFAULT_SIGNATURE_BYTE_SIZE,
+} from '@constants';
 import { selectSchema } from '@utils/moduleAssets';
+import { extractAddress } from '@utils/account';
 import { MAX_ASSET_FEE } from '@constants/moduleAssets';
 
 import http from '../http';
 import ws from '../ws';
 import { getDelegates } from '../delegate';
 import regex from '../../regex';
-import { fromRawLsk } from '../../lsk';
 import { validateAddress } from '../../validators';
 
 const httpPrefix = '/api/v2';
 
 const httpPaths = {
-  feeEstimates: `${httpPrefix}/fee_estimates`,
+  fees: `${httpPrefix}/fees`,
   transactions: `${httpPrefix}/transactions`,
   transaction: `${httpPrefix}/transactions`,
   transactionStats: `${httpPrefix}/transactions/statistics`,
@@ -235,6 +238,32 @@ export const getTxAmount = (transaction) => {
   return amount;
 };
 
+const createTransactionObject = (rawTransction, moduleAssetType) => {
+  const [moduleID, assetID] = moduleAssetType.split(':');
+  const {
+    senderPublicKey, nonce, amount, recipientAddress, data, fee, signatures,
+  } = rawTransction;
+
+  const transaction = {
+    moduleID,
+    assetID,
+    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
+    nonce: BigInt(nonce),
+    fee,
+    signatures,
+  };
+
+  if (moduleAssetType === MODULE_ASSETS.transfer) {
+    transaction.asset = {
+      recipientAddress: extractAddress(recipientAddress),
+      amount: BigInt(amount),
+      data,
+    };
+  }
+
+  return transaction;
+};
+
 /**
  * creates a new transaction
  *
@@ -249,25 +278,12 @@ export const create = ({
   ...transactionObject
 }) => new Promise((resolve, reject) => {
   const { networkIdentifier } = network.networks.LSK;
-
-  const [moduleID, assetID] = moduleAssetType.split(':');
   const {
-    passphrase, senderPublicKey, nonce, amount, recipientId, data, fee,
+    passphrase, rawTransction,
   } = transactionObject;
 
   const schema = selectSchema(moduleAssetType);
-  const transaction = {
-    moduleID,
-    assetID,
-    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
-    nonce: BigInt(nonce),
-    fee: BigInt(fee),
-    asset: {
-      recipientAddress: Buffer.from(recipientId, 'hex'),
-      amount: BigInt(amount),
-      data,
-    },
-  };
+  const transaction = createTransactionObject(rawTransction, moduleAssetType);
 
   try {
     const signedTransaction = transactions.signTransaction(
@@ -334,7 +350,7 @@ export const broadcast = ({ signedTransaction, network }) => {
  */
 export const getTransactionBaseFees = network =>
   http({
-    path: httpPaths.feeEstimates,
+    path: httpPaths.fees,
     searchParams: {},
     network,
   })
@@ -347,9 +363,6 @@ export const getTransactionBaseFees = network =>
       };
     });
 
-
-export const minFeePerByte = 1000;
-
 /**
  * Returns the actual tx fee based on given tx details
  * and selected processing speed
@@ -360,28 +373,47 @@ export const minFeePerByte = 1000;
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
-  transaction, moduleAssetType, selectedPriority,
+  transaction, selectedPriority,
 }) => {
-  const schema = selectSchema(moduleAssetType);
-  const minFee = transactions.computeMinFee(schema, transaction);
+  const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
+  const {
+    moduleAssetType, ...rawTransction
+  } = transaction;
+
+  const schema = selectSchema(moduleAssetType);
   const maxAssetFee = MAX_ASSET_FEE[moduleAssetType];
 
-  // Tie breaker is only meant for Medium and high processing speeds
+  const transactionObject = createTransactionObject(rawTransction, moduleAssetType);
+
+  const minFee = transactions.computeMinFee(schema, {
+    ...transactionObject,
+    signatures: undefined,
+  });
+
+  // tie breaker is only meant for medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : minFeePerByte * feePerByte * Math.random();
 
-  const size = transaction.getBytes().length;
-  let value = minFee + feePerByte * size + tieBreaker;
+  const size = transactions.getBytes(schema, {
+    ...transactionObject,
+    signatures: new Array(numberOfSignatures).fill(
+      Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE),
+    ),
+  }).length;
 
-  if (value > maxAssetFee) {
-    value = maxAssetFee;
+  let fee = minFee + BigInt(size * feePerByte) + BigInt(tieBreaker);
+
+  const maxFee = BigInt(maxAssetFee);
+  if (fee > maxFee) {
+    fee = maxFee;
   }
 
-  const roundedValue = parseFloat(Number(fromRawLsk(value)).toFixed(8));
+  const roundedValue = transactions.convertBeddowsToLSK(fee.toString());
+
   const feedback = transaction.amount === ''
     ? '-'
-    : `${(value ? '' : 'Invalid amount')}`;
+    : `${(roundedValue ? '' : 'Invalid amount')}`;
 
   return {
     value: roundedValue,

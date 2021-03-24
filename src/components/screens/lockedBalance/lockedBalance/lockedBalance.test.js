@@ -3,7 +3,7 @@ import { tokenMap, networks } from '@constants';
 import { mountWithProps } from '../../../../utils/testHelpers';
 import LockedBalance from './index';
 import accounts from '../../../../../test/constants/accounts';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
+import useTransactionPriority from '../../../shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 import { create } from '../../../../utils/api/transaction';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
@@ -57,9 +57,11 @@ describe('Unlock LSK modal', () => {
       info: {
         LSK: {
           ...accounts.genesis,
-          unlocking: initUnlocking,
-          votes: initVotes,
-          nonce: '178',
+          dpos: {
+            unlocking: initUnlocking,
+            sentVotes: initVotes,
+          },
+          sequence: { nonce: '178' },
         },
       },
     },

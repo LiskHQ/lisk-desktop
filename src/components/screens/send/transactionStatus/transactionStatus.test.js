@@ -12,7 +12,10 @@ describe('TransactionStatus', () => {
     bookmarks: {
       LSK: [],
     },
-    account: { address: '312312Z', hwInfo: { deviceId: 'MOCK' } },
+    account: {
+      summary: { address: '312312Z' },
+      hwInfo: { deviceId: 'MOCK' },
+    },
     prevStep: jest.fn(),
     fields: {
       recipient: {

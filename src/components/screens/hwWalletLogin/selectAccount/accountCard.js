@@ -65,7 +65,7 @@ const AccountCard = ({
       </div>
       <div className={`${styles.row} row-balance`}>
         <p>
-          <LiskAmount val={account.balance} token={tokenMap.LSK.key} />
+          <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
         </p>
         <span>{t('Balance')}</span>
       </div>
