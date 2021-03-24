@@ -68,6 +68,7 @@ export const getAccount = async ({
   network, params, baseUrl,
 }) => {
   const normParams = getAccountParams(params);
+  if (typeof params.isDelegate === 'boolean') normParams.isDelegate = params.isDelegate;
   let account = {
     address: normParams.address,
     balance: 0,

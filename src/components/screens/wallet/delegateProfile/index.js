@@ -4,8 +4,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import withData from '@utils/withData';
 import { getVoters } from '@utils/api/delegate';
-import { getAccounts } from '@utils/api/account';
+import { getAccount } from '@utils/api/account';
 import { getBlocks } from '@utils/api/block';
+import { tokenMap } from '@constants';
 import DelegateProfile from './delegateProfile';
 
 const mapStateToProps = state => ({
@@ -16,12 +17,12 @@ const mapStateToProps = state => ({
 const apis = {
   delegate: {
     apiUtil: (network, params) =>
-      getAccounts({ network, params: { ...params, isDelegate: true } }),
+      getAccount({ network, params }, tokenMap.LSK.key),
     defaultData: {},
     getApiParams: (_, ownProps) => ({
       address: ownProps.address,
+      isDelegate: true,
     }),
-    transformResponse: response => (response.data[0] ? response.data[0] : {}),
   },
   voters: {
     apiUtil: (network, params) => getVoters({ network, params }),
@@ -33,10 +34,6 @@ const apis = {
   lastBlockForged: {
     apiUtil: (network, params) => getBlocks({ network, params }),
     defaultData: {},
-    getApiParams: state => ({
-      height: state.account.info && state.account.info.LSK.delegate
-        ? state.account.info.LSK.delegate.lastForgedHeight : 0,
-    }),
     transformResponse: response => (response ? response.data[0] : {}),
   },
 };

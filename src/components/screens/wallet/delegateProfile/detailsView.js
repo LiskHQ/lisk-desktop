@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
+import { tokenMap } from '@constants';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxHeader from '../../../toolbox/box/header';
@@ -48,8 +48,8 @@ const DetailsView = ({
               <DateTimeFromTimestamp
                 fulltime
                 className="date"
-                time={lastBlockForged.data}
-                token="LSK"
+                time={lastBlockForged}
+                token={tokenMap.LSK.key}
               />
             ) : '-' }
           </div>
