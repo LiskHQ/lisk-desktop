@@ -54,10 +54,10 @@ const DelegateProfile = ({
           forgedLsk="-"
         />
       </Box>
-      {/*<DelegateVotesView
+      {/* <DelegateVotesView
         t={t}
         voters={voters}
-      />*/}
+      /> */}
     </section>
   );
 };
