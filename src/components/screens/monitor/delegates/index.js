@@ -153,10 +153,11 @@ const ComposedDelegates = compose(
       },
 
       watchedDelegates: {
-        apiUtil: (network, params) => getAccounts({ network, params }),
+        apiUtil: (network, params) =>
+          getAccounts({ network, params: { ...params, isDelegate: true } }),
         defaultData: [],
         getApiParams: state => ({ addressList: state.watchList }),
-        transformResponse: transformAccountsIsDelegateResponse,
+        transformResponse: transformDelegatesResponse,
       },
     },
   ),
