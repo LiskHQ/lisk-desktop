@@ -1,7 +1,7 @@
 // istanbul ignore file
 import React from 'react';
 import { fromRawLsk } from '@utils/lsk';
-import { colorPalette } from '@constants';
+import { colorPalette, MAX_BLOCKS_FORGED } from '@constants';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -47,7 +47,7 @@ const Overview = ({
     datasets: [
       {
         label: 'delegates',
-        data: [Math.max(0, chartActiveAndStandby.data - 101), 101],
+        data: [Math.max(0, chartActiveAndStandby.data - MAX_BLOCKS_FORGED), MAX_BLOCKS_FORGED],
       },
     ],
   };
