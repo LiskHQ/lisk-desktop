@@ -3,7 +3,7 @@ import { transactions } from '@liskhq/lisk-client';
 
 import {
   tokenMap, MODULE_ASSETS, minFeePerByte, DEFAULT_NUMBER_OF_SIGNATURES,
-  DUMMY_RECIPIENT_ADDRESS, DEFAULT_SIGNATURE_BYTE_SIZE,
+  DEFAULT_SIGNATURE_BYTE_SIZE,
 } from '@constants';
 import { selectSchema } from '@utils/moduleAssets';
 import { extractAddress } from '@utils/account';
