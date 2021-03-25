@@ -4,7 +4,6 @@ import { Redirect, Route } from 'react-router-dom';
 
 import Piwik from '@utils/piwik';
 import { routes } from '@constants';
-import { selectSearchParamValue } from '@utils/searchParams';
 import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 

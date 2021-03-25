@@ -24,7 +24,15 @@ const accounts = {
     token: { balance: 1000e8 },
     sequence: { },
     dpos: {
-      delegate: { username: 'genesis_17' },
+      delegate: {
+        username: 'genesis_17',
+        consecutiveMissedBlocks: 0,
+        isBanned: false,
+        lastForgedHeight: 618820,
+        rank: 18,
+        status: 'active',
+        totalVotesReceived: '100000000000',
+      },
     },
   },
   empty_account: {
