@@ -2,6 +2,7 @@ import Lisk from '@liskhq/lisk-client'; // eslint-disable-line
 
 import { tokenMap } from '../constants/tokens';
 import regex from './regex';
+import { balanceNeededForInitialization } from '../constants/account';
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
@@ -101,3 +102,11 @@ export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlo
         ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );
+
+export const isAccountInitialized = account => account
+  && account.info
+  && account.info.LSK
+  && !!account.info.LSK.serverPublicKey;
+
+export const hasEnoughBalanceForInitialization = (balance = 0) =>
+  Number(balance) >= balanceNeededForInitialization;

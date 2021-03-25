@@ -33,6 +33,7 @@ describe('CustomRoute', () => {
         },
       },
     },
+    transactions: { pending: [] },
   };
 
   beforeEach(() => {
