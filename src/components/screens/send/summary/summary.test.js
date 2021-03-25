@@ -5,7 +5,7 @@ import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 import i18n from '../../../../i18n';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
-import { toRawLsk } from '../../../../utils/lsk';
+import { toRawLsk, fromRawLsk } from '../../../../utils/lsk';
 
 describe('Summary', () => {
   let wrapper;
@@ -130,7 +130,7 @@ describe('Summary', () => {
 
   it('should show props.fields.fee.value and use it in transactionCreated if props.token is not LSK', () => {
     const txFee = 12451;
-    const formattedtxFee = formatAmountBasedOnLocale({ value: txFee });
+    const formattedtxFee = formatAmountBasedOnLocale({ value: fromRawLsk(txFee) });
     wrapper.setProps({
       token: 'BTC',
       fields: {

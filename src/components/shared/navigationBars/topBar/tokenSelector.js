@@ -13,7 +13,7 @@ const TokenSelector = ({ token, history, t }) => {
   const activeToken = useSelector(state => state.settings.token.active);
 
   const activateToken = () => {
-    if (activeToken !== token) {
+    if (activeToken !== token && history.location.pathname !== routes.initialization.path) {
       dispatch(settingsUpdated({ token: { active: token } }));
       const { location, push } = history;
       if (location.pathname !== routes.wallet.path) {
