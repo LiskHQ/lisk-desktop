@@ -60,7 +60,6 @@ const TransactionStatus = ({
     if (transactionsCreated.length) {
       transactionsCreated.forEach(tx => transactionBroadcasted(tx));
     }
-
     if (transactionsCreatedFailed.length) {
       transactionsCreatedFailed.forEach(tx => transactionBroadcasted(tx));
     }
