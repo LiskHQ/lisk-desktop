@@ -16,9 +16,7 @@ const Identity = ({
   username = '',
 }) => {
   if (!address) return null;
-  const truncatedAddress = address.length > 12
-    ? truncateAddress(address) : address;
-
+  const truncatedAddress = truncateAddress(address);
   const [isTruncated, setTruncationState] = useState(true);
   const onClick = () => setTruncationState(!isTruncated);
 
