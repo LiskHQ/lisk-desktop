@@ -5,7 +5,7 @@ import Box from '../../../toolbox/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
-import DelegateVotesView from './delegateVotesView';
+// import DelegateVotesView from './delegateVotesView';
 
 // const formatForgingStatus = (status) => {
 //   const result = status.replace(/([A-Z])/g, ' $1');
@@ -30,33 +30,34 @@ const DelegateProfile = ({
   useEffect(() => {
     delegate.loadData();
     voters.loadData();
-    // lastBlockForged.loadData();
   }, [address]);
 
-  // const status = getDelegateStatus(awaitingForgers, forgingTimes, address);
-  const status = 'Mocked Status';
+  useEffect(() => {
+    lastBlockForged.loadData({ height: delegate.data.dpos?.delegate?.lastForgedHeight });
+  }, [delegate.data.dpos?.delegate?.lastForgedHeight]);
 
   return (
     <section className={`${styles.container} container`}>
       <Box className={`${grid.row} ${styles.statsContainer} stats-container`}>
         <DetailsView
           t={t}
-          status={status}
+          status={delegate.data.dpos?.delegate?.status}
           lastBlockForged={lastBlockForged.data.timestamp}
-          voteWeight={delegate.data.totalVotesReceived}
+          voteWeight={delegate.data.dpos?.delegate?.totalVotesReceived}
+          rank={delegate.data.dpos?.delegate?.rank}
         />
         <PerformanceView
           t={t}
-          productivity={delegate.data.productivity}
-          forgedBlocks={delegate.data.producedBlocks}
-          missedBlocks={delegate.data.missedBlocks}
+          productivity={delegate.data.dpos?.delegate?.productivity}
+          forgedBlocks={delegate.data.dpos?.delegate?.producedBlocks}
+          missedBlocks={delegate.data.dpos?.delegate?.missedBlocks}
           forgedLsk="-"
         />
       </Box>
-      <DelegateVotesView
+      {/* <DelegateVotesView
         t={t}
         voters={voters}
-      />
+      /> */}
     </section>
   );
 };

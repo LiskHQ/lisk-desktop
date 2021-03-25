@@ -10,7 +10,7 @@ import { isEmpty } from '@utils/helpers';
 import { selectActiveToken, selectSettings } from '@store/selectors';
 import Overview from './overview';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
-// import DelegateTab from './delegateProfile';
+import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
 
@@ -51,7 +51,6 @@ const Wallet = ({
             tabId="voting"
           />
         ) : null}
-        {/*
         {account.data?.summary?.isDelegate
           ? (
             <DelegateTab
@@ -61,7 +60,7 @@ const Wallet = ({
               address={selectSearchParamValue(history.location.search, 'address')}
             />
           )
-          : null} */}
+          : null}
       </TabsContainer>
     </section>
   );

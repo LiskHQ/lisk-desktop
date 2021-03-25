@@ -54,6 +54,7 @@ const blocksFilters = {
   dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
   dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
   generatorAddress: { key: 'generatorAddress', test: address => !validateAddress(tokenMap.LSK.key, address) },
+  height: { key: 'height', test: num => (typeof num === 'number') },
   limit: { key: 'limit', test: num => (typeof num === 'number') },
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
   sort: {
