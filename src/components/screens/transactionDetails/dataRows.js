@@ -35,7 +35,7 @@ export const Illustration = ({
   return (
     <BoxRow className={styles.summaryHeader}>
       <TransactionTypeFigure
-        address={transaction.senderId}
+        address={transaction.sender.address}
         moduleAssetId={transaction.moduleAssetId}
       />
       <h2 className="tx-header">{getModuleAssetTitle()[transaction.moduleAssetId]}</h2>
@@ -243,7 +243,7 @@ export const DelegateUsername = ({
       <div className={`${styles.value}`}>
         <span className={styles.label}>{t('Delegate username')}</span>
         <div className="delegate-username">
-          { transaction.asset.delegate.username }
+          { transaction.asset.username }
         </div>
       </div>
     </BoxRow>
