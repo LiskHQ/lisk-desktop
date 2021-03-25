@@ -10,8 +10,10 @@ import Votes from './votes';
 const apis = {
   votes: {
     apiUtil: (network, params) => getVotes({ network, params }),
-    getApiParams: state => ({ address: state.account.summary?.address }),
-    defaultData: [],
+    defaultData: {
+      account: {},
+      votes: [],
+    },
     autoload: false,
     transformResponse: response => response.data,
   },
@@ -21,7 +23,7 @@ const apis = {
     defaultData: {},
     transformResponse: response =>
       response.data.reduce((dict, account) => {
-        dict[account.summary?.address] = account;
+        dict[account.address] = account;
         return dict;
       }, {}),
   },
