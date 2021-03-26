@@ -26,6 +26,7 @@ const selectSchema = moduleAssetId => new Promise(async (resolve, reject) => {
 
   try {
     const response = await getSchema({ moduleAssetId });
+    MODULE_ASSETS_NAME_ID_MAP[moduleAssetId].setSchema(response.data[0]);
     resolve(response.data[0]);
   } catch (error) {
     reject(error);
