@@ -276,7 +276,7 @@ export const create = ({
   } = transactionObject;
 
   try {
-    selectSchema(moduleAssetType)
+    selectSchema(moduleAssetType, network)
       .then((schema) => {
         console.log('create', moduleAssetType);
         const transaction = createTransactionObject(rawTransaction, moduleAssetType);
@@ -367,7 +367,7 @@ export const getTransactionBaseFees = network =>
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
-  transaction, selectedPriority,
+  transaction, selectedPriority, network,
 }) => {
   const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
@@ -375,7 +375,7 @@ export const getTransactionFee = async ({
     moduleAssetType, ...rawTransaction
   } = transaction;
 
-  const schema = await selectSchema(moduleAssetType);
+  const schema = await selectSchema(moduleAssetType, network);
   const maxAssetFee = MAX_ASSET_FEE[moduleAssetType];
   console.log('getTransactionFee', moduleAssetType);
 

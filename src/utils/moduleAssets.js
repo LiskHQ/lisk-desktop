@@ -20,7 +20,7 @@ const getModuleAssetTitle = (t = str => str) => ({
 });
 
 
-const selectSchema = moduleAssetId => new Promise(async (resolve, reject) => {
+const selectSchema = (moduleAssetId, network) => new Promise(async (resolve, reject) => {
   const schema = MODULE_ASSETS_MAP[moduleAssetId].schema;
   if (schema) {
     resolve(schema);
@@ -28,7 +28,7 @@ const selectSchema = moduleAssetId => new Promise(async (resolve, reject) => {
   }
 
   try {
-    const response = await getSchema({ params: { moduleAssetId } });
+    const response = await getSchema({ params: { moduleAssetId }, network });
     MODULE_ASSETS_MAP[moduleAssetId].setSchema(response.data[0]);
     resolve(response.data[0]);
   } catch (error) {
