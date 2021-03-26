@@ -20,13 +20,17 @@ const getModuleAssetTitle = (t = str => str) => ({
 });
 
 
-const selectSchema = async (moduleAssetId) => {
+const selectSchema = moduleAssetId => new Promise(async (resolve, reject) => {
   const schema = MODULE_ASSETS_MAP[moduleAssetId].getSchema();
-  if (schema) return schema;
+  if (schema) resolve(schema);
 
-  const response = await getSchema({ moduleAssetId });
-  return response.data[0];
-};
+  try {
+    const response = await getSchema({ moduleAssetId });
+    resolve(response.data[0]);
+  } catch (error) {
+    reject(error);
+  }
+});
 
 // eslint-disable-next-line import/prefer-default-export
 export { selectSchema, getModuleAssetSenderLabel, getModuleAssetTitle };
