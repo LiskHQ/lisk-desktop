@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { maxMessageLength, MODULE_ASSETS } from '@constants';
+import { maxMessageLength, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';
 import { AutoResizeTextarea } from '../../../toolbox/inputs';
@@ -12,7 +12,7 @@ import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
 
-const moduleAssetType = MODULE_ASSETS.transfer;
+const moduleAssetType = MODULE_ASSETS_NAME_ID_MAP.transfer;
 
 // eslint-disable-next-line max-statements
 const FormLsk = (props) => {

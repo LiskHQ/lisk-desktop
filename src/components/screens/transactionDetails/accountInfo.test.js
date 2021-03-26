@@ -6,7 +6,7 @@ import accounts from '../../../../test/constants/accounts';
 describe('TxDetail AccountInfo', () => {
   const props = {
     label: 'Label test',
-    address: accounts.genesis.address,
+    address: accounts.genesis.summary.address,
     token: 'LSK',
     network: {
       name: 'Mainnet',

@@ -74,7 +74,7 @@ import transactionError from '../../../assets/images/icons/transaction-error.svg
 import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
 import transactionSuccess from '../../../assets/images/icons/transaction-success.svg';
 import secondPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
-import createMultiSig from '../../../assets/images/icons/multiSignature.svg';
+import registerMultisignatureGroup from '../../../assets/images/icons/multiSignature.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
 import registerDelegate from '../../../assets/images/icons/tx-delegate.svg';
 import vote from '../../../assets/images/icons/tx-vote.svg';
@@ -247,7 +247,7 @@ export const icons = {
   verifyMessageActive,
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
-  createMultiSig,
+  registerMultisignatureGroup,
   missedBlocks,
   newsFeedBlog,
   newsFeedBlogDark,

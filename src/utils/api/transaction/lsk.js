@@ -46,13 +46,6 @@ export const getTransaction = ({
   params,
   network,
   baseUrl,
-}).then((response) => {
-  const data = response.data.map((tx) => {
-    tx.title = MODULE_ASSETS.getByCode(tx.type).key;
-    return tx;
-  });
-
-  return { data, meta: response.meta };
 });
 
 const filters = {
@@ -99,7 +92,7 @@ export const getTransactions = ({
   params,
   baseUrl,
 }) => {
-  const typeConfig = params.type && MODULE_ASSETS[params.type];
+  const typeConfig = params.type && MODULE_ASSETS_NAME_ID_MAP[params.type];
 
   // if type, correct the type and use WS
   if (typeConfig) {
@@ -109,13 +102,14 @@ export const getTransactions = ({
     }));
     // BaseUrl is only used for retrieving archived txs, so it's not needed here.
     return ws({ baseUrl: network.serviceUrl, requests })
+      // eslint-disable-next-line arrow-body-style
       .then((response) => {
-        const data = response.data.map((tx) => {
-          tx.title = MODULE_ASSETS.getByCode(tx.type).key;
-          return tx;
-        });
+        // const data = response.data.map((tx) => {
+        //   tx.title = MODULE_ASSETS_NAME_ID_MAP.getByCode(tx.type).key;
+        //   return tx;
+        // });
 
-        return { data, meta: response.meta };
+        return response;
       });
   }
 
@@ -142,13 +136,14 @@ export const getTransactions = ({
     params: normParams,
     baseUrl,
   })
+    // eslint-disable-next-line arrow-body-style
     .then((response) => {
-      const data = response.data.map((tx) => {
-        tx.title = MODULE_ASSETS.getByCode(tx.type).key;
-        return tx;
-      });
+      // const data = response.data.map((tx) => {
+      //   tx.title = MODULE_ASSETS_NAME_ID_MAP.getByCode(tx.type).key;
+      //   return tx;
+      // });
 
-      return { data, meta: response.meta };
+      return response;
     });
 };
 
@@ -217,24 +212,21 @@ export const getTransactionStats = ({ network, params: { period } }) => {
  * @param {Object} transaction The transaction object
  * @returns {String} Amount in beddows/satoshi
  */
-export const getTxAmount = (transaction) => {
-  let amount = transaction.amount ?? transaction.asset.amount;
-  if (transaction.title === 'unlockToken') {
-    amount = 0;
-    transaction.asset.unlockingObjects.forEach((unlockedObject) => {
-      amount += parseInt(unlockedObject.amount, 10);
-    });
-    amount = `${amount}`;
-  }
-  if (transaction.title === 'vote') {
-    amount = 0;
-    transaction.asset.votes.forEach((vote) => {
-      amount += parseInt(vote.amount, 10);
-    });
-    amount = `${amount}`;
+export const getTxAmount = ({ moduleAssetId, asset }) => {
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
+    return asset.amount;
   }
 
-  return amount;
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
+    return asset.unlockingObjects.reduce((sum, unlockingObject) =>
+      sum + parseInt(unlockingObject.amount, 10), 0);
+  }
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
+    return asset.votes.reduce((sum, vote) =>
+      sum + parseInt(vote.amount, 10), 0);
+  }
+
+  return undefined;
 };
 
 const createTransactionObject = (rawTransction, moduleAssetType) => {
@@ -252,7 +244,7 @@ const createTransactionObject = (rawTransction, moduleAssetType) => {
     signatures,
   };
 
-  if (moduleAssetType === MODULE_ASSETS.transfer) {
+  if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.transfer) {
     transaction.asset = {
       recipientAddress: extractAddress(recipientAddress),
       amount: BigInt(amount),

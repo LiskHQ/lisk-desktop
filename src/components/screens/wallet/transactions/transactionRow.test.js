@@ -1,4 +1,4 @@
-import { MODULE_ASSETS } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { mountWithRouter } from '../../../../utils/testHelpers';
 import TransactionRow from './transactionRow';
 import accounts from '../../../../../test/constants/accounts';
@@ -35,7 +35,7 @@ describe('Single Transaction Component', () => {
       },
     );
     expect(wrapper).toContainMatchingElement('.transaction-image');
-    expect(wrapper.find('.transaction-address').text()).toEqual(MODULE_ASSETS.unlockToken);
+    expect(wrapper.find('.transaction-address').text()).toEqual(MODULE_ASSETS_NAME_ID_MAP.unlockToken);
     expect(wrapper).toContainMatchingElement('.transaction-amount');
   });
 });

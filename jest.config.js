@@ -1,7 +1,5 @@
 const { resolve } = require('path');
 
-console.log(resolve(__dirname, './src/utils'));
-
 module.exports = {
   modulePaths: ['src/components'],
   testMatch: [

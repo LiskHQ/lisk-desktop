@@ -2,7 +2,7 @@ import {
   accountDataUpdated, transactionsRetrieved, settingsUpdated,
 } from '@actions';
 
-import { tokenMap, actionTypes, MODULE_ASSETS } from '@constants';
+import { tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import middleware from './account';
 import * as transactionApi from '../../utils/api/transaction';
 
@@ -41,7 +41,7 @@ const transactionsRetrievedAction = {
   type: actionTypes.transactionsRetrieved,
   data: {
     confirmed: [{
-      type: MODULE_ASSETS.registerDelegate,
+      type: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
       confirmations: 1,
     }],
   },
@@ -209,7 +209,7 @@ describe('Account middleware', () => {
     it('should dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
       // const actionSpy = jest.spyOn(votingActions, 'votesRetrieved');
       const actionSpy = () => {};
-      transactionsRetrievedAction.data.confirmed[0].type = MODULE_ASSETS.voteDelegate;
+      transactionsRetrievedAction.data.confirmed[0].type = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
       middleware(store)(next)(transactionsRetrievedAction);
       expect(actionSpy).toHaveBeenCalled();
     });

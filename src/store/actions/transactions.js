@@ -1,7 +1,7 @@
 import to from 'await-to-js';
 
 import {
-  actionTypes, tokenMap, MODULE_ASSETS, loginTypes,
+  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes,
 } from '@constants';
 import { extractAddress } from '@utils/account';
 import { getTransactions, create, broadcast } from '@utils/api/transaction';
@@ -107,7 +107,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
 
   const [error, tx] = account.loginType === loginTypes.passphrase.code
     ? await to(create(
-      { ...data, network, moduleAssetType: MODULE_ASSETS.transfer },
+      { ...data, network, moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.transfer },
       activeToken,
     ))
     : await to(signSendTransaction(account, data));
@@ -169,7 +169,7 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
     if (activeToken !== tokenMap.BTC.key) {
       dispatch(addNewPendingTransaction({
         ...transaction,
-        title: MODULE_ASSETS.getByCode(transaction.type).key,
+        title: MODULE_ASSETS_NAME_ID_MAP[transaction.moduleAssetId],
         amount: transaction.asset.amount,
         recipientId: transaction.asset.recipientId,
       }));

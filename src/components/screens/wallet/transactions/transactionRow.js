@@ -25,22 +25,23 @@ const TransactionRow = ({
     activeToken: state.settings.token.active,
   }));
   const isLSK = activeToken === tokenMap.LSK.key;
-  const isConfirmed = data.confirmations > 0;
-  const { senderId, recipientId } = data;
-  const address = host === recipientId ? senderId : recipientId;
+  const isPending = data.isPending;
+  const senderAddress = data.sender.address;
+  const recipientAddress = data.asset.recipientAddress;
+  const address = host === recipientAddress ? senderAddress : recipientAddress;
   const amount = getTxAmount(data);
 
   return (
     <DialogLink
-      className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending} transactions-row`}
+      className={`${grid.row} ${className} ${isPending ? styles.pending : ''} transactions-row`}
       component="transactionDetails"
       data={{ transactionId: data.id, token: activeToken }}
     >
       <span className={grid[isLSK ? 'col-xs-4' : 'col-xs-5']}>
         <TransactionTypeFigure
-          icon={host === recipientId ? 'incoming' : 'outgoing'}
-          address={host === recipientId ? senderId : recipientId}
-          transactionType={data.title}
+          icon={host === recipientAddress ? 'incoming' : 'outgoing'}
+          address={address}
+          moduleAssetId={data.moduleAssetId}
         />
         <span>
           <TransactionAddress
@@ -48,15 +49,15 @@ const TransactionRow = ({
             bookmarks={bookmarks}
             t={t}
             token={activeToken}
-            transactionType={data.title}
+            moduleAssetId={data.moduleAssetId}
           />
         </span>
       </span>
       <span className={grid[isLSK ? 'col-xs-1' : 'col-xs-2']}>
         {
-          isConfirmed
-            ? <DateTimeFromTimestamp time={data.timestamp} token={activeToken} />
-            : <Spinner completed={isConfirmed} label={t('Pending...')} />
+          isPending
+            ? <Spinner completed={!isPending} label={t('Pending...')} />
+            : <DateTimeFromTimestamp time={data.block.timestamp} token={activeToken} />
         }
       </span>
       <span className={grid['col-xs-1']}>
@@ -76,8 +77,8 @@ const TransactionRow = ({
           host={host}
           token={activeToken}
           showRounded
-          recipient={recipientId || data.asset.recipientId}
-          type={data.type}
+          recipient={recipientAddress}
+          moduleAssetId={data.moduleAssetId}
           amount={amount}
         />
       </span>

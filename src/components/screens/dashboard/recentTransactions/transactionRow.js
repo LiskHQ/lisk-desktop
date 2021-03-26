@@ -24,6 +24,7 @@ const TransactionRow = ({
       total += item.amount;
       return total;
     }, 0);
+
   return (
     <DialogLink
       className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending} transactions-row`}
@@ -34,7 +35,7 @@ const TransactionRow = ({
         <TransactionTypeFigure
           icon={host === data.recipientId ? 'incoming' : 'outgoing'}
           address={host === data.recipientId ? data.senderId : data.recipientId}
-          transactionType={data.title}
+          moduleAssetId={data.moduleAssetId}
         />
         <TransactionAddress
           address={host === data.recipientId ? data.senderId : data.recipientId}
