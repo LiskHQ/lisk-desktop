@@ -22,6 +22,7 @@ module.exports = {
   moduleFileExtensions: ['js'],
   moduleDirectories: ['node_modules'],
   moduleNameMapper: {
+    '^.+\\.css$': 'identity-obj-proxy',
     '^@utils(.*)$': resolve(__dirname, './src/utils/$1'),
     '^@api(.*)$': resolve(__dirname, './src/utils/api/$1'),
     '^@constants(.*)$': resolve(__dirname, './src/constants/$1'),
@@ -30,7 +31,6 @@ module.exports = {
     '^@toolbox(.*)$': resolve(__dirname, './src/components/toolbox/$1'),
     '^@actions(.*)$': resolve(__dirname, './src/store/actions/$1'),
     '^@store(.*)$': resolve(__dirname, './src/store/$1'),
-    '^.+\\.css$': 'identity-obj-proxy',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
   },
   collectCoverage: true,

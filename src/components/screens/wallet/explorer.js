@@ -11,7 +11,7 @@ import { selectActiveToken, selectSettings } from '@store/selectors';
 import Overview from './overview';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
-// import VotesTab from './votes';
+import VotesTab from './votes';
 import Transactions from './transactions';
 
 const Wallet = ({
@@ -43,7 +43,6 @@ const Wallet = ({
           tabId="transactions"
           address={selectSearchParamValue(history.location.search, 'address')}
         />
-        {/*
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
@@ -51,7 +50,7 @@ const Wallet = ({
             tabName={t('Voting')}
             tabId="voting"
           />
-        ) : null} */}
+        ) : null}
         {account.data?.summary?.isDelegate
           ? (
             <DelegateTab
