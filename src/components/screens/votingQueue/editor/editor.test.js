@@ -5,6 +5,22 @@ import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 import Editor from './editor';
 
+const addresses = [
+  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
+  'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',
+  'lskv9tm4z6deg3wu53osxs5cr4sbz7o24qqxyk57k',
+  'lskumc3ec2wzzzzxtcekzbhajo6y3jg8gcaz52jo5',
+  'lskxsnyj33zzzzzz7upwkfrcjocxkse56arbupru6',
+  'lskajvtut6wzj5ah4ky7o5roo4fu7uzsywkawa94w',
+  'lskurg8nyooztpsxodaqqcmhtc64xp5rabbdet3w2',
+  'lskk4drn4kdt2qp39n2vdx7hxhqbkyvak668j9zcm',
+  'lskdea5kprt8c89b2sgntv3u6optuuoe7q7f23vaw',
+  'lskrgs75gvfy29ah9m5bmraenr46dxo3cw8xsnqyz',
+  'lskyhyc9z5e8eg25sokdho5o8mymgacfbp4kx7tcd',
+  'lskzzovs6sbs87pkr8kndsspkrox4z5237wbqh9zf',
+  'lskarccxj6xqdeqtuvakr3hjdjh8a6df73b6pqk6s',
+];
+
 describe('VotingQueue.Editor', () => {
   const props = {
     t: str => str,
@@ -12,18 +28,24 @@ describe('VotingQueue.Editor', () => {
     nextStep: jest.fn(),
   };
   const mixedVotes = {
-    '12345L': { confirmed: 1e10, unconfirmed: 1e10 },
-    '123456L': { confirmed: 1e10, unconfirmed: 2e10 },
+    [addresses[0]]: { confirmed: 1e10, unconfirmed: 1e10 },
+    [addresses[1]]: { confirmed: 1e10, unconfirmed: 2e10 },
   };
 
-  const elevenVotes = Array.from(Array(11).keys()).reduce((dict, i) => {
-    dict[`123456${i}L`] = { confirmed: 1e10, unconfirmed: 1e10 * i };
+  const elevenVotes = addresses.reduce((dict, item, index) => {
+    if (index > 1) {
+      dict[item] = { confirmed: 1e10, unconfirmed: 1e10 * index };
+    }
     return dict;
   }, {});
 
   const expensiveVotes = {
-    '12345L': { confirmed: 0, unconfirmed: Math.floor(Math.parseInt(accounts.genesis.token.balance, 10) / 2) },
-    '123456L': { confirmed: 0, unconfirmed: Math.floor(Math.parseInt(accounts.genesis.token.balance, 10) / 2) },
+    [addresses[0]]: {
+      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
+    },
+    [addresses[1]]: {
+      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
+    },
   };
 
   it('Render only the changed votes', () => {
