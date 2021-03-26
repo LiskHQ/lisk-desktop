@@ -22,7 +22,7 @@ describe('Utils: moduleAssets', () => {
       http.mockClear();
     });
 
-    it('', async () => {
+    it('should return and set schema', async () => {
       const expectedSchema = { id: 'id' };
       http.mockImplementation(() => Promise.resolve({ data: [{ schema: expectedSchema }] }));
       const schema = await selectSchema('2:0');
