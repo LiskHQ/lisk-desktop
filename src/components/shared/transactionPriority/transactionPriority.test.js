@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap, MODULE_ASSETS } from '@constants';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionPriority from '.';
 
 const baseFees = {
@@ -24,7 +24,7 @@ describe('TransactionPriority', () => {
     setSelectedPriority: jest.fn(),
     fee,
     setCustomFee: jest.fn(),
-    txType: MODULE_ASSETS.transfer,
+    txType: MODULE_ASSETS_NAME_ID_MAP.transfer,
     loadError: false,
     isloading: false,
   };

@@ -9,7 +9,7 @@ import AccountVisualWithAddress from '../../../shared/accountVisualWithAddress';
 import styles from './accounts.css';
 
 const getOwnerName = (account) => {
-  const delegateUsername = account.delegate ? account.delegate.username : '';
+  const delegateUsername = account.summary?.username ? account.summary?.username : '';
   const text = account.knowledge
     && account.knowledge.owner && account.knowledge.description
     ? `${account.knowledge.owner} ${account.knowledge.description}`
@@ -31,23 +31,23 @@ const BalanceShare = ({ balance, supply }) => {
 const AccountRow = ({ data, className, supply }) => (
   <Link
     className={`${grid.row} ${className} accounts-row`}
-    to={`${routes.account.path}?address=${data.address}`}
+    to={`${routes.account.path}?address=${data.summary?.address}`}
   >
     <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}>
       {data.rank}
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-5']}`}>
       <AccountVisualWithAddress
-        address={data.address}
+        address={data.summary?.address}
         transactionSubject="address"
         showBookmarkedAddress
       />
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-3']}`}>
-      <LiskAmount val={data.balance} showInt token={tokenMap.LSK.key} />
+      <LiskAmount val={data.token?.balance} showInt token={tokenMap.LSK.key} />
     </span>
     <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
-      <BalanceShare balance={data.balance} supply={supply} />
+      <BalanceShare balance={data.token?.balance} supply={supply} />
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-2']}`}>
       {getOwnerName(data)}

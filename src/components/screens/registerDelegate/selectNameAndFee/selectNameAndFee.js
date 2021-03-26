@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getDelegate } from '@utils/api/delegate';
 import regex from '@utils/regex';
-import { tokenMap, MODULE_ASSETS } from '@constants';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';
 import BoxContent from '../../../toolbox/box/content';
@@ -10,12 +11,9 @@ import { Input } from '../../../toolbox/inputs';
 import { PrimaryButton } from '../../../toolbox/buttons';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './selectNameAndFee.css';
-import TransactionPriority from '../../../shared/transactionPriority/transactionPriority';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
 
 const token = tokenMap.LSK.key;
-const txType = MODULE_ASSETS.registerDelegate;
+const txType = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
 
 // eslint-disable-next-line max-statements
 const SelectNameAndFee = ({ account, ...props }) => {
@@ -41,10 +39,10 @@ const SelectNameAndFee = ({ account, ...props }) => {
     token,
     account,
     priorityOptions,
-    txData: {
+    transaction: {
       txType,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+      nonce: account.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
       username: state.nickname,
     },
   });
@@ -55,7 +53,6 @@ const SelectNameAndFee = ({ account, ...props }) => {
     ),
   );
 
-
   const getNicknameFromPrevState = () => {
     if (Object.entries(prevState).length) {
       setState({ nickname: prevState.nickname });
@@ -63,7 +60,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
   };
 
   const checkIfUserIsDelegate = () => {
-    if (account && account.isDelegate) {
+    if (account?.isDelegate) {
       setState({
         inputDisabled: true,
         error: t('You have already registered as a delegate.'),
@@ -72,8 +69,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
   };
 
   const hasUserEnoughFunds = () => {
-    const hasFunds = account
-      && account.balance >= fee.value;
+    const hasFunds = account?.token?.balance >= fee.value;
 
     if (!hasFunds) {
       setState({

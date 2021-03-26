@@ -1,4 +1,4 @@
-import { MODULE_ASSETS } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import {
   getTransaction,
   getTransactions,
@@ -205,8 +205,8 @@ describe('API: LSK Transactions', () => {
 
     it('should return amount of votes in Beddows', () => {
       const tx = {
-        title: MODULE_ASSETS.voteDelegate,
-        type: MODULE_ASSETS.voteDelegate,
+        title: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+        type: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
         asset: {
           votes: [
             {
@@ -224,8 +224,8 @@ describe('API: LSK Transactions', () => {
 
     it('should return amount of unlock in Beddows', () => {
       const tx = {
-        title: MODULE_ASSETS.unlockToken,
-        type: MODULE_ASSETS.unlockToken,
+        title: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        type: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
         asset: {
           unlockingObjects: [
             {

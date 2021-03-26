@@ -2,13 +2,12 @@ import React, { useMemo, useState } from 'react';
 
 import { tokenMap } from '@constants';
 import { toRawLsk } from '@utils/lsk';
+import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton } from '../../../toolbox/buttons';
-import TransactionPriority from '../../../shared/transactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
+
 import Table from '../../../toolbox/table';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
@@ -118,16 +117,16 @@ const Editor = ({
     token,
     account,
     priorityOptions,
-    txData: {
+    transaction: {
       txType,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+      nonce: account.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
       votes: normalizedVotes,
     },
   });
 
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
-  const feedback = validateVotes(votes, account.balance, fee.value, t);
+  const feedback = validateVotes(votes, account.token?.balance, fee.value, t);
 
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 

@@ -2,19 +2,21 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '@constants';
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
-import AccountVisual from '../../../toolbox/accountVisual';
-import tableStyles from '../../../toolbox/table/table.css';
-import LiskAmount from '../../../shared/liskAmount';
+import { truncateAddress } from '@utils/account';
+import AccountVisual from '@toolbox/accountVisual';
+import tableStyles from '@toolbox/table/table.css';
+import LiskAmount from '@shared/liskAmount';
+import DialogLink from '@toolbox/dialog/link';
+import Spinner from '@toolbox/spinner';
+import Icon from '@toolbox/icon';
 import styles from './votes.css';
-import DialogLink from '../../../toolbox/dialog/link';
-import Spinner from '../../../toolbox/spinner';
-import Icon from '../../../toolbox/icon';
 
 const VoteRow = ({
   data, onRowClick, accounts,
 }) => {
   const onClick = () => onRowClick(data.address);
   const account = accounts[data.address];
+  const truncatedAddress = truncateAddress(data.address);
   return (
     <div className={`${tableStyles.row} ${styles.row} vote-row`}>
       {/* Account visual */}
@@ -22,12 +24,12 @@ const VoteRow = ({
         <div className={`${styles.info}`}>
           <AccountVisual
             className={`${styles.avatar}`}
-            address={data.address}
+            address={truncatedAddress}
             size={40}
           />
           <div className={styles.accountInfo}>
             <span className={`${styles.username} vote-username`}>{data.username}</span>
-            <span className={`${styles.address} showOnLargeViewPort`}>{data.address}</span>
+            <span className={`${styles.address} showOnLargeViewPort`}>{truncatedAddress}</span>
           </div>
         </div>
       </div>
@@ -85,7 +87,6 @@ const VoteRow = ({
                 className={styles.editVoteLink}
                 component="editVote"
                 data={{ address: data.address }}
-
               >
                 <Icon name="edit" />
               </DialogLink>

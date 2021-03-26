@@ -57,7 +57,7 @@ class Login extends React.Component {
 
   componentDidUpdate() {
     if (this.props.account
-      && this.props.account.address) {
+      && this.props.account.summary?.address) {
       this.redirectToReferrer();
     }
   }
@@ -76,7 +76,7 @@ class Login extends React.Component {
     const { account, network, settings: { token: { active } } } = this.props;
     return account
       && network
-      && account.address === address
+      && account.summary?.address === address
       && network.name === prevNetwork.name
       && network.networks[active].nodeUrl === prevNetwork.networks[active].nodeUrl;
   }

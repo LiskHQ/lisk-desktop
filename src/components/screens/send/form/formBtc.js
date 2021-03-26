@@ -1,14 +1,12 @@
 import React from 'react';
-import { MODULE_ASSETS } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk } from '@utils/lsk';
+import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';
 import FormBase from './formBase';
-import TransactionPriority from '../../../shared/transactionPriority';
 import useAmountField from './useAmountField';
-import useTransactionFeeCalculation from './useTransactionFeeCalculation';
-import useTransactionPriority from './useTransactionPriority';
 import useRecipientField from './useRecipientField';
 
-const txType = MODULE_ASSETS.transfer;
+const txType = MODULE_ASSETS_NAME_ID_MAP.transfer;
 
 const FormBtc = (props) => {
   const {
@@ -25,7 +23,7 @@ const FormBtc = (props) => {
     priorityOptions,
     token,
     account,
-    txData: {
+    transaction: {
       amount: toRawLsk(amount.value), txType, recipient: recipient.value,
     },
   });

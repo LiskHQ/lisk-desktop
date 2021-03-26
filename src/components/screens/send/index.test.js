@@ -24,7 +24,7 @@ describe('Send', () => {
       },
     },
     account: {
-      balance: accounts.genesis.balance,
+      token: { balance: accounts.genesis.balance },
     },
     t: v => v,
     prevState: {

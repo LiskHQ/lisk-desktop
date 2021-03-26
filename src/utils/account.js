@@ -29,6 +29,9 @@ export const extractAddress = (data) => {
   if (regex.publicKey.test(data)) {
     return cryptography.getBase32AddressFromPublicKey(data).toString('hex');
   }
+  if (regex.address.test(data)) {
+    return cryptography.getAddressFromBase32Address(data);
+  }
   return undefined;
 };
 

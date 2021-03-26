@@ -8,12 +8,12 @@ describe('VoteRow Component', () => {
   let wrapper;
   const props = {
     data: {
-      address: accounts.delegate.address,
+      address: accounts.delegate.summary.address,
       delegate: accounts.delegate,
     },
     onRowClick: jest.fn(),
     accounts: {
-      [accounts.delegate.address]: {
+      [accounts.delegate.summary.address]: {
         address: '16313739661670634666L',
         balance: '99994688951000',
         delegate: {

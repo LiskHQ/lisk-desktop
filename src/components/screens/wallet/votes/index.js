@@ -10,8 +10,10 @@ import Votes from './votes';
 const apis = {
   votes: {
     apiUtil: (network, params) => getVotes({ network, params }),
-    getApiParams: state => ({ address: state.account.address }),
-    defaultData: [],
+    defaultData: {
+      account: {},
+      votes: [],
+    },
     autoload: false,
     transformResponse: response => response.data,
   },
@@ -29,7 +31,7 @@ const apis = {
 
 const mapStateToProps = state => ({
   hostVotes: state.voting,
-  isDelegate: state.account && state.account.info && state.account.info.LSK.isDelegate,
+  isDelegate: state.account?.info?.LSK?.isDelegate,
 });
 
 export default compose(

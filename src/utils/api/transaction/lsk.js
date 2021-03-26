@@ -1,21 +1,23 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
 
-import { tokenMap, MODULE_ASSETS } from '@constants';
+import {
+  tokenMap, MODULE_ASSETS, minFeePerByte, DEFAULT_NUMBER_OF_SIGNATURES, DEFAULT_SIGNATURE_BYTE_SIZE,
+} from '@constants';
 import { selectSchema } from '@utils/moduleAssets';
+import { extractAddress } from '@utils/account';
 import { MAX_ASSET_FEE } from '@constants/moduleAssets';
 
 import http from '../http';
 import ws from '../ws';
 import { getDelegates } from '../delegate';
 import regex from '../../regex';
-import { fromRawLsk } from '../../lsk';
 import { validateAddress } from '../../validators';
 
 const httpPrefix = '/api/v2';
 
 const httpPaths = {
-  feeEstimates: `${httpPrefix}/fee_estimates`,
+  fees: `${httpPrefix}/fees`,
   transactions: `${httpPrefix}/transactions`,
   transaction: `${httpPrefix}/transactions`,
   transactionStats: `${httpPrefix}/transactions/statistics`,
@@ -44,13 +46,6 @@ export const getTransaction = ({
   params,
   network,
   baseUrl,
-}).then((response) => {
-  const data = response.data.map((tx) => {
-    tx.title = MODULE_ASSETS.getByCode(tx.type).key;
-    return tx;
-  });
-
-  return { data, meta: response.meta };
 });
 
 const filters = {
@@ -97,7 +92,7 @@ export const getTransactions = ({
   params,
   baseUrl,
 }) => {
-  const typeConfig = params.type && MODULE_ASSETS[params.type];
+  const typeConfig = params.type && MODULE_ASSETS_NAME_ID_MAP[params.type];
 
   // if type, correct the type and use WS
   if (typeConfig) {
@@ -107,13 +102,14 @@ export const getTransactions = ({
     }));
     // BaseUrl is only used for retrieving archived txs, so it's not needed here.
     return ws({ baseUrl: network.serviceUrl, requests })
+      // eslint-disable-next-line arrow-body-style
       .then((response) => {
-        const data = response.data.map((tx) => {
-          tx.title = MODULE_ASSETS.getByCode(tx.type).key;
-          return tx;
-        });
+        // const data = response.data.map((tx) => {
+        //   tx.title = MODULE_ASSETS_NAME_ID_MAP.getByCode(tx.type).key;
+        //   return tx;
+        // });
 
-        return { data, meta: response.meta };
+        return response;
       });
   }
 
@@ -140,13 +136,14 @@ export const getTransactions = ({
     params: normParams,
     baseUrl,
   })
+    // eslint-disable-next-line arrow-body-style
     .then((response) => {
-      const data = response.data.map((tx) => {
-        tx.title = MODULE_ASSETS.getByCode(tx.type).key;
-        return tx;
-      });
+      // const data = response.data.map((tx) => {
+      //   tx.title = MODULE_ASSETS_NAME_ID_MAP.getByCode(tx.type).key;
+      //   return tx;
+      // });
 
-      return { data, meta: response.meta };
+      return response;
     });
 };
 
@@ -156,17 +153,17 @@ export const getRegisteredDelegates = async ({ network }) => {
     network,
     params: { limit: 1 },
   });
-  const responsetransactions = await getTransactions({
+  const responseTransactions = await getTransactions({
     network,
     params: { type: 'registerDelegate', limit: 100 },
   });
 
-  if (delegates.error || responsetransactions.error) {
+  if (delegates.error || responseTransactions.error) {
     return Error('Error fetching data.');
   }
 
   // get number of registration in each month
-  const monthStats = responsetransactions.data
+  const monthStats = responseTransactions.data
     .map((tx) => {
       const date = new Date(tx.timestamp * 1000);
       return `${date.getFullYear()}-${date.getMonth() + 1}`;
@@ -213,26 +210,50 @@ export const getTransactionStats = ({ network, params: { period } }) => {
  * Gets the amount of a given transaction
  *
  * @param {Object} transaction The transaction object
- * @returns {String} Amount in beddows/satoshi
+ * @returns {String} Amount in Beddows/Satoshi
  */
-export const getTxAmount = (transaction) => {
-  let amount = transaction.amount ?? transaction.asset.amount;
-  if (transaction.title === 'unlockToken') {
-    amount = 0;
-    transaction.asset.unlockingObjects.forEach((unlockedObject) => {
-      amount += parseInt(unlockedObject.amount, 10);
-    });
-    amount = `${amount}`;
-  }
-  if (transaction.title === 'vote') {
-    amount = 0;
-    transaction.asset.votes.forEach((vote) => {
-      amount += parseInt(vote.amount, 10);
-    });
-    amount = `${amount}`;
+export const getTxAmount = ({ moduleAssetId, asset }) => {
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
+    return asset.amount;
   }
 
-  return amount;
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
+    return asset.unlockingObjects.reduce((sum, unlockingObject) =>
+      sum + parseInt(unlockingObject.amount, 10), 0);
+  }
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
+    return asset.votes.reduce((sum, vote) =>
+      sum + parseInt(vote.amount, 10), 0);
+  }
+
+  return undefined;
+};
+
+const createTransactionObject = (rawTransaction, moduleAssetType) => {
+  console.log(rawTransaction, moduleAssetType);
+  const [moduleID, assetID] = moduleAssetType.split(':');
+  const {
+    senderPublicKey, nonce, amount, recipientAddress, data, fee, signatures,
+  } = rawTransaction;
+
+  const transaction = {
+    moduleID,
+    assetID,
+    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
+    nonce: BigInt(nonce),
+    fee,
+    signatures,
+  };
+
+  if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.transfer) {
+    transaction.asset = {
+      recipientAddress: extractAddress(recipientAddress),
+      amount: BigInt(amount),
+      data,
+    };
+  }
+
+  return transaction;
 };
 
 /**
@@ -249,25 +270,13 @@ export const create = ({
   ...transactionObject
 }) => new Promise((resolve, reject) => {
   const { networkIdentifier } = network.networks.LSK;
-
-  const [moduleID, assetID] = moduleAssetType.split(':');
   const {
-    passphrase, senderPublicKey, nonce, amount, recipientId, data, fee,
+    passphrase, rawTransaction,
   } = transactionObject;
 
   const schema = selectSchema(moduleAssetType);
-  const transaction = {
-    moduleID,
-    assetID,
-    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
-    nonce: BigInt(nonce),
-    fee: BigInt(fee),
-    asset: {
-      recipientAddress: Buffer.from(recipientId, 'hex'),
-      amount: BigInt(amount),
-      data,
-    },
-  };
+  console.log('create', moduleAssetType);
+  const transaction = createTransactionObject(rawTransaction, moduleAssetType);
 
   try {
     const signedTransaction = transactions.signTransaction(
@@ -334,7 +343,7 @@ export const broadcast = ({ signedTransaction, network }) => {
  */
 export const getTransactionBaseFees = network =>
   http({
-    path: httpPaths.feeEstimates,
+    path: httpPaths.fees,
     searchParams: {},
     network,
   })
@@ -347,9 +356,6 @@ export const getTransactionBaseFees = network =>
       };
     });
 
-
-export const minFeePerByte = 1000;
-
 /**
  * Returns the actual tx fee based on given tx details
  * and selected processing speed
@@ -360,28 +366,48 @@ export const minFeePerByte = 1000;
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
-  transaction, moduleAssetType, selectedPriority,
+  transaction, selectedPriority,
 }) => {
-  const schema = selectSchema(moduleAssetType);
-  const minFee = transactions.computeMinFee(schema, transaction);
+  const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
-  const maxAssetFee = MAX_ASSET_FEE[moduleAssetType];
+  const {
+    moduleAssetType, ...rawTransaction
+  } = transaction;
 
-  // Tie breaker is only meant for Medium and high processing speeds
+  const schema = selectSchema(moduleAssetType);
+  const maxAssetFee = MAX_ASSET_FEE[moduleAssetType];
+  console.log('getTransactionFee', moduleAssetType);
+
+  const transactionObject = createTransactionObject(rawTransaction, moduleAssetType);
+
+  const minFee = transactions.computeMinFee(schema, {
+    ...transactionObject,
+    signatures: undefined,
+  });
+
+  // tie breaker is only meant for medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : minFeePerByte * feePerByte * Math.random();
 
-  const size = transaction.getBytes().length;
-  let value = minFee + feePerByte * size + tieBreaker;
+  const size = transactions.getBytes(schema, {
+    ...transactionObject,
+    signatures: new Array(numberOfSignatures).fill(
+      Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE),
+    ),
+  }).length;
 
-  if (value > maxAssetFee) {
-    value = maxAssetFee;
+  let fee = minFee + BigInt(size * feePerByte) + BigInt(tieBreaker);
+
+  const maxFee = BigInt(maxAssetFee);
+  if (fee > maxFee) {
+    fee = maxFee;
   }
 
-  const roundedValue = parseFloat(Number(fromRawLsk(value)).toFixed(8));
+  const roundedValue = transactions.convertBeddowsToLSK(fee.toString());
+
   const feedback = transaction.amount === ''
     ? '-'
-    : `${(value ? '' : 'Invalid amount')}`;
+    : `${(roundedValue ? '' : 'Invalid amount')}`;
 
   return {
     value: roundedValue,

@@ -9,7 +9,7 @@ import { getNetworkStatus } from '@utils/api/network';
 import { getTransactions } from '@utils/api/transaction';
 import withData from '@utils/withData';
 import withFilters from '@utils/withFilters';
-import { MODULE_ASSETS, MAX_BLOCKS_FORGED, tokenMap } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, MAX_BLOCKS_FORGED, tokenMap } from '@constants';
 
 import Delegates from './delegates';
 
@@ -22,6 +22,14 @@ const transformDelegatesResponse = (response, oldData = []) => (
     delegate => !oldData.find(({ username }) => username === delegate.username),
   )]
 );
+
+const transformAccountsIsDelegateResponse = (response, oldData = []) => {
+  response.data = response.data.map(del => ({
+    address: del.summary.address,
+    ...del.dpos.delegate,
+  }));
+  return transformDelegatesResponse(response, oldData);
+};
 
 const transformVotesResponse = (response, oldData = []) => (
   [...oldData, ...response.data.filter(
@@ -79,7 +87,7 @@ const ComposedDelegates = compose(
         }),
         defaultData: [],
         autoload: true,
-        transformResponse: transformDelegatesResponse,
+        transformResponse: transformAccountsIsDelegateResponse,
       },
 
       chartActiveAndStandbyData: {
@@ -106,7 +114,7 @@ const ComposedDelegates = compose(
       votes: {
         apiUtil: (network, params) => getTransactions({
           network,
-          params: { ...params, type: MODULE_ASSETS.voteDelegate, sort: 'timestamp:desc' },
+          params: { ...params, type: MODULE_ASSETS_NAME_ID_MAP.voteDelegate, sort: 'timestamp:desc' },
         }, tokenMap.LSK.key),
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,
@@ -125,16 +133,17 @@ const ComposedDelegates = compose(
         apiUtil: (network, params) => getDelegates({ network, params: { ...params, status: 'punished,banned' } }),
         defaultData: [],
         autoload: true,
-        transformResponse: response => response.data,
+        transformResponse: transformAccountsIsDelegateResponse,
       },
 
       votedDelegates: {
-        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        apiUtil: ({ networks }, params) =>
+          getDelegates({ network: networks.LSK, params: { ...params } }),
         defaultData: {},
         transformResponse: (response) => {
           const transformedResponse = transformDelegatesResponse(response);
           const responseMap = transformedResponse.reduce((acc, delegate) => {
-            acc[delegate.address] = delegate;
+            acc[delegate.address] = delegate.summary?.address;
             return acc;
           }, {});
           return responseMap;
@@ -142,10 +151,11 @@ const ComposedDelegates = compose(
       },
 
       watchedDelegates: {
-        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        apiUtil: (network, params) =>
+          getDelegates({ network, params: { ...params } }),
         defaultData: [],
         getApiParams: state => ({ addressList: state.watchList }),
-        transformResponse: response => response.data,
+        transformResponse: transformDelegatesResponse,
       },
     },
   ),
