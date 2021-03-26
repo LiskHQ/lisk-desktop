@@ -3,10 +3,10 @@ import { transactions } from '@liskhq/lisk-client';
 
 import {
   tokenMap, MODULE_ASSETS, minFeePerByte, DEFAULT_NUMBER_OF_SIGNATURES, DEFAULT_SIGNATURE_BYTE_SIZE,
+  MODULE_ASSETS_MAP,
 } from '@constants';
 import { selectSchema } from '@utils/moduleAssets';
 import { extractAddress } from '@utils/account';
-import { MAX_ASSET_FEE } from '@constants/moduleAssets';
 
 import http from '../http';
 import ws from '../ws';
@@ -376,7 +376,7 @@ export const getTransactionFee = async ({
   } = transaction;
 
   const schema = await selectSchema(moduleAssetType, network);
-  const maxAssetFee = MAX_ASSET_FEE[moduleAssetType];
+  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetType].maxFee;
   console.log('getTransactionFee', moduleAssetType);
 
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetType);

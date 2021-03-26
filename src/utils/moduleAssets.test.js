@@ -24,7 +24,7 @@ describe('Utils: moduleAssets', () => {
 
     it('', async () => {
       const expectedSchema = { id: 'id' };
-      http.mockImplementation(() => Promise.resolve({ data: [expectedSchema] }));
+      http.mockImplementation(() => Promise.resolve({ data: [{ schema: expectedSchema }] }));
       const schema = await selectSchema('2:0');
       expect(schema).toEqual(expectedSchema);
       await selectSchema('2:0');
