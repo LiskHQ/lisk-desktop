@@ -21,16 +21,21 @@ const getModuleAssetTitle = (t = str => str) => ({
 
 
 const selectSchema = moduleAssetId => new Promise(async (resolve, reject) => {
-  const schema = MODULE_ASSETS_MAP[moduleAssetId].getSchema();
-  if (schema) resolve(schema);
+  const schema = MODULE_ASSETS_MAP[moduleAssetId].schema;
+  if (schema) {
+    resolve(schema);
+    return undefined;
+  }
 
   try {
-    const response = await getSchema({ moduleAssetId });
-    MODULE_ASSETS_NAME_ID_MAP[moduleAssetId].setSchema(response.data[0]);
+    const response = await getSchema({ params: { moduleAssetId } });
+    MODULE_ASSETS_MAP[moduleAssetId].setSchema(response.data[0]);
     resolve(response.data[0]);
   } catch (error) {
     reject(error);
   }
+
+  return undefined;
 });
 
 // eslint-disable-next-line import/prefer-default-export

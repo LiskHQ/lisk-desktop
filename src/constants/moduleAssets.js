@@ -9,32 +9,27 @@ const moduleAssetNameIdMap = {
 
 const moduleAssetMap = {
   [moduleAssetNameIdMap.transfer]: {
-    setSchema: (schema) => { this.schema = schema; },
-    getSchema: () => this.schema,
+    setSchema: function setSchema(schema) { this.schema = schema; },
     maxFee: 1e7,
     icon: 'txDefault',
   },
   [moduleAssetNameIdMap.unlockToken]: {
-    setSchema: (schema) => { this.schema = schema; },
-    getSchema: () => this.schema,
+    setSchema: function setSchema(schema) { this.schema = schema; },
     maxFee: 1e7,
     icon: 'unlockToken',
   },
   [moduleAssetNameIdMap.voteDelegate]: {
-    setSchema: (schema) => { this.schema = schema; },
-    getSchema: () => this.schema,
+    setSchema: function setSchema(schema) { this.schema = schema; },
     maxFee: 1e8,
     icon: 'vote',
   },
   [moduleAssetNameIdMap.registerDelegate]: {
-    setSchema: (schema) => { this.schema = schema; },
-    getSchema: () => this.schema,
+    setSchema: function setSchema(schema) { this.schema = schema; },
     maxFee: 25e8,
     icon: 'registerDelegate',
   },
   [moduleAssetNameIdMap.registerMultisignatureGroup]: {
-    setSchema: (schema) => { this.schema = schema; },
-    getSchema: () => this.schema,
+    setSchema: function setSchema(schema) { this.schema = schema; },
     maxFee: 5e8,
     icon: 'registerMultisignatureGroup',
   },
