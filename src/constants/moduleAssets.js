@@ -1,8 +1,3 @@
-/* eslint-disable import/prefer-default-export */
-import {
-  MultisignatureSchema, RegisterDelegateSchema, TransferSchema, UnlockTransactionSchema, VoteSchema,
-} from './schemas';
-
 const moduleAssetNameIdMap = {
   transfer: '2:0',
   // reclaimLSK: 'legacyAccount:reclaimLSK',
@@ -14,27 +9,32 @@ const moduleAssetNameIdMap = {
 
 const moduleAssetMap = {
   [moduleAssetNameIdMap.transfer]: {
-    schema: TransferSchema,
+    setSchema: (schema) => { this.schema = schema; },
+    getSchema: () => this.schema,
     maxFee: 1e7,
     icon: 'txDefault',
   },
   [moduleAssetNameIdMap.unlockToken]: {
-    schema: UnlockTransactionSchema,
+    setSchema: (schema) => { this.schema = schema; },
+    getSchema: () => this.schema,
     maxFee: 1e7,
     icon: 'unlockToken',
   },
   [moduleAssetNameIdMap.voteDelegate]: {
-    schema: VoteSchema,
+    setSchema: (schema) => { this.schema = schema; },
+    getSchema: () => this.schema,
     maxFee: 1e8,
     icon: 'vote',
   },
   [moduleAssetNameIdMap.registerDelegate]: {
-    schema: RegisterDelegateSchema,
+    setSchema: (schema) => { this.schema = schema; },
+    getSchema: () => this.schema,
     maxFee: 25e8,
     icon: 'registerDelegate',
   },
   [moduleAssetNameIdMap.registerMultisignatureGroup]: {
-    schema: MultisignatureSchema,
+    setSchema: (schema) => { this.schema = schema; },
+    getSchema: () => this.schema,
     maxFee: 5e8,
     icon: 'registerMultisignatureGroup',
   },
