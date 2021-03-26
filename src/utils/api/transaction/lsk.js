@@ -158,17 +158,17 @@ export const getRegisteredDelegates = async ({ network }) => {
     network,
     params: { limit: 1 },
   });
-  const responsetransactions = await getTransactions({
+  const responseTransactions = await getTransactions({
     network,
     params: { type: 'registerDelegate', limit: 100 },
   });
 
-  if (delegates.error || responsetransactions.error) {
+  if (delegates.error || responseTransactions.error) {
     return Error('Error fetching data.');
   }
 
   // get number of registration in each month
-  const monthStats = responsetransactions.data
+  const monthStats = responseTransactions.data
     .map((tx) => {
       const date = new Date(tx.timestamp * 1000);
       return `${date.getFullYear()}-${date.getMonth() + 1}`;
@@ -215,7 +215,7 @@ export const getTransactionStats = ({ network, params: { period } }) => {
  * Gets the amount of a given transaction
  *
  * @param {Object} transaction The transaction object
- * @returns {String} Amount in beddows/satoshi
+ * @returns {String} Amount in Beddows/Satoshi
  */
 export const getTxAmount = (transaction) => {
   let amount = transaction.amount ?? transaction.asset.amount;
@@ -237,11 +237,12 @@ export const getTxAmount = (transaction) => {
   return amount;
 };
 
-const createTransactionObject = (rawTransction, moduleAssetType) => {
+const createTransactionObject = (rawTransaction, moduleAssetType) => {
+  console.log(rawTransaction, moduleAssetType);
   const [moduleID, assetID] = moduleAssetType.split(':');
   const {
     senderPublicKey, nonce, amount, recipientAddress, data, fee, signatures,
-  } = rawTransction;
+  } = rawTransaction;
 
   const transaction = {
     moduleID,
@@ -278,11 +279,12 @@ export const create = ({
 }) => new Promise((resolve, reject) => {
   const { networkIdentifier } = network.networks.LSK;
   const {
-    passphrase, rawTransction,
+    passphrase, rawTransaction,
   } = transactionObject;
 
   const schema = selectSchema(moduleAssetType);
-  const transaction = createTransactionObject(rawTransction, moduleAssetType);
+  console.log('create', moduleAssetType);
+  const transaction = createTransactionObject(rawTransaction, moduleAssetType);
 
   try {
     const signedTransaction = transactions.signTransaction(
@@ -377,13 +379,14 @@ export const getTransactionFee = async ({
   const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
   const {
-    moduleAssetType, ...rawTransction
+    moduleAssetType, ...rawTransaction
   } = transaction;
 
   const schema = selectSchema(moduleAssetType);
   const maxAssetFee = MAX_ASSET_FEE[moduleAssetType];
+  console.log('getTransactionFee', moduleAssetType);
 
-  const transactionObject = createTransactionObject(rawTransction, moduleAssetType);
+  const transactionObject = createTransactionObject(rawTransaction, moduleAssetType);
 
   const minFee = transactions.computeMinFee(schema, {
     ...transactionObject,
