@@ -60,7 +60,7 @@ const filters = {
   amountTo: { key: 'max', test: num => parseFloat(num) > 0 },
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
-  type: { key: 'type', test: num => parseInt(num, 10) > 0 },
+  moduleAssetId: { key: 'moduleAssetId', test: str => /\d:\d/.test(str) },
   height: { key: 'height', test: num => parseInt(num, 10) > 0 },
   sort: {
     key: 'sort',
@@ -159,7 +159,7 @@ export const getRegisteredDelegates = async ({ network }) => {
   });
   const responseTransactions = await getTransactions({
     network,
-    params: { type: 'registerDelegate', limit: 100 },
+    params: { moduleAssetId: '5:0', limit: 97 },
   });
 
   if (delegates.error || responseTransactions.error) {
