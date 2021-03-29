@@ -68,46 +68,41 @@ export const getAccount = async ({
   network, params, baseUrl,
 }) => {
   const normParams = getAccountParams(params);
-  let account = {
-    address: normParams.address,
-    balance: 0,
-    token: tokenMap.LSK.key,
-  };
-
-  if (params.publicKey) {
-    account.publicKey = params.publicKey;
-  } else if (params.passphrase) {
-    const publicKey = extractPublicKey(params.passphrase);
-    if (publicKey) {
-      account.publicKey = publicKey;
-    } else {
-      throw Error('Invalid Passphrase');
-    }
-  }
 
   try {
     const response = await http({
+      baseUrl,
       path: httpPaths.account,
       network,
       params: normParams,
-      baseUrl,
     });
+
     if (response.data[0]) {
-      account = {
-        ...response.data[0],
-        summary: {
-          ...response.data[0].summary,
-          publicKey: response.data[0].summary.publicKey !== 'null'
-            ? response.data[0].summary.publicKey : account.publicKey,
-        },
-      };
+      const account = { ...response.data[0] };
+      const isAccountUninitialized = account.summary.publicKey === 'null';
+      if (isAccountUninitialized) {
+        account.summary.publicKey = params.publicKey
+          ?? extractPublicKey(params.passphrase);
+      }
+
+      return account;
     }
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log('Lisk account not found.');
+
+    const publicKey = params.publicKey ?? extractPublicKey(params.address || params.passphrase);
+    const account = {
+      publicKey,
+      balance: 0,
+      address: normParams.address,
+      token: tokenMap.LSK.key,
+    };
+
+    return account;
   }
 
-  return account;
+  throw Error('Error retrieving account');
 };
 
 const accountFilters = {
