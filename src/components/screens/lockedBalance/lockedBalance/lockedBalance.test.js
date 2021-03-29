@@ -1,16 +1,16 @@
 import { act } from 'react-dom/test-utils';
 import { tokenMap, networks } from '@constants';
-import { mountWithProps } from '../../../../utils/testHelpers';
+import { mountWithProps } from '@utils/testHelpers';
+import { create } from '@api/transaction';
+import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
+import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import LockedBalance from './index';
 import accounts from '../../../../../test/constants/accounts';
-import useTransactionPriority from '../../../shared/transactionPriority/useTransactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import { create } from '../../../../utils/api/transaction';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('../../send/form/useTransactionPriority');
 jest.mock('../../send/form/useTransactionFeeCalculation');
-jest.mock('../../../../utils/api/transaction');
+jest.mock('@api/transaction');
 
 describe('Unlock LSK modal', () => {
   let wrapper;

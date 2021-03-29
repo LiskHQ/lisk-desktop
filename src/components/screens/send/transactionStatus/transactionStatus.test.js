@@ -1,4 +1,4 @@
-import { mountWithRouter } from '../../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
 import TransactionStatus from './transactionStatus';
 
 describe('TransactionStatus', () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import FlashMessageHolder from '../../toolbox/flashMessage/holder';
+import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import InitializationMessage, { InitializationMessageRenderer } from './initializationMessage';
 
-jest.fn('../toolbox/flasheMessage/holder');
+jest.fn('@toolbox/flasheMessage/holder');
 
 describe('InitializationMessage', () => {
   let wrapper;

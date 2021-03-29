@@ -7,9 +7,9 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import regex from '@utils/regex';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
 import { MODULE_ASSETS_MAP } from '@constants/moduleAssets';
+import Icon from '@toolbox/icon';
+import AccountVisual from '@toolbox/accountVisual';
 import styles from './accountVisualWithAddress.css';
-import Icon from '../../toolbox/icon';
-import AccountVisual from '../../toolbox/accountVisual';
 
 class AccountVisualWithAddress extends React.Component {
   getTransformedAddress(address) {

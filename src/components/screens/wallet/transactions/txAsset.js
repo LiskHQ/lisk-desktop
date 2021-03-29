@@ -1,7 +1,7 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 
-import VoteItem from '../../../shared/voteItem';
+import VoteItem from '@shared/voteItem';
 import styles from './transactions.css';
 
 const generateVotes = (asset, delegates) => {

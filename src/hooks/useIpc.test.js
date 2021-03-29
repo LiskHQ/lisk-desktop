@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify';
 import { renderHook, act } from '@testing-library/react-hooks';
+import { mountWithRouter } from '@utils/testHelpers';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import DialogHolder from '../components/toolbox/dialog/holder';
 import useIpc from './useIpc';
-import { mountWithRouter } from '../utils/testHelpers';
 
-jest.mock('../store');
+jest.mock('@store');
 
 const mockHistory = {
   push: jest.fn(), pathname: '', location: { search: '' },

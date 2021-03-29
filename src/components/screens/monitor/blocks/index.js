@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { getBlocks } from '@utils/api/block';
+import { getBlocks } from '@api/block';
 import withData from '@utils/withData';
 import Blocks from './blocks';
 

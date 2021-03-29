@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import { Input } from '@toolbox/inputs';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxTabs from '@toolbox/tabs';
 import Overview from './overview';
-import { Input } from '../../../toolbox/inputs';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxTabs from '../../../toolbox/tabs';
 import styles from './delegates.css';
 import LatestVotes from './latestVotes';
 import DelegatesTable from './delegatesTable';

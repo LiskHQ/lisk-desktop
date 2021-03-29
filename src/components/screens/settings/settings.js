@@ -3,12 +3,12 @@ import { toast } from 'react-toastify';
 import { isEmpty } from '@utils/helpers';
 import Piwik from '@utils/piwik';
 import { externalLinks, settings as settingsConst } from '@constants';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import CheckBox from '../../toolbox/checkBox';
-import Select from '../../toolbox/select';
-import Dialog from '../../toolbox/dialog/dialog';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import CheckBox from '@toolbox/checkBox';
+import Select from '@toolbox/select';
+import Dialog from '@toolbox/dialog/dialog';
 import styles from './settings.css';
 
 class Settings extends React.Component {

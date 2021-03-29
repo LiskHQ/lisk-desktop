@@ -1,10 +1,10 @@
 // istanbul ignore file
 import React from 'react';
+import WalletDetails from '@shared/walletDetails';
+import Onboarding from '@toolbox/onboarding/onboarding';
 import NewsFeed from './newsFeed';
-import WalletDetails from '../../shared/walletDetails';
 import RecentTransactions from './recentTransactions';
 import styles from './dashboard.css';
-import Onboarding from '../../toolbox/onboarding/onboarding';
 
 const getOnboardingSlides = t => [{
   title: t('Ready to go!'),

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AccountVisual from '../../../toolbox/accountVisual';
+import AccountVisual from '@toolbox/accountVisual';
 import styles from './delegateProfile.css';
 
 const VoterRow = props => (

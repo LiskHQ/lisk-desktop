@@ -8,7 +8,7 @@ import { getNetworksList } from '@utils/getNetwork';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import { Input } from '@toolbox/inputs';
 import DropdownButton from '@toolbox/dropdownButton';
-import { getNetworkConfig } from '@utils/api/network';
+import { getNetworkConfig } from '@api/network';
 
 import styles from './networkSelector.css';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@constants';
-import Icon from '../../../toolbox/icon';
-import LiskAmount from '../../../shared/liskAmount';
+import Icon from '@toolbox/icon';
+import LiskAmount from '@shared/liskAmount';
 import UnlockingList from './unlockingList';
 import styles from './lockedBalance.css';
 

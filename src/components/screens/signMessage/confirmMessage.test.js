@@ -2,11 +2,11 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { loginType } from '@constants';
+import * as hwManager from '@utils/hwManager';
 import ConfirmMessage from './confirmMessage';
 import accounts from '../../../../test/constants/accounts';
-import * as hwManager from '../../../utils/hwManager';
 
-jest.mock('../../../utils/hwManager');
+jest.mock('@utils/hwManager');
 
 const updateWrapperAsync = async wrapper => new Promise((resolve) => {
   setImmediate(() => {

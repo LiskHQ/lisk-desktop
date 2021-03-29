@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import * as hwManager from '@utils/hwManager';
 import RequestPin from './requestPin';
 import accounts from '../../../../test/constants/accounts';
-import * as hwManager from '../../../utils/hwManager';
 
-jest.mock('../../../utils/hwManager');
+jest.mock('@utils/hwManager');
 
 function enterPinByButtons(wrapper, pinPositions) {
   pinPositions.split('').forEach((digit) => {

@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
 import { actionTypes } from '@constants';
+import Notification from '@utils/notification';
 import middleware from './notification';
-import Notification from '../../utils/notification';
 
 describe('Notification middleware', () => {
   let store;

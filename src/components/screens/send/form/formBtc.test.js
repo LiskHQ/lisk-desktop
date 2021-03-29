@@ -2,18 +2,18 @@ import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@constants';
-import { fromRawLsk } from '../../../../utils/lsk';
+import { fromRawLsk } from '@utils/lsk';
 import {
   getUnspentTransactionOutputs,
   getTransactionFeeFromUnspentOutputs,
   getTransactionFee,
   getTransactionBaseFees,
-} from '../../../../utils/api/transaction';
+} from '@api/transaction';
 import Form from './formBtc';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
-jest.mock('../../../../utils/api/transaction');
+jest.mock('@api/transaction');
 
 const unspendTransactionOutputs = [{
   height: 1575216,

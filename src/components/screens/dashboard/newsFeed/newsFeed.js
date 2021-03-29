@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import styles from './newsFeed.css';
+import Box from '@toolbox/box';
+import BoxRow from '@toolbox/box/row';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxTabs from '@toolbox/tabs';
+import BoxEmptyState from '@toolbox/box/emptyState';
+import Icon from '@toolbox/icon';
 import News from './news';
-import Box from '../../../toolbox/box';
-import BoxRow from '../../../toolbox/box/row';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxTabs from '../../../toolbox/tabs';
-import BoxEmptyState from '../../../toolbox/box/emptyState';
-import Icon from '../../../toolbox/icon';
+import styles from './newsFeed.css';
 
 const NewsFeed = (props) => {
   const {

@@ -1,5 +1,5 @@
-import { blockSubscribe, blockUnsubscribe } from '@utils/api/block';
-import { forgersSubscribe, forgersUnsubscribe, getForgers } from '@utils/api/delegate';
+import { blockSubscribe, blockUnsubscribe } from '@api/block';
+import { forgersSubscribe, forgersUnsubscribe, getForgers } from '@api/delegate';
 import { tokenMap, actionTypes } from '@constants';
 import { olderBlocksRetrieved, forgingTimesRetrieved, networkStatusUpdated } from '@actions';
 

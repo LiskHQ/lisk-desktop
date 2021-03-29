@@ -2,10 +2,10 @@ import { actionTypes } from '@constants';
 import {
   transactionsRetrieved,
 } from './transactions';
-import * as transactionsApi from '../../utils/api/transaction';
+import * as transactionsApi from '@api/transaction';
 
-jest.mock('../utils/api/transaction');
-jest.mock('../utils/api/delegate');
+jest.mock('@api/transaction');
+jest.mock('@api/delegate');
 
 describe('actions: transactions', () => {
   const dispatch = jest.fn();

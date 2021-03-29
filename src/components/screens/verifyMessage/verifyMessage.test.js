@@ -1,5 +1,5 @@
+import { mountWithRouter } from '@utils/testHelpers';
 import VerifyMessage from './verifyMessage';
-import { mountWithRouter } from '../../../utils/testHelpers';
 
 describe('VerifyMessage Component', () => {
   let wrapper;

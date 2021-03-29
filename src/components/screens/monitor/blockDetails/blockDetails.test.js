@@ -1,7 +1,7 @@
+import { mountWithRouter } from '@utils/testHelpers';
 import blocks from '../../../../../test/constants/blocks';
 import transactions from '../../../../../test/constants/transactions';
 import BlockDetails from './blockDetails';
-import { mountWithRouter } from '../../../../utils/testHelpers';
 
 describe('BlockDetails page', () => {
   let wrapper;

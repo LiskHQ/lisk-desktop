@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getIndexOfBookmark } from '@utils/bookmarks';
-import { Input } from '../../../toolbox/inputs';
-import { PrimaryButton, WarningButton } from '../../../toolbox/buttons';
+import { Input } from '@toolbox/inputs';
+import { PrimaryButton, WarningButton } from '@toolbox/buttons';
 import styles from './bookmarkDropdown.css';
 
 const bookmarkCharLength = 20;

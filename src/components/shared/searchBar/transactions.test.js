@@ -1,5 +1,5 @@
+import { mountWithProps } from '@utils/testHelpers';
 import Transactions from './transactions';
-import { mountWithProps } from '../../../utils/testHelpers';
 
 describe('Transactions', () => {
   const props = {

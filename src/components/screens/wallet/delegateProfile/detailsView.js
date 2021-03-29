@@ -1,12 +1,12 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '@constants';
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxHeader from '../../../toolbox/box/header';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxHeader from '@toolbox/box/header';
+import Icon from '@toolbox/icon';
+import { DateTimeFromTimestamp } from '@toolbox/timestamp';
 import styles from './delegateProfile.css';
-import Icon from '../../../toolbox/icon';
-import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 
 const DetailsView = ({
   t, rank, voteWeight, lastBlockForged, status,

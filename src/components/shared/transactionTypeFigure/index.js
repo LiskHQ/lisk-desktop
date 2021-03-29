@@ -1,8 +1,8 @@
 import React from 'react';
 import regex from '@utils/regex';
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@constants';
-import AccountVisual from '../../toolbox/accountVisual';
-import Icon from '../../toolbox/icon';
+import AccountVisual from '@toolbox/accountVisual';
+import Icon from '@toolbox/icon';
 import styles from './transactionTypeFigure.css';
 
 const TransactionTypeFigure = ({

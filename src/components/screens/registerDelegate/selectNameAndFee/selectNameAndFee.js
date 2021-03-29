@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getDelegate } from '@utils/api/delegate';
+import { getDelegate } from '@api/delegate';
 import regex from '@utils/regex';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
-import { Input } from '../../../toolbox/inputs';
-import { PrimaryButton } from '../../../toolbox/buttons';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import { Input } from '@toolbox/inputs';
+import { PrimaryButton } from '@toolbox/buttons';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './selectNameAndFee.css';
 
 const token = tokenMap.LSK.key;

@@ -4,15 +4,15 @@ import { tokenMap } from '@constants';
 import { validateAddress } from '@utils/validators';
 import { getIndexOfBookmark } from '@utils/bookmarks';
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
-import Fields from './fields';
-import ModalWrapper from '../modalWrapper';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
-import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import Icon from '@toolbox/icon';
 import styles from './addBookmark.css';
-import Icon from '../../../toolbox/icon';
+import ModalWrapper from '../modalWrapper';
+import Fields from './fields';
 
 class AddBookmark extends React.Component {
   constructor(props) {

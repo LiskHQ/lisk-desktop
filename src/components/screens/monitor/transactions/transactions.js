@@ -1,6 +1,6 @@
 import React from 'react';
+import TransactionsTable from '@shared/transactionsTable';
 import Overview from './overview';
-import TransactionsTable from '../../../shared/transactionsTable';
 
 const fields = t => [{
   label: t('Date Range'),

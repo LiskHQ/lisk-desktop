@@ -1,8 +1,8 @@
-import { mountWithRouter } from '../../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
+import Spinner from '@toolbox/spinner';
+import DialogLink from '@toolbox/dialog/link';
 import VoteRow from './voteRow';
 import accounts from '../../../../../test/constants/accounts';
-import Spinner from '../../../toolbox/spinner';
-import DialogLink from '../../../toolbox/dialog/link';
 
 describe('VoteRow Component', () => {
   let wrapper;

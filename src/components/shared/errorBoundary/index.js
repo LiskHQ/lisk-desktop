@@ -1,9 +1,9 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Piwik from '@utils/piwik';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
+import Illustration from '@toolbox/illustration';
 import styles from './errorBoundary.css';
-import Illustration from '../../toolbox/illustration';
 
 /* eslint-disable class-methods-use-this, no-unused-vars */
 class ErrorBoundary extends React.Component {

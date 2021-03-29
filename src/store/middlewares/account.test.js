@@ -4,9 +4,9 @@ import {
 
 import { tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import middleware from './account';
-import * as transactionApi from '../../utils/api/transaction';
+import * as transactionApi from '@api/transaction';
 
-jest.mock('../../utils/api/transaction', () => ({
+jest.mock('@api/transaction', () => ({
   getTransactions: jest.fn(),
 }));
 

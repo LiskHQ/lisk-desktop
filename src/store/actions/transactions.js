@@ -4,7 +4,7 @@ import {
   actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes,
 } from '@constants';
 import { extractAddress } from '@utils/account';
-import { getTransactions, create, broadcast } from '@utils/api/transaction';
+import { getTransactions, create, broadcast } from '@api/transaction';
 import { signSendTransaction } from '@utils/hwManager';
 import { passphraseUsed } from './account';
 import { loadingStarted, loadingFinished } from './loading';

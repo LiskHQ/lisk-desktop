@@ -9,7 +9,7 @@ import {
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
 } from '@actions';
 import analytics from '@utils/analytics';
-import { getTransactions } from '@utils/api/transaction';
+import { getTransactions } from '@api/transaction';
 import i18n from '../../i18n';
 
 /**

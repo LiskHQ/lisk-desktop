@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import AccountVisual from '../../toolbox/accountVisual';
+import AccountVisual from '@toolbox/accountVisual';
 import styles from './accountsAndDeletegates.css';
 
 const Accounts = ({

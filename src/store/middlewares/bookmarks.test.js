@@ -1,9 +1,9 @@
 import { actionTypes } from '@constants';
 import bookmarksMiddleware from './bookmarks';
 import accounts from '../../../test/constants/accounts';
-import * as localJSONStorage from '../../utils/localJSONStorage';
+import * as localJSONStorage from '@utils/localJSONStorage';
 
-jest.mock('../../utils/localJSONStorage');
+jest.mock('@utils/localJSONStorage');
 
 describe('Middleware: Bookmarks', () => {
   const next = jest.fn();

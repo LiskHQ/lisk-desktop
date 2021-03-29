@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import BalanceTable from './balanceTable';
-import accounts from '../../../../../test/constants/accounts';
 import {
   calculateBalanceLockedInVotes,
   calculateUnlockableBalance,
-} from '../../../../utils/account';
+} from '@utils/account';
+import BalanceTable from './balanceTable';
+import accounts from '../../../../../test/constants/accounts';
 
 describe('unlock transaction Status', () => {
   let wrapper;

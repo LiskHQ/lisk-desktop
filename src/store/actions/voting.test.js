@@ -6,15 +6,15 @@ import {
   votesConfirmed,
   votesRetrieved,
 } from './voting';
-import * as TransactionApi from '../../utils/api/transaction';
-import * as delegateApi from '../../utils/api/delegate';
+import * as TransactionApi from '@api/transaction';
+import * as delegateApi from '@api/delegate';
 import sampleVotes from '../../../test/constants/votes';
 
-jest.mock('../utils/api/transaction', () => ({
+jest.mock('@api/transaction', () => ({
   create: jest.fn(),
 }));
 
-jest.mock('../utils/api/delegate', () => ({
+jest.mock('@api/delegate', () => ({
   getVotes: jest.fn(),
 }));
 

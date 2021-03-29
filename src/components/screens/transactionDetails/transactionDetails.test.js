@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { mountWithRouter } from '@utils/testHelpers';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
-import { mountWithRouter } from '../../../utils/testHelpers';
 
 const transaction = {
   data: {

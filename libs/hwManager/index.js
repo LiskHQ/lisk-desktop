@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import { IPC_MESSAGES, FUNCTION_TYPES } from './constants';
 import { publish, subscribe } from './utils';
+import { IPC_MESSAGES, FUNCTION_TYPES } from './constants';
 import manufacturers from './manufacturers';
 
 // eslint-disable-next-line import/prefer-default-export

@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { Input } from '../../toolbox/inputs';
-import Feedback from '../../toolbox/feedback/feedback';
+import { Input } from '@toolbox/inputs';
+import Feedback from '@toolbox/feedback/feedback';
 import styles from './filters.css';
 
 class AmountFieldGroup extends React.Component {

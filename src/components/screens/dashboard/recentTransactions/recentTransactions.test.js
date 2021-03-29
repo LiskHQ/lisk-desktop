@@ -1,5 +1,5 @@
+import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from '@utils/testHelpers';
 import RecentTransactions, { NoTransactions, NotSignedIn } from './recentTransactions';
-import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from '../../../../utils/testHelpers';
 
 const t = str => str;
 

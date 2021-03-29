@@ -3,8 +3,8 @@ import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import withData from '@utils/withData';
-import { getVoters, getDelegate } from '@utils/api/delegate';
-import { getBlocks } from '@utils/api/block';
+import { getVoters, getDelegate } from '@api/delegate';
+import { getBlocks } from '@api/block';
 import DelegateProfile from './delegateProfile';
 
 const mapStateToProps = state => ({

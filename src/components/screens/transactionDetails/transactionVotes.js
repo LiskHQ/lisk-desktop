@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
-import BoxRow from '../../toolbox/box/row';
+import BoxRow from '@toolbox/box/row';
 import styles from './transactionDetails.css';
-import VoteItem from '../../shared/voteItem';
+import VoteItem from '@shared/voteItem';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 
 const transactionVotes = ({ t, transaction, votedDelegates }) => {

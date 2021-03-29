@@ -1,13 +1,13 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { getTxAmount } from '@utils/api/transaction/lsk';
-import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
-import AccountVisualWithAddress from '../accountVisualWithAddress';
-import Icon from '../../toolbox/icon';
+import { getTxAmount } from '@api/transaction/lsk';
+import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import Icon from '@toolbox/icon';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import DialogLink from '@toolbox/dialog/link';
 import LiskAmount from '../liskAmount';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import DialogLink from '../../toolbox/dialog/link';
+import AccountVisualWithAddress from '../accountVisualWithAddress';
 import styles from './transactionsTable.css';
 
 const roundSize = 103;

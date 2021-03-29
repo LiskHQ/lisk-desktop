@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxHeader from '../../../toolbox/box/header';
-import { Input } from '../../../toolbox/inputs';
-import Table from '../../../toolbox/table';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxHeader from '@toolbox/box/header';
+import { Input } from '@toolbox/inputs';
+import Table from '@toolbox/table';
 import VoterRow from './voterRow';
 import tableHeader from './votersTableHeader';
 import styles from './delegateProfile.css';

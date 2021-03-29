@@ -1,4 +1,4 @@
-import { mountWithRouter } from '../../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
 import Summary from './summary';
 
 const added = {

@@ -1,10 +1,10 @@
 import React from 'react';
 import { tokenMap } from '@constants';
-import { mountWithRouter } from '../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
 import Request from '.';
 import accounts from '../../../../test/constants/accounts';
 
-jest.mock('../../shared/converter', () => (
+jest.mock('@shared/converter', () => (
   function ConverterMock() {
     return <span className="converted-price" />;
   }

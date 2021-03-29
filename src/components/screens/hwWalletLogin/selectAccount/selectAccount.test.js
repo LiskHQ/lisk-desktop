@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { toast } from 'react-toastify';
+import * as hwManager from '@utils/hwManager';
 import SelectAccount from './selectAccount';
-import * as hwManager from '../../../../utils/hwManager';
 
-jest.mock('../../../../utils/hwManager');
+jest.mock('@utils/hwManager');
 
 describe('Select Account', () => {
   let wrapper;

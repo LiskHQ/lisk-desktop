@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { settingsUpdated } from '@actions';
 import { routes, tokenMap } from '@constants';
+import Icon from '@toolbox/icon';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './topBar.css';
-import Icon from '../../../toolbox/icon';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
 
 const TokenSelector = ({ token, history, t }) => {
   const dispatch = useDispatch();

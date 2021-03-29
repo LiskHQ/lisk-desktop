@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { routes } from '@constants';
+import { PrimaryButton } from '@toolbox/buttons';
+import Illustration from '@toolbox/illustration';
 import styles from './notFound.css';
-import { PrimaryButton } from '../../toolbox/buttons';
-import Illustration from '../../toolbox/illustration';
 
 const NotFound = ({ t }) => (
   <section className={styles.notFoundPage}>

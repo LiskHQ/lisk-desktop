@@ -3,14 +3,14 @@ import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { loginTypes } from '@constants';
 import { signMessageByHW } from '@utils/hwManager';
+import Box from '@toolbox/box';
+import BoxInfoText from '@toolbox/box/infoText';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import BoxHeader from '@toolbox/box/header';
+import { AutoResizeTextarea } from '@toolbox/inputs';
+import { SecondaryButton, PrimaryButton } from '@toolbox/buttons';
 import styles from './signMessage.css';
-import Box from '../../toolbox/box';
-import BoxInfoText from '../../toolbox/box/infoText';
-import BoxContent from '../../toolbox/box/content';
-import BoxFooter from '../../toolbox/box/footer';
-import BoxHeader from '../../toolbox/box/header';
-import { AutoResizeTextarea } from '../../toolbox/inputs';
-import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons';
 import LoadingIcon from '../hwWalletLogin/loadingIcon';
 
 const ConfirmationPending = ({ t, account }) => (

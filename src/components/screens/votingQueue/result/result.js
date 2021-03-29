@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
-import LiskAmount from '../../../shared/liskAmount';
-import Box from '../../../toolbox/box';
-import BoxFooter from '../../../toolbox/box/footer';
-import { PrimaryButton } from '../../../toolbox/buttons';
+import LiskAmount from '@shared/liskAmount';
+import Box from '@toolbox/box';
+import BoxFooter from '@toolbox/box/footer';
+import { PrimaryButton } from '@toolbox/buttons';
+import TransactionResult from '@shared/transactionResult';
 import ToggleIcon from '../toggleIcon';
-import TransactionResult from '../../../shared/transactionResult';
 
 import styles from './styles.css';
 

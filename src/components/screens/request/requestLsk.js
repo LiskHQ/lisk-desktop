@@ -3,12 +3,12 @@ import { maxMessageLength } from '@constants';
 import { validateAmountFormat } from '@utils/validators';
 import regex from '@utils/regex';
 import { sizeOfString } from '@utils/helpers';
-import { Input, AutoResizeTextarea } from '../../toolbox/inputs';
-import CircularProgress from '../../toolbox/circularProgress/circularProgress';
-import Converter from '../../shared/converter';
+import { Input, AutoResizeTextarea } from '@toolbox/inputs';
+import CircularProgress from '@toolbox/circularProgress/circularProgress';
+import Converter from '@shared/converter';
+import Icon from '@toolbox/icon';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
-import Icon from '../../toolbox/icon';
 import i18n from '../../../i18n';
 
 class RequestLsk extends React.Component {

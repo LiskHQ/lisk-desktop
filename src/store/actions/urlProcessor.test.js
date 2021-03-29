@@ -1,8 +1,8 @@
+import * as accounts from '@api/account';
 import setVotesByLaunchProtocol from './urlProcessor';
 import { voteEdited } from './voting';
-import * as accounts from '../../utils/api/account';
 
-jest.mock('../utils/api/account', () => ({
+jest.mock('@api/account', () => ({
   getAccount: jest.fn().mockImplementation(data => Promise.resolve({ address: '12L', username: data.username })),
   getAccounts: jest.fn(),
 }));

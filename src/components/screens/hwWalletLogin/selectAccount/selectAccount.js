@@ -3,7 +3,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { getAccountsFromDevice } from '@utils/hwManager';
 import { tokenMap, routes } from '@constants';
-import { TertiaryButton } from '../../../toolbox/buttons';
+import { TertiaryButton } from '@toolbox/buttons';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { compose } from 'redux';
 import withLocalSort from '@utils/withLocalSort';
-import Table from '../../../../toolbox/table';
+import Table from '@toolbox/table';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
 

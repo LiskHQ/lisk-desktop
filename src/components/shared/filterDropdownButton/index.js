@@ -1,11 +1,11 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import moment from 'moment';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import DropdownButton from '@toolbox/dropdownButton';
+import Icon from '@toolbox/icon';
 import AmountFieldGroup from './amountFieldGroup';
 import DateFieldGroup from './dateFieldGroup';
-import DropdownButton from '../../toolbox/dropdownButton';
-import Icon from '../../toolbox/icon';
 import IntegerFilter from './integerFilter';
 import TextFilter from './textFilter';
 import styles from './filterContainer.css';

@@ -1,8 +1,8 @@
 import React from 'react';
-import TransactionResult from '../../../shared/transactionResult';
+import TransactionResult from '@shared/transactionResult';
+import DialogHolder from '@toolbox/dialog/holder';
 import DelegateAnimation from '../animations/delegateAnimation';
 import styles from './status.css';
-import DialogHolder from '../../../toolbox/dialog/holder';
 
 class Status extends React.Component {
   constructor() {

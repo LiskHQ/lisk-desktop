@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import { extractAddress } from '../../../utils/account';
-import { generatePassphrase } from '../../../utils/passphrase';
+import { extractAddress } from '@utils/account';
+import { generatePassphrase } from '@utils/passphrase';
 import BackupPassphrase from './backupPassphrase';
 
 
