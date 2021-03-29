@@ -95,7 +95,11 @@ export const getAccount = async ({
     if (response.data[0]) {
       account = {
         ...response.data[0],
-        publicKey: response.data[0].publicKey || account.publicKey,
+        summary: {
+          ...response.data[0].summary,
+          publicKey: response.data[0].summary.publicKey !== 'null'
+            ? response.data[0].summary.publicKey : account.publicKey,
+        },
       };
     }
   } catch (e) {
