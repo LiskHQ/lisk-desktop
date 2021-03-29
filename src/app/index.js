@@ -10,19 +10,23 @@ import './variables.css';
 import OfflineWrapper from '@shared/offlineWrapper';
 import CustomRoute from '@shared/customRoute';
 import NotFound from '@shared/notFound';
-import { routes } from '@constants';
+import { routes, MODULE_ASSETS_MAP } from '@constants';
 import NavigationBars from '@shared/navigationBars';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DialogHolder from '@toolbox/dialog/holder';
 import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@actions';
+import { selectSchema } from '@utils/moduleAssets';
 import ThemeContext from '../contexts/theme';
 import styles from './app.css';
 import useIpc from '../hooks/useIpc';
 
+// eslint-disable-next-line max-statements
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
+  const network = useSelector(state => state.network);
+  const serviceUrl = network.networks?.LSK?.serviceUrl;
 
   useIpc(history);
 
@@ -32,6 +36,12 @@ const App = ({ history }) => {
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
   }, []);
+
+  useEffect(() => {
+    Object.keys(MODULE_ASSETS_MAP).forEach((id) => {
+      selectSchema(id, network);
+    });
+  }, [serviceUrl]);
 
   const routesList = Object.values(routes);
   const routeObj = routesList.find(r => r.path === history.location.pathname) || {};
