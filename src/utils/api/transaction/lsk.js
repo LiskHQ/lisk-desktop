@@ -230,14 +230,14 @@ export const getTxAmount = ({ moduleAssetId, asset }) => {
   return undefined;
 };
 
-const splitModuleAndAssetIds = (moduleAssetType) => {
-  const [moduleID, assetID] = moduleAssetType.split(':');
+const splitModuleAndAssetIds = (moduleAssetId) => {
+  const [moduleID, assetID] = moduleAssetId.split(':');
   return [Number(moduleID), Number(assetID)];
 };
 
 // eslint-disable-next-line max-statements
-const createTransactionObject = (tx, moduleAssetType) => {
-  const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetType);
+const createTransactionObject = (tx, moduleAssetId) => {
+  const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
   const {
     senderPublicKey, nonce, amount, recipientAddress, data, fee = 0,
   } = tx;
@@ -251,25 +251,25 @@ const createTransactionObject = (tx, moduleAssetType) => {
     signatures: [],
   };
 
-  if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.transfer) {
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
     transaction.asset = {
       recipientAddress: extractAddress(recipientAddress),
       amount: BigInt(amount),
       data,
     };
-  } else if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
+  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
     transaction.asset = {
       votes: tx.votes,
     };
-  } else if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
+  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
     transaction.asset = {
       unlockObjects: tx.unlockObjects,
     };
-  } else if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.registerDelegate) {
+  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerDelegate) {
     transaction.asset = {
       username: tx.username,
     };
-  } else if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
+  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
     transaction.asset = {
       numberOfSignatures: tx.numberOfSignatures,
       mandatoryKeys: tx.mandatoryKeys,
@@ -292,7 +292,7 @@ const createTransactionObject = (tx, moduleAssetType) => {
  */
 export const create = ({
   network,
-  moduleAssetType,
+  moduleAssetId,
   ...transactionObject
 // eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
@@ -301,8 +301,8 @@ export const create = ({
     passphrase, ...rawTransaction
   } = transactionObject;
 
-  const schema = selectSchema(moduleAssetType);
-  const transaction = createTransactionObject(rawTransaction, moduleAssetType);
+  const schema = selectSchema(moduleAssetId);
+  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
 
   try {
     const signedTransaction = transactions.signTransaction(
@@ -387,14 +387,13 @@ export const getTransactionFee = async ({
   const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
   const {
-    moduleAssetType, ...rawTransaction
+    moduleAssetId, ...rawTransaction
   } = transaction;
 
-  const schema = selectSchema(moduleAssetType);
-  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetType].maxFee;
-  console.log('getTransactionFee', moduleAssetType);
+  const schema = selectSchema(moduleAssetId);
+  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
 
-  const transactionObject = createTransactionObject(rawTransaction, moduleAssetType);
+  const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
 
   const minFee = transactions.computeMinFee(schema, {
     ...transactionObject,

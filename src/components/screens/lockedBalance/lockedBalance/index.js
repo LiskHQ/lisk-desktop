@@ -12,7 +12,7 @@ import useTransactionPriority from '../../../shared/transactionPriority/useTrans
 import Form from './form';
 import BalanceTable from './balanceTable';
 
-const moduleAssetType = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const LockedBalance = (props) => {
   const account = useSelector(state => getActiveTokenAccount(state));
@@ -34,7 +34,7 @@ const LockedBalance = (props) => {
     account,
     priorityOptions,
     transaction: {
-      moduleAssetType,
+      moduleAssetId,
       senderPublicKey: account.summary?.publicKey,
       nonce: account.sequence?.nonce,
       passphrase: account.passphrase,
@@ -64,7 +64,7 @@ const LockedBalance = (props) => {
         fee={fee}
         minFee={minFee.value}
         customFee={customFee ? customFee.value : undefined}
-        txType={moduleAssetType}
+        moduleAssetId={moduleAssetId}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}

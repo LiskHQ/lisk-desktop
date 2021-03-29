@@ -94,7 +94,7 @@ const getVoteStats = votes =>
     }, { added: {}, edited: {}, removed: {} });
 
 const token = tokenMap.LSK.key;
-const txType = 'vote';
+const moduleAssetId = 'vote';
 
 // eslint-disable-next-line max-statements
 const Editor = ({
@@ -118,7 +118,7 @@ const Editor = ({
     account,
     priorityOptions,
     transaction: {
-      txType,
+      moduleAssetId,
       nonce: account.sequence?.nonce,
       senderPublicKey: account.summary?.publicKey,
       votes: normalizedVotes,
@@ -179,7 +179,7 @@ const Editor = ({
                 fee={fee}
                 minFee={minFee.value}
                 customFee={customFee ? customFee.value : undefined}
-                txType={txType}
+                moduleAssetId={moduleAssetId}
                 setCustomFee={setCustomFee}
                 priorityOptions={priorityOptions}
                 selectedPriority={selectedPriority.selectedIndex}

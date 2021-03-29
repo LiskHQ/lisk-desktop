@@ -115,7 +115,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
     passphrase,
     nonce,
     network,
-    moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.transfer,
+    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
   };
 
   const [error, tx] = account.loginType === loginTypes.passphrase.code

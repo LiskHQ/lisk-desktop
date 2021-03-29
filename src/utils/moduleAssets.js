@@ -19,7 +19,7 @@ const getModuleAssetTitle = (t = str => str) => ({
 });
 
 
-const selectSchema = moduleAssetType => MODULE_ASSETS_MAP[moduleAssetType].schema;
+const selectSchema = moduleAssetId => MODULE_ASSETS_MAP[moduleAssetId].schema;
 
 // eslint-disable-next-line import/prefer-default-export
 export { selectSchema, getModuleAssetSenderLabel, getModuleAssetTitle };
