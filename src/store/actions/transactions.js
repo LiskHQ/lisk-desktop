@@ -105,9 +105,20 @@ export const transactionCreated = data => async (dispatch, getState) => {
   } = getState();
   const activeToken = settings.token.active;
 
+  const passphrase = account.passphrase;
+  const nonce = account.info.LSK.sequence.nonce;
+  const senderPublicKey = account.info.LSK.summary.publicKey;
+
   const [error, tx] = account.loginType === loginTypes.passphrase.code
     ? await to(create(
-      { ...data, network, moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.transfer },
+      {
+        ...data,
+        senderPublicKey,
+        passphrase,
+        nonce,
+        network,
+        moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.transfer,
+      },
       activeToken,
     ))
     : await to(signSendTransaction(account, data));
@@ -138,15 +149,10 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
   async (dispatch, getState) => {
     const { network, settings } = getState();
     const activeToken = settings.token.active;
+    const serviceUrl = network.networks[activeToken].serviceUrl;
 
     const [error] = await to(broadcast(
-      {
-        transaction,
-        network: {
-          address: network.networks[activeToken].nodeUrl,
-          name: network.name,
-        },
-      },
+      { transaction, serviceUrl },
       activeToken,
     ));
 
