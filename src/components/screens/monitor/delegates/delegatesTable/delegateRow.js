@@ -81,8 +81,7 @@ const DelegateDetails = ({
           <p className={styles.delegateName}>
             {data.username}
           </p>
-          <p className={`${styles.delegateAddress} showOnLargeViewPort`}>{data.address}</p>
-          <p className={`${styles.delegateAddress} hideOnLargeViewPort`}>{data.address && data.address.replace(regex.lskAddressTrunk, '$1...$3')}</p>
+          <p className={styles.delegateAddress}>{truncateAddress(data.address)}</p>
         </div>
       </div>
     </div>
