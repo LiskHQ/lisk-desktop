@@ -6,7 +6,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { getForgers, getDelegates } from '@utils/api/delegate';
 import { getNetworkStatus } from '@utils/api/network';
-import { getTransactions } from '@utils/api/transaction';
+import { getTransactions, getRegisteredDelegates } from '@utils/api/transaction';
 import withData from '@utils/withData';
 import withFilters from '@utils/withFilters';
 import { MODULE_ASSETS_NAME_ID_MAP, MAX_BLOCKS_FORGED, tokenMap } from '@constants';
@@ -92,19 +92,14 @@ const ComposedDelegates = compose(
 
       chartActiveAndStandbyData: {
         apiUtil: network => getDelegates({ network, params: { limit: 1 } }),
-        defaultData: [],
+        defaultData: 0,
         autoload: true,
         transformResponse: response => response.meta.total,
       },
 
       chartRegisteredDelegatesData: {
-        apiUtil: network => getTransactions({
+        apiUtil: network => getRegisteredDelegates({
           network,
-          params: {
-            limit: 100,
-            type: 10,
-            sort: 'timestamp:desc',
-          },
         }, tokenMap.LSK.key),
         defaultData: [],
         autoload: true,
@@ -114,7 +109,7 @@ const ComposedDelegates = compose(
       votes: {
         apiUtil: (network, params) => getTransactions({
           network,
-          params: { ...params, type: MODULE_ASSETS_NAME_ID_MAP.voteDelegate, sort: 'timestamp:desc' },
+          params: { ...params, moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate, sort: 'timestamp:desc' },
         }, tokenMap.LSK.key),
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,
