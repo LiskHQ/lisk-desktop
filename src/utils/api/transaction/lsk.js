@@ -2,11 +2,12 @@
 import { transactions } from '@liskhq/lisk-client';
 
 import {
-  tokenMap, MODULE_ASSETS, minFeePerByte, DEFAULT_NUMBER_OF_SIGNATURES, DEFAULT_SIGNATURE_BYTE_SIZE,
+  tokenMap, MODULE_ASSETS_NAME_ID_MAP, minFeePerByte,
+  DEFAULT_NUMBER_OF_SIGNATURES, DEFAULT_SIGNATURE_BYTE_SIZE,
+  MODULE_ASSETS_MAP,
 } from '@constants';
 import { selectSchema } from '@utils/moduleAssets';
 import { extractAddress } from '@utils/account';
-import { MAX_ASSET_FEE } from '@constants/moduleAssets';
 
 import http from '../http';
 import ws from '../ws';
@@ -229,11 +230,16 @@ export const getTxAmount = ({ moduleAssetId, asset }) => {
   return undefined;
 };
 
+const splitModuleAndAssetIds = (moduleAssetType) => {
+  const [moduleID, assetID] = moduleAssetType.split(':');
+  return [Number(moduleID), Number(assetID)];
+};
+
 const createTransactionObject = (rawTransaction, moduleAssetType) => {
   console.log(rawTransaction, moduleAssetType);
-  const [moduleID, assetID] = moduleAssetType.split(':');
+  const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetType);
   const {
-    senderPublicKey, nonce, amount, recipientAddress, data, fee, signatures,
+    senderPublicKey, nonce, amount, recipientAddress, data, fee = 0,
   } = rawTransaction;
 
   const transaction = {
@@ -241,8 +247,8 @@ const createTransactionObject = (rawTransaction, moduleAssetType) => {
     assetID,
     senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
     nonce: BigInt(nonce),
-    fee,
-    signatures,
+    fee: BigInt(fee),
+    signatures: [],
   };
 
   if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.transfer) {
@@ -268,19 +274,19 @@ export const create = ({
   network,
   moduleAssetType,
   ...transactionObject
+// eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
   const { networkIdentifier } = network.networks.LSK;
   const {
-    passphrase, rawTransaction,
+    passphrase, ...rawTransaction
   } = transactionObject;
 
   const schema = selectSchema(moduleAssetType);
-  console.log('create', moduleAssetType);
   const transaction = createTransactionObject(rawTransaction, moduleAssetType);
 
   try {
     const signedTransaction = transactions.signTransaction(
-      schema, transaction, networkIdentifier, passphrase,
+      schema, transaction, Buffer.from(networkIdentifier, 'hex'), passphrase,
     );
 
     resolve(signedTransaction);
@@ -298,29 +304,19 @@ export const create = ({
  * @param {string} network.address - the node address e.g. https://betanet-lisk.io
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
-export const broadcast = ({ signedTransaction, network }) => {
-  const transaction = {
-    ...signedTransaction,
-    id: signedTransaction.id.toString('hex'),
-    nonce: signedTransaction.nonce.toString(),
-    fee: signedTransaction.fee.toString(),
-    senderPublicKey: signedTransaction.senderPublicKey.toString('hex'),
-    signatures: signedTransaction.signatures.map(signature => signature.toString('hex')),
-    asset: {
-      ...signedTransaction.asset,
-      amount: signedTransaction.asset.amount.toString(),
-      recipientAddress: signedTransaction.asset.recipientAddress.toString('hex'),
-    },
-  };
+export const broadcast = ({ transaction, serviceUrl }) => {
+  const schema = selectSchema('2:0');
+  const binary = transactions.getBytes(schema, transaction);
+  const payload = binary.toString('hex');
 
   return new Promise(
     async (resolve, reject) => {
       try {
         const response = await http({
           method: 'POST',
-          baseUrl: network.LSK.serviceUrl,
-          path: '/api/v2/transactions​',
-          body: JSON.stringify(transaction), // @todo needs to be binary
+          baseUrl: serviceUrl,
+          path: '/api/v2/transactions',
+          body: { transaction: payload },
         });
 
         resolve(response);
@@ -375,7 +371,7 @@ export const getTransactionFee = async ({
   } = transaction;
 
   const schema = selectSchema(moduleAssetType);
-  const maxAssetFee = MAX_ASSET_FEE[moduleAssetType];
+  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetType].maxFee;
   console.log('getTransactionFee', moduleAssetType);
 
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetType);
