@@ -235,12 +235,12 @@ const splitModuleAndAssetIds = (moduleAssetType) => {
   return [Number(moduleID), Number(assetID)];
 };
 
-const createTransactionObject = (rawTransaction, moduleAssetType) => {
-  console.log(rawTransaction, moduleAssetType);
+// eslint-disable-next-line max-statements
+const createTransactionObject = (tx, moduleAssetType) => {
   const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetType);
   const {
     senderPublicKey, nonce, amount, recipientAddress, data, fee = 0,
-  } = rawTransaction;
+  } = tx;
 
   const transaction = {
     moduleID,
@@ -257,6 +257,26 @@ const createTransactionObject = (rawTransaction, moduleAssetType) => {
       amount: BigInt(amount),
       data,
     };
+  } else if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
+    transaction.asset = {
+      votes: tx.votes,
+    };
+  } else if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
+    transaction.asset = {
+      unlockObjects: tx.unlockObjects,
+    };
+  } else if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.registerDelegate) {
+    transaction.asset = {
+      username: tx.username,
+    };
+  } else if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
+    transaction.asset = {
+      numberOfSignatures: tx.numberOfSignatures,
+      mandatoryKeys: tx.mandatoryKeys,
+      optionalKeys: tx.optionalKeys,
+    };
+  } else {
+    throw Error('Unknown transaction');
   }
 
   return transaction;
