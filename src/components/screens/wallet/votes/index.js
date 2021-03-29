@@ -23,7 +23,7 @@ const apis = {
     defaultData: {},
     transformResponse: response =>
       response.data.reduce((dict, account) => {
-        dict[account.address] = account;
+        dict[account.summary.address] = account;
         return dict;
       }, {}),
   },
