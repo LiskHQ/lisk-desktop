@@ -81,8 +81,8 @@ export const getAccount = async ({
       const account = { ...response.data[0] };
       const isAccountUninitialized = account.summary.publicKey === 'null';
       if (isAccountUninitialized) {
-        account.summary.publicKey = params.publicKey
-          ?? extractPublicKey(params.passphrase);
+        const publicKey = params.publicKey ?? extractPublicKey(params.address || params.passphrase);
+        account.summary.publicKey = publicKey;
       }
 
       return account;
