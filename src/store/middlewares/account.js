@@ -137,16 +137,16 @@ const checkAccountInitializationState = (action) => {
   const initialization = selectSearchParamValue(search, 'initialization');
   let serverPublicKey = '';
   let balance = 0;
-  let redirectUrl = '';
+  // let redirectUrl = '';
 
   if (action.type === actionTypes.accountLoggedIn) {
     serverPublicKey = action.data.info.LSK.serverPublicKey;
     balance = action.data.info.LSK.balance;
-    redirectUrl = routes.initialization.path;
+    // redirectUrl = routes.initialization.path;
   } else if (action.type === actionTypes.accountUpdated) {
     serverPublicKey = action.data.serverPublicKey;
     balance = action.data.balance;
-    redirectUrl = `${routes.wallet.path}?modal=send&initialization=true`;
+    // redirectUrl = `${routes.wallet.path}?modal=send&initialization=true`;
   }
 
   if (serverPublicKey) {
@@ -155,7 +155,7 @@ const checkAccountInitializationState = (action) => {
       removeSearchParamsFromUrl(history, ['modal', 'initialization']);
     }
   } else if (hasEnoughBalanceForInitialization(balance)) {
-    history.push(redirectUrl);
+    // history.push(redirectUrl);
   }
 };
 
