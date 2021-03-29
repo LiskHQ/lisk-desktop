@@ -159,7 +159,7 @@ export const getRegisteredDelegates = async ({ network }) => {
   });
   const responseTransactions = await getTransactions({
     network,
-    params: { moduleAssetId: '5:0', limit: 97 },
+    params: { moduleAssetId: '5:0', limit: 100 },
   });
 
   if (delegates.error || responseTransactions.error) {
@@ -234,7 +234,6 @@ export const getTxAmount = ({ moduleAssetId, asset }) => {
 };
 
 const createTransactionObject = (rawTransaction, moduleAssetType) => {
-  console.log(rawTransaction, moduleAssetType);
   const [moduleID, assetID] = moduleAssetType.split(':');
   const {
     senderPublicKey, nonce, amount, recipientAddress, data, fee, signatures,
@@ -279,7 +278,6 @@ export const create = ({
   } = transactionObject;
 
   const schema = selectSchema(moduleAssetType);
-  console.log('create', moduleAssetType);
   const transaction = createTransactionObject(rawTransaction, moduleAssetType);
 
   try {
@@ -380,7 +378,6 @@ export const getTransactionFee = async ({
 
   const schema = selectSchema(moduleAssetType);
   const maxAssetFee = MAX_ASSET_FEE[moduleAssetType];
-  console.log('getTransactionFee', moduleAssetType);
 
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetType);
 
