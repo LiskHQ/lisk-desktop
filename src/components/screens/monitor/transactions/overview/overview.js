@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { fromRawLsk } from '@utils/lsk';
 import { kFormatter } from '@utils/helpers';
-import { colorPalette, chartStyles, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { colorPalette, chartStyles } from '@constants';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
 import Box from '../../../../toolbox/box';
 import BoxTabs from '../../../../toolbox/tabs';
