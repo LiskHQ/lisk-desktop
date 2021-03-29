@@ -133,7 +133,7 @@ const ComposedDelegates = compose(
 
       votedDelegates: {
         apiUtil: ({ networks }, params) =>
-          getDelegates({ network: networks.LSK, params: { ...params } }),
+          getDelegates({ network: networks.LSK, params }),
         defaultData: {},
         transformResponse: (response) => {
           const transformedResponse = transformDelegatesResponse(response);
@@ -147,7 +147,7 @@ const ComposedDelegates = compose(
 
       watchedDelegates: {
         apiUtil: (network, params) =>
-          getDelegates({ network, params: { ...params } }),
+          getDelegates({ network, params }),
         defaultData: [],
         getApiParams: state => ({ addressList: state.watchList }),
         transformResponse: transformDelegatesResponse,
