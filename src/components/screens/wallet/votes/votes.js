@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { routes } from '@constants';
 import { isEmpty } from '@utils/helpers';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import { Input } from '../../../toolbox/inputs';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import { Input } from '@toolbox/inputs';
+import Table from '@toolbox/table';
+import DialogLink from '@toolbox/dialog/link';
+import { SecondaryButton } from '@toolbox/buttons';
 import styles from './votes.css';
-import Table from '../../../toolbox/table';
 import VoteRow from './voteRow';
 import header from './votesTableHeader';
-import DialogLink from '../../../toolbox/dialog/link';
-import { SecondaryButton } from '../../../toolbox/buttons';
 
 const getMessages = t => ({
   all: t('This account doesn’t have any votes.'),
