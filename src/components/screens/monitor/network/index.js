@@ -112,7 +112,7 @@ export default compose(
       transformResponse: response => response.data,
     },
     peers: {
-      apiUtil: (network, params) => getConnectedPeers({ network, params }, tokenMap.LSK.key),
+      apiUtil: (network, params) => getPeers({ network, params }, tokenMap.LSK.key),
       defaultData: [],
       autoload: true,
       transformResponse: response => response.data,
