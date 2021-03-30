@@ -134,6 +134,6 @@ describe('Network', () => {
       },
     };
     const wrapper = mount(<Network {...props} />);
-    expect(wrapper.find('p').text()).toBe('Connected to:testnet');
+    expect(wrapper.find('p').text()).toBe('Connected to:devnet');
   });
 });

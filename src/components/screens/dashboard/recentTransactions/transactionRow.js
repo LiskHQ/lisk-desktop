@@ -1,10 +1,10 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useSelector } from 'react-redux';
-import TransactionTypeFigure from '@shared/transactionTypeFigure';
-import TransactionAddress from '@shared/transactionAddress';
-import TransactionAmount from '@shared/transactionAmount';
-import DialogLink from '@toolbox/dialog/link';
+import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
+import TransactionAddress from '../../../shared/transactionAddress';
+import TransactionAmount from '../../../shared/transactionAmount';
+import DialogLink from '../../../toolbox/dialog/link';
 import styles from './recentTransactions.css';
 
 // eslint-disable-next-line complexity

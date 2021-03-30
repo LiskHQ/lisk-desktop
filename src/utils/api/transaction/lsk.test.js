@@ -44,7 +44,7 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v1/transactions',
+        path: '/api/v2/transactions',
         params: { id: sampleId },
         network,
         baseUrl,
@@ -77,7 +77,7 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v1/transactions',
+        path: '/api/v2/transactions',
         params: { block: sampleId },
         network,
         baseUrl: undefined,
@@ -98,7 +98,7 @@ describe('API: LSK Transactions', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: '/api/v1/transactions',
+        path: '/api/v2/transactions',
         baseUrl: undefined,
         params: {
           from: 1607446547094,
@@ -128,7 +128,7 @@ describe('API: LSK Transactions', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: '/api/v1/transactions',
+        path: '/api/v2/transactions',
         baseUrl: undefined,
         params: {
           to: 1607446547094,
@@ -186,7 +186,7 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v1/transactions/statistics/day',
+        path: '/api/v2/transactions/statistics/day',
         params: { limit: 7 },
         network,
       });
@@ -196,8 +196,8 @@ describe('API: LSK Transactions', () => {
   describe('getTxAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
-        amount: '100000000',
-        type: 0,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+        asset: { amount: 100000000 },
       };
 
       expect(getTxAmount(tx)).toEqual(tx.amount);
@@ -206,7 +206,7 @@ describe('API: LSK Transactions', () => {
     it('should return amount of votes in Beddows', () => {
       const tx = {
         title: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-        type: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
         asset: {
           votes: [
             {
@@ -219,13 +219,13 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTxAmount(tx)).toEqual('200000000');
+      expect(getTxAmount(tx)).toEqual(200000000);
     });
 
     it('should return amount of unlock in Beddows', () => {
       const tx = {
         title: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
-        type: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
         asset: {
           unlockingObjects: [
             {
@@ -238,7 +238,7 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTxAmount(tx)).toEqual('200000000');
+      expect(getTxAmount(tx)).toEqual(200000000);
     });
   });
 
@@ -249,7 +249,7 @@ describe('API: LSK Transactions', () => {
       nonce: '6',
       recipient: '16313739661670634666L',
       senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-      txType: 'transfer',
+      moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.transfer,
     };
     const selectedPriority = {
       value: 0,
@@ -257,21 +257,21 @@ describe('API: LSK Transactions', () => {
     };
     it('should return fee in Beddows', async () => {
       const result = await getTransactionFee({
-        txData, selectedPriority,
+        transaction: txData, selectedPriority,
       });
       expect(result.value).toEqual(0.0015);
     });
 
     it('should use zero instead of invalid amounts', async () => {
       const invalidAmountResult = await getTransactionFee({
-        txData: {
+        transaction: {
           ...txData,
           amount: 'invalid',
         },
         selectedPriority,
       });
       const ZeroAmountResult = await getTransactionFee({
-        txData: {
+        transaction: {
           ...txData,
           amount: '0',
         },
@@ -282,13 +282,13 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of vote tx', async () => {
       const voteTxData = {
-        txType: 'vote',
+        moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         votes: [],
       };
       const result = await getTransactionFee({
-        txData: voteTxData,
+        transaction: voteTxData,
         selectedPriority,
       });
       expect(result.value).toEqual(0.00114);
@@ -296,12 +296,12 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of register delegate tx', async () => {
       const voteTxData = {
-        txType: 'registerDelegate',
+        moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
       };
       const result = await getTransactionFee({
-        txData: voteTxData,
+        transaction: voteTxData,
         selectedPriority,
       });
       expect(result.value).toEqual(10.00119);

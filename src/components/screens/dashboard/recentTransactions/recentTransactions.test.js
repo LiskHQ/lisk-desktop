@@ -12,7 +12,7 @@ const LiskTransactions = {
       amount: '0.001',
       token: 'LSK',
       type: 0,
-      title: 'transfer',
+      moduleAssetId: '2:0',
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ const LiskTransactions = {
       amount: '0.008',
       token: 'LSK',
       type: 1,
-      title: 'registerDelegate',
+      moduleAssetId: '5:0',
     },
     {
       id: 3,
@@ -30,7 +30,7 @@ const LiskTransactions = {
       amount: '0.0009',
       token: 'LSK',
       type: 2,
-      title: 'vote',
+      moduleAssetId: '4:0',
     },
     {
       id: 4,
@@ -39,7 +39,7 @@ const LiskTransactions = {
       amount: '25',
       token: 'LSK',
       type: 3,
-      title: 'createMultiSig',
+      moduleAssetId: '5:1',
     },
   ],
   isLoading: false,
@@ -56,7 +56,7 @@ const BitcoinTransactions = {
       amount: '0.001',
       token: 'BTC',
       type: 0,
-      title: 'transfer',
+      moduleAssetId: '2:0',
     },
     {
       id: 1,
@@ -65,7 +65,7 @@ const BitcoinTransactions = {
       amount: '0.0003',
       token: 'BTC',
       type: 0,
-      title: 'transfer',
+      moduleAssetId: '2:0',
     },
   ],
   isLoading: false,

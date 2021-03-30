@@ -6,7 +6,7 @@ import FormBase from './formBase';
 import useAmountField from './useAmountField';
 import useRecipientField from './useRecipientField';
 
-const txType = MODULE_ASSETS_NAME_ID_MAP.transfer;
+const moduleAssetType = MODULE_ASSETS_NAME_ID_MAP.transfer;
 
 const FormBtc = (props) => {
   const {
@@ -24,7 +24,7 @@ const FormBtc = (props) => {
     token,
     account,
     transaction: {
-      amount: toRawLsk(amount.value), txType, recipient: recipient.value,
+      amount: toRawLsk(amount.value), moduleAssetType, recipient: recipient.value,
     },
   });
 
@@ -50,6 +50,7 @@ const FormBtc = (props) => {
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
+        moduleAssetType={moduleAssetType}
       />
     </FormBase>
   );
