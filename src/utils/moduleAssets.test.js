@@ -1,6 +1,7 @@
 import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchema } from '@constants';
 import { getModuleAssetSenderLabels, retrieveSchemas } from './moduleAssets';
 import http from './api/http';
+import flushPromises from '../../test/unit-test-utils/flushPromises';
 
 jest.mock('./api/http');
 
@@ -25,7 +26,8 @@ describe('Utils: moduleAssets', () => {
     it('should rretrueve and set schema', async () => {
       const expectedSchema = { id: 'id' };
       http.mockImplementation(() => Promise.resolve({ data: [{ schema: expectedSchema }] }));
-      await retrieveSchemas();
+      retrieveSchemas();
+      await flushPromises();
       expect(moduleAssetSchema).toEqual({
         '2:0': expectedSchema,
         '4:0': expectedSchema,
