@@ -1,5 +1,5 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { getModuleAssetSenderLabels, selectSchema } from './moduleAssets';
+import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchema } from '@constants';
+import { getModuleAssetSenderLabels, retrieveSchemas } from './moduleAssets';
 import http from './api/http';
 
 jest.mock('./api/http');
@@ -22,13 +22,17 @@ describe('Utils: moduleAssets', () => {
       http.mockClear();
     });
 
-    it('should return and set schema', async () => {
+    it('should rretrueve and set schema', async () => {
       const expectedSchema = { id: 'id' };
       http.mockImplementation(() => Promise.resolve({ data: [{ schema: expectedSchema }] }));
-      const schema = await selectSchema('2:0');
-      expect(schema).toEqual(expectedSchema);
-      await selectSchema('2:0');
-      expect(http).toHaveBeenCalledTimes(1);
+      await retrieveSchemas();
+      expect(moduleAssetSchema).toEqual({
+        '2:0': expectedSchema,
+        '4:0': expectedSchema,
+        '5:0': expectedSchema,
+        '5:1': expectedSchema,
+        '5:2': expectedSchema,
+      });
     });
   });
 });
