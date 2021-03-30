@@ -6,7 +6,6 @@ import {
   DEFAULT_NUMBER_OF_SIGNATURES, DEFAULT_SIGNATURE_BYTE_SIZE,
   MODULE_ASSETS_MAP, moduleAssetSchema,
 } from '@constants';
-import { selectSchema } from '@utils/moduleAssets';
 import { extractAddress } from '@utils/account';
 
 import http from '../http';

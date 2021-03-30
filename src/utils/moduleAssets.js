@@ -20,10 +20,10 @@ const getModuleAssetTitle = (t = str => str) => ({
 });
 
 
-const retrieveSchemas = network => () => {
-  Object.values(MODULE_ASSETS_NAME_ID_MAP).forEach(async (id) => {
-    const response = await getSchema({ params: { id }, network });
-    moduleAssetSchema[id] = response.data[0]?.schema;
+const retrieveSchemas = (network) => {
+  Object.values(MODULE_ASSETS_NAME_ID_MAP).forEach(async (moduleAssetId) => {
+    const response = await getSchema({ params: { moduleAssetId }, network });
+    moduleAssetSchema[moduleAssetId] = response.data[0]?.schema;
   });
 };
 
