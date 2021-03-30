@@ -105,16 +105,7 @@ export const getTransactions = ({
       params: { type },
     }));
     // BaseUrl is only used for retrieving archived txs, so it's not needed here.
-    return ws({ baseUrl: network.serviceUrl, requests })
-      // eslint-disable-next-line arrow-body-style
-      .then((response) => {
-        // const data = response.data.map((tx) => {
-        //   tx.title = MODULE_ASSETS_NAME_ID_MAP.getByCode(tx.type).key;
-        //   return tx;
-        // });
-
-        return response;
-      });
+    return ws({ baseUrl: network.serviceUrl, requests });
   }
 
   const normParams = {};
@@ -139,16 +130,7 @@ export const getTransactions = ({
     path: httpPaths.transactions,
     params: normParams,
     baseUrl,
-  })
-    // eslint-disable-next-line arrow-body-style
-    .then((response) => {
-      // const data = response.data.map((tx) => {
-      //   tx.title = MODULE_ASSETS_NAME_ID_MAP.getByCode(tx.type).key;
-      //   return tx;
-      // });
-
-      return response;
-    });
+  });
 };
 
 // @todo document this function signature
