@@ -43,7 +43,9 @@ const DelegateVotesView = ({
             </span>
           )}
         </BoxHeader>
-        <BoxContent className={`${grid.col} ${grid['col-xs-12']} ${styles.votesContainer} votes-container`}>
+        <BoxContent
+          className={`${grid.col} ${grid['col-xs-12']} ${voters.data.length ? styles.votesContainer : ''} votes-container`}
+        >
           <Table
             data={voters.data}
             canLoadMore={voters.meta && voters.data.length < voters.meta.count}
