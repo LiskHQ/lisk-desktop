@@ -1,17 +1,18 @@
 import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
+
 import { tokenMap, routes } from '@constants';
 import regex from '@utils/regex';
-import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxRow from '../../../toolbox/box/row';
-import CopyToClipboard from '../../../toolbox/copyToClipboard';
-import Feedback from '../../../toolbox/feedback/feedback';
-import LabeledValue from '../../../toolbox/labeledValue';
-import LiskAmount from '../../../shared/liskAmount';
-import TransactionsTable from '../../../shared/transactionsTable';
+import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxRow from '@toolbox/box/row';
+import CopyToClipboard from '@toolbox/copyToClipboard';
+import Feedback from '@toolbox/feedback/feedback';
+import LabeledValue from '@toolbox/labeledValue';
+import LiskAmount from '@shared/liskAmount';
+import TransactionsTable from '@shared/transactionsTable';
 import styles from './blockDetails.css';
 
 const BlockDetails = ({
