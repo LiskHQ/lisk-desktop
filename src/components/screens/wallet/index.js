@@ -23,6 +23,7 @@ const Wallet = ({ t, history }) => {
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const { confirmed, pending } = useSelector(selectTransactions);
+  const isDelegate = !!account.info[activeToken].dpos?.delegate;
 
   useEffect(() => {
     if (!confirmed.length && account.info && !isEmpty(account.info)) {
@@ -67,13 +68,13 @@ const Wallet = ({ t, history }) => {
             tabId="votes"
           />
         ) : null}
-        {account.info[activeToken].isDelegate
+        {isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
               tabId="delegateProfile"
-              address={account.info[activeToken].address}
+              account={account.info[activeToken]}
             />
           )
           : null}
