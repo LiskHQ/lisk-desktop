@@ -29,7 +29,7 @@ const TransactionRow = ({ data, className, t }) => (
     </span>
     <span className={grid['col-xs-3']}>
       <AccountVisualWithAddress
-        address={data.asset.recipientAddress}
+        address={data.asset.recipient?.address}
         transactionSubject="recipient"
         moduleAssetId={data.moduleAssetId}
         showBookmarkedAddress
