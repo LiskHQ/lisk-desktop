@@ -9,33 +9,36 @@ const moduleAssetNameIdMap = {
 
 const moduleAssetMap = {
   [moduleAssetNameIdMap.transfer]: {
-    setSchema: function setSchema(schema) { this.schema = schema; },
     maxFee: 1e7,
     icon: 'txDefault',
   },
   [moduleAssetNameIdMap.unlockToken]: {
-    setSchema: function setSchema(schema) { this.schema = schema; },
     maxFee: 1e7,
     icon: 'unlockToken',
   },
   [moduleAssetNameIdMap.voteDelegate]: {
-    setSchema: function setSchema(schema) { this.schema = schema; },
     maxFee: 1e8,
     icon: 'vote',
   },
   [moduleAssetNameIdMap.registerDelegate]: {
-    setSchema: function setSchema(schema) { this.schema = schema; },
     maxFee: 25e8,
     icon: 'registerDelegate',
   },
   [moduleAssetNameIdMap.registerMultisignatureGroup]: {
-    setSchema: function setSchema(schema) { this.schema = schema; },
     maxFee: 5e8,
     icon: 'registerMultisignatureGroup',
   },
 };
 
+const moduleAssetSchema = {
+  [moduleAssetNameIdMap.transfer]: undefined,
+  [moduleAssetNameIdMap.unlockToken]: undefined,
+  [moduleAssetNameIdMap.voteDelegate]: undefined,
+  [moduleAssetNameIdMap.registerDelegate]: undefined,
+  [moduleAssetNameIdMap.registerMultisignatureGroup]: undefined,
+};
+
 const MODULE_ASSETS_NAME_ID_MAP = Object.freeze(moduleAssetNameIdMap);
 const MODULE_ASSETS_MAP = Object.freeze(moduleAssetMap);
 
-export { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP };
+export { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP, moduleAssetSchema };

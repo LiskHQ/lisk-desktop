@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchema } from '@constants';
 import { getSchema } from './api/transaction';
 
 const getModuleAssetSenderLabel = (t = str => str) => ({
@@ -21,7 +21,7 @@ const getModuleAssetTitle = (t = str => str) => ({
 
 
 const selectSchema = (moduleAssetId, network) => new Promise(async (resolve, reject) => {
-  const schema = MODULE_ASSETS_MAP[moduleAssetId].schema;
+  const schema = moduleAssetSchema[moduleAssetId];
   if (schema) {
     resolve(schema);
     return undefined;
@@ -29,8 +29,8 @@ const selectSchema = (moduleAssetId, network) => new Promise(async (resolve, rej
 
   try {
     const response = await getSchema({ params: { moduleAssetId }, network });
-    MODULE_ASSETS_MAP[moduleAssetId].setSchema(response.data[0]?.schema);
-    resolve(MODULE_ASSETS_MAP[moduleAssetId].schema);
+    moduleAssetSchema[moduleAssetId] = response.data[0]?.schema;
+    resolve(moduleAssetSchema[moduleAssetId]);
   } catch (error) {
     reject(error);
   }
