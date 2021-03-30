@@ -2,8 +2,9 @@
 import { transactions } from '@liskhq/lisk-client';
 
 import {
-  tokenMap, MODULE_ASSETS, minFeePerByte, DEFAULT_NUMBER_OF_SIGNATURES, DEFAULT_SIGNATURE_BYTE_SIZE,
-  MODULE_ASSETS_MAP,
+  tokenMap, MODULE_ASSETS_NAME_ID_MAP, minFeePerByte,
+  DEFAULT_NUMBER_OF_SIGNATURES, DEFAULT_SIGNATURE_BYTE_SIZE,
+  MODULE_ASSETS_MAP, moduleAssetSchema,
 } from '@constants';
 import { selectSchema } from '@utils/moduleAssets';
 import { extractAddress } from '@utils/account';
@@ -275,16 +276,15 @@ export const create = ({
     passphrase, rawTransaction,
   } = transactionObject;
 
+  const schema = moduleAssetSchema[moduleAssetType];
+  console.log('create', moduleAssetType);
+  const transaction = createTransactionObject(rawTransaction, moduleAssetType);
+
   try {
-    selectSchema(moduleAssetType, network)
-      .then((schema) => {
-        console.log('create', moduleAssetType);
-        const transaction = createTransactionObject(rawTransaction, moduleAssetType);
-        const signedTransaction = transactions.signTransaction(
-          schema, transaction, networkIdentifier, passphrase,
-        );
-        resolve(signedTransaction);
-      });
+    const signedTransaction = transactions.signTransaction(
+      schema, transaction, networkIdentifier, passphrase,
+    );
+    resolve(signedTransaction);
   } catch (error) {
     reject(error);
   }
@@ -367,7 +367,7 @@ export const getTransactionBaseFees = network =>
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
-  transaction, selectedPriority, network,
+  transaction, selectedPriority,
 }) => {
   const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
@@ -375,7 +375,7 @@ export const getTransactionFee = async ({
     moduleAssetType, ...rawTransaction
   } = transaction;
 
-  const schema = await selectSchema(moduleAssetType, network);
+  const schema = moduleAssetSchema[moduleAssetType];
   const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetType].maxFee;
   console.log('getTransactionFee', moduleAssetType);
 

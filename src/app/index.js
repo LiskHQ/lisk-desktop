@@ -10,12 +10,13 @@ import './variables.css';
 import OfflineWrapper from '@shared/offlineWrapper';
 import CustomRoute from '@shared/customRoute';
 import NotFound from '@shared/notFound';
-import { routes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { routes } from '@constants';
 import NavigationBars from '@shared/navigationBars';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DialogHolder from '@toolbox/dialog/holder';
 import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@actions';
-import { selectSchema } from '@utils/moduleAssets';
+import { retrieveSchemas } from '@utils/moduleAssets';
+import { selectServiceUrl } from '@store/selectors';
 import ThemeContext from '../contexts/theme';
 import styles from './app.css';
 import useIpc from '../hooks/useIpc';
@@ -26,7 +27,7 @@ const App = ({ history }) => {
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
   const network = useSelector(state => state.network);
-  const serviceUrl = network.networks?.LSK?.serviceUrl;
+  const serviceUrl = useSelector(selectServiceUrl);
 
   useIpc(history);
 
@@ -38,9 +39,7 @@ const App = ({ history }) => {
   }, []);
 
   useEffect(() => {
-    Object.values(MODULE_ASSETS_NAME_ID_MAP).forEach((id) => {
-      selectSchema(id, network);
-    });
+    retrieveSchemas(network);
   }, [serviceUrl]);
 
   const routesList = Object.values(routes);

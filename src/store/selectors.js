@@ -12,6 +12,7 @@ const selectBookmarks = state => state.bookmarks[state.settings.token.active];
 const selectBookmark = (state, address) =>
   state.bookmarks[state.settings.token.active].find(item => (item.address === address));
 const selectSettings = state => state.settings;
+const selectServiceUrl = state => state.network.networks?.LSK?.serviceUrl;
 
 export {
   selectBookmark,
@@ -26,4 +27,5 @@ export {
   selectPublicKey,
   selectActiveTokenAccount,
   selectAccountBalance,
+  selectServiceUrl,
 };

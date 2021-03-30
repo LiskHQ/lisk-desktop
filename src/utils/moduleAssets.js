@@ -20,23 +20,12 @@ const getModuleAssetTitle = (t = str => str) => ({
 });
 
 
-const selectSchema = (moduleAssetId, network) => new Promise(async (resolve, reject) => {
-  const schema = moduleAssetSchema[moduleAssetId];
-  if (schema) {
-    resolve(schema);
-    return undefined;
-  }
-
-  try {
-    const response = await getSchema({ params: { moduleAssetId }, network });
-    moduleAssetSchema[moduleAssetId] = response.data[0]?.schema;
-    resolve(moduleAssetSchema[moduleAssetId]);
-  } catch (error) {
-    reject(error);
-  }
-
-  return undefined;
-});
+const retrieveSchemas = network => () => {
+  Object.values(MODULE_ASSETS_NAME_ID_MAP).forEach(async (id) => {
+    const response = await getSchema({ params: { id }, network });
+    moduleAssetSchema[id] = response.data[0]?.schema;
+  });
+};
 
 // eslint-disable-next-line import/prefer-default-export
-export { selectSchema, getModuleAssetSenderLabel, getModuleAssetTitle };
+export { retrieveSchemas, getModuleAssetSenderLabel, getModuleAssetTitle };
