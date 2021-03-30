@@ -8,8 +8,8 @@ import LockedBalance from './index';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
-jest.mock('../../send/form/useTransactionPriority');
-jest.mock('../../send/form/useTransactionFeeCalculation');
+jest.mock('@shared/transactionPriority/useTransactionPriority');
+jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@api/transaction');
 
 describe('Unlock LSK modal', () => {

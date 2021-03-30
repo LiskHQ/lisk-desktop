@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { tokenMap, MAX_ASSET_FEE } from '@constants';
+import { tokenMap, MODULE_ASSETS_MAP } from '@constants';
 import {
   formatAmountBasedOnLocale,
 } from '@utils/formattedNumber';
@@ -64,7 +64,7 @@ const TransactionPriority = ({
 
   let maxFee = 0;
   if (token === tokenMap.LSK.key) {
-    maxFee = MAX_ASSET_FEE[moduleAssetType];
+    maxFee = MODULE_ASSETS_MAP[moduleAssetType].maxFee;
   }
 
   const onClickPriority = (e) => {

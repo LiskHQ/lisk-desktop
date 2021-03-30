@@ -1,4 +1,4 @@
-import { service, transactions } from '@actions';
+import { pricesRetrieved, emptyTransactionsData } from '@actions';
 import { actionTypes } from '@constants';
 import settingsMiddleware from './settings';
 
@@ -36,7 +36,7 @@ describe('Middleware: Settings', () => {
       };
 
       settingsMiddleware(store)(next)(action);
-      expect(service.pricesRetrieved).toBeCalled();
+      expect(pricesRetrieved).toBeCalled();
     });
   });
 
@@ -50,7 +50,7 @@ describe('Middleware: Settings', () => {
       };
 
       settingsMiddleware(store)(next)(action);
-      expect(service.pricesRetrieved).not.toBeCalled();
+      expect(pricesRetrieved).not.toBeCalled();
     });
 
     it('should dispatch pricesRetrieved', () => {
@@ -64,7 +64,7 @@ describe('Middleware: Settings', () => {
       };
 
       settingsMiddleware(store)(next)(action);
-      expect(transactions.emptyTransactionsData).toBeCalled();
+      expect(emptyTransactionsData).toBeCalled();
     });
   });
 });

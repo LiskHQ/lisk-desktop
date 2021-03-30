@@ -64,7 +64,7 @@ const LockedBalance = (props) => {
         fee={fee}
         minFee={minFee.value}
         customFee={customFee ? customFee.value : undefined}
-        txType={moduleAssetType}
+        moduleAssetType={moduleAssetType}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
