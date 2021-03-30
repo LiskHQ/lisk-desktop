@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Box from '../../../toolbox/box';
+import Box from '@toolbox/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
-// import DelegateVotesView from './delegateVotesView';
+import DelegateVotesView from './delegateVotesView';
 
 // const formatForgingStatus = (status) => {
 //   const result = status.replace(/([A-Z])/g, ' $1');
@@ -23,41 +23,45 @@ import PerformanceView from './performanceView';
 // };
 
 const DelegateProfile = ({
-  delegate, address, t, voters,
+  account, t, voters,
   // awaitingForgers, forgingTimes,
   lastBlockForged,
 }) => {
+  const { delegate } = account.dpos;
   useEffect(() => {
-    delegate.loadData();
     voters.loadData();
-  }, [address]);
+  }, [account]);
 
   useEffect(() => {
-    lastBlockForged.loadData({ height: delegate.data.dpos?.delegate?.lastForgedHeight });
-  }, [delegate.data.dpos?.delegate?.lastForgedHeight]);
+    lastBlockForged.loadData({ height: delegate?.lastForgedHeight });
+  }, [delegate?.lastForgedHeight]);
+
+  if (!delegate) {
+    return null;
+  }
 
   return (
     <section className={`${styles.container} container`}>
       <Box className={`${grid.row} ${styles.statsContainer} stats-container`}>
         <DetailsView
           t={t}
-          status={delegate.data.dpos?.delegate?.status}
+          status={delegate?.status}
           lastBlockForged={lastBlockForged.data.timestamp}
-          voteWeight={delegate.data.dpos?.delegate?.totalVotesReceived}
-          rank={delegate.data.dpos?.delegate?.rank}
+          delegateWeight={delegate?.totalVotesReceived}
+          rank={delegate?.rank}
         />
         <PerformanceView
           t={t}
-          productivity={delegate.data.dpos?.delegate?.productivity}
-          forgedBlocks={delegate.data.dpos?.delegate?.producedBlocks}
-          missedBlocks={delegate.data.dpos?.delegate?.missedBlocks}
+          productivity={delegate?.productivity}
+          forgedBlocks={delegate?.producedBlocks}
+          missedBlocks={delegate?.missedBlocks}
           forgedLsk="-"
         />
       </Box>
-      {/* <DelegateVotesView
+      <DelegateVotesView
         t={t}
         voters={voters}
-      /> */}
+      />
     </section>
   );
 };
