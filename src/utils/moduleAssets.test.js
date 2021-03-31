@@ -1,5 +1,9 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { getModuleAssetSenderLabels } from './moduleAssets';
+import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
+import { getModuleAssetSenderLabels, retrieveSchemas } from './moduleAssets';
+import http from './api/http';
+import flushPromises from '../../test/unit-test-utils/flushPromises';
+
+jest.mock('./api/http');
 
 describe('Utils: moduleAssets', () => {
   describe('getModuleAssetSenderLabels', () => {
@@ -11,6 +15,33 @@ describe('Utils: moduleAssets', () => {
       expect(label).toBeDefined();
       expect(typeof label).toBe('string');
       expect(t).toHaveBeenCalled();
+    });
+  });
+
+  describe('selectSchema', () => {
+    beforeEach(() => {
+      http.mockClear();
+    });
+
+    it('should rretrueve and set schema', async () => {
+      const schema = { properties: [] };
+      const data = [
+        { moduleAssetId: '2:0', schema },
+        { moduleAssetId: '4:0', schema },
+        { moduleAssetId: '5:0', schema },
+        { moduleAssetId: '5:1', schema },
+        { moduleAssetId: '5:2', schema },
+      ];
+      http.mockImplementation(() => Promise.resolve({ data }));
+      retrieveSchemas();
+      await flushPromises();
+      expect(moduleAssetSchemas).toEqual({
+        '2:0': schema,
+        '4:0': schema,
+        '5:0': schema,
+        '5:1': schema,
+        '5:2': schema,
+      });
     });
   });
 });

@@ -20,3 +20,4 @@ export const getTransactionStats = transactionAPI.getTransactionStats;
 export const getTransactions = transactionAPI.getTransactions;
 export const getTxAmount = transactionAPI.getTxAmount;
 export const getUnspentTransactionOutputs = transactionAPI.getUnspentTransactionOutputs;
+export const getSchemas = transactionAPI.getSchemas;
