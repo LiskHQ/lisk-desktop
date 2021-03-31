@@ -1,19 +1,34 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { NavLink } from 'react-router-dom';
 
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
+import { routes } from '@constants';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import Icon from '@toolbox/icon';
 import styles from './delegateProfile.css';
-import Icon from '../../../toolbox/icon';
 
 const Item = ({
-  icon, className, text, value,
+  icon, className, text, value, isLink,
 }) => (
   <BoxContent className={`${styles.performance} performance`}>
     <div className={styles.performanceContent}>
       <div className={styles.performanceText}>{text}</div>
-      <div className={styles.performanceValue}>{value}</div>
+      {
+        isLink
+          ? (
+            <NavLink
+              to={`${routes.block.path}?id=${value}`}
+              className={styles.performanceValue}
+              id={value}
+              exact
+            >
+              {value}
+            </NavLink>
+          )
+          : <div className={styles.performanceValue}>{value}</div>
+      }
     </div>
     <div className={className}>
       <Icon name={icon} />
@@ -22,7 +37,7 @@ const Item = ({
 );
 
 const PerformanceView = ({
-  t, productivity, forgedBlocks, forgedLsk, missedBlocks,
+  t, productivity, lastForgedBlocks, forgedLsk, consecutiveMissedBlocks,
 }) => (
   <Box className={`${grid['col-xs-12']} ${grid['col-md-8']} ${styles.performanceContainer} performance-container`}>
     <BoxHeader>
@@ -37,16 +52,17 @@ const PerformanceView = ({
           className={`${styles.performanceIcon} ${styles.productivityIcon}`}
         />
         <Item
-          text={t('Forged Blocks')}
-          value={forgedBlocks}
+          text={t('Last Forged Block')}
+          value={lastForgedBlocks}
           icon="forgedBlocks"
+          isLink
           className={`${styles.performanceIcon} ${styles.forgedBlocksIcon}`}
         />
       </Box>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
-          text={t('Missed Blocks')}
-          value={missedBlocks}
+          text={t('Consecutive Missed Blocks')}
+          value={consecutiveMissedBlocks}
           icon="missedBlocks"
           className={`${styles.performanceIcon} ${styles.missedBlocksIcon}`}
         />
