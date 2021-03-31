@@ -216,27 +216,53 @@ export const getTxAmount = ({ moduleAssetId, asset }) => {
   return undefined;
 };
 
-const createTransactionObject = (rawTransaction, moduleAssetType) => {
-  const [moduleID, assetID] = moduleAssetType.split(':');
+const splitModuleAndAssetIds = (moduleAssetId) => {
+  const [moduleID, assetID] = moduleAssetId.split(':');
+  return [Number(moduleID), Number(assetID)];
+};
+
+// eslint-disable-next-line max-statements
+const createTransactionObject = (tx, moduleAssetId) => {
+  const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
   const {
-    senderPublicKey, nonce, amount, recipientAddress, data, fee, signatures,
-  } = rawTransaction;
+    senderPublicKey, nonce, amount, recipientAddress, data, fee = 0,
+  } = tx;
 
   const transaction = {
     moduleID,
     assetID,
     senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
     nonce: BigInt(nonce),
-    fee,
-    signatures,
+    fee: BigInt(fee),
+    signatures: [],
   };
 
-  if (moduleAssetType === MODULE_ASSETS_NAME_ID_MAP.transfer) {
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
     transaction.asset = {
       recipientAddress: extractAddress(recipientAddress),
       amount: BigInt(amount),
       data,
     };
+  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
+    transaction.asset = {
+      votes: tx.votes,
+    };
+  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
+    transaction.asset = {
+      unlockObjects: tx.unlockObjects,
+    };
+  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerDelegate) {
+    transaction.asset = {
+      username: tx.username,
+    };
+  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
+    transaction.asset = {
+      numberOfSignatures: tx.numberOfSignatures,
+      mandatoryKeys: tx.mandatoryKeys,
+      optionalKeys: tx.optionalKeys,
+    };
+  } else {
+    throw Error('Unknown transaction');
   }
 
   return transaction;
@@ -252,20 +278,21 @@ const createTransactionObject = (rawTransaction, moduleAssetType) => {
  */
 export const create = ({
   network,
-  moduleAssetType,
+  moduleAssetId,
   ...transactionObject
+// eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
   const { networkIdentifier } = network.networks.LSK;
   const {
-    passphrase, rawTransaction,
+    passphrase, ...rawTransaction
   } = transactionObject;
 
-  const schema = moduleAssetSchemas[moduleAssetType];
-  const transaction = createTransactionObject(rawTransaction, moduleAssetType);
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
 
   try {
     const signedTransaction = transactions.signTransaction(
-      schema, transaction, networkIdentifier, passphrase,
+      schema, transaction, Buffer.from(networkIdentifier, 'hex'), passphrase,
     );
     resolve(signedTransaction);
   } catch (error) {
@@ -282,29 +309,19 @@ export const create = ({
  * @param {string} network.address - the node address e.g. https://betanet-lisk.io
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
-export const broadcast = ({ signedTransaction, network }) => {
-  const transaction = {
-    ...signedTransaction,
-    id: signedTransaction.id.toString('hex'),
-    nonce: signedTransaction.nonce.toString(),
-    fee: signedTransaction.fee.toString(),
-    senderPublicKey: signedTransaction.senderPublicKey.toString('hex'),
-    signatures: signedTransaction.signatures.map(signature => signature.toString('hex')),
-    asset: {
-      ...signedTransaction.asset,
-      amount: signedTransaction.asset.amount.toString(),
-      recipientAddress: signedTransaction.asset.recipientAddress.toString('hex'),
-    },
-  };
+export const broadcast = ({ transaction, serviceUrl }) => {
+  const schema = selectSchema('2:0');
+  const binary = transactions.getBytes(schema, transaction);
+  const payload = binary.toString('hex');
 
   return new Promise(
     async (resolve, reject) => {
       try {
         const response = await http({
           method: 'POST',
-          baseUrl: network.LSK.serviceUrl,
-          path: '/api/v2/transactions​',
-          body: JSON.stringify(transaction), // @todo needs to be binary
+          baseUrl: serviceUrl,
+          path: '/api/v2/transactions',
+          body: { transaction: payload },
         });
 
         resolve(response);
@@ -355,13 +372,13 @@ export const getTransactionFee = async ({
   const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
   const {
-    moduleAssetType, ...rawTransaction
+    moduleAssetId, ...rawTransaction
   } = transaction;
 
-  const schema = moduleAssetSchemas[moduleAssetType];
-  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetType].maxFee;
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
 
-  const transactionObject = createTransactionObject(rawTransaction, moduleAssetType);
+  const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
 
   const minFee = transactions.computeMinFee(schema, {
     ...transactionObject,
