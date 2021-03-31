@@ -12,7 +12,11 @@ export default function Result({
 }) {
   let isCorrect = false;
   try {
-    isCorrect = cryptography.verifyMessageWithPublicKey(inputs);
+    isCorrect = cryptography.verifyMessageWithPublicKey({
+      publicKey: Buffer.from(inputs.publicKey, 'hex'),
+      signature: Buffer.from(inputs.signature, 'hex'),
+      message: inputs.message,
+    });
   } catch (e) {
     isCorrect = false;
   }
