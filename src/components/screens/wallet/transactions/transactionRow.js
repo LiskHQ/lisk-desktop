@@ -27,7 +27,7 @@ const TransactionRow = ({
   const isLSK = activeToken === tokenMap.LSK.key;
   const isPending = data.isPending;
   const senderAddress = data.sender.address;
-  const recipientAddress = data.asset.recipientAddress;
+  const recipientAddress = data.asset.recipient.address;
   const address = host === recipientAddress ? senderAddress : recipientAddress;
   const amount = getTxAmount(data);
 
