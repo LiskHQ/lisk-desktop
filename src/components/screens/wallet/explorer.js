@@ -19,7 +19,7 @@ const Wallet = ({
 }) => {
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
-  const isDelegate = !!account.data.dpos?.delegate;
+  const isDelegate = !!account.data.summary?.isDelegate;
 
   useEffect(() => {
     account.loadData();

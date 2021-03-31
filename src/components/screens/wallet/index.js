@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+
 import { parseSearchParams, addSearchParamsToUrl } from '@utils/searchParams';
 import { transactionsRetrieved } from '@actions';
 import { isEmpty } from '@utils/helpers';
@@ -23,7 +24,7 @@ const Wallet = ({ t, history }) => {
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const { confirmed, pending } = useSelector(selectTransactions);
-  const isDelegate = !!account.info[activeToken].dpos?.delegate;
+  const isDelegate = !!account.info[activeToken].summary?.isDelegate;
 
   useEffect(() => {
     if (!confirmed.length && account.info && !isEmpty(account.info)) {
