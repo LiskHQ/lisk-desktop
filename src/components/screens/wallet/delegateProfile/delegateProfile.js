@@ -23,22 +23,22 @@ import DelegateVotesView from './delegateVotesView';
 // };
 
 const DelegateProfile = ({
-  account, t, voters,
+  delegate, account, t, voters,
   // awaitingForgers, forgingTimes,
   lastBlockForged,
 }) => {
-  const { delegate } = account.dpos;
+  const { data } = delegate;
   useEffect(() => {
     voters.loadData();
   }, [account]);
 
   useEffect(() => {
-	if(delegate?.lastForgedHeight) {
-		lastBlockForged.loadData({ height: delegate.lastForgedHeight });
-	}
-  }, [delegate?.lastForgedHeight]);
+    if (data.dpos?.delegate?.lastForgedHeight) {
+      lastBlockForged.loadData({ height: data.dpos.delegate.lastForgedHeight });
+    }
+  }, [data.dpos?.delegate?.lastForgedHeight]);
 
-  if (!delegate) {
+  if (!data.dpos?.delegate) {
     return null;
   }
 
@@ -47,16 +47,16 @@ const DelegateProfile = ({
       <Box className={`${grid.row} ${styles.statsContainer} stats-container`}>
         <DetailsView
           t={t}
-          status={delegate?.status}
+          status={data.dpos?.delegate?.status}
           lastBlockForged={lastBlockForged.data.timestamp}
-          delegateWeight={delegate?.totalVotesReceived}
-          rank={delegate?.rank}
+          delegateWeight={data.dpos?.delegate?.totalVotesReceived}
+          rank={data.dpos?.delegate?.rank}
         />
         <PerformanceView
           t={t}
-          forgedBlocks={delegate?.forgedBlocks}
-          lastForgedBlocks={delegate?.lastForgedHeight}
-          consecutiveMissedBlocks={delegate?.consecutiveMissedBlocks}
+          productivity={data.dpos?.delegate?.productivity}
+          lastForgedBlocks={data.dpos?.delegate?.lastForgedHeight}
+          consecutiveMissedBlocks={data.dpos?.delegate?.consecutiveMissedBlocks}
           forgedLsk="-"
         />
       </Box>
