@@ -17,7 +17,7 @@ const apis = {
     apiUtil: (network, params) => getVoters({ network, params }),
     defaultData: [],
     getApiParams: (_, ownProps) => ({ address: ownProps.account.summary.address }),
-    transformResponse: response => (response.data.votes ? response.data.votes : []),
+    transformResponse: response => (response.data.votes ?? []),
   },
   lastBlockForged: {
     apiUtil: (network, params) => getBlocks({ network, params }),
