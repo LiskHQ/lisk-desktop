@@ -1,5 +1,5 @@
-import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchema } from '@constants';
-import { getSchema } from './api/transaction';
+import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
+import { getSchemas } from './api/transaction';
 
 const getModuleAssetSenderLabel = (t = str => str) => ({
   [MODULE_ASSETS_NAME_ID_MAP.transfer]: t('Sender'),
@@ -20,10 +20,10 @@ const getModuleAssetTitle = (t = str => str) => ({
 });
 
 
-const retrieveSchemas = (network) => {
-  Object.values(MODULE_ASSETS_NAME_ID_MAP).forEach(async (moduleAssetId) => {
-    const response = await getSchema({ params: { moduleAssetId }, network });
-    moduleAssetSchema[moduleAssetId] = response.data[0]?.schema;
+const retrieveSchemas = async (network) => {
+  const response = await getSchemas({ network });
+  response.data.forEach((data) => {
+    moduleAssetSchemas[data.moduleAssetId] = data.schema;
   });
 };
 

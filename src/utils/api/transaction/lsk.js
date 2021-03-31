@@ -4,7 +4,7 @@ import { transactions } from '@liskhq/lisk-client';
 import {
   tokenMap, MODULE_ASSETS_NAME_ID_MAP, minFeePerByte,
   DEFAULT_NUMBER_OF_SIGNATURES, DEFAULT_SIGNATURE_BYTE_SIZE,
-  MODULE_ASSETS_MAP, moduleAssetSchema,
+  MODULE_ASSETS_MAP, moduleAssetSchemas,
 } from '@constants';
 import { extractAddress } from '@utils/account';
 
@@ -275,7 +275,7 @@ export const create = ({
     passphrase, rawTransaction,
   } = transactionObject;
 
-  const schema = moduleAssetSchema[moduleAssetType];
+  const schema = moduleAssetSchemas[moduleAssetType];
   console.log('create', moduleAssetType);
   const transaction = createTransactionObject(rawTransaction, moduleAssetType);
 
@@ -374,7 +374,7 @@ export const getTransactionFee = async ({
     moduleAssetType, ...rawTransaction
   } = transaction;
 
-  const schema = moduleAssetSchema[moduleAssetType];
+  const schema = moduleAssetSchemas[moduleAssetType];
   const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetType].maxFee;
   console.log('getTransactionFee', moduleAssetType);
 
@@ -420,29 +420,18 @@ export const getTokenFromAddress = address => (
   regex.address.test(address) ? tokenMap.LSK.key : tokenMap.BTC.key
 );
 
-const getSchemaProps = ({ moduleAssetId, moduleAssetName }) => {
-  if (moduleAssetId) return { moduleAssetId };
-  if (moduleAssetName) return { moduleAssetName };
-  return {};
-};
-
 /**
- * Retrieves transaction schema.
+ * Retrieves transaction schemas.
  *
  * @param {Object} data
- * @param {String?} data.params.moduleAssetId - Module asset Id
- * @param {String?} data.params.moduleAssetName - Module asset Name
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getSchema = ({
-  params = {}, network, baseUrl,
-}) => http({
+export const getSchemas = ({ network, baseUrl }) => http({
   path: httpPaths.schemas,
-  params: getSchemaProps(params),
   network,
   baseUrl,
 });

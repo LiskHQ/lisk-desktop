@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchema } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
 import { getModuleAssetSenderLabels, retrieveSchemas } from './moduleAssets';
 import http from './api/http';
 import flushPromises from '../../test/unit-test-utils/flushPromises';
@@ -24,16 +24,23 @@ describe('Utils: moduleAssets', () => {
     });
 
     it('should rretrueve and set schema', async () => {
-      const expectedSchema = { id: 'id' };
-      http.mockImplementation(() => Promise.resolve({ data: [{ schema: expectedSchema }] }));
+      const schema = { properties: [] };
+      const data = [
+        { moduleAssetId: '2:0', schema },
+        { moduleAssetId: '4:0', schema },
+        { moduleAssetId: '5:0', schema },
+        { moduleAssetId: '5:1', schema },
+        { moduleAssetId: '5:2', schema },
+      ];
+      http.mockImplementation(() => Promise.resolve({ data }));
       retrieveSchemas();
       await flushPromises();
-      expect(moduleAssetSchema).toEqual({
-        '2:0': expectedSchema,
-        '4:0': expectedSchema,
-        '5:0': expectedSchema,
-        '5:1': expectedSchema,
-        '5:2': expectedSchema,
+      expect(moduleAssetSchemas).toEqual({
+        '2:0': schema,
+        '4:0': schema,
+        '5:0': schema,
+        '5:1': schema,
+        '5:2': schema,
       });
     });
   });

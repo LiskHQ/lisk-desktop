@@ -6,7 +6,7 @@ import {
   getRegisteredDelegates,
   getTxAmount,
   getTransactionFee,
-  getSchema,
+  getSchemas,
 } from './lsk';
 import http from '../http';
 import ws from '../ws';
@@ -309,21 +309,19 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('getSchema', () => {
+  describe('getSchemas', () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });
 
     it('Should call http with given params', () => {
-      getSchema({
+      getSchemas({
         network,
         baseUrl,
-        params: { moduleAssetId: '2:0' },
       });
 
       expect(http).toHaveBeenCalledWith({
         path: '/api/v2/transactions/schemas',
-        params: { moduleAssetId: '2:0' },
         network,
         baseUrl,
       });

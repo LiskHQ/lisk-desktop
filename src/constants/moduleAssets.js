@@ -30,15 +30,9 @@ const moduleAssetMap = {
   },
 };
 
-const moduleAssetSchema = {
-  [moduleAssetNameIdMap.transfer]: undefined,
-  [moduleAssetNameIdMap.unlockToken]: undefined,
-  [moduleAssetNameIdMap.voteDelegate]: undefined,
-  [moduleAssetNameIdMap.registerDelegate]: undefined,
-  [moduleAssetNameIdMap.registerMultisignatureGroup]: undefined,
-};
+const moduleAssetSchemas = {};
 
 const MODULE_ASSETS_NAME_ID_MAP = Object.freeze(moduleAssetNameIdMap);
 const MODULE_ASSETS_MAP = Object.freeze(moduleAssetMap);
 
-export { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP, moduleAssetSchema };
+export { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP, moduleAssetSchemas };
