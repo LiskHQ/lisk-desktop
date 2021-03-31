@@ -15,14 +15,19 @@ import NavigationBars from '@shared/navigationBars';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DialogHolder from '@toolbox/dialog/holder';
 import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@actions';
+import { retrieveSchemas } from '@utils/moduleAssets';
+import { selectServiceUrl } from '@store/selectors';
 import ThemeContext from '../contexts/theme';
 import styles from './app.css';
 import useIpc from '../hooks/useIpc';
 
+// eslint-disable-next-line max-statements
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
+  const network = useSelector(state => state.network);
+  const serviceUrl = useSelector(selectServiceUrl);
 
   useIpc(history);
 
@@ -32,6 +37,10 @@ const App = ({ history }) => {
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
   }, []);
+
+  useEffect(() => {
+    retrieveSchemas(network);
+  }, [serviceUrl]);
 
   const routesList = Object.values(routes);
   const routeObj = routesList.find(r => r.path === history.location.pathname) || {};

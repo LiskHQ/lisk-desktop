@@ -6,6 +6,7 @@ import {
   getRegisteredDelegates,
   getTxAmount,
   getTransactionFee,
+  getSchemas,
 } from './lsk';
 import http from '../http';
 import ws from '../ws';
@@ -305,6 +306,25 @@ describe('API: LSK Transactions', () => {
         selectedPriority,
       });
       expect(result.value).toEqual(10.00119);
+    });
+  });
+
+  describe('getSchemas', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('Should call http with given params', () => {
+      getSchemas({
+        network,
+        baseUrl,
+      });
+
+      expect(http).toHaveBeenCalledWith({
+        path: '/api/v2/transactions/schemas',
+        network,
+        baseUrl,
+      });
     });
   });
 });

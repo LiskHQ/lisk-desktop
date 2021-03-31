@@ -1,4 +1,5 @@
-import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
+import { getSchemas } from './api/transaction';
 
 const getModuleAssetSenderLabel = (t = str => str) => ({
   [MODULE_ASSETS_NAME_ID_MAP.transfer]: t('Sender'),
@@ -19,7 +20,12 @@ const getModuleAssetTitle = (t = str => str) => ({
 });
 
 
-const selectSchema = moduleAssetId => MODULE_ASSETS_MAP[moduleAssetId].schema;
+const retrieveSchemas = async (network) => {
+  const response = await getSchemas({ network });
+  response.data.forEach((data) => {
+    moduleAssetSchemas[data.moduleAssetId] = data.schema;
+  });
+};
 
 // eslint-disable-next-line import/prefer-default-export
-export { selectSchema, getModuleAssetSenderLabel, getModuleAssetTitle };
+export { retrieveSchemas, getModuleAssetSenderLabel, getModuleAssetTitle };

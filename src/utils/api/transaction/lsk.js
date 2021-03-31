@@ -4,9 +4,8 @@ import { transactions } from '@liskhq/lisk-client';
 import {
   tokenMap, MODULE_ASSETS_NAME_ID_MAP, minFeePerByte,
   DEFAULT_NUMBER_OF_SIGNATURES, DEFAULT_SIGNATURE_BYTE_SIZE,
-  MODULE_ASSETS_MAP,
+  MODULE_ASSETS_MAP, moduleAssetSchemas,
 } from '@constants';
-import { selectSchema } from '@utils/moduleAssets';
 import { extractAddress } from '@utils/account';
 
 import http from '../http';
@@ -22,6 +21,7 @@ const httpPaths = {
   transactions: `${httpPrefix}/transactions`,
   transaction: `${httpPrefix}/transactions`,
   transactionStats: `${httpPrefix}/transactions/statistics`,
+  schemas: `${httpPrefix}/transactions/schemas`,
 };
 
 const wsMethods = {
@@ -301,14 +301,14 @@ export const create = ({
     passphrase, ...rawTransaction
   } = transactionObject;
 
-  const schema = selectSchema(moduleAssetId);
-  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
+  const schema = moduleAssetSchemas[moduleAssetType];
+  console.log('create', moduleAssetType);
+  const transaction = createTransactionObject(rawTransaction, moduleAssetType);
 
   try {
     const signedTransaction = transactions.signTransaction(
       schema, transaction, Buffer.from(networkIdentifier, 'hex'), passphrase,
     );
-
     resolve(signedTransaction);
   } catch (error) {
     reject(error);
@@ -390,8 +390,9 @@ export const getTransactionFee = async ({
     moduleAssetId, ...rawTransaction
   } = transaction;
 
-  const schema = selectSchema(moduleAssetId);
-  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
+  const schema = moduleAssetSchemas[moduleAssetType];
+  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetType].maxFee;
+  console.log('getTransactionFee', moduleAssetType);
 
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
 
@@ -434,3 +435,19 @@ export const getTransactionFee = async ({
 export const getTokenFromAddress = address => (
   regex.address.test(address) ? tokenMap.LSK.key : tokenMap.BTC.key
 );
+
+/**
+ * Retrieves transaction schemas.
+ *
+ * @param {Object} data
+ * @param {String?} data.baseUrl - Lisk Service API url to override the
+ * existing ServiceUrl on the network param. We may use this to retrieve
+ * the details of an archived transaction.
+ * @param {Object} data.network - Network setting from Redux store
+ * @returns {Promise} http call
+ */
+export const getSchemas = ({ network, baseUrl }) => http({
+  path: httpPaths.schemas,
+  network,
+  baseUrl,
+});
