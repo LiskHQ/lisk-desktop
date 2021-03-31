@@ -37,7 +37,7 @@ const Item = ({
 );
 
 const PerformanceView = ({
-  t, productivity, lastForgedBlocks, forgedLsk, consecutiveMissedBlocks,
+  t, forgedBlocks, lastForgedBlocks, forgedLsk, consecutiveMissedBlocks,
 }) => (
   <Box className={`${grid['col-xs-12']} ${grid['col-md-8']} ${styles.performanceContainer} performance-container`}>
     <BoxHeader>
@@ -46,16 +46,16 @@ const PerformanceView = ({
     <Box className={`${grid.row} ${styles.content}`}>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
-          text={t('Productivity')}
-          value={productivity}
+          text={t('Last Forged Block')}
           icon="productivity"
+          value={lastForgedBlocks}
+          isLink
           className={`${styles.performanceIcon} ${styles.productivityIcon}`}
         />
         <Item
-          text={t('Last Forged Block')}
-          value={lastForgedBlocks}
+          text={t('Forged Blocks')}
+          value={forgedBlocks || '-'}
           icon="forgedBlocks"
-          isLink
           className={`${styles.performanceIcon} ${styles.forgedBlocksIcon}`}
         />
       </Box>
@@ -66,14 +66,12 @@ const PerformanceView = ({
           icon="missedBlocks"
           className={`${styles.performanceIcon} ${styles.missedBlocksIcon}`}
         />
-        {forgedLsk && (
-          <Item
-            text={t('Forged LSK')}
-            value={forgedLsk}
-            icon="forgedLsk"
-            className={`${styles.performanceIcon} ${styles.forgedLskIcon}`}
-          />
-        )}
+        <Item
+          text={t('Forged LSK')}
+          value={forgedLsk || '-'}
+          icon="forgedLsk"
+          className={`${styles.performanceIcon} ${styles.forgedLskIcon}`}
+        />
       </Box>
     </Box>
   </Box>

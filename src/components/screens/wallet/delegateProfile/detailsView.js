@@ -25,15 +25,13 @@ const DetailsView = ({
           <div className={styles.value}>{rank || '-'}</div>
         </div>
       </div>
-      {status && (
-        <div className={`${grid.row} ${styles.itemContainer}`}>
-          <Icon name="clockActive" className={styles.icon} />
-          <div className={`${grid.col} ${styles.item}`}>
-            <div className={styles.title}>Status</div>
-            <div className={styles.value}>{status}</div>
-          </div>
+      <div className={`${grid.row} ${styles.itemContainer}`}>
+        <Icon name="clockActive" className={styles.icon} />
+        <div className={`${grid.col} ${styles.item}`}>
+          <div className={styles.title}>Status</div>
+          <div className={styles.value}>{status}</div>
         </div>
-      )}
+      </div>
       <div className={`${grid.row} ${styles.itemContainer}`}>
         <Icon name="weight" className={styles.icon} />
         <div className={`${grid.col} ${styles.item}`}>

@@ -52,7 +52,7 @@ const DelegateProfile = ({
         />
         <PerformanceView
           t={t}
-          productivity={delegate?.productivity}
+          forgedBlocks={delegate?.forgedBlocks}
           lastForgedBlocks={delegate?.lastForgedHeight}
           consecutiveMissedBlocks={delegate?.consecutiveMissedBlocks}
           forgedLsk="-"
