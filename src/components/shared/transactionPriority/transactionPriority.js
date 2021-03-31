@@ -64,7 +64,7 @@ const TransactionPriority = ({
 
   let maxFee = 0;
   if (token === tokenMap.LSK.key) {
-    maxFee = MODULE_ASSETS_MAP[moduleAssetType].maxFee;
+    maxFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
   }
 
   const onClickPriority = (e) => {

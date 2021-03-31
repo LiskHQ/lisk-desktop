@@ -301,9 +301,8 @@ export const create = ({
     passphrase, ...rawTransaction
   } = transactionObject;
 
-  const schema = moduleAssetSchemas[moduleAssetType];
-  console.log('create', moduleAssetType);
-  const transaction = createTransactionObject(rawTransaction, moduleAssetType);
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
 
   try {
     const signedTransaction = transactions.signTransaction(
@@ -390,9 +389,8 @@ export const getTransactionFee = async ({
     moduleAssetId, ...rawTransaction
   } = transaction;
 
-  const schema = moduleAssetSchemas[moduleAssetType];
-  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetType].maxFee;
-  console.log('getTransactionFee', moduleAssetType);
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
 
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
 

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
-import { tokenMap } from '@constants';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '../../../toolbox/box';
@@ -94,7 +94,7 @@ const getVoteStats = votes =>
     }, { added: {}, edited: {}, removed: {} });
 
 const token = tokenMap.LSK.key;
-const moduleAssetId = 'vote';
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
 
 // eslint-disable-next-line max-statements
 const Editor = ({
