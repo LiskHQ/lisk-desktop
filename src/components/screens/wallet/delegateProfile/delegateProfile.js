@@ -33,7 +33,9 @@ const DelegateProfile = ({
   }, [account]);
 
   useEffect(() => {
-    lastBlockForged.loadData({ height: delegate?.lastForgedHeight });
+	if(delegate?.lastForgedHeight) {
+		lastBlockForged.loadData({ height: delegate.lastForgedHeight });
+	}
   }, [delegate?.lastForgedHeight]);
 
   if (!delegate) {
