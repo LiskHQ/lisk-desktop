@@ -13,7 +13,7 @@ import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './selectNameAndFee.css';
 
 const token = tokenMap.LSK.key;
-const txType = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
 
 // eslint-disable-next-line max-statements
 const SelectNameAndFee = ({ account, ...props }) => {
@@ -40,7 +40,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
     account,
     priorityOptions,
     transaction: {
-      txType,
+      moduleAssetId,
       nonce: account.sequence?.nonce,
       senderPublicKey: account.summary?.publicKey,
       username: state.nickname,
@@ -184,7 +184,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
           fee={fee}
           minFee={minFee.value}
           customFee={state.customFee ? state.customFee.value : undefined}
-          txType={txType}
+          moduleAssetId={moduleAssetId}
           setCustomFee={changeCustomFee}
           priorityOptions={priorityOptions}
           selectedPriority={selectedPriority.selectedIndex}

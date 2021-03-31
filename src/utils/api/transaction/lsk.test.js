@@ -250,7 +250,7 @@ describe('API: LSK Transactions', () => {
       nonce: '6',
       recipient: '16313739661670634666L',
       senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-      txType: 'transfer',
+      moduleAssetId: 'transfer',
     };
     const selectedPriority = {
       value: 0,
@@ -283,7 +283,7 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of vote tx', async () => {
       const voteTxData = {
-        txType: 'vote',
+        moduleAssetId: 'vote',
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         votes: [],
@@ -297,7 +297,7 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of register delegate tx', async () => {
       const voteTxData = {
-        txType: 'registerDelegate',
+        moduleAssetId: 'registerDelegate',
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
       };
