@@ -20,6 +20,7 @@ const Wallet = ({
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const isDelegate = !!account.data.summary?.isDelegate;
+  const address = selectSearchParamValue(history.location.search, 'address');
 
   useEffect(() => {
     account.loadData();
@@ -42,12 +43,12 @@ const Wallet = ({
           discreetMode={discreetMode}
           tabName={t('Transactions')}
           tabId="transactions"
-          address={selectSearchParamValue(history.location.search, 'address')}
+          address={address}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
-            address={selectSearchParamValue(history.location.search, 'address')}
+            address={address}
             tabName={t('Voting')}
             tabId="voting"
           />
