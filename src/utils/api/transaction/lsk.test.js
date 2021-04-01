@@ -201,7 +201,7 @@ describe('API: LSK Transactions', () => {
         asset: { amount: 100000000 },
       };
 
-      expect(getTxAmount(tx)).toEqual(tx.amount);
+      expect(getTxAmount(tx)).toEqual(tx.asset.amount);
     });
 
     it('should return amount of votes in Beddows', () => {
@@ -250,7 +250,7 @@ describe('API: LSK Transactions', () => {
       nonce: '6',
       recipient: '16313739661670634666L',
       senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-      moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.transfer,
+      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     };
     const selectedPriority = {
       value: 0,
@@ -283,7 +283,7 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of vote tx', async () => {
       const voteTxData = {
-        moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         votes: [],
@@ -297,7 +297,7 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of register delegate tx', async () => {
       const voteTxData = {
-        moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
       };

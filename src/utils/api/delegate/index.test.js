@@ -34,7 +34,7 @@ describe('API: LSK Delegates', () => {
 
     it('should return delegate data', async () => {
       const expectedResponse = { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', username: 'del1', data: {} };
-      const params = { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' };
+      const params = { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', isDelegate: true };
       setApiResponseData(expectedResponse, http);
       await expect(delegate.getDelegate({ params, network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
@@ -47,7 +47,7 @@ describe('API: LSK Delegates', () => {
 
     it('should return delegate data with username when it is passed', async () => {
       const expectedResponse = { username: 'del1', data: {} };
-      const params = { username: 'del1' };
+      const params = { username: 'del1', isDelegate: true };
       setApiResponseData(expectedResponse, http);
       await expect(delegate.getDelegate({ params, network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
@@ -67,13 +67,13 @@ describe('API: LSK Delegates', () => {
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
         path: delegate.httpPaths.delegates,
-        params: { address },
+        params: { address, isDelegate: true },
         network,
       });
     });
 
     it('should set baseUrl', () => {
-      const params = { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' };
+      const params = { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', isDelegate: true };
       delegate.getDelegate({ params, baseUrl, network });
       expect(http).toHaveBeenCalledWith({
         baseUrl,
@@ -145,7 +145,7 @@ describe('API: LSK Delegates', () => {
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
         path: delegate.httpPaths.delegates,
-        params,
+        params: { ...params, isDelegate: true },
         network,
       });
     });
@@ -165,7 +165,7 @@ describe('API: LSK Delegates', () => {
       expect(http).toHaveBeenCalledWith({
         baseUrl,
         path: delegate.httpPaths.delegates,
-        params: { limit: 10, offset: 2 },
+        params: { limit: 10, offset: 2, isDelegate: true },
         network,
       });
     });

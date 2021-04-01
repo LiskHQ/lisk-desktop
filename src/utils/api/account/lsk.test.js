@@ -13,7 +13,7 @@ describe('API: LSK Account', () => {
     },
   };
   const baseUrl = 'http://custom-basse-url.com/';
-  const path = '/api/v1/accounts';
+  const path = '/api/v2/accounts';
 
   beforeEach(() => jest.clearAllMocks());
 
@@ -89,9 +89,8 @@ describe('API: LSK Account', () => {
 
   describe('getAccount', () => {
     const {
-      address,
-      username,
-      publicKey,
+      summary: { address, publicKey },
+      dpos: { delegate: { username } },
       passphrase,
     } = accounts.delegate;
 
