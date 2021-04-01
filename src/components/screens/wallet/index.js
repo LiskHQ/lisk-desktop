@@ -12,8 +12,8 @@ import {
   selectSettings,
   selectTransactions,
 } from '@store/selectors';
+import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
 import Overview from './overview';
-import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
@@ -27,8 +27,8 @@ const Wallet = ({ t, history }) => {
   const isDelegate = !!account.info[activeToken].summary?.isDelegate;
 
   useEffect(() => {
-    if (!confirmed.length && account.info && !isEmpty(account.info)) {
-      const { address } = account.info[activeToken];
+    const { address } = account?.info[activeToken]?.summary;
+    if (!confirmed.length && address) {
       dispatch(transactionsRetrieved({ address }));
     }
   }, [account.info]);
