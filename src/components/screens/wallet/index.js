@@ -24,10 +24,9 @@ const Wallet = ({ t, history }) => {
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const { confirmed, pending } = useSelector(selectTransactions);
-  const isDelegate = !!account.info[activeToken].summary?.isDelegate;
+  const { isDelegate, address } = account.info[activeToken].summary;
 
   useEffect(() => {
-    const { address } = account?.info[activeToken]?.summary;
     if (!confirmed.length && address) {
       dispatch(transactionsRetrieved({ address }));
     }
@@ -59,12 +58,12 @@ const Wallet = ({ t, history }) => {
           discreetMode={discreetMode}
           tabName={t('Transactions')}
           tabId="Transactions"
-          address={account.info[activeToken].address}
+          address={address}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
-            address={account.info[activeToken].address}
+            address={address}
             tabName={t('Votes')}
             tabId="votes"
           />
