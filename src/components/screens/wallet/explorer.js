@@ -19,7 +19,7 @@ const Wallet = ({
 }) => {
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
-  const isDelegate = !!account.data.summary?.isDelegate;
+  const isDelegate = account.data.summary?.isDelegate;
   const address = selectSearchParamValue(history.location.search, 'address');
 
   useEffect(() => {
