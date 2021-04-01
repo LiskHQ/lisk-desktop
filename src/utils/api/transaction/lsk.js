@@ -308,7 +308,7 @@ export const create = ({
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = ({ transaction, serviceUrl }) => {
-  const schema = selectSchema('2:0');
+  const schema = moduleAssetSchemas[transaction.moduleAssetId];
   const binary = transactions.getBytes(schema, transaction);
   const payload = binary.toString('hex');
 
@@ -428,8 +428,7 @@ export const getTokenFromAddress = address => (
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getSchemas = ({ network, baseUrl }) => http({
+export const getSchemas = ({ baseUrl }) => http({
   path: httpPaths.schemas,
-  network,
   baseUrl,
 });
