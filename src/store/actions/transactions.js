@@ -48,18 +48,18 @@ export const transactionsRetrieved = ({
   filters = {},
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.transactionsRetrieved));
+
   const { network, settings } = getState();
   const token = settings.token.active;
 
-  getTransactions({
-    network,
-    params: {
-      address,
-      ...filters,
-      limit,
-      offset,
-    },
-  }, token)
+  const params = {
+    address,
+    ...filters,
+    limit,
+    offset,
+  };
+
+  getTransactions({ network, params }, token)
     .then((response) => {
       dispatch({
         type: actionTypes.transactionsRetrieved,
@@ -105,20 +105,31 @@ export const transactionCreated = data => async (dispatch, getState) => {
   } = getState();
   const activeToken = settings.token.active;
 
+  const passphrase = account.passphrase;
+  const nonce = account.info.LSK.sequence.nonce;
+  const senderPublicKey = account.info.LSK.summary.publicKey;
+
+  const params = {
+    ...data,
+    senderPublicKey,
+    passphrase,
+    nonce,
+    network,
+    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+  };
+
   const [error, tx] = account.loginType === loginTypes.passphrase.code
-    ? await to(create(
-      { ...data, network, moduleAssetType: MODULE_ASSETS_NAME_ID_MAP.transfer },
-      activeToken,
-    ))
+    ? await to(create(params, activeToken))
     : await to(signSendTransaction(account, data));
+
   if (error || (account.loginType !== loginTypes.passphrase.code && !tx.signatures)) {
-    return dispatch({
+    dispatch({
       type: actionTypes.transactionCreatedError,
       data: error,
     });
   }
 
-  return dispatch({
+  dispatch({
     type: actionTypes.transactionCreatedSuccess,
     data: tx,
   });
@@ -138,21 +149,16 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
   async (dispatch, getState) => {
     const { network, settings } = getState();
     const activeToken = settings.token.active;
+    const serviceUrl = network.networks[activeToken].serviceUrl;
 
     const [error] = await to(broadcast(
-      {
-        transaction,
-        network: {
-          address: network.networks[activeToken].nodeUrl,
-          name: network.name,
-        },
-      },
+      { transaction, serviceUrl },
       activeToken,
     ));
 
     callback({ success: !error, error, transaction });
     if (error) {
-      return dispatch({
+      dispatch({
         type: actionTypes.broadcastedTransactionError,
         data: {
           error,
@@ -175,5 +181,5 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
       }));
     }
 
-    return dispatch(passphraseUsed(new Date()));
+    dispatch(passphraseUsed(new Date()));
   };
