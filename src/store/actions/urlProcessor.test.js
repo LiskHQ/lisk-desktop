@@ -3,7 +3,7 @@ import setVotesByLaunchProtocol from './urlProcessor';
 import { voteEdited } from './voting';
 
 jest.mock('@api/account', () => ({
-  getAccount: jest.fn().mockImplementation(data => Promise.resolve({ address: '12L', username: data.username })),
+  getAccount: jest.fn().mockImplementation(data => Promise.resolve({ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: data.username })),
   getAccounts: jest.fn(),
 }));
 
@@ -35,14 +35,14 @@ describe('setVotesByLaunchProtocol', () => {
 
   it('Should dispatch voteEdited with a single username in the query params', async () => {
     const data = [{
-      address: '12L',
+      address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
       amount: '',
       username: 'genesis_5',
     }];
     accounts.getAccounts.mockImplementation(() => Promise.resolve({ data }));
     await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=genesis_5')(dispatch, getState);
     const votes = ['genesis_5']
-      .map(username => ({ address: '12L', username, amount: '' }));
+      .map(username => ({ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username, amount: '' }));
     expect(dispatch).toHaveBeenCalledWith(voteEdited(votes));
   });
 
@@ -60,7 +60,7 @@ describe('setVotesByLaunchProtocol', () => {
   it('Should dispatch voteEdited with an array of valid usernames in query params', async () => {
     const usernameList = ['genesis_5', 'genesis_6', 'genesis_7', 'genesis_3', 'genesis_4'];
     const accountsList = usernameList.map((username, index) => ({
-      address: `12${index}L`,
+      address: `lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y9${index}`,
       amount: '',
       username,
     }));

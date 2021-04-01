@@ -11,7 +11,7 @@ describe('VoteItem', () => {
       vote: {
         confirmed: '10',
       },
-      address: '1L',
+      address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
       truncate: true,
     };
     const wrapper = mount(<VoteItem {...props} />);

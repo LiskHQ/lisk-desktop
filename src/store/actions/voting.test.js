@@ -93,7 +93,7 @@ describe('actions: voting', () => {
 
   describe('votesRetrieved', () => {
     it('should call getVotes and dispatch vote results', async () => {
-      const votes = [{ address: '12L', username: 'genesis', amount: 1e8 }];
+      const votes = [{ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: 'genesis', amount: 1e8 }];
       const expectedAction = {
         type: actionTypes.votesRetrieved,
         data: votes,
