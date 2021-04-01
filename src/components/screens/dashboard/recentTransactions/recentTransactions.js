@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getActiveTokenAccount } from '@utils/account';
+
+import { selectAccount } from '@store/selectors';
 import { routes, tokenMap } from '@constants';
-import { SecondaryButton } from '../../../toolbox/buttons';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxEmptyState from '../../../toolbox/box/emptyState';
-import Icon from '../../../toolbox/icon';
+import { SecondaryButton } from '@toolbox/buttons';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxEmptyState from '@toolbox/box/emptyState';
+import Icon from '@toolbox/icon';
+import Table from '@toolbox/table';
 import styles from './recentTransactions.css';
-import Table from '../../../toolbox/table';
 import header from './tableHeader';
 import TransactionRow from './transactionRow';
 
@@ -35,18 +36,17 @@ export const NotSignedIn = withTranslation()(({ t }) => (
 ));
 
 const RecentTransactions = ({ className, t, transactions }) => {
-  const account = useSelector(state => getActiveTokenAccount(state));
+  const account = useSelector(selectAccount);
   const [isLoaded, setLoaded] = useState(!!transactions.data.length);
-  // const bookmarks = useSelector(state => state.bookmarks);
   const settings = useSelector(state => state.settings);
   const activeToken = tokenMap[settings.token.active];
 
   useEffect(() => {
-    if (account.passphrase && !isLoaded && !transactions.data.length) {
+    if (!!account.info && account.info[activeToken] && !isLoaded && !transactions.data.length) {
       setLoaded(true);
       transactions.loadData();
     }
-  }, [account]);
+  }, [account.info]);
 
   return (
     <Box

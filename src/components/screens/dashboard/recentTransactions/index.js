@@ -9,8 +9,7 @@ export default withData({
     apiUtil: (network, { token, ...params }) => getTransactions({ network, params }, token),
     getApiParams: (state) => {
       const token = state.settings.token.active;
-      const address = state.account.info && state.account.info[token]
-        ? state.account.info[token].address : '';
+      const address = state.account.info ? state.account.info[token].summary.address : '';
       return {
         token,
         address,
