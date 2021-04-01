@@ -22,9 +22,9 @@ describe('unlock transaction Status', () => {
     sequence: { nonce: '178' },
   };
   const voting = {
-    'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11': { confirmed: 500000000000 },
-    'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12': { confirmed: 3000000000 },
-    'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13': { confirmed: 2000000000 },
+    lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 500000000000 },
+    lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 3000000000 },
+    lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: { confirmed: 2000000000 },
   };
 
   const currentBlockHeight = 5000;
@@ -32,7 +32,7 @@ describe('unlock transaction Status', () => {
   const props = {
     t: key => key,
     lockedInVotes: calculateBalanceLockedInVotes(voting),
-    unlockableBalance: calculateUnlockableBalance(account.unlocking, currentBlockHeight),
+    unlockableBalance: calculateUnlockableBalance(account.dpos.unlocking, currentBlockHeight),
     currentBlockHeight,
     account,
   };
@@ -48,15 +48,17 @@ describe('unlock transaction Status', () => {
   it('renders properly when contains selfvotes', () => {
     const customAccount = {
       ...account,
-      unlocking: [
-        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-        { amount: '3000000000', height: { start: 2500, end: 30500 }, delegateAddress: accounts.genesis.summary.address },
-        { amount: '3000000000', height: { start: 2900, end: 30900 }, delegateAddress: accounts.genesis.summary.address },
-      ],
+      dpos: {
+        unlocking: [
+          { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+          { amount: '3000000000', height: { start: 2500, end: 30500 }, delegateAddress: accounts.genesis.summary.address },
+          { amount: '3000000000', height: { start: 2900, end: 30900 }, delegateAddress: accounts.genesis.summary.address },
+        ],
+      },
     };
     const customVoting = {
-      'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11': { confirmed: 500000000000 },
-      'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12': { confirmed: 2000000000 },
+      lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 500000000000 },
+      lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 2000000000 },
       [accounts.genesis.summary.address]: { confirmed: 9000000000000 },
     };
 
@@ -64,7 +66,10 @@ describe('unlock transaction Status', () => {
       ...props,
       account: customAccount,
       lockedInVotes: calculateBalanceLockedInVotes(customVoting),
-      unlockableBalance: calculateUnlockableBalance(customAccount.unlocking, currentBlockHeight),
+      unlockableBalance: calculateUnlockableBalance(
+        customAccount.dpos.unlocking,
+        currentBlockHeight,
+      ),
       currentBlockHeight,
     };
 
