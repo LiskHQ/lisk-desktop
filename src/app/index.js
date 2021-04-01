@@ -39,7 +39,9 @@ const App = ({ history }) => {
   }, []);
 
   useEffect(() => {
-    retrieveSchemas(network);
+    if (serviceUrl) {
+      retrieveSchemas({ serviceUrl });
+    }
   }, [serviceUrl]);
 
   const routesList = Object.values(routes);

@@ -430,8 +430,7 @@ export const getTokenFromAddress = address => (
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getSchemas = ({ network, baseUrl }) => http({
+export const getSchemas = ({ baseUrl }) => http({
   path: httpPaths.schemas,
-  network,
   baseUrl,
 });
