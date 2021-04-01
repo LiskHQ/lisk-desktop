@@ -95,7 +95,7 @@ Calendar.propTypes = {
   maxDate: PropTypes.string,
 };
 
-/* istanbul ignore next */
+/* istanbul ignore next 
 Calendar.defaultProps = {
   locale: 'en',
   date: moment().format('DD.MM.YY'),
@@ -103,6 +103,6 @@ Calendar.defaultProps = {
   onDateSelected: () => null,
   minDate: '',
   maxDate: '',
-};
+};*/
 
 export default Calendar;

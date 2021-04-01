@@ -74,10 +74,10 @@ describe('Block api module', () => {
         getTime: () => 100000000,
       }));
       const params = {
-        addressList: ['1059876081639179984L', '2059876081639179984L'],
+        addressList: ['lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99'],
         dateFrom: '02.02.2021',
         dateTo: '02.02.2021',
-        generatorAddress: '5059876081639179984L',
+        generatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y33',
         limit: 50,
         offset: 100,
         sort: 'height:desc',

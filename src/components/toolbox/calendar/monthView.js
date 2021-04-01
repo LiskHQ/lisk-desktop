@@ -140,18 +140,18 @@ MonthView.propTypes = {
   ]).isRequired,
 };
 
-/* istanbul ignore next */
+/* istanbul ignore next 
 MonthView.defaultProps = {
   isShown: false,
   setCurrentView: () => null,
   onDateSelected: () => null,
   setShowingDate: () => null,
-  selectedDate: moment().format('DD.MM.YY'),
+  //selectedDate: moment().format('DD.MM.YY'),
   dateFormat: 'DD.MM.YY',
   minDate: '',
   maxDate: '',
   locale: 'en',
-  showingDate: moment(),
-};
+  //showingDate: moment(),
+};*/
 
 export default MonthView;

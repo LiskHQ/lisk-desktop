@@ -115,7 +115,7 @@ YearView.propTypes = {
   showingDate: PropTypes.instanceOf(moment).isRequired,
 };
 
-/* istanbul ignore next */
+/* istanbul ignore next 
 YearView.defaultProps = {
   isShown: false,
   setCurrentView: () => null,
@@ -126,6 +126,6 @@ YearView.defaultProps = {
   maxDate: '',
   locale: 'en',
   showingDate: moment(),
-};
+};*/
 
 export default YearView;
