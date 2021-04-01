@@ -26,7 +26,6 @@ const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
-  const network = useSelector(state => state.network);
   const serviceUrl = useSelector(selectServiceUrl);
 
   useIpc(history);
