@@ -1,5 +1,5 @@
 import {
-  accountDataUpdated, transactionsRetrieved, settingsUpdated,
+  accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved,
 } from '@actions';
 
 import { tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
@@ -9,6 +9,14 @@ import * as transactionApi from '@api/transaction';
 jest.mock('@api/transaction', () => ({
   getTransactions: jest.fn(),
 }));
+
+jest.mock('@actions', () => ({
+  accountDataUpdated: jest.fn(),
+  transactionsRetrieved: jest.fn(),
+  settingsUpdated: jest.fn(),
+  votesRetrieved: jest.fn(),
+}));
+
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {
@@ -94,9 +102,6 @@ describe('Account middleware', () => {
   };
 
   jest.useFakeTimers();
-  // jest.spyOn(transactionsActions, 'transactionsRetrieved');
-  // const accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
-  const accountDataUpdatedSpy = {};
   window.Notification = () => { };
   const windowNotificationSpy = jest.spyOn(window, 'Notification');
 
@@ -152,7 +157,7 @@ describe('Account middleware', () => {
       const promise = middleware(store)(next);
       promise(newBlockCreated).then(() => {
         jest.runOnlyPendingTimers();
-        expect(accountDataUpdatedSpy).toHaveBeenCalledWith({
+        expect(accountDataUpdated).toHaveBeenCalledWith({
           account: currentState.account,
           transactions: currentState.transactions,
         });
@@ -185,7 +190,7 @@ describe('Account middleware', () => {
       const promise = middleware(store)(next);
       promise(newBlockCreated).then(() => {
         jest.runOnlyPendingTimers();
-        expect(accountDataUpdatedSpy).toHaveBeenCalledWith({
+        expect(accountDataUpdated).toHaveBeenCalledWith({
           account: currentState.account,
           transactions: currentState.transactions,
         });
@@ -207,11 +212,9 @@ describe('Account middleware', () => {
 
   describe('on transactionsRetrieved', () => {
     it('should dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
-      // const actionSpy = jest.spyOn(votingActions, 'votesRetrieved');
-      const actionSpy = () => {};
       transactionsRetrievedAction.data.confirmed[0].type = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
       middleware(store)(next)(transactionsRetrievedAction);
-      expect(actionSpy).toHaveBeenCalled();
+      expect(votesRetrieved).toHaveBeenCalled();
     });
   });
 
