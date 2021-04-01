@@ -30,7 +30,7 @@ describe('Request PIN Component', () => {
   };
   const pin = '7951';
   const pinPositions = '0246';
-  const publicKey = accounts.genesis.publicKey;
+  const publicKey = accounts.genesis.summary.publicKey;
 
   beforeEach(() => {
     wrapper = mount(<RequestPin {...props} />);

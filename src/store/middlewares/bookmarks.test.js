@@ -33,7 +33,7 @@ describe('Middleware: Bookmarks', () => {
       data: { account: { ...accounts.genesis, title: 'genesiss' } },
     }, {
       type: actionTypes.bookmarkRemoved,
-      data: { address: accounts.genesis.address },
+      data: { address: accounts.genesis.summary.address },
     }];
 
     actions.forEach((action, index) => {

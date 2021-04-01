@@ -81,8 +81,8 @@ describe('actions: account', () => {
           passphrase: accounts.genesis.passphrase,
           info: {
             LSK: {
-              address: accounts.genesis.address,
-              publicKey: accounts.genesis.publicKey,
+              address: accounts.genesis.summary.address,
+              publicKey: accounts.genesis.summary.publicKey,
               balance: 0,
             },
           },

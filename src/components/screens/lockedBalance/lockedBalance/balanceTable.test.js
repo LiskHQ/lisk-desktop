@@ -50,14 +50,14 @@ describe('unlock transaction Status', () => {
       ...account,
       unlocking: [
         { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-        { amount: '3000000000', height: { start: 2500, end: 30500 }, delegateAddress: accounts.genesis.address },
-        { amount: '3000000000', height: { start: 2900, end: 30900 }, delegateAddress: accounts.genesis.address },
+        { amount: '3000000000', height: { start: 2500, end: 30500 }, delegateAddress: accounts.genesis.summary.address },
+        { amount: '3000000000', height: { start: 2900, end: 30900 }, delegateAddress: accounts.genesis.summary.address },
       ],
     };
     const customVoting = {
       'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11': { confirmed: 500000000000 },
       'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12': { confirmed: 2000000000 },
-      [accounts.genesis.address]: { confirmed: 9000000000000 },
+      [accounts.genesis.summary.address]: { confirmed: 9000000000000 },
     };
 
     const customProps = {

@@ -59,9 +59,9 @@ describe('API: LSK Delegates', () => {
     });
 
     it('should return delegate data with address when publicKey is passed', async () => {
-      const address = accounts.genesis.address;
+      const address = accounts.genesis.summary.address;
       const expectedResponse = { address: extractAddress(address), data: {} };
-      const params = { publicKey: accounts.genesis.publicKey };
+      const params = { publicKey: accounts.genesis.summary.publicKey };
       setApiResponseData(expectedResponse, http);
       await expect(delegate.getDelegate({ params, network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({

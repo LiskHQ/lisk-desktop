@@ -10,13 +10,13 @@ import accounts from '../../../test/constants/accounts';
 
 describe('Reducer: bookmarks(state, action)', () => {
   const account = {
-    address: accounts.genesis.address,
-    title: accounts.genesis.address,
-    publicKey: accounts.genesis.publicKey,
+    address: accounts.genesis.summary.address,
+    title: accounts.genesis.summary.address,
+    publicKey: accounts.genesis.summary.publicKey,
   };
   const account2 = {
     address: accounts.delegate.address,
-    title: accounts.genesis.address,
+    title: accounts.genesis.summary.address,
     publicKey: accounts.delegate.publicKey,
   };
 

@@ -19,18 +19,18 @@ describe('Utils: Account', () => {
   describe('extractAddress', () => {
     it('should return the account address from given passphrase', () => {
       const passphrase = 'field organ country moon fancy glare pencil combine derive fringe security pave';
-      const derivedAddress = '440670704090200331L';
+      const derivedAddress = 'lskx7jt85m5ro7u9c7fhteuat95gjtqqxwk3276up';
       expect(extractAddress(passphrase)).toEqual(derivedAddress);
     });
 
     it('should return the account address from given public key', () => {
       const publicKey = 'a89751689c446067cc2107ec2690f612eb47b5939d5570d0d54b81eafaf328de';
-      const derivedAddress = '440670704090200331L';
+      const derivedAddress = 'lskx7jt85m5ro7u9c7fhteuat95gjtqqxwk3276up';
       expect(extractAddress(publicKey)).toEqual(derivedAddress);
     });
 
     it('should return false if no param passed to it', () => {
-      expect(extractAddress()).toEqual(false);
+      expect(extractAddress()).toEqual(undefined);
     });
   });
 

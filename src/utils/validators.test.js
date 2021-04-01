@@ -10,12 +10,12 @@ describe('Validate Address', () => {
   });
 
   it('Should validate LSK address', () => {
-    expect(validateAddress('LSK', accounts.genesis.address)).toBe(0);
+    expect(validateAddress('LSK', accounts.genesis.summary.address)).toBe(0);
     expect(validateAddress('LSK', '12345')).toBe(1);
   });
 
   it('Should validate BTC address', () => {
-    expect(validateAddress('BTC', accounts.genesis.address)).toBe(1);
+    expect(validateAddress('BTC', accounts.genesis.summary.address)).toBe(1);
   });
 });
 
@@ -23,7 +23,7 @@ describe('Validate Public Key', () => {
   const invalidPublicKey = '35c6b25520fc868b56c83fed6e1nduioasuz9qw84a57f';
 
   it('Should return 0 if public key is valid', () => {
-    expect(validateLSKPublicKey(accounts.genesis.publicKey)).toBe(0);
+    expect(validateLSKPublicKey(accounts.genesis.summary.publicKey)).toBe(0);
   });
 
   it('Should return 1 if public key is invalid', () => {

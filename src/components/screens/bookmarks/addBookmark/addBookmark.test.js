@@ -33,7 +33,7 @@ describe('Add a new bookmark component', () => {
     history: {
       push: jest.fn(),
       location: {
-        search: `?address=${accounts.genesis.address}L&modal=addBookmark&formAddress=${accounts.genesis.address}&label=&isDelegate=false`,
+        search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isDelegate=false`,
       },
     },
     account: {
@@ -45,7 +45,7 @@ describe('Add a new bookmark component', () => {
   };
   const addresses = {
     BTC: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
-    LSK: accounts.genesis.address,
+    LSK: accounts.genesis.summary.address,
   };
 
   let wrapper;

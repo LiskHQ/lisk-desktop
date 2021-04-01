@@ -13,7 +13,7 @@ describe('RequestLsk', () => {
   let wrapper;
 
   const props = {
-    address: accounts.genesis.address,
+    address: accounts.genesis.summary.address,
     t: v => v,
   };
   const routeConfig = {

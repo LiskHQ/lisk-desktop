@@ -17,7 +17,7 @@ describe('Request', () => {
     account: {
       info: {
         LSK: {
-          address: accounts.genesis.address,
+          address: accounts.genesis.summary.address,
         },
         BTC: {
           address: '16Qp9op3fTESTBTCACCOUNTv52ghRzYreUuQ',

@@ -9,7 +9,7 @@ import Votes from './votes';
 describe.skip('Votes Tab Component', () => {
   let wrapper;
   const props = {
-    address: accounts.genesis.address,
+    address: accounts.genesis.summary.address,
     history: { push: jest.fn() },
     votes: {
       data: [],

@@ -28,7 +28,7 @@ Then(/^I should see incoming transaction in table$/, function () {
 });
 
 Then(/^I should not see incoming transaction in table$/, function () {
-  cy.get(ss.transactionsTable).contains(accounts.genesis.address).should('not.exist');
+  cy.get(ss.transactionsTable).contains(accounts.genesis.summary.address).should('not.exist');
 });
 
 Then(/^I click filter incoming$/, function () {

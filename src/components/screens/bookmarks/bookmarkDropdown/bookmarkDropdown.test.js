@@ -7,14 +7,14 @@ describe('Bookmark Component', () => {
   let wrapper;
 
   const props = {
-    address: accounts.genesis.address,
+    address: accounts.genesis.summary.address,
     bookmarks: { LSK: [], BTC: [] },
     balance: accounts.genesis.balance,
     isBookmark: false,
     bookmarkAdded: jest.fn(),
     bookmarkRemoved: jest.fn(),
     token: 'LSK',
-    publicKey: accounts.genesis.publicKey,
+    publicKey: accounts.genesis.summary.publicKey,
     t: v => v,
   };
 
@@ -54,7 +54,7 @@ describe('Bookmark Component', () => {
           address: props.address,
           title: evt.target.value,
           isDelegate: false,
-          publicKey: accounts.genesis.publicKey,
+          publicKey: accounts.genesis.summary.publicKey,
         },
         token: props.token,
       };

@@ -60,7 +60,7 @@ const edited = {
 
 const props = {
   t: s => s,
-  account: { passphrase: '', info: { LSK: { publickKey: '' } } },
+  account: { passphrase: '', info: { LSK: { publicKey: '' } } },
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
   transactions: { transactionsCreatedFailed: [], transactionsCreated: [] },
