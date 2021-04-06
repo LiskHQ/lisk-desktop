@@ -27,10 +27,8 @@ const Wallet = ({ t, history }) => {
   const { isDelegate, address } = account.info[activeToken].summary;
 
   useEffect(() => {
-    if (!confirmed.length && address) {
-      dispatch(transactionsRetrieved({ address }));
-    }
-  }, [account.info]);
+    dispatch(transactionsRetrieved({ address }));
+  }, [confirmed.length]);
 
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
@@ -38,8 +36,6 @@ const Wallet = ({ t, history }) => {
       addSearchParamsToUrl(history, { modal: 'send' });
     }
   }, []);
-
-  if (!account || !account.info || isEmpty(account.info)) return (<div />);
 
   return (
     <section>
@@ -54,6 +50,7 @@ const Wallet = ({ t, history }) => {
       <TabsContainer>
         <Transactions
           pending={pending || []}
+          confirmedLength={confirmed.length}
           activeToken={activeToken}
           discreetMode={discreetMode}
           tabName={t('Transactions')}
