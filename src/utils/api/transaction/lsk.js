@@ -308,9 +308,11 @@ export const create = ({
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = ({ transaction, serviceUrl }) => {
-  const schema = moduleAssetSchemas[transaction.moduleAssetId];
+  const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
+  const schema = moduleAssetSchemas[moduleAssetId];
   const binary = transactions.getBytes(schema, transaction);
   const payload = binary.toString('hex');
+  const body = JSON.stringify({ transaction: payload });
 
   return new Promise(
     async (resolve, reject) => {
@@ -319,7 +321,7 @@ export const broadcast = ({ transaction, serviceUrl }) => {
           method: 'POST',
           baseUrl: serviceUrl,
           path: '/api/v2/transactions',
-          body: { transaction: payload },
+          body,
         });
 
         resolve(response);
