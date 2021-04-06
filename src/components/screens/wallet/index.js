@@ -5,7 +5,6 @@ import { withTranslation } from 'react-i18next';
 
 import { parseSearchParams, addSearchParamsToUrl } from '@utils/searchParams';
 import { transactionsRetrieved } from '@actions';
-import { isEmpty } from '@utils/helpers';
 import {
   selectAccount,
   selectActiveToken,
