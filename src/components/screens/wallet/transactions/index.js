@@ -30,6 +30,7 @@ const Transactions = ({
   t,
   votedDelegates,
   address,
+  confirmedLength,
 }) => {
   useEffect(() => {
     // This will automatically load the new data too.
@@ -52,7 +53,7 @@ const Transactions = ({
 
   useEffect(() => {
     transactions.loadData();
-  }, [pending.length]);
+  }, [pending.length, confirmedLength]);
 
   /* istanbul ignore next */
   const handleLoadMore = () => {
