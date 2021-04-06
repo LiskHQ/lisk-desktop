@@ -183,7 +183,7 @@ EOF
 										export CYPRESS_serviceUrl=http://127.0.0.1:9901
 										set +e
 										set -o pipefail
-										npm run cypress:run |tee cypress.log
+										npm run cypress:run -- --record |tee cypress.log
 										ret=$?
 
 										# this is to save on cypress credits
