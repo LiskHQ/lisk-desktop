@@ -24,7 +24,7 @@ Feature: Vote delegate
     And I click on openAddVoteDialog
     And I clear input amountInput
     And I fill 20 in amountInput field
-    And I click on removeVote
+    And I click on confirmBtn
     And I click on votingQueueToggle
     And I click on confirmBtn
     And I click on confirmBtn
@@ -34,7 +34,7 @@ Feature: Vote delegate
 
   Scenario: Unlock balance
     Given I am on wallet page
-    Then I should see that 100 LSK are locked
+    Then I should see that 160 LSK are locked
     Then I click on openUnlockBalanceDialog
     Then I should see unlocking balance 40
     And I click on unlockBtn
