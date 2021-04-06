@@ -101,7 +101,7 @@ const Transactions = ({
             t,
             activeToken,
             host: address,
-            delegates: votedDelegates,
+            delegates: votedDelegates.data,
           }}
           header={header(t, activeToken, changeSort)}
           currentSort={sort}
@@ -162,14 +162,12 @@ export default compose(
     },
     votedDelegates: {
       apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
-      defaultData: [],
-      transformResponse: (response) => {
-        const responseMap = response.data.reduce((acc, delegate) => {
-          acc[delegate.address] = delegate;
+      defaultData: {},
+      transformResponse: response =>
+        response.data.reduce((acc, delegate) => {
+          acc[delegate.address] = delegate.username;
           return acc;
-        }, {});
-        return responseMap;
-      },
+        }, {}),
     },
   }),
   withFilters('transactions', defaultFilters, defaultSort),

@@ -10,7 +10,7 @@ const generateVotes = (asset, delegates) => {
       key={`vote-${vote.delegateAddress}`}
       vote={{ confirmed: vote.amount }}
       address={vote.delegateAddress}
-      title={delegates[vote.delegateAddress] && delegates[vote.delegateAddress].username}
+      title={delegates[vote.delegateAddress]}
       truncate
     />
   ));
