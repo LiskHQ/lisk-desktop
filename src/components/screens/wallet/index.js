@@ -9,7 +9,6 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
-import { isEmpty } from '../../../utils/helpers';
 
 const Wallet = ({ t, history }) => {
   const dispatch = useDispatch();
@@ -29,8 +28,6 @@ const Wallet = ({ t, history }) => {
       addSearchParamsToUrl(history, { modal: 'send' });
     }
   }, []);
-
-  if (!account || !account.info || isEmpty(account.info)) return (<div />);
 
   return (
     <section>
