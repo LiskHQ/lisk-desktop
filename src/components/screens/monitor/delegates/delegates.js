@@ -65,7 +65,7 @@ const DelegatesMonitor = ({
       ...filters,
       search: value,
       offset: 0,
-      limit: 101,
+      limit: 100,
     });
   };
 
