@@ -40,7 +40,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     max-width: 300px;
     white-space: nowrap;
     text-overflow: ellipsis;
