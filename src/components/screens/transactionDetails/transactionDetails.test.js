@@ -121,7 +121,7 @@ describe('Transaction Details Component', () => {
       );
       expect(wrapper).toContainMatchingElements(2, '.accountInfo');
       expect(wrapper.find('.accountInfo .sender-address').text()).toBe(transaction.data.sender.address);
-      expect(wrapper.find('.accountInfo .receiver-address').text()).toBe(transaction.data.asset.recipientAddress);
+      expect(wrapper.find('.accountInfo .receiver-address').text()).toBe(transaction.data.asset.recipient?.address);
       expect(wrapper).toContainExactlyOneMatchingElement('.tx-reference');
     });
 

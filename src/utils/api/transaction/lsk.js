@@ -2,9 +2,13 @@
 import { transactions } from '@liskhq/lisk-client';
 
 import {
-  tokenMap, MODULE_ASSETS_NAME_ID_MAP, minFeePerByte,
-  DEFAULT_NUMBER_OF_SIGNATURES, DEFAULT_SIGNATURE_BYTE_SIZE,
-  MODULE_ASSETS_MAP, moduleAssetSchemas,
+  tokenMap,
+  MODULE_ASSETS_NAME_ID_MAP,
+  minFeePerByte,
+  DEFAULT_NUMBER_OF_SIGNATURES,
+  DEFAULT_SIGNATURE_BYTE_SIZE,
+  MODULE_ASSETS_MAP,
+  moduleAssetSchemas,
 } from '@constants';
 import { extractAddress } from '@utils/account';
 
@@ -51,13 +55,11 @@ export const getTransaction = ({
 
 const filters = {
   address: { key: 'address', test: address => !validateAddress(tokenMap.LSK.key, address) },
-  dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
-  dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
-  amountFrom: { key: 'min', test: num => parseFloat(num) >= 0 },
-  amountTo: { key: 'max', test: num => parseFloat(num) > 0 },
+  timestamp: { key: 'timestamp', test: str => /\d+:\d+/.test(str) },
+  amount: { key: 'amount', test: str => /\d+:\d+/.test(str) },
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
-  type: { key: 'type', test: num => parseInt(num, 10) > 0 },
+  moduleAssetId: { key: 'moduleAssetId', test: str => /\d:\d/.test(str) },
   height: { key: 'height', test: num => parseInt(num, 10) > 0 },
   sort: {
     key: 'sort',
@@ -102,16 +104,7 @@ export const getTransactions = ({
       params: { type },
     }));
     // BaseUrl is only used for retrieving archived txs, so it's not needed here.
-    return ws({ baseUrl: network.serviceUrl, requests })
-      // eslint-disable-next-line arrow-body-style
-      .then((response) => {
-        // const data = response.data.map((tx) => {
-        //   tx.title = MODULE_ASSETS_NAME_ID_MAP.getByCode(tx.type).key;
-        //   return tx;
-        // });
-
-        return response;
-      });
+    return ws({ baseUrl: network.serviceUrl, requests });
   }
 
   const normParams = {};
@@ -136,16 +129,7 @@ export const getTransactions = ({
     path: httpPaths.transactions,
     params: normParams,
     baseUrl,
-  })
-    // eslint-disable-next-line arrow-body-style
-    .then((response) => {
-      // const data = response.data.map((tx) => {
-      //   tx.title = MODULE_ASSETS_NAME_ID_MAP.getByCode(tx.type).key;
-      //   return tx;
-      // });
-
-      return response;
-    });
+  });
 };
 
 // @todo document this function signature
@@ -156,7 +140,7 @@ export const getRegisteredDelegates = async ({ network }) => {
   });
   const responseTransactions = await getTransactions({
     network,
-    params: { type: 'registerDelegate', limit: 100 },
+    params: { moduleAssetId: '5:0', limit: 100 },
   });
 
   if (delegates.error || responseTransactions.error) {
@@ -324,7 +308,7 @@ export const create = ({
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = ({ transaction, serviceUrl }) => {
-  const schema = selectSchema('2:0');
+  const schema = moduleAssetSchemas[transaction.moduleAssetId];
   const binary = transactions.getBytes(schema, transaction);
   const payload = binary.toString('hex');
 
@@ -444,8 +428,7 @@ export const getTokenFromAddress = address => (
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getSchemas = ({ network, baseUrl }) => http({
+export const getSchemas = ({ baseUrl }) => http({
   path: httpPaths.schemas,
-  network,
   baseUrl,
 });

@@ -57,7 +57,7 @@ function withData(apis = {}) {
           this.defaultState = Object.keys(apis).reduce((acc, key) => ({
             ...acc,
             [key]: {
-              data: apis[key].defaultData || {},
+              data: apis[key].defaultData ?? {},
               error: '',
               isLoading: false,
               urlSearchParams: apis[key].defaultUrlSearchParams || {},

@@ -34,10 +34,10 @@ const VoteRow = ({
         </div>
       </div>
 
-      {/* Productivity */}
+      {/* Banned/Punished */}
       <div className={grid['col-sm-2']} onClick={onClick}>
         {account
-          ? `${formatAmountBasedOnLocale({ value: account.delegate.productivity })}%`
+          ? `${formatAmountBasedOnLocale({ value: account.dpos.delegate.productivity })}%`
           /* istanbul ignore next */
           : '-'
         }
@@ -48,7 +48,7 @@ const VoteRow = ({
         <span>
           {
             /* istanbul ignore next */
-            account ? `#${account.delegate.rank}` : '-'
+            account?.dpos.delegate.rank ? `#${account.dpos.delegate.rank}` : '-'
           }
         </span>
       </div>
@@ -57,7 +57,7 @@ const VoteRow = ({
       <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`} onClick={onClick}>
         <span>
           <LiskAmount
-            val={account ? account.delegate.vote : 0}
+            val={account?.dpos.delegate.totalVotesReceived ?? 0}
             token={tokenMap.LSK.key}
           />
         </span>

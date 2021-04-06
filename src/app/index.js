@@ -26,7 +26,6 @@ const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
-  const network = useSelector(state => state.network);
   const serviceUrl = useSelector(selectServiceUrl);
 
   useIpc(history);
@@ -39,7 +38,9 @@ const App = ({ history }) => {
   }, []);
 
   useEffect(() => {
-    retrieveSchemas(network);
+    if (serviceUrl) {
+      retrieveSchemas({ serviceUrl });
+    }
   }, [serviceUrl]);
 
   const routesList = Object.values(routes);
@@ -67,7 +68,6 @@ const App = ({ history }) => {
         <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
           <section className="scrollContainer">
             <FlashMessageHolder />
-            {/* <InitializationMessage history={history} /> */}
             <div className={`${styles.mainContent} ${styles.mainBox}`}>
               <Switch>
                 {

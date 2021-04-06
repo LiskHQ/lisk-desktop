@@ -40,6 +40,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    max-width: 300px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   & .searchContainerParam {
@@ -56,10 +60,26 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      display: inline-block;
+      max-width: 250px;
     }
 
     & .accountVisual {
       padding-left: 10px;
+    }
+  }
+}
+
+@media (min-width: 1060px) {
+  .toggle {
+    & .searchContainer {
+      max-width: 390px;
+    }
+
+    & .searchContainerParam {
+      & .searchedValue {
+        max-width: 360px;
+      }
     }
   }
 }

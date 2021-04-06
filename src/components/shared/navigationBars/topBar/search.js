@@ -54,11 +54,11 @@ const Search = ({
             {
               relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
                 && (
-                <AccountVisual
-                  className={styles.accountVisual}
-                  size={18}
-                  address={relevantSearchParamValue}
-                />
+                  <AccountVisual
+                    className={styles.accountVisual}
+                    size={18}
+                    address={relevantSearchParamValue}
+                  />
                 )
             }
             {relevantSearchParamValue

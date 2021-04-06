@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
+
 import { parseSearchParams } from '@utils/searchParams';
 import Piwik from '@utils/piwik';
-import { AutoResizeTextarea } from '../../toolbox/inputs';
-import { PrimaryButton } from '../../toolbox/buttons';
-import Box from '../../toolbox/box';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import BoxContent from '../../toolbox/box/content';
-import BoxFooter from '../../toolbox/box/footer';
-import BoxHeader from '../../toolbox/box/header';
-import BoxInfoText from '../../toolbox/box/infoText';
+import { AutoResizeTextarea } from '@toolbox/inputs';
+import { PrimaryButton } from '@toolbox/buttons';
+import Box from '@toolbox/box';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import BoxHeader from '@toolbox/box/header';
+import BoxInfoText from '@toolbox/box/infoText';
 import styles from './signMessage.css';
 
 const SignMessageInput = ({ nextStep, t, history }) => {

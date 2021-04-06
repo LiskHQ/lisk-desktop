@@ -6,11 +6,11 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useDispatch } from 'react-redux';
 import { routes } from '@constants';
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
-import regex from '@utils/regex';
+import { truncateAddress } from '@utils/account';
 import { addedToWatchList, removedFromWatchList } from '@actions';
-import Tooltip from '../../../../toolbox/tooltip/tooltip';
-import Icon from '../../../../toolbox/icon';
-import AccountVisual from '../../../../toolbox/accountVisual';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import Icon from '@toolbox/icon';
+import AccountVisual from '@toolbox/accountVisual';
 import styles from '../delegates.css';
 import DelegateWeight from './delegateWeight';
 
@@ -81,8 +81,7 @@ const DelegateDetails = ({
           <p className={styles.delegateName}>
             {data.username}
           </p>
-          <p className={`${styles.delegateAddress} showOnLargeViewPort`}>{data.address}</p>
-          <p className={`${styles.delegateAddress} hideOnLargeViewPort`}>{data.address && data.address.replace(regex.lskAddressTrunk, '$1...$3')}</p>
+          <p className={styles.delegateAddress}>{truncateAddress(data.address)}</p>
         </div>
       </div>
     </div>

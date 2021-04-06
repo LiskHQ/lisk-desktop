@@ -1,15 +1,16 @@
 import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
+
 import withLocalSort from '@utils/withLocalSort';
-import { getNetworkStatistics, getConnectedPeers } from '@utils/api/network';
+import { getNetworkStatistics, getPeers } from '@utils/api/network';
 import withData from '@utils/withData';
 import { tokenMap } from '@constants';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
-import Table from '../../../toolbox/table';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import Table from '@toolbox/table';
 import styles from './network.css';
 import header from './tableHeader';
 import Map from './map';
@@ -111,7 +112,7 @@ export default compose(
       transformResponse: response => response.data,
     },
     peers: {
-      apiUtil: (network, params) => getConnectedPeers({ network, params }, tokenMap.LSK.key),
+      apiUtil: (network, params) => getPeers({ network, params }, tokenMap.LSK.key),
       defaultData: [],
       autoload: true,
       transformResponse: response => response.data,

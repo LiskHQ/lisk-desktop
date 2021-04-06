@@ -1,8 +1,9 @@
 import React from 'react';
+
+import MultiStep from '@shared/multiStep';
+import Dialog from '@toolbox/dialog/dialog';
 import ConfirmMessage from './confirmMessage';
-import MultiStep from '../../shared/multiStep';
 import SignMessageInput from './signMessageInput';
-import Dialog from '../../toolbox/dialog/dialog';
 import styles from './signMessage.css';
 
 const SignMessage = ({
