@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
+
 import { getActiveTokenAccount } from '@utils/account';
 import SignMessage from './signMessage';
 

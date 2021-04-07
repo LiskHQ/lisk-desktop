@@ -19,7 +19,7 @@ const ComposedBlockDetails = compose(
   withData({
     blockDetails: {
       apiUtil: (network, params) => getBlock({ network, params }),
-      getApiParams: (state, ownProps) => ({ id: ownProps.id }),
+      getApiParams: (state, ownProps) => ({ blockId: ownProps.id }),
       transformResponse: response => (response.data && response.data[0]),
     },
     blockTransactions: {

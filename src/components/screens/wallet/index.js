@@ -2,9 +2,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+
 import { parseSearchParams, addSearchParamsToUrl } from '@utils/searchParams';
 import { transactionsRetrieved } from '@actions';
-import { isEmpty } from '@utils/helpers';
 import {
   selectAccount,
   selectActiveToken,
@@ -23,13 +23,11 @@ const Wallet = ({ t, history }) => {
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const { confirmed, pending } = useSelector(selectTransactions);
+  const { isDelegate, address } = account.info[activeToken].summary;
 
   useEffect(() => {
-    if (!confirmed.length && account.info && !isEmpty(account.info)) {
-      const { address } = account.info[activeToken];
-      dispatch(transactionsRetrieved({ address }));
-    }
-  }, [account.info]);
+    dispatch(transactionsRetrieved({ address }));
+  }, [confirmed.length]);
 
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
@@ -37,8 +35,6 @@ const Wallet = ({ t, history }) => {
       addSearchParamsToUrl(history, { modal: 'send' });
     }
   }, []);
-
-  if (!account || !account.info || isEmpty(account.info)) return (<div />);
 
   return (
     <section>
@@ -53,27 +49,28 @@ const Wallet = ({ t, history }) => {
       <TabsContainer>
         <Transactions
           pending={pending || []}
+          confirmedLength={confirmed.length}
           activeToken={activeToken}
           discreetMode={discreetMode}
           tabName={t('Transactions')}
           tabId="Transactions"
-          address={account.info[activeToken].address}
+          address={address}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
-            address={account.info[activeToken].address}
+            address={address}
             tabName={t('Votes')}
             tabId="votes"
           />
         ) : null}
-        {account.info[activeToken].isDelegate
+        {isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
               tabId="delegateProfile"
-              address={account.info[activeToken].address}
+              account={account.info[activeToken]}
             />
           )
           : null}

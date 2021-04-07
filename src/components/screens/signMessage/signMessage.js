@@ -1,4 +1,5 @@
 import React from 'react';
+
 import MultiStep from '@shared/multiStep';
 import Dialog from '@toolbox/dialog/dialog';
 import ConfirmMessage from './confirmMessage';

@@ -1,53 +1,21 @@
-@import '../../../../app/mixins.css';
-
 .dataContainer {
-  box-sizing: border-box;
-  width: calc(100% / 5);
   color: var(--color-maastricht-blue);
+  overflow: hidden;
 
-  & > span {
-    white-space: nowrap;
-    width: 100%;
+  & .dataRow {
+    height: 100px;
+    border-bottom: 1px solid var(--color-platinum);
+    padding-bottom: 20px;
+    padding-top: 10px;
+    margin-bottom: -1px;
 
-    & > div {
-      text-overflow: ellipsis;
-      overflow: hidden;
+    & > span {
+      white-space: nowrap;
+      width: 100%;
     }
   }
 }
 
 h1 {
   color: var(--color-maastricht-blue);
-}
-
-@media (--medium-viewport) {
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-
-    & .dataContainer {
-      flex-grow: 1;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      margin-bottom: 32px;
-    }
-
-    & .dataContainer:nth-child(3n + 1) {
-      min-width: calc(100% / 3 + 10%);
-    }
-
-    & .dataContainer:nth-child(3n + 2) {
-      min-width: calc(100% / 3 - 10%);
-    }
-
-    & .dataContainer:nth-child(3n) {
-      align-items: flex-end;
-      min-width: calc(100% / 3);
-    }
-
-    & .dataContainer:nth-last-child(-n+3) {
-      margin-bottom: 0;
-    }
-  }
 }

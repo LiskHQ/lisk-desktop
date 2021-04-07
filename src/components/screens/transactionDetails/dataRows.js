@@ -73,7 +73,7 @@ export const Recipient = ({
       <AccountInfo
         token={activeToken}
         network={network}
-        address={transaction.asset.recipientAddress}
+        address={transaction.asset.recipient.address}
         addressClass="receiver-address"
         label={t('Recipient')}
       />

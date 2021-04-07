@@ -3,8 +3,9 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
+
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import regex from '@utils/regex';
+import { truncateAddress } from '@utils/account';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
 import { MODULE_ASSETS_MAP } from '@constants/moduleAssets';
 import Icon from '@toolbox/icon';
@@ -47,8 +48,7 @@ class AccountVisualWithAddress extends React.Component {
         ) : (
           <React.Fragment>
             <AccountVisual address={address} size={size} />
-            {/* <span className={`${styles.addressValue} showOnLargeViewPort`}>{transformedAddress}</span> */}
-            <span className={`${styles.addressValue}`}>{transformedAddress.replace(regex.lskAddressTrunk, '$1...$3')}</span>
+            <span className={`${styles.addressValue}`}>{truncateAddress(transformedAddress)}</span>
           </React.Fragment>
         )}
       </div>

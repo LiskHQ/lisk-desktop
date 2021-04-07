@@ -9,7 +9,10 @@ const SelectFilter = ({
   label, placeholder, filters, name, updateCustomFilters,
 }) => {
   const options = Object.keys(MODULE_ASSETS_NAME_ID_MAP)
-    .map(key => ({ value: MODULE_ASSETS_NAME_ID_MAP[key], label: getModuleAssetSenderLabel()[key] }));
+    .map(key => ({
+      value: MODULE_ASSETS_NAME_ID_MAP[key],
+      label: getModuleAssetSenderLabel()[key],
+    }));
   options.unshift({ value: '', label: placeholder });
 
   const onChange = (value) => {

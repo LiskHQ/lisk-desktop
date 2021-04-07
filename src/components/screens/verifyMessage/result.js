@@ -1,6 +1,7 @@
 import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import { SecondaryButton } from '@toolbox/buttons';
 import BoxFooter from '@toolbox/box/footer';
 import Illustration from '@toolbox/illustration';
@@ -11,7 +12,11 @@ export default function Result({
 }) {
   let isCorrect = false;
   try {
-    isCorrect = cryptography.verifyMessageWithPublicKey(inputs);
+    isCorrect = cryptography.verifyMessageWithPublicKey({
+      publicKey: Buffer.from(inputs.publicKey, 'hex'),
+      signature: Buffer.from(inputs.signature, 'hex'),
+      message: inputs.message,
+    });
   } catch (e) {
     isCorrect = false;
   }

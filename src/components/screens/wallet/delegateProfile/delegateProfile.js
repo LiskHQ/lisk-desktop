@@ -5,7 +5,7 @@ import Box from '@toolbox/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
-// import DelegateVotesView from './delegateVotesView';
+import DelegateVotesView from './delegateVotesView';
 
 // const formatForgingStatus = (status) => {
 //   const result = status.replace(/([A-Z])/g, ' $1');
@@ -23,41 +23,47 @@ import PerformanceView from './performanceView';
 // };
 
 const DelegateProfile = ({
-  delegate, address, t, voters,
+  delegate, account, t, voters,
   // awaitingForgers, forgingTimes,
   lastBlockForged,
 }) => {
+  const { data } = delegate;
   useEffect(() => {
-    delegate.loadData();
     voters.loadData();
-  }, [address]);
+  }, [account]);
 
   useEffect(() => {
-    lastBlockForged.loadData({ height: delegate.data.dpos?.delegate?.lastForgedHeight });
-  }, [delegate.data.dpos?.delegate?.lastForgedHeight]);
+    if (data.dpos?.delegate?.lastForgedHeight) {
+      lastBlockForged.loadData({ height: data.dpos.delegate.lastForgedHeight });
+    }
+  }, [data.dpos?.delegate?.lastForgedHeight]);
+
+  if (!data.dpos?.delegate) {
+    return null;
+  }
 
   return (
     <section className={`${styles.container} container`}>
       <Box className={`${grid.row} ${styles.statsContainer} stats-container`}>
         <DetailsView
           t={t}
-          status={delegate.data.dpos?.delegate?.status}
+          status={data.dpos?.delegate?.status}
           lastBlockForged={lastBlockForged.data.timestamp}
-          voteWeight={delegate.data.dpos?.delegate?.totalVotesReceived}
-          rank={delegate.data.dpos?.delegate?.rank}
+          delegateWeight={data.dpos?.delegate?.totalVotesReceived}
+          rank={data.dpos?.delegate?.rank}
         />
         <PerformanceView
           t={t}
-          productivity={delegate.data.dpos?.delegate?.productivity}
-          forgedBlocks={delegate.data.dpos?.delegate?.producedBlocks}
-          missedBlocks={delegate.data.dpos?.delegate?.missedBlocks}
+          productivity={data.dpos?.delegate?.productivity}
+          lastForgedBlocks={data.dpos?.delegate?.lastForgedHeight}
+          consecutiveMissedBlocks={data.dpos?.delegate?.consecutiveMissedBlocks}
           forgedLsk="-"
         />
       </Box>
-      {/* <DelegateVotesView
+      <DelegateVotesView
         t={t}
         voters={voters}
-      /> */}
+      />
     </section>
   );
 };

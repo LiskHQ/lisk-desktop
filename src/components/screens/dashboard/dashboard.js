@@ -1,5 +1,6 @@
 // istanbul ignore file
 import React from 'react';
+
 import WalletDetails from '@shared/walletDetails';
 import Onboarding from '@toolbox/onboarding/onboarding';
 import NewsFeed from './newsFeed';

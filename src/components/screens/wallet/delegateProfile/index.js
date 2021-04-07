@@ -16,17 +16,17 @@ const apis = {
   delegate: {
     apiUtil: (network, params) => getDelegate({ network, params }),
     defaultData: {},
+    autoload: true,
     getApiParams: (_, ownProps) => ({
-      address: ownProps.address,
+      address: ownProps.account.summary?.address,
     }),
     transformResponse: response => response.data[0],
   },
   voters: {
     apiUtil: (network, params) => getVoters({ network, params }),
     defaultData: [],
-    getApiParams: (_, ownProps) => ({
-      address: ownProps.address,
-    }),
+    getApiParams: (_, ownProps) => ({ address: ownProps.account.summary.address }),
+    transformResponse: response => (response.data.votes ?? []),
   },
   lastBlockForged: {
     apiUtil: (network, params) => getBlocks({ network, params }),

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import TransactionsTable from '@shared/transactionsTable';
 import Overview from './overview';
 

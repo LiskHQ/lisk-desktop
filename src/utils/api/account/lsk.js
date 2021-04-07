@@ -93,10 +93,12 @@ export const getAccount = async ({
 
     const publicKey = params.publicKey ?? extractPublicKey(params.address || params.passphrase);
     const account = {
-      publicKey,
-      balance: 0,
-      address: normParams.address,
-      token: tokenMap.LSK.key,
+      summary: {
+        publicKey,
+        balance: 0,
+        address: normParams.address,
+        token: tokenMap.LSK.key,
+      },
     };
 
     return account;

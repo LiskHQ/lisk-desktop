@@ -1,5 +1,6 @@
 // istanbul ignore file
 import React from 'react';
+
 import { fromRawLsk } from '@utils/lsk';
 import { colorPalette, MAX_BLOCKS_FORGED } from '@constants';
 import Box from '@toolbox/box';

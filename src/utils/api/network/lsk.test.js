@@ -1,5 +1,5 @@
 import {
-  getConnectedPeers,
+  getPeers,
   getNetworkStatistics,
   getNetworkStatus,
 } from './lsk';
@@ -20,7 +20,7 @@ const resetApiMock = () => {
 describe('API: LSK Network', () => {
   const network = { serviceUrl: 'http://testnet.io' };
 
-  describe('getConnectedPeers', () => {
+  describe('getPeers', () => {
     beforeEach(() => {
       resetApiMock();
     });
@@ -34,7 +34,7 @@ describe('API: LSK Network', () => {
         }],
       };
       setApiResponseData(expectedResponse, http);
-      await expect(getConnectedPeers({ network, params: { version: '3.0' } })).resolves.toEqual(expectedResponse);
+      await expect(getPeers({ network, params: { version: '3.0' } })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
         path: '/api/v2/peers/connected',
@@ -46,7 +46,7 @@ describe('API: LSK Network', () => {
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
       setApiRejection(expectedResponse.message, http);
-      await expect(getConnectedPeers({ network, params: {} })).rejects.toEqual(expectedResponse);
+      await expect(getPeers({ network, params: {} })).rejects.toEqual(expectedResponse);
     });
   });
 

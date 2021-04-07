@@ -4,7 +4,7 @@ import http from '../http';
 const httpPrefix = '/api/v2';
 
 const httpPaths = {
-  peers: `${httpPrefix}/peers/connected`,
+  peers: `${httpPrefix}/peers`,
   networkStatus: `${httpPrefix}/network/status`,
   networkStatistics: `${httpPrefix}/network/statistics`,
 };
@@ -77,6 +77,7 @@ export const getNetworkStatistics = ({
 
 const peerFilters = {
   version: { key: 'version', test: str => (typeof str === 'string') },
+  state: { key: 'state', test: str => (typeof str === 'string') },
   height: { key: 'height', test: num => (typeof num === 'number' && num > 0) },
   limit: { key: 'limit', test: num => (typeof num === 'number') },
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
@@ -87,7 +88,7 @@ const peerFilters = {
 };
 
 /**
- * Retrieves list of connected peers which
+ * Retrieves list of peers which
  * are discoverable by Lisk Service
  *
  * @param {Object} data
@@ -95,6 +96,7 @@ const peerFilters = {
  * @param {String?} data.baseUrl Custom API URL
  * @param {Object} data.params
  * @param {String?} data.params.version Lisk Core version number which the node rus
+ * @param {String?} data.params.state Option of connected, disconnected, any. Default: Connected
  * @param {String?} data.params.height Block height at which the node runs
  * @param {String?} data.params.offset Used for pagination
  * @param {String?} data.params.sort  an option of 'version:asc', 'version:desc',
@@ -102,7 +104,7 @@ const peerFilters = {
  *
  * @returns {Promise}
  */
-export const getConnectedPeers = ({
+export const getPeers = ({
   network,
   params,
 }) => {
@@ -112,7 +114,7 @@ export const getConnectedPeers = ({
       normParams[peerFilters[key].key] = params[key];
     } else {
       // eslint-disable-next-line no-console
-      console.log(`getConnectedPeers: Dropped ${key} parameter, it's invalid.`);
+      console.log(`getPeers: Dropped ${key} parameter, it's invalid.`);
     }
   });
 

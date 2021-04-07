@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 import CopyToClipboard from 'react-copy-to-clipboard';
+
 import { loginTypes } from '@constants';
 import { signMessageByHW } from '@utils/hwManager';
 import Box from '@toolbox/box';

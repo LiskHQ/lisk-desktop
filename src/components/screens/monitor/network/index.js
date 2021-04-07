@@ -1,8 +1,9 @@
 import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
+
 import withLocalSort from '@utils/withLocalSort';
-import { getNetworkStatistics, getConnectedPeers } from '@api/network';
+import { getNetworkStatistics, getPeers } from '@api/network';
 import withData from '@utils/withData';
 import { tokenMap } from '@constants';
 import Box from '@toolbox/box';
@@ -111,7 +112,7 @@ export default compose(
       transformResponse: response => response.data,
     },
     peers: {
-      apiUtil: (network, params) => getConnectedPeers({ network, params }, tokenMap.LSK.key),
+      apiUtil: (network, params) => getPeers({ network, params }, tokenMap.LSK.key),
       defaultData: [],
       autoload: true,
       transformResponse: response => response.data,

@@ -1,5 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { getTxAmount } from '@api/transaction/lsk';
 import { DateTimeFromTimestamp } from '@toolbox/timestamp';
@@ -28,7 +29,7 @@ const TransactionRow = ({ data, className, t }) => (
     </span>
     <span className={grid['col-xs-3']}>
       <AccountVisualWithAddress
-        address={data.asset.recipientAddress}
+        address={data.asset.recipient?.address}
         transactionSubject="recipient"
         moduleAssetId={data.moduleAssetId}
         showBookmarkedAddress

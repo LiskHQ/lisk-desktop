@@ -47,7 +47,11 @@ const Accounts = ({
               {isDelegate
                 ? (
                   <span className={`${styles.tag} tag`}>
-                    {t('Delegate #{{rank}}', { rank: account.dpos?.delegate.rank })}
+                    {
+                      account.dpos
+                        ? t('Delegate #{{rank}}', { rank: account.dpos.delegate.rank })
+                        : '-'
+                    }
                   </span>
                 )
                 : null }

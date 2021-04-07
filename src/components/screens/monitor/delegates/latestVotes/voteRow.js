@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
+
 import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
 import DialogLink from '@toolbox/dialog/link';
-import AccountVisualWithAddress from '../../../../shared/accountVisualWithAddress';
-import VoteItem from '../../../../shared/voteItem';
+import VoteItem from '@shared/voteItem';
 import styles from '../delegates.css';
 
 const VotesItemsList = ({ votes = [], delegates }) => {
@@ -23,6 +24,7 @@ const VotesItemsList = ({ votes = [], delegates }) => {
                   vote={{ confirmed: amount }}
                   address={delegateAddress}
                   title={delegates[delegateAddress] && delegates[delegateAddress].username}
+                  truncate
                 />
               ))}
             </span>
@@ -57,14 +59,14 @@ const VoteRow = ({
     >
       <span className={grid['col-xs-4']}>
         <AccountVisualWithAddress
-          address={data.senderId}
+          address={data.sender.address}
           transactionSubject="senderId"
           transactionType={3}
           showBookmarkedAddress
         />
       </span>
       <span className={grid['col-xs-3']}>
-        <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
+        <DateTimeFromTimestamp time={data.block.timestamp * 1000} token="BTC" />
       </span>
       <span className={`${grid['col-lg-2']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}>
         <span>{Math.ceil(data.height / 101)}</span>

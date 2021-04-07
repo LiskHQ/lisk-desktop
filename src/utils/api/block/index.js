@@ -15,8 +15,8 @@ const wsMethods = {
   blocksChange: 'update.block',
 };
 
-const getBlockProps = ({ id, height }) => {
-  if (id) return { id };
+const getBlockProps = ({ blockId, height }) => {
+  if (blockId) return { blockId };
   if (height) return { height };
   throw Error('No parameters supplied');
 };
