@@ -16,6 +16,23 @@ export const extractPublicKey = (passphrase) => {
   return undefined;
 };
 
+export const extractAddressFromPublicKey = (data) => {
+  if (regex.publicKey.test(data)) {
+    return cryptography.getBase32AddressFromPublicKey(data).toString('hex');
+  }
+  if (Buffer.isBuffer(data)) {
+    return cryptography.getBase32AddressFromPublicKey(data);
+  }
+  return undefined;
+};
+
+export const extractAddressFromPassphrase = (data) => {
+  if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
+    return cryptography.getBase32AddressFromPassphrase(data).toString('hex');
+  }
+  return undefined;
+};
+
 /**
  * Extracts Lisk address from given passphrase or publicKey
  *
@@ -23,14 +40,11 @@ export const extractPublicKey = (passphrase) => {
  * @returns {String?} - Extracted address for a given valid passphrase or publicKey
  */
 export const extractAddress = (data) => {
-  if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
-    return cryptography.getBase32AddressFromPassphrase(data).toString('hex');
-  }
-  if (regex.publicKey.test(data)) {
-    return cryptography.getBase32AddressFromPublicKey(data).toString('hex');
-  }
   if (regex.address.test(data)) {
     return cryptography.getAddressFromBase32Address(data);
+  }
+  if (Buffer.isBuffer(data)) {
+    return cryptography.getBase32AddressFromAddress(data);
   }
   return undefined;
 };

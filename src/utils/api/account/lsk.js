@@ -2,7 +2,7 @@ import { tokenMap } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';
-import { extractAddress, extractPublicKey } from '../../account';
+import { extractAddressFromPassphrase, extractAddressFromPublicKey, extractPublicKey } from '../../account';
 import regex from '../../regex';
 
 const httpPrefix = '/api/v2';
@@ -42,8 +42,11 @@ const getAccountParams = (params) => {
   // If you have the address, you don't need anything else
   if (address) return { address };
   // convert other params to address
-  if (publicKey || passphrase) {
-    return { address: extractAddress(publicKey || passphrase) };
+  if (publicKey) {
+    return { address: extractAddressFromPublicKey(publicKey) };
+  }
+  if (passphrase) {
+    return { address: extractAddressFromPassphrase(passphrase) };
   }
   // if none of the above, ignore the params
   return {};
@@ -69,6 +72,7 @@ export const getAccount = async ({
 }) => {
   const normParams = getAccountParams(params);
 
+  console.log({ params, normParams });
   try {
     const response = await http({
       baseUrl,
