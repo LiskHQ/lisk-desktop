@@ -3,7 +3,7 @@ import to from 'await-to-js';
 import {
   actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes,
 } from '@constants';
-import { extractAddress } from '@utils/account';
+import { extractAddressFromPublicKey } from '@utils/account';
 import { getTransactions, create, broadcast } from '@utils/api/transaction';
 import { signSendTransaction } from '@utils/hwManager';
 import { passphraseUsed } from './account';
@@ -25,10 +25,7 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
  */
 export const addNewPendingTransaction = data => ({
   type: actionTypes.addNewPendingTransaction,
-  data: {
-    ...data,
-    senderId: extractAddress(data.senderPublicKey),
-  },
+  data,
 });
 
 /**
