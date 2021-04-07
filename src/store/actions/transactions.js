@@ -8,6 +8,7 @@ import { getTransactions, create, broadcast } from '@utils/api/transaction';
 import { signSendTransaction } from '@utils/hwManager';
 import { passphraseUsed } from './account';
 import { loadingStarted, loadingFinished } from './loading';
+import { transformTransaction } from '../../utils/api/transaction/lsk';
 
 /**
  * Action trigger when user logout from the application
@@ -99,6 +100,7 @@ export const resetTransactionResult = () => ({
  * @param {Number} data.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} data.reference - Data field for LSK transactions
  */
+// eslint-disable-next-line max-statements
 export const transactionCreated = data => async (dispatch, getState) => {
   const {
     account, settings, network,
@@ -144,7 +146,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {Number} transaction.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} transaction.reference - Data field for LSK transactions
  */
-export const transactionBroadcasted = (transaction, callback = () => {}) =>
+export const transactionBroadcasted = transaction =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
     const { network, settings } = getState();
@@ -156,7 +158,6 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
       activeToken,
     ));
 
-    callback({ success: !error, error, transaction });
     if (error) {
       dispatch({
         type: actionTypes.broadcastedTransactionError,
@@ -173,12 +174,8 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
     });
 
     if (activeToken !== tokenMap.BTC.key) {
-      dispatch(addNewPendingTransaction({
-        ...transaction,
-        title: MODULE_ASSETS_NAME_ID_MAP[transaction.moduleAssetId],
-        amount: transaction.asset.amount,
-        recipientId: transaction.asset.recipientId,
-      }));
+      const transformedTransaction = transformTransaction(transaction);
+      dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
     }
 
     dispatch(passphraseUsed(new Date()));
