@@ -7,20 +7,12 @@ import { getAccounts } from '@utils/api/account';
 import withData from '@utils/withData';
 import Votes from './votes';
 
-const emptyVotes = {
-  account: {},
-  votes: [],
-};
-
 const apis = {
   votes: {
     apiUtil: (network, params) => getVotes({ network, params }),
-    defaultData: {
-      account: {},
-      votes: [],
-    },
+    defaultData: [],
     autoload: false,
-    transformResponse: response => response.data?.votes ?? emptyVotes,
+    transformResponse: response => response.data?.votes ?? [],
   },
   accounts: {
     apiUtil: (network, params) => getAccounts({ network, params }),

@@ -24,7 +24,10 @@ const apis = {
   },
   voters: {
     apiUtil: (network, params) => getVoters({ network, params }),
-    defaultData: [],
+    defaultData: {
+      account: {},
+      votes: [],
+    },
     getApiParams: (_, ownProps) => ({ address: ownProps.account.summary.address }),
     transformResponse: response => (response.data.votes ?? []),
   },

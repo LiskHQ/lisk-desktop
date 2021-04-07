@@ -47,7 +47,7 @@ const DelegateVotesView = ({
           className={`${grid.col} ${grid['col-xs-12']} ${voters.data.length ? styles.votesContainer : ''} votes-container`}
         >
           <Table
-            data={voters.data}
+            data={voters.data.votes}
             canLoadMore={voters.meta && voters.data.length < voters.meta.count}
             isLoading={voters.isLoading}
             iterationKey="address"
