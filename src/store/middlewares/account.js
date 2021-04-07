@@ -81,8 +81,8 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
     const blockContainsRelevantTransaction = txs.filter((transaction) => {
       if (!transaction) return false;
       return (
-        account.summary?.address === transaction.senderId
-        || account.summary?.address === transaction.recipientId
+        account.summary?.address === transaction.sender.address
+        || account.summary?.address === transaction.asset?.recipient.address
       );
     }).length > 0;
 

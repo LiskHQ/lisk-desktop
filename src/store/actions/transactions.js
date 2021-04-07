@@ -64,18 +64,16 @@ export const transactionsRetrieved = ({
         data: {
           offset,
           address,
+          filters,
           confirmed: response.data,
           count: response.meta.total,
-          filters,
         },
       });
     })
     .catch((error) => {
       dispatch({
         type: actionTypes.transactionLoadFailed,
-        data: {
-          error,
-        },
+        data: { error },
       });
     })
     .finally(() => {
