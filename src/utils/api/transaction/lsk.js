@@ -17,6 +17,7 @@ import ws from '../ws';
 import { getDelegates } from '../delegate';
 import regex from '../../regex';
 import { validateAddress } from '../../validators';
+import { extractAddressFromPublicKey } from '../../account';
 
 const httpPrefix = '/api/v2';
 
@@ -221,7 +222,7 @@ const splitModuleAndAssetIds = (moduleAssetId) => {
 
 export const transformTransaction = (transaction) => {
   const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
-  const senderAddress = extractAddress(transaction.senderPublicKey);
+  const senderAddress = extractAddressFromPublicKey(transaction.senderPublicKey);
   const senderPublicKey = transaction.senderPublicKey.toString('hex');
 
   const transformedTransaction = {
