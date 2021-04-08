@@ -10,7 +10,7 @@ pipeline {
 		booleanParam(name: 'SKIP_PERCY', defaultValue: false, description: 'Skip running percy.')
 		string(name: 'LISK_CORE_VERSION', defaultValue: 'release/3.0.0-beta.1', description: 'Use lisk-core branch.', )
 		string(name: 'LISK_CORE_IMAGE_VERSION', defaultValue: '3.0.0-beta.1-a7842d112d5136d9462501763c4cb2895096e900', description: 'Use lisk-core docker image.', )
-		string(name: 'LISK_SERVICE_VERSION', defaultValue: 'v0.2.0-rc.0', description: 'Use lisk-service branch.', )
+		string(name: 'LISK_SERVICE_VERSION', defaultValue: 'v0.2.0', description: 'Use lisk-service branch.', )
 	}
 	stages {
 		stage('Install npm dependencies') {
@@ -52,7 +52,7 @@ pipeline {
 			}
 		}
 		stage('Deploy build') {
-			agent { node { label 'master-01' } }
+			agent { node { label 'explorer-www' } }
 			steps {
 					unstash 'build'
 					sh '''
@@ -183,7 +183,7 @@ EOF
 										export CYPRESS_serviceUrl=http://127.0.0.1:9901
 										set +e
 										set -o pipefail
-										npm run cypress:run |tee cypress.log
+										npm run cypress:run -- --record |tee cypress.log
 										ret=$?
 
 										# this is to save on cypress credits

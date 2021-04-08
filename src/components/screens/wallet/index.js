@@ -9,7 +9,6 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
-import { isEmpty } from '../../../utils/helpers';
 
 const Wallet = ({ t, history }) => {
   const dispatch = useDispatch();
@@ -17,13 +16,11 @@ const Wallet = ({ t, history }) => {
   const activeToken = useSelector(state => state.settings.token.active);
   const { discreetMode } = useSelector(state => state.settings);
   const { confirmed, pending } = useSelector(state => state.transactions);
+  const { address, isDelegate } = account.info[activeToken];
 
   useEffect(() => {
-    if (!confirmed.length && account.info && !isEmpty(account.info)) {
-      const { address } = account.info[activeToken];
-      dispatch(transactionsRetrieved({ address }));
-    }
-  }, [account.info]);
+    dispatch(transactionsRetrieved({ address }));
+  }, [confirmed.length]);
 
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
@@ -31,8 +28,6 @@ const Wallet = ({ t, history }) => {
       addSearchParamsToUrl(history, { modal: 'send' });
     }
   }, []);
-
-  if (!account || !account.info || isEmpty(account.info)) return (<div />);
 
   return (
     <section>
@@ -47,27 +42,28 @@ const Wallet = ({ t, history }) => {
       <TabsContainer>
         <Transactions
           pending={pending || []}
+          confirmedLength={confirmed.length}
           activeToken={activeToken}
           discreetMode={discreetMode}
           tabName={t('Transactions')}
           tabId="Transactions"
-          address={account.info[activeToken].address}
+          address={address}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
-            address={account.info[activeToken].address}
+            address={address}
             tabName={t('Votes')}
             tabId="votes"
           />
         ) : null}
-        {account.info[activeToken].isDelegate
+        {isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
               tabId="delegateProfile"
-              address={account.info[activeToken].address}
+              address={address}
             />
           )
           : null}

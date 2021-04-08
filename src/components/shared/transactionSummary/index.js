@@ -93,7 +93,7 @@ class TransactionSummary extends React.Component {
   render() {
     const {
       title, children, confirmButton, cancelButton, account,
-      t, fee, confirmation, classNames, token, footerClassName,
+      t, fee, confirmation, classNames, token, footerClassName, showCancelButton = true,
     } = this.props;
     const {
       secondPassphrase, isHardwareWalletConnected, isConfirmed,
@@ -175,12 +175,14 @@ class TransactionSummary extends React.Component {
         ? null
         : (
           <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
-            <SecondaryButton
-              className={`${styles.editBtn} cancel-button`}
-              onClick={cancelButton.onClick}
-            >
-              {cancelButton.label}
-            </SecondaryButton>
+            {showCancelButton && (
+              <SecondaryButton
+                className={`${styles.editBtn} cancel-button`}
+                onClick={cancelButton.onClick}
+              >
+                {cancelButton.label}
+              </SecondaryButton>
+            )}
             <PrimaryButton
               className={`${styles.confirmBtn} confirm-button`}
               disabled={

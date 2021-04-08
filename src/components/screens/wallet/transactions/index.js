@@ -30,6 +30,7 @@ const Transactions = ({
   t,
   votedDelegates,
   address,
+  confirmedLength,
 }) => {
   useEffect(() => {
     // This will automatically load the new data too.
@@ -52,7 +53,7 @@ const Transactions = ({
 
   useEffect(() => {
     transactions.loadData();
-  }, [pending.length]);
+  }, [pending.length, confirmedLength]);
 
   /* istanbul ignore next */
   const handleLoadMore = () => {
@@ -101,7 +102,7 @@ const Transactions = ({
             t,
             activeToken,
             host: address,
-            delegates: votedDelegates,
+            delegates: votedDelegates.data,
           }}
           header={header(t, activeToken, changeSort)}
           currentSort={sort}
@@ -162,14 +163,12 @@ export default compose(
     },
     votedDelegates: {
       apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
-      defaultData: [],
-      transformResponse: (response) => {
-        const responseMap = response.data.reduce((acc, delegate) => {
-          acc[delegate.address] = delegate;
+      defaultData: {},
+      transformResponse: response =>
+        response.data.reduce((acc, delegate) => {
+          acc[delegate.address] = delegate.username;
           return acc;
-        }, {});
-        return responseMap;
-      },
+        }, {}),
     },
   }),
   withFilters('transactions', defaultFilters, defaultSort),

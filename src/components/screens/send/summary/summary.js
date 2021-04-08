@@ -1,5 +1,5 @@
 import React from 'react';
-import { toRawLsk } from '../../../../utils/lsk';
+import { toRawLsk, fromRawLsk } from '../../../../utils/lsk';
 import loginTypes from '../../../../constants/loginTypes';
 import AccountVisual from '../../../toolbox/accountVisual';
 import Converter from '../../../shared/converter';
@@ -70,24 +70,25 @@ class Summary extends React.Component {
 
   render() {
     const {
-      fields, t, token, account,
+      fields, t, token, account, isInitialization,
     } = this.props;
     const amount = fields.amount.value;
 
     return (
       <TransactionSummary
-        title={t('Transaction summary')}
+        title={isInitialization ? t('Initialization summary ') : t('Transaction summary')}
         t={t}
         account={account}
         confirmButton={{
-          label: t('Send {{amount}} {{token}}', { amount, token }),
+          label: isInitialization ? t('Send') : t('Send {{amount}} {{token}}', { amount, token }),
           onClick: this.submitTransaction,
         }}
         cancelButton={{
           label: t('Edit transaction'),
           onClick: this.prevStep,
         }}
-        fee={fields.fee.value}
+        showCancelButton={!isInitialization}
+        fee={fromRawLsk(fields.fee.value)}
         token={token}
       >
         <section>

@@ -147,6 +147,11 @@ import delegateWarning from '../../../assets/images/icons/delegate-warning.svg';
 import delegateAwaiting from '../../../assets/images/icons/delegate-awaiting.svg';
 import eyeInactive from '../../../assets/images/icons/eye-inactive.svg';
 import eyeActive from '../../../assets/images/icons/eye-active.svg';
+import liskIcon from '../../../assets/images/icons/lisk-icon.svg';
+import initialiseIcon from '../../../assets/images/icons/initialise-icon.svg';
+import initialiseRegistration from '../../../assets/images/icons/initialise-registration.svg';
+import warningYellow from '../../../assets/images/icons/warning-yellow.svg';
+import linkIcon from '../../../assets/images/icons/link-icon.svg';
 
 export const icons = {
   academy,
@@ -294,6 +299,11 @@ export const icons = {
   delegateAwaiting,
   eyeActive,
   eyeInactive,
+  liskIcon,
+  initialiseIcon,
+  initialiseRegistration,
+  warningYellow,
+  linkIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
