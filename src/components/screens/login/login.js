@@ -56,8 +56,7 @@ class Login extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.account
-      && this.props.account.summary?.address) {
+    if (this.props.account?.summary?.address) {
       this.redirectToReferrer();
     }
   }
