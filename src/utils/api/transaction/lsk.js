@@ -9,6 +9,7 @@ import {
   DEFAULT_SIGNATURE_BYTE_SIZE,
   MODULE_ASSETS_MAP,
   moduleAssetSchemas,
+  BASE_FEES,
 } from '@constants';
 import { extractAddress, extractAddressFromPublicKey } from '@utils/account';
 
@@ -225,6 +226,7 @@ const splitModuleAndAssetIds = (moduleAssetId) => {
   return [Number(moduleID), Number(assetID)];
 };
 
+// eslint-disable-next-line max-statements
 export const transformTransaction = (transaction) => {
   const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
   const senderAddress = extractAddressFromPublicKey(transaction.senderPublicKey);
@@ -239,91 +241,120 @@ export const transformTransaction = (transaction) => {
     signatures: transaction.signatures,
   };
 
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
-    transformedTransaction.asset = {
-      recipient: { address: extractAddress(transaction.asset.recipientAddress) },
-      amount: String(transaction.asset.amount),
-      data: transaction.asset.data,
-    };
-  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
-    // @todo fix me
-    // transformedTransaction.asset = {
-    //   votes: tx.votes,
-    // };
+  switch (moduleAssetId) {
+    case MODULE_ASSETS_NAME_ID_MAP.transfer: {
+      transformedTransaction.asset = {
+        recipient: { address: extractAddress(transaction.asset.recipientAddress) },
+        amount: String(transaction.asset.amount),
+        data: transaction.asset.data,
+      };
 
-  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
-    // @todo fix me
-    // transformedTransaction.asset = {
-    //   unlockObjects: tx.unlockObjects,
-    // };
-  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerDelegate) {
-    // @todo fix me
-    // transformedTransaction.asset = {
-    //   username: tx.username,
-    // };
-  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-    // @todo fix me
-    // transformedTransaction.asset = {
-    //   numberOfSignatures: tx.numberOfSignatures,
-    //   mandatoryKeys: tx.mandatoryKeys,
-    //   optionalKeys: tx.optionalKeys,
-    // };
-  } else {
-    throw Error('Unknown transaction');
+      break;
+    }
+
+    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: {
+      // @todo fix me
+      // transformedTransaction.asset = {
+      //   username: tx.username,
+      // };
+      break;
+    }
+
+    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: {
+      // @todo fix me
+      // transformedTransaction.asset = {
+      //   votes: tx.votes,
+      // };
+      break;
+    }
+
+    case MODULE_ASSETS_NAME_ID_MAP.unlockToken: {
+      // @todo fix me
+      // transformedTransaction.asset = {
+      //   unlockObjects: tx.unlockObjects,
+      // };
+      break;
+    }
+
+    case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup: {
+      // @todo fix me
+      // transformedTransaction.asset = {
+      //   numberOfSignatures: tx.numberOfSignatures,
+      //   mandatoryKeys: tx.mandatoryKeys,
+      //   optionalKeys: tx.optionalKeys,
+      // };
+      break;
+    }
+
+    default:
+      throw Error('Unknown transaction');
   }
 
   return transformedTransaction;
 };
+
 // eslint-disable-next-line max-statements
 const createTransactionObject = (tx, moduleAssetId) => {
-  try {
-    const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
-    const {
-      senderPublicKey, nonce, amount, recipientAddress, data, fee = 0,
-    } = tx;
+  const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
+  const {
+    senderPublicKey, nonce, amount, recipientAddress, data, fee = 0,
+  } = tx;
 
-    const transaction = {
-      moduleID,
-      assetID,
-      senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
-      nonce: BigInt(nonce),
-      fee: BigInt(fee),
-      signatures: [],
-    };
+  const transaction = {
+    moduleID,
+    assetID,
+    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
+    nonce: BigInt(nonce),
+    fee: BigInt(fee),
+    signatures: [],
+  };
 
-    if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
+  switch (moduleAssetId) {
+    case MODULE_ASSETS_NAME_ID_MAP.transfer: {
       transaction.asset = {
         recipientAddress: extractAddress(recipientAddress),
         amount: BigInt(amount),
         data,
       };
-    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
-      transaction.asset = {
-        votes: tx.votes,
-      };
-    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
-      transaction.asset = {
-        unlockObjects: tx.unlockObjects,
-      };
-    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerDelegate) {
+      break;
+    }
+
+    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: {
       transaction.asset = {
         username: tx.username,
       };
-    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-      transaction.asset = {
-        numberOfSignatures: tx.numberOfSignatures,
-        mandatoryKeys: tx.mandatoryKeys,
-        optionalKeys: tx.optionalKeys,
-      };
-    } else {
-      throw Error('Unknown transaction');
+      break;
     }
 
-    return transaction;
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
+    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: {
+      const votes = tx.votes.map(vote =>
+        ({ amount: BigInt(vote.amount), delegateAddress: Buffer.from(vote.delegateAddress) }));
+      transaction.asset = { votes };
+      break;
+    }
+
+    case MODULE_ASSETS_NAME_ID_MAP.unlockToken: {
+      transaction.asset = {
+        unlockObjects: tx.unlockObjects,
+      };
+      break;
+    }
+
+    // case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup: {
+    //   transaction.asset = {
+    //     numberOfSignatures: tx.numberOfSignatures,
+    //     mandatoryKeys: tx.mandatoryKeys,
+    //     optionalKeys: tx.optionalKeys,
+    //   };
+    //   break;
+    // }
+
+    default:
+      throw Error('Unknown transaction');
   }
+
+  console.log(transaction);
+  return transaction;
 };
 
 /**
@@ -339,6 +370,7 @@ export const create = ({
   moduleAssetId,
   ...transactionObject
 }) => new Promise((resolve, reject) => {
+  console.log(transactionObject, moduleAssetId);
   const { networkIdentifier } = network.networks.LSK;
   const {
     passphrase, ...rawTransaction
@@ -432,6 +464,8 @@ export const getTransactionFee = async ({
   console.log('getTransactionFee 1', transaction);
   const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
+  console.log('feePerByte', feePerByte);
+
   const {
     moduleAssetId, ...rawTransaction
   } = transaction;
@@ -442,14 +476,20 @@ export const getTransactionFee = async ({
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
   console.log('getTransactionFee 2', transactionObject);
 
+  console.log(BASE_FEES);
   const minFee = transactions.computeMinFee(schema, {
     ...transactionObject,
     signatures: undefined,
+  }, {
+    baseFees: BASE_FEES,
   });
 
+  console.log('minDee', minFee);
   // tie breaker is only meant for medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : minFeePerByte * feePerByte * Math.random();
+
+  console.log('tieBreaker', tieBreaker);
 
   const size = transactions.getBytes(schema, {
     ...transactionObject,
