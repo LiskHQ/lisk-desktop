@@ -92,10 +92,7 @@ const Summary = ({
     Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
 
     votesSubmitted({
-      passphrase: account.passphrase,
-      senderPublicKey: account.info.LSK.publicKey,
       fee: String(fee),
-      nonce: account.info.LSK.sequence?.nonce,
       votes: normalizedVotes,
     });
   };
