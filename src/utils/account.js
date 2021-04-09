@@ -16,6 +16,12 @@ export const extractPublicKey = (passphrase) => {
   throw Error('Invalid passphrase');
 };
 
+/**
+ * Extracts address from publicKey
+ *
+ * @param {String} data PublicKey in Hex
+ * @returns {String} - address derived from the given publicKey
+ */
 export const extractAddressFromPublicKey = (data) => {
   if (regex.publicKey.test(data)) {
     return cryptography.getBase32AddressFromPublicKey(data).toString('hex');
@@ -26,6 +32,12 @@ export const extractAddressFromPublicKey = (data) => {
   throw Error(`Unable to convert publicKey ${data} to address`);
 };
 
+/**
+ * Extracts address from Mnemonic passphrase
+ *
+ * @param {String} data Valid Mnemonic passphrase
+ * @returns {String} - address derived from the given passphrase
+ */
 export const extractAddressFromPassphrase = (data) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
     return cryptography.getBase32AddressFromPassphrase(data).toString('hex');
@@ -49,6 +61,12 @@ export const extractAddress = (data) => {
   throw Error('Invalid publicKey or passphrase');
 };
 
+/**
+ * This is selector, getting active token account from the Redux store
+ *
+ * @param {Object} state - Redux store state
+ * @returns {Object} - account details or empty object
+ */
 export const getActiveTokenAccount = state => ({
   ...state.account,
   ...((state.account.info && state.account.info[
@@ -70,22 +88,40 @@ export const truncateAddress = address =>
 
 /**
  * calculates the balance locked in votes
+ *
+ * @param {Object} votes - Votes dictionary, values must include vote.confirmed
+ * @returns {Number} - Sum of vote amounts
  */
 export const calculateBalanceLockedInVotes = (votes = {}) =>
   Object.values(votes).reduce((total, vote) => (total + vote.confirmed), 0);
 
 /**
  * calculates balance locked for the account in unvotes
-*/
+ *
+ * @param {Array} unlocking - unlocking values array from the account details
+ * @returns {Number} - Sum of locked LSK, this can be different than sum of vote amounts
+ */
 export const calculateBalanceLockedInUnvotes = (unlocking = []) =>
   unlocking.reduce((acc, vote) => acc + parseInt(vote.amount, 10), 0);
 
+/**
+ * Checks if given unlocking item can be unlocked
+ * (Checks if the current height is greater than the unlocking height)
+ *
+ * @param {Number} unlockHeight - The height at which given LSK can be unlocked
+ * @param {Number} currentBlockHeight - Current block height
+ * @returns {Boolean} - True if the height is there
+ */
 export const isBlockHeightReached = (unlockHeight, currentBlockHeight) =>
   currentBlockHeight >= unlockHeight;
 
 /**
  * returns unlocking objects for broadcasting an unlock transaction
  * at the current height
+ *
+ * @param {Array} unlocking - unlocking values array from the account details
+ * @param {Number} currentBlockHeight - Current block height
+ * @returns {Array} Array of LSK rows available to unlock
  */
 export const getUnlockableUnlockingObjects = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.filter(vote => isBlockHeightReached(vote.height.end, currentBlockHeight))
@@ -97,6 +133,10 @@ export const getUnlockableUnlockingObjects = (unlocking = [], currentBlockHeight
 
 /**
  * returns the balance that can be unlocked at the current block height
+ *
+ * @param {Array} unlocking - unlocking values array from the account details
+ * @param {Number} currentBlockHeight - Current block height
+ * @returns {Number} - The LSK value that can be unlocked
  */
 export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
@@ -108,6 +148,10 @@ export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 
 
 /**
  * returns the balance that can not be unlocked at the current block height
+ *
+ * @param {Array} unlocking - unlocking values array from the account details
+ * @param {Number} currentBlockHeight - Current block height
+ * @returns {Number} - The LSK value that can NOT be unlocked at the current height
  */
 export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
