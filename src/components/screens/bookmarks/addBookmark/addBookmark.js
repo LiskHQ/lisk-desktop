@@ -106,10 +106,10 @@ class AddBookmark extends React.Component {
 
   updateLabelIfDelegate(prevProps, account) {
     const { fields: { label } } = this.state;
-    if (account.data.delegate === prevProps.account.data.delegate) return;
+    if (account.data.summary.isDelegate === prevProps.account.data.summary.isDelegate) return;
 
-    if (account.data.delegate && account.data.delegate.username !== label.value) {
-      const data = { value: account.data.delegate.username, readonly: true };
+    if (account.data.summary.isDelegate && account.data.dpos.delegate.username !== label.value) {
+      const data = { value: account.data.dpos.delegate.username, readonly: true };
       this.updateField({
         name: 'label',
         data,
