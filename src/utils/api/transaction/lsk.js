@@ -270,11 +270,6 @@ export const broadcast = ({ transaction, serviceUrl }) => {
 
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
- *
- * @todo The current implementation mocks the results with realistic values.
- * We will refactor this function to fetch the base fees from Lisk Service
- * when the endpoint is ready. Refer to #3081
- *
  * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
  */
