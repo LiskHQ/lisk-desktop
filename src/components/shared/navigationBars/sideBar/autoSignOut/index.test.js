@@ -4,7 +4,7 @@ import { account } from '@constants';
 import AutoSignOut from './index';
 
 describe('AutoSignOut', () => {
-  const expireTime = Date.now() + account.lockDuration;
+  const expireTime = Date.now() + lockDuration;
 
   const props = {
     expireTime,
