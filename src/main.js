@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import { applyDeviceClass } from '@utils/applyDeviceClass';
 import store from '@store';
 import externalLinks from '@utils/externalLinks';
 import ipcLocale from '@utils/ipcLocale';
@@ -44,7 +43,5 @@ if (module.hot) {
     ReactDOM.render(renderWithRouter(NextRootContainer), rootElement);
   });
 }
-
-applyDeviceClass(document.getElementsByTagName('html')[0]);
 
 document.documentElement.setAttribute('data-useragent', navigator.userAgent);
