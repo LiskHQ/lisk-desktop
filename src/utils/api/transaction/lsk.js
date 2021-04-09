@@ -12,12 +12,13 @@ import {
   BASE_FEES,
 } from '@constants';
 import { extractAddress, extractAddressFromPublicKey } from '@utils/account';
+import { splitModuleAndAssetIds } from '@utils/moduleAssets';
 
+import { validateAddress } from '../../validators';
+import regex from '../../regex';
 import http from '../http';
 import ws from '../ws';
 import { getDelegates } from '../delegate';
-import regex from '../../regex';
-import { validateAddress } from '../../validators';
 
 const httpPrefix = '/api/v2';
 
@@ -213,11 +214,6 @@ export const getTxAmount = ({ moduleAssetId, asset }) => {
   }
 
   return undefined;
-};
-
-const splitModuleAndAssetIds = (moduleAssetId) => {
-  const [moduleID, assetID] = moduleAssetId.split(':');
-  return [Number(moduleID), Number(assetID)];
 };
 
 // eslint-disable-next-line max-statements
