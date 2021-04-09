@@ -50,7 +50,6 @@ const FormBtc = (props) => {
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
-        moduleAssetType={moduleAssetType}
       />
     </FormBase>
   );
