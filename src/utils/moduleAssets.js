@@ -32,9 +32,12 @@ const splitModuleAndAssetIds = (moduleAssetId) => {
   return [Number(moduleID), Number(assetID)];
 };
 
+const joinModuleAndAssetIds = ({ moduleID, assetID }) => [moduleID, assetID].join(':');
+
 export {
   retrieveSchemas,
   getModuleAssetTitle,
+  joinModuleAndAssetIds,
   splitModuleAndAssetIds,
   getModuleAssetSenderLabel,
 };
