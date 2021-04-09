@@ -66,7 +66,7 @@ export default class VerifyMessageInput extends React.Component {
     const validators = {
       publicKey: () => {
         try {
-          cryptography.getAddressFromPublicKey(value);
+          cryptography.getAddressFromPublicKey(Buffer.from(value, 'hex'));
           return '';
         } catch (e) {
           return t('This is not a valid public key. Please enter the correct public key.');
