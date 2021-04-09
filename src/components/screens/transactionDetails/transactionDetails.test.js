@@ -27,7 +27,9 @@ const transaction = {
     ],
     asset: {
       amount: '150000000000',
-      recipientAddress: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      recipient: {
+        address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      },
       data: '',
     },
     isPending: false,
