@@ -12,6 +12,7 @@ import {
   BASE_FEES,
 } from '@constants';
 
+import { joinModuleAndAssetIds } from '@utils/moduleAssets';
 import { createTransactionObject } from '@utils/transaction';
 import { validateAddress } from '../../validators';
 import http from '../http';
@@ -234,7 +235,10 @@ export const create = ({
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = ({ transaction, serviceUrl }) => {
-  const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
+  const moduleAssetId = joinModuleAndAssetIds({
+    moduleID: transaction.moduleID,
+    assetID: transaction.assetID,
+  });
   const schema = moduleAssetSchemas[moduleAssetId];
   const binary = transactions.getBytes(schema, transaction);
   const payload = binary.toString('hex');
