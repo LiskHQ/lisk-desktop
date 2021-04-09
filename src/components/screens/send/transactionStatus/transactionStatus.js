@@ -115,7 +115,7 @@ const TransactionStatus = ({
             : null
         }
         {
-          !isBookmarked && account.summary?.address !== fields.recipient.address && (
+          !isBookmarked && account.summary.address !== fields.recipient.address && (
             <div className={`${styles.bookmarkBtn} bookmark-container`}>
               <DialogLink
                 component="addBookmark"
