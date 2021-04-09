@@ -13,7 +13,7 @@ export const extractPublicKey = (passphrase) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
     return cryptography.getKeys(passphrase).publicKey.toString('hex');
   }
-  return undefined;
+  throw Error('Invalid passphrase');
 };
 
 export const extractAddressFromPublicKey = (data) => {
@@ -23,14 +23,14 @@ export const extractAddressFromPublicKey = (data) => {
   if (Buffer.isBuffer(data)) {
     return cryptography.getBase32AddressFromPublicKey(data);
   }
-  return undefined;
+  throw Error(`Unable to convert publicKey ${data} to address`);
 };
 
 export const extractAddressFromPassphrase = (data) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
     return cryptography.getBase32AddressFromPassphrase(data).toString('hex');
   }
-  return undefined;
+  throw Error('Invalid passphrase');
 };
 
 /**
@@ -40,13 +40,13 @@ export const extractAddressFromPassphrase = (data) => {
  * @returns {String?} - Extracted address for a given valid passphrase or publicKey
  */
 export const extractAddress = (data) => {
-  if (regex.address.test(data)) {
+  if (cryptography.validateBase32Address()(data)) {
     return cryptography.getAddressFromBase32Address(data);
   }
   if (Buffer.isBuffer(data)) {
     return cryptography.getBase32AddressFromAddress(data);
   }
-  return undefined;
+  throw Error('Invalid publicKey or passphrase');
 };
 
 export const getActiveTokenAccount = state => ({

@@ -63,7 +63,7 @@ import styles from './table.css';
  * you can use this property.
  */
 const Table = ({
-  data = [],
+  data,
   loadData,
   header,
   row,
@@ -97,7 +97,7 @@ const Table = ({
         data={emptyState}
         error={error}
         isLoading={isLoading}
-        isListEmpty={data.length === 0}
+        isListEmpty={data?.length === 0}
         className={styles.emptyState}
       />
       <Error data={error} isLoading={isLoading} />
