@@ -132,7 +132,13 @@ export const getTransactions = ({
   });
 };
 
-// @todo document this function signature
+/**
+ * Fetches and generates an array of monthly number of delegate
+ * registrations on Lisk blockchain.
+ *
+ * @param {Object} Network - Network setting from Redux store
+ * @returns {Promise} Registered delegates list API call
+ */
 export const getRegisteredDelegates = async ({ network }) => {
   const delegates = await getDelegates({
     network,
