@@ -72,7 +72,6 @@ export const getAccount = async ({
 }) => {
   const normParams = getAccountParams(params);
 
-  console.log({ params, normParams });
   try {
     const response = await http({
       baseUrl,
