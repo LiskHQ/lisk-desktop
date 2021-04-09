@@ -7,39 +7,63 @@ const LiskTransactions = {
   data: [
     {
       id: 0,
-      recipientId: '123456L',
-      senderId: '123456L',
       amount: '0.001',
       token: 'LSK',
       type: 0,
       moduleAssetId: '2:0',
+      sender: {
+        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+      },
+      asset: {
+        recipient: {
+          address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+        },
+      },
     },
     {
       id: 2,
-      recipientId: '123456L',
-      senderId: '123456L',
       amount: '0.008',
       token: 'LSK',
       type: 1,
       moduleAssetId: '5:0',
+      sender: {
+        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+      },
+      asset: {
+        recipient: {
+          address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+        },
+      },
     },
     {
       id: 3,
-      recipientId: '234234234L',
-      senderId: '123456L',
       amount: '0.0009',
       token: 'LSK',
       type: 2,
       moduleAssetId: '4:0',
+      sender: {
+        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+      },
+      asset: {
+        recipient: {
+          address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
+        },
+      },
     },
     {
       id: 4,
-      recipientId: '4564346346L',
-      senderId: '123456L',
       amount: '25',
       token: 'LSK',
       type: 3,
       moduleAssetId: '5:1',
+      sender: {
+        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+      },
+      asset: {
+        recipient: {
+          address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
+        },
+      },
     },
   ],
   isLoading: false,
@@ -51,21 +75,33 @@ const BitcoinTransactions = {
   data: [
     {
       id: 0,
-      recipientId: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
-      senderId: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
       amount: '0.001',
       token: 'BTC',
       type: 0,
       moduleAssetId: '2:0',
+      sender: {
+        address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
+      },
+      asset: {
+        recipient: {
+          address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
+        },
+      },
     },
     {
       id: 1,
-      recipientId: 'mkakDp2f31b3eXdATtAggoqwXcdx1PqqFo',
-      senderId: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
       amount: '0.0003',
       token: 'BTC',
       type: 0,
       moduleAssetId: '2:0',
+      sender: {
+        address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
+      },
+      asset: {
+        recipient: {
+          address: 'mkakDp2f31b3eXdATtAggoqwXcdx1PqqFo',
+        },
+      },
     },
   ],
   isLoading: false,
@@ -84,7 +120,7 @@ const bookmarks = {
   LSK: [
     {
       id: 0,
-      address: '2435345L',
+      address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       title: 'saved account',
       amount: '0.001',
       type: 0,
@@ -105,7 +141,7 @@ const LiskState = {
   account: {
     passphrase: 'test',
     info: {
-      LSK: { address: '12345L' },
+      LSK: { summary: { address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' } },
     },
   },
   settings: {
