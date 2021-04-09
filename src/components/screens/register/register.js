@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generatePassphrase } from '@utils/passphrase';
-import { extractAddress } from '@utils/account';
+import { extractAddressFromPassphrase } from '@utils/account';
 import { routes } from '@constants';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
 import ChooseAvatar from './chooseAvatar';
@@ -25,7 +25,7 @@ class Register extends React.Component {
   componentDidMount() {
     const passphrases = [...Array(5)].map(generatePassphrase);
     const accounts = passphrases.map(pass => ({
-      address: extractAddress(pass),
+      address: extractAddressFromPassphrase(pass),
       passphrase: pass,
     }));
     this.setState({

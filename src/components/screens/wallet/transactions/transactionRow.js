@@ -13,7 +13,6 @@ import DialogLink from '@toolbox/dialog/link';
 import TransactionAsset from './txAsset';
 import styles from './transactions.css';
 
-// eslint-disable-next-line complexity
 const TransactionRow = ({
   data, className, t, host, delegates,
 }) => {

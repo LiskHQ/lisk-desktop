@@ -8,17 +8,20 @@ import { actionTypes } from '@constants';
  */
 const voting = (state = {}, action) => {
   switch (action.type) {
-    case actionTypes.votesRetrieved:
-      return action.data
-        .reduce((votesDict, delegate) => {
-          votesDict[delegate.address] = {
-            confirmed: Number(delegate.amount),
-            unconfirmed: Number(delegate.amount),
-            username: delegate.username,
-          };
-          return votesDict;
-        }, {});
-
+    case actionTypes.votesRetrieved: {
+      if (action.data.account.votesUsed) {
+        return action.data
+          .reduce((votesDict, delegate) => {
+            votesDict[delegate.address] = {
+              confirmed: Number(delegate.amount),
+              unconfirmed: Number(delegate.amount),
+              username: delegate.username,
+            };
+            return votesDict;
+          }, {});
+      }
+      return {};
+    }
     case actionTypes.voteEdited:
       return {
         ...state,

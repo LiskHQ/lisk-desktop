@@ -6,7 +6,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import { routes, networks, networkKeys } from '@constants';
 import { parseSearchParams, stringifySearchParams } from '@utils/searchParams';
-import { extractAddress } from '@utils/account';
+import { extractAddressFromPassphrase } from '@utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '@utils/login';
 import { getNetworksList } from '@utils/getNetwork';
 import Piwik from '@utils/piwik';
@@ -97,7 +97,7 @@ class Login extends React.Component {
     Piwik.trackingEvent('Login', 'button', 'Login submission');
     const { network, login } = this.props;
     this.secondIteration = true;
-    if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
+    if (this.alreadyLoggedWithThisAddress(extractAddressFromPassphrase(passphrase), network)) {
       this.redirectToReferrer();
     } else {
       login({ passphrase });

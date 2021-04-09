@@ -1,6 +1,6 @@
 import http from '../http';
 import ws, { subscribe, unsubscribe } from '../ws';
-import { extractAddress } from '../../account';
+import { extractAddress, extractAddressFromPublicKey } from '../../account';
 import regex from '../../regex';
 
 const httpPrefix = '/api/v2';
@@ -21,7 +21,7 @@ export const wsMethods = {
 const getDelegateProps = ({ address, publicKey, username }) => {
   if (username) return { username };
   if (address) return { address };
-  if (publicKey) return { address: extractAddress(publicKey) };
+  if (publicKey) return { address: extractAddressFromPublicKey(publicKey) };
   return {};
 };
 
