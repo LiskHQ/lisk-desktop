@@ -1,5 +1,5 @@
-import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
-import { getModuleAssetSenderLabels, retrieveSchemas } from './moduleAssets';
+import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants/moduleAssets';
+import { getModuleAssetSenderLabel, retrieveSchemas } from './moduleAssets';
 import http from './api/http';
 import flushPromises from '../../test/unit-test-utils/flushPromises';
 
