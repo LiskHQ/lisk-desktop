@@ -20,7 +20,7 @@ describe('Validate Address', () => {
 });
 
 describe('Validate Public Key', () => {
-  const invalidPublicKey = '35c6b25520fc868b56c83fed6e1nduioasuz9qw84a57f';
+  const invalidPublicKey = 'invalid_public_key';
 
   it('Should return 0 if public key is valid', () => {
     expect(validateLSKPublicKey(accounts.genesis.summary.publicKey)).toBe(0);
