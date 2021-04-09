@@ -25,7 +25,7 @@ describe('hwManager util', () => {
   describe('getAccountsFromDevice', () => {
     it('should resolve all non-empty and one empty account', async () => {
       communication.getPublicKey.mockResolvedValueOnce(accounts.genesis.summary.publicKey);
-      communication.getPublicKey.mockResolvedValueOnce(accounts.empty_account.publicKey);
+      communication.getPublicKey.mockResolvedValueOnce(accounts.empty_account.summary.publicKey);
       accountApi.getAccount.mockResolvedValueOnce(accounts.genesis);
       accountApi.getAccount.mockResolvedValueOnce(accounts.empty_account);
 
