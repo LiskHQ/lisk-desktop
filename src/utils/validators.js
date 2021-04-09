@@ -14,7 +14,6 @@ import reg from './regex';
  * @param {Object} network The network config from Redux store
  * @returns {Number} -> 0: valid, 1: invalid, -1: empty
  */
-// eslint-disable-next-line import/prefer-default-export
 export const validateAddress = (tokenType, address, network) => {
   if (address === '') {
     return -1;
@@ -32,15 +31,25 @@ export const validateAddress = (tokenType, address, network) => {
       }
 
     case tokenMap.LSK.key:
+      try {
+        return cryptography.validateBase32Address(address) ? 0 : 1;
+      } catch (e) {
+        return 1;
+      }
     default:
-      return address && cryptography.validateBase32Address(address) ? 0 : 1;
+      return 1;
   }
 };
 
-export const validateLSKPublicKey = (address) => {
+/**
+ * Checks the validity of a given publicKey
+ *
+ * @param {String} publicKey - The publicKey to validate
+ * @returns {Number} 0 for valid, 1 for invalid
+ */
+export const validateLSKPublicKey = (publicKey) => {
   try {
-    cryptography.getAddressFromPublicKey(address);
-    return 0;
+    return reg.publicKey.test(publicKey) ? 0 : 1;
   } catch (e) {
     return 1;
   }
