@@ -512,10 +512,6 @@ export const getTransactionFee = async ({
   };
 };
 
-export const getTokenFromAddress = address => (
-  regex.address.test(address) ? tokenMap.LSK.key : tokenMap.BTC.key
-);
-
 /**
  * Retrieves transaction schemas.
  *
