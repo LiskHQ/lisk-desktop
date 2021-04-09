@@ -198,75 +198,22 @@ export const getTransactionStats = ({ network, params: { period } }) => {
   });
 };
 
+
 /**
- * creates a new transaction
+ * Retrieves transaction schemas.
  *
- * @param {Object} transaction The transaction information
- * @param {String} transactionType The transaction type title
- * @returns {Promise} promise that resolves to a transaction or
- * rejects with an error
+ * @param {Object} data
+ * @param {String?} data.baseUrl - Lisk Service API url to override the
+ * existing ServiceUrl on the network param. We may use this to retrieve
+ * the details of an archived transaction.
+ * @param {Object} data.network - Network setting from Redux store
+ * @returns {Promise} http call
  */
-export const create = ({
-  network,
-  moduleAssetId,
-  ...transactionObject
-}) => new Promise((resolve, reject) => {
-  console.log(transactionObject, moduleAssetId);
-  const { networkIdentifier } = network.networks.LSK;
-  const {
-    passphrase, ...rawTransaction
-  } = transactionObject;
-
-  const schema = moduleAssetSchemas[moduleAssetId];
-  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
-
-  try {
-    const signedTransaction = transactions.signTransaction(
-      schema, transaction, Buffer.from(networkIdentifier, 'hex'), passphrase,
-    );
-
-    resolve(signedTransaction);
-  } catch (error) {
-    reject(error);
-  }
+export const getSchemas = ({ baseUrl }) => http({
+  path: httpPaths.schemas,
+  baseUrl,
 });
 
-/**
- * broadcasts a transaction over the network
- *
- * @param {object} transaction
- * @param {Object} network
- * @param {string} network.name - the network name, e.g. mainnet, betanet
- * @param {string} network.address - the node address e.g. https://betanet-lisk.io
- * @returns {Promise} promise that resolves to a transaction or rejects with an error
- */
-export const broadcast = ({ transaction, serviceUrl }) => {
-  const moduleAssetId = joinModuleAndAssetIds({
-    moduleID: transaction.moduleID,
-    assetID: transaction.assetID,
-  });
-  const schema = moduleAssetSchemas[moduleAssetId];
-  const binary = transactions.getBytes(schema, transaction);
-  const payload = binary.toString('hex');
-  const body = JSON.stringify({ transaction: payload });
-
-  return new Promise(
-    async (resolve, reject) => {
-      try {
-        const response = await http({
-          method: 'POST',
-          baseUrl: serviceUrl,
-          path: '/api/v2/transactions',
-          body,
-        });
-
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      }
-    },
-  );
-};
 
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
@@ -356,16 +303,71 @@ export const getTransactionFee = async ({
 };
 
 /**
- * Retrieves transaction schemas.
+ * creates a new transaction
  *
- * @param {Object} data
- * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
- * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call
+ * @param {Object} transaction The transaction information
+ * @param {String} transactionType The transaction type title
+ * @returns {Promise} promise that resolves to a transaction or
+ * rejects with an error
  */
-export const getSchemas = ({ baseUrl }) => http({
-  path: httpPaths.schemas,
-  baseUrl,
+export const create = ({
+  network,
+  moduleAssetId,
+  ...transactionObject
+}) => new Promise((resolve, reject) => {
+  console.log(transactionObject, moduleAssetId);
+  const { networkIdentifier } = network.networks.LSK;
+  const {
+    passphrase, ...rawTransaction
+  } = transactionObject;
+
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
+
+  try {
+    const signedTransaction = transactions.signTransaction(
+      schema, transaction, Buffer.from(networkIdentifier, 'hex'), passphrase,
+    );
+
+    resolve(signedTransaction);
+  } catch (error) {
+    reject(error);
+  }
 });
+
+/**
+ * broadcasts a transaction over the network
+ *
+ * @param {object} transaction
+ * @param {Object} network
+ * @param {string} network.name - the network name, e.g. mainnet, betanet
+ * @param {string} network.address - the node address e.g. https://betanet-lisk.io
+ * @returns {Promise} promise that resolves to a transaction or rejects with an error
+ */
+export const broadcast = ({ transaction, serviceUrl }) => {
+  const moduleAssetId = joinModuleAndAssetIds({
+    moduleID: transaction.moduleID,
+    assetID: transaction.assetID,
+  });
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const binary = transactions.getBytes(schema, transaction);
+  const payload = binary.toString('hex');
+  const body = JSON.stringify({ transaction: payload });
+
+  return new Promise(
+    async (resolve, reject) => {
+      try {
+        const response = await http({
+          method: 'POST',
+          baseUrl: serviceUrl,
+          path: '/api/v2/transactions',
+          body,
+        });
+
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      }
+    },
+  );
+};
