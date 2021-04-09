@@ -225,7 +225,6 @@ export const transformTransaction = (transaction) => {
   const senderAddress = extractAddressFromPublicKey(transaction.senderPublicKey);
   const senderPublicKey = transaction.senderPublicKey.toString('hex');
 
-  console.log(transaction);
   const transformedTransaction = {
     id: transaction.id.toString('hex'),
     moduleAssetId,
