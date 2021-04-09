@@ -16,16 +16,22 @@ describe('Form', () => {
     bookmarks = {
       LSK: [{
         title: 'ABC',
-        address: '12345L',
-        balance: 10,
+        summary: {
+          address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+          balance: 10,
+        },
       }, {
         title: 'FRG',
-        address: '12375L',
-        balance: 15,
+        summary: {
+          address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
+          balance: 15,
+        },
       }, {
         title: 'KTG',
-        address: '12395L',
-        balance: 7,
+        summary: {
+          address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
+          balance: 7,
+        },
       }],
       BTC: [],
     };
@@ -136,7 +142,7 @@ describe('Form', () => {
     });
   });
 
-  describe('Amount field', () => {
+  describe.only('Amount field', () => {
     it('Should show converter on correct input', () => {
       const evt = { target: { name: 'amount', value: 1 } };
       let amountField = wrapper.find('.fieldGroup').at(1);
@@ -189,7 +195,7 @@ describe('Form', () => {
     });
 
     it('Should show error if transaction will result on an account with less than the minimum balance', () => {
-      const evt = { target: { name: 'amount', value: '49.96' } };
+      const evt = { target: { name: 'amount', value: '98970000' } };
       const amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', evt);
       act(() => { jest.advanceTimersByTime(300); });
