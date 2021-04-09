@@ -37,7 +37,9 @@ describe('Top Accounts Monitor Page', () => {
       isLoading: false,
       data: [
         {
-          address: '1234567L',
+          summary: {
+            address: accounts.delegate.summary.address,
+          },
           dpos: {
             delegate: {
               username: 'geenesis',
