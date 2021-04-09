@@ -5,7 +5,7 @@ jest.mock('socket.io-client');
 
 describe('Web socket', () => {
   const baseUrl = 'http://sample-service-url.com';
-  const wsURI = 'ws://sample-service-url.com/rpc-v1';
+  const wsURI = 'ws://sample-service-url.com/rpc-v2';
 
   describe('ws', () => {
     it('Should call socket.emit', async () => {
