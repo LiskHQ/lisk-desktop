@@ -40,7 +40,7 @@ export const extractAddressFromPassphrase = (data) => {
  * @returns {String?} - Extracted address for a given valid passphrase or publicKey
  */
 export const extractAddress = (data) => {
-  if (regex.address.test(data)) {
+  if (cryptography.validateBase32Address()(data)) {
     return cryptography.getAddressFromBase32Address(data);
   }
   if (Buffer.isBuffer(data)) {
