@@ -15,11 +15,14 @@ describe('Delegate Registration Summary', () => {
 
   const props = {
     account: {
-      address: '123456789L',
-      balance: 11000,
-      secondPublicKey: '',
-      isDelegate: false,
-      nonce: '1',
+      summary: {
+        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+        balance: 11000,
+        isDelegate: false,
+      },
+      sequence: {
+        nonce: '1',
+      },
     },
     fee: 10,
     prevState: {},
