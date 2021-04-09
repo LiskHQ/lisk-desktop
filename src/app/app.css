@@ -163,12 +163,3 @@ body {
     }
   }
 }
-
-@media (--small-viewport) {
-  html.on-device,
-  html.on-device body {
-    -webkit-overflow-scrolling: touch !important;
-    overflow: auto !important;
-    height: 100% !important;
-  }
-}
