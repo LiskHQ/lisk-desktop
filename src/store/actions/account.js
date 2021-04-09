@@ -1,6 +1,6 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
-import { loginTypes, actionTypes } from '@constants';
+import { loginTypes, actionTypes, tokenMap } from '@constants';
 import { getAccount } from '@utils/api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
 import { networkStatusUpdated } from './network';
@@ -68,7 +68,11 @@ export const accountDataUpdated = tokensTypes =>
       : [settings.token.active];
 
     const params = activeTokens.reduce((acc, token) => {
-      acc[token] = { address: account.info[token].address };
+      if (token === tokenMap.LSK.key) {
+        acc[token] = { address: account.info[tokenMap.LSK.key].summary.address };
+      } else {
+        acc[token] = { address: account.info[token].address };
+      }
       return acc;
     }, {});
 

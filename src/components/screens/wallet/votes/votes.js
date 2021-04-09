@@ -39,14 +39,14 @@ const Votes = ({
 
   // Fetch delegate profiles to define rank, productivity and delegate weight
   useEffect(() => {
-    if (isEmpty(accounts.data) && votes.data.votes.length) {
-      const addressList = votes.data.votes.map(vote => vote.address);
+    if (isEmpty(accounts.data) && votes.data.length) {
+      const addressList = votes.data.map(vote => vote.address);
       accounts.loadData({ addressList });
     }
   }, [votes.data]);
 
   const areLoading = accounts.isLoading || votes.isLoading;
-  const filteredVotes = votes.data.votes.filter((vote) => {
+  const filteredVotes = votes.data.filter((vote) => {
     if (!vote.username) return false;
     return vote.username.indexOf(filterValue) > -1;
   });
@@ -68,7 +68,7 @@ const Votes = ({
           )}
           <Input
             className="search"
-            disabled={!votes.data.votes.length}
+            disabled={!votes.data.length}
             name="filter"
             value={filterValue}
             placeholder={t('Filter by name')}

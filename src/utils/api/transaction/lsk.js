@@ -17,6 +17,7 @@ import ws from '../ws';
 import { getDelegates } from '../delegate';
 import regex from '../../regex';
 import { validateAddress } from '../../validators';
+import { extractAddressFromPublicKey } from '../../account';
 
 const httpPrefix = '/api/v2';
 
@@ -219,51 +220,105 @@ const splitModuleAndAssetIds = (moduleAssetId) => {
   return [Number(moduleID), Number(assetID)];
 };
 
-// eslint-disable-next-line max-statements
-const createTransactionObject = (tx, moduleAssetId) => {
-  const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
-  const {
-    senderPublicKey, nonce, amount, recipientAddress, data, fee = 0,
-  } = tx;
+export const transformTransaction = (transaction) => {
+  const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
+  const senderAddress = extractAddressFromPublicKey(transaction.senderPublicKey);
+  const senderPublicKey = transaction.senderPublicKey.toString('hex');
 
-  const transaction = {
-    moduleID,
-    assetID,
-    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
-    nonce: BigInt(nonce),
-    fee: BigInt(fee),
-    signatures: [],
+  const transformedTransaction = {
+    id: transaction.id.toString('hex'),
+    moduleAssetId,
+    fee: String(transaction.fee),
+    nonce: String(transaction.nonce),
+    sender: { publicKey: senderPublicKey, address: senderAddress },
+    signatures: transaction.signatures,
   };
 
   if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
-    transaction.asset = {
-      recipientAddress: extractAddress(recipientAddress),
-      amount: BigInt(amount),
-      data,
+    transformedTransaction.asset = {
+      recipient: { address: extractAddress(transaction.asset.recipientAddress) },
+      amount: String(transaction.asset.amount),
+      data: transaction.asset.data,
     };
   } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
-    transaction.asset = {
-      votes: tx.votes,
-    };
+    // @todo fix me
+    // transformedTransaction.asset = {
+    //   votes: tx.votes,
+    // };
+
   } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
-    transaction.asset = {
-      unlockObjects: tx.unlockObjects,
-    };
+    // @todo fix me
+    // transformedTransaction.asset = {
+    //   unlockObjects: tx.unlockObjects,
+    // };
   } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerDelegate) {
-    transaction.asset = {
-      username: tx.username,
-    };
+    // @todo fix me
+    // transformedTransaction.asset = {
+    //   username: tx.username,
+    // };
   } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-    transaction.asset = {
-      numberOfSignatures: tx.numberOfSignatures,
-      mandatoryKeys: tx.mandatoryKeys,
-      optionalKeys: tx.optionalKeys,
-    };
+    // @todo fix me
+    // transformedTransaction.asset = {
+    //   numberOfSignatures: tx.numberOfSignatures,
+    //   mandatoryKeys: tx.mandatoryKeys,
+    //   optionalKeys: tx.optionalKeys,
+    // };
   } else {
     throw Error('Unknown transaction');
   }
 
-  return transaction;
+  return transformedTransaction;
+};
+// eslint-disable-next-line max-statements
+const createTransactionObject = (tx, moduleAssetId) => {
+  try {
+    const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
+    const {
+      senderPublicKey, nonce, amount, recipientAddress, data, fee = 0,
+    } = tx;
+
+    const transaction = {
+      moduleID,
+      assetID,
+      senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
+      nonce: BigInt(nonce),
+      fee: BigInt(fee),
+      signatures: [],
+    };
+
+    if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
+      transaction.asset = {
+        recipientAddress: extractAddress(recipientAddress),
+        amount: BigInt(amount),
+        data,
+      };
+    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
+      transaction.asset = {
+        votes: tx.votes,
+      };
+    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
+      transaction.asset = {
+        unlockObjects: tx.unlockObjects,
+      };
+    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerDelegate) {
+      transaction.asset = {
+        username: tx.username,
+      };
+    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
+      transaction.asset = {
+        numberOfSignatures: tx.numberOfSignatures,
+        mandatoryKeys: tx.mandatoryKeys,
+        optionalKeys: tx.optionalKeys,
+      };
+    } else {
+      throw Error('Unknown transaction');
+    }
+
+    return transaction;
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+  }
 };
 
 /**
@@ -278,7 +333,6 @@ export const create = ({
   network,
   moduleAssetId,
   ...transactionObject
-// eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
   const { networkIdentifier } = network.networks.LSK;
   const {
@@ -292,6 +346,7 @@ export const create = ({
     const signedTransaction = transactions.signTransaction(
       schema, transaction, Buffer.from(networkIdentifier, 'hex'), passphrase,
     );
+
     resolve(signedTransaction);
   } catch (error) {
     reject(error);
@@ -308,9 +363,11 @@ export const create = ({
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = ({ transaction, serviceUrl }) => {
-  const schema = moduleAssetSchemas[transaction.moduleAssetId];
+  const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
+  const schema = moduleAssetSchemas[moduleAssetId];
   const binary = transactions.getBytes(schema, transaction);
   const payload = binary.toString('hex');
+  const body = JSON.stringify({ transaction: payload });
 
   return new Promise(
     async (resolve, reject) => {
@@ -319,7 +376,7 @@ export const broadcast = ({ transaction, serviceUrl }) => {
           method: 'POST',
           baseUrl: serviceUrl,
           path: '/api/v2/transactions',
-          body: { transaction: payload },
+          body,
         });
 
         resolve(response);

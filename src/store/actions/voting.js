@@ -78,7 +78,7 @@ export const votesSubmitted = data =>
 export const votesRetrieved = () =>
   async (dispatch, getState) => {
     const { account, network } = getState();
-    const address = account.info[tokenMap.LSK.key].address;
+    const address = account.info[tokenMap.LSK.key].summary.address;
     const votes = await getVotes({ network, params: { address } });
 
     dispatch({

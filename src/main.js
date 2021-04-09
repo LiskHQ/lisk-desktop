@@ -10,6 +10,9 @@ import ipcLocale from '@utils/ipcLocale';
 import i18n from './i18n';
 import App from './app';
 
+// eslint-disable-next-line no-extend-native
+BigInt.prototype.toJSON = function () { return `${this.toString()}n`; };
+
 if (PRODUCTION) {
   externalLinks.init();
 }
