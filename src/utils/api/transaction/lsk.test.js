@@ -9,7 +9,6 @@ import {
   getSchemas,
 } from './lsk';
 import http from '../http';
-import ws from '../ws';
 import * as delegates from '../delegate';
 
 jest.mock('../http', () => ({
@@ -58,20 +57,6 @@ describe('API: LSK Transactions', () => {
       jest.clearAllMocks();
     });
 
-    it('should call WS with correct list of types', async () => {
-      await getTransactions({
-        network, params: { type: 'transfer' },
-      });
-
-      expect(ws).toHaveBeenCalledWith({
-        baseUrl: 'http://sample.com/',
-        requests: [
-          { method: 'get.transactions', params: { type: 0 } },
-          { method: 'get.transactions', params: { type: 8 } },
-        ],
-      });
-    });
-
     it('should call http with block id', async () => {
       await getTransactions({
         network, params: { blockId: sampleId },
@@ -89,10 +74,8 @@ describe('API: LSK Transactions', () => {
       await getTransactions({
         network,
         params: {
-          dateFrom: 1607446547094,
-          dateTo: 1607446547094,
-          amountFrom: 123445,
-          amountTo: 123445,
+          timestamp: '1607446547094:1607446547094',
+          amount: '123445:123445',
           sort: 'amount:asc',
         },
       });
@@ -102,10 +85,8 @@ describe('API: LSK Transactions', () => {
         path: '/api/v2/transactions',
         baseUrl: undefined,
         params: {
-          from: 1607446547094,
-          to: 1607446547094,
-          min: 123445,
-          max: 123445,
+          timestamp: '1607446547094:1607446547094',
+          amount: '123445:123445',
           sort: 'amount:asc',
         },
       });
@@ -115,10 +96,8 @@ describe('API: LSK Transactions', () => {
       await getTransactions({
         network,
         params: {
-          dateFrom: 'wrong_date',
-          dateTo: 1607446547094,
-          amountFrom: 'wrong_amount',
-          amountTo: 123445,
+          timestamp: 'wrong_date:1607446547094',
+          amount: 'wrong_amount:123445',
           sort: 'wrong_sort',
           limit: 0,
           offset: -1,
@@ -132,8 +111,6 @@ describe('API: LSK Transactions', () => {
         path: '/api/v2/transactions',
         baseUrl: undefined,
         params: {
-          to: 1607446547094,
-          max: 123445,
         },
       });
     });
@@ -141,12 +118,12 @@ describe('API: LSK Transactions', () => {
 
   describe('getRegisteredDelegates', () => {
     beforeEach(() => {
-      ws.mockReset();
+      http.mockReset();
     });
 
     it('should throw if any of the API endpoints throw', async () => {
       // Mock promise failure
-      ws.mockRejectedValue(Error('Error fetching data.'));
+      http.mockRejectedValue(Error('Error fetching data.'));
 
       // call and anticipate failure
       await expect(getRegisteredDelegates({ network }))
@@ -168,7 +145,7 @@ describe('API: LSK Transactions', () => {
         data: {},
         meta: { total: 10 },
       });
-      ws.mockResolvedValue({
+      http.mockResolvedValue({
         data: txs,
         meta: { total: 10 },
       });
@@ -248,7 +225,7 @@ describe('API: LSK Transactions', () => {
       amount: '100000000',
       data: 'to test the instance',
       nonce: '6',
-      recipient: '16313739661670634666L',
+      recipientAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
       senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     };
@@ -300,6 +277,7 @@ describe('API: LSK Transactions', () => {
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        username: 'some_username',
       };
       const result = await getTransactionFee({
         transaction: voteTxData,
@@ -322,7 +300,6 @@ describe('API: LSK Transactions', () => {
 
       expect(http).toHaveBeenCalledWith({
         path: '/api/v2/transactions/schemas',
-        network,
         baseUrl,
       });
     });
