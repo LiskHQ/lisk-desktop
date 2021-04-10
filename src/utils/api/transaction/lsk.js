@@ -457,12 +457,10 @@ export const getTransactionFee = async ({
     ),
   }).length;
 
-  let fee = minFee + BigInt(size * feePerByte) + BigInt(tieBreaker);
-
-  const maxFee = BigInt(maxAssetFee);
-  if (fee > maxFee) {
-    fee = maxFee;
-  }
+  const fee = Math.min(
+    minFee + BigInt(size * feePerByte) + BigInt(tieBreaker),
+    BigInt(maxAssetFee),
+  );
 
   const roundedValue = transactions.convertBeddowsToLSK(fee.toString());
 
