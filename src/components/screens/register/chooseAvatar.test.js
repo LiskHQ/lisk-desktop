@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import { generatePassphraseFromSeed } from '@utils/passphrase';
-import { extractAddress } from '@utils/account';
+import { extractAddressFromPassphrase } from '@utils/account';
 import ChooseAvatar from './chooseAvatar';
 
 describe('Register Process - Choose Avatar', () => {
@@ -15,7 +15,7 @@ describe('Register Process - Choose Avatar', () => {
       seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
     }));
   const accounts = passphrases.map(pass => ({
-    address: extractAddress(pass),
+    address: extractAddressFromPassphrase(pass),
     passphrase: pass,
   }));
 
