@@ -201,10 +201,12 @@ describe('API: LSK Account', () => {
       });
 
       expect(result).toEqual({
-        address,
-        balance: 0,
-        token: 'LSK',
-        publicKey,
+        summary: {
+          address,
+          balance: 0,
+          token: 'LSK',
+          publicKey,
+        },
       });
     });
   });
