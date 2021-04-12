@@ -10,7 +10,6 @@ export const create = transactionAPI.create;
 export const createTransactionInstance = transactionAPI.createTransactionInstance;
 export const getMinTxFee = transactionAPI.getMinTxFee;
 export const getRegisteredDelegates = transactionAPI.getRegisteredDelegates;
-export const getTokenFromAddress = transactionAPI.getTokenFromAddress;
 export const getTransaction = transactionAPI.getTransaction;
 export const getTransactionBaseFees = transactionAPI.getTransactionBaseFees;
 export const getTransactionFee = transactionAPI.getTransactionFee;
