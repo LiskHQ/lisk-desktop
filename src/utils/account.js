@@ -40,9 +40,7 @@ export const extractAddressFromPassphrase = (data) => {
  */
 export const getBase32AddressFromAddress = (data) => {
   try {
-    if (Buffer.isBuffer(data)) {
-      return cryptography.getBase32AddressFromAddress(data);
-    }
+    return cryptography.getBase32AddressFromAddress(data);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
@@ -52,9 +50,7 @@ export const getBase32AddressFromAddress = (data) => {
 
 export const getAddressFromBase32Address = (data) => {
   try {
-    if (cryptography.validateBase32Address(data)) {
-      return cryptography.getAddressFromBase32Address(data);
-    }
+    return cryptography.getAddressFromBase32Address(data);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
