@@ -2,7 +2,7 @@
 import {
   MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
-import { extractAddressFromPublicKey, getBase32AddressFromAddress } from '@utils/account';
+import { extractAddressFromPublicKey, getBase32AddressFromAddress, getAddressFromBase32Address } from '@utils/account';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
 
 /**
@@ -113,11 +113,15 @@ const createTransactionObject = (tx, moduleAssetId) => {
 
   switch (moduleAssetId) {
     case MODULE_ASSETS_NAME_ID_MAP.transfer: {
+      const binaryAddress = recipientAddress
+        ? getAddressFromBase32Address(recipientAddress) : Buffer.from('');
+
       transaction.asset = {
-        recipientAddress: getBase32AddressFromAddress(recipientAddress),
+        recipientAddress: binaryAddress,
         amount: BigInt(amount),
         data,
       };
+
       break;
     }
 
