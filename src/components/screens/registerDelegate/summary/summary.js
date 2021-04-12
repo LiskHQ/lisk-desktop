@@ -40,7 +40,6 @@ class Summary extends React.Component {
       create(data, tokenMap.LSK.key),
     );
 
-    console.log(error);
     if (!error) {
       nextStep({ transactionInfo: tx });
     }
