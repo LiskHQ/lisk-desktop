@@ -5,6 +5,9 @@ import {
 import { extractAddressFromPublicKey, getBase32AddressFromAddress, getAddressFromBase32Address } from '@utils/account';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
 
+const {
+  transfer, voteDelegate, registerDelegate, unlockToken,
+} = MODULE_ASSETS_NAME_ID_MAP;
 /**
  * Gets the amount of a given transaction
  *
@@ -44,7 +47,7 @@ const transformTransaction = (transaction) => {
   };
 
   switch (moduleAssetId) {
-    case MODULE_ASSETS_NAME_ID_MAP.transfer: {
+    case transfer: {
       transformedTransaction.asset = {
         recipient: { address: getBase32AddressFromAddress(transaction.asset.recipientAddress) },
         amount: String(transaction.asset.amount),
@@ -54,7 +57,7 @@ const transformTransaction = (transaction) => {
       break;
     }
 
-    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: {
+    case registerDelegate: {
       // @todo fix me
       // transformedTransaction.asset = {
       //   username: tx.username,
@@ -62,7 +65,7 @@ const transformTransaction = (transaction) => {
       break;
     }
 
-    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: {
+    case voteDelegate: {
       transformedTransaction.asset = {
         votes: transaction.asset.votes.map(vote => ({
           amount: Number(vote.amount),
@@ -72,7 +75,7 @@ const transformTransaction = (transaction) => {
       break;
     }
 
-    case MODULE_ASSETS_NAME_ID_MAP.unlockToken: {
+    case unlockToken: {
       // @todo fix me
       // transformedTransaction.asset = {
       //   unlockObjects: tx.unlockObjects,
@@ -80,15 +83,15 @@ const transformTransaction = (transaction) => {
       break;
     }
 
-    case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup: {
-      // @todo fix me
-      // transformedTransaction.asset = {
-      //   numberOfSignatures: tx.numberOfSignatures,
-      //   mandatoryKeys: tx.mandatoryKeys,
-      //   optionalKeys: tx.optionalKeys,
-      // };
-      break;
-    }
+    // case registerMultisignatureGroup: {
+    // @todo fix me
+    // transformedTransaction.asset = {
+    //   numberOfSignatures: tx.numberOfSignatures,
+    //   mandatoryKeys: tx.mandatoryKeys,
+    //   optionalKeys: tx.optionalKeys,
+    // };
+    // break;
+    // }
 
     default:
       throw Error('Unknown transaction');
@@ -114,7 +117,7 @@ const createTransactionObject = (tx, moduleAssetId) => {
   };
 
   switch (moduleAssetId) {
-    case MODULE_ASSETS_NAME_ID_MAP.transfer: {
+    case transfer: {
       const binaryAddress = recipientAddress
         ? getAddressFromBase32Address(recipientAddress) : Buffer.from('');
 
@@ -127,14 +130,14 @@ const createTransactionObject = (tx, moduleAssetId) => {
       break;
     }
 
-    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: {
+    case registerDelegate: {
       transaction.asset = {
         username: tx.username,
       };
       break;
     }
 
-    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: {
+    case voteDelegate: {
       const votes = tx.votes.map(vote => ({
         amount: BigInt(vote.amount),
         delegateAddress: getAddressFromBase32Address(vote.delegateAddress),
@@ -143,14 +146,14 @@ const createTransactionObject = (tx, moduleAssetId) => {
       break;
     }
 
-    case MODULE_ASSETS_NAME_ID_MAP.unlockToken: {
+    case unlockToken: {
       transaction.asset = {
         unlockObjects: tx.unlockObjects,
       };
       break;
     }
 
-    // case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup: {
+    // case registerMultisignatureGroup: {
     //   transaction.asset = {
     //     numberOfSignatures: tx.numberOfSignatures,
     //     mandatoryKeys: tx.mandatoryKeys,
@@ -163,7 +166,6 @@ const createTransactionObject = (tx, moduleAssetId) => {
       throw Error('Unknown transaction');
   }
 
-  console.log(transaction);
   return transaction;
 };
 
