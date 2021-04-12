@@ -63,10 +63,12 @@ const transformTransaction = (transaction) => {
     }
 
     case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: {
-      // @todo fix me
-      // transformedTransaction.asset = {
-      //   votes: tx.votes,
-      // };
+      transformedTransaction.asset = {
+        votes: transaction.asset.votes.map(vote => ({
+          amount: Number(vote.amount),
+          delegateAddress: getBase32AddressFromAddress(vote.delegateAddress),
+        })),
+      };
       break;
     }
 
@@ -133,8 +135,10 @@ const createTransactionObject = (tx, moduleAssetId) => {
     }
 
     case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: {
-      const votes = tx.votes.map(vote =>
-        ({ amount: BigInt(vote.amount), delegateAddress: Buffer.from(vote.delegateAddress) }));
+      const votes = tx.votes.map(vote => ({
+        amount: BigInt(vote.amount),
+        delegateAddress: getAddressFromBase32Address(vote.delegateAddress),
+      }));
       transaction.asset = { votes };
       break;
     }
