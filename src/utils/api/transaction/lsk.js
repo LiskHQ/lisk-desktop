@@ -241,10 +241,8 @@ export const getTransactionBaseFees = network =>
 export const getTransactionFee = async ({
   transaction, selectedPriority,
 }) => {
-  console.log(transaction);
   const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
-  console.log('feePerByte', feePerByte);
 
   const {
     moduleAssetId, ...rawTransaction
@@ -255,7 +253,6 @@ export const getTransactionFee = async ({
 
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
 
-  console.log(BASE_FEES);
   const minFee = transactions.computeMinFee(schema, {
     ...transactionObject,
     signatures: undefined,
@@ -263,12 +260,9 @@ export const getTransactionFee = async ({
     baseFees: BASE_FEES,
   });
 
-  console.log('minDee', minFee);
   // tie breaker is only meant for medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : minFeePerByte * feePerByte * Math.random();
-
-  console.log('tieBreaker', tieBreaker);
 
   const size = transactions.getBytes(schema, {
     ...transactionObject,
@@ -277,13 +271,7 @@ export const getTransactionFee = async ({
     ),
   }).length;
 
-  console.log('size', size);
-
-
   let fee = minFee + BigInt(size * feePerByte) + BigInt(tieBreaker);
-
-  console.log('fee', fee);
-
 
   const maxFee = BigInt(maxAssetFee);
   if (fee > maxFee) {
@@ -316,7 +304,6 @@ export const create = ({
   moduleAssetId,
   ...transactionObject
 }) => new Promise((resolve, reject) => {
-  console.log(transactionObject, moduleAssetId);
   const { networkIdentifier } = network.networks.LSK;
   const {
     passphrase, ...rawTransaction
