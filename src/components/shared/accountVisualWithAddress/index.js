@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@constants';
 import { truncateAddress } from '@utils/account';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
-import { MODULE_ASSETS_MAP } from '@constants/moduleAssets';
 import Icon from '@toolbox/icon';
 import AccountVisual from '@toolbox/accountVisual';
 import styles from './accountVisualWithAddress.css';
