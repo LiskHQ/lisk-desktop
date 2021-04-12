@@ -1,5 +1,5 @@
 import {
-  accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved,
+  accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved, emptyTransactionsData,
 } from '@actions';
 
 import { tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
@@ -15,6 +15,7 @@ jest.mock('@actions', () => ({
   transactionsRetrieved: jest.fn(),
   settingsUpdated: jest.fn(),
   votesRetrieved: jest.fn(),
+  emptyTransactionsData: jest.fn(),
 }));
 
 
@@ -251,9 +252,8 @@ describe('Account middleware', () => {
     });
   });
 
-  describe.skip('on accountLoggedOut', () => {
+  describe('on accountLoggedOut', () => {
     it('should clean up', () => {
-      // jest.spyOn(settingsActions, 'settingsUpdated');
       const accountLoggedOutAction = {
         type: actionTypes.accountLoggedOut,
       };
@@ -261,7 +261,7 @@ describe('Account middleware', () => {
       expect(settingsUpdated).toHaveBeenCalledWith(
         { token: { active: tokenMap.LSK.key } },
       );
-      expect(store.dispatch).toHaveBeenCalledWith({ type: actionTypes.emptyTransactionsData });
+      expect(emptyTransactionsData).toHaveBeenCalled();
     });
   });
 
