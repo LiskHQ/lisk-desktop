@@ -7,7 +7,7 @@ import { getTransactions, create, broadcast } from '@api/transaction';
 import { signSendTransaction } from '@utils/hwManager';
 import { passphraseUsed } from './account';
 import { loadingStarted, loadingFinished } from './loading';
-import { transformTransaction } from '../../utils/api/transaction/lsk';
+import { transformTransaction } from '../../utils/transaction';
 
 /**
  * Action trigger when user logout from the application
