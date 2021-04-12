@@ -1,7 +1,7 @@
 
 import { getAccount } from '../account/btc';
 import { getTransaction } from '../transaction/btc';
-import regex from '../../regex';
+import { regex } from '@constants';
 
 /**
  * Defines the entity corresponding the given query

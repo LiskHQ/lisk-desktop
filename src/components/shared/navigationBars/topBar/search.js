@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { routes } from '@constants';
+import { routes, regex } from '@constants';
 import { selectSearchParamValue } from '@utils/searchParams';
-import regex from '@utils/regex';
 import styles from './topBar.css';
 import Icon from '../../../toolbox/icon';
 import DialogLink from '../../../toolbox/dialog/link';

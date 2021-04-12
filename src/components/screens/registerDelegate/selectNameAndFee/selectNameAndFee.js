@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getDelegate } from '@utils/api/delegate';
-import regex from '@utils/regex';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { regex, tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '../../../toolbox/box';
 import BoxHeader from '../../../toolbox/box/header';

@@ -1,9 +1,8 @@
-import { tokenMap } from '@constants';
+import { tokenMap, regex } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';
 import { extractAddressFromPassphrase, extractAddressFromPublicKey, extractPublicKey } from '../../account';
-import regex from '../../regex';
 
 const httpPrefix = '/api/v2';
 
