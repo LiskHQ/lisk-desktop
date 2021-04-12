@@ -28,14 +28,7 @@ const getServiceUrl = ({ name, address = 'http://localhost:4000' }) => {
   if ([networkKeys.mainNet, networkKeys.testNet].includes(name)) {
     return networks[name].serviceUrl;
   }
-  if (name === networkKeys.customNode) {
-    const serviceUrl = window.localStorage.getItem('serviceUrl');
-    if (serviceUrl) {
-      return serviceUrl;
-    }
-    return address.replace(/:\d{2,4}/, ':9901');
-  }
-  throw Error('The node url entered does not have a corresponding service url');
+  return address;
 };
 
 /**
