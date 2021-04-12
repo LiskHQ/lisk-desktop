@@ -75,10 +75,13 @@ const transformTransaction = (transaction) => {
     }
 
     case unlockToken: {
-      // @todo fix me
-      // transformedTransaction.asset = {
-      //   unlockObjects: tx.unlockObjects,
-      // };
+      transformedTransaction.asset = {
+        // unlockObjects: transaction.unlockObjects.map(unlockingObject => ({
+        //   delegateAddress: unlockingObject.delegateAddress,
+        //   amount: unlockingObject.amount,
+        //   unvoteHeight: unlockingObject.height.start
+        // })),
+      };
       break;
     }
 
