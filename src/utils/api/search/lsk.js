@@ -2,7 +2,7 @@ import { getAccount } from '../account/lsk';
 import { getTransaction } from '../transaction/lsk';
 import { getDelegates } from '../delegate';
 import { getBlock } from '../block';
-import regex from '../../regex';
+import { regex } from '@constants';
 
 /**
  * Fetches transaction or block info for a given id

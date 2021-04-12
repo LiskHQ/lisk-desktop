@@ -1,7 +1,7 @@
 import http from '../http';
 import ws, { subscribe, unsubscribe } from '../ws';
-import { extractAddress, extractAddressFromPublicKey } from '../../account';
-import regex from '../../regex';
+import { extractAddressFromPublicKey } from '../../account';
+import { regex } from '@constants';
 
 const httpPrefix = '/api/v2';
 

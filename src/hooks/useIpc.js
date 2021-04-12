@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
+
 import htmlStringToReact from '@utils/htmlStringToReact';
-import regex from '@utils/regex';
+import { regex } from '@constants';
 import { addSearchParamsToUrl } from '@utils/searchParams';
 import { appUpdateAvailable } from '@actions';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';

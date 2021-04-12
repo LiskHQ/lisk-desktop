@@ -2,10 +2,9 @@ import * as bitcoin from 'bitcoinjs-lib';
 import { cryptography } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 
-import { tokenMap, minAccountBalance } from '@constants';
+import { tokenMap, minAccountBalance, regex as reg } from '@constants';
 import { toRawLsk } from './lsk';
 import i18n from '../i18n';
-import reg from './regex';
 
 /**
  * Validates the given address with respect to the tokenType
