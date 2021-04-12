@@ -19,7 +19,7 @@ const getUnitFromFormat = format =>
   Object.keys(formats).find(key => formats[key] === format);
 
 const getNormalizedTimestamp = (tx) => {
-  const token = getTokenFromAddress(tx.senderId) || tokenMap.BTC.key;
+  const token = getTokenFromAddress(tx.sender.address) || tokenMap.BTC.key;
   return ({
     BTC: t => t,
     LSK: getUnixTimestampFromValue,
