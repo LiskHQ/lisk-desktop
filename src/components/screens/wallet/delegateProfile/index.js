@@ -12,6 +12,11 @@ const mapStateToProps = state => ({
   forgingTimes: state.blocks.forgingTimes,
 });
 
+const defaultVoters = {
+  account: {},
+  votes: [],
+};
+
 const apis = {
   delegate: {
     apiUtil: (network, params) => getDelegate({ network, params }),
@@ -24,12 +29,9 @@ const apis = {
   },
   voters: {
     apiUtil: (network, params) => getVoters({ network, params }),
-    defaultData: {
-      account: {},
-      votes: [],
-    },
+    defaultData: defaultVoters,
     getApiParams: (_, ownProps) => ({ address: ownProps.account.summary.address }),
-    transformResponse: response => (response.data.votes ?? []),
+    transformResponse: response => (response.data.votes ? response.data : defaultVoters),
   },
   lastBlockForged: {
     apiUtil: (network, params) => getBlocks({ network, params }),
