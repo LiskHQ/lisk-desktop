@@ -15,15 +15,15 @@ const {
  * @returns {String} Amount in Beddows/Satoshi
  */
 const getTxAmount = ({ moduleAssetId, asset }) => {
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
+  if (moduleAssetId === transfer) {
     return asset.amount;
   }
 
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
+  if (moduleAssetId === unlockToken) {
     return asset.unlockingObjects.reduce((sum, unlockingObject) =>
       sum + parseInt(unlockingObject.amount, 10), 0);
   }
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
+  if (moduleAssetId === voteDelegate) {
     return asset.votes.reduce((sum, vote) =>
       sum + parseInt(vote.amount, 10), 0);
   }
