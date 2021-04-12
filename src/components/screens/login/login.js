@@ -20,13 +20,13 @@ import styles from './login.css';
 class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
     super();
-    const { liskCoreUrl } = getAutoLogInData();
+    const { liskServiceUrl } = getAutoLogInData();
     let loginNetwork = findMatchingLoginNetwork();
     let address = '';
 
     if (!loginNetwork) {
-      loginNetwork = liskCoreUrl ? networks.customNode : networks[networkKeys.mainNet];
-      address = liskCoreUrl || '';
+      loginNetwork = liskServiceUrl ? networks.customNode : networks[networkKeys.mainNet];
+      address = liskServiceUrl || '';
     }
 
     this.state = {
