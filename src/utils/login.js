@@ -35,16 +35,16 @@ export const validateUrl = (value) => {
 // Ignore coverage because this is only development feature
 export const getAutoLogInData = /* istanbul ignore next */ () => ({
   [settings.keys.loginKey]: localStorage.getItem(settings.keys.loginKey),
-  [settings.keys.liskCoreUrl]: localStorage.getItem(settings.keys.liskCoreUrl),
+  [settings.keys.liskServiceUrl]: localStorage.getItem(settings.keys.liskServiceUrl),
 });
 
 // Ignore coverage because this is only development feature
 export const shouldAutoLogIn = /* istanbul ignore next */ autologin =>
-  autologin[settings.keys.liskCoreUrl] && autologin[settings.keys.liskCoreUrl] !== ''
+  autologin[settings.keys.liskServiceUrl] && autologin[settings.keys.liskServiceUrl] !== ''
     && autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
 
 export const findMatchingLoginNetwork = () => {
-  const { liskCoreUrl } = getAutoLogInData();
+  const { liskServiceUrl } = getAutoLogInData();
   return Object.values(networks).find(({ nodes }) =>
-    (Array.isArray(nodes) ? nodes.includes(liskCoreUrl) : false));
+    (Array.isArray(nodes) ? nodes.includes(liskServiceUrl) : false));
 };
