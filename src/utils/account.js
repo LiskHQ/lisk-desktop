@@ -50,14 +50,28 @@ export const extractAddressFromPassphrase = (data) => {
  * @param {String} data - passphrase or public key
  * @returns {String?} - Extracted address for a given valid passphrase or publicKey
  */
-export const extractAddress = (data) => {
-  if (cryptography.validateBase32Address()(data)) {
-    return cryptography.getAddressFromBase32Address(data);
+export const getBase32AddressFromAddress = (data) => {
+  try {
+    if (Buffer.isBuffer(data)) {
+      return cryptography.getBase32AddressFromAddress(data);
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    throw Error('Invalid address');
   }
-  if (Buffer.isBuffer(data)) {
-    return cryptography.getBase32AddressFromAddress(data);
+};
+
+export const getAddressFromBase32Address = (data) => {
+  try {
+    if (cryptography.validateBase32Address(data)) {
+      return cryptography.getAddressFromBase32Address(data);
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    throw Error('Invalid address');
   }
-  throw Error('Invalid publicKey or passphrase');
 };
 
 /**
