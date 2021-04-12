@@ -129,8 +129,8 @@ export const getChartDateFormat = (transactions) => {
 };
 
 
-const isIncomming = (tx, address) => tx.recipientId === address;
-const isOutgoing = (tx, address) => tx.senderId === address;
+const isIncomming = (tx, address) => tx.asset.recipient?.address === address;
+const isOutgoing = (tx, address) => tx.sender.address === address;
 
 /**
  * Returns value in interger format of the amount that was added or subtracted from the balance
