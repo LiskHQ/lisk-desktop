@@ -10,14 +10,13 @@ import {
   MODULE_ASSETS_MAP,
   moduleAssetSchemas,
 } from '@constants';
-import { extractAddress } from '@utils/account';
+import { extractAddress, extractAddressFromPublicKey } from '@utils/account';
 
 import http from '../http';
 import ws from '../ws';
 import { getDelegates } from '../delegate';
 import regex from '../../regex';
 import { validateAddress } from '../../validators';
-import { extractAddressFromPublicKey } from '../../account';
 
 const httpPrefix = '/api/v2';
 
@@ -430,6 +429,7 @@ export const getTransactionBaseFees = network =>
 export const getTransactionFee = async ({
   transaction, selectedPriority,
 }) => {
+  console.log('getTransactionFee 1', transaction);
   const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
   const {
@@ -440,6 +440,7 @@ export const getTransactionFee = async ({
   const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
 
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
+  console.log('getTransactionFee 2', transactionObject);
 
   const minFee = transactions.computeMinFee(schema, {
     ...transactionObject,
