@@ -2,7 +2,7 @@ import moment from 'moment';
 import { tokenMap } from '@constants';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
-import { getTokenFromAddress } from './api/transaction';
+import { getTokenFromAddress } from './account';
 import i18n from '../i18n';
 
 const formats = {
@@ -19,7 +19,7 @@ const getUnitFromFormat = format =>
   Object.keys(formats).find(key => formats[key] === format);
 
 const getNormalizedTimestamp = (tx) => {
-  const token = getTokenFromAddress(tx.senderId) || tokenMap.BTC.key;
+  const token = getTokenFromAddress(tx.sender.address) || tokenMap.BTC.key;
   return ({
     BTC: t => t,
     LSK: getUnixTimestampFromValue,
@@ -129,8 +129,8 @@ export const getChartDateFormat = (transactions) => {
 };
 
 
-const isIncomming = (tx, address) => tx.recipientId === address;
-const isOutgoing = (tx, address) => tx.senderId === address;
+const isIncomming = (tx, address) => tx.asset.recipient?.address === address;
+const isOutgoing = (tx, address) => tx.sender.address === address;
 
 /**
  * Returns value in interger format of the amount that was added or subtracted from the balance

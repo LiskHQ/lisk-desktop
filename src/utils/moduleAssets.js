@@ -27,5 +27,17 @@ const retrieveSchemas = async ({ serviceUrl }) => {
   });
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { retrieveSchemas, getModuleAssetSenderLabel, getModuleAssetTitle };
+const splitModuleAndAssetIds = (moduleAssetId) => {
+  const [moduleID, assetID] = moduleAssetId.split(':');
+  return [Number(moduleID), Number(assetID)];
+};
+
+const joinModuleAndAssetIds = ({ moduleID, assetID }) => [moduleID, assetID].join(':');
+
+export {
+  retrieveSchemas,
+  getModuleAssetTitle,
+  joinModuleAndAssetIds,
+  splitModuleAndAssetIds,
+  getModuleAssetSenderLabel,
+};

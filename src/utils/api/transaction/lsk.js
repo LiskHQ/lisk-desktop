@@ -9,15 +9,15 @@ import {
   DEFAULT_SIGNATURE_BYTE_SIZE,
   MODULE_ASSETS_MAP,
   moduleAssetSchemas,
+  BASE_FEES,
 } from '@constants';
-import { extractAddress } from '@utils/account';
 
+import { joinModuleAndAssetIds } from '@utils/moduleAssets';
+import { createTransactionObject } from '@utils/transaction';
+import { validateAddress } from '../../validators';
 import http from '../http';
 import ws from '../ws';
 import { getDelegates } from '../delegate';
-import regex from '../../regex';
-import { validateAddress } from '../../validators';
-import { extractAddressFromPublicKey } from '../../account';
 
 const httpPrefix = '/api/v2';
 
@@ -192,133 +192,103 @@ export const getTransactionStats = ({ network, params: { period } }) => {
   });
 };
 
+
 /**
- * Gets the amount of a given transaction
+ * Retrieves transaction schemas.
  *
- * @param {Object} transaction The transaction object
- * @returns {String} Amount in Beddows/Satoshi
+ * @param {Object} data
+ * @param {String?} data.baseUrl - Lisk Service API url to override the
+ * existing ServiceUrl on the network param. We may use this to retrieve
+ * the details of an archived transaction.
+ * @param {Object} data.network - Network setting from Redux store
+ * @returns {Promise} http call
  */
-export const getTxAmount = ({ moduleAssetId, asset }) => {
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
-    return asset.amount;
-  }
+export const getSchemas = ({ baseUrl }) => http({
+  path: httpPaths.schemas,
+  baseUrl,
+});
 
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
-    return asset.unlockingObjects.reduce((sum, unlockingObject) =>
-      sum + parseInt(unlockingObject.amount, 10), 0);
-  }
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
-    return asset.votes.reduce((sum, vote) =>
-      sum + parseInt(vote.amount, 10), 0);
-  }
 
-  return undefined;
-};
+/**
+ * Returns a dictionary of base fees for low, medium and high processing speeds
+ * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
+ * medium and high priority fee options
+ */
+export const getTransactionBaseFees = network =>
+  http({
+    path: httpPaths.fees,
+    searchParams: {},
+    network,
+  })
+    .then((response) => {
+      const { feeEstimatePerByte } = response.data;
+      return {
+        Low: feeEstimatePerByte.low,
+        Medium: feeEstimatePerByte.medium,
+        High: feeEstimatePerByte.high,
+      };
+    });
 
-const splitModuleAndAssetIds = (moduleAssetId) => {
-  const [moduleID, assetID] = moduleAssetId.split(':');
-  return [Number(moduleID), Number(assetID)];
-};
-
-export const transformTransaction = (transaction) => {
-  const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
-  const senderAddress = extractAddressFromPublicKey(transaction.senderPublicKey);
-  const senderPublicKey = transaction.senderPublicKey.toString('hex');
-
-  const transformedTransaction = {
-    id: transaction.id.toString('hex'),
-    moduleAssetId,
-    fee: String(transaction.fee),
-    nonce: String(transaction.nonce),
-    sender: { publicKey: senderPublicKey, address: senderAddress },
-    signatures: transaction.signatures,
-  };
-
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
-    transformedTransaction.asset = {
-      recipient: { address: extractAddress(transaction.asset.recipientAddress) },
-      amount: String(transaction.asset.amount),
-      data: transaction.asset.data,
-    };
-  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
-    // @todo fix me
-    // transformedTransaction.asset = {
-    //   votes: tx.votes,
-    // };
-
-  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
-    // @todo fix me
-    // transformedTransaction.asset = {
-    //   unlockObjects: tx.unlockObjects,
-    // };
-  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerDelegate) {
-    // @todo fix me
-    // transformedTransaction.asset = {
-    //   username: tx.username,
-    // };
-  } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-    // @todo fix me
-    // transformedTransaction.asset = {
-    //   numberOfSignatures: tx.numberOfSignatures,
-    //   mandatoryKeys: tx.mandatoryKeys,
-    //   optionalKeys: tx.optionalKeys,
-    // };
-  } else {
-    throw Error('Unknown transaction');
-  }
-
-  return transformedTransaction;
-};
+/**
+ * Returns the actual tx fee based on given tx details
+ * and selected processing speed
+ *
+ * @param {String} txData - The transaction object
+ * @param {Object} selectedPriority - network configuration
+ * @returns {Promise} Object containing value, error and feedback
+ */
 // eslint-disable-next-line max-statements
-const createTransactionObject = (tx, moduleAssetId) => {
-  try {
-    const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
-    const {
-      senderPublicKey, nonce, amount, recipientAddress, data, fee = 0,
-    } = tx;
+export const getTransactionFee = async ({
+  transaction, selectedPriority,
+}) => {
+  const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
+  const feePerByte = selectedPriority.value;
 
-    const transaction = {
-      moduleID,
-      assetID,
-      senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
-      nonce: BigInt(nonce),
-      fee: BigInt(fee),
-      signatures: [],
-    };
+  const {
+    moduleAssetId, ...rawTransaction
+  } = transaction;
 
-    if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
-      transaction.asset = {
-        recipientAddress: extractAddress(recipientAddress),
-        amount: BigInt(amount),
-        data,
-      };
-    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.voteDelegate) {
-      transaction.asset = {
-        votes: tx.votes,
-      };
-    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken) {
-      transaction.asset = {
-        unlockObjects: tx.unlockObjects,
-      };
-    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerDelegate) {
-      transaction.asset = {
-        username: tx.username,
-      };
-    } else if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-      transaction.asset = {
-        numberOfSignatures: tx.numberOfSignatures,
-        mandatoryKeys: tx.mandatoryKeys,
-        optionalKeys: tx.optionalKeys,
-      };
-    } else {
-      throw Error('Unknown transaction');
-    }
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
 
-    return transaction;
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
+  const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
+
+  const minFee = transactions.computeMinFee(schema, {
+    ...transactionObject,
+    signatures: undefined,
+  }, {
+    baseFees: BASE_FEES,
+  });
+
+  // tie breaker is only meant for medium and high processing speeds
+  const tieBreaker = selectedPriority.selectedIndex === 0
+    ? 0 : minFeePerByte * feePerByte * Math.random();
+
+  const size = transactions.getBytes(schema, {
+    ...transactionObject,
+    signatures: new Array(numberOfSignatures).fill(
+      Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE),
+    ),
+  }).length;
+
+  let fee = minFee + BigInt(size * feePerByte) + BigInt(tieBreaker);
+
+  const maxFee = BigInt(maxAssetFee);
+  if (fee > maxFee) {
+    fee = maxFee;
   }
+
+  const roundedValue = transactions.convertBeddowsToLSK(fee.toString());
+
+  const feedback = transaction.amount === ''
+    ? '-'
+    : `${(roundedValue ? '' : 'Invalid amount')}`;
+
+  return {
+    value: roundedValue,
+    error: !!feedback,
+    feedback,
+  };
 };
 
 /**
@@ -363,7 +333,10 @@ export const create = ({
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = ({ transaction, serviceUrl }) => {
-  const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
+  const moduleAssetId = joinModuleAndAssetIds({
+    moduleID: transaction.moduleID,
+    assetID: transaction.assetID,
+  });
   const schema = moduleAssetSchemas[moduleAssetId];
   const binary = transactions.getBytes(schema, transaction);
   const payload = binary.toString('hex');
@@ -386,106 +359,3 @@ export const broadcast = ({ transaction, serviceUrl }) => {
     },
   );
 };
-
-/**
- * Returns a dictionary of base fees for low, medium and high processing speeds
- *
- * @todo The current implementation mocks the results with realistic values.
- * We will refactor this function to fetch the base fees from Lisk Service
- * when the endpoint is ready. Refer to #3081
- *
- * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
- * medium and high priority fee options
- */
-export const getTransactionBaseFees = network =>
-  http({
-    path: httpPaths.fees,
-    searchParams: {},
-    network,
-  })
-    .then((response) => {
-      const { feeEstimatePerByte } = response.data;
-      return {
-        Low: feeEstimatePerByte.low,
-        Medium: feeEstimatePerByte.medium,
-        High: feeEstimatePerByte.high,
-      };
-    });
-
-/**
- * Returns the actual tx fee based on given tx details
- * and selected processing speed
- *
- * @param {String} txData - The transaction object
- * @param {Object} selectedPriority - network configuration
- * @returns {Promise} Object containing value, error and feedback
- */
-// eslint-disable-next-line max-statements
-export const getTransactionFee = async ({
-  transaction, selectedPriority,
-}) => {
-  const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
-  const feePerByte = selectedPriority.value;
-  const {
-    moduleAssetId, ...rawTransaction
-  } = transaction;
-
-  const schema = moduleAssetSchemas[moduleAssetId];
-  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
-
-  const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
-
-  const minFee = transactions.computeMinFee(schema, {
-    ...transactionObject,
-    signatures: undefined,
-  });
-
-  // tie breaker is only meant for medium and high processing speeds
-  const tieBreaker = selectedPriority.selectedIndex === 0
-    ? 0 : minFeePerByte * feePerByte * Math.random();
-
-  const size = transactions.getBytes(schema, {
-    ...transactionObject,
-    signatures: new Array(numberOfSignatures).fill(
-      Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE),
-    ),
-  }).length;
-
-  let fee = minFee + BigInt(size * feePerByte) + BigInt(tieBreaker);
-
-  const maxFee = BigInt(maxAssetFee);
-  if (fee > maxFee) {
-    fee = maxFee;
-  }
-
-  const roundedValue = transactions.convertBeddowsToLSK(fee.toString());
-
-  const feedback = transaction.amount === ''
-    ? '-'
-    : `${(roundedValue ? '' : 'Invalid amount')}`;
-
-  return {
-    value: roundedValue,
-    error: !!feedback,
-    feedback,
-  };
-};
-
-export const getTokenFromAddress = address => (
-  regex.address.test(address) ? tokenMap.LSK.key : tokenMap.BTC.key
-);
-
-/**
- * Retrieves transaction schemas.
- *
- * @param {Object} data
- * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
- * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call
- */
-export const getSchemas = ({ baseUrl }) => http({
-  path: httpPaths.schemas,
-  baseUrl,
-});

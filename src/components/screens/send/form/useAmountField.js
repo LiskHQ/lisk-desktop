@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
-import { tokenMap, minAccountBalance } from '@constants';
+import { tokenMap, minAccountBalance, regex } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import { validateAmountFormat } from '@utils/validators';
-import regex from '@utils/regex';
 
 let loaderTimeout = null;
 

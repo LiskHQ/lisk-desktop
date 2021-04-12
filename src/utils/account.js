@@ -1,7 +1,6 @@
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 
-import { tokenMap } from '@constants';
-import regex from './regex';
+import { tokenMap, regex } from '@constants';
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
@@ -39,14 +38,24 @@ export const extractAddressFromPassphrase = (data) => {
  * @param {String} data - passphrase or public key
  * @returns {String?} - Extracted address for a given valid passphrase or publicKey
  */
-export const extractAddress = (data) => {
-  if (cryptography.validateBase32Address()(data)) {
-    return cryptography.getAddressFromBase32Address(data);
-  }
-  if (Buffer.isBuffer(data)) {
+export const getBase32AddressFromAddress = (data) => {
+  try {
     return cryptography.getBase32AddressFromAddress(data);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    throw Error('Invalid address');
   }
-  throw Error('Invalid publicKey or passphrase');
+};
+
+export const getAddressFromBase32Address = (data) => {
+  try {
+    return cryptography.getAddressFromBase32Address(data);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    throw Error('Invalid address');
+  }
 };
 
 export const getActiveTokenAccount = state => ({
@@ -116,3 +125,7 @@ export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlo
         ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );
+
+export const getTokenFromAddress = address => (
+  cryptography.validateBase32Address(address) ? tokenMap.LSK.key : tokenMap.BTC.key
+);

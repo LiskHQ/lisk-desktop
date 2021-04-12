@@ -1,6 +1,6 @@
 import React from 'react';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { getTxAmount } from '@utils/api/transaction';
+import { getTxAmount } from '@utils/transaction';
 import { getModuleAssetSenderLabel, getModuleAssetTitle } from '@utils/moduleAssets';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
 import TransactionTypeFigure from '../../shared/transactionTypeFigure';

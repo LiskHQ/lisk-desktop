@@ -3,12 +3,11 @@ import to from 'await-to-js';
 import {
   actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes,
 } from '@constants';
-import { extractAddressFromPublicKey } from '@utils/account';
 import { getTransactions, create, broadcast } from '@utils/api/transaction';
 import { signSendTransaction } from '@utils/hwManager';
 import { passphraseUsed } from './account';
 import { loadingStarted, loadingFinished } from './loading';
-import { transformTransaction } from '../../utils/api/transaction/lsk';
+import { transformTransaction } from '../../utils/transaction';
 
 /**
  * Action trigger when user logout from the application

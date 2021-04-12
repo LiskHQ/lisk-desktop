@@ -1,10 +1,23 @@
+const modules = {
+  token: 2,
+  dpos: 5,
+  multiSignature: 4,
+};
+
+const assets = {
+  transfer: 0,
+  registerDelegate: 0,
+  voteDelegate: 1,
+  unlockToken: 2,
+  registerMultisignatureGroup: 0,
+};
+
 const moduleAssetNameIdMap = {
-  transfer: '2:0',
-  // reclaimLSK: 'legacyAccount:reclaimLSK',
-  unlockToken: '5:2',
-  voteDelegate: '5:1',
-  registerDelegate: '5:0',
-  registerMultisignatureGroup: '4:0',
+  transfer: `${modules.token}:${assets.transfer}`,
+  unlockToken: `${modules.dpos}:${assets.unlockToken}`,
+  voteDelegate: `${modules.dpos}:${assets.voteDelegate}`,
+  registerDelegate: `${modules.dpos}:${assets.registerDelegate}`,
+  registerMultisignatureGroup: `${modules.multiSignature}:${assets.registerMultisignatureGroup}`,
 };
 
 const moduleAssetMap = {
@@ -34,5 +47,17 @@ const moduleAssetSchemas = {};
 
 const MODULE_ASSETS_NAME_ID_MAP = Object.freeze(moduleAssetNameIdMap);
 const MODULE_ASSETS_MAP = Object.freeze(moduleAssetMap);
+const BASE_FEES = [
+  Object.freeze({
+    moduleID: modules.dpos,
+    assetID: assets.registerDelegate,
+    baseFee: '1000000000',
+  }),
+];
 
-export { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP, moduleAssetSchemas };
+export {
+  BASE_FEES,
+  MODULE_ASSETS_MAP,
+  MODULE_ASSETS_NAME_ID_MAP,
+  moduleAssetSchemas,
+};

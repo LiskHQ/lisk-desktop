@@ -8,6 +8,8 @@ import styles from './summary.css';
 import AccountVisual from '../../../toolbox/accountVisual';
 import TransactionSummary from '../../../shared/transactionSummary';
 
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
+
 class Summary extends React.Component {
   constructor(props) {
     super(props);
@@ -25,13 +27,13 @@ class Summary extends React.Component {
     } = this.props;
 
     const data = {
-      account,
-      username: nickname,
-      passphrase: account.passphrase,
-      fee: toRawLsk(parseFloat(fee)),
+      moduleAssetId,
       network,
+      senderPublicKey: account.info.LSK.summary.publicKey,
+      passphrase: account.passphrase,
       nonce: account.sequence?.nonce,
-      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
+      fee: toRawLsk(parseFloat(fee)),
+      username: nickname,
     };
 
     const [error, tx] = await to(

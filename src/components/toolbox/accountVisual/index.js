@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
 import generateUniqueId from '@utils/generateUniqueId';
-import reg from '@utils/regex';
+import { regex as reg } from '@constants';
 import { Gradients, gradientSchemes } from './gradients';
 import styles from './accountVisual.css';
 

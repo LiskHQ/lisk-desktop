@@ -4,6 +4,7 @@ import { create } from '@utils/api/transaction';
 import { signVoteTransaction } from '@utils/hwManager';
 import { getVotes } from '@utils/api/delegate';
 import { passphraseUsed } from './account';
+import { MODULE_ASSETS_NAME_ID_MAP } from '../../constants/moduleAssets';
 
 /**
  * Clears the existing changes on votes.
@@ -46,16 +47,22 @@ export const voteEdited = data => ({
  * Adds pending state and then after the duration of one round
  * cleans the pending state
  */
-export const votesSubmitted = data =>
+export const votesSubmitted = ({ fee, votes }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
+    const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
     const { network, account } = getState();
+    const passphrase = account.passphrase;
+    const senderPublicKey = account.info.LSK.summary.publicKey;
+    const nonce = account.info.LSK.sequence.nonce;
+
+    const transaction = {
+      fee, votes, nonce, passphrase, senderPublicKey,
+    };
+    const params = { ...transaction, network, moduleAssetId };
 
     const [error, tx] = account.loginType === loginTypes.passphrase.code
-      ? await to(create(
-        { ...data, network, transactionType: 'castVotes' },
-        tokenMap.LSK.key,
-      ))
-      : await to(signVoteTransaction(account, data));
+      ? await to(create(params, tokenMap.LSK.key))
+      : await to(signVoteTransaction(account, transaction));
 
     if (error) {
       return dispatch({
