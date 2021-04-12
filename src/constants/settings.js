@@ -3,6 +3,7 @@ const settings = {
   keys: {
     loginKey: 'loginKey',
     liskCoreUrl: 'liskCoreUrl',
+    liskServiceUrl: 'liskServiceUrl',
   },
 };
 export default settings;
