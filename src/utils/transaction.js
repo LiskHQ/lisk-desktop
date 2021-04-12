@@ -58,10 +58,9 @@ const transformTransaction = (transaction) => {
     }
 
     case registerDelegate: {
-      // @todo fix me
-      // transformedTransaction.asset = {
-      //   username: tx.username,
-      // };
+      transformedTransaction.asset = {
+        username: transaction.username,
+      };
       break;
     }
 
