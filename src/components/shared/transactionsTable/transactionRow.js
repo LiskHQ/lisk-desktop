@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { getTxAmount } from '@api/transaction/lsk';
+import { getTxAmount } from '@utils/transaction';
 import { DateTimeFromTimestamp } from '@toolbox/timestamp';
 import Icon from '@toolbox/icon';
 import Tooltip from '@toolbox/tooltip/tooltip';
