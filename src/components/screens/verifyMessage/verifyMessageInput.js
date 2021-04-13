@@ -1,4 +1,3 @@
-import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -12,6 +11,7 @@ import BoxFooter from '@toolbox/box/footer';
 import BoxInfoText from '@toolbox/box/infoText';
 import Icon from '@toolbox/icon';
 import Tooltip from '@toolbox/tooltip/tooltip';
+import { regex } from '@constants';
 import styles from './verifyMessage.css';
 
 export default class VerifyMessageInput extends React.Component {
@@ -65,12 +65,10 @@ export default class VerifyMessageInput extends React.Component {
     const { t } = this.props;
     const validators = {
       publicKey: () => {
-        try {
-          cryptography.getAddressFromPublicKey(Buffer.from(value, 'hex'));
+        if (regex.publicKey.test(value)) {
           return '';
-        } catch (e) {
-          return t('This is not a valid public key. Please enter the correct public key.');
         }
+        return t('This is not a valid public key. Please enter the correct public key.');
       },
       message: () => (
         value !== value.trim()
