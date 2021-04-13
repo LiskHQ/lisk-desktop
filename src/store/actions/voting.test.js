@@ -31,7 +31,12 @@ describe('actions: voting', () => {
       loginType: loginTypes.passphrase.code,
       info: {
         LSK: {
-          address: '123L',
+          summary: {
+            address: '123L',
+          },
+          sequence: {
+            nonce: 1,
+          },
           votes: [{ delegateAddress: '123L', amount: 1e9 }],
         },
       },
