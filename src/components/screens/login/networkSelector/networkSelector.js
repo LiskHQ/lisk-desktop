@@ -12,8 +12,6 @@ import { getNetworkConfig } from '@api/network';
 
 import styles from './networkSelector.css';
 
-const networkList = getNetworksList();
-
 const getNetwork = (name, url) => {
   const { nodes, initialSupply } = networks[name];
   const address = name === networkKeys.customNode
@@ -37,10 +35,12 @@ const getInitialState = (address) => {
   };
 };
 
+
 // eslint-disable-next-line max-statements
 const NetworkSelector = ({
   t, selectedNetworkName, selectedAddress, networkSelected, settingsUpdated,
 }) => {
+  const networkList = getNetworksList();
   const childRef = useRef(null);
   const [state, _setState] = useState(() => getInitialState(selectedAddress));
   const setState = newState => _setState(prevState => ({ ...prevState, ...newState }));
