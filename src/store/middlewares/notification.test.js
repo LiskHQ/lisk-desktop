@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 
-import actionTypes from '@constants';
+import { actionTypes } from '@constants';
 import Notification from '@utils/notification';
 import middleware from './notification';
 
