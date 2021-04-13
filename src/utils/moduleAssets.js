@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants/moduleAssets';
+import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
 import { getSchemas } from './api/transaction';
 
 const getModuleAssetSenderLabel = (t = str => str) => ({
