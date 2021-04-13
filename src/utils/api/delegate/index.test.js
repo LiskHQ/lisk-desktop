@@ -1,7 +1,6 @@
 import accounts from '../../../../test/constants/accounts';
 import http from '../http';
 import ws, { subscribe, unsubscribe } from '../ws';
-import { extractAddress } from '../../account';
 
 import * as delegate from './index';
 
