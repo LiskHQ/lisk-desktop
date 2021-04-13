@@ -1,36 +1,39 @@
+import accounts from '../../test/constants/accounts';
 import {
   extractPublicKey,
-  extractAddress,
+  extractAddressFromPublicKey,
   getActiveTokenAccount,
   calculateUnlockableBalance,
   getUnlockableUnlockingObjects,
   calculateBalanceLockedInVotes,
+  extractAddressFromPassphrase,
 } from './account';
+
+const passphrase = accounts.genesis.passphrase;
+const publicKey = accounts.genesis.summary.serverPublicKey;
+const address = accounts.genesis.summary.address;
 
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
-    it('should return a Hex string from any given string', () => {
-      const passphrase = 'field organ country moon fancy glare pencil combine derive fringe security pave';
-      const publicKey = 'a89751689c446067cc2107ec2690f612eb47b5939d5570d0d54b81eafaf328de';
+    it('should return a hex string from any given string', () => {
       expect(extractPublicKey(passphrase)).toEqual(publicKey);
     });
   });
 
-  describe('extractAddress', () => {
-    it('should return the account address from given passphrase', () => {
-      const passphrase = 'field organ country moon fancy glare pencil combine derive fringe security pave';
-      const derivedAddress = 'lskx7jt85m5ro7u9c7fhteuat95gjtqqxwk3276up';
-      expect(extractAddress(passphrase)).toEqual(derivedAddress);
+  describe('extractAddressFromPublicKey', () => {
+    it('should return the address corresponding to a (hex) public key', () => {
+      expect(extractAddressFromPublicKey(publicKey)).toEqual(address);
     });
 
-    it('should return the account address from given public key', () => {
-      const publicKey = 'a89751689c446067cc2107ec2690f612eb47b5939d5570d0d54b81eafaf328de';
-      const derivedAddress = 'lskx7jt85m5ro7u9c7fhteuat95gjtqqxwk3276up';
-      expect(extractAddress(publicKey)).toEqual(derivedAddress);
+    it('should return the address corresponding to a (binary) public key', () => {
+      const binaryPublicKey = Buffer.from(publicKey, 'hex');
+      expect(extractAddressFromPublicKey(binaryPublicKey)).toEqual(address);
     });
+  });
 
-    it('should return false if no param passed to it', () => {
-      expect(extractAddress()).toEqual(undefined);
+  describe('extractAddressFromPassphrase', () => {
+    it('should return the address corresponding to a passphrase', () => {
+      expect(extractAddressFromPassphrase(passphrase)).toEqual(address);
     });
   });
 
@@ -93,9 +96,9 @@ describe('Utils: Account', () => {
     describe('calculateBalanceLockedInVotes', () => {
       it('should get correct available balance', () => {
         const votes = {
-          'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11': { confirmed: 5000000000 },
-          'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12': { confirmed: 3000000000 },
-          'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13': { confirmed: 2000000000 },
+          lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 5000000000 },
+          lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 3000000000 },
+          lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: { confirmed: 2000000000 },
         };
 
         expect(calculateBalanceLockedInVotes(votes)).toEqual(10000000000);
