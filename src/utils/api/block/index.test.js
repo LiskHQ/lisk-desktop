@@ -1,11 +1,9 @@
-import moment from 'moment';
 import * as block from './index';
 import { subscribe, unsubscribe } from '../ws';
 import http from '../http';
 
 jest.mock('../http');
 jest.mock('../ws');
-jest.mock('moment');
 
 describe('Block api module', () => {
   describe('getBlock', () => {
@@ -68,7 +66,6 @@ describe('Block api module', () => {
     });
 
     it.skip('should handle filters correctly', async () => {
-      moment.mockImplementation(() => ({ format: () => '' }));
       jest.spyOn(global, 'Date').mockImplementation(() => ({
         valueOf: () => 100000000,
         getTime: () => 100000000,
