@@ -59,7 +59,7 @@ const transformTransaction = (transaction) => {
 
     case registerDelegate: {
       transformedTransaction.asset = {
-        username: transaction.username,
+        username: transaction.asset.username,
       };
       break;
     }
