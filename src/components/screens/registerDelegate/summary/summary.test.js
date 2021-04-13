@@ -1,11 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Lisk from '@liskhq/lisk-client';
+import * as transactionsApi from '@api/transaction';
 import Summary from './summary';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 describe('Delegate Registration Summary', () => {
-  let wrapper;
+  jest.mock('@api/transaction', () => ({
+    create: jest.fn(),
+  }));
 
   const network = {
     networks: {
@@ -15,13 +17,17 @@ describe('Delegate Registration Summary', () => {
 
   const props = {
     account: {
-      summary: {
-        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-        balance: 11000,
-        isDelegate: false,
-      },
-      sequence: {
-        nonce: '1',
+      info: {
+        LSK: {
+          summary: {
+            address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+            balance: 11000,
+            isDelegate: false,
+          },
+          sequence: {
+            nonce: '1',
+          },
+        },
       },
     },
     fee: 10,
@@ -42,18 +48,12 @@ describe('Delegate Registration Summary', () => {
     nonce: '123',
   };
 
-  beforeEach(() => {
-    Lisk.transaction.registerDelegate = jest.fn();
-    Lisk.transaction.registerDelegate.mockResolvedValue(response);
-    wrapper = mount(<Summary {...props} />);
-  });
-
   afterEach(() => {
-    Lisk.transaction.registerDelegate.mockRestore();
     props.nextStep.mockRestore();
   });
 
   it('renders properly Symmary component', () => {
+    const wrapper = mount(<Summary {...props} />);
     expect(wrapper).toContainMatchingElement('.summary-container');
     expect(wrapper).toContainMatchingElement('.nickname-label');
     expect(wrapper).toContainMatchingElement('.nickname');
@@ -63,21 +63,25 @@ describe('Delegate Registration Summary', () => {
   });
 
   it('go to prev page when click Go Back button', () => {
+    const wrapper = mount(<Summary {...props} />);
     expect(props.prevStep).not.toBeCalled();
     wrapper.find('button.cancel-button').simulate('click');
     expect(props.prevStep).toBeCalled();
   });
 
   it('submit user data when click in confirm button', async () => {
+    transactionsApi.create = jest.fn().mockImplementation(() => Promise.resolve(response));
+    const wrapper = mount(<Summary {...props} />);
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
     await flushPromises();
+    expect(transactionsApi.create).toHaveBeenCalled();
     expect(props.nextStep).toBeCalledWith({ transactionInfo: response });
   });
 
   it('submit user data when click in confirm button but fails', async () => {
-    Lisk.transaction.registerDelegate.mockRejectedValue(new Error('please provide a username'));
-
+    transactionsApi.create = jest.fn().mockImplementation(() => Promise.reject(new Error('Some error')));
+    const wrapper = mount(<Summary {...props} />);
     wrapper.find('button.confirm-button').simulate('click');
 
     await flushPromises();
