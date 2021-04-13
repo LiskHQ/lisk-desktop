@@ -1,6 +1,6 @@
 import React from 'react';
 import { networkKeys } from '@constants';
-import { getNetworkNameBasedOnNethash } from '@utils/getNetwork';
+import { getNetworkName } from '@utils/getNetwork';
 import styles from './network.css';
 
 const Network = ({ network, t, token }) => {
@@ -9,7 +9,7 @@ const Network = ({ network, t, token }) => {
     [networkKeys.testNet]: t('Testnet').toLowerCase(),
     [networkKeys.customNode]: t('Devnet').toLowerCase(),
   };
-  const activeNetwork = getNetworkNameBasedOnNethash(network, token);
+  const activeNetwork = getNetworkName(network, token);
   const statusColor = network.status.online ? styles.online : styles.offline;
 
   return (
