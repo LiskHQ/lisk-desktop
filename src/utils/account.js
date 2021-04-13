@@ -23,7 +23,7 @@ export const extractPublicKey = (passphrase) => {
  */
 export const extractAddressFromPublicKey = (data) => {
   if (regex.publicKey.test(data)) {
-    return cryptography.getBase32AddressFromPublicKey(data).toString('hex');
+    return cryptography.getBase32AddressFromPublicKey(Buffer.from(data, 'hex')).toString('hex');
   }
   if (Buffer.isBuffer(data)) {
     return cryptography.getBase32AddressFromPublicKey(data);
