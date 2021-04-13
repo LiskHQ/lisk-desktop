@@ -5,7 +5,7 @@ export const networkKeys = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const initialSupply = 10000000000000000;
+export const initialSupply = 10000000000000000;
 
 const networks = {
   [networkKeys.mainNet]: {
