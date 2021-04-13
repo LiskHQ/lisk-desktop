@@ -19,7 +19,7 @@ const Transactions = ({
   t, activeToken, netCode, transaction, votedDelegates,
 }) => {
   const { error, isLoading, data } = transaction;
-  const addresses = data && [data.asset?.recipient.address, data.sender.address];
+  const addresses = !isEmpty(data) && [data.asset.recipient?.address, data.sender.address];
 
   if (!error && isEmpty(transaction.data)) return <div />;
   if (error && isEmpty(transaction.data)) return <NotFound />;
