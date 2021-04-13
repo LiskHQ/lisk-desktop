@@ -81,9 +81,11 @@ describe('actions: account', () => {
           passphrase: accounts.genesis.passphrase,
           info: {
             LSK: {
-              address: accounts.genesis.summary.address,
-              publicKey: accounts.genesis.summary.publicKey,
-              balance: 0,
+              summary: {
+                address: accounts.genesis.summary.address,
+                publicKey: accounts.genesis.summary.publicKey,
+                balance: 0,
+              }
             },
           },
         },
@@ -99,7 +101,7 @@ describe('actions: account', () => {
     });
 
     it('should call account API methods on newBlockCreated action when offline', async () => {
-      const code = 'EUNAVAILABLE';
+      const code = 'EN_AVAILABLE';
       accountApi.getAccount.mockRejectedValue({ error: { code } });
 
       await accountDataUpdated('active')(dispatch, getState);
