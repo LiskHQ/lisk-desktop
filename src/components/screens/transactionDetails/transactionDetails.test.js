@@ -277,8 +277,9 @@ describe('Transaction Details Component', () => {
       const unlockTx = {
         data: {
           type: 14,
-          senderId: accounts.genesis.summary.address,
-          recipientId: '',
+          sender: {
+            senderId: accounts.genesis.summary.address,
+          },
           id: 123,
           asset: {
             unlockingObjects: [
