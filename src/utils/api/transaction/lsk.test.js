@@ -1,10 +1,10 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { getTxAmount } from '@utils/transaction';
 import {
   getTransaction,
   getTransactions,
   getTransactionStats,
   getRegisteredDelegates,
-  getTxAmount,
   getTransactionFee,
   getSchemas,
 } from './lsk';
