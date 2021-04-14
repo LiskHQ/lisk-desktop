@@ -1,6 +1,7 @@
 import { pricesRetrieved, emptyTransactionsData } from '@actions';
 import { actionTypes } from '@constants';
 import settingsMiddleware from './settings';
+import { settingsUpdated } from '../actions/settings';
 
 jest.mock('@actions/service');
 jest.mock('@actions/settings');
@@ -33,10 +34,19 @@ describe('Middleware: Settings', () => {
     it('should dispatch pricesRetrieved', () => {
       const action = {
         type: actionTypes.networkConfigSet,
+        data: {
+          name: 'customNode',
+          networks: {
+            LSK: {
+              serviceUrl: 'http://test.io',
+            },
+          },
+        },
       };
 
       settingsMiddleware(store)(next)(action);
       expect(pricesRetrieved).toBeCalled();
+      expect(settingsUpdated).toBeCalled();
     });
   });
 

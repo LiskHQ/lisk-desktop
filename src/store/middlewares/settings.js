@@ -1,7 +1,6 @@
 import { actionTypes } from '@constants';
 import { setInStorage } from '@utils/localJSONStorage';
-import { pricesRetrieved, emptyTransactionsData } from '@actions';
-import { settingsUpdated } from '../actions/settings';
+import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@actions';
 
 const settings = store => next => (action) => {
   const { token } = store.getState().settings;
