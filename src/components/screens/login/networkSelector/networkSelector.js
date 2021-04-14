@@ -83,7 +83,7 @@ const NetworkSelector = ({
           name: networkName,
           address: networkToSet.address,
         }, tokenMap.LSK.key);
-        if (response.data) {
+        if (response) {
           setState({ isValid: true, connected: true });
           changeNetworkInSettings(networkName);
           networkSelected(networkToSet);
@@ -114,6 +114,8 @@ const NetworkSelector = ({
     isCustomSelected,
     isValidationLoading,
   } = state;
+
+  console.log('isValid', isValid);
 
   const validationError = isValid ? '' : t('Unable to connect to Lisk Service, please check the address and try again');
 
