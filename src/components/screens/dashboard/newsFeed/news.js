@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import Icon from '../../../toolbox/icon';
+import Icon from '@toolbox/icon';
 import TweetParser from './twitterParser';
 import styles from './news.css';
 

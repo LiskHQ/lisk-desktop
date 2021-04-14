@@ -1,13 +1,13 @@
 import React from 'react';
 import { tokenMap } from '@constants';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import BoxRow from '../../toolbox/box/row';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxRow from '@toolbox/box/row';
+import Icon from '@toolbox/icon';
 import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
 import styles from './walletDetails.css';
-import Icon from '../../toolbox/icon';
 
 const MyAccount = ({
   t, account, settings, className,

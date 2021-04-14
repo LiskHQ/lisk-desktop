@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@constants';
+import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
+import { toRawLsk } from '@utils/lsk';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 import i18n from '../../../../i18n';
-import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
-import { toRawLsk } from '../../../../utils/lsk';
 
 describe('Summary', () => {
   let wrapper;
@@ -65,7 +65,6 @@ describe('Summary', () => {
     expect(wrapper).toContainMatchingElement('.summary-header');
     expect(wrapper).toContainMatchingElement('.summary-content');
     expect(wrapper).toContainMatchingElement('.summary-footer');
-    expect(wrapper).toContainMatchingElement('.summary-second-passphrase');
     expect(wrapper.find('button.confirm-button')).toHaveText('Send 1.123 LSK');
     expect(wrapper.find('.amount-summary')).toIncludeText('1.123 LSK');
   });
@@ -87,29 +86,6 @@ describe('Summary', () => {
     wrapper.find('.cancel-button').at(0).simulate('click');
     wrapper.update();
     expect(props.prevStep).toBeCalled();
-  });
-
-  it('should call transactionCreated function after do a click in confirm button', () => {
-    const clipboardData = {
-      getData: () => accounts.second_passphrase_account.secondPassphrase,
-    };
-    wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
-    wrapper.update();
-    wrapper.find('.confirm-button').at(0).simulate('click');
-    wrapper.update();
-    expect(props.transactionCreated).toBeCalled();
-    wrapper.setProps({
-      transactions: {
-        ...props.transactions,
-        transactionsCreated: [{
-          id: '123123', senderId: '34234L', recipientId: '2342342L', amount: '0.01',
-        }],
-        transactionsCreatedFailed: [],
-        broadcastedTransactionsError: [],
-      },
-    });
-    wrapper.update();
-    expect(props.nextStep).toBeCalled();
   });
 
   it('should show props.fields.recipient.title if it is present', () => {

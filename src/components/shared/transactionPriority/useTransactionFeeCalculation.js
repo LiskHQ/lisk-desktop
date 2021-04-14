@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useReducer } from 'react';
 import {
   getTransactionFee,
-} from '@utils/api/transaction';
+} from '@api/transaction';
 import { actionTypes, reducer, getInitialState } from './reducer';
 
 const useTransactionFeeCalculation = ({

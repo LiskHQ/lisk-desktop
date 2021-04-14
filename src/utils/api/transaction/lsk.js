@@ -133,7 +133,13 @@ export const getTransactions = ({
   });
 };
 
-// @todo document this function signature
+/**
+ * Fetches and generates an array of monthly number of delegate
+ * registrations on Lisk blockchain.
+ *
+ * @param {Object} Network - Network setting from Redux store
+ * @returns {Promise} Registered delegates list API call
+ */
 export const getRegisteredDelegates = async ({ network }) => {
   const delegates = await getDelegates({
     network,
@@ -241,16 +247,13 @@ export const getTransactionBaseFees = network =>
 export const getTransactionFee = async ({
   transaction, selectedPriority,
 }) => {
-  const numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES;
   const feePerByte = selectedPriority.value;
 
   const {
     moduleAssetId, ...rawTransaction
   } = transaction;
-
   const schema = moduleAssetSchemas[moduleAssetId];
   const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
-
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
 
   const minFee = transactions.computeMinFee(schema, {
@@ -266,18 +269,13 @@ export const getTransactionFee = async ({
 
   const size = transactions.getBytes(schema, {
     ...transactionObject,
-    signatures: new Array(numberOfSignatures).fill(
+    signatures: new Array(DEFAULT_NUMBER_OF_SIGNATURES).fill(
       Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE),
     ),
   }).length;
 
-  let fee = minFee + BigInt(size * feePerByte) + BigInt(tieBreaker);
-
-  const maxFee = BigInt(maxAssetFee);
-  if (fee > maxFee) {
-    fee = maxFee;
-  }
-
+  const calculatedFee = Number(minFee + BigInt(size * feePerByte) + BigInt(tieBreaker));
+  const fee = Math.min(calculatedFee, maxAssetFee);
   const roundedValue = transactions.convertBeddowsToLSK(fee.toString());
 
   const feedback = transaction.amount === ''

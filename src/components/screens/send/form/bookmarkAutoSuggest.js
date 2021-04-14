@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { getNetworkCode } from '@utils/api/network';
+import { getNetworkCode } from '@api/network';
 import { validateAddress } from '@utils/validators';
-import AccountVisual from '../../../toolbox/accountVisual';
-import AutoSuggest from '../../../toolbox/autoSuggest';
+import AccountVisual from '@toolbox/accountVisual';
+import AutoSuggest from '@toolbox/autoSuggest';
 import styles from './form.css';
 
 class BookmarkAutoSuggest extends React.Component {

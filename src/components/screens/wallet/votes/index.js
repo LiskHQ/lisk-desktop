@@ -2,8 +2,8 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { getVotes } from '@utils/api/delegate';
-import { getAccounts } from '@utils/api/account';
+import { getVotes } from '@api/delegate';
+import { getAccounts } from '@api/account';
 import withData from '@utils/withData';
 import Votes from './votes';
 

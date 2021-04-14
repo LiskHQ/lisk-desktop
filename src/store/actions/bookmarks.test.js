@@ -9,10 +9,10 @@ import accounts from '../../../test/constants/accounts';
 describe('actions: boomarks', () => {
   const data = {
     account: {
-      address: accounts.genesis.address,
-      publicKey: accounts.genesis.publicKey,
+      address: accounts.genesis.summary.address,
+      publicKey: accounts.genesis.summary.publicKey,
       balance: accounts.genesis.balance,
-      title: accounts.genesis.address,
+      title: accounts.genesis.summary.address,
     },
     token: tokenMap.LSK.key,
   };
@@ -37,7 +37,7 @@ describe('actions: boomarks', () => {
 
   it('should create an action to remove a bookmark account', () => {
     const removedData = {
-      address: accounts.genesis.address,
+      address: accounts.genesis.summary.address,
       token: tokenMap.LSK.key,
     };
     const expectedAction = {
@@ -45,6 +45,6 @@ describe('actions: boomarks', () => {
       type: actionTypes.bookmarkRemoved,
     };
     expect(bookmarkRemoved(removedData)).toEqual(expectedAction);
-    expect(bookmarkRemoved({ address: accounts.genesis.address })).toEqual(expectedAction);
+    expect(bookmarkRemoved({ address: accounts.genesis.summary.address })).toEqual(expectedAction);
   });
 });

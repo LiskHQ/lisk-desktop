@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import AccountVisual from '../../toolbox/accountVisual';
+import AccountVisual from '@toolbox/accountVisual';
 import styles from './accountsAndDeletegates.css';
 
 const Accounts = ({
   accounts, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
-  const isDelegate = accounts.some(account => account.dpos?.isDelegate);
+  const isDelegate = accounts.some(account => account.summary?.isDelegate);
 
   return (
     <div className={`${styles.wrapper} accounts`}>

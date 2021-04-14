@@ -1,15 +1,15 @@
 import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
-import { getModuleAssetSenderLabels, retrieveSchemas } from './moduleAssets';
+import { getModuleAssetSenderLabel, retrieveSchemas } from './moduleAssets';
 import http from './api/http';
 import flushPromises from '../../test/unit-test-utils/flushPromises';
 
 jest.mock('./api/http');
 
 describe('Utils: moduleAssets', () => {
-  describe('getModuleAssetSenderLabels', () => {
+  describe('getModuleAssetSenderLabel', () => {
     it('should return a dictionary of strings', () => {
       const t = jest.fn(str => str);
-      const dict = getModuleAssetSenderLabels(t);
+      const dict = getModuleAssetSenderLabel(t);
       const label = dict[MODULE_ASSETS_NAME_ID_MAP.transfer];
 
       expect(label).toBeDefined();
@@ -23,7 +23,7 @@ describe('Utils: moduleAssets', () => {
       http.mockClear();
     });
 
-    it('should rretrueve and set schema', async () => {
+    it('should retrieve and set schema', async () => {
       const schema = { properties: [] };
       const data = [
         { moduleAssetId: '2:0', schema },
@@ -33,7 +33,7 @@ describe('Utils: moduleAssets', () => {
         { moduleAssetId: '5:2', schema },
       ];
       http.mockImplementation(() => Promise.resolve({ data }));
-      retrieveSchemas();
+      retrieveSchemas({ serviceUrl: 'http://sample.url' });
       await flushPromises();
       expect(moduleAssetSchemas).toEqual({
         '2:0': schema,

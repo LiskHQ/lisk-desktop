@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { mountWithRouter } from '@utils/testHelpers';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
-import { mountWithRouter } from '../../../utils/testHelpers';
 
 const transaction = {
   data: {
@@ -27,7 +27,9 @@ const transaction = {
     ],
     asset: {
       amount: '150000000000',
-      recipientAddress: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      recipient: {
+        address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      },
       data: '',
     },
     isPending: false,
@@ -275,8 +277,9 @@ describe('Transaction Details Component', () => {
       const unlockTx = {
         data: {
           type: 14,
-          senderId: accounts.genesis.address,
-          recipientId: '',
+          sender: {
+            senderId: accounts.genesis.summary.address,
+          },
           id: 123,
           asset: {
             unlockingObjects: [

@@ -2,14 +2,14 @@ import React from 'react';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { getTxAmount } from '@utils/transaction';
 import { getModuleAssetSenderLabel, getModuleAssetTitle } from '@utils/moduleAssets';
-import CopyToClipboard from '../../toolbox/copyToClipboard';
-import TransactionTypeFigure from '../../shared/transactionTypeFigure';
+import CopyToClipboard from '@toolbox/copyToClipboard';
+import TransactionTypeFigure from '@shared/transactionTypeFigure';
+import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import DiscreetMode from '@shared/discreetMode';
+import LiskAmount from '@shared/liskAmount';
+import BoxRow from '@toolbox/box/row';
 import AccountInfo from './accountInfo';
-import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import DiscreetMode from '../../shared/discreetMode';
-import LiskAmount from '../../shared/liskAmount';
-import BoxRow from '../../toolbox/box/row';
 import styles from './transactionDetails.css';
 
 const getDelegateName = (transaction, activeToken) => (

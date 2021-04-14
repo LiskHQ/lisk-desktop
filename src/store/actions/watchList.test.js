@@ -3,7 +3,7 @@ import { addedToWatchList, removedFromWatchList, watchListRetrieved } from './wa
 
 describe('actions: watchList', () => {
   const data = {
-    address: '1L',
+    address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
   };
 
   afterEach(() => {
@@ -27,7 +27,7 @@ describe('actions: watchList', () => {
   });
 
   it('should create an action to retrieve the watchlist', () => {
-    const retrievedWatchList = ['1L', '2L', '3L'];
+    const retrievedWatchList = ['lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12', 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13'];
     const dispatch = jest.fn();
     window.localStorage.getItem = jest.fn(() => JSON.stringify(retrievedWatchList));
     const expectedAction = {

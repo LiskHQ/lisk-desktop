@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
+
 import { DateTimeFromTimestamp } from '@toolbox/timestamp';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
 import DialogLink from '@toolbox/dialog/link';

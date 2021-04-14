@@ -10,10 +10,10 @@ import { extractAddressFromPassphrase } from '@utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '@utils/login';
 import { getNetworksList } from '@utils/getNetwork';
 import Piwik from '@utils/piwik';
-import { PrimaryButton } from '../../toolbox/buttons';
-import PassphraseInput from '../../toolbox/passphraseInput';
-import DiscreetModeToggle from '../../shared/discreetModeToggle';
-import Icon from '../../toolbox/icon/index';
+import { PrimaryButton } from '@toolbox/buttons';
+import PassphraseInput from '@toolbox/passphraseInput';
+import DiscreetModeToggle from '@shared/discreetModeToggle';
+import Icon from '@toolbox/icon/index';
 import NetworkSelector from './networkSelector';
 import styles from './login.css';
 

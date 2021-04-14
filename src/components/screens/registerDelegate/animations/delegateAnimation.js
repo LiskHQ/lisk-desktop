@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Animation from '../../../toolbox/animation';
+import Animation from '@toolbox/animation';
 
 class DelegateAnimation extends React.PureComponent {
   constructor() {

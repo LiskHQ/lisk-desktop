@@ -1,12 +1,12 @@
 import React from 'react';
 import to from 'await-to-js';
 
-import { create } from '@utils/api/transaction';
+import { create } from '@api/transaction';
 import { toRawLsk } from '@utils/lsk';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import AccountVisual from '@toolbox/accountVisual';
+import TransactionSummary from '@shared/transactionSummary';
 import styles from './summary.css';
-import AccountVisual from '../../../toolbox/accountVisual';
-import TransactionSummary from '../../../shared/transactionSummary';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
 

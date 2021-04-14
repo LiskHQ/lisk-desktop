@@ -1,8 +1,8 @@
 import { actionTypes } from '@constants';
 import { networkSelected, networkConfigSet, networkStatusUpdated } from './network';
-import { getNetworkConfig } from '../../utils/api/network';
+import { getNetworkConfig } from '@api/network';
 
-jest.mock('../utils/api/network', () => ({ getNetworkConfig: jest.fn() }));
+jest.mock('@api/network', () => ({ getNetworkConfig: jest.fn() }));
 
 describe('actions: network', () => {
   beforeEach(() => {

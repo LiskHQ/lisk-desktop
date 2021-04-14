@@ -28,11 +28,16 @@ describe('Accounts', () => {
     const newProps = { ...props };
     newProps.accounts = [
       {
-        address: '12345234236L',
-        balance: '120',
-        delegate: {
-          rank: 34,
-          username: 'genesis_51',
+        summary: {
+          address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
+          balance: '120',
+          isDelegate: true,
+        },
+        dpos: {
+          delegate: {
+            rank: 34,
+            username: 'genesis_51',
+          },
         },
       },
     ];
@@ -47,14 +52,16 @@ describe('Accounts', () => {
     const newProps = { ...props };
     newProps.accounts = [
       {
-        address: '123456L',
-        title: 'John',
-        balance: '120',
+        summary: {
+          address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
+          balance: '120',
+        },
       },
       {
-        address: '12345234L',
-        title: 'Anna',
-        balance: '110',
+        summary: {
+          address: 'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',
+          balance: '110',
+        },
       },
     ];
     wrapper = mount(<Accounts {...newProps} />);
@@ -69,8 +76,10 @@ describe('Accounts', () => {
     const newProps = { ...props };
     newProps.accounts = [
       {
-        address: '123456L',
-        balance: '120',
+        summary: {
+          address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
+          balance: '120',
+        },
       },
     ];
     wrapper = mount(<Accounts {...newProps} />);

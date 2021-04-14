@@ -1,8 +1,8 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import Icon from '@toolbox/icon';
 import LiskAmount from '../liskAmount';
 import styles from './transactionsAndBlocks.css';
-import Icon from '../../toolbox/icon';
 
 const getTxConfig = (t, transactions) => {
   const config = MODULE_ASSETS_NAME_ID_MAP[transactions[0].moduleAssetName];

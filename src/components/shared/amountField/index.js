@@ -3,8 +3,8 @@ import {
   formatAmountBasedOnLocale,
 } from '@utils/formattedNumber';
 import { fromRawLsk } from '@utils/lsk';
-import { Input } from '../../toolbox/inputs';
-import { TertiaryButton } from '../../toolbox/buttons';
+import { Input } from '@toolbox/inputs';
+import { TertiaryButton } from '@toolbox/buttons';
 import Converter from '../converter';
 import styles from './amountField.css';
 

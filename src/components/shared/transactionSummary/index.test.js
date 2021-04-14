@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import TransactionSummary from './index';
-import accounts from '../../../../test/constants/accounts';
 
 describe('TransactionSummary', () => {
   let props;
@@ -28,27 +27,6 @@ describe('TransactionSummary', () => {
   it('should render title', () => {
     const wrapper = mount(<TransactionSummary {...props} />);
     expect(wrapper.find('h2').text()).toEqual(props.title);
-  });
-
-  it('should disable confirm button if props.acount.secondPublicKey and valid 2nd passphrase is not provided', () => {
-    const wrapper = mount(<TransactionSummary {...{
-      ...props,
-      account: {
-        address: accounts.second_passphrase_account.summary?.address,
-        secondPublicKey: accounts.second_passphrase_account.secondPublicKey,
-      },
-    }}
-    />);
-    expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeTruthy();
-    const clipboardData = {
-      getData: () => accounts.second_passphrase_account.secondPassphrase,
-    };
-    wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
-    expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeFalsy();
-    wrapper.find('passphraseInput input').first().simulate('paste', {
-      clipboardData: { getData: () => 'invalid passphrase' },
-    });
-    expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeTruthy();
   });
 
   it('should render hw wallet confirmation if props.acount.hwInfo', () => {

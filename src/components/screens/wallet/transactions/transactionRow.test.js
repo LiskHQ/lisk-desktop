@@ -1,27 +1,30 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { mountWithRouter } from '../../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
 import TransactionRow from './transactionRow';
 import accounts from '../../../../../test/constants/accounts';
 
 describe('Single Transaction Component', () => {
   const unlockTx = {
     data: {
-      senderId: accounts.genesis.summary.address,
+      sender: {
+        address: accounts.genesis.summary.address,
+      },
+      block: {
+        timestamp: 1617806451178,
+      },
       asset: {
         unlockingObjects: [
           {
             amount: '80000000000',
             unvoteHeight: 34482,
-            delegateAddress: '642631452659250689L',
+            delegateAddress: 'lskewvoradpj2zheu8jkouqt97ee3548s683xqv56',
           },
         ],
       },
       confirmation: 1,
-      type: 14,
+      moduleAssetId: '5:2',
       id: 123,
       fee: 1e7,
       timestamp: Date.now(),
-      title: 'unlockToken',
     },
   };
 
@@ -35,7 +38,7 @@ describe('Single Transaction Component', () => {
       },
     );
     expect(wrapper).toContainMatchingElement('.transaction-image');
-    expect(wrapper.find('.transaction-address').text()).toEqual(MODULE_ASSETS_NAME_ID_MAP.unlockToken);
+    expect(wrapper.find('.transaction-address').text()).toEqual('Unlock');
     expect(wrapper).toContainMatchingElement('.transaction-amount');
   });
 });

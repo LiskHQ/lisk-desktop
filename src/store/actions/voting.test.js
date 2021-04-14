@@ -6,15 +6,15 @@ import {
   votesConfirmed,
   votesRetrieved,
 } from './voting';
-import * as TransactionApi from '../../utils/api/transaction';
-import * as delegateApi from '../../utils/api/delegate';
+import * as TransactionApi from '@api/transaction';
+import * as delegateApi from '@api/delegate';
 import sampleVotes from '../../../test/constants/votes';
 
-jest.mock('../utils/api/transaction', () => ({
+jest.mock('@api/transaction', () => ({
   create: jest.fn(),
 }));
 
-jest.mock('../utils/api/delegate', () => ({
+jest.mock('@api/delegate', () => ({
   getVotes: jest.fn(),
 }));
 
@@ -31,7 +31,12 @@ describe('actions: voting', () => {
       loginType: loginTypes.passphrase.code,
       info: {
         LSK: {
-          address: '123L',
+          summary: {
+            address: '123L',
+          },
+          sequence: {
+            nonce: 1,
+          },
           votes: [{ delegateAddress: '123L', amount: 1e9 }],
         },
       },
@@ -93,7 +98,7 @@ describe('actions: voting', () => {
 
   describe('votesRetrieved', () => {
     it('should call getVotes and dispatch vote results', async () => {
-      const votes = [{ address: '12L', username: 'genesis', amount: 1e8 }];
+      const votes = [{ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: 'genesis', amount: 1e8 }];
       const expectedAction = {
         type: actionTypes.votesRetrieved,
         data: votes,

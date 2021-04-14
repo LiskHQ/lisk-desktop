@@ -1,58 +1,58 @@
-import { mountWithRouter } from '../../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
 import Summary from './summary';
 
 const added = {
-  '1L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: {
     confirmed: 0,
     unconfirmed: 10,
   },
-  '2L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: {
     confirmed: 0,
     unconfirmed: 20,
   },
-  '3L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: {
     confirmed: 0,
     unconfirmed: 30,
   },
-  '4L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y44: {
     confirmed: 0,
     unconfirmed: 40,
   },
 };
 
 const removed = {
-  '1L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: {
     confirmed: 10,
     unconfirmed: 0,
   },
-  '2L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: {
     confirmed: 20,
     unconfirmed: 0,
   },
-  '3L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: {
     confirmed: 30,
     unconfirmed: 0,
   },
-  '4L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y44: {
     confirmed: 40,
     unconfirmed: 0,
   },
 };
 
 const edited = {
-  '1L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: {
     confirmed: 10,
     unconfirmed: 20,
   },
-  '2L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: {
     confirmed: 20,
     unconfirmed: 30,
   },
-  '3L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: {
     confirmed: 30,
     unconfirmed: 10,
   },
-  '4L': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y44: {
     confirmed: 40,
     unconfirmed: 20,
   },
@@ -60,7 +60,7 @@ const edited = {
 
 const props = {
   t: s => s,
-  account: { passphrase: '', info: { LSK: { publickKey: '' } } },
+  account: { passphrase: '', info: { LSK: { publicKey: '' } } },
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
   transactions: { transactionsCreatedFailed: [], transactionsCreated: [] },

@@ -1,6 +1,6 @@
 import React from 'react';
+import Icon from '@toolbox/icon';
 import styles from './overview.css';
-import Icon from '../../../toolbox/icon';
 
 const NumericInfo = ({ icon, value, title }) => (
   <section className={styles.numericInfo}>

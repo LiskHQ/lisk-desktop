@@ -5,14 +5,14 @@ import { fromRawLsk } from '@utils/lsk';
 import { kFormatter } from '@utils/helpers';
 import { colorPalette, chartStyles } from '@constants';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
-import Box from '../../../../toolbox/box';
-import BoxTabs from '../../../../toolbox/tabs';
-import BoxHeader from '../../../../toolbox/box/header';
-import BoxContent from '../../../../toolbox/box/content';
-import { DoughnutChart, BarChart } from '../../../../toolbox/charts';
-import Tooltip from '../../../../toolbox/tooltip/tooltip';
+import Box from '@toolbox/box';
+import BoxTabs from '@toolbox/tabs';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import { DoughnutChart, BarChart } from '@toolbox/charts';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
 import styles from './overview.css';
-import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
 
 const listOfLabels = Object.values(getModuleAssetTitle());
 

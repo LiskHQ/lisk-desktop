@@ -1,9 +1,9 @@
 /* eslint-disable complexity */
 import React from 'react';
 import { getErrorReportMailto } from '@utils/helpers';
-import { TertiaryButton } from '../../toolbox/buttons';
+import { TertiaryButton } from '@toolbox/buttons';
+import Illustration from '@toolbox/illustration';
 import styles from './transactionResult.css';
-import Illustration from '../../toolbox/illustration';
 
 const TransactionResult = ({
   success, title, message, t, error, children, illustration, className, sharedData,

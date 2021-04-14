@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { actionTypes } from '@constants';
-import * as accountApi from '@utils/api/account';
+import * as accountApi from '@api/account';
 import {
   accountLoggedOut,
   accountDataUpdated,
@@ -13,7 +13,7 @@ jest.mock('i18next', () => ({
   t: jest.fn(key => key),
   init: jest.fn(),
 }));
-jest.mock('@utils/api/account', () => ({
+jest.mock('@api/account', () => ({
   getAccount: jest.fn(),
 }));
 jest.mock('./transactions', () => ({
@@ -81,9 +81,11 @@ describe('actions: account', () => {
           passphrase: accounts.genesis.passphrase,
           info: {
             LSK: {
-              address: accounts.genesis.address,
-              publicKey: accounts.genesis.publicKey,
-              balance: 0,
+              summary: {
+                address: accounts.genesis.summary.address,
+                publicKey: accounts.genesis.summary.publicKey,
+                balance: 0,
+              },
             },
           },
         },
@@ -99,7 +101,7 @@ describe('actions: account', () => {
     });
 
     it('should call account API methods on newBlockCreated action when offline', async () => {
-      const code = 'EUNAVAILABLE';
+      const code = 'EN_AVAILABLE';
       accountApi.getAccount.mockRejectedValue({ error: { code } });
 
       await accountDataUpdated('active')(dispatch, getState);

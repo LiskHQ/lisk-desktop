@@ -10,7 +10,7 @@ const voting = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.votesRetrieved: {
       if (action.data.account.votesUsed) {
-        return action.data
+        return action.data.votes
           .reduce((votesDict, delegate) => {
             votesDict[delegate.address] = {
               confirmed: Number(delegate.amount),

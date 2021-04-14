@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 
 import { tokenMap, routes } from '@constants';
 import { truncateAddress } from '@utils/account';
-import { Input } from '../../../toolbox/inputs';
-import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
-import AccountVisual from '../../../toolbox/accountVisual';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
+import { Input } from '@toolbox/inputs';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
+import AccountVisual from '@toolbox/accountVisual';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import Icon from '@toolbox/icon';
 import EmptyState from './emptyState';
 import styles from './list.css';
-import Icon from '../../../toolbox/icon';
 
 export class BookmarksList extends React.Component {
   constructor(props) {

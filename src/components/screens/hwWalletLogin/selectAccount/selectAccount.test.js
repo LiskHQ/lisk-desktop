@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { toast } from 'react-toastify';
+import * as hwManager from '@utils/hwManager';
 import SelectAccount from './selectAccount';
-import * as hwManager from '../../../../utils/hwManager';
 
-jest.mock('../../../../utils/hwManager');
+jest.mock('@utils/hwManager');
 
 describe('Select Account', () => {
   let wrapper;
@@ -13,23 +13,31 @@ describe('Select Account', () => {
   const mockValue = [
     {
       name: 'Unnamed account',
-      address: '123456L',
-      balance: 100,
+      summary: {
+        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+        balance: 100,
+      },
     },
     {
       name: 'Unnamed account',
-      address: '098765L',
-      balance: 50,
+      summary: {
+        address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
+        balance: 50,
+      },
     },
     {
       name: 'Unnamed account',
-      address: '112233L',
-      balance: 150,
+      summary: {
+        address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
+        balance: 150,
+      },
     },
     {
       name: 'Unnamed account',
-      address: '555555L',
-      balance: 0,
+      summary: {
+        address: 'lsksckkjs2c8dnu7vhcku825cp62ed6eyxd8pbt6p',
+        balance: 0,
+      },
     },
   ];
 
@@ -48,17 +56,21 @@ describe('Select Account', () => {
         deviceModel: 'Ledger Nano S',
       },
       account: {
-        address: '123456L',
-        balance: 100,
+        summary: {
+          address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+          balance: 100,
+          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+        },
         name: 'Lisk',
-        publicKey: '123bkgj45',
       },
       network: {},
       settings: {
         hardwareAccounts: {
           'Ledger Nano S': [
             {
-              address: '123456L',
+              summary: {
+                address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+              },
               name: 'Main',
             },
           ],
