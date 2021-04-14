@@ -248,6 +248,7 @@ export const getTransactionFee = async ({
   transaction, selectedPriority,
 }) => {
   const feePerByte = selectedPriority.value;
+
   const {
     moduleAssetId, ...rawTransaction
   } = transaction;
