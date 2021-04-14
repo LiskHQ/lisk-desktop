@@ -204,7 +204,8 @@ describe('Form', () => {
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
       expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
-      // amountField.find('input').simulate('change', { target: { name: 'amount', value: '1.1.' } });
+      // amountField.find('input').simulate('change',
+      //   { target: { name: 'amount', value: '1.1.' } });
       // act(() => { jest.advanceTimersByTime(300); });
       // wrapper.update();
       // amountField = wrapper.find('.fieldGroup').at(1);
@@ -212,12 +213,17 @@ describe('Form', () => {
       // expect(amountField.find('.feedback.error')).toHaveClassName('error');
       // expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
-      // amountField.find('input').simulate('change', { target: { name: 'amount', value: props.account.token?.balance + 2 } });
+      // amountField.find('input').simulate('change', {
+      //   target:
+      //     { name: 'amount', value: props.account.token?.balance + 2 },
+      // });
       // act(() => { jest.advanceTimersByTime(300); });
       // await flushPromises();
       // wrapper.update();
 
-      // expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
+      // expect(wrapper.find('.amount Feedback')).toHaveText(
+      //   'Provided amount is higher than your current balance.',
+      // );
     });
 
     it('Should show error if transaction will result on an account with less than the minimum balance', () => {

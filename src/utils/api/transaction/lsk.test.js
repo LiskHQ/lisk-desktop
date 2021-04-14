@@ -48,7 +48,15 @@ describe('API: LSK Transactions', () => {
 
   moduleAssetSchemas['2:0'] = {
     $id: 'lisk/transfer-asset',
-    properties: { amount: { dataType: 'uint64', fieldNumber: 1 }, recipientAddress: { dataType: 'bytes', fieldNumber: 2, maxLength: 20, minLength: 20 }, data: { dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0 } },
+    properties: {
+      amount: { dataType: 'uint64', fieldNumber: 1 },
+      recipientAddress: {
+        dataType: 'bytes', fieldNumber: 2, maxLength: 20, minLength: 20,
+      },
+      data: {
+        dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0,
+      },
+    },
     required: ['amount', 'recipientAddress', 'data'],
     title: 'Transfer transaction asset',
     type: 'object',

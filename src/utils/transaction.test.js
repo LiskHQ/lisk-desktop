@@ -53,7 +53,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe.only('transformTransaction', () => {
+  describe('transformTransaction', () => {
     const binaryAddress = 'd04699e57c4a3846c988f3c15306796f8eae5c1c';
 
     it('should a transfer transaction with type signature of lisk service', () => {

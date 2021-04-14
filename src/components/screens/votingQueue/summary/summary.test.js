@@ -2,57 +2,57 @@ import { mountWithRouter } from '@utils/testHelpers';
 import Summary from './summary';
 
 const added = {
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: {
     confirmed: 0,
     unconfirmed: 10,
   },
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: {
     confirmed: 0,
     unconfirmed: 20,
   },
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: {
     confirmed: 0,
     unconfirmed: 30,
   },
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y44': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y44: {
     confirmed: 0,
     unconfirmed: 40,
   },
 };
 
 const removed = {
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: {
     confirmed: 10,
     unconfirmed: 0,
   },
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: {
     confirmed: 20,
     unconfirmed: 0,
   },
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: {
     confirmed: 30,
     unconfirmed: 0,
   },
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y44': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y44: {
     confirmed: 40,
     unconfirmed: 0,
   },
 };
 
 const edited = {
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: {
     confirmed: 10,
     unconfirmed: 20,
   },
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: {
     confirmed: 20,
     unconfirmed: 30,
   },
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: {
     confirmed: 30,
     unconfirmed: 10,
   },
-  'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y44': {
+  lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y44: {
     confirmed: 40,
     unconfirmed: 20,
   },

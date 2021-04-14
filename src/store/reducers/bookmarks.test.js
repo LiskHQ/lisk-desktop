@@ -8,6 +8,7 @@ import bookmarks from './bookmarks';
 import {
   genesis,
   delegate,
+  // eslint-disable-next-line camelcase
   empty_account,
 } from '../../../test/constants/accounts';
 

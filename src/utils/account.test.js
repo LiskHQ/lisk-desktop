@@ -69,7 +69,7 @@ describe('Utils: Account', () => {
         { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
         { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
       ];
-      const address = '80L';
+      const delegateAddress = '80L';
       const currentBlockHeight = 5000;
 
       expect(
@@ -78,7 +78,7 @@ describe('Utils: Account', () => {
 
       unlocking = [
         { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-        { amount: '3000000000', height: { start: 2500, end: 5500 }, delegateAddress: address },
+        { amount: '3000000000', height: { start: 2500, end: 5500 }, delegateAddress },
         { amount: '1000000000', height: { start: 3000, end: 5500 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
       ];
       expect(

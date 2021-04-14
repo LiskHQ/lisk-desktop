@@ -85,7 +85,7 @@ describe('actions: account', () => {
                 address: accounts.genesis.summary.address,
                 publicKey: accounts.genesis.summary.publicKey,
                 balance: 0,
-              }
+              },
             },
           },
         },
