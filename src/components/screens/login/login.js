@@ -106,7 +106,7 @@ class Login extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { t, network, settings } = this.props;
-    const canHWSignIn = !network.networks.LSK;
+    const canHWSignIn = !network.networks?.LSK;
 
     return (
       <React.Fragment>

@@ -123,7 +123,7 @@ const NetworkSelector = ({
       buttonClassName={`${isValid ? '' : styles.dropdownError} ${styles.dropdownHandler} network`}
       wrapperClassName={styles.NetworkSelector}
       className={`${styles.menu} network-dropdown`}
-      buttonLabel={(<span>{networks[selectedNetworkName].label}</span>)}
+      buttonLabel={(<span>{networks[selectedNetworkName]?.label}</span>)}
       ButtonComponent={SecondaryButton}
       align="right"
     >
