@@ -20,13 +20,13 @@ import styles from './login.css';
 class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
     super();
-    const { liskCoreUrl } = getAutoLogInData();
+    const { liskServiceUrl } = getAutoLogInData();
     let loginNetwork = findMatchingLoginNetwork();
     let address = '';
 
     if (!loginNetwork) {
-      loginNetwork = liskCoreUrl ? networks.customNode : networks[networkKeys.mainNet];
-      address = liskCoreUrl || '';
+      loginNetwork = liskServiceUrl ? networks.customNode : networks[networkKeys.mainNet];
+      address = liskServiceUrl || '';
     }
 
     this.state = {
@@ -48,7 +48,7 @@ class Login extends React.Component {
 
   async componentDidMount() {
     // istanbul ignore else
-    if (!this.props.settings.areTermsOfUseAccepted) {
+    if (!this.props.settings.areTermsOfUseAccepted && this.props.network.networks?.LSK) {
       this.props.history.push(routes.termsOfUse.path);
     }
 
@@ -106,7 +106,7 @@ class Login extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { t, network, settings } = this.props;
-    const canHWSignIn = !network.networks.LSK;
+    const canHWSignIn = !network.networks?.LSK;
 
     return (
       <React.Fragment>

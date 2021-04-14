@@ -1,4 +1,4 @@
-import { pricesRetrieved, emptyTransactionsData } from '@actions';
+import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@actions';
 import { actionTypes } from '@constants';
 import settingsMiddleware from './settings';
 
@@ -33,10 +33,19 @@ describe('Middleware: Settings', () => {
     it('should dispatch pricesRetrieved', () => {
       const action = {
         type: actionTypes.networkConfigSet,
+        data: {
+          name: 'customNode',
+          networks: {
+            LSK: {
+              serviceUrl: 'http://test.io',
+            },
+          },
+        },
       };
 
       settingsMiddleware(store)(next)(action);
       expect(pricesRetrieved).toBeCalled();
+      expect(settingsUpdated).toBeCalled();
     });
   });
 

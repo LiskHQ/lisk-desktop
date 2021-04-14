@@ -106,10 +106,10 @@ const autoLogInIfNecessary = async ({ dispatch, getState }) => {
   } = getState().settings;
   const autoLoginData = getAutoLogInData();
 
-  const address = autoLoginData[settings.keys.liskCoreUrl];
+  const address = autoLoginData[settings.keys.liskServiceUrl];
   const network = address
     ? { name: networkKeys.customNode, address }
-    : { name: networkKeys.mainNet, address: networks.mainnet.nodes[0] };
+    : { name: networkKeys.mainNet, address: networks.mainnet.serviceUrl };
   dispatch(networkSelected(network));
   dispatch(networkStatusUpdated({ online: true }));
 
@@ -139,7 +139,9 @@ const accountMiddleware = store => next => async (action) => {
       store.dispatch(emptyTransactionsData());
       break;
     case actionTypes.settingsUpdated:
-      store.dispatch(accountDataUpdated('enabled'));
+      if (action.data.token) {
+        store.dispatch(accountDataUpdated('enabled'));
+      }
       break;
     /* istanbul ignore next */
     default: break;

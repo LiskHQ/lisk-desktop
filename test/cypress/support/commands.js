@@ -61,6 +61,6 @@ Cypress.Commands.add('addObjectToLocalStorage', (item, key, value) => {
 });
 
 Cypress.Commands.add('autologin', (passphrase, network) => {
-  localStorage.setItem('liskCoreUrl', network);
+  localStorage.setItem('liskServiceUrl', network);
   localStorage.setItem('loginKey', passphrase);
 });

@@ -25,9 +25,9 @@ const getNetwork = (name, url) => {
 };
 
 const getInitialState = (address) => {
-  const { liskCoreUrl } = getAutoLogInData();
+  const { liskServiceUrl } = getAutoLogInData();
   return {
-    address: liskCoreUrl || address,
+    address: liskServiceUrl || address,
     connected: true,
     isValid: true,
     isCustomSelected: false,
@@ -83,7 +83,7 @@ const NetworkSelector = ({
           name: networkName,
           address: networkToSet.address,
         }, tokenMap.LSK.key);
-        if (response.data) {
+        if (response) {
           setState({ isValid: true, connected: true });
           changeNetworkInSettings(networkName);
           networkSelected(networkToSet);
@@ -115,7 +115,7 @@ const NetworkSelector = ({
     isValidationLoading,
   } = state;
 
-  const validationError = isValid ? '' : t('Unable to connect to the node, please check the address and try again');
+  const validationError = isValid ? '' : t('Unable to connect to Lisk Service, please check the address and try again');
 
   return (
     <DropdownButton
@@ -123,7 +123,7 @@ const NetworkSelector = ({
       buttonClassName={`${isValid ? '' : styles.dropdownError} ${styles.dropdownHandler} network`}
       wrapperClassName={styles.NetworkSelector}
       className={`${styles.menu} network-dropdown`}
-      buttonLabel={(<span>{networks[selectedNetworkName].label}</span>)}
+      buttonLabel={(<span>{networks[selectedNetworkName]?.label}</span>)}
       ButtonComponent={SecondaryButton}
       align="right"
     >

@@ -4,6 +4,7 @@ import { Redirect, Route } from 'react-router-dom';
 
 import Piwik from '@utils/piwik';
 import { routes } from '@constants';
+import Login from '@screens/login';
 import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
@@ -29,10 +30,6 @@ const CustomRoute = ({
   const isNetworkSet = useSelector(checkNetwork);
   const { search = '' } = history.location;
 
-  if (!isNetworkSet) {
-    return null;
-  }
-
   Piwik.tracking(history, settings);
 
   if (forbiddenTokens.indexOf(settings.token.active) !== -1) {
@@ -51,10 +48,10 @@ const CustomRoute = ({
     <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
       <ErrorBoundary errorMessage={t('An error occurred while rendering this page')}>
         <Route
-          path={path}
+          path={isNetworkSet ? path : routes.login.path}
           exact={exact}
-          key={path}
-          component={component}
+          key={isNetworkSet ? path : routes.login.path}
+          component={isNetworkSet ? component : Login}
         />
       </ErrorBoundary>
     </main>
