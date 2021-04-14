@@ -6,9 +6,9 @@ import {
   getActiveTokenAccount,
   getUnlockableUnlockingObjects,
 } from '@utils/account';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants/moduleAssets';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionPriority, { useTransactionFeeCalculation } from '@shared/transactionPriority';
-import useTransactionPriority from '../../../shared/transactionPriority/useTransactionPriority';
+import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import Form from './form';
 import BalanceTable from './balanceTable';
 

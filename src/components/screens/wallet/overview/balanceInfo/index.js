@@ -9,14 +9,14 @@ import {
   calculateBalanceLockedInVotes,
   getActiveTokenAccount,
 } from '@utils/account';
-import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
-import Box from '../../../../toolbox/box';
-import BoxContent from '../../../../toolbox/box/content';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import DialogLink from '@toolbox/dialog/link';
+import Icon from '@toolbox/icon';
 import LiskAmount from '../../../../shared/liskAmount';
 import DiscreetMode from '../../../../shared/discreetMode';
 import Converter from '../../../../shared/converter';
-import DialogLink from '../../../../toolbox/dialog/link';
-import Icon from '../../../../toolbox/icon';
 import styles from './balanceInfo.css';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
 

@@ -23,8 +23,7 @@ import Request from '@screens/request';
 import LockedBalance from '@screens/lockedBalance';
 import EditVote from '@screens/editVote';
 import VotingQueue from '@screens/votingQueue';
-// eslint-disable-next-line import/no-named-as-default
-import DeviceDisconnectDialog from '@screens/deviceDisconnectDialog';
+import DeviceDisconnect from '@screens/deviceDisconnectDialog';
 import NewReleaseDialog from '@shared/newReleaseDialog/newReleaseDialog';
 import SearchBar from '@shared/searchBar';
 import { tokenMap } from './tokens';
@@ -200,7 +199,7 @@ export const modals = {
     forbiddenTokens: [],
   },
   deviceDisconnectDialog: {
-    component: DeviceDisconnectDialog,
+    component: DeviceDisconnect,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },

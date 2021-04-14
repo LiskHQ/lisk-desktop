@@ -2,8 +2,8 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { getModuleAssetSenderLabel } from '@utils/moduleAssets';
+import Select from '@toolbox/select';
 import styles from './filters.css';
-import Select from '../../toolbox/select';
 
 const SelectFilter = ({
   label, placeholder, filters, name, updateCustomFilters,

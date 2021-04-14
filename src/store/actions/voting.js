@@ -1,8 +1,8 @@
 import to from 'await-to-js';
 import { actionTypes, loginTypes, tokenMap } from '@constants';
-import { create } from '@utils/api/transaction';
+import { create } from '@api/transaction';
 import { signVoteTransaction } from '@utils/hwManager';
-import { getVotes } from '@utils/api/delegate';
+import { getVotes } from '@api/delegate';
 import { passphraseUsed } from './account';
 import { MODULE_ASSETS_NAME_ID_MAP } from '../../constants/moduleAssets';
 

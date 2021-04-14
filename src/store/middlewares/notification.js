@@ -1,5 +1,5 @@
 import Notification from '@utils/notification';
-import { getActiveTokenAccount } from '../../utils/account';
+import { getActiveTokenAccount } from '@utils/account';
 import { tokenMap } from '../../constants/tokens';
 import { actionTypes } from '@constants';
 

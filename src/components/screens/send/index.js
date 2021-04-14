@@ -2,11 +2,11 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { routes } from '@constants';
 import { parseSearchParams } from '@utils/searchParams';
-import MultiStep from '../../shared/multiStep';
+import MultiStep from '@shared/multiStep';
+import Dialog from '@toolbox/dialog/dialog';
 import Form from './form';
 import Summary from './summary';
 import TransactionStatus from './transactionStatus';
-import Dialog from '../../toolbox/dialog/dialog';
 import styles from './send.css';
 
 const Send = ({ history }) => {

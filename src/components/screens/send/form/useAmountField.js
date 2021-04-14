@@ -34,7 +34,7 @@ const useAmountField = (initialValue, token) => {
     let { message: feedback } = validateAmountFormat({
       value,
       token,
-      funds: token !== tokenMap.LSK.key ? maxAmount : maxAmount + minAccountBalance,
+      funds: token !== tokenMap.LSK.key ? maxAmount : Number(maxAmount) + Number(minAccountBalance),
       checklist: token !== tokenMap.LSK.key ? checklist : [...checklist, 'MIN_BALANCE'],
     });
 

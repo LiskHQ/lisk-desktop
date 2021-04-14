@@ -40,10 +40,15 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     it('should store fetched votes of a given account', () => {
       const action = {
         type: actionTypes.votesRetrieved,
-        data: [
-          { address: delegate1.address, username: delegate1.username, amount: 1e10 },
-          { address: delegate2.address, username: delegate2.username, amount: 2e10 },
-        ],
+        data: {
+          account: {
+            votesUsed: 2,
+          },
+          votes: [
+            { address: delegate1.address, username: delegate1.username, amount: 1e10 },
+            { address: delegate2.address, username: delegate2.username, amount: 2e10 },
+          ],
+        },
       };
       const expectedState = {
         [delegate1.address]: { confirmed: 1e10, unconfirmed: 1e10 },

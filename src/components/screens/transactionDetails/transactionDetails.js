@@ -2,24 +2,24 @@ import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { isEmpty } from '@utils/helpers';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import NotFound from '../../shared/notFound';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import NotFound from '@shared/notFound';
+import Dialog from '@toolbox/dialog/dialog';
 import TransactionVotes from './transactionVotes';
 import {
   TransactionId, Sender, Recipient, Message,
   Illustration, AmountAndDate, FeeAndConfirmation,
   DelegateUsername,
 } from './dataRows';
-import Dialog from '../../toolbox/dialog/dialog';
 import styles from './transactionDetails.css';
 
 const Transactions = ({
   t, activeToken, netCode, transaction, votedDelegates,
 }) => {
   const { error, isLoading, data } = transaction;
-  const addresses = data && [data.asset?.recipient.address, data.sender.address];
+  const addresses = !isEmpty(data) && [data.asset.recipient?.address, data.sender.address];
 
   if (!error && isEmpty(transaction.data)) return <div />;
   if (error && isEmpty(transaction.data)) return <NotFound />;

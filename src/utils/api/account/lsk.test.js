@@ -13,7 +13,7 @@ describe('API: LSK Account', () => {
     },
   };
   const baseUrl = 'http://custom-basse-url.com/';
-  const path = '/api/v1/accounts';
+  const path = '/api/v2/accounts';
 
   beforeEach(() => jest.clearAllMocks());
 
@@ -29,14 +29,14 @@ describe('API: LSK Account', () => {
 
     it('should call ws with addressList if it is provided', async () => {
       const expectedApiCallParams = [
-        { method: 'get.accounts', params: { address: '12L' }, jsonrpc: '2.0' },
-        { method: 'get.accounts', params: { address: '13L' }, jsonrpc: '2.0' },
+        { method: 'get.accounts', params: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' }, jsonrpc: '2.0' },
+        { method: 'get.accounts', params: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y91' }, jsonrpc: '2.0' },
       ];
       // BaseUrl is not used for WS calls
       const response = await getAccounts({
         network,
         params: {
-          addressList: ['12L', '13L'],
+          addressList: ['lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y91'],
         },
         path: 'transactions',
       });
@@ -89,9 +89,8 @@ describe('API: LSK Account', () => {
 
   describe('getAccount', () => {
     const {
-      address,
-      username,
-      publicKey,
+      summary: { address, publicKey },
+      dpos: { delegate: { username } },
       passphrase,
     } = accounts.delegate;
 
@@ -202,10 +201,12 @@ describe('API: LSK Account', () => {
       });
 
       expect(result).toEqual({
-        address,
-        balance: 0,
-        token: 'LSK',
-        publicKey,
+        summary: {
+          address,
+          balance: 0,
+          token: 'LSK',
+          publicKey,
+        },
       });
     });
   });

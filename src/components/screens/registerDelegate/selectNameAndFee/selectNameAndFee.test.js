@@ -1,16 +1,16 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { networks } from '@constants';
-import SelectNameAndFee from './selectNameAndFee';
-import * as delegatesApi from '../../../../utils/api/delegate';
+import * as delegatesApi from '@api/delegate';
+import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
+import { fromRawLsk } from '@utils/lsk';
 import accounts from '../../../../../test/constants/accounts';
-import { getTransactionBaseFees, getTransactionFee } from '../../../../utils/api/transaction';
-import { fromRawLsk } from '../../../../utils/lsk';
+import SelectNameAndFee from './selectNameAndFee';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
-jest.mock('../../../../utils/api/network');
-jest.mock('../../../../utils/api/transaction');
-jest.mock('../../../../utils/api/delegate', () => ({
+jest.mock('@api/network');
+jest.mock('@api/transaction');
+jest.mock('@api/delegate', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
 }));
 

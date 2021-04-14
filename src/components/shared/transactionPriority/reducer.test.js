@@ -23,8 +23,8 @@ describe('useTransactionFeeCalculation.reducer', () => {
     const state = { feedback: '', error: false, value: 0 };
     const newState = reducer(state, {
       type: actionTypes.setMaxAmount,
-      payload: { token: 'LSK', response: 1, account: { balance: 200 } },
+      payload: { token: 'LSK', response: 1, account: { token: { balance: 200000000 } } },
     });
-    expect(newState).toStrictEqual({ ...state, value: 200 });
+    expect(newState).toStrictEqual({ ...state, value: 195000000 });
   });
 });

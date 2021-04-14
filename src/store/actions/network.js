@@ -1,5 +1,5 @@
 import { actionTypes, tokenKeys } from '@constants';
-import { getNetworkConfig } from '@utils/api/network';
+import { getNetworkConfig } from '@api/network';
 
 /**
  * call this action with a network name and address to update the

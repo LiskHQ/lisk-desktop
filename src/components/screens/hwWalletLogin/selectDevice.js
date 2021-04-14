@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { routes } from '@constants';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
+import Icon from '@toolbox/icon';
 import styles from './selectDevice.css';
-import Icon from '../../toolbox/icon';
 
 class SelectDevice extends React.Component {
   constructor(props) {

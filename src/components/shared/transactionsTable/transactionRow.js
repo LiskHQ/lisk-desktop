@@ -7,8 +7,8 @@ import { DateTimeFromTimestamp } from '@toolbox/timestamp';
 import Icon from '@toolbox/icon';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import DialogLink from '@toolbox/dialog/link';
-import AccountVisualWithAddress from '../accountVisualWithAddress';
 import LiskAmount from '../liskAmount';
+import AccountVisualWithAddress from '../accountVisualWithAddress';
 import styles from './transactionsTable.css';
 
 const roundSize = 103;

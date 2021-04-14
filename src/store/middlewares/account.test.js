@@ -1,14 +1,23 @@
 import {
-  accountDataUpdated, transactionsRetrieved, settingsUpdated,
+  accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved, emptyTransactionsData,
 } from '@actions';
 
 import { tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import middleware from './account';
-import * as transactionApi from '../../utils/api/transaction';
+import * as transactionApi from '@api/transaction';
 
-jest.mock('../../utils/api/transaction', () => ({
+jest.mock('@api/transaction', () => ({
   getTransactions: jest.fn(),
 }));
+
+jest.mock('@actions', () => ({
+  accountDataUpdated: jest.fn(),
+  transactionsRetrieved: jest.fn(),
+  settingsUpdated: jest.fn(),
+  votesRetrieved: jest.fn(),
+  emptyTransactionsData: jest.fn(),
+}));
+
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {
@@ -17,18 +26,38 @@ const storeCreatedAction = {
 
 const transactions = [
   {
-    senderId: 'some_address',
-    recipientId: 'sample_address',
-    asset: { data: 'Message' },
-    amount: 10e8,
-    type: 0,
+    sender: {
+      address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+    },
+    asset: {
+      recipient: {
+        address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
+      },
+      data: 'Message',
+      amount: 10e8,
+    },
+    moduleAssetId: '2:0',
+    moduleAssetName: 'token:transfer',
+    fee: '295000',
+    height: 741142,
+    nonce: '2',
   },
   {
-    senderId: 'some_address',
-    recipientId: 'sample_address',
-    asset: { data: '' },
-    amount: 10e8,
-    type: 0,
+    sender: {
+      address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+    },
+    asset: {
+      recipient: {
+        address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
+      },
+      data: '',
+      amount: 10e8,
+    },
+    moduleAssetId: '2:0',
+    moduleAssetName: 'token:transfer',
+    fee: '295000',
+    height: 741141,
+    nonce: '1',
   },
 ];
 
@@ -64,10 +93,11 @@ const network = {
 };
 
 const account = {
-  address: 'sample_address',
   info: {
     LSK: {
-      address: 'sample_address',
+      summary: {
+        address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
+      },
     },
   },
 };
@@ -80,7 +110,12 @@ const defaultState = {
       id: 12498250891724098,
     }],
     confirmed: [],
-    account: { address: 'test_address', balance: 0 },
+    account: {
+      summary: {
+        address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
+        balance: 0,
+      },
+    },
   },
   delegate: {},
   settings: { token: { active: 'LSK' }, statistics: false },
@@ -94,9 +129,6 @@ describe('Account middleware', () => {
   };
 
   jest.useFakeTimers();
-  // jest.spyOn(transactionsActions, 'transactionsRetrieved');
-  // const accountDataUpdatedSpy = jest.spyOn(accountActions, 'accountDataUpdated');
-  const accountDataUpdatedSpy = {};
   window.Notification = () => { };
   const windowNotificationSpy = jest.spyOn(window, 'Notification');
 
@@ -144,7 +176,7 @@ describe('Account middleware', () => {
         transactions: {
           ...state.transactions,
           confirmed: [{ confirmations: 10 }],
-          address: 'sample_address',
+          address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
         },
       });
       const currentState = store.getState();
@@ -152,7 +184,7 @@ describe('Account middleware', () => {
       const promise = middleware(store)(next);
       promise(newBlockCreated).then(() => {
         jest.runOnlyPendingTimers();
-        expect(accountDataUpdatedSpy).toHaveBeenCalledWith({
+        expect(accountDataUpdated).toHaveBeenCalledWith({
           account: currentState.account,
           transactions: currentState.transactions,
         });
@@ -167,7 +199,7 @@ describe('Account middleware', () => {
           pending: [{
             id: 12498250891724098,
           }],
-          confirmed: [{ confirmations: 10, address: 'sample_address' }],
+          confirmed: [{ confirmations: 10, address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79' }],
         },
         network: {
           status: { online: true },
@@ -185,7 +217,7 @@ describe('Account middleware', () => {
       const promise = middleware(store)(next);
       promise(newBlockCreated).then(() => {
         jest.runOnlyPendingTimers();
-        expect(accountDataUpdatedSpy).toHaveBeenCalledWith({
+        expect(accountDataUpdated).toHaveBeenCalledWith({
           account: currentState.account,
           transactions: currentState.transactions,
         });
@@ -207,11 +239,9 @@ describe('Account middleware', () => {
 
   describe('on transactionsRetrieved', () => {
     it('should dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
-      // const actionSpy = jest.spyOn(votingActions, 'votesRetrieved');
-      const actionSpy = () => {};
       transactionsRetrievedAction.data.confirmed[0].type = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
       middleware(store)(next)(transactionsRetrievedAction);
-      expect(actionSpy).toHaveBeenCalled();
+      expect(votesRetrieved).toHaveBeenCalled();
     });
   });
 
@@ -224,7 +254,6 @@ describe('Account middleware', () => {
 
   describe('on accountLoggedOut', () => {
     it('should clean up', () => {
-      // jest.spyOn(settingsActions, 'settingsUpdated');
       const accountLoggedOutAction = {
         type: actionTypes.accountLoggedOut,
       };
@@ -232,7 +261,7 @@ describe('Account middleware', () => {
       expect(settingsUpdated).toHaveBeenCalledWith(
         { token: { active: tokenMap.LSK.key } },
       );
-      expect(store.dispatch).toHaveBeenCalledWith({ type: actionTypes.emptyTransactionsData });
+      expect(emptyTransactionsData).toHaveBeenCalled();
     });
   });
 

@@ -20,14 +20,14 @@ describe('TxDetail AccountInfo', () => {
   });
 
   it('Should render with invalid address and label passed as props', () => {
-    const newProps = { ...props, address: 'sdfsdf67565' };
+    const newProps = { ...props, address: 'invalid_address' };
     const wrapper = mount(<AccountInfo {...newProps} />);
     expect(wrapper.find('.label').text()).toEqual('Label test');
-    expect(wrapper.find('.address').first().text()).toEqual('sdfsdf67565');
+    expect(wrapper.find('.address').first().text()).toEqual('invalid_address');
   });
 
   it('Should render the name if passed', () => {
-    const namedProps = { ...props, address: 'sdfsdf67565', name: 'genesis' };
+    const namedProps = { ...props, address: 'invalid_address', name: 'genesis' };
     const wrapper = mount(<AccountInfo {...namedProps} />);
     expect(wrapper.text().indexOf('genesis')).not.toEqual(-1);
   });

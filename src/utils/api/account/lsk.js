@@ -79,21 +79,15 @@ export const getAccount = async ({
       params: normParams,
     });
 
-    if (response.data[0]) {
-      const account = { ...response.data[0] };
-      const isAccountUninitialized = account.summary.publicKey === 'null';
-      if (isAccountUninitialized) {
-        const publicKey = params.publicKey ?? extractPublicKey(params.address || params.passphrase);
-        account.summary.publicKey = publicKey;
-      }
-
-      return account;
-    }
+    return response.data[0];
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log('Lisk account not found.');
+    let publicKey = params.publicKey;
+    if (!publicKey && params.passphrase) {
+      publicKey = extractPublicKey(params.passphrase);
+    }
 
-    const publicKey = params.publicKey ?? extractPublicKey(params.address || params.passphrase);
     const account = {
       summary: {
         publicKey,
@@ -105,8 +99,6 @@ export const getAccount = async ({
 
     return account;
   }
-
-  throw Error('Error retrieving account');
 };
 
 const accountFilters = {

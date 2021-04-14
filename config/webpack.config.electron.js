@@ -9,7 +9,7 @@ module.exports = merge(baseConfig, {
   },
   output: {
     path: resolve(__dirname, '../app/build'),
-    filename: 'main.[name].js',
+    filename: '[name].js',
   },
   target: 'electron-main',
   node: {

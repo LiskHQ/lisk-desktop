@@ -1,15 +1,15 @@
 import React from 'react';
 import { extractPublicKey } from '@utils/account';
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import BoxFooter from '../../toolbox/box/footer';
-import CheckBox from '../../toolbox/checkBox';
-import HardwareWalletIllustration from '../../toolbox/hardwareWalletIllustration';
-import PassphraseInput from '../../toolbox/passphraseInput';
-import Tooltip from '../../toolbox/tooltip/tooltip';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import CheckBox from '@toolbox/checkBox';
+import HardwareWalletIllustration from '@toolbox/hardwareWalletIllustration';
+import PassphraseInput from '@toolbox/passphraseInput';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './transactionSummary.css';
 
 class TransactionSummary extends React.Component {

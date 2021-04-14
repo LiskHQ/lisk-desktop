@@ -42,6 +42,7 @@
     }
   },
   "rules": {
+    "import/no-cycle": "error",
     "import/named": "off",
     "jsx-a11y/alt-text": "off",
     "jsx-a11y/anchor-is-valid": "off",

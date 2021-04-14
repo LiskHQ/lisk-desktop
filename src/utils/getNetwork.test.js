@@ -1,13 +1,10 @@
-import { constants } from '@liskhq/lisk-client';
 import {
   getNetworksList,
-  getNetworkNameBasedOnNethash,
+  getNetworkName,
   getConnectionErrorMessage,
 } from './getNetwork';
 
 describe('Utils: getNetwork', () => {
-  const { MAINNET_NETHASH, TESTNET_NETHASH } = constants;
-
   describe('getNetworksList', () => {
     const response = [
       { label: 'Mainnet', name: 'mainnet' },
@@ -19,29 +16,19 @@ describe('Utils: getNetwork', () => {
     });
   });
 
-  describe('getNetworkNameBasedOnNethash', () => {
+  describe.skip('getNetworkName', () => {
     it('should discover mainnet', () => {
       const network = {
         name: 'customNode',
-        networks: {
-          LSK: {
-            nethash: MAINNET_NETHASH,
-          },
-        },
       };
-      expect(getNetworkNameBasedOnNethash(network, 'LSK')).toEqual('mainnet');
+      expect(getNetworkName(network, 'LSK')).toEqual('mainnet');
     });
 
     it('should discover testnet', () => {
       const network = {
         name: 'customNode',
-        networks: {
-          LSK: {
-            nethash: TESTNET_NETHASH,
-          },
-        },
       };
-      expect(getNetworkNameBasedOnNethash(network, 'LSK')).toEqual('testnet');
+      expect(getNetworkName(network, 'LSK')).toEqual('testnet');
     });
 
     it('should mark as customNode otherwise', () => {
@@ -53,7 +40,7 @@ describe('Utils: getNetwork', () => {
           },
         },
       };
-      expect(getNetworkNameBasedOnNethash(network, 'LSK')).toEqual('customNode');
+      expect(getNetworkName(network, 'LSK')).toEqual('customNode');
     });
   });
 

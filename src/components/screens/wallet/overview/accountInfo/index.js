@@ -2,14 +2,14 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 import { getAddress } from '@utils/hwManager';
 import { isEmpty } from '@utils/helpers';
-import AccountVisual from '../../../../toolbox/accountVisual';
-import Box from '../../../../toolbox/box';
-import BoxContent from '../../../../toolbox/box/content';
-import Icon from '../../../../toolbox/icon';
-import CopyToClipboard from '../../../../toolbox/copyToClipboard';
+import AccountVisual from '@toolbox/accountVisual';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import Icon from '@toolbox/icon';
+import CopyToClipboard from '@toolbox/copyToClipboard';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import DialogLink from '@toolbox/dialog/link';
 import styles from './accountInfo.css';
-import Tooltip from '../../../../toolbox/tooltip/tooltip';
-import DialogLink from '../../../../toolbox/dialog/link';
 import Identity from './identity';
 
 const BookmarkIcon = ({ bookmark }) => (

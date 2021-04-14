@@ -1,6 +1,6 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
-import FilterDropdownButton from '../../../shared/filterDropdownButton';
+import FilterDropdownButton from '@shared/filterDropdownButton';
 
 const FilterDropdown = ({ t, filters, applyFilters }) => {
   const fields = [

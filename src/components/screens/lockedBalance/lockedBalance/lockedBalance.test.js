@@ -1,16 +1,16 @@
 import { act } from 'react-dom/test-utils';
 import { tokenMap, networks } from '@constants';
-import { mountWithProps } from '../../../../utils/testHelpers';
+import { mountWithProps } from '@utils/testHelpers';
+import { create } from '@api/transaction';
+import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
+import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import LockedBalance from './index';
 import accounts from '../../../../../test/constants/accounts';
-import useTransactionPriority from '../../../shared/transactionPriority/useTransactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import { create } from '../../../../utils/api/transaction';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
-jest.mock('../../send/form/useTransactionPriority');
-jest.mock('../../send/form/useTransactionFeeCalculation');
-jest.mock('../../../../utils/api/transaction');
+jest.mock('@shared/transactionPriority/useTransactionPriority');
+jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
+jest.mock('@api/transaction');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
@@ -41,14 +41,14 @@ describe('Unlock LSK modal', () => {
 
   const currentBlockHeight = 5000;
   const initVotes = [
-    { amount: '500000000000', delegateAddress: '1L' },
-    { amount: '3000000000', delegateAddress: '3L' },
-    { amount: '2000000000', delegateAddress: '1L' },
+    { amount: '500000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+    { amount: '3000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+    { amount: '2000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
   ];
   const initUnlocking = [
-    { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: '1L' },
-    { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: '1L' },
-    { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: '3L' },
+    { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+    { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+    { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
   ];
 
   const store = {

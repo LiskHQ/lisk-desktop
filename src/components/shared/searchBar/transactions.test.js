@@ -1,5 +1,5 @@
+import { mountWithProps } from '@utils/testHelpers';
 import Transactions from './transactions';
-import { mountWithProps } from '../../../utils/testHelpers';
 
 describe('Transactions', () => {
   const props = {
@@ -11,7 +11,7 @@ describe('Transactions', () => {
         },
         id: 123,
         type: 0,
-        title: 'transfer',
+        moduleAssetName: 'transfer',
       },
     ],
     onSelectedRow: jest.fn(),
@@ -50,7 +50,7 @@ describe('Transactions', () => {
         },
         id: 123,
         type: 0,
-        title: 'transfer',
+        moduleAssetName: 'transfer',
       },
     ];
     const wrapper = mountWithProps(
@@ -75,7 +75,7 @@ describe('Transactions', () => {
         },
         id: 123,
         type: 2,
-        title: 'registerDelegate',
+        moduleAssetName: 'registerDelegate',
       },
     ];
     const wrapper = mountWithProps(
@@ -100,7 +100,7 @@ describe('Transactions', () => {
         },
         id: 123,
         type: 3,
-        title: 'vote',
+        moduleAssetName: 'voteDelegate',
       },
     ];
     const wrapper = mountWithProps(

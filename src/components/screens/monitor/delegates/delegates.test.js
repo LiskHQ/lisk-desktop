@@ -101,14 +101,14 @@ describe('Delegates monitor page', () => {
       },
       votes: {
         isLoading: false,
-        data: [{ asset: { votes: [{ delegateAddress: '1L', amount: '100000000' }] } }],
+        data: [{ asset: { votes: [{ delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', amount: '100000000' }] } }],
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
       },
       votedDelegates: {
         isLoading: false,
-        data: [{ address: '1L', username: 'test_del' }],
+        data: [{ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', username: 'test_del' }],
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},

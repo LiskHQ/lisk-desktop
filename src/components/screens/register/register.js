@@ -3,13 +3,13 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generatePassphrase } from '@utils/passphrase';
 import { extractAddressFromPassphrase } from '@utils/account';
 import { routes } from '@constants';
+import MultiStepProgressBar from '@shared/multiStepProgressBar';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
 import styles from './register.css';
 import MultiStep from '../../../../libs/multiStep';
-import MultiStepProgressBar from '../../shared/multiStepProgressBar';
 
 class Register extends React.Component {
   constructor() {

@@ -25,7 +25,7 @@ module.exports = {
     '^.+\\.css$': 'identity-obj-proxy',
     '^@utils(.*)$': resolve(__dirname, './src/utils/$1'),
     '^@api(.*)$': resolve(__dirname, './src/utils/api/$1'),
-    '^@constants(.*)$': resolve(__dirname, './src/constants/$1'),
+    '^@constants$': resolve(__dirname, './src/constants'),
     '^@shared(.*)$': resolve(__dirname, './src/components/shared/$1'),
     '^@screens(.*)$': resolve(__dirname, './src/components/screens/$1'),
     '^@toolbox(.*)$': resolve(__dirname, './src/components/toolbox/$1'),

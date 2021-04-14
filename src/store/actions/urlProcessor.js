@@ -1,5 +1,5 @@
 import { parseSearchParams } from '@utils/searchParams';
-import { getAccounts } from '@utils/api/account';
+import { getAccounts } from '@api/account';
 import { tokenMap, regex } from '@constants';
 import { voteEdited } from './voting';
 

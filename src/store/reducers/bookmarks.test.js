@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import {
   bookmarkAdded,
   bookmarkUpdated,
@@ -6,40 +5,45 @@ import {
 } from '@actions';
 import { actionTypes } from '@constants';
 import bookmarks from './bookmarks';
-import accounts from '../../../test/constants/accounts';
+import {
+  genesis,
+  delegate,
+  // eslint-disable-next-line camelcase
+  empty_account,
+} from '../../../test/constants/accounts';
 
 describe('Reducer: bookmarks(state, action)', () => {
   const account = {
-    address: accounts.genesis.address,
-    title: accounts.genesis.address,
-    publicKey: accounts.genesis.publicKey,
+    address: genesis.summary.address,
+    title: genesis.summary.address,
+    publicKey: genesis.summary.publicKey,
   };
   const account2 = {
-    address: accounts.delegate.address,
-    title: accounts.genesis.address,
-    publicKey: accounts.delegate.publicKey,
+    address: delegate.summary.address,
+    title: genesis.summary.address,
+    publicKey: delegate.summary.publicKey,
   };
 
   it(`should return accounts with added account if action.type is ${actionTypes.bookmarkAdded}`, () => {
     const account3 = {
-      address: accounts.empty_account.address,
-      title: accounts.empty_account.address,
-      publicKey: accounts.empty_account.publicKey,
+      address: empty_account.summary.address,
+      title: empty_account.summary.address,
+      publicKey: empty_account.summary.publicKey,
     };
 
     const state = { LSK: [account, account2], BTC: [] };
     const action = bookmarkAdded({ account: account3, token: 'BTC' });
     const changedState = bookmarks(state, action);
-    expect(changedState.LSK[0]).to.deep.equal(account);
-    expect(changedState.LSK[1]).to.deep.equal(account2);
-    expect(changedState.BTC[0]).to.include(account3);
+    expect(changedState.LSK[0]).toEqual(account);
+    expect(changedState.LSK[1]).toEqual(account2);
+    expect(changedState.BTC[0]).toMatchObject(account3);
   });
 
   it(`should return accounts with added account and trimmed title if action.type is ${actionTypes.bookmarkAdded}`, () => {
     const account3 = {
-      address: accounts.empty_account.address,
-      title: accounts.empty_account.address,
-      publicKey: accounts.empty_account.publicKey,
+      address: empty_account.summary.address,
+      title: empty_account.summary.address,
+      publicKey: empty_account.summary.publicKey,
     };
 
     const state = { LSK: [account, account2], BTC: [] };
@@ -51,17 +55,17 @@ describe('Reducer: bookmarks(state, action)', () => {
       token: 'BTC',
     });
     const changedState = bookmarks(state, action);
-    expect(changedState.LSK[0]).to.deep.equal(account);
-    expect(changedState.LSK[1]).to.deep.equal(account2);
-    expect(changedState.BTC[0]).to.include(account3);
+    expect(changedState.LSK[0]).toEqual(account);
+    expect(changedState.LSK[1]).toEqual(account2);
+    expect(changedState.BTC[0]).toMatchObject(account3);
   });
 
 
   it(`should return accounts with updated account if action.type is ${actionTypes.bookmarkUpdated}`, () => {
     const updatedAccount = {
-      address: accounts.delegate.address,
+      address: delegate.summary.address,
       title: 'bob',
-      publicKey: accounts.delegate.publicKey,
+      publicKey: delegate.summary.publicKey,
     };
 
     const state = { LSK: [account, account2], BTC: [] };
@@ -69,15 +73,15 @@ describe('Reducer: bookmarks(state, action)', () => {
 
     const changedState = bookmarks(state, action);
 
-    expect(changedState.LSK[0]).to.deep.equal(account);
-    expect(changedState.LSK[1]).to.deep.equal(updatedAccount);
+    expect(changedState.LSK[0]).toEqual(account);
+    expect(changedState.LSK[1]).toEqual(updatedAccount);
   });
 
   it(`should return accounts with updated account and trimmed title if action.type is ${actionTypes.bookmarkUpdated}`, () => {
     const updatedAccount = {
-      address: accounts.delegate.address,
+      address: delegate.summary.address,
       title: 'bob',
-      publicKey: accounts.delegate.publicKey,
+      publicKey: delegate.summary.publicKey,
     };
 
     const state = { LSK: [account, account2], BTC: [] };
@@ -90,8 +94,8 @@ describe('Reducer: bookmarks(state, action)', () => {
 
     const changedState = bookmarks(state, action);
 
-    expect(changedState.LSK[0]).to.deep.equal(account);
-    expect(changedState.LSK[1]).to.deep.equal(updatedAccount);
+    expect(changedState.LSK[0]).toEqual(account);
+    expect(changedState.LSK[1]).toEqual(updatedAccount);
   });
 
 
@@ -101,7 +105,7 @@ describe('Reducer: bookmarks(state, action)', () => {
 
     const changedState = bookmarks(state, action);
 
-    expect(changedState.LSK[0]).to.deep.equal(account);
-    expect(changedState.LSK[1]).to.deep.equal(undefined);
+    expect(changedState.LSK[0]).toEqual(account);
+    expect(changedState.LSK[1]).toEqual(undefined);
   });
 });

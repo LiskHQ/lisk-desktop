@@ -1,9 +1,9 @@
 import React from 'react';
 import { routes } from '@constants';
+import DialogHolder from '@toolbox/dialog/holder';
+import { mountWithRouter } from '@utils/testHelpers';
 import TopBar from './topBar';
 import accounts from '../../../../../test/constants/accounts';
-import DialogHolder from '../../../toolbox/dialog/holder';
-import { mountWithRouter } from '../../../../utils/testHelpers';
 
 const mockInputNode = {
   focus: jest.fn(),

@@ -1,12 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import { loginType } from '@constants';
+import { loginTypes } from '@constants';
+import * as hwManager from '@utils/hwManager';
 import ConfirmMessage from './confirmMessage';
 import accounts from '../../../../test/constants/accounts';
-import * as hwManager from '../../../utils/hwManager';
 
-jest.mock('../../../utils/hwManager');
+jest.mock('@utils/hwManager');
 
 const updateWrapperAsync = async wrapper => new Promise((resolve) => {
   setImmediate(() => {
@@ -18,11 +18,11 @@ const updateWrapperAsync = async wrapper => new Promise((resolve) => {
 describe('Confirm Message Component', () => {
   const accountWithPassphrase = {
     ...accounts.genesis,
-    loginType: loginType.passphrase.code,
+    loginType: loginTypes.passphrase.code,
   };
   const accountWithHW = {
     ...accounts.genesis,
-    loginType: loginType.ledger,
+    loginType: loginTypes.ledger,
     hwInfo: {
       deviceModel: 'Ledger Nano S',
     },

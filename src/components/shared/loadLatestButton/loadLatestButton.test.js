@@ -2,8 +2,8 @@ import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
 import io from 'socket.io-client';
+import { subscribeConnections } from '@api/ws';
 import LoadLatestButton from '.';
-import { subscribeConnections } from '../../../utils/api/ws';
 
 jest.mock('socket.io-client');
 

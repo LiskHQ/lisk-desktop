@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { getIndexOfBookmark } from '@utils/bookmarks';
-import { SecondaryButton, PrimaryButton } from '../../../toolbox/buttons';
-import TransactionResult from '../../../shared/transactionResult';
+import { SecondaryButton, PrimaryButton } from '@toolbox/buttons';
+import TransactionResult from '@shared/transactionResult';
+import DialogLink from '@toolbox/dialog/link';
 import statusMessage from './statusMessages';
 import styles from './transactionStatus.css';
-import DialogLink from '../../../toolbox/dialog/link';
 
 const bookmarkInformation = (bookmarks, fields) => {
   const isBookmarked = getIndexOfBookmark(
@@ -115,7 +115,7 @@ const TransactionStatus = ({
             : null
         }
         {
-          !isBookmarked && account.summary?.address !== fields.recipient.address && (
+          !isBookmarked && account.summary.address !== fields.recipient.address && (
             <div className={`${styles.bookmarkBtn} bookmark-container`}>
               <DialogLink
                 component="addBookmark"

@@ -1,8 +1,8 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import FlashMessage from '../../toolbox/flashMessage/flashMessage';
-import { TertiaryButton } from '../../toolbox/buttons';
+import FlashMessage from '@toolbox/flashMessage/flashMessage';
+import { TertiaryButton } from '@toolbox/buttons';
 import styles from './newReleaseMessage.css';
 
 const NewReleaseMessage = ({

@@ -1,9 +1,9 @@
 import { actionTypes } from '@constants';
 import bookmarksMiddleware from './bookmarks';
 import accounts from '../../../test/constants/accounts';
-import * as localJSONStorage from '../../utils/localJSONStorage';
+import * as localJSONStorage from '@utils/localJSONStorage';
 
-jest.mock('../../utils/localJSONStorage');
+jest.mock('@utils/localJSONStorage');
 
 describe('Middleware: Bookmarks', () => {
   const next = jest.fn();
@@ -33,7 +33,7 @@ describe('Middleware: Bookmarks', () => {
       data: { account: { ...accounts.genesis, title: 'genesiss' } },
     }, {
       type: actionTypes.bookmarkRemoved,
-      data: { address: accounts.genesis.address },
+      data: { address: accounts.genesis.summary.address },
     }];
 
     actions.forEach((action, index) => {

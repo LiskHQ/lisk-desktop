@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { routes } from '@constants';
+import Icon from '@toolbox/icon';
 import styles from './navigationButtons.css';
-import Icon from '../../../toolbox/icon';
 
 const NavigationButtons = ({ history }) => {
   const [pageIndex, setPageIndex] = useState(history.length);

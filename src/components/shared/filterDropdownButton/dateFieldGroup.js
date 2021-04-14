@@ -3,8 +3,8 @@ import React from 'react';
 import moment from 'moment';
 import { firstBlockTime } from '@constants';
 import { getDateTimestampFromFirstBlock, formatInputToDate } from '@utils/datetime';
+import Feedback from '@toolbox/feedback/feedback';
 import DateField from './dateField';
-import Feedback from '../../toolbox/feedback/feedback';
 import styles from './filters.css';
 
 class DateFieldGroup extends React.Component {

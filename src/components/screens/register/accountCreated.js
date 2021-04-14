@@ -3,10 +3,10 @@ import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { routes } from '@constants';
-import { PrimaryButton } from '../../toolbox/buttons';
+import { PrimaryButton } from '@toolbox/buttons';
+import Illustration from '@toolbox/illustration';
 import registerStyles from './register.css';
 import styles from './accountCreated.css';
-import Illustration from '../../toolbox/illustration';
 
 const AccountCreated = ({ t }) => (
   <React.Fragment>
