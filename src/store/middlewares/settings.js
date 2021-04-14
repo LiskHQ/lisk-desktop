@@ -1,6 +1,7 @@
 import { actionTypes } from '@constants';
 import { setInStorage } from '@utils/localJSONStorage';
 import { pricesRetrieved, emptyTransactionsData } from '@actions';
+import { settingsUpdated } from '../actions/settings';
 
 const settings = store => next => (action) => {
   const { token } = store.getState().settings;
@@ -8,6 +9,12 @@ const settings = store => next => (action) => {
   switch (action.type) {
     case actionTypes.networkConfigSet:
       store.dispatch(pricesRetrieved());
+      store.dispatch(settingsUpdated({
+        network: {
+          name: action.data.name,
+          address: action.data.networks.LSK.serviceUrl,
+        },
+      }));
       break;
     case actionTypes.settingsUpdated:
       if (action.data.token && action.data.token.active !== token.active) {
