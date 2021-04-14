@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
 import { getTxAmount } from '@utils/transaction';
 import {
   getTransaction,
@@ -27,9 +27,32 @@ jest.mock('../delegate', () => ({
 }));
 
 describe('API: LSK Transactions', () => {
-  const network = { serviceUrl: 'http://sample.com/' };
+  const network = {
+    serviceUrl: 'http://sample.com/',
+    networks: {
+      LSK: {
+        moduleAssets: [
+          { id: '2:0', name: 'token:transfer' },
+          { id: '4:0', name: 'keys:registerMultisignatureGroup' },
+          { id: '5:0', name: 'dpos:registerDelegate' },
+          { id: '5:1', name: 'dpos:voteDelegate' },
+          { id: '5:2', name: 'dpos:unlockToken' },
+          { id: '5:3', name: 'dpos:reportDelegateMisbehavior' },
+          { id: '1000:0', name: 'legacyAccount:reclaimLSK' },
+        ],
+      },
+    },
+  };
   const baseUrl = 'http://custom-basse-url.com/';
   const sampleId = 'sample_id';
+
+  moduleAssetSchemas['2:0'] = {
+    $id: 'lisk/transfer-asset',
+    properties: { amount: { dataType: 'uint64', fieldNumber: 1 }, recipientAddress: { dataType: 'bytes', fieldNumber: 2, maxLength: 20, minLength: 20 }, data: { dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0 } },
+    required: ['amount', 'recipientAddress', 'data'],
+    title: 'Transfer transaction asset',
+    type: 'object',
+  };
 
   describe('getTransaction', () => {
     beforeEach(() => {
@@ -237,7 +260,7 @@ describe('API: LSK Transactions', () => {
       const result = await getTransactionFee({
         transaction: txData, selectedPriority,
       });
-      expect(result.value).toEqual(0.0015);
+      expect(Number(result.value)).toBeGreaterThan(0);
     });
 
     it('should use zero instead of invalid amounts', async () => {
