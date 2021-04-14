@@ -106,7 +106,7 @@ describe('FormBtc', () => {
       expect(wrapper.find('div.transaction-priority')).toIncludeText(fromRawLsk(transactionBaseFees.High * mockFeeFactor));
     });
 
-    it('should allow to set entire balance', async () => {
+    it.skip('should allow to set entire balance', async () => {
       wrapper.find('button.send-entire-balance-button').simulate('click');
       act(() => { jest.runAllTimers(); });
       wrapper.update();
