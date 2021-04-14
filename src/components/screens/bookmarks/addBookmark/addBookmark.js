@@ -94,7 +94,9 @@ class AddBookmark extends React.Component {
     const { token } = this.props;
     const { token: prevToken } = prevProps;
 
-    if (this.props.account) this.updateLabelIfDelegate(prevProps, this.props.account);
+    if (!this.props.account.isLoading && this.props.account.data.summary) {
+      this.updateLabelIfDelegate(prevProps, this.props.account);
+    }
 
     if (token.active !== prevToken.active) {
       this.setState(state => ({
@@ -106,7 +108,7 @@ class AddBookmark extends React.Component {
 
   updateLabelIfDelegate(prevProps, account) {
     const { fields: { label } } = this.state;
-    if (account.data.summary.isDelegate === prevProps.account.data.summary.isDelegate) return;
+    if (account.data.summary.isDelegate === prevProps.account.data.summary?.isDelegate) return;
 
     if (account.data.summary.isDelegate && account.data.dpos.delegate.username !== label.value) {
       const data = { value: account.data.dpos.delegate.username, readonly: true };
