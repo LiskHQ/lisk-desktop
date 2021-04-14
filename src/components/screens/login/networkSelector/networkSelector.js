@@ -115,8 +115,6 @@ const NetworkSelector = ({
     isValidationLoading,
   } = state;
 
-  console.log('isValid', isValid);
-
   const validationError = isValid ? '' : t('Unable to connect to Lisk Service, please check the address and try again');
 
   return (
