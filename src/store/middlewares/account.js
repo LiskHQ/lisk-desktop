@@ -139,7 +139,9 @@ const accountMiddleware = store => next => async (action) => {
       store.dispatch(emptyTransactionsData());
       break;
     case actionTypes.settingsUpdated:
-      store.dispatch(accountDataUpdated('enabled'));
+      if (action.data.token) {
+        store.dispatch(accountDataUpdated('enabled'));
+      }
       break;
     /* istanbul ignore next */
     default: break;
