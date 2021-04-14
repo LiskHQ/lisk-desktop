@@ -217,7 +217,7 @@ class AddBookmark extends React.Component {
       account: {
         title: label.value,
         address: address.value,
-        isDelegate: this.getUrlSearchParam('isDelegate'),
+        isDelegate: this.props.account.data.summary.isDelegate,
       },
     });
     this.onClose();
