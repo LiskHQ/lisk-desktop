@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
+import { moduleAssetSchemas } from '@constants';
 
 import { mountWithRouter } from '@utils/testHelpers';
 import accounts from '../../../../../test/constants/accounts';

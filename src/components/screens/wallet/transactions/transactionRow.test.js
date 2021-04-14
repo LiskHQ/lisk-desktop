@@ -1,4 +1,3 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { mountWithRouter } from '@utils/testHelpers';
 import TransactionRow from './transactionRow';
 import accounts from '../../../../../test/constants/accounts';
