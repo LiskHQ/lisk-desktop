@@ -37,7 +37,6 @@ TransactionAmount.propTypes = {
   host: PropTypes.string,
   recipient: PropTypes.string,
   token: PropTypes.string.isRequired,
-  type: PropTypes.number.isRequired,
   amount: PropTypes.string,
   showInt: PropTypes.bool,
   showRounded: PropTypes.bool,

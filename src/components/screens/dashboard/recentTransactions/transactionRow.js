@@ -19,12 +19,12 @@ const TransactionRow = ({
     activeToken: state.settings.token.active,
   }));
   const isConfirmed = data.confirmations > 0;
-  const unlockAmount = data.asset && data.asset.unlockingObjects
+  const unlockAmount = data.asset?.unlockingObjects
     && data.asset.unlockingObjects.reduce((total, item) => {
       total += item.amount;
       return total;
     }, 0);
-  const direction = host === data.asset.recipient?.address ? 'incoming' : 'outgoing';
+  const direction = host === data.asset?.recipient?.address ? 'incoming' : 'outgoing';
 
   return (
     <DialogLink

@@ -15,7 +15,7 @@ const Overview = ({
   t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
-  const { address, publicKey, balance = 0 } = account.summary ?? {};
+  const { address, publicKey, balance = 0 } = account?.summary ?? {};
   const { confirmed } = useSelector(selectTransactions);
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),

@@ -17,6 +17,8 @@ import Transactions from './transactions';
 const Wallet = ({
   t, account, history,
 }) => {
+  if (!account || !account.data || isEmpty(account.data)) return (<div />);
+
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const isDelegate = account.data.summary?.isDelegate;
@@ -26,7 +28,6 @@ const Wallet = ({
     account.loadData();
   }, [history.location.search]);
 
-  if (!account || !account.data || isEmpty(account.data)) return (<div />);
 
   return (
     <section>
