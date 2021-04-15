@@ -2,18 +2,22 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Illustration from '@toolbox/illustration';
 import { PrimaryButton } from '@toolbox/buttons';
+import styles from './introduction.css';
 
 const Introduction = ({ t }) => (
-  <>
-    <Illustration name="reclaimBalanceIntro" />
-    <h4>{t('Lisk has now been enhanced even further')}</h4>
-    <p>{t('We are proud to announce that Lisk Core v3 now contains new improved robust security features.')}</p>
-    <p>
+  <div className={styles.container}>
+    <Illustration className={styles.illustration} name="reclaimBalanceIntro" />
+    <p className={styles.header}>{t('Lisk has now been enhanced even further')}</p>
+    <p className={styles.text}>
+      {t('We are proud to announce that Lisk Core v3 now contains new improved robust security features.')}
+      <br />
+      <br />
       {t('You can learn more')}
-      <span>{t('here')}</span>
+      {' '}
+      <span className={styles.link}>{t('here')}</span>
     </p>
-    <PrimaryButton>{t('Continue')}</PrimaryButton>
-  </>
+    <PrimaryButton className={styles.button}>{t('Continue')}</PrimaryButton>
+  </div>
 );
 
 export default withTranslation()(Introduction);

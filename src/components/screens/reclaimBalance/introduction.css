@@ -1,0 +1,40 @@
+@import '../../../app/mixins.css';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 550px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.illustration {
+  width: 294px;
+}
+
+.header {
+  @mixin headingLarge;
+
+  margin-bottom: 0px;
+  color: var(--color-maastricht-blue);
+  font-size: 28px;
+}
+
+.text {
+  @mixin contentLargest;
+
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--color-blue-gray);
+}
+
+.link {
+  color: var(--color-link-active);
+  cursor: pointer;
+}
+
+.button {
+  width: 430px;
+}
