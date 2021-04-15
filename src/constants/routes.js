@@ -26,6 +26,7 @@ import VotingQueue from '@screens/votingQueue';
 import DeviceDisconnect from '@screens/deviceDisconnectDialog';
 import NewReleaseDialog from '@shared/newReleaseDialog/newReleaseDialog';
 import SearchBar from '@shared/searchBar';
+import ReclaimBalance from '@screens/reclaimBalance';
 import { tokenMap } from './tokens';
 import Initialization from '../components/screens/initialization';
 
@@ -131,6 +132,12 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
+  },
+  reclaimBalance: {
+    path: '/reclaim-balance',
+    component: ReclaimBalance,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
 };
 
