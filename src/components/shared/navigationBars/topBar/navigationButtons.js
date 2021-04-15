@@ -36,14 +36,15 @@ const NavigationButtons = ({ history }) => {
     <div className={`${styles.wrapper} navigation-buttons`}>
       <button
         className="go-back"
-        disabled={pageIndex <= refIndex}
+        disabled={pageIndex <= refIndex || history.location.pathname === routes.initialization.path}
         onClick={goBack}
       >
         <Icon name="arrowLeftActive" />
       </button>
       <button
         className="go-forward"
-        disabled={pageIndex >= history.length}
+        disabled={pageIndex >= history.length
+          || history.location.pathname === routes.initialization.path}
         onClick={goForward}
       >
         <Icon name="arrowRightActive" />

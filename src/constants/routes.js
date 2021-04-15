@@ -27,6 +27,7 @@ import DeviceDisconnect from '@screens/deviceDisconnectDialog';
 import NewReleaseDialog from '@shared/newReleaseDialog/newReleaseDialog';
 import SearchBar from '@shared/searchBar';
 import { tokenMap } from './tokens';
+import Initialization from '../components/screens/initialization';
 
 export default {
   wallet: {
@@ -117,6 +118,12 @@ export default {
     exact: true,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
+  },
+  initialization: {
+    path: '/initialization',
+    component: Initialization,
+    isPrivate: true,
+    forbiddenTokens: [],
   },
   dashboard: {
     path: '/',

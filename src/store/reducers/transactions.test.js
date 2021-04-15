@@ -239,4 +239,71 @@ describe('Reducer: transactions', () => {
       expect(changedState.transactionsCreatedFailed).toEqual([]);
     });
   });
+  it('should add broadcastedTransactionsError', () => {
+    const networkError = { message: 'network error' };
+    const state = {
+      transactionsCreated: [],
+      broadcastedTransactionsError: [],
+    };
+    let changedState = transactions(state, {
+      type: actionTypes.broadcastedTransactionError,
+      data: { transaction: mockTransactions[0], error: networkError },
+    });
+    expect(changedState).toEqual({
+      ...state,
+      broadcastedTransactionsError: [
+        { error: networkError, transaction: mockTransactions[0] },
+      ],
+    });
+    changedState = transactions(changedState, {
+      type: actionTypes.broadcastedTransactionError,
+      data: { transaction: mockTransactions[1], error: networkError },
+    });
+    expect(changedState).toEqual({
+      ...state,
+      broadcastedTransactionsError: [
+        { error: networkError, transaction: mockTransactions[0] },
+        { error: networkError, transaction: mockTransactions[1] },
+      ],
+    });
+  });
+
+  it('should not stack the same transaction in broadcastedTransactionsError and should replace it with the latest error', () => {
+    const networkError = { message: 'network error' };
+    const apiError = { message: 'API error' };
+    const state = {
+      transactionsCreated: [],
+      broadcastedTransactionsError: [{ error: networkError, transaction: mockTransactions[0] }],
+    };
+    const action = {
+      type: actionTypes.broadcastedTransactionError,
+      data: { transaction: mockTransactions[0], error: apiError },
+    };
+    const changedState = transactions(state, action);
+    expect(changedState).toEqual({
+      ...state,
+      broadcastedTransactionsError: [{ error: apiError, transaction: mockTransactions[0] }],
+    });
+  });
+
+  // it('Should update transactions reducer for TransactionCreatedSuccess on RETRY', () => {
+  //   const tx = {
+  //     id: '12312334',
+  //     senderId: '123L',
+  //     recipientId: '456L',
+  //     amount: '0.01',
+  //     data: 'sending',
+  //   };
+  //   const newState = {
+  //     pending: [],
+  //     confirmed: [],
+  //     transactionsCreated: [],
+  //     transactionsCreatedFailed: [],
+  //     broadcastedTransactionsError: [{ transaction: tx }],
+  //   };
+  //   const actionResult = broadcastedTransactionSuccess(tx);
+  //   const changedState = transactions(newState, actionResult);
+  //   expect(changedState.transactionsCreated).toEqual([]);
+  //   expect(changedState.broadcastedTransactionsError).toEqual([]);
+  // });
 });

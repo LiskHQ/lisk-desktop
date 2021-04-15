@@ -34,6 +34,7 @@ const TopBar = ({
         />
         <NavigationButtons
           history={history}
+          account={account}
         />
         <Toggle
           setting="sideBarExpanded"

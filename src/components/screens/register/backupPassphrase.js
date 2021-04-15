@@ -15,7 +15,7 @@ const BackupPassphrase = ({
       </h1>
       <p>{t('Keep it safe as it is the only way to access your wallet.')}</p>
     </div>
-    <div className={`${grid['col-sm-10']} ${registerStyles.PassphraseBackupContainer}`}>
+    <div className={`${grid['col-sm-10']} ${registerStyles.passphraseBackupContainer}`}>
       <PassphraseBackup
         account={account}
         t={t}

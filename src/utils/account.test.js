@@ -7,6 +7,8 @@ import {
   getUnlockableUnlockingObjects,
   calculateBalanceLockedInVotes,
   extractAddressFromPassphrase,
+  isAccountInitialized,
+  hasEnoughBalanceForInitialization,
 } from './account';
 
 const passphrase = accounts.genesis.passphrase;
@@ -127,6 +129,30 @@ describe('Utils: Account', () => {
         const currentBlockHeight = 5000;
         expect(getUnlockableUnlockingObjects(undefined, currentBlockHeight)).toEqual([]);
       });
+    });
+  });
+
+  describe('isAccountInitialzed', () => {
+    it('should return true if initialized', () => {
+      const result = isAccountInitialized({ info: { LSK: { serverPublicKey: 'some key' } } });
+      expect(result).toBe(true);
+    });
+
+    it('should return false if not initialized', () => {
+      const result = isAccountInitialized({ info: { LSK: { serverPublicKey: '' } } });
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('hasEnoughBalanceForInitialization', () => {
+    it('should return true if balance is enough', () => {
+      const result = hasEnoughBalanceForInitialization('200000000');
+      expect(result).toBe(true);
+    });
+
+    it('should return false if balance is not enough', () => {
+      const result = hasEnoughBalanceForInitialization('0');
+      expect(result).toBe(false);
     });
   });
 });

@@ -87,7 +87,10 @@ const TransactionRow = ({
 
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
-  (prevProps.data.id === nextProps.data.id
-  && prevProps.data.confirmations === nextProps.data.confirmations);
+  (
+    prevProps.data.id === nextProps.data.id
+    && prevProps.data.confirmations === nextProps.data.confirmations
+    && Object.keys(prevProps.delegates).length === Object.keys(nextProps.delegates).length
+  );
 
 export default React.memo(TransactionRow, areEqual);

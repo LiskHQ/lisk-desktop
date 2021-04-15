@@ -102,7 +102,7 @@ const Transactions = ({
             t,
             activeToken,
             host: address,
-            delegates: votedDelegates,
+            delegates: votedDelegates.data,
           }}
           header={header(t, activeToken, changeSort)}
           currentSort={sort}
@@ -166,7 +166,7 @@ export default compose(
       defaultData: [],
       transformResponse: (response) => {
         const responseMap = response.data.reduce((acc, delegate) => {
-          acc[delegate.address] = delegate.summary?.address;
+          acc[delegate.address] = delegate;
           return acc;
         }, {});
         return responseMap;

@@ -2,9 +2,24 @@ import {
   accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved, emptyTransactionsData,
 } from '@actions';
 
-import { tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import {
+  tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes,
+} from '@constants';
 import middleware from './account';
 import * as transactionApi from '@api/transaction';
+import {
+  addSearchParamsToUrl,
+  removeSearchParamsFromUrl,
+} from '../../utils/searchParams';
+import history from '../../history';
+
+jest.mock('../../utils/searchParams', () => ({
+  selectSearchParamValue: jest.fn(() => ({ initialization: true })),
+  removeSearchParamsFromUrl: jest.fn(),
+  addSearchParamsToUrl: jest.fn(),
+}));
+
+jest.mock('../../history');
 
 jest.mock('@api/transaction', () => ({
   getTransactions: jest.fn(),
@@ -274,6 +289,38 @@ describe('Account middleware', () => {
       middleware(store)(next)(settingsUpdatedAction);
       expect(accountDataUpdated).toHaveBeenCalledWith('enabled');
       expect(store.dispatch).toHaveBeenCalled();
+    });
+  });
+
+  describe('on accountUpdated', () => {
+    it('should do nothing if uninitialsed account logs in with insufficient balance', () => {
+      const action = {
+        type: actionTypes.accountLoggedIn,
+        data: { info: { LSK: { serverPublicKey: '', balance: '0' } } },
+      };
+      middleware(store)(next)(action);
+      expect(history.push).not.toHaveBeenCalledWith('/wallet?modal=send&initialization=true');
+      expect(history.push).not.toHaveBeenCalledWith('initialization');
+    });
+
+    it.skip('should redirect to the initialization screen if uninitialsed account logs in with enough balance', () => {
+      const action = {
+        type: actionTypes.accountLoggedIn,
+        data: { info: { LSK: { serverPublicKey: '', balance: '2e8' } } },
+      };
+      middleware(store)(next)(action);
+      expect(history.push).toHaveBeenCalledWith(routes.initialization.path);
+    });
+
+    it.skip('should call the modal remove function if actionTypes.accountUpdated is called with enough balance', () => {
+      const action = {
+        type: actionTypes.accountUpdated,
+        data: { serverPublicKey: 'some_key', balance: '2e8' },
+      };
+      middleware(store)(next)(action);
+      expect(addSearchParamsToUrl).not.toHaveBeenCalled();
+      expect(removeSearchParamsFromUrl).toHaveBeenCalled();
+      expect(history.push).toHaveBeenCalledWith(routes.wallet.path);
     });
   });
 });

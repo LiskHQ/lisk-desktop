@@ -1,6 +1,5 @@
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
-
-import { tokenMap, regex } from '@constants';
+import { tokenMap, regex, balanceNeededForInitialization } from '@constants';
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
@@ -174,3 +173,11 @@ export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlo
 export const getTokenFromAddress = address => (
   cryptography.validateBase32Address(address) ? tokenMap.LSK.key : tokenMap.BTC.key
 );
+
+export const isAccountInitialized = account => account
+  && account.info
+  && account.info.LSK
+  && !!account.info.LSK.serverPublicKey;
+
+export const hasEnoughBalanceForInitialization = (balance = 0) =>
+  Number(balance) >= balanceNeededForInitialization;

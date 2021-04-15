@@ -4,21 +4,30 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { routes } from '@constants';
 import { PrimaryButton } from '@toolbox/buttons';
-import Illustration from '@toolbox/illustration';
+import Icon from '../../toolbox/icon';
+
 import registerStyles from './register.css';
 import styles from './accountCreated.css';
 
 const AccountCreated = ({ t }) => (
-  <React.Fragment>
+  <>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
-        {t('Perfect! You\'re all set')}
+        {t('Perfect! Almost done')}
       </h1>
-      <p className={styles.text}>{t('You can now start sending and receiving LSK')}</p>
     </div>
-
-    <Illustration className={styles.illustration} name="registrationSuccess" />
-
+    <Icon name="initialiseRegistration" />
+    <h3 className={styles.subHeading}>Now in order to secure your account you need to:</h3>
+    <div className={`${grid.column} ${styles.content}`}>
+      <span className={grid.row}>
+        <Icon name="initialiseIcon" />
+        <p className={styles.successCaption}>Deposit a small amount of LSK tokens</p>
+      </span>
+      <span className={grid.row}>
+        <Icon name="liskIcon" />
+        <p className={styles.successCaption}>Initialize your account</p>
+      </span>
+    </div>
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <Link
         className={`${registerStyles.button} login-button`}
@@ -29,7 +38,7 @@ const AccountCreated = ({ t }) => (
         </PrimaryButton>
       </Link>
     </div>
-  </React.Fragment>
+  </>
 );
 
 export default withTranslation()(AccountCreated);

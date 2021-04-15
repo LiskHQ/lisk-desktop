@@ -41,6 +41,7 @@ const getMessagesDetails = (transactions, fields, t, isHardwareWalletConnected) 
   };
 };
 
+// eslint-disable-next-line complexity
 const TransactionStatus = ({
   transactionBroadcasted,
   resetTransactionResult,
@@ -60,7 +61,6 @@ const TransactionStatus = ({
     if (transactionsCreated.length) {
       transactionsCreated.forEach(tx => transactionBroadcasted(tx));
     }
-
     if (transactionsCreatedFailed.length) {
       transactionsCreatedFailed.forEach(tx => transactionBroadcasted(tx));
     }
@@ -92,6 +92,9 @@ const TransactionStatus = ({
     isHardwareWalletConnected,
   );
   const success = transactions.broadcastedTransactionsError.length === 0 && !isHardwareWalletError;
+  const totalErrors = transactions.broadcastedTransactionsError.length;
+  const error = totalErrors > 0
+    && JSON.stringify(transactions.broadcastedTransactionsError[totalErrors - 1]);
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
@@ -101,6 +104,7 @@ const TransactionStatus = ({
         illustration={success ? 'transactionSuccess' : 'transactionError'}
         message={messageDetails.paragraph}
         success={success}
+        error={error}
       >
         {
           isHardwareWalletError || transactions.broadcastedTransactionsError.length

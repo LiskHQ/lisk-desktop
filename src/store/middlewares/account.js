@@ -1,16 +1,18 @@
 import {
-  networks, actionTypes, networkKeys, settings, MODULE_ASSETS_NAME_ID_MAP, tokenMap,
+  networks, actionTypes, networkKeys, settings, MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
 } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
-import { getActiveTokenAccount } from '@utils/account';
+import { getActiveTokenAccount, hasEnoughBalanceForInitialization } from '@utils/account';
 import { getAutoLogInData } from '@utils/login';
 import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
 } from '@actions';
+import { removeSearchParamsFromUrl, selectSearchParamValue } from '@utils/searchParams';
 import analytics from '@utils/analytics';
 import { getTransactions } from '@api/transaction';
 import i18n from '../../i18n';
+import history from '../../history';
 
 /**
  * After a new block is created and broadcasted
@@ -120,6 +122,36 @@ const autoLogInIfNecessary = async ({ dispatch, getState }) => {
   }
 };
 
+// eslint-disable-next-line max-statements
+const checkAccountInitializationState = (action) => {
+  const search = window.location.href.split('?')[1];
+
+  const initialization = selectSearchParamValue(search, 'initialization');
+  let serverPublicKey = '';
+  let balance = 0;
+  // let redirectUrl = '';
+
+  if (action.type === actionTypes.accountLoggedIn) {
+    serverPublicKey = action.data.info.LSK.serverPublicKey;
+    balance = action.data.info.LSK.balance;
+    // redirectUrl = routes.initialization.path;
+  } else if (action.type === actionTypes.accountUpdated) {
+    serverPublicKey = action.data.serverPublicKey;
+    balance = action.data.balance;
+    // redirectUrl = `${routes.wallet.path}?modal=send&initialization=true`;
+  }
+
+  if (serverPublicKey) {
+    if (initialization) {
+      history.push(routes.wallet.path);
+      removeSearchParamsFromUrl(history, ['modal', 'initialization']);
+    }
+  } else if (hasEnoughBalanceForInitialization(balance)) {
+    // history.push(redirectUrl);
+  }
+};
+
+// eslint-disable-next-line complexity
 const accountMiddleware = store => next => async (action) => {
   next(action);
   switch (action.type) {
@@ -132,6 +164,11 @@ const accountMiddleware = store => next => async (action) => {
     case actionTypes.transactionsRetrieved:
       votePlaced(store, action);
       break;
+    case actionTypes.accountUpdated:
+    case actionTypes.accountLoggedIn: {
+      checkAccountInitializationState(action);
+      break;
+    }
     case actionTypes.accountLoggedOut:
       /* Reset active token setting so in case BTC is selected,
       the Lisk monitoring features are available and Lisk is selected on the next login */
