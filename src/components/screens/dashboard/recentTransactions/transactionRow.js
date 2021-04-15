@@ -52,7 +52,7 @@ const TransactionRow = ({
           token={activeToken}
           showRounded
           sender={data.sender.address}
-          recipient={data.asset.recipient?.address}
+          recipient={data.asset?.recipient?.address}
           moduleAssetId={data.moduleAssetId}
           amount={data.amount || data.asset.amount || unlockAmount}
         />
