@@ -13,7 +13,7 @@ export default {
     if (ipc) {
       ipc.on('openUrl', (action, url) => {
         const [protocol, rest] = url.split(':/');
-        const [normalizedUrl, searchParams] = rest.split('?');
+        const [normalizedUrl, searchParams] = rest?.split('?') ?? [];
 
         if (protocol?.toLowerCase() === 'lisk' && normalizedUrl) {
           let redirectUrl = normalizedUrl;
