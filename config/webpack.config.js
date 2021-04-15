@@ -28,7 +28,6 @@ module.exports = {
     usb: 'commonjs usb',
     bufferutil: 'bufferutil',
     'utf-8-validate': 'utf-8-validate',
-    express: 'express',
   },
   module: {
     rules: [
