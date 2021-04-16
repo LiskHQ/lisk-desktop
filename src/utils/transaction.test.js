@@ -161,5 +161,39 @@ describe('API: LSK Transactions', () => {
 
       expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
     });
+
+    it('should transform a reclaimLSK transaction', () => {
+      const [moduleID, assetID] = splitModuleAndAssetIds(
+        MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
+      );
+      const tx = {
+        moduleID,
+        assetID,
+        fee: 0.1,
+        nonce: 1,
+        id: Buffer.from('123', 'hex'),
+        senderPublicKey: accounts.genesis.summary.publicKey,
+        asset: {
+          amount: '100',
+        },
+      };
+
+      const expectedTransaction = {
+        id: '12',
+        moduleAssetId: '1000:0',
+        fee: '0.1',
+        nonce: '1',
+        sender: {
+          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+        },
+        signatures: undefined,
+        asset: {
+          amount: '100',
+        },
+      };
+
+      expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
+    });
   });
 });
