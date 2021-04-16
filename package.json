@@ -147,7 +147,7 @@
     "cypress": "6.3.0",
     "cypress-cucumber-preprocessor": "4.0.0",
     "cypress-pipe": "2.0.0",
-    "electron": "7.2.4",
+    "electron": "9.4.0",
     "electron-builder": "22.3.5",
     "electron-builder-notarize": "1.1.2",
     "electron-devtools-installer": "2.2.4",
