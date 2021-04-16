@@ -103,24 +103,24 @@ export const getAccount = async ({
 
   return {
     summary: {
-      address: '02a1de92405edeaac13913bd089b07eb73cbd762',
-      legacyAddress: '2841524825665420181L',
+      address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      legacyAddress: '5059876081639179984L',
       balance: '0', // balance in the new blockchain
       isMigrated: true, // shows only when found by the public key
       // true = account is migrated from the legacy blockchain
       // false = account is created in the current blockchain
-      publicKey: '968ba2fa993ea9dc27ed740da0daf49eddd740dbd7cb1cb4fc5db3a20baf341b',
+      publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
       isDelegate: false,
       isMultisignature: false,
     },
     token: {
       balance: '0', // balance in the new blockchain
     },
-    sequence: { nonce: 1 },
+    sequence: { nonce: 38 },
     keys: {},
     dpos: { },
     legacy: { // only if the reclaim wasn't made yet
-      address: '2841524825665420181L', // Legacy address in hex format
+      address: '5059876081639179984L', // Legacy address in hex format
       balance: '151146419900', // balance to reclaim
     },
   };
