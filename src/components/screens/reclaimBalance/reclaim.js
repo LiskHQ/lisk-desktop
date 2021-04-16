@@ -31,7 +31,7 @@ const Reclaim = ({ t }) => {
             </div>
             <p>{`${t('Balance')}: ${fromRawLsk(parseInt(account.legacy?.balance, 10))}LSK`}</p>
           </div>
-          <Icon name="arrowRightActive" />
+          <Icon name="arrowRightWithStroke" />
           <div>
             <h5>{t('New account')}</h5>
             <div className={styles.addressContainer}>
