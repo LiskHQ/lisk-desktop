@@ -6,7 +6,7 @@ import { extractAddressFromPublicKey, getBase32AddressFromAddress, getAddressFro
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
 
 const {
-  transfer, voteDelegate, registerDelegate, unlockToken,
+  transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK,
 } = MODULE_ASSETS_NAME_ID_MAP;
 /**
  * Gets the amount of a given transaction
@@ -70,6 +70,13 @@ const transformTransaction = (transaction) => {
           amount: Number(vote.amount),
           delegateAddress: getBase32AddressFromAddress(vote.delegateAddress),
         })),
+      };
+      break;
+    }
+
+    case reclaimLSK: {
+      transformedTransaction.asset = {
+        amount: String(transaction.asset.amount),
       };
       break;
     }
