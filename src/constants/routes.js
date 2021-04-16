@@ -119,8 +119,9 @@ export default {
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  initialization: {
-    path: '/initialization',
+  reclaim: {
+    path: '/reclaim',
+    // @todo import the reclaim screen here
     component: Initialization,
     isPrivate: true,
     forbiddenTokens: [],

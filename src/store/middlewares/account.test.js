@@ -7,17 +7,7 @@ import {
 } from '@constants';
 import middleware from './account';
 import * as transactionApi from '@api/transaction';
-import {
-  addSearchParamsToUrl,
-  removeSearchParamsFromUrl,
-} from '../../utils/searchParams';
 import history from '../../history';
-
-jest.mock('../../utils/searchParams', () => ({
-  selectSearchParamValue: jest.fn(() => ({ initialization: true })),
-  removeSearchParamsFromUrl: jest.fn(),
-  addSearchParamsToUrl: jest.fn(),
-}));
 
 jest.mock('../../history');
 
@@ -32,7 +22,6 @@ jest.mock('@actions', () => ({
   votesRetrieved: jest.fn(),
   emptyTransactionsData: jest.fn(),
 }));
-
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {
@@ -303,24 +292,22 @@ describe('Account middleware', () => {
       expect(history.push).not.toHaveBeenCalledWith('initialization');
     });
 
-    it.skip('should redirect to the initialization screen if uninitialsed account logs in with enough balance', () => {
+    it('should not redirect to the reclaim screen if the account is migrated', () => {
       const action = {
         type: actionTypes.accountLoggedIn,
-        data: { info: { LSK: { serverPublicKey: '', balance: '2e8' } } },
+        data: { info: { LSK: { summary: { isMigrated: true } } } },
+      };
+      middleware(store)(next)(action);
+      expect(history.push).not.toHaveBeenCalledWith(routes.initialization.path);
+    });
+
+    it('should redirect to the reclaim screen if the account is not migrated', () => {
+      const action = {
+        type: actionTypes.accountLoggedIn,
+        data: { info: { LSK: { summary: { isMigrated: false } } } },
       };
       middleware(store)(next)(action);
       expect(history.push).toHaveBeenCalledWith(routes.initialization.path);
-    });
-
-    it.skip('should call the modal remove function if actionTypes.accountUpdated is called with enough balance', () => {
-      const action = {
-        type: actionTypes.accountUpdated,
-        data: { serverPublicKey: 'some_key', balance: '2e8' },
-      };
-      middleware(store)(next)(action);
-      expect(addSearchParamsToUrl).not.toHaveBeenCalled();
-      expect(removeSearchParamsFromUrl).toHaveBeenCalled();
-      expect(history.push).toHaveBeenCalledWith(routes.wallet.path);
     });
   });
 });
