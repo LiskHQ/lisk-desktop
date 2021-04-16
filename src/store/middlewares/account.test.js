@@ -7,17 +7,7 @@ import {
 } from '@constants';
 import middleware from './account';
 import * as transactionApi from '@api/transaction';
-import {
-  addSearchParamsToUrl,
-  removeSearchParamsFromUrl,
-} from '../../utils/searchParams';
 import history from '../../history';
-
-jest.mock('../../utils/searchParams', () => ({
-  selectSearchParamValue: jest.fn(() => ({ initialization: true })),
-  removeSearchParamsFromUrl: jest.fn(),
-  addSearchParamsToUrl: jest.fn(),
-}));
 
 jest.mock('../../history');
 
@@ -32,7 +22,6 @@ jest.mock('@actions', () => ({
   votesRetrieved: jest.fn(),
   emptyTransactionsData: jest.fn(),
 }));
-
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {
