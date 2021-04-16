@@ -36,6 +36,7 @@
 .accountContainer {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid var(--color-periwinkle-blue);
 
   & > div > h5 {
     @mixin contentNormal semi-bold;
@@ -60,12 +61,59 @@
   color: var(--color-maastricht-blue);
 }
 
-.listItem {
-  @mixin contentLargest;
+.list {
+  list-style: none;
+  padding-left: 0;
+  
+  & > li {
+    @mixin contentLargest;
 
-  color: #000;
+    color: #000;
+    display: flex;
 
-  & > p > span {
-    color: var(--color-blue-gray);
+    & > p {
+      margin-top: 0;
+    }
+
+    & > p > span {
+      color: var(--color-blue-gray);
+    }
+
+    &::before {
+      display: block;
+      content: ' ';
+      margin-right: 10px;
+      margin-top: 8px;
+      background-image: url('../../../assets/images/icons/dot-blue.svg');
+      background-repeat: no-repeat;
+      width: 4px;
+      height: auto;
+    }
+
+    &.step::before {
+      display: block;
+      content: ' ';
+      margin-right: 10px;
+      margin-top: 2px;
+      background-image: url('../../../assets/images/icons/circle-grey.svg');
+      background-repeat: no-repeat;
+      width: 17px;
+      height: auto;
+    }
+    &.step.green::before {
+      background-image: url('../../../assets/images/icons/circle-green.svg');
+    }
+    &.step.tick::before {
+      background-image: url('../../../assets/images/icons/circle-tick.svg');
+    }
   }
+}
+
+.link {
+  color: var(--color-link-active);
+  cursor: pointer;
+}
+
+.button {
+  width: 430px;
 }
