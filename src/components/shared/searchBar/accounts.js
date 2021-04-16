@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import AccountVisual from '../../toolbox/accountVisual';
+import AccountVisual from '@toolbox/accountVisual';
 import styles from './accountsAndDeletegates.css';
 
 const Accounts = ({
   accounts, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
-  const isDelegate = accounts.some(account => account.delegate);
+  const isDelegate = accounts.some(account => account.summary?.isDelegate);
 
   return (
     <div className={`${styles.wrapper} accounts`}>
@@ -19,10 +19,10 @@ const Accounts = ({
             key={index}
             data-index={index}
             className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} account-row`}
-            onClick={() => onSelectedRow(account.address)}
+            onClick={() => onSelectedRow(account.summary?.address)}
             onMouseEnter={updateRowItemIndex}
           >
-            <AccountVisual address={account.address} />
+            <AccountVisual address={account.summary?.address} />
             <div className={styles.accountInformation}>
               {
                 isDelegate
@@ -30,15 +30,15 @@ const Accounts = ({
                     <Fragment>
                       <div>
                         <span className={`${styles.accountTitle} account-title`}>
-                          {account.delegate.username}
+                          {account.dpos?.delegate.username}
                         </span>
                       </div>
-                      <span className={styles.accountSubtitle}>{account.address}</span>
+                      <span className={styles.accountSubtitle}>{account.summary?.address}</span>
                     </Fragment>
                   )
                   : (
                     <span className={`${styles.accountTitle} account-title`}>
-                      {account.address}
+                      {account.summary?.address}
                     </span>
                   )
               }
@@ -47,7 +47,11 @@ const Accounts = ({
               {isDelegate
                 ? (
                   <span className={`${styles.tag} tag`}>
-                    {t('Delegate #{{rank}}', { rank: account.delegate.rank })}
+                    {
+                      account.dpos
+                        ? t('Delegate #{{rank}}', { rank: account.dpos.delegate.rank })
+                        : '-'
+                    }
                   </span>
                 )
                 : null }

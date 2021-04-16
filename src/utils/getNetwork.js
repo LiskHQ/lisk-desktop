@@ -1,7 +1,5 @@
-import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
-import networks, { networkKeys } from '../constants/networks';
-import { tokenMap } from '../constants/tokens';
+import { networks, networkKeys } from '@constants';
 
 export const getNetworksList = () =>
   Object.values(networkKeys)
@@ -10,23 +8,7 @@ export const getNetworksList = () =>
       name,
     }));
 
-
-export const getNetworkNameBasedOnNethash = (network, token = 'LSK') => {
-  const isCustomNode = network.name === networkKeys.customNode;
-  const isBtc = token === tokenMap.BTC.key;
-
-  if (isCustomNode && !isBtc) {
-    const { nethash } = network.networks[token];
-    const testNet = nethash === Lisk.constants.TESTNET_NETHASH ? 'testNet' : '';
-    const mainNet = nethash === Lisk.constants.MAINNET_NETHASH ? 'mainNet' : '';
-    return networkKeys[mainNet || testNet] || network.name;
-  }
-
-  if (isCustomNode && isBtc) {
-    return networkKeys.testNet;
-  }
-  return network.name;
-};
+export const getNetworkName = network => network.name || 'customNode';
 
 /**
  * Returns human readable error messages

@@ -6,7 +6,7 @@ describe('AvatarWithNameAndAddress', () => {
   const props = {
     username: 'tes_username',
     account: {
-      address: '1234567890L',
+      address: 'lskwezupc89ug4xw8g92y89pru3c7d4zwouo5eyky',
     },
   };
 

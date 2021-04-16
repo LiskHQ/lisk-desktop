@@ -1,10 +1,11 @@
 import React from 'react';
-import { toRawLsk, fromRawLsk } from '../../../../utils/lsk';
-import loginTypes from '../../../../constants/loginTypes';
-import AccountVisual from '../../../toolbox/accountVisual';
-import Converter from '../../../shared/converter';
-import Piwik from '../../../../utils/piwik';
-import TransactionSummary from '../../../shared/transactionSummary';
+import { loginTypes } from '@constants';
+import { toRawLsk, fromRawLsk } from '@utils/lsk';
+import Piwik from '@utils/piwik';
+import AccountVisual from '@toolbox/accountVisual';
+import Converter from '@shared/converter';
+import TransactionSummary from '@shared/transactionSummary';
+
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -21,16 +22,14 @@ class Summary extends React.Component {
 
   submitTransaction({ secondPassphrase }) {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
-    const { account, fields } = this.props;
+    const { fields } = this.props;
 
     this.props.transactionCreated({
       amount: `${toRawLsk(fields.amount.value)}`,
       data: fields.reference ? fields.reference.value : '',
-      passphrase: account.passphrase,
-      recipientId: fields.recipient.address,
+      recipientAddress: fields.recipient.address,
       secondPassphrase,
       fee: toRawLsk(parseFloat(fields.fee.value)),
-      nonce: account.nonce,
     });
   }
 

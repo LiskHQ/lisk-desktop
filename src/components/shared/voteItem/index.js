@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import routes from '../../../constants/routes';
 
-import { truncateAddress } from '../../../utils/account';
-import { tokenMap } from '../../../constants/tokens';
+import { truncateAddress } from '@utils/account';
+import { routes, tokenMap } from '@constants';
 import LiskAmount from '../liskAmount';
 
 import styles from './styles.css';
@@ -34,7 +33,7 @@ const VoteItem = ({
         </span>
       </Link>
       <span className={styles.value}>
-        {Object.values(vote).length === 2
+        {vote.confirmed && vote.unconfirmed
           ? (
             <>
               <LiskAmount val={vote.confirmed} token={token} />
@@ -43,7 +42,7 @@ const VoteItem = ({
             </>
           )
           : <LiskAmount val={Object.values(vote)[0]} token={token} />
-          }
+      }
       </span>
     </span>
   );

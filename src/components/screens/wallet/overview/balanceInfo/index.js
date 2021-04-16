@@ -2,29 +2,29 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
-import Box from '../../../../toolbox/box';
-import BoxContent from '../../../../toolbox/box/content';
-import LiskAmount from '../../../../shared/liskAmount';
-import DiscreetMode from '../../../../shared/discreetMode';
-import Converter from '../../../../shared/converter';
-import DialogLink from '../../../../toolbox/dialog/link';
-import Icon from '../../../../toolbox/icon';
-import styles from './balanceInfo.css';
-import { fromRawLsk } from '../../../../../utils/lsk';
-import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
-import { tokenMap } from '../../../../../constants/tokens';
+import { tokenMap } from '@constants';
+import { fromRawLsk } from '@utils/lsk';
 import {
   calculateBalanceLockedInUnvotes,
   calculateBalanceLockedInVotes,
   getActiveTokenAccount,
-} from '../../../../../utils/account';
+} from '@utils/account';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import DialogLink from '@toolbox/dialog/link';
+import Icon from '@toolbox/icon';
+import LiskAmount from '../../../../shared/liskAmount';
+import DiscreetMode from '../../../../shared/discreetMode';
+import Converter from '../../../../shared/converter';
+import styles from './balanceInfo.css';
+import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
 
 const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
   const host = useSelector(state => getActiveTokenAccount(state));
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   const lockedInUnvotes = activeToken === tokenMap.LSK.key && isWalletRoute && host
-    ? calculateBalanceLockedInUnvotes(host.unlocking) : undefined;
+    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking) : undefined;
 
   if (lockedInUnvotes + lockedInVotes > 0) {
     return (

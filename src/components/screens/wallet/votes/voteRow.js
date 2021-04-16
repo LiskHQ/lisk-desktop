@@ -1,20 +1,22 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import AccountVisual from '../../../toolbox/accountVisual';
-import tableStyles from '../../../toolbox/table/table.css';
-import LiskAmount from '../../../shared/liskAmount';
+import { tokenMap } from '@constants';
+import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
+import { truncateAddress } from '@utils/account';
+import AccountVisual from '@toolbox/accountVisual';
+import tableStyles from '@toolbox/table/table.css';
+import LiskAmount from '@shared/liskAmount';
+import DialogLink from '@toolbox/dialog/link';
+import Spinner from '@toolbox/spinner';
+import Icon from '@toolbox/icon';
 import styles from './votes.css';
-import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
-import { tokenMap } from '../../../../constants/tokens';
-import DialogLink from '../../../toolbox/dialog/link';
-import Spinner from '../../../toolbox/spinner';
-import Icon from '../../../toolbox/icon';
 
 const VoteRow = ({
   data, onRowClick, accounts,
 }) => {
   const onClick = () => onRowClick(data.address);
   const account = accounts[data.address];
+  const truncatedAddress = truncateAddress(data.address);
   return (
     <div className={`${tableStyles.row} ${styles.row} vote-row`}>
       {/* Account visual */}
@@ -22,20 +24,20 @@ const VoteRow = ({
         <div className={`${styles.info}`}>
           <AccountVisual
             className={`${styles.avatar}`}
-            address={data.address}
+            address={truncatedAddress}
             size={40}
           />
           <div className={styles.accountInfo}>
             <span className={`${styles.username} vote-username`}>{data.username}</span>
-            <span className={`${styles.address} showOnLargeViewPort`}>{data.address}</span>
+            <span className={`${styles.address} showOnLargeViewPort`}>{truncatedAddress}</span>
           </div>
         </div>
       </div>
 
-      {/* Productivity */}
+      {/* Banned/Punished */}
       <div className={grid['col-sm-2']} onClick={onClick}>
         {account
-          ? `${formatAmountBasedOnLocale({ value: account.delegate.productivity })}%`
+          ? `${formatAmountBasedOnLocale({ value: account.dpos.delegate.productivity })}%`
           /* istanbul ignore next */
           : '-'
         }
@@ -46,7 +48,7 @@ const VoteRow = ({
         <span>
           {
             /* istanbul ignore next */
-            account ? `#${account.delegate.rank}` : '-'
+            account?.dpos.delegate.rank ? `#${account.dpos.delegate.rank}` : '-'
           }
         </span>
       </div>
@@ -55,7 +57,7 @@ const VoteRow = ({
       <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`} onClick={onClick}>
         <span>
           <LiskAmount
-            val={account ? account.delegate.vote : 0}
+            val={account?.dpos.delegate.totalVotesReceived ?? 0}
             token={tokenMap.LSK.key}
           />
         </span>
@@ -85,7 +87,6 @@ const VoteRow = ({
                 className={styles.editVoteLink}
                 component="editVote"
                 data={{ address: data.address }}
-
               >
                 <Icon name="edit" />
               </DialogLink>

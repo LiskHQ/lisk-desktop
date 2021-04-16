@@ -1,32 +1,32 @@
 /* istanbul ignore file */
-// Coverage of this file is ignored because it's a central integration point
-// of the whole app. If anything goes wrong here, e2e tests will fail,
-// so it's covered by e2e tests.
+// This is covered by e2e tests
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { hot } from 'react-hot-loader/root';//eslint-disable-line
-import styles from './app.css';
+import { hot } from 'react-hot-loader/root';
 import './variables.css';
-import OfflineWrapper from '../components/shared/offlineWrapper';
-import CustomRoute from '../components/shared/customRoute';
-import NotFound from '../components/shared/notFound';
-import routes from '../constants/routes';
-import NavigationBars from '../components/shared/navigationBars';
-import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
-import DialogHolder from '../components/toolbox/dialog/holder';
+import OfflineWrapper from '@shared/offlineWrapper';
+import CustomRoute from '@shared/customRoute';
+import NotFound from '@shared/notFound';
+import { routes } from '@constants';
+import NavigationBars from '@shared/navigationBars';
+import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import DialogHolder from '@toolbox/dialog/holder';
+import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@actions';
+import { retrieveSchemas } from '@utils/moduleAssets';
+import { selectServiceUrl } from '@store/selectors';
 import ThemeContext from '../contexts/theme';
-import { settingsRetrieved } from '../actions/settings';
-import { bookmarksRetrieved } from '../actions/bookmarks';
-import { watchListRetrieved } from '../actions/watchList';
+import styles from './app.css';
 import useIpc from '../hooks/useIpc';
 
+// eslint-disable-next-line max-statements
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
+  const serviceUrl = useSelector(selectServiceUrl);
 
   useIpc(history);
 
@@ -36,6 +36,12 @@ const App = ({ history }) => {
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
   }, []);
+
+  useEffect(() => {
+    if (serviceUrl) {
+      retrieveSchemas({ serviceUrl });
+    }
+  }, [serviceUrl]);
 
   const routesList = Object.values(routes);
   const routeObj = routesList.find(r => r.path === history.location.pathname) || {};

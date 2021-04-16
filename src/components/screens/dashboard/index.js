@@ -1,7 +1,8 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { getActiveTokenAccount } from '../../../utils/account';
+
+import { getActiveTokenAccount } from '@utils/account';
 import Dashboard from './dashboard';
 
 const removeDuplicateTransactions = (pendingTransactions, confirmedTransactions) =>

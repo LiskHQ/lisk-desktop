@@ -1,8 +1,7 @@
 /* eslint-disable */
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import networks from '../../../constants/networks';
-import ss from '../../../constants/selectors';
-import accounts from '../../../constants/accounts';
+import { networks, ss } from '@constants'
+import { accounts } from '@constants';
 
 Then(/^I should see 30 transactions$/, function () {
   cy.get(ss.transactionRow).should('have.length', 30);
@@ -29,7 +28,7 @@ Then(/^I should see incoming transaction in table$/, function () {
 });
 
 Then(/^I should not see incoming transaction in table$/, function () {
-  cy.get(ss.transactionsTable).contains(accounts.genesis.address).should('not.exist');
+  cy.get(ss.transactionsTable).contains(accounts.genesis.summary.address).should('not.exist');
 });
 
 Then(/^I click filter incoming$/, function () {

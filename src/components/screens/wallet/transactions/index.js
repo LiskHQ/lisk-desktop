@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import Table from '../../../toolbox/table';
+import withFilters from '@utils/withFilters';
+import withData from '@utils/withData';
+import { getDelegates } from '@api/delegate';
+import { toRawLsk } from '@utils/lsk';
+import { transformStringDateToUnixTimestamp } from '@utils/datetime';
+import { getTransactions } from '@api/transaction';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import Table from '@toolbox/table';
+import FilterBar from '@shared/filterBar';
 import styles from './transactions.css';
 import header from './tableHeader';
-import FilterBar from '../../../shared/filterBar';
-import withFilters from '../../../../utils/withFilters';
-import withData from '../../../../utils/withData';
-import { getDelegates } from '../../../../utils/api/delegate';
-import { toRawLsk } from '../../../../utils/lsk';
-import { transformStringDateToUnixTimestamp } from '../../../../utils/datetime';
-import { getTransactions } from '../../../../utils/api/transaction';
 import TransactionRow from './transactionRow';
 import FilterDropdown from './filterDropdown';
 
@@ -163,12 +163,14 @@ export default compose(
     },
     votedDelegates: {
       apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
-      defaultData: {},
-      transformResponse: response =>
-        response.data.reduce((acc, delegate) => {
-          acc[delegate.address] = delegate.username;
+      defaultData: [],
+      transformResponse: (response) => {
+        const responseMap = response.data.reduce((acc, delegate) => {
+          acc[delegate.address] = delegate;
           return acc;
-        }, {}),
+        }, {});
+        return responseMap;
+      },
     },
   }),
   withFilters('transactions', defaultFilters, defaultSort),

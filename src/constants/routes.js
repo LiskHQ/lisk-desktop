@@ -1,33 +1,32 @@
+import AddBookmark from '@screens/bookmarks/addBookmark';
+import BlockDetails from '@screens/monitor/blockDetails';
+import Blocks from '@screens/monitor/blocks';
+import Bookmarks from '@screens/bookmarks/list';
+import Dashboard from '@screens/dashboard';
+import DelegatesMonitor from '@screens/monitor/delegates';
+import HwWalletLogin from '@screens/hwWalletLogin';
+import Login from '@screens/login';
+import MonitorAccounts from '@screens/monitor/accounts';
+import MonitorNetwork from '@screens/monitor/network';
+import MonitorTransactions from '@screens/monitor/transactions';
+import Register from '@screens/register';
+import RegisterDelegate from '@screens/registerDelegate';
+import Send from '@screens/send';
+import Settings from '@screens/settings';
+import SignMessage from '@screens/signMessage';
+import TermsOfUse from '@screens/termsOfUse';
+import Wallet from '@screens/wallet';
+import Explorer from '@screens/wallet/explorer';
+import TransactionDetails from '@screens/transactionDetails';
+import VerifyMessage from '@screens/verifyMessage';
+import Request from '@screens/request';
+import LockedBalance from '@screens/lockedBalance';
+import EditVote from '@screens/editVote';
+import VotingQueue from '@screens/votingQueue';
+import DeviceDisconnect from '@screens/deviceDisconnectDialog';
+import NewReleaseDialog from '@shared/newReleaseDialog/newReleaseDialog';
+import SearchBar from '@shared/searchBar';
 import { tokenMap } from './tokens';
-import AddBookmark from '../components/screens/bookmarks/addBookmark';
-import BlockDetails from '../components/screens/monitor/blockDetails';
-import Blocks from '../components/screens/monitor/blocks';
-import Bookmarks from '../components/screens/bookmarks/list';
-import Dashboard from '../components/screens/dashboard';
-import DelegatesMonitor from '../components/screens/monitor/delegates';
-import HwWalletLogin from '../components/screens/hwWalletLogin';
-import Login from '../components/screens/login';
-import MonitorAccounts from '../components/screens/monitor/accounts';
-import MonitorNetwork from '../components/screens/monitor/network';
-import MonitorTransactions from '../components/screens/monitor/transactions';
-import Register from '../components/screens/register';
-import RegisterDelegate from '../components/screens/registerDelegate';
-import Send from '../components/screens/send';
-import Settings from '../components/screens/settings';
-import SignMessage from '../components/screens/signMessage';
-import TermsOfUse from '../components/screens/termsOfUse';
-import Wallet from '../components/screens/wallet';
-import Explorer from '../components/screens/wallet/explorer';
-import TransactionDetails from '../components/screens/transactionDetails';
-import VerifyMessage from '../components/screens/verifyMessage';
-import Request from '../components/screens/request';
-import LockedBalance from '../components/screens/lockedBalance';
-import SearchBar from '../components/shared/searchBar';
-import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
-import EditVote from '../components/screens/editVote';
-import VotingQueue from '../components/screens/votingQueue';
-// eslint-disable-next-line import/no-named-as-default
-import DeviceDisconnectDialog from '../components/screens/deviceDisconnectDialog';
 import Initialization from '../components/screens/initialization';
 
 export default {
@@ -207,7 +206,7 @@ export const modals = {
     forbiddenTokens: [],
   },
   deviceDisconnectDialog: {
-    component: DeviceDisconnectDialog,
+    component: DeviceDisconnect,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },

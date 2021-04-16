@@ -1,23 +1,32 @@
 /* eslint-disable max-lines */
-import Lisk from '@liskhq/lisk-client';
+import { transactions } from '@liskhq/lisk-client';
 
+import {
+  tokenMap,
+  MODULE_ASSETS_NAME_ID_MAP,
+  minFeePerByte,
+  DEFAULT_NUMBER_OF_SIGNATURES,
+  DEFAULT_SIGNATURE_BYTE_SIZE,
+  MODULE_ASSETS_MAP,
+  moduleAssetSchemas,
+  BASE_FEES,
+} from '@constants';
+
+import { joinModuleAndAssetIds } from '@utils/moduleAssets';
+import { createTransactionObject } from '@utils/transaction';
+import { validateAddress } from '../../validators';
 import http from '../http';
 import ws from '../ws';
-import transactionTypes, { minFeePerByte } from '../../../constants/transactionTypes';
 import { getDelegates } from '../delegate';
-import regex from '../../regex';
-import { tokenMap } from '../../../constants/tokens';
-import { fromRawLsk } from '../../lsk';
-import { validateAddress } from '../../validators';
-import { getApiClient } from '../apiClient';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 const httpPaths = {
-  feeEstimates: `${httpPrefix}/fee_estimates`,
+  fees: `${httpPrefix}/fees`,
   transactions: `${httpPrefix}/transactions`,
   transaction: `${httpPrefix}/transactions`,
   transactionStats: `${httpPrefix}/transactions/statistics`,
+  schemas: `${httpPrefix}/transactions/schemas`,
 };
 
 const wsMethods = {
@@ -43,30 +52,22 @@ export const getTransaction = ({
   params,
   network,
   baseUrl,
-}).then((response) => {
-  const data = response.data.map((tx) => {
-    tx.title = transactionTypes.getByCode(tx.type).key;
-    return tx;
-  });
-
-  return { data, meta: response.meta };
 });
 
 const filters = {
   address: { key: 'address', test: address => !validateAddress(tokenMap.LSK.key, address) },
-  dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
-  dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
-  amountFrom: { key: 'min', test: num => parseFloat(num) >= 0 },
-  amountTo: { key: 'max', test: num => parseFloat(num) > 0 },
+  timestamp: { key: 'timestamp', test: str => /\d+:\d+/.test(str) },
+  amount: { key: 'amount', test: str => /\d+:\d+/.test(str) },
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
-  type: { key: 'type', test: num => parseInt(num, 10) > 0 },
+  moduleAssetId: { key: 'moduleAssetId', test: str => /\d:\d/.test(str) },
   height: { key: 'height', test: num => parseInt(num, 10) > 0 },
   sort: {
     key: 'sort',
     test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
   },
 };
+
 /**
  * Retrieves the list of transactions for given parameters
  *
@@ -95,7 +96,8 @@ export const getTransactions = ({
   params,
   baseUrl,
 }) => {
-  const typeConfig = params.type && transactionTypes()[params.type];
+  const typeConfig = params.type && MODULE_ASSETS_NAME_ID_MAP[params.type];
+
   // if type, correct the type and use WS
   if (typeConfig) {
     const requests = Object.values(typeConfig.code).map(type => ({
@@ -103,15 +105,7 @@ export const getTransactions = ({
       params: { type },
     }));
     // BaseUrl is only used for retrieving archived txs, so it's not needed here.
-    return ws({ baseUrl: network.serviceUrl, requests })
-      .then((response) => {
-        const data = response.data.map((tx) => {
-          tx.title = transactionTypes.getByCode(tx.type).key;
-          return tx;
-        });
-
-        return { data, meta: response.meta };
-      });
+    return ws({ baseUrl: network.serviceUrl, requests });
   }
 
   const normParams = {};
@@ -136,34 +130,32 @@ export const getTransactions = ({
     path: httpPaths.transactions,
     params: normParams,
     baseUrl,
-  })
-    .then((response) => {
-      const data = response.data.map((tx) => {
-        tx.title = transactionTypes.getByCode(tx.type).key;
-        return tx;
-      });
-
-      return { data, meta: response.meta };
-    });
+  });
 };
 
-// @todo document this function signature
+/**
+ * Fetches and generates an array of monthly number of delegate
+ * registrations on Lisk blockchain.
+ *
+ * @param {Object} Network - Network setting from Redux store
+ * @returns {Promise} Registered delegates list API call
+ */
 export const getRegisteredDelegates = async ({ network }) => {
   const delegates = await getDelegates({
     network,
     params: { limit: 1 },
   });
-  const transactions = await getTransactions({
+  const responseTransactions = await getTransactions({
     network,
-    params: { type: 'registerDelegate', limit: 100 },
+    params: { moduleAssetId: '5:0', limit: 100 },
   });
 
-  if (delegates.error || transactions.error) {
+  if (delegates.error || responseTransactions.error) {
     return Error('Error fetching data.');
   }
 
   // get number of registration in each month
-  const monthStats = transactions.data
+  const monthStats = responseTransactions.data
     .map((tx) => {
       const date = new Date(tx.timestamp * 1000);
       return `${date.getFullYear()}-${date.getMonth() + 1}`;
@@ -206,75 +198,95 @@ export const getTransactionStats = ({ network, params: { period } }) => {
   });
 };
 
+
 /**
- * Gets the amount of a given transaction
+ * Retrieves transaction schemas.
  *
- * @param {Object} transaction The transaction object
- * @returns {String} Amount in beddows/satoshi
+ * @param {Object} data
+ * @param {String?} data.baseUrl - Lisk Service API url to override the
+ * existing ServiceUrl on the network param. We may use this to retrieve
+ * the details of an archived transaction.
+ * @param {Object} data.network - Network setting from Redux store
+ * @returns {Promise} http call
  */
-export const getTxAmount = (transaction) => {
-  let amount = transaction.amount ?? transaction.asset.amount;
-  if (transaction.title === 'unlockToken') {
-    amount = 0;
-    transaction.asset.unlockingObjects.forEach((unlockedObject) => {
-      amount += parseInt(unlockedObject.amount, 10);
+export const getSchemas = ({ baseUrl }) => http({
+  path: httpPaths.schemas,
+  baseUrl,
+});
+
+
+/**
+ * Returns a dictionary of base fees for low, medium and high processing speeds
+ * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
+ * medium and high priority fee options
+ */
+export const getTransactionBaseFees = network =>
+  http({
+    path: httpPaths.fees,
+    searchParams: {},
+    network,
+  })
+    .then((response) => {
+      const { feeEstimatePerByte } = response.data;
+      return {
+        Low: feeEstimatePerByte.low,
+        Medium: feeEstimatePerByte.medium,
+        High: feeEstimatePerByte.high,
+      };
     });
-    amount = `${amount}`;
-  }
-  if (transaction.title === 'vote') {
-    amount = 0;
-    transaction.asset.votes.forEach((vote) => {
-      amount += parseInt(vote.amount, 10);
-    });
-    amount = `${amount}`;
-  }
 
-  return amount;
-};
+/**
+ * Returns the actual tx fee based on given tx details
+ * and selected processing speed
+ *
+ * @param {String} txData - The transaction object
+ * @param {Object} selectedPriority - network configuration
+ * @returns {Promise} Object containing value, error and feedback
+ */
+// eslint-disable-next-line max-statements
+export const getTransactionFee = async ({
+  transaction, selectedPriority,
+}) => {
+  const feePerByte = selectedPriority.value;
 
-const txTypeClassMap = {
-  transfer: Lisk.transactions.TransferTransaction,
-  registerDelegate: Lisk.transactions.DelegateTransaction,
-  vote: Lisk.transactions.VoteTransaction,
-  unlockToken: Lisk.transaction.UnlockTransaction,
-};
+  const {
+    moduleAssetId, ...rawTransaction
+  } = transaction;
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
+  const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
 
-/* istanbul ignore next */
-export const createTransactionInstance = (rawTx, type) => {
-  const FEE_BYTES_PLACEHOLDER = '18446744073709551615';
-  const SIGNATURE_BYTES_PLACEHOLDER = '204514eb1152355799ece36d17037e5feb4871472c60763bdafe67eb6a38bec632a8e2e62f84a32cf764342a4708a65fbad194e37feec03940f0ff84d3df2a05';
-  const asset = {
-    data: rawTx.data,
-  };
-
-  switch (type) {
-    case 'transfer':
-      asset.recipientId = rawTx.recipient;
-      asset.amount = rawTx.amount;
-      break;
-    case 'registerDelegate':
-      asset.username = rawTx.username || 'abcde';
-      break;
-    case 'vote':
-      asset.votes = rawTx.votes;
-      break;
-    case 'unlockToken':
-      asset.unlockingObjects = rawTx.unlockingObjects;
-      break;
-    default:
-      break;
-  }
-
-  const TxClass = txTypeClassMap[type];
-  const tx = new TxClass({
-    senderPublicKey: rawTx.senderPublicKey,
-    nonce: rawTx.nonce,
-    asset,
-    fee: FEE_BYTES_PLACEHOLDER,
-    signatures: [SIGNATURE_BYTES_PLACEHOLDER],
+  const minFee = transactions.computeMinFee(schema, {
+    ...transactionObject,
+    signatures: undefined,
+  }, {
+    baseFees: BASE_FEES,
   });
 
-  return tx;
+  // tie breaker is only meant for medium and high processing speeds
+  const tieBreaker = selectedPriority.selectedIndex === 0
+    ? 0 : minFeePerByte * feePerByte * Math.random();
+
+  const size = transactions.getBytes(schema, {
+    ...transactionObject,
+    signatures: new Array(DEFAULT_NUMBER_OF_SIGNATURES).fill(
+      Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE),
+    ),
+  }).length;
+
+  const calculatedFee = Number(minFee + BigInt(size * feePerByte) + BigInt(tieBreaker));
+  const fee = Math.min(calculatedFee, maxAssetFee);
+  const roundedValue = transactions.convertBeddowsToLSK(fee.toString());
+
+  const feedback = transaction.amount === ''
+    ? '-'
+    : `${(roundedValue ? '' : 'Invalid amount')}`;
+
+  return {
+    value: roundedValue,
+    error: !!feedback,
+    feedback,
+  };
 };
 
 /**
@@ -287,17 +299,23 @@ export const createTransactionInstance = (rawTx, type) => {
  */
 export const create = ({
   network,
-  transactionType,
-  ...rest
+  moduleAssetId,
+  ...transactionObject
 }) => new Promise((resolve, reject) => {
+  const { networkIdentifier } = network.networks.LSK;
+  const {
+    passphrase, ...rawTransaction
+  } = transactionObject;
+
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
+
   try {
-    const { networkIdentifier } = network.networks.LSK;
-    const tx = Lisk.transaction[transactionType]({
-      ...rest,
-      fee: rest.fee.toString(),
-      networkIdentifier,
-    });
-    resolve(tx);
+    const signedTransaction = transactions.signTransaction(
+      schema, transaction, Buffer.from(networkIdentifier, 'hex'), passphrase,
+    );
+
+    resolve(signedTransaction);
   } catch (error) {
     reject(error);
   }
@@ -312,86 +330,30 @@ export const create = ({
  * @param {string} network.address - the node address e.g. https://betanet-lisk.io
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
-export const broadcast = ({ transaction, network }) => new Promise(
-  async (resolve, reject) => {
-    try {
-      const client = getApiClient(network);
-      const response = await client.transactions.broadcast(transaction);
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
-  },
-);
+export const broadcast = ({ transaction, serviceUrl }) => {
+  const moduleAssetId = joinModuleAndAssetIds({
+    moduleID: transaction.moduleID,
+    assetID: transaction.assetID,
+  });
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const binary = transactions.getBytes(schema, transaction);
+  const payload = binary.toString('hex');
+  const body = JSON.stringify({ transaction: payload });
 
-/**
- * Returns a dictionary of base fees for low, medium and high processing speeds
- *
- * @todo The current implementation mocks the results with realistic values.
- * We will refactor this function to fetch the base fees from Lisk Service
- * when the endpoint is ready. Refer to #3081
- *
- * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
- * medium and high priority fee options
- */
-export const getTransactionBaseFees = network =>
-  http({
-    path: httpPaths.feeEstimates,
-    searchParams: {},
-    network,
-  })
-    .then((response) => {
-      const { feeEstimatePerByte } = response.data;
-      return {
-        Low: feeEstimatePerByte.low,
-        Medium: feeEstimatePerByte.medium,
-        High: feeEstimatePerByte.high,
-      };
-    });
+  return new Promise(
+    async (resolve, reject) => {
+      try {
+        const response = await http({
+          method: 'POST',
+          baseUrl: serviceUrl,
+          path: '/api/v2/transactions',
+          body,
+        });
 
-export const getMinTxFee = tx => Number(tx.minFee.toString());
-
-/**
- * Returns the actual tx fee based on given tx details
- * and selected processing speed
- *
- * @param {String} txData - The transaction object
- * @param {Object} selectedPriority - network configuration
- * @returns {Promise} Object containing value, error and feedback
- */
-// eslint-disable-next-line max-statements
-export const getTransactionFee = async ({
-  txData, selectedPriority,
-}) => {
-  const { txType, ...data } = txData;
-  const tx = createTransactionInstance(data, txType);
-  const minFee = getMinTxFee(tx);
-  const feePerByte = selectedPriority.value;
-  const hardCap = transactionTypes.getHardCap(txType);
-
-  // Tie breaker is only meant for Medium and high processing speeds
-  const tieBreaker = selectedPriority.selectedIndex === 0
-    ? 0 : minFeePerByte * feePerByte * Math.random();
-
-  const size = tx.getBytes().length;
-  let value = minFee + feePerByte * size + tieBreaker;
-
-  if (value > hardCap) {
-    value = hardCap;
-  }
-
-  const roundedValue = parseFloat(Number(fromRawLsk(value)).toFixed(8));
-  const feedback = data.amount === ''
-    ? '-'
-    : `${(value ? '' : 'Invalid amount')}`;
-
-  return {
-    value: roundedValue,
-    error: !!feedback,
-    feedback,
-  };
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      }
+    },
+  );
 };
-
-export const getTokenFromAddress = address => (
-  regex.address.test(address) ? tokenMap.LSK.key : tokenMap.BTC.key
-);

@@ -4,7 +4,7 @@ import functionMapper from '../functionMapper';
 
 const networkAPI = functionMapper(lsk, btc);
 
-export const getConnectedPeers = networkAPI.getConnectedPeers;
+export const getPeers = networkAPI.getPeers;
 export const getNetworkCode = networkAPI.getNetworkCode;
 export const getNetworkConfig = networkAPI.getNetworkConfig;
 export const getNetworkStatistics = networkAPI.getNetworkStatistics;

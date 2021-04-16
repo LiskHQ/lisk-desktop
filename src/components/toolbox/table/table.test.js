@@ -68,10 +68,17 @@ describe('Table', () => {
       const wrapper = mount(<Table {...props} />);
       expect(wrapper.find('Row')).toHaveLength(props.data.length);
     });
+
     it('should render accept function to define iteration key', () => {
       const iterationKey = jest.fn().mockImplementation(data => data.address);
       mount(<Table {...props} iterationKey={iterationKey} />);
       expect(iterationKey.mock.calls.length).toBe(props.data.length);
+    });
+
+    it('should not crash when data is undefined', () => {
+      const wrapper = mount(<Table {...props} data={undefined} />);
+      expect(wrapper.find('.empty-state')).toHaveLength(1);
+      expect(wrapper.find('Row')).toHaveLength(0);
     });
   });
 });

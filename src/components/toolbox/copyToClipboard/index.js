@@ -1,9 +1,9 @@
 import React from 'react';
 import { CopyToClipboard as ReactCopyToClipboard } from 'react-copy-to-clipboard';
 import { withTranslation } from 'react-i18next';
+import Piwik from '@utils/piwik';
 import Icon from '../icon';
 import styles from './copyToClipboard.css';
-import Piwik from '../../../utils/piwik';
 
 const IconAndText = ({
   value, t, className, text, copyClassName, Container, containerProps, onCopy, copied,

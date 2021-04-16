@@ -1,8 +1,8 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
-import PassphraseBackup from '../../shared/passphraseBackup';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
+import PassphraseBackup from '@shared/passphraseBackup';
 import registerStyles from './register.css';
 
 const BackupPassphrase = ({

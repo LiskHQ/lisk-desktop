@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { getBlocks } from '@api/block';
+import withData from '@utils/withData';
 import BlocksOverview from './blocksOverview';
-import { getBlocks } from '../../../../../utils/api/block';
-import withData from '../../../../../utils/withData';
 
 export default compose(
   withRouter,

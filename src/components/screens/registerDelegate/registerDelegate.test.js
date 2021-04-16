@@ -1,10 +1,10 @@
 import debounce from 'lodash.debounce';
-import { mountWithRouter } from '../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
+import { getTransactionBaseFees } from '@api/transaction';
 import RegisterDelegate from './registerDelegate';
-import { getTransactionBaseFees } from '../../../utils/api/transaction';
 
 jest.mock('lodash.debounce');
-jest.mock('../../../utils/api/transaction');
+jest.mock('@api/transaction');
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,
@@ -17,8 +17,11 @@ describe('RegisterDelegate', () => {
     account: {
       info: {
         LSK: {
-          address: '123456789L',
-          balance: 11000,
+          summary: {
+            address: '123456789L',
+            balance: 11000,
+          },
+          token: { balance: 11000 },
         },
       },
     },

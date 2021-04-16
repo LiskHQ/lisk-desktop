@@ -1,9 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import Icon from '../../../toolbox/icon';
-import { isBlockHeightReached } from '../../../../utils/account';
-import LiskAmount from '../../../shared/liskAmount';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from '@constants';
+import { isBlockHeightReached } from '@utils/account';
+import Icon from '@toolbox/icon';
+import LiskAmount from '@shared/liskAmount';
 
 const getPendingTime = (unvoteHeight, unlockHeight) => {
   const awaitingBlocks = unlockHeight - unvoteHeight;

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { withRouter } from 'react-router';
-import routes from '../../../constants/routes';
-import { addSearchParamsToUrl } from '../../../utils/searchParams';
+import { routes } from '@constants';
+import { addSearchParamsToUrl } from '@utils/searchParams';
 
 const DialogLink = ({
   children, component, className, history, data,

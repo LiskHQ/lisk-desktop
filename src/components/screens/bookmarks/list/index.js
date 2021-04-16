@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { bookmarkRemoved, bookmarkUpdated } from '../../../../actions/bookmarks';
+import { bookmarkRemoved, bookmarkUpdated } from '@actions';
 import BookmarkListModal from './modal';
 
 const mapStateToProps = state => ({

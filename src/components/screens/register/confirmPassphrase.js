@@ -1,9 +1,9 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import PassphraseRenderer from '@shared/passphraseRenderer';
 import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
-import PassphraseRenderer from '../../shared/passphraseRenderer';
 
 const ConfirmPassphrase = ({
   t, passphrase, onConfirmPassphrase, prevStep, nextStep,

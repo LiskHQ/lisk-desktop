@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxHeader from '../../../toolbox/box/header';
-import { Input } from '../../../toolbox/inputs';
-import Table from '../../../toolbox/table';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxHeader from '@toolbox/box/header';
+import { Input } from '@toolbox/inputs';
+import Table from '@toolbox/table';
 import VoterRow from './voterRow';
 import tableHeader from './votersTableHeader';
 import styles from './delegateProfile.css';
@@ -31,7 +31,7 @@ const DelegateVotesView = ({
             <span>{t('Voters')}</span>
             <span className={styles.totalVotes}>{`(${voters.meta ? voters.meta.count : '...'})`}</span>
           </h1>
-          {voters.length > 0 && (
+          {voters.data.votes.length > 0 && (
             <span>
               <Input
                 onChange={onInputChange}
@@ -43,10 +43,12 @@ const DelegateVotesView = ({
             </span>
           )}
         </BoxHeader>
-        <BoxContent className={`${grid.col} ${grid['col-xs-12']} ${styles.votesContainer} votes-container`}>
+        <BoxContent
+          className={`${grid.col} ${grid['col-xs-12']} ${voters.data.votes.length ? styles.votesContainer : ''} votes-container`}
+        >
           <Table
-            data={voters.data}
-            canLoadMore={voters.meta && voters.data.length < voters.meta.count}
+            data={voters.data.votes}
+            canLoadMore={voters.meta && voters.data.votes.length < voters.meta.count}
             isLoading={voters.isLoading}
             iterationKey="address"
             emptyState={{ message: t('This account doesn’t have any voters.') }}

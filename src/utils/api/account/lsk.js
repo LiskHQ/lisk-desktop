@@ -1,11 +1,10 @@
+import { tokenMap, regex } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';
-import { extractAddress, extractPublicKey } from '../../account';
-import regex from '../../regex';
-import { tokenMap } from '../../../constants/tokens';
+import { extractAddressFromPassphrase, extractAddressFromPublicKey, extractPublicKey } from '../../account';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 const httpPaths = {
   account: `${httpPrefix}/accounts`,
@@ -42,8 +41,11 @@ const getAccountParams = (params) => {
   // If you have the address, you don't need anything else
   if (address) return { address };
   // convert other params to address
-  if (publicKey || passphrase) {
-    return { address: extractAddress(publicKey || passphrase) };
+  if (publicKey) {
+    return { address: extractAddressFromPublicKey(publicKey) };
+  }
+  if (passphrase) {
+    return { address: extractAddressFromPassphrase(passphrase) };
   }
   // if none of the above, ignore the params
   return {};
@@ -68,42 +70,35 @@ export const getAccount = async ({
   network, params, baseUrl,
 }) => {
   const normParams = getAccountParams(params);
-  let account = {
-    address: normParams.address,
-    balance: 0,
-    token: tokenMap.LSK.key,
-  };
-
-  if (params.publicKey) {
-    account.publicKey = params.publicKey;
-  } else if (params.passphrase) {
-    const publicKey = extractPublicKey(params.passphrase);
-    if (publicKey) {
-      account.publicKey = publicKey;
-    } else {
-      throw Error('Invalid Passphrase');
-    }
-  }
 
   try {
     const response = await http({
+      baseUrl,
       path: httpPaths.account,
       network,
       params: normParams,
-      baseUrl,
     });
-    if (response.data[0]) {
-      account = {
-        ...response.data[0],
-        publicKey: response.data[0].publicKey || account.publicKey,
-      };
-    }
+
+    return response.data[0];
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log('Lisk account not found.');
-  }
+    let publicKey = params.publicKey;
+    if (!publicKey && params.passphrase) {
+      publicKey = extractPublicKey(params.passphrase);
+    }
 
-  return account;
+    const account = {
+      summary: {
+        publicKey,
+        balance: 0,
+        address: normParams.address,
+        token: tokenMap.LSK.key,
+      },
+    };
+
+    return account;
+  }
 };
 
 const accountFilters = {

@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import routes from '../../../../constants/routes';
-import NavigationButtons from './navigationButtons';
-import Network from './networkName';
+import { routes } from '@constants';
+import { isEmpty } from '@utils/helpers';
+import Icon from '@toolbox/icon';
+import DialogLink from '@toolbox/dialog/link';
+import { PrimaryButton } from '@toolbox/buttons';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './topBar.css';
-import Icon from '../../../toolbox/icon';
-import DialogLink from '../../../toolbox/dialog/link';
-import { PrimaryButton } from '../../../toolbox/buttons';
-import { isEmpty } from '../../../../utils/helpers';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
+import Network from './networkName';
+import NavigationButtons from './navigationButtons';
 import Search from './search';
 import Toggle from './toggle';
 import TokenSelector from './tokenSelector';

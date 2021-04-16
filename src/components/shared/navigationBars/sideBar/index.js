@@ -2,14 +2,14 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import menuLinks from './constants';
-import routes, { modals } from '../../../../constants/routes';
-import Icon from '../../../toolbox/icon';
+import { routes, modals } from '@constants';
+import Piwik from '@utils/piwik';
+import { accountLoggedOut } from '@actions';
+import Icon from '@toolbox/icon';
+import DialogLink from '@toolbox/dialog/link';
 import styles from './sideBar.css';
-import Piwik from '../../../../utils/piwik';
-import { accountLoggedOut } from '../../../../actions/account';
-import DialogLink from '../../../toolbox/dialog/link';
 import AutoSignOut from './autoSignOut';
+import menuLinks from './menuLinks';
 
 const Inner = ({
   data, pathname, sideBarExpanded,

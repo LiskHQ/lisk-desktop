@@ -1,9 +1,8 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');/* eslint-disable-line import/no-extraneous-dependencies */
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
-      allChunks: true,
       filename: 'styles.css',
     }),
   ],
@@ -17,8 +16,6 @@ module.exports = {
             loader: 'css-loader',
             options: {
               sourceMap: true,
-              // minimize: true,
-              // importLoaders: 1,
               modules: {
                 mode: 'local',
                 localIdentName: '[name]__[local]___[hash:base64:5]',
@@ -32,7 +29,6 @@ module.exports = {
               sourceMap: true,
               sourceComments: true,
               plugins: [
-                /* eslint-disable import/no-extraneous-dependencies */
                 require('postcss-partial-import')({}),
                 require('postcss-mixins')({}),
                 require('postcss-nesting')({}),
@@ -45,7 +41,6 @@ module.exports = {
                   },
                 }),
                 require('postcss-for')({}),
-                /* eslint-enable import/no-extraneous-dependencies */
               ],
             },
           },

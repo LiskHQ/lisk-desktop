@@ -1,15 +1,18 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import transactionTypes from '../../../constants/transactionTypes';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { getModuleAssetSenderLabel } from '@utils/moduleAssets';
+import Select from '@toolbox/select';
 import styles from './filters.css';
-import Select from '../../toolbox/select';
 
 const SelectFilter = ({
   label, placeholder, filters, name, updateCustomFilters,
 }) => {
-  const txTypes = transactionTypes();
-  const options = Object.keys(txTypes)
-    .map(key => ({ value: txTypes[key].outgoingCode, label: txTypes[key].title }));
+  const options = Object.keys(MODULE_ASSETS_NAME_ID_MAP)
+    .map(key => ({
+      value: MODULE_ASSETS_NAME_ID_MAP[key],
+      label: getModuleAssetSenderLabel()[key],
+    }));
   options.unshift({ value: '', label: placeholder });
 
   const onChange = (value) => {

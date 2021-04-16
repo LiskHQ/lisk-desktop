@@ -1,9 +1,8 @@
-import actionTypes from '../../constants/actions';
-import { networkStatusUpdated } from '../../actions/network';
-import { olderBlocksRetrieved, forgingTimesRetrieved } from '../../actions/blocks';
-import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
-import { forgersSubscribe, forgersUnsubscribe, getForgers } from '../../utils/api/delegate';
-import { tokenMap } from '../../constants/tokens';
+import { blockSubscribe, blockUnsubscribe } from '@api/block';
+import { forgersSubscribe, forgersUnsubscribe, getForgers } from '@api/delegate';
+import { tokenMap, actionTypes } from '@constants';
+import { olderBlocksRetrieved, forgingTimesRetrieved, networkStatusUpdated } from '@actions';
+
 
 const oneMinute = 1000 * 60;
 
@@ -15,7 +14,6 @@ const generateOnReconnect = dispatch => () => {
   dispatch(networkStatusUpdated({ online: true }));
 };
 
-// eslint-disable-next-line max-statements
 const blockListener = ({ getState, dispatch }) => {
   const state = getState();
   blockUnsubscribe();
@@ -91,7 +89,8 @@ const blockMiddleware = store => (
         forgingListener(store);
         break;
 
-      default: break;
+      default:
+        break;
     }
   });
 

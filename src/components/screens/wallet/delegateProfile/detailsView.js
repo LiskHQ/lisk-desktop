@@ -1,15 +1,17 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxHeader from '../../../toolbox/box/header';
+import { tokenMap } from '@constants';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxHeader from '@toolbox/box/header';
+import Icon from '@toolbox/icon';
+import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import LiskAmount from '@shared/liskAmount';
 import styles from './delegateProfile.css';
-import Icon from '../../../toolbox/icon';
-import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 
 const DetailsView = ({
-  t, rank, voteWeight, lastBlockForged, status,
+  t, rank, delegateWeight, lastBlockForged, status,
 }) => (
   <Box className={`${grid.col} ${grid['col-xs-12']} ${grid['col-md-4']} ${styles.detailsContainer} details-container`}>
     <BoxHeader>
@@ -23,20 +25,20 @@ const DetailsView = ({
           <div className={styles.value}>{rank || '-'}</div>
         </div>
       </div>
-      {status && (
-        <div className={`${grid.row} ${styles.itemContainer}`}>
-          <Icon name="clockActive" className={styles.icon} />
-          <div className={`${grid.col} ${styles.item}`}>
-            <div className={styles.title}>Status</div>
-            <div className={styles.value}>{status}</div>
-          </div>
+      <div className={`${grid.row} ${styles.itemContainer}`}>
+        <Icon name="clockActive" className={styles.icon} />
+        <div className={`${grid.col} ${styles.item}`}>
+          <div className={styles.title}>Status</div>
+          <div className={styles.value}>{status}</div>
         </div>
-      )}
+      </div>
       <div className={`${grid.row} ${styles.itemContainer}`}>
         <Icon name="weight" className={styles.icon} />
         <div className={`${grid.col} ${styles.item}`}>
-          <div className={styles.title}>Vote Weight</div>
-          <div className={styles.value}>{voteWeight}</div>
+          <div className={styles.title}>Delegate Weight</div>
+          <div className={styles.value}>
+            <LiskAmount val={delegateWeight} token={tokenMap.LSK.key} />
+          </div>
         </div>
       </div>
       <div className={`${grid.row} ${styles.itemContainer}`}>
@@ -48,8 +50,8 @@ const DetailsView = ({
               <DateTimeFromTimestamp
                 fulltime
                 className="date"
-                time={lastBlockForged.data}
-                token="LSK"
+                time={lastBlockForged}
+                token={tokenMap.LSK.key}
               />
             ) : '-' }
           </div>

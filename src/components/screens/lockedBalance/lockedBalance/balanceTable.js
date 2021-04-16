@@ -1,8 +1,8 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import Icon from '../../../toolbox/icon';
-import LiskAmount from '../../../shared/liskAmount';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from '@constants';
+import Icon from '@toolbox/icon';
+import LiskAmount from '@shared/liskAmount';
 import UnlockingList from './unlockingList';
 import styles from './lockedBalance.css';
 
@@ -14,7 +14,7 @@ const BalanceTable = ({
   account,
 }) => (
   <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-    {(lockedInVotes !== 0 || account.unlocking.length > 0 || unlockableBalance !== 0)
+    {(lockedInVotes !== 0 || account?.dpos?.unlocking.length > 0 || unlockableBalance !== 0)
       && (
       <li>
         <p className={styles.columnTitle}>{t('Amount')}</p>
@@ -35,10 +35,10 @@ const BalanceTable = ({
         </li>
       )
     }
-    {account.unlocking && account.unlocking.length > 0
+    {account?.dpos?.unlocking.length > 0
       && (
       <UnlockingList
-        unlocking={account.unlocking}
+        unlocking={account?.dpos?.unlocking}
         currentBlockHeight={currentBlockHeight}
         t={t}
       />

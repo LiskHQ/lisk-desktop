@@ -8,7 +8,7 @@ describe('DiscreetMode Component', () => {
   const props = {
     account: {
       info: {
-        LSK: { address: '16313739661670634666L' },
+        LSK: { address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy' },
         BTC: { address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo' },
       },
     },
@@ -36,7 +36,7 @@ describe('DiscreetMode Component', () => {
       location: {
         pathname: '/explorer/transactions',
       },
-      addresses: ['16313739661670634666L', '234324234L'],
+      addresses: ['lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt'],
     };
     wrapper = setup(newProps);
     expect(wrapper).toContainMatchingElements(1, 'div');
@@ -48,7 +48,7 @@ describe('DiscreetMode Component', () => {
       ...props,
       location: {
         pathname: '/account',
-        search: '?address=34234234L',
+        search: '?address=lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
       },
       shouldEvaluateForOtherAccounts: true,
     };
@@ -63,7 +63,7 @@ describe('DiscreetMode Component', () => {
       location: {
         pathname: '/explorer/transactions',
       },
-      addresses: ['16313739661670634666L', '234324234L'],
+      addresses: ['lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt'],
       shouldEvaluateForOtherAccounts: true,
     };
     wrapper = setup(newProps);

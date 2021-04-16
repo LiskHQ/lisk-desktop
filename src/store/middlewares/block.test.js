@@ -1,12 +1,12 @@
+import { olderBlocksRetrieved } from '@actions';
+import { actionTypes } from '@constants';
 import middleware from './block';
-import actionTypes from '../../constants/actions';
-import { blockSubscribe, blockUnsubscribe } from '../../utils/api/block';
-import { forgersSubscribe, forgersUnsubscribe } from '../../utils/api/delegate';
-import { olderBlocksRetrieved } from '../../actions/blocks';
+import { blockSubscribe, blockUnsubscribe } from '@api/block';
+import { forgersSubscribe, forgersUnsubscribe } from '@api/delegate';
 
-jest.mock('../../utils/api/block');
-jest.mock('../../utils/api/delegate');
-jest.mock('../../actions/blocks');
+jest.mock('@api/block');
+jest.mock('@api/delegate');
+jest.mock('@actions/blocks');
 
 describe('Block middleware', () => {
   it('Should subscribe to block/change when actionTypes.networkConfigSet', () => {

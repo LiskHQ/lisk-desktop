@@ -1,13 +1,12 @@
 import { to } from 'await-to-js';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { TertiaryButton } from '../../../toolbox/buttons';
-import { getAccountsFromDevice } from '../../../../utils/hwManager';
+import { getAccountsFromDevice } from '@utils/hwManager';
+import { tokenMap, routes } from '@constants';
+import { TertiaryButton } from '@toolbox/buttons';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
-import routes from '../../../../constants/routes';
 import styles from './selectAccount.css';
-import { tokenMap } from '../../../../constants/tokens';
 
 class SelectAccount extends React.Component {
   constructor(props) {
@@ -32,7 +31,7 @@ class SelectAccount extends React.Component {
 
   componentDidUpdate() {
     // istanbul ignore else
-    if (this.props.account?.address) {
+    if (this.props.account?.summary.address) {
       this.props.history.push(`${routes.dashboard.path}`);
     }
     const { devices, device } = this.props;
@@ -45,7 +44,7 @@ class SelectAccount extends React.Component {
     // istanbul ignore else
     if (Array.isArray(settings.hardwareAccounts[device.model])) {
       const storedAccount = settings.hardwareAccounts[device.model].filter(account =>
-        account.address === address);
+        account.summary.address === address);
       return storedAccount.length ? storedAccount[0].name : null;
     }
 
@@ -60,8 +59,8 @@ class SelectAccount extends React.Component {
     } else {
       const hwAccounts = accounts.map((account, index) => ({
         ...account,
-        name: this.getNameFromAccount(account.address),
-        shouldShow: !!account.balance || index === 0,
+        name: this.getNameFromAccount(account.summary.address),
+        shouldShow: account.summary.balance > 0 || index === 0,
       }));
       this.setState({ hwAccounts });
     }
@@ -80,7 +79,7 @@ class SelectAccount extends React.Component {
 
   onSaveNameAccounts() {
     const accountNames = this.state.hwAccounts.map(account =>
-      ({ address: account.address, name: account.name }));
+      ({ address: account.summary.address, name: account.name }));
     this.props.settingsUpdated({
       hardwareAccounts: {
         ...this.props.settings.hardwareAccounts,
@@ -118,7 +117,7 @@ class SelectAccount extends React.Component {
     });
 
     login({
-      publicKey: account.publicKey,
+      publicKey: account.summary.publicKey,
       hwInfo: {
         deviceId: device.deviceId,
         derivationIndex: index,

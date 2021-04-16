@@ -1,15 +1,15 @@
+import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
+import { getTxAmount } from '@utils/transaction';
 import {
   getTransaction,
   getTransactions,
   getTransactionStats,
   getRegisteredDelegates,
-  getTxAmount,
   getTransactionFee,
+  getSchemas,
 } from './lsk';
 import http from '../http';
-import ws from '../ws';
 import * as delegates from '../delegate';
-import transactionTypes from '../../../constants/transactionTypes';
 
 jest.mock('../http', () => ({
   __esModule: true,
@@ -27,9 +27,91 @@ jest.mock('../delegate', () => ({
 }));
 
 describe('API: LSK Transactions', () => {
-  const network = { serviceUrl: 'http://sample.com/' };
+  const network = {
+    serviceUrl: 'http://sample.com/',
+    networks: {
+      LSK: {
+        moduleAssets: [
+          { id: '2:0', name: 'token:transfer' },
+          { id: '4:0', name: 'keys:registerMultisignatureGroup' },
+          { id: '5:0', name: 'dpos:registerDelegate' },
+          { id: '5:1', name: 'dpos:voteDelegate' },
+          { id: '5:2', name: 'dpos:unlockToken' },
+          { id: '5:3', name: 'dpos:reportDelegateMisbehavior' },
+          { id: '1000:0', name: 'legacyAccount:reclaimLSK' },
+        ],
+      },
+    },
+  };
   const baseUrl = 'http://custom-basse-url.com/';
   const sampleId = 'sample_id';
+
+  moduleAssetSchemas['2:0'] = {
+    $id: 'lisk/transfer-asset',
+    properties: {
+      amount: { dataType: 'uint64', fieldNumber: 1 },
+      recipientAddress: {
+        dataType: 'bytes', fieldNumber: 2, maxLength: 20, minLength: 20,
+      },
+      data: {
+        dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0,
+      },
+    },
+    required: ['amount', 'recipientAddress', 'data'],
+    title: 'Transfer transaction asset',
+    type: 'object',
+  };
+
+  moduleAssetSchemas['5:0'] = {
+    $id: 'lisk/dpos/register',
+    type: 'object',
+    required: [
+      'username',
+    ],
+    properties: {
+      username: {
+        dataType: 'string',
+        fieldNumber: 1,
+        minLength: 1,
+        maxLength: 20,
+      },
+    },
+  };
+
+  moduleAssetSchemas['5:1'] = {
+    $id: 'lisk/dpos/vote',
+    type: 'object',
+    required: [
+      'votes',
+    ],
+    properties: {
+      votes: {
+        type: 'array',
+        minItems: 1,
+        maxItems: 20,
+        items: {
+          type: 'object',
+          required: [
+            'delegateAddress',
+            'amount',
+          ],
+          properties: {
+            delegateAddress: {
+              dataType: 'bytes',
+              fieldNumber: 1,
+              minLength: 20,
+              maxLength: 20,
+            },
+            amount: {
+              dataType: 'sint64',
+              fieldNumber: 2,
+            },
+          },
+        },
+        fieldNumber: 1,
+      },
+    },
+  };
 
   describe('getTransaction', () => {
     beforeEach(() => {
@@ -44,7 +126,7 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v1/transactions',
+        path: '/api/v2/transactions',
         params: { id: sampleId },
         network,
         baseUrl,
@@ -57,27 +139,13 @@ describe('API: LSK Transactions', () => {
       jest.clearAllMocks();
     });
 
-    it('should call WS with correct list of types', async () => {
-      await getTransactions({
-        network, params: { type: 'transfer' },
-      });
-
-      expect(ws).toHaveBeenCalledWith({
-        baseUrl: 'http://sample.com/',
-        requests: [
-          { method: 'get.transactions', params: { type: 0 } },
-          { method: 'get.transactions', params: { type: 8 } },
-        ],
-      });
-    });
-
     it('should call http with block id', async () => {
       await getTransactions({
         network, params: { blockId: sampleId },
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v1/transactions',
+        path: '/api/v2/transactions',
         params: { block: sampleId },
         network,
         baseUrl: undefined,
@@ -88,23 +156,19 @@ describe('API: LSK Transactions', () => {
       await getTransactions({
         network,
         params: {
-          dateFrom: 1607446547094,
-          dateTo: 1607446547094,
-          amountFrom: 123445,
-          amountTo: 123445,
+          timestamp: '1607446547094:1607446547094',
+          amount: '123445:123445',
           sort: 'amount:asc',
         },
       });
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: '/api/v1/transactions',
+        path: '/api/v2/transactions',
         baseUrl: undefined,
         params: {
-          from: 1607446547094,
-          to: 1607446547094,
-          min: 123445,
-          max: 123445,
+          timestamp: '1607446547094:1607446547094',
+          amount: '123445:123445',
           sort: 'amount:asc',
         },
       });
@@ -114,10 +178,8 @@ describe('API: LSK Transactions', () => {
       await getTransactions({
         network,
         params: {
-          dateFrom: 'wrong_date',
-          dateTo: 1607446547094,
-          amountFrom: 'wrong_amount',
-          amountTo: 123445,
+          timestamp: 'wrong_date:1607446547094',
+          amount: 'wrong_amount:123445',
           sort: 'wrong_sort',
           limit: 0,
           offset: -1,
@@ -128,11 +190,9 @@ describe('API: LSK Transactions', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: '/api/v1/transactions',
+        path: '/api/v2/transactions',
         baseUrl: undefined,
         params: {
-          to: 1607446547094,
-          max: 123445,
         },
       });
     });
@@ -140,12 +200,12 @@ describe('API: LSK Transactions', () => {
 
   describe('getRegisteredDelegates', () => {
     beforeEach(() => {
-      ws.mockReset();
+      http.mockReset();
     });
 
     it('should throw if any of the API endpoints throw', async () => {
       // Mock promise failure
-      ws.mockRejectedValue(Error('Error fetching data.'));
+      http.mockRejectedValue(Error('Error fetching data.'));
 
       // call and anticipate failure
       await expect(getRegisteredDelegates({ network }))
@@ -167,7 +227,7 @@ describe('API: LSK Transactions', () => {
         data: {},
         meta: { total: 10 },
       });
-      ws.mockResolvedValue({
+      http.mockResolvedValue({
         data: txs,
         meta: { total: 10 },
       });
@@ -186,7 +246,7 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v1/transactions/statistics/day',
+        path: '/api/v2/transactions/statistics/day',
         params: { limit: 7 },
         network,
       });
@@ -196,17 +256,17 @@ describe('API: LSK Transactions', () => {
   describe('getTxAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
-        amount: '100000000',
-        type: 0,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+        asset: { amount: 100000000 },
       };
 
-      expect(getTxAmount(tx)).toEqual(tx.amount);
+      expect(getTxAmount(tx)).toEqual(tx.asset.amount);
     });
 
     it('should return amount of votes in Beddows', () => {
       const tx = {
-        title: transactionTypes().vote.key,
-        type: transactionTypes().vote.code.new,
+        title: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
         asset: {
           votes: [
             {
@@ -219,13 +279,13 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTxAmount(tx)).toEqual('200000000');
+      expect(getTxAmount(tx)).toEqual(200000000);
     });
 
     it('should return amount of unlock in Beddows', () => {
       const tx = {
-        title: transactionTypes().unlockToken.key,
-        type: transactionTypes().unlockToken.code.new,
+        title: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
         asset: {
           unlockingObjects: [
             {
@@ -238,7 +298,7 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(getTxAmount(tx)).toEqual('200000000');
+      expect(getTxAmount(tx)).toEqual(200000000);
     });
   });
 
@@ -247,9 +307,9 @@ describe('API: LSK Transactions', () => {
       amount: '100000000',
       data: 'to test the instance',
       nonce: '6',
-      recipient: '16313739661670634666L',
+      recipientAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
       senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-      txType: 'transfer',
+      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     };
     const selectedPriority = {
       value: 0,
@@ -257,54 +317,55 @@ describe('API: LSK Transactions', () => {
     };
     it('should return fee in Beddows', async () => {
       const result = await getTransactionFee({
-        txData, selectedPriority,
+        transaction: txData, selectedPriority,
       });
-      expect(result.value).toEqual(0.0015);
-    });
-
-    it('should use zero instead of invalid amounts', async () => {
-      const invalidAmountResult = await getTransactionFee({
-        txData: {
-          ...txData,
-          amount: 'invalid',
-        },
-        selectedPriority,
-      });
-      const ZeroAmountResult = await getTransactionFee({
-        txData: {
-          ...txData,
-          amount: '0',
-        },
-        selectedPriority,
-      });
-      expect(invalidAmountResult.value).toEqual(ZeroAmountResult.value);
+      expect(Number(result.value)).toBeGreaterThan(0);
     });
 
     it('should calculate fee of vote tx', async () => {
       const voteTxData = {
-        txType: 'vote',
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         votes: [],
       };
       const result = await getTransactionFee({
-        txData: voteTxData,
+        transaction: voteTxData,
         selectedPriority,
       });
-      expect(result.value).toEqual(0.00114);
+      expect(Number(result.value)).toBeGreaterThan(0);
     });
 
     it('should calculate fee of register delegate tx', async () => {
       const voteTxData = {
-        txType: 'registerDelegate',
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        username: 'some_username',
       };
       const result = await getTransactionFee({
-        txData: voteTxData,
+        transaction: voteTxData,
         selectedPriority,
       });
-      expect(result.value).toEqual(10.00119);
+      expect(Number(result.value)).toBeGreaterThan(0);
+    });
+  });
+
+  describe('getSchemas', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('Should call http with given params', () => {
+      getSchemas({
+        network,
+        baseUrl,
+      });
+
+      expect(http).toHaveBeenCalledWith({
+        path: '/api/v2/transactions/schemas',
+        baseUrl,
+      });
     });
   });
 });

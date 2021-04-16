@@ -1,6 +1,6 @@
-import keyCodes from '../../../constants/keyCodes';
+import { keyCodes } from '@constants';
 import SearchBar from './searchBar';
-import { mountWithRouter } from '../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
 
 describe('SearchBar', () => {
   let wrapper;

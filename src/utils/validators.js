@@ -1,11 +1,10 @@
 import * as bitcoin from 'bitcoinjs-lib';
-import numeral from 'numeral';
 import { cryptography } from '@liskhq/lisk-client';
-import { tokenMap } from '../constants/tokens';
-import { minBalance } from '../constants/transactions';
+import numeral from 'numeral';
+
+import { tokenMap, minAccountBalance, regex as reg } from '@constants';
 import { toRawLsk } from './lsk';
 import i18n from '../i18n';
-import reg from './regex';
 
 /**
  * Validates the given address with respect to the tokenType
@@ -14,7 +13,6 @@ import reg from './regex';
  * @param {Object} network The network config from Redux store
  * @returns {Number} -> 0: valid, 1: invalid, -1: empty
  */
-// eslint-disable-next-line import/prefer-default-export
 export const validateAddress = (tokenType, address, network) => {
   if (address === '') {
     return -1;
@@ -32,15 +30,25 @@ export const validateAddress = (tokenType, address, network) => {
       }
 
     case tokenMap.LSK.key:
+      try {
+        return cryptography.validateBase32Address(address) ? 0 : 1;
+      } catch (e) {
+        return 1;
+      }
     default:
-      return reg.address.test(address) ? 0 : 1;
+      return 1;
   }
 };
 
-export const validateLSKPublicKey = (address) => {
+/**
+ * Checks the validity of a given publicKey
+ *
+ * @param {String} publicKey - The publicKey to validate
+ * @returns {Number} 0 for valid, 1 for invalid
+ */
+export const validateLSKPublicKey = (publicKey) => {
   try {
-    cryptography.getAddressFromPublicKey(address);
-    return 0;
+    return reg.publicKey.test(publicKey) ? 0 : 1;
   } catch (e) {
     return 1;
   }
@@ -98,7 +106,7 @@ export const validateAmountFormat = ({
       message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
-        return funds - rawValue < minBalance;
+        return funds - rawValue < minAccountBalance;
       },
     },
   };

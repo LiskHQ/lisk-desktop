@@ -2,19 +2,17 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
-import BoxHeader from '../../../toolbox/box/header';
-import { PrimaryButton } from '../../../toolbox/buttons';
-import { toRawLsk } from '../../../../utils/lsk';
-import Piwik from '../../../../utils/piwik';
-import { getUnlockableUnlockingObjects } from '../../../../utils/account';
-import { create } from '../../../../utils/api/transaction';
-import transactionTypes from '../../../../constants/transactionTypes';
-import actionTypes from '../../../../constants/actions';
-import LiskAmount from '../../../shared/liskAmount';
-import { tokenMap } from '../../../../constants/tokens';
+import { MODULE_ASSETS_NAME_ID_MAP, actionTypes, tokenMap } from '@constants';
+import { toRawLsk } from '@utils/lsk';
+import Piwik from '@utils/piwik';
+import { getUnlockableUnlockingObjects } from '@utils/account';
+import { create } from '@api/transaction';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import BoxHeader from '@toolbox/box/header';
+import { PrimaryButton } from '@toolbox/buttons';
+import LiskAmount from '@shared/liskAmount';
 import styles from './lockedBalance.css';
 
 const ButtonTitle = ({ unlockableBalance, t }) => {
@@ -50,17 +48,17 @@ const Form = ({
     Piwik.trackingEvent('Send_UnlockTransaction', 'button', 'Next step');
     const selectedFee = customFee ? customFee.value : fee.value;
     const txData = {
-      nonce: account.nonce,
+      nonce: account.sequence?.nonce,
       fee: `${toRawLsk(parseFloat(selectedFee))}`,
       passphrase: account.passphrase,
-      unlockingObjects: getUnlockableUnlockingObjects(account.unlocking, currentBlockHeight),
+      unlockingObjects: getUnlockableUnlockingObjects(account.dpos?.unlocking, currentBlockHeight),
       network,
     };
 
     const [error, tx] = await to(
       create({
         ...txData,
-        transactionType: transactionTypes().unlockToken.key,
+        transactionType: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
         network,
       }, tokenMap.LSK.key),
     );

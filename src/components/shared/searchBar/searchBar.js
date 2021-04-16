@@ -1,14 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Input } from '../../toolbox/inputs';
+import { routes, keyCodes } from '@constants';
+import { addSearchParamsToUrl } from '@utils/searchParams';
+import { Input } from '@toolbox/inputs';
 import Accounts from './accounts';
 import Delegates from './delegates';
 import Transactions from './transactions';
-import routes from '../../../constants/routes';
-import keyCodes from '../../../constants/keyCodes';
 import styles from './searchBar.css';
 import Blocks from './blocks';
-import { addSearchParamsToUrl } from '../../../utils/searchParams';
 
 class SearchBar extends React.Component {
   constructor() {
@@ -82,7 +81,7 @@ class SearchBar extends React.Component {
     const { rowItemIndex } = this.state;
 
     if (addresses.length) this.onSelectAccount(addresses[rowItemIndex].address);
-    if (delegates.length) this.onSelectAccount(delegates[rowItemIndex].account.address);
+    if (delegates.length) this.onSelectAccount(delegates[rowItemIndex].account.summary?.address);
     if (transactions.length) this.onSelectTransaction(transactions[rowItemIndex].id);
     if (blocks.length) this.onSelectTransaction(blocks[rowItemIndex].id);
   }

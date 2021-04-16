@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { useDispatch } from 'react-redux';
-import routes from '../../../../../constants/routes';
-import Tooltip from '../../../../toolbox/tooltip/tooltip';
-import Icon from '../../../../toolbox/icon';
-import AccountVisual from '../../../../toolbox/accountVisual';
-import { formatAmountBasedOnLocale } from '../../../../../utils/formattedNumber';
-import regex from '../../../../../utils/regex';
+import { routes } from '@constants';
+import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
+import { truncateAddress } from '@utils/account';
+import { addedToWatchList, removedFromWatchList } from '@actions';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import Icon from '@toolbox/icon';
+import AccountVisual from '@toolbox/accountVisual';
 import styles from '../delegates.css';
 import DelegateWeight from './delegateWeight';
-import { addedToWatchList, removedFromWatchList } from '../../../../../actions/watchList';
 
 const roundStatus = {
   forging: 'Forging',
@@ -81,8 +81,7 @@ const DelegateDetails = ({
           <p className={styles.delegateName}>
             {data.username}
           </p>
-          <p className={`${styles.delegateAddress} showOnLargeViewPort`}>{data.address}</p>
-          <p className={`${styles.delegateAddress} hideOnLargeViewPort`}>{data.address && data.address.replace(regex.lskAddressTrunk, '$1...$3')}</p>
+          <p className={styles.delegateAddress}>{truncateAddress(data.address)}</p>
         </div>
       </div>
     </div>
@@ -133,7 +132,7 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
 );
 
 const DelegateStatus = ({ activeTab, data }) => {
-  const status = data.delegateWeight < 100000000000 ? 'non-eligible' : data.status;
+  const status = data.totalVotesReceived < 100000000000 ? 'non-eligible' : data.status;
   return (
     <span className={
       activeTab === 'watched'
@@ -203,7 +202,7 @@ const DelegateRow = ({
       </span> */}
       {activeTab !== 'sanctioned' && (
         <span className={`${grid['col-xs-2']}`}>
-          <DelegateWeight value={data.delegateWeight} />
+          <DelegateWeight value={data.totalVotesReceived} />
         </span>
       )}
       {(activeTab === 'active' || activeTab === 'watched') && (

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Tooltip from '../../../toolbox/tooltip/tooltip';
+import { settingsUpdated } from '@actions';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import Icon from '@toolbox/icon';
 import styles from './topBar.css';
-import Icon from '../../../toolbox/icon';
-import { settingsUpdated } from '../../../../actions/settings';
 
 /**
  * Toggles boolean values on store.settings

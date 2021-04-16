@@ -1,6 +1,6 @@
 import React from 'react';
-import AccountVisual from '../../../toolbox/accountVisual';
-import { Input } from '../../../toolbox/inputs';
+import AccountVisual from '@toolbox/accountVisual';
+import { Input } from '@toolbox/inputs';
 import styles from './addBookmark.css';
 
 const Fields = ({ fields, status, onInputChange }) => (

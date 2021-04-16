@@ -1,15 +1,14 @@
 import React, { useMemo, useState } from 'react';
 
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
-import { PrimaryButton } from '../../../toolbox/buttons';
-import TransactionPriority from '../../../shared/transactionPriority';
-import { tokenMap } from '../../../../constants/tokens';
-import { toRawLsk } from '../../../../utils/lsk';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
-import Table from '../../../toolbox/table';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { toRawLsk } from '@utils/lsk';
+import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import { PrimaryButton } from '@toolbox/buttons';
+
+import Table from '@toolbox/table';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
 
@@ -95,7 +94,7 @@ const getVoteStats = votes =>
     }, { added: {}, edited: {}, removed: {} });
 
 const token = tokenMap.LSK.key;
-const txType = 'vote';
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
 
 // eslint-disable-next-line max-statements
 const Editor = ({
@@ -118,16 +117,16 @@ const Editor = ({
     token,
     account,
     priorityOptions,
-    txData: {
-      txType,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+    transaction: {
+      moduleAssetId,
+      nonce: account.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
       votes: normalizedVotes,
     },
   });
 
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
-  const feedback = validateVotes(votes, account.balance, fee.value, t);
+  const feedback = validateVotes(votes, account.token?.balance, fee.value, t);
 
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 
@@ -180,7 +179,7 @@ const Editor = ({
                 fee={fee}
                 minFee={minFee.value}
                 customFee={customFee ? customFee.value : undefined}
-                txType={txType}
+                moduleAssetId={moduleAssetId}
                 setCustomFee={setCustomFee}
                 priorityOptions={priorityOptions}
                 selectedPriority={selectedPriority.selectedIndex}

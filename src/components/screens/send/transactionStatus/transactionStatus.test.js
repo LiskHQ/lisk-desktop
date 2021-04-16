@@ -1,4 +1,4 @@
-import { mountWithRouter } from '../../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
 import TransactionStatus from './transactionStatus';
 
 describe('TransactionStatus', () => {
@@ -12,11 +12,14 @@ describe('TransactionStatus', () => {
     bookmarks: {
       LSK: [],
     },
-    account: { address: '312312Z', hwInfo: { deviceId: 'MOCK' } },
+    account: {
+      summary: { address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' },
+      hwInfo: { deviceId: 'MOCK' },
+    },
     prevStep: jest.fn(),
     fields: {
       recipient: {
-        address: '123123L',
+        address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
       },
       amount: {
         value: 1,
@@ -60,7 +63,12 @@ describe('TransactionStatus', () => {
   it('should not show add bookmark button', () => {
     wrapper = mountWithRouter(TransactionStatus, {
       ...props,
-      account: { address: props.fields.recipient.address, hwInfo: { deviceId: 'MOCK' } },
+      account: {
+        summary: {
+          address: props.fields.recipient.address,
+        },
+        hwInfo: { deviceId: 'MOCK' },
+      },
     });
     expect(wrapper).not.toContainMatchingElement('.bookmark-container');
     expect(wrapper).not.toContainMatchingElement('.bookmark-btn');
@@ -77,7 +85,7 @@ describe('TransactionStatus', () => {
 
   it('should render error message in case of transaction failed', () => {
     const newProps = { ...props };
-    newProps.transactions.broadcastedTransactionsError = [{ recipient: '123L', amount: 1, reference: 'test' }];
+    newProps.transactions.broadcastedTransactionsError = [{ recipient: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', amount: 1, reference: 'test' }];
     wrapper = mountWithRouter(TransactionStatus, newProps);
     expect(wrapper).toContainMatchingElement('.report-error-link');
   });
@@ -88,7 +96,7 @@ describe('TransactionStatus', () => {
     newProps.fields.hwTransactionStatus = 'error';
     newProps.failedTransactions = [{
       error: { message: 'errorMessage' },
-      transaction: { recipient: '123L', amount: 1, reference: 'test' },
+      transaction: { recipient: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', amount: 1, reference: 'test' },
     }];
     wrapper = mountWithRouter(TransactionStatus, newProps);
     expect(wrapper).toContainMatchingElement('.report-error-link');
@@ -101,7 +109,7 @@ describe('TransactionStatus', () => {
     newProps.transactions = {
       broadcastedTransactionsError: [{
         error: { message: 'errorMessage' },
-        transaction: { recipient: '123L', amount: 1, reference: 'test' },
+        transaction: { recipient: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', amount: 1, reference: 'test' },
       }],
       transactionsCreated: [{ id: 1 }],
       transactionsCreatedFailed: [{ id: 2 }],

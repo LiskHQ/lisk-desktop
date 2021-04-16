@@ -2,12 +2,12 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getActiveTokenAccount } from '../../../utils/account';
-import { getTransaction } from '../../../utils/api/transaction';
-import { getDelegates } from '../../../utils/api/delegate';
-import withData from '../../../utils/withData';
+import { getActiveTokenAccount } from '@utils/account';
+import { getTransaction } from '@api/transaction';
+import { getDelegates } from '@api/delegate';
+import withData from '@utils/withData';
+import { parseSearchParams } from '@utils/searchParams';
 import TransactionDetails from './transactionDetails';
-import { parseSearchParams } from '../../../utils/searchParams';
 
 const mapStateToProps = (state, ownProps) => ({
   address: getActiveTokenAccount(state).address,
@@ -18,10 +18,11 @@ const mapStateToProps = (state, ownProps) => ({
 
 const apis = {
   transaction: {
-    apiUtil: (network, { token, id }) => getTransaction({ network, params: { id } }, token),
+    apiUtil: (network, { token, transactionId }) =>
+      getTransaction({ network, params: { transactionId } }, token),
     getApiParams: (state, ownProps) => ({
       token: state.settings.token.active,
-      id: parseSearchParams(ownProps.location.search).transactionId,
+      transactionId: parseSearchParams(ownProps.location.search).transactionId,
       network: state.network,
     }),
     transformResponse: response => response.data[0] || {},
@@ -32,7 +33,7 @@ const apis = {
     defaultData: {},
     transformResponse: (response) => {
       const responseMap = response.data.reduce((acc, delegate) => {
-        acc[delegate.address] = delegate;
+        acc[delegate.address] = delegate.summary?.address;
         return acc;
       }, {});
       return responseMap;

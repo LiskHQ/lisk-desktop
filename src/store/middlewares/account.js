@@ -1,27 +1,18 @@
 import {
-  accountDataUpdated,
-} from '../../actions/account';
+  networks, actionTypes, networkKeys, settings, MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
+} from '@constants';
+import { fromRawLsk } from '@utils/lsk';
+import { getActiveTokenAccount, hasEnoughBalanceForInitialization } from '@utils/account';
+import { getAutoLogInData } from '@utils/login';
 import {
-  emptyTransactionsData,
-  transactionsRetrieved,
-} from '../../actions/transactions';
-import { settingsUpdated } from '../../actions/settings';
-import { fromRawLsk } from '../../utils/lsk';
-import { getAutoLogInData } from '../../utils/login';
-import { votesRetrieved } from '../../actions/voting';
-import { networkSelected, networkStatusUpdated } from '../../actions/network';
-import { getActiveTokenAccount, hasEnoughBalanceForInitialization } from '../../utils/account';
-import actionTypes from '../../constants/actions';
-import analytics from '../../utils/analytics';
+  settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
+  emptyTransactionsData, transactionsRetrieved, votesRetrieved,
+} from '@actions';
+import { removeSearchParamsFromUrl, selectSearchParamValue } from '@utils/searchParams';
+import analytics from '@utils/analytics';
+import { getTransactions } from '@api/transaction';
 import i18n from '../../i18n';
-import networks, { networkKeys } from '../../constants/networks';
-import settings from '../../constants/settings';
-import transactionTypes from '../../constants/transactionTypes';
-import { tokenMap } from '../../constants/tokens';
-import { removeSearchParamsFromUrl, selectSearchParamValue } from '../../utils/searchParams';
 import history from '../../history';
-import routes from '../../constants/routes';
-import { getTransactions } from '../../utils/api/transaction';
 
 /**
  * After a new block is created and broadcasted
@@ -48,7 +39,7 @@ const getRecentTransactionOfType = (transactionsList, type) => (
 const votePlaced = (store, action) => {
   const voteTransaction = getRecentTransactionOfType(
     action.data.confirmed,
-    transactionTypes().vote.code.legacy,
+    MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
   );
 
   if (voteTransaction) {
@@ -58,8 +49,8 @@ const votePlaced = (store, action) => {
 
 const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
   transaction
-  && transaction.recipientId === account.address
-  && transaction.type === transactionTypes().transfer.code.legacy
+  && transaction.recipientId === account.summary?.address
+  && transaction.type === MODULE_ASSETS_NAME_ID_MAP.transfer
 ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
@@ -92,7 +83,8 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
     const blockContainsRelevantTransaction = txs.filter((transaction) => {
       if (!transaction) return false;
       return (
-        account.address === transaction.senderId || account.address === transaction.recipientId
+        account.summary?.address === transaction.sender.address
+        || account.summary?.address === transaction.asset?.recipient.address
       );
     }).length > 0;
 
@@ -103,7 +95,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
     if (blockContainsRelevantTransaction || recentBtcTransaction) {
       store.dispatch(accountDataUpdated());
       store.dispatch(transactionsRetrieved({
-        address: account.address,
+        address: account.summary?.address,
         filters: transactions.filters,
       }));
     }
@@ -116,10 +108,10 @@ const autoLogInIfNecessary = async ({ dispatch, getState }) => {
   } = getState().settings;
   const autoLoginData = getAutoLogInData();
 
-  const address = autoLoginData[settings.keys.liskCoreUrl];
+  const address = autoLoginData[settings.keys.liskServiceUrl];
   const network = address
     ? { name: networkKeys.customNode, address }
-    : { name: networkKeys.mainNet, address: networks.mainnet.nodes[0] };
+    : { name: networkKeys.mainNet, address: networks.mainnet.serviceUrl };
   dispatch(networkSelected(network));
   dispatch(networkStatusUpdated({ online: true }));
 
@@ -184,7 +176,9 @@ const accountMiddleware = store => next => async (action) => {
       store.dispatch(emptyTransactionsData());
       break;
     case actionTypes.settingsUpdated:
-      store.dispatch(accountDataUpdated('enabled'));
+      if (action.data.token) {
+        store.dispatch(accountDataUpdated('enabled'));
+      }
       break;
     /* istanbul ignore next */
     default: break;

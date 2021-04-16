@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as bitcoin from 'bitcoinjs-lib';
-import { tokenMap, tokenKeys } from '../../../../constants/tokens';
+import { tokenMap, tokenKeys } from '@constants';
 import accounts from '../../../../../test/constants/accounts';
 import AddBookmark from './addBookmark';
 
@@ -33,11 +33,14 @@ describe('Add a new bookmark component', () => {
     history: {
       push: jest.fn(),
       location: {
-        search: `?address=${accounts.genesis.address}L&modal=addBookmark&formAddress=${accounts.genesis.address}&label=&isDelegate=false`,
+        search: `?address=${accounts.genesis.summary.address}L&modal=addBookmark&formAddress=${accounts.genesis.summary.address}&label=&isDelegate=false`,
       },
     },
     account: {
-      data: {},
+      data: {
+        summary: {},
+        dpos: {},
+      },
       loadData: jest.fn(),
     },
     bookmarkAdded: jest.fn(),
@@ -45,7 +48,7 @@ describe('Add a new bookmark component', () => {
   };
   const addresses = {
     BTC: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
-    LSK: accounts.genesis.address,
+    LSK: accounts.genesis.summary.address,
   };
 
   let wrapper;
@@ -91,25 +94,36 @@ describe('Add a new bookmark component', () => {
     });
 
     it('should not be possible to change delegate label', () => {
+      const accountAddress = accounts.delegate.summary.address;
+      const accountUsername = accounts.delegate.dpos.delegate.username;
       props.account.loadData.mockImplementation(({ address }) => {
-        const account = { address, delegate: { username: accounts.delegate.username } };
+        const account = {
+          summary: {
+            address,
+            isDelegate: true,
+          },
+          dpos: {
+            delegate: { username: accountUsername },
+          },
+        };
         wrapper.setProps({
           account: { ...props.account, data: account },
           history: {
             push: jest.fn(),
             location: {
-              search: `?address=${accounts.delegate.address}L&modal=addBookmark&formAddress=${accounts.delegate.address}&label=${accounts.delegate.username}&isDelegate=true`,
+              search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isDelegate=true`,
             },
           },
         });
       });
       wrapper.find('input[name="address"]').first().simulate('change', {
         target: {
-          value: accounts.delegate.address,
+          value: accountAddress,
           name: 'address',
         },
       });
-      expect(wrapper.find('input[name="label"]')).toHaveValue(accounts.delegate.username);
+      wrapper.update();
+      expect(wrapper.find('input[name="label"]')).toHaveValue(accountUsername);
       expect(wrapper.find('input[name="label"]')).toHaveProp('readOnly', true);
       expect(wrapper.find('button').at(0)).not.toBeDisabled();
       wrapper.find('button').at(0).simulate('click');

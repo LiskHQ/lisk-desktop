@@ -1,8 +1,8 @@
+import { networkConfigSet } from '@actions';
+import { actionTypes } from '@constants';
 import middleware from './network';
-import actionTypes from '../../constants/actions';
-import { networkConfigSet } from '../../actions/network';
 
-jest.mock('../../actions/network', () => ({ networkConfigSet: jest.fn() }));
+jest.mock('@actions/network', () => ({ networkConfigSet: jest.fn() }));
 
 describe('Middleware: Network', () => {
   const next = jest.fn();

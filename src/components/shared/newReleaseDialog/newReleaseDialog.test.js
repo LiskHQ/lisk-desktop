@@ -1,12 +1,12 @@
 import React from 'react';
+import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import { mountWithRouter } from '@utils/testHelpers';
+import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import NewReleaseDialog from './newReleaseDialog';
-import FlashMessageHolder from '../../toolbox/flashMessage/holder';
-import { mountWithRouter } from '../../../utils/testHelpers';
-import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
-jest.mock('../../toolbox/flashMessage/holder');
-jest.mock('../../toolbox/dialog/holder');
-jest.mock('../../../utils/searchParams', () => ({
+jest.mock('@toolbox/flashMessage/holder');
+jest.mock('@toolbox/dialog/holder');
+jest.mock('@utils/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),
 }));
 

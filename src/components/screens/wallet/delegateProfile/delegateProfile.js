@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Box from '../../../toolbox/box';
+import Box from '@toolbox/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
@@ -23,33 +23,40 @@ import DelegateVotesView from './delegateVotesView';
 // };
 
 const DelegateProfile = ({
-  delegate, address, t, voters,
+  delegate, account, t, voters,
   // awaitingForgers, forgingTimes,
   lastBlockForged,
 }) => {
+  const { data } = delegate;
   useEffect(() => {
-    delegate.loadData();
     voters.loadData();
-    // lastBlockForged.loadData();
-  }, [address]);
+  }, [account]);
 
-  // const status = getDelegateStatus(awaitingForgers, forgingTimes, address);
-  const status = 'Mocked Status';
+  useEffect(() => {
+    if (data.dpos?.delegate?.lastForgedHeight) {
+      lastBlockForged.loadData({ height: data.dpos.delegate.lastForgedHeight });
+    }
+  }, [data.dpos?.delegate?.lastForgedHeight]);
+
+  if (!data.dpos?.delegate) {
+    return null;
+  }
 
   return (
     <section className={`${styles.container} container`}>
       <Box className={`${grid.row} ${styles.statsContainer} stats-container`}>
         <DetailsView
           t={t}
-          status={status}
+          status={data.dpos?.delegate?.status}
           lastBlockForged={lastBlockForged.data.timestamp}
-          voteWeight={delegate.data.totalVotesReceived}
+          delegateWeight={data.dpos?.delegate?.totalVotesReceived}
+          rank={data.dpos?.delegate?.rank}
         />
         <PerformanceView
           t={t}
-          productivity={delegate.data.productivity}
-          forgedBlocks={delegate.data.producedBlocks}
-          missedBlocks={delegate.data.missedBlocks}
+          productivity={data.dpos?.delegate?.productivity}
+          lastForgedBlocks={data.dpos?.delegate?.lastForgedHeight}
+          consecutiveMissedBlocks={data.dpos?.delegate?.consecutiveMissedBlocks}
           forgedLsk="-"
         />
       </Box>

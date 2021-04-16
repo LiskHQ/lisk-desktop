@@ -1,12 +1,10 @@
-import { tokenMap } from '../../constants/tokens';
-
 const functionMapper = (lskFunctions, btcFunction) => {
   const lskNames = Object.keys(lskFunctions);
   const btcNames = Object.keys(btcFunction);
 
   const resourceMap = {
-    [tokenMap.LSK.key]: lskFunctions,
-    [tokenMap.BTC.key]: btcFunction,
+    LSK: lskFunctions,
+    BTC: btcFunction,
   };
 
   const resources = lskNames.reduce((acc, item) => {

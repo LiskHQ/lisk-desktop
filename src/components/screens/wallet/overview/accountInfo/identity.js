@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
+import { truncateAddress } from '@utils/account';
 import styles from './accountInfo.css';
-import { truncateAddress } from '../../../../../utils/account';
 
 /**
  *
@@ -16,9 +16,7 @@ const Identity = ({
   username = '',
 }) => {
   if (!address) return null;
-  const truncatedAddress = address.length > 12
-    ? truncateAddress(address) : address;
-
+  const truncatedAddress = truncateAddress(address);
   const [isTruncated, setTruncationState] = useState(true);
   const onClick = () => setTruncationState(!isTruncated);
 

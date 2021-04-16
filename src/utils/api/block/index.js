@@ -1,10 +1,10 @@
+import { tokenMap } from '@constants';
 import { subscribe, unsubscribe } from '../ws';
 import http from '../http';
-import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
 import { transformStringDateToUnixTimestamp } from '../../datetime';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 export const httpPaths = {
   block: `${httpPrefix}/blocks`,
@@ -15,8 +15,8 @@ const wsMethods = {
   blocksChange: 'update.block',
 };
 
-const getBlockProps = ({ id, height }) => {
-  if (id) return { id };
+const getBlockProps = ({ blockId, height }) => {
+  if (blockId) return { blockId };
   if (height) return { height };
   throw Error('No parameters supplied');
 };
@@ -54,6 +54,7 @@ const blocksFilters = {
   dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
   dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
   generatorAddress: { key: 'generatorAddress', test: address => !validateAddress(tokenMap.LSK.key, address) },
+  height: { key: 'height', test: num => (typeof num === 'number') },
   limit: { key: 'limit', test: num => (typeof num === 'number') },
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
   sort: {

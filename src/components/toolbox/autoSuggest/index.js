@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
+import { keyCodes } from '@constants';
 import { Input } from '../inputs';
-import keyCodes from '../../../constants/keyCodes';
 import styles from './autoSuggest.css';
 
 class AutoSuggest extends React.Component {
@@ -62,6 +62,7 @@ class AutoSuggest extends React.Component {
       // istanbul ignore else
       if (action === 'down' && dropdownIndex < filteredItemsLength - 1) {
         if (dropdownIndex + 1 >= 4) {
+          // eslint-disable-next-line operator-assignment
           this.listContainerRef.scrollTop = this.listContainerRef.scrollTop + rowHeight;
         }
         dropdownIndex += 1;

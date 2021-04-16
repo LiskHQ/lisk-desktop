@@ -2,8 +2,8 @@
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 
-import withData from '../../../../../utils/withData';
-import { getTransactionStats } from '../../../../../utils/api/transaction';
+import withData from '@utils/withData';
+import { getTransactionStats } from '@api/transaction';
 import Overview from './overview';
 
 export default compose(

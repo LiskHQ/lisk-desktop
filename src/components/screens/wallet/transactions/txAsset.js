@@ -1,7 +1,7 @@
 import React from 'react';
-import transactionTypes from '../../../../constants/transactionTypes';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 
-import VoteItem from '../../../shared/voteItem';
+import VoteItem from '@shared/voteItem';
 import styles from './transactions.css';
 
 const generateVotes = (asset, delegates) => {
@@ -27,8 +27,8 @@ const generateVotes = (asset, delegates) => {
   );
 };
 
-const voteTxType = transactionTypes().vote.code.new;
-const registerDelegateTxType = transactionTypes().registerDelegate.code.new;
+const voteAssetType = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
+const registerDelegateAssetType = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
 
 const TransactionAsset = ({
   transaction, delegates,
@@ -39,10 +39,10 @@ const TransactionAsset = ({
   let data = token !== 'BTC' ? '-' : '';
   let className = '';
   switch (type) {
-    case registerDelegateTxType:
+    case registerDelegateAssetType:
       data = asset?.delegate?.username ?? username;
       break;
-    case voteTxType:
+    case voteAssetType:
       className = styles.delegateVote;
       data = asset?.votes ? generateVotes(asset, delegates) : data;
       break;

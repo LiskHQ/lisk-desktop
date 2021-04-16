@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Fields from './fields';
-import ModalWrapper from '../modalWrapper';
-import { validateAddress } from '../../../../utils/validators';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
-import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
+import { tokenMap } from '@constants';
+import { validateAddress } from '@utils/validators';
+import { getIndexOfBookmark } from '@utils/bookmarks';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import Icon from '@toolbox/icon';
 import styles from './addBookmark.css';
-import { getIndexOfBookmark } from '../../../../utils/bookmarks';
-import { tokenMap } from '../../../../constants/tokens';
-import Icon from '../../../toolbox/icon';
-import { selectSearchParamValue, removeSearchParamsFromUrl } from '../../../../utils/searchParams';
+import ModalWrapper from '../modalWrapper';
+import Fields from './fields';
 
 class AddBookmark extends React.Component {
   constructor(props) {
@@ -94,7 +94,9 @@ class AddBookmark extends React.Component {
     const { token } = this.props;
     const { token: prevToken } = prevProps;
 
-    if (this.props.account) this.updateLabelIfDelegate(prevProps, this.props.account);
+    if (!this.props.account.isLoading && this.props.account.data.summary) {
+      this.updateLabelIfDelegate(prevProps, this.props.account);
+    }
 
     if (token.active !== prevToken.active) {
       this.setState(state => ({
@@ -106,10 +108,10 @@ class AddBookmark extends React.Component {
 
   updateLabelIfDelegate(prevProps, account) {
     const { fields: { label } } = this.state;
-    if (account.data.delegate === prevProps.account.data.delegate) return;
+    if (account.data.summary.isDelegate === prevProps.account.data.summary?.isDelegate) return;
 
-    if (account.data.delegate && account.data.delegate.username !== label.value) {
-      const data = { value: account.data.delegate.username, readonly: true };
+    if (account.data.summary.isDelegate && account.data.dpos.delegate.username !== label.value) {
+      const data = { value: account.data.dpos.delegate.username, readonly: true };
       this.updateField({
         name: 'label',
         data,
@@ -215,7 +217,7 @@ class AddBookmark extends React.Component {
       account: {
         title: label.value,
         address: address.value,
-        isDelegate: this.getUrlSearchParam('isDelegate'),
+        isDelegate: this.props.account.data.summary.isDelegate,
       },
     });
     this.onClose();

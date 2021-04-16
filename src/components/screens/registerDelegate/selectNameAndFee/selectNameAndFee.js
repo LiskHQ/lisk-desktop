@@ -1,22 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
-import { Input } from '../../../toolbox/inputs';
-import { PrimaryButton } from '../../../toolbox/buttons';
-import { getDelegate } from '../../../../utils/api/delegate';
-import regex from '../../../../utils/regex';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
+import { getDelegate } from '@api/delegate';
+import { regex, tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import { Input } from '@toolbox/inputs';
+import { PrimaryButton } from '@toolbox/buttons';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './selectNameAndFee.css';
-import TransactionPriority from '../../../shared/transactionPriority/transactionPriority';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
-import { tokenMap } from '../../../../constants/tokens';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import transactionTypes from '../../../../constants/transactionTypes';
 
 const token = tokenMap.LSK.key;
-const txType = transactionTypes().registerDelegate.key;
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
 
 // eslint-disable-next-line max-statements
 const SelectNameAndFee = ({ account, ...props }) => {
@@ -42,10 +38,10 @@ const SelectNameAndFee = ({ account, ...props }) => {
     token,
     account,
     priorityOptions,
-    txData: {
-      txType,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+    transaction: {
+      moduleAssetId,
+      nonce: account.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
       username: state.nickname,
     },
   });
@@ -56,7 +52,6 @@ const SelectNameAndFee = ({ account, ...props }) => {
     ),
   );
 
-
   const getNicknameFromPrevState = () => {
     if (Object.entries(prevState).length) {
       setState({ nickname: prevState.nickname });
@@ -64,7 +59,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
   };
 
   const checkIfUserIsDelegate = () => {
-    if (account && account.isDelegate) {
+    if (account?.isDelegate) {
       setState({
         inputDisabled: true,
         error: t('You have already registered as a delegate.'),
@@ -73,8 +68,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
   };
 
   const hasUserEnoughFunds = () => {
-    const hasFunds = account
-      && account.balance >= fee.value;
+    const hasFunds = account?.token?.balance >= fee.value;
 
     if (!hasFunds) {
       setState({
@@ -189,7 +183,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
           fee={fee}
           minFee={minFee.value}
           customFee={state.customFee ? state.customFee.value : undefined}
-          txType={txType}
+          moduleAssetId={moduleAssetId}
           setCustomFee={changeCustomFee}
           priorityOptions={priorityOptions}
           selectedPriority={selectedPriority.selectedIndex}

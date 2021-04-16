@@ -1,15 +1,16 @@
 // istanbul ignore file
 import React from 'react';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxEmptyState from '../../../toolbox/box/emptyState';
-import { DoughnutChart, LineChart } from '../../../toolbox/charts';
+
+import { fromRawLsk } from '@utils/lsk';
+import { colorPalette, MAX_BLOCKS_FORGED } from '@constants';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxEmptyState from '@toolbox/box/emptyState';
+import { DoughnutChart, LineChart } from '@toolbox/charts';
+import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
-import { fromRawLsk } from '../../../../utils/lsk';
-import GuideTooltip, { GuideTooltipItem } from '../../../toolbox/charts/guideTooltip';
-import { colorPalette } from '../../../../constants/chartConstants';
 
 const Overview = ({
   chartActiveAndStandby,
@@ -47,7 +48,7 @@ const Overview = ({
     datasets: [
       {
         label: 'delegates',
-        data: [Math.max(0, chartActiveAndStandby.data - 101), 101],
+        data: [Math.max(0, chartActiveAndStandby.data - MAX_BLOCKS_FORGED), MAX_BLOCKS_FORGED],
       },
     ],
   };

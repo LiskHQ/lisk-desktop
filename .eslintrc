@@ -15,16 +15,34 @@
     "beforeEach": true,
     "afterEach": true,
     "ipc": true,
-    "PRODUCTION": true,
-    "TEST": true,
     "jest": true,
-    "expect": true
+    "expect": true,
+    "PRODUCTION": true
   },
   "env": {
+    "es2020": true,
     "browser": true,
     "node": true
   },
+  "settings": {
+    "import/resolver" : {
+      "alias" : {
+        "map" : [
+          ["@store", "./src/store"],
+          ["@utils", "./src/utils/"],
+          ["@api", "./src/utils/api/"],
+          ["@actions", "./src/store/actions"],
+          ["@constants", "./src/constants/"],
+          ["@shared", "./src/components/shared"],
+          ["@screens", "./src/components/screens/"],
+          ["@toolbox", "./src/components/toolbox/"]
+        ],
+        "extensions": [".js"]
+      }
+    }
+  },
   "rules": {
+    "import/no-cycle": "error",
     "import/named": "off",
     "jsx-a11y/alt-text": "off",
     "jsx-a11y/anchor-is-valid": "off",
@@ -70,16 +88,7 @@
     "react/prop-types": "off",
     "no-plusplus": "off",
     "no-underscore-dangle": "off",
-    "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": [
-        "./src/**/*.test.js",
-        "./test/**/*.js",
-        "./src/**/*.stories.js",
-        "./src/tests.js",
-        "./src/i18n-scanner.js"
-        ]
-      }
-    ],
+    "import/no-extraneous-dependencies": "off",
     "linebreak-style": 0,
     "no-param-reassign": "off",
     "complexity": ["error", 10],

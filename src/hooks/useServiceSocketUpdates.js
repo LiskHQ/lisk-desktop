@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { subscribe, unsubscribe } from '../utils/api/ws';
+import { subscribe, unsubscribe } from '@api/ws';
 
 /**
  *

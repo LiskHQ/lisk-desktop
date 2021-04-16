@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 
-import LiskAmount from '../../../shared/liskAmount';
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
-import Piwik from '../../../../utils/piwik';
-import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
+import Piwik from '@utils/piwik';
+import LiskAmount from '@shared/liskAmount';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import VoteItem from '@shared/voteItem';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
-import VoteItem from '../../../shared/voteItem';
 
 import styles from './styles.css';
 
@@ -92,10 +92,7 @@ const Summary = ({
     Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
 
     votesSubmitted({
-      passphrase: account.passphrase,
-      senderPublicKey: account.info.LSK.publicKey,
       fee: String(fee),
-      nonce: account.info.LSK.nonce,
       votes: normalizedVotes,
     });
   };

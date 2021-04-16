@@ -1,4 +1,4 @@
-import { mountWithRouterAndStore } from '../../../../utils/testHelpers';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import TransactionStatus from './index';
 
 describe('unlock transaction Status', () => {

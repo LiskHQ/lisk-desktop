@@ -1,9 +1,9 @@
+import { mountWithRouter } from '@utils/testHelpers';
+import { getTransactionBaseFees } from '@api/transaction';
 import accounts from '../../../../test/constants/accounts';
 import Send from './index';
-import { mountWithRouter } from '../../../utils/testHelpers';
-import { getTransactionBaseFees } from '../../../utils/api/transaction';
 
-jest.mock('../../../utils/api/transaction');
+jest.mock('@api/transaction');
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,
@@ -24,7 +24,7 @@ describe('Send', () => {
       },
     },
     account: {
-      balance: accounts.genesis.balance,
+      token: { balance: accounts.genesis.balance },
     },
     t: v => v,
     prevState: {

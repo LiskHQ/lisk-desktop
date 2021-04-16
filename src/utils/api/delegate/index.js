@@ -1,15 +1,15 @@
 import http from '../http';
 import ws, { subscribe, unsubscribe } from '../ws';
-import { extractAddress } from '../../account';
-import regex from '../../regex';
+import { extractAddressFromPublicKey } from '../../account';
+import { regex } from '@constants';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 export const httpPaths = {
-  delegates: `${httpPrefix}/delegates`,
+  delegates: `${httpPrefix}/accounts`,
   votesSent: `${httpPrefix}/votes_sent`,
   votesReceived: `${httpPrefix}/votes_received`,
-  forgers: `${httpPrefix}/delegates/next_forgers`,
+  forgers: `${httpPrefix}/forgers`,
 };
 
 export const wsMethods = {
@@ -21,7 +21,7 @@ export const wsMethods = {
 const getDelegateProps = ({ address, publicKey, username }) => {
   if (username) return { username };
   if (address) return { address };
-  if (publicKey) return { address: extractAddress(publicKey) };
+  if (publicKey) return { address: extractAddressFromPublicKey(publicKey) };
   return {};
 };
 
@@ -42,7 +42,7 @@ export const getDelegate = ({
   params = {}, network, baseUrl,
 }) => http({
   path: httpPaths.delegates,
-  params: getDelegateProps(params),
+  params: { ...getDelegateProps(params), isDelegate: true },
   network,
   baseUrl,
 });
@@ -113,7 +113,7 @@ export const getDelegates = ({
   }
 
   // Use HTTP to retrieve accounts with given sorting and pagination parameters
-  const normParams = {};
+  const normParams = { isDelegate: true };
   Object.keys(params).forEach((key) => {
     if (txFilters[key].test(params[key])) {
       normParams[txFilters[key].key] = params[key];

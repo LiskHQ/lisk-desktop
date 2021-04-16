@@ -4,30 +4,29 @@ import i18next from 'i18next';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
-import routes from '../../../constants/routes';
-import { parseSearchParams, stringifySearchParams } from '../../../utils/searchParams';
-import { extractAddress } from '../../../utils/account';
-import { getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
-import { getNetworksList } from '../../../utils/getNetwork';
-import networks, { networkKeys } from '../../../constants/networks';
-import { PrimaryButton } from '../../toolbox/buttons';
-import PassphraseInput from '../../toolbox/passphraseInput';
-import Piwik from '../../../utils/piwik';
-import DiscreetModeToggle from '../../shared/discreetModeToggle';
-import Icon from '../../toolbox/icon/index';
+import { routes, networks, networkKeys } from '@constants';
+import { parseSearchParams, stringifySearchParams } from '@utils/searchParams';
+import { extractAddressFromPassphrase } from '@utils/account';
+import { getAutoLogInData, findMatchingLoginNetwork } from '@utils/login';
+import { getNetworksList } from '@utils/getNetwork';
+import Piwik from '@utils/piwik';
+import { PrimaryButton } from '@toolbox/buttons';
+import PassphraseInput from '@toolbox/passphraseInput';
+import DiscreetModeToggle from '@shared/discreetModeToggle';
+import Icon from '@toolbox/icon/index';
 import NetworkSelector from './networkSelector';
 import styles from './login.css';
 
 class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
     super();
-    const { liskCoreUrl } = getAutoLogInData();
+    const { liskServiceUrl } = getAutoLogInData();
     let loginNetwork = findMatchingLoginNetwork();
     let address = '';
 
     if (!loginNetwork) {
-      loginNetwork = liskCoreUrl ? networks.customNode : networks[networkKeys.mainNet];
-      address = liskCoreUrl || '';
+      loginNetwork = liskServiceUrl ? networks.customNode : networks[networkKeys.mainNet];
+      address = liskServiceUrl || '';
     }
 
     this.state = {
@@ -49,7 +48,7 @@ class Login extends React.Component {
 
   async componentDidMount() {
     // istanbul ignore else
-    if (!this.props.settings.areTermsOfUseAccepted) {
+    if (!this.props.settings.areTermsOfUseAccepted && this.props.network.networks?.LSK) {
       this.props.history.push(routes.termsOfUse.path);
     }
 
@@ -57,8 +56,7 @@ class Login extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.account
-      && this.props.account.address) {
+    if (this.props.account?.summary?.address) {
       this.redirectToReferrer();
     }
   }
@@ -77,7 +75,7 @@ class Login extends React.Component {
     const { account, network, settings: { token: { active } } } = this.props;
     return account
       && network
-      && account.address === address
+      && account.summary?.address === address
       && network.name === prevNetwork.name
       && network.networks[active].nodeUrl === prevNetwork.networks[active].nodeUrl;
   }
@@ -98,7 +96,7 @@ class Login extends React.Component {
     Piwik.trackingEvent('Login', 'button', 'Login submission');
     const { network, login } = this.props;
     this.secondIteration = true;
-    if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
+    if (this.alreadyLoggedWithThisAddress(extractAddressFromPassphrase(passphrase), network)) {
       this.redirectToReferrer();
     } else {
       login({ passphrase });
@@ -108,7 +106,7 @@ class Login extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { t, network, settings } = this.props;
-    const canHWSignIn = !network.networks.LSK;
+    const canHWSignIn = !network.networks?.LSK;
 
     return (
       <React.Fragment>

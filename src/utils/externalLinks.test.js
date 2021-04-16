@@ -1,6 +1,6 @@
+import { routes } from '@constants';
 import externalLinks from './externalLinks';
 import history from '../history';
-import routes from '../constants/routes';
 
 jest.mock('../history', () => ({
   push: jest.fn(), replace: jest.fn(),

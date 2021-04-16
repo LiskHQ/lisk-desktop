@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import { extractAddress } from '../../../utils/account';
-import { generatePassphrase } from '../../../utils/passphrase';
+import { extractAddressFromPassphrase } from '@utils/account';
+import { generatePassphrase } from '@utils/passphrase';
 import BackupPassphrase from './backupPassphrase';
 
 
@@ -12,7 +12,7 @@ describe('Register Process - Backup Passphrase', () => {
 
   const passphrase = generatePassphrase();
   const account = {
-    address: extractAddress(passphrase),
+    address: extractAddressFromPassphrase(passphrase),
     passphrase,
   };
 

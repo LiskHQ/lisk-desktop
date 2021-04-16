@@ -3,24 +3,31 @@ import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import withData from '../../../utils/withData';
+import withData from '@utils/withData';
+import { getAccount } from '@api/account';
+import { selectSearchParamValue } from '@utils/searchParams';
+import { isEmpty } from '@utils/helpers';
+import { selectActiveToken, selectSettings } from '@store/selectors';
+import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
 import Overview from './overview';
-import { getAccount } from '../../../utils/api/account';
-import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 import Transactions from './transactions';
-import { selectSearchParamValue } from '../../../utils/searchParams';
 
 const Wallet = ({
   t, account, history,
 }) => {
-  const activeToken = useSelector(state => state.settings.token.active);
-  const { discreetMode } = useSelector(state => state.settings);
+  if (!account || !account.data || isEmpty(account.data)) return (<div />);
+
+  const activeToken = useSelector(selectActiveToken);
+  const { discreetMode } = useSelector(selectSettings);
+  const isDelegate = account.data.summary?.isDelegate;
+  const address = selectSearchParamValue(history.location.search, 'address');
 
   useEffect(() => {
     account.loadData();
   }, [history.location.search]);
+
 
   return (
     <section>
@@ -37,23 +44,23 @@ const Wallet = ({
           discreetMode={discreetMode}
           tabName={t('Transactions')}
           tabId="transactions"
-          address={selectSearchParamValue(history.location.search, 'address')}
+          address={address}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
-            address={selectSearchParamValue(history.location.search, 'address')}
+            address={address}
             tabName={t('Voting')}
             tabId="voting"
           />
         ) : null}
-        {account.data?.isDelegate
+        {isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
               tabName={t('Delegate profile')}
               tabId="delegateProfile"
-              address={selectSearchParamValue(history.location.search, 'address')}
+              account={account.data}
             />
           )
           : null}

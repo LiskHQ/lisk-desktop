@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
+import { actionTypes } from '@constants';
 import middleware from './loadingBar';
-import actionType from '../../constants/actions';
 
 
 describe('LoadingBar middleware', () => {
@@ -21,9 +21,9 @@ describe('LoadingBar middleware', () => {
     expect(next).to.have.been.calledWith(randomAction);
   });
 
-  it(`should not call next on ${actionType.loadingStarted} action if action.data == '${ignoredLoadingActionKeys[0]}'`, () => {
+  it(`should not call next on ${actionTypes.loadingStarted} action if action.data == '${ignoredLoadingActionKeys[0]}'`, () => {
     const action = {
-      type: actionType.loadingStarted,
+      type: actionTypes.loadingStarted,
       data: ignoredLoadingActionKeys[0],
     };
 
@@ -31,9 +31,9 @@ describe('LoadingBar middleware', () => {
     expect(next).not.to.have.been.calledWith(action);
   });
 
-  it(`should not call next on ${actionType.loadingFinished} action if action.data == '${ignoredLoadingActionKeys[0]}'`, () => {
+  it(`should not call next on ${actionTypes.loadingFinished} action if action.data == '${ignoredLoadingActionKeys[0]}'`, () => {
     const action = {
-      type: actionType.loadingFinished,
+      type: actionTypes.loadingFinished,
       data: ignoredLoadingActionKeys[0],
     };
 
@@ -41,9 +41,9 @@ describe('LoadingBar middleware', () => {
     expect(next).not.to.have.been.calledWith(action);
   });
 
-  it(`should call next on ${actionType.loadingStarted} action if action.data != '${ignoredLoadingActionKeys[0]}'`, () => {
+  it(`should call next on ${actionTypes.loadingStarted} action if action.data != '${ignoredLoadingActionKeys[0]}'`, () => {
     const action = {
-      type: actionType.loadingStarted,
+      type: actionTypes.loadingStarted,
       data: 'something/else',
     };
 
@@ -51,9 +51,9 @@ describe('LoadingBar middleware', () => {
     expect(next).to.have.been.calledWith(action);
   });
 
-  it(`should call next on ${actionType.loadingFinished} action if action.data != '${ignoredLoadingActionKeys[0]}'`, () => {
+  it(`should call next on ${actionTypes.loadingFinished} action if action.data != '${ignoredLoadingActionKeys[0]}'`, () => {
     const action = {
-      type: actionType.loadingFinished,
+      type: actionTypes.loadingFinished,
       data: 'something/else',
     };
 

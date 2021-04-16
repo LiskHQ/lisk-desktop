@@ -63,7 +63,7 @@ import styles from './table.css';
  * you can use this property.
  */
 const Table = ({
-  data,
+  data = [],
   loadData,
   header,
   row,

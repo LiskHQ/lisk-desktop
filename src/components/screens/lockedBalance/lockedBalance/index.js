@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import TransactionPriority from '../../../shared/transactionPriority';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import transactionTypes from '../../../../constants/transactionTypes';
 import {
   calculateBalanceLockedInVotes,
   calculateUnlockableBalance,
   getActiveTokenAccount,
   getUnlockableUnlockingObjects,
-} from '../../../../utils/account';
+} from '@utils/account';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import TransactionPriority, { useTransactionFeeCalculation } from '@shared/transactionPriority';
+import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import Form from './form';
 import BalanceTable from './balanceTable';
 
-const txType = transactionTypes().unlockToken.key;
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const LockedBalance = (props) => {
   const account = useSelector(state => getActiveTokenAccount(state));
   const token = useSelector(state => state.settings.token.active);
   const currentBlockHeight = useSelector(state => state.blocks.latestBlocks[0].height || 0);
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
-  const unlockableBalance = calculateUnlockableBalance(account.unlocking, currentBlockHeight);
+  const unlockableBalance = calculateUnlockableBalance(
+    account.dpos?.unlocking, currentBlockHeight,
+  );
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority,
@@ -32,12 +33,12 @@ const LockedBalance = (props) => {
     token,
     account,
     priorityOptions,
-    txData: {
-      txType,
-      senderPublicKey: account.publicKey,
-      nonce: account.nonce,
+    transaction: {
+      moduleAssetId,
+      senderPublicKey: account.summary?.publicKey,
+      nonce: account.sequence?.nonce,
       passphrase: account.passphrase,
-      unlockingObjects: getUnlockableUnlockingObjects(account.unlocking, currentBlockHeight),
+      unlockingObjects: getUnlockableUnlockingObjects(account.dpos?.unlocking, currentBlockHeight),
     },
   });
 
@@ -63,7 +64,7 @@ const LockedBalance = (props) => {
         fee={fee}
         minFee={minFee.value}
         customFee={customFee ? customFee.value : undefined}
-        txType={txType}
+        moduleAssetId={moduleAssetId}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}

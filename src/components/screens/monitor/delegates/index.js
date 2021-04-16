@@ -5,14 +5,12 @@ import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { getDelegates, getForgers } from '../../../../utils/api/delegate';
-import { getNetworkStatus } from '../../../../utils/api/network';
-import { getTransactions } from '../../../../utils/api/transaction';
-import withData from '../../../../utils/withData';
-import withFilters from '../../../../utils/withFilters';
-import transactionTypes from '../../../../constants/transactionTypes';
-import { MAX_BLOCKS_FORGED } from '../../../../constants/delegates';
-import { tokenMap } from '../../../../constants/tokens';
+import { getForgers, getDelegates } from '@api/delegate';
+import { getNetworkStatus } from '@api/network';
+import { getTransactions, getRegisteredDelegates } from '@api/transaction';
+import withData from '@utils/withData';
+import withFilters from '@utils/withFilters';
+import { MODULE_ASSETS_NAME_ID_MAP, MAX_BLOCKS_FORGED, tokenMap } from '@constants';
 
 import Delegates from './delegates';
 
@@ -25,6 +23,14 @@ const transformDelegatesResponse = (response, oldData = []) => (
     delegate => !oldData.find(({ username }) => username === delegate.username),
   )]
 );
+
+const transformAccountsIsDelegateResponse = (response, oldData = []) => {
+  response.data = response.data.map(del => ({
+    address: del.summary.address,
+    ...del.dpos.delegate,
+  }));
+  return transformDelegatesResponse(response, oldData);
+};
 
 const transformVotesResponse = (response, oldData = []) => (
   [...oldData, ...response.data.filter(
@@ -82,24 +88,19 @@ const ComposedDelegates = compose(
         }),
         defaultData: [],
         autoload: true,
-        transformResponse: transformDelegatesResponse,
+        transformResponse: transformAccountsIsDelegateResponse,
       },
 
       chartActiveAndStandbyData: {
         apiUtil: network => getDelegates({ network, params: { limit: 1 } }),
-        defaultData: [],
+        defaultData: 0,
         autoload: true,
         transformResponse: response => response.meta.total,
       },
 
       chartRegisteredDelegatesData: {
-        apiUtil: network => getTransactions({
+        apiUtil: network => getRegisteredDelegates({
           network,
-          params: {
-            limit: 100,
-            type: 10,
-            sort: 'timestamp:desc',
-          },
         }, tokenMap.LSK.key),
         defaultData: [],
         autoload: true,
@@ -109,7 +110,7 @@ const ComposedDelegates = compose(
       votes: {
         apiUtil: (network, params) => getTransactions({
           network,
-          params: { ...params, type: transactionTypes().vote.code.new, sort: 'timestamp:desc' },
+          params: { ...params, moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate, sort: 'timestamp:desc' },
         }, tokenMap.LSK.key),
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,
@@ -128,16 +129,17 @@ const ComposedDelegates = compose(
         apiUtil: (network, params) => getDelegates({ network, params: { ...params, status: 'punished,banned' } }),
         defaultData: [],
         autoload: true,
-        transformResponse: response => response.data,
+        transformResponse: transformAccountsIsDelegateResponse,
       },
 
       votedDelegates: {
-        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        apiUtil: ({ networks }, params) =>
+          getDelegates({ network: networks.LSK, params }),
         defaultData: {},
         transformResponse: (response) => {
           const transformedResponse = transformDelegatesResponse(response);
           const responseMap = transformedResponse.reduce((acc, delegate) => {
-            acc[delegate.address] = delegate;
+            acc[delegate.address] = delegate.summary?.address;
             return acc;
           }, {});
           return responseMap;
@@ -145,10 +147,11 @@ const ComposedDelegates = compose(
       },
 
       watchedDelegates: {
-        apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+        apiUtil: ({ networks }, params) =>
+          getDelegates({ network: networks.LSK, params }),
         defaultData: [],
         getApiParams: state => ({ addressList: state.watchList }),
-        transformResponse: response => response.data,
+        transformResponse: transformDelegatesResponse,
       },
     },
   ),

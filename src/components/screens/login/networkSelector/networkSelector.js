@@ -1,17 +1,16 @@
 import React, { useRef, useState } from 'react';
 
-import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
-import { Input } from '../../../toolbox/inputs';
-import { addHttp, getAutoLogInData } from '../../../../utils/login';
-import { getNetworksList } from '../../../../utils/getNetwork';
-import networks, { networkKeys } from '../../../../constants/networks';
-import keyCodes from '../../../../constants/keyCodes';
-import DropdownButton from '../../../toolbox/dropdownButton';
-import { getApiClient } from '../../../../utils/api/apiClient';
+import {
+  networks, networkKeys, keyCodes, tokenMap,
+} from '@constants';
+import { addHttp, getAutoLogInData } from '@utils/login';
+import { getNetworksList } from '@utils/getNetwork';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import { Input } from '@toolbox/inputs';
+import DropdownButton from '@toolbox/dropdownButton';
+import { getNetworkConfig } from '@api/network';
 
 import styles from './networkSelector.css';
-
-const networkList = getNetworksList();
 
 const getNetwork = (name, url) => {
   const { nodes, initialSupply } = networks[name];
@@ -26,9 +25,9 @@ const getNetwork = (name, url) => {
 };
 
 const getInitialState = (address) => {
-  const { liskCoreUrl } = getAutoLogInData();
+  const { liskServiceUrl } = getAutoLogInData();
   return {
-    address: liskCoreUrl || address,
+    address: liskServiceUrl || address,
     connected: true,
     isValid: true,
     isCustomSelected: false,
@@ -36,10 +35,12 @@ const getInitialState = (address) => {
   };
 };
 
+
 // eslint-disable-next-line max-statements
 const NetworkSelector = ({
   t, selectedNetworkName, selectedAddress, networkSelected, settingsUpdated,
 }) => {
+  const networkList = getNetworksList();
   const childRef = useRef(null);
   const [state, _setState] = useState(() => getInitialState(selectedAddress));
   const setState = newState => _setState(prevState => ({ ...prevState, ...newState }));
@@ -77,10 +78,12 @@ const NetworkSelector = ({
     const networkToSet = getNetwork(networkName, state.address);
 
     if (networkName === networkKeys.customNode) {
-      const liskApiClient = getApiClient({ address: networkToSet.address });
       try {
-        const response = await liskApiClient.node.getConstants();
-        if (response.data) {
+        const response = await getNetworkConfig({
+          name: networkName,
+          address: networkToSet.address,
+        }, tokenMap.LSK.key);
+        if (response) {
           setState({ isValid: true, connected: true });
           changeNetworkInSettings(networkName);
           networkSelected(networkToSet);
@@ -112,7 +115,7 @@ const NetworkSelector = ({
     isValidationLoading,
   } = state;
 
-  const validationError = isValid ? '' : t('Unable to connect to the node, please check the address and try again');
+  const validationError = isValid ? '' : t('Unable to connect to Lisk Service, please check the address and try again');
 
   return (
     <DropdownButton
@@ -120,7 +123,7 @@ const NetworkSelector = ({
       buttonClassName={`${isValid ? '' : styles.dropdownError} ${styles.dropdownHandler} network`}
       wrapperClassName={styles.NetworkSelector}
       className={`${styles.menu} network-dropdown`}
-      buttonLabel={(<span>{networks[selectedNetworkName].label}</span>)}
+      buttonLabel={(<span>{networks[selectedNetworkName]?.label}</span>)}
       ButtonComponent={SecondaryButton}
       align="right"
     >
