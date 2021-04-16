@@ -106,7 +106,7 @@ export const getAccount = async ({
       address: '02a1de92405edeaac13913bd089b07eb73cbd762',
       legacyAddress: '2841524825665420181L',
       balance: '0', // balance in the new blockchain
-      isMigrated: true, // shows only when found by the public key
+      isMigrated: false, // shows only when found by the public key
       // true = account is migrated from the legacy blockchain
       // false = account is created in the current blockchain
       publicKey: '968ba2fa993ea9dc27ed740da0daf49eddd740dbd7cb1cb4fc5db3a20baf341b',
