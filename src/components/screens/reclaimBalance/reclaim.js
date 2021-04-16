@@ -8,12 +8,14 @@ import { PrimaryButton } from '@toolbox/buttons';
 import DialogLink from '@toolbox/dialog/link';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
 import { getActiveTokenAccount } from '@utils/account';
+import { fromRawLsk } from '@utils/lsk';
 import styles from './reclaim.css';
 
 const Reclaim = ({ t }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
   // const hasEnoughtBalance = false;
-  const hasEnoughtBalance = parseInt(account.token?.balance, 10) > 1000000;
+  const rawBalance = parseInt(account.token?.balance, 10);
+  const hasEnoughtBalance = rawBalance > 1000000;
 
   return (
     <div className={styles.container}>
@@ -24,19 +26,19 @@ const Reclaim = ({ t }) => {
           <div>
             <h5>{t('Old account')}</h5>
             <div className={styles.addressContainer}>
-              <AccountVisualWithAddress address="5726759782318848681L" />
+              <AccountVisualWithAddress address={account.legacy?.address} />
               <CopyToClipboard />
             </div>
-            <p>{t('Balance')}: 1000LSK</p>
+            <p>{`${t('Balance')}: ${fromRawLsk(parseInt(account.legacy?.balance, 10))}LSK`}</p>
           </div>
           <Icon name="arrowRightActive" />
           <div>
             <h5>{t('New account')}</h5>
             <div className={styles.addressContainer}>
-              <AccountVisualWithAddress address="lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt" />
+              <AccountVisualWithAddress address={account.summary?.address} />
               <CopyToClipboard />
             </div>
-            <p>{t('Balance')}: 0LSK</p>
+            <p>{`${t('Balance')}: ${fromRawLsk(rawBalance)}LSK`}</p>
           </div>
         </div>
         <div>
