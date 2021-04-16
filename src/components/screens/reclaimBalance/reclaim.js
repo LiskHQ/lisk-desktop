@@ -27,7 +27,7 @@ const Reclaim = ({ t }) => {
             <h5>{t('Old account')}</h5>
             <div className={styles.addressContainer}>
               <AccountVisualWithAddress address={account.legacy?.address} />
-              <CopyToClipboard />
+              <CopyToClipboard type="icon" value={account.legacy?.address} />
             </div>
             <p>{`${t('Balance')}: ${fromRawLsk(parseInt(account.legacy?.balance, 10))}LSK`}</p>
           </div>
@@ -36,7 +36,7 @@ const Reclaim = ({ t }) => {
             <h5>{t('New account')}</h5>
             <div className={styles.addressContainer}>
               <AccountVisualWithAddress address={account.summary?.address} />
-              <CopyToClipboard />
+              <CopyToClipboard type="icon" value={account.summary?.address} />
             </div>
             <p>{`${t('Balance')}: ${fromRawLsk(rawBalance)}LSK`}</p>
           </div>
