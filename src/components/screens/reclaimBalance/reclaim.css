@@ -1,0 +1,71 @@
+@import '../../../app/mixins.css';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  height: 100%;
+
+  & > h4 {
+    @mixin headingLarge;
+
+    margin: 0;
+    font-size: 28px;
+    color: var(--color-maastricht-blue);
+  }
+
+  & > p {
+    @mixin contentLargest;
+
+    color: var(--color-maastricht-blue);
+  }
+}
+
+.box {
+  background-color: var(--color-white);
+  box-shadow: 0px 4px 10px rgba(234, 234, 234, 0.36);
+  border-radius: 6px;
+  width: 100%;
+  margin: 20px 0;
+  padding: 20px;
+}
+
+.accountContainer {
+  display: flex;
+  justify-content: space-between;
+
+  & > div > h5 {
+    @mixin contentNormal semi-bold;
+
+    color: var(--color-maastricht-blue);
+  }
+
+  & > div > p {
+    @mixin contentLargest semi-bold;
+
+    color: var(--color-maastricht-blue);
+  }
+}
+
+.addressContainer {
+  display: flex;
+}
+
+.listHeading {
+  @mixin headingNormal;
+
+  color: var(--color-maastricht-blue);
+}
+
+.listItem {
+  @mixin contentLargest;
+
+  color: #000;
+
+  & > p > span {
+    color: var(--color-blue-gray);
+  }
+}
