@@ -76,7 +76,7 @@ const transformTransaction = (transaction) => {
 
     case reclaimLSK: {
       transformedTransaction.asset = {
-        amount: String(transaction.asset.amount),
+        amount: transaction.asset.amount,
       };
       break;
     }
@@ -158,6 +158,13 @@ const createTransactionObject = (tx, moduleAssetId) => {
     case unlockToken: {
       transaction.asset = {
         unlockObjects: tx.unlockObjects,
+      };
+      break;
+    }
+
+    case reclaimLSK: {
+      transaction.asset = {
+        amount: BigInt(amount),
       };
       break;
     }
