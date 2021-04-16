@@ -2,13 +2,12 @@ import {
   networks, actionTypes, networkKeys, settings, MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
 } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
-import { getActiveTokenAccount, hasEnoughBalanceForInitialization } from '@utils/account';
+import { getActiveTokenAccount } from '@utils/account';
 import { getAutoLogInData } from '@utils/login';
 import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
 } from '@actions';
-import { removeSearchParamsFromUrl, selectSearchParamValue } from '@utils/searchParams';
 import analytics from '@utils/analytics';
 import { getTransactions } from '@api/transaction';
 import i18n from '../../i18n';
