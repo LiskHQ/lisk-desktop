@@ -232,7 +232,7 @@ class AccountVisual extends React.Component {
       );
     }
 
-    if (!reg.address.test(address)) {
+    if (!reg.address.test(address) && !reg.legacyAddress.test(address)) {
       return null;
     }
     const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(size);
