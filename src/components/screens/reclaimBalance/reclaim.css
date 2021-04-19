@@ -86,30 +86,31 @@
 
     &::before {
       display: block;
-      content: ' ';
+      content: '';
       margin-right: 10px;
       margin-top: 8px;
-      background-image: url('../../../assets/images/icons/dot-blue.svg');
-      background-repeat: no-repeat;
       width: 4px;
-      height: auto;
+      height: 4px;
+      border-radius: 4px;
+      background: #4070F4;
     }
 
     &.step::before {
       display: block;
-      content: ' ';
+      content: '';
       margin-right: 10px;
       margin-top: 2px;
-      background-image: url('../../../assets/images/icons/circle-grey.svg');
-      background-repeat: no-repeat;
-      width: 17px;
-      height: auto;
+      width: 16px;
+      height: 16px;
+      border-radius: 16px;
+      border: 1px solid #8A8CA2;
+      background: transparent;
     }
     &.step.green::before {
-      background-image: url('../../../assets/images/icons/circle-green.svg');
+      border: 1px solid #2BD67B;
     }
     &.step.tick::before {
-      background-image: url('../../../assets/images/icons/circle-tick.svg');
+      background: #2BD67B;
     }
   }
 }
