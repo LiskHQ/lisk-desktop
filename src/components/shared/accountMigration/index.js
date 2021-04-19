@@ -6,7 +6,7 @@ import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
 import styles from './index.css';
 
-const Reclaim = ({ t, account, showBalance }) => (
+const AccountMigration = ({ t, account, showBalance }) => (
   <div className={styles.accountContainer}>
     <div>
       <h5>{t('Old account')}</h5>
@@ -38,4 +38,4 @@ const Reclaim = ({ t, account, showBalance }) => (
   </div>
 );
 
-export default withTranslation()(Reclaim);
+export default withTranslation()(AccountMigration);

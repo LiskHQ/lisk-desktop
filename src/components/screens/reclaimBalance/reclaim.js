@@ -11,7 +11,6 @@ import styles from './index.css';
 const Reclaim = ({ t }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
   const hasEnoughtBalance = parseInt(account.token?.balance, 10) > 1000000;
-  // const hasEnoughtBalance = true;
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>

@@ -24,15 +24,18 @@ class Summary extends React.Component {
 
   submitTransaction({ secondPassphrase }) {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
-    const { fields } = this.props;
-
-    this.props.transactionCreated({
+    const { fields, isReclaim, account } = this.props;
+    const tx = isReclaim ? {
+      amount: account.legacy?.balance,
+    } : {
       amount: `${toRawLsk(fields.amount.value)}`,
       data: fields.reference ? fields.reference.value : '',
       recipientAddress: fields.recipient.address,
       secondPassphrase,
       fee: toRawLsk(parseFloat(fields.fee.value)),
-    });
+    };
+
+    this.props.transactionCreated(tx);
   }
 
   checkForSuccessOrFailedTransactions() {
