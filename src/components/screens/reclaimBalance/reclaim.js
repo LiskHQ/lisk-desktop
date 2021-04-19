@@ -1,21 +1,17 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import CopyToClipboard from '@toolbox/copyToClipboard';
 import Tooltip from '@toolbox/tooltip/tooltip';
-import Icon from '@toolbox/icon';
 import { PrimaryButton } from '@toolbox/buttons';
 import DialogLink from '@toolbox/dialog/link';
-import LiskAmount from '@shared/liskAmount';
-import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
+import AccountMigration from '@shared/accountMigration';
 import { getActiveTokenAccount } from '@utils/account';
-import { fromRawLsk } from '@utils/lsk';
 import styles from './index.css';
 
 const Reclaim = ({ t }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
-  const rawBalance = parseInt(account.token?.balance, 10);
-  const hasEnoughtBalance = rawBalance > 1000000;
+  const hasEnoughtBalance = parseInt(account.token?.balance, 10) > 1000000;
+  // const hasEnoughtBalance = true;
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
@@ -26,30 +22,8 @@ const Reclaim = ({ t }) => {
         {t('We kindly ask you to transfer your balance to the new account.')}
       </p>
       <section className={styles.box}>
-        <div className={styles.accountContainer}>
-          <div>
-            <h5>{t('Old account')}</h5>
-            <div className={styles.addressContainer}>
-              <AccountVisualWithAddress address={account.legacy?.address} />
-              <CopyToClipboard type="icon" value={account.legacy?.address} />
-            </div>
-            <p>
-              <span>{`${t('Balance')}: `}</span>
-              <LiskAmount val={fromRawLsk(parseInt(account.legacy?.balance, 10))} token="LSK" />
-            </p>
-          </div>
-          <Icon name="arrowRightWithStroke" />
-          <div>
-            <h5>{t('New account')}</h5>
-            <div className={styles.addressContainer}>
-              <AccountVisualWithAddress address={account.summary?.address} />
-              <CopyToClipboard type="icon" value={account.summary?.address} />
-            </div>
-            <p>
-              <span>{`${t('Balance')}: `}</span>
-              <LiskAmount val={rawBalance} token="LSK" />
-            </p>
-          </div>
+        <div className={styles.accountMigrationContainer}>
+          <AccountMigration account={account} showBalance />
         </div>
         <div>
           <h5 className={styles.listHeading}>{t('You will be able to:')}</h5>
@@ -107,7 +81,7 @@ const Reclaim = ({ t }) => {
           </li>
         </ul>
       </section>
-      <DialogLink component="balanceReclaim">
+      <DialogLink component="send" data={{ reclaim: true }}>
         <PrimaryButton
           className={styles.button}
           disabled={!hasEnoughtBalance}

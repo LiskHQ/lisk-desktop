@@ -5,6 +5,8 @@ import Piwik from '@utils/piwik';
 import AccountVisual from '@toolbox/accountVisual';
 import Converter from '@shared/converter';
 import TransactionSummary from '@shared/transactionSummary';
+import LiskAmount from '@shared/liskAmount';
+import AccountMigration from '@shared/accountMigration';
 
 import styles from './summary.css';
 
@@ -69,58 +71,73 @@ class Summary extends React.Component {
 
   render() {
     const {
-      fields, t, token, account, isInitialization,
+      fields, t, token, account, isReclaim,
     } = this.props;
     const amount = fields.amount.value;
 
     return (
       <TransactionSummary
-        title={isInitialization ? t('Initialization summary ') : t('Transaction summary')}
+        title={t('Transaction summary')}
         t={t}
         account={account}
         confirmButton={{
-          label: isInitialization ? t('Send') : t('Send {{amount}} {{token}}', { amount, token }),
+          label: isReclaim ? t('Send') : t('Send {{amount}} {{token}}', { amount, token }),
           onClick: this.submitTransaction,
         }}
         cancelButton={{
           label: t('Edit transaction'),
           onClick: this.prevStep,
         }}
-        showCancelButton={!isInitialization}
+        showCancelButton={!isReclaim}
         fee={fromRawLsk(fields.fee.value)}
         token={token}
       >
-        <section>
-          <label>{t('Recipient')}</label>
-          <label className="recipient-value">
-            <AccountVisual address={fields.recipient.address} size={25} />
-            <label className={`${styles.information} recipient-confirm`}>
-              {fields.recipient.title || fields.recipient.address}
-            </label>
-            { fields.recipient.title ? (
-              <span className={styles.secondText}>
-                {fields.recipient.address}
-              </span>
-            ) : null }
-          </label>
-        </section>
-        <section>
-          <label>{t('Amount')}</label>
-          <label className="amount-summary">
-            {`${amount} ${token}`}
-            <Converter className={styles.secondText} value={amount} />
-          </label>
-        </section>
-        { fields.reference && fields.reference.value
-          ? (
+        {isReclaim && (
+          <>
             <section>
-              <label>{t('Message')}</label>
-              <label className="message-summary">
-                {`${fields.reference.value}`}
+              <AccountMigration account={account} showBalance={false} />
+            </section>
+            <section>
+              <label>{t('Balance to reclaim')}</label>
+              <LiskAmount val={parseInt(account.legacy?.balance, 10)} token="LSK" />
+            </section>
+          </>
+        )}
+        {!isReclaim && (
+          <>
+            <section>
+              <label>{t('Recipient')}</label>
+              <label className="recipient-value">
+                <AccountVisual address={fields.recipient.address} size={25} />
+                <label className={`${styles.information} recipient-confirm`}>
+                  {fields.recipient.title || fields.recipient.address}
+                </label>
+                { fields.recipient.title ? (
+                  <span className={styles.secondText}>
+                    {fields.recipient.address}
+                  </span>
+                ) : null }
               </label>
             </section>
-          )
-          : null }
+            <section>
+              <label>{t('Amount')}</label>
+              <label className="amount-summary">
+                {`${amount} ${token}`}
+                <Converter className={styles.secondText} value={amount} />
+              </label>
+            </section>
+            { fields.reference && fields.reference.value
+              ? (
+                <section>
+                  <label>{t('Message')}</label>
+                  <label className="message-summary">
+                    {`${fields.reference.value}`}
+                  </label>
+                </section>
+              )
+              : null }
+          </>
+        )}
       </TransactionSummary>
     );
   }

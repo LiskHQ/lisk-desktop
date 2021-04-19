@@ -1,0 +1,36 @@
+@import '../../../app/mixins.css';
+
+.accountContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  & > div > h5 {
+    @mixin contentNormal semi-bold;
+
+    margin-top: 0px;
+    margin-bottom: 10px;
+    color: var(--color-maastricht-blue);
+  }
+
+  & > div > p {
+    @mixin contentLargest;
+
+    margin-top: 2px;
+    margin-left: 42px;
+
+    & > span {
+      @mixin contentLargest semi-bold;
+      color: var(--color-maastricht-blue);
+    }
+  }
+}
+
+.addressContainer {
+  display: flex;
+  align-items: center;
+
+  & > div:first-child {
+    margin-right: 10px;
+  }
+}

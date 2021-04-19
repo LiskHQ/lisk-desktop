@@ -14,6 +14,8 @@
   height: 100%;
 
   &.reclaim {
+    max-width: 800px;
+
     & > h4 {
       @mixin headingLarge;
   
@@ -61,40 +63,9 @@
   padding: 20px;
 }
 
-.accountContainer {
-  display: flex;
-  justify-content: space-between;
+.accountMigrationContainer {
   border-bottom: 1px solid var(--color-periwinkle-blue);
   margin-bottom: 30px;
-
-  & > div > h5 {
-    @mixin contentNormal semi-bold;
-
-    margin-top: 0px;
-    margin-bottom: 10px;
-    color: var(--color-maastricht-blue);
-  }
-
-  & > div > p {
-    @mixin contentLargest;
-
-    margin-top: 2px;
-    margin-left: 42px;
-
-    & > span {
-      @mixin contentLargest semi-bold;
-      color: var(--color-maastricht-blue);
-    }
-  }
-}
-
-.addressContainer {
-  display: flex;
-  align-items: center;
-
-  & > div:first-child {
-    margin-right: 10px;
-  }
 }
 
 .listHeading {
