@@ -305,7 +305,7 @@ export const icons = {
   initialiseRegistration,
   warningYellow,
   linkIcon,
-  arrowRightWithStroke
+  arrowRightWithStroke,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

@@ -21,6 +21,7 @@
 
     & > span {
       @mixin contentLargest semi-bold;
+
       color: var(--color-maastricht-blue);
     }
   }
