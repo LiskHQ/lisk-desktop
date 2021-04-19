@@ -15,5 +15,13 @@ describe('AccountMigration component', () => {
     const html = wrapper.html();
     expect(html).toContain(truncateAddress(accounts.empty_account.legacy.address));
     expect(html).toContain(truncateAddress(accounts.empty_account.summary.address));
+    expect(html).toContain('98,970,000 LSK');
+  });
+
+  it('should not render balance', () => {
+    const wrapper = mount(<AcountMigration {...props} showBalance={false} />);
+    const html = wrapper.html();
+    expect(html).toContain(truncateAddress(accounts.empty_account.legacy.address));
+    expect(html).toContain(truncateAddress(accounts.empty_account.summary.address));
   });
 });
