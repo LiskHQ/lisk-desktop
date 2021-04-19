@@ -93,7 +93,7 @@ describe('SideBar', () => {
         ...myProps,
         isUserLogout: false,
         location: {
-          pathname: routes.initialization.path,
+          pathname: routes.reclaim.path,
         },
       },
     );

@@ -28,7 +28,6 @@ import NewReleaseDialog from '@shared/newReleaseDialog/newReleaseDialog';
 import SearchBar from '@shared/searchBar';
 import ReclaimBalance from '@screens/reclaimBalance';
 import { tokenMap } from './tokens';
-import Initialization from '../components/screens/initialization';
 
 export default {
   wallet: {
@@ -122,10 +121,9 @@ export default {
   },
   reclaim: {
     path: '/reclaim',
-    // @todo import the reclaim screen here
-    component: Initialization,
-    isPrivate: true,
-    forbiddenTokens: [],
+    component: ReclaimBalance,
+    isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   dashboard: {
     path: '/',
@@ -133,12 +131,6 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
-  },
-  reclaimBalance: {
-    path: '/reclaim-balance',
-    component: ReclaimBalance,
-    isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
   },
 };
 

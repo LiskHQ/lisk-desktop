@@ -125,7 +125,7 @@ const checkAccountInitializationState = (action) => {
   if (action.type === actionTypes.accountLoggedIn) {
     const { isMigrated } = action.data.info.LSK.summary;
     if (isMigrated === false) { // we need to check against false, check against falsy won't work
-      history.push(routes.initialization.path);
+      history.push(routes.reclaim.path);
     }
   }
 };

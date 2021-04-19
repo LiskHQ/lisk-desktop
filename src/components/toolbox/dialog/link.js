@@ -13,7 +13,7 @@ const DialogLink = ({
 
   return (
     <div
-      onClick={history.location.pathname === routes.initialization.path && component !== 'send' ? () => {} : onClick}
+      onClick={history.location.pathname === routes.reclaim.path && component !== 'send' ? () => {} : onClick}
       ref={linkEl}
       className={className}
     >

@@ -174,7 +174,7 @@ describe('TopBar', () => {
         ...props,
         history: {
           ...props.history,
-          location: { pathname: routes.initialization.path },
+          location: { pathname: routes.reclaim.path },
         },
       },
     );
