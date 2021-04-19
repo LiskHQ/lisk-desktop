@@ -83,7 +83,7 @@
   & > li {
     @mixin contentLargest;
 
-    color: #000;
+    color: var(--color-black);
     display: flex;
     margin-top: 20px;
     line-height: 26px;
