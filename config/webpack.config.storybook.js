@@ -1,6 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = {
+const config = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'styles.css',
@@ -82,3 +82,5 @@ module.exports = {
     ],
   },
 };
+
+module.exports = config;
