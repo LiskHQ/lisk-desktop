@@ -2,6 +2,7 @@ const modules = {
   token: 2,
   dpos: 5,
   multiSignature: 4,
+  legacyAccount: 1000,
 };
 
 const assets = {
@@ -10,6 +11,7 @@ const assets = {
   voteDelegate: 1,
   unlockToken: 2,
   registerMultisignatureGroup: 0,
+  reclaimLSK: 0,
 };
 
 const moduleAssetNameIdMap = {
@@ -18,6 +20,7 @@ const moduleAssetNameIdMap = {
   voteDelegate: `${modules.dpos}:${assets.voteDelegate}`,
   registerDelegate: `${modules.dpos}:${assets.registerDelegate}`,
   registerMultisignatureGroup: `${modules.multiSignature}:${assets.registerMultisignatureGroup}`,
+  reclaimLSK: `${modules.legacyAccount}:${assets.reclaimLSK}`,
 };
 
 const moduleAssetMap = {
@@ -40,6 +43,10 @@ const moduleAssetMap = {
   [moduleAssetNameIdMap.registerMultisignatureGroup]: {
     maxFee: 5e8,
     icon: 'registerMultisignatureGroup',
+  },
+  [moduleAssetNameIdMap.reclaimLSK]: {
+    maxFee: 1e7,
+    icon: 'txDefault',
   },
 };
 

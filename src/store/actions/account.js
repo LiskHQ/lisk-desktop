@@ -105,6 +105,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
   const params = Object.keys(settings.token.list)
     .filter(key => settings.token.list[key])
     .reduce((acc, token) => {
+      // @todo only use the publicKey for login
       acc[token] = { passphrase, publicKey };
       return acc;
     }, {});

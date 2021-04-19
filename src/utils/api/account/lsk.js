@@ -68,37 +68,62 @@ const getAccountParams = (params) => {
 // eslint-disable-next-line max-statements
 export const getAccount = async ({
   network, params, baseUrl,
+// eslint-disable-next-line arrow-body-style
 }) => {
-  const normParams = getAccountParams(params);
+  // const normParams = getAccountParams(params);
 
-  try {
-    const response = await http({
-      baseUrl,
-      path: httpPaths.account,
-      network,
-      params: normParams,
-    });
+  // try {
+  //   const response = await http({
+  //     baseUrl,
+  //     path: httpPaths.account,
+  //     network,
+  //     params: normParams,
+  //   });
 
-    return response.data[0];
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log('Lisk account not found.');
-    let publicKey = params.publicKey;
-    if (!publicKey && params.passphrase) {
-      publicKey = extractPublicKey(params.passphrase);
-    }
+  //   return response.data[0];
+  // } catch (e) {
+  //   // eslint-disable-next-line no-console
+  //   console.log('Lisk account not found.');
+  //   let publicKey = params.publicKey;
+  //   if (!publicKey && params.passphrase) {
+  //     publicKey = extractPublicKey(params.passphrase);
+  //   }
 
-    const account = {
-      summary: {
-        publicKey,
-        balance: 0,
-        address: normParams.address,
-        token: tokenMap.LSK.key,
-      },
-    };
+  //   const account = {
+  //     summary: {
+  //       publicKey,
+  //       balance: 0,
+  //       address: normParams.address,
+  //       token: tokenMap.LSK.key,
+  //     },
+  //   };
 
-    return account;
-  }
+  //   return account;
+  // }
+
+  return {
+    summary: {
+      address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      legacyAddress: '5059876081639179984L',
+      balance: '0', // balance in the new blockchain
+      isMigrated: false, // shows only when found by the public key
+      // true = account is migrated from the legacy blockchain
+      // false = account is created in the current blockchain
+      publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+      isDelegate: false,
+      isMultisignature: false,
+    },
+    token: {
+      balance: '0', // balance in the new blockchain
+    },
+    sequence: { nonce: 38 },
+    keys: {},
+    dpos: { },
+    legacy: { // only if the reclaim wasn't made yet
+      address: '5059876081639179984L', // Legacy address in hex format
+      balance: '151146419900', // balance to reclaim
+    },
+  };
 };
 
 const accountFilters = {
