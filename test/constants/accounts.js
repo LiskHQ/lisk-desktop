@@ -44,6 +44,10 @@ const accounts = {
       balance: 0,
     },
     token: { balance: 0 },
+    legacy: {
+      address: '12345678900000000000L',
+      balance: '9897000000000000',
+    },
     sequence: { },
     dpos: {
       delegate: {},

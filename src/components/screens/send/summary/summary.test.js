@@ -142,4 +142,8 @@ describe('Summary', () => {
     wrapper.update();
     expect(props.transactionCreated).toBeCalled();
   });
+
+  it('should render correctly when is reclaim tx', () => {
+
+  });
 });
