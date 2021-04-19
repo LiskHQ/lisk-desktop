@@ -1,29 +1,55 @@
 @import '../../../app/mixins.css';
 
+.multiStep {
+  height: 100%;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 800px;
+  max-width: 550px;
   margin: 0 auto;
   height: 100%;
 
-  & > h4 {
-    @mixin headingLarge;
-
-    margin: 0;
-    font-size: 28px;
-    color: var(--color-maastricht-blue);
+  &.reclaim {
+    & > h4 {
+      @mixin headingLarge;
+  
+      margin: 0;
+      font-size: 28px;
+      color: var(--color-maastricht-blue);
+    }
+  
+    & > p {
+      @mixin contentLargest;
+  
+      color: var(--color-maastricht-blue);
+      text-align: center;
+      margin-bottom: 0;
+    }
   }
+}
 
-  & > p {
-    @mixin contentLargest;
+.illustration {
+  width: 294px;
+}
 
-    color: var(--color-maastricht-blue);
-    text-align: center;
-    margin-bottom: 0;
-  }
+.header {
+  @mixin headingLarge;
+
+  margin-bottom: 0px;
+  color: var(--color-maastricht-blue);
+  font-size: 28px;
+}
+
+.text {
+  @mixin contentLargest;
+
+  text-align: center;
+  margin-bottom: 0;
+  color: var(--color-blue-gray);
 }
 
 .box {

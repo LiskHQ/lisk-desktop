@@ -2,9 +2,9 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Illustration from '@toolbox/illustration';
 import { PrimaryButton } from '@toolbox/buttons';
-import styles from './introduction.css';
+import styles from './index.css';
 
-const Introduction = ({ t }) => (
+const Introduction = ({ t, nextStep }) => (
   <div className={styles.container}>
     <Illustration className={styles.illustration} name="reclaimBalanceIntro" />
     <p className={styles.header}>{t('Lisk has now been enhanced even further')}</p>
@@ -16,7 +16,7 @@ const Introduction = ({ t }) => (
       {' '}
       <span className={styles.link}>{t('here')}</span>
     </p>
-    <PrimaryButton className={styles.button}>{t('Continue')}</PrimaryButton>
+    <PrimaryButton className={styles.button} onClick={nextStep}>{t('Continue')}</PrimaryButton>
   </div>
 );
 

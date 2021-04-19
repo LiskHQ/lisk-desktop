@@ -10,7 +10,7 @@ import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
 import { getActiveTokenAccount } from '@utils/account';
 import { fromRawLsk } from '@utils/lsk';
-import styles from './reclaim.css';
+import styles from './index.css';
 
 const Reclaim = ({ t }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
@@ -18,7 +18,7 @@ const Reclaim = ({ t }) => {
   const hasEnoughtBalance = rawBalance > 1000000;
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.reclaim}`}>
       <h4>{t('Update to your new account')}</h4>
       <p>
         {t('Your tokens and passphrase are safe.')}
@@ -112,7 +112,7 @@ const Reclaim = ({ t }) => {
           className={styles.button}
           disabled={!hasEnoughtBalance}
         >
-            {t('Continue')}
+          {t('Continue')}
         </PrimaryButton>
       </DialogLink>
     </div>
