@@ -85,7 +85,7 @@ const postCssLoader = {
   },
 };
 
-module.exports = {
+const config = {
   mode: 'development',
   entry: {
     app: `${resolve(__dirname, '../src')}/main.js`,
@@ -151,3 +151,5 @@ module.exports = {
     ],
   },
 };
+
+module.exports = config;

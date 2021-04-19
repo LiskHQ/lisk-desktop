@@ -2,7 +2,7 @@ const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
 
-module.exports = merge(baseConfig, {
+const config = {
   mode: 'production',
   entry: {
     main: ['babel-polyfill', `${resolve(__dirname, '../app/src')}/main.js`],
@@ -25,4 +25,6 @@ module.exports = merge(baseConfig, {
       },
     ],
   },
-});
+};
+
+module.exports = merge(baseConfig, config);
