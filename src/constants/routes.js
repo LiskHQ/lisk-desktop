@@ -122,13 +122,13 @@ export default {
   reclaim: {
     path: '/reclaim',
     component: ReclaimBalance,
-    isPrivate: false,
+    isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   dashboard: {
     path: '/',
     component: Dashboard,
-    isPrivate: true,
+    isPrivate: false,
     forbiddenTokens: [],
     exact: true,
   },

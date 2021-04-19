@@ -1,5 +1,8 @@
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import { addSearchParamsToUrl } from '../../../utils/searchParams';
+import accounts from '../../../../test/constants/accounts';
+import { truncateAddress } from '../../../utils/account';
+import { tokenMap } from '../../../constants/tokens';
 import Reclaim from './reclaim';
 import styles from './index.css';
 
@@ -10,6 +13,15 @@ jest.mock('../../../utils/searchParams', () => ({
 describe('Reclaim balance screen', () => {
   let wrapper;
   let props;
+  const state = {
+    account: {
+      passphrase: 'test',
+      info: {
+        LSK: accounts.empty_account,
+      },
+    },
+    settings: { token: tokenMap.LSK.key },
+  };
 
   beforeEach(() => {
     props = {
@@ -18,7 +30,13 @@ describe('Reclaim balance screen', () => {
         push: jest.fn(),
       },
     };
-    wrapper = mountWithRouter(Reclaim, props);
+    wrapper = mountWithRouterAndStore(Reclaim, props, {}, state);
+  });
+
+  it('should render legacy and new addresses', () => {
+    const html = wrapper.html();
+    expect(html).toContain(truncateAddress(accounts.empty_account.legacy.address));
+    expect(html).toContain(truncateAddress(accounts.empty_account.summary.address));
   });
 
   it('Opens send modal', () => {
