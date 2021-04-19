@@ -62,7 +62,7 @@ const Reclaim = ({ t }) => {
       <section className={styles.box}>
         <h5 className={styles.listHeading}>{t('All you need to do:')}</h5>
         <ul className={styles.list}>
-          <li className={`${styles.step} ${hasEnoughtBalance ? styles.tick : styles.green}`}>
+          <li className={`${styles.step} ${hasEnoughtBalance ? styles.check : styles.green}`}>
             <p>
               {t('Deposit at least 0.01 LSK to your new account')}
               <Tooltip position="right" size="m">
