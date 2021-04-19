@@ -21,6 +21,8 @@
     @mixin contentLargest;
 
     color: var(--color-maastricht-blue);
+    text-align: center;
+    margin-bottom: 0;
   }
 }
 
@@ -29,7 +31,7 @@
   box-shadow: 0px 4px 10px rgba(234, 234, 234, 0.36);
   border-radius: 6px;
   width: 100%;
-  margin: 20px 0;
+  margin: 20px 0 0 0;
   padding: 20px;
 }
 
@@ -37,10 +39,12 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid var(--color-periwinkle-blue);
+  margin-bottom: 30px;
 
   & > div > h5 {
     @mixin contentNormal semi-bold;
 
+    margin-top: 0px;
     color: var(--color-maastricht-blue);
   }
 
@@ -64,23 +68,29 @@
   @mixin headingNormal;
 
   color: var(--color-maastricht-blue);
+  margin: 0;
 }
 
 .list {
   list-style: none;
   padding-left: 0;
+  margin-bottom: 0;
   
   & > li {
     @mixin contentLargest;
 
     color: #000;
     display: flex;
+    margin-top: 20px;
+    line-height: 26px;
 
     & > p {
       margin-top: 0;
+      margin-bottom: 10px;
     }
 
     & > p > span {
+      margin-top: 7px;
       color: var(--color-blue-gray);
     }
 
@@ -92,7 +102,7 @@
       width: 4px;
       height: 4px;
       border-radius: 4px;
-      background: #4070F4;
+      background: var(--color-ultramarine-blue);
     }
 
     &.step::before {
@@ -103,14 +113,15 @@
       width: 16px;
       height: 16px;
       border-radius: 16px;
-      border: 1px solid #8A8CA2;
+      border: 1px solid var(--color-blue-gray);
       background: transparent;
     }
     &.step.green::before {
-      border: 1px solid #2BD67B;
+      border: 1px solid var(--color-jade-green);
     }
     &.step.tick::before {
-      background: #2BD67B;
+      border: 1px solid var(--color-jade-green);
+      background: var(--color-jade-green);
     }
   }
 }
@@ -121,5 +132,6 @@
 }
 
 .button {
+  margin-top: 30px;
   width: 430px;
 }

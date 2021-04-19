@@ -13,14 +13,17 @@ import styles from './reclaim.css';
 
 const Reclaim = ({ t }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
-  // const hasEnoughtBalance = false;
   const rawBalance = parseInt(account.token?.balance, 10);
   const hasEnoughtBalance = rawBalance > 1000000;
 
   return (
     <div className={styles.container}>
       <h4>{t('Update to your new account')}</h4>
-      <p>{t('Your tokens and passphrase are safe. We kindly ask you to transfer your balance to the new account.')}</p>
+      <p>
+        {t('Your tokens and passphrase are safe.')}
+        <br />
+        {t('We kindly ask you to transfer your balance to the new account.')}
+      </p>
       <section className={styles.box}>
         <div className={styles.accountContainer}>
           <div>
