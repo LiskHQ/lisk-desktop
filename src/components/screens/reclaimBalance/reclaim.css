@@ -45,13 +45,20 @@
     @mixin contentNormal semi-bold;
 
     margin-top: 0px;
+    margin-bottom: 10px;
     color: var(--color-maastricht-blue);
   }
 
   & > div > p {
-    @mixin contentLargest semi-bold;
+    @mixin contentLargest;
 
-    color: var(--color-maastricht-blue);
+    margin-top: 2px;
+    margin-left: 42px;
+
+    & > span {
+      @mixin contentLargest semi-bold;
+      color: var(--color-maastricht-blue);
+    }
   }
 }
 

@@ -6,6 +6,7 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import Icon from '@toolbox/icon';
 import { PrimaryButton } from '@toolbox/buttons';
 import DialogLink from '@toolbox/dialog/link';
+import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
 import { getActiveTokenAccount } from '@utils/account';
 import { fromRawLsk } from '@utils/lsk';
@@ -32,7 +33,10 @@ const Reclaim = ({ t }) => {
               <AccountVisualWithAddress address={account.legacy?.address} />
               <CopyToClipboard type="icon" value={account.legacy?.address} />
             </div>
-            <p>{`${t('Balance')}: ${fromRawLsk(parseInt(account.legacy?.balance, 10))}LSK`}</p>
+            <p>
+              <span>{`${t('Balance')}: `}</span>
+              <LiskAmount val={fromRawLsk(parseInt(account.legacy?.balance, 10))} token="LSK" />
+            </p>
           </div>
           <Icon name="arrowRightWithStroke" />
           <div>
@@ -41,7 +45,10 @@ const Reclaim = ({ t }) => {
               <AccountVisualWithAddress address={account.summary?.address} />
               <CopyToClipboard type="icon" value={account.summary?.address} />
             </div>
-            <p>{`${t('Balance')}: ${fromRawLsk(rawBalance)}LSK`}</p>
+            <p>
+              <span>{`${t('Balance')}: `}</span>
+              <LiskAmount val={rawBalance} token="LSK" />
+            </p>
           </div>
         </div>
         <div>
