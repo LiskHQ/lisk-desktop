@@ -131,7 +131,7 @@
       display: block;
       content: '';
       margin-right: 10px;
-      margin-top: 8px;
+      margin-top: 11px;
       width: 4px;
       height: 4px;
       border-radius: 4px;
@@ -142,8 +142,9 @@
       display: block;
       content: '';
       margin-right: 10px;
-      margin-top: 2px;
+      margin-top: 4px;
       width: 16px;
+      min-width: 16px;
       height: 16px;
       border-radius: 16px;
       border: 1px solid var(--color-blue-gray);
