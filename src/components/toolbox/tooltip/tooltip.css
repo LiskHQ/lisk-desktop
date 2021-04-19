@@ -27,15 +27,14 @@
 .tooltip {
   @mixin contentLarge;
 
-  background-color: var(--color-white);
-  border: 1px solid var(--color-platinum);
-  border-radius: var(--border-radius-standard);
+  background-color: var(--color-tooltip);
+  border-radius: var(--border-radius-box);
   box-shadow: var(--box-shadow-standard);
   box-sizing: border-box;
   color: var(--color-slate-gray);
   max-width: 380px;
   opacity: 0;
-  padding: 20px;
+  padding: 7px;
   position: absolute;
   text-align: left;
   transform: translateY(-50%);
@@ -48,7 +47,7 @@
   word-break: initial;
 
   & .tooltipArrow {
-    color: var(--color-white);
+    color: var(--color-tooltip);
     height: 28px;
     position: absolute;
     stroke: var(--color-platinum);
@@ -183,6 +182,7 @@
 
   & p {
     margin: 0;
+    font-size: var(--footnote-font-size);
   }
 
   & .title {
@@ -210,6 +210,11 @@
     margin: 0;
     margin-top: var(--tooltip-spacing-inside);
     padding: 0;
+  }
+
+  & > main {
+    color: var(--color-maastricht-blue);
+    font-size: var(--footnote-font-size);
   }
 
   &.s {
