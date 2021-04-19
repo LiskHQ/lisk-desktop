@@ -92,7 +92,6 @@
     }
 
     & .tooltip {
-
       & > div {
         width: auto;
       }
@@ -124,7 +123,9 @@
     }
 
     & + footer {
-      transform: translateY(100%);
+      transform: translateY(50%);
+      pointer-events: none;
+      opacity: 0;
     }
   }
 
@@ -137,7 +138,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    transition: transform ease 200ms;
+    transition: all ease 200ms;
 
     & .helperIcon {
       width: 40px;
