@@ -1,144 +1,57 @@
-import React from 'react';
-import QRCode from 'qrcode.react';
-import { getAddress } from '@utils/hwManager';
-import { isEmpty } from '@utils/helpers';
+import React, { useState } from 'react';
 import AccountVisual from '@toolbox/accountVisual';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import Icon from '@toolbox/icon';
-import CopyToClipboard from '@toolbox/copyToClipboard';
-import Tooltip from '@toolbox/tooltip/tooltip';
-import DialogLink from '@toolbox/dialog/link';
 import styles from './accountInfo.css';
 import Identity from './identity';
+import ActionBar from './actionBar';
 
-const BookmarkIcon = ({ bookmark }) => (
-  <Icon
-    name={bookmark === undefined ? 'bookmark' : 'bookmarkActive'}
-    className={styles.bookmark}
-  />
-);
-
-/* eslint-disable complexity */
 const AccountInfo = ({
   address, t, activeToken, hwInfo, account, username, bookmark, host,
-}) => (
-  <Box className={styles.wrapper}>
-    <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
-      <h2 className={styles.title}>{t('Wallet address')}</h2>
-      <div className={styles.info}>
-        <AccountVisual
+}) => {
+  const [showLegacy, setShowLegacy] = useState(false);
+  const onClick = () => {
+    if (activeToken === 'LSK' && account.summary.legacyAddress) {
+      setShowLegacy(!showLegacy);
+    }
+  };
+
+  return (
+    <Box className={styles.wrapper}>
+      <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
+        <h2 className={styles.title}>{t('Wallet address')}</h2>
+        <div className={`${styles.info} ${showLegacy ? styles.showLegacy : ''}`}>
+          <AccountVisual
+            address={address}
+            size={30}
+          />
+          <Identity
+            newAddress={address}
+            legacyAddress={account.summary.legacyAddress}
+            username={username}
+            bookmark={bookmark}
+            showLegacy={showLegacy}
+            onClickFn={onClick}
+          />
+        </div>
+        <ActionBar
           address={address}
-          size={40}
-        />
-        <Identity
-          address={address}
+          host={host}
+          activeToken={activeToken}
           username={username}
+          account={account}
           bookmark={bookmark}
+          hwInfo={hwInfo}
+          t={t}
         />
-      </div>
-      <footer>
-        <div className={styles.helperIcon}>
-          <Tooltip
-            className={styles.tooltipWrapper}
-            position="bottom"
-            size="maxContent"
-            content={(
-              <CopyToClipboard
-                value={address}
-                type="icon"
-                copyClassName={styles.copyIcon}
-                className={styles.copyIcon}
-              />
-            )}
-          >
-            <p>{t('Copy address')}</p>
-          </Tooltip>
-        </div>
-        <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
-          {
-          host === address ? (
-            <Tooltip
-              className={styles.tooltipWrapper}
-              position="bottom"
-              size="maxContent"
-              content={(
-                <DialogLink component="request">
-                  <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
-                </DialogLink>
-              )}
-            >
-              <p>{t(`Request ${activeToken}`)}</p>
-            </Tooltip>
-          ) : (
-            <Tooltip
-              className={styles.tooltipWrapper}
-              position="bottom"
-              size="s"
-              title={t('Scan address')}
-              content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
-            >
-              <QRCode value={address} size={154} />
-            </Tooltip>
-          )}
-        </div>
-        {
-          host !== address ? (
-            <div className={styles.helperIcon}>
-              <Tooltip
-                className={`${styles.tooltipWrapper} add-bookmark-icon`}
-                position="bottom"
-                size="maxContent"
-                content={(
-                  <DialogLink
-                    component="addBookmark"
-                    data={username ? {
-                      formAddress: address,
-                      label: account.dpos?.delegate?.username,
-                      isDelegate: account.isDelegate,
-                    } : {
-                      formAddress: address,
-                      label: bookmark ? bookmark.title : '',
-                      isDelegate: account.isDelegate,
-                    }}
-                  >
-                    <BookmarkIcon bookmark={bookmark} />
-                  </DialogLink>
-                )}
-              >
-                <p>{t(bookmark === undefined ? 'Add to bookmarks' : 'Edit bookmark')}</p>
-              </Tooltip>
-            </div>
-          ) : null
-        }
-        {
-          hwInfo && !isEmpty(hwInfo) && host === address && (
-            <div
-              className={`${styles.helperIcon} verify-address ${styles.tooltipWrapper}`}
-              onClick={() => getAddress({
-                deviceId: hwInfo.deviceId,
-                index: hwInfo.derivationIndex,
-                showOnDevice: true,
-              })}
-            >
-              <Tooltip
-                className={styles.tooltipWrapper}
-                position="bottom"
-                title={t('Verify address')}
-                content={<Icon name="verifyWalletAddress" className={styles.hwWalletIcon} />}
-              >
-                <span>{t('Verify the address in your hardware wallet device.')}</span>
-              </Tooltip>
-            </div>
-          )
-        }
-      </footer>
-      <Icon
-        name={activeToken === 'LSK' ? 'liskLogo' : 'bitcoinLogo'}
-        className={styles.watermarkLogo}
-      />
-    </BoxContent>
-  </Box>
-);
+        <Icon
+          name={activeToken === 'LSK' ? 'liskLogo' : 'bitcoinLogo'}
+          className={styles.watermarkLogo}
+        />
+      </BoxContent>
+    </Box>
+  );
+};
 
 export default AccountInfo;
