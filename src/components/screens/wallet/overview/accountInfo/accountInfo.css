@@ -96,12 +96,10 @@
         width: auto;
       }
 
-      & header {
-        margin: 0;
-        padding: 0;
+      & main {
         width: auto;
 
-        & p {
+        & span {
           white-space: nowrap;
         }
       }

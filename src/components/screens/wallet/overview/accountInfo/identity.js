@@ -31,7 +31,6 @@ const WithTitle = ({
     </span>
     <Tooltip
       className={`${styles.tooltip} ${styles.secondary} ${styles.truncated}`}
-      title={t('Click to see full and old addresses')}
       content={(
         <span
           className={`${styles.text} ${styles.noSelect} account-secondary-truncated`}
@@ -40,10 +39,11 @@ const WithTitle = ({
           {truncateAddress(newAddress)}
         </span>
       )}
-    />
+    >
+      <span>{t('Click to see full and old addresses')}</span>
+    </Tooltip>
     <Tooltip
       className={`${styles.tooltip} ${styles.secondaryTooltip} ${styles.full}`}
-      title={t('Click to hide full and old addresses')}
       content={(
         <span
           className={`${styles.text} ${styles.noSelect} account-secondary-full`}
@@ -52,7 +52,9 @@ const WithTitle = ({
           {newAddress}
         </span>
       )}
-    />
+    >
+      <span>{t('Click to hide full and old addresses')}</span>
+    </Tooltip>
     <Legacy legacyAddress={legacyAddress} />
   </div>
 );
@@ -66,7 +68,6 @@ const WithOutTitle = ({
   <div className={styles.identity}>
     <Tooltip
       className={`${styles.tooltip} ${styles.primary} ${styles.truncated}`}
-      title={t('Click to see full and old addresses')}
       content={(
         <span
           className={`${styles.text} ${styles.primary} ${styles.noSelect} account-primary-truncated`}
@@ -75,10 +76,11 @@ const WithOutTitle = ({
           {truncateAddress(newAddress)}
         </span>
       )}
-    />
+    >
+      <span>{t('Click to see full and old addresses')}</span>
+    </Tooltip>
     <Tooltip
       className={`${styles.tooltip} ${styles.primaryTooltip} ${styles.full}`}
-      title={t('Click to hide full and old addresses')}
       content={(
         <span
           className={`${styles.text} ${styles.primary} ${styles.noSelect} delegate-primary-full`}
@@ -87,7 +89,9 @@ const WithOutTitle = ({
           {newAddress}
         </span>
       )}
-    />
+    >
+      <span>{t('Click to hide full and old addresses')}</span>
+    </Tooltip>
     <Legacy legacyAddress={legacyAddress} />
   </div>
 );
