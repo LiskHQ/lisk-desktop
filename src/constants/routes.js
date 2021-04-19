@@ -128,7 +128,7 @@ export default {
   dashboard: {
     path: '/',
     component: Dashboard,
-    isPrivate: false,
+    isPrivate: true,
     forbiddenTokens: [],
     exact: true,
   },
