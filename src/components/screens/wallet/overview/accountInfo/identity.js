@@ -17,85 +17,6 @@ const Legacy = ({ legacyAddress }) => (
   </div>
 );
 
-const WithTitle = ({
-  newAddress,
-  legacyAddress,
-  bookmark,
-  username = '',
-  t = str => str,
-  onClickFn,
-}) => (
-  <div className={styles.identity}>
-    <span className={`${styles.primary} ${styles.text} ${styles.noSelect} account-primary`}>
-      {username || bookmark.title}
-    </span>
-    <Tooltip
-      className={`${styles.tooltip} ${styles.secondary} ${styles.truncated}`}
-      content={(
-        <span
-          className={`${styles.text} ${styles.noSelect} account-secondary-truncated`}
-          onClick={onClickFn}
-        >
-          {truncateAddress(newAddress)}
-        </span>
-      )}
-    >
-      <span>{t('Click to see full and old addresses')}</span>
-    </Tooltip>
-    <Tooltip
-      className={`${styles.tooltip} ${styles.secondaryTooltip} ${styles.full}`}
-      content={(
-        <span
-          className={`${styles.text} ${styles.noSelect} account-secondary-full`}
-          onClick={onClickFn}
-        >
-          {newAddress}
-        </span>
-      )}
-    >
-      <span>{t('Click to hide full and old addresses')}</span>
-    </Tooltip>
-    <Legacy legacyAddress={legacyAddress} />
-  </div>
-);
-
-const WithOutTitle = ({
-  newAddress,
-  legacyAddress,
-  t = str => str,
-  onClickFn,
-}) => (
-  <div className={styles.identity}>
-    <Tooltip
-      className={`${styles.tooltip} ${styles.primary} ${styles.truncated}`}
-      content={(
-        <span
-          className={`${styles.text} ${styles.primary} ${styles.noSelect} account-primary-truncated`}
-          onClick={onClickFn}
-        >
-          {truncateAddress(newAddress)}
-        </span>
-      )}
-    >
-      <span>{t('Click to see full and old addresses')}</span>
-    </Tooltip>
-    <Tooltip
-      className={`${styles.tooltip} ${styles.primaryTooltip} ${styles.full}`}
-      content={(
-        <span
-          className={`${styles.text} ${styles.primary} ${styles.noSelect} delegate-primary-full`}
-          onClick={onClickFn}
-        >
-          {newAddress}
-        </span>
-      )}
-    >
-      <span>{t('Click to hide full and old addresses')}</span>
-    </Tooltip>
-    <Legacy legacyAddress={legacyAddress} />
-  </div>
-);
-
 /**
  *
  * Displays address and username
@@ -103,14 +24,75 @@ const WithOutTitle = ({
  * but toggles expanded on user click
  *
  */
-const Identity = (props) => {
-  if (!props.newAddress) {
+const Identity = ({
+  newAddress,
+  legacyAddress,
+  bookmark,
+  username = '',
+  t = str => str,
+  setShowLegacy,
+}) => {
+  if (!newAddress) {
     return null;
   }
-  if (props.username || !!props.bookmark) {
-    return <WithTitle {...props} />;
+
+  const hasTitle = username || !!bookmark;
+  let classNames = {
+    tooltipTruncated: `${styles.tooltip} ${styles.primary} ${styles.truncated}`,
+    tooltipFull: `${styles.tooltip} ${styles.primaryTooltip} ${styles.full}`,
+    spanTruncated: `${styles.text} ${styles.primary} ${styles.noSelect} account-primary-truncated`,
+    spanFull: `${styles.text} ${styles.primary} ${styles.noSelect} delegate-primary-full`,
+  };
+
+  if (hasTitle) {
+    classNames = {
+      tooltipTruncated: `${styles.tooltip} ${styles.secondary} ${styles.truncated}`,
+      tooltipFull: `${styles.tooltip} ${styles.secondaryTooltip} ${styles.full}`,
+      spanTruncated: `${styles.text} ${styles.noSelect} account-secondary-truncated`,
+      spanFull: `${styles.text} ${styles.noSelect} account-secondary-full`,
+    };
   }
-  return <WithOutTitle {...props} />;
+
+  return (
+    <div className={styles.identity}>
+      {
+        hasTitle
+          ? (
+            <span className={`${styles.primary} ${styles.text} ${styles.noSelect} account-primary`}>
+              {username || bookmark.title}
+            </span>
+          )
+          : null
+      }
+      <Tooltip
+        className={classNames.tooltipTruncated}
+        content={(
+          <span
+            className={classNames.spanTruncated}
+            onClick={setShowLegacy}
+          >
+            {truncateAddress(newAddress)}
+          </span>
+        )}
+      >
+        <span>{t('Click to see full and old addresses')}</span>
+      </Tooltip>
+      <Tooltip
+        className={classNames.tooltipFull}
+        content={(
+          <span
+            className={classNames.spanFull}
+            onClick={setShowLegacy}
+          >
+            {newAddress}
+          </span>
+        )}
+      >
+        <span>{t('Click to hide full and old addresses')}</span>
+      </Tooltip>
+      <Legacy legacyAddress={legacyAddress} />
+    </div>
+  );
 };
 
 export default Identity;
