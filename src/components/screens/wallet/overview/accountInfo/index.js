@@ -32,7 +32,7 @@ const AccountInfo = ({
             username={username}
             bookmark={bookmark}
             showLegacy={showLegacy}
-            onClickFn={onClick}
+            setShowLegacy={onClick}
           />
         </div>
         <ActionBar
