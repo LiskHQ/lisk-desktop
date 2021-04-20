@@ -154,17 +154,17 @@ describe('API: LSK Account', () => {
       });
     });
 
-    it('should call http without parameters', async () => {
+    it('should call http without base url if not passed', async () => {
       http.mockImplementation(() => Promise.resolve({ data: [{}] }));
       // Checks with no baseUrl
       await getAccount({
         network,
-        params: { address: 'lsk123' },
+        params: { passphrase },
       });
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { address: 'lsk123' },
+        params: { address },
         baseUrl: undefined,
         path,
       });
