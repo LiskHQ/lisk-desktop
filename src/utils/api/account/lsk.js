@@ -51,6 +51,17 @@ const getAccountParams = (params) => {
   return {};
 };
 
+/* istanbul ignore next */
+const getPublicKey = (address, passphrase) => {
+  if (address) {
+    return extractAddressFromPublicKey(address);
+  }
+  if (passphrase) {
+    return extractPublicKey(passphrase);
+  }
+  throw Error('Can not convert undefined to public key');
+};
+
 /**
  * Retrieves details of an account with given params
  *
@@ -79,15 +90,21 @@ export const getAccount = async ({
       params: normParams,
     });
 
-    return response.data[0];
+    if (response.data[0]) {
+      const account = { ...response.data[0] };
+      const isAccountUninitialized = !account.summary.publicKey;
+      if (isAccountUninitialized) {
+        const publicKey = params.publicKey ?? getPublicKey(params.address, params.passphrase);
+        account.summary.publicKey = publicKey;
+      }
+
+      return account;
+    }
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log('Lisk account not found.');
-    let publicKey = params.publicKey;
-    if (!publicKey && params.passphrase) {
-      publicKey = extractPublicKey(params.passphrase);
-    }
 
+    const publicKey = params.publicKey ?? getPublicKey(params.address, params.passphrase);
     const account = {
       summary: {
         publicKey,
@@ -99,6 +116,8 @@ export const getAccount = async ({
 
     return account;
   }
+
+  throw Error('Error retrieving account');
 };
 
 const accountFilters = {
