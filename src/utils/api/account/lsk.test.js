@@ -159,12 +159,12 @@ describe('API: LSK Account', () => {
       // Checks with no baseUrl
       await getAccount({
         network,
-        params: { },
+        params: { address: 'lsk123' },
       });
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { },
+        params: { address: 'lsk123' },
         baseUrl: undefined,
         path,
       });
