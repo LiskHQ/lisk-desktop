@@ -28,13 +28,14 @@
   @mixin contentLarge;
 
   background-color: var(--color-tooltip);
+  border: 1px solid var(--color-platinum);
   border-radius: var(--border-radius-box);
   box-shadow: var(--box-shadow-standard);
   box-sizing: border-box;
   color: var(--color-slate-gray);
   max-width: 380px;
   opacity: 0;
-  padding: 7px;
+  padding: 7px 10px;
   position: absolute;
   text-align: left;
   transform: translateY(-50%);
@@ -50,6 +51,7 @@
     color: var(--color-tooltip);
     height: 28px;
     position: absolute;
+    stroke: var(--color-platinum);
     transform: translateY(-50%);
     width: 13px;
   }
@@ -237,6 +239,5 @@
 }
 
 .maxContent {
-  padding: 16px;
   width: max-content;
 }
