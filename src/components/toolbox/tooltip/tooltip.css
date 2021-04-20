@@ -50,7 +50,6 @@
     color: var(--color-tooltip);
     height: 28px;
     position: absolute;
-    stroke: var(--color-platinum);
     transform: translateY(-50%);
     width: 13px;
   }
