@@ -36,6 +36,7 @@ const getAccountParams = (params) => {
     passphrase,
     publicKey,
   } = params;
+
   // Pick username, cause the address is not obtainable from the username
   if (username) return { username };
   // If you have the address, you don't need anything else
@@ -49,17 +50,6 @@ const getAccountParams = (params) => {
   }
   // if none of the above, ignore the params
   return {};
-};
-
-/* istanbul ignore next */
-const getPublicKey = (address, passphrase) => {
-  if (address) {
-    return extractAddressFromPublicKey(address);
-  }
-  if (passphrase) {
-    return extractPublicKey(passphrase);
-  }
-  throw Error('Can not convert undefined to public key');
 };
 
 /**
@@ -92,9 +82,9 @@ export const getAccount = async ({
 
     if (response.data[0]) {
       const account = { ...response.data[0] };
-      const isAccountUninitialized = !account.summary.publicKey;
+      const isAccountUninitialized = !account.summary?.publicKey;
       if (isAccountUninitialized) {
-        const publicKey = params.publicKey ?? getPublicKey(params.address, params.passphrase);
+        const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
         account.summary.publicKey = publicKey;
       }
 
@@ -104,7 +94,7 @@ export const getAccount = async ({
     // eslint-disable-next-line no-console
     console.log('Lisk account not found.');
 
-    const publicKey = params.publicKey ?? getPublicKey(params.address, params.passphrase);
+    const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
     const account = {
       summary: {
         publicKey,
