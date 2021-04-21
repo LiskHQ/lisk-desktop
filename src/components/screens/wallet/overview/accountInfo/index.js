@@ -92,14 +92,9 @@ const AccountInfo = ({
                 content={(
                   <DialogLink
                     component="addBookmark"
-                    data={username ? {
+                    data={{
                       formAddress: address,
-                      label: account.dpos?.delegate?.username,
-                      isDelegate: account.isDelegate,
-                    } : {
-                      formAddress: address,
-                      label: bookmark ? bookmark.title : '',
-                      isDelegate: account.isDelegate,
+                      username: username || '',
                     }}
                   >
                     <BookmarkIcon bookmark={bookmark} />
