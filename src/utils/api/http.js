@@ -29,7 +29,11 @@ const http = ({
       ...restOptions,
     })
       .then((response) => {
-        if (!response.ok) throw Error(response.statusText);
+        if (!response.ok) {
+          const error = Error(response.statusText);
+          error.code = response.status;
+          throw error;
+        }
         return response.json();
       });
   } catch (e) {
