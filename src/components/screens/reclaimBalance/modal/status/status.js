@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import TransactionResult from '@shared/transactionResult';
-import DialogHolder from '@toolbox/dialog/holder';
 import { PrimaryButton } from '@toolbox/buttons';
+import { routes } from '@constants';
 import styles from './status.css';
 
-const Status = ({ t, transactionBroadcasted, transactionInfo }) => {
+const Status = ({
+  t, transactionBroadcasted,
+  transactionInfo, history,
+}) => {
   const [status, setStatus] = useState('pending');
 
   const broadcastTransaction = () => {
@@ -27,7 +30,9 @@ const Status = ({ t, transactionBroadcasted, transactionInfo }) => {
       title: t('Done!'),
       message: t('You will be notified when your transaction is confirmed.'),
       button: {
-        onClick: DialogHolder.hideDialog,
+        onClick: () => {
+          history.push(routes.dashboard.path);
+        },
         title: t('Go to Wallet'),
         className: 'close-modal',
       },

@@ -6,7 +6,7 @@ import Summary from './summary';
 import Status from './status';
 
 const ReclaimBalanceModal = ({ t }) => (
-  <Dialog hasClose>
+  <Dialog>
     <MultiStep>
       <Summary t={t} />
       <Status t={t} />
