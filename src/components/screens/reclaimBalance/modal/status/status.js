@@ -7,19 +7,18 @@ import { PrimaryButton } from '@toolbox/buttons';
 import { routes, tokenMap } from '@constants';
 import styles from './status.css';
 
+// eslint-disable-next-line max-statements
 const Status = ({
-  t, transactionBroadcasted,
+  t, transactionBroadcasted, transactions,
   transactionInfo, history,
 }) => {
   const account = useSelector(selectAccount);
-  const [status, setStatus] = useState('pending');
 
   const broadcastTransaction = () => {
     transactionBroadcasted(transactionInfo);
   };
 
   const onRetry = () => {
-    setStatus('pending');
     broadcastTransaction();
   };
 
@@ -27,7 +26,10 @@ const Status = ({
     if (transactionInfo) broadcastTransaction();
   }, []);
 
-  const isTransactionSuccess = status !== 'fail';
+  const isTransactionSuccess = transactions.confirmed.length > 0;
+  const totalErrors = transactions.broadcastedTransactionsError.length;
+  const error = totalErrors > 0
+    && JSON.stringify(transactions.broadcastedTransactionsError[totalErrors - 1]);
 
   const displayTemplate = isTransactionSuccess
     ? {
@@ -54,11 +56,12 @@ const Status = ({
   return (
     <div className={`${styles.wrapper} status-container`}>
       <TransactionResult
+        t={t}
         illustration={isTransactionSuccess ? 'transactionSuccess' : 'transactionError'}
         success={isTransactionSuccess}
         title={displayTemplate.title}
         className={`${styles.content} ${!isTransactionSuccess && styles.error}`}
-        t={t}
+        error={error}
       >
         {isTransactionSuccess
           ? (
