@@ -10,6 +10,7 @@ export { default as quickTips } from './quickTips';
 export { default as settings } from './settings';
 export { tokenKeys, tokenMap } from './tokens';
 export * from './transactions';
+export * from './account';
 export { default as account } from './account';
 export { default as actionTypes } from './actionTypes';
 export { chartStyles, colorPalette } from './chart';
