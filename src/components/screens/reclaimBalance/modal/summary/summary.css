@@ -1,5 +1,3 @@
-@import '../../../../../app/mixins.css';
-
 .summaryContainer {
   & > header {
     padding-left: var(--horizontal-padding-l) !important;

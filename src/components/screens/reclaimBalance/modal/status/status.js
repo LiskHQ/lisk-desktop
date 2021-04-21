@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectAccount } from '@store/selectors';
 import TransactionResult from '@shared/transactionResult';
+import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
-import { routes } from '@constants';
+import { routes, tokenMap } from '@constants';
 import styles from './status.css';
 
 const Status = ({
   t, transactionBroadcasted,
   transactionInfo, history,
 }) => {
+  const account = useSelector(selectAccount);
   const [status, setStatus] = useState('pending');
 
   const broadcastTransaction = () => {
@@ -28,10 +32,10 @@ const Status = ({
   const displayTemplate = isTransactionSuccess
     ? {
       title: t('Done!'),
-      message: t('You will be notified when your transaction is confirmed.'),
+      message: t('Your balance will be transfered in a few seconds.'),
       button: {
         onClick: () => {
-          history.push(routes.dashboard.path);
+          history.push(routes.wallet.path);
         },
         title: t('Go to Wallet'),
         className: 'close-modal',
@@ -60,8 +64,17 @@ const Status = ({
           ? (
             <>
               <ul className={styles.successList}>
-                <li>{t('0.1 LSK was deposited on your account')}</li>
-                <li>{t('Reclaim transaction was sent')}</li>
+                <li>
+                  <span>
+                    <LiskAmount
+                      val={parseInt(account.info.LSK.legacy.balance, 10)}
+                      token={tokenMap.LSK.key}
+                    />
+                    {' '}
+                    {t('was deposited on your account')}
+                  </span>
+                </li>
+                <li><span>{t('Reclaim transaction was sent')}</span></li>
               </ul>
               <p className="transaction-status body-message">{displayTemplate.message}</p>
               <PrimaryButton

@@ -80,7 +80,7 @@ const Summary = ({
       </section>
       <section>
         <label>{t('Balance to reclaim')}</label>
-        <LiskAmount val={parseInt(account.info.LSK.legacy.balance, 10)} token="LSK" />
+        <LiskAmount val={parseInt(account.info.LSK.legacy.balance, 10)} token={token} />
       </section>
     </TransactionSummary>
   );
