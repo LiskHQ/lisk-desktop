@@ -57,7 +57,7 @@ const Status = ({
         illustration={isTransactionSuccess ? 'transactionSuccess' : 'transactionError'}
         success={isTransactionSuccess}
         title={displayTemplate.title}
-        className={styles.content}
+        className={`${styles.content} ${!isTransactionSuccess && styles.error}`}
         t={t}
       >
         {isTransactionSuccess

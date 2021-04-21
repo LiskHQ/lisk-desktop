@@ -15,12 +15,22 @@
 
     margin: 0;
     padding: 0;
-    color: var(----color-maastricht-blue);
+    color: var(--color-maastricht-blue);
   }
 
   & > button {
     margin: 50px 0 0 0;
     width: 431px !important;
+  }
+
+  &.error {
+    & > p {
+      color: var(--color-blue-gray);
+    }
+
+    & > button {
+      margin-bottom: 30px;
+    }
   }
 }
 
@@ -33,7 +43,7 @@
   
     display: flex;
     margin-bottom: 30px;
-    color: var(----color-black);
+    color: var(--color-black);
 
     &::before {
       display: block;
