@@ -4,7 +4,10 @@ import CopyToClipboard from '@toolbox/copyToClipboard';
 import Icon from '@toolbox/icon';
 import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
+import { tokenMap } from '@constants';
 import styles from './index.css';
+
+const token = tokenMap.LSK.key;
 
 const AccountMigration = ({ t, account, showBalance }) => (
   <div className={styles.accountContainer}>
@@ -17,7 +20,7 @@ const AccountMigration = ({ t, account, showBalance }) => (
       {showBalance && (
         <p>
           <span>{`${t('Balance')}: `}</span>
-          <LiskAmount val={parseInt(account.legacy?.balance, 10)} token="LSK" />
+          <LiskAmount val={Number(account.legacy?.balance)} token={token} />
         </p>
       )}
     </div>
@@ -31,7 +34,7 @@ const AccountMigration = ({ t, account, showBalance }) => (
       {showBalance && (
         <p>
           <span>{`${t('Balance')}: `}</span>
-          <LiskAmount val={parseInt(account.token?.balance, 10)} token="LSK" />
+          <LiskAmount val={parseInt(account.token?.balance, 10)} token={token} />
         </p>
       )}
     </div>

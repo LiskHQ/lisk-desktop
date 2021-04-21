@@ -12,12 +12,12 @@ import { toRawLsk } from '@utils/lsk';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.reclaimLSK;
+const token = tokenMap.LSK.key;
 
 const Summary = ({
   nextStep,
   t,
 }) => {
-  const token = tokenMap.LSK.key;
   const account = useSelector(selectAccount);
   const network = useSelector(state => state.network);
   const [
@@ -33,7 +33,7 @@ const Summary = ({
     transaction: {
       moduleAssetId,
       nonce: account.info.LSK.sequence.nonce,
-      senderPublicKey: account.info.LSK.summary.publicKey,
+      publicKey: account.info.LSK.summary.publicKey,
       amount: account.info.LSK.legacy.balance,
     },
   });
@@ -42,7 +42,7 @@ const Summary = ({
     const data = {
       moduleAssetId,
       network,
-      senderPublicKey: account.info.LSK.summary.publicKey,
+      publicKey: account.info.LSK.summary.publicKey,
       passphrase: account.passphrase,
       nonce: account.info.LSK.sequence.nonce,
       fee: toRawLsk(minFee.value),

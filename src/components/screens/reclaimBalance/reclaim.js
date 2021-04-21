@@ -5,12 +5,13 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import { PrimaryButton } from '@toolbox/buttons';
 import DialogLink from '@toolbox/dialog/link';
 import AccountMigration from '@shared/accountMigration';
-import { getActiveTokenAccount } from '@utils/account';
+import { getActiveTokenAccount, hasEnoughtBalanceForReclaim } from '@utils/account';
+import { fromRawLsk } from '@utils/lsk';
 import styles from './index.css';
 
 const Reclaim = ({ t }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
-  const hasEnoughtBalance = parseInt(account.token?.balance, 10) > 1000000;
+  const hasEnoughtBalance = hasEnoughtBalanceForReclaim(parseInt(account.token?.balance, 10));
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
@@ -37,7 +38,7 @@ const Reclaim = ({ t }) => {
         <ul className={styles.list}>
           <li className={`${styles.step} ${hasEnoughtBalance ? styles.check : styles.green}`}>
             <p>
-              {t('Deposit at least 0.01 LSK to your new account')}
+              {t('Deposit at least {{amount}} to your new account', { amount: fromRawLsk(Number(account.info.LSK.legacy.balance)) })}
               <Tooltip position="right" size="m">
                 <>
                   <p>

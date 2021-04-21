@@ -125,7 +125,7 @@
   "Delegates Forging Status": "Delegates Forging Status",
   "Delegates are the most commited Lisk community members responsible for \n          securing the network and processing all the transactions on Lisk’s blockchain \n          network.": "Delegates are the most commited Lisk community members responsible for \n          securing the network and processing all the transactions on Lisk’s blockchain \n          network.",
   "Delegates overview": "Delegates overview",
-  "Deposit at least 0.01 LSK to your new account": "Deposit at least 0.01 LSK to your new account",
+  "Deposit at least {{amount}} to your new account": "Deposit at least {{amount}} to your new account",
   "Details": "Details",
   "Devnet": "Devnet",
   "Disable dark mode": "Disable dark mode",
