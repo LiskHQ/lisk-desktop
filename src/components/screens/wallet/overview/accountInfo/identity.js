@@ -32,10 +32,6 @@ const Identity = ({
   t = str => str,
   setShowLegacy,
 }) => {
-  if (!newAddress) {
-    return null;
-  }
-
   const hasTitle = username || !!bookmark;
   let classNames = {
     tooltipTruncated: `${styles.tooltip} ${styles.primary} ${styles.truncated}`,

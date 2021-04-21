@@ -26,14 +26,18 @@ const AccountInfo = ({
             address={address}
             size={30}
           />
-          <Identity
-            newAddress={address}
-            legacyAddress={account.summary.legacyAddress}
-            username={username}
-            bookmark={bookmark}
-            showLegacy={showLegacy}
-            setShowLegacy={onClick}
-          />
+          {
+            address ? (
+              <Identity
+                newAddress={address}
+                legacyAddress={account.summary.legacyAddress}
+                username={username}
+                bookmark={bookmark}
+                showLegacy={showLegacy}
+                setShowLegacy={onClick}
+              />
+            ) : null
+          }
         </div>
         <ActionBar
           address={address}
