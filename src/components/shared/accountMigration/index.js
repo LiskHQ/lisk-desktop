@@ -11,8 +11,8 @@ const AccountMigration = ({ t, account, showBalance }) => (
     <div>
       <h5>{t('Old account')}</h5>
       <div className={styles.addressContainer}>
-        <AccountVisualWithAddress address={account.legacy?.address} />
-        <CopyToClipboard type="icon" value={account.legacy?.address} />
+        <AccountVisualWithAddress address={account.legacy?.address} truncate={false} />
+        <CopyToClipboard type="icon" value={account.legacy?.address} copyClassName={styles.copyIcon} />
       </div>
       {showBalance && (
         <p>
@@ -21,12 +21,12 @@ const AccountMigration = ({ t, account, showBalance }) => (
         </p>
       )}
     </div>
-    <Icon name="arrowRightWithStroke" />
+    <Icon name="arrowRightWithStroke" className={styles.arrow} />
     <div>
       <h5>{t('New account')}</h5>
       <div className={styles.addressContainer}>
-        <AccountVisualWithAddress address={account.summary?.address} />
-        <CopyToClipboard type="icon" value={account.summary?.address} />
+        <AccountVisualWithAddress address={account.summary?.address} truncate={false} />
+        <CopyToClipboard type="icon" value={account.summary?.address} copyClassName={styles.copyIcon} />
       </div>
       {showBalance && (
         <p>
