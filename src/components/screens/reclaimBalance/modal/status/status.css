@@ -40,7 +40,7 @@
 
   & > li {
     @mixin contentLargest;
-  
+
     display: flex;
     margin-bottom: 30px;
     color: var(--color-black);

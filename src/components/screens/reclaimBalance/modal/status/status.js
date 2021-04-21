@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAccount } from '@store/selectors';
 import TransactionResult from '@shared/transactionResult';
