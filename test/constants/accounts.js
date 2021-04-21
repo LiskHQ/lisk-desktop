@@ -48,7 +48,7 @@ const accounts = {
       address: '12345678900000000000L',
       balance: '9897000000000000',
     },
-    sequence: { },
+    sequence: { nonce: '0' },
     dpos: {
       delegate: {},
     },
