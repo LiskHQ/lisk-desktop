@@ -32,7 +32,7 @@
       border-radius: 16px;
       border: 1px solid var(--color-jade-green);
       background: var(--color-jade-green);
-      background-image: url('../../../../assets/images/icons/checkmark-white.svg');
+      background-image: url('../../../../../assets/images/icons/checkmark-white.svg');
       background-repeat: no-repeat;
       background-position: center;
     }

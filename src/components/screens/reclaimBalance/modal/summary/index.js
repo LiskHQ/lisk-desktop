@@ -23,7 +23,6 @@ const Summary = ({
     // eslint-disable-next-line no-unused-vars
     selectedPriority, _, priorityOptions,
   ] = useTransactionPriority(token);
-  console.log(selectedPriority, priorityOptions);
 
   const { minFee } = useTransactionFeeCalculation({
     selectedPriority,
@@ -37,7 +36,6 @@ const Summary = ({
       amount: account.info.LSK.legacy.balance,
     },
   });
-  console.log(minFee);
 
   const onSubmit = async () => {
     const data = {
@@ -50,12 +48,10 @@ const Summary = ({
       amount: account.info.LSK.legacy.balance,
     };
 
-    console.log('onSubmit', data);
 
     const [error, tx] = await to(
       create(data, tokenMap.LSK.key),
     );
-    console.log(error, tx);
 
     if (!error) {
       nextStep({ transactionInfo: tx });
