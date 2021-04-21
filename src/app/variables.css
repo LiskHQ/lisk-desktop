@@ -165,6 +165,7 @@ or "warn/action" ineastd of "red/green"
   --color-red-transparent: rgba(255, 69, 87, 0.1);
   --color-blue-manatee-transparent: rgba(138, 140, 162, 0.1);
   --color-jade-green-transparent: rgba(43, 214, 123, 0.1);
+  --color-tooltip: rgb(255, 255, 255, 0.9);
 
   /*************************
         Box
@@ -245,4 +246,5 @@ or "warn/action" ineastd of "red/green"
   --tab-border-color: #4070f4;
   --color-search-container: var(--color-body-bg);
   --color-vote-item-bg: var(--color-mystic);
+  --color-tooltip: rgb(35, 35, 37, 0.9);
 }
