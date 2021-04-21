@@ -83,7 +83,7 @@ export const getAccount = async ({
     if (response.data[0]) {
       const account = { ...response.data[0] };
       const isAccountUninitialized = !account.summary.publicKey;
-      if (isAccountUninitialized) {
+      if (isAccountUninitialized && (params.publicKey || params.passphrase)) {
         const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
         account.summary.publicKey = publicKey;
       }
@@ -94,17 +94,18 @@ export const getAccount = async ({
     // eslint-disable-next-line no-console
     console.log('Lisk account not found.');
 
-    const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
-    const account = {
-      summary: {
-        publicKey,
-        balance: 0,
-        address: normParams.address,
-        token: tokenMap.LSK.key,
-      },
-    };
-
-    return account;
+    if (params.publicKey || params.passphrase) {
+      const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
+      const account = {
+        summary: {
+          publicKey,
+          balance: 0,
+          address: normParams.address,
+          token: tokenMap.LSK.key,
+        },
+      };
+      return account;
+    }
   }
 
   throw Error('Error retrieving account');
