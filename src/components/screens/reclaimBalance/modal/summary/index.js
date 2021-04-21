@@ -20,6 +20,7 @@ const Summary = ({
 }) => {
   const account = useSelector(selectAccount);
   const network = useSelector(state => state.network);
+  const senderPublicKey = account.info.LSK.summary.publicKey;
   const [
     // eslint-disable-next-line no-unused-vars
     selectedPriority, _, priorityOptions,
@@ -33,7 +34,7 @@ const Summary = ({
     transaction: {
       moduleAssetId,
       nonce: account.info.LSK.sequence.nonce,
-      publicKey: account.info.LSK.summary.publicKey,
+      senderPublicKey,
       amount: account.info.LSK.legacy.balance,
     },
   });
@@ -42,7 +43,7 @@ const Summary = ({
     const data = {
       moduleAssetId,
       network,
-      publicKey: account.info.LSK.summary.publicKey,
+      senderPublicKey,
       passphrase: account.passphrase,
       nonce: account.info.LSK.sequence.nonce,
       fee: toRawLsk(minFee.value),
