@@ -1,5 +1,5 @@
 import React from 'react';
-import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP, tokenMap } from '@constants';
 import { validateAddress } from '@utils/validators';
 import AccountVisual from '@toolbox/accountVisual';
 import Icon from '@toolbox/icon';
@@ -9,7 +9,7 @@ const TransactionTypeFigure = ({
   moduleAssetId, address, avatarSize = 40, className = '', icon,
 }) => {
   const renderAvatar = () => {
-    if (validateAddress(address)) {
+    if (validateAddress(tokenMap.LSK.key, address) === 0) {
       return <AccountVisual address={address} size={avatarSize} />;
     }
     return null;

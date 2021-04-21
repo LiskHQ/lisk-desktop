@@ -64,7 +64,7 @@ const setVotesByLaunchProtocol = search =>
 
     return dispatch(
       voteEdited(accounts.data
-        .filter(({ address }) => validateAddress(address))
+        .filter(({ address }) => validateAddress(tokenMap.LSK.key, address) === 0)
         .map(
           ({ address, username }) => ({ address, username, amount: '' }),
         )),

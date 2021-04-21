@@ -1,4 +1,4 @@
-import { regex } from '@constants';
+import { regex, tokenMap } from '@constants';
 import { validateAddress } from '@utils/validators';
 import { getAccount } from '../account/lsk';
 import { getTransaction } from '../transaction/lsk';
@@ -67,7 +67,7 @@ const getTransactionOrBlock = async ({ network, params, baseUrl }) => {
  */
 // eslint-disable-next-line import/prefer-default-export
 export const search = ({ network, params, baseUrl }) => {
-  if (validateAddress(params.query)
+  if (validateAddress(tokenMap.LSK.key, params.query) === 0
     || regex.publicKey.test(params.query)) {
     return getAccount({
       network,
