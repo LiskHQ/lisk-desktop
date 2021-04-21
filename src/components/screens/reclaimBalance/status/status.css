@@ -1,0 +1,40 @@
+.wrapper {
+  padding: var(--horizontal-padding-l);
+}
+
+.content {
+  & > h1 {
+    margin: 19px 0 15px 0;
+    padding: 0;
+  }
+
+  & > p {
+    margin: 0 0 9px 0;
+    padding: 0;
+  }
+
+  & > button {
+    margin: 0;
+    width: 431px !important;
+  }
+}
+
+.successList {
+  list-style: none;
+
+  & > li {
+    &::before {
+      display: block;
+      content: '';
+      width: 16px;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--color-jade-green);
+      background: var(--color-jade-green);
+      background-image: url('../../../../assets/images/icons/checkmark-white.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+}
