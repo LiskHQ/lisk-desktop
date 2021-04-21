@@ -1,27 +1,4 @@
-@import '../../../../app/mixins.css';
-
-.userInformation {
-  width: 100%;
-  height: 27px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  box-sizing: border-box;
-
-  & .nickname {
-    @mixin contentLargest;
-
-    color: var(--color-maastricht-blue);
-    margin: 0 0 0 15px;
-  }
-
-  & .address {
-    @mixin contentLargest;
-
-    color: var(--color-blue-gray);
-    margin: 0 0 0 10px;
-  }
-}
+@import '../../../../../app/mixins.css';
 
 .summaryContainer {
   & > header {

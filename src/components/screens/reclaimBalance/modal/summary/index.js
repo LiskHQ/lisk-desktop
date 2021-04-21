@@ -9,6 +9,7 @@ import AccountMigration from '@shared/accountMigration';
 import TransactionSummary from '@shared/transactionSummary';
 import LiskAmount from '@shared/liskAmount';
 import { toRawLsk } from '@utils/lsk';
+import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.reclaimLSK;
 
@@ -72,6 +73,7 @@ const Summary = ({
       showCancelButton={false}
       fee={minFee.value}
       token={token}
+      classNames={styles.summaryContainer}
     >
       <section>
         <AccountMigration account={account.info.LSK} showBalance={false} />

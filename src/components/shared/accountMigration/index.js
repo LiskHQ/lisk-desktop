@@ -21,7 +21,7 @@ const AccountMigration = ({ t, account, showBalance }) => (
         </p>
       )}
     </div>
-    <Icon name="arrowRightWithStroke" className={styles.arrow} />
+    <Icon name="arrowRightWithStroke" className={`${styles.arrow} ${!showBalance && styles.noBalance}`} />
     <div>
       <h5>{t('New account')}</h5>
       <div className={styles.addressContainer}>
