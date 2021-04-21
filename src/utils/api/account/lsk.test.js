@@ -154,17 +154,17 @@ describe('API: LSK Account', () => {
       });
     });
 
-    it('should call http without parameters', async () => {
+    it('should call http without base url if not passed', async () => {
       http.mockImplementation(() => Promise.resolve({ data: [{}] }));
       // Checks with no baseUrl
       await getAccount({
         network,
-        params: { },
+        params: { passphrase },
       });
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { },
+        params: { address },
         baseUrl: undefined,
         path,
       });
@@ -191,6 +191,60 @@ describe('API: LSK Account', () => {
 
     it('should return an account if the API returns 404', async () => {
       http.mockImplementation(() => Promise.reject(Error('Account not found.')));
+      // Checks the baseUrl too
+      const result = await getAccount({
+        network,
+        params: {
+          passphrase,
+        },
+        baseUrl,
+      });
+
+      expect(result).toEqual({
+        summary: {
+          address,
+          balance: 0,
+          token: 'LSK',
+          publicKey,
+        },
+      });
+    });
+
+    it('should use the public key from params if the account is uninitialized', async () => {
+      http.mockImplementation(() => Promise.resolve({
+        data: [{
+          summary: {
+            publicKey: '', address, balance: 0, token: 'LSK',
+          },
+        }],
+      }));
+      // Checks the baseUrl too
+      const result = await getAccount({
+        network,
+        params: {
+          publicKey,
+        },
+        baseUrl,
+      });
+
+      expect(result).toEqual({
+        summary: {
+          address,
+          balance: 0,
+          token: 'LSK',
+          publicKey,
+        },
+      });
+    });
+
+    it('should use extract the public key from params.passphrase if the account is uninitialized', async () => {
+      http.mockImplementation(() => Promise.resolve({
+        data: [{
+          summary: {
+            publicKey: '', address, balance: 0, token: 'LSK',
+          },
+        }],
+      }));
       // Checks the baseUrl too
       const result = await getAccount({
         network,

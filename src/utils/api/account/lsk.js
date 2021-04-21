@@ -36,6 +36,7 @@ const getAccountParams = (params) => {
     passphrase,
     publicKey,
   } = params;
+
   // Pick username, cause the address is not obtainable from the username
   if (username) return { username };
   // If you have the address, you don't need anything else
@@ -79,26 +80,35 @@ export const getAccount = async ({
       params: normParams,
     });
 
-    return response.data[0];
+    if (response.data[0]) {
+      const account = { ...response.data[0] };
+      const isAccountUninitialized = !account.summary.publicKey;
+      if (isAccountUninitialized && (params.publicKey || params.passphrase)) {
+        const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
+        account.summary.publicKey = publicKey;
+      }
+
+      return account;
+    }
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log('Lisk account not found.');
-    let publicKey = params.publicKey;
-    if (!publicKey && params.passphrase) {
-      publicKey = extractPublicKey(params.passphrase);
+
+    if (params.publicKey || params.passphrase) {
+      const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
+      const account = {
+        summary: {
+          publicKey,
+          balance: 0,
+          address: normParams.address,
+          token: tokenMap.LSK.key,
+        },
+      };
+      return account;
     }
-
-    const account = {
-      summary: {
-        publicKey,
-        balance: 0,
-        address: normParams.address,
-        token: tokenMap.LSK.key,
-      },
-    };
-
-    return account;
   }
+
+  throw Error('Error retrieving account');
 };
 
 const accountFilters = {
