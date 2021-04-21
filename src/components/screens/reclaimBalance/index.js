@@ -1,14 +1,15 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import MultiStep from '@shared/multiStep';
 import Introduction from './introduction';
 import Reclaim from './reclaim';
 import styles from './index.css';
 
-const ReclaimBalance = () => (
+const ReclaimBalance = ({ t }) => (
   <MultiStep className={styles.multiStep}>
-    <Introduction />
-    <Reclaim />
+    <Introduction t={t} />
+    <Reclaim t={t} />
   </MultiStep>
 );
 
-export default ReclaimBalance;
+export default withTranslation()(ReclaimBalance);

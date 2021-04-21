@@ -80,7 +80,7 @@ const Reclaim = ({ t }) => {
           </li>
         </ul>
       </section>
-      <DialogLink component="send" data={{ reclaim: true }}>
+      <DialogLink component="reclaimBalance">
         <PrimaryButton
           className={styles.button}
           disabled={!hasEnoughtBalance}

@@ -27,6 +27,7 @@ import DeviceDisconnect from '@screens/deviceDisconnectDialog';
 import NewReleaseDialog from '@shared/newReleaseDialog/newReleaseDialog';
 import SearchBar from '@shared/searchBar';
 import ReclaimBalance from '@screens/reclaimBalance';
+import ReclaimBalanceModal from '@screens/reclaimBalance/modal';
 import { tokenMap } from './tokens';
 
 export default {
@@ -208,6 +209,11 @@ export const modals = {
   deviceDisconnectDialog: {
     component: DeviceDisconnect,
     isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  reclaimBalance: {
+    component: ReclaimBalanceModal,
+    isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
 };
