@@ -1,6 +1,7 @@
 import { parseSearchParams } from '@utils/searchParams';
 import { getAccounts } from '@api/account';
 import { tokenMap, regex } from '@constants';
+import { validateAddress } from '@utils/validators';
 import { voteEdited } from './voting';
 
 const isUsernameValid = username => regex.delegateName.test(username);
@@ -63,7 +64,7 @@ const setVotesByLaunchProtocol = search =>
 
     return dispatch(
       voteEdited(accounts.data
-        .filter(({ address }) => regex.address.test(address))
+        .filter(({ address }) => validateAddress(address))
         .map(
           ({ address, username }) => ({ address, username, amount: '' }),
         )),

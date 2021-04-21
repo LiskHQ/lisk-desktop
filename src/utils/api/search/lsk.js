@@ -1,8 +1,9 @@
+import { regex } from '@constants';
+import { validateAddress } from '@utils/validators';
 import { getAccount } from '../account/lsk';
 import { getTransaction } from '../transaction/lsk';
 import { getDelegates } from '../delegate';
 import { getBlock } from '../block';
-import { regex } from '@constants';
 
 /**
  * Fetches transaction or block info for a given id
@@ -66,7 +67,7 @@ const getTransactionOrBlock = async ({ network, params, baseUrl }) => {
  */
 // eslint-disable-next-line import/prefer-default-export
 export const search = ({ network, params, baseUrl }) => {
-  if (regex.address.test(params.query)
+  if (validateAddress(params.query)
     || regex.publicKey.test(params.query)) {
     return getAccount({
       network,

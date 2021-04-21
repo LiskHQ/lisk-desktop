@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
 import generateUniqueId from '@utils/generateUniqueId';
-import { regex as reg } from '@constants';
+import { validateAddress } from '@utils/validators';
 import { Gradients, gradientSchemes } from './gradients';
 import styles from './accountVisual.css';
 
@@ -232,7 +232,7 @@ class AccountVisual extends React.Component {
       );
     }
 
-    if (!reg.address.test(address)) {
+    if (!validateAddress(address)) {
       return null;
     }
     const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(size);
