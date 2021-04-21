@@ -209,5 +209,59 @@ describe('API: LSK Account', () => {
         },
       });
     });
+
+    it('should use the public key from params if the account is uninitialized', async () => {
+      http.mockImplementation(() => Promise.resolve({
+        data: [{
+          summary: {
+            publicKey: '', address, balance: 0, token: 'LSK',
+          },
+        }],
+      }));
+      // Checks the baseUrl too
+      const result = await getAccount({
+        network,
+        params: {
+          publicKey,
+        },
+        baseUrl,
+      });
+
+      expect(result).toEqual({
+        summary: {
+          address,
+          balance: 0,
+          token: 'LSK',
+          publicKey,
+        },
+      });
+    });
+
+    it('should use extract the public key from params.passphrase if the account is uninitialized', async () => {
+      http.mockImplementation(() => Promise.resolve({
+        data: [{
+          summary: {
+            publicKey: '', address, balance: 0, token: 'LSK',
+          },
+        }],
+      }));
+      // Checks the baseUrl too
+      const result = await getAccount({
+        network,
+        params: {
+          passphrase,
+        },
+        baseUrl,
+      });
+
+      expect(result).toEqual({
+        summary: {
+          address,
+          balance: 0,
+          token: 'LSK',
+          publicKey,
+        },
+      });
+    });
   });
 });
