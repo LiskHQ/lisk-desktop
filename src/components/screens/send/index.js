@@ -19,9 +19,9 @@ const Send = ({ history }) => {
   const initialValue = parseSearchParams(history.location.search);
   const address = useSelector(state => state.account.info.LSK.address);
   const isAccountInitialized = useSelector(state => state.account.isAccountInitialised);
-  const isReclaim = initialValue.reclaim;
+  const isInitialization = initialValue.initialization;
 
-  if (isReclaim) {
+  if (isInitialization) {
     return (
       <Dialog hasClose={isAccountInitialized}>
         <MultiStep
@@ -30,7 +30,7 @@ const Send = ({ history }) => {
           className={styles.wrapper}
         >
           <Summary
-            isReclaim={isReclaim}
+            isInitialization={isInitialization}
             fields={{
               recipient: { address },
               fee: { value: 1e7 },

@@ -6,7 +6,6 @@ import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 import i18n from '../../../../i18n';
-import { truncateAddress } from '../../../../utils/account';
 
 describe('Summary', () => {
   let wrapper;
@@ -68,25 +67,6 @@ describe('Summary', () => {
     expect(wrapper).toContainMatchingElement('.summary-footer');
     expect(wrapper.find('button.confirm-button')).toHaveText('Send 1.123 LSK');
     expect(wrapper.find('.amount-summary')).toIncludeText('1.123 LSK');
-  });
-
-  it('should render properly when isReclaim', () => {
-    wrapper = mount(
-      <Summary
-        {...props}
-        account={accounts.empty_account}
-        isReclaim
-      />,
-    );
-    expect(wrapper).toContainMatchingElement('.summary');
-    expect(wrapper).toContainMatchingElement('.summary-header');
-    expect(wrapper).toContainMatchingElement('.summary-content');
-    expect(wrapper).toContainMatchingElement('.summary-footer');
-    const html = wrapper.html();
-    expect(html).toContain(truncateAddress(accounts.empty_account.legacy.address));
-    expect(html).toContain(truncateAddress(accounts.empty_account.summary.address));
-    expect(html).toContain('98,970,000 LSK');
-    expect(html).toContain('0.1 LSK');
   });
 
   it('should render German decimal point  properly', () => {
@@ -161,9 +141,5 @@ describe('Summary', () => {
     wrapper = mount(<Summary {...newProps} />);
     wrapper.update();
     expect(props.transactionCreated).toBeCalled();
-  });
-
-  it('should render correctly when is reclaim tx', () => {
-
   });
 });

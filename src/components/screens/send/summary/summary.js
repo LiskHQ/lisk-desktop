@@ -5,8 +5,6 @@ import Piwik from '@utils/piwik';
 import AccountVisual from '@toolbox/accountVisual';
 import Converter from '@shared/converter';
 import TransactionSummary from '@shared/transactionSummary';
-import LiskAmount from '@shared/liskAmount';
-import AccountMigration from '@shared/accountMigration';
 
 import styles from './summary.css';
 
@@ -24,18 +22,15 @@ class Summary extends React.Component {
 
   submitTransaction({ secondPassphrase }) {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
-    const { fields, isReclaim, account } = this.props;
-    const tx = isReclaim ? {
-      amount: account.legacy?.balance,
-    } : {
+    const { fields } = this.props;
+
+    this.props.transactionCreated({
       amount: `${toRawLsk(fields.amount.value)}`,
       data: fields.reference ? fields.reference.value : '',
       recipientAddress: fields.recipient.address,
       secondPassphrase,
       fee: toRawLsk(parseFloat(fields.fee.value)),
-    };
-
-    this.props.transactionCreated(tx);
+    });
   }
 
   checkForSuccessOrFailedTransactions() {
@@ -74,7 +69,7 @@ class Summary extends React.Component {
 
   render() {
     const {
-      fields, t, token, account, isReclaim,
+      fields, t, token, account, isInitialization,
     } = this.props;
     const amount = fields.amount.value;
 
@@ -84,63 +79,48 @@ class Summary extends React.Component {
         t={t}
         account={account}
         confirmButton={{
-          label: isReclaim ? t('Send') : t('Send {{amount}} {{token}}', { amount, token }),
+          label: isInitialization ? t('Send') : t('Send {{amount}} {{token}}', { amount, token }),
           onClick: this.submitTransaction,
         }}
         cancelButton={{
           label: t('Edit transaction'),
           onClick: this.prevStep,
         }}
-        showCancelButton={!isReclaim}
+        showCancelButton={!isInitialization}
         fee={fromRawLsk(fields.fee.value)}
         token={token}
       >
-        {isReclaim && (
-          <>
+        <section>
+          <label>{t('Recipient')}</label>
+          <label className="recipient-value">
+            <AccountVisual address={fields.recipient.address} size={25} />
+            <label className={`${styles.information} recipient-confirm`}>
+              {fields.recipient.title || fields.recipient.address}
+            </label>
+            { fields.recipient.title ? (
+              <span className={styles.secondText}>
+                {fields.recipient.address}
+              </span>
+            ) : null }
+          </label>
+        </section>
+        <section>
+          <label>{t('Amount')}</label>
+          <label className="amount-summary">
+            {`${amount} ${token}`}
+            <Converter className={styles.secondText} value={amount} />
+          </label>
+        </section>
+        { fields.reference && fields.reference.value
+          ? (
             <section>
-              <AccountMigration account={account} showBalance={false} />
-            </section>
-            <section>
-              <label>{t('Balance to reclaim')}</label>
-              <LiskAmount val={parseInt(account.legacy?.balance, 10)} token="LSK" />
-            </section>
-          </>
-        )}
-        {!isReclaim && (
-          <>
-            <section>
-              <label>{t('Recipient')}</label>
-              <label className="recipient-value">
-                <AccountVisual address={fields.recipient.address} size={25} />
-                <label className={`${styles.information} recipient-confirm`}>
-                  {fields.recipient.title || fields.recipient.address}
-                </label>
-                { fields.recipient.title ? (
-                  <span className={styles.secondText}>
-                    {fields.recipient.address}
-                  </span>
-                ) : null }
+              <label>{t('Message')}</label>
+              <label className="message-summary">
+                {`${fields.reference.value}`}
               </label>
             </section>
-            <section>
-              <label>{t('Amount')}</label>
-              <label className="amount-summary">
-                {`${amount} ${token}`}
-                <Converter className={styles.secondText} value={amount} />
-              </label>
-            </section>
-            { fields.reference && fields.reference.value
-              ? (
-                <section>
-                  <label>{t('Message')}</label>
-                  <label className="message-summary">
-                    {`${fields.reference.value}`}
-                  </label>
-                </section>
-              )
-              : null }
-          </>
-        )}
+          )
+          : null }
       </TransactionSummary>
     );
   }
