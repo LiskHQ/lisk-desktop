@@ -89,7 +89,6 @@ class AddBookmark extends React.Component {
     }, {});
   }
 
-
   componentDidUpdate(prevProps) {
     const { token } = this.props;
     const { token: prevToken } = prevProps;
@@ -211,13 +210,14 @@ class AddBookmark extends React.Component {
     const { fields: { label, address } } = this.state;
 
     const func = this.state.edit ? bookmarkUpdated : bookmarkAdded;
+    const isDelegate = this.getUrlSearchParam('isDelegate') || this.props.account.data.summary?.isDelegate;
 
     func({
       token: active,
       account: {
         title: label.value,
         address: address.value,
-        isDelegate: this.props.account.data.summary.isDelegate,
+        isDelegate,
       },
     });
     this.onClose();
