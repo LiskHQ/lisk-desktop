@@ -88,15 +88,16 @@
     margin-top: 20px;
     line-height: 26px;
 
-    & > p {
+    & > div {
       margin-top: 0;
       margin-bottom: 10px;
+
+      & > span {
+        margin-top: 7px;
+        color: var(--color-blue-gray);
+      }
     }
 
-    & > p > span {
-      margin-top: 7px;
-      color: var(--color-blue-gray);
-    }
 
     &::before {
       display: block;

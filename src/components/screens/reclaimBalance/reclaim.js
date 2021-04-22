@@ -38,7 +38,7 @@ const Reclaim = ({ t }) => {
         <h5 className={styles.listHeading}>{t('All you need to do:')}</h5>
         <ul className={styles.list}>
           <li className={`${styles.step} ${hasEnoughBalance ? styles.check : styles.green}`}>
-            <p>
+            <div>
               {t('Deposit at least {{amount}} LSK to your new account', { amount: fromRawLsk(balanceNeededForReclaim) })}
               <Tooltip position="right" size="m">
                 <>
@@ -69,16 +69,16 @@ const Reclaim = ({ t }) => {
                   </span>
                 </>
               )}
-            </p>
+            </div>
           </li>
           <li className={`${styles.step} ${hasEnoughBalance && styles.green}`}>
-            <p>
+            <div>
               {t('Send a reclaim transaction')}
               <br />
               <span>
                 {t('Once you have enough tokens on your new account you will be able to send a transaction.')}
               </span>
-            </p>
+            </div>
           </li>
         </ul>
       </section>
