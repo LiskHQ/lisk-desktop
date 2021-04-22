@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 
 import { tokenMap } from '@constants';
 import { validateAddress } from '@utils/validators';
@@ -75,9 +74,9 @@ const AddBookmark = ({
   bookmarkRemoved,
   bookmarkAdded,
   bookmarkUpdated,
+  network,
   t,
 }) => {
-  const network = useSelector(state => state.network);
   const [mode, setMode] = useState(getMode(history, bookmarks, active));
   const [fields, setFields] = useState([blankField, blankField]);
   const timeout = useRef(null);
