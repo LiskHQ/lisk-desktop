@@ -36,16 +36,11 @@ const getAccountParams = (params) => {
     passphrase,
     publicKey,
   } = params;
-  // Pick username, cause the address is not obtainable from the username
   if (username) return { username };
-  // If you have the address, you don't need anything else
+  if (publicKey) return { publicKey };
   if (address) return { address };
-  // convert other params to address
-  if (publicKey) {
-    return { address: extractAddressFromPublicKey(publicKey) };
-  }
   if (passphrase) {
-    return { address: extractAddressFromPassphrase(passphrase) };
+    return { address: extractPublicKey(passphrase) };
   }
   // if none of the above, ignore the params
   return {};
