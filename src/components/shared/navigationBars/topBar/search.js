@@ -38,6 +38,7 @@ const getSearchedText = (history) => {
 const Search = ({
   t,
   history,
+  disabled,
 }) => {
   const { relevantSearchParam, relevantSearchParamValue } = getSearchedText(history);
 
@@ -47,7 +48,7 @@ const Search = ({
       size="maxContent"
       position="bottom"
       content={(
-        <DialogLink component="search" className={`${styles.toggle} search-toggle`}>
+        <DialogLink component="search" className={`${styles.toggle} search-toggle ${disabled && `${styles.disabled} disabled`}`}>
           <span className={relevantSearchParam ? `${styles.searchContainer} ${styles.searchContainerParam}` : styles.searchContainer}>
             <Icon name={relevantSearchParam ? 'search' : 'searchInput'} className="search-icon" />
             {

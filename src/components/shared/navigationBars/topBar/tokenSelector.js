@@ -7,7 +7,9 @@ import Icon from '@toolbox/icon';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './topBar.css';
 
-const TokenSelector = ({ token, history, t }) => {
+const TokenSelector = ({
+  token, history, t, disabled,
+}) => {
   const dispatch = useDispatch();
   const activeToken = useSelector(state => state.settings.token.active);
 
@@ -23,7 +25,7 @@ const TokenSelector = ({ token, history, t }) => {
 
   return (
     <Tooltip
-      className={styles.tooltipWrapper}
+      className={`${styles.tooltipWrappe} ${disabled && `${styles.disabled} disabled`}`}
       size="maxContent"
       position="bottom"
       content={(
