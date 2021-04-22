@@ -98,7 +98,7 @@ const AddBookmark = ({
       {
         value: usernameValue,
         feedback: usernameFeedback,
-        readonly: usernameFeedback !== '',
+        readonly: username || usernameFeedback !== '',
       },
     ]);
   }, []);
