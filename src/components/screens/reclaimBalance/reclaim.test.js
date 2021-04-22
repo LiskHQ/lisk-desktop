@@ -1,12 +1,12 @@
 import { mountWithRouterAndStore } from '@utils/testHelpers';
 import { truncateAddress } from '@utils/account';
-import { addSearchParamsToUrl } from '../../../utils/searchParams';
-import accounts from '../../../../test/constants/accounts';
-import { tokenMap } from '../../../constants/tokens';
+import { addSearchParamsToUrl } from '@utils/searchParams';
+import { tokenMap } from '@constants';
 import Reclaim from './reclaim';
 import styles from './index.css';
+import accounts from '../../../../test/constants/accounts';
 
-jest.mock('../../../utils/searchParams', () => ({
+jest.mock('@utils/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),
 }));
 
