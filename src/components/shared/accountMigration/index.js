@@ -34,7 +34,7 @@ const AccountMigration = ({ t, account, showBalance }) => (
       {showBalance && (
         <p>
           <span>{`${t('Balance')}: `}</span>
-          <LiskAmount val={parseInt(account.token?.balance, 10)} token={token} />
+          <LiskAmount val={Number(account.token?.balance)} token={token} />
         </p>
       )}
     </div>
