@@ -80,14 +80,6 @@ export const getAccount = async ({
       params: normParams,
     });
 
-    response.data[0].summary.isMigrated = false;
-    response.data[0].summary.legacyAddress = '5059876081639179984L';
-
-    response.data[0].legacy = {
-      address: '5059876081639179984L',
-      balance: '7000000000',
-    };
-
     return response.data[0];
   } catch (e) {
     // eslint-disable-next-line no-console
