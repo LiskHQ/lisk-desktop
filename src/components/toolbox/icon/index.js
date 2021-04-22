@@ -11,6 +11,7 @@ import arrowLeftInactive from '../../../assets/images/icons/arrow-left-inactive.
 import arrowRightActive from '../../../assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '../../../assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '../../../assets/images/icons/arrow-right-with-stroke.svg';
+import arrowRightWithStrokeDark from '../../../assets/images/icons/arrow-right-with-stroke-dark.svg';
 import arrowUpCircle from '../../../assets/images/icons/click-to-update.svg';
 import balance from '../../../assets/images/icons/balance.svg';
 import balanceDark from '../../../assets/images/icons/balance-dark.svg';
@@ -306,6 +307,7 @@ export const icons = {
   warningYellow,
   linkIcon,
   arrowRightWithStroke,
+  arrowRightWithStrokeDark,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

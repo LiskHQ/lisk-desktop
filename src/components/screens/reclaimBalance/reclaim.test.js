@@ -1,4 +1,5 @@
 import { mountWithRouterAndStore } from '@utils/testHelpers';
+import { truncateAddress } from '@utils/account';
 import { addSearchParamsToUrl } from '../../../utils/searchParams';
 import accounts from '../../../../test/constants/accounts';
 import { tokenMap } from '../../../constants/tokens';
@@ -35,7 +36,7 @@ describe('Reclaim balance screen', () => {
   it('should render legacy and new addresses', () => {
     const html = wrapper.html();
     expect(html).toContain(accounts.empty_account.legacy.address);
-    expect(html).toContain(accounts.empty_account.summary.address);
+    expect(html).toContain(truncateAddress(accounts.empty_account.summary.address, 'medium'));
   });
 
   it('Opens send modal', () => {

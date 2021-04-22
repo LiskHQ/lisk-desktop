@@ -3,6 +3,7 @@ import { getTransactionBaseFees, getTransactionFee, create } from '@api/transact
 import { tokenMap } from '@constants';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { fromRawLsk } from '@utils/lsk';
+import { truncateAddress } from '@utils/account';
 import accounts from '../../../../../../test/constants/accounts';
 import Summary from './index';
 import flushPromises from '../../../../../../test/unit-test-utils/flushPromises';
@@ -62,7 +63,7 @@ describe('Reclaim balance Summary', () => {
     const wrapper = mountWithRouterAndStore(Summary, props, {}, state);
     const html = wrapper.html();
     expect(html).toContain(accounts.empty_account.legacy.address);
-    expect(html).toContain(accounts.empty_account.summary.address);
+    expect(html).toContain(truncateAddress(accounts.empty_account.summary.address, 'medium'));
     expect(html).toContain('98,970,000 LSK');
     expect(html).toContain('0.001 LSK');
     expect(html).toContain('confirm-button');

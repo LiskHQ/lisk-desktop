@@ -22,8 +22,10 @@ const TopBar = ({
   network,
   token,
   noOfVotes,
+  location,
 }) => {
   const isUserLogout = isEmpty(account) || account.afterLogout;
+  const disabled = location.pathname === routes.reclaim.path;
 
   return (
     <div className={`${styles.wrapper} top-bar`}>
@@ -46,7 +48,10 @@ const TopBar = ({
           size="maxContent"
           position="bottom"
           content={(
-            <DialogLink component="bookmarks" className={`${styles.toggle} bookmark-list-toggle`}>
+            <DialogLink
+              component="bookmarks"
+              className={`${styles.toggle} bookmark-list-toggle ${disabled && `${styles.disabled} disabled`}`}
+            >
               <Icon name="bookmark" className={styles.bookmarksIcon} />
             </DialogLink>
           )}
@@ -57,12 +62,13 @@ const TopBar = ({
           t={t}
           noOfVotes={noOfVotes}
           isUserLogout={isUserLogout}
+          disabled={disabled}
         />
-        <Search t={t} history={history} />
+        <Search t={t} history={history} disabled={disabled} />
       </div>
       <div className={styles.group}>
-        { !isUserLogout ? <TokenSelector token="LSK" history={history} t={t} /> : null }
-        { !isUserLogout && token.list.BTC ? <TokenSelector token="BTC" history={history} t={t} /> : null }
+        { !isUserLogout ? <TokenSelector token="LSK" history={history} t={t} disabled={disabled} /> : null }
+        { !isUserLogout && token.list.BTC ? <TokenSelector token="BTC" history={history} t={t} disabled={disabled} /> : null }
         <Toggle
           setting="darkMode"
           icons={['lightMode', 'darkMode']}

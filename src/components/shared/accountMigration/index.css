@@ -18,11 +18,10 @@
 
     margin-top: 2px;
     margin-left: 42px;
+    color: var(--color-maastricht-blue);
 
     & > span {
       @mixin contentLargest semi-bold;
-
-      color: var(--color-maastricht-blue);
     }
   }
 }
@@ -32,6 +31,7 @@
 
   display: flex;
   align-items: center;
+  color: var(--color-maastricht-blue);
 
   & > div:first-child {
     margin-right: 10px;
