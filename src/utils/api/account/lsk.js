@@ -2,7 +2,7 @@ import { tokenMap, regex } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';
-import { extractAddressFromPassphrase, extractAddressFromPublicKey, extractPublicKey } from '../../account';
+import { extractPublicKey } from '../../account';
 
 const httpPrefix = '/api/v2';
 
