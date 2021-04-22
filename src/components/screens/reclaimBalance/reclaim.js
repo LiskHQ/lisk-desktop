@@ -5,14 +5,14 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import { PrimaryButton } from '@toolbox/buttons';
 import DialogLink from '@toolbox/dialog/link';
 import AccountMigration from '@shared/accountMigration';
-import { getActiveTokenAccount, hasEnoughtBalanceForReclaim } from '@utils/account';
+import { getActiveTokenAccount, hasEnoughBalanceForReclaim } from '@utils/account';
 import { fromRawLsk } from '@utils/lsk';
 import { balanceNeededForReclaim } from '@constants';
 import styles from './index.css';
 
 const Reclaim = ({ t }) => {
   const account = useSelector(state => getActiveTokenAccount(state));
-  const hasEnoughtBalance = hasEnoughtBalanceForReclaim(Number(account.token?.balance));
+  const hasEnoughBalance = hasEnoughBalanceForReclaim(Number(account.token?.balance));
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
@@ -37,8 +37,8 @@ const Reclaim = ({ t }) => {
       <section className={styles.box}>
         <h5 className={styles.listHeading}>{t('All you need to do:')}</h5>
         <ul className={styles.list}>
-          <li className={`${styles.step} ${hasEnoughtBalance ? styles.check : styles.green}`}>
-            <p>
+          <li className={`${styles.step} ${hasEnoughBalance ? styles.check : styles.green}`}>
+            <div>
               {t('Deposit at least {{amount}} LSK to your new account', { amount: fromRawLsk(balanceNeededForReclaim) })}
               <Tooltip position="right" size="m">
                 <>
@@ -56,7 +56,7 @@ const Reclaim = ({ t }) => {
                 </>
               </Tooltip>
               <br />
-              {!hasEnoughtBalance && (
+              {!hasEnoughBalance && (
                 <>
                   <span>
                     {t('An initial one-time transfer fee will be deducted from the new account.')}
@@ -69,23 +69,23 @@ const Reclaim = ({ t }) => {
                   </span>
                 </>
               )}
-            </p>
+            </div>
           </li>
-          <li className={`${styles.step} ${hasEnoughtBalance && styles.green}`}>
-            <p>
+          <li className={`${styles.step} ${hasEnoughBalance && styles.green}`}>
+            <div>
               {t('Send a reclaim transaction')}
               <br />
               <span>
                 {t('Once you have enough tokens on your new account you will be able to send a transaction.')}
               </span>
-            </p>
+            </div>
           </li>
         </ul>
       </section>
       <DialogLink component="reclaimBalance">
         <PrimaryButton
           className={styles.button}
-          disabled={!hasEnoughtBalance}
+          disabled={!hasEnoughBalance}
         >
           {t('Continue')}
         </PrimaryButton>

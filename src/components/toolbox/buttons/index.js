@@ -6,7 +6,7 @@ import styles from './css/size.css';
 import tertiaryButtonTheme from './css/tertiaryButton.css';
 import warningButtonTheme from './css/warningButton.css';
 
-const getButonWithTheme = (theme) => {
+const getButtonWithTheme = (theme) => {
   const Button = ({
     className, size, ...props
   }) => (
@@ -33,11 +33,11 @@ const getButonWithTheme = (theme) => {
   return Button;
 };
 
-const Button = getButonWithTheme(primaryButtonTheme);
-const PrimaryButton = getButonWithTheme(primaryButtonTheme);
-const SecondaryButton = getButonWithTheme(secondaryButtonTheme);
-const TertiaryButton = getButonWithTheme(tertiaryButtonTheme);
-const WarningButton = getButonWithTheme(warningButtonTheme);
+const Button = getButtonWithTheme(primaryButtonTheme);
+const PrimaryButton = getButtonWithTheme(primaryButtonTheme);
+const SecondaryButton = getButtonWithTheme(secondaryButtonTheme);
+const TertiaryButton = getButtonWithTheme(tertiaryButtonTheme);
+const WarningButton = getButtonWithTheme(warningButtonTheme);
 
 export {
   Button,

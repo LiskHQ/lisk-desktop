@@ -12,7 +12,6 @@ import { toRawLsk } from '@utils/lsk';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.reclaimLSK;
-const token = tokenMap.LSK.key;
 
 const Summary = ({
   nextStep,
@@ -24,11 +23,11 @@ const Summary = ({
   const [
     // eslint-disable-next-line no-unused-vars
     selectedPriority, _, priorityOptions,
-  ] = useTransactionPriority(token);
+  ] = useTransactionPriority(tokenMap.LSK.key);
 
   const { minFee } = useTransactionFeeCalculation({
     selectedPriority,
-    token,
+    token: tokenMap.LSK.key,
     account: account.info.LSK,
     priorityOptions,
     transaction: {
@@ -73,7 +72,7 @@ const Summary = ({
       confirmButton={onConfirmAction}
       showCancelButton={false}
       fee={minFee.value}
-      token={token}
+      token={tokenMap.LSK.key}
       classNames={styles.summaryContainer}
     >
       <section>
@@ -81,7 +80,10 @@ const Summary = ({
       </section>
       <section>
         <label>{t('Balance to reclaim')}</label>
-        <LiskAmount val={parseInt(account.info.LSK.legacy.balance, 10)} token={token} />
+        <LiskAmount
+          val={Number(account.info.LSK.legacy.balance)}
+          token={tokenMap.LSK.key}
+        />
       </section>
     </TransactionSummary>
   );

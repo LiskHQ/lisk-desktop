@@ -103,6 +103,12 @@ export const getAccount = async ({
         balance: 0,
         address: normParams.address,
         token: tokenMap.LSK.key,
+        isMigrated: false,
+        legacyAddress: '5059876081639179984L',
+      },
+      legacy: {
+        address: '5059876081639179984L',
+        balance: '7000000000',
       },
     };
 

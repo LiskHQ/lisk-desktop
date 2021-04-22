@@ -26,8 +26,8 @@ const MyAccount = ({
       </BoxHeader>
       <BoxContent className={`${styles.container} coin-container`}>
         {
-        coins.map(coin => (
-          <BoxRow key={coin.address} className={`${styles.row} coin-row`}>
+        coins.map((coin, index) => (
+          <BoxRow key={`${coin.address}-${index}`} className={`${styles.row} coin-row`}>
             <Icon name={coin.token === tokenMap.BTC.key ? 'btcIcon' : 'lskIcon'} />
             <div className={styles.details}>
               <span>{t('{{token}} balance', { token: tokenMap[coin.token === tokenMap.BTC.key ? coin.token : tokenMap.LSK.key].label })}</span>
