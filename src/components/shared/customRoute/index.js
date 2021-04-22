@@ -2,7 +2,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-
+import { getActiveTokenAccount } from '@utils/account';
 import Piwik from '@utils/piwik';
 import { routes } from '@constants';
 import Login from '@screens/login';
@@ -25,6 +25,7 @@ const CustomRoute = ({
   t,
   history,
 }) => {
+  const account = useSelector(state => getActiveTokenAccount(state));
   const settings = useSelector(state => state.settings);
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
@@ -35,6 +36,12 @@ const CustomRoute = ({
 
   if (forbiddenTokens.indexOf(settings.token.active) !== -1) {
     return <Redirect to={`${routes.dashboard.path}`} />;
+  }
+
+  if (!account.info?.LSK?.summary?.isMigrated
+    && history.location.pathname === routes.reclaim.path
+    && path !== routes.reclaim.path) {
+    return <Redirect to={`${routes.reclaim.path}`} />;
   }
 
   if (isPrivate && !isAuthenticated) {
