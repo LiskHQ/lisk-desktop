@@ -189,8 +189,7 @@ describe('API: LSK Account', () => {
       });
     });
 
-    // @todo to be reinstated after development is merged into this branch
-    it.skip('should return an account if the API returns 404', async () => {
+    it('should return an account if the API returns 404', async () => {
       http.mockImplementation(() => Promise.reject(Error('Account not found.')));
       // Checks the baseUrl too
       const result = await getAccount({
@@ -207,6 +206,12 @@ describe('API: LSK Account', () => {
           balance: 0,
           token: 'LSK',
           publicKey,
+          isMigrated: false,
+          legacyAddress: '5059876081639179984L',
+        },
+        legacy: {
+          address: '5059876081639179984L',
+          balance: '7000000000',
         },
       });
     });
