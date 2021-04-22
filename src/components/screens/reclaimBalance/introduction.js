@@ -16,7 +16,7 @@ const Introduction = ({ t, nextStep }) => (
       {' '}
       <span className={styles.link}>{t('here')}</span>
     </p>
-    <PrimaryButton className={styles.button} onClick={nextStep}>{t('Continue')}</PrimaryButton>
+    <PrimaryButton className={styles.button} onClick={() => nextStep()}>{t('Continue')}</PrimaryButton>
   </div>
 );
 
