@@ -42,7 +42,6 @@ const Overview = ({
           hwInfo={hwInfo}
           activeToken={activeToken}
           address={address}
-          account={account}
           username={account?.dpos?.delegate?.username}
           bookmark={bookmark}
           publicKey={publicKey}
