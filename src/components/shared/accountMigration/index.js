@@ -28,7 +28,7 @@ const AccountMigration = ({ t, account, showBalance }) => (
     <div>
       <h5>{t('New account')}</h5>
       <div className={styles.addressContainer}>
-        <AccountVisualWithAddress address={account.summary?.address} truncate={false} />
+        <AccountVisualWithAddress address={account.summary?.address} truncate="medium" />
         <CopyToClipboard type="icon" value={account.summary?.address} copyClassName={styles.copyIcon} />
       </div>
       {showBalance && (
