@@ -92,10 +92,13 @@ export const getActiveTokenAccount = state => ({
  * by replacing characters by ellipsis except for
  * the first and last 3.
  * @param {String} address LSk or BTC address
+ * @param {String?} size An option of small and medium
  * @returns {String} Truncated address
  */
-export const truncateAddress = address =>
-  address.replace(regex.lskAddressTrunk, '$1...$3');
+export const truncateAddress = (address, size = 'small') => {
+  const reg = size === 'small' ? regex.lskAddressTrunk : regex.btcAddressTrunk;
+  return address.replace(reg, '$1...$3');
+};
 
 /**
  * calculates the balance locked in votes
