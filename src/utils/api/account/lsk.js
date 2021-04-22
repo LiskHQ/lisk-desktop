@@ -1,4 +1,4 @@
-import { tokenMap, regex } from '@constants';
+import { HTTP_CODES, tokenMap, regex } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';
@@ -66,7 +66,7 @@ const getAccountParams = (params) => {
  *
  * @returns {Promise}
  */
-// eslint-disable-next-line max-statements
+// eslint-disable-next-line complexity, max-statements
 export const getAccount = async ({
   network, params, baseUrl,
 }) => {
@@ -87,27 +87,29 @@ export const getAccount = async ({
         const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
         account.summary.publicKey = publicKey;
       }
-
       return account;
     }
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log('Lisk account not found.');
+    if (e.code === HTTP_CODES.NOT_FOUND) {
+      // eslint-disable-next-line no-console
+      console.log('Lisk account not found.');
 
-    if (params.publicKey || params.passphrase) {
-      const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
-      const account = {
-        summary: {
-          publicKey,
-          balance: 0,
-          address: normParams.address,
-          token: tokenMap.LSK.key,
-        },
-      };
-      return account;
+      if (params.publicKey || params.passphrase) {
+        const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
+        const account = {
+          summary: {
+            publicKey,
+            balance: 0,
+            address: normParams.address,
+            token: tokenMap.LSK.key,
+          },
+        };
+        return account;
+      }
+    } else {
+      throw Error();
     }
   }
-
   throw Error('Error retrieving account');
 };
 
