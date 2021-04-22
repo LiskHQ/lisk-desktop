@@ -31,6 +31,9 @@ class AccountVisualWithAddress extends React.Component {
     } = this.props;
     const title = getModuleAssetTitle()[moduleAssetId];
     const transformedAddress = this.getTransformedAddress(address);
+    const truncatedAddress = (truncate === 'small' || truncate === 'medium')
+      ? truncateAddress(transformedAddress, truncate)
+      : truncateAddress(transformedAddress);
 
     return (
       <div className={`${styles.address}`}>
@@ -48,7 +51,7 @@ class AccountVisualWithAddress extends React.Component {
           <React.Fragment>
             <AccountVisual address={address} size={size} />
             <span className={`${styles.addressValue}`}>
-              {truncate ? truncateAddress(transformedAddress, truncate) : transformedAddress}
+              {truncate ? truncatedAddress : transformedAddress}
             </span>
           </React.Fragment>
         )}
