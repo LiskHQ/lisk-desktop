@@ -40,7 +40,7 @@ const getAccountParams = (params) => {
   if (publicKey) return { publicKey };
   if (address) return { address };
   if (passphrase) {
-    return { address: extractPublicKey(passphrase) };
+    return { publicKey: extractPublicKey(passphrase) };
   }
   // if none of the above, ignore the params
   return {};
