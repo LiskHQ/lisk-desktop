@@ -64,7 +64,6 @@ const getAccountParams = (params) => {
 // eslint-disable-next-line complexity, max-statements
 export const getAccount = async ({
   network, params, baseUrl,
-// eslint-disable-next-line arrow-body-style
 }) => {
   const normParams = getAccountParams(params);
 
