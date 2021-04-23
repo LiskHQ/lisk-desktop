@@ -50,8 +50,8 @@ export const getTransaction = ({
 
 const filters = {
   address: { key: 'address', test: address => !validateAddress(tokenMap.LSK.key, address) },
-  timestamp: { key: 'timestamp', test: str => /\d+:\d+/.test(str) },
-  amount: { key: 'amount', test: str => /\d+:\d+/.test(str) },
+  timestamp: { key: 'timestamp', test: str => /(\d+)?:(\d+)?/.test(str) },
+  amount: { key: 'amount', test: str => /(\d+)?:(\d+)?/.test(str) },
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
   moduleAssetId: { key: 'moduleAssetId', test: str => /\d:\d/.test(str) },

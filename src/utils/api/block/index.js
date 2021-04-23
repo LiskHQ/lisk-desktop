@@ -51,8 +51,7 @@ export const getBlock = ({
 
 const blocksFilters = {
   addressList: { key: 'addressList', test: addressList => !addressList.some(address => validateAddress(tokenMap.LSK.key, address)) },
-  dateFrom: { key: 'from', test: timestamp => (new Date(timestamp)).getTime() > 0 },
-  dateTo: { key: 'to', test: timestamp => (new Date(timestamp)).getTime() > 0 },
+  timestamp: { key: 'timestamp', test: str => /(\d+)?:(\d+)?/.test(str) },
   generatorAddress: { key: 'generatorAddress', test: address => !validateAddress(tokenMap.LSK.key, address) },
   height: { key: 'height', test: num => (typeof num === 'number') },
   limit: { key: 'limit', test: num => (typeof num === 'number') },
