@@ -43,6 +43,7 @@ const accounts = {
       serverPublicKey: '197cf311f678406bc72a8edfdc3dffe6f59f49c4550a860e4b68fb20382211d0',
       address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
       balance: 0,
+      isMigrated: false,
     },
     token: { balance: 0 },
     legacy: {
