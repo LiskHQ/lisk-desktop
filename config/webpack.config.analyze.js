@@ -4,7 +4,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
 
-module.exports = merge(baseConfig, reactConfig, {
+const config = {
   output: {
     path: resolve(__dirname, '../dist'),
     filename: 'bundle.[name].js',
@@ -13,4 +13,6 @@ module.exports = merge(baseConfig, reactConfig, {
   plugins: [
     new BundleAnalyzerPlugin(),
   ],
-});
+};
+
+module.exports = merge(baseConfig, reactConfig, config);

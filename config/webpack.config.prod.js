@@ -6,7 +6,7 @@ const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
 const version = require('../package.json').version;
 
-module.exports = merge(baseConfig, reactConfig, {
+const config = {
   output: {
     path: resolve(__dirname, '../app', '../app/build'),
     filename: 'bundle.[name].[contenthash].js',
@@ -32,4 +32,6 @@ module.exports = merge(baseConfig, reactConfig, {
       VERSION: JSON.stringify(version),
     }),
   ],
-});
+};
+
+module.exports = merge(baseConfig, reactConfig, config);

@@ -17,17 +17,17 @@ import Transactions from './transactions';
 const Wallet = ({
   t, account, history,
 }) => {
-  if (!account || !account.data || isEmpty(account.data)) return (<div />);
-
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
-  const isDelegate = account.data.summary?.isDelegate;
   const address = selectSearchParamValue(history.location.search, 'address');
 
   useEffect(() => {
     account.loadData();
-  }, [history.location.search]);
+  }, [address]);
 
+  if (!account || !account.data || isEmpty(account.data)) return (<div />);
+
+  const isDelegate = account.data.summary?.isDelegate;
 
   return (
     <section>

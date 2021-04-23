@@ -1,4 +1,4 @@
-import { tokenMap, regex } from '@constants';
+import { HTTP_CODES, tokenMap, regex } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';
@@ -36,6 +36,8 @@ const getAccountParams = (params) => {
     passphrase,
     publicKey,
   } = params;
+
+  // Pick username, cause the address is not obtainable from the username
   if (username) return { username };
   if (publicKey) return { publicKey };
   if (address) return { address };
@@ -60,7 +62,7 @@ const getAccountParams = (params) => {
  *
  * @returns {Promise}
  */
-// eslint-disable-next-line max-statements
+// eslint-disable-next-line complexity, max-statements
 export const getAccount = async ({
   network, params, baseUrl,
 // eslint-disable-next-line arrow-body-style
@@ -75,32 +77,37 @@ export const getAccount = async ({
       params: normParams,
     });
 
-    return response.data[0];
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log('Lisk account not found.');
-    let publicKey = params.publicKey;
-    if (!publicKey && params.passphrase) {
-      publicKey = extractPublicKey(params.passphrase);
+    if (response.data[0]) {
+      const account = { ...response.data[0] };
+      const isAccountUninitialized = !account.summary.publicKey;
+      if (isAccountUninitialized && (params.publicKey || params.passphrase)) {
+        const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
+        account.summary.publicKey = publicKey;
+      }
+      return account;
     }
+  } catch (e) {
+    if (e.code === HTTP_CODES.NOT_FOUND) {
+      // eslint-disable-next-line no-console
+      console.log('Lisk account not found.');
 
-    const account = {
-      summary: {
-        publicKey,
-        balance: 0,
-        address: normParams.address,
-        token: tokenMap.LSK.key,
-        isMigrated: false,
-        legacyAddress: '5059876081639179984L',
-      },
-      legacy: {
-        address: '5059876081639179984L',
-        balance: '7000000000',
-      },
-    };
-
-    return account;
+      if (params.publicKey || params.passphrase) {
+        const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
+        const account = {
+          summary: {
+            publicKey,
+            balance: 0,
+            address: normParams.address,
+            token: tokenMap.LSK.key,
+          },
+        };
+        return account;
+      }
+    } else {
+      throw Error();
+    }
   }
+  throw Error('Error retrieving account');
 };
 
 const accountFilters = {

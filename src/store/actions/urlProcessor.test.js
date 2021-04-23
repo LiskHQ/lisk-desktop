@@ -1,6 +1,7 @@
 import * as accounts from '@api/account';
 import setVotesByLaunchProtocol from './urlProcessor';
 import { voteEdited } from './voting';
+import mockAccounts from '../../../test/constants/accounts';
 
 jest.mock('@api/account', () => ({
   getAccount: jest.fn().mockImplementation(data => Promise.resolve({ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: data.username })),
@@ -58,11 +59,13 @@ describe('setVotesByLaunchProtocol', () => {
   });
 
   it('Should dispatch voteEdited with an array of valid usernames in query params', async () => {
-    const usernameList = ['genesis_5', 'genesis_6', 'genesis_7', 'genesis_3', 'genesis_4'];
-    const accountsList = usernameList.map((username, index) => ({
-      address: `lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y9${index}`,
+    const delegates = Object.values(mockAccounts)
+      .filter(account => account.dpos.delegate.username && account.summary.address);
+    const usernameList = delegates.map(account => account.dpos.delegate.username);
+    const accountsList = delegates.map(account => ({
+      address: account.summary.address,
       amount: '',
-      username,
+      username: account.dpos.delegate.username,
     }));
     const url = `?modal=votingQueue&unvotes=${usernameList.join(',')}`;
     accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: accountsList }));
