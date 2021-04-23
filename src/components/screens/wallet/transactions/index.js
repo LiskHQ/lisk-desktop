@@ -4,8 +4,7 @@ import { withTranslation } from 'react-i18next';
 import withFilters from '@utils/withFilters';
 import withData from '@utils/withData';
 import { getDelegates } from '@api/delegate';
-import { toRawLsk } from '@utils/lsk';
-import { transformStringDateToUnixTimestamp } from '@utils/datetime';
+import { normalizeTransactionParams } from '@utils/transaction';
 import { getTransactions } from '@api/transaction';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
@@ -123,31 +122,11 @@ const defaultFilters = {
 };
 const defaultSort = 'timestamp:desc';
 
-/**
- * The implementation of this API endpoint and the ones implemented for Lisk Service
- * are different. this transformer adapts params temporarily before all the APIs
- * are unified. then we can remove this.
- *
- * @param {Object} params - All params and filters provided by WithFilters HOC
- */
-const transformParams = params => Object.keys(params)
-  .reduce((acc, item) => {
-    if (item === 'dateFrom' || item === 'dateTo') {
-      acc[item] = transformStringDateToUnixTimestamp(params[item]);
-    } else if (item === 'amountFrom' || item === 'amountTo') {
-      acc[item] = toRawLsk(params[item]);
-    } else {
-      acc[item] = params[item];
-    }
-
-    return acc;
-  }, {});
-
 export default compose(
   withData({
     transactions: {
       apiUtil: (network, { token, ...params }) =>
-        getTransactions({ network, params: transformParams(params) }, token),
+        getTransactions({ network, params: normalizeTransactionParams(params) }, token),
       getApiParams: (state, { address, sort }) => ({
         token: state.settings.token.active,
         address,

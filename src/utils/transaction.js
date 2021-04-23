@@ -2,7 +2,13 @@
 import {
   MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
-import { extractAddressFromPublicKey, getBase32AddressFromAddress, getAddressFromBase32Address } from '@utils/account';
+import {
+  extractAddressFromPublicKey,
+  getBase32AddressFromAddress,
+  getAddressFromBase32Address,
+} from '@utils/account';
+import { transformStringDateToUnixTimestamp } from '@utils/datetime';
+import { toRawLsk } from '@utils/lsk';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
 
 const {
@@ -170,5 +176,37 @@ const createTransactionObject = (tx, moduleAssetId) => {
 
   return transaction;
 };
+
+/**
+ * Adapts transaction filter params to match transactions API method
+ *
+ * @param {Object} params - Params received from withFilters HOC
+ * @returns {Object} - Parameters consumable by transaction API method
+ */
+export const normalizeTransactionParams = params => Object.keys(params)
+  .reduce((acc, item) => {
+    switch (item) {
+      case 'dateFrom':
+        if (!acc.timestamp) acc.timestamp = ':';
+        acc.timestamp = acc.timestamp.replace(/(\d+)?:/, `${transformStringDateToUnixTimestamp(params[item])}:`);
+        break;
+      case 'dateTo':
+        if (!acc.timestamp) acc.timestamp = ':';
+        acc.timestamp = acc.timestamp.replace(/:(\d+)?/, `:${transformStringDateToUnixTimestamp(params[item])}`);
+        break;
+      case 'amountFrom':
+        if (!acc.amount) acc.amount = ':';
+        acc.amount = acc.amount.replace(/(\d+)?:/, `${toRawLsk(params[item])}:`);
+        break;
+      case 'amountTo':
+        if (!acc.amount) acc.amount = ':';
+        acc.amount = acc.amount.replace(/:(\d+)?/, `:${toRawLsk(params[item])}`);
+        break;
+      default:
+        acc[item] = params[item];
+    }
+
+    return acc;
+  }, {});
 
 export { getTxAmount, transformTransaction, createTransactionObject };
