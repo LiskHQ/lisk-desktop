@@ -24,7 +24,7 @@ const createMarkers = (peers) => {
   });
 
   peers.forEach((peer) => {
-    if (peer.location.latitude) {
+    if (peer.location?.latitude) {
       markers.addLayer(
         L.marker([peer.location.latitude, peer.location.longitude], { icon }),
       );
