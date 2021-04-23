@@ -3,7 +3,6 @@ import { transactions } from '@liskhq/lisk-client';
 
 import {
   tokenMap,
-  MODULE_ASSETS_NAME_ID_MAP,
   minFeePerByte,
   DEFAULT_NUMBER_OF_SIGNATURES,
   DEFAULT_SIGNATURE_BYTE_SIZE,
@@ -16,7 +15,6 @@ import { joinModuleAndAssetIds } from '@utils/moduleAssets';
 import { createTransactionObject } from '@utils/transaction';
 import { validateAddress } from '../../validators';
 import http from '../http';
-import ws from '../ws';
 import { getDelegates } from '../delegate';
 
 const httpPrefix = '/api/v2';
@@ -27,10 +25,6 @@ const httpPaths = {
   transaction: `${httpPrefix}/transactions`,
   transactionStats: `${httpPrefix}/transactions/statistics`,
   schemas: `${httpPrefix}/transactions/schemas`,
-};
-
-const wsMethods = {
-  transactions: 'get.transactions',
 };
 
 /**
