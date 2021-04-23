@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const { resolve } = require('path');
 const { ProvidePlugin } = require('webpack');
 
-module.exports = {
+const config = {
   mode: 'development',
   resolve: {
     alias: {
@@ -97,3 +97,5 @@ module.exports = {
     }),
   ],
 };
+
+module.exports = config;

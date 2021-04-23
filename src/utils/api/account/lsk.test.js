@@ -1,3 +1,4 @@
+import { HTTP_CODES } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { getAccount, getAccounts } from './lsk';
@@ -95,7 +96,7 @@ describe('API: LSK Account', () => {
     } = accounts.delegate;
 
     it('should call http with right params, prioritizing 1. username', async () => {
-      http.mockImplementation(() => Promise.resolve({ data: [{}] }));
+      http.mockImplementation(() => Promise.resolve({ data: [{ summary: { publicKey } }] }));
       // Checks the baseUrl too
       await getAccount({
         network,
@@ -117,7 +118,7 @@ describe('API: LSK Account', () => {
     });
 
     it('should call http with right params, prioritizing 2. address', async () => {
-      http.mockImplementation(() => Promise.resolve({ data: [{}] }));
+      http.mockImplementation(() => Promise.resolve({ data: [{ summary: { publicKey } }] }));
       // Checks with no baseUrl
       await getAccount({
         network,
@@ -137,7 +138,7 @@ describe('API: LSK Account', () => {
     });
 
     it('should call http with right address, if publicKey passed', async () => {
-      http.mockImplementation(() => Promise.resolve({ data: [{}] }));
+      http.mockImplementation(() => Promise.resolve({ data: [{ summary: { publicKey } }] }));
       // Checks with no baseUrl
       await getAccount({
         network,
@@ -154,24 +155,24 @@ describe('API: LSK Account', () => {
       });
     });
 
-    it('should call http without parameters', async () => {
-      http.mockImplementation(() => Promise.resolve({ data: [{}] }));
+    it('should call http without base url if not passed', async () => {
+      http.mockImplementation(() => Promise.resolve({ data: [{ summary: { publicKey } }] }));
       // Checks with no baseUrl
       await getAccount({
         network,
-        params: { },
+        params: { passphrase },
       });
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { },
+        params: { address },
         baseUrl: undefined,
         path,
       });
     });
 
     it('should call http with right address, if passphrase passed', async () => {
-      http.mockImplementation(() => Promise.resolve({ data: [{}] }));
+      http.mockImplementation(() => Promise.resolve({ data: [{ summary: { publicKey } }] }));
       // Checks the baseUrl too
       await getAccount({
         network,
@@ -190,7 +191,63 @@ describe('API: LSK Account', () => {
     });
 
     it('should return an account if the API returns 404', async () => {
-      http.mockImplementation(() => Promise.reject(Error('Account not found.')));
+      const error = Error('Account not found.');
+      error.code = HTTP_CODES.NOT_FOUND;
+      http.mockImplementation(() => Promise.reject(error));
+      // Checks the baseUrl too
+      const result = await getAccount({
+        network,
+        params: {
+          passphrase,
+        },
+        baseUrl,
+      });
+
+      expect(result).toEqual({
+        summary: {
+          address,
+          balance: 0,
+          token: 'LSK',
+          publicKey,
+        },
+      });
+    });
+
+    it('should use the public key from params if the account is uninitialized', async () => {
+      http.mockImplementation(() => Promise.resolve({
+        data: [{
+          summary: {
+            publicKey: '', address, balance: 0, token: 'LSK',
+          },
+        }],
+      }));
+      // Checks the baseUrl too
+      const result = await getAccount({
+        network,
+        params: {
+          publicKey,
+        },
+        baseUrl,
+      });
+
+      expect(result).toEqual({
+        summary: {
+          address,
+          balance: 0,
+          token: 'LSK',
+          publicKey,
+        },
+      });
+    });
+
+    it('should use extract the public key from params.passphrase if the account is uninitialized', async () => {
+      http.mockImplementation(() => Promise.resolve({
+        data: [{
+          summary: {
+            publicKey: '', address, balance: 0, token: 'LSK',
+          },
+        }],
+      }));
       // Checks the baseUrl too
       const result = await getAccount({
         network,

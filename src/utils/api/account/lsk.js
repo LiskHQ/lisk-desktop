@@ -1,4 +1,4 @@
-import { tokenMap, regex } from '@constants';
+import { HTTP_CODES, tokenMap, regex } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';
@@ -36,6 +36,7 @@ const getAccountParams = (params) => {
     passphrase,
     publicKey,
   } = params;
+
   // Pick username, cause the address is not obtainable from the username
   if (username) return { username };
   // If you have the address, you don't need anything else
@@ -65,65 +66,52 @@ const getAccountParams = (params) => {
  *
  * @returns {Promise}
  */
-// eslint-disable-next-line max-statements
+// eslint-disable-next-line complexity, max-statements
 export const getAccount = async ({
   network, params, baseUrl,
 // eslint-disable-next-line arrow-body-style
 }) => {
-  // const normParams = getAccountParams(params);
+  const normParams = getAccountParams(params);
 
-  // try {
-  //   const response = await http({
-  //     baseUrl,
-  //     path: httpPaths.account,
-  //     network,
-  //     params: normParams,
-  //   });
+  try {
+    const response = await http({
+      baseUrl,
+      path: httpPaths.account,
+      network,
+      params: normParams,
+    });
 
-  //   return response.data[0];
-  // } catch (e) {
-  //   // eslint-disable-next-line no-console
-  //   console.log('Lisk account not found.');
-  //   let publicKey = params.publicKey;
-  //   if (!publicKey && params.passphrase) {
-  //     publicKey = extractPublicKey(params.passphrase);
-  //   }
+    if (response.data[0]) {
+      const account = { ...response.data[0] };
+      const isAccountUninitialized = !account.summary.publicKey;
+      if (isAccountUninitialized && (params.publicKey || params.passphrase)) {
+        const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
+        account.summary.publicKey = publicKey;
+      }
+      return account;
+    }
+  } catch (e) {
+    if (e.code === HTTP_CODES.NOT_FOUND) {
+      // eslint-disable-next-line no-console
+      console.log('Lisk account not found.');
 
-  //   const account = {
-  //     summary: {
-  //       publicKey,
-  //       balance: 0,
-  //       address: normParams.address,
-  //       token: tokenMap.LSK.key,
-  //     },
-  //   };
-
-  //   return account;
-  // }
-
-  return {
-    summary: {
-      address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
-      legacyAddress: '5059876081639179984L',
-      balance: '0', // balance in the new blockchain
-      isMigrated: false, // shows only when found by the public key
-      // true = account is migrated from the legacy blockchain
-      // false = account is created in the current blockchain
-      publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-      isDelegate: false,
-      isMultisignature: false,
-    },
-    token: {
-      balance: '0', // balance in the new blockchain
-    },
-    sequence: { nonce: 38 },
-    keys: {},
-    dpos: { },
-    legacy: { // only if the reclaim wasn't made yet
-      address: '5059876081639179984L', // Legacy address in hex format
-      balance: '151146419900', // balance to reclaim
-    },
-  };
+      if (params.publicKey || params.passphrase) {
+        const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
+        const account = {
+          summary: {
+            publicKey,
+            balance: 0,
+            address: normParams.address,
+            token: tokenMap.LSK.key,
+          },
+        };
+        return account;
+      }
+    } else {
+      throw Error();
+    }
+  }
+  throw Error('Error retrieving account');
 };
 
 const accountFilters = {
