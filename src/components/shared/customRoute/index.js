@@ -39,8 +39,8 @@ const CustomRoute = ({
   }
 
   if (!account.info?.LSK?.summary?.isMigrated
-    && history.location.pathname === routes.reclaim.path
-    && path !== routes.reclaim.path) {
+    && history.location.pathname !== routes.reclaim.path
+    && history.location.pathname !== routes.login.path) {
     return <Redirect to={`${routes.reclaim.path}`} />;
   }
 
