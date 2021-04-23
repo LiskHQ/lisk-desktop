@@ -187,7 +187,5 @@ export const isAccountInitialized = account => account
 export const hasEnoughBalanceForInitialization = (balance = 0) =>
   Number(balance) >= balanceNeededForInitialization;
 
-export const hasEnoughBalanceForReclaim = (balance = 0) => {
-  console.log(Number(balance), balanceNeededForReclaim);
-  return Number(balance) >= balanceNeededForReclaim;
-}
+export const hasEnoughBalanceForReclaim = (balance = 0) =>
+  Number(balance) >= balanceNeededForReclaim;
