@@ -165,7 +165,7 @@ describe('API: LSK Account', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { address },
+        params: { publicKey },
         baseUrl: undefined,
         path,
       });
@@ -209,12 +209,6 @@ describe('API: LSK Account', () => {
           balance: 0,
           token: 'LSK',
           publicKey,
-          isMigrated: false,
-          legacyAddress: '5059876081639179984L',
-        },
-        legacy: {
-          address: '5059876081639179984L',
-          balance: '7000000000',
         },
       });
     });
