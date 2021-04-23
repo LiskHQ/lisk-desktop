@@ -20,7 +20,7 @@ const SignedOutTip = ({ t }) => (
 );
 
 const VoteQueueToggle = ({
-  t, noOfVotes, isUserLogout,
+  t, noOfVotes, isUserLogout, disabled,
 }) => (
   <Tooltip
     className={styles.tooltipWrapper}
@@ -28,7 +28,10 @@ const VoteQueueToggle = ({
     position={isUserLogout ? 'bottom right' : 'bottom'}
     indent={isUserLogout}
     content={(
-      <DialogLink component="votingQueue" className={`${styles.toggle} voting-queue-toggle`}>
+      <DialogLink
+        component="votingQueue"
+        className={`${styles.toggle} voting-queue-toggle ${disabled && `${styles.disabled} disabled`}`}
+      >
         <Icon name="votingQueueInactive" />
         {noOfVotes !== 0
           && <span className={styles.votingQueueVoteCount}>{noOfVotes}</span>}

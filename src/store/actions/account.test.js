@@ -115,7 +115,9 @@ describe('actions: account', () => {
     let state;
     const getState = () => (state);
     const balance = 10e8;
-    const { passphrase, address, publicKey } = accounts.genesis;
+    const {
+      passphrase, summary: { address, publicKey },
+    } = accounts.genesis;
 
     beforeEach(() => {
       state = {

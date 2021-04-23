@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
 import { routes } from '@constants';
+import accounts from '../../../../test/constants/accounts';
+import ReclaimBalance from '../../screens/reclaimBalance';
 import CustomRoute from './index';
 
 const Public = () => <h1>Public</h1>;
@@ -22,7 +24,7 @@ describe('CustomRoute', () => {
     },
     account: {
       info: {
-        LSK: 'some data',
+        LSK: accounts.genesis,
       },
     },
     network: {
@@ -57,6 +59,7 @@ describe('CustomRoute', () => {
       <MemoryRouter initialEntries={['/private/test']}>
         <div>
           <Route path={routes.login.path} component={Public} />
+          <Route path={routes.reclaim.path} component={ReclaimBalance} />
           <CustomRoute
             {...props}
             isPrivate={isPrivate}
@@ -74,5 +77,11 @@ describe('CustomRoute', () => {
     mockAppState.account.info = {};
     const wrapper = isAuth({ isPrivate: true });
     expect(wrapper.find(Public).exists()).toBe(true);
+  });
+
+  it('should redirect to reclaim path if user is not migrated', () => {
+    mockAppState.account.info.LSK = accounts.empty_account;
+    const wrapper = isAuth({ isPrivate: true });
+    expect(wrapper.find(ReclaimBalance).exists()).toBe(true);
   });
 });

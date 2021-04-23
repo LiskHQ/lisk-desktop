@@ -26,8 +26,9 @@ import VotingQueue from '@screens/votingQueue';
 import DeviceDisconnect from '@screens/deviceDisconnectDialog';
 import NewReleaseDialog from '@shared/newReleaseDialog/newReleaseDialog';
 import SearchBar from '@shared/searchBar';
+import ReclaimBalance from '@screens/reclaimBalance';
+import ReclaimBalanceModal from '@screens/reclaimBalance/modal';
 import { tokenMap } from './tokens';
-import Initialization from '../components/screens/initialization';
 
 export default {
   wallet: {
@@ -121,10 +122,9 @@ export default {
   },
   reclaim: {
     path: '/reclaim',
-    // @todo import the reclaim screen here
-    component: Initialization,
+    component: ReclaimBalance,
     isPrivate: true,
-    forbiddenTokens: [],
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   dashboard: {
     path: '/',
@@ -209,6 +209,11 @@ export const modals = {
   deviceDisconnectDialog: {
     component: DeviceDisconnect,
     isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  reclaimBalance: {
+    component: ReclaimBalanceModal,
+    isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
 };

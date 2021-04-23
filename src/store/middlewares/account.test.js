@@ -298,7 +298,7 @@ describe('Account middleware', () => {
         data: { info: { LSK: { summary: { isMigrated: true } } } },
       };
       middleware(store)(next)(action);
-      expect(history.push).not.toHaveBeenCalledWith(routes.initialization.path);
+      expect(history.push).not.toHaveBeenCalledWith(routes.reclaim.path);
     });
 
     it('should redirect to the reclaim screen if the account is not migrated', () => {
@@ -307,7 +307,7 @@ describe('Account middleware', () => {
         data: { info: { LSK: { summary: { isMigrated: false } } } },
       };
       middleware(store)(next)(action);
-      expect(history.push).toHaveBeenCalledWith(routes.initialization.path);
+      expect(history.push).toHaveBeenCalledWith(routes.reclaim.path);
     });
   });
 });

@@ -75,7 +75,7 @@ class Summary extends React.Component {
 
     return (
       <TransactionSummary
-        title={isInitialization ? t('Initialization summary ') : t('Transaction summary')}
+        title={t('Transaction summary')}
         t={t}
         account={account}
         confirmButton={{

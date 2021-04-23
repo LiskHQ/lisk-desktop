@@ -27,10 +27,13 @@ class AccountVisualWithAddress extends React.Component {
 
   render() {
     const {
-      address, transactionSubject, moduleAssetId, size,
+      address, transactionSubject, moduleAssetId, size, truncate,
     } = this.props;
     const title = getModuleAssetTitle()[moduleAssetId];
     const transformedAddress = this.getTransformedAddress(address);
+    const truncatedAddress = (truncate === 'small' || truncate === 'medium')
+      ? truncateAddress(transformedAddress, truncate)
+      : truncateAddress(transformedAddress);
 
     return (
       <div className={`${styles.address}`}>
@@ -47,7 +50,9 @@ class AccountVisualWithAddress extends React.Component {
         ) : (
           <React.Fragment>
             <AccountVisual address={address} size={size} />
-            <span className={`${styles.addressValue}`}>{truncateAddress(transformedAddress)}</span>
+            <span className={`${styles.addressValue}`}>
+              {truncate ? truncatedAddress : transformedAddress}
+            </span>
           </React.Fragment>
         )}
       </div>
@@ -70,6 +75,7 @@ AccountVisualWithAddress.defaultProps = {
   showBookmarkedAddress: false,
   size: 32,
   transactionSubject: '',
+  truncate: true,
 };
 
 const mapStateToProps = state => ({

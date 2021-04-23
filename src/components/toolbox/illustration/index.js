@@ -43,6 +43,7 @@ import verifyMessageErrorDark from '../../../assets/images/illustrations/verify-
 import verifyMessageSuccess from '../../../assets/images/illustrations/verify-message-success.svg';
 import verifyMessageSuccessDark from '../../../assets/images/illustrations/verify-message-success-dark.svg';
 import registrationSuccess from '../../../assets/images/illustrations/registration-success.svg';
+import reclaimBalanceIntro from '../../../assets/images/illustrations/reclaim-balance-intro.svg';
 
 export const illustrations = {
   welcomeLiskDelegates,
@@ -87,6 +88,7 @@ export const illustrations = {
   emptyBookmarkFilerDark,
   verifyMessageErrorDark,
   verifyMessageSuccessDark,
+  reclaimBalanceIntro,
 };
 
 const Illustration = ({ name, className, noTheme }) => {

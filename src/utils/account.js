@@ -1,5 +1,7 @@
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
-import { tokenMap, regex, account as accountConst } from '@constants';
+import {
+  tokenMap, regex, balanceNeededForReclaim, balanceNeededForInitialization,
+} from '@constants';
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
@@ -90,10 +92,13 @@ export const getActiveTokenAccount = state => ({
  * by replacing characters by ellipsis except for
  * the first and last 3.
  * @param {String} address LSk or BTC address
+ * @param {String?} size An option of small and medium
  * @returns {String} Truncated address
  */
-export const truncateAddress = address =>
-  address.replace(regex.lskAddressTrunk, '$1...$3');
+export const truncateAddress = (address, size = 'small') => {
+  const reg = size === 'small' ? regex.lskAddressTrunk : regex.btcAddressTrunk;
+  return address.replace(reg, '$1...$3');
+};
 
 /**
  * calculates the balance locked in votes
@@ -180,4 +185,7 @@ export const isAccountInitialized = account => account
   && !!account.info.LSK.serverPublicKey;
 
 export const hasEnoughBalanceForInitialization = (balance = 0) =>
-  Number(balance) >= accountConst.balanceNeededForInitialization;
+  Number(balance) >= balanceNeededForInitialization;
+
+export const hasEnoughBalanceForReclaim = (balance = 0) =>
+  Number(balance) >= balanceNeededForReclaim;
