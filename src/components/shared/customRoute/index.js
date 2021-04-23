@@ -38,18 +38,18 @@ const CustomRoute = ({
     return <Redirect to={`${routes.dashboard.path}`} />;
   }
 
-  if (!account.info?.LSK?.summary?.isMigrated
-    && history.location.pathname !== routes.reclaim.path
-    && history.location.pathname !== routes.login.path) {
-    return <Redirect to={`${routes.reclaim.path}`} />;
-  }
-
   if (isPrivate && !isAuthenticated) {
     return (
       <Redirect
         to={`${routes.login.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(/^\?/, '')}`}
       />
     );
+  }
+
+  if (!account.info?.LSK?.summary?.isMigrated
+    && history.location.pathname !== routes.reclaim.path
+    && history.location.pathname !== routes.login.path) {
+    return <Redirect to={`${routes.reclaim.path}`} />;
   }
 
   return (

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
 import { routes } from '@constants';
+import accounts from '../../../../test/constants/accounts';
 import CustomRoute from './index';
 
 const Public = () => <h1>Public</h1>;
@@ -22,7 +23,7 @@ describe('CustomRoute', () => {
     },
     account: {
       info: {
-        LSK: 'some data',
+        LSK: accounts.genesis,
       },
     },
     network: {
