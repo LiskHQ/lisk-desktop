@@ -64,7 +64,7 @@ const filters = {
   height: { key: 'height', test: num => parseInt(num, 10) > 0 },
   sort: {
     key: 'sort',
-    test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
+    test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
   },
 };
 
@@ -82,7 +82,7 @@ const filters = {
  * @param {String} data.params.dateTo Unix timestamp, the end time of txs
  * @param {String} data.params.amountFrom The minimum value of txs
  * @param {String} data.params.amountTo The maximum value of txs
- * @param {Number} data.params.type The title of the transaction type
+ * @param {String} data.params.moduleAssetId The moduleAssetId. 2:0, 5:1, etc
  * @param {Number} data.params.offset Used for pagination
  * @param {Number} data.params.limit Used for pagination
  * @param {String} data.params.sort an option of 'amount:asc',
@@ -96,18 +96,6 @@ export const getTransactions = ({
   params,
   baseUrl,
 }) => {
-  const typeConfig = params.type && MODULE_ASSETS_NAME_ID_MAP[params.type];
-
-  // if type, correct the type and use WS
-  if (typeConfig) {
-    const requests = Object.values(typeConfig.code).map(type => ({
-      method: wsMethods.transactions,
-      params: { type },
-    }));
-    // BaseUrl is only used for retrieving archived txs, so it's not needed here.
-    return ws({ baseUrl: network.serviceUrl, requests });
-  }
-
   const normParams = {};
 
   // if blockId, ignore others
