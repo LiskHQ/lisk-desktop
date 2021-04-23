@@ -96,30 +96,19 @@ describe('Add a new bookmark component', () => {
     it('should not be possible to change delegate label', () => {
       const accountAddress = accounts.delegate.summary.address;
       const accountUsername = accounts.delegate.dpos.delegate.username;
-      props.account.loadData.mockImplementation(({ address }) => {
-        const account = {
-          summary: {
-            address,
-            isDelegate: true,
-          },
-          dpos: {
-            delegate: { username: accountUsername },
-          },
-        };
-        wrapper.setProps({
-          account: { ...props.account, data: account },
-          history: {
-            push: jest.fn(),
-            location: {
-              search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isDelegate=true`,
-            },
-          },
-        });
-      });
       wrapper.find('input[name="address"]').first().simulate('change', {
         target: {
           value: accountAddress,
           name: 'address',
+        },
+      });
+      wrapper.setProps({
+        account: { ...props.account, data: accounts.delegate },
+        history: {
+          push: jest.fn(),
+          location: {
+            search: `?address=${accountAddress}L&modal=addBookmark&formAddress=${accountAddress}&label=${accountUsername}&isDelegate=true`,
+          },
         },
       });
       wrapper.update();
@@ -173,30 +162,6 @@ describe('Add a new bookmark component', () => {
         expect(wrapper.find('input[name="label"]')).toHaveClassName('error');
         expect(wrapper).toContainMatchingElement('.error');
       });
-    });
-  });
-
-  describe('Token switching', () => {
-    it('Should clear the fields each time active token is changed', () => {
-      wrapper.setProps({ token: { active: tokenMap.LSK.key } });
-      wrapper.find('input[name="address"]').first().simulate('change', {
-        target: {
-          value: accounts.delegate.address,
-          name: 'address',
-        },
-      });
-      expect(wrapper.find('input[name="address"]')).toHaveValue(accounts.delegate.address);
-      wrapper.setProps({
-        token: { active: tokenMap.BTC.key },
-        history: {
-          push: jest.fn(),
-          location: {
-            search: '?modal=addBookmark',
-          },
-        },
-      });
-      wrapper.update();
-      expect(wrapper.find('input[name="address"]')).toHaveValue('');
     });
   });
 });
