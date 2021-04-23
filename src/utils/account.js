@@ -1,5 +1,5 @@
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
-import { tokenMap, regex, balanceNeededForInitialization } from '@constants';
+import { tokenMap, regex, account as accountConst } from '@constants';
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
@@ -186,4 +186,4 @@ export const hasEnoughBalanceForInitialization = (balance = 0) =>
   Number(balance) >= accountConst.balanceNeededForInitialization;
 
 export const hasEnoughBalanceForReclaim = (balance = 0) =>
-  Number(balance) >= balanceNeededForReclaim;
+  Number(balance) >= accountConst.balanceNeededForReclaim;
