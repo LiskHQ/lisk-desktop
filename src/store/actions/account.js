@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { loginTypes, actionTypes, tokenMap } from '@constants';
 import { getAccount } from '@api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
+import { extractPublicKey } from '@utils/account';
 import { networkStatusUpdated } from './network';
 
 /**
@@ -98,36 +99,36 @@ export const accountDataUpdated = tokensTypes =>
  * @param {String} data.publicKey - Lisk publicKey used for hardware wallet login
  * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
  */
-export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
-  const { network, settings } = getState();
-  dispatch(accountLoading());
+export const login = ({ passphrase, publicKey, hwInfo }) =>
+  async (dispatch, getState) => {
+    const { network, settings } = getState();
+    dispatch(accountLoading());
 
-  const params = Object.keys(settings.token.list)
-    .filter(key => settings.token.list[key])
-    .reduce((acc, token) => {
-      // @todo only use the publicKey for login
-      acc[token] = { passphrase, publicKey };
-      return acc;
-    }, {});
+    const params = Object.keys(settings.token.list)
+      .filter(key => settings.token.list[key])
+      .reduce((acc, token) => {
+        acc[token] = { publicKey: publicKey ?? extractPublicKey(passphrase) };
+        return acc;
+      }, {});
 
-  const [error, info] = await to(getAccounts({ network, params }));
+    const [error, info] = await to(getAccounts({ network, params }));
 
-  if (error) {
-    toast.error(getConnectionErrorMessage(error));
-    dispatch(accountLoggedOut());
-  } else {
-    const loginType = hwInfo
-      ? ['trezor', 'ledger'].find(item => hwInfo.deviceModel.toLowerCase().indexOf(item) > -1)
-      : 'passphrase';
-    dispatch({
-      type: actionTypes.accountLoggedIn,
-      data: {
-        passphrase,
-        loginType: loginTypes[loginType].code,
-        hwInfo: hwInfo || {},
-        date: new Date(),
-        info,
-      },
-    });
-  }
-};
+    if (error) {
+      toast.error(getConnectionErrorMessage(error));
+      dispatch(accountLoggedOut());
+    } else {
+      const loginType = hwInfo
+        ? ['trezor', 'ledger'].find(item => hwInfo.deviceModel.toLowerCase().indexOf(item) > -1)
+        : 'passphrase';
+      dispatch({
+        type: actionTypes.accountLoggedIn,
+        data: {
+          passphrase,
+          loginType: loginTypes[loginType].code,
+          hwInfo: hwInfo || {},
+          date: new Date(),
+          info,
+        },
+      });
+    }
+  };
