@@ -111,6 +111,7 @@ or "warn/action" ineastd of "red/green"
   --color-jade-green: #2bd67b;
   --color-pale-pink: #ffd0d1;
   --color-silver: #eef0f7;
+  --color-black: #000;
 
   /*************************
       Other Colors
@@ -165,6 +166,7 @@ or "warn/action" ineastd of "red/green"
   --color-red-transparent: rgba(255, 69, 87, 0.1);
   --color-blue-manatee-transparent: rgba(138, 140, 162, 0.1);
   --color-jade-green-transparent: rgba(43, 214, 123, 0.1);
+  --color-tooltip: rgb(255, 255, 255, 0.9);
 
   /*************************
         Box
@@ -225,6 +227,7 @@ or "warn/action" ineastd of "red/green"
   --color-platinum: #4d4d50;
   --color-white-smoke: #1c1c1c;
   --color-maastricht-blue: #fff;
+  --color-black: #fff;
   --dark-border-color: #373739;
   --color-mystic: #4d4d50;
   --color-body-bg: #000;
@@ -245,4 +248,5 @@ or "warn/action" ineastd of "red/green"
   --tab-border-color: #4070f4;
   --color-search-container: var(--color-body-bg);
   --color-vote-item-bg: var(--color-mystic);
+  --color-tooltip: rgb(35, 35, 37, 0.9);
 }

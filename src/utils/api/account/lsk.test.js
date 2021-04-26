@@ -131,7 +131,7 @@ describe('API: LSK Account', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { address },
+        params: { publicKey },
         baseUrl: undefined,
         path,
       });
@@ -149,7 +149,7 @@ describe('API: LSK Account', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { address },
+        params: { publicKey },
         baseUrl: undefined,
         path,
       });
@@ -165,7 +165,7 @@ describe('API: LSK Account', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { address },
+        params: { publicKey },
         baseUrl: undefined,
         path,
       });
@@ -184,7 +184,7 @@ describe('API: LSK Account', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        params: { address },
+        params: { publicKey },
         baseUrl,
         path,
       });

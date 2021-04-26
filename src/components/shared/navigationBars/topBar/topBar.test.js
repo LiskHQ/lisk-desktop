@@ -42,6 +42,7 @@ describe('TopBar', () => {
     showDelegate: false,
     t: val => val,
     logOut: jest.fn(),
+    location: { pathname: routes.dashboard.path, search: '' },
     history: {
       location: { pathname: routes.dashboard.path, search: '' },
       replace: () => {},
@@ -174,7 +175,7 @@ describe('TopBar', () => {
         ...props,
         history: {
           ...props.history,
-          location: { pathname: routes.initialization.path },
+          location: { pathname: routes.reclaim.path },
         },
       },
     );

@@ -2,7 +2,7 @@ import { HTTP_CODES, tokenMap, regex } from '@constants';
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';
-import { extractAddressFromPassphrase, extractAddressFromPublicKey, extractPublicKey } from '../../account';
+import { extractAddressFromPublicKey, extractPublicKey } from '../../account';
 
 const httpPrefix = '/api/v2';
 
@@ -37,18 +37,13 @@ const getAccountParams = (params) => {
     publicKey,
   } = params;
 
-  // Pick username, cause the address is not obtainable from the username
   if (username) return { username };
-  // If you have the address, you don't need anything else
+  if (publicKey) return { publicKey };
   if (address) return { address };
-  // convert other params to address
-  if (publicKey) {
-    return { address: extractAddressFromPublicKey(publicKey) };
-  }
   if (passphrase) {
-    return { address: extractAddressFromPassphrase(passphrase) };
+    return { publicKey: extractPublicKey(passphrase) };
   }
-  // if none of the above, ignore the params
+
   return {};
 };
 
@@ -96,18 +91,19 @@ export const getAccount = async ({
 
       if (params.publicKey || params.passphrase) {
         const publicKey = params.publicKey ?? extractPublicKey(params.passphrase);
+        const address = extractAddressFromPublicKey(publicKey);
         const account = {
           summary: {
             publicKey,
             balance: 0,
-            address: normParams.address,
+            address,
             token: tokenMap.LSK.key,
           },
         };
         return account;
       }
     } else {
-      throw Error();
+      throw Error(e);
     }
   }
   throw Error('Error retrieving account');

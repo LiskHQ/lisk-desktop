@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { truncateAddress } from '@utils/account';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import CopyToClipboard from '@toolbox/copyToClipboard';
 import styles from './accountInfo.css';
+
+const Legacy = ({ legacyAddress }) => (
+  <div className={styles.legacy}>
+    <span className={`${styles.text} ${styles.label}`}>Old address</span>
+    <CopyToClipboard
+      text={legacyAddress}
+      className={styles.text}
+    >
+      {legacyAddress}
+    </CopyToClipboard>
+  </div>
+);
 
 /**
  *
@@ -11,44 +25,70 @@ import styles from './accountInfo.css';
  *
  */
 const Identity = ({
-  address,
+  newAddress,
+  legacyAddress,
   bookmark,
   username = '',
+  t = str => str,
+  setShowLegacy,
 }) => {
-  if (!address) return null;
-  const truncatedAddress = truncateAddress(address);
-  const [isTruncated, setTruncationState] = useState(true);
-  const onClick = () => setTruncationState(!isTruncated);
+  const hasTitle = username || !!bookmark;
+  let classNames = {
+    tooltipTruncated: `${styles.tooltip} ${styles.primary} ${styles.truncated}`,
+    tooltipFull: `${styles.tooltip} ${styles.primaryTooltip} ${styles.full}`,
+    spanTruncated: `${styles.text} ${styles.primary} ${styles.noSelect} account-primary-truncated`,
+    spanFull: `${styles.text} ${styles.primary} ${styles.noSelect} delegate-primary-full`,
+  };
+
+  if (hasTitle) {
+    classNames = {
+      tooltipTruncated: `${styles.tooltip} ${styles.secondary} ${styles.truncated}`,
+      tooltipFull: `${styles.tooltip} ${styles.secondaryTooltip} ${styles.full}`,
+      spanTruncated: `${styles.text} ${styles.noSelect} account-secondary-truncated`,
+      spanFull: `${styles.text} ${styles.noSelect} account-secondary-full`,
+    };
+  }
 
   return (
-    <div className={styles.text}>
+    <div className={styles.identity}>
       {
-        username || !!bookmark
+        hasTitle
           ? (
-            <>
-              <span className={`${styles.primary} account-primary`}>
-                {username || bookmark.title}
-              </span>
-              <span
-                className={`${styles.secondary} ${styles.noSelect} delegate-secondary`}
-                onClick={onClick}
-              >
-                {isTruncated ? truncatedAddress : address}
-              </span>
-            </>
-          )
-          : (
-            <span
-              className={`${styles.primary} ${styles.noSelect} account-primary`}
-              onClick={onClick}
-            >
-              {isTruncated ? truncatedAddress : address}
+            <span className={`${styles.primary} ${styles.text} ${styles.noSelect} account-primary`}>
+              {username || bookmark.title}
             </span>
           )
+          : null
       }
+      <Tooltip
+        className={classNames.tooltipTruncated}
+        content={(
+          <span
+            className={classNames.spanTruncated}
+            onClick={setShowLegacy}
+          >
+            {truncateAddress(newAddress)}
+          </span>
+        )}
+      >
+        <span>{t('Click to see full and old addresses')}</span>
+      </Tooltip>
+      <Tooltip
+        className={classNames.tooltipFull}
+        content={(
+          <span
+            className={classNames.spanFull}
+            onClick={setShowLegacy}
+          >
+            {newAddress}
+          </span>
+        )}
+      >
+        <span>{t('Click to hide full and old addresses')}</span>
+      </Tooltip>
+      <Legacy legacyAddress={legacyAddress} />
     </div>
   );
 };
-
 
 export default Identity;

@@ -44,6 +44,10 @@ const moduleAssetMap = {
     maxFee: 5e8,
     icon: 'registerMultisignatureGroup',
   },
+  [moduleAssetNameIdMap.reclaimLSK]: {
+    maxFee: 1e7,
+    icon: 'txDefault',
+  },
 };
 
 const moduleAssetSchemas = {};

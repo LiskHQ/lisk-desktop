@@ -12,7 +12,7 @@ import { toRawLsk } from '@utils/lsk';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
 
 const {
-  transfer, voteDelegate, registerDelegate, unlockToken,
+  transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK,
 } = MODULE_ASSETS_NAME_ID_MAP;
 /**
  * Gets the amount of a given transaction
@@ -76,6 +76,13 @@ const transformTransaction = (transaction) => {
           amount: Number(vote.amount),
           delegateAddress: getBase32AddressFromAddress(vote.delegateAddress),
         })),
+      };
+      break;
+    }
+
+    case reclaimLSK: {
+      transformedTransaction.asset = {
+        amount: transaction.asset.amount,
       };
       break;
     }
@@ -161,6 +168,13 @@ const createTransactionObject = (tx, moduleAssetId) => {
           delegateAddress: getAddressFromBase32Address(unlockingObject.delegateAddress),
           unvoteHeight: unlockingObject.unvoteHeight,
         })),
+      };
+      break;
+    }
+
+    case reclaimLSK: {
+      transaction.asset = {
+        amount: BigInt(amount),
       };
       break;
     }

@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { withRouter } from 'react-router';
-import { routes } from '@constants';
 import { addSearchParamsToUrl } from '@utils/searchParams';
 
 const DialogLink = ({
@@ -13,7 +12,7 @@ const DialogLink = ({
 
   return (
     <div
-      onClick={history.location.pathname === routes.initialization.path && component !== 'send' ? () => {} : onClick}
+      onClick={onClick}
       ref={linkEl}
       className={className}
     >

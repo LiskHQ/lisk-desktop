@@ -7,12 +7,14 @@ import Icon from '@toolbox/icon';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './topBar.css';
 
-const TokenSelector = ({ token, history, t }) => {
+const TokenSelector = ({
+  token, history, t, disabled,
+}) => {
   const dispatch = useDispatch();
   const activeToken = useSelector(state => state.settings.token.active);
 
   const activateToken = () => {
-    if (activeToken !== token && history.location.pathname !== routes.initialization.path) {
+    if (activeToken !== token && history.location.pathname !== routes.reclaim.path) {
       dispatch(settingsUpdated({ token: { active: token } }));
       const { location, push } = history;
       if (location.pathname !== routes.wallet.path) {
@@ -23,7 +25,7 @@ const TokenSelector = ({ token, history, t }) => {
 
   return (
     <Tooltip
-      className={styles.tooltipWrapper}
+      className={`${styles.tooltipWrappe} ${disabled && `${styles.disabled} disabled`}`}
       size="maxContent"
       position="bottom"
       content={(

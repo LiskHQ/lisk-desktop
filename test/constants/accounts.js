@@ -6,6 +6,7 @@ const accounts = {
       serverPublicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
       address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
       balance: '9897000000000000',
+      isMigrated: true,
     },
     token: { balance: '9897000000000000' },
     sequence: { nonce: '1' },
@@ -42,9 +43,14 @@ const accounts = {
       serverPublicKey: '197cf311f678406bc72a8edfdc3dffe6f59f49c4550a860e4b68fb20382211d0',
       address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
       balance: 0,
+      isMigrated: false,
     },
     token: { balance: 0 },
-    sequence: { },
+    legacy: {
+      address: '12345678900000000000L',
+      balance: '9897000000000000',
+    },
+    sequence: { nonce: '0' },
     dpos: {
       delegate: {},
     },
