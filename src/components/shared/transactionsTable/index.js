@@ -2,6 +2,7 @@ import { withTranslation } from 'react-i18next';
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import withFilters from '@utils/withFilters';
+import { getModuleAssetTitle } from '@utils/moduleAssets';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxHeader from '@toolbox/box/header';
@@ -31,7 +32,7 @@ const TransactionsTable = ({
   const handleLoadMore = () => {
     const params = Object.keys(filters).reduce((acc, key) => ({
       ...acc,
-      ...(filters[key] && { [key]: key === 'type' ? MODULE_ASSETS_NAME_ID_MAP[filters[key]] : filters[key] }),
+      ...(filters[key] && { [key]: key === 'moduleAssetId' ? MODULE_ASSETS_NAME_ID_MAP[filters[key]] : filters[key] }),
     }), {
       offset: transactions.meta.count + transactions.meta.offset,
       sort,
@@ -42,7 +43,7 @@ const TransactionsTable = ({
   /* istanbul ignore next */
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
-    type: value => `${t('Type')}: ${MODULE_ASSETS_NAME_ID_MAP[value]}`,
+    moduleAssetId: value => `${t('Type')}: ${getModuleAssetTitle()[value]}`,
     address: value => `${t('Address')}: ${value}`,
     recipient: value => `${t('Recipient')}: ${value}`,
   };
@@ -101,7 +102,7 @@ const defaultFilters = {
   message: '',
   amountFrom: '',
   amountTo: '',
-  type: '',
+  moduleAssetId: '',
   height: '',
   recipient: '',
   address: '',

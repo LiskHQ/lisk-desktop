@@ -21,7 +21,7 @@ const BookmarkIcon = ({ bookmark }) => (
 
 /* eslint-disable complexity */
 const AccountInfo = ({
-  address, t, activeToken, hwInfo, account, username, bookmark, host,
+  address, t, activeToken, hwInfo, username, bookmark, host,
 }) => (
   <Box className={styles.wrapper}>
     <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
@@ -92,14 +92,9 @@ const AccountInfo = ({
                 content={(
                   <DialogLink
                     component="addBookmark"
-                    data={username ? {
+                    data={{
                       formAddress: address,
-                      label: account.dpos?.delegate?.username,
-                      isDelegate: account.isDelegate,
-                    } : {
-                      formAddress: address,
-                      label: bookmark ? bookmark.title : '',
-                      isDelegate: account.isDelegate,
+                      username: username || '',
                     }}
                   >
                     <BookmarkIcon bookmark={bookmark} />

@@ -29,7 +29,7 @@ const fields = t => [{
 }, {
   label: t('Type'),
   placeholder: t('All types'),
-  name: 'type',
+  name: 'moduleAssetId',
   type: 'select',
 }, {
   label: t('Height'),
@@ -45,7 +45,7 @@ const Transactions = ({ t, transactions }) => {
     message: '',
     amountFrom: '',
     amountTo: '',
-    type: '',
+    moduleAssetId: '',
     height: '',
     recipient: '',
     address: '',

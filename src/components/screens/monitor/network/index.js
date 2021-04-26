@@ -115,7 +115,11 @@ export default compose(
       apiUtil: (network, params) => getPeers({ network, params }, tokenMap.LSK.key),
       defaultData: [],
       autoload: true,
-      transformResponse: response => response.data,
+      transformResponse: (response, peers, urlSearchParams) => (
+        urlSearchParams.offset
+          ? [...peers, ...response.data]
+          : response.data
+      ),
     },
   }),
   withLocalSort('peers', 'height:desc', { version: sortByVersion }),

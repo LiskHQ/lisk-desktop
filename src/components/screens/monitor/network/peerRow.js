@@ -12,7 +12,7 @@ const PeerRow = ({ data, className }) => (
       {data.wsPort}
     </span>
     <span className={grid['col-xs-2']}>
-      <Flag code={data.location.countryCode} />
+      <Flag code={data.location?.countryCode} />
     </span>
     <span className={grid['col-xs-2']}>
       {data.version}
