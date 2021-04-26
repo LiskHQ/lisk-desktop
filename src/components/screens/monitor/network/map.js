@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import styles from './network.css';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
@@ -52,18 +52,21 @@ const getTiles = () =>
 
 const FullMap = ({ peers }) => {
   const ref = useRef();
+  const [peersCount, setPeersCount] = useState(0);
 
   useEffect(() => {
-    if (peers.length && !ref.map) {
-      const networkMap = L.map('mapContainer', mapOptions).setView([36.414203, 11.250000], 2);
+    if (peers.length) {
+      if (!ref.current) {
+        const networkMap = L.map('mapContainer', mapOptions).setView([36.414203, 11.250000], 2);
 
-      const tiles = getTiles();
-      tiles.addTo(networkMap);
+        const tiles = getTiles();
+        tiles.addTo(networkMap);
+        ref.current = networkMap;
+      }
 
-      networkMap.addLayer(createMarkers(peers));
-      networkMap.attributionControl.addAttribution(getAttributionLinks());
-
-      ref.current = networkMap;
+      ref.current.addLayer(createMarkers(peers.slice(peersCount)));
+      ref.current.attributionControl.addAttribution(getAttributionLinks());
+      setPeersCount(peers.length);
     }
   }, [peers]);
 
