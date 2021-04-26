@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { fromRawLsk } from '@utils/lsk';
 import { kFormatter } from '@utils/helpers';
-import { colorPalette, chartStyles } from '@constants';
+import { colorPalette, chartStyles, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
 import Box from '@toolbox/box';
 import BoxTabs from '@toolbox/tabs';
@@ -14,7 +14,9 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
 import styles from './overview.css';
 
-const listOfLabels = Object.values(getModuleAssetTitle());
+const moduleAssetIds = Object.values(MODULE_ASSETS_NAME_ID_MAP);
+const titles = getModuleAssetTitle();
+const listOfLabels = moduleAssetIds.map(id => titles[id]);
 
 const options = {
   responsive: true,
@@ -122,8 +124,8 @@ const formatDates = (date, period) => {
   return date.replace(/^\d{4}-/, '');
 };
 
-const formatDistributionByValues = distributions => [0, 1, 2, 3, 4].map(item =>
-  (distributions[item] || 0) + (distributions[item + 8] || 0));
+const formatDistributionByValues = distributions =>
+  moduleAssetIds.map(id => (distributions[id] || 0) || 0);
 
 const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
