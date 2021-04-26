@@ -24,7 +24,7 @@ const AccountInfo = ({
         <div className={`${styles.info} ${showLegacy ? styles.showLegacy : ''}`}>
           <AccountVisual
             address={address}
-            size={30}
+            size={40}
           />
           {
             address ? (
@@ -39,6 +39,10 @@ const AccountInfo = ({
             ) : null
           }
         </div>
+        <Icon
+          name={activeToken === 'LSK' ? 'liskLogo' : 'bitcoinLogo'}
+          className={styles.watermarkLogo}
+        />
         <ActionBar
           address={address}
           host={host}
@@ -48,10 +52,6 @@ const AccountInfo = ({
           bookmark={bookmark}
           hwInfo={hwInfo}
           t={t}
-        />
-        <Icon
-          name={activeToken === 'LSK' ? 'liskLogo' : 'bitcoinLogo'}
-          className={styles.watermarkLogo}
         />
       </BoxContent>
     </Box>

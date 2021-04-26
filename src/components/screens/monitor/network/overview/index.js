@@ -190,8 +190,8 @@ const Overview = ({
   networkStatus,
   t,
 }) => {
-  const { basic, coreVer, height } = networkStatus;
-  const versionsDistribution = coreVer ? createChartData(coreVer, t) : null;
+  const { basic, networkVersion, height } = networkStatus;
+  const versionsDistribution = networkVersion ? createChartData(networkVersion, t) : null;
   const heightDistribution = height ? createChartData(height, t) : null;
   const versionChartProps = versionsDistribution ? {
     data: {

@@ -6,7 +6,7 @@ describe('SelectFilter', () => {
   const props = {
     t: v => v,
     filters: {
-      type: '',
+      moduleAssetId: '',
     },
     placeholder: 'Sample title',
     name: 'type',

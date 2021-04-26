@@ -3,7 +3,6 @@ import { transactions } from '@liskhq/lisk-client';
 
 import {
   tokenMap,
-  MODULE_ASSETS_NAME_ID_MAP,
   minFeePerByte,
   DEFAULT_NUMBER_OF_SIGNATURES,
   DEFAULT_SIGNATURE_BYTE_SIZE,
@@ -16,7 +15,6 @@ import { joinModuleAndAssetIds } from '@utils/moduleAssets';
 import { createTransactionObject } from '@utils/transaction';
 import { validateAddress } from '../../validators';
 import http from '../http';
-import ws from '../ws';
 import { getDelegates } from '../delegate';
 
 const httpPrefix = '/api/v2';
@@ -27,10 +25,6 @@ const httpPaths = {
   transaction: `${httpPrefix}/transactions`,
   transactionStats: `${httpPrefix}/transactions/statistics`,
   schemas: `${httpPrefix}/transactions/schemas`,
-};
-
-const wsMethods = {
-  transactions: 'get.transactions',
 };
 
 /**
@@ -56,15 +50,15 @@ export const getTransaction = ({
 
 const filters = {
   address: { key: 'address', test: address => !validateAddress(tokenMap.LSK.key, address) },
-  timestamp: { key: 'timestamp', test: str => /\d+:\d+/.test(str) },
-  amount: { key: 'amount', test: str => /\d+:\d+/.test(str) },
+  timestamp: { key: 'timestamp', test: str => /^(\d+)?:(\d+)?$/.test(str) },
+  amount: { key: 'amount', test: str => /^(\d+)?:(\d+)?$/.test(str) },
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
   moduleAssetId: { key: 'moduleAssetId', test: str => /\d:\d/.test(str) },
   height: { key: 'height', test: num => parseInt(num, 10) > 0 },
   sort: {
     key: 'sort',
-    test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'type:asc', 'type:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
+    test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
   },
 };
 
@@ -82,7 +76,7 @@ const filters = {
  * @param {String} data.params.dateTo Unix timestamp, the end time of txs
  * @param {String} data.params.amountFrom The minimum value of txs
  * @param {String} data.params.amountTo The maximum value of txs
- * @param {Number} data.params.type The title of the transaction type
+ * @param {String} data.params.moduleAssetId The moduleAssetId. 2:0, 5:1, etc
  * @param {Number} data.params.offset Used for pagination
  * @param {Number} data.params.limit Used for pagination
  * @param {String} data.params.sort an option of 'amount:asc',
@@ -96,18 +90,6 @@ export const getTransactions = ({
   params,
   baseUrl,
 }) => {
-  const typeConfig = params.type && MODULE_ASSETS_NAME_ID_MAP[params.type];
-
-  // if type, correct the type and use WS
-  if (typeConfig) {
-    const requests = Object.values(typeConfig.code).map(type => ({
-      method: wsMethods.transactions,
-      params: { type },
-    }));
-    // BaseUrl is only used for retrieving archived txs, so it's not needed here.
-    return ws({ baseUrl: network.serviceUrl, requests });
-  }
-
   const normParams = {};
 
   // if blockId, ignore others

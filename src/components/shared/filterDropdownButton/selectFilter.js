@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { getModuleAssetSenderLabel } from '@utils/moduleAssets';
+import { getModuleAssetTitle } from '@utils/moduleAssets';
 import Select from '@toolbox/select';
 import styles from './filters.css';
 
@@ -11,7 +11,7 @@ const SelectFilter = ({
   const options = Object.keys(MODULE_ASSETS_NAME_ID_MAP)
     .map(key => ({
       value: MODULE_ASSETS_NAME_ID_MAP[key],
-      label: getModuleAssetSenderLabel()[key],
+      label: getModuleAssetTitle()[MODULE_ASSETS_NAME_ID_MAP[key]],
     }));
   options.unshift({ value: '', label: placeholder });
 

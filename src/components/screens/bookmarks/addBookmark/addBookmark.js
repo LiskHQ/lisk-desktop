@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { tokenMap } from '@constants';
 import { validateAddress } from '@utils/validators';
 import { getIndexOfBookmark } from '@utils/bookmarks';
-import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
+import { parseSearchParams, removeSearchParamsFromUrl } from '@utils/searchParams';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
@@ -14,264 +15,216 @@ import styles from './addBookmark.css';
 import ModalWrapper from '../modalWrapper';
 import Fields from './fields';
 
-class AddBookmark extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.fields = [{
-      name: 'address',
-      label: props.t('Address'),
-      placeholder: props.t('Insert public address'),
-      className: 'input-address',
-    }, {
-      name: 'label',
-      label: props.t('Label'),
-      feedback: props.t('Max. 20 characters'),
-      placeholder: props.t('Insert label'),
-      className: 'input-label',
-    }];
-
-    const edit = this.isEditing();
-
-    this.state = {
-      fields: this.setupFields(),
-      showRemoveBtn: edit,
-      showSaveBtn: !edit || !this.getUrlSearchParam('isDelegate'),
-      edit,
-    };
-
-    this.onInputChange = {
-      address: this.onAddressChange.bind(this),
-      label: this.onLabelChange.bind(this),
-    };
-    this.handleRemoveBookmark = this.handleRemoveBookmark.bind(this);
-    this.handleAddBookmark = this.handleAddBookmark.bind(this);
-    this.onClose = this.onClose.bind(this);
+/**
+ *  Checks the label and returns feedback
+ *
+ * @param {String} value - The label string to check
+ * @param {Function} t - i18n function
+ * @returns {String} - Feedback string. Empty string if the label is valid
+ */
+const validateLabel = (value = '', t) => {
+  if (value.length > 20) {
+    return t('Label is too long, Max. 20 characters');
   }
+  return '';
+};
 
-  getUrlSearchParam(param) {
-    if (param === 'isDelegate') {
-      return selectSearchParamValue(this.props.history.location.search, param) === 'true';
-    }
-    return selectSearchParamValue(this.props.history.location.search, param);
+/**
+ * Checks the address and returns feedback
+ *
+ * @param {String} token - LSK or BTC
+ * @param {String} value - Address string
+ * @param {Object} network - The network object from Redux store
+ * @param {Object} bookmarks - Lisk of bookmarks from Redux store
+ * @param {Function} t - i18n function
+ * @param {Boolean} isUnique - Should check if the account is already a bookmark
+ * @returns {String} - Feedback string. Empty string if the address is valid (and unique)
+ */
+const validateBookmarkAddress = (token, value = '', network, bookmarks, t, isUnique) => {
+  if (validateAddress(token, value, network) === 1) {
+    return t('Invalid address');
   }
-
-  isEditing() {
-    const { token: { active }, bookmarks } = this.props;
-    const formAddress = this.getUrlSearchParam('formAddress');
-    return bookmarks[active].some(bookmark => bookmark.address === formAddress);
+  if (isUnique && getIndexOfBookmark(bookmarks, { address: value, token }) !== -1) {
+    return t('Address already bookmarked');
   }
+  return '';
+};
 
-  setupFields() {
-    const formAddress = this.getUrlSearchParam('formAddress');
-    const label = this.getUrlSearchParam('label');
+/**
+ * Define edit/add mode
+ *
+ * @param {Object} history - History object from withRouter
+ * @param {Object} bookmarks - Lisk of bookmarks from Redux store
+ * @param {String} active - LSK, BTC, etc
+ * @returns {String} - edit or add
+ */
+const getMode = (history, bookmarks, active) => {
+  const { address } = parseSearchParams(history.location.search);
+  return bookmarks[active].some(bookmark => bookmark.address === address) ? 'edit' : 'add';
+};
 
-    return this.fields.reduce((acc, field) => {
-      let value = '';
-      let readonly = false;
-      if (field.name === 'address' && formAddress) {
-        value = formAddress;
-        readonly = true;
-      } else if (field.name === 'label' && label) {
-        value = label;
-        readonly = this.getUrlSearchParam('isDelegate');
-      }
+const blankField = { value: '', readonly: false, feedback: '' };
 
-      return {
-        ...acc,
-        [field.name]: {
-          value,
-          error: false,
-          feedback: field.feedback || '',
-          readonly,
-        },
-      };
-    }, {});
-  }
+// eslint-disable-next-line max-statements
+const AddBookmark = ({
+  token: { active },
+  account,
+  bookmarks,
+  history,
+  bookmarkRemoved,
+  bookmarkAdded,
+  bookmarkUpdated,
+  network,
+  t,
+}) => {
+  const [mode, setMode] = useState(getMode(history, bookmarks, active));
+  const [fields, setFields] = useState([blankField, blankField]);
+  const timeout = useRef(null);
 
-
-  componentDidUpdate(prevProps) {
-    const { token } = this.props;
-    const { token: prevToken } = prevProps;
-
-    if (!this.props.account.isLoading && this.props.account.data.summary) {
-      this.updateLabelIfDelegate(prevProps, this.props.account);
-    }
-
-    if (token.active !== prevToken.active) {
-      this.setState(state => ({
-        ...state,
-        fields: this.setupFields(),
-      }));
-    }
-  }
-
-  updateLabelIfDelegate(prevProps, account) {
-    const { fields: { label } } = this.state;
-    if (account.data.summary.isDelegate === prevProps.account.data.summary?.isDelegate) return;
-
-    if (account.data.summary.isDelegate && account.data.dpos.delegate.username !== label.value) {
-      const data = { value: account.data.dpos.delegate.username, readonly: true };
-      this.updateField({
-        name: 'label',
-        data,
-      });
-    } else if (label.readonly) {
-      this.updateField({
-        name: 'label',
-        data: { value: '', readonly: false },
-      });
-    }
-  }
-
-  updateField({ name, data }) {
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        [name]: {
-          ...fields[name],
-          ...data,
-        },
+  useEffect(() => {
+    const { formAddress, username } = parseSearchParams(history.location.search);
+    const bookmark = bookmarks[active].find(item => item.address === formAddress);
+    const addressFeedback = validateBookmarkAddress(
+      active, formAddress, network, bookmarks, t, false,
+    );
+    const usernameValue = bookmark?.title || username || '';
+    const usernameFeedback = validateLabel(usernameValue, t);
+    setFields([
+      {
+        value: formAddress || '',
+        feedback: addressFeedback,
+        readonly: addressFeedback !== '',
       },
-    }));
-  }
+      {
+        value: usernameValue,
+        feedback: usernameFeedback,
+        readonly: username || usernameFeedback !== '',
+      },
+    ]);
+  }, []);
 
-  onLabelChange({ target: { name, value } }) {
-    const { error, feedback } = this.validateLabel(value);
-    this.updateField({
-      name,
-      data: {
-        error,
+  useEffect(() => {
+    if (account.data.summary) {
+      const username = account.data.dpos?.delegate?.username ?? '';
+      setFields(
+        [{
+          value: account.data.summary.address,
+          feedback: '',
+          readonly: true,
+        },
+        {
+          value: username,
+          feedback: '',
+          readonly: username !== '',
+        }],
+      );
+
+      setMode(getMode(history, bookmarks, active));
+    }
+  }, [account.data]);
+
+  const onClose = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    removeSearchParamsFromUrl(history, ['modal', 'formAddress', 'username']);
+  };
+
+  const onLabelChange = ({ target: { value } }) => {
+    const feedback = validateLabel(value, t);
+    setFields([
+      fields[0],
+      {
         value,
         feedback,
         readonly: false,
       },
-    });
-  }
+    ]);
+  };
 
-  validateLabel(value) {
-    const { t } = this.props;
-    const maxLength = 20;
-    const error = value.length > maxLength;
-    const feedback = !error
-      ? t('Max. 20 characters')
-      : t('Label is too long.');
-    return { feedback, error };
-  }
+  const onAddressChange = ({ target: { value } }) => {
+    const feedback = validateBookmarkAddress(active, value, network, bookmarks, t, true);
+    clearTimeout(timeout.current);
 
-  onAddressChange({ target: { name, value } }) {
-    const { token: { active }, account } = this.props;
-    const { feedback, error, isInvalid } = this.validateAddress(active, value);
-
-    if (active === tokenMap.LSK.key && !error && value.length) {
-      account.loadData({ address: value });
+    if (active === tokenMap.LSK.key && !feedback) {
+      timeout.current = setTimeout(() => {
+        account.loadData({ address: value });
+      }, 300);
     }
 
-    this.updateField({
-      name,
-      data: {
-        error,
+    setFields([
+      {
         value,
         feedback,
-        isInvalid,
+        readonly: false,
       },
-    });
-  }
+      fields[1],
+    ]);
+  };
 
-  validateAddress(token, value) {
-    const { network, bookmarks, t } = this.props;
-    const isInvalid = validateAddress(token, value, network) === 1;
-    const alreadyBookmarked = !isInvalid
-      && getIndexOfBookmark(bookmarks, { address: value, token }) !== -1;
-    const feedback = (isInvalid && t('Invalid address'))
-      || (alreadyBookmarked && t('Address already bookmarked'))
-      || '';
-    return { error: isInvalid || alreadyBookmarked, isInvalid, feedback };
-  }
-
-  handleRemoveBookmark(e) {
+  const handleRemoveBookmark = (e) => {
     e.preventDefault();
-    const {
-      token: { active }, bookmarkRemoved,
-    } = this.props;
-    const { fields: { address } } = this.state;
-
     bookmarkRemoved({
-      address: address.value,
+      address: fields[0].value,
       token: active,
     });
-    this.onClose();
-  }
+    onClose();
+  };
 
-  handleAddBookmark(e) {
+  const handleAddBookmark = (e) => {
     e.preventDefault();
-    const {
-      token: { active }, bookmarkAdded, bookmarkUpdated,
-    } = this.props;
-    const { fields: { label, address } } = this.state;
 
-    const func = this.state.edit ? bookmarkUpdated : bookmarkAdded;
+    const func = mode === 'edit' ? bookmarkUpdated : bookmarkAdded;
 
     func({
       token: active,
       account: {
-        title: label.value,
-        address: address.value,
-        isDelegate: this.props.account.data.summary.isDelegate,
+        address: fields[0].value,
+        title: fields[1].value,
+        isDelegate: fields[1].readonly,
       },
     });
-    this.onClose();
-  }
+    onClose();
+  };
 
-  onClose(e) {
-    if (e) e.preventDefault();
-    removeSearchParamsFromUrl(this.props.history, ['modal', 'formAddress', 'isDelegate', 'label']);
-  }
+  const isDisabled = fields.find(field => field.feedback || field.value === '');
 
-  render() {
-    const { t } = this.props;
-    const { fields } = this.state;
-    const isDisabled = !!Object.keys(fields).find(field => fields[field].error || fields[field].value === '');
-
-    return (
-      <ModalWrapper>
-        <div className={styles.wrapper}>
-          <div className={styles.content}>
-            <header className={styles.header}><Icon name="bookmarkActive" /></header>
-            <Box className={styles.box}>
-              <BoxHeader><h2>{this.state.edit ? t('Edit bookmark') : t('New bookmark')}</h2></BoxHeader>
-              <BoxContent>
-                <Fields
-                  fields={this.fields}
-                  status={this.state.fields}
-                  onInputChange={this.onInputChange}
-                />
-              </BoxContent>
-              <BoxFooter direction="horizontal">
-                <SecondaryButton className="cancel-button" onClick={this.onClose}>
-                  {t('Cancel')}
+  return (
+    <ModalWrapper>
+      <div className={styles.wrapper}>
+        <div className={styles.content}>
+          <header className={styles.header}><Icon name="bookmarkActive" /></header>
+          <Box className={styles.box}>
+            <BoxHeader><h2>{mode === 'edit' ? t('Edit bookmark') : t('New bookmark')}</h2></BoxHeader>
+            <BoxContent>
+              <Fields
+                t={t}
+                status={fields}
+                handlers={[onAddressChange, onLabelChange]}
+              />
+            </BoxContent>
+            <BoxFooter direction="horizontal">
+              <SecondaryButton className="cancel-button" onClick={onClose}>
+                {t('Cancel')}
+              </SecondaryButton>
+              {mode === 'edit' && (
+                <SecondaryButton className="remove-button" onClick={handleRemoveBookmark}>
+                  <div className={styles.removeBtn}>
+                    <Icon name="remove" />
+                    {t('Remove')}
+                  </div>
                 </SecondaryButton>
-                {this.state.showRemoveBtn && (
-                  <SecondaryButton className="remove-button" onClick={this.handleRemoveBookmark}>
-                    <div className={styles.removeBtn}>
-                      <Icon name="remove" />
-                      {t('Remove')}
-                    </div>
-                  </SecondaryButton>
-                )}
-                {this.state.showSaveBtn && (
-                  <PrimaryButton disabled={isDisabled} onClick={this.handleAddBookmark} className="save-button">
-                    {t('Save')}
-                  </PrimaryButton>
-                )}
-              </BoxFooter>
-            </Box>
-          </div>
+              )}
+              <PrimaryButton disabled={isDisabled} onClick={handleAddBookmark} className="save-button">
+                {t('Save')}
+              </PrimaryButton>
+            </BoxFooter>
+          </Box>
         </div>
-      </ModalWrapper>
-    );
-  }
-}
+      </div>
+    </ModalWrapper>
+  );
+};
 
 AddBookmark.displayName = 'AddBookmark';
 AddBookmark.propTypes = {
