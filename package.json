@@ -76,7 +76,6 @@
     "lodash.throttle": "4.1.1",
     "lottie-web": "5.5.5",
     "moment": "2.23.0",
-    "node-abi": "2.26.0",
     "node-hid": "2.1.1",
     "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
     "os-browserify": "^0.3.0",
