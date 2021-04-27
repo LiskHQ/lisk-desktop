@@ -46,7 +46,7 @@ const CustomRoute = ({
     );
   }
 
-  if (!account.info?.LSK?.summary?.isMigrated
+  if (account.info?.LSK?.summary?.isMigrated === false
     && history.location.pathname !== routes.reclaim.path
     && history.location.pathname !== routes.login.path
     && isAuthenticated) {
