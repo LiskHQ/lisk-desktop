@@ -46,6 +46,7 @@ const Overview = ({
           bookmark={bookmark}
           publicKey={publicKey}
           host={host}
+          account={account}
         />
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
