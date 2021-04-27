@@ -1,41 +1,42 @@
 {
   "name": "Lisk",
   "version": "2.0.0-alpha.6",
+  "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
+  "license": "GPL-3.0",
   "productName": "Lisk",
   "description": "Lisk",
   "homepage": "https://github.com/LiskHQ/lisk-desktop",
   "bugs": "https://github.com/LiskHQ/lisk-desktop/issues",
   "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LiskHQ/lisk-desktop"
+  },
+  "engines": {
+    "node": ">=v12.7.0"
+  },
   "scripts": {
     "dev": "DEBUG=true NACL_FAST=disable && webpack serve --config ./config/webpack.config.dev",
     "dev:hw": " DEBUG=true webpack serve --config ./config/webpack.config.dev --https",
-  
     "start": "npm run rebuild && electron ./app/",
     "rebuild": "electron-rebuild -m app/node_modules/node-hid && electron-rebuild -m app/node_modules/usb",
-  
     "build": "npm-run-all clean:build copy:files build:prod build:electron",
     "build:prod": "webpack --config ./config/webpack.config.prod",
     "build:electron": "webpack --config ./config/webpack.config.electron",
-
     "dist": "electron-builder --x64 --publish onTag",
     "dist:win": "electron-builder --win --ia32 --x64 --publish onTag",
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux --x64 --publish onTag",
-
     "pack": "npm install && npm run build && npm run clean:dist && npm run dist",
     "pack:win": "cmd /c npm install && npm run install:electron:dependencies && npm run clean:build && npm run copy:files && npm run build-prod && npm run build-electron && npm run clean:dist && npm run dist:win",
-
     "test": "jest --config ./jest.config.js",
     "test:live": "npm test -- --watch",
     "cypress:open": "cypress open --project test/cypress",
     "cypress:run": "cypress run --project test/cypress",
-
     "eslint": "eslint ./",
     "eslint:fix": "eslint ./ --fix",
-
     "storybook": "start-storybook -p 6006",
     "percy": "build-storybook && percy-storybook --widths=769",
-
     "postinstall": "electron-builder install-app-deps",
     "install:storybook:dependencies": "cd ./storybook/; npm install; cd ..",
     "install:electron:dependencies": "cd ./app && npm install && cd ..",
@@ -44,11 +45,63 @@
     "clean:build": "rm -rf app/build",
     "clean:dist": "rm -rf dist"
   },
-  "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
-  "license": "GPL-3.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/LiskHQ/lisk-desktop"
+  "build": {
+    "asar": true,
+    "appId": "io.lisk.hub",
+    "copyright": "Copyright © 2017-2020 Lisk",
+    "afterSign": "electron-builder-notarize",
+    "protocols": {
+      "name": "lisk",
+      "schemes": [
+        "lisk"
+      ]
+    },
+    "artifactName": "lisk-${os}-${arch}-${version}.${ext}",
+    "publish": [
+      "github"
+    ],
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "desktop": {
+        "MimeType": "application/lisk;x-scheme-handler/lisk"
+      },
+      "category": "Network"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.plist",
+      "entitlementsInherit": "build/entitlements.plist"
+    },
+    "dmg": {
+      "background": "./build/background@2x.png",
+      "contents": [
+        {
+          "x": 584,
+          "y": 230,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 380,
+          "y": 232,
+          "type": "file"
+        }
+      ],
+      "window": {
+        "width": 660,
+        "height": 480
+      }
+    }
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true,
+    "stepDefinitions": "features/"
   },
   "dependencies": {
     "@ledgerhq/hw-transport-node-hid": "4.78.0",
@@ -214,66 +267,5 @@
     "webpack-bundle-analyzer": "3.3.2",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "3.11.2"
-  },
-  "build": {
-    "asar": true,
-    "appId": "io.lisk.hub",
-    "copyright": "Copyright © 2017-2020 Lisk",
-    "afterSign": "electron-builder-notarize",
-    "protocols": {
-      "name": "lisk",
-      "schemes": [
-        "lisk"
-      ]
-    },
-    "artifactName": "lisk-${os}-${arch}-${version}.${ext}",
-    "publish": [
-      "github"
-    ],
-    "linux": {
-      "target": [
-        "AppImage"
-      ],
-      "desktop": {
-        "MimeType": "application/lisk;x-scheme-handler/lisk"
-      },
-      "category": "Network"
-    },
-    "win": {
-      "target": "nsis"
-    },
-    "mac": {
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false,
-      "entitlements": "build/entitlements.plist",
-      "entitlementsInherit": "build/entitlements.plist"
-    },
-    "dmg": {
-      "background": "./build/background@2x.png",
-      "contents": [
-        {
-          "x": 584,
-          "y": 230,
-          "type": "link",
-          "path": "/Applications"
-        },
-        {
-          "x": 380,
-          "y": 232,
-          "type": "file"
-        }
-      ],
-      "window": {
-        "width": 660,
-        "height": 480
-      }
-    }
-  },
-  "engines": {
-    "node": ">=v12.7.0"
-  },
-  "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true,
-    "stepDefinitions": "features/"
   }
 }
