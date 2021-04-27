@@ -7,11 +7,11 @@ const reactConfig = require('./webpack.config.react');
 const version = require('../package.json').version;
 
 const config = {
+  mode: 'production',
   output: {
-    path: resolve(__dirname, '../app', '../app/build'),
+    path: resolve(__dirname, '../app/build'),
     filename: 'bundle.[name].[contenthash].js',
   },
-  mode: 'production',
   optimization: {
     moduleIds: 'named',
     minimizer: [new TerserPlugin({ test: /\.js(\?.*)?$/i })],
