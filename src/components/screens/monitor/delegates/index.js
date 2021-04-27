@@ -2,7 +2,6 @@
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-import moment from 'moment';
 import { connect } from 'react-redux';
 
 import { getForgers, getDelegates } from '@api/delegate';
