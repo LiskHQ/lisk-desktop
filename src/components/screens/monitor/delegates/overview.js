@@ -12,6 +12,9 @@ import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
 
+const getAmountOfDelegatesInTime = registrations => registrations.data.map(item => item[1]);
+const getAmountOfDelegatesLabels = registrations => registrations.data.map(item => item[0]);
+
 const Overview = ({
   chartActiveAndStandby,
   chartRegisteredDelegates,
@@ -19,30 +22,6 @@ const Overview = ({
   totalBlocks,
   supply,
 }) => {
-  const getAmountOfDelegatesInTime = () => {
-    const totalDelegates = chartActiveAndStandby.data;
-    const final = [totalDelegates];
-    let allPositiveValues = true;
-    chartRegisteredDelegates.data
-      .map(delegate => (delegate.y))
-      .reduce((amountOfDelegates, amountOfDelegatesByMonth) => {
-        final.unshift(amountOfDelegates - amountOfDelegatesByMonth);
-        allPositiveValues = allPositiveValues && amountOfDelegates - amountOfDelegatesByMonth > 0;
-        return amountOfDelegates - amountOfDelegatesByMonth;
-      }, totalDelegates);
-
-    return allPositiveValues ? final : [];
-  };
-
-  const getAmountOfDelegatesLabels = () => {
-    const labels = chartRegisteredDelegates.data.map((item) => {
-      const date = item.x;
-      return date.slice(0, 2) + date.slice(3, date.length);
-    });
-    labels.push('Now');
-    return labels;
-  };
-
   const doughnutChartData = {
     labels: [t('Standby delegates'), t('Active delegates')],
     datasets: [

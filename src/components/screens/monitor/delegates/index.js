@@ -38,27 +38,6 @@ const transformVotesResponse = (response, oldData = []) => (
   )]
 );
 
-/**
- * This function is to iterate over the list of delegates and GROUP BY
- * timestamp (Month and Year) and count how many users registered as
- * delegate in the month
- */
-const transformChartResponse = (response) => {
-  const responseFormatted = response.data.reduce((acc, transaction) => {
-    const newTransaction = { ...transaction, timestamp: moment(transaction.timestamp * 1000).startOf('month').toISOString() };
-    return {
-      ...acc,
-      [newTransaction.timestamp]: ((acc[newTransaction.timestamp] || 0) + 1),
-    };
-  }, {});
-
-  return Object.entries(responseFormatted)
-    .map(delegate => ({ x: delegate[0], y: delegate[1] }))
-    .sort((dateA, dateB) => (dateB.x > dateA.x ? -1 : 1))
-    .slice(-4)
-    .map(delegate => ({ ...delegate, x: moment(delegate.x).format('MMM YY') }));
-};
-
 const mapStateToProps = state => ({
   watchList: state.watchList,
 });
