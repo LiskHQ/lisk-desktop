@@ -21,7 +21,7 @@
     "test-live": "npm test -- --watch",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
     "start": "npm run rebuild && electron ./app/",
-    "dist": "electron-builder --ia32 --x64 --publish onTag",
+    "dist": "electron-builder --x64 --publish onTag",
     "dist:win": "electron-builder --win --ia32 --x64 --publish onTag",
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux --x64 --publish onTag",
