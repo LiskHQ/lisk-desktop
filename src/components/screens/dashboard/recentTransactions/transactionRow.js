@@ -9,7 +9,7 @@ import styles from './recentTransactions.css';
 
 // eslint-disable-next-line complexity
 const TransactionRow = ({
-  data, className, t, host,
+  data, className, t, host, currentBlockHeight,
 }) => {
   const {
     bookmarks,
@@ -18,7 +18,7 @@ const TransactionRow = ({
     bookmarks: state.bookmarks,
     activeToken: state.settings.token.active,
   }));
-  const isConfirmed = data.confirmations > 0;
+  const isConfirmed = currentBlockHeight - data.height > 0;
   const unlockAmount = data.asset?.unlockingObjects
     && data.asset.unlockingObjects.reduce((total, item) => {
       total += item.amount;
@@ -64,6 +64,6 @@ const TransactionRow = ({
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
   (prevProps.data.id === nextProps.data.id
-  && prevProps.data.confirmations === nextProps.data.confirmations);
+  && prevProps.currentBlockHeight === nextProps.currentBlockHeight);
 
 export default React.memo(TransactionRow, areEqual);

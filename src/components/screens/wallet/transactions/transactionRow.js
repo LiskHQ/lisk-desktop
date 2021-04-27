@@ -89,7 +89,7 @@ const TransactionRow = ({
 const areEqual = (prevProps, nextProps) =>
   (
     prevProps.data.id === nextProps.data.id
-    && prevProps.data.confirmations === nextProps.data.confirmations
+    && prevProps.currentBlockHeight === nextProps.currentBlockHeight
     && Object.keys(prevProps.delegates).length === Object.keys(nextProps.delegates).length
   );
 

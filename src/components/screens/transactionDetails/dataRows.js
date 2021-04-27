@@ -148,7 +148,7 @@ export const AmountAndDate = ({
 };
 
 export const FeeAndConfirmation = ({
-  transaction, activeToken, t,
+  transaction, activeToken, t, currentBlockHeight,
 }) => (
   <BoxRow>
     <div className={styles.value}>
@@ -171,14 +171,14 @@ export const FeeAndConfirmation = ({
         </Tooltip>
       </span>
       <span className="tx-confirmation">
-        {transaction.confirmations || 0}
+        {currentBlockHeight ? currentBlockHeight - transaction.height : 0}
       </span>
     </div>
   </BoxRow>
 );
 
 export const DateAndConfirmation = ({
-  transaction, activeToken, t,
+  transaction, activeToken, t, currentBlockHeight,
 }) => (
   <BoxRow>
     <div className={styles.value}>
@@ -203,7 +203,7 @@ export const DateAndConfirmation = ({
         </Tooltip>
       </span>
       <span className="tx-confirmation">
-        {transaction.confirmations || 0}
+        {currentBlockHeight ? currentBlockHeight - transaction.height : 0}
       </span>
     </div>
   </BoxRow>
