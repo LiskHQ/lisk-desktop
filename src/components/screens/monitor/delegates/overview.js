@@ -16,8 +16,9 @@ const getAmountOfDelegatesInTime = registrations => registrations.data.map(item 
 const getAmountOfDelegatesLabels = registrations => registrations.data.map(item => item[0]);
 
 const Overview = ({
-  chartActiveAndStandby,
-  chartRegisteredDelegates,
+  delegatesCount,
+  transactionsCount,
+  registrations,
   t,
   totalBlocks,
   supply,
@@ -27,7 +28,7 @@ const Overview = ({
     datasets: [
       {
         label: 'delegates',
-        data: [Math.max(0, chartActiveAndStandby.data - MAX_BLOCKS_FORGED), MAX_BLOCKS_FORGED],
+        data: [Math.max(0, delegatesCount.data - MAX_BLOCKS_FORGED), MAX_BLOCKS_FORGED],
       },
     ],
   };
@@ -51,7 +52,7 @@ const Overview = ({
       <BoxContent className={styles.content}>
         <div className={styles.column}>
           {
-            typeof chartActiveAndStandby.data === 'number'
+            typeof delegatesCount.data === 'number'
               ? (
                 <>
                   <div className={styles.chartBox}>
@@ -105,7 +106,7 @@ const Overview = ({
               />
               <NumericInfo
                 title="Total transactions"
-                value="1272556"
+                value={transactionsCount.data}
                 icon="transactionsMonitor"
               />
               <NumericInfo
@@ -118,17 +119,17 @@ const Overview = ({
         </div>
         <div className={styles.column}>
           {
-            chartRegisteredDelegates.data.length
+            registrations.data.length
               ? (
                 <div className={styles.chartBox}>
                   <h2 className={styles.title}>{t('Registered Delegates')}</h2>
                   <div className={styles.chart}>
                     <LineChart
                       data={{
-                        labels: getAmountOfDelegatesLabels(),
+                        labels: getAmountOfDelegatesLabels(registrations),
                         datasets: [
                           {
-                            data: getAmountOfDelegatesInTime(),
+                            data: getAmountOfDelegatesInTime(registrations),
                           },
                         ],
                       }}

@@ -19,8 +19,9 @@ const DelegatesMonitor = ({
   sanctionedDelegates,
   watchedDelegates,
   watchList,
-  chartActiveAndStandbyData,
-  chartRegisteredDelegatesData,
+  delegatesCount,
+  registrations,
+  transactionsCount,
   standByDelegates,
   networkStatus,
   applyFilters,
@@ -109,8 +110,9 @@ const DelegatesMonitor = ({
   return (
     <div>
       <Overview
-        chartActiveAndStandby={chartActiveAndStandbyData}
-        chartRegisteredDelegates={chartRegisteredDelegatesData}
+        delegatesCount={delegatesCount}
+        transactionsCount={transactionsCount}
+        registrations={registrations}
         t={t}
         totalBlocks={total}
         supply={networkStatus.data.supply}

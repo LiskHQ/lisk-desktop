@@ -70,20 +70,26 @@ const ComposedDelegates = compose(
         transformResponse: transformAccountsIsDelegateResponse,
       },
 
-      chartActiveAndStandbyData: {
+      delegatesCount: {
         apiUtil: network => getDelegates({ network, params: { limit: 1 } }),
         defaultData: 0,
         autoload: true,
         transformResponse: response => response.meta.total,
       },
 
-      chartRegisteredDelegatesData: {
+      transactionsCount: {
+        apiUtil: network => getTransactions({ network, params: { limit: 1 } }, tokenMap.LSK.key),
+        defaultData: 0,
+        autoload: true,
+        transformResponse: response => response.meta.total,
+      },
+
+      registrations: {
         apiUtil: network => getRegisteredDelegates({
           network,
         }, tokenMap.LSK.key),
         defaultData: [],
         autoload: true,
-        transformResponse: transformChartResponse,
       },
 
       votes: {
