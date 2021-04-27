@@ -1,23 +1,19 @@
+const express = require('express');
+const path = require('path');
+
 const server = {
   // eslint-disable-next-line max-statements
   init: (port) => {
-    const express = require('express'); // eslint-disable-line
-    const Path = require('path');
-    const bodyParser = require('body-parser'); // eslint-disable-line
-
     if (process.env.LISK_HUB_URL) {
       return process.env.LISK_HUB_URL;
     }
 
     const app = express();
 
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
+    app.set('views', path.join(__dirname, '.'));
+    app.use(express.static(path.join(__dirname, '.')));
 
-    app.set('views', Path.join(__dirname, '.'));
-    app.use(express.static(Path.join(__dirname, '.')));
-
-    app.get('*', (req, res) => res.sendFile(Path.join(__dirname, 'index.html')));
+    app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
     // catch 404 and forward to error handler
     app.use((req, res, next) => {
