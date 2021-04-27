@@ -165,7 +165,7 @@ export const getRegisteredDelegates = async ({ network }) => {
     }, [[getDate(txs.data[0].block.timestamp), delegates.meta.total]]);
 
   // Add the date of one month before the last tx
-  res[0][0] = getDate(txs.data[txs.data.length - 1].block.timestamp - 2678400);
+  res[0][0] = getDate(txs.data[txs.data.length - 1].block.timestamp - 2670000);
 
   return res;
 };

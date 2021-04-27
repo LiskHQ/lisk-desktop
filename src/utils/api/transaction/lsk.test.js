@@ -231,7 +231,7 @@ describe('API: LSK Transactions', () => {
       // Call and expect right values
       const response = await getRegisteredDelegates({ network });
       expect(response).toEqual([
-        ['2020-2', 90], ['2020-4', 93], ['2020-5', 96], ['2020-6', 99], ['2020-7', 100],
+        ['2020-3', 90], ['2020-4', 93], ['2020-5', 96], ['2020-6', 99], ['2020-7', 100],
       ]);
     });
   });
