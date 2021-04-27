@@ -2,7 +2,6 @@
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-import moment from 'moment';
 import { connect } from 'react-redux';
 
 import { getForgers, getDelegates } from '@api/delegate';
@@ -38,27 +37,6 @@ const transformVotesResponse = (response, oldData = []) => (
   )]
 );
 
-/**
- * This function is to iterate over the list of delegates and GROUP BY
- * timestamp (Month and Year) and count how many users registered as
- * delegate in the month
- */
-const transformChartResponse = (response) => {
-  const responseFormatted = response.data.reduce((acc, transaction) => {
-    const newTransaction = { ...transaction, timestamp: moment(transaction.timestamp * 1000).startOf('month').toISOString() };
-    return {
-      ...acc,
-      [newTransaction.timestamp]: ((acc[newTransaction.timestamp] || 0) + 1),
-    };
-  }, {});
-
-  return Object.entries(responseFormatted)
-    .map(delegate => ({ x: delegate[0], y: delegate[1] }))
-    .sort((dateA, dateB) => (dateB.x > dateA.x ? -1 : 1))
-    .slice(-4)
-    .map(delegate => ({ ...delegate, x: moment(delegate.x).format('MMM YY') }));
-};
-
 const mapStateToProps = state => ({
   watchList: state.watchList,
 });
@@ -91,20 +69,26 @@ const ComposedDelegates = compose(
         transformResponse: transformAccountsIsDelegateResponse,
       },
 
-      chartActiveAndStandbyData: {
+      delegatesCount: {
         apiUtil: network => getDelegates({ network, params: { limit: 1 } }),
         defaultData: 0,
         autoload: true,
         transformResponse: response => response.meta.total,
       },
 
-      chartRegisteredDelegatesData: {
+      transactionsCount: {
+        apiUtil: network => getTransactions({ network, params: { limit: 1 } }, tokenMap.LSK.key),
+        defaultData: 0,
+        autoload: true,
+        transformResponse: response => response.meta.total,
+      },
+
+      registrations: {
         apiUtil: network => getRegisteredDelegates({
           network,
         }, tokenMap.LSK.key),
         defaultData: [],
         autoload: true,
-        transformResponse: transformChartResponse,
       },
 
       votes: {
