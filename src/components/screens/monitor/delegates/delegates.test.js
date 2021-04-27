@@ -80,20 +80,27 @@ describe('Delegates monitor page', () => {
         urlSearchParams: {},
       },
       watchList: [],
-      chartActiveAndStandbyData: {
+      delegatesCount: {
         isLoading: false,
         data: '589',
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      chartRegisteredDelegatesData: {
+      transactionsCount: {
+        isLoading: false,
+        data: '12345678',
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      registrations: {
         isLoading: false,
         data: [
-          { x: 'Aug', y: 4 },
-          { x: 'Sep', y: 1 },
-          { x: 'Oct', y: 8 },
-          { x: 'Nov', y: 4 },
+          ['2020-8', 576],
+          ['2020-9', 577],
+          ['2020-10', 585],
+          ['2020-11', 589],
         ],
         loadData: jest.fn(),
         clearData: jest.fn(),
