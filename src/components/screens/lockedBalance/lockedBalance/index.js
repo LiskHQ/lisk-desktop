@@ -9,6 +9,7 @@ import {
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionPriority, { useTransactionFeeCalculation } from '@shared/transactionPriority';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
+import { selectCurrentBlockHeight } from '@store/selectors';
 import Form from './form';
 import BalanceTable from './balanceTable';
 
@@ -17,7 +18,7 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 const LockedBalance = (props) => {
   const account = useSelector(state => getActiveTokenAccount(state));
   const token = useSelector(state => state.settings.token.active);
-  const currentBlockHeight = useSelector(state => state.blocks.latestBlocks[0].height || 0);
+  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   const unlockableBalance = calculateUnlockableBalance(
     account.dpos?.unlocking, currentBlockHeight,

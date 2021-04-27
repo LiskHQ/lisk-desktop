@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { selectAccount } from '@store/selectors';
+import { selectAccount, selectCurrentBlockHeight } from '@store/selectors';
 import { routes, tokenMap } from '@constants';
 import { SecondaryButton } from '@toolbox/buttons';
 import Box from '@toolbox/box';
@@ -39,6 +39,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
   const account = useSelector(selectAccount);
   const [isLoaded, setLoaded] = useState(!!transactions.data.length);
   const settings = useSelector(state => state.settings);
+  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = tokenMap[settings.token.active];
 
   useEffect(() => {
@@ -64,7 +65,9 @@ const RecentTransactions = ({ className, t, transactions }) => {
           header={header(t)}
           error={transactions.error}
           canLoadMore={false}
-          additionalRowProps={{ t, activeToken: activeToken.key, host: account.address }}
+          additionalRowProps={{
+            t, activeToken: activeToken.key, host: account.address, currentBlockHeight,
+          }}
           emptyState={account.passphrase ? NoTransactions : NotSignedIn}
         />
         <div className={styles.viewAll}>

@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { selectCurrentBlockHeight } from '@store/selectors';
 import withFilters from '@utils/withFilters';
 import withData from '@utils/withData';
 import { getDelegates } from '@api/delegate';
@@ -31,6 +33,7 @@ const Transactions = ({
   address,
   confirmedLength,
 }) => {
+  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   useEffect(() => {
     // This will automatically load the new data too.
     clearAllFilters();
@@ -102,6 +105,7 @@ const Transactions = ({
             activeToken,
             host: address,
             delegates: votedDelegates.data,
+            currentBlockHeight,
           }}
           header={header(t, activeToken, changeSort)}
           currentSort={sort}

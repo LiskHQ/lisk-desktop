@@ -13,6 +13,7 @@ const selectBookmark = (state, address) =>
   state.bookmarks[state.settings.token.active].find(item => (item.address === address));
 const selectSettings = state => state.settings;
 const selectServiceUrl = state => state.network.networks?.LSK?.serviceUrl;
+const selectCurrentBlockHeight = state => state.blocks.latestBlocks[0]?.height || 0;
 
 export {
   selectBookmark,
@@ -28,4 +29,5 @@ export {
   selectActiveTokenAccount,
   selectAccountBalance,
   selectServiceUrl,
+  selectCurrentBlockHeight,
 };
