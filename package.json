@@ -7,34 +7,42 @@
   "bugs": "https://github.com/LiskHQ/lisk-desktop/issues",
   "main": "main.js",
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
-    "rebuild": "electron-rebuild -m app/node_modules/node-hid && electron-rebuild -m app/node_modules/usb",
-    "install-electron-dependencies": "cd ./app && npm install && cd ..",
-    "build": "npm-run-all clean-build copy-files build-prod build-electron",
     "dev": "DEBUG=true NACL_FAST=disable && webpack serve --config ./config/webpack.config.dev",
-    "dev-hardware-wallet": " DEBUG=true webpack serve --config ./config/webpack.config.dev --https",
-    "build-prod": "webpack --config ./config/webpack.config.prod",
-    "build-electron": "webpack --config ./config/webpack.config.electron",
-    "cypress:open": "cypress open --project test/cypress",
-    "cypress:run": "cypress run --project test/cypress",
-    "test": "jest --config ./jest.config.js",
-    "test-live": "npm test -- --watch",
-    "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
+    "dev:hw": " DEBUG=true webpack serve --config ./config/webpack.config.dev --https",
+  
     "start": "npm run rebuild && electron ./app/",
+    "rebuild": "electron-rebuild -m app/node_modules/node-hid && electron-rebuild -m app/node_modules/usb",
+  
+    "build": "npm-run-all clean:build copy:files build:prod build:electron",
+    "build:prod": "webpack --config ./config/webpack.config.prod",
+    "build:electron": "webpack --config ./config/webpack.config.electron",
+
     "dist": "electron-builder --x64 --publish onTag",
     "dist:win": "electron-builder --win --ia32 --x64 --publish onTag",
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux --x64 --publish onTag",
-    "copy-files": "cpx \"./src/{index.html,assets/**/*}\" ./app/build/",
-    "clean-build": "rm -rf app/build",
-    "clean-dist": "rm -rf dist",
+
+    "pack": "npm install && npm run build && npm run clean:dist && npm run dist",
+    "pack:win": "cmd /c npm install && npm run install:electron:dependencies && npm run clean:build && npm run copy:files && npm run build-prod && npm run build-electron && npm run clean:dist && npm run dist:win",
+
+    "test": "jest --config ./jest.config.js",
+    "test:live": "npm test -- --watch",
+    "cypress:open": "cypress open --project test/cypress",
+    "cypress:run": "cypress run --project test/cypress",
+
     "eslint": "eslint ./",
     "eslint:fix": "eslint ./ --fix",
-    "pack": "npm install && npm run build && npm run clean-dist && npm run dist",
-    "pack:win": "cmd /c npm install && npm run install-electron-dependencies && npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron && npm run clean-dist && npm run dist:win",
-    "install-storybook-dependencies": "cd ./storybook/; npm install; cd ..",
+
     "storybook": "start-storybook -p 6006",
-    "percy": "build-storybook && percy-storybook --widths=769"
+    "percy": "build-storybook && percy-storybook --widths=769",
+
+    "postinstall": "electron-builder install-app-deps",
+    "install:storybook:dependencies": "cd ./storybook/; npm install; cd ..",
+    "install:electron:dependencies": "cd ./app && npm install && cd ..",
+    "analyze:bundles": "webpack  --config ./config/webpack.config.analyze",
+    "copy:files": "cpx \"./src/{index.html,assets/**/*}\" ./app/build/",
+    "clean:build": "rm -rf app/build",
+    "clean:dist": "rm -rf dist"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
