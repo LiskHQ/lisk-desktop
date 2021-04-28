@@ -16,7 +16,7 @@ pipeline {
 		stage('Install npm dependencies') {
 			steps {
 				nvm(getNodejsVersion()) {
-					sh 'npm ci'
+					sh 'npm install --registry https://npm.lisk.io --no-optional'
 				}
 			}
 		}
