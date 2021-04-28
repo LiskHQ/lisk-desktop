@@ -75,7 +75,6 @@ const Transactions = ({
     dateTo: value => `${t('To')}: ${value}`,
     amountFrom: value => `> ${value} ${activeToken}`,
     amountTo: value => `< ${value} ${activeToken}`,
-    message: value => `${t('Message')}: ${value}`,
   };
 
   return (
@@ -122,7 +121,6 @@ const defaultFilters = {
   dateTo: '',
   amountFrom: '',
   amountTo: '',
-  message: '',
 };
 const defaultSort = 'timestamp:desc';
 

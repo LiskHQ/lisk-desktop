@@ -14,12 +14,6 @@ const FilterDropdown = ({ t, filters, applyFilters }) => {
       name: 'amount',
       type: 'number-range',
     },
-    {
-      label: t('Message'),
-      placeholder: t('Write message'),
-      name: 'message',
-      type: 'text',
-    },
   ];
 
   const props = { fields, filters, applyFilters };
