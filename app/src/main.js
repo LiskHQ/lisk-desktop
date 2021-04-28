@@ -10,9 +10,9 @@ import updateChecker from './modules/autoUpdater';
 import server from '../server';
 import i18nSetup from '../../i18n/i18n-setup';
 import { storage, setConfig, readConfig } from './modules/storage';
-import { hwM } from './modules/hwManager';
+// import { hwM } from './modules/hwManager';
 
-hwM.listening();
+// hwM.listening();
 i18nSetup();
 
 const defaultServerPort = 5659;
@@ -43,9 +43,9 @@ const createWindow = () => {
   if (process.env.DEBUG) {
     installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
       // eslint-disable-next-line no-console
-      .then(name => console.info(`Added Extension:  ${name}`))
+      .then((name) => console.info(`Added Extension:  ${name}`))
       // eslint-disable-next-line no-console
-      .catch(err => console.info('An error occurred: ', err));
+      .catch((err) => console.info('An error occurred: ', err));
   }
 };
 
