@@ -1,12 +1,10 @@
+const express = require('express');
+const path = require('path');
 
 const server = {
-  // eslint-disable-next-line max-statements
   init: (port) => {
-    const express = require('express');
-    const path = require('path');
-
-    if (process.env.LISK_HUB_URL) {
-      return process.env.LISK_HUB_URL;
+    if (process.env.LISK_DESKTOP_URL) {
+      return process.env.LISK_DESKTOP_URL;
     }
 
     const app = express();
