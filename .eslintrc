@@ -44,6 +44,7 @@
   "rules": {
     "arrow-parens": "off",
     "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/control-has-associated-label": "off",
     "import/no-cycle": "error",
     "import/named": "off",
     "jsx-a11y/alt-text": "off",
