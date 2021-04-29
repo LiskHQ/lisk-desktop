@@ -59,14 +59,15 @@ const getPassedMinutes = (lastBlock = {}, firstRoundBlock = {}) => {
 };
 
 const ForgingDetails = ({
-  t, chartDelegatesForging,
+  t, chartDelegatesForging, awaitingForgers,
 }) => {
+  const now = Math.floor((new Date()).getTime() / 1000);
   const delegatesForgedLabels = [
     t('Forging'),
     t('Awaiting slot'),
     t('Missed block'),
   ];
-  const { latestBlocks, awaitingForgers } = useSelector(state => state.blocks);
+  const { latestBlocks } = useSelector(state => state.blocks);
   const forgedInRound = latestBlocks.length
     ? latestBlocks[0].height % MAX_BLOCKS_FORGED : 0;
 
@@ -91,13 +92,10 @@ const ForgingDetails = ({
     },
   };
 
-  const forgersListToShow = awaitingForgers.slice(forgedInRound, forgedInRound + FORGERS_TO_SHOW);
+  const forgersListToShow = awaitingForgers
+    .filter(item => item.nextForgingTime >= now)
+    .slice(0, FORGERS_TO_SHOW);
 
-  if (forgersListToShow.length < FORGERS_TO_SHOW) {
-    forgersListToShow.push(
-      ...awaitingForgers.slice(0, FORGERS_TO_SHOW - forgersListToShow.length),
-    );
-  }
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
