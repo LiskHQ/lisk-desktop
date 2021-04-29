@@ -10,18 +10,25 @@ import { getTransactions, getRegisteredDelegates } from '@api/transaction';
 import withData from '@utils/withData';
 import withFilters from '@utils/withFilters';
 import { MODULE_ASSETS_NAME_ID_MAP, MAX_BLOCKS_FORGED, tokenMap } from '@constants';
-
 import Delegates from './delegates';
 
 const defaultUrlSearchParams = { search: '' };
-const delegatesKey = 'delegates';
-const standByDelegatesKey = 'standByDelegates';
 
-const mergeUniquelyByUsername = (response, oldData = []) => (
-  [...oldData, ...response.data.filter(
-    delegate => !oldData.find(({ username }) => username === delegate.username),
+/**
+ * Merges two arrays and ensures there's no duplicated item
+ *
+ * @param {String} key - Key to find in array members to ensure uniqueness
+ * @param {Array} newData - The new data array
+ * @param {Array} oldData - The old data array
+ * @returns {Array} Array build by merging the given two arrays
+ */
+const mergeUniquely = (key, newData, oldData = []) => (
+  [...oldData, ...newData.data.filter(
+    newItem => !oldData.find(oldItem => oldItem[key] === newItem[key]),
   )]
 );
+const mergeUniquelyByUsername = mergeUniquely.bind(this, 'username');
+const mergeUniquelyById = mergeUniquely.bind(this, 'id');
 
 /**
  * Strips down the account data to have a
@@ -36,12 +43,6 @@ const stripAccountDataAndMerge = (response, oldData = []) => {
   return mergeUniquelyByUsername(response, oldData);
 };
 
-const mergeUniquelyById = (response, oldData = []) => (
-  [...oldData, ...response.data.filter(
-    vote => !oldData.find(({ id }) => id === vote.id),
-  )]
-);
-
 const mapStateToProps = state => ({
   watchList: state.watchList,
 });
@@ -51,7 +52,7 @@ const ComposedDelegates = compose(
   connect(mapStateToProps),
   withData(
     {
-      [delegatesKey]: {
+      delegates: {
         apiUtil: (network, params) => getForgers(
           { network, params: { ...params, limit: MAX_BLOCKS_FORGED } },
         ),
@@ -60,7 +61,7 @@ const ComposedDelegates = compose(
         transformResponse: mergeUniquelyByUsername,
       },
 
-      [standByDelegatesKey]: {
+      standByDelegates: {
         apiUtil: (network, params) => getDelegates({
           network,
           params: {
@@ -144,7 +145,7 @@ const ComposedDelegates = compose(
       },
     },
   ),
-  withFilters(standByDelegatesKey, defaultUrlSearchParams),
+  withFilters('standByDelegates', defaultUrlSearchParams),
   withTranslation(),
 )(Delegates);
 
