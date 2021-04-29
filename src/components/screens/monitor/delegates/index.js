@@ -17,21 +17,26 @@ const defaultUrlSearchParams = { search: '' };
 const delegatesKey = 'delegates';
 const standByDelegatesKey = 'standByDelegates';
 
-const transformDelegatesResponse = (response, oldData = []) => (
+const mergeUniquelyByUsername = (response, oldData = []) => (
   [...oldData, ...response.data.filter(
     delegate => !oldData.find(({ username }) => username === delegate.username),
   )]
 );
 
-const transformAccountsIsDelegateResponse = (response, oldData = []) => {
+/**
+ * Strips down the account data to have a
+ * similar structure to getForgers used to
+ * retrieve in-round delegates
+ */
+const stripAccountDataAndMerge = (response, oldData = []) => {
   response.data = response.data.map(del => ({
     address: del.summary.address,
     ...del.dpos.delegate,
   }));
-  return transformDelegatesResponse(response, oldData);
+  return mergeUniquelyByUsername(response, oldData);
 };
 
-const transformVotesResponse = (response, oldData = []) => (
+const mergeUniquelyById = (response, oldData = []) => (
   [...oldData, ...response.data.filter(
     vote => !oldData.find(({ id }) => id === vote.id),
   )]
@@ -52,7 +57,7 @@ const ComposedDelegates = compose(
         ),
         defaultData: [],
         autoload: true,
-        transformResponse: transformDelegatesResponse,
+        transformResponse: mergeUniquelyByUsername,
       },
 
       [standByDelegatesKey]: {
@@ -66,7 +71,7 @@ const ComposedDelegates = compose(
         }),
         defaultData: [],
         autoload: true,
-        transformResponse: transformAccountsIsDelegateResponse,
+        transformResponse: stripAccountDataAndMerge,
       },
 
       delegatesCount: {
@@ -99,7 +104,7 @@ const ComposedDelegates = compose(
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,
         defaultData: [],
-        transformResponse: transformVotesResponse,
+        transformResponse: mergeUniquelyById,
       },
 
       networkStatus: {
@@ -113,7 +118,7 @@ const ComposedDelegates = compose(
         apiUtil: (network, params) => getDelegates({ network, params: { ...params, status: 'punished,banned' } }),
         defaultData: [],
         autoload: true,
-        transformResponse: transformAccountsIsDelegateResponse,
+        transformResponse: stripAccountDataAndMerge,
       },
 
       votedDelegates: {
@@ -121,7 +126,7 @@ const ComposedDelegates = compose(
           getDelegates({ network: networks.LSK, params }),
         defaultData: {},
         transformResponse: (response) => {
-          const transformedResponse = transformDelegatesResponse(response);
+          const transformedResponse = mergeUniquelyByUsername(response);
           const responseMap = transformedResponse.reduce((acc, delegate) => {
             acc[delegate.address] = delegate.summary?.address;
             return acc;
@@ -135,7 +140,7 @@ const ComposedDelegates = compose(
           getDelegates({ network: networks.LSK, params }),
         defaultData: [],
         getApiParams: state => ({ addressList: state.watchList }),
-        transformResponse: transformDelegatesResponse,
+        transformResponse: stripAccountDataAndMerge,
       },
     },
   ),
