@@ -5,7 +5,6 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { useDispatch } from 'react-redux';
 import { routes } from '@constants';
-import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import { truncateAddress } from '@utils/account';
 import { addedToWatchList, removedFromWatchList } from '@actions';
 import Tooltip from '@toolbox/tooltip/tooltip';
@@ -13,6 +12,7 @@ import Icon from '@toolbox/icon';
 import AccountVisual from '@toolbox/accountVisual';
 import styles from '../delegates.css';
 import DelegateWeight from './delegateWeight';
+import { getStatusClass, getDelegateWeightClass, getRoundStateClass } from './tableHeader';
 
 const roundStatus = {
   forging: 'Forging',
@@ -31,7 +31,7 @@ const delegateStatus = {
   standby: 'Standby',
   banned: 'Banned',
   punished: 'Punished',
-  'non-eligible': 'Non-eligible to forge',
+  nonEligible: 'Non-eligible to forge',
 };
 
 const getForgingTime = (data) => {
@@ -132,14 +132,9 @@ const RoundStatus = ({ data, t, formattedForgingTime }) => (
 );
 
 const DelegateStatus = ({ activeTab, data }) => {
-  const status = data.totalVotesReceived < 100000000000 ? 'non-eligible' : data.status;
+  const status = data.totalVotesReceived < 1e11 ? 'nonEligible' : data.status;
   return (
-    <span className={
-      activeTab === 'watched'
-        ? `${grid['col-xs-1']}`
-        : activeTab === 'sanctioned' ? `${grid['col-xs-4']}`
-          : activeTab !== 'active' ? `${grid['col-xs-3']}` : 'hidden'}
-    >
+    <span className={getStatusClass(activeTab)}>
       <span className={`${styles.delegateStatus} ${styles[status]}`}>{delegateStatus[status]}</span>
     </span>
   );
@@ -174,7 +169,7 @@ const DelegateRow = ({
       className={`${className} delegate-row ${styles.tableRow}`}
       to={`${routes.account.path}?address=${data.address}`}
     >
-      <span className={grid['col-xs-4']}>
+      <span className={grid['col-xs-5']}>
         <DelegateDetails
           t={t}
           data={data}
@@ -184,27 +179,9 @@ const DelegateRow = ({
           removeFromWatchList={removeFromWatchList}
         />
       </span>
-      <span className={
-        activeTab === 'active' || activeTab === 'watched'
-          ? `${grid['col-xs-2']}`
-          : activeTab === 'sanctioned' ? `${grid['col-xs-4']}`
-            : `${grid['col-xs-3']}`}
-      >
-        {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
+      <span className={getDelegateWeightClass(activeTab)}>
+        <DelegateWeight value={data.totalVotesReceived} />
       </span>
-      {/*
-      <span
-        className={activeTab !== 'sanctioned' ?
-          (activeTab === 'watched' ? `${grid['col-xs-1']}` :
-          `${grid['col-xs-2']}`) : `${grid['col-xs-3']} ${styles.noEllipsis}`}
-      >
-        {`#${data.rank}`}
-      </span> */}
-      {activeTab !== 'sanctioned' && (
-        <span className={`${grid['col-xs-2']}`}>
-          <DelegateWeight value={data.totalVotesReceived} />
-        </span>
-      )}
       {(activeTab === 'active' || activeTab === 'watched') && (
         <>
           <span className={`
@@ -217,12 +194,12 @@ const DelegateRow = ({
           >
             {formattedForgingTime}
           </span>
-          <span className={`${grid['col-xs-1']} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
+          <span className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
             <RoundStatus data={data} t={t} formattedForgingTime={formattedForgingTime} />
           </span>
         </>
       )}
-      {(activeTab === 'watched' || activeTab !== 'active') && <DelegateStatus data={data} activeTab={activeTab} />}
+      {(activeTab !== 'active') && <DelegateStatus data={data} activeTab={activeTab} />}
     </Link>
   );
 };
