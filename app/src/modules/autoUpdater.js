@@ -22,7 +22,7 @@ export default ({ // eslint-disable-line max-statements
       updater.error = error;
       if (error?.toString().indexOf('404 Not Found') === -1) {
         // this condition is because of https://github.com/LiskHQ/lisk-desktop/issues/647
-        dialog.showErrorBox(`${i18n.t('Error')}: `, error.toString());
+        dialog.showErrorBox(`${i18n.t('Error')}: `, 'There was a problem updating the application');
       }
     }
   });
