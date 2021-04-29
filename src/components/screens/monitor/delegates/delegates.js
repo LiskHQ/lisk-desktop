@@ -120,6 +120,7 @@ const DelegatesMonitor = ({
       <ForgingDetails
         t={t}
         chartDelegatesForging={forgingTimes}
+        awaitingForgers={delegates.data}
       />
       <Box main isLoading={delegates.isLoading || standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className="delegates-table">
