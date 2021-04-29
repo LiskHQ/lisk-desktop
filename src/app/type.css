@@ -149,6 +149,16 @@ small {
   text-align: center;
 }
 
+:global .text-left {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+:global .text-right {
+  text-align: right;
+  justify-content: flex-end;
+}
+
 input,
 textarea,
 select {
