@@ -37,6 +37,17 @@ export const getRoundStateClass = (activeTab) => {
   }
 };
 
+export const getForgingTimeClass = (activeTab) => {
+  switch (activeTab) {
+    case 'active':
+      return grid['col-xs-3'];
+    case 'watched':
+      return grid['col-xs-2'];
+    default:
+      return 'hidden';
+  }
+};
+
 // eslint-disable-next-line complexity
 export default (activeTab, changeSort, t) => ([
   {
@@ -54,10 +65,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Forging time'),
-    classList: activeTab === 'active'
-      ? `${grid['col-xs-3']}`
-      : activeTab === 'watched' ? `${grid['col-xs-2']}`
-        : 'hidden',
+    classList: getForgingTimeClass(activeTab),
     sort: {
       fn: changeSort,
       key: 'forgingTime',
