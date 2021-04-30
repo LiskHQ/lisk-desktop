@@ -38,7 +38,7 @@ pipeline {
 								cp -R /home/lisk/fonts/gilroy src/assets/fonts
 								npm run --silent build
 
-								npm run install-electron-dependencies
+								npm run install:electron:dependencies
 								USE_SYSTEM_XORRISO=true npm run dist:linux
 								'''
 							}
