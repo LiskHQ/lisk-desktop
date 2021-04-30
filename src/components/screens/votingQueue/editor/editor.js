@@ -79,9 +79,7 @@ const validateVotes = (votes, balance, fee, t) => {
     messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
   }
 
-  if (Object.keys(votesStats.added).length > 10
-    || Object.keys(votesStats.edited).length > 10
-    || Object.keys(votesStats.removed).length > 10) {
+  if (Object.keys(votesStats.added).length + Object.keys(votesStats.edited).length > 10) {
     messages.push(t('You can\'t vote for more than 10 delegates.'));
   }
 
