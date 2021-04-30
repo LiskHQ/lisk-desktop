@@ -21,7 +21,6 @@ describe('Register Process - Confirm Passphrase', () => {
     comp.find('div.option').forEach(option => props.passphrase.includes(option.text()) && option.simulate('click'));
   };
 
-
   beforeEach(() => {
     wrapper = mount(<ConfirmPassphrase {...props} />);
     clock = useFakeTimers({

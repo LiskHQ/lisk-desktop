@@ -30,7 +30,6 @@ describe('Delegate animation component', () => {
     wrapper = mount(<DelegateAnimation {...props} />);
   });
 
-
   it('Should render delegate animation component without errors', () => {
     expect(wrapper).toHaveClassName(props.className);
     expect(wrapper).toContainMatchingElement('Animation');

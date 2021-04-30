@@ -20,8 +20,7 @@ const BalanceTable = ({
         <p className={styles.columnTitle}>{t('Amount')}</p>
         <p className={styles.columnTitle}>{t('Status')}</p>
       </li>
-      )
-    }
+      )}
     {lockedInVotes !== 0
       && (
         <li>
@@ -33,8 +32,7 @@ const BalanceTable = ({
             {t('locked')}
           </p>
         </li>
-      )
-    }
+      )}
     {account?.dpos?.unlocking.length > 0
       && (
       <UnlockingList
@@ -42,8 +40,7 @@ const BalanceTable = ({
         currentBlockHeight={currentBlockHeight}
         t={t}
       />
-      )
-    }
+      )}
     {unlockableBalance !== 0
       && (
       <li>
@@ -55,8 +52,7 @@ const BalanceTable = ({
           {t('available to unlock')}
         </p>
       </li>
-      )
-    }
+      )}
   </ul>
 );
 

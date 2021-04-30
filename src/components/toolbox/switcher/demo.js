@@ -4,7 +4,7 @@ import Switcher from '.';
 import DemoRenderer from '../demoRenderer';
 
 const SwitcherDemo = () => (
-  <React.Fragment>
+  <>
     <h2>Switcher</h2>
     <MemoryRouter
       initialEntries={[{}]}
@@ -28,7 +28,7 @@ const SwitcherDemo = () => (
         />
       </DemoRenderer>
     </MemoryRouter>
-  </React.Fragment>
+  </>
 );
 
 export default SwitcherDemo;

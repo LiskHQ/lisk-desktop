@@ -98,8 +98,7 @@ const Status = ({
                 {displayTemplate.button.title}
               </PrimaryButton>
             </>
-          )
-        }
+          )}
       </TransactionResult>
     </div>
   );

@@ -24,7 +24,6 @@ const getMessagesDetails = (transactions, fields, t, isHardwareWalletConnected) 
     ? messages.success
     : messages.error;
 
-
   if (transactions.broadcastedTransactionsError[0]
       && transactions.broadcastedTransactionsError[0].error
       && transactions.broadcastedTransactionsError[0].error.message) {
@@ -84,7 +83,6 @@ const TransactionStatus = ({
 
     return resetTransactionResult;
   }, []);
-
 
   const { isBookmarked } = bookmarkInformation(bookmarks, fields);
   const { isHardwareWalletError, messageDetails } = getMessagesDetails(

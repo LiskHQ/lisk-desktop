@@ -79,7 +79,6 @@ describe('Reducer: account(state, action)', () => {
     clock.restore();
   });
 
-
   it('should return remove passphrase from account object if actionTypes.removePassphrase is called', () => {
     const action = {
       type: actionTypes.removePassphrase,

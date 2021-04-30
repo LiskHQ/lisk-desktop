@@ -59,8 +59,7 @@ const FilterBar = ({
             clearFilter={clearFilter}
             formatters={formatters}
           />
-        ))
-        }
+        ))}
         <SecondaryButton
           className="clear-all-filters"
           size="xs"

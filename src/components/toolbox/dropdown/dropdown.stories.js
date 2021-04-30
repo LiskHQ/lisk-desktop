@@ -4,7 +4,6 @@ import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWr
 import Dropdown from './dropdown';
 import DropdownButton from '../dropdownButton';
 
-
 storiesOf('Toolbox', module)
   .add('Dropdown', () => (
     <StoryWrapper>

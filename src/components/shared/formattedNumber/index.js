@@ -8,7 +8,7 @@ const FormattedNumber = ({ val }) => {
   // set numeral language
   numeral.locale(i18n.language);
   const formattedVal = numeral(val).format('0,0.[0000000000000]');
-  return <React.Fragment>{formattedVal}</React.Fragment>;
+  return <>{formattedVal}</>;
 };
 
 export default withTranslation()(FormattedNumber);

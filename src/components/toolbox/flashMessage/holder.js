@@ -38,6 +38,7 @@ class FlashMessageHolder extends React.Component {
     return Object.keys(children).map((key) => {
       const ChildComponent = children[key];
       return (
+        // eslint-disable-next-line react/jsx-pascal-case
         <ChildComponent.type
           {...ChildComponent.props}
           onDismiss={() => FlashMessageHolder.deleteMessage(key)}

@@ -147,7 +147,6 @@ export const getRegisteredDelegates = async ({ network }) => {
       return acc;
     }, {});
 
-
   // start with [total delegates number]
   // subtract total of each month to get prev month's stats
   return Object.values(monthStats).reduce((acc, item) => {
@@ -180,7 +179,6 @@ export const getTransactionStats = ({ network, params: { period } }) => {
   });
 };
 
-
 /**
  * Retrieves transaction schemas.
  *
@@ -195,7 +193,6 @@ export const getSchemas = ({ baseUrl }) => http({
   path: httpPaths.schemas,
   baseUrl,
 });
-
 
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
@@ -312,7 +309,7 @@ export const create = ({
  * @param {string} network.address - the node address e.g. https://betanet-lisk.io
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
-export const broadcast = ({ transaction, serviceUrl }) => {
+export const broadcast = async ({ transaction, serviceUrl }) => {
   const moduleAssetId = joinModuleAndAssetIds({
     moduleID: transaction.moduleID,
     assetID: transaction.assetID,
@@ -322,20 +319,12 @@ export const broadcast = ({ transaction, serviceUrl }) => {
   const payload = binary.toString('hex');
   const body = JSON.stringify({ transaction: payload });
 
-  return new Promise(
-    async (resolve, reject) => {
-      try {
-        const response = await http({
-          method: 'POST',
-          baseUrl: serviceUrl,
-          path: '/api/v2/transactions',
-          body,
-        });
+  const response = await http({
+    method: 'POST',
+    baseUrl: serviceUrl,
+    path: '/api/v2/transactions',
+    body,
+  });
 
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      }
-    },
-  );
+  return response;
 };

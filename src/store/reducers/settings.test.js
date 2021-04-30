@@ -1,7 +1,6 @@
 import { actionTypes, tokenKeys } from '@constants';
 import settings from './settings';
 
-
 describe('Reducer: settings(state, action)', () => {
   let initializeState;
 

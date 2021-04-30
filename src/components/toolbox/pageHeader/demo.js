@@ -4,7 +4,7 @@ import DemoRenderer from '../demoRenderer';
 import PageHeader from '.';
 
 const PageHeaderDemo = () => (
-  <Fragment>
+  <>
     <h2>PageHeader</h2>
     <DemoRenderer>
       <PageHeader
@@ -16,7 +16,7 @@ const PageHeaderDemo = () => (
         </PrimaryButton>
       </PageHeader>
     </DemoRenderer>
-  </Fragment>
+  </>
 );
 
 export default PageHeaderDemo;

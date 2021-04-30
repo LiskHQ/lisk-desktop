@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { actionTypes } from '@constants';
 import loading from './loading';
 
-
 describe('Reducer: loading(state, action)', () => {
   let state;
 

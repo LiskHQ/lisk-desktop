@@ -19,7 +19,7 @@ const getOwnerName = (account) => {
 };
 
 const BalanceShare = ({ balance, supply }) => {
-  const share = new BigNumber(balance / supply * 100);
+  const share = new BigNumber((balance / supply) * 100);
   return (
     <span className={styles.balanceShare}>
       {

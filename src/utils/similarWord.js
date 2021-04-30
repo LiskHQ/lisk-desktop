@@ -48,7 +48,6 @@ const getByKey = key =>
     reducedDictByWordLength[key + 1],
   ];
 
-
 export const getWordsFromDictByLength = (len) => {
   const n = len > MAX_WORD_LENGTH ? MAX_WORD_LENGTH : len;
   return getByKey(n)

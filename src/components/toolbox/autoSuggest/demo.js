@@ -57,10 +57,10 @@ export default class AutoSuggestDemo extends React.Component {
             onChange={this.onChange}
             onSelectItem={this.onSelectItem}
             renderItem={item => (
-              <React.Fragment>
+              <>
                 <span>{item.title}</span>
                 <span>{item.address}</span>
-              </React.Fragment>
+              </>
             )}
           />
         </DemoRenderer>

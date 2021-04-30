@@ -149,5 +149,4 @@ const accounts = {
 };
 accounts['any account'] = accounts.genesis;
 
-
 module.exports = accounts;

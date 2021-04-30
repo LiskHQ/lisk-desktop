@@ -27,7 +27,6 @@ export const removeUndefinedKeys = obj => Object.keys(obj).reduce((acc, key) => 
   return acc;
 }, {});
 
-
 /**
  * Checks if the given collection is empty.
  * @param {Object|Array} collection
@@ -40,7 +39,6 @@ export const isEmpty = (collection) => {
 
   return Object.keys(collection).length === 0;
 };
-
 
 /**
  * Filters object keys by given value

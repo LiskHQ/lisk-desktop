@@ -129,8 +129,7 @@ export const AmountAndDate = ({
             </DiscreetMode>
           </div>
         )
-        : null
-      }
+        : null}
       <div className={styles.value}>
         <span className={styles.label}>{t('Date')}</span>
         <span className={`${styles.date} tx-date`}>

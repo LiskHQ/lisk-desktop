@@ -21,7 +21,7 @@ const AccountCard = ({
     <header className={styles.header}>
       { accountOnEditMode === index
         ? (
-          <React.Fragment>
+          <>
             <Input
               value={account.name}
               size="xs"
@@ -35,10 +35,10 @@ const AccountCard = ({
             >
               {t('Save')}
             </PrimaryButton>
-          </React.Fragment>
+          </>
         )
         : (
-          <React.Fragment>
+          <>
             <span className={`${styles.accountTitle} account-name`}>
               {account.name === null ? t('Unnamed account') : account.name}
             </span>
@@ -49,9 +49,8 @@ const AccountCard = ({
               {t('Edit')}
               <Icon name="edit" />
             </SecondaryButton>
-          </React.Fragment>
-        )
-      }
+          </>
+        )}
     </header>
 
     <div className={styles.content}>

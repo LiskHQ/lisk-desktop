@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import FormattedNumber from './index';
 
-
 describe('FormattedNumber', () => {
   it('renders 0 if raw value is 0', () => {
     const value = {

@@ -17,7 +17,7 @@ const List = ({
 }) => {
   if (data.length === 0 || error) return null;
   return (
-    <Fragment>
+    <>
       <Header data={header} currentSort={currentSort} />
       {data.map((item, index) => (
         <Row
@@ -27,7 +27,7 @@ const List = ({
           {...additionalRowProps}
         />
       ))}
-    </Fragment>
+    </>
   );
 };
 

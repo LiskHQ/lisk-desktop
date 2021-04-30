@@ -109,7 +109,7 @@ class Login extends React.Component {
     const canHWSignIn = !network.networks?.LSK;
 
     return (
-      <React.Fragment>
+      <>
         <div className={`${styles.login} ${grid.row}`}>
           <div
             className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
@@ -173,7 +173,7 @@ class Login extends React.Component {
             </form>
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

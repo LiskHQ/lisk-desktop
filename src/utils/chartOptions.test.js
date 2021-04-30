@@ -9,7 +9,6 @@ import {
   doughnutChartOptions,
 } from './chartOptions';
 
-
 describe('Chart Setting', () => {
   describe('Data', () => {
     const lineData = {

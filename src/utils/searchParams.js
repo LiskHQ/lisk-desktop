@@ -94,7 +94,6 @@ export const addSearchParamsToUrl = (history, data = {}) => {
   history.push(`${history.location.pathname}${newSearchString}`);
 };
 
-
 /**
  * removes a query param to the url and redirects to that url
  *

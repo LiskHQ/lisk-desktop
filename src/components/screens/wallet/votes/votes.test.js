@@ -5,7 +5,6 @@ import { routes } from '@constants';
 import accounts from '../../../../../test/constants/accounts';
 import Votes from './votes';
 
-
 describe.skip('Votes Tab Component', () => {
   let wrapper;
   const props = {

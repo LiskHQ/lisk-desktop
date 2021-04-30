@@ -49,7 +49,6 @@ const Summary = ({
       amount: account.info.LSK.legacy.balance,
     };
 
-
     const [error, tx] = await to(
       create(data, tokenMap.LSK.key),
     );

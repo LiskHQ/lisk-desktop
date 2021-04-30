@@ -1,7 +1,7 @@
 import { actionTypes } from '@constants';
+import * as localJSONStorage from '@utils/localJSONStorage';
 import bookmarksMiddleware from './bookmarks';
 import accounts from '../../../test/constants/accounts';
-import * as localJSONStorage from '@utils/localJSONStorage';
 
 jest.mock('@utils/localJSONStorage');
 

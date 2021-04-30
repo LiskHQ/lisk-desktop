@@ -61,5 +61,4 @@ const SignMessageInput = ({ nextStep, t, history }) => {
   );
 };
 
-
 export default SignMessageInput;

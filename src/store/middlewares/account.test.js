@@ -5,8 +5,8 @@ import {
 import {
   tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes,
 } from '@constants';
-import middleware from './account';
 import * as transactionApi from '@api/transaction';
+import middleware from './account';
 import history from '../../history';
 
 jest.mock('../../history');

@@ -33,7 +33,6 @@ async function autoLogInIfNecessary(store) {
 const hwWalletMiddleware = store => next => (action) => {
   const { ipc } = window;
 
-
   if (action.type === actionTypes.storeCreated && ipc) {
     autoLogInIfNecessary(store);
 

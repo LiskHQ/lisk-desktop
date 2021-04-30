@@ -3,7 +3,6 @@ import {
   convertUnixSecondsToLiskEpochSeconds,
 } from './datetime';
 
-
 describe('Datetime', () => {
   describe('getUnixTimestampFromValue', () => {
     it('should return valid unix timestamp', () => {

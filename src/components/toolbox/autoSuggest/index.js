@@ -154,7 +154,7 @@ class AutoSuggest extends React.Component {
     const { dropdownIndex, isLoading } = this.state;
 
     return (
-      <Fragment>
+      <>
         <span className={`${styles.inputWrapper} ${className}`}>
           <Input
             autoComplete="off"
@@ -186,7 +186,7 @@ class AutoSuggest extends React.Component {
               )) }
           </ul>
         </span>
-      </Fragment>
+      </>
     );
   }
 }

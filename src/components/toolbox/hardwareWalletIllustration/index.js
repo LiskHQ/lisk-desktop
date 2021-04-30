@@ -3,7 +3,6 @@ import React from 'react';
 import Illustration from '../illustration';
 import styles from './hardwareWalletIllustration.css';
 
-
 const HardwareWalletIllustration = ({ account, size }) => (
   account.loginType
     ? (

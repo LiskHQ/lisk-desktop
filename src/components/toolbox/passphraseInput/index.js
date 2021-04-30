@@ -137,7 +137,7 @@ class passphraseInput extends React.Component {
     const isFeedbackOnError = validationError || secondPPFeedback !== '';
 
     return (
-      <React.Fragment>
+      <>
         <div className={styles.wrapper}>
           <label className={`${styles.showPassphrase}`} onClick={this.handleToggleShowPassphrase}>
             <Icon name={iconName} />
@@ -190,7 +190,7 @@ class passphraseInput extends React.Component {
             />
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

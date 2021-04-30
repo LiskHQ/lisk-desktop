@@ -113,7 +113,7 @@ class FilterDropdownButton extends React.Component {
     const { t, fields } = this.props;
 
     return (
-      <React.Fragment>
+      <>
         {fields.length > 3 && (
         <span onClick={this.extendFilters} className={[styles.actionable, 'more-less-switch'].join(' ')}>
           {areFiltersExtended ? t('Less filters') : t('More Filters')}
@@ -127,7 +127,7 @@ class FilterDropdownButton extends React.Component {
         >
           {t('Apply Filters')}
         </PrimaryButton>
-      </React.Fragment>
+      </>
     );
   }
 
@@ -139,10 +139,10 @@ class FilterDropdownButton extends React.Component {
       <DropdownButton
         buttonClassName="filterTransactions filter"
         buttonLabel={(
-          <React.Fragment>
+          <>
             {t('Filter')}
             <Icon className="button-icon" name="iconFilter" />
-          </React.Fragment>
+          </>
         )}
         size="l"
         ButtonComponent={SecondaryButton}
