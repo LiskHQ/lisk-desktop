@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { keyCodes } from '@constants';
 import { Input } from '../inputs';
 import styles from './autoSuggest.css';

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import AccountVisual from '@toolbox/accountVisual';
 import styles from './accountsAndDeletegates.css';
 

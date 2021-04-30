@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Loading from './loading';
 import Empty from './empty';
 import Error from './error';

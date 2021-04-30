@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { PrimaryButton } from '../buttons';
 import DemoRenderer from '../demoRenderer';
 import PageHeader from '.';
