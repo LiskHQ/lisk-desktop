@@ -13,7 +13,9 @@ import styles from './transactionsTable.css';
 
 const roundSize = 103;
 
-const TransactionRow = ({ data, className, t }) => (
+const TransactionRow = ({
+  data, className, t, currentBlockHeight,
+}) => (
   <DialogLink
     className={`${grid.row} ${className}`}
     component="transactionDetails"
@@ -66,7 +68,7 @@ const TransactionRow = ({ data, className, t }) => (
         content={<Icon name={data.isPending ? 'pending' : 'approved'} />}
         size="s"
       >
-        <p>{`${data.block.height}/${roundSize} ${t('Confirmations')}`}</p>
+        <p>{`${currentBlockHeight ? currentBlockHeight - data.block.height : 0}/${roundSize} ${t('Confirmations')}`}</p>
       </Tooltip>
     </span>
   </DialogLink>
@@ -75,6 +77,6 @@ const TransactionRow = ({ data, className, t }) => (
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
   (prevProps.data.id === nextProps.data.id
-  && prevProps.data.confirmations === nextProps.data.confirmations);
+  && prevProps.currentBlockHeight === nextProps.currentBlockHeight);
 
 export default React.memo(TransactionRow, areEqual);

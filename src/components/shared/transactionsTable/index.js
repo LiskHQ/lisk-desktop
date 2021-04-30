@@ -1,5 +1,6 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import withFilters from '@utils/withFilters';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
@@ -7,6 +8,7 @@ import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxHeader from '@toolbox/box/header';
 import Table from '@toolbox/table';
+import { selectCurrentBlockHeight } from '@store/selectors';
 import FilterBar from '../filterBar';
 import FilterDropdownButton from '../filterDropdownButton';
 import LoadLatestButton from '../loadLatestButton';
@@ -29,6 +31,7 @@ const TransactionsTable = ({
   canLoadMore,
   emptyState,
 }) => {
+  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const handleLoadMore = () => {
     const params = Object.keys(filters).reduce((acc, key) => ({
       ...acc,
@@ -77,7 +80,7 @@ const TransactionsTable = ({
           isLoading={transactions.isLoading}
           row={TransactionRow}
           loadData={handleLoadMore}
-          additionalRowProps={{ t }}
+          additionalRowProps={{ t, currentBlockHeight }}
           header={header(changeSort, t)}
           currentSort={sort}
           canLoadMore={canLoadMore}

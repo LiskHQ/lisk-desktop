@@ -215,17 +215,13 @@ describe('API: LSK Transactions', () => {
 
     it('should return correct stats of registered delegates', async () => {
       // create sample delegate registration transactions
-      const txs = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4]
-        .map((item) => {
-          const t = new Date();
-          t.setMonth(t.getMonth() + item);
-          return { timestamp: t.getTime(), type: 0 };
-        });
+      const txs = [7, 6, 6, 6, 5, 5, 5, 4, 4, 4]
+        .map(d => ({ block: { timestamp: (new Date(`2020-${d}-1`)).getTime() / 1000 } }));
 
       // mock internals
       delegates.getDelegates.mockResolvedValue({
         data: {},
-        meta: { total: 10 },
+        meta: { total: 100 },
       });
       http.mockResolvedValue({
         data: txs,
@@ -234,7 +230,9 @@ describe('API: LSK Transactions', () => {
 
       // Call and expect right values
       const response = await getRegisteredDelegates({ network });
-      expect(response).toEqual([0, 1, 4, 7, 10]);
+      expect(response).toEqual([
+        ['2020-3', 90], ['2020-4', 93], ['2020-5', 96], ['2020-6', 99], ['2020-7', 100],
+      ]);
     });
   });
 

@@ -1,5 +1,6 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { isEmpty } from '@utils/helpers';
 import Box from '@toolbox/box';
@@ -7,6 +8,7 @@ import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import NotFound from '@shared/notFound';
 import Dialog from '@toolbox/dialog/dialog';
+import { selectCurrentBlockHeight } from '@store/selectors';
 import TransactionVotes from './transactionVotes';
 import {
   TransactionId, Sender, Recipient, Message,
@@ -18,6 +20,7 @@ import styles from './transactionDetails.css';
 const Transactions = ({
   t, activeToken, netCode, transaction, votedDelegates,
 }) => {
+  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const { error, isLoading, data } = transaction;
   const addresses = !isEmpty(data) && [data.asset.recipient?.address, data.sender.address];
 
@@ -55,6 +58,7 @@ const Transactions = ({
             activeToken={activeToken}
             addresses={addresses}
             t={t}
+            currentBlockHeight={currentBlockHeight}
           />
           <Message activeToken={activeToken} transaction={data} t={t} />
           <TransactionVotes transaction={data} t={t} votedDelegates={votedDelegates} />

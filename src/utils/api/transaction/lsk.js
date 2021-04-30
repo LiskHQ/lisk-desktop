@@ -127,32 +127,47 @@ export const getRegisteredDelegates = async ({ network }) => {
     network,
     params: { limit: 1 },
   });
-  const responseTransactions = await getTransactions({
+  const txs = await getTransactions({
     network,
     params: { moduleAssetId: '5:0', limit: 100 },
   });
 
-  if (delegates.error || responseTransactions.error) {
+  if (delegates.error || txs.error) {
     return Error('Error fetching data.');
   }
 
-  // get number of registration in each month
-  const monthStats = responseTransactions.data
-    .map((tx) => {
-      const date = new Date(tx.timestamp * 1000);
-      return `${date.getFullYear()}-${date.getMonth() + 1}`;
-    }).reduce((acc, date) => {
-      if (typeof acc[date] !== 'number') acc[date] = 1;
-      else acc[date] += 1;
+  const getDate = (timestamp) => {
+    const d = new Date(timestamp * 1000);
+    return `${new Date(d).getFullYear()}-${new Date(d).getMonth() + 1}`;
+  };
+
+  // create monthly number of registration as a dictionary
+  const monthStats = txs.data
+    .map(tx => tx.block.timestamp)
+    .reduce((acc, timestamp) => {
+      const date = getDate(timestamp);
+      acc[date] = typeof acc[date] === 'number' ? acc[date] + 1 : 1;
       return acc;
     }, {});
 
-  // start with [total delegates number]
-  // subtract total of each month to get prev month's stats
-  return Object.values(monthStats).reduce((acc, item) => {
-    acc.unshift(acc[0] - item);
-    return acc;
-  }, [delegates.meta.total]);
+  // Create a sorted array of monthly accumulated number of registrations
+  const res = Object.keys(monthStats)
+    .sort((a, b) => -1 * (b - 1))
+    .reduce((acc, month) => {
+      if (acc[0][0] === month) {
+        acc.unshift([null, acc[0][1] - monthStats[month]]);
+      } else if (acc[0][0] === null) {
+        acc[0][0] = month;
+        acc.unshift([null, acc[0][1] - monthStats[month]]);
+      }
+
+      return acc;
+    }, [[getDate(txs.data[0].block.timestamp), delegates.meta.total]]);
+
+  // Add the date of one month before the last tx
+  res[0][0] = getDate(txs.data[txs.data.length - 1].block.timestamp - 2670000);
+
+  return res;
 };
 
 /**
