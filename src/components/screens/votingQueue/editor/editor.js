@@ -101,7 +101,7 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
 
 // eslint-disable-next-line max-statements
 const Editor = ({
-  t, votes, account, nextStep,
+  t, votes, account, pendingVotingTx, nextStep,
 }) => {
   const [customFee, setCustomFee] = useState();
   const [
@@ -129,7 +129,7 @@ const Editor = ({
   });
 
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
-  const feedback = validateVotes(votes, account.token?.balance, fee.value, t);
+  const feedback = validateVotes(votes, Number(account.token?.balance), fee.value, t);
 
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 
@@ -140,7 +140,7 @@ const Editor = ({
     });
   };
 
-  const showEmptyState = !changedVotes.length;
+  const showEmptyState = !changedVotes.length || pendingVotingTx;
 
   return (
     <section className={styles.wrapper}>
@@ -201,7 +201,7 @@ const Editor = ({
                 <PrimaryButton
                   className="confirm"
                   size="l"
-                  disabled={isCTADisabled}
+                  disabled={isCTADisabled || pendingVotingTx}
                   onClick={goToNextStep}
                 >
                   {t('Continue')}
