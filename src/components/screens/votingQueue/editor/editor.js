@@ -101,7 +101,7 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
 
 // eslint-disable-next-line max-statements
 const Editor = ({
-  t, votes, account, pendingVotingTx, nextStep,
+  t, votes, account, isVotingTxPending, nextStep,
 }) => {
   const [customFee, setCustomFee] = useState();
   const [
@@ -140,7 +140,7 @@ const Editor = ({
     });
   };
 
-  const showEmptyState = !changedVotes.length || pendingVotingTx;
+  const showEmptyState = !changedVotes.length || isVotingTxPending;
 
   return (
     <section className={styles.wrapper}>
@@ -201,7 +201,7 @@ const Editor = ({
                 <PrimaryButton
                   className="confirm"
                   size="l"
-                  disabled={isCTADisabled || pendingVotingTx}
+                  disabled={isCTADisabled || isVotingTxPending}
                   onClick={goToNextStep}
                 >
                   {t('Continue')}

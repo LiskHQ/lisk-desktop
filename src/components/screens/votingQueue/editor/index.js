@@ -1,14 +1,18 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { isVotingTxPending } from '@utils/voting';
+import { containsTransactionType } from '@utils/transaction';
 import { getActiveTokenAccount } from '@utils/account';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import Editor from './editor';
 
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   votes: state.voting,
-  pendingVotingTx: isVotingTxPending(state),
+  isVotingTxPending: containsTransactionType(
+    state.transactions.pending,
+    MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+  ),
 });
 
 export default connect(
