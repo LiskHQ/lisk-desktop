@@ -35,41 +35,6 @@ const normalizeVotesForTx = votes =>
     }));
 
 /**
- * Validates given votes against the following criteria:
- * - Number of votes must not exceed 10
- * - Added vote amounts + fee must not exceed account balance
- * @param {Object} votes - Votes object from Redux store
- * @param {Number} balance - Account balance in Beddows
- * @param {Number} fee - Tx fee in Beddows
- * @param {Function} t - i18n translation function
- * @returns {Object} The feedback object including error status and messages
- */
-const validateVotes = (votes, balance, fee, t) => {
-  const messages = [];
-
-  const areVotesInValid = Object.values(votes).some(vote =>
-    (vote.unconfirmed === '' || vote.unconfirmed === undefined));
-
-  if (areVotesInValid) {
-    messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
-  }
-
-  if (Object.keys(votes).length > 10) {
-    messages.push(t('You can\'t vote for more than 10 delegates.'));
-  }
-
-  const addedVoteAmount = Object.values(votes)
-    .filter(vote => vote.unconfirmed > vote.confirmed)
-    .reduce((sum, vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
-
-  if ((addedVoteAmount + toRawLsk(fee)) > balance) {
-    messages.push(t('You don\'t have enough LSK in your account.'));
-  }
-
-  return { messages, error: !!messages.length };
-};
-
-/**
  * Determines the number of votes that have been
  * added, removed or edited.
  *
@@ -93,12 +58,48 @@ const getVoteStats = votes =>
       return stats;
     }, { added: {}, edited: {}, removed: {} });
 
+/**
+ * Validates given votes against the following criteria:
+ * - Number of votes must not exceed 10
+ * - Added vote amounts + fee must not exceed account balance
+ * @param {Object} votes - Votes object from Redux store
+ * @param {Number} balance - Account balance in Beddows
+ * @param {Number} fee - Tx fee in Beddows
+ * @param {Function} t - i18n translation function
+ * @returns {Object} The feedback object including error status and messages
+ */
+// eslint-disable-next-line max-statements
+const validateVotes = (votes, balance, fee, t) => {
+  const messages = [];
+  const areVotesInValid = Object.values(votes).some(vote =>
+    (vote.unconfirmed === '' || vote.unconfirmed === undefined));
+  const votesStats = getVoteStats(votes);
+
+  if (areVotesInValid) {
+    messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
+  }
+
+  if (Object.keys(votesStats.added).length + Object.keys(votesStats.edited).length > 10) {
+    messages.push(t('You can\'t vote for more than 10 delegates.'));
+  }
+
+  const addedVoteAmount = Object.values(votes)
+    .filter(vote => vote.unconfirmed > vote.confirmed)
+    .reduce((sum, vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
+
+  if ((addedVoteAmount + toRawLsk(fee)) > balance) {
+    messages.push(t('You don\'t have enough LSK in your account.'));
+  }
+
+  return { messages, error: !!messages.length };
+};
+
 const token = tokenMap.LSK.key;
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
 
 // eslint-disable-next-line max-statements
 const Editor = ({
-  t, votes, account, nextStep,
+  t, votes, account, isVotingTxPending, nextStep,
 }) => {
   const [customFee, setCustomFee] = useState();
   const [
@@ -126,7 +127,7 @@ const Editor = ({
   });
 
   const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
-  const feedback = validateVotes(votes, account.token?.balance, fee.value, t);
+  const feedback = validateVotes(votes, Number(account.token?.balance), fee.value, t);
 
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 
@@ -137,7 +138,7 @@ const Editor = ({
     });
   };
 
-  const showEmptyState = !changedVotes.length;
+  const showEmptyState = !changedVotes.length || isVotingTxPending;
 
   return (
     <section className={styles.wrapper}>
@@ -198,7 +199,7 @@ const Editor = ({
                 <PrimaryButton
                   className="confirm"
                   size="l"
-                  disabled={isCTADisabled}
+                  disabled={isCTADisabled || isVotingTxPending}
                   onClick={goToNextStep}
                 >
                   {t('Continue')}

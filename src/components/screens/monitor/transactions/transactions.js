@@ -17,11 +17,6 @@ const fields = t => [{
   name: 'address',
   type: 'address',
 }, {
-  label: t('Message'),
-  placeholder: t('Your message'),
-  name: 'message',
-  type: 'text',
-}, {
   label: t('Recipient'),
   placeholder: t('Address or Public key'),
   name: 'recipient',
@@ -42,7 +37,6 @@ const Transactions = ({ t, transactions }) => {
   const filters = {
     dateFrom: '',
     dateTo: '',
-    message: '',
     amountFrom: '',
     amountTo: '',
     moduleAssetId: '',

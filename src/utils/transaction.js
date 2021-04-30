@@ -195,6 +195,9 @@ const createTransactionObject = (tx, moduleAssetId) => {
   return transaction;
 };
 
+export const containsTransactionType = (transactions = [], type) =>
+  transactions.some(tx => tx.moduleAssetId === type);
+
 /**
  * Adapts transaction filter params to match transactions API method
  *

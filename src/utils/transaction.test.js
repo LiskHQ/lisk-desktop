@@ -1,5 +1,5 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { getTxAmount, transformTransaction } from './transaction';
+import { getTxAmount, transformTransaction, containsTransactionType } from './transaction';
 import accounts from '../../test/constants/accounts';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
 
@@ -194,6 +194,35 @@ describe('API: LSK Transactions', () => {
       };
 
       expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
+    });
+  });
+
+  describe('containsTransactionType', () => {
+    it('should return true', () => {
+      let pending = [
+        { moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate },
+      ];
+      expect(containsTransactionType(
+        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+      )).toEqual(true);
+      pending = [
+        { moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer },
+        { moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate },
+      ];
+      expect(containsTransactionType(
+        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+      )).toEqual(true);
+    });
+
+    it('should return false', () => {
+      let pending = [];
+      expect(containsTransactionType(
+        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+      )).toEqual(false);
+      pending = [{ moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer }];
+      expect(containsTransactionType(
+        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+      )).toEqual(false);
     });
   });
 });
