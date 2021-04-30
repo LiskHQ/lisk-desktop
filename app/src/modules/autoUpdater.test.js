@@ -116,7 +116,7 @@ describe('autoUpdater', () => {
     expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
 
     callbacks.error('error');
-    expect(params.dialog.showErrorBox).to.have.been.calledWith('Error: ', 'error');
+    expect(params.dialog.showErrorBox).to.have.been.calledWith('Error: ', 'There was a problem updating the application');
   });
 
   it('should show info box when update downloaded', () => {
