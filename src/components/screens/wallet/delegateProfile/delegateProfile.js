@@ -24,8 +24,8 @@ import DelegateVotesView from './delegateVotesView';
 
 const DelegateProfile = ({
   delegate, account, t, voters,
-  // awaitingForgers, forgingTimes,
   lastBlockForged,
+  // forgers,
 }) => {
   const { data } = delegate;
   useEffect(() => {
