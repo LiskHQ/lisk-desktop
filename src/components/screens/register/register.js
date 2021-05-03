@@ -4,12 +4,12 @@ import { generatePassphrase } from '@utils/passphrase';
 import { extractAddressFromPassphrase } from '@utils/account';
 import { routes } from '@constants';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
+import MultiStep from '@shared/multiStep';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
 import styles from './register.css';
-import MultiStep from '../../../../libs/multiStep';
 import Icon from '../../toolbox/icon';
 import Box from '../../toolbox/box';
 import BoxContent from '../../toolbox/box/content';
@@ -67,7 +67,7 @@ class Register extends React.Component {
                 </span>
                 <div className={styles.warningContent}>
                   <p className={styles.warningSubheading}>
-                     WARNING: Do not deposit large amounts until your account has been initialized
+                    WARNING: Do not deposit large amounts until your account has been initialized
                   </p>
                   <p className={styles.warningPara}>
                     To initialize your account, you simply need to send at least one
@@ -89,7 +89,7 @@ class Register extends React.Component {
                       className={styles.link}
                       onClick={() => window.open('https://lisk.io/blog/announcement/lisk-account-initialization', '_blank', 'rel=noopener noreferrer')}
                     >
-                        blog post
+                      blog post
                       {' '}
                       <Icon name="linkIcon" />
                     </span>

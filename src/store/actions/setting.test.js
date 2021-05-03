@@ -4,7 +4,6 @@ import {
   settingsUpdated,
 } from './settings';
 
-
 describe('actions: setting', () => {
   describe('settingsUpdated', () => {
     it('should create an action to update settings', () => {

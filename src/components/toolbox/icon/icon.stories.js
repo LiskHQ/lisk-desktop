@@ -7,7 +7,6 @@ storiesOf('Toolbox', module)
   .add('Icon', () => (
     <StoryWrapper>
       <h3>Icons</h3>
-      { Object.keys(icons).map(icon => (<Icon name={icon} key={icon} />))
-      }
+      { Object.keys(icons).map(icon => (<Icon name={icon} key={icon} />))}
     </StoryWrapper>
   ));

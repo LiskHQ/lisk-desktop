@@ -60,7 +60,6 @@ describe('Reducer: bookmarks(state, action)', () => {
     expect(changedState.BTC[0]).toMatchObject(account3);
   });
 
-
   it(`should return accounts with updated account if action.type is ${actionTypes.bookmarkUpdated}`, () => {
     const updatedAccount = {
       address: delegate.summary.address,
@@ -97,7 +96,6 @@ describe('Reducer: bookmarks(state, action)', () => {
     expect(changedState.LSK[0]).toEqual(account);
     expect(changedState.LSK[1]).toEqual(updatedAccount);
   });
-
 
   it(`should return accounts without deleted account if action.type is ${actionTypes.bookmarkRemoved}`, () => {
     const state = { LSK: [account, account2] };

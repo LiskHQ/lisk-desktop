@@ -30,5 +30,4 @@ const LoadLatestButton = ({ children, onClick, event }) => {
     : null);
 };
 
-
 export default LoadLatestButton;

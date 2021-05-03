@@ -20,7 +20,6 @@ export const networkConfigSet = async (data) => {
   };
 };
 
-
 /**
  * Returns required action object to update offline/online status of network
  * @param {Object} data - active network data

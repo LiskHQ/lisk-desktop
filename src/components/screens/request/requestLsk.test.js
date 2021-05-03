@@ -34,7 +34,6 @@ describe('RequestLsk', () => {
     wrapper.find('.fieldGroup').at(1).find('AutoResizeTextarea').simulate('change', evt);
     expect(wrapper.find(Request).state('shareLink')).toMatch(`${shareLink}&${evt.target.name}=${evt.target.value}`);
 
-
     evt = { target: { name: 'amount', value: 1 } };
     wrapper.find('.fieldGroup').at(0).find('input').simulate('change', evt);
     expect(wrapper.find(Request).state('shareLink')).toMatch(`${shareLink}&${evt.target.name}=${evt.target.value}`);

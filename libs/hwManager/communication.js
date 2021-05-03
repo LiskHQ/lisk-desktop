@@ -120,7 +120,6 @@ const subscribeToDeviceDisconnected = (fn) => {
   IPC.on(IPC_MESSAGES.HW_DISCONNECTED, (event, response) => fn(response));
 };
 
-
 const getDeviceList = () => (
   executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null)
 );

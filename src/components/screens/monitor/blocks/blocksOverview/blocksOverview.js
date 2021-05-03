@@ -67,7 +67,6 @@ class BlocksOverview extends React.Component {
       },
     };
 
-
     return (
       <Box className={styles.wrapper}>
         <BoxHeader className="box-header">

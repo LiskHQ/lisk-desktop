@@ -39,11 +39,11 @@ describe('Recipient Input', () => {
     matchProps: ['address', 'title'],
     // eslint-disable-next-line react/display-name
     renderItem: item => (
-      <React.Fragment>
+      <>
         <AccountVisual address={item.address} size={25} />
         <span>{item.title}</span>
         <span>{item.address}</span>
-      </React.Fragment>
+      </>
     ),
   };
 

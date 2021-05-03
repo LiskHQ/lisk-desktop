@@ -19,7 +19,6 @@ const getModuleAssetTitle = (t = str => str) => ({
   [MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup]: t('Register Multisignature Group'),
 });
 
-
 const retrieveSchemas = async ({ serviceUrl }) => {
   const response = await getSchemas({ baseUrl: serviceUrl });
   response.data.forEach((data) => {

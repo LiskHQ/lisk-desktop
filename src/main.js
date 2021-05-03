@@ -26,7 +26,6 @@ if (!PRODUCTION) {
   whyDidYouRender(React);
 }
 
-
 const rootElement = document.getElementById('app');
 
 const renderWithRouter = Component => (

@@ -213,11 +213,9 @@ const Overview = ({ t, txStats }) => {
                     key={`transaction-GuideTooltip${i}`}
                     color={colorPalette[i]}
                     label={label
-                      .replace('Register Multisignature Group', 'Multisig. creation')
-                    }
+                      .replace('Register Multisignature Group', 'Multisig. creation')}
                   />
-                ))
-                  }
+                ))}
             </GuideTooltip>
           </div>
         </div>
@@ -234,8 +232,7 @@ const Overview = ({ t, txStats }) => {
               {Object.keys(distributionByAmount)
                 .map((label, i) => (
                   <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPalette[i]} label={label} />
-                ))
-              }
+                ))}
             </GuideTooltip>
           </div>
         </div>

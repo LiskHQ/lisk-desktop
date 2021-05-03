@@ -138,7 +138,8 @@ const DelegateStatus = ({ activeTab, data }) => {
       activeTab === 'watched'
         ? `${grid['col-xs-1']}`
         : activeTab === 'sanctioned' ? `${grid['col-xs-4']}`
-          : activeTab !== 'active' ? `${grid['col-xs-3']}` : 'hidden'}
+          : activeTab !== 'active' ? `${grid['col-xs-3']}` : 'hidden'
+}
     >
       <span className={`${styles.delegateStatus} ${styles[status]}`}>{delegateStatus[status]}</span>
     </span>
@@ -188,7 +189,8 @@ const DelegateRow = ({
         activeTab === 'active' || activeTab === 'watched'
           ? `${grid['col-xs-2']}`
           : activeTab === 'sanctioned' ? `${grid['col-xs-4']}`
-            : `${grid['col-xs-3']}`}
+            : `${grid['col-xs-3']}`
+}
       >
         {`${formatAmountBasedOnLocale({ value: data.productivity })} %`}
       </span>

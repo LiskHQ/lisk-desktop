@@ -28,8 +28,7 @@ const Converter = ({
             {`~${price} ${currency}`}
           </span>
         )
-        : null
-      }
+        : null}
     </div>
   );
 };

@@ -50,7 +50,6 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-
   const onBackDropClick = (e) => {
     if (e.target === backdropRef.current) {
       const { initialization = false } = parseSearchParams(history.location.search);

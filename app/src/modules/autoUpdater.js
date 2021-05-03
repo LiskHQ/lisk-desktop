@@ -8,9 +8,9 @@ export default ({ // eslint-disable-line max-statements
   };
   autoUpdater.autoDownload = false;
 
-  autoUpdater.checkForUpdates();
+  autoUpdater.checkForUpdatesAndNotify();
   setInterval(() => {
-    autoUpdater.checkForUpdates();
+    autoUpdater.checkForUpdatesAndNotify();
   }, 24 * 60 * 60 * 1000);
 
   autoUpdater.on('error', (error) => {
@@ -22,7 +22,7 @@ export default ({ // eslint-disable-line max-statements
       updater.error = error;
       if (error?.toString().indexOf('404 Not Found') === -1) {
         // this condition is because of https://github.com/LiskHQ/lisk-desktop/issues/647
-        dialog.showErrorBox(`${i18n.t('Error')}: `, error.toString());
+        dialog.showErrorBox(`${i18n.t('Error')}: `, 'There was a problem updating the application');
       }
     }
   });

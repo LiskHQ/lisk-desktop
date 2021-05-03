@@ -8,7 +8,7 @@ import styles from './list.css';
 const EmptyState = ({
   bookmarks, token, emptyStateClassName, t, onAddBookmark,
 }) => (
-  <React.Fragment>
+  <>
     { bookmarks[token.active].length
       ? (
         <BoxEmptyState className={emptyStateClassName}>
@@ -18,7 +18,7 @@ const EmptyState = ({
       )
       : (
         <BoxEmptyState className={emptyStateClassName}>
-          <React.Fragment>
+          <>
             <Illustration name="emptyBookmarksList" className="bookmarks-empty-illustration" />
             <p>{t('You don’t have any bookmarks yet.')}</p>
             <PrimaryButton
@@ -29,12 +29,11 @@ const EmptyState = ({
               <Icon name="plus" className={styles.plusIcon} />
               {t('Add bookmark')}
             </PrimaryButton>
-          </React.Fragment>
+          </>
 
         </BoxEmptyState>
-      )
-    }
-  </React.Fragment>
+      )}
+  </>
 );
 
 export default EmptyState;

@@ -27,8 +27,7 @@ const TransactionAmount = ({
             </span>
           </DiscreetMode>
         )
-        : '-'
-      }
+        : '-'}
     </div>
   );
 };

@@ -61,7 +61,8 @@ const ActionBar = ({
         >
           <QRCode value={address} size={154} />
         </Tooltip>
-      )}
+      )
+}
     </div>
     {
       host !== address ? (

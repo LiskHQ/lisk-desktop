@@ -69,8 +69,7 @@ const TransactionsTable = ({
         >
           {t('New transactions')}
         </LoadLatestButton>
-        )
-      }
+        )}
       <FilterBar {...{
         clearFilter, clearAllFilters, filters, formatters, t,
       }}

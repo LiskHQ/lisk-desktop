@@ -19,8 +19,7 @@ const Result = (props) => {
       account={account}
       transactions={transactions}
       transactionBroadcasted={params =>
-        dispatch(transactionBroadcasted(params))
-      }
+        dispatch(transactionBroadcasted(params))}
     />
   );
 };

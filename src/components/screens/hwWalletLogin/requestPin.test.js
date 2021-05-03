@@ -75,7 +75,6 @@ describe('Request PIN Component', () => {
     expect(props.nextStep).toBeCalled();
   });
 
-
   it('Should show error message if PIN is invalid', async () => {
     hwManager.getPublicKey.mockResolvedValue('');
     hwManager.validatePin.mockRejectedValue('Error');

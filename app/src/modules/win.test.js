@@ -53,7 +53,6 @@ describe('Electron Browser Window Wrapper', () => {
     serverMock.expects('init').returns(url);
   });
 
-
   afterEach(() => {
     win.browser = null;
     win.isUILoaded = false;

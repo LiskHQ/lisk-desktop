@@ -48,7 +48,7 @@ class PassphraseBackup extends React.Component {
     } = this.props;
 
     return (
-      <React.Fragment>
+      <>
         <div className={`${styles.optionsHolder}`}>
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
@@ -87,7 +87,7 @@ class PassphraseBackup extends React.Component {
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

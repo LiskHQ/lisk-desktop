@@ -51,7 +51,6 @@ ReactRouterDom.withRouter = jest.fn((Component => (
 )));
 ReactRouterDom.NavLink = ReactRouterDom.Link;
 
-
 ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => ((Component) => {
   function MockConnect(props) {
     return (

@@ -1,7 +1,7 @@
 import Notification from '@utils/notification';
 import { getActiveTokenAccount } from '@utils/account';
-import { tokenMap } from '../../constants/tokens';
 import { actionTypes } from '@constants';
+import { tokenMap } from '../../constants/tokens';
 
 const notificationMiddleware = (store) => {
   const notify = Notification.init();

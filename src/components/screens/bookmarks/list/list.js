@@ -134,8 +134,7 @@ export class BookmarksList extends React.Component {
               </span>
             </header>
           )
-          : null
-        }
+          : null}
         <Box className={styles.box}>
           <BoxHeader>
             <h2 className={styles.heading}>{t('Bookmarks')}</h2>
@@ -204,7 +203,7 @@ export class BookmarksList extends React.Component {
                       <div className={styles.buttonContainer}>
                         { editedAddress === bookmark.address
                           ? (
-                            <React.Fragment>
+                            <>
                               <TertiaryButton
                                 onClick={e => this.updateBookmark(e, {})}
                                 className="bookmarks-cancel-button"
@@ -220,10 +219,10 @@ export class BookmarksList extends React.Component {
                               >
                                 {t('Save changes')}
                               </TertiaryButton>
-                            </React.Fragment>
+                            </>
                           )
                           : (
-                            <React.Fragment>
+                            <>
                               <TertiaryButton
                                 onClick={e => this.editBookmark(e, bookmark)}
                                 className="bookmarks-edit-button"
@@ -239,13 +238,11 @@ export class BookmarksList extends React.Component {
                               >
                                 <Icon name="remove" />
                               </TertiaryButton>
-                            </React.Fragment>
-                          )
-                    }
+                            </>
+                          )}
                       </div>
                     )
-                    : null
-                }
+                    : null}
                 </Link>
               ))
               : (

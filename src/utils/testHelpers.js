@@ -38,7 +38,6 @@ export const mountWithRouter = (Component, props, routeConfig = {}) => mount(
   </MemoryRouter>,
 );
 
-
 /**
  * Mounts components that are wrapped in WithRouter
  *

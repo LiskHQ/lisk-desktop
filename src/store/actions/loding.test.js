@@ -5,7 +5,6 @@ import {
   loadingFinished,
 } from './loading';
 
-
 describe('actions: loading', () => {
   describe('loadingStarted', () => {
     it('should create an action to show loading bar', () => {

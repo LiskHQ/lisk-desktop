@@ -1,6 +1,5 @@
 import { reducer, actionTypes, getInitialState } from './reducer';
 
-
 describe('useTransactionFeeCalculation.reducer', () => {
   it('returns some initial state', () => {
     const initialState = getInitialState({ balance: 0 });
