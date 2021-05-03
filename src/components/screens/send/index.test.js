@@ -1,11 +1,5 @@
 import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
-import { mount, shallow } from 'enzyme';
-import React from 'react';
 import { mountWithRouter } from '@utils/testHelpers';
-
-import { MemoryRouter } from 'react-router-dom';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
 import Send from './index';
 import accounts from '../../../../test/constants/accounts';
 
