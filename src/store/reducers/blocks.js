@@ -4,6 +4,7 @@ const initialState = {
   latestBlocks: [],
   forgingTimes: {},
   awaitingForgers: [],
+  forgers: [],
   total: 0,
 };
 
@@ -25,11 +26,12 @@ const blocks = (state = initialState, action) => {
         ],
         total: action.data.total,
       };
-    case actionTypes.forgingTimesRetrieved:
+    case actionTypes.forgersRetrieved:
+    case actionTypes.forgersUpdated:
+    case actionTypes.forgingStatusUpdated:
       return {
         ...state,
-        forgingTimes: action.data.forgingTimes,
-        awaitingForgers: action.data.awaitingForgers,
+        forgers: action.data,
       };
     default:
       return state;
