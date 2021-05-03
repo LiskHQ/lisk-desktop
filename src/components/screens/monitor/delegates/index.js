@@ -9,7 +9,7 @@ import { getNetworkStatus } from '@api/network';
 import { getTransactions, getRegisteredDelegates } from '@api/transaction';
 import withData from '@utils/withData';
 import withFilters from '@utils/withFilters';
-import { MODULE_ASSETS_NAME_ID_MAP, MAX_BLOCKS_FORGED, tokenMap } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, ROUND_LENGTH, tokenMap } from '@constants';
 import Delegates from './delegates';
 
 const defaultUrlSearchParams = { search: '' };
@@ -54,7 +54,7 @@ const ComposedDelegates = compose(
     {
       delegates: {
         apiUtil: (network, params) => getForgers(
-          { network, params: { ...params, limit: MAX_BLOCKS_FORGED } },
+          { network, params: { ...params, limit: ROUND_LENGTH } },
         ),
         defaultData: [],
         autoload: true,

@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { routes, colorPalette, MAX_BLOCKS_FORGED } from '@constants';
+import { routes, colorPalette, ROUND_LENGTH } from '@constants';
 import { DoughnutChart } from '@toolbox/charts';
 import AccountVisual from '@toolbox/accountVisual';
 import Box from '@toolbox/box';
@@ -45,7 +45,7 @@ const Forger = ({ forger }) => (
 
 const ProgressBar = ({ forgedInRound }) => (
   <div className={styles.progressBar}>
-    <div className={styles.lineForged} style={{ width: `${(forgedInRound / MAX_BLOCKS_FORGED) * 100}%` }} />
+    <div className={styles.lineForged} style={{ width: `${(forgedInRound / ROUND_LENGTH) * 100}%` }} />
   </div>
 );
 
@@ -69,7 +69,7 @@ const ForgingDetails = ({
   ];
   const { latestBlocks } = useSelector(state => state.blocks);
   const forgedInRound = latestBlocks.length
-    ? latestBlocks[0].height % MAX_BLOCKS_FORGED : 0;
+    ? latestBlocks[0].height % ROUND_LENGTH : 0;
 
   const doughnutChartData = {
     labels: delegatesForgedLabels,
@@ -151,7 +151,7 @@ const ForgingDetails = ({
                   <ProgressBar forgedInRound={forgedInRound} />
                   <p className={styles.blue}>
                     {`${forgedInRound} / `}
-                    <span>{` ${MAX_BLOCKS_FORGED}`}</span>
+                    <span>{` ${ROUND_LENGTH}`}</span>
                   </p>
                 </main>
               </section>
