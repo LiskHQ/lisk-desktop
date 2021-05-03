@@ -1,13 +1,11 @@
 import { blockSubscribe, blockUnsubscribe } from '@api/block';
-import { forgersSubscribe, forgersUnsubscribe, getForgers } from '@api/delegate';
+import { forgersSubscribe, forgersUnsubscribe } from '@api/delegate';
 import { tokenMap, actionTypes } from '@constants';
 import {
   olderBlocksRetrieved,
   forgersRetrieved,
-  forgersUpdated,
   networkStatusUpdated,
 } from '@actions';
-
 
 const oneMinute = 1000 * 60;
 
@@ -57,17 +55,7 @@ const forgingListener = ({ getState, dispatch }) => {
   const state = getState();
   forgersUnsubscribe();
 
-  const callback = async () => {
-    try {
-      const delegates = await getForgers({
-        params: { limit: 103 },
-        network: state.network,
-      });
-      dispatch(forgersUpdated(delegates.data));
-    } catch (e) {
-      dispatch(forgersRetrieved());
-    }
-  };
+  const callback = () => dispatch(forgersRetrieved());
 
   forgersSubscribe(
     state.network,
