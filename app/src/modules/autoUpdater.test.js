@@ -3,7 +3,7 @@ import sinon, { spy, stub } from 'sinon'; // eslint-disable-line import/no-extra
 import ipcMock from 'electron-ipc-mock'; // eslint-disable-line import/no-extraneous-dependencies
 import autoUpdater from './autoUpdater';
 
-describe('autoUpdater', () => {
+describe.skip('autoUpdater', () => {
   const version = '1.2.3';
   const releaseNotes = 'this notes';
   const loadURL = spy();
