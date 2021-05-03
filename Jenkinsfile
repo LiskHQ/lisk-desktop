@@ -16,7 +16,7 @@ pipeline {
 		stage('Install npm dependencies') {
 			steps {
 				nvm(getNodejsVersion()) {
-					sh 'npm install --registry https://npm.lisk.io --no-optional'
+					sh 'npm ci'
 				}
 			}
 		}
@@ -26,7 +26,7 @@ pipeline {
 					"ESLint": {
 						ansiColor('xterm') {
 							nvm(getNodejsVersion()) {
-								sh 'npm run --silent eslint'
+								sh 'npm run --silent lint'
 							}
 						}
 					},
