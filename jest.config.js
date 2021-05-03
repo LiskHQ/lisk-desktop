@@ -56,6 +56,7 @@ module.exports = {
     'src/i18n-scanner.js',
     'src/main.js',
     'src/tests.js',
+    '/app/src/modules/autoUpdater.js',
     'src/actions/settings.js',
     'src/actions/bookmarks.js',
     'src/actions/liskService.js',
