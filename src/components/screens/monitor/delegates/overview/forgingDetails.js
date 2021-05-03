@@ -74,7 +74,6 @@ const ForgingDetails = ({
   };
 
   const forgersListToShow = forgers.slice(0, FORGERS_TO_SHOW);
-  console.log(forgersListToShow);
 
   return (
     <Box className={styles.wrapper}>
