@@ -8,9 +8,9 @@ export default ({ // eslint-disable-line max-statements
   };
   autoUpdater.autoDownload = false;
 
-  autoUpdater.checkForUpdates();
+  autoUpdater.checkForUpdatesAndNotify();
   setInterval(() => {
-    autoUpdater.checkForUpdates();
+    autoUpdater.checkForUpdatesAndNotify();
   }, 24 * 60 * 60 * 1000);
 
   autoUpdater.on('error', (error) => {
