@@ -65,7 +65,7 @@ const DelegateRow = ({
       <DelegateWeight value={data.totalVotesReceived} activeTab={activeTab} />
       {(activeTab === 'active' || activeTab === 'watched') && (
         <>
-          <ForgingTime activeTab={activeTab} time={formattedForgingTime} />
+          <ForgingTime activeTab={activeTab} status={data.status} time={formattedForgingTime} />
           <RoundStatus data={data} t={t} time={formattedForgingTime} activeTab={activeTab} />
         </>
       )}
