@@ -53,31 +53,26 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
  */
 export const forgersRetrieved = () => async (dispatch, getState) => {
   const { network, blocks: { latestBlocks } } = getState();
-  const forgedInRoundNum = latestBlocks[0].height % ROUND_LENGTH;
+  const forgedBlocksInRound = latestBlocks[0].height % ROUND_LENGTH;
+  const remainingBlocksInRound = ROUND_LENGTH - forgedBlocksInRound;
   const { data } = await getForgers({
     network,
     params: { limit: ROUND_LENGTH },
   });
   let forgers = [];
-  let missedBlocksCount = 0;
+  const haveForgedInRound = latestBlocks
+    .filter((b, i) => forgedBlocksInRound >= i)
+    .map(b => b.generatorUsername);
   // check previous blocks and define missed blocks
   if (data) {
     forgers = data.map((forger, index) => {
-      if (index > forgedInRoundNum) {
+      if (haveForgedInRound.indexOf(forger.username) > -1) {
+        return { ...forger, status: 'forging' };
+      }
+      if (index < remainingBlocksInRound) {
         return { ...forger, status: 'awaitingSlot' };
       }
-      const { generatorUsername } = latestBlocks[
-        latestBlocks.length - forgedInRoundNum + index - missedBlocksCount - 1
-      ];
-      let status = 'forging';
-      if (generatorUsername !== forger.username) {
-        status = 'missedBlock';
-        missedBlocksCount += 1;
-      }
-      return {
-        ...forger,
-        status,
-      };
+      return { ...forger, status: 'missedBlock' };
     });
   }
   dispatch({
@@ -110,10 +105,10 @@ export const forgersUpdated = forgers => ({
  */
 export const forgingStatusUpdated = block => async (dispatch, getState) => {
   const { blocks: { forgers, latestBlocks } } = getState();
-  const forgedInRoundNum = latestBlocks[0].height % ROUND_LENGTH;
+  const forgedBlocksInRound = latestBlocks[0].height % ROUND_LENGTH;
   let found = false;
   const data = forgers.map((forger, index) => {
-    if (index >= forgedInRoundNum && !found) {
+    if (index >= forgedBlocksInRound && !found) {
       if (forger.username === block.generatorUsername) {
         found = true;
         return { ...forger, status: 'forging' };
