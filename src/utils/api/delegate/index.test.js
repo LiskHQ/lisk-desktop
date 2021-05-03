@@ -107,8 +107,14 @@ describe('API: LSK Delegates', () => {
       expect(ws).toHaveBeenCalledWith({
         baseUrl: network.serviceUrl,
         requests: [
-          { params: { address: addressList[0] }, method: delegate.wsMethods.delegates },
-          { params: { address: addressList[1] }, method: delegate.wsMethods.delegates },
+          {
+            params: { address: addressList[0], isDelegate: true },
+            method: delegate.wsMethods.delegates,
+          },
+          {
+            params: { address: addressList[1], isDelegate: true },
+            method: delegate.wsMethods.delegates,
+          },
         ],
       });
     });
@@ -125,8 +131,14 @@ describe('API: LSK Delegates', () => {
       expect(ws).toHaveBeenCalledWith({
         baseUrl: network.serviceUrl,
         requests: [
-          { params: { address: addressList[0] }, method: delegate.wsMethods.delegates },
-          { params: { address: addressList[1] }, method: delegate.wsMethods.delegates },
+          {
+            params: { address: addressList[0], isDelegate: true },
+            method: delegate.wsMethods.delegates,
+          },
+          {
+            params: { address: addressList[1], isDelegate: true },
+            method: delegate.wsMethods.delegates,
+          },
         ],
       });
     });
@@ -154,8 +166,14 @@ describe('API: LSK Delegates', () => {
       expect(ws).toHaveBeenCalledWith({
         baseUrl,
         requests: [
-          { params: { address: addressList[0] }, method: delegate.wsMethods.delegates },
-          { params: { address: addressList[1] }, method: delegate.wsMethods.delegates },
+          {
+            params: { address: addressList[0], isDelegate: true },
+            method: delegate.wsMethods.delegates,
+          },
+          {
+            params: { address: addressList[1], isDelegate: true },
+            method: delegate.wsMethods.delegates,
+          },
         ],
       });
       delegate.getDelegates({
