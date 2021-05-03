@@ -46,16 +46,12 @@ describe('Delegates monitor page', () => {
     });
   };
 
+  const { blocks } = store.getState();
+
   beforeEach(() => {
     props = {
       t: key => key,
-      delegates: {
-        isLoading: true,
-        data: activeDelegates,
-        loadData: jest.fn(),
-        clearData: jest.fn(),
-        urlSearchParams: {},
-      },
+      blocks,
       standByDelegates: {
         isLoading: true,
         data: [],
@@ -145,6 +141,6 @@ describe('Delegates monitor page', () => {
 
   it('renders the forging status', () => {
     wrapper = setup(props);
-    expect(wrapper.find('a.delegate-row')).toHaveLength(delegatesList.length + 1);
+    expect(wrapper.find('a.delegate-row')).toHaveLength(blocks.forgers.length);
   });
 });
