@@ -2,8 +2,6 @@ import { actionTypes } from '@constants';
 
 const initialState = {
   latestBlocks: [],
-  forgingTimes: {},
-  awaitingForgers: [],
   forgers: [],
   total: 0,
 };
