@@ -6,8 +6,7 @@ const Spinner = ({ label, className, completed }) => (
     <span className={`${styles.spinner} ${completed ? styles.completed : ''} spinner`} />
     {label
       ? <span className={`${styles.label} spinner-label`}>{label}</span>
-      : null
-    }
+      : null}
   </span>
 );
 

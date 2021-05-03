@@ -35,7 +35,6 @@ const getInitialState = (address) => {
   };
 };
 
-
 // eslint-disable-next-line max-statements
 const NetworkSelector = ({
   t, selectedNetworkName, selectedAddress, networkSelected, settingsUpdated,

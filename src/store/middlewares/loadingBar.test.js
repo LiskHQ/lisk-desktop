@@ -3,7 +3,6 @@ import { spy } from 'sinon';
 import { actionTypes } from '@constants';
 import middleware from './loadingBar';
 
-
 describe('LoadingBar middleware', () => {
   let next;
   const ignoredLoadingActionKeys = ['transactions'];

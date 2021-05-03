@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { actionTypes } from '@constants';
 import blocksReducer from './blocks';
 
-
 describe('Reducer: blocks(state, action)', () => {
   const blocks = [{
     id: 19812401289461240,

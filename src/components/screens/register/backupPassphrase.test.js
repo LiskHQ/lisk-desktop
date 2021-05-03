@@ -6,7 +6,6 @@ import { extractAddressFromPassphrase } from '@utils/account';
 import { generatePassphrase } from '@utils/passphrase';
 import BackupPassphrase from './backupPassphrase';
 
-
 describe('Register Process - Backup Passphrase', () => {
   let wrapper;
 

@@ -9,7 +9,6 @@ const setup = () => {
     return accumulator;
   }, {});
 
-
   return i18n
     .init({
       fallbackLng: 'en',

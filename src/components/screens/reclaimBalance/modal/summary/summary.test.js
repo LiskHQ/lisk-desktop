@@ -69,7 +69,6 @@ describe('Reclaim balance Summary', () => {
     expect(html).toContain('confirm-button');
   });
 
-
   it('Go to next page when continue button is clicked', async () => {
     create.mockImplementation(() => Promise.resolve(response));
     const wrapper = mountWithRouterAndStore(Summary, props, {}, state);

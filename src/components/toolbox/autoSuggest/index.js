@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { keyCodes } from '@constants';
 import { Input } from '../inputs';
 import styles from './autoSuggest.css';
@@ -154,7 +154,7 @@ class AutoSuggest extends React.Component {
     const { dropdownIndex, isLoading } = this.state;
 
     return (
-      <Fragment>
+      <>
         <span className={`${styles.inputWrapper} ${className}`}>
           <Input
             autoComplete="off"
@@ -186,7 +186,7 @@ class AutoSuggest extends React.Component {
               )) }
           </ul>
         </span>
-      </Fragment>
+      </>
     );
   }
 }

@@ -39,8 +39,7 @@ const VoteRow = ({
         {account
           ? `${formatAmountBasedOnLocale({ value: account.dpos.delegate.productivity })}%`
           /* istanbul ignore next */
-          : '-'
-        }
+          : '-'}
       </div>
 
       {/* Rank */}

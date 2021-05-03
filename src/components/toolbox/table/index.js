@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Loading from './loading';
 import Empty from './empty';
 import Error from './error';
@@ -78,7 +78,7 @@ const Table = ({
 }) => {
   const Row = row;
   return (
-    <Fragment>
+    <>
       <List
         data={data}
         header={header}
@@ -108,7 +108,7 @@ const Table = ({
         canLoadMore={canLoadMore}
         error={error}
       />
-    </Fragment>
+    </>
   );
 };
 

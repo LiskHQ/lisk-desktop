@@ -1,4 +1,3 @@
-
 export default {
   URL: 'https://matomo.lisk.io',
   SITE_ID: 1,

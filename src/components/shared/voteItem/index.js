@@ -41,8 +41,7 @@ const VoteItem = ({
               <LiskAmount val={vote.unconfirmed} token={token} />
             </>
           )
-          : <LiskAmount val={Object.values(vote)[0]} token={token} />
-      }
+          : <LiskAmount val={Object.values(vote)[0]} token={token} />}
       </span>
     </span>
   );

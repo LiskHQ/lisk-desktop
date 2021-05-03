@@ -148,14 +148,14 @@ class TransactionSummary extends React.Component {
                   className={`${styles.tooltip}`}
                   title={t('What is your second passphrase?')}
                 >
-                  <React.Fragment>
+                  <>
                     <p className={`${styles.tooltupText}`}>
                       {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
                     </p>
                     <p className={`${styles.tooltipText}`}>
                       {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
                     </p>
-                  </React.Fragment>
+                  </>
                 </Tooltip>
               </label>
               <PassphraseInput
@@ -188,7 +188,8 @@ class TransactionSummary extends React.Component {
               disabled={
               (!!account.secondPublicKey && !secondPassphrase.isValid)
               || (confirmation && !isConfirmed)
-              || confirmButton.disabled}
+              || confirmButton.disabled
+}
               onClick={this.confirmOnClick}
             >
               {confirmButton.label}

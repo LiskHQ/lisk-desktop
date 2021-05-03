@@ -1,7 +1,6 @@
 import { actionTypes } from '@constants';
 import network from './network';
 
-
 describe('Reducer: network(state, action)', () => {
   it.skip('should return state object with passed network setup if action is networkSet', () => {
     const state = {

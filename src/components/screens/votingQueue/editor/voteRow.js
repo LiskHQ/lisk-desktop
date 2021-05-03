@@ -108,8 +108,7 @@ const VoteRow = ({
               </TertiaryButton>
             </div>
           </form>
-        )
-      }
+        )}
     </Box>
   );
 };

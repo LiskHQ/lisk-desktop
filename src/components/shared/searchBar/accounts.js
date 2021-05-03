@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import AccountVisual from '@toolbox/accountVisual';
 import styles from './accountsAndDeletegates.css';
 
@@ -27,14 +27,14 @@ const Accounts = ({
               {
                 isDelegate
                   ? (
-                    <Fragment>
+                    <>
                       <div>
                         <span className={`${styles.accountTitle} account-title`}>
                           {account.dpos?.delegate.username}
                         </span>
                       </div>
                       <span className={styles.accountSubtitle}>{account.summary?.address}</span>
-                    </Fragment>
+                    </>
                   )
                   : (
                     <span className={`${styles.accountTitle} account-title`}>

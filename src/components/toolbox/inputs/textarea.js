@@ -12,7 +12,6 @@ Textarea.propTypes = {
   className: PropTypes.string,
 };
 
-
 Textarea.defaultProps = {
   size: 'l',
   className: '',

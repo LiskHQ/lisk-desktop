@@ -3,7 +3,6 @@ import { forgersSubscribe, forgersUnsubscribe, getForgers } from '@api/delegate'
 import { tokenMap, actionTypes } from '@constants';
 import { olderBlocksRetrieved, forgingTimesRetrieved, networkStatusUpdated } from '@actions';
 
-
 const oneMinute = 1000 * 60;
 
 const generateOnDisconnect = dispatch => () => {

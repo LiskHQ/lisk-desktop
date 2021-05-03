@@ -249,91 +249,86 @@ export const getTransactionFee = async ({
  * @param {string} selectedFeePerByte - in satoshis/byte.
  * @param {Object} network - the network object
  */
-export const create = ({
+// eslint-disable-next-line max-statements
+export const create = async ({
   passphrase,
   recipientId: recipientAddress,
   amount,
   selectedFeePerByte,
   network,
-  // eslint-disable-next-line max-statements, consistent-return
-}) => new Promise(async (resolve, reject) => {
-  try {
-    const config = getNetworkConfig(tokenMap.LSK.key, network);
-    amount = Number(amount);
-    selectedFeePerByte = Number(selectedFeePerByte);
+  // eslint-disable-next-line consistent-return
+}) => {
+  const config = getNetworkConfig(tokenMap.LSK.key, network);
+  amount = Number(amount);
+  selectedFeePerByte = Number(selectedFeePerByte);
 
-    const senderAddress = extractAddress(passphrase, config);
-    const unspentTxOuts = await getUnspentTransactionOutputs(senderAddress, network);
+  const senderAddress = extractAddress(passphrase, config);
+  const unspentTxOuts = await getUnspentTransactionOutputs(senderAddress, network);
 
-    // Estimate total cost (currently estimates max cost by assuming the worst case)
-    const estimatedMinerFee = calculateTransactionFee({
-      inputCount: unspentTxOuts.length,
-      outputCount: 2,
-      selectedFeePerByte,
-    });
+  // Estimate total cost (currently estimates max cost by assuming the worst case)
+  const estimatedMinerFee = calculateTransactionFee({
+    inputCount: unspentTxOuts.length,
+    outputCount: 2,
+    selectedFeePerByte,
+  });
 
-    const estimatedTotal = amount + estimatedMinerFee;
+  const estimatedTotal = amount + estimatedMinerFee;
 
-    // Check if balance is sufficient
-    const unspentTxOutsTotal = unspentTxOuts.reduce((total, tx) => {
-      total += tx.value;
-      return total;
-    }, 0);
+  // Check if balance is sufficient
+  const unspentTxOutsTotal = unspentTxOuts.reduce((total, tx) => {
+    total += tx.value;
+    return total;
+  }, 0);
 
-    if (unspentTxOutsTotal < estimatedTotal) {
-      reject(new Error('Insufficient (estimated) balance'));
-      return null;
-    }
-
-    // Find unspent txOuts to spend for this tx
-    let txOutIndex = 0;
-    let sumOfConsumedOutputs = 0;
-    const txOutsToConsume = [];
-
-    while (sumOfConsumedOutputs < estimatedTotal) {
-      const tx = unspentTxOuts[txOutIndex];
-      txOutsToConsume.push(tx);
-      txOutIndex += 1;
-      sumOfConsumedOutputs += tx.value;
-    }
-
-    const txb = new bitcoin.TransactionBuilder(config.network);
-
-    // Add inputs from unspent txOuts
-    // eslint-disable-next-line
-    for (const tx of txOutsToConsume) {
-      txb.addInput(tx.tx_hash, tx.tx_pos);
-    }
-
-    // Output to Recipient
-    txb.addOutput(recipientAddress, amount);
-
-    // Calculate final fee
-    const calculatedMinerFee = calculateTransactionFee({
-      inputCount: txOutsToConsume.length,
-      outputCount: 2,
-      selectedFeePerByte,
-    });
-
-    // Calculate total
-    const calculatedTotal = amount + calculatedMinerFee;
-
-    // Output to Change Address
-    const change = sumOfConsumedOutputs - calculatedTotal;
-    txb.addOutput(senderAddress, change);
-
-    // Sign inputs
-    const derivedPath = getDerivedPathFromPassphrase(passphrase, config);
-    const keyPair = bitcoin.ECPair.fromWIF(derivedPath.toWIF(), config.network);
-    for (let i = 0; i < txOutsToConsume.length; i++) {
-      txb.sign(i, keyPair);
-    }
-
-    resolve(txb.build().toHex());
-  } catch (error) {
-    reject(error);
+  if (unspentTxOutsTotal < estimatedTotal) {
+    throw Error('Insufficient (estimated) balance');
   }
-});
+
+  // Find unspent txOuts to spend for this tx
+  let txOutIndex = 0;
+  let sumOfConsumedOutputs = 0;
+  const txOutsToConsume = [];
+
+  while (sumOfConsumedOutputs < estimatedTotal) {
+    const tx = unspentTxOuts[txOutIndex];
+    txOutsToConsume.push(tx);
+    txOutIndex += 1;
+    sumOfConsumedOutputs += tx.value;
+  }
+
+  const txb = new bitcoin.TransactionBuilder(config.network);
+
+  // Add inputs from unspent txOuts
+  // eslint-disable-next-line
+    for (const tx of txOutsToConsume) {
+    txb.addInput(tx.tx_hash, tx.tx_pos);
+  }
+
+  // Output to Recipient
+  txb.addOutput(recipientAddress, amount);
+
+  // Calculate final fee
+  const calculatedMinerFee = calculateTransactionFee({
+    inputCount: txOutsToConsume.length,
+    outputCount: 2,
+    selectedFeePerByte,
+  });
+
+  // Calculate total
+  const calculatedTotal = amount + calculatedMinerFee;
+
+  // Output to Change Address
+  const change = sumOfConsumedOutputs - calculatedTotal;
+  txb.addOutput(senderAddress, change);
+
+  // Sign inputs
+  const derivedPath = getDerivedPathFromPassphrase(passphrase, config);
+  const keyPair = bitcoin.ECPair.fromWIF(derivedPath.toWIF(), config.network);
+  for (let i = 0; i < txOutsToConsume.length; i++) {
+    txb.sign(i, keyPair);
+  }
+  return txb.build().toHex();
+};
 
 export const broadcast = async (transaction, network) => {
   const config = getNetworkConfig(tokenMap.LSK.key, network);

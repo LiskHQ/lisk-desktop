@@ -1,7 +1,6 @@
 import { mountWithRouter } from '@utils/testHelpers';
 import Result from './result';
 
-
 const props = {
   t: s => s,
   history: { push: jest.fn() },

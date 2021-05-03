@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { routes } from '@constants';
@@ -17,33 +16,6 @@ const Send = ({ history }) => {
     history.push(routes.wallet.path);
   };
   const initialValue = parseSearchParams(history.location.search);
-  const address = useSelector(state => state.account.info.LSK.address);
-  const isAccountInitialized = useSelector(state => state.account.isAccountInitialised);
-  const isInitialization = initialValue.initialization;
-
-  if (isInitialization) {
-    return (
-      <Dialog hasClose={isAccountInitialized}>
-        <MultiStep
-          key="send"
-          finalCallback={backToWallet}
-          className={styles.wrapper}
-        >
-          <Summary
-            isInitialization={isInitialization}
-            fields={{
-              recipient: { address },
-              fee: { value: 1e7 },
-              amount: { value: 0.1 },
-              reference: { value: 'Account Initialization' },
-            }}
-          />
-          <Summary />
-          <TransactionStatus history={history} />
-        </MultiStep>
-      </Dialog>
-    );
-  }
 
   return (
     <Dialog hasClose>

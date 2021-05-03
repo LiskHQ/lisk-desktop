@@ -105,7 +105,6 @@ describe('Summary', () => {
     expect(wrapper.find('.recipient-value')).toIncludeText(title);
   });
 
-
   it('should show props.fields.fee.value and use it in transactionCreated if props.token is not LSK', () => {
     const txFee = 12451;
     const formattedtxFee = formatAmountBasedOnLocale({ value: fromRawLsk(txFee) });

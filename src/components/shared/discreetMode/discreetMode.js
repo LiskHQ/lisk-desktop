@@ -46,5 +46,4 @@ DiscreetMode.propTypes = {
   shouldEvaluateForOtherAccounts: PropTypes.bool,
 };
 
-
 export default DiscreetMode;

@@ -52,8 +52,7 @@ const Onboarding = ({
             key={`illustration-${i}`}
             name={illustration}
           />
-        ))
-        }
+        ))}
       </div>
 
       <div className={styles.content}>
@@ -66,11 +65,9 @@ const Onboarding = ({
                   data-index={i}
                   className={i === currentSlide ? styles.active : ''}
                 />
-              ))
-            }
+              ))}
             </span>
-          ) : null
-        }
+          ) : null}
         <div className={`${styles.slides} slides`}>
           {slides.map((slide, index) => (
             <section
@@ -93,8 +90,7 @@ const Onboarding = ({
               >
                 {t('Previous')}
               </SecondaryButton>
-            ) : null
-          }
+            ) : null}
           {(currentSlide !== slides.length - 1 && actionButtonLabel !== '')
             ? (
               <PrimaryButton

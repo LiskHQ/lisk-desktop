@@ -17,7 +17,7 @@ const RankOrStatus = ({
     </span>
   ) : (
     <span className={`${styles.status} ${className}`}>
-      {'active'}
+      active
     </span>
   )
 );

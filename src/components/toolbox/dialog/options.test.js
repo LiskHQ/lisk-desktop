@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { mountWithRouter } from '@utils/testHelpers';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';

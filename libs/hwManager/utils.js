@@ -50,7 +50,6 @@ export const subscribe = (receiver, { event, action }) => {
   });
 };
 
-
 export default {
   createCommand,
   publish,

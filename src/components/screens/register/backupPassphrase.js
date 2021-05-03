@@ -8,7 +8,7 @@ import registerStyles from './register.css';
 const BackupPassphrase = ({
   t, account, prevStep, nextStep,
 }) => (
-  <React.Fragment>
+  <>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
         {t('Save your passphrase')}
@@ -39,7 +39,7 @@ const BackupPassphrase = ({
         </PrimaryButton>
       </span>
     </div>
-  </React.Fragment>
+  </>
 );
 
 export default withTranslation()(BackupPassphrase);

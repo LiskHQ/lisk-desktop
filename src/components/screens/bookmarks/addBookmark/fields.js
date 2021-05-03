@@ -46,8 +46,7 @@ const Fields = ({
               address={status[index].value}
               size={25}
             />
-          ) : null
-          }
+          ) : null}
         </span>
       </label>
     ))}

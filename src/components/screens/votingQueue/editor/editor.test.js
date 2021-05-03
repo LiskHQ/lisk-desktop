@@ -22,7 +22,6 @@ const addresses = [
   'lskarccxj6xqdeqtuvakr3hjdjh8a6df73b6pqk6s',
 ];
 
-
 describe('VotingQueue.Editor', () => {
   moduleAssetSchemas['5:1'] = {
     $id: 'lisk/dpos/vote',

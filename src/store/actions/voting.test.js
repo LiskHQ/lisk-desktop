@@ -1,4 +1,6 @@
 import { actionTypes, networks, loginTypes } from '@constants';
+import * as TransactionApi from '@api/transaction';
+import * as delegateApi from '@api/delegate';
 import {
   voteEdited,
   votesCleared,
@@ -6,8 +8,6 @@ import {
   votesConfirmed,
   votesRetrieved,
 } from './voting';
-import * as TransactionApi from '@api/transaction';
-import * as delegateApi from '@api/delegate';
 import sampleVotes from '../../../test/constants/votes';
 
 jest.mock('@api/transaction', () => ({
