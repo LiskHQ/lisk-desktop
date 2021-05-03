@@ -7,10 +7,10 @@ import BoxContent from '@toolbox/box/content';
 import BoxTabs from '@toolbox/tabs';
 import { ROUND_LENGTH } from '@constants';
 import styles from './delegates.css';
-import Overview from './overview';
+import DelegatesOverview from './overview/delegatesOverview';
+import ForgingDetails from './overview/forgingDetails';
 import LatestVotes from './latestVotes';
 import DelegatesTable from './delegatesTable';
-import ForgingDetails from './forgingDetails';
 
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
@@ -98,7 +98,7 @@ const DelegatesMonitor = ({
 
   return (
     <div>
-      <Overview
+      <DelegatesOverview
         delegatesCount={delegatesCount}
         transactionsCount={transactionsCount}
         registrations={registrations}
