@@ -82,13 +82,14 @@ const AddBookmark = ({
   const timeout = useRef(null);
 
   useEffect(() => {
-    const { formAddress, username } = parseSearchParams(history.location.search);
+    const { formAddress, label, isDelegate } = parseSearchParams(history.location.search);
     const bookmark = bookmarks[active].find(item => item.address === formAddress);
     const addressFeedback = validateBookmarkAddress(
       active, formAddress, network, bookmarks, t, false,
     );
-    const usernameValue = bookmark?.title || username || '';
+    const usernameValue = bookmark?.title || label || '';
     const usernameFeedback = validateLabel(usernameValue, t);
+
     setFields([
       {
         value: formAddress || '',
@@ -98,7 +99,7 @@ const AddBookmark = ({
       {
         value: usernameValue,
         feedback: usernameFeedback,
-        readonly: username || usernameFeedback !== '',
+        readonly: isDelegate === true || usernameFeedback !== '',
       },
     ]);
   }, []);
