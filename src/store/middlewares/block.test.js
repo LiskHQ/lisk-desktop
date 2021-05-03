@@ -1,8 +1,8 @@
 import { olderBlocksRetrieved } from '@actions';
 import { actionTypes } from '@constants';
-import middleware from './block';
 import { blockSubscribe, blockUnsubscribe } from '@api/block';
 import { forgersSubscribe, forgersUnsubscribe } from '@api/delegate';
+import middleware from './block';
 
 jest.mock('@api/block');
 jest.mock('@api/delegate');

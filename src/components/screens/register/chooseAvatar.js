@@ -59,7 +59,7 @@ class ChooseAvatar extends React.Component {
     const { deselect } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
           <h1 className={styles.title}>
             {t('Choose your avatar')}
@@ -109,7 +109,7 @@ class ChooseAvatar extends React.Component {
             </PrimaryButton>
           </span>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

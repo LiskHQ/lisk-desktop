@@ -61,8 +61,7 @@ const Status = ({
           >
             {template.button.title}
           </PrimaryButton>
-        )
-        }
+        )}
       </TransactionResult>
     </div>
   );

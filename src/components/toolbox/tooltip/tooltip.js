@@ -20,7 +20,6 @@ class Tooltip extends React.Component {
     this.setWrapperRef = this.setWrapperRef.bind(this);
   }
 
-
   setWrapperRef(node) {
     this.wrapperRef = node;
   }
@@ -87,8 +86,7 @@ class Tooltip extends React.Component {
               className={`${styles.infoIcon} ${infoIcon}`}
               onClick={this.handleClick}
             />
-          )
-         }
+          )}
         <div className={[
           styles.tooltip,
           positionStyles,
@@ -130,7 +128,7 @@ Tooltip.propTypes = {
 
 Tooltip.defaultProps = {
   title: '',
-  children: <React.Fragment />,
+  children: <></>,
   className: '',
   size: 'l',
 };

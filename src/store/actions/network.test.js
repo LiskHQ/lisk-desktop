@@ -1,6 +1,6 @@
 import { actionTypes } from '@constants';
-import { networkSelected, networkConfigSet, networkStatusUpdated } from './network';
 import { getNetworkConfig } from '@api/network';
+import { networkSelected, networkConfigSet, networkStatusUpdated } from './network';
 
 jest.mock('@api/network', () => ({ getNetworkConfig: jest.fn() }));
 

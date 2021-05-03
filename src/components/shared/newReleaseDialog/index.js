@@ -1,4 +1,3 @@
-
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import NewReleaseDialog from './newReleaseDialog';

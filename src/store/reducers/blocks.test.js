@@ -2,7 +2,6 @@ import { actionTypes } from '@constants';
 import blocksReducer from './blocks';
 import { genesis } from '../../../test/constants/accounts';
 
-
 describe('Reducer: blocks(state, action)', () => {
   const blocks = [{
     id: 19812401289461240,

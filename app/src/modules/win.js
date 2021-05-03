@@ -121,5 +121,4 @@ const sendEventsFromEventStack = () => {
   win.eventStack.length = 0;
 };
 
-
 export default win;

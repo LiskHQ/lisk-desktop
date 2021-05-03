@@ -18,7 +18,7 @@ const getId = child => `/toolbox/${getName(child)}`;
 const WithTableOfContents = ({
   children,
 }) => (
-  <React.Fragment>
+  <>
     {children.map(child => (
       <div id={getId(child)} key={getName(child)} className={styles.section}>
         {child}
@@ -31,7 +31,7 @@ const WithTableOfContents = ({
         </a>
       ))}
     </div>
-  </React.Fragment>
+  </>
 );
 
 const ToolboxDemo = () => (

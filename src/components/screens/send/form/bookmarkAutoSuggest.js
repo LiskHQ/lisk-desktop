@@ -89,11 +89,11 @@ class BookmarkAutoSuggest extends React.Component {
           />
         )}
         renderItem={bookmark => (
-          <React.Fragment>
+          <>
             <AccountVisual address={bookmark.address} size={25} />
             <span>{bookmark.title}</span>
             <span>{bookmark.address}</span>
-          </React.Fragment>
+          </>
         )}
         matchProps={['address', 'title']}
       />

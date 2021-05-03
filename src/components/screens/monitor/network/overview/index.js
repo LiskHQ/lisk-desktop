@@ -104,7 +104,8 @@ const HeightDistributionChart = ({ t, heightDistribution }) => {
                                 label={label}
                                 color={colorPalette[i]}
                               />
-                            ))}
+                            ))
+}
                       </GuideTooltip>
                     </div>
                   </div>
@@ -266,7 +267,8 @@ const Overview = ({
                               label={label}
                               color={colorPalette[i]}
                             />
-                          ))}
+                          ))
+}
                     </GuideTooltip>
                   </div>
                 </div>

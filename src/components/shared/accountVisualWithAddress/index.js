@@ -38,7 +38,7 @@ class AccountVisualWithAddress extends React.Component {
     return (
       <div className={`${styles.address}`}>
         {moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer && transactionSubject === 'recipient' ? (
-          <React.Fragment>
+          <>
             <Icon
               className={styles.txIcon}
               name={MODULE_ASSETS_MAP[moduleAssetId].icon || 'txDefault'}
@@ -46,14 +46,14 @@ class AccountVisualWithAddress extends React.Component {
             <span className={styles.addressValue}>
               {title}
             </span>
-          </React.Fragment>
+          </>
         ) : (
-          <React.Fragment>
+          <>
             <AccountVisual address={address} size={size} />
             <span className={`${styles.addressValue}`}>
               {truncate ? truncatedAddress : transformedAddress}
             </span>
-          </React.Fragment>
+          </>
         )}
       </div>
     );

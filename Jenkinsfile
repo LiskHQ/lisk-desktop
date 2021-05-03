@@ -16,7 +16,7 @@ pipeline {
 		stage('Install npm dependencies') {
 			steps {
 				nvm(getNodejsVersion()) {
-					sh 'npm install --registry https://npm.lisk.io --no-optional'
+					sh 'npm ci'
 				}
 			}
 		}
@@ -26,7 +26,7 @@ pipeline {
 					"ESLint": {
 						ansiColor('xterm') {
 							nvm(getNodejsVersion()) {
-								sh 'npm run --silent eslint'
+								sh 'npm run --silent lint'
 							}
 						}
 					},
@@ -37,9 +37,8 @@ pipeline {
 								cp -R /home/lisk/fonts/basier-circle src/assets/fonts
 								cp -R /home/lisk/fonts/gilroy src/assets/fonts
 								npm run --silent build
-								npm run --silent build:testnet
 
-								npm run install-electron-dependencies
+								npm run install:electron:dependencies
 								USE_SYSTEM_XORRISO=true npm run dist:linux
 								'''
 							}

@@ -4,7 +4,7 @@ import DemoRenderer from '../demoRenderer';
 import HardwareWalletIllustration from '.';
 
 const HardwareWalletIllustrationDemo = () => (
-  <React.Fragment>
+  <>
     <h2>HardwareWalletIllustration</h2>
     { Object.keys(loginTypes).map(type => (
       <DemoRenderer key={type}>
@@ -14,7 +14,7 @@ const HardwareWalletIllustrationDemo = () => (
         />
       </DemoRenderer>
     )) }
-  </React.Fragment>
+  </>
 );
 
 export default HardwareWalletIllustrationDemo;

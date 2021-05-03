@@ -54,7 +54,6 @@ describe('Form', () => {
       BTC: [],
     };
 
-
     props = {
       token: tokenMap.LSK.key,
       t: v => v,

@@ -27,7 +27,7 @@ const TransactionResult = ({
       {
       !success
         ? (
-          <React.Fragment>
+          <>
             <p>{t('Does the problem still persist?')}</p>
             <a
               className="report-error-link"
@@ -39,7 +39,7 @@ const TransactionResult = ({
                 {t('Report the error via E-Mail')}
               </TertiaryButton>
             </a>
-          </React.Fragment>
+          </>
         )
         : null
     }

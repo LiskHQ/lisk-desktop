@@ -29,7 +29,7 @@ const Dashboard = ({ account, t }) => {
   const isLoggedIn = !!(account?.summary?.address);
 
   return (
-    <React.Fragment>
+    <>
       <div className={`${styles.wrapper} dashboard-container`}>
         <Onboarding
           slides={getOnboardingSlides(t)}
@@ -52,7 +52,7 @@ const Dashboard = ({ account, t }) => {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import OfflineWrapper from './offlineWrapper';
 import styles from './offlineWrapper.css';
 
-
 describe('OfflineWrapper', () => {
   it('renders props.children inside a span with "offline" class if props.offline', () => {
     const wrapper = shallow(<OfflineWrapper offline>

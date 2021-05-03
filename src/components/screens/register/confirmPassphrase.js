@@ -8,7 +8,7 @@ import styles from './confirmPassphrase.css';
 const ConfirmPassphrase = ({
   t, passphrase, onConfirmPassphrase, prevStep, nextStep,
 }) => (
-  <React.Fragment>
+  <>
     <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
       <h1>
         {t('Confirm your passphrase')}
@@ -28,7 +28,7 @@ const ConfirmPassphrase = ({
         isConfirmation
       />
     </div>
-  </React.Fragment>
+  </>
 );
 
 export default withTranslation()(ConfirmPassphrase);

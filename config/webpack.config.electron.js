@@ -5,7 +5,7 @@ const baseConfig = require('./webpack.config');
 const config = {
   mode: 'production',
   entry: {
-    main: ['babel-polyfill', `${resolve(__dirname, '../app/src')}/main.js`],
+    main: `${resolve(__dirname, '../app/src')}/main.js`,
   },
   output: {
     path: resolve(__dirname, '../app/build'),
@@ -14,6 +14,7 @@ const config = {
   target: 'electron-main',
   node: {
     __dirname: false,
+    __filename: false,
   },
   module: {
     rules: [

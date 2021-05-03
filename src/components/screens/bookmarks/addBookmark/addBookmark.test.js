@@ -57,7 +57,6 @@ describe('Add a new bookmark component', () => {
     wrapper = mount(<AddBookmark {...props} />);
   });
 
-
   afterEach(() => {
     props.history.push.mockClear();
     props.bookmarkAdded.mockClear();

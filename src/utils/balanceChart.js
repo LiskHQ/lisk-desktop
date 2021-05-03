@@ -128,7 +128,6 @@ export const getChartDateFormat = (transactions) => {
   return formats.year;
 };
 
-
 const isIncomming = (tx, address) => tx.asset.recipient?.address === address;
 const isOutgoing = (tx, address) => tx.sender.address === address;
 

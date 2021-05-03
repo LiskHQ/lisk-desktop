@@ -76,6 +76,7 @@ const AddVote = ({
               title={t('Vote amount (LSK)')}
               inputPlaceHolder={t('Insert the vote amount')}
               name="vote"
+              displayConverter
             />
           </label>
         </BoxContent>

@@ -11,6 +11,7 @@ import styles from './amountField.css';
 const AmountField = ({
   amount, maxAmount, setAmountField, className,
   title, maxAmountTitle, inputPlaceHolder, name,
+  displayConverter,
 }) => {
   const setEntireBalance = () => {
     const value = formatAmountBasedOnLocale({
@@ -59,11 +60,13 @@ const AmountField = ({
           status={amount.error ? 'error' : 'ok'}
           feedback={amount.feedback}
         />
-        <Converter
-          className={styles.converter}
-          value={amount.value}
-          error={amount.error}
-        />
+        {displayConverter && (
+          <Converter
+            className={styles.converter}
+            value={amount.value}
+            error={amount.error}
+          />
+        )}
       </span>
     </label>
   );

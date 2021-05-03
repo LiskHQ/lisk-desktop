@@ -36,7 +36,7 @@ const HardwareWalletLogin = ({
   };
 
   return (
-    <React.Fragment>
+    <>
       <div className={`${styles.wrapper} ${grid.row}`}>
         <MultiStep
           className={`${grid['col-xs-10']}`}
@@ -54,7 +54,7 @@ const HardwareWalletLogin = ({
           />
         </MultiStep>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

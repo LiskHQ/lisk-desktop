@@ -116,8 +116,7 @@ const DelegatesMonitor = ({
         <BoxHeader className="delegates-table">
           {tabs.tabs.length === 1
             ? <h2>{tabs.tabs[0].name}</h2>
-            : <BoxTabs {...tabs} />
-          }
+            : <BoxTabs {...tabs} />}
           <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
               onChange={handleFilter}

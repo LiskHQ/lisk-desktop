@@ -42,7 +42,10 @@
     }
   },
   "rules": {
-    "import/no-cycle": "error",
+    "arrow-parens": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "import/no-cycle": "off",
     "import/named": "off",
     "jsx-a11y/alt-text": "off",
     "jsx-a11y/anchor-is-valid": "off",

@@ -38,14 +38,17 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-  if (!networkIsSet || modals[modalName].forbiddenTokens.includes(settings.token.active)) {
+  if (modals[modalName].forbiddenTokens.includes(settings.token.active)) {
+    return null;
+  }
+
+  if (!networkIsSet && modals[modalName].isPrivate) {
     return null;
   }
 
   if (modals[modalName].isPrivate && !isAuthenticated) {
     return null;
   }
-
 
   const onBackDropClick = (e) => {
     if (e.target === backdropRef.current) {

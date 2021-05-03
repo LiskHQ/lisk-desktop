@@ -33,10 +33,10 @@ const LiskAmount = ({
   if (showInt) value = getInt(value);
   else if (showRounded) value = trim(value);
   return (
-    <React.Fragment>
+    <>
       <FormattedNumber val={value} />
       {token && ` ${token}`}
-    </React.Fragment>
+    </>
   );
 };
 

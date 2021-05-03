@@ -20,7 +20,6 @@ describe('Search Params', () => {
     });
   });
 
-
   describe('stringifySearchParams', () => {
     it('strigifies the search params correctly', () => {
       expect(stringifySearchParams(parseSearchParams(''))).toEqual('');

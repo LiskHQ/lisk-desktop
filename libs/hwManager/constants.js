@@ -1,4 +1,3 @@
-
 export const ADD_DEVICE = 'add';
 export const REMOVE_DEVICE = 'remove';
 export const RESPONSE = 'result';
