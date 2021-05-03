@@ -24,10 +24,9 @@ const getForgingStats = (data, forgedInRound) => {
     awaitingSlot: 0,
     missedBlock: 0,
   };
-  Object.values(data)
-    .forEach((item) => {
-      statuses[item.status]++;
-    });
+  data.forEach((item) => {
+    statuses[item.status]++;
+  });
   return Object.values(statuses);
 };
 
@@ -59,9 +58,8 @@ const getPassedMinutes = (lastBlock = {}, firstRoundBlock = {}) => {
 };
 
 const ForgingDetails = ({
-  t, chartDelegatesForging, awaitingForgers,
+  t, forgers,
 }) => {
-  const now = Math.floor((new Date()).getTime() / 1000);
   const delegatesForgedLabels = [
     t('Forging'),
     t('Awaiting slot'),
@@ -76,7 +74,7 @@ const ForgingDetails = ({
     datasets: [
       {
         label: 'status',
-        data: getForgingStats(chartDelegatesForging, forgedInRound),
+        data: getForgingStats(forgers, forgedInRound),
       },
     ],
   };
@@ -92,9 +90,7 @@ const ForgingDetails = ({
     },
   };
 
-  const forgersListToShow = awaitingForgers
-    .filter(item => item.nextForgingTime >= now)
-    .slice(0, FORGERS_TO_SHOW);
+  const forgersListToShow = forgers.slice(0, FORGERS_TO_SHOW);
 
   return (
     <Box className={styles.wrapper}>
@@ -104,7 +100,7 @@ const ForgingDetails = ({
       <BoxContent className={styles.content}>
         <div className={styles.column}>
           {
-            Object.keys(chartDelegatesForging).length
+            forgers.length
               ? (
                 <div className={styles.chartBox}>
                   <h2 className={styles.title}>{t('Delegates Forging Status')}</h2>
