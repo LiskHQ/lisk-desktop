@@ -13,7 +13,6 @@ import LatestVotes from './latestVotes';
 import DelegatesTable from './delegatesTable';
 import ForgingDetails from './forgingDetails';
 
-// eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
   votedDelegates,
   sanctionedDelegates,
@@ -25,25 +24,13 @@ const DelegatesMonitor = ({
   standByDelegates,
   networkStatus,
   applyFilters,
-  delegates,
   filters,
   votes,
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
-  const { forgingTimes, total } = useSelector(state => state.blocks);
-  const delegatesWithForgingTimes = {
-    ...delegates,
-    data: delegates.data.map(
-      data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
-    ),
-  };
-  const watchedDelegatesWithForgingTimes = {
-    ...watchedDelegates,
-    data: watchedDelegates.data.map(
-      data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
-    ),
-  };
+  const { total, forgers } = useSelector(state => state.blocks);
+  const delegatesWithForgingTimes = { data: forgers };
 
   useEffect(() => {
     const addressList = votes.data && votes.data.reduce((acc, data) => {
@@ -119,10 +106,9 @@ const DelegatesMonitor = ({
       />
       <ForgingDetails
         t={t}
-        chartDelegatesForging={forgingTimes}
-        awaitingForgers={delegates.data}
+        forgers={forgers}
       />
-      <Box main isLoading={delegates.isLoading || standByDelegates.isLoading || votes.isLoading}>
+      <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className="delegates-table">
           {tabs.tabs.length === 1
             ? <h2>{tabs.tabs[0].name}</h2>
@@ -147,7 +133,7 @@ const DelegatesMonitor = ({
                   setActiveTab={setActiveTab}
                   delegates={delegatesWithForgingTimes}
                   watchList={watchList}
-                  watchedDelegates={watchedDelegatesWithForgingTimes}
+                  watchedDelegates={watchedDelegates}
                   standByDelegates={standByDelegates}
                   sanctionedDelegates={sanctionedDelegates}
                   filters={filters}
