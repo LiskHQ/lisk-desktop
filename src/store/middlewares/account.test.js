@@ -282,16 +282,6 @@ describe('Account middleware', () => {
   });
 
   describe('on accountUpdated', () => {
-    it('should do nothing if uninitialsed account logs in with insufficient balance', () => {
-      const action = {
-        type: actionTypes.accountLoggedIn,
-        data: { info: { LSK: { serverPublicKey: '', balance: '0' } } },
-      };
-      middleware(store)(next)(action);
-      expect(history.push).not.toHaveBeenCalledWith('/wallet?modal=send&initialization=true');
-      expect(history.push).not.toHaveBeenCalledWith('initialization');
-    });
-
     it('should not redirect to the reclaim screen if the account is migrated', () => {
       const action = {
         type: actionTypes.accountLoggedIn,
