@@ -1,6 +1,6 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
-import { getTxAmount, transformTransaction } from './transaction';
+import { getTxAmount, transformTransaction, containsTransactionType } from './transaction';
 import accounts from '../../test/constants/accounts';
 
 describe('API: LSK Transactions', () => {
