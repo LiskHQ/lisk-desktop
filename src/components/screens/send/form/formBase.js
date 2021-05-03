@@ -47,6 +47,7 @@ const FormBase = ({
           maxAmountTitle={t('Send entire balance')}
           inputPlaceHolder={t('Insert the amount of transaction')}
           name="amount"
+          displayConverter
         />
         { children }
       </BoxContent>

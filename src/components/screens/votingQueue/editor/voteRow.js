@@ -90,6 +90,7 @@ const VoteRow = ({
               inputPlaceHolder={t('Vote amount')}
               name="vote"
               className={styles.editAmountInput}
+              displayConverter={false}
             />
             <div className={styles.formButtonsContainer}>
               <SecondaryButton
