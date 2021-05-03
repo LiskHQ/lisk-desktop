@@ -95,23 +95,17 @@ export const RoundStatus = ({
 }) => (
   <span className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
     <Tooltip
-      title={data.forgingTime
-        ? t(roundStatus[data.forgingTime.status])
-        : t(roundStatus.missedBlock)}
+      title={t(roundStatus[data.status])}
       position="left"
       size="maxContent"
       content={(
         <Icon
           className={styles.statusIcon}
-          name={
-            data.forgingTime
-              ? icons[data.forgingTime.status]
-              : icons.notForging
-          }
+          name={icons[data.status]}
         />
       )}
       footer={(
-        <p>{time}</p>
+        <p>{data.status === 'missedBlock' ? '-' : time}</p>
       )}
     >
       <p className={styles.statusToolip}>
@@ -144,8 +138,8 @@ export const DelegateStatus = ({ activeTab, data }) => {
   );
 };
 
-export const ForgingTime = ({ activeTab, time }) => (
+export const ForgingTime = ({ activeTab, time, status }) => (
   <span className={getForgingTimeClass(activeTab)}>
-    {time}
+    {status === 'missedBlock' ? '-' : time}
   </span>
 );
