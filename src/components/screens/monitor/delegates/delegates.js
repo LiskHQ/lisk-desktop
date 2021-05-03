@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { withTranslation } from 'react-i18next';
 
 import { Input } from '@toolbox/inputs';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import BoxTabs from '@toolbox/tabs';
+import { ROUND_LENGTH } from '@constants';
 import styles from './delegates.css';
 import Overview from './overview';
 import LatestVotes from './latestVotes';
 import DelegatesTable from './delegatesTable';
 import ForgingDetails from './forgingDetails';
 
+// eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
   votedDelegates,
   sanctionedDelegates,
@@ -25,12 +25,14 @@ const DelegatesMonitor = ({
   networkStatus,
   applyFilters,
   filters,
+  blocks,
   votes,
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
-  const { total, forgers } = useSelector(state => state.blocks);
+  const { total, forgers, latestBlocks } = blocks;
   const delegatesWithForgingTimes = { data: forgers };
+  const forgedInRound = latestBlocks.length ? latestBlocks[0].height % ROUND_LENGTH : 0;
 
   useEffect(() => {
     const addressList = votes.data && votes.data.reduce((acc, data) => {
@@ -107,6 +109,8 @@ const DelegatesMonitor = ({
       <ForgingDetails
         t={t}
         forgers={forgers}
+        forgedInRound={forgedInRound}
+        startTime={latestBlocks[0]?.timestamp}
       />
       <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className="delegates-table">
@@ -148,4 +152,4 @@ const DelegatesMonitor = ({
   );
 };
 
-export default withTranslation()(DelegatesMonitor);
+export default DelegatesMonitor;

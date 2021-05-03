@@ -45,6 +45,7 @@ const stripAccountDataAndMerge = (response, oldData = []) => {
 
 const mapStateToProps = state => ({
   watchList: state.watchList,
+  blocks: state.blocks,
 });
 
 const ComposedDelegates = compose(
