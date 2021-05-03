@@ -1,4 +1,4 @@
-import { actionTypes } from '@constants';
+import { actionTypes, ROUND_LENGTH } from '@constants';
 
 const initialState = {
   latestBlocks: [],
@@ -14,7 +14,7 @@ const blocks = (state = initialState, action) => {
         latestBlocks: [
           action.data.block,
           ...state.latestBlocks,
-        ].slice(0, 103 * 2),
+        ].slice(0, ROUND_LENGTH * 2),
       };
     case actionTypes.olderBlocksRetrieved:
       return {
@@ -25,8 +25,6 @@ const blocks = (state = initialState, action) => {
         total: action.data.total,
       };
     case actionTypes.forgersRetrieved:
-    case actionTypes.forgersUpdated:
-    case actionTypes.forgingStatusUpdated:
       return {
         ...state,
         forgers: action.data,

@@ -60,9 +60,12 @@ export const forgersRetrieved = () => async (dispatch, getState) => {
     params: { limit: ROUND_LENGTH },
   });
   let forgers = [];
+
+  // Get the list of usernames that already forged in this round
   const haveForgedInRound = latestBlocks
     .filter((b, i) => forgedBlocksInRound >= i)
     .map(b => b.generatorUsername);
+
   // check previous blocks and define missed blocks
   if (data) {
     forgers = data.map((forger, index) => {
@@ -75,52 +78,9 @@ export const forgersRetrieved = () => async (dispatch, getState) => {
       return { ...forger, status: 'missedBlock' };
     });
   }
+
   dispatch({
     type: actionTypes.forgersRetrieved,
     data: forgers,
-  });
-};
-
-/**
- * Fire this action when a new round starts.
- * It assigns awaitingSlot to all forgers.
- *
- * @param {Array} forgers - List of forgers of the new round
- * @returns {Object} - Action object with type forgersUpdated
- * @todo Check if the list needs modifications
- */
-export const forgersUpdated = forgers => ({
-  type: actionTypes.forgersUpdated,
-  data: forgers.map(forger => ({ ...forger, status: 'awaitingSlot' })),
-});
-
-/**
- * Fire this action once a new block is forged.
- * It looks for the delegate who forged the block and
- * marks them as forging. Every delegate who are listed
- * before the actual forger and didn't forge in their turn
- * will be marked as missedBlock.
- *
- * @param {Object} block - Block object containing generatorUsername
- */
-export const forgingStatusUpdated = block => async (dispatch, getState) => {
-  const { blocks: { forgers, latestBlocks } } = getState();
-  const forgedBlocksInRound = latestBlocks[0].height % ROUND_LENGTH;
-  let found = false;
-  const data = forgers.map((forger, index) => {
-    if (index >= forgedBlocksInRound && !found) {
-      if (forger.username === block.generatorUsername) {
-        found = true;
-        return { ...forger, status: 'forging' };
-      }
-      return { ...forger, status: 'missedBlock' };
-    }
-    return forger;
-  });
-
-
-  dispatch({
-    type: actionTypes.forgingStatusUpdated,
-    data,
   });
 };

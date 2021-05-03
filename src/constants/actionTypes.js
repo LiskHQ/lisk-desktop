@@ -69,8 +69,6 @@ const actionTypes = {
   broadcastedTransactionSuccess: 'BROADCAST_TRANSACTION_SUCCESS',
   broadcastedTransactionError: 'BROADCASTED_TRANSACTION_ERROR',
   forgersRetrieved: 'FORGERS_RETRIEVED',
-  forgersUpdated: 'FORGERS_UPDATED',
-  forgingStatusUpdated: 'FORGING_STATUS_UPDATED',
   appUpdateAvailable: 'APP_UPDATE_AVAILABLE',
   transactionsRetrieved: 'TRANSACTION_RETRIEVED',
 };
