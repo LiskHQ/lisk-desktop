@@ -110,7 +110,7 @@ const DelegatesMonitor = ({
         t={t}
         forgers={forgers}
         forgedInRound={forgedInRound}
-        startTime={latestBlocks[0]?.timestamp}
+        startTime={latestBlocks[forgedInRound]?.timestamp}
       />
       <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className="delegates-table">
