@@ -100,7 +100,10 @@
   @mixin headingNormal normal;
 
   color: var(--color-ink-blue);
-  cursor: pointer;
+
+  &.pointer {
+    cursor: pointer;
+  }
 
   & > img {
     width: 17px;
