@@ -1,14 +1,15 @@
 import configureStore from 'redux-mock-store';
+import accounts from '../constants/accounts';
 import delegates from '../constants/delegates';
 
-const forgingTimes = delegates.reduce((acc, item, index) => {
-  acc[item.account.publicKey] = {
-    time: index * 10,
-    tense: 'past',
-    status: 'forging',
-  };
-  return acc;
-}, {});
+const forgers = Object.values(accounts).slice(0, 9).map((account, index) => ({
+  username: `genesis_${index}`,
+  totalVotesReceived: '100000000000',
+  address: account.summary.address,
+  minActiveHeight: 1,
+  isConsensusParticipant: true,
+  nextForgingTime: 1620049927 + 10 * index,
+}));
 
 const fakeStore = configureStore();
 const defaultStore = {
@@ -47,7 +48,8 @@ const defaultStore = {
   },
   blocks: {
     latestBlocks: delegates,
-    forgingTimes,
+    forgers,
+    total: 10000,
   },
 };
 

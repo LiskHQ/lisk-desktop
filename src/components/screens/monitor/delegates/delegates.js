@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { withTranslation } from 'react-i18next';
 
 import { Input } from '@toolbox/inputs';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import BoxTabs from '@toolbox/tabs';
+import { ROUND_LENGTH } from '@constants';
 import styles from './delegates.css';
-import Overview from './overview';
+import DelegatesOverview from './overview/delegatesOverview';
+import ForgingDetails from './overview/forgingDetails';
 import LatestVotes from './latestVotes';
 import DelegatesTable from './delegatesTable';
-import ForgingDetails from './forgingDetails';
 
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
@@ -25,25 +24,15 @@ const DelegatesMonitor = ({
   standByDelegates,
   networkStatus,
   applyFilters,
-  delegates,
   filters,
+  blocks,
   votes,
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
-  const { forgingTimes, total } = useSelector(state => state.blocks);
-  const delegatesWithForgingTimes = {
-    ...delegates,
-    data: delegates.data.map(
-      data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
-    ),
-  };
-  const watchedDelegatesWithForgingTimes = {
-    ...watchedDelegates,
-    data: watchedDelegates.data.map(
-      data => ({ ...data, forgingTime: forgingTimes[data.publicKey] }),
-    ),
-  };
+  const { total, forgers, latestBlocks } = blocks;
+  const delegatesWithForgingTimes = { data: forgers };
+  const forgedInRound = latestBlocks.length ? latestBlocks[0].height % ROUND_LENGTH : 0;
 
   useEffect(() => {
     const addressList = votes.data && votes.data.reduce((acc, data) => {
@@ -109,7 +98,7 @@ const DelegatesMonitor = ({
 
   return (
     <div>
-      <Overview
+      <DelegatesOverview
         delegatesCount={delegatesCount}
         transactionsCount={transactionsCount}
         registrations={registrations}
@@ -119,9 +108,11 @@ const DelegatesMonitor = ({
       />
       <ForgingDetails
         t={t}
-        chartDelegatesForging={forgingTimes}
+        forgers={forgers}
+        forgedInRound={forgedInRound}
+        startTime={latestBlocks[forgedInRound]?.timestamp}
       />
-      <Box main isLoading={delegates.isLoading || standByDelegates.isLoading || votes.isLoading}>
+      <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className="delegates-table">
           {tabs.tabs.length === 1
             ? <h2>{tabs.tabs[0].name}</h2>
@@ -145,7 +136,7 @@ const DelegatesMonitor = ({
                   setActiveTab={setActiveTab}
                   delegates={delegatesWithForgingTimes}
                   watchList={watchList}
-                  watchedDelegates={watchedDelegatesWithForgingTimes}
+                  watchedDelegates={watchedDelegates}
                   standByDelegates={standByDelegates}
                   sanctionedDelegates={sanctionedDelegates}
                   filters={filters}
@@ -160,4 +151,4 @@ const DelegatesMonitor = ({
   );
 };
 
-export default withTranslation()(DelegatesMonitor);
+export default DelegatesMonitor;

@@ -227,7 +227,7 @@
     background-color: var(--color-yellow-transparent);
   }
 
-  &.non-eligible {
+  &.nonEligible {
     color: var(--color-blue-gray);
     background-color: var(--color-blue-manatee-transparent);
   }

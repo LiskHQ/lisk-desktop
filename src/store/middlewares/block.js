@@ -1,7 +1,11 @@
 import { blockSubscribe, blockUnsubscribe } from '@api/block';
-import { forgersSubscribe, forgersUnsubscribe, getForgers } from '@api/delegate';
+import { forgersSubscribe, forgersUnsubscribe } from '@api/delegate';
 import { tokenMap, actionTypes } from '@constants';
-import { olderBlocksRetrieved, forgingTimesRetrieved, networkStatusUpdated } from '@actions';
+import {
+  olderBlocksRetrieved,
+  forgersRetrieved,
+  networkStatusUpdated,
+} from '@actions';
 
 const oneMinute = 1000 * 60;
 
@@ -19,28 +23,23 @@ const blockListener = ({ getState, dispatch }) => {
 
   // eslint-disable-next-line max-statements
   const callback = (block) => {
-    const { settings, network, blocks } = getState();
+    const { settings, network } = getState();
     const activeToken = settings.token && state.settings.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;
     const now = new Date();
 
-    if ((activeToken !== tokenMap.BTC.key) || now - lastBtcUpdate > oneMinute) {
+    if (activeToken === tokenMap.LSK.key) {
       dispatch({
         type: actionTypes.newBlockCreated,
         data: { block },
       });
-      if (activeToken === tokenMap.BTC.key) {
-        dispatch({
-          type: actionTypes.lastBtcUpdateSet,
-          data: now,
-        });
-      }
+      dispatch(forgersRetrieved());
     }
-
-    if (Object.keys(blocks.forgingTimes).length === 0 || blocks.awaitingForgers.length === 0) {
-      dispatch(forgingTimesRetrieved());
-    } else {
-      dispatch(forgingTimesRetrieved(blocks.awaitingForgers));
+    if (activeToken === tokenMap.BTC.key && (now - lastBtcUpdate > oneMinute)) {
+      dispatch({
+        type: actionTypes.lastBtcUpdateSet,
+        data: now,
+      });
     }
   };
 
@@ -56,19 +55,7 @@ const forgingListener = ({ getState, dispatch }) => {
   const state = getState();
   forgersUnsubscribe();
 
-  const callback = async () => {
-    if (getState().blocks.latestBlocks.length) {
-      try {
-        const delegates = await getForgers({
-          params: { limit: 103 },
-          network: state.network,
-        });
-        dispatch(forgingTimesRetrieved(delegates.data));
-      } catch (e) {
-        dispatch(forgingTimesRetrieved());
-      }
-    }
-  };
+  const callback = () => dispatch(forgersRetrieved());
 
   forgersSubscribe(
     state.network,
@@ -86,6 +73,9 @@ const blockMiddleware = store => (
         store.dispatch(olderBlocksRetrieved());
         blockListener(store);
         forgingListener(store);
+        break;
+      case actionTypes.olderBlocksRetrieved:
+        store.dispatch(forgersRetrieved());
         break;
 
       default:

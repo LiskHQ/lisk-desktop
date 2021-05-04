@@ -1,4 +1,4 @@
-import { actionTypes, MAX_BLOCKS_FORGED } from '@constants';
+import { actionTypes, ROUND_LENGTH } from '@constants';
 import { convertUnixSecondsToLiskEpochSeconds } from '@utils/datetime';
 import { getBlocks } from '@api/block';
 import { getForgers } from '@api/delegate';
@@ -24,7 +24,6 @@ const loadLastBlocks = async (params, network) => {
   };
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export const olderBlocksRetrieved = () => async (dispatch, getState) => {
   const blocksFetchLimit = 100;
   const { network } = getState();
@@ -46,63 +45,42 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
   });
 };
 
-const retrieveNextForgers = async (network) => {
+/**
+ * Fire this action after network is set.
+ * It retrieves the list of forgers in the current
+ * round and determines their status as forging, missedBlock
+ * and awaitingSlot.
+ */
+export const forgersRetrieved = () => async (dispatch, getState) => {
+  const { network, blocks: { latestBlocks } } = getState();
+  const forgedBlocksInRound = latestBlocks[0].height % ROUND_LENGTH;
+  const remainingBlocksInRound = ROUND_LENGTH - forgedBlocksInRound;
   const { data } = await getForgers({
     network,
-    params: { limit: MAX_BLOCKS_FORGED },
+    params: { limit: ROUND_LENGTH },
   });
+  let forgers = [];
 
+  // Get the list of usernames that already forged in this round
+  const haveForgedInRound = latestBlocks
+    .filter((b, i) => forgedBlocksInRound >= i)
+    .map(b => b.generatorUsername);
+
+  // check previous blocks and define missed blocks
   if (data) {
-    return data;
+    forgers = data.map((forger, index) => {
+      if (haveForgedInRound.indexOf(forger.username) > -1) {
+        return { ...forger, status: 'forging' };
+      }
+      if (index < remainingBlocksInRound) {
+        return { ...forger, status: 'awaitingSlot' };
+      }
+      return { ...forger, status: 'missedBlock' };
+    });
   }
 
-  return [];
-};
-
-// eslint-disable-next-line max-statements
-export const forgingTimesRetrieved = nextForgers => async (dispatch, getState) => {
-  const { network } = getState();
-  const { latestBlocks } = getState().blocks;
-  const forgedInRoundNum = latestBlocks[0].height % MAX_BLOCKS_FORGED;
-  const awaitingForgers = nextForgers ?? await retrieveNextForgers(network);
-  const forgingTimes = {};
-  const latestBlockTimestamp = latestBlocks[0].timestamp;
-
-  // First we iterate the latest blocks and set the forging time
-  latestBlocks
-    .slice(0, forgedInRoundNum)
-    .forEach((item) => {
-      if (!forgingTimes[item.generatorPublicKey]) {
-        forgingTimes[item.generatorPublicKey] = {
-          time: -(latestBlockTimestamp - item.timestamp),
-          status: 'forging',
-        };
-      }
-    });
-
-  // Now we set awaitingForgers as awaitingSlot if they are upfront
-  // of the current number and to missed block in case that they did
-  // not forge
-  awaitingForgers
-    .forEach((item, index) => {
-      if (index >= forgedInRoundNum) {
-        forgingTimes[item.publicKey] = {
-          time: item.nextForgingTime - latestBlockTimestamp,
-          status: 'awaitingSlot',
-        };
-      } else if (!forgingTimes[item.publicKey]) {
-        forgingTimes[item.publicKey] = {
-          time: undefined,
-          status: 'missedBlock',
-        };
-      }
-    });
-
   dispatch({
-    type: actionTypes.forgingTimesRetrieved,
-    data: {
-      forgingTimes,
-      awaitingForgers,
-    },
+    type: actionTypes.forgersRetrieved,
+    data: forgers,
   });
 };

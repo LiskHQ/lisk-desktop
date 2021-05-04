@@ -68,7 +68,7 @@ const actionTypes = {
   resetTransactionResult: 'RESET_TRANSACTION_RESULTS',
   broadcastedTransactionSuccess: 'BROADCAST_TRANSACTION_SUCCESS',
   broadcastedTransactionError: 'BROADCASTED_TRANSACTION_ERROR',
-  forgingTimesRetrieved: 'FORGING_TIME_RETRIEVED',
+  forgersRetrieved: 'FORGERS_RETRIEVED',
   appUpdateAvailable: 'APP_UPDATE_AVAILABLE',
   transactionsRetrieved: 'TRANSACTION_RETRIEVED',
 };
