@@ -1,16 +1,16 @@
 import React from 'react';
-import Lisk from '@liskhq/lisk-client';
+import { transactions } from '@liskhq/lisk-client';
+import { extractAddressFromPublicKey } from '@utils/account';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import MultiSignatureReview from '../../../shared/multiSignatureReview';
-import { extractAddress } from '../../../../utils/account';
 import ProgressBar from '../progressBar';
 import styles from '../styles.css';
 
 const convertKeyToMemberData = accountRole => publicKey => ({
-  accountId: extractAddress(publicKey),
+  accountId: extractAddressFromPublicKey(publicKey),
   publicKey,
   accountRole,
 });
@@ -31,7 +31,7 @@ const ReviewSign = ({
 
   const submitTransaction = () => {
     try {
-      const signedTx = Lisk.transactions.signMultiSignatureTransaction({
+      const signedTx = transactions.signMultiSignatureTransaction({
         transaction,
         passphrase: host.passphrase,
         networkIdentifier,
