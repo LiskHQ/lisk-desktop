@@ -46,6 +46,8 @@
       font-family: var(--heading-font);
       color: var(--color-strong-mystic);
       display: inline-block;
+      cursor: pointer;
+      user-select: none;
     }
 
     & .primary {
