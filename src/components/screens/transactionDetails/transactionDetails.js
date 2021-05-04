@@ -15,7 +15,7 @@ export const Context = React.createContext({
 });
 
 const TransactionDetails = ({
-  t, activeToken, netCode, delegates, history,
+  t, activeToken, network, history,
   transaction: { error, isLoading, data },
 }) => {
   const isFirstRender = useRef(true);
@@ -47,7 +47,7 @@ const TransactionDetails = ({
         </BoxHeader>
         <BoxContent className={`${styles.mainContent} ${Layout.className}`}>
           <Context.Provider value={{
-            transaction: data, activeToken, netCode, delegates,
+            transaction: data, activeToken, network,
           }}
           >
             {Layout.components.map((Component, index) => <Component key={index} t={t} />)}
