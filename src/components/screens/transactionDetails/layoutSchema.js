@@ -8,7 +8,8 @@ import { Members } from './components/components';
 import styles from './transactionDetails.css';
 
 const {
-  transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup, reclaimLSK,
+  transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup,
+  // reclaimLSK,
 } = MODULE_ASSETS_NAME_ID_MAP;
 
 const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date, Nonce];

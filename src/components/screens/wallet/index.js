@@ -26,6 +26,7 @@ const Wallet = ({ t, history }) => {
   const { confirmed, pending } = useSelector(selectTransactions);
   const { isDelegate, address } = account.info[activeToken].summary;
 
+  const isMultiSignature = true;
   useEffect(() => {
     dispatch(transactionsRetrieved({ address }));
   }, [confirmed.length]);

@@ -1,9 +1,8 @@
 import React from 'react';
 
+import { tokenMap, regex } from '@constants';
 import LiskAmount from '../liskAmount';
 import AccountVisual from '../../toolbox/accountVisual';
-import { tokenMap } from '../../../constants/tokens';
-import regex from '../../../utils/regex';
 
 import styles from './styles.css';
 

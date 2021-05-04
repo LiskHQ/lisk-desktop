@@ -1,11 +1,10 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import DialogLink from '../../../toolbox/dialog/link';
-import AccountVisual from '../../../toolbox/accountVisual';
-import Icon from '../../../toolbox/icon';
+import { tokenMap, regex } from '@constants';
+import DialogLink from '@toolbox/dialog/link';
+import AccountVisual from '@toolbox/accountVisual';
+import Icon from '@toolbox/icon';
 import TransactionAmount from '../../../shared/transactionAmount';
-import { tokenMap } from '../../../../constants/tokens';
-import regex from '../../../../utils/regex';
 import styles from './multiSignature.css';
 
 const ActionButton = ({ status, t }) => (

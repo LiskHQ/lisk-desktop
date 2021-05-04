@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
+import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
-import TransactionPriority from '../../../shared/transactionPriority';
+
 import { tokenMap } from '../../../../constants/tokens';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
 import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
 import { Input } from '../../../toolbox/inputs';
 

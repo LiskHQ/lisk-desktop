@@ -75,9 +75,7 @@ import transactionApproved from '../../../assets/images/icons/transaction-status
 import transactionError from '../../../assets/images/icons/transaction-error.svg';
 import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
 import transactionSuccess from '../../../assets/images/icons/transaction-success.svg';
-import tx2ndPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
 import secondPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
-import registerMultisignatureGroup from '../../../assets/images/icons/multiSignature.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
 import registerDelegate from '../../../assets/images/icons/tx-delegate.svg';
 import vote from '../../../assets/images/icons/tx-vote.svg';
@@ -146,7 +144,7 @@ import votingQueueActive from '../../../assets/images/icons/voting-queue-active.
 import deleteIcon from '../../../assets/images/icons/delete.svg';
 import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.svg';
 import download from '../../../assets/images/icons/download.svg';
-import multiSignature from '../../../assets/images/icons/multisignature.svg';
+import registerMultisignatureGroup from '../../../assets/images/icons/multisignature.svg';
 import multiSignatureOutline from '../../../assets/images/icons/multisignature-outline.svg';
 import upload from '../../../assets/images/icons/upload.svg';
 import delegateForged from '../../../assets/images/icons/delegate-forged.svg';
@@ -166,6 +164,7 @@ export const icons = {
   academyActive,
   alertIcon,
   approved,
+  arrowRightTailed,
   arrowLeftActive,
   arrowLeftInactive,
   arrowRightActive,
@@ -260,7 +259,6 @@ export const icons = {
   verifyMessageActive,
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
-  multiSignature,
   multiSignatureOutline,
   registerMultisignatureGroup,
   missedBlocks,

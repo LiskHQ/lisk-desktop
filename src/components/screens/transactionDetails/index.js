@@ -7,8 +7,7 @@ import { getTransaction } from '@api/transaction';
 import { getDelegates } from '@api/delegate';
 import withData from '@utils/withData';
 import { parseSearchParams } from '@utils/searchParams';
-import TransactionDetails from './transactionDetails';
-
+import { withTranslation } from 'react-i18next';
 import TransactionDetails from './transactionDetails';
 
 const mapStateToProps = (state, ownProps) => ({

@@ -48,6 +48,7 @@ const Overview = ({
           publicKey={publicKey}
           host={host}
           account={account}
+          isMultisig={isMultisig}
         />
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>

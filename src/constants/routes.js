@@ -28,9 +28,9 @@ import NewReleaseDialog from '@shared/newReleaseDialog/newReleaseDialog';
 import SearchBar from '@shared/searchBar';
 import ReclaimBalance from '@screens/reclaimBalance';
 import ReclaimBalanceModal from '@screens/reclaimBalance/modal';
+import MultiSignature from '@screens/multiSignature';
+import SignMultiSigTransaction from '@screens/signMultiSignTransaction';
 import { tokenMap } from './tokens';
-import MultiSignature from '../components/screens/multiSignature';
-import SignMultiSigTransaction from '../components/screens/signMultiSignTransaction';
 
 export default {
   wallet: {

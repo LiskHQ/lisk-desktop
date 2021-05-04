@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 
+import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@utils/moduleAssets';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
 import { tokenMap } from '../../../../constants/tokens';
@@ -12,7 +13,6 @@ import AccountInfo from './accountInfo';
 import styles from './styles.css';
 import Tooltip from '../../../toolbox/tooltip/tooltip';
 import { Context } from '../transactionDetails';
-import transactionTypes from '../../../../constants/transactionTypes';
 import { extractAddress } from '../../../../utils/account';
 
 const getDelegateName = (transaction, activeToken) => (
@@ -28,7 +28,6 @@ const getTxAsset = (tx) => {
   return '-';
 };
 
-
 const ValueAndLabel = ({ label, className, children }) => (
   <div className={`${styles.value} ${className}`}>
     <span className={styles.label}>
@@ -40,7 +39,7 @@ const ValueAndLabel = ({ label, className, children }) => (
 
 export const Illustration = () => {
   const { transaction: { senderId, type } } = useContext(Context);
-  const { title } = transactionTypes.getByCode(type || 0);
+  const title = getModuleAssetTitle()[type];
 
   return (
     <div className={styles.illustration}>
@@ -58,7 +57,7 @@ export const Sender = () => {
     activeToken, netCode, transaction,
   } = useContext(Context);
   const delegateName = getDelegateName(transaction, activeToken);
-  const { senderLabel } = transactionTypes.getByCode(transaction.type || 0);
+  const senderLabel = getModuleAssetSenderLabel()[transaction.type];
 
   return (
     <AccountInfo
