@@ -4,41 +4,48 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
-import { getForgers, getDelegates } from '@api/delegate';
+import { getDelegates } from '@api/delegate';
 import { getNetworkStatus } from '@api/network';
 import { getTransactions, getRegisteredDelegates } from '@api/transaction';
 import withData from '@utils/withData';
 import withFilters from '@utils/withFilters';
-import { MODULE_ASSETS_NAME_ID_MAP, MAX_BLOCKS_FORGED, tokenMap } from '@constants';
-
+import { MODULE_ASSETS_NAME_ID_MAP, tokenMap } from '@constants';
 import Delegates from './delegates';
 
 const defaultUrlSearchParams = { search: '' };
-const delegatesKey = 'delegates';
-const standByDelegatesKey = 'standByDelegates';
 
-const transformDelegatesResponse = (response, oldData = []) => (
-  [...oldData, ...response.data.filter(
-    delegate => !oldData.find(({ username }) => username === delegate.username),
+/**
+ * Merges two arrays and ensures there's no duplicated item
+ *
+ * @param {String} key - Key to find in array members to ensure uniqueness
+ * @param {Array} newData - The new data array
+ * @param {Array} oldData - The old data array
+ * @returns {Array} Array build by merging the given two arrays
+ */
+const mergeUniquely = (key, newData, oldData = []) => (
+  [...oldData, ...newData.data.filter(
+    newItem => !oldData.find(oldItem => oldItem[key] === newItem[key]),
   )]
 );
+const mergeUniquelyByUsername = mergeUniquely.bind(this, 'username');
+const mergeUniquelyById = mergeUniquely.bind(this, 'id');
 
-const transformAccountsIsDelegateResponse = (response, oldData = []) => {
+/**
+ * Strips down the account data to have a
+ * similar structure to getForgers used to
+ * retrieve in-round delegates
+ */
+const stripAccountDataAndMerge = (response, oldData = []) => {
   response.data = response.data.map(del => ({
     address: del.summary.address,
     ...del.dpos.delegate,
   }));
-  return transformDelegatesResponse(response, oldData);
+  return mergeUniquelyByUsername(response, oldData);
 };
-
-const transformVotesResponse = (response, oldData = []) => (
-  [...oldData, ...response.data.filter(
-    vote => !oldData.find(({ id }) => id === vote.id),
-  )]
-);
 
 const mapStateToProps = state => ({
   watchList: state.watchList,
+  blocks: state.blocks,
 });
 
 const ComposedDelegates = compose(
@@ -46,16 +53,7 @@ const ComposedDelegates = compose(
   connect(mapStateToProps),
   withData(
     {
-      [delegatesKey]: {
-        apiUtil: (network, params) => getForgers(
-          { network, params: { ...params, limit: MAX_BLOCKS_FORGED } },
-        ),
-        defaultData: [],
-        autoload: true,
-        transformResponse: transformDelegatesResponse,
-      },
-
-      [standByDelegatesKey]: {
+      standByDelegates: {
         apiUtil: (network, params) => getDelegates({
           network,
           params: {
@@ -66,7 +64,7 @@ const ComposedDelegates = compose(
         }),
         defaultData: [],
         autoload: true,
-        transformResponse: transformAccountsIsDelegateResponse,
+        transformResponse: stripAccountDataAndMerge,
       },
 
       delegatesCount: {
@@ -99,7 +97,7 @@ const ComposedDelegates = compose(
         getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,
         defaultData: [],
-        transformResponse: transformVotesResponse,
+        transformResponse: mergeUniquelyById,
       },
 
       networkStatus: {
@@ -113,7 +111,7 @@ const ComposedDelegates = compose(
         apiUtil: (network, params) => getDelegates({ network, params: { ...params, status: 'punished,banned' } }),
         defaultData: [],
         autoload: true,
-        transformResponse: transformAccountsIsDelegateResponse,
+        transformResponse: stripAccountDataAndMerge,
       },
 
       votedDelegates: {
@@ -121,7 +119,7 @@ const ComposedDelegates = compose(
           getDelegates({ network: networks.LSK, params }),
         defaultData: {},
         transformResponse: (response) => {
-          const transformedResponse = transformDelegatesResponse(response);
+          const transformedResponse = mergeUniquelyByUsername(response);
           const responseMap = transformedResponse.reduce((acc, delegate) => {
             acc[delegate.address] = delegate.summary?.address;
             return acc;
@@ -135,11 +133,11 @@ const ComposedDelegates = compose(
           getDelegates({ network: networks.LSK, params }),
         defaultData: [],
         getApiParams: state => ({ addressList: state.watchList }),
-        transformResponse: transformDelegatesResponse,
+        transformResponse: stripAccountDataAndMerge,
       },
     },
   ),
-  withFilters(standByDelegatesKey, defaultUrlSearchParams),
+  withFilters('standByDelegates', defaultUrlSearchParams),
   withTranslation(),
 )(Delegates);
 

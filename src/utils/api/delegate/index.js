@@ -13,7 +13,7 @@ export const httpPaths = {
 };
 
 export const wsMethods = {
-  delegates: 'get.delegates',
+  delegates: 'get.accounts',
   forgers: 'get.delegates.next_forgers',
   forgersRound: 'update.round',
 };
@@ -72,7 +72,7 @@ const getRequests = (values) => {
       .filter(item => regex[paramList.name].test(item))
       .map(item => ({
         method: wsMethods.delegates,
-        params: { [paramList.name]: item },
+        params: { [paramList.name]: item, isDelegate: true },
       }));
   }
   return false;

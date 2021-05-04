@@ -1,11 +1,8 @@
 // istanbul ignore file
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { routes, colorPalette, MAX_BLOCKS_FORGED } from '@constants';
+import { colorPalette, ROUND_LENGTH } from '@constants';
 import { DoughnutChart } from '@toolbox/charts';
-import AccountVisual from '@toolbox/accountVisual';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
@@ -13,6 +10,7 @@ import BoxEmptyState from '@toolbox/box/emptyState';
 import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
 import Icon from '@toolbox/icon';
 import NumericInfo from './numericInfo';
+import Forger from './forger';
 import styles from './overview.css';
 
 const FORGERS_TO_SHOW = 6;
@@ -24,58 +22,42 @@ const getForgingStats = (data, forgedInRound) => {
     awaitingSlot: 0,
     missedBlock: 0,
   };
-  Object.values(data)
-    .forEach((item) => {
-      statuses[item.status]++;
-    });
+  data.forEach((item) => {
+    statuses[item.status]++;
+  });
   return Object.values(statuses);
 };
 
-const Forger = ({ forger }) => (
-  <div className={`${styles.forger} forger-item`}>
-    <Link to={`${routes.account.path}?address=${forger.address}`}>
-      <AccountVisual
-        address={forger.address}
-        className={styles.accountVisual}
-      />
-      <span>{forger.username}</span>
-    </Link>
-  </div>
-);
-
 const ProgressBar = ({ forgedInRound }) => (
   <div className={styles.progressBar}>
-    <div className={styles.lineForged} style={{ width: `${(forgedInRound / MAX_BLOCKS_FORGED) * 100}%` }} />
+    <div className={styles.lineForged} style={{ width: `${(forgedInRound / ROUND_LENGTH) * 100}%` }} />
   </div>
 );
 
 const formatToTwoDigits = str => str.toLocaleString('en-US', { minimumIntegerDigits: 2 });
 
-const getPassedMinutes = (lastBlock = {}, firstRoundBlock = {}) => {
-  const seconds = lastBlock.timestamp - firstRoundBlock.timestamp;
+const getPassedMinutes = (startTime) => {
+  const seconds = Math.floor((new Date()).getTime() / 1000) - startTime;
   if (!seconds) return '00:00';
   const duration = moment.duration({ seconds });
   return `${formatToTwoDigits(duration.minutes())}:${formatToTwoDigits(duration.seconds())}`;
 };
 
 const ForgingDetails = ({
-  t, chartDelegatesForging,
+  t, forgers, forgedInRound, startTime,
 }) => {
   const delegatesForgedLabels = [
     t('Forging'),
     t('Awaiting slot'),
     t('Missed block'),
   ];
-  const { latestBlocks, awaitingForgers } = useSelector(state => state.blocks);
-  const forgedInRound = latestBlocks.length
-    ? latestBlocks[0].height % MAX_BLOCKS_FORGED : 0;
 
   const doughnutChartData = {
     labels: delegatesForgedLabels,
     datasets: [
       {
         label: 'status',
-        data: getForgingStats(chartDelegatesForging, forgedInRound),
+        data: getForgingStats(forgers, forgedInRound),
       },
     ],
   };
@@ -91,13 +73,8 @@ const ForgingDetails = ({
     },
   };
 
-  const forgersListToShow = awaitingForgers.slice(forgedInRound, forgedInRound + FORGERS_TO_SHOW);
+  const forgersListToShow = forgers.slice(1, FORGERS_TO_SHOW + 1);
 
-  if (forgersListToShow.length < FORGERS_TO_SHOW) {
-    forgersListToShow.push(
-      ...awaitingForgers.slice(0, FORGERS_TO_SHOW - forgersListToShow.length),
-    );
-  }
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
@@ -106,7 +83,7 @@ const ForgingDetails = ({
       <BoxContent className={styles.content}>
         <div className={styles.column}>
           {
-            Object.keys(chartDelegatesForging).length
+            forgers.length
               ? (
                 <div className={styles.chartBox}>
                   <h2 className={styles.title}>{t('Delegates Forging Status')}</h2>
@@ -153,13 +130,13 @@ const ForgingDetails = ({
                   <ProgressBar forgedInRound={forgedInRound} />
                   <p className={styles.blue}>
                     {`${forgedInRound} / `}
-                    <span>{` ${MAX_BLOCKS_FORGED}`}</span>
+                    <span>{` ${ROUND_LENGTH}`}</span>
                   </p>
                 </main>
               </section>
               <NumericInfo
                 title="Minutes passed"
-                value={`${getPassedMinutes(latestBlocks[0], latestBlocks[forgedInRound])}`}
+                value={`${getPassedMinutes(startTime)}`}
                 icon="clock"
               />
             </div>

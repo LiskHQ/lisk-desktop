@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { fromRawLsk } from '@utils/lsk';
-import { colorPalette, MAX_BLOCKS_FORGED } from '@constants';
+import { colorPalette, ROUND_LENGTH } from '@constants';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
@@ -28,7 +28,7 @@ const Overview = ({
     datasets: [
       {
         label: 'delegates',
-        data: [Math.max(0, delegatesCount.data - MAX_BLOCKS_FORGED), MAX_BLOCKS_FORGED],
+        data: [Math.max(0, delegatesCount.data - ROUND_LENGTH), ROUND_LENGTH],
       },
     ],
   };

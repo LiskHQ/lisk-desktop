@@ -2,40 +2,61 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from '../delegates.css';
 
+export const getStatusClass = (activeTab) => {
+  switch (activeTab) {
+    case 'active':
+      return 'hidden';
+    case 'sanctioned':
+      return grid['col-xs-7'];
+    case 'watched':
+      return grid['col-xs-2'];
+    default:
+      return grid['col-xs-4'];
+  }
+};
+
+export const getDelegateWeightClass = (activeTab) => {
+  switch (activeTab) {
+    case 'sanctioned':
+      return 'hidden';
+    case 'watched':
+      return `${grid['col-xs-2']} ${styles.voteWeight}`;
+    default:
+      return `${grid['col-xs-3']} ${styles.voteWeight}`;
+  }
+};
+
+export const getRoundStateClass = (activeTab) => {
+  switch (activeTab) {
+    case 'active':
+      return `${grid['col-xs-1']} ${styles.statusTitle} text-right ${styles.roundStateHeader}`;
+    case 'watched':
+      return `${grid['col-xs-1']} ${styles.statusTitle} ${styles.roundStateHeader}`;
+    default:
+      return 'hidden';
+  }
+};
+
+export const getForgingTimeClass = (activeTab) => {
+  switch (activeTab) {
+    case 'active':
+      return grid['col-xs-3'];
+    case 'watched':
+      return grid['col-xs-2'];
+    default:
+      return 'hidden';
+  }
+};
+
 // eslint-disable-next-line complexity
 export default (activeTab, changeSort, t) => ([
   {
     title: t('Delegate'),
-    classList: `${grid['col-xs-4']} ${styles.delegateHeader}`,
+    classList: `${grid['col-xs-5']} ${styles.delegateHeader}`,
   },
-  {
-    title: t('Productivity'),
-    classList: activeTab === 'active' || activeTab === 'watched'
-      ? `${grid['col-xs-2']}`
-      : activeTab === 'sanctioned' ? `${grid['col-xs-4']}`
-        : `${grid['col-xs-3']}`,
-    tooltip: {
-      title: t('Productivity'),
-      message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
-      position: 'top',
-    },
-  },
-  /*
-  {
-    title: t('Rank'),
-    classList: activeTab === 'sanctioned'
-      ? `${grid['col-xs-3']}`
-      : activeTab === 'watched' ? `${grid['col-xs-1']}`
-        : `${grid['col-xs-2']}`,
-    sort: {
-      fn: changeSort,
-      key: 'rank',
-    },
-  },
-  */
   {
     title: t('Delegate weight'),
-    classList: activeTab === 'sanctioned' ? 'hidden' : `${grid['col-xs-2']} ${styles.voteWeight}`,
+    classList: getDelegateWeightClass(activeTab),
     tooltip: {
       title: t('Delegate weight'),
       message: t('The total LSK voted to a delegate.'),
@@ -44,10 +65,7 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Forging time'),
-    classList: activeTab === 'active'
-      ? `${grid['col-xs-3']}`
-      : activeTab === 'watched' ? `${grid['col-xs-2']}`
-        : 'hidden',
+    classList: getForgingTimeClass(activeTab),
     sort: {
       fn: changeSort,
       key: 'forgingTime',
@@ -55,15 +73,10 @@ export default (activeTab, changeSort, t) => ([
   },
   {
     title: t('Round state'),
-    classList: activeTab === 'active' || activeTab === 'watched'
-      ? `${grid['col-xs-1']} ${styles.statusTitle} ${styles.roundStateHeader}`
-      : 'hidden',
+    classList: getRoundStateClass(activeTab),
   },
   {
     title: t('Status'),
-    classList: activeTab === 'watched'
-      ? `${grid['col-xs-1']}`
-      : activeTab === 'sanctioned' ? `${grid['col-xs-4']}`
-        : activeTab !== 'active' ? `${grid['col-xs-3']}` : 'hidden',
+    classList: getStatusClass(activeTab),
   },
 ]);

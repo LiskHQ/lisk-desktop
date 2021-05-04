@@ -8,8 +8,7 @@ import { getBlocks } from '@api/block';
 import DelegateProfile from './delegateProfile';
 
 const mapStateToProps = state => ({
-  awaitingForgers: state.blocks.awaitingForgers,
-  forgingTimes: state.blocks.forgingTimes,
+  forgers: state.blocks.forgers,
 });
 
 const defaultVoters = {
