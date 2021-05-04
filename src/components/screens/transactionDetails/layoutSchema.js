@@ -15,23 +15,23 @@ const {
 const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date, Nonce];
 
 const LayoutSchema = {
-  [transfer.code.legacy]: {
+  [transfer]: {
     components: [...baseComponents, Recipient, Illustration, Amount, Message],
     className: '',
   },
-  [voteDelegate.code.legacy]: {
+  [voteDelegate]: {
     components: [...baseComponents, Illustration, Message, TransactionVotes],
     className: styles.voteLayout,
   },
-  [registerDelegate.code.legacy]: {
+  [registerDelegate]: {
     components: [...baseComponents, Illustration],
     className: styles.registerDelegate,
   },
-  [registerMultisignatureGroup.code.legacy]: {
+  [registerMultisignatureGroup]: {
     components: [...baseComponents, RequiredSignatures, Members],
     className: styles.multiSigLayout,
   },
-  [unlockToken.code.new]: {
+  [unlockToken]: {
     components: [...baseComponents, Illustration, Amount],
     className: styles.unlockToken,
   },
