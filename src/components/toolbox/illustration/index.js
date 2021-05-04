@@ -43,6 +43,8 @@ import verifyMessageErrorDark from '../../../assets/images/illustrations/verify-
 import verifyMessageSuccess from '../../../assets/images/illustrations/verify-message-success.svg';
 import verifyMessageSuccessDark from '../../../assets/images/illustrations/verify-message-success-dark.svg';
 import registrationSuccess from '../../../assets/images/illustrations/registration-success.svg';
+import registerMultisignatureSuccess from '../../../assets/images/illustrations/multisignature-success.svg';
+import registerMultisignatureError from '../../../assets/images/illustrations/multisignature-error.svg';
 import reclaimBalanceIntro from '../../../assets/images/illustrations/reclaim-balance-intro.svg';
 
 export const illustrations = {
@@ -88,6 +90,8 @@ export const illustrations = {
   emptyBookmarkFilerDark,
   verifyMessageErrorDark,
   verifyMessageSuccessDark,
+  registerMultisignatureSuccess,
+  registerMultisignatureError,
   reclaimBalanceIntro,
 };
 

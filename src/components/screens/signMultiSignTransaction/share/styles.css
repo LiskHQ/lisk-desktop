@@ -1,0 +1,18 @@
+@import '../styles.css';
+
+.content {
+  max-width: 450px;
+  margin: 0 auto;
+  padding-bottom: 0;
+}
+
+.buttonContent {
+  @mixin contentLarge;
+
+  display: flex;
+  justify-content: center;
+
+  & > img {
+    margin-right: 8px;
+  }
+}

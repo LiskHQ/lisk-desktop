@@ -60,7 +60,7 @@
 
     &::before,
     &::after {
-      background-color: #fff;
+      background-color: var(--color-white);
       content: "";
       height: 14px;
       position: absolute;

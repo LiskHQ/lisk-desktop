@@ -14,6 +14,7 @@ import {
 import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
+import MultiSignatureTab from './multiSignature';
 import VotesTab from './votes';
 import Transactions from './transactions';
 
@@ -71,6 +72,15 @@ const Wallet = ({ t, history }) => {
               tabName={t('Delegate profile')}
               tabId="delegateProfile"
               account={account.info[activeToken]}
+            />
+          )
+          : null}
+        {isMultiSignature
+          ? (
+            <MultiSignatureTab
+              // tabClassName="delegate-statistics"
+              tabName={t('Multisignatures')}
+              tabId="multiSignatures"
             />
           )
           : null}

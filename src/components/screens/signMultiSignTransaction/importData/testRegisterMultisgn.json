@@ -1,0 +1,24 @@
+{
+  "id":"12510531279763703865",
+  "type":12,
+  "senderPublicKey":"0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+  "senderId":"5059876081639179984L",
+  "nonce":"158",
+  "fee":"10000000000",
+  "signatures":[
+    "fd59169392ebf28d5a0382161faa8f767e0cf0dff1b805ed8a28556343e0fb988622e40ad529a7570d47013efc979afb2fe9538d67d0d877afdfadafd6c73c0f",
+    "fd59169392ebf28d5a0382161faa8f767e0cf0dff1b805ed8a28556343e0fb988622e40ad529a7570d47013efc979afb2fe9538d67d0d877afdfadafd6c73c0f",
+    "e20dc01f8afa54315ebc3a7e1bc2f366cc1c9291400f9eda51e9aaed5ab3eef0c666e28a628bcae1ea85d65fb2ee6ebbaa6aee0476844328dc1fed71fc25a907",
+    ""
+  ],
+  "asset":{
+    "mandatoryKeys":[
+      "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a"
+    ],
+    "optionalKeys":[
+      "197cf311f678406bc72a8edfdc3dffe6f59f49c4550a860e4b68fb20382211d0",
+      "86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"
+    ],
+    "numberOfSignatures":2
+  }
+}

@@ -78,6 +78,9 @@
       & .tooltipArrow {
         left: 40px;
         right: auto;
+        bottom: -20px;
+        top: auto;
+        transform: rotate(-90deg);
       }
     }
 

@@ -1,6 +1,4 @@
-import { withTranslation } from 'react-i18next';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useRef, useEffect } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { isEmpty } from '@utils/helpers';
 import Box from '@toolbox/box';
@@ -8,24 +6,38 @@ import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import NotFound from '@shared/notFound';
 import Dialog from '@toolbox/dialog/dialog';
-import { selectCurrentBlockHeight } from '@store/selectors';
-import TransactionVotes from './transactionVotes';
-import {
-  TransactionId, Sender, Recipient, Message,
-  Illustration, AmountAndDate, FeeAndConfirmation,
-  DelegateUsername,
-} from './dataRows';
+import routes from '@constants';
 import styles from './transactionDetails.css';
+import LayoutSchema from './layoutSchema';
 
-const Transactions = ({
-  t, activeToken, netCode, transaction, votedDelegates,
+export const Context = React.createContext({
+  transaction: {},
+});
+
+const TransactionDetails = ({
+  t, activeToken, netCode, delegates, history,
+  transaction: { error, isLoading, data },
 }) => {
-  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
-  const { error, isLoading, data } = transaction;
-  const addresses = !isEmpty(data) && [data.asset.recipient?.address, data.sender.address];
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      history.push(routes.dashboard.path);
+    }
+  }, [activeToken]);
 
-  if (!error && isEmpty(transaction.data)) return <div />;
-  if (error && isEmpty(transaction.data)) return <NotFound />;
+  useEffect(() => {
+    isFirstRender.current = false;
+  }, []);
+
+  if (!error && isEmpty(data)) {
+    return <div />;
+  }
+
+  if (error && isEmpty(data)) {
+    return <NotFound />;
+  }
+
+  const Layout = LayoutSchema[data.type] || LayoutSchema.default;
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
@@ -33,40 +45,17 @@ const Transactions = ({
         <BoxHeader>
           <h1>{t('Transaction details')}</h1>
         </BoxHeader>
-        <BoxContent className={styles.mainContent}>
-          <Illustration transaction={data} />
-          <Sender
-            transaction={data}
-            activeToken={activeToken}
-            netCode={netCode}
-          />
-          <Recipient
-            transaction={data}
-            activeToken={activeToken}
-            netCode={netCode}
-            t={t}
-          />
-          <TransactionId t={t} id={data.id} />
-          <AmountAndDate
-            transaction={data}
-            activeToken={activeToken}
-            addresses={addresses}
-            t={t}
-          />
-          <FeeAndConfirmation
-            transaction={data}
-            activeToken={activeToken}
-            addresses={addresses}
-            t={t}
-            currentBlockHeight={currentBlockHeight}
-          />
-          <Message activeToken={activeToken} transaction={data} t={t} />
-          <TransactionVotes transaction={data} t={t} votedDelegates={votedDelegates} />
-          <DelegateUsername transaction={data} t={t} />
+        <BoxContent className={`${styles.mainContent} ${Layout.className}`}>
+          <Context.Provider value={{
+            transaction: data, activeToken, netCode, delegates,
+          }}
+          >
+            {Layout.components.map((Component, index) => <Component key={index} t={t} />)}
+          </Context.Provider>
         </BoxContent>
       </Box>
     </Dialog>
   );
 };
 
-export default withTranslation()(Transactions);
+export default TransactionDetails;

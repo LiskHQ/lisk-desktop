@@ -29,6 +29,8 @@ import SearchBar from '@shared/searchBar';
 import ReclaimBalance from '@screens/reclaimBalance';
 import ReclaimBalanceModal from '@screens/reclaimBalance/modal';
 import { tokenMap } from './tokens';
+import MultiSignature from '../components/screens/multiSignature';
+import SignMultiSigTransaction from '../components/screens/signMultiSignTransaction';
 
 export default {
   wallet: {
@@ -204,7 +206,7 @@ export const modals = {
   votingQueue: {
     component: VotingQueue,
     isPrivate: true,
-    forbiddenTokens: [],
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   deviceDisconnectDialog: {
     component: DeviceDisconnect,
@@ -213,6 +215,16 @@ export const modals = {
   },
   reclaimBalance: {
     component: ReclaimBalanceModal,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  multiSignature: {
+    component: MultiSignature,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  signMultiSignTransaction: {
+    component: SignMultiSigTransaction,
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },

@@ -165,8 +165,9 @@
       &.copyIcon,
       &.qrCode,
       &.bookmark,
+      &.multisigIcon,
       &.verify {
-        filter: brightness(100) !important;
+        filter: brightness(100);
       }
     }
 
@@ -210,4 +211,18 @@
 .tooltipWrapper {
   width: 100%;
   height: 100%;
+}
+
+.whiteBackground {
+  background-color: var(--color-white);
+
+  & .multisigIcon {
+    filter: none !important;
+  }
+}
+
+.centerContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

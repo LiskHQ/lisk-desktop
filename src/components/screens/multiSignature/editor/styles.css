@@ -1,0 +1,81 @@
+.wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+  padding-bottom: 0;
+
+  & .box {
+    margin-bottom: 0;
+  }
+
+  & .contentContainer {
+    display: flex;
+    width: auto;
+    padding: 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--color-platinum);
+  }
+
+  & header {
+    height: auto;
+    padding: 0;
+  }
+}
+
+.contentScrollable {
+  overflow: scroll;
+  max-height: 290px;
+  display: flex;
+  flex-direction: column;
+}
+
+.txPriority {
+  margin-top: 20px;
+}
+
+.formButtonsContainer {
+  margin-left: 20px;
+  display: flex;
+}
+
+.requiredSignaturesInput {
+  width: 140px;
+  height: 40px;
+}
+
+.memberFieldContainer {
+  height: auto;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.membersControls {
+  margin-top: 28px;
+  display: flex;
+
+  & > span {
+    @mixin contentNormal;
+
+    display: flex;
+    align-items: center;
+  }
+}
+
+.deleteIcon {
+  margin-right: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.requiredSignaturesHeading {
+  @mixin contentNormal;
+
+  margin-bottom: 10px;
+}
+
+.inputWithDropdown {
+  margin-right: 18px;
+}

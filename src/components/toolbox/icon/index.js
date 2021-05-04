@@ -75,6 +75,7 @@ import transactionApproved from '../../../assets/images/icons/transaction-status
 import transactionError from '../../../assets/images/icons/transaction-error.svg';
 import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
 import transactionSuccess from '../../../assets/images/icons/transaction-success.svg';
+import tx2ndPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
 import secondPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
 import registerMultisignatureGroup from '../../../assets/images/icons/multiSignature.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
@@ -143,6 +144,11 @@ import unlockToken from '../../../assets/images/icons/tx-unlock.svg';
 import votingQueueInactive from '../../../assets/images/icons/voting-queue-inactive.svg';
 import votingQueueActive from '../../../assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '../../../assets/images/icons/delete.svg';
+import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.svg';
+import download from '../../../assets/images/icons/download.svg';
+import multiSignature from '../../../assets/images/icons/multisignature.svg';
+import multiSignatureOutline from '../../../assets/images/icons/multisignature-outline.svg';
+import upload from '../../../assets/images/icons/upload.svg';
 import delegateForged from '../../../assets/images/icons/delegate-forged.svg';
 import delegateMissed from '../../../assets/images/icons/delegate-missed.svg';
 import delegateWarning from '../../../assets/images/icons/delegate-warning.svg';
@@ -254,6 +260,8 @@ export const icons = {
   verifyMessageActive,
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
+  multiSignature,
+  multiSignatureOutline,
   registerMultisignatureGroup,
   missedBlocks,
   newsFeedBlog,
@@ -295,6 +303,8 @@ export const icons = {
   unlockToken,
   votingQueueInactive,
   votingQueueActive,
+  download,
+  upload,
   delegateForged,
   delegateMissed,
   delegateWarning,

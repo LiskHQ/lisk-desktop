@@ -17,6 +17,7 @@ const Overview = ({
 }) => {
   const { address, publicKey, balance = 0 } = account?.summary ?? {};
   const { confirmed } = useSelector(selectTransactions);
+  const isMultisig = account.keys && account.keys.numberOfSignatures > 0;
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );

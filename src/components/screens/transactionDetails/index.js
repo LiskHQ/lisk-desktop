@@ -9,6 +9,8 @@ import withData from '@utils/withData';
 import { parseSearchParams } from '@utils/searchParams';
 import TransactionDetails from './transactionDetails';
 
+import TransactionDetails from './transactionDetails';
+
 const mapStateToProps = (state, ownProps) => ({
   address: getActiveTokenAccount(state).address,
   id: ownProps.match.params.id,
@@ -45,4 +47,5 @@ export default compose(
   withRouter,
   connect(mapStateToProps),
   withData(apis),
+  withTranslation(),
 )(TransactionDetails);

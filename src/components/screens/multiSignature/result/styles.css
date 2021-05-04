@@ -1,0 +1,43 @@
+@import '../../../../app/mixins.css';
+
+.wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+  padding-bottom: 0;
+}
+
+.header {
+  & > h1 {
+    @mixin headingNormal bold;
+
+    margin: 0;
+  }
+}
+
+.content {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.buttonsContainer {
+  margin-top: 40px;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.buttonsContainer button {
+  width: 200px;
+
+  & > span {
+    @mixin contentLarge;
+
+    display: flex;
+    justify-content: center;
+
+    & > img {
+      margin-right: 8px;
+    }
+  }
+}

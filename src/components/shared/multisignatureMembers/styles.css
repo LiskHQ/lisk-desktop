@@ -1,0 +1,61 @@
+@import '../../../app/mixins.css';
+
+.membersContainer {
+  max-height: 440px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  & > p {
+    width: 100%;
+    text-align: left;
+  }
+
+  & > div {
+    width: 50%;
+  }
+}
+
+.memberInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 30px;
+
+  & > .memberInfoIndex {
+    @mixin contentLarge;
+
+    margin-right: 8px;
+    color: var(--color-blue-gray);
+  }
+
+  & > .memberDetails {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+
+    & > .memberTitle {
+      @mixin headingSmall;
+
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--color-maastricht-blue);
+      font-family: var(--content-font);
+
+      & > span {
+        @mixin contentNormal;
+
+        margin-left: 10px;
+        color: black;
+      }
+    }
+
+    & > .memberKey {
+      @mixin contentNormal;
+
+      margin: 0;
+      color: var(--color-slate-gray);
+    }
+  }
+}
