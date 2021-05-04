@@ -1,7 +1,7 @@
 import React from 'react';
 import to from 'await-to-js';
 import { useSelector } from 'react-redux';
-import { selectAccount } from '@store/selectors';
+import { selectAccount } from '@store';
 import { create } from '@api/transaction';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';

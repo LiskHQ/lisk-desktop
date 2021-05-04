@@ -22,4 +22,5 @@ if (module.hot) {
   });
 }
 
+export * from './selectors';
 export default store;

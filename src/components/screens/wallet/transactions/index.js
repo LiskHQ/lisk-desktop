@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { selectCurrentBlockHeight } from '@store/selectors';
+import { selectCurrentBlockHeight } from '@store';
 import withFilters from '@utils/withFilters';
 import withData from '@utils/withData';
 import { getDelegates } from '@api/delegate';

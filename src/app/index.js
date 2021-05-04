@@ -16,7 +16,7 @@ import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DialogHolder from '@toolbox/dialog/holder';
 import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@actions';
 import { retrieveSchemas } from '@utils/moduleAssets';
-import { selectServiceUrl } from '@store/selectors';
+import { selectServiceUrl } from '@store';
 import ThemeContext from '../contexts/theme';
 import styles from './app.css';
 import useIpc from '../hooks/useIpc';
