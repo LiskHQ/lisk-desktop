@@ -1,22 +1,22 @@
 import React, { useContext, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { selectCurrentBlockHeight } from '@store/selectors';
 
+import { selectCurrentBlockHeight } from '@store';
 import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@utils/moduleAssets';
 import { getTxAmount } from '@utils/transaction';
-import CopyToClipboard from '../../../toolbox/copyToClipboard';
-import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
-import { tokenMap } from '../../../../constants/tokens';
-import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
-import DiscreetMode from '../../../shared/discreetMode';
-import LiskAmount from '../../../shared/liskAmount';
-import MultiSignatureMembers from '../../../shared/multisignatureMembers';
+import { tokenMap } from '@constants';
+import CopyToClipboard from '@toolbox/copyToClipboard';
+import TransactionTypeFigure from '@shared/transactionTypeFigure';
+import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import DiscreetMode from '@shared/discreetMode';
+import LiskAmount from '@shared/liskAmount';
+import MultiSignatureMembers from '@shared/multisignatureMembers';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import { extractAddressFromPublicKey } from '@utils/account';
 
+import { Context } from '../transactionDetails';
 import AccountInfo from './accountInfo';
 import styles from './styles.css';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
-import { Context } from '../transactionDetails';
-import { extractAddress } from '../../../../utils/account';
 
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
@@ -247,12 +247,12 @@ export const Members = ({ t }) => {
   const { optionalKeys, mandatoryKeys } = asset;
 
   const members = useMemo(() => optionalKeys.map(publicKey => ({
-    address: extractAddress(publicKey),
+    address: extractAddressFromPublicKey(publicKey),
     publicKey,
     mandatory: false,
   })).concat(
     mandatoryKeys.map(publicKey => ({
-      address: extractAddress(publicKey),
+      address: extractAddressFromPublicKey(publicKey),
       publicKey,
       mandatory: true,
     })),
