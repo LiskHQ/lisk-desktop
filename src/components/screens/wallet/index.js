@@ -25,10 +25,8 @@ const Wallet = ({ t, history }) => {
   const { discreetMode } = useSelector(selectSettings);
   const { confirmed, pending } = useSelector(selectTransactions);
   const {
-    isDelegate, address,
-    // isMultiSignature
+    isDelegate, address, isMultisignature,
   } = account.info[activeToken].summary;
-  const isMultiSignature = true; // mock
 
   useEffect(() => {
     dispatch(transactionsRetrieved({ address }));
@@ -79,7 +77,7 @@ const Wallet = ({ t, history }) => {
             />
           )
           : null}
-        {isMultiSignature
+        {isMultisignature
           ? (
             <MultiSignatureTab
               // tabClassName="delegate-statistics"

@@ -15,16 +15,17 @@ const Overview = ({
   t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
-  const { address, publicKey, balance = 0 } = account?.summary ?? {};
+  const {
+    address, publicKey, balance = 0, isMultisignature,
+  } = account?.summary ?? {};
   const { confirmed } = useSelector(selectTransactions);
-  // const isMultisig = account.keys && account.keys.numberOfSignatures > 0;
-  const isMultisig = true;
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );
 
   const host = useSelector(
-    state => (state.account
+    state => (
+      state.account
       && state.account.info
       && state.account.info[activeToken]
       && state.account.info[activeToken].summary?.address) || '',
@@ -49,7 +50,7 @@ const Overview = ({
           publicKey={publicKey}
           host={host}
           account={account}
-          isMultisig={isMultisig}
+          isMultisignature={isMultisignature}
         />
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>

@@ -8,7 +8,7 @@ import Identity from './identity';
 import ActionBar from './actionBar';
 
 const AccountInfo = ({
-  address, t, activeToken, hwInfo, account, username, bookmark, host,
+  address, t, activeToken, hwInfo, account, username, bookmark, isMultisignature, host,
 }) => {
   const [showLegacy, setShowLegacy] = useState(false);
   const onClick = () => {
@@ -51,6 +51,7 @@ const AccountInfo = ({
           account={account}
           bookmark={bookmark}
           hwInfo={hwInfo}
+          isMultisignature={isMultisignature}
           t={t}
         />
       </BoxContent>
