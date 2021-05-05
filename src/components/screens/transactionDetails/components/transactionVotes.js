@@ -7,13 +7,13 @@ import { Context } from '../transactionDetails';
 import styles from './styles.css';
 
 const TransactionVotes = ({ t, votedDelegates }) => {
-  const { transaction, delegates } = useContext(Context);
+  const { transaction } = useContext(Context);
   const { votes } = transaction.asset;
 
   useEffect(() => {
     if (transaction.asset) {
       const addressList = votes.map(item => item.delegateAddress);
-      delegates.loadData({ addressList });
+      votedDelegates.loadData({ addressList });
     }
   }, []);
 
