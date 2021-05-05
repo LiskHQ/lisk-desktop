@@ -25,8 +25,8 @@ const getTxAmount = ({ moduleAssetId, asset }) => {
   }
 
   if (moduleAssetId === unlockToken) {
-    return asset.unlockingObjects.reduce((sum, unlockingObject) =>
-      sum + parseInt(unlockingObject.amount, 10), 0);
+    return asset.unlockObjects.reduce((sum, unlockObject) =>
+      sum + parseInt(unlockObject.amount, 10), 0);
   }
   if (moduleAssetId === voteDelegate) {
     return asset.votes.reduce((sum, vote) =>
@@ -88,10 +88,10 @@ const transformTransaction = (transaction) => {
 
     case unlockToken: {
       transformedTransaction.asset = {
-        unlockObjects: transaction.asset.unlockObjects.map(unlockingObject => ({
-          delegateAddress: getBase32AddressFromAddress(unlockingObject.delegateAddress),
-          amount: Number(unlockingObject.amount),
-          unvoteHeight: unlockingObject.height.start,
+        unlockObjects: transaction.asset.unlockObjects.map(unlockObject => ({
+          delegateAddress: getBase32AddressFromAddress(unlockObject.delegateAddress),
+          amount: Number(unlockObject.amount),
+          unvoteHeight: unlockObject.height.start,
         })),
       };
       break;
