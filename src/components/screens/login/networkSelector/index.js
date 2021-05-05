@@ -11,7 +11,7 @@ const NetworkSelector = (props) => {
   const { t } = useTranslation();
   const network = useSelector(state => state.network);
   const settings = useSelector(state => state.settings);
-  const selectedNetworkName = network.name || settings.network.name;
+  const selectedNetworkName = network.name || settings.network?.name || 'mainnet';
   const networkConfig = network.networks[settings.token.active || tokenMap.LSK.key];
   const selectedAddress = networkConfig?.serviceUrl || settings.network?.address;
 
