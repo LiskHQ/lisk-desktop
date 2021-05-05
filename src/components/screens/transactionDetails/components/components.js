@@ -49,7 +49,7 @@ export const Illustration = () => {
   return (
     <div className={styles.illustration}>
       <TransactionTypeFigure
-        address={sender}
+        address={sender.address}
         moduleAssetId={moduleAssetId}
       />
       <h2 className="tx-header">{title}</h2>
