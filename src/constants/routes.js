@@ -30,6 +30,7 @@ import ReclaimBalance from '@screens/reclaimBalance';
 import ReclaimBalanceModal from '@screens/reclaimBalance/modal';
 import MultiSignature from '@screens/multiSignature';
 import SignMultiSigTransaction from '@screens/signMultiSignTransaction';
+import MultisigAccountDetails from '@screens/multisigAccountDetails';
 import { tokenMap } from './tokens';
 
 export default {
@@ -220,6 +221,11 @@ export const modals = {
   },
   multiSignature: {
     component: MultiSignature,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  multisigAccountDetails: {
+    component: MultisigAccountDetails,
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
