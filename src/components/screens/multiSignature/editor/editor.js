@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
+import { Input } from '@toolbox/inputs';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 
-import { tokenMap } from '../../../../constants/tokens';
-import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
-import { Input } from '../../../toolbox/inputs';
-
+import ProgressBar from '../progressBar';
 import MemberField from './memberField';
 import styles from './styles.css';
-import ProgressBar from '../progressBar';
 
 const token = tokenMap.LSK.key;
-const txType = 'createMultiSig';
 const MAX_MULTI_SIG_MEMBERS = 64;
 
 const placeholderMember = {
   identifier: undefined, isMandatory: false,
 };
+
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 
 // eslint-disable-next-line max-statements
 const Editor = ({
@@ -46,8 +46,8 @@ const Editor = ({
     token,
     account,
     priorityOptions,
-    txData: {
-      txType,
+    transaction: {
+      moduleAssetId,
       nonce: account.nonce,
       senderPublicKey: account.publicKey,
       signatures: [], // no of signatures needed?
@@ -88,7 +88,7 @@ const Editor = ({
   };
 
   const changeRequiredSignatures = (e) => {
-    const value = Number(e.target.value);
+    const value = e.target.value ? Number(e.target.value) : undefined;
     setRequiredSignatures(value);
   };
 
@@ -109,7 +109,7 @@ const Editor = ({
             <span className={styles.requiredSignaturesHeading}>{t('Required Signatures')}</span>
             <Input
               className={`${styles.requiredSignaturesInput} multisignature-editor-input`}
-              value={requiredSignatures}
+              value={requiredSignatures ?? ''}
               onChange={changeRequiredSignatures}
               autoComplete="off"
               name="required-signatures"
@@ -139,7 +139,7 @@ const Editor = ({
           fee={fee}
           minFee={minFee.value}
           customFee={customFee ? customFee.value : undefined}
-          txType={txType}
+          moduleAssetId={moduleAssetId}
           setCustomFee={setCustomFee}
           priorityOptions={priorityOptions}
           selectedPriority={selectedPriority.selectedIndex}
