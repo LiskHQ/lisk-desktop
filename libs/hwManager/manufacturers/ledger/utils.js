@@ -1,6 +1,6 @@
-import Lisk from '@liskhq/lisk-client';// eslint-disable-line
+import { cryptography, transactions } from '@liskhq/lisk-client';
 
 export const getTransactionBytes = transaction =>
-  Lisk.transaction.utils.getTransactionBytes(transaction);
+  transactions.getBytes(transaction);
 
-export const getBufferToHex = buffer => Lisk.cryptography.bufferToHex(buffer);
+export const getBufferToHex = buffer => cryptography.bufferToHex(buffer);

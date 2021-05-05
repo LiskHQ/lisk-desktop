@@ -2,46 +2,39 @@
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import withData from '@utils/withData';
+import { getVoters, getDelegate } from '@api/delegate';
+import { getBlocks } from '@api/block';
 import DelegateProfile from './delegateProfile';
-import withData from '../../../../utils/withData';
-import { getAPIClient } from '../../../../utils/api/lsk/network';
 
 const mapStateToProps = state => ({
-  awaitingForgers: state.blocks.awaitingForgers,
-  forgingTimes: state.blocks.forgingTimes,
+  forgers: state.blocks.forgers,
 });
+
+const defaultVoters = {
+  account: {},
+  votes: [],
+};
 
 const apis = {
   delegate: {
-    apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).delegates.get(params),
+    apiUtil: (network, params) => getDelegate({ network, params }),
     defaultData: {},
+    autoload: true,
     getApiParams: (_, ownProps) => ({
-      address: ownProps.address,
+      address: ownProps.account.summary?.address,
     }),
-    transformResponse: response => (response.data[0] ? response.data[0] : {}),
+    transformResponse: response => response.data[0],
   },
   voters: {
-    // apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).voters.get(params),
-    apiUtil: (liskAPIClient, params) => (new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          data: Array.from(Array(10).keys()).map(item => `5447926331525636${item + (params.offset || 0)}L`),
-          meta: { count: 1000, offset: (params.offset || 0) },
-        });
-      }, 50);
-    })),
-    defaultData: [],
-    getApiParams: (_, ownProps) => ({
-      address: ownProps.address,
-    }),
-    transformResponse: response => (response ? response.data : []),
+    apiUtil: (network, params) => getVoters({ network, params }),
+    defaultData: defaultVoters,
+    getApiParams: (_, ownProps) => ({ address: ownProps.account.summary.address }),
+    transformResponse: response => (response.data.votes ? response.data : defaultVoters),
   },
   lastBlockForged: {
-    apiUtil: (liskAPIClient, params) => getAPIClient(liskAPIClient).blocks.get(params),
+    apiUtil: (network, params) => getBlocks({ network, params }),
     defaultData: {},
-    getApiParams: state => ({
-      height: state.account.info && state.account.info.LSK.delegate.lastForgedHeight,
-    }),
     transformResponse: response => (response ? response.data[0] : {}),
   },
 };

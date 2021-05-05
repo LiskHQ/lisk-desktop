@@ -1,15 +1,19 @@
 import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import Table from '../../../toolbox/table';
+
+import withData from '@utils/withData';
+import { getAccounts } from '@api/account';
+import { getNetworkStatus } from '@api/network';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import Table from '@toolbox/table';
 import styles from './accounts.css';
 import header from './tableHeader';
 import AccountRow from './accountRow';
-import withData from '../../../../utils/withData';
-import liskServiceApi from '../../../../utils/api/lsk/liskService';
+
+const LIMIT = 30;
 
 export const AccountsPure = ({
   accounts,
@@ -18,10 +22,10 @@ export const AccountsPure = ({
 }) => {
   /* istanbul ignore next */
   const handleLoadMore = () => {
-    accounts.loadData({ offset: accounts.data.length });
+    accounts.loadData({ offset: accounts.meta.count + accounts.meta.offset });
   };
   const supply = networkStatus.data.supply;
-  const canLoadMore = accounts.meta ? accounts.meta.count === 30 : false;
+  const canLoadMore = accounts.meta ? accounts.meta.count === LIMIT : false;
 
   return (
     <Box main isLoading={accounts.isLoading} className="accounts-box">
@@ -48,7 +52,15 @@ export default compose(
   withData(
     {
       accounts: {
-        apiUtil: liskServiceApi.getTopAccounts,
+        apiUtil: (network, params) => getAccounts({
+          network,
+          params: {
+            ...params,
+            limit: params.limit || LIMIT,
+            offset: params.offset || 0,
+            sort: 'balance:desc',
+          },
+        }),
         defaultData: [],
         autoload: true,
         transformResponse: (response, accounts, urlSearchParams) => (
@@ -58,7 +70,7 @@ export default compose(
         ),
       },
       networkStatus: {
-        apiUtil: liskServiceApi.getNetworkStatus,
+        apiUtil: network => getNetworkStatus({ network }),
         defaultData: {},
         autoload: true,
         transformResponse: response => response,

@@ -1,19 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { loginType } from '../../../constants/hwConstants';
 import Illustration from '../illustration';
 import styles from './hardwareWalletIllustration.css';
 
-const illustrationMapping = {
-  [loginType.trezor]: 'trezor',
-  [loginType.ledger]: 'ledgerNano',
-};
-
 const HardwareWalletIllustration = ({ account, size }) => (
-  illustrationMapping[account.loginType]
+  account.loginType
     ? (
       <Illustration
-        name={illustrationMapping[account.loginType]}
+        name={account.loginType}
         className={`${styles.wrapper} ${styles[size]}`}
       />
     )

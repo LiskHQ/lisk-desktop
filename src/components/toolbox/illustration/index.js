@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '../../../utils/theme';
+import { useTheme } from '@utils/theme';
 import welcomeLiskDelegates from '../../../assets/images/illustrations/illustration-welcome-to-lisk-delegates-dark.svg';
 import yourVoiceMatters from '../../../assets/images/illustrations/illustration-your-voice-matters-dark.svg';
 import getRewarded from '../../../assets/images/illustrations/illustration-get-rewarded-dark.svg';
@@ -45,6 +45,7 @@ import verifyMessageSuccessDark from '../../../assets/images/illustrations/verif
 import registrationSuccess from '../../../assets/images/illustrations/registration-success.svg';
 import registerMultisignatureSuccess from '../../../assets/images/illustrations/multisignature-success.svg';
 import registerMultisignatureError from '../../../assets/images/illustrations/multisignature-error.svg';
+import reclaimBalanceIntro from '../../../assets/images/illustrations/reclaim-balance-intro.svg';
 
 export const illustrations = {
   welcomeLiskDelegates,
@@ -91,6 +92,7 @@ export const illustrations = {
   verifyMessageSuccessDark,
   registerMultisignatureSuccess,
   registerMultisignatureError,
+  reclaimBalanceIntro,
 };
 
 const Illustration = ({ name, className, noTheme }) => {

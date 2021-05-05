@@ -6,6 +6,7 @@ const delegate = index => ({
   missedBlocks: 3 - (index % 3),
   productivity: (((30 + (index % 3)) / (3 - (index % 3))) * 100).toFixed(2),
   rank: index,
+  address: `1401833615129611201${index}L`,
   account: {
     address: `1401833615129611201${index}L`,
     publicKey: `3ff32442bb6da7d60c1b7752b24e6467813c9b698e0f278d48c43580da972${index}`,

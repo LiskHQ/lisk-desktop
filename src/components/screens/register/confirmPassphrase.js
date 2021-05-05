@@ -1,14 +1,14 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import PassphraseRenderer from '@shared/passphraseRenderer';
 import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
-import PassphraseRenderer from '../../shared/passphraseRenderer';
 
 const ConfirmPassphrase = ({
-  t, passphrase, prevStep, nextStep,
+  t, passphrase, onConfirmPassphrase, prevStep, nextStep,
 }) => (
-  <React.Fragment>
+  <>
     <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
       <h1>
         {t('Confirm your passphrase')}
@@ -20,12 +20,15 @@ const ConfirmPassphrase = ({
       <PassphraseRenderer
         showInfo
         passphrase={passphrase}
-        nextStep={nextStep}
+        nextStep={(params) => {
+          onConfirmPassphrase();
+          nextStep(params);
+        }}
         prevStep={prevStep}
         isConfirmation
       />
     </div>
-  </React.Fragment>
+  </>
 );
 
 export default withTranslation()(ConfirmPassphrase);

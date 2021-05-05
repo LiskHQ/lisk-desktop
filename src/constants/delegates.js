@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export const MAX_BLOCKS_FORGED = 101;
+export const ROUND_LENGTH = 103;

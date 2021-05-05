@@ -1,8 +1,8 @@
 import lodashMerge from 'lodash.merge';
 import {
   chartStyles,
-  colorPallete,
-} from '../constants/chartConstants';
+  colorPalette,
+} from '@constants';
 
 const merge = (...args) => lodashMerge({}, ...args);
 
@@ -13,11 +13,11 @@ const merge = (...args) => lodashMerge({}, ...args);
 export const lineChartData = data => merge({
   datasets: (data.datasets).map((_, index) => ({
     backgroundColor: chartStyles.transparent,
-    borderColor: colorPallete[index],
-    pointBorderColor: colorPallete[index],
+    borderColor: colorPalette[index],
+    pointBorderColor: colorPalette[index],
     pointBackgroundColor: chartStyles.whiteColor,
     pointHoverBackgroundColor: chartStyles.whiteColor,
-    pointHoverBorderColor: colorPallete[index],
+    pointHoverBorderColor: colorPalette[index],
     pointHoverBorderWidth: 4,
     borderWidth: 2,
   })),
@@ -35,7 +35,7 @@ export const barChartData = data => merge({
     maxBarThickness: 14,
     minBarLength: 2,
     stack: index,
-    backgroundColor: colorPallete[index],
+    backgroundColor: colorPalette[index],
   })),
 }, data);
 
@@ -46,7 +46,7 @@ export const barChartData = data => merge({
 export const doughnutChartData = data => merge({
   datasets: [
     {
-      backgroundColor: colorPallete,
+      backgroundColor: colorPalette,
     },
   ],
 }, data);

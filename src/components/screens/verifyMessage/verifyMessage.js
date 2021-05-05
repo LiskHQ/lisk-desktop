@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import MultiStep from '../../shared/multiStep';
+
+import { routes } from '@constants';
+import MultiStep from '@shared/multiStep';
+import Dialog from '@toolbox/dialog/dialog';
 import Result from './result';
 import VerifyMessageInput from './verifyMessageInput';
-import routes from '../../../constants/routes';
-import Dialog from '../../toolbox/dialog/dialog';
 import styles from './verifyMessage.css';
 
 export default function VerifyMessage({

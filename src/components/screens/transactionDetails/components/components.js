@@ -1,24 +1,29 @@
 import React, { useContext, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
-import CopyToClipboard from '../../../toolbox/copyToClipboard';
-import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
-import { tokenMap } from '../../../../constants/tokens';
-import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
-import DiscreetMode from '../../../shared/discreetMode';
-import LiskAmount from '../../../shared/liskAmount';
-import MultiSignatureMembers from '../../../shared/multisignatureMembers';
+import { selectCurrentBlockHeight } from '@store';
+import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@utils/moduleAssets';
+import { getTxAmount } from '@utils/transaction';
+import { tokenMap } from '@constants';
+import CopyToClipboard from '@toolbox/copyToClipboard';
+import TransactionTypeFigure from '@shared/transactionTypeFigure';
+import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import DiscreetMode from '@shared/discreetMode';
+import LiskAmount from '@shared/liskAmount';
+import MultiSignatureMembers from '@shared/multisignatureMembers';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import { extractAddressFromPublicKey } from '@utils/account';
 
+import { Context } from '../transactionDetails';
 import AccountInfo from './accountInfo';
 import styles from './styles.css';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
-import { Context } from '../transactionDetails';
-import transactionTypes from '../../../../constants/transactionTypes';
-import { extractAddress } from '../../../../utils/account';
 
 const getDelegateName = (transaction, activeToken) => (
-  (activeToken === tokenMap.LSK.key
+  (activeToken === 'LSK'
   && transaction.asset
-  && transaction.asset.username) ? transaction.asset.username : null
+  && transaction.asset.delegate
+  && transaction.asset.delegate.username)
+    ? transaction.asset.delegate.username : null
 );
 
 const getTxAsset = (tx) => {
@@ -27,7 +32,6 @@ const getTxAsset = (tx) => {
   }
   return '-';
 };
-
 
 const ValueAndLabel = ({ label, className, children }) => (
   <div className={`${styles.value} ${className}`}>
@@ -39,14 +43,14 @@ const ValueAndLabel = ({ label, className, children }) => (
 );
 
 export const Illustration = () => {
-  const { transaction: { senderId, type } } = useContext(Context);
-  const { title } = transactionTypes.getByCode(type || 0);
+  const { transaction: { sender, moduleAssetId } } = useContext(Context);
+  const title = getModuleAssetTitle()[moduleAssetId];
 
   return (
     <div className={styles.illustration}>
       <TransactionTypeFigure
-        address={senderId}
-        transactionType={type}
+        address={sender.address}
+        moduleAssetId={moduleAssetId}
       />
       <h2 className="tx-header">{title}</h2>
     </div>
@@ -55,18 +59,18 @@ export const Illustration = () => {
 
 export const Sender = () => {
   const {
-    activeToken, netCode, transaction,
+    activeToken, transaction, network,
   } = useContext(Context);
   const delegateName = getDelegateName(transaction, activeToken);
-  const { senderLabel } = transactionTypes.getByCode(transaction.type || 0);
+  const senderLabel = getModuleAssetSenderLabel()[transaction.moduleAssetId];
 
   return (
     <AccountInfo
       className={`${styles.value} ${styles.sender}`}
       name={delegateName}
       token={activeToken}
-      netCode={netCode}
-      address={transaction.senderId}
+      network={network}
+      address={transaction.sender.address}
       addressClass="sender-address"
       label={senderLabel}
     />
@@ -75,15 +79,15 @@ export const Sender = () => {
 
 export const Recipient = ({ t }) => {
   const {
-    activeToken, netCode, transaction: { recipientId },
+    activeToken, network, transaction,
   } = useContext(Context);
 
   return (
     <AccountInfo
       className={`${styles.value} ${styles.recipient}`}
       token={activeToken}
-      netCode={netCode}
-      address={recipientId}
+      network={network}
+      address={transaction.asset.recipient.address}
       addressClass="receiver-address"
       label={t('Recipient')}
     />
@@ -130,14 +134,15 @@ export const Amount = ({
   t,
 }) => {
   const {
-    activeToken, transaction: { amount, recipientId, senderId },
+    activeToken, transaction,
   } = useContext(Context);
+  const addresses = [transaction.asset.recipient ?? '', transaction.sender.address];
 
   return (
     <ValueAndLabel label={t('Amount of Transaction')} className={styles.amount}>
-      <DiscreetMode addresses={[recipientId, senderId]} shouldEvaluateForOtherAccounts>
+      <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
         <span className="tx-amount">
-          <LiskAmount val={amount} />
+          <LiskAmount val={getTxAmount(transaction)} />
           {' '}
           {activeToken}
         </span>
@@ -148,7 +153,7 @@ export const Amount = ({
 
 export const Date = ({ t }) => {
   const {
-    activeToken, transaction: { timestamp },
+    activeToken, transaction,
   } = useContext(Context);
 
   return (
@@ -157,7 +162,7 @@ export const Date = ({ t }) => {
         <DateTimeFromTimestamp
           fulltime
           className="date"
-          time={timestamp}
+          time={transaction.block.timestamp}
           token={activeToken}
           showSeconds
         />
@@ -183,10 +188,12 @@ export const Fee = ({ t }) => {
 };
 
 export const Confirmations = ({ t }) => {
+  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const {
-    activeToken, transaction: { confirmations },
+    activeToken, transaction,
   } = useContext(Context);
 
+  const confirmations = currentBlockHeight ? currentBlockHeight - transaction.height : 0;
   return (
     <ValueAndLabel
       className={styles.confirmations}
@@ -240,12 +247,12 @@ export const Members = ({ t }) => {
   const { optionalKeys, mandatoryKeys } = asset;
 
   const members = useMemo(() => optionalKeys.map(publicKey => ({
-    address: extractAddress(publicKey),
+    address: extractAddressFromPublicKey(publicKey),
     publicKey,
     mandatory: false,
   })).concat(
     mandatoryKeys.map(publicKey => ({
-      address: extractAddress(publicKey),
+      address: extractAddressFromPublicKey(publicKey),
       publicKey,
       mandatory: true,
     })),

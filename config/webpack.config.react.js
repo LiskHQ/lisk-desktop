@@ -1,10 +1,9 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const { resolve } = require('path');
 const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const InlineChunkHtmlPlugin = require('inline-chunk-html-plugin');
 const fs = require('fs');
 const path = require('path');
 const reactToolboxVariables = require('./reactToolbox.config');
@@ -21,29 +20,20 @@ const getLocales = (url) => {
   });
   return str.join('|');
 };
-/* eslint-enable import/no-extraneous-dependencies */
 
 const langRegex = getLocales('../i18n/languages.js');
-const entries = {
-  app: `${resolve(__dirname, '../src')}/main.js`,
-  head: `${resolve(__dirname, '../src/assets/css')}/styles.head.css`,
-};
-// const extractHeadCSS = new MiniCssExtractPlugin({
-//   filename: 'head.css',
-//   allChunks: false,
-// });
+
 const cssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: true,
-    // minimize: true,
-    // importLoaders: 1,
     modules: {
       mode: 'local',
       localIdentName: '[name]__[local]___[hash:base64:5]',
     },
   },
 };
+
 const headCssLoader = {
   loader: 'css-loader',
   options: {
@@ -51,16 +41,9 @@ const headCssLoader = {
     modules: false,
   },
 };
-// const headCssLoadersConfig = { ...headCssLoader };
 
 const MiniCssExtractPluginLoader = {
   loader: MiniCssExtractPlugin.loader,
-  options: {
-    // only enable hot in development
-    hmr: process.env.DEBUG,
-    // if hmr does not work, this is a forceful method.
-    reloadAll: false,
-  },
 };
 
 const reactToastifyLoader = {
@@ -81,7 +64,6 @@ const postCssLoader = {
     sourceMap: true,
     sourceComments: true,
     plugins: [
-      /* eslint-disable import/no-extraneous-dependencies */
       require('postcss-partial-import')({}),
       require('postcss-mixins')({}),
       require('postcss-nesting')({}),
@@ -99,13 +81,16 @@ const postCssLoader = {
         },
       }),
       require('postcss-for')({}),
-      /* eslint-enable import/no-extraneous-dependencies */
     ],
   },
 };
 
-module.exports = {
-  entry: entries,
+const config = {
+  mode: 'development',
+  entry: {
+    app: `${resolve(__dirname, '../src')}/main.js`,
+    head: `${resolve(__dirname, '../src/assets/css')}/styles.head.css`,
+  },
   devtool: 'source-map',
   devServer: {
     contentBase: 'src',
@@ -118,35 +103,26 @@ module.exports = {
       VERSION: `"${bundleVersion}"`,
     }),
     new StyleLintPlugin({
-      context: `${resolve(__dirname, '../src')}/`,
+      context: `${resolve(__dirname, '../src')}`,
       files: '**/*.css',
       config: stylelintrc,
     }),
-    // new MiniCssExtractPlugin({
-    //   filename: 'head.css',
-    //   allChunks: false,
-    //   id: 1,
-    //   chunkFilename: 'head.css',
-    // }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      allChunks: true,
-      id: 2,
       chunkFilename: '[name].css',
     }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       VERSION: bundleVersion,
       inject: false,
-      inlineSource: '.(css)$',
       excludeChunks: ['head'],
-      parameters: {
-        style: 'styles.[hash].css',
-        bundle: 'bundle.vendor.[hash].js',
-        app: 'bundle.app.[hash].js',
+      templateParameters: {
+        style: 'styles.[contenthash].css',
+        bundle: 'bundle.vendor.[contenthash].js',
+        app: 'bundle.app.[contenthash].js',
       },
     }),
-    new HtmlWebpackInlineSourcePlugin(),
+    new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
     new I18nScannerPlugin({
       translationFunctionNames: ['i18next.t', 'props.t', 'this.props.t', 't'],
       outputFilePath: './i18n/locales/en/common.json',
@@ -175,3 +151,5 @@ module.exports = {
     ],
   },
 };
+
+module.exports = config;

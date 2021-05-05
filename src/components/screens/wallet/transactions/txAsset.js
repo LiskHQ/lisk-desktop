@@ -1,20 +1,18 @@
 import React from 'react';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 
-import { tokenMap } from '../../../../constants/tokens';
-import LiskAmount from '../../../shared/liskAmount';
-import { truncateAddress } from '../../../../utils/account';
+import VoteItem from '@shared/voteItem';
 import styles from './transactions.css';
 
-const generateVotes = (asset) => {
+const generateVotes = (asset, delegates) => {
   const voteElements = asset.votes.slice(0, 2).map(vote => (
-    <div key={vote.delegateAddress} className={styles.voteItem}>
-      <span className={styles.username}>
-        {vote.delegateAddress && truncateAddress(vote.delegateAddress)}
-      </span>
-      <span>
-        <LiskAmount val={vote.amount} token={tokenMap.LSK.key} />
-      </span>
-    </div>
+    <VoteItem
+      key={`vote-${vote.delegateAddress}`}
+      vote={{ confirmed: vote.amount }}
+      address={vote.delegateAddress}
+      title={delegates[vote.delegateAddress]}
+      truncate
+    />
   ));
 
   return (
@@ -29,8 +27,11 @@ const generateVotes = (asset) => {
   );
 };
 
+const voteAssetType = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
+const registerDelegateAssetType = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
+
 const TransactionAsset = ({
-  transaction,
+  transaction, delegates,
 }) => {
   const {
     asset, username, type, token,
@@ -38,15 +39,15 @@ const TransactionAsset = ({
   let data = token !== 'BTC' ? '-' : '';
   let className = '';
   switch (type) {
-    case 2:
-      data = asset && asset.delegate ? asset.delegate.username : username;
+    case registerDelegateAssetType:
+      data = asset?.delegate?.username ?? username;
       break;
-    case 3:
+    case voteAssetType:
       className = styles.delegateVote;
-      data = asset && asset.votes ? generateVotes(asset) : data;
+      data = asset?.votes ? generateVotes(asset, delegates) : data;
       break;
     default:
-      data = asset && asset.data ? asset.data : data;
+      data = asset?.data ?? data;
       break;
   }
 

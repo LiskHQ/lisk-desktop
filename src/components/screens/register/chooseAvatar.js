@@ -2,9 +2,9 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import routes from '../../../constants/routes';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
-import AccountVisual from '../../toolbox/accountVisual';
+import { routes } from '@constants';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
+import AccountVisual from '@toolbox/accountVisual';
 import registerStyles from './register.css';
 import styles from './chooseAvatar.css';
 
@@ -59,7 +59,7 @@ class ChooseAvatar extends React.Component {
     const { deselect } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
           <h1 className={styles.title}>
             {t('Choose your avatar')}
@@ -109,7 +109,7 @@ class ChooseAvatar extends React.Component {
             </PrimaryButton>
           </span>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

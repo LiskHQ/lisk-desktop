@@ -1,16 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import styles from './transactionPriority.css';
-import { tokenMap } from '../../../constants/tokens';
-import Input from '../../toolbox/inputs/input';
-import Icon from '../../toolbox/icon';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import Spinner from '../../toolbox/spinner';
+import { tokenMap, MODULE_ASSETS_MAP } from '@constants';
 import {
   formatAmountBasedOnLocale,
-} from '../../../utils/formattedNumber';
-import { toRawLsk, fromRawLsk } from '../../../utils/lsk';
-import transactionTypes from '../../../constants/transactionTypes';
+} from '@utils/formattedNumber';
+import { toRawLsk, fromRawLsk } from '@utils/lsk';
+import Input from '@toolbox/inputs/input';
+import Icon from '@toolbox/icon';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import Spinner from '@toolbox/spinner';
+
+import styles from './transactionPriority.css';
 
 const CUSTOM_FEE_INDEX = 3;
 
@@ -28,11 +28,11 @@ const getRelevantPriorityOptions = (options, token) =>
     index !== CUSTOM_FEE_INDEX
   || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key));
 
-const isCustomFeeValid = (value, hardCap, minFee) => {
+const isCustomFeeValid = (value, maxFee, minFee) => {
   if (!value) return false;
   const rawValue = toRawLsk(parseFloat(value));
 
-  if (rawValue > hardCap) {
+  if (rawValue > maxFee) {
     return false;
   }
 
@@ -47,31 +47,33 @@ const isCustomFeeValid = (value, hardCap, minFee) => {
 const TransactionPriority = ({
   t,
   token,
-  priorityOptions,
-  selectedPriority,
-  setSelectedPriority,
+  moduleAssetId,
   fee,
   minFee,
   customFee,
   setCustomFee,
-  txType,
+  priorityOptions,
+  selectedPriority,
+  setSelectedPriority,
   className,
+  loadError,
+  isLoading,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
-  const [inputValue, setInputValue] = useState(undefined);
-  const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
-  const isLoading = priorityOptions[0].value === 0;
-  let hardCap = 0;
+  const [inputValue, setInputValue] = useState();
+
+  let maxFee = 0;
   if (token === tokenMap.LSK.key) {
-    hardCap = transactionTypes.getHardCap(txType);
+    maxFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
   }
 
   const onClickPriority = (e) => {
     e.preventDefault();
-    if (setCustomFee) {
-      setCustomFee(undefined);
-    }
     const selectedIndex = Number(e.target.value);
+    if (setCustomFee && selectedIndex !== CUSTOM_FEE_INDEX) {
+      setCustomFee(undefined);
+      setInputValue(undefined);
+    }
     setSelectedPriority({ item: priorityOptions[selectedIndex], index: selectedIndex });
     if (showEditIcon) {
       setShowEditIcon(false);
@@ -83,7 +85,7 @@ const TransactionPriority = ({
     const newValue = e.target.value;
     if (token === tokenMap.LSK.key) {
       setInputValue(newValue);
-      if (isCustomFeeValid(newValue, hardCap, minFee)) {
+      if (isCustomFeeValid(newValue, maxFee, minFee)) {
         setCustomFee({ value: newValue, feedback: '', error: false });
       } else {
         setCustomFee({ value: undefined, feedback: 'invalid custom fee', error: true });
@@ -112,6 +114,8 @@ const TransactionPriority = ({
     getRelevantPriorityOptions(priorityOptions, token),
   [priorityOptions, token]);
 
+  const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
+
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} ${className} transaction-priority`}>
       <div className={`${styles.col}`}>
@@ -126,16 +130,30 @@ const TransactionPriority = ({
           </Tooltip>
         </span>
         <div className={`${styles.prioritySelector} priority-selector`}>
-          {tokenRelevantPriorities.map((priority, index) => (
-            <button
-              key={`fee-priority-${index}`}
-              className={`${styles.priorityTitle} ${index === selectedPriority ? styles.priorityTitleSelected : ''} option-${priority.title}`}
-              onClick={onClickPriority}
-              value={index}
-            >
-              {priority.title}
-            </button>
-          ))}
+          {tokenRelevantPriorities.map((priority, index) => {
+            let disabled = false;
+            if (index === 0) {
+              priority.title = priority.value === 0 ? 'Normal' : 'Low';
+            } else if (index === 3) {
+              // Custom fee option
+              disabled = priority.value === 0 && !loadError;
+            } else {
+              // Medium and high fee option
+              disabled = priority.value === 0 || loadError;
+            }
+
+            return (
+              <button
+                key={`fee-priority-${index}`}
+                className={`${styles.priorityTitle} ${index === selectedPriority ? styles.priorityTitleSelected : ''} option-${priority.title}`}
+                onClick={onClickPriority}
+                value={index}
+                disabled={disabled}
+              >
+                {priority.title}
+              </button>
+            );
+          })}
         </div>
       </div>
       <div className={`${styles.col} fee-container`}>
@@ -173,8 +191,8 @@ const TransactionPriority = ({
                 onChange={onInputChange}
                 onBlur={onInputBlur}
                 onFocus={onInputFocus}
-                status={!isCustomFeeValid(inputValue, hardCap, minFee) ? 'error' : 'ok'}
-                feedback={`fee must be between ${minFee} and ${fromRawLsk(hardCap)}`}
+                status={!isCustomFeeValid(inputValue, maxFee, minFee) ? 'error' : 'ok'}
+                feedback={`fee must be between ${minFee} and ${fromRawLsk(maxFee)}`}
               />
             ) : (
               <span className={`${styles.feeValue} fee-value`} onClick={onClickCustomEdit}>
@@ -202,7 +220,7 @@ TransactionPriority.propTypes = {
   fee: PropTypes.object,
   customFee: PropTypes.number,
   minFee: PropTypes.number,
-  txType: PropTypes.string,
+  moduleAssetId: PropTypes.string,
   className: PropTypes.string,
 };
 

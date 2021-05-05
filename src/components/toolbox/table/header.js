@@ -1,13 +1,12 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { isReactComponent } from '@utils/helpers';
 import Tooltip from '../tooltip/tooltip';
 import styles from './table.css';
-import { isReactComponent } from '../../../utils/helpers';
 
 const Tip = ({ data }) => {
-  if (!data || !(typeof data === 'string' || isReactComponent(data.message))) return null;
-
-  const Message = typeof data === 'string'
+  if (!data || typeof data !== 'object' || isReactComponent(data.message)) return null;
+  const Message = typeof data.message === 'string'
     ? () => <p>{data.message}</p>
     : data.message;
   return (
@@ -60,10 +59,13 @@ const Header = ({ data, currentSort }) => {
                       currentSort={currentSort}
                     >
                       <span>{item.title}</span>
-                      <Tip data={item.tooltip} />
+                      {item.tooltip && <Tip data={item.tooltip} />}
                     </Sort>
                   ) : (
-                    <span>{item}</span>
+                    <>
+                      <span>{item}</span>
+                      {item.tooltip && <Tip data={item.tooltip} />}
+                    </>
                   )
               }
             </div>

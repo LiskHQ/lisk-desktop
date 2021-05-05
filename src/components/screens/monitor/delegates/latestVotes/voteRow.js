@@ -1,65 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
-import { DateTimeFromTimestamp } from '../../../../toolbox/timestamp';
-import LiskAmount from '../../../../shared/liskAmount';
-import AccountVisualWithAddress from '../../../../shared/accountVisualWithAddress';
-import DialogLink from '../../../../toolbox/dialog/link';
+
+import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
+import DialogLink from '@toolbox/dialog/link';
+import VoteItem from '@shared/voteItem';
 import styles from '../delegates.css';
 
+const VotesItemsList = ({ votes = [], delegates }) => {
+  const [showAll, setShowAll] = useState(false);
+  const { t } = useTranslation();
+  return (
+    <>
+      {
+        votes.length > 0 && (
+          <span className={styles.vote}>
+            <span className={styles.delegatesList}>
+              {votes.slice(0, showAll ? votes.length : 2).map(({ amount, delegateAddress }) => (
+                <VoteItem
+                  key={`vote-${delegateAddress}`}
+                  vote={{ confirmed: amount }}
+                  address={delegateAddress}
+                  title={delegates[delegateAddress] && delegates[delegateAddress].username}
+                  truncate
+                />
+              ))}
+            </span>
+            {!showAll && votes.length > 2 && (
+              <button
+                className={`${styles.loadMoreVotesBtn}`}
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  evt.stopPropagation();
+                  setShowAll(true);
+                }}
+              >
+                  {t('{{restVotes}} more...', { restVotes: votes.length - 2 })}
+              </button>
+            )}
+          </span>
+        )
+      }
+    </>
+  );
+};
+
 const VoteRow = ({
-  data, className,
+  data, className, delegates,
 }) => {
-  const votes = data.votes
-    .filter(vote => vote.status === '+')
-    .map(vote => vote.delegate.username);
-  const unVotes = data.votes
-    .filter(vote => vote.status === '-')
-    .map(vote => vote.delegate.username);
+  const { votes } = data.asset;
   return (
     <DialogLink
       className={`${grid.row} ${className} ${styles.voteRow} vote-row`}
       component="transactionDetails"
       data={{ transactionId: data.id, token: 'LSK' }}
     >
-      <span className={grid['col-sm-3']}>
+      <span className={grid['col-xs-4']}>
         <AccountVisualWithAddress
-          address={data.senderId}
+          address={data.sender.address}
           transactionSubject="senderId"
           transactionType={3}
           showBookmarkedAddress
         />
       </span>
-      <span className={grid['col-sm-2']}>
-        <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
+      <span className={grid['col-xs-3']}>
+        <DateTimeFromTimestamp time={data.block.timestamp * 1000} token="BTC" />
       </span>
-      <span className={grid['col-sm-2']}>
-        <LiskAmount val={data.balance} token="LSK" />
-      </span>
-      <span className={`${grid['col-lg-1']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}>
+      <span className={`${grid['col-lg-2']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}>
         <span>{Math.ceil(data.height / 101)}</span>
       </span>
-      <span className={`${grid['col-sm-5']} ${grid['col-lg-4']} ${styles.votesColumn}`}>
-        {
-          votes.length ? (
-            <span className={styles.vote}>
-              <span className={styles.icon}>↑</span>
-              <span className={styles.delegatesList}>
-                {votes.map(username => <span key={username}>{username}</span>)}
-              </span>
-            </span>
-          ) : null
-        }
-        {
-          unVotes.length ? (
-            <span className={styles.unVote}>
-              <span className={styles.icon}>↓</span>
-              <span className={styles.delegatesList}>
-                {unVotes.map(username => <span key={username}>{username}</span>)}
-              </span>
-            </span>
-          ) : null
-        }
+      <span className={`${grid['col-xs-5']} ${grid['col-lg-3']} ${styles.votesColumn}`}>
+        <VotesItemsList votes={votes} delegates={delegates} />
       </span>
     </DialogLink>
   );

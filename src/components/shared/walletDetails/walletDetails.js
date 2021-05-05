@@ -1,13 +1,13 @@
 import React from 'react';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import BoxRow from '../../toolbox/box/row';
+import { tokenMap } from '@constants';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxRow from '@toolbox/box/row';
+import Icon from '@toolbox/icon';
 import LiskAmount from '../liskAmount';
-import { tokenMap } from '../../../constants/tokens';
 import DiscreetMode from '../discreetMode';
 import styles from './walletDetails.css';
-import Icon from '../../toolbox/icon';
 
 const MyAccount = ({
   t, account, settings, className,
@@ -26,14 +26,17 @@ const MyAccount = ({
       </BoxHeader>
       <BoxContent className={`${styles.container} coin-container`}>
         {
-        coins.map(coin => (
-          <BoxRow key={coin.token} className={`${styles.row} coin-row`}>
-            <Icon name={coin.token === tokenMap.LSK.key ? 'lskIcon' : 'btcIcon'} />
+        coins.map((coin, index) => (
+          <BoxRow key={`${coin.address}-${index}`} className={`${styles.row} coin-row`}>
+            <Icon name={coin.token === tokenMap.BTC.key ? 'btcIcon' : 'lskIcon'} />
             <div className={styles.details}>
-              <span>{t('{{token}} balance', { token: tokenMap[coin.token].label })}</span>
+              <span>{t('{{token}} balance', { token: tokenMap[coin.token === tokenMap.BTC.key ? coin.token : tokenMap.LSK.key].label })}</span>
               <DiscreetMode>
                 <span className={styles.amounts}>
-                  <LiskAmount val={coin.balance} token={coin.token} />
+                  <LiskAmount
+                    val={coin.token === tokenMap.BTC.key ? coin.balance : coin.summary?.balance}
+                    token={coin.token === tokenMap.BTC.key ? coin.token : tokenMap.LSK.key}
+                  />
                 </span>
               </DiscreetMode>
             </div>

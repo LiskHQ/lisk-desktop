@@ -80,7 +80,7 @@
     @mixin contentNormal bold;
 
     color: var(--color-maastricht-blue);
-    padding: 16px 20px;
+    padding: 16px 8px;
   }
 }
 
@@ -117,6 +117,8 @@
 
 .titleWrapper {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .sortInactive {

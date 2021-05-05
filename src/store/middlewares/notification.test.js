@@ -1,35 +1,42 @@
-import { expect } from 'chai';
-import { spy, stub } from 'sinon';
+import configureStore from 'redux-mock-store';
+
+import { actionTypes } from '@constants';
+import Notification from '@utils/notification';
 import middleware from './notification';
-import actionTypes from '../../constants/actions';
-import Notification from '../../utils/notification';
+
+const fakeStore = configureStore();
 
 describe('Notification middleware', () => {
-  let store;
-  let next;
+  const next = jest.fn();
+  const store = fakeStore({
+    account: {
+      token: {
+        balance: 100,
+      },
+    },
+    settings: {
+      token: {
+        active: 'LSK',
+      },
+    },
+  });
   const accountUpdatedAction = balance => ({
     type: actionTypes.accountUpdated,
     data: {
-      balance,
+      token: {
+        balance,
+      },
     },
   });
 
-  beforeEach(() => {
-    next = spy();
-    store = stub();
-    store.getState = () => ({
-      account: {
-        balance: 100,
-      },
-    });
-    store.dispatch = spy();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should init Notification service', () => {
-    const spyFn = spy(Notification, 'init');
+    const spyFn = jest.spyOn(Notification, 'init');
     middleware(store);
-    expect(spyFn).to.have.been.calledWith();
-    spyFn.restore();
+    expect(spyFn).toHaveBeenCalledWith();
   });
 
   it('should just pass action along for all actions', () => {
@@ -38,21 +45,19 @@ describe('Notification middleware', () => {
       data: 'SAMPLE_DATA',
     };
     middleware(store)(next)(sampleAction);
-    expect(next).to.have.been.calledWith(sampleAction);
+    expect(next).toHaveBeenCalledWith(sampleAction);
   });
 
   it(`should handle notify.about method on ${actionTypes.accountUpdated} action`, () => {
-    const spyFn = spy(Notification, 'about');
+    const spyFn = jest.spyOn(Notification, 'about');
     middleware(store)(next)(accountUpdatedAction(1000));
-    expect(spyFn).to.have.been.calledWith('deposit', 900);
-    spyFn.restore();
+    expect(spyFn).toHaveBeenCalledWith('deposit', 900);
   });
 
   it(`should not handle notify.about method on ${actionTypes.accountUpdated} action if balance the same or lower than current`, () => {
-    const spyFn = spy(Notification, 'about');
+    const spyFn = jest.spyOn(Notification, 'about');
     middleware(store)(next)(accountUpdatedAction(100));
     middleware(store)(next)(accountUpdatedAction(50));
-    expect(spyFn.called).to.be.equal(false);
-    spyFn.restore();
+    expect(spyFn).toHaveBeenCalledTimes(0);
   });
 });

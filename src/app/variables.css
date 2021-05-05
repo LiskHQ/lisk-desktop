@@ -111,6 +111,7 @@ or "warn/action" ineastd of "red/green"
   --color-jade-green: #2bd67b;
   --color-pale-pink: #ffd0d1;
   --color-silver: #eef0f7;
+  --color-black: #000;
 
   /*************************
       Other Colors
@@ -127,6 +128,7 @@ or "warn/action" ineastd of "red/green"
   --color-primary-light: #9db8fa;
   --color-white: #fff;
   --color-danger: #ff7721;
+  --color-red: #ff4557;
   --color-content: #19224d;
   --color-content-light: #0c152e;
   --color-primary-very-light: #e8f0fa;
@@ -159,6 +161,12 @@ or "warn/action" ineastd of "red/green"
   --color-side-bar: var(--color-maastricht-blue);
   --color-search-container: #1d2b52;
   --color-periwinkle-blue: #c5cfe4;
+  --color-vote-item-bg: var(--color-silver);
+  --color-yellow-transparent: rgba(247, 227, 109, 0.3);
+  --color-red-transparent: rgba(255, 69, 87, 0.1);
+  --color-blue-manatee-transparent: rgba(138, 140, 162, 0.1);
+  --color-jade-green-transparent: rgba(43, 214, 123, 0.1);
+  --color-tooltip: rgb(255, 255, 255, 0.9);
 
   /*************************
         Box
@@ -204,7 +212,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
 }
 
-@custom-media --xLarge-viewport (min-width: 1400px);
+@custom-media --xLarge-viewport (max-width: 1600px);
 @custom-media --large-viewport (max-width: 1400px);
 @custom-media --medium-viewport (max-width: 1024px);
 @custom-media --small-viewport (max-width: 768px);
@@ -219,6 +227,7 @@ or "warn/action" ineastd of "red/green"
   --color-platinum: #4d4d50;
   --color-white-smoke: #1c1c1c;
   --color-maastricht-blue: #fff;
+  --color-black: #fff;
   --dark-border-color: #373739;
   --color-mystic: #4d4d50;
   --color-body-bg: #000;
@@ -238,4 +247,6 @@ or "warn/action" ineastd of "red/green"
   --color-side-bar: #1c1c1e;
   --tab-border-color: #4070f4;
   --color-search-container: var(--color-body-bg);
+  --color-vote-item-bg: var(--color-mystic);
+  --color-tooltip: rgb(35, 35, 37, 0.9);
 }

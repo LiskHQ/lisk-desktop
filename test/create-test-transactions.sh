@@ -21,6 +21,16 @@ function transfer(){
 	lisk transaction:broadcast $(lisk transaction:create:transfer $1 0.1 $2 $3 --data=$4 --passphrase="$PASSPHRASE_GENESIS" --networkIdentifier=$NETWORK_IDENTIFIER)
 }
 
+function registerDelegate(){
+	lisk transaction:broadcast $(lisk transaction:create:delegate 0 11 delegate --passphrase="recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit" --networkIdentifier=$NETWORKIDENTIFIER)
+}
+
+function vote() {
+	lisk transaction:broadcast $(lisk transaction:create --type=13 156 0.1 --votes="537318935439898807L,100" --passphrase="peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" --networkIdentifier=93d00fe5be70d90e7ae247936a2e7d83b50809c79b73fa14285f02c842348b3e)
+	sleep 20
+	lisk transaction:broadcast $(lisk transaction:create --type=13 157 0.1 --votes="537318935439898807L,-20" --passphrase="peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready" --networkIdentifier=93d00fe5be70d90e7ae247936a2e7d83b50809c79b73fa14285f02c842348b3e)
+}
+
 for i in {1..50}; do
   CURRENT=$(( $i + $GENESIS_NONCE - 1 ))
 	transfer ${CURRENT} ${i}00 537318935439898807L test
@@ -32,7 +42,22 @@ transfer 155 70 16422276087748907680L send-all-account
 transfer 156 1 94495548317450502L without-initialization
 
 # wait for the account registration tx to be included in the blockchain
-sleep 15
+sleep 20
+registerDelegate
+sleep 20
+vote
+
+# initialize accounts
+transfer 158 1 544792633152563672L account-initializer
+transfer 159 1 4264113712245538326L account-initializer
+
+sleep 20
+
+lisk transaction:broadcast $(lisk transaction:create:transfer 0 0.1 1 544792633152563672L --data=account-initialization \
+--passphrase="right cat soul renew under climb middle maid powder churn cram coconut" --networkIdentifier=$NETWORKIDENTIFIER)
+
+lisk transaction:broadcast $(lisk transaction:create:transfer 0 0.1 1 4264113712245538326L --data=account-initialization \
+--passphrase="dolphin inhale planet talk insect release maze engine guilt loan attend lawn" --networkIdentifier=$NETWORKIDENTIFIER)
 
 # register multisig account with the multiSig_candidate account
 # transaction:create:multisignature {nonce} {fee} --mandatory-key="xxx" --mandatory-key="yyy" --optional-key="yyy" --optional-key="yyy" --number-of-signatures=4 --passphrase="****" --member-passphrase="****" --member-passphrase="****" 
@@ -42,7 +67,7 @@ TRANSACTION2=$(lisk transaction:sign "$TRANSACTION1" --optional-key="$PUBLICKEY_
 lisk transaction:broadcast "$TRANSACTION2"
 
 # wait for the account registration tx to be included in the blockchain
-sleep 15
+sleep 20
 
 # create and broadcast a multisig tx
 TRANSACTION3=$(lisk transaction:create:transfer 1 0.1 1 5932438298200837883L --networkIdentifier="$NETWORK_IDENTIFIER" --passphrase="$PASSPHRASE_MULTISIG")

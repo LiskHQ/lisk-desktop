@@ -1,19 +1,21 @@
 import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
-import Table from '../../../toolbox/table';
+
+import withLocalSort from '@utils/withLocalSort';
+import { getNetworkStatistics, getPeers } from '@api/network';
+import withData from '@utils/withData';
+import { tokenMap } from '@constants';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import Table from '@toolbox/table';
 import styles from './network.css';
 import header from './tableHeader';
 import Map from './map';
 import PeerRow from './peerRow';
 import Overview from './overview';
-import withLocalSort from '../../../../utils/withLocalSort';
-import liskService from '../../../../utils/api/lsk/liskService';
-import withData from '../../../../utils/withData';
 
 /**
  * Compares two version values to and returns
@@ -104,16 +106,20 @@ export const NetworkPure = ({
 export default compose(
   withData({
     networkStatistics: {
-      apiUtil: liskService.getNetworkStatistics,
+      apiUtil: network => getNetworkStatistics({ network }, tokenMap.LSK.key),
       defaultData: {},
       autoload: true,
       transformResponse: response => response.data,
     },
     peers: {
-      apiUtil: liskService.getConnectedPeers,
+      apiUtil: (network, params) => getPeers({ network, params }, tokenMap.LSK.key),
       defaultData: [],
       autoload: true,
-      transformResponse: response => response.data,
+      transformResponse: (response, peers, urlSearchParams) => (
+        urlSearchParams.offset
+          ? [...peers, ...response.data]
+          : response.data
+      ),
     },
   }),
   withLocalSort('peers', 'height:desc', { version: sortByVersion }),

@@ -1,19 +1,20 @@
+import { mountWithRouter } from '@utils/testHelpers';
 import VerifyMessage from './verifyMessage';
-import { mountWithRouter } from '../../../utils/testHelpers';
+import { genesis } from '../../../../test/constants/accounts';
 
 describe('VerifyMessage Component', () => {
   let wrapper;
   const props = {
     history: {
-      location: { search: '?message=Hello&publicKey=c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f&signature=c68adc131' },
+      location: { search: `?message=Hello&publicKey=${genesis.summary.publicKey}&signature=c68adc131` },
       goBack: jest.fn(),
       push: jest.fn(),
     },
     t: v => v,
   };
   const message = 'Hello world';
-  const publicKey = 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f';
-  const signature = 'c68adc13131696c35ac82b9bb6884ee4de66ff281b013fe4ded66a73243c860b6a74b759bfb8d25db507ea2bec4bb208f8bb514fa18380416e637db947f0ab06';
+  const publicKey = genesis.summary.publicKey;
+  const signature = '2240598a4d7700010d82a60b066c5daf1f45fe673dbbd0e4b368ac8d07f78710e7685a598395784066f2e474db8095b7cb2ba503bcc3f1bb06c528cf048fc201';
   const signedMessage = `-----MESSAGE-----
 ${message}
 -----PUBLIC KEY-----

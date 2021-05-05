@@ -1,11 +1,11 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import moment from 'moment';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import DropdownButton from '@toolbox/dropdownButton';
+import Icon from '@toolbox/icon';
 import AmountFieldGroup from './amountFieldGroup';
 import DateFieldGroup from './dateFieldGroup';
-import DropdownButton from '../../toolbox/dropdownButton';
-import Icon from '../../toolbox/icon';
 import IntegerFilter from './integerFilter';
 import TextFilter from './textFilter';
 import styles from './filterContainer.css';
@@ -113,7 +113,7 @@ class FilterDropdownButton extends React.Component {
     const { t, fields } = this.props;
 
     return (
-      <React.Fragment>
+      <>
         {fields.length > 3 && (
         <span onClick={this.extendFilters} className={[styles.actionable, 'more-less-switch'].join(' ')}>
           {areFiltersExtended ? t('Less filters') : t('More Filters')}
@@ -127,7 +127,7 @@ class FilterDropdownButton extends React.Component {
         >
           {t('Apply Filters')}
         </PrimaryButton>
-      </React.Fragment>
+      </>
     );
   }
 
@@ -139,10 +139,10 @@ class FilterDropdownButton extends React.Component {
       <DropdownButton
         buttonClassName="filterTransactions filter"
         buttonLabel={(
-          <React.Fragment>
+          <>
             {t('Filter')}
             <Icon className="button-icon" name="iconFilter" />
-          </React.Fragment>
+          </>
         )}
         size="l"
         ButtonComponent={SecondaryButton}

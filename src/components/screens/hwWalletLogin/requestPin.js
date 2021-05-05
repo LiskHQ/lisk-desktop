@@ -1,9 +1,9 @@
 import { to } from 'await-to-js';
 import React from 'react';
-import { Input } from '../../toolbox/inputs';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
-import { getPublicKey, validatePin } from '../../../utils/hwManager';
-import externalLinks from '../../../constants/externalLinks';
+import { getPublicKey, validatePin } from '@utils/hwManager';
+import { externalLinks } from '@constants';
+import { Input } from '@toolbox/inputs';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
 import styles from './requestPin.css';
 
 class RequestPin extends React.Component {
@@ -22,9 +22,11 @@ class RequestPin extends React.Component {
   }
 
   componentDidMount() {
+    this.mounted = true;
     const { nextStep, deviceId } = this.props;
-    if (this.selectedDevice.model !== 'Trezor Model One') nextStep({ deviceId });
-    else this.checkDeviceUnlocked();
+    if (this.selectedDevice.model !== 'Trezor Model One') {
+      nextStep({ deviceId });
+    } else this.checkDeviceUnlocked();
   }
 
   async checkDeviceUnlocked() {
@@ -64,9 +66,13 @@ class RequestPin extends React.Component {
       this.setState({
         isLoading: false, error: true, feedback: t('Invalid PIN'), pin: '',
       });
-    } else {
+    } else if (this.mounted) {
       nextStep({ deviceId });
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   render() {

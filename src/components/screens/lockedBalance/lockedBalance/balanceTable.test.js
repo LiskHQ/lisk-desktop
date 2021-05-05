@@ -1,37 +1,39 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import {
+  calculateBalanceLockedInVotes,
+  calculateUnlockableBalance,
+} from '@utils/account';
 import BalanceTable from './balanceTable';
 import accounts from '../../../../../test/constants/accounts';
-import {
-  calculateLockedBalance,
-  calculateAvailableBalance,
-} from '../../../../utils/account';
 
 describe('unlock transaction Status', () => {
   let wrapper;
 
   const account = {
     ...accounts.genesis,
-    unlocking: [
-      { amount: '1000000000', unvoteHeight: 4900, delegateAddress: '1L' },
-      { amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' },
-      { amount: '1000000000', unvoteHeight: 3000, delegateAddress: '3L' },
-    ],
-    votes: [
-      { amount: '500000000000', delegateAddress: '1L' },
-      { amount: '3000000000', delegateAddress: '3L' },
-      { amount: '2000000000', delegateAddress: '1L' },
-    ],
-    nonce: '178',
+    dpos: {
+      unlocking: [
+        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+        { amount: '3000000000', height: { start: 100, end: 10100 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+        { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+      ],
+    },
+    sequence: { nonce: '178' },
   };
+  const voting = {
+    lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 500000000000 },
+    lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 3000000000 },
+    lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: { confirmed: 2000000000 },
+  };
+
   const currentBlockHeight = 5000;
-  const currentBlock = { height: currentBlockHeight };
 
   const props = {
     t: key => key,
-    lockedBalance: calculateLockedBalance(account),
-    availableBalance: calculateAvailableBalance(account, currentBlock),
-    currentBlock,
+    lockedInVotes: calculateBalanceLockedInVotes(voting),
+    unlockableBalance: calculateUnlockableBalance(account.dpos.unlocking, currentBlockHeight),
+    currentBlockHeight,
     account,
   };
 
@@ -39,30 +41,36 @@ describe('unlock transaction Status', () => {
     wrapper = mount(<BalanceTable {...props} />);
     expect(wrapper).toContainMatchingElement('.lock-balance-amount-container');
     expect(wrapper.find('.locked-balance').text()).toEqual('5,050 LSK');
-    expect(wrapper.find('.available-balance').text()).toEqual('30 LSK');
+    expect(wrapper.find('.available-balance').text()).toEqual('10 LSK');
     expect(wrapper.find('.unlocking-balance')).toHaveLength(2);
   });
 
   it('renders properly when contains selfvotes', () => {
     const customAccount = {
       ...account,
-      unlocking: [
-        { amount: '1000000000', unvoteHeight: 4900, delegateAddress: '1L' },
-        { amount: '3000000000', unvoteHeight: 2500, delegateAddress: accounts.genesis.address },
-        { amount: '3000000000', unvoteHeight: 2900, delegateAddress: accounts.genesis.address },
-      ],
-      votes: [
-        { amount: '500000000000', delegateAddress: '1L' },
-        { amount: '9000000000000', delegateAddress: accounts.genesis.address },
-        { amount: '2000000000', delegateAddress: '1L' },
-      ],
+      dpos: {
+        unlocking: [
+          { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+          { amount: '3000000000', height: { start: 2500, end: 30500 }, delegateAddress: accounts.genesis.summary.address },
+          { amount: '3000000000', height: { start: 2900, end: 30900 }, delegateAddress: accounts.genesis.summary.address },
+        ],
+      },
+    };
+    const customVoting = {
+      lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 500000000000 },
+      lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 2000000000 },
+      [accounts.genesis.summary.address]: { confirmed: 9000000000000 },
     };
 
     const customProps = {
       ...props,
       account: customAccount,
-      lockedBalance: calculateLockedBalance(customAccount),
-      availableBalance: calculateAvailableBalance(customAccount, currentBlock),
+      lockedInVotes: calculateBalanceLockedInVotes(customVoting),
+      unlockableBalance: calculateUnlockableBalance(
+        customAccount.dpos.unlocking,
+        currentBlockHeight,
+      ),
+      currentBlockHeight,
     };
 
     wrapper = mount(<BalanceTable {...customProps} />);

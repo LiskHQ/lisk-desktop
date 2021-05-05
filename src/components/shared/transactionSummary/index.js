@@ -1,16 +1,16 @@
 import React from 'react';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
-import { extractPublicKey } from '../../../utils/account';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import BoxFooter from '../../toolbox/box/footer';
-import CheckBox from '../../toolbox/checkBox';
-import HardwareWalletIllustration from '../../toolbox/hardwareWalletIllustration';
-import PassphraseInput from '../../toolbox/passphraseInput';
-import Tooltip from '../../toolbox/tooltip/tooltip';
+import { extractPublicKey } from '@utils/account';
+import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import CheckBox from '@toolbox/checkBox';
+import HardwareWalletIllustration from '@toolbox/hardwareWalletIllustration';
+import PassphraseInput from '@toolbox/passphraseInput';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './transactionSummary.css';
-import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 
 class TransactionSummary extends React.Component {
   constructor(props) {
@@ -93,7 +93,7 @@ class TransactionSummary extends React.Component {
   render() {
     const {
       title, children, confirmButton, cancelButton, account,
-      t, fee, confirmation, classNames, token, footerClassName,
+      t, fee, confirmation, classNames, token, footerClassName, showCancelButton = true,
     } = this.props;
     const {
       secondPassphrase, isHardwareWalletConnected, isConfirmed,
@@ -148,14 +148,14 @@ class TransactionSummary extends React.Component {
                   className={`${styles.tooltip}`}
                   title={t('What is your second passphrase?')}
                 >
-                  <React.Fragment>
+                  <>
                     <p className={`${styles.tooltupText}`}>
                       {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
                     </p>
                     <p className={`${styles.tooltipText}`}>
                       {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
                     </p>
-                  </React.Fragment>
+                  </>
                 </Tooltip>
               </label>
               <PassphraseInput
@@ -175,18 +175,21 @@ class TransactionSummary extends React.Component {
         ? null
         : (
           <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
-            <SecondaryButton
-              className={`${styles.editBtn} cancel-button`}
-              onClick={cancelButton.onClick}
-            >
-              {cancelButton.label}
-            </SecondaryButton>
+            {showCancelButton && (
+              <SecondaryButton
+                className={`${styles.editBtn} cancel-button`}
+                onClick={cancelButton.onClick}
+              >
+                {cancelButton.label}
+              </SecondaryButton>
+            )}
             <PrimaryButton
               className={`${styles.confirmBtn} confirm-button`}
               disabled={
               (!!account.secondPublicKey && !secondPassphrase.isValid)
               || (confirmation && !isConfirmed)
-              || confirmButton.disabled}
+              || confirmButton.disabled
+}
               onClick={this.confirmOnClick}
             >
               {confirmButton.label}

@@ -1,11 +1,11 @@
 import React from 'react';
-import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
-import AccountVisual from '../../../toolbox/accountVisual';
-import LiskAmount from '../../../shared/liskAmount';
-import { Input } from '../../../toolbox/inputs';
+import { tokenMap } from '@constants';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import AccountVisual from '@toolbox/accountVisual';
+import LiskAmount from '@shared/liskAmount';
+import { Input } from '@toolbox/inputs';
+import Icon from '@toolbox/icon';
 import styles from './selectAccount.css';
-import Icon from '../../../toolbox/icon';
-import { tokenMap } from '../../../../constants/tokens';
 
 const AccountCard = ({
   account,
@@ -21,7 +21,7 @@ const AccountCard = ({
     <header className={styles.header}>
       { accountOnEditMode === index
         ? (
-          <React.Fragment>
+          <>
             <Input
               value={account.name}
               size="xs"
@@ -29,19 +29,28 @@ const AccountCard = ({
               className="account-name"
               placeholder={t('Account name')}
             />
-            <PrimaryButton className={`${styles.saveBtn} save-account`} onClick={() => onSaveNameAccounts()}>{t('Save')}</PrimaryButton>
-          </React.Fragment>
+            <PrimaryButton
+              className={`${styles.saveBtn} save-account`}
+              onClick={() => onSaveNameAccounts()}
+            >
+              {t('Save')}
+            </PrimaryButton>
+          </>
         )
         : (
-          <React.Fragment>
-            <span className={`${styles.accountTitle} account-name`}>{account.name === null ? t('Unnamed account') : account.name}</span>
-            <SecondaryButton className={`${styles.editBtn} edit-account`} onClick={() => onEditAccount(index)}>
+          <>
+            <span className={`${styles.accountTitle} account-name`}>
+              {account.name === null ? t('Unnamed account') : account.name}
+            </span>
+            <SecondaryButton
+              className={`${styles.editBtn} edit-account`}
+              onClick={() => onEditAccount(index)}
+            >
               {t('Edit')}
               <Icon name="edit" />
             </SecondaryButton>
-          </React.Fragment>
-        )
-      }
+          </>
+        )}
     </header>
 
     <div className={styles.content}>
@@ -55,12 +64,15 @@ const AccountCard = ({
       </div>
       <div className={`${styles.row} row-balance`}>
         <p>
-          <LiskAmount val={account.balance} token={tokenMap.LSK.key} />
+          <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
         </p>
         <span>{t('Balance')}</span>
       </div>
 
-      <PrimaryButton className="select-account" onClick={() => onSelectAccount(account, index)}>
+      <PrimaryButton
+        className="select-account"
+        onClick={() => onSelectAccount(account, index)}
+      >
         {t('Select this account')}
       </PrimaryButton>
     </div>

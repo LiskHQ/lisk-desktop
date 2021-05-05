@@ -1,7 +1,9 @@
 Feature: Wallet Votes
 
-  Scenario: See all votes
+  Background:
     Given I login as genesis on devnet
+
+  Scenario: See all votes
     Given I am on Wallet page
     Given I open votes tab
-    Then I see no votes
+    Then I see 2 delegates in table

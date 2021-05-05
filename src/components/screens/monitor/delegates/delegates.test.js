@@ -15,12 +15,13 @@ activeDelegates.push({
   productivity: 0,
   publicKey: 'test_pbk',
   rank: 999,
+  address: '14018336151296112016L',
   account: {
     address: '14018336151296112016L',
     publicKey: 'test_pbk',
     secondPublicKey: '',
   },
-  approval: 0,
+  delegateWeight: 0,
 });
 
 describe('Delegates monitor page', () => {
@@ -45,38 +46,72 @@ describe('Delegates monitor page', () => {
     });
   };
 
+  const { blocks } = store.getState();
+
   beforeEach(() => {
     props = {
       t: key => key,
-      delegates: {
+      blocks,
+      standByDelegates: {
         isLoading: true,
-        data: activeDelegates,
+        data: [],
+        meta: { total: 100, count: 10, offset: 0 },
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      standByDelegates: {
+      sanctionedDelegates: {
+        isLoading: true,
+        data: [],
+
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      watchedDelegates: {
         isLoading: true,
         data: [],
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      chartActiveAndStandbyData: {
+      watchList: [],
+      delegatesCount: {
         isLoading: false,
         data: '589',
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
       },
-      chartRegisteredDelegatesData: {
+      transactionsCount: {
+        isLoading: false,
+        data: '12345678',
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      registrations: {
         isLoading: false,
         data: [
-          { x: 'Aug', y: 4 },
-          { x: 'Sep', y: 1 },
-          { x: 'Oct', y: 8 },
-          { x: 'Nov', y: 4 },
+          ['2020-8', 576],
+          ['2020-9', 577],
+          ['2020-10', 585],
+          ['2020-11', 589],
         ],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      votes: {
+        isLoading: false,
+        data: [{ asset: { votes: [{ delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', amount: '100000000' }] } }],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+      votedDelegates: {
+        isLoading: false,
+        data: [{ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', username: 'test_del' }],
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
@@ -95,10 +130,10 @@ describe('Delegates monitor page', () => {
 
   it('renders a page with header', () => {
     wrapper = setup(props);
-    expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Active delegates');
+    expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Inside round');
   });
 
-  it('allows to switch to stand by delegates', () => {
+  it('allows to switch to standby delegates', () => {
     wrapper = setup(props);
     switchTab('standby');
     expect(wrapper.find('.tab.standby')).toHaveClassName('active');
@@ -106,6 +141,6 @@ describe('Delegates monitor page', () => {
 
   it('renders the forging status', () => {
     wrapper = setup(props);
-    expect(wrapper.find('a.delegate-row')).toHaveLength(delegatesList.length + 1);
+    expect(wrapper.find('a.delegate-row')).toHaveLength(blocks.forgers.length);
   });
 });

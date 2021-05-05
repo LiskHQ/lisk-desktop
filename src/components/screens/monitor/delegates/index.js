@@ -2,99 +2,142 @@
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-import moment from 'moment';
+import { connect } from 'react-redux';
+
+import { getDelegates } from '@api/delegate';
+import { getNetworkStatus } from '@api/network';
+import { getTransactions, getRegisteredDelegates } from '@api/transaction';
+import withData from '@utils/withData';
+import withFilters from '@utils/withFilters';
+import { MODULE_ASSETS_NAME_ID_MAP, tokenMap } from '@constants';
 import Delegates from './delegates';
-import liskService from '../../../../utils/api/lsk/liskService';
-import withData from '../../../../utils/withData';
-import withFilters from '../../../../utils/withFilters';
-import withLocalSort from '../../../../utils/withLocalSort';
 
 const defaultUrlSearchParams = { search: '' };
-const delegatesKey = 'delegates';
-const standByDelegatesKey = 'standByDelegates';
-
-const transformDelegatesResponse = (response, oldData = []) => (
-  [...oldData, ...response.data.filter(
-    delegate => !oldData.find(({ username }) => username === delegate.username),
-  )]
-);
-
-const transformVotesResponse = (response, oldData = []) => (
-  [...oldData, ...response.data.filter(
-    vote => !oldData.find(({ id }) => id === vote.id),
-  )]
-);
 
 /**
- * This function is to iterate over the list of delegates and GROUP BY
- * timestamp (Month and Year) and count how many users registered as
- * delegate in the month
+ * Merges two arrays and ensures there's no duplicated item
+ *
+ * @param {String} key - Key to find in array members to ensure uniqueness
+ * @param {Array} newData - The new data array
+ * @param {Array} oldData - The old data array
+ * @returns {Array} Array build by merging the given two arrays
  */
-const transformChartResponse = (response) => {
-  const responseFormatted = response.data.reduce((acc, delegate) => {
-    const newDelegate = { ...delegate, timestamp: moment(delegate.timestamp * 1000).startOf('month').toISOString() };
-    return {
-      ...acc,
-      [newDelegate.timestamp]: ((acc[newDelegate.timestamp] || 0) + 1),
-    };
-  }, {});
+const mergeUniquely = (key, newData, oldData = []) => (
+  [...oldData, ...newData.data.filter(
+    newItem => !oldData.find(oldItem => oldItem[key] === newItem[key]),
+  )]
+);
+const mergeUniquelyByUsername = mergeUniquely.bind(this, 'username');
+const mergeUniquelyById = mergeUniquely.bind(this, 'id');
 
-  return Object.entries(responseFormatted)
-    .map(delegate => ({ x: delegate[0], y: delegate[1] }))
-    .sort((dateA, dateB) => (dateB.x > dateA.x ? -1 : 1))
-    .slice(-4)
-    .map(delegate => ({ ...delegate, x: moment(delegate.x).format('MMM YY') }));
+/**
+ * Strips down the account data to have a
+ * similar structure to getForgers used to
+ * retrieve in-round delegates
+ */
+const stripAccountDataAndMerge = (response, oldData = []) => {
+  response.data = response.data.map(del => ({
+    address: del.summary.address,
+    ...del.dpos.delegate,
+  }));
+  return mergeUniquelyByUsername(response, oldData);
 };
+
+const mapStateToProps = state => ({
+  watchList: state.watchList,
+  blocks: state.blocks,
+});
 
 const ComposedDelegates = compose(
   withRouter,
+  connect(mapStateToProps),
   withData(
     {
-      [delegatesKey]: {
-        apiUtil: liskService.getActiveDelegates,
+      standByDelegates: {
+        apiUtil: (network, params) => getDelegates({
+          network,
+          params: {
+            ...params,
+            limit: params.limit || 30,
+            status: 'standby',
+          },
+        }),
         defaultData: [],
         autoload: true,
-        transformResponse: transformDelegatesResponse,
+        transformResponse: stripAccountDataAndMerge,
       },
 
-      [standByDelegatesKey]: {
-        apiUtil: liskService.getStandbyDelegates,
-        defaultData: [],
-        autoload: true,
-        transformResponse: transformDelegatesResponse,
-      },
-
-      chartActiveAndStandbyData: {
-        apiUtil: liskService.getActiveAndStandByDelegates,
-        defaultData: [],
+      delegatesCount: {
+        apiUtil: network => getDelegates({ network, params: { limit: 1 } }),
+        defaultData: 0,
         autoload: true,
         transformResponse: response => response.meta.total,
       },
 
-      chartRegisteredDelegatesData: {
-        apiUtil: liskService.getRegisteredDelegates,
+      transactionsCount: {
+        apiUtil: network => getTransactions({ network, params: { limit: 1 } }, tokenMap.LSK.key),
+        defaultData: 0,
+        autoload: true,
+        transformResponse: response => response.meta.total,
+      },
+
+      registrations: {
+        apiUtil: network => getRegisteredDelegates({
+          network,
+        }, tokenMap.LSK.key),
         defaultData: [],
         autoload: true,
-        transformResponse: transformChartResponse,
       },
 
       votes: {
-        apiUtil: liskService.getLatestVotes,
+        apiUtil: (network, params) => getTransactions({
+          network,
+          params: { ...params, moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate, sort: 'timestamp:desc' },
+        }, tokenMap.LSK.key),
+        getApiParams: state => ({ token: state.settings.token.active }),
         autoload: true,
         defaultData: [],
-        transformResponse: transformVotesResponse,
+        transformResponse: mergeUniquelyById,
       },
 
       networkStatus: {
-        apiUtil: liskService.getNetworkStatus,
+        apiUtil: network => getNetworkStatus({ network }),
         defaultData: {},
         autoload: true,
         transformResponse: response => response,
       },
+
+      sanctionedDelegates: {
+        apiUtil: (network, params) => getDelegates({ network, params: { ...params, status: 'punished,banned' } }),
+        defaultData: [],
+        autoload: true,
+        transformResponse: stripAccountDataAndMerge,
+      },
+
+      votedDelegates: {
+        apiUtil: ({ networks }, params) =>
+          getDelegates({ network: networks.LSK, params }),
+        defaultData: {},
+        transformResponse: (response) => {
+          const transformedResponse = mergeUniquelyByUsername(response);
+          const responseMap = transformedResponse.reduce((acc, delegate) => {
+            acc[delegate.address] = delegate.summary?.address;
+            return acc;
+          }, {});
+          return responseMap;
+        },
+      },
+
+      watchedDelegates: {
+        apiUtil: ({ networks }, params) =>
+          getDelegates({ network: networks.LSK, params }),
+        defaultData: [],
+        getApiParams: state => ({ addressList: state.watchList }),
+        transformResponse: stripAccountDataAndMerge,
+      },
     },
   ),
-  withFilters(standByDelegatesKey, defaultUrlSearchParams),
-  withLocalSort(delegatesKey, 'rank:asc'),
+  withFilters('standByDelegates', defaultUrlSearchParams),
   withTranslation(),
 )(Delegates);
 

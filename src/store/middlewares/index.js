@@ -1,26 +1,26 @@
 import thunk from 'redux-thunk';
-import accountMiddleware from './account';
-import loadingBarMiddleware from './loadingBar';
-import offlineMiddleware from './offline';
-import hwManagerMiddleware from './hwManager';
+import account from './account';
+import loading from './loadingBar';
+import hwManager from './hwManager';
 // ToDo : enable this one when you solve the problem with multi account management
 // import notificationMiddleware from './notification';
-import votingMiddleware from './voting';
-import socketMiddleware from './socket';
-import settingsMiddleware from './settings';
-import bookmarksMiddleware from './bookmarks';
-import networkMiddleware from './network';
+import voting from './voting';
+import block from './block';
+import settings from './settings';
+import bookmarks from './bookmarks';
+import network from './network';
+import watchList from './watchList';
 
 export default [
   // notificationMiddleware,
-  accountMiddleware,
-  bookmarksMiddleware,
-  hwManagerMiddleware,
-  loadingBarMiddleware,
-  offlineMiddleware,
-  settingsMiddleware,
-  socketMiddleware,
-  votingMiddleware,
-  networkMiddleware,
+  account,
+  bookmarks,
+  hwManager,
+  loading,
+  network,
+  settings,
+  block,
+  voting,
+  watchList,
   thunk,
 ];

@@ -10,6 +10,7 @@ describe('Register Process - Confirm Passphrase', () => {
   const props = {
     passphrase: 'barely feature filter inmate exotic sister dog boil crush build canvas latin',
     nextStep: jest.fn(),
+    onConfirmPassphrase: jest.fn(),
   };
 
   const selectWrongWords = (comp) => {
@@ -19,7 +20,6 @@ describe('Register Process - Confirm Passphrase', () => {
   const selectRightWords = (comp) => {
     comp.find('div.option').forEach(option => props.passphrase.includes(option.text()) && option.simulate('click'));
   };
-
 
   beforeEach(() => {
     wrapper = mount(<ConfirmPassphrase {...props} />);
@@ -43,6 +43,7 @@ describe('Register Process - Confirm Passphrase', () => {
     clock.tick(1500);
     wrapper.update();
     expect(props.nextStep).toHaveBeenCalled();
+    expect(props.onConfirmPassphrase).toHaveBeenCalled();
   });
 
   it('Should update empty values after wrong selection', () => {

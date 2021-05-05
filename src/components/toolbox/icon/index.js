@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '../../../utils/theme';
+import { useTheme } from '@utils/theme';
 import academy from '../../../assets/images/icons/academy.svg';
 import academyActive from '../../../assets/images/icons/academy-active.svg';
 import alertIcon from '../../../assets/images/icons/icon-alert.svg';
@@ -10,6 +10,8 @@ import arrowLeftActive from '../../../assets/images/icons/arrow-left-active.svg'
 import arrowLeftInactive from '../../../assets/images/icons/arrow-left-inactive.svg';
 import arrowRightActive from '../../../assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '../../../assets/images/icons/arrow-right-inactive.svg';
+import arrowRightWithStroke from '../../../assets/images/icons/arrow-right-with-stroke.svg';
+import arrowRightWithStrokeDark from '../../../assets/images/icons/arrow-right-with-stroke-dark.svg';
 import arrowUpCircle from '../../../assets/images/icons/click-to-update.svg';
 import balance from '../../../assets/images/icons/balance.svg';
 import balanceDark from '../../../assets/images/icons/balance-dark.svg';
@@ -73,10 +75,10 @@ import transactionApproved from '../../../assets/images/icons/transaction-status
 import transactionError from '../../../assets/images/icons/transaction-error.svg';
 import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
 import transactionSuccess from '../../../assets/images/icons/transaction-success.svg';
-import tx2ndPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
+import secondPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
-import txDelegate from '../../../assets/images/icons/tx-delegate.svg';
-import txVote from '../../../assets/images/icons/tx-vote.svg';
+import registerDelegate from '../../../assets/images/icons/tx-delegate.svg';
+import vote from '../../../assets/images/icons/tx-vote.svg';
 import addedVotes from '../../../assets/images/icons/added-votes.svg';
 import removedVotes from '../../../assets/images/icons/removed-votes.svg';
 import totalVotes from '../../../assets/images/icons/total-votes.svg';
@@ -136,26 +138,37 @@ import forgedBlocks from '../../../assets/images/icons/forged-blocks.svg';
 import lock from '../../../assets/images/icons/lock.svg';
 import unlock from '../../../assets/images/icons/unlock.svg';
 import loading from '../../../assets/images/icons/loading.svg';
-import txUnlock from '../../../assets/images/icons/tx-unlock.svg';
+import unlockToken from '../../../assets/images/icons/tx-unlock.svg';
 import votingQueueInactive from '../../../assets/images/icons/voting-queue-inactive.svg';
 import votingQueueActive from '../../../assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '../../../assets/images/icons/delete.svg';
 import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.svg';
 import download from '../../../assets/images/icons/download.svg';
-import multiSignature from '../../../assets/images/icons/multisignature.svg';
+import registerMultisignatureGroup from '../../../assets/images/icons/multisignature.svg';
 import multiSignatureOutline from '../../../assets/images/icons/multisignature-outline.svg';
 import upload from '../../../assets/images/icons/upload.svg';
+import delegateForged from '../../../assets/images/icons/delegate-forged.svg';
+import delegateMissed from '../../../assets/images/icons/delegate-missed.svg';
+import delegateWarning from '../../../assets/images/icons/delegate-warning.svg';
+import delegateAwaiting from '../../../assets/images/icons/delegate-awaiting.svg';
+import eyeInactive from '../../../assets/images/icons/eye-inactive.svg';
+import eyeActive from '../../../assets/images/icons/eye-active.svg';
+import liskIcon from '../../../assets/images/icons/lisk-icon.svg';
+import initialiseIcon from '../../../assets/images/icons/initialise-icon.svg';
+import initialiseRegistration from '../../../assets/images/icons/initialise-registration.svg';
+import warningYellow from '../../../assets/images/icons/warning-yellow.svg';
+import linkIcon from '../../../assets/images/icons/link-icon.svg';
 
 export const icons = {
   academy,
   academyActive,
   alertIcon,
   approved,
+  arrowRightTailed,
   arrowLeftActive,
   arrowLeftInactive,
   arrowRightActive,
   arrowRightInactive,
-  arrowRightTailed,
   arrowUpCircle,
   balance,
   bookmarksIconEmptyState,
@@ -214,10 +227,10 @@ export const icons = {
   transactionError,
   transactionPending,
   transactionSuccess,
-  tx2ndPassphrase,
+  secondPassphrase,
   txDefault,
-  txDelegate,
-  txVote,
+  registerDelegate,
+  vote,
   user,
   userActive,
   verifyMessageInputsView,
@@ -246,8 +259,8 @@ export const icons = {
   verifyMessageActive,
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
-  multiSignature,
   multiSignatureOutline,
+  registerMultisignatureGroup,
   missedBlocks,
   newsFeedBlog,
   newsFeedBlogDark,
@@ -285,11 +298,24 @@ export const icons = {
   lock,
   unlock,
   loading,
-  txUnlock,
+  unlockToken,
   votingQueueInactive,
   votingQueueActive,
   download,
   upload,
+  delegateForged,
+  delegateMissed,
+  delegateWarning,
+  delegateAwaiting,
+  eyeActive,
+  eyeInactive,
+  liskIcon,
+  initialiseIcon,
+  initialiseRegistration,
+  warningYellow,
+  linkIcon,
+  arrowRightWithStroke,
+  arrowRightWithStrokeDark,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

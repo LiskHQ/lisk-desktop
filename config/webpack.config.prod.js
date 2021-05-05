@@ -1,22 +1,21 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
-const { NamedModulesPlugin } = require('webpack');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
-/* eslint-enable import/no-extraneous-dependencies */
+const version = require('../package.json').version;
 
-module.exports = merge(baseConfig, reactConfig, {
-  output: {
-    path: resolve(__dirname, '../app', '../app/build'),
-    filename: 'bundle.[name].[hash].js',
-  },
+const config = {
   mode: 'production',
+  output: {
+    path: resolve(__dirname, '../app/build'),
+    filename: 'bundle.[name].[contenthash].js',
+  },
   optimization: {
+    moduleIds: 'named',
     minimizer: [new TerserPlugin({ test: /\.js(\?.*)?$/i })],
-    runtimeChunk: 'single', // enable "runtime" chunk
+    runtimeChunk: 'single',
     splitChunks: {
       cacheGroups: {
         vendor: {
@@ -29,13 +28,10 @@ module.exports = merge(baseConfig, reactConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      PRODUCTION: true,
-      TEST: false,
-      // because of https://fb.me/react-minification
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
+      PRODUCTION: JSON.stringify(true),
+      VERSION: JSON.stringify(version),
     }),
-    new NamedModulesPlugin(),
   ],
-});
+};
+
+module.exports = merge(baseConfig, reactConfig, config);

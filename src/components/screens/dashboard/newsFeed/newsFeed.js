@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import styles from './newsFeed.css';
+import Box from '@toolbox/box';
+import BoxRow from '@toolbox/box/row';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxTabs from '@toolbox/tabs';
+import BoxEmptyState from '@toolbox/box/emptyState';
+import Icon from '@toolbox/icon';
 import News from './news';
-import Box from '../../../toolbox/box';
-import BoxRow from '../../../toolbox/box/row';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxTabs from '../../../toolbox/tabs';
-import BoxEmptyState from '../../../toolbox/box/emptyState';
-import Icon from '../../../toolbox/icon';
+import styles from './newsFeed.css';
 
 const NewsFeed = (props) => {
   const {
@@ -16,17 +15,13 @@ const NewsFeed = (props) => {
     t,
   } = props;
   const filteredNewsFeed = newsFeed.data || [];
-  const serviceUrl = useSelector(state => state.network.serviceUrl);
   const sources = ['twitter_lisk', 'drupal_lisk_general'];
   const [source, setSource] = useState(sources.join(','));
-  useEffect(
-    () => {
-      if (newsFeed && (newsFeed.error.length === 0 && newsFeed.data.length === 0)) {
-        newsFeed.loadData({ source });
-      }
-    },
-    [serviceUrl],
-  );
+  useEffect(() => {
+    if (newsFeed && (newsFeed.error.length === 0 && newsFeed.data.length === 0)) {
+      newsFeed.loadData({ source });
+    }
+  }, [source]);
   const tabs = [
     {
       value: sources.join(','),

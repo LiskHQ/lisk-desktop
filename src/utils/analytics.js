@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
-import AnalyticsMessage from '../components/shared/analyticsMessage/analyticsMessage';
+import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import AnalyticsMessage from '@shared/analyticsMessage/analyticsMessage';
 
 export default {
   init() {
@@ -22,7 +22,8 @@ export default {
     // showAnalytics - Trigger ONLY the first time when user is in Wallet page after SignIn
     // or show since the beginning after the user saw the banner for first time but
     // didn't took action
-    if (showAnalytics
+    if (
+      showAnalytics
       || (statisticsRequest && statisticsFollowingDay === undefined)
     ) {
       this.init();

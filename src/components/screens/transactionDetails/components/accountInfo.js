@@ -1,20 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
-import AccountVisual from '../../../toolbox/accountVisual';
-import routes from '../../../../constants/routes';
-import { validateAddress } from '../../../../utils/validators';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { routes } from '@constants';
+import { validateAddress } from '@utils/validators';
+import AccountVisual from '@toolbox/accountVisual';
 
 import styles from './styles.css';
 
 const AccountInfo = ({
-  address,
+  name = '',
   label,
-  addressClass,
-  name,
+  address,
   token,
-  netCode,
+  network,
+  addressClass,
   className,
 }) => {
   const addressLink = `${routes.account.path}?address=${address}`;
@@ -23,7 +22,7 @@ const AccountInfo = ({
       <p className={styles.label}>{label}</p>
       <div className={styles.addressRow}>
         <AccountVisual className={styles.avatar} address={address} size={25} />
-        { validateAddress(token, address, netCode) === 0
+        { validateAddress(token, address, network) === 0
           ? (
             <Link
               to={addressLink}
@@ -50,11 +49,6 @@ AccountInfo.propTypes = {
   label: PropTypes.string.isRequired,
   addressClass: PropTypes.string,
   name: PropTypes.string,
-};
-
-AccountInfo.defaultProps = {
-  addressClass: '',
-  name: '',
 };
 
 export default AccountInfo;

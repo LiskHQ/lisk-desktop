@@ -4,6 +4,7 @@ import 'numeral/locales';
 
 BigNumber.config({ ERRORS: false });
 
+// @todo remove in favour of functions provided by lisk elements
 export const fromRawLsk = value => (
   new BigNumber(value || 0).dividedBy(new BigNumber(10).pow(8)).toFixed()
 );

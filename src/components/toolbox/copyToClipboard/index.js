@@ -1,9 +1,9 @@
 import React from 'react';
 import { CopyToClipboard as ReactCopyToClipboard } from 'react-copy-to-clipboard';
 import { withTranslation } from 'react-i18next';
+import Piwik from '@utils/piwik';
 import Icon from '../icon';
 import styles from './copyToClipboard.css';
-import Piwik from '../../../utils/piwik';
 
 const IconAndText = ({
   value, t, className, text, copyClassName, Container, containerProps, onCopy, copied,
@@ -13,15 +13,16 @@ const IconAndText = ({
       {copied ? (
         <span className={`${className} copied`}>
           <Icon name="checkmark" className={`${styles.icon} ${copyClassName}`} />
+          {' '}
           {t('Copied')}
         </span>
       ) : (
         <span className={`${className} ${styles.clickable} default`}>
-          <Icon name="copy" className={`${styles.icon} ${copyClassName}`} />
           <span className="copy-title">
             {text || value}
           </span>
           {' '}
+          <Icon name="copy" className={`${styles.icon} ${copyClassName}`} />
         </span>
       )}
     </Container>

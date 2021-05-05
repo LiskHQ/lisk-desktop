@@ -1,22 +1,32 @@
-import { mountWithRouter } from '../../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
+import Spinner from '@toolbox/spinner';
+import DialogLink from '@toolbox/dialog/link';
 import VoteRow from './voteRow';
 import accounts from '../../../../../test/constants/accounts';
-import Spinner from '../../../toolbox/spinner';
-import DialogLink from '../../../toolbox/dialog/link';
 
 describe('VoteRow Component', () => {
   let wrapper;
   const props = {
     data: {
-      delegateAddress: accounts.delegate.address,
+      address: accounts.delegate.summary.address,
       delegate: accounts.delegate,
     },
     onRowClick: jest.fn(),
     accounts: {
-      [accounts.delegate.address]: {
-        productivity: 95,
-        rank: 1,
-        totalVotesReceived: 50e8,
+      [accounts.delegate.summary.address]: {
+        summary: {
+          address: accounts.delegate.summary.address,
+          balance: '99994688951000',
+        },
+        dpos: {
+          delegate: {
+            productivity: '0',
+            rank: 0,
+            rewards: '0',
+            username: 'free',
+            vote: '10000000000',
+          },
+        },
       },
     },
   };

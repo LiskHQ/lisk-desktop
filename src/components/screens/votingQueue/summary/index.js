@@ -2,8 +2,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { votesSubmitted } from '@actions';
 import SummaryComponent from './summary';
-import { votesSubmitted } from '../../../../actions/voting';
 
 const Summary = (props) => {
   const { t } = useTranslation();

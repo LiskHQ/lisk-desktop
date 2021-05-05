@@ -1,27 +1,38 @@
 // istanbul ignore file
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { getVotes } from '../../../../utils/api/delegates';
-import liskService from '../../../../utils/api/lsk/liskService';
-import withData from '../../../../utils/withData';
+import { getVotes } from '@api/delegate';
+import { getAccounts } from '@api/account';
+import withData from '@utils/withData';
 import Votes from './votes';
 
 const apis = {
   votes: {
-    apiUtil: getVotes,
+    apiUtil: (network, params) => getVotes({ network, params }),
     defaultData: [],
     autoload: false,
-    transformResponse: response => response.data.votes,
+    transformResponse: response => response.data?.votes ?? [],
   },
   accounts: {
-    apiUtil: liskService.getAccounts,
+    apiUtil: (network, params) => getAccounts({ network, params }),
     autoload: false,
     defaultData: {},
     transformResponse: response =>
       response.data.reduce((dict, account) => {
-        dict[account.address] = account;
+        dict[account.summary.address] = account;
         return dict;
       }, {}),
   },
 };
 
-export default withData(apis)(withTranslation()(Votes));
+const mapStateToProps = state => ({
+  hostVotes: state.voting,
+  isDelegate: state.account?.info?.LSK?.summary.isDelegate,
+});
+
+export default compose(
+  connect(mapStateToProps),
+  withData(apis),
+  withTranslation(),
+)(Votes);

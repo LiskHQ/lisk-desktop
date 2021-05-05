@@ -1,9 +1,9 @@
 import React from 'react';
+import { routes } from '@constants';
+import DialogHolder from '@toolbox/dialog/holder';
+import { mountWithRouter } from '@utils/testHelpers';
 import TopBar from './topBar';
-import routes from '../../../../constants/routes';
 import accounts from '../../../../../test/constants/accounts';
-import DialogHolder from '../../../toolbox/dialog/holder';
-import { mountWithRouter } from '../../../../utils/testHelpers';
 
 const mockInputNode = {
   focus: jest.fn(),
@@ -42,6 +42,7 @@ describe('TopBar', () => {
     showDelegate: false,
     t: val => val,
     logOut: jest.fn(),
+    location: { pathname: routes.dashboard.path, search: '' },
     history: {
       location: { pathname: routes.dashboard.path, search: '' },
       replace: () => {},
@@ -165,6 +166,24 @@ describe('TopBar', () => {
     expect(wrapper).not.toContainMatchingElement('span.searchedValue');
     expect(wrapper).not.toContainMatchingElement('AccountVisual');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
+  });
+
+  it('Should not navigate on Initialization screen', () => {
+    const wrapper = mountWithRouter(
+      TopBar,
+      {
+        ...props,
+        history: {
+          ...props.history,
+          location: { pathname: routes.reclaim.path },
+        },
+      },
+    );
+    wrapper.find('.token-selector-BTC').first().simulate('click');
+    wrapper.find('.token-selector-LSK').first().simulate('click');
+    wrapper.find('.bookmark-list-toggle').first().simulate('click');
+    wrapper.find('.search-toggle').first().simulate('click');
+    expect(props.history.push).not.toHaveBeenCalled();
   });
 
   // can we remove this test?

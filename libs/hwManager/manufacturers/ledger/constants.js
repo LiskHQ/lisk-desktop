@@ -2,7 +2,7 @@
 export const LEDGER = {
   name: 'Ledger',
   models: {
-    Ledeger_Nano_S: 'Ledeger Nano S',
-    Ledeger_Nano_X: 'Ledeger Nano X',
+    Ledger_Nano_S: 'Ledger Nano S',
+    Ledger_Nano_X: 'Ledger Nano X',
   },
 };

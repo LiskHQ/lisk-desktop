@@ -1,82 +1,122 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { withTranslation } from 'react-i18next';
-import Overview from './overview';
-import { Input } from '../../../toolbox/inputs';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import BoxTabs from '../../../toolbox/tabs';
+import React, { useState, useEffect } from 'react';
+
+import { Input } from '@toolbox/inputs';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxTabs from '@toolbox/tabs';
+import { ROUND_LENGTH } from '@constants';
 import styles from './delegates.css';
+import DelegatesOverview from './overview/delegatesOverview';
+import ForgingDetails from './overview/forgingDetails';
 import LatestVotes from './latestVotes';
 import DelegatesTable from './delegatesTable';
-import ForgingDetails from './forgingDetails';
 
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
-  chartActiveAndStandbyData,
-  chartRegisteredDelegatesData,
+  votedDelegates,
+  sanctionedDelegates,
+  watchedDelegates,
+  watchList,
+  delegatesCount,
+  registrations,
+  transactionsCount,
   standByDelegates,
   networkStatus,
   applyFilters,
-  changeSort,
-  delegates,
   filters,
+  blocks,
   votes,
-  sort,
   t,
 }) => {
   const [activeTab, setActiveTab] = useState('active');
-  const forgingTimes = useSelector(state => state.blocks.forgingTimes);
-  const totalBlocks = useSelector(state => state.blocks.total);
+  const { total, forgers, latestBlocks } = blocks;
+  const delegatesWithForgingTimes = { data: forgers };
+  const forgedInRound = latestBlocks.length ? latestBlocks[0].height % ROUND_LENGTH : 0;
+
+  useEffect(() => {
+    const addressList = votes.data && votes.data.reduce((acc, data) => {
+      const votesList = data.asset.votes || [];
+      const dataAddresses = votesList.map(vote => vote.delegateAddress);
+      return acc.concat(dataAddresses);
+    }, []);
+    if (addressList.length > 0) {
+      votedDelegates.loadData({ addressList });
+    }
+  }, [votes.data]);
+
+  useEffect(() => {
+    if (watchList.length) {
+      watchedDelegates.loadData({ addressList: watchList });
+    }
+  }, [watchList.length]);
 
   const handleFilter = ({ target: { value } }) => {
     applyFilters({
       ...filters,
       search: value,
+      offset: 0,
+      limit: 100,
     });
   };
+
   const tabs = {
     tabs: [
       {
         value: 'active',
-        name: ('Active delegates'),
+        name: t('Inside round'),
         className: 'active',
       },
       {
         value: 'standby',
-        name: ('Standby delegates'),
+        name: t('Outside round'),
         className: 'standby',
       },
       {
+        value: 'sanctioned',
+        name: t('Sanctioned'),
+        className: 'sanctioned',
+      },
+      {
         value: 'votes',
-        name: ('Latest votes'),
+        name: t('Latest votes'),
         className: 'votes',
       },
+
     ],
     active: activeTab,
     onClick: ({ value }) => setActiveTab(value),
   };
 
+  if (watchList.length) {
+    tabs.tabs.push({
+      value: 'watched',
+      name: t('Watched'),
+      className: 'watched',
+    });
+  }
+
   return (
     <div>
-      <Overview
-        chartActiveAndStandby={chartActiveAndStandbyData}
-        chartRegisteredDelegates={chartRegisteredDelegatesData}
+      <DelegatesOverview
+        delegatesCount={delegatesCount}
+        transactionsCount={transactionsCount}
+        registrations={registrations}
         t={t}
-        totalBlocks={totalBlocks}
+        totalBlocks={total}
         supply={networkStatus.data.supply}
       />
       <ForgingDetails
         t={t}
-        chartDelegatesForging={forgingTimes}
+        forgers={forgers}
+        forgedInRound={forgedInRound}
+        startTime={latestBlocks[forgedInRound]?.timestamp}
       />
-      <Box main isLoading={delegates.isLoading || standByDelegates.isLoading || votes.isLoading}>
+      <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className="delegates-table">
           {tabs.tabs.length === 1
             ? <h2>{tabs.tabs[0].name}</h2>
-            : <BoxTabs {...tabs} />
-          }
+            : <BoxTabs {...tabs} />}
           <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
               onChange={handleFilter}
@@ -90,17 +130,18 @@ const DelegatesMonitor = ({
         <BoxContent className={styles.content}>
           {
             activeTab === 'votes'
-              ? <LatestVotes votes={votes} t={t} />
+              ? <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
               : (
                 <DelegatesTable
+                  setActiveTab={setActiveTab}
+                  delegates={delegatesWithForgingTimes}
+                  watchList={watchList}
+                  watchedDelegates={watchedDelegates}
                   standByDelegates={standByDelegates}
-                  changeSort={changeSort}
-                  delegates={delegates}
+                  sanctionedDelegates={sanctionedDelegates}
                   filters={filters}
-                  sort={sort}
                   t={t}
                   activeTab={activeTab}
-                  forgingTimes={forgingTimes}
                 />
               )
           }
@@ -110,4 +151,4 @@ const DelegatesMonitor = ({
   );
 };
 
-export default withTranslation()(DelegatesMonitor);
+export default DelegatesMonitor;

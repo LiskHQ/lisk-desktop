@@ -1,10 +1,10 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import { keyCodes } from '@constants';
+import { isValidPassphrase, getPassphraseValidationErrors } from '@utils/passphrase';
 import Icon from '../icon';
-import { isValidPassphrase, getPassphraseValidationErrors } from '../../../utils/passphrase';
 import Input from '../inputs/input';
 import Feedback from '../feedback/feedback';
-import keyCodes from '../../../constants/keyCodes';
 import styles from './passphraseInput.css';
 
 class passphraseInput extends React.Component {
@@ -137,7 +137,7 @@ class passphraseInput extends React.Component {
     const isFeedbackOnError = validationError || secondPPFeedback !== '';
 
     return (
-      <React.Fragment>
+      <>
         <div className={styles.wrapper}>
           <label className={`${styles.showPassphrase}`} onClick={this.handleToggleShowPassphrase}>
             <Icon name={iconName} />
@@ -190,7 +190,7 @@ class passphraseInput extends React.Component {
             />
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

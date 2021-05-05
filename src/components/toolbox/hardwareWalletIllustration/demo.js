@@ -1,12 +1,12 @@
 import React from 'react';
+import { loginTypes } from '@constants';
 import DemoRenderer from '../demoRenderer';
 import HardwareWalletIllustration from '.';
-import { loginType } from '../../../constants/hwConstants';
 
 const HardwareWalletIllustrationDemo = () => (
-  <React.Fragment>
+  <>
     <h2>HardwareWalletIllustration</h2>
-    { Object.values(loginType).map(type => (
+    { Object.keys(loginTypes).map(type => (
       <DemoRenderer key={type}>
         <HardwareWalletIllustration
           account={{ loginType: type }}
@@ -14,7 +14,7 @@ const HardwareWalletIllustrationDemo = () => (
         />
       </DemoRenderer>
     )) }
-  </React.Fragment>
+  </>
 );
 
 export default HardwareWalletIllustrationDemo;

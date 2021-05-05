@@ -4,9 +4,9 @@ import React, {
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import { modals } from '@constants';
+import { parseSearchParams, removeSearchParamsFromUrl } from '@utils/searchParams';
 import styles from './dialog.css';
-import { modals } from '../../../constants/routes';
-import { parseSearchParams, removeSearchParamsFromUrl } from '../../../utils/searchParams';
 
 // eslint-disable-next-line max-statements
 const DialogHolder = ({ history }) => {
@@ -16,7 +16,7 @@ const DialogHolder = ({ history }) => {
   }, [history.location.search]);
 
   const settings = useSelector(state => state.settings);
-  const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
+  const networkIsSet = useSelector(state => !!state.network.name);
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
 
@@ -38,7 +38,11 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-  if (!networkIsSet || modals[modalName].forbiddenTokens.includes(settings.token.active)) {
+  if (modals[modalName].forbiddenTokens.includes(settings.token.active)) {
+    return null;
+  }
+
+  if (!networkIsSet && modals[modalName].isPrivate) {
     return null;
   }
 
@@ -46,10 +50,12 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-
   const onBackDropClick = (e) => {
     if (e.target === backdropRef.current) {
-      removeSearchParamsFromUrl(history, ['modal'], true);
+      const { initialization = false } = parseSearchParams(history.location.search);
+      if (!initialization) {
+        removeSearchParamsFromUrl(history, ['modal'], true);
+      }
     }
   };
 

@@ -1,10 +1,10 @@
 import QRCode from 'qrcode.react';
 import React from 'react';
-import { SecondaryButton } from '../../toolbox/buttons';
-import CopyToClipboard from '../../toolbox/copyToClipboard';
-import Icon from '../../toolbox/icon';
+import renderPaperwallet from '@utils/paperwallet';
+import { SecondaryButton } from '@toolbox/buttons';
+import CopyToClipboard from '@toolbox/copyToClipboard';
+import Icon from '@toolbox/icon';
 import styles from './passphraseBackup.css';
-import renderPaperwallet from '../../../utils/paperwallet';
 import PassphraseRenderer from '../passphraseRenderer';
 
 class PassphraseBackup extends React.Component {
@@ -48,7 +48,7 @@ class PassphraseBackup extends React.Component {
     } = this.props;
 
     return (
-      <React.Fragment>
+      <>
         <div className={`${styles.optionsHolder}`}>
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
@@ -87,7 +87,7 @@ class PassphraseBackup extends React.Component {
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

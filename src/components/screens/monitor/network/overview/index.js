@@ -1,15 +1,15 @@
 // istanbul ignore file
 import React from 'react';
-import Box from '../../../../toolbox/box';
-import BoxHeader from '../../../../toolbox/box/header';
-import BoxContent from '../../../../toolbox/box/content';
-import BoxEmptyState from '../../../../toolbox/box/emptyState';
-import { DoughnutChart } from '../../../../toolbox/charts';
-import Tooltip from '../../../../toolbox/tooltip/tooltip';
+import { colorPalette } from '@constants';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxEmptyState from '@toolbox/box/emptyState';
+import { DoughnutChart } from '@toolbox/charts';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './overview.css';
-import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
-import { colorPallete } from '../../../../../constants/chartConstants';
 
 const createChartData = (data, t) => {
   const list = {
@@ -102,9 +102,10 @@ const HeightDistributionChart = ({ t, heightDistribution }) => {
                               <GuideTooltipItem
                                 key={`distribution-GuideTooltip-${i}-${label}`}
                                 label={label}
-                                color={colorPallete[i]}
+                                color={colorPalette[i]}
                               />
-                            ))}
+                            ))
+}
                       </GuideTooltip>
                     </div>
                   </div>
@@ -169,11 +170,11 @@ const PeersChart = ({ t, basic }) => {
                   <GuideTooltip>
                     <GuideTooltipItem
                       label={t('Connected')}
-                      color={colorPallete[0]}
+                      color={colorPalette[0]}
                     />
                     <GuideTooltipItem
                       label={t('Disconnected')}
-                      color={colorPallete[1]}
+                      color={colorPalette[1]}
                     />
                   </GuideTooltip>
                 </div>
@@ -190,8 +191,8 @@ const Overview = ({
   networkStatus,
   t,
 }) => {
-  const { basic, coreVer, height } = networkStatus;
-  const versionsDistribution = coreVer ? createChartData(coreVer, t) : null;
+  const { basic, networkVersion, height } = networkStatus;
+  const versionsDistribution = networkVersion ? createChartData(networkVersion, t) : null;
   const heightDistribution = height ? createChartData(height, t) : null;
   const versionChartProps = versionsDistribution ? {
     data: {
@@ -264,9 +265,10 @@ const Overview = ({
                             <GuideTooltipItem
                               key={`version-GuideTooltip-${i}-${label}`}
                               label={label}
-                              color={colorPallete[i]}
+                              color={colorPalette[i]}
                             />
-                          ))}
+                          ))
+}
                     </GuideTooltip>
                   </div>
                 </div>

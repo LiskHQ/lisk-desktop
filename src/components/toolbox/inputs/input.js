@@ -58,7 +58,7 @@ const Input = ({
   });
   const Component = type === 'textarea' ? type : 'input';
   return (
-    <React.Fragment>
+    <>
       { label && <label className={[styles.label, styles[size]].join(' ')}>{label}</label> }
       <span className={`${styles.wrapper} ${styles[size]}`}>
         { icon && (
@@ -67,11 +67,9 @@ const Input = ({
             : <span className={styles.icon}>{icon}</span>
         )}
         { status === 'pending'
-          && <Spinner className={`${styles.loading} ${styles.status}`} />
-        }
+          && <Spinner className={`${styles.loading} ${styles.status} node-connection-loading-spinner`} />}
         { statusIconNameMap[status]
-          && <Icon name={statusIconNameMap[status]} className={`${styles.status}`} />
-        }
+          && <Icon name={statusIconNameMap[status]} className={`${styles.status}`} />}
         <Component
           {...props}
           type={type}
@@ -86,7 +84,7 @@ const Input = ({
           status={status}
         />
       </span>
-    </React.Fragment>
+    </>
   );
 };
 

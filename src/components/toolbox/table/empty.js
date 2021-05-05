@@ -1,6 +1,6 @@
 import React from 'react';
+import { isReactComponent } from '@utils/helpers';
 import styles from '../box/emptyState.css';
-import { isReactComponent } from '../../../utils/helpers';
 import Illustration from '../illustration';
 
 const Empty = ({
@@ -13,8 +13,8 @@ const Empty = ({
   }
   return (
     <div className={`${styles.wrapper} ${className} empty-state`}>
-      <Illustration name={data && data.illustration ? data.illustration : 'emptyWallet'} />
-      <h3>{ data && data.message ? data.message : 'Nothing found.' }</h3>
+      <Illustration name={data?.illustration ?? 'emptyWallet'} />
+      <h3>{data?.message ?? 'Nothing found.'}</h3>
     </div>
   );
 };

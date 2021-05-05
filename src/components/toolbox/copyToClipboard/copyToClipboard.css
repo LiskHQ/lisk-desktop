@@ -8,4 +8,8 @@
   &:hover {
     filter: grayscale(0) brightness(100%);
   }
+
+  & + span {
+    padding-left: 5px;
+  }
 }

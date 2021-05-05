@@ -1,12 +1,14 @@
 import React from 'react';
 import to from 'await-to-js';
 
-import TransactionSummary from '../../../shared/transactionSummary';
-import AccountVisual from '../../../toolbox/accountVisual';
-import { create } from '../../../../utils/api/lsk/transactions';
-import transactionTypes from '../../../../constants/transactionTypes';
-import { toRawLsk } from '../../../../utils/lsk';
+import { create } from '@api/transaction';
+import { toRawLsk } from '@utils/lsk';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import AccountVisual from '@toolbox/accountVisual';
+import TransactionSummary from '@shared/transactionSummary';
 import styles from './summary.css';
+
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
 
 class Summary extends React.Component {
   constructor(props) {
@@ -25,16 +27,17 @@ class Summary extends React.Component {
     } = this.props;
 
     const data = {
-      account,
-      username: nickname,
-      passphrase: account.passphrase,
-      fee: toRawLsk(parseFloat(fee)),
+      moduleAssetId,
       network,
-      nonce: account.nonce,
+      senderPublicKey: account.info.LSK.summary.publicKey,
+      passphrase: account.passphrase,
+      nonce: account.sequence?.nonce,
+      fee: toRawLsk(parseFloat(fee)),
+      username: nickname,
     };
 
     const [error, tx] = await to(
-      create(data, transactionTypes().registerDelegate.key),
+      create(data, tokenMap.LSK.key),
     );
 
     if (!error) {
@@ -75,11 +78,11 @@ class Summary extends React.Component {
           <div className={styles.userInformation}>
             <AccountVisual
               className={styles.accountVisual}
-              address={account.address}
+              address={account.summary?.address}
               size={25}
             />
             <span className={`${styles.nickname} nickname`}>{nickname}</span>
-            <span className={`${styles.address} address`}>{account.address}</span>
+            <span className={`${styles.address} address`}>{account.summary?.address}</span>
           </div>
         </section>
       </TransactionSummary>

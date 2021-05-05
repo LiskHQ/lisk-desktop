@@ -1,6 +1,5 @@
 import { formatAmountBasedOnLocale } from './formattedNumber';
 
-
 describe('Formatted number utils', () => {
   describe('formatAmountBasedOnLocale', () => {
     it('should format to EN by default', () => {

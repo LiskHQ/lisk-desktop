@@ -1,21 +1,21 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
-import PassphraseBackup from '../../shared/passphraseBackup';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
+import PassphraseBackup from '@shared/passphraseBackup';
 import registerStyles from './register.css';
 
 const BackupPassphrase = ({
   t, account, prevStep, nextStep,
 }) => (
-  <React.Fragment>
+  <>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
         {t('Save your passphrase')}
       </h1>
       <p>{t('Keep it safe as it is the only way to access your wallet.')}</p>
     </div>
-    <div className={`${grid['col-sm-10']} ${registerStyles.PassphraseBackupContainer}`}>
+    <div className={`${grid['col-sm-10']} ${registerStyles.passphraseBackupContainer}`}>
       <PassphraseBackup
         account={account}
         t={t}
@@ -39,7 +39,7 @@ const BackupPassphrase = ({
         </PrimaryButton>
       </span>
     </div>
-  </React.Fragment>
+  </>
 );
 
 export default withTranslation()(BackupPassphrase);

@@ -1,5 +1,5 @@
+import { mountWithProps } from '@utils/testHelpers';
 import Transactions from './transactions';
-import { mountWithProps } from '../../../utils/testHelpers';
 
 describe('Transactions', () => {
   const props = {
@@ -11,6 +11,7 @@ describe('Transactions', () => {
         },
         id: 123,
         type: 0,
+        moduleAssetName: 'transfer',
       },
     ],
     onSelectedRow: jest.fn(),
@@ -49,6 +50,7 @@ describe('Transactions', () => {
         },
         id: 123,
         type: 0,
+        moduleAssetName: 'transfer',
       },
     ];
     const wrapper = mountWithProps(
@@ -73,6 +75,7 @@ describe('Transactions', () => {
         },
         id: 123,
         type: 2,
+        moduleAssetName: 'registerDelegate',
       },
     ];
     const wrapper = mountWithProps(
@@ -97,6 +100,7 @@ describe('Transactions', () => {
         },
         id: 123,
         type: 3,
+        moduleAssetName: 'voteDelegate',
       },
     ];
     const wrapper = mountWithProps(
@@ -110,50 +114,5 @@ describe('Transactions', () => {
     expect(wrapper).toContainMatchingElement('.transactions-subtitle');
     expect(wrapper).toContainMatchingElement('.transactions-content');
     expect(wrapper).toContainMatchingElement('.search-transaction-row');
-  });
-
-  it('should render properly with transactions data type 7', () => {
-    const newProps = { ...props };
-    newProps.transactions = [
-      {
-        asset: {
-          data: 'testing',
-        },
-        id: 123,
-        type: 7,
-      },
-    ];
-    const wrapper = mountWithProps(
-      Transactions,
-      newProps,
-      store,
-    );
-
-    expect(wrapper).toContainMatchingElement('.transactions');
-    expect(wrapper).toContainMatchingElement('.transactions-header');
-    expect(wrapper).toContainMatchingElement('.transactions-subtitle');
-    expect(wrapper).toContainMatchingElement('.transactions-content');
-    expect(wrapper).toContainMatchingElement('.search-transaction-row');
-  });
-
-  it('should call onClick function on selected row', () => {
-    const newProps = { ...props };
-    newProps.transactions = [
-      {
-        asset: {
-          data: 'testing',
-        },
-        id: 123,
-        type: 1,
-      },
-    ];
-    const wrapper = mountWithProps(
-      Transactions,
-      newProps,
-      store,
-    );
-
-    wrapper.find('.search-transaction-row').at(0).simulate('click');
-    expect(props.onSelectedRow).toBeCalled();
   });
 });

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { getNetworkCode } from '../../../../utils/api/btc/network';
-import { validateAddress } from '../../../../utils/validators';
-import AccountVisual from '../../../toolbox/accountVisual';
-import AutoSuggest from '../../../toolbox/autoSuggest';
+import { getNetworkCode } from '@api/network';
+import { validateAddress } from '@utils/validators';
+import AccountVisual from '@toolbox/accountVisual';
+import AutoSuggest from '@toolbox/autoSuggest';
 import styles from './form.css';
 
 class BookmarkAutoSuggest extends React.Component {
@@ -89,11 +89,11 @@ class BookmarkAutoSuggest extends React.Component {
           />
         )}
         renderItem={bookmark => (
-          <React.Fragment>
+          <>
             <AccountVisual address={bookmark.address} size={25} />
             <span>{bookmark.title}</span>
             <span>{bookmark.address}</span>
-          </React.Fragment>
+          </>
         )}
         matchProps={['address', 'title']}
       />

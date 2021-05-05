@@ -1,20 +1,20 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
-/* eslint-enable import/no-extraneous-dependencies */
 
-module.exports = merge(baseConfig, {
+const config = {
+  mode: 'production',
   entry: {
-    main: ['babel-polyfill', `${resolve(__dirname, '../app/src')}/main.js`],
+    main: `${resolve(__dirname, '../app/src')}/main.js`,
   },
   output: {
     path: resolve(__dirname, '../app/build'),
-    filename: 'main.js',
+    filename: '[name].js',
   },
   target: 'electron-main',
   node: {
     __dirname: false,
+    __filename: false,
   },
   module: {
     rules: [
@@ -26,4 +26,6 @@ module.exports = merge(baseConfig, {
       },
     ],
   },
-});
+};
+
+module.exports = merge(baseConfig, config);

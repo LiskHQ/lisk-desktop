@@ -1,19 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
 import styles from './transactionAmount.css';
-import transactionTypes from '../../../constants/transactionTypes';
 
 const TransactionAmount = ({
-  sender, recipient, type, token, showRounded, showInt, host, amount,
+  recipient, moduleAssetId, token, showRounded, showInt, host, amount,
 }) => {
-  const isIncoming = host === (recipient && sender !== recipient)
-    || type === transactionTypes().unlockToken.code.legacy;
+  const isIncoming = host === recipient
+    || moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken;
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
-      { type === transactionTypes().transfer.code.legacy
-        || type === transactionTypes().unlockToken.code.legacy
+      { moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer
+        || moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken
         ? (
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <span className={isIncoming ? styles.receive : ''}>
@@ -27,18 +27,15 @@ const TransactionAmount = ({
             </span>
           </DiscreetMode>
         )
-        : '-'
-      }
+        : '-'}
     </div>
   );
 };
 
 TransactionAmount.propTypes = {
   host: PropTypes.string,
-  sender: PropTypes.string.isRequired,
   recipient: PropTypes.string,
   token: PropTypes.string.isRequired,
-  type: PropTypes.number.isRequired,
   amount: PropTypes.string,
   showInt: PropTypes.bool,
   showRounded: PropTypes.bool,

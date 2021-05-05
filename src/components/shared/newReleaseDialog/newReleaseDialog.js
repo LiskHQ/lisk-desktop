@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dialog from '../../toolbox/dialog/dialog';
-import FlashMessageHolder from '../../toolbox/flashMessage/holder';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons';
+import Dialog from '@toolbox/dialog/dialog';
+import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import styles from './newReleaseDialog.css';
 
 class NewReleaseDialog extends React.Component {

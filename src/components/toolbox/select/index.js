@@ -36,8 +36,7 @@ class Select extends React.Component {
     } = this.props;
     const { isOpen } = this.state;
     // eslint-disable-next-line eqeqeq
-    const { value, label } = options.filter(item => item.value == selected)[0];
-
+    const { value, label } = options.find(item => item.value == selected);
 
     return (
       <OutsideClickHandler

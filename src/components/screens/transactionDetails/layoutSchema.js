@@ -1,33 +1,37 @@
-import transactionTypes from '../../../constants/transactionTypes';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
-  Confirmations, Date, Amount, Fee, RequiredSignatures, Nonce, TransactionVotes,
+  Confirmations, Date, Amount, Fee, RequiredSignatures, TransactionVotes,
 } from './components';
 import { Members } from './components/components';
 import styles from './transactionDetails.css';
 
-const txTypes = transactionTypes();
-const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date, Nonce];
+const {
+  transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup,
+  // reclaimLSK,
+} = MODULE_ASSETS_NAME_ID_MAP;
+
+const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date];
 
 const LayoutSchema = {
-  [txTypes.transfer.code.legacy]: {
+  [transfer]: {
     components: [...baseComponents, Recipient, Illustration, Amount, Message],
     className: '',
   },
-  [txTypes.vote.code.legacy]: {
+  [voteDelegate]: {
     components: [...baseComponents, Illustration, Message, TransactionVotes],
     className: styles.voteLayout,
   },
-  [txTypes.registerDelegate.code.legacy]: {
+  [registerDelegate]: {
     components: [...baseComponents, Illustration],
     className: styles.registerDelegate,
   },
-  [txTypes.createMultiSig.code.legacy]: {
+  [registerMultisignatureGroup]: {
     components: [...baseComponents, RequiredSignatures, Members],
     className: styles.multiSigLayout,
   },
-  [txTypes.unlockToken.code.new]: {
+  [unlockToken]: {
     components: [...baseComponents, Illustration, Amount],
     className: styles.unlockToken,
   },

@@ -3,18 +3,17 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { Input } from '../../../toolbox/inputs';
-import { PrimaryButton, TertiaryButton } from '../../../toolbox/buttons';
-import { tokenMap } from '../../../../constants/tokens';
-import AccountVisual from '../../../toolbox/accountVisual';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
+import { tokenMap, routes } from '@constants';
+import { truncateAddress } from '@utils/account';
+import { Input } from '@toolbox/inputs';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
+import AccountVisual from '@toolbox/accountVisual';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import Icon from '@toolbox/icon';
 import EmptyState from './emptyState';
-import routes from '../../../../constants/routes';
-import { truncateAddress } from '../../../../utils/account';
 import styles from './list.css';
-import Icon from '../../../toolbox/icon';
 
 export class BookmarksList extends React.Component {
   constructor(props) {
@@ -135,8 +134,7 @@ export class BookmarksList extends React.Component {
               </span>
             </header>
           )
-          : null
-        }
+          : null}
         <Box className={styles.box}>
           <BoxHeader>
             <h2 className={styles.heading}>{t('Bookmarks')}</h2>
@@ -205,7 +203,7 @@ export class BookmarksList extends React.Component {
                       <div className={styles.buttonContainer}>
                         { editedAddress === bookmark.address
                           ? (
-                            <React.Fragment>
+                            <>
                               <TertiaryButton
                                 onClick={e => this.updateBookmark(e, {})}
                                 className="bookmarks-cancel-button"
@@ -221,10 +219,10 @@ export class BookmarksList extends React.Component {
                               >
                                 {t('Save changes')}
                               </TertiaryButton>
-                            </React.Fragment>
+                            </>
                           )
                           : (
-                            <React.Fragment>
+                            <>
                               <TertiaryButton
                                 onClick={e => this.editBookmark(e, bookmark)}
                                 className="bookmarks-edit-button"
@@ -240,13 +238,11 @@ export class BookmarksList extends React.Component {
                               >
                                 <Icon name="remove" />
                               </TertiaryButton>
-                            </React.Fragment>
-                          )
-                    }
+                            </>
+                          )}
                       </div>
                     )
-                    : null
-                }
+                    : null}
                 </Link>
               ))
               : (

@@ -2,8 +2,8 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import { actionTypes } from '@constants';
 import { getActiveTokenAccount } from '../../../../utils/account';
-import actionTypes from '../../../../constants/actions';
 
 import Summary from './summary';
 

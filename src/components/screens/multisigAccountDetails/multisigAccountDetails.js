@@ -1,34 +1,32 @@
 import React, { useMemo } from 'react';
-
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import BoxInfoText from '../../toolbox/box/infoText';
-import Dialog from '../../toolbox/dialog/dialog';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import Members from '../../shared/multisignatureMembers';
-import { extractAddress } from '../../../utils/account';
+import { extractAddressFromPublicKey } from '@utils/account';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxInfoText from '@toolbox/box/infoText';
+import Dialog from '@toolbox/dialog/dialog';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import Members from '@shared/multisignatureMembers';
+
 import styles from './styles.css';
 
 const MultisigAccountDetails = ({ t, account }) => {
-  // @todo We shouldn't be needing this if we lazyload the routes.
-  if (!account.keys || account.keys.numberOfSignatures === 0) return null;
-
   const { numberOfSignatures, optionalKeys, mandatoryKeys } = account.keys;
 
-  const members = useMemo(() => (optionalKeys.map(publicKey => ({
-    address: extractAddress(publicKey),
-    publicKey,
-    mandatory: false,
-  })).concat(
-    mandatoryKeys.map(publicKey => ({
-      address: extractAddress(publicKey),
+  const members = useMemo(() => (
+    optionalKeys.map(publicKey => ({
+      address: extractAddressFromPublicKey(publicKey),
       publicKey,
-      mandatory: true,
-    })),
-  )), [account.address]);
+      mandatory: false,
+    })).concat(
+      mandatoryKeys.map(publicKey => ({
+        address: extractAddressFromPublicKey(publicKey),
+        publicKey,
+        mandatory: true,
+      })),
+    )), [account.address]);
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>

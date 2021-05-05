@@ -1,14 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import NotFound from '../../shared/notFound';
-import routes from '../../../constants/routes';
-import { isEmpty } from '../../../utils/helpers';
-import Dialog from '../../toolbox/dialog/dialog';
-
+import { isEmpty } from '@utils/helpers';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import NotFound from '@shared/notFound';
+import Dialog from '@toolbox/dialog/dialog';
+import { routes } from '@constants';
 import styles from './transactionDetails.css';
 import LayoutSchema from './layoutSchema';
 
@@ -17,11 +15,10 @@ export const Context = React.createContext({
 });
 
 const TransactionDetails = ({
-  t, activeToken, netCode, delegates, history,
+  t, activeToken, network, history,
   transaction: { error, isLoading, data },
 }) => {
   const isFirstRender = useRef(true);
-
   useEffect(() => {
     if (!isFirstRender.current) {
       history.push(routes.dashboard.path);
@@ -40,7 +37,7 @@ const TransactionDetails = ({
     return <NotFound />;
   }
 
-  const Layout = LayoutSchema[data.type] || LayoutSchema.default;
+  const Layout = LayoutSchema[data.moduleAssetId] || LayoutSchema.default;
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
@@ -50,7 +47,7 @@ const TransactionDetails = ({
         </BoxHeader>
         <BoxContent className={`${styles.mainContent} ${Layout.className}`}>
           <Context.Provider value={{
-            transaction: data, activeToken, netCode, delegates,
+            transaction: data, activeToken, network,
           }}
           >
             {Layout.components.map((Component, index) => <Component key={index} t={t} />)}

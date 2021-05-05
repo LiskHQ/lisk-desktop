@@ -1,6 +1,5 @@
-import actionTypes from '../../constants/actions';
-import { tokenKeys } from '../../constants/tokens';
-import { deepMergeObj } from '../../utils/helpers';
+import { actionTypes, tokenKeys, settings as settingsConst } from '@constants';
+import { deepMergeObj } from '@utils/helpers';
 
 export const channels = {
   academy: false,
@@ -47,8 +46,15 @@ export const initialState = {
  */
 const settings = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.settingsRetrieved:
-      return validateToken(action.data);
+    case actionTypes.settingsRetrieved: {
+      const newSettings = deepMergeObj(
+        action.data,
+        {
+          currency: action.data.currency === 'CHF' ? settingsConst.currencies[0] : action.data.currency,
+        },
+      );
+      return validateToken(newSettings);
+    }
     case actionTypes.settingsUpdated:
       return validateToken(deepMergeObj(state, action.data));
     case actionTypes.settingsReset:

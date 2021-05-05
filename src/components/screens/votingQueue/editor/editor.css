@@ -3,10 +3,23 @@
     display: flex;
     width: auto;
     padding: 0;
-    margin: 20px;
+    margin: 0px 20px 20px 20px;
     border-radius: 0;
     border-bottom: 1px solid var(--color-platinum);
   }
+
+  & header {
+    @mixin headingNormal;
+
+    font-size: var(--font-size-h5);
+    color: var(--color-maastricht-blue);
+  }
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
 }
 
 .contentHeader {
@@ -21,6 +34,7 @@
 .oldAmountColumn {
   padding: 0;
   width: 20%;
+  color: var(--color-maastricht-blue);
 }
 
 .centerContent {
@@ -32,6 +46,7 @@
   padding: 0;
   display: flex;
   flex: 1;
+  color: var(--color-maastricht-blue);
 }
 
 .delegateInfoContainer {
@@ -41,8 +56,16 @@
 .delegateInfo {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   margin-left: 10px;
+
+  & span:first-child {
+    color: var(--color-maastricht-blue);
+  }
+
+  & span:nth-child(2) {
+    color: var(--color-blue-gray);
+  }
 }
 
 .editColumn {
@@ -52,13 +75,12 @@
 
 .contentScrollable {
   margin-top: 10px;
-  overflow: scroll;
+  overflow-y: auto;
   max-height: 290px;
-  display: flex;
-  flex-direction: column;
 
   & header {
-    padding: 0 0 20px 0;
+    padding: 21px 0 20px 0;
+    margin-top: 10px;
   }
 }
 
@@ -161,5 +183,22 @@
     padding: 0 8px;
     border: none;
     min-width: 64px;
+  }
+}
+
+.feedback {
+  width: 100%;
+  padding: 0 var(--horizontal-padding-m);
+  box-sizing: border-box;
+  margin-bottom: 10px;
+
+  & > span {
+    width: 100%;
+    background: var(--error-background-color);
+    color: var(--color-strong-white);
+    border-radius: var(--border-radius-standard);
+    display: block;
+    padding: var(--vertical-padding-s) var(--horizontal-padding-m);
+    box-sizing: border-box;
   }
 }

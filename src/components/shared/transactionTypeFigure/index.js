@@ -1,27 +1,27 @@
 import React from 'react';
-import AccountVisual from '../../toolbox/accountVisual';
-import Icon from '../../toolbox/icon';
-import reg from '../../../utils/regex';
+import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP, tokenMap } from '@constants';
+import { validateAddress } from '@utils/validators';
+import AccountVisual from '@toolbox/accountVisual';
+import Icon from '@toolbox/icon';
 import styles from './transactionTypeFigure.css';
-import transactionTypes from '../../../constants/transactionTypes';
 
 const TransactionTypeFigure = ({
-  transactionType, address, avatarSize = 40, className = '', icon,
+  moduleAssetId, address, avatarSize = 40, className = '', icon,
 }) => {
-  const validateAddress = () => !!reg.address.test(address);
-  const txType = transactionTypes.getByCode(transactionType);
-
-  const renderAvatar = () => (validateAddress()
-    ? <AccountVisual address={address} size={avatarSize} />
-    : null);
+  const renderAvatar = () => {
+    if (validateAddress(tokenMap.LSK.key, address) === 0) {
+      return <AccountVisual address={address} size={avatarSize} />;
+    }
+    return null;
+  };
 
   return (
     <div className={`${styles.wrapper} ${className} transaction-image`}>
       { icon ? <Icon name={icon} className={styles.inOutIcon} /> : null }
       {
-        transactionType === transactionTypes().transfer.code.legacy
+        moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer
           ? renderAvatar()
-          : <Icon name={txType ? txType.icon : 'txDefault'} className={styles.transactionIcon} />
+          : <Icon name={MODULE_ASSETS_MAP[moduleAssetId].icon} className={styles.transactionIcon} />
       }
     </div>
   );

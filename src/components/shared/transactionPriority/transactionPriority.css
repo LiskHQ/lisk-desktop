@@ -44,7 +44,6 @@
     & > .prioritySelector {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
       margin-bottom: 4px;
 
       & > .priorityTitle {
@@ -58,6 +57,10 @@
         margin-right: 5px;
         padding: 5px var(--horizontal-padding-m);
         outline: none;
+
+        &:disabled {
+          opacity: 0;
+        }
 
         &.priorityTitleSelected {
           background-color: var(--color-ink-blue);

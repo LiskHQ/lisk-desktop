@@ -1,10 +1,10 @@
+import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@actions';
+import { actionTypes } from '@constants';
 import settingsMiddleware from './settings';
-import actionTypes from '../../constants/actions';
-import * as service from '../../actions/service';
 
-jest.mock('../../actions/service');
-jest.mock('../../actions/settings');
-jest.mock('../../actions/transactions');
+jest.mock('@actions/service');
+jest.mock('@actions/settings');
+jest.mock('@actions/transactions');
 
 describe('Middleware: Settings', () => {
   const next = jest.fn();
@@ -17,35 +17,63 @@ describe('Middleware: Settings', () => {
     }),
   };
 
-  it('should pass the action', () => {
-    const action = { type: 'ANY_ACTION' };
-    settingsMiddleware(store)(next)(action);
-    expect(next).toBeCalledWith(action);
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should not dispatch pricesRetrieved', () => {
-    const action = {
-      type: actionTypes.settingsUpdated,
-      data: {
-        test: true,
-      },
-    };
-
-    settingsMiddleware(store)(next)(action);
-    expect(service.pricesRetrieved).not.toBeCalled();
+  describe('Basic behavior', () => {
+    it('should pass the action', () => {
+      const action = { type: 'ANY_ACTION' };
+      settingsMiddleware(store)(next)(action);
+      expect(next).toBeCalledWith(action);
+    });
   });
 
-  it('should dispatch pricesRetrieved', () => {
-    const action = {
-      type: actionTypes.settingsUpdated,
-      data: {
-        token: {
-          active: 'LSK',
+  describe('on networkConfigSet', () => {
+    it('should dispatch pricesRetrieved', () => {
+      const action = {
+        type: actionTypes.networkConfigSet,
+        data: {
+          name: 'customNode',
+          networks: {
+            LSK: {
+              serviceUrl: 'http://test.io',
+            },
+          },
         },
-      },
-    };
+      };
 
-    settingsMiddleware(store)(next)(action);
-    expect(service.pricesRetrieved).toBeCalled();
+      settingsMiddleware(store)(next)(action);
+      expect(pricesRetrieved).toBeCalled();
+      expect(settingsUpdated).toBeCalled();
+    });
+  });
+
+  describe('on settingsUpdated', () => {
+    it('should not dispatch pricesRetrieved', () => {
+      const action = {
+        type: actionTypes.settingsUpdated,
+        data: {
+          test: true,
+        },
+      };
+
+      settingsMiddleware(store)(next)(action);
+      expect(pricesRetrieved).not.toBeCalled();
+    });
+
+    it('should dispatch pricesRetrieved', () => {
+      const action = {
+        type: actionTypes.settingsUpdated,
+        data: {
+          token: {
+            active: 'LSK',
+          },
+        },
+      };
+
+      settingsMiddleware(store)(next)(action);
+      expect(emptyTransactionsData).toBeCalled();
+    });
   });
 });

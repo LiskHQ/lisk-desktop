@@ -55,3 +55,20 @@
 .button {
   min-width: 185px !important;
 }
+
+.pendingWrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  & > span {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+
+  & img {
+    margin-top: 50px;
+    margin-bottom: 40px;
+  }
+}

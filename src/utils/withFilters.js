@@ -1,5 +1,4 @@
 import React from 'react';
-import transactionTypes from '../constants/transactionTypes';
 
 function withFilters(apiName, initialFilters, initialSort) {
   return function (ChildComponent) {
@@ -22,10 +21,8 @@ function withFilters(apiName, initialFilters, initialSort) {
         const { sort } = this.state;
         const filters = { ...f, sort };
         this.setState({ filters: f });
-        this.props[apiName].loadData(Object.keys(filters).reduce((acc, key) => ({
-          ...acc,
-          ...(filters[key] && { [key]: key === 'type' ? transactionTypes.getByCode(Number(filters[key])).outgoingCode : filters[key] }),
-        }), {}));
+        const usedFilters = Object.keys(filters).filter(key => filters[key] !== '').reduce((acc, key) => { acc[key] = filters[key]; return acc; }, {});
+        this.props[apiName].loadData(usedFilters);
       }
 
       clearFilter(name) {

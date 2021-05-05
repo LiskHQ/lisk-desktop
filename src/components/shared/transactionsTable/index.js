@@ -1,15 +1,18 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
-import Box from '../../toolbox/box';
-import BoxContent from '../../toolbox/box/content';
-import BoxHeader from '../../toolbox/box/header';
+import { useSelector } from 'react-redux';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import withFilters from '@utils/withFilters';
+import { getModuleAssetTitle } from '@utils/moduleAssets';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxHeader from '@toolbox/box/header';
+import Table from '@toolbox/table';
+import { selectCurrentBlockHeight } from '@store';
 import FilterBar from '../filterBar';
-import transactionTypes from '../../../constants/transactionTypes';
 import FilterDropdownButton from '../filterDropdownButton';
 import LoadLatestButton from '../loadLatestButton';
-import Table from '../../toolbox/table';
 import styles from './transactionsTable.css';
-import withFilters from '../../../utils/withFilters';
 import TransactionRow from './transactionRow';
 import header from './tableHeader';
 
@@ -28,12 +31,13 @@ const TransactionsTable = ({
   canLoadMore,
   emptyState,
 }) => {
+  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const handleLoadMore = () => {
     const params = Object.keys(filters).reduce((acc, key) => ({
       ...acc,
-      ...(filters[key] && { [key]: key === 'type' ? transactionTypes.getByCode(Number(filters[key])).outgoingCode : filters[key] }),
+      ...(filters[key] && { [key]: key === 'moduleAssetId' ? MODULE_ASSETS_NAME_ID_MAP[filters[key]] : filters[key] }),
     }), {
-      offset: transactions.data.length,
+      offset: transactions.meta.count + transactions.meta.offset,
       sort,
     });
     transactions.loadData(params);
@@ -42,8 +46,8 @@ const TransactionsTable = ({
   /* istanbul ignore next */
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
-    type: value => `${t('Type')}: ${transactionTypes.getByCode(Number(value)).title}`,
-    sender: value => `${t('Sender')}: ${value}`,
+    moduleAssetId: value => `${t('Type')}: ${getModuleAssetTitle()[value]}`,
+    address: value => `${t('Address')}: ${value}`,
     recipient: value => `${t('Recipient')}: ${value}`,
   };
 
@@ -65,8 +69,7 @@ const TransactionsTable = ({
         >
           {t('New transactions')}
         </LoadLatestButton>
-        )
-      }
+        )}
       <FilterBar {...{
         clearFilter, clearAllFilters, filters, formatters, t,
       }}
@@ -77,7 +80,7 @@ const TransactionsTable = ({
           isLoading={transactions.isLoading}
           row={TransactionRow}
           loadData={handleLoadMore}
-          additionalRowProps={{ t }}
+          additionalRowProps={{ t, currentBlockHeight }}
           header={header(changeSort, t)}
           currentSort={sort}
           canLoadMore={canLoadMore}
@@ -101,10 +104,10 @@ const defaultFilters = {
   message: '',
   amountFrom: '',
   amountTo: '',
-  type: '',
+  moduleAssetId: '',
   height: '',
   recipient: '',
-  sender: '',
+  address: '',
 };
 
 const defaultSort = 'timestamp:desc';

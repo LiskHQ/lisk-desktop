@@ -3,11 +3,13 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
+
+import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@constants';
+import { truncateAddress } from '@utils/account';
+import { getModuleAssetTitle } from '@utils/moduleAssets';
+import Icon from '@toolbox/icon';
+import AccountVisual from '@toolbox/accountVisual';
 import styles from './accountVisualWithAddress.css';
-import Icon from '../../toolbox/icon';
-import transactionTypes from '../../../constants/transactionTypes';
-import AccountVisual from '../../toolbox/accountVisual';
-import regex from '../../../utils/regex';
 
 class AccountVisualWithAddress extends React.Component {
   getTransformedAddress(address) {
@@ -25,30 +27,33 @@ class AccountVisualWithAddress extends React.Component {
 
   render() {
     const {
-      address, transactionSubject, transactionType, size,
+      address, transactionSubject, moduleAssetId, size, truncate,
     } = this.props;
-    const txType = transactionTypes.getByCode(transactionType);
-    const sendCode = transactionTypes().transfer.code;
+    const title = getModuleAssetTitle()[moduleAssetId];
     const transformedAddress = this.getTransformedAddress(address);
+    const truncatedAddress = (truncate === 'small' || truncate === 'medium')
+      ? truncateAddress(transformedAddress, truncate)
+      : truncateAddress(transformedAddress);
 
     return (
       <div className={`${styles.address}`}>
-        {transactionType !== sendCode && transactionSubject === 'recipientId' ? (
-          <React.Fragment>
+        {moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer && transactionSubject === 'recipient' ? (
+          <>
             <Icon
               className={styles.txIcon}
-              name={txType.icon || 'txDefault'}
+              name={MODULE_ASSETS_MAP[moduleAssetId].icon || 'txDefault'}
             />
             <span className={styles.addressValue}>
-              {txType.title}
+              {title}
             </span>
-          </React.Fragment>
+          </>
         ) : (
-          <React.Fragment>
+          <>
             <AccountVisual address={address} size={size} />
-            <span className={`${styles.addressValue} showOnLargeViewPort`}>{transformedAddress}</span>
-            <span className={`${styles.addressValue} hideOnLargeViewPort`}>{transformedAddress.replace(regex.lskAddressTrunk, '$1...$3')}</span>
-          </React.Fragment>
+            <span className={`${styles.addressValue}`}>
+              {truncate ? truncatedAddress : transformedAddress}
+            </span>
+          </>
         )}
       </div>
     );
@@ -62,7 +67,7 @@ AccountVisualWithAddress.propTypes = {
   size: PropTypes.number,
   token: PropTypes.shape().isRequired,
   transactionSubject: PropTypes.string,
-  transactionType: PropTypes.number,
+  moduleAssetId: PropTypes.string,
 };
 
 AccountVisualWithAddress.defaultProps = {
@@ -70,6 +75,7 @@ AccountVisualWithAddress.defaultProps = {
   showBookmarkedAddress: false,
   size: 32,
   transactionSubject: '',
+  truncate: true,
 };
 
 const mapStateToProps = state => ({

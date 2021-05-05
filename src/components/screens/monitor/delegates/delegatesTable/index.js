@@ -1,8 +1,35 @@
 import React from 'react';
-import voting from '../../../../../constants/voting';
-import Table from '../../../../toolbox/table';
+import { compose } from 'redux';
+import withLocalSort from '@utils/withLocalSort';
+import Table from '@toolbox/table';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
+
+const TableWrapper = compose(
+  withLocalSort('delegates', 'forgingTime:asc', {
+    forgingTime: (a, b, direction) =>
+      ((a.nextForgingTime > b.nextForgingTime) ? 1 : -1) * (direction === 'asc' ? 1 : -1),
+  }),
+)(({
+  delegates, handleLoadMore, t, activeTab,
+  changeSort, sort, canLoadMore, watchList, setActiveTab,
+}) => (
+  <Table
+    data={delegates.data}
+    isLoading={delegates.isLoading}
+    row={DelegateRow}
+    loadData={handleLoadMore}
+    additionalRowProps={{
+      t,
+      activeTab,
+      watchList,
+      setActiveTab,
+    }}
+    header={header(activeTab, changeSort, t)}
+    currentSort={sort}
+    canLoadMore={canLoadMore}
+  />
+));
 
 const filterDelegates = (delegates, filters) => ({
   ...delegates,
@@ -11,45 +38,66 @@ const filterDelegates = (delegates, filters) => ({
     : delegates.data,
 });
 
+const selectDelegates = ({
+  activeTab, delegates, standByDelegates, sanctionedDelegates,
+  watchedDelegates, filters,
+}) => {
+  switch (activeTab) {
+    case 'active':
+      return filterDelegates(delegates, filters);
+
+    case 'standby':
+      return filterDelegates(standByDelegates, filters);
+
+    case 'sanctioned':
+      return filterDelegates(sanctionedDelegates, filters);
+
+    case 'watched':
+      return filterDelegates(watchedDelegates, filters);
+
+    default:
+      return undefined;
+  }
+};
+
 const DelegatesTable = ({
-  standByDelegates,
-  changeSort,
+  setActiveTab,
   delegates,
+  watchList,
+  watchedDelegates,
+  standByDelegates,
+  sanctionedDelegates,
+  activeTab,
+  changeSort,
   filters,
   sort,
   t,
-  activeTab,
-  forgingTimes,
 }) => {
+  const delegatesToShow = selectDelegates({
+    activeTab, delegates, standByDelegates, sanctionedDelegates, watchedDelegates, filters,
+  });
+
+  const canLoadMore = activeTab === 'standby' && (standByDelegates.meta?.offset + standByDelegates.meta?.count) < standByDelegates.meta?.total;
+
   const handleLoadMore = () => {
-    delegates.loadData(Object.keys(filters).reduce((acc, key) => ({
+    delegatesToShow.loadData(Object.keys(filters).reduce((acc, key) => ({
       ...acc,
       ...(filters[key] && { [key]: filters[key] }),
     }), {
-      offset: delegates.data.length,
+      offset: delegatesToShow.meta.count + delegatesToShow.meta.offset,
     }));
   };
 
-  const canLoadMore = activeTab === 'active' || !standByDelegates.meta
-    ? false
-    : standByDelegates.data.length < (standByDelegates.meta.total - voting.numberOfActiveDelegates);
-
-  delegates = activeTab === 'active'
-    ? filterDelegates(delegates, filters)
-    : filterDelegates(standByDelegates, filters);
-
   return (
-    <Table
-      data={delegates.data}
-      isLoading={delegates.isLoading}
-      row={DelegateRow}
-      loadData={handleLoadMore}
-      additionalRowProps={{
-        t,
-        forgingTimes,
-      }}
-      header={header(activeTab, changeSort, t)}
-      currentSort={sort}
+    <TableWrapper
+      delegates={delegatesToShow}
+      setActiveTab={setActiveTab}
+      watchList={watchList}
+      handleLoadMore={handleLoadMore}
+      t={t}
+      activeTab={activeTab}
+      changeSort={changeSort}
+      sort={sort}
       canLoadMore={canLoadMore}
     />
   );

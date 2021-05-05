@@ -1,10 +1,10 @@
 import React from 'react';
-import { mountWithRouter } from '../../../utils/testHelpers';
+import { tokenMap } from '@constants';
+import { mountWithRouter } from '@utils/testHelpers';
 import Request from '.';
-import { tokenMap } from '../../../constants/tokens';
 import accounts from '../../../../test/constants/accounts';
 
-jest.mock('../../shared/converter', () => (
+jest.mock('@shared/converter', () => (
   function ConverterMock() {
     return <span className="converted-price" />;
   }
@@ -17,7 +17,7 @@ describe('Request', () => {
     account: {
       info: {
         LSK: {
-          address: accounts.genesis.address,
+          address: accounts.genesis.summary.address,
         },
         BTC: {
           address: '16Qp9op3fTESTBTCACCOUNTv52ghRzYreUuQ',

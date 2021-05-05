@@ -1,16 +1,17 @@
 import React from 'react';
-import { Input } from '../../toolbox/inputs';
-import { TertiaryButton } from '../../toolbox/buttons';
 import {
   formatAmountBasedOnLocale,
-} from '../../../utils/formattedNumber';
-import { fromRawLsk } from '../../../utils/lsk';
+} from '@utils/formattedNumber';
+import { fromRawLsk } from '@utils/lsk';
+import { Input } from '@toolbox/inputs';
+import { TertiaryButton } from '@toolbox/buttons';
 import Converter from '../converter';
 import styles from './amountField.css';
 
 const AmountField = ({
   amount, maxAmount, setAmountField, className,
   title, maxAmountTitle, inputPlaceHolder, name,
+  displayConverter,
 }) => {
   const setEntireBalance = () => {
     const value = formatAmountBasedOnLocale({
@@ -24,12 +25,16 @@ const AmountField = ({
     setAmountField(target, maxAmount);
   };
 
+  const ignoreClicks = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <label className={[
       styles.fieldGroup, amount.error && styles.error, className,
     ].filter(Boolean).join(' ')}
     >
-      <div className={`${styles.amountFieldHeader}`}>
+      <div className={`${styles.amountFieldHeader}`} onClick={ignoreClicks}>
         { title && <span className={`${styles.fieldLabel}`}>{title}</span> }
         {
           maxAmount && (
@@ -55,11 +60,13 @@ const AmountField = ({
           status={amount.error ? 'error' : 'ok'}
           feedback={amount.feedback}
         />
-        <Converter
-          className={styles.converter}
-          value={amount.value}
-          error={amount.error}
-        />
+        {displayConverter && (
+          <Converter
+            className={styles.converter}
+            value={amount.value}
+            error={amount.error}
+          />
+        )}
       </span>
     </label>
   );

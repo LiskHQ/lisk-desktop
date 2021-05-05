@@ -1,5 +1,5 @@
 import React, { Fragment, createElement } from 'react';
-import regex from './regex';
+import { regex } from '@constants';
 
 const htmlStringToReact = (html = '') => {
   const trimmedHtml = html.trim();
@@ -7,7 +7,7 @@ const htmlStringToReact = (html = '') => {
   if (!elements) return trimmedHtml;
   const before = trimmedHtml.slice(0, trimmedHtml.indexOf(elements[0]));
   return (
-    <Fragment>
+    <>
       {
       elements.map((element, index) => {
         const [tag, content, after] = element.match(regex.htmlElements).slice(1);
@@ -24,7 +24,7 @@ const htmlStringToReact = (html = '') => {
         );
       })
     }
-    </Fragment>
+    </>
   );
 };
 

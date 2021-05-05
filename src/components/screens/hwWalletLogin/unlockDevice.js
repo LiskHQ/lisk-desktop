@@ -1,72 +1,61 @@
-import React from 'react';
-import { TertiaryButton } from '../../toolbox/buttons';
-import { checkIfInsideLiskApp } from '../../../utils/hwManager';
-import Illustration from '../../toolbox/illustration';
+import React, { useEffect, useRef } from 'react';
+import { checkIfInsideLiskApp } from '@utils/hwManager';
+import { TertiaryButton } from '@toolbox/buttons';
+import Illustration from '@toolbox/illustration';
+import Spinner from '@toolbox/spinner';
+import styles from './hwWalletLogin.css';
 
-class UnlockDevice extends React.Component {
-  constructor() {
-    super();
+const UnlockDevice = ({
+  deviceId,
+  devices,
+  prevStep,
+  nextStep,
+  goBack,
+  t,
+}) => {
+  const timeOut = useRef();
+  const selected = devices.find(d => d.deviceId === deviceId) || {};
 
-    this.state = {
-      isLoading: true,
-    };
+  const checkIfAppRunning = async () => {
+    await checkIfInsideLiskApp({ id: deviceId });
+  };
 
-    this.timeout = null;
-    this.checkIfInsideLiskApp = this.checkIfInsideLiskApp.bind(this);
-  }
-
-  componentDidMount() {
-    this.navigateIfNeeded();
-  }
-
-  componentDidUpdate() {
-    this.navigateIfNeeded();
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timeout);
-  }
-
-  get selectedDevice() {
-    return this.props.devices.find(d => d.deviceId === this.props.deviceId) || {};
-  }
-
-  navigateIfNeeded() {
-    clearTimeout(this.timeout);
-    const selectedDevice = this.selectedDevice;
-    if (!selectedDevice.model) {
-      this.props.prevStep({ reset: true });
-    } else if (selectedDevice.openApp) {
-      this.props.nextStep({ device: selectedDevice });
+  const navigateIfNeeded = () => {
+    clearTimeout(timeOut.current);
+    if (!selected.model) {
+      prevStep({ reset: true });
+    } else if (selected.openApp) {
+      nextStep({ device: selected });
     } else {
-      this.timeout = setTimeout(this.checkIfInsideLiskApp, 1000);
+      timeOut.current = setTimeout(checkIfAppRunning, 1000);
     }
-  }
+  };
 
-  async checkIfInsideLiskApp() {
-    await checkIfInsideLiskApp({ id: this.props.deviceId });
-    if (this.state.isLoading) {
-      this.setState({ isLoading: false });
-    }
-  }
+  useEffect(() => () => clearTimeout(timeOut.current), []);
 
-  render() {
-    const { t, goBack } = this.props;
-    const selectedDevice = this.selectedDevice;
-    return (!this.state.isLoading && !!selectedDevice.model) ? (
-      <div>
-        <h1>{t('{{deviceModel}} connected! Open the Lisk app on the device', { deviceModel: selectedDevice.model })}</h1>
-        <p>
-          { t('If you’re not sure how to do this please follow the') }
-          {' '}
-        </p>
-        <Illustration name="ledgerNanoLight" />
-        <TertiaryButton onClick={goBack}>
-          {t('Go back')}
-        </TertiaryButton>
+  useEffect(() => {
+    navigateIfNeeded();
+  }, [devices]);
+
+  return (selected.model) ? (
+    <div>
+      <h1>{t('{{deviceModel}} connected! Open the Lisk app on the device', { deviceModel: selected.model })}</h1>
+      <p>
+        { t('If you’re not sure how to do this please follow the') }
+        {' '}
+      </p>
+      <div className={styles.illustration}>
+        <Illustration name="ledgerNano" />
       </div>
-    ) : '';
-  }
-}
+      <TertiaryButton onClick={goBack}>
+        {t('Go back')}
+      </TertiaryButton>
+    </div>
+  ) : (
+    <div>
+      <Spinner label="Checking devices" completed={false} />
+    </div>
+  );
+};
 
 export default UnlockDevice;

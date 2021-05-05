@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import routes from '../../../constants/routes';
+import { routes } from '@constants';
+import { getTokenFromAddress } from '@utils/account';
+import { selectSearchParamValue } from '@utils/searchParams';
 import styles from './discreetMode.css';
-import { getTokenFromAddress } from '../../../utils/api/transactions';
-import { selectSearchParamValue } from '../../../utils/searchParams';
 
 class DiscreetMode extends Component {
   handleBlurOnOtherWalletPage() {
@@ -45,6 +45,5 @@ DiscreetMode.propTypes = {
   location: PropTypes.object.isRequired,
   shouldEvaluateForOtherAccounts: PropTypes.bool,
 };
-
 
 export default DiscreetMode;

@@ -52,7 +52,7 @@ class I18nScannerPlugin {
   }
 
   apply(compiler) {
-    compiler.plugin('emit', (compilation, callback) => {
+    compiler.hooks.emit.tapAsync('I18nScannerPlugin', (compilation, callback) => {
       i18nScanner(this.options);
       callback();
     });

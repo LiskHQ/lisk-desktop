@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { firstBlockTime } from '../constants/datetime';
+import { firstBlockTime } from '@constants';
 
 /**
  * Returns unix timestamp from value
@@ -7,19 +7,7 @@ import { firstBlockTime } from '../constants/datetime';
  * @returns {Number} - timestamp in Unix timestamp format
  */
 export const getUnixTimestampFromValue = value =>
-  ((moment(firstBlockTime).format('x') / 1000) + +moment(value).format('x')) * 1000;
-
-/**
- * returns timestamp from first block considering time
- * @param {Number} value - Date value
- * @param {String} [format] - Format in which the date is provided e.g. MM.DD.YY
- * @param {Object} [options={ inclusive: false }] - set to true to get end of day timestamp
- * @returns {Number} - Timestamp from first block
- */
-export const getTimestampFromFirstBlock = (value, format, options = { inclusive: false }) => {
-  const timestamp = options.inclusive ? moment(value, format).endOf('day').format('x') : moment(value, format).format('x');
-  return Math.floor((timestamp - moment(firstBlockTime).format('x')) / 1000);
-};
+  +moment(value).format('x') * 1000;
 
 /**
  * returns timestamp from first block not considering time
@@ -60,10 +48,17 @@ export const convertUnixSecondsToLiskEpochSeconds = timestamp => (
   moment(timestamp * 1000).unix() - moment(firstBlockTime).unix()
 );
 
+/**
+ * Converts a date in DD-MM-YYYY format to timestamp
+ * @param {String} date - Date in DD-MM-YYYY format
+ * @returns {Number} - Unix timestamp
+ */
+export const transformStringDateToUnixTimestamp = date => new Date(moment(date, 'DD-MM-YYYY').format('MM/DD/YYYY')).valueOf() / 1000;
+
 export default {
   convertUnixSecondsToLiskEpochSeconds,
-  getTimestampFromFirstBlock,
   getDateTimestampFromFirstBlock,
   formatInputToDate,
   firstBlockTime,
+  transformStringDateToUnixTimestamp,
 };

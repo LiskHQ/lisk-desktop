@@ -1,9 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap } from '../../../constants/tokens';
+import { tokenMap, keyCodes } from '@constants';
 import AccountVisual from '../accountVisual';
 import AutoSuggest from './index';
-import keyCodes from '../../../constants/keyCodes';
 
 describe('Recipient Input', () => {
   let wrapper;
@@ -40,11 +39,11 @@ describe('Recipient Input', () => {
     matchProps: ['address', 'title'],
     // eslint-disable-next-line react/display-name
     renderItem: item => (
-      <React.Fragment>
+      <>
         <AccountVisual address={item.address} size={25} />
         <span>{item.title}</span>
         <span>{item.address}</span>
-      </React.Fragment>
+      </>
     ),
   };
 

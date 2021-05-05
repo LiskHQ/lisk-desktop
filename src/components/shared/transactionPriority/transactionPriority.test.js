@@ -1,13 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap } from '../../../constants/tokens';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionPriority from '.';
-import transactionTypes from '../../../constants/transactionTypes';
 
 const baseFees = {
-  Low: 0.1,
-  Medium: 0.2,
-  High: 0.3,
+  Low: 100,
+  Medium: 1000,
+  High: 2000,
 };
 
 describe('TransactionPriority', () => {
@@ -25,7 +24,9 @@ describe('TransactionPriority', () => {
     setSelectedPriority: jest.fn(),
     fee,
     setCustomFee: jest.fn(),
-    txType: transactionTypes().transfer.key,
+    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+    loadError: false,
+    isloading: false,
   };
   beforeEach(() => {
     props.setSelectedPriority.mockRestore();
@@ -72,5 +73,70 @@ describe('TransactionPriority', () => {
     wrapper.find('span.fee-value').simulate('click');
     expect(wrapper).not.toContainMatchingElement('Icon[name="edit"]');
     expect(wrapper).toContainMatchingElement('.custom-fee-input');
+  });
+
+  it('should disable button when fees are 0', () => {
+    wrapper.setProps({
+      ...props,
+      token: tokenMap.LSK.key,
+      priorityOptions: [{ title: 'Low', value: 0 },
+        { title: 'Medium', value: 0 },
+        { title: 'High', value: 0 },
+        { title: 'Custom', value: 0 }],
+    });
+    expect(wrapper.find('.option-Medium')).toBeDisabled();
+    expect(wrapper.find('.option-High')).toBeDisabled();
+    expect(wrapper.find('.option-Custom')).toBeDisabled();
+  });
+
+  it('Options buttons should be enabled/disabled correctly with loading lsk tx fee had an error', () => {
+    wrapper.setProps({ ...props, token: tokenMap.LSK.key, loadError: 'Error' });
+    expect(wrapper.find('.option-Medium')).toBeDisabled();
+    expect(wrapper.find('.option-High')).toBeDisabled();
+    expect(wrapper.find('.option-Custom')).not.toBeDisabled();
+    expect(wrapper.find('.option-Low')).not.toBeDisabled();
+  });
+
+  it('Should enable all priority options', () => {
+    wrapper.setProps({ ...props, token: tokenMap.LSK.key });
+    expect(wrapper.find('.option-Low')).not.toBeDisabled();
+    expect(wrapper.find('.option-Medium')).not.toBeDisabled();
+    expect(wrapper.find('.option-High')).not.toBeDisabled();
+    expect(wrapper.find('.option-Custom')).not.toBeDisabled();
+  });
+
+  it('Should disable confirmation button when fee is higher than hard cap', async () => {
+    wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
+    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.5' } });
+    expect(props.setCustomFee).toHaveBeenCalledWith({
+      error: true,
+      feedback: 'invalid custom fee',
+      value: undefined,
+    });
+  });
+
+  it('Should disable confirmation button when fee is less than the minimum', async () => {
+    wrapper.setProps({
+      ...props,
+      token: tokenMap.LSK.key,
+      selectedPriority: 3,
+      minFee: 1000,
+    });
+    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.00000000001' } });
+    expect(props.setCustomFee).toHaveBeenCalledWith({
+      error: true,
+      feedback: 'invalid custom fee',
+      value: undefined,
+    });
+  });
+
+  it('Should enable confirmation button when fee is within bounds', async () => {
+    wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
+    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.019' } });
+    expect(props.setCustomFee).toHaveBeenCalledWith({
+      error: false,
+      feedback: '',
+      value: '0.019',
+    });
   });
 });

@@ -6,13 +6,15 @@
 export const parseSearchParams = (search) => {
   const searchParams = new URLSearchParams(search);
   const parsedParams = {};
-  // eslint-disable-next-line no-restricted-syntax
+
+  // eslint-disable-next-line no-restricted-syntax, no-unused-vars
   for (const [key, value] of searchParams.entries()) {
     const values = value.split(',');
     if (values.length > 1) {
       parsedParams[key] = values;
     } else { parsedParams[key] = value; }
   }
+
   return parsedParams;
 };
 
@@ -30,7 +32,7 @@ export const selectSearchParamValue = (search, paramToSelect) =>
  * @param {object} params the parsed searchParams object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const strigifySearchParams = (params) => {
+export const stringifySearchParams = (params) => {
   const result = [];
 
   Object.keys(params).forEach((key) => {
@@ -56,7 +58,7 @@ export const appendSearchParams = (search, data) => {
   Object.keys(data).forEach((key) => {
     searchParams[key] = data[key];
   });
-  return strigifySearchParams(searchParams);
+  return stringifySearchParams(searchParams);
 };
 
 /**
@@ -79,7 +81,7 @@ export const removeSearchParams = (search, paramsToRemove, cleanParamsAfter) => 
     });
   }
 
-  return strigifySearchParams(params);
+  return stringifySearchParams(params);
 };
 
 /**
@@ -91,7 +93,6 @@ export const addSearchParamsToUrl = (history, data = {}) => {
   const newSearchString = appendSearchParams(history.location.search, data);
   history.push(`${history.location.pathname}${newSearchString}`);
 };
-
 
 /**
  * removes a query param to the url and redirects to that url

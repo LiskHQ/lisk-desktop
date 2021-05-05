@@ -1,10 +1,8 @@
-import actionTypes from '../../constants/actions';
-import voting from '../../constants/voting';
+import { actionTypes, ROUND_LENGTH } from '@constants';
 
 const initialState = {
   latestBlocks: [],
-  forgingTimes: {},
-  awaitingForgers: [],
+  forgers: [],
   total: 0,
 };
 
@@ -16,7 +14,7 @@ const blocks = (state = initialState, action) => {
         latestBlocks: [
           action.data.block,
           ...state.latestBlocks,
-        ].slice(0, voting.numberOfActiveDelegates * 2),
+        ].slice(0, ROUND_LENGTH * 2),
       };
     case actionTypes.olderBlocksRetrieved:
       return {
@@ -26,11 +24,10 @@ const blocks = (state = initialState, action) => {
         ],
         total: action.data.total,
       };
-    case actionTypes.forgingTimesRetrieved:
+    case actionTypes.forgersRetrieved:
       return {
         ...state,
-        forgingTimes: action.data.forgingTimes,
-        awaitingForgers: action.data.awaitingForgers,
+        forgers: action.data,
       };
     default:
       return state;

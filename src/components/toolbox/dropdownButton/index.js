@@ -15,9 +15,9 @@ class DropdownButton extends React.Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
   }
 
-  toggleDropdown() {
+  toggleDropdown(_, showDropdown) {
     this.setState(prevState => ({
-      shownDropdown: !prevState.shownDropdown,
+      shownDropdown: showDropdown || !prevState.shownDropdown,
     }));
   }
 
@@ -28,7 +28,7 @@ class DropdownButton extends React.Component {
       wrapperClassName, buttonClassName, className,
     } = this.props;
     return (
-      <React.Fragment>
+      <>
         <OutsideClickHandler
           className={`${styles.wrapper} ${wrapperClassName}`}
           disabled={!shownDropdown}
@@ -46,7 +46,7 @@ class DropdownButton extends React.Component {
             {children}
           </Dropdown>
         </OutsideClickHandler>
-      </React.Fragment>
+      </>
     );
   }
 }

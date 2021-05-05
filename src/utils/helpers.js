@@ -27,7 +27,6 @@ export const removeUndefinedKeys = obj => Object.keys(obj).reduce((acc, key) => 
   return acc;
 }, {});
 
-
 /**
  * Checks if the given collection is empty.
  * @param {Object|Array} collection
@@ -40,7 +39,6 @@ export const isEmpty = (collection) => {
 
   return Object.keys(collection).length === 0;
 };
-
 
 /**
  * Filters object keys by given value
@@ -57,10 +55,11 @@ export const filterObjectPropsWithValue = (object = {}, value) => (
  * @param {string} error - error message to put into the email body
  * @returns {sting} mailto link with recipient, subject, and body
  */
-export const getErrorReportMailto = (error) => {
+export const getErrorReportMailto = (error = 'Unknown error occured') => {
   const recipient = 'hubdev@lisk.io';
   const subject = `User Reported Error - Lisk - ${VERSION}`; // eslint-disable-line no-undef
-  return `mailto:${recipient}?&subject=${subject}&body=${error}`;
+  const body = encodeURIComponent(`\nImportant metadata for the team, please do not edit: \n\n${error}\n`);
+  return `mailto:${recipient}?&subject=${subject}&body=${body}`;
 };
 
 /**
@@ -114,3 +113,24 @@ export const kFormatter = (num, precision = 0) => {
   }
   return num;
 };
+
+/**
+ * Convert given strings to camel case
+ * All below string convert into equipmentClassName
+ * EquipmentClass name
+ * Equipment className
+ * equipment class name
+ * Equipment Class Name
+ *
+ * @param {String} str - The string to convert ot camelCase
+ * @return {String} camelCased string
+ */
+export const camelize = str =>
+  str
+    .replace(
+      /(?:^\w|[A-Z]|\b\w)/g,
+      (word, index) => (index === 0
+        ? word.toLowerCase()
+        : word.toUpperCase()),
+    )
+    .replace(/\s+/g, '');

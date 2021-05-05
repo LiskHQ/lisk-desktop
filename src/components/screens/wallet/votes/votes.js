@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import { Input } from '../../../toolbox/inputs';
-import routes from '../../../../constants/routes';
+import { routes } from '@constants';
+import { isEmpty } from '@utils/helpers';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import { Input } from '@toolbox/inputs';
+import Table from '@toolbox/table';
+import DialogLink from '@toolbox/dialog/link';
+import { SecondaryButton } from '@toolbox/buttons';
 import styles from './votes.css';
-import Table from '../../../toolbox/table';
 import VoteRow from './voteRow';
 import header from './votesTableHeader';
-import DialogLink from '../../../toolbox/dialog/link';
-import { SecondaryButton } from '../../../toolbox/buttons';
-// import { isEmpty } from '../../../../utils/helpers';
 
 const getMessages = t => ({
   all: t('This account doesn’t have any votes.'),
@@ -19,7 +19,7 @@ const getMessages = t => ({
 });
 
 const Votes = ({
-  votes, accounts, address, t, history,
+  votes, accounts, address, t, history, hostVotes = {}, isDelegate,
 }) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
@@ -35,21 +35,20 @@ const Votes = ({
 
   useEffect(() => {
     votes.loadData({ address });
-  }, [address]);
+  }, [address, hostVotes]);
 
-  // @todo uncomment this when Lisk Service API is ready
   // Fetch delegate profiles to define rank, productivity and delegate weight
-  // useEffect(() => {
-  //   if (isEmpty(accounts.data) && votes.data.length) {
-  //     const addressList = votes.data.map(vote => vote.delegateAddress);
-  //     accounts.loadData({ addressList });
-  //   }
-  // }, [votes.data]);
+  useEffect(() => {
+    if (isEmpty(accounts.data) && votes.data.length) {
+      const addressList = votes.data.map(vote => vote.address);
+      accounts.loadData({ addressList });
+    }
+  }, [votes.data]);
 
   const areLoading = accounts.isLoading || votes.isLoading;
   const filteredVotes = votes.data.filter((vote) => {
-    if (!vote.delegate) return false;
-    return vote.delegate.username.indexOf(filterValue) > -1;
+    if (!vote.username) return false;
+    return vote.username.indexOf(filterValue) > -1;
   });
 
   return (
@@ -57,6 +56,7 @@ const Votes = ({
       <BoxHeader>
         <h1>{t('Voted delegates')}</h1>
         <div className={`${styles.filterHolder}`}>
+          {!isDelegate && (
           <DialogLink
             className={`${styles.registerDelegate} register-delegate`}
             component="registerDelegate"
@@ -65,6 +65,7 @@ const Votes = ({
               {t('Register a delegate')}
             </SecondaryButton>
           </DialogLink>
+          )}
           <Input
             className="search"
             disabled={!votes.data.length}

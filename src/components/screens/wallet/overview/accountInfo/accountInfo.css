@@ -18,7 +18,8 @@
     @mixin contentLargest normal;
 
     color: var(--color-strong-mystic);
-    margin: 0 0 10px;
+    margin: 0 0 5px;
+    box-sizing: border-box;
   }
 
   & .info {
@@ -26,34 +27,103 @@
     flex-flow: row nowrap;
     position: relative;
     z-index: 1;
+  }
+
+  & .identity {
+    display: block;
+    position: relative;
+    z-index: 1;
+    min-height: 53px;
+    padding-left: 10px;
+    max-width: calc(100% - 40px);
 
     & .text {
-      position: relative;
+      @mixin contentNormal normal;
+
+      width: 100%;
+      line-height: 15px;
+      opacity: 0.7;
+      font-family: var(--heading-font);
       color: var(--color-strong-mystic);
-      padding-left: 10px;
-      padding-top: 4px;
-      min-height: 53px;
-      max-width: calc(100% - 40px);
+      display: inline-block;
+    }
+
+    & .primary {
+      @mixin headingNormalIntermediate normal;
+
+      font-size: 22px;
+      line-height: 22px;
+      display: block;
+      color: var(--color-strong-mystic);
+      opacity: 1;
+    }
+
+    & .full {
+      position: relative;
+      display: block;
+      width: 100%;
       word-wrap: break-word;
+      opacity: 0;
+      pointer-events: none;
 
-      & .primary {
-        @mixin headingNormalIntermediate normal;
-
-        font-size: 22px;
-        display: block;
+      &.primaryTooltip {
+        margin-top: -22px;
       }
 
-      & .secondary {
-        @mixin contentLargest normal;
+      &.secondaryTooltip {
+        margin-top: -16px;
+      }
+    }
 
-        opacity: 0.7;
-        display: inline-block;
+    & .legacy {
+      padding-top: 7px;
+      margin-top: 10px;
+      border-top: solid 1px rgba(255, 255, 255, 0.2);
+      opacity: 0;
+      pointer-events: none;
+
+      & img {
+        filter: brightness(100) !important;
       }
 
-      & .noSelect {
-        cursor: pointer;
-        user-select: none;
+      & .label {
+        padding-bottom: 4px;
       }
+    }
+
+    & .tooltip {
+      & > div {
+        width: auto;
+      }
+
+      & main {
+        width: auto;
+
+        & span {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  & .showLegacy {
+    & .identity {
+      & .truncated {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      & .legacy,
+      & .full {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+
+    & + footer {
+      transform: translateY(50%);
+      pointer-events: none;
+      opacity: 0;
     }
   }
 
@@ -66,6 +136,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    transition: all ease 200ms;
 
     & .helperIcon {
       width: 40px;

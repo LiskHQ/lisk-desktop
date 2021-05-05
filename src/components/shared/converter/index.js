@@ -1,12 +1,11 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { pricesRetrieved } from '../../../actions/service';
+import { settings, tokenMap } from '@constants';
 import Converter from './converter';
-import settings from '../../../constants/settings';
 
 const mapStateToProps = state => ({
-  settings: state.settings,
-  token: state.settings.token && state.settings.token.active,
+  currency: state.settings.currency || 'EUR',
+  token: state.settings.token ? state.settings.token.active : tokenMap.LSK.key,
   priceTicker: (state.service && state.service.priceTicker)
     ? state.service.priceTicker
     : {
@@ -15,11 +14,6 @@ const mapStateToProps = state => ({
     },
 });
 
-const mapDispatchToProps = {
-  pricesRetrieved,
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Converter);

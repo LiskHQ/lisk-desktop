@@ -1,6 +1,6 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
-import FilterDropdownButton from '../../../shared/filterDropdownButton';
+import FilterDropdownButton from '@shared/filterDropdownButton';
 
 const FilterDropdown = ({ t, filters, applyFilters }) => {
   const fields = [
@@ -13,12 +13,6 @@ const FilterDropdown = ({ t, filters, applyFilters }) => {
       label: t('Amount Range'),
       name: 'amount',
       type: 'number-range',
-    },
-    {
-      label: t('Message'),
-      placeholder: t('Write message'),
-      name: 'message',
-      type: 'text',
     },
   ];
 

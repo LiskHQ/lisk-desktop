@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import withFilters from '@utils/withFilters';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import FilterBar from '@shared/filterBar';
+import LoadLatestButton from '@shared/loadLatestButton';
+import Table from '@toolbox/table';
 import BlockFilterDropdown from './blockFilterDropdown';
-import Box from '../../../toolbox/box';
-import BoxHeader from '../../../toolbox/box/header';
-import BoxContent from '../../../toolbox/box/content';
-import FilterBar from '../../../shared/filterBar';
-import LoadLatestButton from '../../../shared/loadLatestButton';
-import Table from '../../../toolbox/table';
 import styles from './blocks.css';
-import withFilters from '../../../../utils/withFilters';
 import BlocksOverview from './blocksOverview';
 import BlockRow from './blockRow';
 import header from './tableHeader';
@@ -42,7 +42,7 @@ const Blocks = ({
   /* istanbul ignore next */
   const loadLastBlocks = () => applyFilters(filters);
 
-  const canLoadMore = blocks.meta ? blocks.meta.count === 30 : false;
+  const canLoadMore = blocks.meta && blocks.meta.total > blocks.data.length;
 
   return (
     <div>

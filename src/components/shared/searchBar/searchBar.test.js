@@ -1,6 +1,6 @@
-import keyCodes from '../../../constants/keyCodes';
+import { keyCodes } from '@constants';
+import { mountWithRouter } from '@utils/testHelpers';
 import SearchBar from './searchBar';
-import { mountWithRouter } from '../../../utils/testHelpers';
 
 describe('SearchBar', () => {
   let wrapper;
@@ -92,7 +92,8 @@ describe('SearchBar', () => {
                 data: 'testing',
               },
               id: 123456123234234,
-              type: 1,
+              type: 0,
+              title: 'transfer',
             },
           ],
         },

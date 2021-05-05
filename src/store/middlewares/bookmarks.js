@@ -1,17 +1,17 @@
-import actionsType from '../../constants/actions';
-import { setInStorage } from '../../utils/localJSONStorage';
+import { actionTypes } from '@constants';
+import { setInStorage } from '@utils/localJSONStorage';
 
 const bookmarks = store => next => (action) => {
   switch (action.type) {
-    case actionsType.bookmarkUpdated:
+    case actionTypes.bookmarkUpdated:
       next(action);
       setInStorage('bookmarks', store.getState().bookmarks);
       break;
-    case actionsType.bookmarkRemoved:
+    case actionTypes.bookmarkRemoved:
       next(action);
       setInStorage('bookmarks', store.getState().bookmarks);
       break;
-    case actionsType.bookmarkAdded:
+    case actionTypes.bookmarkAdded:
       next(action);
       setInStorage('bookmarks', store.getState().bookmarks);
       break;

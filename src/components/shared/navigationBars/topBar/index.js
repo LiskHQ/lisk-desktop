@@ -2,9 +2,9 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { accountLoggedOut, accountUpdated } from '../../../../actions/account';
-import { networkSet } from '../../../../actions/network';
-import accountConfig from '../../../../constants/account';
+import { containsTransactionType } from '@utils/transaction';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { accountLoggedOut, passphraseUsed } from '@actions';
 import TopBar from './topBar';
 
 const mapStateToProps = state => ({
@@ -12,15 +12,18 @@ const mapStateToProps = state => ({
   network: state.network,
   token: state.settings.token,
   settings: state.settings,
-  noOfVotes: Object.values(state.voting)
-    .filter(vote => (vote.confirmed !== vote.unconfirmed))
-    .length,
+  noOfVotes: containsTransactionType(
+    state.transactions.pending,
+    MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+  ) ? 0
+    : Object.values(state.voting)
+      .filter(vote => (vote.confirmed !== vote.unconfirmed))
+      .length,
 });
 
 const mapDispatchToProps = {
   logOut: accountLoggedOut,
-  networkSet,
-  resetTimer: () => accountUpdated({ expireTime: Date.now() + accountConfig.lockDuration }),
+  resetTimer: () => passphraseUsed(new Date()),
 };
 
 export default withRouter(

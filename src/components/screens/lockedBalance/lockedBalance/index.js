@@ -1,40 +1,45 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import TransactionPriority from '../../../shared/transactionPriority';
-import { toRawLsk } from '../../../../utils/lsk';
-import useTransactionPriority from '../../send/form/useTransactionPriority';
-import useTransactionFeeCalculation from '../../send/form/useTransactionFeeCalculation';
-import transactionTypes from '../../../../constants/transactionTypes';
 import {
-  calculateLockedBalance,
-  calculateAvailableBalance,
+  calculateBalanceLockedInVotes,
+  calculateUnlockableBalance,
   getActiveTokenAccount,
-} from '../../../../utils/account';
+  getUnlockableUnlockingObjects,
+} from '@utils/account';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import TransactionPriority, { useTransactionFeeCalculation } from '@shared/transactionPriority';
+import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
+import { selectCurrentBlockHeight } from '@store';
 import Form from './form';
 import BalanceTable from './balanceTable';
 
-const txType = transactionTypes().unlockToken.key;
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const LockedBalance = (props) => {
   const account = useSelector(state => getActiveTokenAccount(state));
   const token = useSelector(state => state.settings.token.active);
-  const currentBlock = useSelector(state => state.blocks.latestBlocks[0] || { height: 0 });
-  const lockedBalance = calculateLockedBalance(account);
-  const availableBalance = calculateAvailableBalance(account, currentBlock);
+  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
+  const unlockableBalance = calculateUnlockableBalance(
+    account.dpos?.unlocking, currentBlockHeight,
+  );
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority, priorityOptions,
+    selectedPriority, selectTransactionPriority,
+    priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority(token);
+
   const { fee, minFee } = useTransactionFeeCalculation({
     selectedPriority,
     token,
     account,
     priorityOptions,
-    txData: {
-      amount: toRawLsk(availableBalance),
-      txType,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+    transaction: {
+      moduleAssetId,
+      senderPublicKey: account.summary?.publicKey,
+      nonce: account.sequence?.nonce,
+      passphrase: account.passphrase,
+      unlockingObjects: getUnlockableUnlockingObjects(account.dpos?.unlocking, currentBlockHeight),
     },
   });
 
@@ -44,15 +49,15 @@ const LockedBalance = (props) => {
         account,
         customFee,
         fee,
-        currentBlock,
-        availableBalance,
+        currentBlockHeight,
+        unlockableBalance,
       }}
       {...props}
     >
       <BalanceTable
-        lockedBalance={lockedBalance}
-        availableBalance={availableBalance}
-        currentBlock={currentBlock}
+        lockedInVotes={lockedInVotes}
+        unlockableBalance={unlockableBalance}
+        currentBlockHeight={currentBlockHeight}
         account={account}
       />
       <TransactionPriority
@@ -60,11 +65,13 @@ const LockedBalance = (props) => {
         fee={fee}
         minFee={minFee.value}
         customFee={customFee ? customFee.value : undefined}
-        txType={txType}
+        moduleAssetId={moduleAssetId}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
+        loadError={prioritiesLoadError}
+        isLoading={loadingPriorities}
       />
     </Form>
   );

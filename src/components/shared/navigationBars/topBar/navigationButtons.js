@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { routes } from '@constants';
+import Icon from '@toolbox/icon';
 import styles from './navigationButtons.css';
-import Icon from '../../../toolbox/icon';
-import routes from '../../../../constants/routes';
 
 const NavigationButtons = ({ history }) => {
   const [pageIndex, setPageIndex] = useState(history.length);
@@ -36,14 +36,15 @@ const NavigationButtons = ({ history }) => {
     <div className={`${styles.wrapper} navigation-buttons`}>
       <button
         className="go-back"
-        disabled={pageIndex <= refIndex}
+        disabled={pageIndex <= refIndex || history.location.pathname === routes.reclaim.path}
         onClick={goBack}
       >
         <Icon name="arrowLeftActive" />
       </button>
       <button
         className="go-forward"
-        disabled={pageIndex >= history.length}
+        disabled={pageIndex >= history.length
+          || history.location.pathname === routes.reclaim.path}
         onClick={goForward}
       >
         <Icon name="arrowRightActive" />

@@ -1,4 +1,4 @@
-import actionTypes from '../../constants/actions';
+import { actionTypes } from '@constants';
 
 const initialState = {
   status: {},
@@ -15,13 +15,13 @@ const initialState = {
  */
 const network = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.networkSet:
+    case actionTypes.networkConfigSet:
       return {
         ...state,
         name: action.data.name,
         networks: {
           ...state.networks,
-          [action.data.token]: action.data.network || {},
+          ...action.data.networks,
         },
       };
     case actionTypes.networkStatusUpdated:
@@ -29,10 +29,10 @@ const network = (state = initialState, action) => {
         ...state,
         status: action.data,
       };
-    case actionTypes.serviceUrlSet:
+    case actionTypes.lastBtcUpdateSet:
       return {
         ...state,
-        serviceUrl: action.data,
+        lastBtcUpdate: action.data,
       };
     default:
       return state;

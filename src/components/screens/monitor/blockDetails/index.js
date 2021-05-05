@@ -3,10 +3,12 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import { getBlock } from '@api/block';
+import { getTransactions } from '@api/transaction';
+import withData from '@utils/withData';
+import { selectSearchParamValue } from '@utils/searchParams';
+import { tokenMap } from '@constants';
 import BlockDetails from './blockDetails';
-import liskService from '../../../../utils/api/lsk/liskService';
-import withData from '../../../../utils/withData';
-import { selectSearchParamValue } from '../../../../utils/searchParams';
 
 const mapStateToProps = (state, ownProps) => ({
   id: selectSearchParamValue(ownProps.history.location.search, 'id'),
@@ -16,14 +18,14 @@ const ComposedBlockDetails = compose(
   connect(mapStateToProps),
   withData({
     blockDetails: {
-      apiUtil: liskService.getBlockDetails,
-      getApiParams: (state, ownProps) => ({ id: ownProps.id }),
+      apiUtil: (network, params) => getBlock({ network, params }),
+      getApiParams: (state, ownProps) => ({ blockId: ownProps.id }),
       transformResponse: response => (response.data && response.data[0]),
     },
     blockTransactions: {
-      apiUtil: liskService.getBlockTransactions,
+      apiUtil: (network, params) => getTransactions({ network, params }, tokenMap.LSK.key),
       defaultData: [],
-      getApiParams: (state, ownProps) => ({ id: ownProps.id }),
+      getApiParams: (state, ownProps) => ({ blockId: ownProps.id }),
       transformResponse: (response, oldData, urlSearchParams) => (
         urlSearchParams.offset
           ? [...oldData, ...response.data.filter(block =>

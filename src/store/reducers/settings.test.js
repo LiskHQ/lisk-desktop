@@ -1,7 +1,5 @@
+import { actionTypes, tokenKeys } from '@constants';
 import settings from './settings';
-import actionTypes from '../../constants/actions';
-import { tokenKeys } from '../../constants/tokens';
-
 
 describe('Reducer: settings(state, action)', () => {
   let initializeState;

@@ -1,9 +1,9 @@
 import React from 'react';
-import { mountWithRouter } from '../../../utils/testHelpers';
+import { mountWithRouter } from '@utils/testHelpers';
 import Request from './requestLsk';
 import accounts from '../../../../test/constants/accounts';
 
-jest.mock('../../shared/converter', () => (
+jest.mock('@shared/converter', () => (
   function ConverterMock() {
     return <span className="converted-price" />;
   }
@@ -13,7 +13,7 @@ describe('RequestLsk', () => {
   let wrapper;
 
   const props = {
-    address: accounts.genesis.address,
+    address: accounts.genesis.summary.address,
     t: v => v,
   };
   const routeConfig = {
@@ -33,7 +33,6 @@ describe('RequestLsk', () => {
     evt = { target: { name: 'reference', value: 'test' } };
     wrapper.find('.fieldGroup').at(1).find('AutoResizeTextarea').simulate('change', evt);
     expect(wrapper.find(Request).state('shareLink')).toMatch(`${shareLink}&${evt.target.name}=${evt.target.value}`);
-
 
     evt = { target: { name: 'amount', value: 1 } };
     wrapper.find('.fieldGroup').at(0).find('input').simulate('change', evt);

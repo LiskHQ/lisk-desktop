@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import MultiStep from '../../shared/multiStep';
-import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
-import processLaunchProtocol from '../../../actions/urlProcessor';
+import { removeSearchParamsFromUrl } from '@utils/searchParams';
+import { processLaunchProtocol } from '@actions';
+import MultiStep from '@shared/multiStep';
 
 import Editor from './editor';
 import Summary from './summary';
@@ -20,6 +20,9 @@ const VotingQueue = ({ history }) => {
 
   useEffect(() => {
     dispatch(processLaunchProtocol(history.location.search));
+
+    // remove the search params from the url after applying the values to the voting queue
+    removeSearchParamsFromUrl(history, ['votes', 'unvotes']);
   }, []);
 
   return (

@@ -1,67 +1,54 @@
-import { constants } from '@liskhq/lisk-client';
-import networks from '../constants/networks';
-import getNetwork, { getNetworkIdentifier } from './getNetwork';
+import {
+  getNetworksList,
+  getNetworkName,
+  getConnectionErrorMessage,
+} from './getNetwork';
 
-describe('getNetwork Utils', () => {
-  const { MAINNET_NETHASH, TESTNET_NETHASH } = constants;
-  describe('getNetwork function', () => {
-    it('Should return correct network Object', () => {
-      let expectedNetwork = networks.mainnet;
-      expect(getNetwork('Mainnet')).toEqual(expectedNetwork);
-
-      expectedNetwork = networks.testnet;
-      expect(getNetwork('Testnet')).toEqual(expectedNetwork);
-
-      expectedNetwork = networks.customNode;
-      expect(getNetwork('Custom Node')).toEqual(expectedNetwork);
+describe('Utils: getNetwork', () => {
+  describe('getNetworksList', () => {
+    const response = [
+      { label: 'Mainnet', name: 'mainnet' },
+      { label: 'Testnet', name: 'testnet' },
+      { label: 'Custom Node', name: 'customNode' },
+    ];
+    it('returns names and labels', () => {
+      expect(getNetworksList()).toEqual(response);
     });
   });
 
-  describe('getNetworkIdentifier function', () => {
-    it('Should return network name based on nethash', () => {
-      let network = {
-        name: 'Mainnet',
-        networks: {
-          LSK: { nethash: MAINNET_NETHASH },
-        },
-      };
-      expect(getNetworkIdentifier(network)).toBe('mainnet');
-
-      network = {
-        name: 'Testnet',
-        networks: {
-          LSK: { nethash: TESTNET_NETHASH },
-        },
-      };
-      expect(getNetworkIdentifier(network)).toBe('testnet');
-    });
-
-    it('Should return network name based on name', () => {
-      let network = {
-        name: 'Mainnet',
-        networks: {
-          LSK: { nethash: MAINNET_NETHASH },
-        },
-      };
-      expect(getNetworkIdentifier(network)).toBe('mainnet');
-
-      network = {
-        name: 'Testnet',
-        networks: {
-          LSK: { nethash: TESTNET_NETHASH },
-        },
-      };
-      expect(getNetworkIdentifier(network)).toBe('testnet');
-    });
-
-    it('Should return nethash for custom node', () => {
+  describe.skip('getNetworkName', () => {
+    it('should discover mainnet', () => {
       const network = {
-        name: 'Custom Node',
+        name: 'customNode',
+      };
+      expect(getNetworkName(network, 'LSK')).toEqual('mainnet');
+    });
+
+    it('should discover testnet', () => {
+      const network = {
+        name: 'customNode',
+      };
+      expect(getNetworkName(network, 'LSK')).toEqual('testnet');
+    });
+
+    it('should mark as customNode otherwise', () => {
+      const network = {
+        name: 'customNode',
         networks: {
-          LSK: { nethash: '098f6bcd4621d373cade4e832627b4f6' },
+          LSK: {
+            nethash: 'sample_hash',
+          },
         },
       };
-      expect(getNetworkIdentifier(network)).toBe(network.networks.LSK.nethash);
+      expect(getNetworkName(network, 'LSK')).toEqual('customNode');
+    });
+  });
+
+  describe('getConnectionErrorMessage', () => {
+    it('should display the error message if presented', () => {
+      expect(getConnectionErrorMessage({
+        message: 'sample error message',
+      })).toEqual('Unable to connect to the node, Error: sample error message');
     });
   });
 });

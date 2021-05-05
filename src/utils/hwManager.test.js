@@ -1,5 +1,5 @@
 import { getAccountsFromDevice, signSendTransaction, signVoteTransaction } from './hwManager';
-import * as accountApi from './api/lsk/account';
+import * as accountApi from './api/account';
 import accounts from '../../test/constants/accounts';
 import * as communication from '../../libs/hwManager/communication';
 
@@ -8,7 +8,7 @@ jest.mock('../../libs/hwManager/communication', () => ({
   signTransaction: jest.fn(),
 }));
 
-jest.mock('./api/lsk/account', () => ({
+jest.mock('./api/account', () => ({
   getAccount: jest.fn(),
 }));
 
@@ -24,8 +24,8 @@ describe('hwManager util', () => {
 
   describe('getAccountsFromDevice', () => {
     it('should resolve all non-empty and one empty account', async () => {
-      communication.getPublicKey.mockResolvedValueOnce(accounts.genesis.publicKey);
-      communication.getPublicKey.mockResolvedValueOnce(accounts.empty_account.publicKey);
+      communication.getPublicKey.mockResolvedValueOnce(accounts.genesis.summary.publicKey);
+      communication.getPublicKey.mockResolvedValueOnce(accounts.empty_account.summary.publicKey);
       accountApi.getAccount.mockResolvedValueOnce(accounts.genesis);
       accountApi.getAccount.mockResolvedValueOnce(accounts.empty_account);
 

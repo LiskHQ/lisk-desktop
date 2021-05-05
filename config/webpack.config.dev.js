@@ -1,17 +1,17 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
+const ESLintPlugin = require('eslint-webpack-plugin');
+
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
+const version = require('../package.json').version;
 
-
-/* eslint-enable import/no-extraneous-dependencies */
-
-module.exports = merge(baseConfig, reactConfig, {
+const config = {
+  mode: 'development',
   output: {
     path: resolve(__dirname, '../app', '../dist'),
-    filename: 'bundle.[name].[hash].js',
+    filename: 'bundle.[name].[contenthash].js',
   },
   devServer: {
     contentBase: 'src',
@@ -19,16 +19,18 @@ module.exports = merge(baseConfig, reactConfig, {
     port: 8080,
     historyApiFallback: true,
     host: '0.0.0.0',
+    hot: true,
   },
   plugins: [
-    new webpack.DefinePlugin({
-      PRODUCTION: false,
-      TEST: false,
-      // because of https://fb.me/react-minification
-      'process.env': {
-        NODE_ENV: null,
-      },
+    new ESLintPlugin({
+      context: '../',
     }),
-    new webpack.IgnorePlugin(/\.\/locale$/),
+    new webpack.IgnorePlugin({ resourceRegExp: /\.\/locale$/ }),
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify(false),
+      VERSION: JSON.stringify(version),
+    }),
   ],
-});
+};
+
+module.exports = merge(baseConfig, reactConfig, config);

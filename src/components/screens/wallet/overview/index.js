@@ -1,37 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { compose } from 'redux';
+import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import withData from '@utils/withData';
+import { getTransactions } from '@api/transaction';
+import { selectTransactions } from '@store';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
-import { isEmpty } from '../../../../utils/helpers';
 import styles from './overview.css';
-
-const getProp = (dic, prop, defaultValue) => {
-  if (!dic || isEmpty(dic)) {
-    return defaultValue;
-  }
-  return dic[prop];
-};
 
 const Overview = ({
   t, activeToken, transactions, hwInfo,
   discreetMode, isWalletRoute, account,
 }) => {
-  const address = getProp(account, 'address', '');
-  const delegate = getProp(account, 'delegate', {});
-  const publicKey = getProp(account, 'publicKey', '');
-  const balance = getProp(account, 'balance', 0);
-  const isMultisig = account.keys && account.keys.numberOfSignatures > 0;
+  const {
+    address, publicKey, balance = 0, isMultisignature,
+  } = account?.summary ?? {};
+  const { confirmed } = useSelector(selectTransactions);
   const bookmark = useSelector(
     state => state.bookmarks[activeToken].find(item => (item.address === address)),
   );
+
   const host = useSelector(
-    state => (state.account
+    state => (
+      state.account
       && state.account.info
       && state.account.info[activeToken]
-      && state.account.info[activeToken].address) || '',
+      && state.account.info[activeToken].summary?.address) || '',
   );
+
+  useEffect(() => {
+    if (!isWalletRoute && address) {
+      transactions.loadData({ address });
+    }
+  }, [address]);
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
@@ -41,11 +45,12 @@ const Overview = ({
           hwInfo={hwInfo}
           activeToken={activeToken}
           address={address}
-          delegate={delegate}
+          username={account?.dpos?.delegate?.username}
           bookmark={bookmark}
           publicKey={publicKey}
           host={host}
-          isMultisig={isMultisig}
+          account={account}
+          isMultisignature={isMultisignature}
         />
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
@@ -55,22 +60,36 @@ const Overview = ({
           balance={balance}
           isDiscreetMode={discreetMode}
           isWalletRoute={isWalletRoute}
-          isDelegate={account.isDelegate}
+          username={account?.dpos?.delegate?.username}
           address={address}
         />
       </div>
       <div className={`${grid['col-xs-12']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.balanceChart}`}>
-        <BalanceChart
-          t={t}
-          transactions={transactions}
-          token={activeToken}
-          isDiscreetMode={discreetMode && host === address}
-          balance={balance}
-          address={address}
-        />
+        {address && (
+          <BalanceChart
+            t={t}
+            transactions={isWalletRoute ? confirmed : transactions.data.data}
+            token={activeToken}
+            isDiscreetMode={discreetMode && host === address}
+            balance={balance}
+            address={address}
+          />
+        )}
       </div>
     </section>
   );
 };
 
-export default Overview;
+export default compose(
+  withData({
+    transactions: {
+      apiUtil: (network, { token, ...params }) => getTransactions({ network, params }, token),
+      getApiParams: state => ({
+        token: state.settings.token.active,
+      }),
+      defaultData: { data: [], meta: {} },
+      autoload: false,
+    },
+  }),
+  withTranslation(),
+)(Overview);

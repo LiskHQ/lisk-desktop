@@ -1,6 +1,6 @@
-import { TransactionsPure } from './index';
+import { mountWithRouter } from '@utils/testHelpers';
+import TransactionsPure from './transactions';
 import transactions from '../../../../../test/constants/transactions';
-import { mountWithRouter } from '../../../../utils/testHelpers';
 
 describe('Transactions monitor page', () => {
   const props = {

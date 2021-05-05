@@ -1,60 +1,82 @@
+/* eslint-disable no-nested-ternary */
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from '../delegates.css';
 
+export const getStatusClass = (activeTab) => {
+  switch (activeTab) {
+    case 'active':
+      return 'hidden';
+    case 'sanctioned':
+      return grid['col-xs-7'];
+    case 'watched':
+      return grid['col-xs-2'];
+    default:
+      return grid['col-xs-4'];
+  }
+};
+
+export const getDelegateWeightClass = (activeTab) => {
+  switch (activeTab) {
+    case 'sanctioned':
+      return 'hidden';
+    case 'watched':
+      return `${grid['col-xs-2']} ${styles.voteWeight}`;
+    default:
+      return `${grid['col-xs-3']} ${styles.voteWeight}`;
+  }
+};
+
+export const getRoundStateClass = (activeTab) => {
+  switch (activeTab) {
+    case 'active':
+      return `${grid['col-xs-1']} ${styles.statusTitle} text-right ${styles.roundStateHeader}`;
+    case 'watched':
+      return `${grid['col-xs-1']} ${styles.statusTitle} ${styles.roundStateHeader}`;
+    default:
+      return 'hidden';
+  }
+};
+
+export const getForgingTimeClass = (activeTab) => {
+  switch (activeTab) {
+    case 'active':
+      return grid['col-xs-3'];
+    case 'watched':
+      return grid['col-xs-2'];
+    default:
+      return 'hidden';
+  }
+};
+
+// eslint-disable-next-line complexity
 export default (activeTab, changeSort, t) => ([
   {
-    title: t('Rank'),
-    classList: `${grid['col-xs-1']} ${grid['col-md-1']}`,
-    sort: {
-      fn: changeSort,
-      key: 'rank',
+    title: t('Delegate'),
+    classList: `${grid['col-xs-5']} ${styles.delegateHeader}`,
+  },
+  {
+    title: t('Delegate weight'),
+    classList: getDelegateWeightClass(activeTab),
+    tooltip: {
+      title: t('Delegate weight'),
+      message: t('The total LSK voted to a delegate.'),
+      position: 'top',
     },
-  },
-  {
-    title: t('Name'),
-    classList: `${grid['col-xs-2']} ${grid['col-md-2']}`,
-  },
-  {
-    title: t('Address'),
-    classList: activeTab === 'active'
-      ? `${grid['col-xs-3']} ${grid['col-md-3']}`
-      : `${grid['col-xs-6']} ${grid['col-md-6']}`,
   },
   {
     title: t('Forging time'),
-    classList: activeTab === 'active' ? `${grid['col-xs-2']} ${grid['col-md-2']}` : 'hidden',
-    tooltip: {
-      title: t('Forging time'),
-      message: t('Time until next forging slot of a delegate.'),
+    classList: getForgingTimeClass(activeTab),
+    sort: {
+      fn: changeSort,
+      key: 'forgingTime',
     },
+  },
+  {
+    title: t('Round state'),
+    classList: getRoundStateClass(activeTab),
   },
   {
     title: t('Status'),
-    classList: activeTab === 'active'
-      ? `${grid['col-xs-1']} ${grid['col-md-1']} ${styles.statusTitle}`
-      : 'hidden',
-    tooltip: {
-      title: t('Status'),
-      message: t('Current status of a delegate: forging, not forging, awaiting slot or missed block.'),
-      position: 'left',
-    },
-  },
-  {
-    title: t('Productivity'),
-    classList: `${grid['col-xs-2']} ${grid['col-md-2']} ${grid['col-lg-2']}`,
-    tooltip: {
-      title: t('Productivity'),
-      message: t('Percentage of successfully forged blocks in relation to all blocks (forged and missed).'),
-      position: 'left',
-    },
-  },
-  {
-    title: t('Approval'),
-    classList: `${grid['col-xs-1']} ${grid['col-md-1']} ${styles.approvalTitle}`,
-    tooltip: {
-      title: t('Approval'),
-      message: t('Percentage of total supply voting for a delegate.'),
-      position: 'left',
-    },
+    classList: getStatusClass(activeTab),
   },
 ]);

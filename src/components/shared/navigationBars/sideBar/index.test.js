@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
+import { routes } from '@constants';
+import { mountWithRouter } from '@utils/testHelpers';
 import SideBar from './index';
-import routes from '../../../../constants/routes';
-import { mountWithRouter } from '../../../../utils/testHelpers';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -84,5 +84,26 @@ describe('SideBar', () => {
     expect(wrapper.find('a').at(4)).not.toHaveClassName('disabled');
     expect(wrapper.find('a').at(5)).not.toHaveClassName('disabled');
     expect(wrapper.find('a').at(6)).not.toHaveClassName('disabled');
+  });
+
+  it('renders 7 disabled menu items on Initialization screen', () => {
+    wrapper = mountWithRouter(
+      SideBar,
+      {
+        ...myProps,
+        isUserLogout: false,
+        location: {
+          pathname: routes.reclaim.path,
+        },
+      },
+    );
+    expect(wrapper).toContainMatchingElements(7, 'a');
+    expect(wrapper.find('a').at(0)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(1)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(2)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(3)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(4)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(5)).toHaveClassName('disabled');
+    expect(wrapper.find('a').at(6)).toHaveClassName('disabled');
   });
 });

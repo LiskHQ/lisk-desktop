@@ -1,8 +1,8 @@
-import { mountWithRouterAndStore } from '../../../utils/testHelpers';
-import * as votingActions from '../../../actions/voting';
+import * as votingActions from '@actions';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import EditVote from './index';
 
-jest.mock('../../../actions/voting', () => ({
+jest.mock('@actions/voting', () => ({
   voteEdited: jest.fn(),
 }));
 

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import AccountVisual from '../../../toolbox/accountVisual';
-import Box from '../../../toolbox/box';
-import { SecondaryButton, TertiaryButton } from '../../../toolbox/buttons';
-import Icon from '../../../toolbox/icon';
-import LiskAmount from '../../../shared/liskAmount';
-import { tokenMap } from '../../../../constants/tokens';
+import { tokenMap } from '@constants';
+import { voteEdited } from '@actions';
+import { fromRawLsk, toRawLsk } from '@utils/lsk';
+import { truncateAddress } from '@utils/account';
+import AccountVisual from '@toolbox/accountVisual';
+import Box from '@toolbox/box';
+import { SecondaryButton, TertiaryButton } from '@toolbox/buttons';
+import Icon from '@toolbox/icon';
+import LiskAmount from '@shared/liskAmount';
+import AmountField from '@shared/amountField';
 import useVoteAmountField from '../../editVote/useVoteAmountField';
-import { voteEdited } from '../../../../actions/voting';
-import { toRawLsk } from '../../../../utils/lsk';
-import AmountField from '../../../shared/amountField';
 import styles from './editor.css';
 
 const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
@@ -23,7 +24,8 @@ const VoteRow = ({
 }) => {
   const [state, setState] = useState(unconfirmed === '' ? ComponentState.editing : ComponentState.notEditing);
   const dispatch = useDispatch();
-  const [voteAmount, setVoteAmount] = useVoteAmountField(unconfirmed);
+  const [voteAmount, setVoteAmount] = useVoteAmountField(fromRawLsk(unconfirmed));
+  const truncatedAddress = truncateAddress(address);
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
@@ -54,8 +56,8 @@ const VoteRow = ({
       <div className={`${styles.infoColumn} ${styles.delegateInfoContainer}`}>
         <AccountVisual address={address} />
         <div className={styles.delegateInfo}>
-          <span className={styles.delegateAddress}>{address}</span>
-          <span className={styles.delegateUsername}>{username}</span>
+          <span className={styles.delegateAddress}>{truncatedAddress}</span>
+          { username && <span className={styles.delegateUsername}>{username}</span> }
         </div>
       </div>
       <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
@@ -88,6 +90,7 @@ const VoteRow = ({
               inputPlaceHolder={t('Vote amount')}
               name="vote"
               className={styles.editAmountInput}
+              displayConverter={false}
             />
             <div className={styles.formButtonsContainer}>
               <SecondaryButton
@@ -106,8 +109,7 @@ const VoteRow = ({
               </TertiaryButton>
             </div>
           </form>
-        )
-      }
+        )}
     </Box>
   );
 };

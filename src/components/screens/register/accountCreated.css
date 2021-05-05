@@ -5,10 +5,6 @@
   --avatar-size: calc(105px - var(--avatar-padding));
 }
 
-.illustration {
-  margin: 42px 0;
-}
-
 .text {
   width: 350px !important;
 }
@@ -18,4 +14,20 @@
 
   margin: 0;
   color: var(--color-slate-gray);
+}
+
+.content {
+  margin-bottom: 45px;
+}
+
+.subHeading {
+  @mixin contentLargest semi-bold;
+
+  color: var(--color-maastricht-blue);
+  margin-top: 30px;
+}
+
+.successCaption {
+  padding-left: 10px;
+  color: var(--color-maastricht-blue);
 }

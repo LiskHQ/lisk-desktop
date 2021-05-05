@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { Input } from '../../toolbox/inputs';
-import Feedback from '../../toolbox/feedback/feedback';
+import { Input } from '@toolbox/inputs';
+import Feedback from '@toolbox/feedback/feedback';
 import styles from './filters.css';
 
 class AmountFieldGroup extends React.Component {
@@ -99,7 +99,7 @@ class AmountFieldGroup extends React.Component {
           autoComplete="off"
           onChange={this.handleFieldChange}
           name={name}
-          value={filters[name]}
+          value={filters[name] ? filters[name] : ''}
           placeholder={placeholder}
           className={`${styles.input} ${field.error ? 'error' : ''} ${name}Input`}
           isLoading={field.loading}

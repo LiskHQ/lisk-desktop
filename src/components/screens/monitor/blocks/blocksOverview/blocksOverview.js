@@ -1,13 +1,13 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Box from '../../../../toolbox/box';
-import BoxHeader from '../../../../toolbox/box/header';
-import BoxContent from '../../../../toolbox/box/content';
-import BoxTabs from '../../../../toolbox/tabs';
-import { DoughnutChart, BarChart } from '../../../../toolbox/charts';
+import { chartStyles } from '@constants';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxTabs from '@toolbox/tabs';
+import { DoughnutChart, BarChart } from '@toolbox/charts';
+import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
 import styles from './blocksOverview.css';
-import { chartStyles } from '../../../../../constants/chartConstants';
-import GuideTooltip, { GuideTooltipItem } from '../../../../toolbox/charts/guideTooltip';
 
 class BlocksOverview extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class BlocksOverview extends React.Component {
 
   changeTab = ({ value }) => {
     this.setState({ activeTab: value });
-    this.props.blocks.loadData({ limit: value.toString() });
+    this.props.blocks.loadData({ limit: value });
   }
 
   render() {
@@ -66,7 +66,6 @@ class BlocksOverview extends React.Component {
         },
       },
     };
-
 
     return (
       <Box className={styles.wrapper}>

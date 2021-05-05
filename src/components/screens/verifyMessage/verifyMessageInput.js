@@ -1,16 +1,17 @@
-import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Input } from '../../toolbox/inputs';
-import { PrimaryButton } from '../../toolbox/buttons';
-import { parseSearchParams } from '../../../utils/searchParams';
-import Box from '../../toolbox/box';
-import BoxHeader from '../../toolbox/box/header';
-import BoxContent from '../../toolbox/box/content';
-import BoxFooter from '../../toolbox/box/footer';
-import BoxInfoText from '../../toolbox/box/infoText';
-import Icon from '../../toolbox/icon';
-import Tooltip from '../../toolbox/tooltip/tooltip';
+
+import { parseSearchParams } from '@utils/searchParams';
+import { Input } from '@toolbox/inputs';
+import { PrimaryButton } from '@toolbox/buttons';
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import BoxInfoText from '@toolbox/box/infoText';
+import Icon from '@toolbox/icon';
+import Tooltip from '@toolbox/tooltip/tooltip';
+import { regex } from '@constants';
 import styles from './verifyMessage.css';
 
 export default class VerifyMessageInput extends React.Component {
@@ -64,12 +65,10 @@ export default class VerifyMessageInput extends React.Component {
     const { t } = this.props;
     const validators = {
       publicKey: () => {
-        try {
-          cryptography.getAddressFromPublicKey(value);
+        if (regex.publicKey.test(value)) {
           return '';
-        } catch (e) {
-          return t('This is not a valid public key. Please enter the correct public key.');
         }
+        return t('This is not a valid public key. Please enter the correct public key.');
       },
       message: () => (
         value !== value.trim()

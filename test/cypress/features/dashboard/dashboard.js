@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import accounts from '../../../constants/accounts';
+import { accounts } from '@constants';
 
 Given(/^I have a bookmark saved$/, function () {
-  window.localStorage.setItem('bookmarks', `{"LSK":[{"title":"Alice","address":"${accounts.genesis.address}","balance":101}],"BTC":[]}`);
+  window.localStorage.setItem('bookmarks', `{"LSK":[{"title":"Alice","address":"${accounts.genesis.summary.address}","balance":101}],"BTC":[]}`);
 });

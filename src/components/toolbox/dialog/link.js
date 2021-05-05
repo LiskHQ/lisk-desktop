@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { withRouter } from 'react-router';
-
-import { addSearchParamsToUrl } from '../../../utils/searchParams';
+import { addSearchParamsToUrl } from '@utils/searchParams';
 
 const DialogLink = ({
   children, component, className, history, data,
@@ -12,7 +11,13 @@ const DialogLink = ({
   };
 
   return (
-    <div onClick={onClick} ref={linkEl} className={className}>{ children }</div>
+    <div
+      onClick={onClick}
+      ref={linkEl}
+      className={className}
+    >
+      { children }
+    </div>
   );
 };
 

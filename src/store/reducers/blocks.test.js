@@ -1,7 +1,6 @@
-import { expect } from 'chai';
+import { actionTypes } from '@constants';
 import blocksReducer from './blocks';
-import actionTypes from '../../constants/actions';
-
+import { genesis } from '../../../test/constants/accounts';
 
 describe('Reducer: blocks(state, action)', () => {
   const blocks = [{
@@ -25,7 +24,7 @@ describe('Reducer: blocks(state, action)', () => {
       },
     };
     const changedBlocks = blocksReducer(state, action);
-    expect(changedBlocks).to.deep.equal({
+    expect(changedBlocks).toEqual({
       latestBlocks: blocks,
     });
   });
@@ -43,30 +42,35 @@ describe('Reducer: blocks(state, action)', () => {
       },
     };
     const changedBlocks = blocksReducer(state, action);
-    expect(changedBlocks).to.deep.equal({
+    expect(changedBlocks).toEqual({
       latestBlocks: blocks,
       total: 1000,
     });
   });
 
-  it('stores forgingTimes in the event of forgingTimesRetrieved', () => {
+  it('stores forgers in the event of forgersRetrieved', () => {
     const state = {
+      forgers: [],
       latestBlocks: [],
-      forgingTimes: {},
     };
 
     const action = {
-      type: actionTypes.forgingTimesRetrieved,
-      data: {
-        forgingTimes: ['12345678', { time: 0, status: 'forging', tense: 'past' }],
-        awaitingForgers: [{ address: '12345678', publicKey: '12345678', username: 'test' }],
-      },
+      type: actionTypes.forgersRetrieved,
+      data: [
+        {
+          totalVotesReceived: 1e9,
+          status: 'awaitingSlot',
+          lastBlock: 10000,
+          username: genesis.dpos.delegate.username,
+          nextForgingTime: 1620049927,
+          address: genesis.summary.address,
+        },
+      ],
     };
     const changedBlocks = blocksReducer(state, action);
-    expect(changedBlocks).to.deep.equal({
+    expect(changedBlocks).toEqual({
       latestBlocks: [],
-      forgingTimes: action.data.forgingTimes,
-      awaitingForgers: action.data.awaitingForgers,
+      forgers: action.data,
     });
   });
 });

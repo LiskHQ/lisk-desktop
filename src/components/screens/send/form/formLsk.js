@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import { AutoResizeTextarea } from '../../../toolbox/inputs';
-import { messageMaxLength } from '../../../../constants/transactions';
-import CircularProgress from '../../../toolbox/circularProgress/circularProgress';
+import { maxMessageLength, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { toRawLsk } from '@utils/lsk';
+import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';
+import { AutoResizeTextarea } from '@toolbox/inputs';
+import CircularProgress from '@toolbox/circularProgress/circularProgress';
+import Icon from '@toolbox/icon';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import FormBase from './formBase';
-import Icon from '../../../toolbox/icon';
-import Tooltip from '../../../toolbox/tooltip/tooltip';
 import styles from './form.css';
 import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
-import { toRawLsk } from '../../../../utils/lsk';
-import TransactionPriority from '../../../shared/transactionPriority';
-import useTransactionFeeCalculation from './useTransactionFeeCalculation';
-import useTransactionPriority from './useTransactionPriority';
-import transactionTypes from '../../../../constants/transactionTypes';
 
-const txType = transactionTypes().transfer.key;
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.transfer;
 
 // eslint-disable-next-line max-statements
 const FormLsk = (props) => {
@@ -24,7 +21,8 @@ const FormLsk = (props) => {
   } = props;
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority, priorityOptions,
+    selectedPriority, selectTransactionPriority,
+    priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority(token);
   const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), token);
@@ -35,12 +33,12 @@ const FormLsk = (props) => {
     token,
     account,
     priorityOptions,
-    txData: {
+    transaction: {
+      moduleAssetId,
       amount: toRawLsk(amount.value),
-      txType,
-      recipient: recipient.value,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
+      recipientAddress: recipient.value,
+      nonce: account.sequence?.nonce,
+      senderPublicKey: account.summary?.publicKey,
       data: reference.value,
     },
   });
@@ -78,7 +76,7 @@ const FormLsk = (props) => {
             className={`${styles.textarea} ${reference.error ? 'error' : ''} message`}
           />
           <CircularProgress
-            max={messageMaxLength}
+            max={maxMessageLength}
             value={reference.byteCount}
             className={`${styles.byteCounter} ${reference.error ? styles.hide : ''}`}
           />
@@ -87,7 +85,7 @@ const FormLsk = (props) => {
             name={reference.error ? 'alertIcon' : 'okIcon'}
           />
         </span>
-        <span className={`${styles.feedback} ${reference.error || messageMaxLength - reference.byteCount < 10 ? 'error' : ''} ${styles.show}`}>
+        <span className={`${styles.feedback} ${reference.error || maxMessageLength - reference.byteCount < 10 ? 'error' : ''} ${styles.show}`}>
           {reference.feedback}
           <Tooltip
             position="left"
@@ -108,11 +106,13 @@ const FormLsk = (props) => {
         fee={fee}
         minFee={minFee.value}
         customFee={customFee ? customFee.value : undefined}
-        txType={txType}
+        moduleAssetId={moduleAssetId}
         setCustomFee={changeCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
         setSelectedPriority={selectTransactionPriority}
+        loadError={prioritiesLoadError}
+        isLoading={loadingPriorities}
       />
     </FormBase>
   );

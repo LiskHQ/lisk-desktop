@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
 
-  &.disabled {
+  &.opaqueLogo {
     opacity: 0.5;
   }
 
@@ -40,6 +40,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 300px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   & .searchContainerParam {
@@ -56,10 +59,26 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      display: inline-block;
+      max-width: 250px;
     }
 
     & .accountVisual {
       padding-left: 10px;
+    }
+  }
+}
+
+@media (min-width: 1060px) {
+  .toggle {
+    & .searchContainer {
+      max-width: 390px;
+    }
+
+    & .searchContainerParam {
+      & .searchedValue {
+        max-width: 360px;
+      }
     }
   }
 }
@@ -93,8 +112,24 @@
   background-color: var(--color-jade-green);
 }
 
-@media (--medium-viewport) {
-  .toggle {
-    margin-right: 10px;
+.signedOutTip {
+  & p {
+    padding-top: 5px;
+    padding-bottom: 7px;
+  }
+}
+
+.votingQueueIcon {
+  display: flex;
+  justify-content: center;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+
+  & .label,
+  & img {
+    opacity: 0.5;
   }
 }

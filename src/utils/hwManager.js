@@ -1,16 +1,17 @@
 // eslint-disable-next-line import/no-unresolved
-import Lisk from '@liskhq/lisk-client';
+// import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
-import { getAccount } from './api/lsk/account';
+import { getAccount } from './api/account';
 import {
   checkIfInsideLiskApp,
   getAddress,
   getPublicKey,
   signTransaction,
-  subscribeToDeviceConnceted,
-  subscribeToDeviceDisonnceted,
+  subscribeToDeviceConnected,
+  subscribeToDeviceDisconnected,
   subscribeToDevicesList,
   validatePin,
+  signMessage,
 } from '../../libs/hwManager/communication';
 
 /**
@@ -24,8 +25,8 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
     // eslint-disable-next-line no-await-in-loop
     const publicKey = await getPublicKey({ index, deviceId });
     // eslint-disable-next-line no-await-in-loop
-    account = await getAccount({ network, publicKey });
-    if (index === 0 || accounts[index - 1].balance) {
+    account = await getAccount({ network, publicKey }, 'LSK');
+    if (index === 0 || accounts[index - 1].summary.balance) {
       accounts.push(account);
     }
   }
@@ -36,27 +37,28 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
  * signSendTransaction - Function.
  * This function is used for sign a send transaction.
  */
-const signSendTransaction = async (account, data) => {
-  const { transfer, utils } = Lisk.transaction;
-  const transactionObject = {
-    ...transfer(data),
-    senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,
-  };
+const signSendTransaction = async () => {
+// const signSendTransaction = async (account, data) => {
+  // const { transfer, utils } = Lisk.transaction;
+  // const transactionObject = {
+  //   ...transfer(data),
+  //   senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,
+  // };
 
-  const transaction = {
-    deviceId: account.hwInfo.deviceId,
-    index: account.hwInfo.derivationIndex,
-    tx: transactionObject,
-  };
+  // const transaction = {
+  //   deviceId: account.hwInfo.deviceId,
+  //   index: account.hwInfo.derivationIndex,
+  //   tx: transactionObject,
+  // };
 
-  try {
-    const signature = await signTransaction(transaction);
-    const signedTransaction = { ...transactionObject, signature };
-    const result = { ...signedTransaction, id: utils.getTransactionId(signedTransaction) };
-    return result;
-  } catch (error) {
-    throw new Error(error);
-  }
+  // try {
+  //   const signature = await signTransaction(transaction);
+  //   const signedTransaction = { ...transactionObject, signature };
+  //   const result = { ...signedTransaction, id: utils.getTransactionId(signedTransaction) };
+  //   return result;
+  // } catch (error) {
+  //   throw new Error(error);
+  // }
 };
 
 /**
@@ -69,6 +71,7 @@ const signVoteTransaction = async (
   timeOffset,
   networkIdentifier,
 ) => {
+  // eslint-disable-next-line no-undef
   const { castVotes, utils } = Lisk.transaction;
 
   try {
@@ -99,6 +102,33 @@ const signVoteTransaction = async (
   }
 };
 
+const signMessageByHW = async ({
+  account,
+  message,
+}) => {
+  try {
+    const signature = await signMessage({
+      deviceId: account.hwInfo.deviceId,
+      index: account.hwInfo.derivationIndex,
+      message,
+    });
+
+    if (!signature) {
+      throw new Error(i18next.t(
+        'The message signature has been canceled on your {{model}}',
+        { model: account.hwInfo.deviceModel },
+      ));
+    }
+
+    return signature;
+  } catch (error) {
+    throw new Error(i18next.t(
+      'The message signature has been canceled on your {{model}}',
+      { model: account.hwInfo.deviceModel },
+    ));
+  }
+};
+
 export {
   checkIfInsideLiskApp,
   getAccountsFromDevice,
@@ -106,8 +136,9 @@ export {
   getPublicKey,
   signSendTransaction,
   signVoteTransaction,
-  subscribeToDeviceConnceted,
-  subscribeToDeviceDisonnceted,
+  subscribeToDeviceConnected,
+  subscribeToDeviceDisconnected,
   subscribeToDevicesList,
   validatePin,
+  signMessageByHW,
 };

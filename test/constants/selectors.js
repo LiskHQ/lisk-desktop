@@ -232,11 +232,17 @@ const ss = {
   closeDialog: '.dialog-close-button',
   bookmarkListToggle: '.bookmark-list-toggle',
   settingsMenu: '.settings-toggle',
-  lowFeeOption: '.option-Low',
-  mediumFeeOption: '.option-Medium',
-  highFeeOption: '.option-High',
-  customFeeOption: '.option-Custom',
-  customFeeInput: '.custom-fee-input',
+  openAddVoteDialog: '.open-add-vote-dialog',
+  votingQueueToggle: '.voting-queue-toggle',
+  openUnlockBalanceDialog: '.open-unlock-balance-dialog',
+  unlockBtn: '.unlock-btn',
+  removeVote: '.remove-vote',
+  unlockingBalance: '.unlocking-balance',
+  addBookmarkIcon: '.add-bookmark-icon',
+  inputLabel: '.input-label',
+  saveButton: '.save-button',
+  feeValue: '.fee-value',
+  nodeConnectionLoadingSpinner: '.node-connection-loading-spinner',
 };
 
 export default ss;

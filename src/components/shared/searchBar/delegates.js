@@ -1,6 +1,6 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import AccountVisual from '../../toolbox/accountVisual';
+import AccountVisual from '@toolbox/accountVisual';
 import styles from './accountsAndDeletegates.css';
 
 const Delegates = ({
@@ -17,10 +17,10 @@ const Delegates = ({
           key={index}
           data-index={index}
           className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} delegates-row`}
-          onClick={() => onSelectedRow(delegate.account.address)}
+          onClick={() => onSelectedRow(delegate.address)}
           onMouseEnter={updateRowItemIndex}
         >
-          <AccountVisual address={delegate.account.address} />
+          <AccountVisual address={delegate.address} />
           <div className={styles.accountInformation}>
             <div>
               <span className={`${styles.delegateName} delegate-name`}>
@@ -32,7 +32,7 @@ const Delegates = ({
                 />
               </span>
             </div>
-            <span className={styles.accountSubtitle}>{delegate.account.address}</span>
+            <span className={styles.accountSubtitle}>{delegate.address}</span>
           </div>
           <span className={styles.accountBalance}>
             <span className={styles.tag}>

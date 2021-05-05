@@ -1,30 +1,35 @@
 /* istanbul ignore file */
-import { connect } from 'react-redux';
-import NetworkSelector from './networkSelector';
-import { networkSet } from '../../../../actions/network';
-import { settingsUpdated } from '../../../../actions/settings';
-import networks from '../../../../constants/networks';
-import { tokenMap } from '../../../../constants/tokens';
-import { getAPIClient } from '../../../../utils/api/network';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { networks, tokenMap } from '@constants';
+import { networkSelected, settingsUpdated } from '@actions';
+import NetworkSelectorComp from './networkSelector';
 
-// eslint-disable-next-line complexity
-const mapStateToProps = state => ({
-  network: state.network,
-  selectedNetwork: (state.network.networks.LSK && state.network.networks.LSK.code)
-    || networks.mainnet.code,
-  address: ((state.network.networks[state.settings.token.active || tokenMap.LSK.key]
+const NetworkSelector = (props) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const selectedNetworkName = useSelector(state => state.network.name);
+  const selectedNetwork = useSelector(
+    state => state.network.networks[state.settings.token.active || tokenMap.LSK.key],
+  );
+  const selectedAddress = useSelector(
+    state => ((state.network.networks[state.settings.token.active || tokenMap.LSK.key]
     && state.network.networks[state.settings.token.active || tokenMap.LSK.key].nodeUrl)
-    || (state.settings.network && state.settings.network.name === networks.customNode.name
-      && state.settings.network.address)) || '',
-  liskAPIClient: getAPIClient(tokenMap.LSK.key, state.network),
-});
+    || (state.settings.network && state.settings.network.name === networks.customNode.name && state.settings.network.address)) || '',
+  );
 
-const mapDispatchToProps = {
-  networkSet,
-  settingsUpdated,
+  return (
+    <NetworkSelectorComp
+      t={t}
+      selectedNetworkName={selectedNetworkName}
+      selectedNetwork={selectedNetwork}
+      selectedAddress={selectedAddress}
+      networkSelected={params => dispatch(networkSelected(params))}
+      settingsUpdated={params => dispatch(settingsUpdated(params))}
+      {...props}
+    />
+  );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(NetworkSelector);
+export default NetworkSelector;

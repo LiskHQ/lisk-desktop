@@ -1,21 +1,19 @@
 import * as bitcoin from 'bitcoinjs-lib';
-import numeral from 'numeral';
 import { cryptography } from '@liskhq/lisk-client';
-import { tokenMap } from '../constants/tokens';
-import getBtcConfig from './api/btc/config';
+import numeral from 'numeral';
+
+import { tokenMap, minAccountBalance, regex as reg } from '@constants';
 import { toRawLsk } from './lsk';
 import i18n from '../i18n';
-import reg from './regex';
 
 /**
  * Validates the given address with respect to the tokenType
  * @param {String} tokenType
  * @param {String} address
- * @param {Number} [netCode=1]
+ * @param {Object} network The network config from Redux store
  * @returns {Number} -> 0: valid, 1: invalid, -1: empty
  */
-// eslint-disable-next-line import/prefer-default-export
-export const validateAddress = (tokenType, address, netCode = 1) => {
+export const validateAddress = (tokenType, address, network) => {
   if (address === '') {
     return -1;
   }
@@ -24,24 +22,33 @@ export const validateAddress = (tokenType, address, netCode = 1) => {
     // Reference: https://github.com/bitcoinjs/bitcoinjs-lib/issues/890
     case tokenMap.BTC.key:
       try {
-        const config = getBtcConfig(netCode);
         bitcoin.address.fromBase58Check(address); // eliminates segwit addresses
-        bitcoin.address.toOutputScript(address, config.network);
+        bitcoin.address.toOutputScript(address, network.networks.BTC.network);
         return 0;
       } catch (e) {
         return 1;
       }
 
     case tokenMap.LSK.key:
+      try {
+        return cryptography.validateBase32Address(address) ? 0 : 1;
+      } catch (e) {
+        return 1;
+      }
     default:
-      return reg.address.test(address) ? 0 : 1;
+      return 1;
   }
 };
 
-export const validateLSKPublicKey = (address) => {
+/**
+ * Checks the validity of a given publicKey
+ *
+ * @param {String} publicKey - The publicKey to validate
+ * @returns {Number} 0 for valid, 1 for invalid
+ */
+export const validateLSKPublicKey = (publicKey) => {
   try {
-    cryptography.getAddressFromPublicKey(address);
-    return 0;
+    return reg.publicKey.test(publicKey) ? 0 : 1;
   } catch (e) {
     return 1;
   }
@@ -94,6 +101,13 @@ export const validateAmountFormat = ({
     INSUFFICIENT_FUNDS: {
       message: i18n.t('Provided amount is higher than your current balance.'),
       fn: () => funds < toRawLsk(numeral(value).value()),
+    },
+    MIN_BALANCE: {
+      message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
+      fn: () => {
+        const rawValue = toRawLsk(numeral(value).value());
+        return funds - rawValue < minAccountBalance;
+      },
     },
   };
 

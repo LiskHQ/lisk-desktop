@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { PrimaryButton } from '../../toolbox/buttons';
-import Icon from '../../toolbox/icon';
+import { PrimaryButton } from '@toolbox/buttons';
+import Icon from '@toolbox/icon';
 import useServiceSocketUpdates from '../../../hooks/useServiceSocketUpdates';
 import styles from './loadLatestButton.css';
 
@@ -29,6 +29,5 @@ const LoadLatestButton = ({ children, onClick, event }) => {
     )
     : null);
 };
-
 
 export default LoadLatestButton;

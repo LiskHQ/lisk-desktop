@@ -1,10 +1,5 @@
 @import '../../../../app/mixins.css';
 
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
 .detailsContainer,
 .performanceContainer {
   & h1.heading {
@@ -12,14 +7,30 @@
 
     font-size: 20px;
   }
+
+  & .content {
+    flex-flow: row nowrap;
+    width: calc(100% + 1em); /* stylelint-disable-line unit-whitelist */
+  }
 }
 
-.statsContainer {
+.container {
+  display: flex;
+  flex-direction: column;
+
+  & .statsContainer {
+    flex-flow: row nowrap;
+  }
+
+  & .votesWrapper {
+    width: 100%;
+  }
+
   & .votesContainer {
-    display: grid;
+    display: grid !important;
     grid-template-columns: repeat(auto-fill, 25%);
     box-sizing: border-box;
-    justify-content: center;
+    justify-content: center !important;
     grid-gap: 30px 0px;
 
     & > header {
@@ -31,10 +42,20 @@
       margin-top: -15px;
     }
   }
+}
 
-  @media (--medium-viewport) {
+@media (--medium-viewport) {
+  .container {
+    & .statsContainer {
+      flex-flow: row wrap;
+    }
+
     & .votesContainer {
       grid-template-columns: repeat(auto-fill, 33.3%);
+
+      & button {
+        grid-column: 1/4;
+      }
     }
   }
 }
@@ -44,7 +65,7 @@
   flex-grow: 1;
 
   & .itemContainer {
-    border-bottom: 1px solid #e1e3eb;
+    border-bottom: 1px solid var(--color-platinum);
     padding: 16px 0;
     margin-left: 0;
 
@@ -69,6 +90,7 @@
 
     & .value {
       margin-top: 8px;
+      color: var(--color-maastricht-blue);
     }
   }
 }
@@ -103,6 +125,8 @@
 
   & .performanceValue {
     @mixin delegatePerformanceValueFont;
+
+    color: var(--color-maastricht-blue);
   }
 }
 
@@ -151,6 +175,7 @@
     @mixin contentLargest;
 
     padding-left: 10px;
+    color: var(--color-maastricht-blue);
   }
 
   &::after {
@@ -159,7 +184,7 @@
     width: calc(100% - 30px);
     height: 1px;
     left: 15px;
-    margin-top: 70px;
+    margin-top: 35px;
     z-index: 0;
     background: var(--color-platinum);
   }

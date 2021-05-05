@@ -2,8 +2,8 @@ import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
 import styles from './passphraseRenderer.css';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons';
 
 class PassphraseRenderer extends React.Component {
   constructor(props) {
@@ -148,12 +148,12 @@ class PassphraseRenderer extends React.Component {
     return (
       <div>
         {showInfo && (
-          <React.Fragment>
+          <>
             <h2 className={styles.header}>{t('Passphrase')}</h2>
             <p className={styles.subheader}>
               {t('Please carefully write down these 12 words and store them in a safe place.')}
             </p>
-          </React.Fragment>
+          </>
         )}
         <div className={styles.passphraseContainer}>
           <div className={`${styles.inputsRow} ${grid.row} passphrase`}>

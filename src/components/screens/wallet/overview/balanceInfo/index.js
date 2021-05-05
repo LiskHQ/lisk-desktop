@@ -2,28 +2,49 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { PrimaryButton, SecondaryButton } from '../../../../toolbox/buttons';
-import Box from '../../../../toolbox/box';
-import BoxContent from '../../../../toolbox/box/content';
+import { tokenMap } from '@constants';
+import { fromRawLsk } from '@utils/lsk';
+import {
+  calculateBalanceLockedInUnvotes,
+  calculateBalanceLockedInVotes,
+  getActiveTokenAccount,
+} from '@utils/account';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import DialogLink from '@toolbox/dialog/link';
+import Icon from '@toolbox/icon';
 import LiskAmount from '../../../../shared/liskAmount';
 import DiscreetMode from '../../../../shared/discreetMode';
 import Converter from '../../../../shared/converter';
-import DialogLink from '../../../../toolbox/dialog/link';
-import Icon from '../../../../toolbox/icon';
 import styles from './balanceInfo.css';
-import { fromRawLsk } from '../../../../../utils/lsk';
 import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
-import { tokenMap } from '../../../../../constants/tokens';
-import { calculateLockedBalance, getActiveTokenAccount } from '../../../../../utils/account';
 
+const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
+  const host = useSelector(state => getActiveTokenAccount(state));
+  const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
+  const lockedInUnvotes = activeToken === tokenMap.LSK.key && isWalletRoute && host
+    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking) : undefined;
+
+  if (lockedInUnvotes + lockedInVotes > 0) {
+    return (
+      <DialogLink
+        className={`${styles.lockedBalance} open-unlock-balance-dialog`}
+        component="lockedBalance"
+      >
+        <Icon name="lock" />
+        {`${fromRawLsk(lockedInUnvotes + lockedInVotes)} ${tokenMap.LSK.key}`}
+      </DialogLink>
+    );
+  }
+
+  return null;
+};
 
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, isDelegate,
+  t, activeToken, balance, isWalletRoute, address, username,
 }) => {
-  const host = useSelector(state => getActiveTokenAccount(state));
   const vote = useSelector(state => state.voting[address]);
-  const lockedBalance = activeToken === tokenMap.LSK.key && isWalletRoute && host
-    ? calculateLockedBalance(host) : undefined;
   const initialValue = isWalletRoute
     ? {}
     : { recipient: address };
@@ -48,21 +69,13 @@ const BalanceInfo = ({
               />
 
             </div>
-            {lockedBalance && (
-              <DialogLink
-                className={styles.lockedBalance}
-                component="lockedBalance"
-              >
-                <Icon name="lock" />
-                {`${fromRawLsk(lockedBalance)} ${tokenMap.LSK.key}`}
-              </DialogLink>
-            )}
+            <LockedBalanceLink activeToken={activeToken} isWalletRoute={isWalletRoute} />
           </DiscreetMode>
         </div>
         <SignInTooltipWrapper position="bottom">
           <div className={styles.actionRow}>
             {
-              isDelegate && (
+              username ? (
                 <DialogLink component="editVote" className={`${styles.button} add-vote`}>
                   <SecondaryButton
                     className={`${styles.voteButton} open-add-vote-dialog`}
@@ -71,7 +84,7 @@ const BalanceInfo = ({
                     {voteButtonTitle}
                   </SecondaryButton>
                 </DialogLink>
-              )
+              ) : null
             }
             <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
               <PrimaryButton

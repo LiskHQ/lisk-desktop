@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import routes from '../../../constants/routes';
+import { routes } from '@constants';
 import NotFound from './index';
 
 describe('notFound', () => {

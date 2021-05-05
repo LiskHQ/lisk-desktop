@@ -1,10 +1,11 @@
 import React from 'react';
-import { toRawLsk } from '../../../../utils/lsk';
-import { loginType } from '../../../../constants/hwConstants';
-import AccountVisual from '../../../toolbox/accountVisual';
-import Converter from '../../../shared/converter';
-import Piwik from '../../../../utils/piwik';
-import TransactionSummary from '../../../shared/transactionSummary';
+import { loginTypes } from '@constants';
+import { toRawLsk, fromRawLsk } from '@utils/lsk';
+import Piwik from '@utils/piwik';
+import AccountVisual from '@toolbox/accountVisual';
+import Converter from '@shared/converter';
+import TransactionSummary from '@shared/transactionSummary';
+
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -21,16 +22,14 @@ class Summary extends React.Component {
 
   submitTransaction({ secondPassphrase }) {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
-    const { account, fields } = this.props;
+    const { fields } = this.props;
 
     this.props.transactionCreated({
       amount: `${toRawLsk(fields.amount.value)}`,
       data: fields.reference ? fields.reference.value : '',
-      passphrase: account.passphrase,
-      recipientId: fields.recipient.address,
+      recipientAddress: fields.recipient.address,
       secondPassphrase,
       fee: toRawLsk(parseFloat(fields.fee.value)),
-      nonce: account.nonce,
     });
   }
 
@@ -42,7 +41,8 @@ class Summary extends React.Component {
       transactions,
     } = this.props;
 
-    if (account.loginType !== loginType.normal && transactions.transactionsCreatedFailed.length) {
+    if (account.loginType !== loginTypes.passphrase.code
+        && transactions.transactionsCreatedFailed.length) {
       nextStep({
         fields: {
           ...fields,
@@ -69,7 +69,7 @@ class Summary extends React.Component {
 
   render() {
     const {
-      fields, t, token, account,
+      fields, t, token, account, isInitialization,
     } = this.props;
     const amount = fields.amount.value;
 
@@ -79,14 +79,15 @@ class Summary extends React.Component {
         t={t}
         account={account}
         confirmButton={{
-          label: t('Send {{amount}} {{token}}', { amount, token }),
+          label: isInitialization ? t('Send') : t('Send {{amount}} {{token}}', { amount, token }),
           onClick: this.submitTransaction,
         }}
         cancelButton={{
           label: t('Edit transaction'),
           onClick: this.prevStep,
         }}
-        fee={fields.fee.value}
+        showCancelButton={!isInitialization}
+        fee={fromRawLsk(fields.fee.value)}
         token={token}
       >
         <section>

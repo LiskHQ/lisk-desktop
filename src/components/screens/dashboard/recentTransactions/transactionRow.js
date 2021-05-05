@@ -1,15 +1,15 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useSelector } from 'react-redux';
-import TransactionTypeFigure from '../../../shared/transactionTypeFigure';
-import TransactionAddress from '../../../shared/transactionAddress';
-import TransactionAmount from '../../../shared/transactionAmount';
-import DialogLink from '../../../toolbox/dialog/link';
+import TransactionTypeFigure from '@shared/transactionTypeFigure';
+import TransactionAddress from '@shared/transactionAddress';
+import TransactionAmount from '@shared/transactionAmount';
+import DialogLink from '@toolbox/dialog/link';
 import styles from './recentTransactions.css';
 
 // eslint-disable-next-line complexity
 const TransactionRow = ({
-  data, className, t, host,
+  data, className, t, host, currentBlockHeight,
 }) => {
   const {
     bookmarks,
@@ -18,36 +18,43 @@ const TransactionRow = ({
     bookmarks: state.bookmarks,
     activeToken: state.settings.token.active,
   }));
-  const isConfirmed = data.confirmations > 0;
+  const isConfirmed = currentBlockHeight - data.height > 0;
+  const unlockAmount = data.asset?.unlockingObjects
+    && data.asset.unlockingObjects.reduce((total, item) => {
+      total += item.amount;
+      return total;
+    }, 0);
+  const direction = host === data.asset?.recipient?.address ? 'incoming' : 'outgoing';
+
   return (
     <DialogLink
       className={`${grid.row} ${className} ${isConfirmed ? '' : styles.pending} transactions-row`}
       component="transactionDetails"
       data={{ transactionId: data.id, token: activeToken }}
     >
-      <span className={grid['col-xs-9']}>
+      <span className={grid['col-xs-8']}>
         <TransactionTypeFigure
-          icon={host === data.recipientId ? 'incoming' : 'outgoing'}
-          address={host === data.recipientId ? data.senderId : data.recipientId}
-          transactionType={data.type}
+          icon={direction}
+          address={direction === 'incoming' ? data.sender.address : data.asset.recipient?.address}
+          moduleAssetId={data.moduleAssetId}
         />
         <TransactionAddress
-          address={host === data.recipientId ? data.senderId : data.recipientId}
+          address={direction === 'incoming' ? data.sender.address : data.asset.recipient?.address}
           bookmarks={bookmarks}
           t={t}
           token={activeToken}
-          transactionType={data.type}
+          moduleAssetId={data.moduleAssetId}
         />
       </span>
-      <span className={grid['col-xs-3']}>
+      <span className={grid['col-xs-4']}>
         <TransactionAmount
           host={host}
           token={activeToken}
           showRounded
-          sender={data.senderId}
-          recipient={data.recipientId || data.asset.recipientId}
-          type={data.type}
-          amount={data.amount || data.asset.amount}
+          sender={data.sender.address}
+          recipient={data.asset?.recipient?.address}
+          moduleAssetId={data.moduleAssetId}
+          amount={data.amount || data.asset.amount || unlockAmount}
         />
       </span>
     </DialogLink>
@@ -57,6 +64,6 @@ const TransactionRow = ({
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
   (prevProps.data.id === nextProps.data.id
-  && prevProps.data.confirmations === nextProps.data.confirmations);
+  && prevProps.currentBlockHeight === nextProps.currentBlockHeight);
 
 export default React.memo(TransactionRow, areEqual);

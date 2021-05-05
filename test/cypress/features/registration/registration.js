@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { Given } from 'cypress-cucumber-preprocessor/steps';
-import urls from '../../../constants/urls';
-import ss from '../../../constants/selectors';
+import { urls, ss } from '@constants'
 
 When(/^I pick an avatar$/, function () {
   cy.get(ss.chooseAvatar).first().click();
@@ -29,5 +28,5 @@ Given(/^I confirm my passphrase$/, function () {
 });
 
 Then(/^I see the success message$/, function () {
-  cy.get(ss.app).contains('Perfect! You\'re all set');
+  cy.get(ss.app).contains('Perfect! Almost done');
 });

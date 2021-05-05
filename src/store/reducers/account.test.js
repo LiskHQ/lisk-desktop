@@ -1,7 +1,7 @@
 import { useFakeTimers } from 'sinon';
+import { actionTypes } from '@constants';
 import account from './account';
 import accounts from '../../../test/constants/accounts';
-import actionTypes from '../../constants/actions';
 
 describe('Reducer: account(state, action)', () => {
   let state;
@@ -24,17 +24,16 @@ describe('Reducer: account(state, action)', () => {
     const action = {
       type: actionTypes.accountUpdated,
       data: {
-        address: state.address,
-        balance: 100000000,
-        token: 'LSK',
+        LSK: {
+          address: state.address,
+          balance: 100000000,
+        },
       },
     };
     const changedAccount = account(state, action);
     expect(changedAccount).toEqual({
       ...state,
-      info: {
-        LSK: action.data,
-      },
+      info: action.data,
     });
   });
 
@@ -44,6 +43,18 @@ describe('Reducer: account(state, action)', () => {
     };
     const changedAccount = account(state, action);
     expect(changedAccount).toEqual({ afterLogout: true });
+  });
+
+  it('should return account object with changes if action.type = actionTypes.timerReset', () => {
+    const action = {
+      type: actionTypes.timerReset,
+      data: new Date('2021-02-09T15:37:25.880Z'),
+    };
+    const changedAccount = account(state, action);
+    expect(changedAccount).toEqual({
+      ...state,
+      expireTime: new Date('2021-02-09T15:47:25.880Z'),
+    });
   });
 
   it('should return loading account object if action.type = actionTypes.accountLoading', () => {
@@ -67,7 +78,6 @@ describe('Reducer: account(state, action)', () => {
     });
     clock.restore();
   });
-
 
   it('should return remove passphrase from account object if actionTypes.removePassphrase is called', () => {
     const action = {

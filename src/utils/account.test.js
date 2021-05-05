@@ -1,36 +1,41 @@
+import accounts from '../../test/constants/accounts';
 import {
   extractPublicKey,
-  extractAddress,
+  extractAddressFromPublicKey,
   getActiveTokenAccount,
-  calculateAvailableBalance,
-  getAvailableUnlockingTransactions,
-  calculateLockedBalance,
+  calculateUnlockableBalance,
+  getUnlockableUnlockingObjects,
+  calculateBalanceLockedInVotes,
+  extractAddressFromPassphrase,
+  isAccountInitialized,
+  hasEnoughBalanceForInitialization,
 } from './account';
+
+const passphrase = accounts.genesis.passphrase;
+const publicKey = accounts.genesis.summary.serverPublicKey;
+const address = accounts.genesis.summary.address;
 
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
-    it('should return a Hex string from any given string', () => {
-      const passphrase = 'field organ country moon fancy glare pencil combine derive fringe security pave';
-      const publicKey = 'a89751689c446067cc2107ec2690f612eb47b5939d5570d0d54b81eafaf328de';
+    it('should return a hex string from any given string', () => {
       expect(extractPublicKey(passphrase)).toEqual(publicKey);
     });
   });
 
-  describe('extractAddress', () => {
-    it('should return the account address from given passphrase', () => {
-      const passphrase = 'field organ country moon fancy glare pencil combine derive fringe security pave';
-      const derivedAddress = '440670704090200331L';
-      expect(extractAddress(passphrase)).toEqual(derivedAddress);
+  describe('extractAddressFromPublicKey', () => {
+    it('should return the address corresponding to a (hex) public key', () => {
+      expect(extractAddressFromPublicKey(publicKey)).toEqual(address);
     });
 
-    it('should return the account address from given public key', () => {
-      const publicKey = 'a89751689c446067cc2107ec2690f612eb47b5939d5570d0d54b81eafaf328de';
-      const derivedAddress = '440670704090200331L';
-      expect(extractAddress(publicKey)).toEqual(derivedAddress);
+    it('should return the address corresponding to a (binary) public key', () => {
+      const binaryPublicKey = Buffer.from(publicKey, 'hex');
+      expect(extractAddressFromPublicKey(binaryPublicKey)).toEqual(address);
     });
+  });
 
-    it('should return false if no param passed to it', () => {
-      expect(extractAddress()).toEqual(false);
+  describe('extractAddressFromPassphrase', () => {
+    it('should return the address corresponding to a passphrase', () => {
+      expect(extractAddressFromPassphrase(passphrase)).toEqual(address);
     });
   });
 
@@ -59,75 +64,95 @@ describe('Utils: Account', () => {
     });
   });
 
-  describe('calculateAvailableBalance', () => {
+  describe('unlocking util functions', () => {
     it('should get correct available balance', () => {
       let unlocking = [
-        { amount: '1000000000', unvoteHeight: 4900, delegateAddress: '1L' },
-        { amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' },
-        { amount: '1000000000', unvoteHeight: 3000, delegateAddress: '3L' },
+        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+        { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+        { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
       ];
-      const address = '80L';
-      const currentBlock = { height: 5000 };
+      const delegateAddress = '80L';
+      const currentBlockHeight = 5000;
 
       expect(
-        calculateAvailableBalance({ unlocking, address }, currentBlock),
-      ).toEqual(3000000000);
+        calculateUnlockableBalance(unlocking, currentBlockHeight),
+      ).toEqual(4000000000);
 
       unlocking = [
-        { amount: '1000000000', unvoteHeight: 4900, delegateAddress: '1L' },
-        { amount: '3000000000', unvoteHeight: 2500, delegateAddress: address },
-        { amount: '1000000000', unvoteHeight: 3000, delegateAddress: '3L' },
+        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+        { amount: '3000000000', height: { start: 2500, end: 5500 }, delegateAddress },
+        { amount: '1000000000', height: { start: 3000, end: 5500 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
       ];
       expect(
-        calculateAvailableBalance({ unlocking, address }, currentBlock),
+        calculateUnlockableBalance(unlocking, currentBlockHeight),
       ).toEqual(0);
     });
 
     it('should return 0 when unlocking is undefined', () => {
-      const address = '80L';
-      const currentBlock = { height: 5000 };
-
+      const currentBlockHeight = 5000;
       expect(
-        calculateAvailableBalance({ address }, currentBlock),
+        calculateUnlockableBalance(undefined, currentBlockHeight),
       ).toEqual(0);
     });
 
-    describe('calculateLockedBalance', () => {
+    describe('calculateBalanceLockedInVotes', () => {
       it('should get correct available balance', () => {
-        const votes = [
-          { amount: '5000000000', delegateAddress: '1L' },
-          { amount: '3000000000', delegateAddress: '3L' },
-          { amount: '2000000000', delegateAddress: '1L' },
-        ];
+        const votes = {
+          lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 5000000000 },
+          lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 3000000000 },
+          lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: { confirmed: 2000000000 },
+        };
 
-        expect(calculateLockedBalance({ votes })).toEqual(10000000000);
+        expect(calculateBalanceLockedInVotes(votes)).toEqual(10000000000);
       });
 
       it('should return 0 when unlocking is undefined', () => {
-        expect(calculateLockedBalance({ })).toEqual(0);
+        expect(calculateBalanceLockedInVotes({})).toEqual(0);
       });
     });
 
     describe('getAvailableUnlockingTransactions', () => {
       it('should get correct available balance', () => {
         const unlocking = [
-          { amount: '1000000000', unvoteHeight: 5000, delegateAddress: '1L' },
-          { amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' },
-          { amount: '1000000000', unvoteHeight: 3100, delegateAddress: '3L' },
+          { amount: '1000000000', height: { start: 5000, end: 6000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+          { amount: '3000000000', height: { start: 100, end: 2000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+          { amount: '1000000000', height: { start: 3100, end: 41000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
         ];
-        const address = '80L';
-        const currentBlock = { height: 5000 };
+        const currentBlockHeight = 5000;
 
         expect(
-          getAvailableUnlockingTransactions({ unlocking, address }, currentBlock),
-        ).toEqual([{ amount: '3000000000', unvoteHeight: 100, delegateAddress: '1L' }]);
+          getUnlockableUnlockingObjects(unlocking, currentBlockHeight),
+        ).toEqual([{ amount: '3000000000', unvoteHeight: 100, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' }]);
       });
 
       it('should return 0 when unlocking is undefined', () => {
-        const address = '80L';
-        const currentBlock = { height: 5000 };
-        expect(getAvailableUnlockingTransactions({ address }, currentBlock)).toEqual([]);
+        const currentBlockHeight = 5000;
+        expect(getUnlockableUnlockingObjects(undefined, currentBlockHeight)).toEqual([]);
       });
+    });
+  });
+
+  describe('isAccountInitialzed', () => {
+    it('should return true if initialized', () => {
+      const result = isAccountInitialized({ info: { LSK: { serverPublicKey: 'some key' } } });
+      expect(result).toBe(true);
+    });
+
+    it('should return false if not initialized', () => {
+      const result = isAccountInitialized({ info: { LSK: { serverPublicKey: '' } } });
+      expect(result).toBe(false);
+    });
+  });
+
+  describe.skip('hasEnoughBalanceForInitialization', () => {
+    it('should return true if balance is enough', () => {
+      const result = hasEnoughBalanceForInitialization('200000000');
+      expect(result).toBe(true);
+    });
+
+    it('should return false if balance is not enough', () => {
+      const result = hasEnoughBalanceForInitialization('0');
+      expect(result).toBe(false);
     });
   });
 });

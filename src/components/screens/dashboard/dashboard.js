@@ -1,10 +1,11 @@
 // istanbul ignore file
 import React from 'react';
+
+import WalletDetails from '@shared/walletDetails';
+import Onboarding from '@toolbox/onboarding/onboarding';
 import NewsFeed from './newsFeed';
-import WalletDetails from '../../shared/walletDetails';
 import RecentTransactions from './recentTransactions';
 import styles from './dashboard.css';
-import Onboarding from '../../toolbox/onboarding/onboarding';
 
 const getOnboardingSlides = t => [{
   title: t('Ready to go!'),
@@ -25,10 +26,10 @@ const getOnboardingSlides = t => [{
 }];
 
 const Dashboard = ({ account, t }) => {
-  const isLoggedIn = !!(account.address);
+  const isLoggedIn = !!(account?.summary?.address);
 
   return (
-    <React.Fragment>
+    <>
       <div className={`${styles.wrapper} dashboard-container`}>
         <Onboarding
           slides={getOnboardingSlides(t)}
@@ -51,7 +52,7 @@ const Dashboard = ({ account, t }) => {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

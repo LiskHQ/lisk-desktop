@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
-import { toRawLsk } from '../../../../utils/lsk';
-import { validateAmountFormat } from '../../../../utils/validators';
-import regex from '../../../../utils/regex';
+import { tokenMap, minAccountBalance, regex } from '@constants';
+import { toRawLsk } from '@utils/lsk';
+import { validateAmountFormat } from '@utils/validators';
 
 let loaderTimeout = null;
 
@@ -30,11 +30,12 @@ const useAmountField = (initialValue, token) => {
   const { t, i18n } = useTranslation();
 
   const getAmountFeedbackAndError = (value, maxAmount = 0) => {
+    const checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT', 'INSUFFICIENT_FUNDS'];
     let { message: feedback } = validateAmountFormat({
       value,
       token,
-      funds: maxAmount,
-      checklist: ['ZERO', 'MAX_ACCURACY', 'FORMAT', 'INSUFFICIENT_FUNDS'],
+      funds: token !== tokenMap.LSK.key ? maxAmount : Number(maxAmount) + Number(minAccountBalance),
+      checklist: token !== tokenMap.LSK.key ? checklist : [...checklist, 'MIN_BALANCE'],
     });
 
     if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {

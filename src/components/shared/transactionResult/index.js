@@ -1,9 +1,9 @@
 /* eslint-disable complexity */
 import React from 'react';
-import { TertiaryButton } from '../../toolbox/buttons';
-import { getErrorReportMailto } from '../../../utils/helpers';
+import { getErrorReportMailto } from '@utils/helpers';
+import { TertiaryButton } from '@toolbox/buttons';
+import Illustration from '@toolbox/illustration';
 import styles from './transactionResult.css';
-import Illustration from '../../toolbox/illustration';
 
 const TransactionResult = ({
   success, title, message, t, error, children, illustration, className, sharedData,
@@ -27,7 +27,7 @@ const TransactionResult = ({
       {
       !success
         ? (
-          <React.Fragment>
+          <>
             <p>{t('Does the problem still persist?')}</p>
             <a
               className="report-error-link"
@@ -39,7 +39,7 @@ const TransactionResult = ({
                 {t('Report the error via E-Mail')}
               </TertiaryButton>
             </a>
-          </React.Fragment>
+          </>
         )
         : null
     }

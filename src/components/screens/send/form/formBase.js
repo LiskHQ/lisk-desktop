@@ -1,12 +1,12 @@
 import React from 'react';
-import { PrimaryButton } from '../../../toolbox/buttons';
-import AmountField from '../../../shared/amountField';
+import Piwik from '@utils/piwik';
+import { PrimaryButton } from '@toolbox/buttons';
+import AmountField from '@shared/amountField';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import BoxHeader from '@toolbox/box/header';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
-import BoxHeader from '../../../toolbox/box/header';
-import Piwik from '../../../../utils/piwik';
 import styles from './form.css';
 
 const FormBase = ({
@@ -47,6 +47,7 @@ const FormBase = ({
           maxAmountTitle={t('Send entire balance')}
           inputPlaceHolder={t('Insert the amount of transaction')}
           name="amount"
+          displayConverter
         />
         { children }
       </BoxContent>

@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { regex } from '@constants';
 import AccountVisual from '../../toolbox/accountVisual';
-import regex from '../../../utils/regex';
 
 import styles from './styles.css';
 
