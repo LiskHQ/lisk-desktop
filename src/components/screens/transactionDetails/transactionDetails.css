@@ -31,7 +31,7 @@
       "sender sender"
       "recipient recipient"
       "date confirmations"
-      "transactionId nonce"
+      "transactionId transactionId"
       "amount fee"
       "message message";
 
@@ -54,7 +54,7 @@
       "sender sender"
       "recipient recipient"
       "date confirmations"
-      "transactionId nonce"
+      "transactionId transactionId"
       "amount fee"
       "message message";
   }
@@ -62,7 +62,7 @@
   & .multiSigLayout {
     grid-template-areas:
       "sender sender"
-      "transactionId nonce"
+      "transactionId transactionId"
       "date fee"
       "confirmations requiredSignatures"
       "members members";
@@ -73,7 +73,7 @@
       "illustration illustration"
       "sender sender"
       "date fee"
-      "transactionId nonce"
+      "transactionId transactionId"
       "message confirmations"
       "votes votes";
   }
@@ -83,7 +83,7 @@
       "illustration illustration"
       "sender sender"
       "date confirmations"
-      "transactionId nonce"
+      "transactionId transactionId"
       "fee fee";
   }
 }

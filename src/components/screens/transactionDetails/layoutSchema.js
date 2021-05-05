@@ -2,7 +2,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
-  Confirmations, Date, Amount, Fee, RequiredSignatures, Nonce, TransactionVotes,
+  Confirmations, Date, Amount, Fee, RequiredSignatures, TransactionVotes,
 } from './components';
 import { Members } from './components/components';
 import styles from './transactionDetails.css';
@@ -12,7 +12,7 @@ const {
   // reclaimLSK,
 } = MODULE_ASSETS_NAME_ID_MAP;
 
-const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date, Nonce];
+const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date];
 
 const LayoutSchema = {
   [transfer]: {
