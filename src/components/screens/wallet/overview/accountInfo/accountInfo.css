@@ -139,6 +139,7 @@
     left: 0;
     width: 100%;
     transition: all ease 200ms;
+    z-index: 3;
 
     & .helperIcon {
       width: 40px;
