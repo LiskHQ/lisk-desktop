@@ -24,9 +24,12 @@ const Wallet = ({ t, history }) => {
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const { confirmed, pending } = useSelector(selectTransactions);
-  const { isDelegate, address } = account.info[activeToken].summary;
+  const {
+    isDelegate, address,
+    // isMultiSignature
+  } = account.info[activeToken].summary;
+  const isMultiSignature = true; // mock
 
-  const isMultiSignature = true;
   useEffect(() => {
     dispatch(transactionsRetrieved({ address }));
   }, [confirmed.length]);
