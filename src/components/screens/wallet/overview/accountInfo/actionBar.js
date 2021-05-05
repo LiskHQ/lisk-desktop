@@ -15,8 +15,9 @@ const BookmarkIcon = ({ bookmark }) => (
   />
 );
 
+// eslint-disable-next-line complexity
 const ActionBar = ({
-  address, host, activeToken, username, account, bookmark, hwInfo, t,
+  address, host, activeToken, username, account, bookmark, hwInfo, isMultisignature, t,
 }) => (
   <footer>
     <div className={styles.helperIcon}>
@@ -38,31 +39,31 @@ const ActionBar = ({
     </div>
     <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
       {
-      host === address ? (
-        <Tooltip
-          className={styles.tooltipWrapper}
-          position="bottom"
-          size="maxContent"
-          content={(
-            <DialogLink component="request">
-              <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
-            </DialogLink>
-          )}
-        >
-          <p>{t(`Request ${activeToken}`)}</p>
-        </Tooltip>
-      ) : (
-        <Tooltip
-          className={styles.tooltipWrapper}
-          position="bottom"
-          size="s"
-          title={t('Scan address')}
-          content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
-        >
-          <QRCode value={address} size={154} />
-        </Tooltip>
-      )
-}
+        host === address ? (
+          <Tooltip
+            className={styles.tooltipWrapper}
+            position="bottom"
+            size="maxContent"
+            content={(
+              <DialogLink component="request">
+                <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
+              </DialogLink>
+            )}
+          >
+            <p>{t(`Request ${activeToken}`)}</p>
+          </Tooltip>
+        ) : (
+          <Tooltip
+            className={styles.tooltipWrapper}
+            position="bottom"
+            size="s"
+            title={t('Scan address')}
+            content={<Icon name="qrCodeActive" className={styles.qrCodeIcon} />}
+          >
+            <QRCode value={address} size={154} />
+          </Tooltip>
+        )
+      }
     </div>
     {
       host !== address ? (
@@ -114,6 +115,20 @@ const ActionBar = ({
         </div>
       )
     }
+    <div className={styles.helperIcon}>
+      <Tooltip
+        className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisignature ? styles.whiteBackground : ''}`}
+        position="bottom"
+        size="maxContent"
+        content={(
+          <DialogLink component={isMultisignature ? 'multisigAccountDetails' : 'multiSignature'}>
+            <Icon name="multiSignatureOutline" className={styles.multisigIcon} />
+          </DialogLink>
+        )}
+      >
+        <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature')}</p>
+      </Tooltip>
+    </div>
   </footer>
 );
 
