@@ -103,15 +103,18 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
 
 const autoLogInIfNecessary = async ({ dispatch, getState }) => {
   const {
-    statistics, statisticsRequest, statisticsFollowingDay,
+    statistics, statisticsRequest, statisticsFollowingDay, network,
   } = getState().settings;
   const autoLoginData = getAutoLogInData();
 
   const address = autoLoginData[settings.keys.liskServiceUrl];
-  const network = address
+  const config = address
     ? { name: networkKeys.customNode, address }
-    : { name: networkKeys.mainNet, address: networks.mainnet.serviceUrl };
-  dispatch(networkSelected(network));
+    : {
+      name: network?.name || networkKeys.mainNet,
+      address: network?.address || networks.mainnet.serviceUrl,
+    };
+  dispatch(networkSelected(config));
   dispatch(networkStatusUpdated({ online: true }));
 
   if (!statistics) {
@@ -134,7 +137,7 @@ const checkAccountInitializationState = (action) => {
 const accountMiddleware = store => next => async (action) => {
   next(action);
   switch (action.type) {
-    case actionTypes.storeCreated:
+    case actionTypes.settingsRetrieved:
       autoLogInIfNecessary(store);
       break;
     case actionTypes.newBlockCreated:
