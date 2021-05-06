@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { routes } from '@constants';
+import routes from '@src/routes';
 import { isEmpty } from '@utils/helpers';
 import Icon from '@toolbox/icon';
 import DialogLink from '@toolbox/dialog/link';

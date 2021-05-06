@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { routes } from '@constants';
+import routes from '@src/routes';
 import { TertiaryButton } from '@toolbox/buttons';
 import LoadingIcon from './loadingIcon';
 

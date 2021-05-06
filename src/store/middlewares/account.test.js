@@ -1,10 +1,10 @@
 import {
   accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved, emptyTransactionsData,
 } from '@actions';
-
 import {
-  tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes,
+  tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
+import routes from '@src/routes';
 import * as transactionApi from '@api/transaction';
 import middleware from './account';
 import history from '../../history';

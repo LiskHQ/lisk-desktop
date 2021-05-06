@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { routes } from '@constants';
+import routes from '@src/routes';
 import AccountVisual from '@toolbox/accountVisual';
 import styles from './overview.css';
 

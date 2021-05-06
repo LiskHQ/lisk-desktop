@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { routes } from '@constants';
+import routes from '@src/routes';
 import { getTokenFromAddress } from '@utils/account';
 import { selectSearchParamValue } from '@utils/searchParams';
 import styles from './discreetMode.css';

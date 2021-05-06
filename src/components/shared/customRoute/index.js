@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import { getActiveTokenAccount } from '@utils/account';
 import Piwik from '@utils/piwik';
-import { routes } from '@constants';
+import routes from '@src/routes';
 import Login from '@screens/login';
 import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';

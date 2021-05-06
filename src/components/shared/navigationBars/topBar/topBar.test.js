@@ -1,5 +1,5 @@
 import React from 'react';
-import { routes } from '@constants';
+import routes from '@src/routes';
 import DialogHolder from '@toolbox/dialog/holder';
 import { mountWithRouter } from '@utils/testHelpers';
 import TopBar from './topBar';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { routes } from '@constants';
+import routes from '@src/routes';
 import { parseSearchParams } from '@utils/searchParams';
 import MultiStep from '@shared/multiStep';
 import Dialog from '@toolbox/dialog/dialog';

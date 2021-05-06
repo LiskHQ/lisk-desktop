@@ -2,7 +2,8 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { routes, modals } from '@constants';
+
+import routes, { modals } from '@src/routes';
 import Piwik from '@utils/piwik';
 import { accountLoggedOut } from '@actions';
 import Icon from '@toolbox/icon';

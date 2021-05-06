@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { subscribeToDevicesList } from '@utils/hwManager';
-import { routes } from '@constants';
+import routes from '@src/routes';
 import MultiStep from '@shared/multiStep';
 import Loading from './loading';
 import RequestPin from './requestPin';

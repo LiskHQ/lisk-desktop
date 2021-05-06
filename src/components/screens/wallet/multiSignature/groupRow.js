@@ -3,7 +3,8 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import AccountVisual from '@toolbox/accountVisual';
 import LiskAmount from '@shared/liskAmount';
-import { tokenMap, routes, regex } from '@constants';
+import { tokenMap, regex } from '@constants';
+import routes from '@src/routes';
 import styles from './multiSignature.css';
 
 const GroupRow = ({ data, className }) => {
