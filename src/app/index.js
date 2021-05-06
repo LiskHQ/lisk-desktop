@@ -44,8 +44,8 @@ const App = ({ history }) => {
     }
   }, [serviceUrl]);
 
-  const routesList = Object.values(routes);
-  const routeObj = routesList.find(r => r.path === history.location.pathname) || {};
+  const routesList = Object.keys(routes);
+  const routeObj = Object.values(routes).find(r => r.path === history.location.pathname) || {};
 
   return (
     <ThemeContext.Provider value={theme}>
@@ -74,12 +74,12 @@ const App = ({ history }) => {
                 {
                   routesList.map(route => (
                     <CustomRoute
-                      key={route.path}
-                      route={route}
-                      path={route.path}
-                      exact={route.exact}
-                      isPrivate={route.isPrivate}
-                      forbiddenTokens={route.forbiddenTokens}
+                      key={routes[route].path}
+                      route={routes[route]}
+                      path={routes[route].path}
+                      exact={routes[route].exact}
+                      isPrivate={routes[route].isPrivate}
+                      forbiddenTokens={routes[route].forbiddenTokens}
                       component={routesMap[route]}
                       history={history}
                     />
