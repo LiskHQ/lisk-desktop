@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import routes from '@src/routes';
+import { routes } from '@constants';
 import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
 import AccountVisual from '@toolbox/accountVisual';
 import registerStyles from './register.css';

@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { keyCodes } from '@constants';
-import routes from '@src/routes';
+import { routes, keyCodes } from '@constants';
 import { addSearchParamsToUrl } from '@utils/searchParams';
 import { Input } from '@toolbox/inputs';
 import Accounts from './accounts';

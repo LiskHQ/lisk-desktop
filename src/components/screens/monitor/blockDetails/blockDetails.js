@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import { tokenMap } from '@constants';
-import routes from '@src/routes';
+import { tokenMap, routes } from '@constants';
 import { DateTimeFromTimestamp } from '@toolbox/timestamp';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';

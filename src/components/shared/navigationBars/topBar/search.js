@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { regex } from '@constants';
-import routes from '@src/routes';
+import { routes, regex } from '@constants';
 import { selectSearchParamValue } from '@utils/searchParams';
 import Icon from '@toolbox/icon';
 import DialogLink from '@toolbox/dialog/link';

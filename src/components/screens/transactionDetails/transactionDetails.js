@@ -6,7 +6,7 @@ import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import NotFound from '@shared/notFound';
 import Dialog from '@toolbox/dialog/dialog';
-import routes from '@src/routes';
+import { routes } from '@constants';
 import styles from './transactionDetails.css';
 import LayoutSchema from './layoutSchema';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Piwik from '@utils/piwik';
-import routes from '@src/routes';
+import { routes } from '@constants';
 import { PrimaryButton } from '@toolbox/buttons';
 import Icon from '@toolbox/icon';
 import styles from './termsOfUse.css';

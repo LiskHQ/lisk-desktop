@@ -1,7 +1,6 @@
 import {
-  networks, actionTypes, networkKeys, settings, MODULE_ASSETS_NAME_ID_MAP, tokenMap,
+  networks, actionTypes, networkKeys, settings, MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
 } from '@constants';
-import routes from '@src/routes';
 import { fromRawLsk } from '@utils/lsk';
 import { getActiveTokenAccount } from '@utils/account';
 import { getAutoLogInData } from '@utils/login';

@@ -4,8 +4,7 @@ import { selectAccount } from '@store';
 import TransactionResult from '@shared/transactionResult';
 import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
-import { tokenMap } from '@constants';
-import routes from '@src/routes';
+import { routes, tokenMap } from '@constants';
 import styles from './status.css';
 
 // eslint-disable-next-line max-statements

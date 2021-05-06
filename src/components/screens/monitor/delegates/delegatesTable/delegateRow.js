@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
-import routes from '@src/routes';
+import { useDispatch } from 'react-redux';
+import { routes } from '@constants';
 import { addedToWatchList, removedFromWatchList } from '@actions';
 import styles from '../delegates.css';
 import {
