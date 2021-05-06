@@ -31,9 +31,9 @@ getTransactionFee.mockImplementation((params) => {
 });
 
 useTransactionFeeCalculation.mockImplementation(() => ({
-  minFee: { value: 0.001 },
-  fee: { value: 0.01 },
-  maxAmount: { value: 0.01 },
+  minFee: { value: 0.00001 },
+  fee: { value: 0.0001 },
+  maxAmount: { value: 200000000 },
 }));
 
 describe('Form', () => {
