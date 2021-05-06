@@ -5,12 +5,10 @@ import {
 } from '@actions';
 import { actionTypes } from '@constants';
 import bookmarks from './bookmarks';
-import {
-  genesis,
-  delegate,
-  // eslint-disable-next-line camelcase
-  empty_account,
-} from '../../../test/constants/accounts';
+import accounts from '../../../test/constants/accounts';
+
+// eslint-disable-next-line camelcase
+const { genesis, delegate, empty_account } = accounts;
 
 describe('Reducer: bookmarks(state, action)', () => {
   const account = {
