@@ -2,9 +2,39 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { tokenMap, moduleAssetSchemas } from '@constants';
+import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
+import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
+import { fromRawLsk } from '@utils/lsk';
 import Form from './form';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
+
+jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
+jest.mock('@api/transaction');
+
+const transactionBaseFees = {
+  Low: 156,
+  Medium: 100,
+  High: 51,
+};
+
+const mockFeeFactor = 100;
+getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
+getTransactionFee.mockImplementation((params) => {
+  const selectedTransactionPriority = params.selectedPriority.selectedIndex;
+  const fees = fromRawLsk(
+    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
+  );
+  return ({
+    value: fees, feedback: '', error: false,
+  });
+});
+
+useTransactionFeeCalculation.mockImplementation(() => ({
+  minFee: { value: 0.001 },
+  fee: { value: 0.01 },
+  maxAmount: { value: 0.01 },
+}));
 
 describe('Form', () => {
   moduleAssetSchemas['2:0'] = {
