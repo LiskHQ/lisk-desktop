@@ -37,7 +37,9 @@ const http = ({
         return response.json();
       });
   } catch (e) {
-    return Promise.reject(Error(e));
+    // eslint-disable-next-line no-console
+    console.error(e);
+    // return Promise.reject(Error(e));
   }
 };
 

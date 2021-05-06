@@ -49,7 +49,7 @@ export const getNetworkConfig = ({ name, address }) => {
     .catch((err) => {
       // eslint-disable-next-line no-console
       console.error(err);
-      throw Error(`Can not connect to ${address}`);
+      // throw Error(`Can not connect to ${address}`);
     });
 };
 
