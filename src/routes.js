@@ -23,11 +23,15 @@ import Request from '@screens/request';
 import LockedBalance from '@screens/lockedBalance';
 import EditVote from '@screens/editVote';
 import VotingQueue from '@screens/votingQueue';
-// eslint-disable-next-line import/no-named-as-default
-import DeviceDisconnectDialog from '@screens/deviceDisconnectDialog';
+import DeviceDisconnect from '@screens/deviceDisconnectDialog';
 import NewReleaseDialog from '@shared/newReleaseDialog/newReleaseDialog';
 import SearchBar from '@shared/searchBar';
-import { tokenMap } from './constants/tokens';
+import ReclaimBalance from '@screens/reclaimBalance';
+import ReclaimBalanceModal from '@screens/reclaimBalance/modal';
+import MultiSignature from '@screens/multiSignature';
+import SignMultiSigTransaction from '@screens/signMultiSignTransaction';
+import MultisigAccountDetails from '@screens/multisigAccountDetails';
+import { tokenMap } from '@constants';
 
 export default {
   wallet: {
@@ -119,6 +123,12 @@ export default {
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
+  reclaim: {
+    path: '/reclaim',
+    component: ReclaimBalance,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
   dashboard: {
     path: '/',
     component: Dashboard,
@@ -197,11 +207,31 @@ export const modals = {
   votingQueue: {
     component: VotingQueue,
     isPrivate: true,
-    forbiddenTokens: [],
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   deviceDisconnectDialog: {
-    component: DeviceDisconnectDialog,
+    component: DeviceDisconnect,
     isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  reclaimBalance: {
+    component: ReclaimBalanceModal,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  multiSignature: {
+    component: MultiSignature,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  multisigAccountDetails: {
+    component: MultisigAccountDetails,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  signMultiSignTransaction: {
+    component: SignMultiSigTransaction,
+    isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
 };
