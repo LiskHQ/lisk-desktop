@@ -33,8 +33,7 @@ describe('Utils: moduleAssets', () => {
         { moduleAssetId: '5:2', schema },
       ];
       http.mockImplementation(() => Promise.resolve({ data }));
-      retrieveSchemas({ serviceUrl: 'http://sample.url' });
-      await flushPromises();
+      await retrieveSchemas({ serviceUrl: 'http://sample.url' });
       expect(moduleAssetSchemas).toEqual({
         '2:0': schema,
         '4:0': schema,
