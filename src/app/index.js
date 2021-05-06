@@ -17,6 +17,7 @@ import DialogHolder from '@toolbox/dialog/holder';
 import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@actions';
 import { retrieveSchemas } from '@utils/moduleAssets';
 import { selectServiceUrl } from '@store';
+import routesMap from '../routesMap';
 import ThemeContext from '../contexts/theme';
 import styles from './app.css';
 import useIpc from '../hooks/useIpc';
@@ -73,13 +74,13 @@ const App = ({ history }) => {
                 {
                   routesList.map(route => (
                     <CustomRoute
+                      key={route.path}
                       route={route}
                       path={route.path}
                       exact={route.exact}
                       isPrivate={route.isPrivate}
                       forbiddenTokens={route.forbiddenTokens}
-                      component={route.component}
-                      key={route.path}
+                      component={routesMap[route]}
                       history={history}
                     />
                   ))
