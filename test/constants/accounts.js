@@ -70,9 +70,16 @@ const accounts = {
   },
   multiSig_candidate: {
     passphrase: 'approve tribe main deposit luxury obtain knock problem pulse claw social select',
-    publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
-    serverPublicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
-    address: '1941002779612196826L',
+    summary: {
+      publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+      serverPublicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+      address: '1941002779612196826L',
+    },
+    token: {},
+    sequence: {},
+    dpos: {
+      delegate: {},
+    },
   },
   second_passphrase_candidate: {
     passphrase: 'dolphin inhale planet talk insect release maze engine guilt loan attend lawn',
@@ -89,7 +96,6 @@ const accounts = {
   },
   send_all_account: {
     passphrase: 'oyster flush inquiry bright leopard gas replace ball hold pudding teach swear',
-
     summary: {
       publicKey: 'c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
       serverPublicKey: 'c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
@@ -153,6 +159,5 @@ const accounts = {
     },
   },
 };
-accounts['any account'] = accounts.genesis;
 
-module.exports = accounts;
+export default accounts;
