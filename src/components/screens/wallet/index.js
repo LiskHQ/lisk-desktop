@@ -10,7 +10,7 @@ import {
   selectActiveToken,
   selectSettings,
   selectTransactions,
-} from '@store';
+} from '@store/selectors';
 import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';

@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectCurrentBlockHeight } from '@store';
+import { selectCurrentBlockHeight } from '@store/selectors';
 import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@utils/moduleAssets';
 import { getTxAmount } from '@utils/transaction';
 import { tokenMap } from '@constants';

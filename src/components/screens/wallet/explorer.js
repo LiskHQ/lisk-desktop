@@ -7,7 +7,7 @@ import withData from '@utils/withData';
 import { getAccount } from '@api/account';
 import { selectSearchParamValue } from '@utils/searchParams';
 import { isEmpty } from '@utils/helpers';
-import { selectActiveToken, selectSettings } from '@store';
+import { selectActiveToken, selectSettings } from '@store/selectors';
 import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';

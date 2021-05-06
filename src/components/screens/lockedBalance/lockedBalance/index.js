@@ -9,7 +9,7 @@ import {
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionPriority, { useTransactionFeeCalculation } from '@shared/transactionPriority';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
-import { selectCurrentBlockHeight } from '@store';
+import { selectCurrentBlockHeight } from '@store/selectors';
 import Form from './form';
 import BalanceTable from './balanceTable';
 
