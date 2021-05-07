@@ -8,7 +8,7 @@ import {
 } from '@utils/account';
 import { transformStringDateToUnixTimestamp } from '@utils/datetime';
 import { toRawLsk } from '@utils/lsk';
-import { splitModuleAndAssetIds } from '@utils/moduleAssets';
+import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@utils/moduleAssets';
 
 const {
   transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,
@@ -16,11 +16,11 @@ const {
 
 const EMPTY_BUFFER = Buffer.from('');
 
-function convertToBinaryInHex(value) {
+function convertStringToBinary(value) {
   return Buffer.from(value, 'hex');
 }
 
-function convertBinaryInHexToString(value) {
+function convertBinaryToString(value) {
   return value.toString('hex');
 }
 
@@ -31,26 +31,30 @@ function convertBinaryInHexToString(value) {
  * @returns the transformed transaction
  */
 // eslint-disable-next-line max-statements
-const transformTransaction = (transaction) => {
-  const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
+const transformTransaction = ({
+  moduleID, assetID, id, asset, nonce, fee, senderPublicKey, signatures, ...transaction
+}) => {
+  const moduleAssetId = joinModuleAndAssetIds(moduleID, assetID);
   const senderAddress = extractAddressFromPublicKey(transaction.senderPublicKey);
-  const senderPublicKey = transaction.senderPublicKey.toString('hex');
 
   const transformedTransaction = {
-    id: transaction.id.toString('hex'),
     moduleAssetId,
-    fee: String(transaction.fee),
-    nonce: String(transaction.nonce),
-    sender: { publicKey: senderPublicKey, address: senderAddress },
-    signatures: transaction.signatures,
+    id: convertBinaryToString(id),
+    fee: String(fee),
+    nonce: String(nonce),
+    signatures,
+    sender: {
+      address: senderAddress,
+      publicKey: convertBinaryToString(senderPublicKey),
+    },
   };
 
   switch (moduleAssetId) {
     case transfer: {
       transformedTransaction.asset = {
-        recipient: { address: getBase32AddressFromAddress(transaction.asset.recipientAddress) },
-        amount: String(transaction.asset.amount),
-        data: transaction.asset.data,
+        data: asset.data,
+        amount: String(asset.amount),
+        recipient: { address: getBase32AddressFromAddress(asset.recipientAddress) },
       };
 
       break;
@@ -58,14 +62,14 @@ const transformTransaction = (transaction) => {
 
     case registerDelegate: {
       transformedTransaction.asset = {
-        username: transaction.asset.username,
+        username: asset.username,
       };
       break;
     }
 
     case voteDelegate: {
       transformedTransaction.asset = {
-        votes: transaction.asset.votes.map(vote => ({
+        votes: asset.votes.map(vote => ({
           amount: Number(vote.amount),
           delegateAddress: getBase32AddressFromAddress(vote.delegateAddress),
         })),
@@ -75,14 +79,14 @@ const transformTransaction = (transaction) => {
 
     case reclaimLSK: {
       transformedTransaction.asset = {
-        amount: transaction.asset.amount,
+        amount: asset.amount,
       };
       break;
     }
 
     case unlockToken: {
       transformedTransaction.asset = {
-        unlockObjects: transaction.asset.unlockObjects.map(unlockingObject => ({
+        unlockObjects: asset.unlockObjects.map(unlockingObject => ({
           delegateAddress: getBase32AddressFromAddress(unlockingObject.delegateAddress),
           amount: Number(unlockingObject.amount),
           unvoteHeight: unlockingObject.height.start,
@@ -93,9 +97,9 @@ const transformTransaction = (transaction) => {
 
     case registerMultisignatureGroup: {
       transformedTransaction.asset = {
-        numberOfSignatures: transaction.numberOfSignatures,
-        mandatoryKeys: transaction.mandatoryKeys.map(convertBinaryInHexToString),
-        optionalKeys: transaction.optionalKeys.map(convertBinaryInHexToString),
+        numberOfSignatures: asset.numberOfSignatures,
+        mandatoryKeys: asset.mandatoryKeys.map(convertBinaryToString),
+        optionalKeys: asset.optionalKeys.map(convertBinaryToString),
       };
       break;
     }
@@ -124,7 +128,7 @@ const createTransactionObject = (tx, moduleAssetId) => {
   const transaction = {
     moduleID,
     assetID,
-    senderPublicKey: convertToBinaryInHex(senderPublicKey),
+    senderPublicKey: convertStringToBinary(senderPublicKey),
     nonce: BigInt(nonce),
     fee: BigInt(fee),
     signatures: [],
@@ -181,8 +185,8 @@ const createTransactionObject = (tx, moduleAssetId) => {
     case registerMultisignatureGroup: {
       transaction.asset = {
         numberOfSignatures: Number(tx.numberOfSignatures),
-        mandatoryKeys: tx.mandatoryKeys.map(convertToBinaryInHex),
-        optionalKeys: tx.optionalKeys.map(convertToBinaryInHex),
+        mandatoryKeys: tx.mandatoryKeys.map(convertStringToBinary),
+        optionalKeys: tx.optionalKeys.map(convertStringToBinary),
       };
       break;
     }
