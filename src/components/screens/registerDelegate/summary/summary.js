@@ -4,8 +4,8 @@ import to from 'await-to-js';
 import { create } from '@api/transaction';
 import { toRawLsk } from '@utils/lsk';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import AccountVisual from '@toolbox/accountVisual';
 import TransactionSummary from '@shared/transactionSummary';
+import TransactionInfo from '@shared/transactionInfo';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
@@ -73,18 +73,7 @@ class Summary extends React.Component {
         fee={fee}
         classNames={`${styles.box} ${styles.summaryContainer}`}
       >
-        <section className="summary-container">
-          <label className="nickname-label">{t('Your nickname')}</label>
-          <div className={styles.userInformation}>
-            <AccountVisual
-              className={styles.accountVisual}
-              address={account.summary?.address}
-              size={25}
-            />
-            <span className={`${styles.nickname} nickname`}>{nickname}</span>
-            <span className={`${styles.address} address`}>{account.summary?.address}</span>
-          </div>
-        </section>
+        <TransactionInfo account={account} nickname={nickname} />
       </TransactionSummary>
     );
   }

@@ -1,41 +1,15 @@
 import React, { useEffect } from 'react';
 
 import Piwik from '@utils/piwik';
-import LiskAmount from '@shared/liskAmount';
+import TransactionInfo from '@shared/TransactionInfo';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import VoteItem from '@shared/voteItem';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
 
 import styles from './styles.css';
-
-const ItemList = ({ items, heading }) => (
-  <div className={styles.contentItem}>
-    <span className={styles.contentHeading}>{heading}</span>
-    <div className={styles.voteItems}>
-      {Object.keys(items).map(address => (
-        <VoteItem
-          key={`vote-item-${address}`}
-          address={address}
-          vote={items[address]}
-          title={items[address].username}
-        />
-      ))}
-    </div>
-  </div>
-);
-
-const InfoColumn = ({ title, children, className }) => (
-  <div className={`${styles.infoColumn} ${className}`}>
-    <span className={styles.infoTitle}>{title}</span>
-    <span className={styles.infoValue}>
-      {children}
-    </span>
-  </div>
-);
 
 const getResultProps = ({ added, removed, edited }) => {
   let unlockable = Object.values(removed).reduce((sum, { confirmed }) => {
@@ -66,10 +40,6 @@ const Summary = ({
   t, removed = {}, edited = {}, added = {},
   fee, account, prevStep, nextStep, transactions, ...props
 }) => {
-  const addedLength = Object.keys(added).length;
-  const editedLength = Object.keys(edited).length;
-  const removedLength = Object.keys(removed).length;
-
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
@@ -108,21 +78,13 @@ const Summary = ({
           <VoteStats
             t={t}
             heading={t('Voting Summary')}
-            added={addedLength}
-            edited={editedLength}
-            removed={removedLength}
+            added={Object.keys(added).length}
+            edited={Object.keys(edited).length}
+            removed={Object.keys(removed).length}
           />
         </div>
         <BoxContent className={styles.content}>
-          {addedLength ? <ItemList heading={t('Added votes')} items={added} /> : null}
-          {editedLength ? <ItemList heading={t('Changed votes')} items={edited} /> : null}
-          {removedLength ? <ItemList heading={t('Removed votes')} items={removed} /> : null}
-          <div className={styles.infoContainer}>
-            <InfoColumn title={t('Total votes after confirmation')} className="total-votes">{`${addedLength + editedLength}/10`}</InfoColumn>
-            <InfoColumn title={t('Transaction fee')} className="fee">
-              <LiskAmount val={fee} />
-            </InfoColumn>
-          </div>
+          <TransactionInfo added={added} edited={edited} removed={removed} fee={fee} />
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
           <SecondaryButton onClick={prevStep} className="edit-button">Edit</SecondaryButton>

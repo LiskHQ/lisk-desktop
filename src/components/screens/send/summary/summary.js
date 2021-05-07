@@ -2,9 +2,8 @@ import React from 'react';
 import { loginTypes } from '@constants';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
-import AccountVisual from '@toolbox/accountVisual';
-import Converter from '@shared/converter';
 import TransactionSummary from '@shared/transactionSummary';
+import TransactionInfo from '@shared/transactionInfo';
 
 import styles from './summary.css';
 
@@ -90,37 +89,7 @@ class Summary extends React.Component {
         fee={fromRawLsk(fields.fee.value)}
         token={token}
       >
-        <section>
-          <label>{t('Recipient')}</label>
-          <label className="recipient-value">
-            <AccountVisual address={fields.recipient.address} size={25} />
-            <label className={`${styles.information} recipient-confirm`}>
-              {fields.recipient.title || fields.recipient.address}
-            </label>
-            { fields.recipient.title ? (
-              <span className={styles.secondText}>
-                {fields.recipient.address}
-              </span>
-            ) : null }
-          </label>
-        </section>
-        <section>
-          <label>{t('Amount')}</label>
-          <label className="amount-summary">
-            {`${amount} ${token}`}
-            <Converter className={styles.secondText} value={amount} />
-          </label>
-        </section>
-        { fields.reference && fields.reference.value
-          ? (
-            <section>
-              <label>{t('Message')}</label>
-              <label className="message-summary">
-                {`${fields.reference.value}`}
-              </label>
-            </section>
-          )
-          : null }
+        <TransactionInfo fields={fields} amount={amount} token={token} />
       </TransactionSummary>
     );
   }
