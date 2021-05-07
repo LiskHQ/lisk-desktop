@@ -36,6 +36,7 @@ class NetworkSelector extends React.Component {
       isFirstTime: true,
       activeNetwork: 0,
       connected: true,
+      networkLabel: 'Mainnet',
     };
 
     this.onConnectToCustomNode = this.onConnectToCustomNode.bind(this);
@@ -45,6 +46,11 @@ class NetworkSelector extends React.Component {
 
   componentDidMount() {
     this.checkNodeStatus(false);
+
+    // check the network, define selected
+    if (!this.props.network.networks.LSK) {
+      this.validateCorrectNode(networks.mainnet.code, networks.mainnet.nodes[0]);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -129,10 +135,12 @@ class NetworkSelector extends React.Component {
     const newNetwork = this.getNetwork(network);
 
     if (network === networks.customNode.code) {
-      const { apiVersion } = this.props.network.networks.LSK;
+      const apiVersion = this.props.network.networks.LSK
+        ? this.props.network.networks.LSK.apiVersion : '2';
       const Lisk = liskClient(apiVersion);
       const liskAPIClient = new Lisk.APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
+        // eslint-disable-next-line max-statements
         .then((res) => {
           if (res.data) {
             this.props.networkSet({
@@ -142,10 +150,23 @@ class NetworkSelector extends React.Component {
               },
             });
 
-            this.props.history.push(nextPath);
-            this.setState({ validationError: '', connected: true });
+            let networkLabel = 'Devnet';
+
+            if (res.data.nethash === Lisk.constants.MAINNET_NETHASH) {
+              networkLabel = 'Mainnet';
+            } else if (res.data.nethash === Lisk.constants.TESTNET_NETHASH) {
+              networkLabel = 'Testnet';
+            }
+
+            this.setState({
+              validationError: '',
+              connected: true,
+              networkLabel,
+            });
             this.childRef.toggleDropdown();
+            this.props.networkStatusUpdated({ online: true });
             this.changeNetwork(networks.customNode.code);
+            this.props.history.push(nextPath);
           } else {
             throw new Error();
           }
@@ -162,6 +183,7 @@ class NetworkSelector extends React.Component {
           ...newNetwork,
         },
       });
+      this.props.networkStatusUpdated({ online: true });
       this.props.history.push(nextPath);
       this.setState({ validationError: '' });
     }
@@ -179,21 +201,19 @@ class NetworkSelector extends React.Component {
   /* eslint-disable complexity */
   render() {
     const {
-      address,
+      settings,
+      network,
       dark,
-      selectedNetwork,
       t,
     } = this.props;
     const {
       isValidationLoading,
       connected,
       validationError,
+      networkLabel,
     } = this.state;
     const { activeNetwork } = this.state;
     const networkList = getNetworksList();
-    const networkLabel = selectedNetwork !== networks.customNode.code
-      ? networkList[selectedNetwork].label
-      : address || this.state.address;
 
     return (
       <DropdownButton
@@ -206,17 +226,17 @@ class NetworkSelector extends React.Component {
         ref={(node) => { this.childRef = node; }}
       >
         {
-          networkList.map((network, key) => {
+          networkList.map((item, key) => {
             const isActiveItem = activeNetwork === networks.customNode.code;
 
-            if (network.value === networks.customNode.code) {
+            if (item.value === networks.customNode.code) {
               return (
                 <span
                   className={`${styles.networkSpan} address`}
                   key={key}
-                  onClick={() => this.onChangeActiveNetwork(network.value)}
+                  onClick={() => this.onChangeActiveNetwork(item.value)}
                 >
-                  {network.label}
+                  {item.label}
                   <div className={styles.inputWrapper}>
                     <Input
                       autoComplete="off"
@@ -267,14 +287,14 @@ class NetworkSelector extends React.Component {
             return (
               <span
                 onClick={() => {
-                  this.onChangeActiveNetwork(network.value);
-                  this.validateCorrectNode(network.value);
+                  this.onChangeActiveNetwork(item.value);
+                  this.validateCorrectNode(item.value);
                   this.setState({ connected: false, isFirstTime: true });
                   this.childRef.toggleDropdown();
                 }}
                 key={key}
               >
-                {network.label}
+                {item.label}
               </span>
             );
           })
