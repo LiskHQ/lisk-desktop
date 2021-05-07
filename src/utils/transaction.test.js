@@ -198,37 +198,25 @@ describe('API: LSK Transactions', () => {
   });
 
   describe('containsTransactionType', () => {
-    it('should return true', () => {
-      let pending = [
-        { moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate },
-      ];
+    const { transfer, voteDelegate } = MODULE_ASSETS_NAME_ID_MAP;
 
-      expect(containsTransactionType(
-        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-      )).toEqual(true);
+    it('should return true', () => {
+      let pending = [{ moduleAssetId: voteDelegate }];
+      expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
 
       pending = [
-        { moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer },
-        { moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate },
+        { moduleAssetId: transfer },
+        { moduleAssetId: voteDelegate },
       ];
-
-      expect(containsTransactionType(
-        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-      )).toEqual(true);
+      expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
     });
 
     it('should return false', () => {
       let pending = [];
+      expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
 
-      expect(containsTransactionType(
-        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-      )).toEqual(false);
-
-      pending = [{ moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer }];
-
-      expect(containsTransactionType(
-        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-      )).toEqual(false);
+      pending = [{ moduleAssetId: transfer }];
+      expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
     });
   });
 });
