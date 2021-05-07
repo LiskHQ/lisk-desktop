@@ -25,17 +25,13 @@ const CustomRoute = ({
   const networkIsSet = useSelector(state => !!state.network.name && !!state.network.serviceUrl);
   const isAuthenticated = account.info && account.info[settings.token.active];
 
-  if (!networkIsSet) {
-    return null;
-  }
-
   Piwik.tracking(history, settings);
 
   if (forbiddenTokens.indexOf(settings.token.active) !== -1) {
     return <Redirect to={`${routes.dashboard.path}`} />;
   }
 
-  if (isPrivate && !isAuthenticated) {
+  if ((isPrivate && !isAuthenticated) || (!networkIsSet && path !== routes.login.path)) {
     return (
       <Redirect
         to={`${routes.login.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(/^\?/, '')}`}
