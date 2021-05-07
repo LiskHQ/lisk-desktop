@@ -36,6 +36,12 @@ const getTxAmount = ({ moduleAssetId, asset }) => {
   return undefined;
 };
 
+/**
+ * Converts a transaction returned by lisk elements back to the signature
+ * used by lisk desktop
+ * @param {object} transaction - the transaction object
+ * @returns the transformed transaction
+ */
 // eslint-disable-next-line max-statements
 const transformTransaction = (transaction) => {
   const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
@@ -114,6 +120,13 @@ const transformTransaction = (transaction) => {
   return transformedTransaction;
 };
 
+/**
+ * creates a transaction object to be used with the api client from
+ * lisk elements
+ * @param {object} tx - the transaction data
+ * @param {string} moduleAssetId - moduleAssetId
+ * @returns the transaction object
+ */
 // eslint-disable-next-line max-statements
 const createTransactionObject = (tx, moduleAssetId) => {
   const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
@@ -194,7 +207,7 @@ const createTransactionObject = (tx, moduleAssetId) => {
   return transaction;
 };
 
-export const containsTransactionType = (transactions = [], type) =>
+const containsTransactionType = (transactions = [], type) =>
   transactions.some(tx => tx.moduleAssetId === type);
 
 /**
@@ -203,7 +216,7 @@ export const containsTransactionType = (transactions = [], type) =>
  * @param {Object} params - Params received from withFilters HOC
  * @returns {Object} - Parameters consumable by transaction API method
  */
-export const normalizeTransactionParams = params => Object.keys(params)
+const normalizeTransactionParams = params => Object.keys(params)
   .reduce((acc, item) => {
     switch (item) {
       case 'dateFrom':
@@ -229,4 +242,10 @@ export const normalizeTransactionParams = params => Object.keys(params)
     return acc;
   }, {});
 
-export { getTxAmount, transformTransaction, createTransactionObject };
+export {
+  getTxAmount,
+  transformTransaction,
+  containsTransactionType,
+  createTransactionObject,
+  normalizeTransactionParams,
+};
