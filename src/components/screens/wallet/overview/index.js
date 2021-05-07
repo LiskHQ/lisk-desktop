@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import withData from '@utils/withData';
 import { getTransactions } from '@api/transaction';
-import { selectTransactions } from '@store';
+import { selectTransactions } from '@store/selectors';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';

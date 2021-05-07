@@ -1,7 +1,6 @@
 import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
 import { getModuleAssetSenderLabel, retrieveSchemas } from './moduleAssets';
 import http from './api/http';
-import flushPromises from '../../test/unit-test-utils/flushPromises';
 
 jest.mock('./api/http');
 
@@ -33,8 +32,7 @@ describe('Utils: moduleAssets', () => {
         { moduleAssetId: '5:2', schema },
       ];
       http.mockImplementation(() => Promise.resolve({ data }));
-      retrieveSchemas({ serviceUrl: 'http://sample.url' });
-      await flushPromises();
+      await retrieveSchemas({ serviceUrl: 'http://sample.url' });
       expect(moduleAssetSchemas).toEqual({
         '2:0': schema,
         '4:0': schema,

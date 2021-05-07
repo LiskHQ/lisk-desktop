@@ -190,3 +190,11 @@ jest.mock('react-chartjs-2', () => ({
   Doughnut: () => null,
   Bar: () => null,
 }));
+
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    ok: true,
+    json() {
+      return Promise.resolve({ data: [], meta: { count: 0, total: 0 } });
+    },
+  }));

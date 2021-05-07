@@ -4,6 +4,7 @@ import React, {
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import routesMap from '@src/routesMap';
 import { modals } from '@constants';
 import { parseSearchParams, removeSearchParamsFromUrl } from '@utils/searchParams';
 import styles from './dialog.css';
@@ -12,7 +13,7 @@ import styles from './dialog.css';
 const DialogHolder = ({ history }) => {
   const modalName = useMemo(() => {
     const { modal = '' } = parseSearchParams(history.location.search);
-    return modals[modal] ? modal : undefined;
+    return routesMap[modal] ? modal : undefined;
   }, [history.location.search]);
 
   const settings = useSelector(state => state.settings);
@@ -27,7 +28,7 @@ const DialogHolder = ({ history }) => {
     if (modalName) {
       setDismissed(false);
       document.body.style.overflow = 'hidden';
-      return modals[modalName].component;
+      return routesMap[modalName];
     }
     setDismissed(true);
     document.body.style.overflow = '';

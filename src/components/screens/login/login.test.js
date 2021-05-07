@@ -20,8 +20,7 @@ describe('Login', () => {
     name: 'Custom Node',
     networks: {
       LSK: {
-        nodeUrl: 'hhtp://localhost:4000',
-        nethash: '2349jih34',
+        serviceUrl: '',
       },
     },
   };

@@ -28,8 +28,7 @@ export default {
     name: 'Testnet',
     networks: {
       LSK: {
-        networkIdentifier: 'sample_identifier',
-        apiVersion: '2',
+        serviceUrl: 'http://example.com',
       },
     },
   },

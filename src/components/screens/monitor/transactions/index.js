@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withData from '@utils/withData';

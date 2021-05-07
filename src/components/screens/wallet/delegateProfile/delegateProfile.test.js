@@ -1,8 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
-import { delegate, genesis } from '../../../../../test/constants/accounts';
+import accounts from '../../../../../test/constants/accounts';
 import DelegateProfile from './delegateProfile';
+
+const { genesis, delegate } = accounts;
 
 describe('Delegate Profile', () => {
   let wrapper;

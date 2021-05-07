@@ -23,6 +23,7 @@ module.exports = {
   moduleDirectories: ['node_modules'],
   moduleNameMapper: {
     '^.+\\.css$': 'identity-obj-proxy',
+    '^@src(.*)$': resolve(__dirname, './src/$1'),
     '^@utils(.*)$': resolve(__dirname, './src/utils/$1'),
     '^@api(.*)$': resolve(__dirname, './src/utils/api/$1'),
     '^@constants$': resolve(__dirname, './src/constants'),
