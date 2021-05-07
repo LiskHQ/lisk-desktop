@@ -1,7 +1,6 @@
 import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
 import { getModuleAssetSenderLabel, retrieveSchemas } from './moduleAssets';
 import http from './api/http';
-import flushPromises from '../../test/unit-test-utils/flushPromises';
 
 jest.mock('./api/http');
 

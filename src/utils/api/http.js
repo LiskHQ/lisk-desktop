@@ -14,6 +14,7 @@
 
 const http = ({
   baseUrl, path, params, method = 'GET', network, ...restOptions
+  // eslint-disable-next-line consistent-return
 }) => {
   try {
     const url = new URL(baseUrl ? `${baseUrl}${path}`
