@@ -59,7 +59,7 @@ describe('Reducer: blocks(state, action)', () => {
       data: [
         {
           totalVotesReceived: 1e9,
-          status: 'awaitingSlot',
+          state: 'awaitingSlot',
           lastBlock: 10000,
           username: genesis.dpos.delegate.username,
           nextForgingTime: 1620049927,
