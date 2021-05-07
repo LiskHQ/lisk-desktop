@@ -12,6 +12,53 @@ import PassphraseInput from '@toolbox/passphraseInput';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './transactionSummary.css';
 
+const Footer = ({
+  confirmButton, cancelButton, footerClassName, showCancelButton,
+  isHardwareWalletConnected, confirmOnClick, confirmation, isConfirmed,
+  account, secondPassphrase, t,
+}) => {
+  if (isHardwareWalletConnected) {
+    return null;
+  }
+
+  return (
+    <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
+      {account.summary.isMultisignature ? (
+        <>
+          <SecondaryButton className={`${styles.editBtn} cancel-button`}>
+            {t('Download')}
+          </SecondaryButton>
+          <PrimaryButton className={`${styles.confirmBtn} confirm-button`}>
+            {t('Copy')}
+          </PrimaryButton>
+        </>
+      ) : (
+        <>
+          {showCancelButton && (
+            <SecondaryButton
+              className={`${styles.editBtn} cancel-button`}
+              onClick={cancelButton.onClick}
+            >
+              {cancelButton.label}
+            </SecondaryButton>
+          )}
+          <PrimaryButton
+            className={`${styles.confirmBtn} confirm-button`}
+            disabled={
+              (!!account.secondPublicKey && !secondPassphrase.isValid)
+              || (confirmation && !isConfirmed)
+              || confirmButton.disabled
+            }
+            onClick={confirmOnClick}
+          >
+            {confirmButton.label}
+          </PrimaryButton>
+        </>
+      )}
+    </BoxFooter>
+  );
+};
+
 class TransactionSummary extends React.Component {
   constructor(props) {
     super(props);
@@ -170,33 +217,19 @@ class TransactionSummary extends React.Component {
           : null
       }
         </BoxContent>
-        {
-      isHardwareWalletConnected
-        ? null
-        : (
-          <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
-            {showCancelButton && (
-              <SecondaryButton
-                className={`${styles.editBtn} cancel-button`}
-                onClick={cancelButton.onClick}
-              >
-                {cancelButton.label}
-              </SecondaryButton>
-            )}
-            <PrimaryButton
-              className={`${styles.confirmBtn} confirm-button`}
-              disabled={
-              (!!account.secondPublicKey && !secondPassphrase.isValid)
-              || (confirmation && !isConfirmed)
-              || confirmButton.disabled
-}
-              onClick={this.confirmOnClick}
-            >
-              {confirmButton.label}
-            </PrimaryButton>
-          </BoxFooter>
-        )
-    }
+        <Footer
+          confirmButton={confirmButton}
+          cancelButton={cancelButton}
+          footerClassName={footerClassName}
+          showCancelButton={showCancelButton}
+          isHardwareWalletConnected={isHardwareWalletConnected}
+          confirmOnClick={this.confirmOnClick}
+          confirmation={confirmation}
+          isConfirmed={isConfirmed}
+          account={account}
+          secondPassphrase={secondPassphrase}
+          t={t}
+        />
       </Box>
     );
   }
