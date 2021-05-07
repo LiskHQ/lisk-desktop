@@ -11,30 +11,18 @@ import { toRawLsk } from '@utils/lsk';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
 
 const {
-  transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK,
+  transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,
 } = MODULE_ASSETS_NAME_ID_MAP;
-/**
- * Gets the amount of a given transaction
- *
- * @param {Object} transaction The transaction object
- * @returns {String} Amount in Beddows/Satoshi
- */
-const getTxAmount = ({ moduleAssetId, asset }) => {
-  if (moduleAssetId === transfer) {
-    return asset.amount;
-  }
 
-  if (moduleAssetId === unlockToken) {
-    return asset.unlockingObjects.reduce((sum, unlockingObject) =>
-      sum + parseInt(unlockingObject.amount, 10), 0);
-  }
-  if (moduleAssetId === voteDelegate) {
-    return asset.votes.reduce((sum, vote) =>
-      sum + parseInt(vote.amount, 10), 0);
-  }
+const EMPTY_BUFFER = Buffer.from('');
 
-  return undefined;
-};
+function convertToBinaryInHex(value) {
+  return Buffer.from(value, 'hex');
+}
+
+function convertBinaryInHexToString(value) {
+  return value.toString('hex');
+}
 
 /**
  * Converts a transaction returned by lisk elements back to the signature
@@ -103,15 +91,14 @@ const transformTransaction = (transaction) => {
       break;
     }
 
-    // case registerMultisignatureGroup: {
-    // @todo fix me
-    // transformedTransaction.asset = {
-    //   numberOfSignatures: tx.numberOfSignatures,
-    //   mandatoryKeys: tx.mandatoryKeys,
-    //   optionalKeys: tx.optionalKeys,
-    // };
-    // break;
-    // }
+    case registerMultisignatureGroup: {
+      transformedTransaction.asset = {
+        numberOfSignatures: transaction.numberOfSignatures,
+        mandatoryKeys: transaction.mandatoryKeys.map(convertBinaryInHexToString),
+        optionalKeys: transaction.optionalKeys.map(convertBinaryInHexToString),
+      };
+      break;
+    }
 
     default:
       throw Error('Unknown transaction');
@@ -137,7 +124,7 @@ const createTransactionObject = (tx, moduleAssetId) => {
   const transaction = {
     moduleID,
     assetID,
-    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
+    senderPublicKey: convertToBinaryInHex(senderPublicKey),
     nonce: BigInt(nonce),
     fee: BigInt(fee),
     signatures: [],
@@ -146,7 +133,7 @@ const createTransactionObject = (tx, moduleAssetId) => {
   switch (moduleAssetId) {
     case transfer: {
       const binaryAddress = recipientAddress
-        ? getAddressFromBase32Address(recipientAddress) : Buffer.from('');
+        ? getAddressFromBase32Address(recipientAddress) : EMPTY_BUFFER;
 
       transaction.asset = {
         recipientAddress: binaryAddress,
@@ -191,14 +178,14 @@ const createTransactionObject = (tx, moduleAssetId) => {
       break;
     }
 
-    // case registerMultisignatureGroup: {
-    //   transaction.asset = {
-    //     numberOfSignatures: tx.numberOfSignatures,
-    //     mandatoryKeys: tx.mandatoryKeys,
-    //     optionalKeys: tx.optionalKeys,
-    //   };
-    //   break;
-    // }
+    case registerMultisignatureGroup: {
+      transaction.asset = {
+        numberOfSignatures: Number(tx.numberOfSignatures),
+        mandatoryKeys: tx.mandatoryKeys.map(convertToBinaryInHex),
+        optionalKeys: tx.optionalKeys.map(convertToBinaryInHex),
+      };
+      break;
+    }
 
     default:
       throw Error('Unknown transaction');
@@ -241,6 +228,29 @@ const normalizeTransactionParams = params => Object.keys(params)
 
     return acc;
   }, {});
+
+/**
+ * Gets the amount of a given transaction
+ *
+ * @param {Object} transaction The transaction object
+ * @returns {String} Amount in Beddows/Satoshi
+ */
+const getTxAmount = ({ moduleAssetId, asset }) => {
+  if (moduleAssetId === transfer) {
+    return asset.amount;
+  }
+
+  if (moduleAssetId === unlockToken) {
+    return asset.unlockingObjects.reduce((sum, unlockingObject) =>
+      sum + parseInt(unlockingObject.amount, 10), 0);
+  }
+  if (moduleAssetId === voteDelegate) {
+    return asset.votes.reduce((sum, vote) =>
+      sum + parseInt(vote.amount, 10), 0);
+  }
+
+  return undefined;
+};
 
 export {
   getTxAmount,
