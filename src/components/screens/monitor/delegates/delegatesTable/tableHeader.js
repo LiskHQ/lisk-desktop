@@ -26,6 +26,17 @@ export const getDelegateWeightClass = (activeTab) => {
   }
 };
 
+export const getDelegateRankClass = (activeTab) => {
+  switch (activeTab) {
+    case 'watched':
+      return `${grid['col-xs-1']} ${styles.rank}`;
+    case 'standby':
+      return `${grid['col-xs-2']} ${styles.rank}`;
+    default:
+      return 'hidden';
+  }
+};
+
 export const getRoundStateClass = (activeTab) => {
   switch (activeTab) {
     case 'active':
@@ -62,6 +73,10 @@ export default (activeTab, changeSort, t) => ([
       message: t('The total LSK voted to a delegate.'),
       position: 'top',
     },
+  },
+  {
+    title: t('Rank'),
+    classList: getDelegateRankClass(activeTab),
   },
   {
     title: t('Forging time'),

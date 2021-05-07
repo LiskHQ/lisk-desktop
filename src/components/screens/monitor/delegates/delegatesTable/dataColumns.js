@@ -1,5 +1,4 @@
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import { fromRawLsk } from '@utils/lsk';
@@ -34,6 +33,12 @@ const delegateStatus = {
   punished: 'Punished',
   nonEligible: 'Non-eligible to forge',
 };
+
+export const DelegateRank = ({ data, activeTab }) => (
+  <span className={getDelegateRankClass(activeTab)}>
+    <span>{data.rank}</span>
+  </span>
+);
 
 export const DelegateWeight = ({ value, activeTab }) => {
   const formatted = formatAmountBasedOnLocale({
