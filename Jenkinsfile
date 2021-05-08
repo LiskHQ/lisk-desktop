@@ -53,6 +53,7 @@ pipeline {
 		}
 		stage('Deploy build') {
 			agent { node { label 'master-01' } }
+			agent { node { label 'explorer-www' } }
 			steps {
 					unstash 'build'
 					sh '''
