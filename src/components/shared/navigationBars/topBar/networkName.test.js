@@ -45,14 +45,14 @@ describe('Network', () => {
   });
 
   it('renders nethash option as DEVENET', () => {
-    expect(wrapper.find('p span').at(1)).to.have.text('devnet');
+    expect(wrapper.find('p span').at(1)).to.have.text('custom');
   });
 
   it('renders mainnet nethash option as DEVENET', () => {
     const mainnet = 'ed14889723f24ecc54871d058d98ce91ff2f973192075c0155ba2b7b70ad2511';
     data.network.networks.LSK.nethash = mainnet;
     wrapper = setup(data);
-    expect(wrapper.find('p span').at(1)).to.have.text('devnet');
+    expect(wrapper.find('p span').at(1)).to.have.text('custom');
   });
 
   it('renders testnete nethash option as DEVENET', () => {
