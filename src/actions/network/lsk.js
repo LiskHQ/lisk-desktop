@@ -60,7 +60,7 @@ export const networkSet = data => async (dispatch, getState) => {
     && state.network.networks
     && state.network.networks.LSK
     && state.network.networks.LSK.apiVersion) || '2';
-  const nodeUrl = data.network.address;
+  const nodeUrl = data.network.address || data.network.nodes[0];
   await getNetworkInfo(nodeUrl, apiVersion).then(({ nethash, version, networkId }) => {
     const network = {
       nodeUrl,
