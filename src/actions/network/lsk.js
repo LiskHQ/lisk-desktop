@@ -46,7 +46,7 @@ export const getConnectionErrorMessage = error => (
 const getNetworkInfo = async (nodeUrl, apiVersion) => (
   new Promise(async (resolve, reject) => {
     const Client = liskClient(apiVersion);
-    new Client.APIClient([nodeUrl], {}).node.getConstants().then((response) => {
+    new Client.APIClient([nodeUrl.trim()], {}).node.getConstants().then((response) => {
       resolve(response.data);
     }).catch((error) => {
       reject(getConnectionErrorMessage(error));
