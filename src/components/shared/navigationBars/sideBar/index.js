@@ -35,7 +35,7 @@ const MenuLink = ({
     const disabled = !isOnline || (isUserLogout && modals[data.id].isPrivate)
       || pathname === routes.initialization.path ? `${styles.disabled} disabled` : '';
     return (
-      <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${`${styles.item} ${disabled}`}`}>
+      <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${styles.item} ${disabled}`}>
         <Inner data={data} modal={data.id} sideBarExpanded={sideBarExpanded} />
       </DialogLink>
     );
