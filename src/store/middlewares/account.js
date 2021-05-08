@@ -113,9 +113,6 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
-
-
-
 // eslint-disable-next-line max-statements
 const autoLogInIfNecessary = async (store) => {
   const {

@@ -201,8 +201,6 @@ class NetworkSelector extends React.Component {
   /* eslint-disable complexity */
   render() {
     const {
-      settings,
-      network,
       dark,
       t,
     } = this.props;
