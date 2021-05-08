@@ -29,22 +29,24 @@ const Inner = ({
 };
 
 const MenuLink = ({
-  data, isUserLogout, pathname, sideBarExpanded,
+  data, isUserLogout, pathname, sideBarExpanded, isOnline,
 }) => {
   if (data.modal) {
-    const className = `${styles.item} ${(isUserLogout && modals[data.id].isPrivate) || pathname === routes.initialization.path ? `${styles.disabled} disabled` : ''}`;
+    const disabled = !isOnline || (isUserLogout && modals[data.id].isPrivate)
+      || pathname === routes.initialization.path ? `${styles.disabled} disabled` : '';
     return (
-      <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${className}`}>
+      <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${`${styles.item} ${disabled}`}`}>
         <Inner data={data} modal={data.id} sideBarExpanded={sideBarExpanded} />
       </DialogLink>
     );
   }
 
-  const className = `${styles.item} ${(isUserLogout && routes[data.id].isPrivate) || pathname === routes.initialization.path ? `${styles.disabled} disabled` : ''}`;
+  const disabled = !isOnline || (isUserLogout && routes[data.id].isPrivate)
+    || pathname === routes.initialization.path ? `${styles.disabled} disabled` : '';
   return (
     <NavLink
       to={data.path}
-      className={className}
+      className={`${styles.item} ${disabled}`}
       id={data.id}
       activeClassName={styles.selected}
       exact={routes[data.id].exact}
@@ -81,6 +83,7 @@ const SideBar = ({
   const dispatch = useDispatch();
   const items = menuLinks(t);
   const token = useSelector(state => state.settings.token.active);
+  const network = useSelector(state => state.network);
   const isLoggedOut = useSelector(state => !state.account.info || !state.account.info[token]);
   const expireTime = useSelector(state => state.account.expireTime);
   const autoSignOut = useSelector(state => state.settings.autoLog);
@@ -102,6 +105,7 @@ const SideBar = ({
                   || (modals[id] && !modals[id].forbiddenTokens.includes(token))
                 )).map(item => (
                   <MenuLink
+                    isOnline={network.status.online}
                     key={item.id}
                     isUserLogout={isLoggedOut}
                     pathname={location.pathname}
