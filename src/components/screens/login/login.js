@@ -50,11 +50,6 @@ class Login extends React.Component {
   }
 
   async componentDidMount() {
-    // istanbul ignore else
-    if (!this.props.settings.areTermsOfUseAccepted) {
-      this.props.history.push(routes.termsOfUse.path);
-    }
-
     i18next.on('languageChanged', getNetworksList);
   }
 
