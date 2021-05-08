@@ -122,72 +122,61 @@ class NetworkSelector extends React.Component {
     return network;
   }
 
-  setValidationError() {
+  setValidationError(reset) {
     this.setState({
-      validationError: this.props.t('Unable to connect to the node, please check the address and try again'),
+      validationError: reset ? '' : this.props.t('Unable to connect to the node, please check the address and try again'),
     });
   }
 
   /* istanbul ignore next */
   // eslint-disable-next-line max-statements
   validateCorrectNode(network, address, nextPath) {
-    const nodeURL = address !== '' ? addHttp(address) : '';
+    let nodeURL = address !== '' ? addHttp(address) : '';
     const newNetwork = this.getNetwork(network);
-
-    if (network === networks.customNode.code) {
-      const apiVersion = this.props.network.networks.LSK
-        ? this.props.network.networks.LSK.apiVersion : '2';
-      const Lisk = liskClient(apiVersion);
-      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
-      liskAPIClient.node.getConstants()
-        // eslint-disable-next-line max-statements
-        .then((res) => {
-          if (res.data) {
-            this.props.networkSet({
-              name: newNetwork.name,
-              network: {
-                ...newNetwork,
-              },
-            });
-
-            let networkLabel = 'Devnet';
-
-            if (res.data.nethash === Lisk.constants.MAINNET_NETHASH) {
-              networkLabel = 'Mainnet';
-            } else if (res.data.nethash === Lisk.constants.TESTNET_NETHASH) {
-              networkLabel = 'Testnet';
-            }
-
-            this.setState({
-              validationError: '',
-              connected: true,
-              networkLabel,
-            });
-            this.childRef.toggleDropdown();
-            this.props.networkStatusUpdated({ online: true });
-            this.changeNetwork(networks.customNode.code);
-            this.props.history.push(nextPath);
-          } else {
-            throw new Error();
-          }
-        })
-        .catch(() => {
-          this.setValidationError();
-        });
-
-      this.setState({ isValidationLoading: false, isFirstTime: false });
-    } else {
-      this.props.networkSet({
-        name: newNetwork.name,
-        network: {
-          ...newNetwork,
-        },
-      });
-      this.props.networkStatusUpdated({ online: true });
-      this.props.history.push(nextPath);
-      this.setState({ validationError: '' });
+    if (network !== networks.customNode.code) {
+      nodeURL = newNetwork.nodes[Math.floor(Math.random() * newNetwork.nodes.length)];
     }
 
+    const Lisk = liskClient('2');
+    const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+    this.setValidationError(true);
+
+    liskAPIClient.node.getConstants()
+      // eslint-disable-next-line max-statements
+      .then((res) => {
+        if (res.data) {
+          let networkLabel = networks.customNode.name;
+          if (res.data.nethash === Lisk.constants.MAINNET_NETHASH) {
+            networkLabel = networks.mainnet.name;
+          } else if (res.data.nethash === Lisk.constants.TESTNET_NETHASH) {
+            networkLabel = networks.testnet.name;
+          }
+
+          this.props.networkSet({
+            name: newNetwork.name,
+            network: newNetwork,
+          });
+
+          this.setState({
+            validationError: '',
+            connected: true,
+            networkLabel,
+          });
+          if (network === networks.customNode.code) {
+            this.childRef.toggleDropdown();
+          }
+          this.props.networkStatusUpdated({ online: true });
+          this.changeNetwork(networks.customNode.code);
+          this.setState({ isValidationLoading: false, isFirstTime: false });
+          this.props.history.push(nextPath);
+        } else {
+          throw new Error();
+        }
+      })
+      .catch(() => {
+        this.setValidationError();
+        this.setState({ isValidationLoading: false, isFirstTime: false });
+      });
     this.setState({ network });
   }
 
@@ -243,16 +232,16 @@ class NetworkSelector extends React.Component {
                       value={this.state.address}
                       placeholder={this.props.t('ie. 192.168.0.1')}
                       size="xs"
-                      className={`custom-network ${styles.input} ${validationError ? styles.errorInput : ''}`}
+                      className={`custom-network ${styles.input} ${this.state.activeNetwork === 2 && validationError ? styles.errorInput : ''}`}
                       onKeyDown={e => e.keyCode === keyCodes.enter
                       && this.onConnectToCustomNode(e)}
                       isLoading={isValidationLoading && this.state.address}
                       status={connected ? 'ok' : 'error'}
-                      feedback={validationError}
+                      feedback={this.state.activeNetwork === 2 && validationError}
                       dark={dark}
                     />
                     {
-                      validationError
+                      this.state.activeNetwork === 2 && validationError
                         ? (
                           <span className={styles.customNodeError}>
                             {validationError}

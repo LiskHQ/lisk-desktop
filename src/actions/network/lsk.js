@@ -4,7 +4,6 @@ import i18next from 'i18next';
 import { toast } from 'react-toastify';
 import actionTypes from '../../constants/actions';
 import { tokenMap } from '../../constants/tokens';
-import networks from '../../constants/networks';
 // import { version as AppVersion } from '../../../package.json';
 
 // const isStaging = () => (
@@ -57,13 +56,11 @@ const getNetworkInfo = async (nodeUrl, apiVersion) => (
 
 export const networkSet = data => async (dispatch, getState) => {
   const state = getState();
-  const apiVersion = state.network
+  const apiVersion = (state.network
     && state.network.networks
     && state.network.networks.LSK
-    && state.network.networks.LSK.apiVersion;
-  const nodeUrl = data.name === networks.customNode.name
-    ? data.network.address
-    : networks[data.name.toLowerCase()].nodes[0];
+    && state.network.networks.LSK.apiVersion) || '2';
+  const nodeUrl = data.network.address;
   await getNetworkInfo(nodeUrl, apiVersion).then(({ nethash, version, networkId }) => {
     const network = {
       nodeUrl,
