@@ -6,7 +6,6 @@ import { settingsUpdated } from '../../../../actions/settings';
 
 const mapStateToProps = state => ({
   network: state.network,
-  settings: state.settings,
 });
 
 const mapDispatchToProps = {
