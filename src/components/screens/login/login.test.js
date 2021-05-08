@@ -76,7 +76,7 @@ describe('Login', () => {
   });
 
   describe('Generals', () => {
-    it('redirect to Terms of Use page', () => {
+    it.skip('redirect to Terms of Use page', () => {
       expect(props.history.push).toHaveBeenCalledWith(routes.termsOfUse.path);
     });
 
