@@ -50,6 +50,14 @@ class NetworkSelector extends React.Component {
     // check the network, define selected
     if (!this.props.network.networks.LSK) {
       this.validateCorrectNode(networks.mainnet.code, networks.mainnet.nodes[0]);
+    } else if (this.props.network.networks.LSK) {
+      const { LSK } = this.props.network.networks;
+      this.setState({
+        address: LSK.nodeUrl,
+        activeNetwork: LSK.code,
+        network: LSK.code,
+        networkLabel: this.props.network.name,
+      });
     }
   }
 
@@ -131,6 +139,7 @@ class NetworkSelector extends React.Component {
   /* istanbul ignore next */
   // eslint-disable-next-line max-statements
   validateCorrectNode(network, address, nextPath) {
+    const custom = ' (Custom)';
     let nodeURL = address !== '' ? addHttp(address) : '';
     const newNetwork = this.getNetwork(network);
     if (network !== networks.customNode.code) {
@@ -138,7 +147,7 @@ class NetworkSelector extends React.Component {
     }
 
     const Lisk = liskClient('2');
-    const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+    const liskAPIClient = new Lisk.APIClient([nodeURL.trim()], {});
     this.setValidationError(true);
 
     liskAPIClient.node.getConstants()
@@ -147,9 +156,9 @@ class NetworkSelector extends React.Component {
         if (res.data) {
           let networkLabel = networks.customNode.name;
           if (res.data.nethash === Lisk.constants.MAINNET_NETHASH) {
-            networkLabel = networks.mainnet.name;
+            networkLabel = `${networks.mainnet.name}${network === networks.customNode.code ? custom : ''}`;
           } else if (res.data.nethash === Lisk.constants.TESTNET_NETHASH) {
-            networkLabel = networks.testnet.name;
+            networkLabel = `${networks.testnet.name}${network === networks.customNode.code ? custom : ''}`;
           }
 
           this.props.networkSet({
@@ -162,7 +171,7 @@ class NetworkSelector extends React.Component {
             connected: true,
             networkLabel,
           });
-          if (network === networks.customNode.code) {
+          if (network === networks.customNode.code && this.childRef.state.shownDropdown) {
             this.childRef.toggleDropdown();
           }
           this.props.networkStatusUpdated({ online: true });
@@ -177,7 +186,6 @@ class NetworkSelector extends React.Component {
         this.setValidationError();
         this.setState({ isValidationLoading: false, isFirstTime: false });
       });
-    this.setState({ network });
   }
 
   onConnectToCustomNode(e) {
@@ -237,7 +245,7 @@ class NetworkSelector extends React.Component {
                       && this.onConnectToCustomNode(e)}
                       isLoading={isValidationLoading && this.state.address}
                       status={connected ? 'ok' : 'error'}
-                      feedback={this.state.activeNetwork === 2 && validationError}
+                      feedback={this.state.activeNetwork === 2 ? validationError : ''}
                       dark={dark}
                     />
                     {
