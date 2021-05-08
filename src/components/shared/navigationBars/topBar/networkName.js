@@ -16,10 +16,18 @@ const Network = ({ network, t, token }) => {
   return (
     <section className={`${styles.wrapper} network-status`}>
       <span className={`${styles.status} ${statusColor}`} />
-      <p>
-        <span>{t('Connected to:')}</span>
-        <span>{networksList[activeNetwork]}</span>
-      </p>
+      {
+        activeNetwork ? (
+          <p>
+            <span>{t('Connected to:')}</span>
+            <span>{networksList[activeNetwork]}</span>
+          </p>
+        ) : (
+          <p>
+            <span>{t('Not connected')}</span>
+          </p>
+        )
+      }
     </section>
   );
 };
