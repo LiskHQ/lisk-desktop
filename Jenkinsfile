@@ -86,67 +86,6 @@ pipeline {
 							}
 						}
 					},
-					"cypress": {
-						dir('lisk') {
-							checkout([$class: 'GitSCM',
-							          tags: [[name: "v${env.LISK_CORE_VERSION}" ]],
-								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk-core']]])
-						}
-						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
-						withCredentials([string(credentialsId: 'lisk-hub-cypress-record-key', variable: 'CYPRESS_RECORD_KEY')]) {
-							ansiColor('xterm') {
-								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
-									nvm(getNodejsVersion()) {
-										sh '''#!/bin/bash -xe
-										export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
-
-										rm -rf $WORKSPACE/$BRANCH_NAME/
-										cp -rf $WORKSPACE/lisk/docker/ $WORKSPACE/$BRANCH_NAME/
-										cp $WORKSPACE/test/dev_blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
-										cd $WORKSPACE/$BRANCH_NAME
-										cp .env.development .env
-										sed -i -r -e "s/ENV_LISK_VERSION=.*$/ENV_LISK_VERSION=$LISK_CORE_VERSION/" .env
-
-										sed -i -r -e '/ports:/,+2d' docker-compose.yml
-										# random port assignment
-										cat <<EOF >docker-compose.override.yml
-version: "3"
-services:
-
-  lisk:
-    ports:
-      - \\${ENV_LISK_HTTP_PORT}
-      - \\${ENV_LISK_WS_PORT}
-EOF
-
-										ENV_LISK_VERSION="$LISK_CORE_VERSION" make coldstart
-										export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
-										export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
-										cd -
-
-										npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
-										set +e
-										set -o pipefail
-										npm run cypress:run |tee cypress.log
-										ret=$?
-										if [ $ret -ne 0 ]; then
-										  FAILED_TESTS="$( awk '/Spec/{f=1}f' cypress.log |grep --only-matching '✖ .*.feature' |awk '{ print "test/cypress/features/"$2 }' |xargs| tr -s ' ' ',' )"
-                                          cd $WORKSPACE/$BRANCH_NAME
-                                          make coldstart
-                                          export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
-                                          sleep 10
-                                          cd -
-                                          npm run cypress:run -- --record --spec $FAILED_TESTS |tee cypress.log
-                                          ret=$?
-										fi
-										exit $ret
-										'''
-									}
-								}
-							}
-						}
-						}
-					},
 					"percy": {
 						script {
 							if(params.SKIP_PERCY){
