@@ -110,6 +110,7 @@ module.exports = {
     'src/utils/hacks.js',
     'src/utils/hwManager.js',
     'src/utils/voting.js',
+    'src/utils/getNetwork.js',
   ],
   coverageThreshold: {
     global: {
