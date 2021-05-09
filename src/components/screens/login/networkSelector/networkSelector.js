@@ -136,10 +136,22 @@ class NetworkSelector extends React.Component {
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  getSelectLabel(Lisk, nethash, network) {
+    const custom = ' (Custom)';
+    let networkLabel = networks.customNode.name;
+    if (nethash === Lisk.constants.MAINNET_NETHASH) {
+      networkLabel = `${networks.mainnet.name}${network === networks.customNode.code ? custom : ''}`;
+    } else if (nethash === Lisk.constants.TESTNET_NETHASH) {
+      networkLabel = `${networks.testnet.name}${network === networks.customNode.code ? custom : ''}`;
+    }
+
+    return networkLabel;
+  }
+
   /* istanbul ignore next */
   // eslint-disable-next-line max-statements
   validateCorrectNode(network, address, nextPath) {
-    const custom = ' (Custom)';
     let nodeURL = address !== '' ? addHttp(address) : '';
     const newNetwork = this.getNetwork(network);
     if (network !== networks.customNode.code) {
@@ -154,15 +166,9 @@ class NetworkSelector extends React.Component {
       // eslint-disable-next-line max-statements
       .then((res) => {
         if (res.data) {
-          let networkLabel = networks.customNode.name;
-          if (res.data.nethash === Lisk.constants.MAINNET_NETHASH) {
-            networkLabel = `${networks.mainnet.name}${network === networks.customNode.code ? custom : ''}`;
-          } else if (res.data.nethash === Lisk.constants.TESTNET_NETHASH) {
-            networkLabel = `${networks.testnet.name}${network === networks.customNode.code ? custom : ''}`;
-          }
-
+          const networkLabel = this.getSelectLabel(Lisk, res.data.nethash, network);
           this.props.networkSet({
-            name: newNetwork.name,
+            name: networkLabel,
             network: newNetwork,
           });
 
