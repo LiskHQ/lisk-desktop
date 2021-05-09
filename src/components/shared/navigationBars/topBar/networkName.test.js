@@ -45,38 +45,31 @@ describe('Network', () => {
   });
 
   it('renders nethash option as DEVENET', () => {
-    expect(wrapper.find('p span').at(1)).to.have.text('custom');
+    expect(wrapper.find('p span').at(1)).to.have.text('Custom Node');
   });
 
   it('renders mainnet nethash option as DEVENET', () => {
-    const mainnet = 'ed14889723f24ecc54871d058d98ce91ff2f973192075c0155ba2b7b70ad2511';
-    data.network.networks.LSK.nethash = mainnet;
+    data.network.name = 'Minnet (Custom)';
     wrapper = setup(data);
-    expect(wrapper.find('p span').at(1)).to.have.text('custom');
+    expect(wrapper.find('p span').at(1)).to.have.text('Minnet (Custom)');
   });
 
   it('renders testnete nethash option as DEVENET', () => {
-    const testnet = 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba';
-    data.network.networks.LSK.nethash = testnet;
+    data.network.name = 'Testnet (Custom)';
     wrapper = setup(data);
-    expect(wrapper.find('p span').at(1)).to.have.text('testnet');
+    expect(wrapper.find('p span').at(1)).to.have.text('Testnet (Custom)');
   });
 
   it('renders nethash option as MAINNET', () => {
-    const mainnet = 'ed14889723f24ecc54871d058d98ce91ff2f973192075c0155ba2b7b70ad2511';
-    data.network.status.online = true;
     data.network.name = 'Mainnet';
-    data.network.networks.LSK.nethash = mainnet;
     wrapper = setup(data);
-    expect(wrapper.find('p span').at(1)).to.have.text('mainnet');
+    expect(wrapper.find('p span').at(1)).to.have.text('Mainnet');
   });
 
   it('renders nethash option as TESTNET', () => {
-    const testnet = 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba';
-    data.network.networks.LSK.nethash = testnet;
     data.network.name = 'Testnet';
     wrapper = setup(data);
-    expect(wrapper.find('p span').at(1)).to.have.text('testnet');
+    expect(wrapper.find('p span').at(1)).to.have.text('Testnet');
   });
 
   it('not render a network', () => {
@@ -88,11 +81,9 @@ describe('Network', () => {
   });
 
   it('renders nethash option as TESTNET when BTC', () => {
-    const devnet = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';
-    data.network.networks.LSK.nethash = devnet;
     data.token = 'BTC';
-    data.network.name = 'Custom Node';
+    data.network.name = 'Testnet';
     wrapper = setup(data);
-    expect(wrapper.find('p span').at(1)).to.have.text('testnet');
+    expect(wrapper.find('p span').at(1)).to.have.text('Testnet');
   });
 });
