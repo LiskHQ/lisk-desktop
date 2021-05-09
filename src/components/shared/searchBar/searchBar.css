@@ -1,7 +1,7 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
-  width: calc(100% - 444px);
+  width: calc(100% - 475px);
   box-sizing: border-box;
   position: absolute;
   top: 0px;
