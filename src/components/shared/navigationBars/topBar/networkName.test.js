@@ -45,19 +45,19 @@ describe('Network', () => {
   });
 
   it('renders nethash option as DEVENET', () => {
-    expect(wrapper.find('p span').at(1)).to.have.text('Custom Node');
+    expect(wrapper.find('p span').at(1)).to.have.text('Custom');
   });
 
   it('renders mainnet nethash option as DEVENET', () => {
-    data.network.name = 'Minnet (Custom)';
+    data.network.name = 'Custom Node';
     wrapper = setup(data);
-    expect(wrapper.find('p span').at(1)).to.have.text('Minnet (Custom)');
+    expect(wrapper.find('p span').at(1)).to.have.text('Custom');
   });
 
   it('renders testnete nethash option as DEVENET', () => {
-    data.network.name = 'Testnet (Custom)';
+    data.network.name = 'Custom Node';
     wrapper = setup(data);
-    expect(wrapper.find('p span').at(1)).to.have.text('Testnet (Custom)');
+    expect(wrapper.find('p span').at(1)).to.have.text('Custom');
   });
 
   it('renders nethash option as MAINNET', () => {
