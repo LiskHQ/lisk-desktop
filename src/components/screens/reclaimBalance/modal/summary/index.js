@@ -23,6 +23,7 @@ const Summary = ({
     // eslint-disable-next-line no-unused-vars
     selectedPriority, _, priorityOptions,
   ] = useTransactionPriority(tokenMap.LSK.key);
+  account.info.LSK.legacy = { balance: '111111111111111' };
 
   const { minFee } = useTransactionFeeCalculation({
     selectedPriority,
@@ -73,7 +74,7 @@ const Summary = ({
       token={tokenMap.LSK.key}
       classNames={styles.summaryContainer}
     >
-      <TransactionInfo account={account} />
+      <TransactionInfo account={account} moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.reclaimLSK} />
     </TransactionSummary>
   );
 };

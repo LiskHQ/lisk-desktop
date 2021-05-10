@@ -1,11 +1,9 @@
 import React from 'react';
-import { loginTypes } from '@constants';
+import { loginTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
-
-import styles from './summary.css';
 
 class Summary extends React.Component {
   constructor(props) {
@@ -89,7 +87,12 @@ class Summary extends React.Component {
         fee={fromRawLsk(fields.fee.value)}
         token={token}
       >
-        <TransactionInfo fields={fields} amount={amount} token={token} />
+        <TransactionInfo
+          fields={fields}
+          amount={amount}
+          token={token}
+          moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.transfer}
+        />
       </TransactionSummary>
     );
   }

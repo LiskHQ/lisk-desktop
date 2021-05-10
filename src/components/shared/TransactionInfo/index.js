@@ -7,6 +7,8 @@ import LiskAmount from '@shared/liskAmount';
 import VoteItem from '@shared/voteItem';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 
+import styles from './transactionInfo.css';
+
 const ItemList = ({ items, heading }) => (
   <div className={styles.contentItem}>
     <span className={styles.contentHeading}>{heading}</span>
@@ -124,8 +126,8 @@ const RegisterDelegate = ({ account, nickname, t }) => (
   </section>
 );
 
-const TransactionInfo = ({ transaction, ...restProps }) => {
-  switch (transaction.moduleAssetId) {
+const TransactionInfo = ({ moduleAssetId, ...restProps }) => {
+  switch (moduleAssetId) {
     case MODULE_ASSETS_NAME_ID_MAP.reclaimLSK: return <Reclaim {...restProps} />;
     case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: return <RegisterDelegate {...restProps} />;
     case MODULE_ASSETS_NAME_ID_MAP.transfer: return <Send {...restProps} />;

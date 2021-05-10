@@ -6,6 +6,7 @@ import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
 
@@ -84,7 +85,13 @@ const Summary = ({
           />
         </div>
         <BoxContent className={styles.content}>
-          <TransactionInfo added={added} edited={edited} removed={removed} fee={fee} />
+          <TransactionInfo
+            added={added}
+            edited={edited}
+            removed={removed}
+            fee={fee}
+            moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.voteDelegate}
+          />
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
           <SecondaryButton onClick={prevStep} className="edit-button">Edit</SecondaryButton>

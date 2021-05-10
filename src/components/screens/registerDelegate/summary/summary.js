@@ -73,7 +73,11 @@ class Summary extends React.Component {
         fee={fee}
         classNames={`${styles.box} ${styles.summaryContainer}`}
       >
-        <TransactionInfo account={account} nickname={nickname} />
+        <TransactionInfo
+          account={account}
+          nickname={nickname}
+          moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.registerDelegate}
+        />
       </TransactionSummary>
     );
   }
