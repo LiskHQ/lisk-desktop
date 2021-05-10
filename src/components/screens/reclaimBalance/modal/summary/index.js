@@ -23,7 +23,6 @@ const Summary = ({
     // eslint-disable-next-line no-unused-vars
     selectedPriority, _, priorityOptions,
   ] = useTransactionPriority(tokenMap.LSK.key);
-  account.info.LSK.legacy = { balance: '111111111111111' };
 
   const { minFee } = useTransactionFeeCalculation({
     selectedPriority,
