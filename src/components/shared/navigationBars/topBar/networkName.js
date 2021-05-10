@@ -2,6 +2,11 @@ import React from 'react';
 import styles from './network.css';
 
 const Network = ({ network, t }) => {
+  const networksList = {
+    Mainnet: t('Mainnet'),
+    Testnet: t('Testnet'),
+    'Custom Node': t('Custom'),
+  };
   const statusColor = network.status.online ? styles.online : styles.offline;
 
   return (
@@ -11,7 +16,7 @@ const Network = ({ network, t }) => {
         network.name ? (
           <p>
             <span>{t('Connected to:')}</span>
-            <span>{network.name}</span>
+            <span>{networksList[network.name]}</span>
           </p>
         ) : (
           <p>
