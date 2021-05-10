@@ -28,12 +28,18 @@ const Inner = ({
   );
 };
 
+const isDisabled = (isOnline, dic, id, isUserLogout, pathname) => (
+  (!isOnline && id !== 'settings')
+  || (isUserLogout && dic[id].isPrivate)
+  || pathname === routes.initialization.path
+);
+
 const MenuLink = ({
   data, isUserLogout, pathname, sideBarExpanded, isOnline,
 }) => {
   if (data.modal) {
-    const disabled = !isOnline || (isUserLogout && modals[data.id].isPrivate)
-      || pathname === routes.initialization.path ? `${styles.disabled} disabled` : '';
+    const disabled = isDisabled(isOnline, modals, data.id, isUserLogout, pathname)
+      ? `${styles.disabled} disabled` : '';
     return (
       <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${styles.item} ${disabled}`}>
         <Inner data={data} modal={data.id} sideBarExpanded={sideBarExpanded} />
@@ -41,8 +47,8 @@ const MenuLink = ({
     );
   }
 
-  const disabled = !isOnline || (isUserLogout && routes[data.id].isPrivate)
-    || pathname === routes.initialization.path ? `${styles.disabled} disabled` : '';
+  const disabled = isDisabled(isOnline, routes, data.id, isUserLogout, pathname)
+    ? `${styles.disabled} disabled` : '';
   return (
     <NavLink
       to={data.path}
