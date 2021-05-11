@@ -73,10 +73,7 @@ describe('API: LSK Transactions', () => {
         fee: '1000000',
         data: 'test',
       };
-      const txObj = createTransactionObject(
-        tx,
-        transfer,
-      );
+      const txObj = createTransactionObject(tx, transfer);
 
       expect(txObj).toMatchSnapshot();
     });
@@ -96,10 +93,7 @@ describe('API: LSK Transactions', () => {
           },
         ],
       };
-      const txObj = createTransactionObject(
-        tx,
-        voteDelegate,
-      );
+      const txObj = createTransactionObject(tx, voteDelegate);
 
       expect(txObj).toMatchSnapshot();
     });
@@ -111,10 +105,7 @@ describe('API: LSK Transactions', () => {
         fee: '1000000',
         username: 'username',
       };
-      const txObj = createTransactionObject(
-        tx,
-        registerDelegate,
-      );
+      const txObj = createTransactionObject(tx, registerDelegate);
 
       expect(txObj).toMatchSnapshot();
     });
@@ -126,10 +117,7 @@ describe('API: LSK Transactions', () => {
         fee: '1000000',
         amount: '10000000',
       };
-      const txObj = createTransactionObject(
-        tx,
-        reclaimLSK,
-      );
+      const txObj = createTransactionObject(tx, reclaimLSK);
 
       expect(txObj).toMatchSnapshot();
     });
@@ -160,10 +148,7 @@ describe('API: LSK Transactions', () => {
         mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
         optionalKeys: [accounts.second_passphrase_account.summary.publicKey],
       };
-      const txObj = createTransactionObject(
-        tx,
-        registerMultisignatureGroup,
-      );
+      const txObj = createTransactionObject(tx, registerMultisignatureGroup);
 
       expect(txObj).toMatchSnapshot();
     });
@@ -173,9 +158,7 @@ describe('API: LSK Transactions', () => {
     const binaryAddress = 'd04699e57c4a3846c988f3c15306796f8eae5c1c';
 
     it('should a transfer transaction with type signature of lisk service', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(
-        transfer,
-      );
+      const [moduleID, assetID] = splitModuleAndAssetIds(transfer);
       const tx = {
         moduleID,
         assetID,
@@ -190,9 +173,7 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should a register delegate transaction with type signature of lisk service', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(
-        registerDelegate,
-      );
+      const [moduleID, assetID] = splitModuleAndAssetIds(registerDelegate);
       const tx = {
         moduleID,
         assetID,
@@ -207,9 +188,7 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should a vote delegate transaction with type signature of lisk service', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(
-        voteDelegate,
-      );
+      const [moduleID, assetID] = splitModuleAndAssetIds(voteDelegate);
       const tx = {
         moduleID,
         assetID,
@@ -231,9 +210,7 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should transform a reclaimLSK transaction', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(
-        reclaimLSK,
-      );
+      const [moduleID, assetID] = splitModuleAndAssetIds(reclaimLSK);
       const tx = {
         moduleID,
         assetID,
@@ -250,9 +227,22 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should transform a unlockToken transaction', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(
-        unlockToken,
-      );
+      const [moduleID, assetID] = splitModuleAndAssetIds(unlockToken);
+      const unlockObjects = [
+        {
+          delegateAddress:
+            getAddressFromBase32Address(accounts.delegate.summary.address),
+          amount: 10000000n,
+          height: { start: 1000000 },
+        },
+        {
+          delegateAddress:
+            getAddressFromBase32Address(accounts.send_all_account.summary.address),
+          amount: -10000000n,
+          height: { start: 1000000 },
+        },
+      ];
+
       const tx = {
         moduleID,
         assetID,
@@ -260,31 +250,14 @@ describe('API: LSK Transactions', () => {
         nonce: 1,
         id: Buffer.from('123', 'hex'),
         senderPublicKey: accounts.genesis.summary.publicKey,
-        asset: {
-          unlockObjects: [
-            {
-              delegateAddress:
-                getAddressFromBase32Address(accounts.delegate.summary.address),
-              amount: 10000000n,
-              height: { start: 1000000 },
-            },
-            {
-              delegateAddress:
-                getAddressFromBase32Address(accounts.send_all_account.summary.address),
-              amount: -10000000n,
-              height: { start: 1000000 },
-            },
-          ],
-        },
+        asset: { unlockObjects },
       };
 
       expect(transformTransaction(tx)).toMatchSnapshot();
     });
 
     it('should transform a registerMultisignatureGroup transaction', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(
-        registerMultisignatureGroup,
-      );
+      const [moduleID, assetID] = splitModuleAndAssetIds(registerMultisignatureGroup);
       const mandatoryKeys = [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey].map(key => Buffer.from(key, 'hex'));
       const optionalKeys = [accounts.second_passphrase_account.summary.publicKey].map(key => Buffer.from(key, 'hex'));
 
