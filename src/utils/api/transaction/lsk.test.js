@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
 import { getTxAmount } from '@utils/transaction';
 import {
@@ -10,17 +11,13 @@ import {
 } from './lsk';
 import http from '../http';
 import * as delegates from '../delegate';
+import accounts from '../../../../test/constants/accounts';
 
-jest.mock('../http', () => ({
-  __esModule: true,
-  default: jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })),
-}));
+jest.mock('../http', () =>
+  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
 
-jest.mock('../ws', () => ({
-  __esModule: true,
-  default: jest.fn()
-    .mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })),
-}));
+jest.mock('../ws', () =>
+  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
 
 jest.mock('../delegate', () => ({
   getDelegates: jest.fn(),
@@ -109,6 +106,86 @@ describe('API: LSK Transactions', () => {
           },
         },
         fieldNumber: 1,
+      },
+    },
+  };
+
+  moduleAssetSchemas['5:2'] = {
+    $id: 'lisk/dpos/unlock',
+    type: 'object',
+    required: [
+      'unlockObjects',
+    ],
+    properties: {
+      unlockObjects: {
+        type: 'array',
+        minItems: 1,
+        maxItems: 20,
+        items: {
+          type: 'object',
+          required: [
+            'delegateAddress',
+            'amount',
+            'unvoteHeight',
+          ],
+          properties: {
+            delegateAddress: {
+              dataType: 'bytes',
+              fieldNumber: 1,
+              minLength: 20,
+              maxLength: 20,
+            },
+            amount: {
+              dataType: 'uint64',
+              fieldNumber: 2,
+            },
+            unvoteHeight: {
+              dataType: 'uint32',
+              fieldNumber: 3,
+            },
+          },
+        },
+        fieldNumber: 1,
+      },
+    },
+  };
+
+  moduleAssetSchemas['4:0'] = {
+    $id: 'lisk/keys/register',
+    type: 'object',
+    required: [
+      'numberOfSignatures',
+      'optionalKeys',
+      'mandatoryKeys',
+    ],
+    properties: {
+      numberOfSignatures: {
+        dataType: 'uint32',
+        fieldNumber: 1,
+        minimum: 1,
+        maximum: 64,
+      },
+      mandatoryKeys: {
+        type: 'array',
+        items: {
+          dataType: 'bytes',
+          minLength: 32,
+          maxLength: 32,
+        },
+        fieldNumber: 2,
+        minItems: 0,
+        maxItems: 64,
+      },
+      optionalKeys: {
+        type: 'array',
+        items: {
+          dataType: 'bytes',
+          minLength: 32,
+          maxLength: 32,
+        },
+        fieldNumber: 3,
+        minItems: 0,
+        maxItems: 64,
       },
     },
   };
@@ -345,6 +422,96 @@ describe('API: LSK Transactions', () => {
         transaction: voteTxData,
         selectedPriority,
       });
+      expect(Number(result.value)).toBeGreaterThan(0);
+    });
+
+    it('should calculate fee of registerMultisignatureGroup tx', async () => {
+      const transaction = {
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
+        nonce: 1,
+        fee: '1000000',
+        amount: '10000000',
+        numberOfSignatures: 2,
+        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
+        optionalKeys: [accounts.second_passphrase_account.summary.publicKey],
+      };
+      const result = await getTransactionFee({
+        transaction,
+        selectedPriority,
+        numberOfSignatures: 2,
+      });
+
+      expect(Number(result.value)).toBeGreaterThan(0);
+    });
+
+    it('should calculate fee of multisignature token transfer tx', async () => {
+      const transaction = {
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+        amount: '100000',
+        nonce: '6',
+        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+      };
+      const result = await getTransactionFee({
+        transaction,
+        selectedPriority,
+        numberOfSignatures: 3,
+      });
+
+      expect(Number(result.value)).toBeGreaterThan(0);
+    });
+
+    it('should calculate fee of multisignature voteDelegate tx', async () => {
+      const transaction = {
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+        nonce: '6',
+        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        votes: [
+          { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
+          { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
+        ],
+      };
+      const result = await getTransactionFee({
+        transaction,
+        selectedPriority,
+        numberOfSignatures: 10,
+      });
+
+      expect(Number(result.value)).toBeGreaterThan(0);
+    });
+
+    it('should calculate fee of multisignature registerDelegate tx', async () => {
+      const transaction = {
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
+        nonce: '6',
+        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        username: 'user_name',
+      };
+      const result = await getTransactionFee({
+        transaction,
+        selectedPriority,
+        numberOfSignatures: 64,
+      });
+
+      expect(Number(result.value)).toBeGreaterThan(0);
+    });
+
+    it('should calculate fee of multisignature unlockToken tx', async () => {
+      const transaction = {
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        nonce: '6',
+        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        unlockingObjects: [
+          { delegateAddress: accounts.genesis.summary.address, amount: '-10000000' },
+          { delegateAddress: accounts.delegate_candidate.summary.address, amount: '-340000000' },
+        ],
+      };
+      const result = await getTransactionFee({
+        transaction,
+        selectedPriority,
+        numberOfSignatures: 4,
+      });
+
       expect(Number(result.value)).toBeGreaterThan(0);
     });
   });
