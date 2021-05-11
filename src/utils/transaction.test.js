@@ -1,7 +1,10 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
 import {
-  getTxAmount, transformTransaction, containsTransactionType, createTransactionObject,
+  getTxAmount,
+  transformTransaction,
+  containsTransactionType,
+  createTransactionObject,
 } from './transaction';
 import accounts from '../../test/constants/accounts';
 
@@ -55,7 +58,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('createTransactionObject', () => {
+  describe.only('createTransactionObject', () => {
     it('creates a transaction object for transfer transaction', () => {
       const tx = {
         senderPublicKey: '',
@@ -65,20 +68,12 @@ describe('API: LSK Transactions', () => {
         fee: '1000000',
         data: 'test',
       };
-      const txObj = createTransactionObject(tx, MODULE_ASSETS_NAME_ID_MAP.transfer);
+      const txObj = createTransactionObject(
+        tx,
+        MODULE_ASSETS_NAME_ID_MAP.transfer,
+      );
 
-      expect(txObj).toBeDefined();
-      expect(txObj).toEqual(expect.objectContaining({
-        moduleID: 2,
-        assetID: 0,
-        senderPublicKey: expect.anything(),
-        nonce: 1n,
-        fee: 1000000n,
-        signatures: [],
-        asset: { recipientAddress: expect.anything(), amount: 1n, data: 'test' },
-      }));
-      expect(txObj.asset.recipientAddress).toBeInstanceOf(Buffer);
-      expect(txObj.senderPublicKey).toBeInstanceOf(Buffer);
+      expect(txObj).toMatchSnapshot();
     });
 
     it('creates a transaction object for vote transaction', () => {
@@ -88,25 +83,20 @@ describe('API: LSK Transactions', () => {
         recipient: '',
         amount: '1',
         fee: '1000000',
-        votes: [{ amount: '100', delegateAddress: accounts.genesis.summary.address }, { amount: '-100', delegateAddress: accounts.delegate.summary.address }],
+        votes: [
+          { amount: '100', delegateAddress: accounts.genesis.summary.address },
+          {
+            amount: '-100',
+            delegateAddress: accounts.delegate.summary.address,
+          },
+        ],
       };
-      const txObj = createTransactionObject(tx, MODULE_ASSETS_NAME_ID_MAP.voteDelegate);
+      const txObj = createTransactionObject(
+        tx,
+        MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+      );
 
-      expect(txObj).toBeDefined();
-      expect(txObj).toEqual(expect.objectContaining({
-        moduleID: 5,
-        assetID: 1,
-        senderPublicKey: expect.anything(),
-        nonce: 1n,
-        fee: 1000000n,
-        signatures: [],
-        asset: { votes: expect.anything() },
-      }));
-
-      txObj.asset.votes.forEach(vote => {
-        expect(vote.delegateAddress).toBeInstanceOf(Buffer);
-        expect(vote.amount).toBeDefined();
-      });
+      expect(txObj).toMatchSnapshot();
     });
 
     it('creates a transaction object for delegate registration transaction', () => {
@@ -116,18 +106,27 @@ describe('API: LSK Transactions', () => {
         fee: '1000000',
         username: 'username',
       };
-      const txObj = createTransactionObject(tx, MODULE_ASSETS_NAME_ID_MAP.registerDelegate);
+      const txObj = createTransactionObject(
+        tx,
+        MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
+      );
 
-      expect(txObj).toBeDefined();
-      expect(txObj).toEqual(expect.objectContaining({
-        moduleID: 5,
-        assetID: 0,
-        senderPublicKey: expect.anything(),
-        nonce: 1n,
-        fee: 1000000n,
-        signatures: [],
-        asset: { username: 'username' },
-      }));
+      expect(txObj).toMatchSnapshot();
+    });
+
+    it('creates a transaction object for reclaimLSK transaction', () => {
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        fee: '1000000',
+        amount: '10000000',
+      };
+      const txObj = createTransactionObject(
+        tx,
+        MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
+      );
+
+      expect(txObj).toMatchSnapshot();
     });
   });
 
@@ -135,7 +134,9 @@ describe('API: LSK Transactions', () => {
     const binaryAddress = 'd04699e57c4a3846c988f3c15306796f8eae5c1c';
 
     it('should a transfer transaction with type signature of lisk service', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(MODULE_ASSETS_NAME_ID_MAP.transfer);
+      const [moduleID, assetID] = splitModuleAndAssetIds(
+        MODULE_ASSETS_NAME_ID_MAP.transfer,
+      );
       const tx = {
         moduleID,
         assetID,
@@ -152,13 +153,15 @@ describe('API: LSK Transactions', () => {
         fee: '0.1',
         nonce: '1',
         sender: {
-          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+          publicKey:
+            '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
           address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
         },
         signatures: undefined,
         asset: {
           recipient: {
-            address: 'lskzzzz3xu4xpzz6x2zzuzzbvzpz2zzrvz3zzxuzz3mzozzox24z2zzuzzzzzvuzz3z577dz7',
+            address:
+              'lskzzzz3xu4xpzz6x2zzuzzbvzpz2zzrvz3zzxuzz3mzozzox24z2zzuzzzzzvuzz3z577dz7',
           },
           amount: '100000000',
           data: '',
@@ -188,7 +191,8 @@ describe('API: LSK Transactions', () => {
         fee: '0.1',
         nonce: '1',
         sender: {
-          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+          publicKey:
+            '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
           address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
         },
         signatures: undefined,
@@ -212,10 +216,12 @@ describe('API: LSK Transactions', () => {
         id: Buffer.from('123', 'hex'),
         senderPublicKey: accounts.genesis.summary.publicKey,
         asset: {
-          votes: [{
-            amount: '100',
-            delegateAddress: '123',
-          }],
+          votes: [
+            {
+              amount: '100',
+              delegateAddress: '123',
+            },
+          ],
         },
       };
 
@@ -225,15 +231,18 @@ describe('API: LSK Transactions', () => {
         fee: '0.1',
         nonce: '1',
         sender: {
-          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+          publicKey:
+            '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
           address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
         },
         signatures: undefined,
         asset: {
-          votes: [{
-            amount: 100,
-            delegateAddress: 'lskzpxzckpryh',
-          }],
+          votes: [
+            {
+              amount: 100,
+              delegateAddress: 'lskzpxzckpryh',
+            },
+          ],
         },
       };
 
@@ -262,7 +271,8 @@ describe('API: LSK Transactions', () => {
         fee: '0.1',
         nonce: '1',
         sender: {
-          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+          publicKey:
+            '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
           address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
         },
         signatures: undefined,
@@ -282,10 +292,7 @@ describe('API: LSK Transactions', () => {
       let pending = [{ moduleAssetId: voteDelegate }];
       expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
 
-      pending = [
-        { moduleAssetId: transfer },
-        { moduleAssetId: voteDelegate },
-      ];
+      pending = [{ moduleAssetId: transfer }, { moduleAssetId: voteDelegate }];
       expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
     });
 

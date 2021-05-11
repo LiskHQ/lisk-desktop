@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for delegate registration transaction 1`] = `
+Object {
+  "asset": Object {
+    "username": "username",
+  },
+  "assetID": 0,
+  "fee": 1000000n,
+  "moduleID": 5,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
+
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for reclaimLSK transaction 1`] = `
+Object {
+  "asset": Object {
+    "amount": 10000000n,
+  },
+  "assetID": 0,
+  "fee": 1000000n,
+  "moduleID": 1000,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
+
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for transfer transaction 1`] = `
+Object {
+  "asset": Object {
+    "amount": 1n,
+    "data": "test",
+    "recipientAddress": Object {
+      "data": Array [],
+      "type": "Buffer",
+    },
+  },
+  "assetID": 0,
+  "fee": 1000000n,
+  "moduleID": 2,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
+
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for vote transaction 1`] = `
+Object {
+  "asset": Object {
+    "votes": Array [
+      Object {
+        "amount": 100n,
+        "delegateAddress": Object {
+          "data": Array [
+            208,
+            70,
+            153,
+            229,
+            124,
+            74,
+            56,
+            70,
+            201,
+            136,
+            243,
+            193,
+            83,
+            6,
+            121,
+            111,
+            142,
+            174,
+            92,
+            28,
+          ],
+          "type": "Buffer",
+        },
+      },
+      Object {
+        "amount": -100n,
+        "delegateAddress": Object {
+          "data": Array [
+            183,
+            120,
+            252,
+            149,
+            185,
+            240,
+            116,
+            7,
+            230,
+            64,
+            157,
+            115,
+            200,
+            175,
+            25,
+            25,
+            217,
+            3,
+            80,
+            2,
+          ],
+          "type": "Buffer",
+        },
+      },
+    ],
+  },
+  "assetID": 1,
+  "fee": 1000000n,
+  "moduleID": 5,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
