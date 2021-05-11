@@ -239,7 +239,7 @@ export const getTransactionBaseFees = network =>
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
-  transaction, selectedPriority,
+  transaction, selectedPriority, numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
 }) => {
   const feePerByte = selectedPriority.value;
 
@@ -255,6 +255,7 @@ export const getTransactionFee = async ({
     signatures: undefined,
   }, {
     baseFees: BASE_FEES,
+    numberOfSignatures,
   });
 
   // tie breaker is only meant for medium and high processing speeds
@@ -263,7 +264,7 @@ export const getTransactionFee = async ({
 
   const size = transactions.getBytes(schema, {
     ...transactionObject,
-    signatures: new Array(DEFAULT_NUMBER_OF_SIGNATURES).fill(
+    signatures: new Array(numberOfSignatures).fill(
       Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE),
     ),
   }).length;
@@ -307,6 +308,37 @@ export const create = ({
   try {
     const signedTransaction = transactions.signTransaction(
       schema, transaction, Buffer.from(networkIdentifier, 'hex'), passphrase,
+    );
+
+    resolve(signedTransaction);
+  } catch (error) {
+    reject(error);
+  }
+});
+
+export const createMultiSignatureTransaction = ({
+  network,
+  moduleAssetId,
+  mandatoryKeys,
+  optionalKeys,
+  ...transactionObject
+}) => new Promise((resolve, reject) => {
+  const { networkIdentifier } = network.networks.LSK;
+  const {
+    passphrase, ...rawTransaction
+  } = transactionObject;
+
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
+
+  try {
+    const signedTransaction = transactions.signMultiSignatureTransaction(
+      schema,
+      transaction,
+      Buffer.from(networkIdentifier, 'hex'),
+      passphrase,
+      { mandatoryKeys, optionalKeys },
+      true,
     );
 
     resolve(signedTransaction);
