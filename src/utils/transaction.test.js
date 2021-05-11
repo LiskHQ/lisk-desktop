@@ -55,7 +55,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe.only('createTransactionObject', () => {
+  describe('createTransactionObject', () => {
     it('creates a transaction object for transfer transaction', () => {
       const tx = {
         senderPublicKey: '',
@@ -107,6 +107,27 @@ describe('API: LSK Transactions', () => {
         expect(vote.delegateAddress).toBeInstanceOf(Buffer);
         expect(vote.amount).toBeDefined();
       });
+    });
+
+    it('creates a transaction object for delegate registration transaction', () => {
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        fee: '1000000',
+        username: 'username',
+      };
+      const txObj = createTransactionObject(tx, MODULE_ASSETS_NAME_ID_MAP.registerDelegate);
+
+      expect(txObj).toBeDefined();
+      expect(txObj).toEqual(expect.objectContaining({
+        moduleID: 5,
+        assetID: 0,
+        senderPublicKey: expect.anything(),
+        nonce: 1n,
+        fee: 1000000n,
+        signatures: [],
+        asset: { username: 'username' },
+      }));
     });
   });
 
