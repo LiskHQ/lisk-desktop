@@ -17,7 +17,7 @@ class Summary extends React.Component {
     this.checkForSuccessOrFailedTransactions();
   }
 
-  submitTransaction({ secondPassphrase }) {
+  submitTransaction() {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
     const { fields } = this.props;
 
@@ -25,7 +25,6 @@ class Summary extends React.Component {
       amount: `${toRawLsk(fields.amount.value)}`,
       data: fields.reference ? fields.reference.value : '',
       recipientAddress: fields.recipient.address,
-      secondPassphrase,
       fee: toRawLsk(parseFloat(fields.fee.value)),
     });
   }
@@ -38,23 +37,26 @@ class Summary extends React.Component {
       transactions,
     } = this.props;
 
-    if (account.loginType !== loginTypes.passphrase.code
-        && transactions.transactionsCreatedFailed.length) {
-      nextStep({
-        fields: {
-          ...fields,
-          hwTransactionStatus: 'error',
-        },
-      });
-    }
+    if (!account.summary.isMultisignature) {
+      if (account.loginType !== loginTypes.passphrase.code
+          && transactions.transactionsCreatedFailed.length) {
+        nextStep({
+          fields: {
+            ...fields,
+            hwTransactionStatus: 'error',
+          },
+        });
+      }
 
-    if (transactions.transactionsCreated.length && !transactions.transactionsCreatedFailed.length) {
-      nextStep({
-        fields: {
-          ...fields,
-          hwTransactionStatus: false,
-        },
-      });
+      if (transactions.transactionsCreated.length
+        && !transactions.transactionsCreatedFailed.length) {
+        nextStep({
+          fields: {
+            ...fields,
+            hwTransactionStatus: false,
+          },
+        });
+      }
     }
   }
 
@@ -66,7 +68,7 @@ class Summary extends React.Component {
 
   render() {
     const {
-      fields, t, token, account, isInitialization,
+      fields, t, token, account, isInitialization, transactions,
     } = this.props;
     const amount = fields.amount.value;
 
@@ -86,6 +88,8 @@ class Summary extends React.Component {
         showCancelButton={!isInitialization}
         fee={fromRawLsk(fields.fee.value)}
         token={token}
+        createTransaction={this.submitTransaction}
+        transaction={transactions.transactionsCreated[0]}
       >
         <TransactionInfo
           fields={fields}

@@ -46,6 +46,7 @@ const Share = ({
             error={error}
           />
         </BoxContent>
+        {/* TODO use TransactionSummary */}
         {success && (
           <BoxFooter className={styles.footer} direction="horizontal">
             <CopyToClipboard

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { extractPublicKey } from '@utils/account';
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
@@ -10,26 +10,64 @@ import CheckBox from '@toolbox/checkBox';
 import HardwareWalletIllustration from '@toolbox/hardwareWalletIllustration';
 import PassphraseInput from '@toolbox/passphraseInput';
 import Tooltip from '@toolbox/tooltip/tooltip';
+import copyToClipboard from 'copy-to-clipboard';
+import Icon from '@toolbox/icon';
 import styles from './transactionSummary.css';
 
 const Footer = ({
   confirmButton, cancelButton, footerClassName, showCancelButton,
-  isHardwareWalletConnected, confirmOnClick, confirmation, isConfirmed,
-  account, secondPassphrase, t,
+  isHardwareWalletConnected, confirmation, isConfirmed,
+  account, secondPassphrase, t, transaction, createTransaction,
 }) => {
+  account.summary.isMultisignature = true;
   if (isHardwareWalletConnected) {
     return null;
   }
+  const [download, setDownload] = useState(false);
+  const [isCopy, setIsCopy] = useState(false);
+  const onDownload = () => {
+    const anchor = document.createElement('a');
+    anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(transaction))}`);
+    anchor.setAttribute('download', `tx-${transaction.moduleID}-${transaction.assetID}.json`);
+    anchor.click();
+  };
+
+  useEffect(() => {
+    if (account.summary.isMultisignature) {
+      if (download) {
+        onDownload();
+        setDownload(false);
+      }
+      if (isCopy) {
+        copyToClipboard(JSON.stringify(transaction));
+        setIsCopy(false);
+      }
+    }
+  }, [transaction]);
 
   return (
     <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
       {account.summary.isMultisignature ? (
         <>
-          <SecondaryButton className={`${styles.editBtn} cancel-button`}>
-            {t('Download')}
+          <SecondaryButton onClick={() => {
+            setIsCopy(true);
+            createTransaction();
+          }}
+          >
+            <span className={styles.buttonContent}>
+              <Icon name="copy" />
+              {t('copy')}
+            </span>
           </SecondaryButton>
-          <PrimaryButton className={`${styles.confirmBtn} confirm-button`}>
-            {t('Copy')}
+          <PrimaryButton onClick={() => {
+            setDownload(true);
+            createTransaction();
+          }}
+          >
+            <span className={styles.buttonContent}>
+              <Icon name="download" />
+              {t('Download')}
+            </span>
           </PrimaryButton>
         </>
       ) : (
@@ -49,7 +87,7 @@ const Footer = ({
               || (confirmation && !isConfirmed)
               || confirmButton.disabled
             }
-            onClick={confirmOnClick}
+            onClick={confirmButton.onClick}
           >
             {confirmButton.label}
           </PrimaryButton>
@@ -139,7 +177,7 @@ class TransactionSummary extends React.Component {
 
   render() {
     const {
-      title, children, confirmButton, cancelButton, account,
+      title, children, confirmButton, cancelButton, account, transaction, createTransaction,
       t, fee, confirmation, classNames, token, footerClassName, showCancelButton = true,
     } = this.props;
     const {
@@ -223,11 +261,12 @@ class TransactionSummary extends React.Component {
           footerClassName={footerClassName}
           showCancelButton={showCancelButton}
           isHardwareWalletConnected={isHardwareWalletConnected}
-          confirmOnClick={this.confirmOnClick}
           confirmation={confirmation}
           isConfirmed={isConfirmed}
           account={account}
           secondPassphrase={secondPassphrase}
+          transaction={transaction}
+          createTransaction={createTransaction}
           t={t}
         />
       </Box>

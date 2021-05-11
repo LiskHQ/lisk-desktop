@@ -2,11 +2,8 @@ import React, { useEffect } from 'react';
 
 import Piwik from '@utils/piwik';
 import TransactionInfo from '@shared/TransactionInfo';
-import Box from '@toolbox/box';
-import BoxContent from '@toolbox/box/content';
-import BoxFooter from '@toolbox/box/footer';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import TransactionSummary from '@shared/transactionSummary';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
 
@@ -46,15 +43,17 @@ const Summary = ({
   } = getResultProps({ added, removed, edited });
 
   useEffect(() => {
-    if (!transactions.transactionsCreatedFailed.length
-      && transactions.transactionsCreated.length) {
-      nextStep({
-        locked, unlockable, error: false,
-      });
-    } else if (transactions.transactionsCreatedFailed.length) {
-      nextStep({
-        error: true,
-      });
+    if (!account.summary.isMultisignature) {
+      if (!transactions.transactionsCreatedFailed.length
+        && transactions.transactionsCreated.length) {
+        nextStep({
+          locked, unlockable, error: false,
+        });
+      } else if (transactions.transactionsCreatedFailed.length) {
+        nextStep({
+          error: true,
+        });
+      }
     }
   }, [transactions]);
 
@@ -68,39 +67,43 @@ const Summary = ({
     });
   };
 
+  const onConfirmAction = {
+    label: t('Confirm'),
+    onClick: submitTransaction,
+  };
+  const onCancelAction = {
+    label: t('Edit'),
+    onClick: prevStep,
+  };
+
   return (
-    <section>
-      <Box className={styles.container}>
-        <ToggleIcon isNotHeader />
-        <div className={styles.headerContainer}>
-          <header>
-            {t('Voting Summary')}
-          </header>
-          <VoteStats
-            t={t}
-            heading={t('Voting Summary')}
-            added={Object.keys(added).length}
-            edited={Object.keys(edited).length}
-            removed={Object.keys(removed).length}
-          />
-        </div>
-        <BoxContent className={styles.content}>
-          <TransactionInfo
-            added={added}
-            edited={edited}
-            removed={removed}
-            fee={fee}
-            moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.voteDelegate}
-          />
-        </BoxContent>
-        <BoxFooter className={styles.footer} direction="horizontal">
-          <SecondaryButton onClick={prevStep} className="edit-button">Edit</SecondaryButton>
-          <PrimaryButton className="confirm" size="l" onClick={submitTransaction}>
-            {t('Confirm')}
-          </PrimaryButton>
-        </BoxFooter>
-      </Box>
-    </section>
+    <TransactionSummary
+      title={t('Voting Summary')}
+      t={t}
+      account={account}
+      confirmButton={onConfirmAction}
+      cancelButton={onCancelAction}
+      fee={fee}
+      classNames={`${styles.box} ${styles.summaryContainer}`}
+      createTransaction={submitTransaction}
+      transaction={transactions.transactionsCreated[0]}
+    >
+      <ToggleIcon isNotHeader />
+      <VoteStats
+        t={t}
+        heading={t('Voting Summary')}
+        added={Object.keys(added).length}
+        edited={Object.keys(edited).length}
+        removed={Object.keys(removed).length}
+      />
+      <TransactionInfo
+        added={added}
+        edited={edited}
+        removed={removed}
+        fee={fee}
+        moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.voteDelegate}
+      />
+    </TransactionSummary>
   );
 };
 
