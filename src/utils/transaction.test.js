@@ -1,6 +1,8 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
-import { getTxAmount, transformTransaction, containsTransactionType } from './transaction';
+import {
+  getTxAmount, transformTransaction, containsTransactionType, createTransactionObject,
+} from './transaction';
 import accounts from '../../test/constants/accounts';
 
 describe('API: LSK Transactions', () => {
@@ -50,6 +52,61 @@ describe('API: LSK Transactions', () => {
       };
 
       expect(getTxAmount(tx)).toEqual(200000000);
+    });
+  });
+
+  describe.only('createTransactionObject', () => {
+    it('creates a transaction object for transfer transaction', () => {
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        recipient: '',
+        amount: '1',
+        fee: '1000000',
+        data: 'test',
+      };
+      const txObj = createTransactionObject(tx, MODULE_ASSETS_NAME_ID_MAP.transfer);
+
+      expect(txObj).toBeDefined();
+      expect(txObj).toEqual(expect.objectContaining({
+        moduleID: 2,
+        assetID: 0,
+        senderPublicKey: expect.anything(),
+        nonce: 1n,
+        fee: 1000000n,
+        signatures: [],
+        asset: { recipientAddress: expect.anything(), amount: 1n, data: 'test' },
+      }));
+      expect(txObj.asset.recipientAddress).toBeInstanceOf(Buffer);
+      expect(txObj.senderPublicKey).toBeInstanceOf(Buffer);
+    });
+
+    it('creates a transaction object for vote transaction', () => {
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        recipient: '',
+        amount: '1',
+        fee: '1000000',
+        votes: [{ amount: '100', delegateAddress: accounts.genesis.summary.address }, { amount: '-100', delegateAddress: accounts.delegate.summary.address }],
+      };
+      const txObj = createTransactionObject(tx, MODULE_ASSETS_NAME_ID_MAP.voteDelegate);
+
+      expect(txObj).toBeDefined();
+      expect(txObj).toEqual(expect.objectContaining({
+        moduleID: 5,
+        assetID: 1,
+        senderPublicKey: expect.anything(),
+        nonce: 1n,
+        fee: 1000000n,
+        signatures: [],
+        asset: { votes: expect.anything() },
+      }));
+
+      txObj.asset.votes.forEach(vote => {
+        expect(vote.delegateAddress).toBeInstanceOf(Buffer);
+        expect(vote.amount).toBeDefined();
+      });
     });
   });
 
