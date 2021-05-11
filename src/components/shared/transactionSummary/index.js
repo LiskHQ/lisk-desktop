@@ -188,26 +188,30 @@ class TransactionSummary extends React.Component {
 
     return (
       <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
-        <BoxHeader className="summary-header">
-          <h2>
-            {title}
-            {isHardwareWalletConnected ? t(' - Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel }) : ''}
-          </h2>
-        </BoxHeader>
+        {title && (
+          <BoxHeader className="summary-header">
+            <h2>
+              {title}
+              {isHardwareWalletConnected ? t(' - Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel }) : ''}
+            </h2>
+          </BoxHeader>
+        )}
         <BoxContent className={`${styles.content} summary-content`}>
           <HardwareWalletIllustration account={account} size="s" />
           {children}
-          <section>
-            <label>
-              {t('Transaction fee')}
-              <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
-                <p className={styles.tooltipText}>{tooltip.children}</p>
-              </Tooltip>
-            </label>
-            <label className={`${styles.feeValue} fee-value`}>
-              {`${formatAmountBasedOnLocale({ value: fee })} ${token}`}
-            </label>
-          </section>
+          {fee && (
+            <section>
+              <label>
+                {t('Transaction fee')}
+                <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
+                  <p className={styles.tooltipText}>{tooltip.children}</p>
+                </Tooltip>
+              </label>
+              <label className={`${styles.feeValue} fee-value`}>
+                {`${formatAmountBasedOnLocale({ value: fee })} ${token}`}
+              </label>
+            </section>
+          )}
           {
         confirmation
           ? (

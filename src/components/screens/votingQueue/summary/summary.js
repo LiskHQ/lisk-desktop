@@ -78,24 +78,27 @@ const Summary = ({
 
   return (
     <TransactionSummary
-      title={t('Voting Summary')}
       t={t}
       account={account}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      fee={fee}
-      classNames={`${styles.box} ${styles.summaryContainer}`}
+      classNames={styles.container}
       createTransaction={submitTransaction}
       transaction={transactions.transactionsCreated[0]}
     >
       <ToggleIcon isNotHeader />
-      <VoteStats
-        t={t}
-        heading={t('Voting Summary')}
-        added={Object.keys(added).length}
-        edited={Object.keys(edited).length}
-        removed={Object.keys(removed).length}
-      />
+      <div className={styles.headerContainer}>
+        <header>
+          {t('Voting Summary')}
+        </header>
+        <VoteStats
+          t={t}
+          heading={t('Voting Summary')}
+          added={Object.keys(added).length}
+          edited={Object.keys(edited).length}
+          removed={Object.keys(removed).length}
+        />
+      </div>
       <TransactionInfo
         added={added}
         edited={edited}

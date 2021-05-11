@@ -1,6 +1,7 @@
 @import '../../../../app/mixins.css';
 
 .container {
+  width: auto !important;
   & .content {
     & .contentItem {
       padding-bottom: 20px;
@@ -26,7 +27,7 @@
 .headerContainer {
   display: flex;
   justify-content: space-between;
-  margin: 20px;
+  margin: 20px 0px;
 }
 
 .addressText {
