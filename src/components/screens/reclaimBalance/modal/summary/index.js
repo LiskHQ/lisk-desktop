@@ -5,8 +5,9 @@ import { selectAccount } from '@store';
 import { create } from '@api/transaction';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
+import AccountMigration from '@shared/accountMigration';
 import TransactionSummary from '@shared/transactionSummary';
-import TransactionInfo from '@shared/transactionInfo';
+import LiskAmount from '@shared/liskAmount';
 import { toRawLsk } from '@utils/lsk';
 import styles from './summary.css';
 
@@ -73,7 +74,16 @@ const Summary = ({
       token={tokenMap.LSK.key}
       classNames={styles.summaryContainer}
     >
-      <TransactionInfo account={account} moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.reclaimLSK} />
+      <section>
+        <AccountMigration account={account.info.LSK} showBalance={false} />
+      </section>
+      <section>
+        <label>{t('Balance to reclaim')}</label>
+        <LiskAmount
+          val={Number(account.info.LSK.legacy.balance)}
+          token={tokenMap.LSK.key}
+        />
+      </section>
     </TransactionSummary>
   );
 };
