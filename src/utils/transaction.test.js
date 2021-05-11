@@ -128,6 +128,24 @@ describe('API: LSK Transactions', () => {
 
       expect(txObj).toMatchSnapshot();
     });
+
+    it('creates a transaction object for registerMultisignatureGroup transaction', () => {
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        fee: '1000000',
+        amount: '10000000',
+        numberOfSignatures: 2,
+        mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
+        optionalKeys: [accounts.second_passphrase_account.summary.publicKey],
+      };
+      const txObj = createTransactionObject(
+        tx,
+        MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
+      );
+
+      expect(txObj).toMatchSnapshot();
+    });
   });
 
   describe('transformTransaction', () => {
@@ -204,6 +222,31 @@ describe('API: LSK Transactions', () => {
         senderPublicKey: accounts.genesis.summary.publicKey,
         asset: {
           amount: '100',
+        },
+      };
+
+      expect(transformTransaction(tx)).toMatchSnapshot();
+    });
+
+    it('should transform a registerMultisignatureGroup transaction', () => {
+      const [moduleID, assetID] = splitModuleAndAssetIds(
+        MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
+      );
+      const mandatoryKeys = [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey].map(key => Buffer.from(key, 'hex'));
+      const optionalKeys = [accounts.second_passphrase_account.summary.publicKey].map(key => Buffer.from(key, 'hex'));
+
+      const tx = {
+        moduleID,
+        assetID,
+        id: Buffer.from('123', 'hex'),
+        senderPublicKey: accounts.genesis.summary.publicKey,
+        nonce: 1,
+        fee: '1000000',
+        amount: '10000000',
+        asset: {
+          numberOfSignatures: 2,
+          mandatoryKeys,
+          optionalKeys,
         },
       };
 
