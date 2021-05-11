@@ -26,11 +26,10 @@ const convertBinaryToString = value => value.toString('hex');
  */
 // eslint-disable-next-line max-statements
 const transformTransaction = ({
-  moduleID, assetID, id, asset, nonce, fee, senderPublicKey, signatures, ...transaction
+  moduleID, assetID, id, asset, nonce, fee, senderPublicKey, signatures,
 }) => {
-  const moduleAssetId = joinModuleAndAssetIds(moduleID, assetID);
-  const senderAddress = extractAddressFromPublicKey(transaction.senderPublicKey);
-
+  const moduleAssetId = joinModuleAndAssetIds({ moduleID, assetID });
+  const senderAddress = extractAddressFromPublicKey(senderPublicKey);
   const transformedTransaction = {
     moduleAssetId,
     id: convertBinaryToString(id),
