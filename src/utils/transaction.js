@@ -15,14 +15,8 @@ const {
 } = MODULE_ASSETS_NAME_ID_MAP;
 
 const EMPTY_BUFFER = Buffer.from('');
-
-function convertStringToBinary(value) {
-  return Buffer.from(value, 'hex');
-}
-
-function convertBinaryToString(value) {
-  return value.toString('hex');
-}
+const convertStringToBinary = value => Buffer.from(value, 'hex');
+const convertBinaryToString = value => value.toString('hex');
 
 /**
  * Converts a transaction returned by lisk elements back to the signature
@@ -246,11 +240,11 @@ const getTxAmount = ({ moduleAssetId, asset }) => {
 
   if (moduleAssetId === unlockToken) {
     return asset.unlockingObjects.reduce((sum, unlockingObject) =>
-      sum + parseInt(unlockingObject.amount, 10), 0);
+      sum + Number(unlockingObject.amount), 0);
   }
   if (moduleAssetId === voteDelegate) {
     return asset.votes.reduce((sum, vote) =>
-      sum + parseInt(vote.amount, 10), 0);
+      sum + Number(vote.amount), 0);
   }
 
   return undefined;
