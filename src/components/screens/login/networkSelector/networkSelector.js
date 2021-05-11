@@ -125,7 +125,7 @@ class NetworkSelector extends React.Component {
   getNetwork(chosenNetwork) {
     const network = { ...getNetwork(getNetworksList()[chosenNetwork].name) };
     if (chosenNetwork === networks.customNode.code) {
-      network.address = addHttp(this.state.address);
+      network.address = addHttp(this.state.address.trim());
     }
     return network;
   }
@@ -139,14 +139,16 @@ class NetworkSelector extends React.Component {
   /* istanbul ignore next */
   // eslint-disable-next-line max-statements
   validateCorrectNode(network, address, nextPath) {
-    let nodeURL = address !== '' ? addHttp(address) : '';
-    const newNetwork = this.getNetwork(network);
-    if (network !== networks.customNode.code) {
-      nodeURL = newNetwork.nodes[Math.floor(Math.random() * newNetwork.nodes.length)];
+    if (address !== '' && network === networks.customNode.code) {
+      this.setState({ address: addHttp(address.trim()) });
     }
+    const newNetwork = this.getNetwork(network);
+    const nodeURL = network === networks.customNode.code
+      ? addHttp(address.trim())
+      : newNetwork.nodes[Math.floor(Math.random() * newNetwork.nodes.length)];
 
     const Lisk = liskClient('2');
-    const liskAPIClient = new Lisk.APIClient([nodeURL.trim()], {});
+    const liskAPIClient = new Lisk.APIClient([nodeURL], {});
     this.setValidationError(true);
 
     liskAPIClient.node.getConstants()
@@ -230,7 +232,7 @@ class NetworkSelector extends React.Component {
                       onChange={(value) => { this.changeAddress(value); }}
                       name="customNetwork"
                       value={this.state.address}
-                      placeholder={this.props.t('ie. 192.168.0.1')}
+                      placeholder={this.props.t('i.e. ip:port, https://domain.tld')}
                       size="xs"
                       className={`custom-network ${styles.input} ${this.state.activeNetwork === 2 && validationError ? styles.errorInput : ''}`}
                       onKeyDown={e => e.keyCode === keyCodes.enter
