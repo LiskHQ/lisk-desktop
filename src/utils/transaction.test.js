@@ -1,5 +1,6 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
+import { getAddressFromBase32Address } from '@utils/account';
 import {
   getTxAmount,
   transformTransaction,
@@ -133,6 +134,22 @@ describe('API: LSK Transactions', () => {
       expect(txObj).toMatchSnapshot();
     });
 
+    it('creates a transaction object for unlockToken transaction', () => {
+      const unlockingObjects = [
+        { delegateAddress: accounts.genesis.summary.address, amount: '-1000' },
+        { delegateAddress: accounts.delegate.summary.address, amount: '1000' },
+      ];
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        fee: '1000000',
+        unlockingObjects,
+      };
+      const txObj = createTransactionObject(tx, unlockToken);
+
+      expect(txObj).toMatchSnapshot();
+    });
+
     it('creates a transaction object for registerMultisignatureGroup transaction', () => {
       const tx = {
         senderPublicKey: '',
@@ -226,6 +243,38 @@ describe('API: LSK Transactions', () => {
         senderPublicKey: accounts.genesis.summary.publicKey,
         asset: {
           amount: '100',
+        },
+      };
+
+      expect(transformTransaction(tx)).toMatchSnapshot();
+    });
+
+    it('should transform a unlockToken transaction', () => {
+      const [moduleID, assetID] = splitModuleAndAssetIds(
+        unlockToken,
+      );
+      const tx = {
+        moduleID,
+        assetID,
+        fee: 0.1,
+        nonce: 1,
+        id: Buffer.from('123', 'hex'),
+        senderPublicKey: accounts.genesis.summary.publicKey,
+        asset: {
+          unlockObjects: [
+            {
+              delegateAddress:
+                getAddressFromBase32Address(accounts.delegate.summary.address),
+              amount: 10000000n,
+              height: { start: 1000000 },
+            },
+            {
+              delegateAddress:
+                getAddressFromBase32Address(accounts.send_all_account.summary.address),
+              amount: -10000000n,
+              height: { start: 1000000 },
+            },
+          ],
         },
       };
 

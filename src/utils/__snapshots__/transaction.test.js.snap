@@ -188,6 +188,82 @@ Object {
 }
 `;
 
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for unlockToken transaction 1`] = `
+Object {
+  "asset": Object {
+    "unlockObjects": Array [
+      Object {
+        "amount": -1000n,
+        "delegateAddress": Object {
+          "data": Array [
+            208,
+            70,
+            153,
+            229,
+            124,
+            74,
+            56,
+            70,
+            201,
+            136,
+            243,
+            193,
+            83,
+            6,
+            121,
+            111,
+            142,
+            174,
+            92,
+            28,
+          ],
+          "type": "Buffer",
+        },
+        "unvoteHeight": undefined,
+      },
+      Object {
+        "amount": 1000n,
+        "delegateAddress": Object {
+          "data": Array [
+            183,
+            120,
+            252,
+            149,
+            185,
+            240,
+            116,
+            7,
+            230,
+            64,
+            157,
+            115,
+            200,
+            175,
+            25,
+            25,
+            217,
+            3,
+            80,
+            2,
+          ],
+          "type": "Buffer",
+        },
+        "unvoteHeight": undefined,
+      },
+    ],
+  },
+  "assetID": 2,
+  "fee": 1000000n,
+  "moduleID": 5,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
+
 exports[`API: LSK Transactions createTransactionObject creates a transaction object for vote transaction 1`] = `
 Object {
   "asset": Object {
@@ -354,6 +430,34 @@ Object {
   "fee": "1000000",
   "id": "12",
   "moduleAssetId": "4:0",
+  "nonce": "1",
+  "sender": Object {
+    "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
+    "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+  },
+  "signatures": undefined,
+}
+`;
+
+exports[`API: LSK Transactions transformTransaction should transform a unlockToken transaction 1`] = `
+Object {
+  "asset": Object {
+    "unlockObjects": Array [
+      Object {
+        "amount": 10000000,
+        "delegateAddress": "lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy",
+        "unvoteHeight": 1000000,
+      },
+      Object {
+        "amount": -10000000,
+        "delegateAddress": "lskkx46qy3wkwtfbh4gzbq57tx6dzfexu5yufwh5b",
+        "unvoteHeight": 1000000,
+      },
+    ],
+  },
+  "fee": "0.1",
+  "id": "12",
+  "moduleAssetId": "5:2",
   "nonce": "1",
   "sender": Object {
     "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
