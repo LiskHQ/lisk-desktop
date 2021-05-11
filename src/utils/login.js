@@ -16,7 +16,7 @@ const isValidIp = url => (isValidLocalhost(url)
 
 export const addHttp = (url) => {
   const domainReg = /^(?:f|ht)tps?:\/\//i;
-  const ipReg = /^(\d+\.\d+\.\d+\.\d+)(\:\d+)?/;
+  const ipReg = /^(\d+\.\d+\.\d+\.\d+)(:\d+)?/;
   if (ipReg.test(url)) {
     return `http://${url}`;
   }
