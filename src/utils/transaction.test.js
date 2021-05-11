@@ -58,7 +58,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe.only('createTransactionObject', () => {
+  describe('createTransactionObject', () => {
     it('creates a transaction object for transfer transaction', () => {
       const tx = {
         senderPublicKey: '',
@@ -147,28 +147,7 @@ describe('API: LSK Transactions', () => {
         asset: { amount: 100000000, recipientAddress: binaryAddress, data: '' },
       };
 
-      const expectedTransaction = {
-        id: '12',
-        moduleAssetId: '2:0',
-        fee: '0.1',
-        nonce: '1',
-        sender: {
-          publicKey:
-            '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
-        },
-        signatures: undefined,
-        asset: {
-          recipient: {
-            address:
-              'lskzzzz3xu4xpzz6x2zzuzzbvzpz2zzrvz3zzxuzz3mzozzox24z2zzuzzzzzvuzz3z577dz7',
-          },
-          amount: '100000000',
-          data: '',
-        },
-      };
-
-      expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
+      expect(transformTransaction(tx)).toMatchSnapshot();
     });
 
     it('should a register delegate transaction with type signature of lisk service', () => {
@@ -185,23 +164,7 @@ describe('API: LSK Transactions', () => {
         asset: { username: 'super_delegate' },
       };
 
-      const expectedTransaction = {
-        id: '12',
-        moduleAssetId: '5:0',
-        fee: '0.1',
-        nonce: '1',
-        sender: {
-          publicKey:
-            '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
-        },
-        signatures: undefined,
-        asset: {
-          username: 'super_delegate',
-        },
-      };
-
-      expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
+      expect(transformTransaction(tx)).toMatchSnapshot();
     });
 
     it('should a vote delegate transaction with type signature of lisk service', () => {
@@ -225,28 +188,7 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      const expectedTransaction = {
-        id: '12',
-        moduleAssetId: '5:1',
-        fee: '0.1',
-        nonce: '1',
-        sender: {
-          publicKey:
-            '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
-        },
-        signatures: undefined,
-        asset: {
-          votes: [
-            {
-              amount: 100,
-              delegateAddress: 'lskzpxzckpryh',
-            },
-          ],
-        },
-      };
-
-      expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
+      expect(transformTransaction(tx)).toMatchSnapshot();
     });
 
     it('should transform a reclaimLSK transaction', () => {
@@ -265,23 +207,7 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      const expectedTransaction = {
-        id: '12',
-        moduleAssetId: '1000:0',
-        fee: '0.1',
-        nonce: '1',
-        sender: {
-          publicKey:
-            '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
-        },
-        signatures: undefined,
-        asset: {
-          amount: '100',
-        },
-      };
-
-      expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
+      expect(transformTransaction(tx)).toMatchSnapshot();
     });
   });
 
