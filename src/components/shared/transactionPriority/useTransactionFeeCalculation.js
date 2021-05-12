@@ -1,12 +1,19 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useReducer } from 'react';
-import {
-  getTransactionFee,
-} from '@api/transaction';
+import { getTransactionFee } from '@api/transaction';
+import { DEFAULT_NUMBER_OF_SIGNATURES } from '@constants';
 import { actionTypes, reducer, getInitialState } from './reducer';
 
+const getNumberOfSignatures = (account) => {
+  const lskAccount = account.info.LSK;
+  if (lskAccount.summary.isMultisignature) {
+    return lskAccount.keys.numberOfSignatures;
+  }
+  return DEFAULT_NUMBER_OF_SIGNATURES;
+};
+
 const useTransactionFeeCalculation = ({
-  selectedPriority, transaction, token, account, priorityOptions, numberOfSignatures,
+  token, account, selectedPriority, transaction, priorityOptions,
 }) => {
   const network = useSelector(state => state.network);
   const [state, dispatch] = useReducer(reducer, account, getInitialState);
@@ -30,7 +37,12 @@ const useTransactionFeeCalculation = ({
 
   useEffect(() => {
     calculateTransactionFees({
-      token, account, network, transaction, selectedPriority, numberOfSignatures,
+      token,
+      account,
+      network,
+      transaction,
+      selectedPriority,
+      numberOfSignatures: getNumberOfSignatures(account),
     });
   }, [
     transaction.amount,
