@@ -1,4 +1,4 @@
-import { votesRetrieved } from '@actions';
+import { votesRetrieved, votesReset } from '@actions';
 import { actionTypes } from '@constants';
 
 const votingMiddleware = store => next => (action) => {
@@ -11,10 +11,7 @@ const votingMiddleware = store => next => (action) => {
       store.dispatch(votesRetrieved());
       break;
     case actionTypes.accountLoggedOut:
-      store.dispatch({
-        type: actionTypes.votesRetrieved,
-        data: [],
-      });
+      store.dispatch(votesReset());
       break;
     default: break;
   }
