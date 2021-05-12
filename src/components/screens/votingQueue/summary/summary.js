@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Piwik from '@utils/piwik';
-import TransactionInfo from '@shared/TransactionInfo';
+import TransactionInfo from '@shared/transactionInfo';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import ToggleIcon from '../toggleIcon';
