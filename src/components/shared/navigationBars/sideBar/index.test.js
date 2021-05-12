@@ -41,6 +41,9 @@ describe('SideBar', () => {
       network: {
         name: 'testnet',
         serviceUrl: 'someUrl',
+        status: {
+          online: true,
+        },
       },
     };
 

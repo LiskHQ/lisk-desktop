@@ -15,8 +15,15 @@ const isValidIp = url => (isValidLocalhost(url)
 || isValidUrlRegEx(url.toString()));
 
 export const addHttp = (url) => {
-  const reg = /^(?:f|ht)tps?:\/\//i;
-  return reg.test(url) ? url : `http://${url}`;
+  const domainReg = /^(?:f|ht)tps?:\/\//i;
+  const ipReg = /^(\d+\.\d+\.\d+\.\d+)(:\d+)?/;
+  if (ipReg.test(url)) {
+    return `http://${url}`;
+  }
+  if (!domainReg.test(url)) {
+    return `https://${url}`;
+  }
+  return url;
 };
 // eslint-disable-next-line import/prefer-default-export
 export const validateUrl = (value) => {

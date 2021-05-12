@@ -38,7 +38,8 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-  if (!networkIsSet || modals[modalName].forbiddenTokens.includes(settings.token.active)) {
+  if ((!networkIsSet && modalName !== 'settings')
+  || modals[modalName].forbiddenTokens.includes(settings.token.active)) {
     return null;
   }
 

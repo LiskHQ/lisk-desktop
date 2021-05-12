@@ -10,14 +10,11 @@ import {
 import { settingsUpdated } from '../../actions/settings';
 import { fromRawLsk } from '../../utils/lsk';
 import { getActiveTokenAccount, hasEnoughBalanceForInitialization } from '../../utils/account';
-import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
+import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
 import { loadVotes } from '../../actions/voting';
-import { networkSet, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
 import analytics from '../../utils/analytics';
 import i18n from '../../i18n';
-import { getFromStorage } from '../../utils/localJSONStorage';
-import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import transactionTypes from '../../constants/transactionTypes';
 import { txAdapter } from '../../utils/api/lsk/adapters';
@@ -116,80 +113,11 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
-// istanbul ignore next
-const getNetworkFromLocalStorage = () => {
-  let mySettings = {};
-  getFromStorage('settings', {}, (data) => {
-    mySettings = data;
-  });
-  if (!mySettings.network) return networks.mainnet;
-  return {
-    ...Object.values(networks).find(
-      ({ name }) => name === mySettings.network.name,
-    ) || networks.mainnet,
-    address: mySettings.network.address,
-  };
-};
-
-// eslint-disable-next-line max-statements
-const checkNetworkToConnect = (showNetwork) => {
-  const autologinData = getAutoLogInData();
-  let loginNetwork = findMatchingLoginNetwork();
-
-  if (loginNetwork) {
-    const net = loginNetwork.slice(-1).shift();
-    loginNetwork = {
-      name: net.name,
-      network: {
-        ...net,
-      },
-    };
-  }
-
-  if (!loginNetwork && autologinData.liskCoreUrl) {
-    loginNetwork = {
-      name: networks.customNode.name,
-      passphrase: autologinData[settings.keys.loginKey],
-      network: { ...networks.customNode, address: autologinData[settings.keys.liskCoreUrl] },
-      options: {
-        code: networks.customNode.code,
-        address: autologinData[settings.keys.liskCoreUrl],
-      },
-    };
-  }
-
-  // istanbul ignore next
-  if (!loginNetwork && !autologinData.liskCoreUrl) {
-    if (showNetwork) {
-      const currentNetwork = getNetworkFromLocalStorage();
-      loginNetwork = {
-        name: currentNetwork.name,
-        network: {
-          ...currentNetwork,
-        },
-      };
-    } else {
-      loginNetwork = {
-        name: networks.mainnet.name,
-        network: {
-          ...networks.mainnet,
-        },
-      };
-    }
-  }
-
-  return loginNetwork;
-};
-
 // eslint-disable-next-line max-statements
 const autoLogInIfNecessary = async (store) => {
   const {
-    showNetwork, statistics, statisticsRequest, statisticsFollowingDay,
+    statistics, statisticsRequest, statisticsFollowingDay,
   } = store.getState().settings;
-  const loginNetwork = checkNetworkToConnect(showNetwork);
-
-  store.dispatch(await networkSet(loginNetwork));
-  store.dispatch(networkStatusUpdated({ online: true }));
 
   const autologinData = getAutoLogInData();
   if (shouldAutoLogIn(autologinData)) {
@@ -238,7 +166,7 @@ const checkAccountInitializationState = (action) => {
 const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
-    case actionTypes.storeCreated:
+    case actionTypes.settingsRetrieved:
       autoLogInIfNecessary(store);
       break;
     case actionTypes.newBlockCreated:

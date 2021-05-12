@@ -36,6 +36,7 @@ class NetworkSelector extends React.Component {
       isFirstTime: true,
       activeNetwork: 0,
       connected: true,
+      networkLabel: 'Mainnet',
     };
 
     this.onConnectToCustomNode = this.onConnectToCustomNode.bind(this);
@@ -45,6 +46,19 @@ class NetworkSelector extends React.Component {
 
   componentDidMount() {
     this.checkNodeStatus(false);
+
+    // check the network, define selected
+    if (!this.props.network.networks.LSK) {
+      this.validateCorrectNode(networks.mainnet.code, networks.mainnet.nodes[0]);
+    } else if (this.props.network.networks.LSK) {
+      const { LSK } = this.props.network.networks;
+      this.setState({
+        address: LSK.nodeUrl,
+        activeNetwork: LSK.code,
+        network: LSK.code,
+        networkLabel: this.props.network.name,
+      });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -111,62 +125,61 @@ class NetworkSelector extends React.Component {
   getNetwork(chosenNetwork) {
     const network = { ...getNetwork(getNetworksList()[chosenNetwork].name) };
     if (chosenNetwork === networks.customNode.code) {
-      network.address = addHttp(this.state.address);
+      network.address = addHttp(this.state.address.trim());
     }
     return network;
   }
 
-  setValidationError() {
+  setValidationError(reset) {
     this.setState({
-      validationError: this.props.t('Unable to connect to the node, please check the address and try again'),
+      validationError: reset ? '' : this.props.t('Unable to connect to the node, please check the address and try again'),
     });
   }
 
   /* istanbul ignore next */
   // eslint-disable-next-line max-statements
   validateCorrectNode(network, address, nextPath) {
-    const nodeURL = address !== '' ? addHttp(address) : '';
-    const newNetwork = this.getNetwork(network);
-
-    if (network === networks.customNode.code) {
-      const { apiVersion } = this.props.network.networks.LSK;
-      const Lisk = liskClient(apiVersion);
-      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
-      liskAPIClient.node.getConstants()
-        .then((res) => {
-          if (res.data) {
-            this.props.networkSet({
-              name: newNetwork.name,
-              network: {
-                ...newNetwork,
-              },
-            });
-
-            this.props.history.push(nextPath);
-            this.setState({ validationError: '', connected: true });
-            this.childRef.toggleDropdown();
-            this.changeNetwork(networks.customNode.code);
-          } else {
-            throw new Error();
-          }
-        })
-        .catch(() => {
-          this.setValidationError();
-        });
-
-      this.setState({ isValidationLoading: false, isFirstTime: false });
-    } else {
-      this.props.networkSet({
-        name: newNetwork.name,
-        network: {
-          ...newNetwork,
-        },
-      });
-      this.props.history.push(nextPath);
-      this.setState({ validationError: '' });
+    if (address !== '' && network === networks.customNode.code) {
+      this.setState({ address: addHttp(address.trim()) });
     }
+    const newNetwork = this.getNetwork(network);
+    const nodeURL = network === networks.customNode.code
+      ? addHttp(address.trim())
+      : newNetwork.nodes[Math.floor(Math.random() * newNetwork.nodes.length)];
 
-    this.setState({ network });
+    const Lisk = liskClient('2');
+    const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+    this.setValidationError(true);
+
+    liskAPIClient.node.getConstants()
+      // eslint-disable-next-line max-statements
+      .then((res) => {
+        if (res.data) {
+          this.props.networkSet({
+            name: newNetwork.name,
+            network: newNetwork,
+          });
+
+          this.setState({
+            validationError: '',
+            connected: true,
+            networkLabel: newNetwork.name,
+          });
+          if (network === networks.customNode.code && this.childRef.state.shownDropdown) {
+            this.childRef.toggleDropdown();
+          }
+          this.props.networkStatusUpdated({ online: true });
+          this.changeNetwork(networks.customNode.code);
+          this.setState({ isValidationLoading: false, isFirstTime: false });
+          this.props.history.push(nextPath);
+        } else {
+          throw new Error();
+        }
+      })
+      .catch(() => {
+        this.setValidationError();
+        this.setState({ isValidationLoading: false, isFirstTime: false });
+      });
   }
 
   onConnectToCustomNode(e) {
@@ -179,21 +192,17 @@ class NetworkSelector extends React.Component {
   /* eslint-disable complexity */
   render() {
     const {
-      address,
       dark,
-      selectedNetwork,
       t,
     } = this.props;
     const {
       isValidationLoading,
       connected,
       validationError,
+      networkLabel,
     } = this.state;
     const { activeNetwork } = this.state;
     const networkList = getNetworksList();
-    const networkLabel = selectedNetwork !== networks.customNode.code
-      ? networkList[selectedNetwork].label
-      : address || this.state.address;
 
     return (
       <DropdownButton
@@ -206,35 +215,35 @@ class NetworkSelector extends React.Component {
         ref={(node) => { this.childRef = node; }}
       >
         {
-          networkList.map((network, key) => {
+          networkList.map((item, key) => {
             const isActiveItem = activeNetwork === networks.customNode.code;
 
-            if (network.value === networks.customNode.code) {
+            if (item.value === networks.customNode.code) {
               return (
                 <span
                   className={`${styles.networkSpan} address`}
                   key={key}
-                  onClick={() => this.onChangeActiveNetwork(network.value)}
+                  onClick={() => this.onChangeActiveNetwork(item.value)}
                 >
-                  {network.label}
+                  {item.label}
                   <div className={styles.inputWrapper}>
                     <Input
                       autoComplete="off"
                       onChange={(value) => { this.changeAddress(value); }}
                       name="customNetwork"
                       value={this.state.address}
-                      placeholder={this.props.t('ie. 192.168.0.1')}
+                      placeholder={this.props.t('i.e. ip:port, https://domain.tld')}
                       size="xs"
-                      className={`custom-network ${styles.input} ${validationError ? styles.errorInput : ''}`}
+                      className={`custom-network ${styles.input} ${this.state.activeNetwork === 2 && validationError ? styles.errorInput : ''}`}
                       onKeyDown={e => e.keyCode === keyCodes.enter
                       && this.onConnectToCustomNode(e)}
                       isLoading={isValidationLoading && this.state.address}
                       status={connected ? 'ok' : 'error'}
-                      feedback={validationError}
+                      feedback={this.state.activeNetwork === 2 ? validationError : ''}
                       dark={dark}
                     />
                     {
-                      validationError
+                      this.state.activeNetwork === 2 && validationError
                         ? (
                           <span className={styles.customNodeError}>
                             {validationError}
@@ -267,14 +276,14 @@ class NetworkSelector extends React.Component {
             return (
               <span
                 onClick={() => {
-                  this.onChangeActiveNetwork(network.value);
-                  this.validateCorrectNode(network.value);
+                  this.onChangeActiveNetwork(item.value);
+                  this.validateCorrectNode(item.value);
                   this.setState({ connected: false, isFirstTime: true });
                   this.childRef.toggleDropdown();
                 }}
                 key={key}
               >
-                {network.label}
+                {item.label}
               </span>
             );
           })

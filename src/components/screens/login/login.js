@@ -50,11 +50,6 @@ class Login extends React.Component {
   }
 
   async componentDidMount() {
-    // istanbul ignore else
-    if (!this.props.settings.areTermsOfUseAccepted) {
-      this.props.history.push(routes.termsOfUse.path);
-    }
-
     i18next.on('languageChanged', getNetworksList);
   }
 
@@ -110,7 +105,8 @@ class Login extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { t, network, settings } = this.props;
-    const canHWSignIn = !network.networks.LSK || network.networks.LSK.apiVersion === '2';
+    const canHWSignIn = (network.networks && !network.networks.LSK)
+      || (network.networks && network.networks.LSK && network.networks.LSK.apiVersion === '2');
 
     return (
       <React.Fragment>
