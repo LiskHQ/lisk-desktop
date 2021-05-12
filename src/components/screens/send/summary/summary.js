@@ -1,6 +1,6 @@
 import React from 'react';
 import { loginTypes } from '@constants';
-import { toRawLsk, fromRawLsk } from '@utils/lsk';
+import { toRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import AccountVisual from '@toolbox/accountVisual';
 import Converter from '@shared/converter';
@@ -87,7 +87,7 @@ class Summary extends React.Component {
           onClick: this.prevStep,
         }}
         showCancelButton={!isInitialization}
-        fee={fromRawLsk(fields.fee.value)}
+        fee={fields.fee.value}
         token={token}
       >
         <section>
