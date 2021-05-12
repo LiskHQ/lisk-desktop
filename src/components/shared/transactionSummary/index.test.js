@@ -33,7 +33,7 @@ describe('TransactionSummary', () => {
   it('should render hw wallet confirmation if props.acount.hwInfo', () => {
     const wrapper = mount(<TransactionSummary {...{
       ...props,
-      account: { hwInfo },
+      account: { ...accounts.genesis, hwInfo },
     }}
     />);
     expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
@@ -48,7 +48,7 @@ describe('TransactionSummary', () => {
         ...props.confirmButton,
         disabled: true,
       },
-      account: { hwInfo },
+      account: { ...accounts.genesis, hwInfo },
     }}
     />);
     expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
