@@ -19,7 +19,6 @@ const Footer = ({
   isHardwareWalletConnected, confirmation, isConfirmed,
   account, secondPassphrase, t, transaction, createTransaction,
 }) => {
-  account.summary.isMultisignature = true;
   if (isHardwareWalletConnected) {
     return null;
   }
