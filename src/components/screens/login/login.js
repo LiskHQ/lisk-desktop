@@ -104,7 +104,7 @@ class Login extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t, network, settings } = this.props;
+    const { t, network } = this.props;
     const canHWSignIn = (network.networks && !network.networks.LSK)
       || (network.networks && network.networks.LSK && network.networks.LSK.apiVersion === '2');
 
@@ -127,14 +127,7 @@ class Login extends React.Component {
             </div>
 
             <form onSubmit={e => e.preventDefault()}>
-              {
-                settings.showNetwork ? (
-                  <fieldset className={`${styles.inputsHolder}`}>
-                    <label>{t('Network')}</label>
-                    <NetworkSelector />
-                  </fieldset>
-                ) : null
-              }
+              <NetworkSelector />
               <fieldset className={`${styles.inputsHolder}`}>
                 <label className={styles.inputLabel}>{t('Passphrase')}</label>
                 <PassphraseInput
