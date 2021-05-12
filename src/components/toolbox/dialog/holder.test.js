@@ -12,13 +12,15 @@ const mockHistory = {
 jest.mock('@constants', () => ({
   modals: {
     testDialog: {
-      component: () => (
-        <MockDialog.WrappedComponent hasClose history={mockHistory} />
-      ),
       forbiddenTokens: [],
     },
   },
 }));
+
+jest.mock('@src/routesMap', () => {
+  const component = () => <MockDialog.WrappedComponent hasClose history={mockHistory} />;
+  return { testDialog: component };
+});
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

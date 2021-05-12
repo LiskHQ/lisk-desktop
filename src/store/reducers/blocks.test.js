@@ -1,6 +1,6 @@
 import { actionTypes } from '@constants';
 import blocksReducer from './blocks';
-import { genesis } from '../../../test/constants/accounts';
+import accounts from '../../../test/constants/accounts';
 
 describe('Reducer: blocks(state, action)', () => {
   const blocks = [{
@@ -61,9 +61,9 @@ describe('Reducer: blocks(state, action)', () => {
           totalVotesReceived: 1e9,
           status: 'awaitingSlot',
           lastBlock: 10000,
-          username: genesis.dpos.delegate.username,
+          username: accounts.genesis.dpos.delegate.username,
           nextForgingTime: 1620049927,
-          address: genesis.summary.address,
+          address: accounts.genesis.summary.address,
         },
       ],
     };

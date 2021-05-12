@@ -35,7 +35,8 @@
           ["@constants", "./src/constants/"],
           ["@shared", "./src/components/shared"],
           ["@screens", "./src/components/screens/"],
-          ["@toolbox", "./src/components/toolbox/"]
+          ["@toolbox", "./src/components/toolbox/"],
+          ["@src", "./src"]
         ],
         "extensions": [".js"]
       }

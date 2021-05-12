@@ -14,6 +14,7 @@
 
 const http = ({
   baseUrl, path, params, method = 'GET', network, ...restOptions
+  // eslint-disable-next-line consistent-return
 }) => {
   try {
     const url = new URL(baseUrl ? `${baseUrl}${path}`
@@ -37,7 +38,9 @@ const http = ({
         return response.json();
       });
   } catch (e) {
-    return Promise.reject(Error(e));
+    // eslint-disable-next-line no-console
+    console.error(e);
+    // return Promise.reject(Error(e));
   }
 };
 

@@ -14,6 +14,7 @@ const config = {
       '@toolbox': resolve(__dirname, '../src/components/toolbox'),
       '@actions': resolve(__dirname, '../src/store/actions'),
       '@store': resolve(__dirname, '../src/store'),
+      '@src': resolve(__dirname, '../src'),
     },
     fallback: {
       net: false,
