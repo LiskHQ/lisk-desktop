@@ -34,8 +34,8 @@ const Summary = ({
     const [error, tx] = await to(
       create(data, tokenMap.LSK.key),
     );
-    if (transaction) {
-      setTransaction(transaction);
+    if (tx) {
+      setTransaction(tx);
     }
     return [error, tx];
   };
