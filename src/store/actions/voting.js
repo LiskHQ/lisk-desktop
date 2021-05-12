@@ -6,6 +6,10 @@ import { getVotes } from '@api/delegate';
 import { passphraseUsed } from './account';
 import { MODULE_ASSETS_NAME_ID_MAP } from '../../constants/moduleAssets';
 
+export const votesReset = () => ({
+  type: actionTypes.votesReset,
+});
+
 /**
  * Clears the existing changes on votes.
  * The vote queue will be empty after this action dispatched
