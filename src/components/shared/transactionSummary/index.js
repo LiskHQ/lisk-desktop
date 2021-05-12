@@ -23,8 +23,11 @@ const Footer = ({
   if (isHardwareWalletConnected) {
     return null;
   }
+
   const [download, setDownload] = useState(false);
   const [isCopy, setIsCopy] = useState(false);
+  const [copied, setCopied] = useState(false);
+
   const onDownload = () => {
     const anchor = document.createElement('a');
     anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(transaction))}`);
@@ -41,6 +44,7 @@ const Footer = ({
       if (isCopy) {
         copyToClipboard(JSON.stringify(transaction));
         setIsCopy(false);
+        setCopied(true);
       }
     }
   }, [transaction]);
@@ -55,8 +59,8 @@ const Footer = ({
           }}
           >
             <span className={styles.buttonContent}>
-              <Icon name="copy" />
-              {t('copy')}
+              <Icon name={copied ? 'checkmark' : 'copy'} />
+              {t(copied ? 'Copied' : 'Copy')}
             </span>
           </SecondaryButton>
           <PrimaryButton onClick={() => {

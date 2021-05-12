@@ -58,6 +58,21 @@ const VoteDelegate = ({
 
 const RegisterMultisignatureGroup = () => null;
 
+const Reclaim = ({ account, t }) => (
+  <>
+    <section>
+      <AccountMigration account={account.info.LSK} showBalance={false} />
+    </section>
+    <section>
+      <label>{t('Balance to reclaim')}</label>
+      <LiskAmount
+        val={Number(account.info.LSK.legacy.balance)}
+        token={tokenMap.LSK.key}
+      />
+    </section>
+  </>
+);
+
 const Send = ({
   fields, amount, token, t,
 }) => (
@@ -113,6 +128,7 @@ const RegisterDelegate = ({ account, nickname, t }) => (
 
 const TransactionInfo = ({ moduleAssetId, ...restProps }) => {
   switch (moduleAssetId) {
+    case MODULE_ASSETS_NAME_ID_MAP.reclaimLSK: return <Reclaim {...restProps} />;
     case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: return <RegisterDelegate {...restProps} />;
     case MODULE_ASSETS_NAME_ID_MAP.transfer: return <Send {...restProps} />;
     case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: return <VoteDelegate {...restProps} />;
