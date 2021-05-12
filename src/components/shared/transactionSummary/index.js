@@ -25,7 +25,7 @@ const Footer = ({
   }
 
   const [download, setDownload] = useState(false);
-  const [isCopy, setIsCopy] = useState(false);
+  const [copy, setCopy] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const onDownload = () => {
@@ -36,25 +36,25 @@ const Footer = ({
   };
 
   useEffect(() => {
-    if (account.summary.isMultisignature) {
+    if (transaction && account.summary.isMultisignature) {
       if (download) {
         onDownload();
         setDownload(false);
       }
-      if (isCopy) {
+      if (copy) {
         copyToClipboard(JSON.stringify(transaction));
-        setIsCopy(false);
+        setCopy(false);
         setCopied(true);
       }
     }
-  }, [transaction]);
+  }, [download, copy, transaction]);
 
   return (
     <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
       {account.summary.isMultisignature ? (
         <>
           <SecondaryButton onClick={() => {
-            setIsCopy(true);
+            setCopy(true);
             createTransaction();
           }}
           >
