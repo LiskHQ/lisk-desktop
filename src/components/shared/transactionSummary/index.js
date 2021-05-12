@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { extractPublicKey } from '@utils/account';
-import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import LiskAmount from '@shared/liskAmount';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
@@ -120,7 +121,7 @@ class TransactionSummary extends React.Component {
               </Tooltip>
             </label>
             <label className={`${styles.feeValue} fee-value`}>
-              {`${formatAmountBasedOnLocale({ value: fee })} ${token}`}
+              <LiskAmount val={fee} token={token} convert={false} />
             </label>
           </section>
           {
