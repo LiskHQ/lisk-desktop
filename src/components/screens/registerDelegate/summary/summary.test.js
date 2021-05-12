@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import * as transactionsApi from '@api/transaction';
 import Summary from './summary';
+import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 describe('Delegate Registration Summary', () => {
@@ -19,11 +20,7 @@ describe('Delegate Registration Summary', () => {
     account: {
       info: {
         LSK: {
-          summary: {
-            address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-            balance: 11000,
-            isDelegate: false,
-          },
+          ...accounts.genesis,
           sequence: {
             nonce: '1',
           },

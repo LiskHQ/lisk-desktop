@@ -1,4 +1,5 @@
 import { mountWithRouter } from '@utils/testHelpers';
+import accounts from '../../../../../test/constants/accounts';
 import Summary from './summary';
 
 const added = {
@@ -60,7 +61,7 @@ const edited = {
 
 const props = {
   t: s => s,
-  account: { passphrase: '', info: { LSK: { publicKey: '' } } },
+  account: accounts.genesis,
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
   transactions: { transactionsCreatedFailed: [], transactionsCreated: [] },
