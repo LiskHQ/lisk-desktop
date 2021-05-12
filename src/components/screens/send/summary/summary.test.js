@@ -117,7 +117,7 @@ describe('Summary', () => {
         },
         reference: undefined,
       },
-      account: { },
+      account: accounts.genesis,
     });
     expect(wrapper.find('.fee-value')).toIncludeText(formattedtxFee);
     wrapper.find('.confirm-button').at(0).simulate('click');

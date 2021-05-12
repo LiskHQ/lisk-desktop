@@ -24,7 +24,7 @@ const Summary = ({
     const data = {
       moduleAssetId,
       network,
-      senderPublicKey: account.info.LSK.summary.publicKey,
+      senderPublicKey: account.summary.publicKey,
       passphrase: account.passphrase,
       nonce: account.sequence?.nonce,
       fee: toRawLsk(parseFloat(fee)),
@@ -40,8 +40,8 @@ const Summary = ({
     return [error, tx];
   };
 
-  const onSubmit = () => {
-    const [error, tx] = createTransaction();
+  const onSubmit = async () => {
+    const [error, tx] = await createTransaction();
 
     if (!error) {
       nextStep({ transactionInfo: tx });

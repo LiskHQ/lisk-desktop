@@ -17,7 +17,7 @@ activeDelegates.push({
   publicKey: 'test_pbk',
   rank: 999,
   address: '14018336151296112016L',
-  account: accounts.genesis
+  account: accounts.genesis,
   delegateWeight: 0,
 });
 

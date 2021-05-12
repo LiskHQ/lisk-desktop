@@ -17,16 +17,7 @@ describe('Delegate Registration Summary', () => {
   };
 
   const props = {
-    account: {
-      info: {
-        LSK: {
-          ...accounts.genesis,
-          sequence: {
-            nonce: '1',
-          },
-        },
-      },
-    },
+    account: accounts.genesis,
     fee: 10,
     prevState: {},
     nickname: 'mydelegate',

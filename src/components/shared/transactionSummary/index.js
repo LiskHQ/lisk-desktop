@@ -12,11 +12,12 @@ import PassphraseInput from '@toolbox/passphraseInput';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import copyToClipboard from 'copy-to-clipboard';
 import Icon from '@toolbox/icon';
+import { tokenMap } from '@constants';
 import styles from './transactionSummary.css';
 
 const Footer = ({
   confirmButton, cancelButton, footerClassName, showCancelButton,
-  isHardwareWalletConnected, confirmation, isConfirmed,
+  isHardwareWalletConnected, confirmation, isConfirmed, isMultisignature,
   account, secondPassphrase, t, transaction, createTransaction,
 }) => {
   if (isHardwareWalletConnected) {
@@ -50,7 +51,7 @@ const Footer = ({
 
   return (
     <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
-      {account.summary.isMultisignature ? (
+      {isMultisignature ? (
         <>
           <SecondaryButton
             className="copy-button"
@@ -278,6 +279,7 @@ class TransactionSummary extends React.Component {
           secondPassphrase={secondPassphrase}
           transaction={transaction}
           createTransaction={createTransaction}
+          isMultisignature={token === tokenMap.LSK.key && account.summary.isMultisignature}
           t={t}
         />
       </Box>
