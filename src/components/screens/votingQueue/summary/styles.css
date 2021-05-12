@@ -2,24 +2,13 @@
 
 .container {
   width: auto !important;
-  & .content {
-    & .contentItem {
-      padding-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-    }
-  }
+  display: inline;
 
-  & header {
-    @mixin headingNormal;
+  & > div {
+    padding-top: 0px !important;
 
-    font-size: var(--font-size-h5);
-    color: var(--color-maastricht-blue);
-  }
-
-  & .footer {
-    & button {
-      width: 230px;
+    & > span {
+      margin: 0 -20px;
     }
   }
 }
@@ -28,13 +17,4 @@
   display: flex;
   justify-content: space-between;
   margin: 20px 0px;
-}
-
-.addressText {
-  color: var(--color-ink-blue);
-  margin-right: 10px;
-}
-
-.arrowIcon {
-  margin: 0 6px;
 }
