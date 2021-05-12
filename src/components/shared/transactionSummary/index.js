@@ -52,20 +52,24 @@ const Footer = ({
     <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
       {account.summary.isMultisignature ? (
         <>
-          <SecondaryButton onClick={() => {
-            setCopy(true);
-            createTransaction();
-          }}
+          <SecondaryButton
+            className="copy-button"
+            onClick={() => {
+              setCopy(true);
+              createTransaction();
+            }}
           >
             <span className={styles.buttonContent}>
               <Icon name={copied ? 'checkmark' : 'copy'} />
               {t(copied ? 'Copied' : 'Copy')}
             </span>
           </SecondaryButton>
-          <PrimaryButton onClick={() => {
-            setDownload(true);
-            createTransaction();
-          }}
+          <PrimaryButton
+            className="download-button"
+            onClick={() => {
+              setDownload(true);
+              createTransaction();
+            }}
           >
             <span className={styles.buttonContent}>
               <Icon name="download" />
@@ -77,14 +81,14 @@ const Footer = ({
         <>
           {showCancelButton && (
             <SecondaryButton
-              className={`${styles.editBtn} cancel-button`}
+              className="cancel-button"
               onClick={cancelButton.onClick}
             >
               {cancelButton.label}
             </SecondaryButton>
           )}
           <PrimaryButton
-            className={`${styles.confirmBtn} confirm-button`}
+            className="confirm-button"
             disabled={
               (!!account.secondPublicKey && !secondPassphrase.isValid)
               || (confirmation && !isConfirmed)
