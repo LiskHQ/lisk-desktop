@@ -164,6 +164,7 @@ class NetworkSelector extends React.Component {
             validationError: '',
             connected: true,
             networkLabel: newNetwork.name,
+            address: network !== networks.customNode.code ? '' : address,
           });
           if (network === networks.customNode.code && this.childRef.state.shownDropdown) {
             this.childRef.toggleDropdown();
@@ -192,9 +193,13 @@ class NetworkSelector extends React.Component {
   /* eslint-disable complexity */
   render() {
     const {
+      settings,
       dark,
       t,
     } = this.props;
+    if (!settings.showNetwork) {
+      return <div />;
+    }
     const {
       isValidationLoading,
       connected,
@@ -205,90 +210,93 @@ class NetworkSelector extends React.Component {
     const networkList = getNetworksList();
 
     return (
-      <DropdownButton
-        buttonClassName={`${validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
-        wrapperClassName={styles.NetworkSelector}
-        className={`${styles.menu} ${dark ? 'dark' : ''} network-dropdown`}
-        buttonLabel={(<span>{networkLabel}</span>)}
-        ButtonComponent={SecondaryButton}
-        align="right"
-        ref={(node) => { this.childRef = node; }}
-      >
-        {
-          networkList.map((item, key) => {
-            const isActiveItem = activeNetwork === networks.customNode.code;
+      <fieldset className={`${styles.inputsHolder}`}>
+        <label>{t('Network')}</label>
+        <DropdownButton
+          buttonClassName={`${validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
+          wrapperClassName={styles.NetworkSelector}
+          className={`${styles.menu} ${dark ? 'dark' : ''} network-dropdown`}
+          buttonLabel={(<span>{networkLabel}</span>)}
+          ButtonComponent={SecondaryButton}
+          align="right"
+          ref={(node) => { this.childRef = node; }}
+        >
+          {
+            networkList.map((item, key) => {
+              const isActiveItem = activeNetwork === networks.customNode.code;
 
-            if (item.value === networks.customNode.code) {
+              if (item.value === networks.customNode.code) {
+                return (
+                  <span
+                    className={`${styles.networkSpan} address`}
+                    key={key}
+                    onClick={() => this.onChangeActiveNetwork(item.value)}
+                  >
+                    {item.label}
+                    <div className={styles.inputWrapper}>
+                      <Input
+                        autoComplete="off"
+                        onChange={(value) => { this.changeAddress(value); }}
+                        name="customNetwork"
+                        value={this.state.address}
+                        placeholder={this.props.t('i.e. ip:port, https://domain.tld')}
+                        size="xs"
+                        className={`custom-network ${styles.input} ${this.state.activeNetwork === 2 && validationError ? styles.errorInput : ''}`}
+                        onKeyDown={e => e.keyCode === keyCodes.enter
+                        && this.onConnectToCustomNode(e)}
+                        isLoading={isValidationLoading && this.state.address}
+                        status={connected ? 'ok' : 'error'}
+                        feedback={this.state.activeNetwork === 2 ? validationError : ''}
+                        dark={dark}
+                      />
+                      {
+                        this.state.activeNetwork === 2 && validationError
+                          ? (
+                            <span className={styles.customNodeError}>
+                              {validationError}
+                            </span>
+                          )
+                          : null
+                      }
+                    </div>
+                    {
+                      isActiveItem && this.state.address !== ''
+                        ? (
+                          <div>
+                            <PrimaryButton
+                              disabled={this.state.connected}
+                            /* istanbul ignore next */
+                              onClick={this.onConnectToCustomNode}
+                              className={`${styles.button} ${styles.backButton} connect-button`}
+                              size="xs"
+                            >
+                              {this.state.connected ? t('Connected') : t('Connect')}
+                            </PrimaryButton>
+                          </div>
+                        )
+                        : ''
+                    }
+                  </span>
+                );
+              }
+
               return (
                 <span
-                  className={`${styles.networkSpan} address`}
+                  onClick={() => {
+                    this.onChangeActiveNetwork(item.value);
+                    this.validateCorrectNode(item.value);
+                    this.setState({ connected: false, isFirstTime: true });
+                    this.childRef.toggleDropdown();
+                  }}
                   key={key}
-                  onClick={() => this.onChangeActiveNetwork(item.value)}
                 >
                   {item.label}
-                  <div className={styles.inputWrapper}>
-                    <Input
-                      autoComplete="off"
-                      onChange={(value) => { this.changeAddress(value); }}
-                      name="customNetwork"
-                      value={this.state.address}
-                      placeholder={this.props.t('i.e. ip:port, https://domain.tld')}
-                      size="xs"
-                      className={`custom-network ${styles.input} ${this.state.activeNetwork === 2 && validationError ? styles.errorInput : ''}`}
-                      onKeyDown={e => e.keyCode === keyCodes.enter
-                      && this.onConnectToCustomNode(e)}
-                      isLoading={isValidationLoading && this.state.address}
-                      status={connected ? 'ok' : 'error'}
-                      feedback={this.state.activeNetwork === 2 ? validationError : ''}
-                      dark={dark}
-                    />
-                    {
-                      this.state.activeNetwork === 2 && validationError
-                        ? (
-                          <span className={styles.customNodeError}>
-                            {validationError}
-                          </span>
-                        )
-                        : null
-                    }
-                  </div>
-                  {
-                    isActiveItem
-                      ? (
-                        <div>
-                          <PrimaryButton
-                            disabled={this.state.connected}
-                          /* istanbul ignore next */
-                            onClick={this.onConnectToCustomNode}
-                            className={`${styles.button} ${styles.backButton} connect-button`}
-                            size="xs"
-                          >
-                            {this.state.connected ? t('Connected') : t('Connect')}
-                          </PrimaryButton>
-                        </div>
-                      )
-                      : ''
-                  }
                 </span>
               );
-            }
-
-            return (
-              <span
-                onClick={() => {
-                  this.onChangeActiveNetwork(item.value);
-                  this.validateCorrectNode(item.value);
-                  this.setState({ connected: false, isFirstTime: true });
-                  this.childRef.toggleDropdown();
-                }}
-                key={key}
-              >
-                {item.label}
-              </span>
-            );
-          })
-        }
-      </DropdownButton>
+            })
+          }
+        </DropdownButton>
+      </fieldset>
     );
   }
 }
