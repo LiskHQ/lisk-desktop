@@ -21,7 +21,6 @@ const blockListener = ({ getState, dispatch }) => {
   const state = getState();
   blockUnsubscribe();
 
-  // eslint-disable-next-line max-statements
   const callback = (block) => {
     const { settings, network } = getState();
     const activeToken = settings.token && state.settings.token.active;
