@@ -1,12 +1,10 @@
-import React from 'react';
 import i18next from 'i18next';
-import { mount } from 'enzyme';
+import { mountWithRouter } from '../../../utils/testHelpers';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
 
 describe('Login', () => {
-  let wrapper;
   i18next.on = jest.fn();
 
   const account = {
@@ -68,19 +66,20 @@ describe('Login', () => {
 
   beforeEach(() => {
     localStorage.getItem = jest.fn().mockReturnValue(JSON.stringify(undefined));
-    wrapper = mount(<Login {...props} />);
   });
 
   afterEach(() => {
-    history.location.search = '';
+    jest.clearAllMocks();
   });
 
   describe('Generals', () => {
     it.skip('redirect to Terms of Use page', () => {
+      mountWithRouter(Login, props);
       expect(props.history.push).toHaveBeenCalledWith(routes.termsOfUse.path);
     });
 
     it('should show error about passphrase length if passphrase have wrong length', () => {
+      const wrapper = mountWithRouter(Login, props);
       const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
       const clipboardData = {
         getData: () => passphrase.replace(/\s[a-z]+$/, ''),
@@ -92,24 +91,39 @@ describe('Login', () => {
 
   describe('History management', () => {
     it('calls this.props.history.replace(\'/dashboard\')', () => {
-      wrapper.setProps({
-        history,
-        account: { address: 'dummy' },
-      });
-      expect(props.history.replace).toHaveBeenCalledWith(`${routes.dashboard.path}`);
+      const newProps = {
+        ...props,
+      };
+      const wrapper = mountWithRouter(Login, newProps);
+      const clipboardData = {
+        getData: () => accounts.delegate.passphrase,
+      };
+      wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
+      wrapper.update();
+      wrapper.find('button.login-button').simulate('click');
+      expect(newProps.history.replace).toHaveBeenCalledWith(`${routes.dashboard.path}`);
     });
 
     it('calls this.props.history.replace with referrer address', () => {
       history.location.search = `?referrer=${routes.voting.path}`;
-      wrapper.setProps({
-        history, account: { address: 'dummy' },
-      });
-      expect(props.history.replace).toHaveBeenCalledWith(routes.voting.path);
+      const newProps = {
+        ...props,
+        history,
+      };
+      const wrapper = mountWithRouter(Login, newProps);
+      const clipboardData = {
+        getData: () => accounts.delegate.passphrase,
+      };
+      wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
+      wrapper.update();
+      wrapper.find('button.login-button').simulate('click');
+      expect(newProps.history.replace).toHaveBeenCalledWith(routes.voting.path);
     });
   });
 
   describe('After submission', () => {
     it('it should call props.login if not already logged with given passphrase', () => {
+      const wrapper = mountWithRouter(Login, props);
       const clipboardData = {
         getData: () => accounts.delegate.passphrase,
       };
