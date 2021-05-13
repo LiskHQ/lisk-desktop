@@ -56,6 +56,7 @@ pipeline {
 			steps {
 					unstash 'build'
 					sh '''
+					mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME
 					rsync -axl --delete $WORKSPACE/app/build/ /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
 					rm -rf $WORKSPACE/app/build
 					'''
