@@ -164,14 +164,15 @@ class NetworkSelector extends React.Component {
             validationError: '',
             connected: true,
             networkLabel: newNetwork.name,
-            address: network !== networks.customNode.code ? '' : address,
+            address: network !== networks.customNode.code ? '' : nodeURL,
+            isValidationLoading: false,
+            isFirstTime: false,
           });
           if (network === networks.customNode.code && this.childRef.state.shownDropdown) {
             this.childRef.toggleDropdown();
           }
           this.props.networkStatusUpdated({ online: true });
           this.changeNetwork(networks.customNode.code);
-          this.setState({ isValidationLoading: false, isFirstTime: false });
           this.props.history.push(nextPath);
         } else {
           throw new Error();
