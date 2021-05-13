@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 
 const getErrorMessage = (error) => {
-  if (error === false || error.indexOf('404 Not Found') > -1) {
+  if (error.indexOf('404 Not Found') > -1) {
     return '';
   } if (error.indexOf('DISCONNECTED') > -1 || error.indexOf('net:') > -1) {
     return 'Please check your internet connection.';
@@ -29,7 +29,7 @@ export default ({ // eslint-disable-line max-statements
     console.error(error);
     if (updater.error !== error) {
       updater.error = error;
-      const message = getErrorMessage(error && error.toString());
+      const message = getErrorMessage(error ? error.toString() : '');
       if (message) {
         dialog.showErrorBox(`${i18n.t('Error')}: `, message);
       }
