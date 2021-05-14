@@ -16,7 +16,7 @@ export const bookmarksRetrieved = () => (dispatch) => {
       BTC: data.BTC,
       LSK: data.LSK.map(account => ({
         ...account,
-        disabled: !validateAddress('LSK', account.address),
+        disabled: validateAddress('LSK', account.address) === 1,
       })),
     };
     dispatch({
