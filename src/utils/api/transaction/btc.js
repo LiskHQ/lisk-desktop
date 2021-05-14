@@ -31,24 +31,33 @@ const normalizeTransactionsResponse = ({
 }) => list.map(({
   tx, feeSatoshi, confirmations, timestamp,
 }) => {
-  const data = {
+  const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
+  const recipientAddress = validateAddress(tokenMap.BTC.key, extractedAddress, network) === 0
+    ? extractedAddress : 'Unparsed Address';
+
+  return {
     id: tx.txid,
-    timestamp: timestamp ? Number(timestamp) * 1000 : null,
+    block: {
+      timestamp: timestamp ? Number(timestamp) * 1000 : null,
+    },
     confirmations: confirmations || 0,
-    type: 0,
-    title: 'transfer',
-    data: '',
+    isPending: !confirmations,
+    nonce: 0,
+    moduleAssetId: '2:0',
+    moduleAssetName: 'token:transfer',
     fee: feeSatoshi,
     explorerLink: `${network.networks.BTC.transactionExplorerURL}/${tx.txid}`,
+    sender: {
+      address: tx.inputs[0].txDetail.scriptPubKey.addresses[0],
+    },
+    asset: {
+      amount: tx.outputs[0].satoshi.toString(),
+      recipient: {
+        address: recipientAddress,
+      },
+      data: '',
+    },
   };
-
-  data.senderId = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
-  const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
-  data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, network) === 0
-    ? extractedAddress : 'Unparsed Address';
-  data.amount = tx.outputs[0].satoshi.toString();
-
-  return data;
 });
 
 /**
