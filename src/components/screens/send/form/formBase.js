@@ -1,6 +1,7 @@
 import React from 'react';
 import Piwik from '@utils/piwik';
 import { PrimaryButton } from '@toolbox/buttons';
+import { tokenMap } from '@constants';
 import AmountField from '@shared/amountField';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
@@ -31,7 +32,8 @@ const FormBase = ({
         <span className={`${styles.fieldGroup} recipient`}>
           <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
           <BookmarkAutoSuggest
-            bookmarks={bookmarks[token]}
+            bookmarks={token === tokenMap.LSK.key
+              ? bookmarks[token].filter(item => !item.disabled) : bookmarks[token]}
             network={network}
             recipient={fields.recipient}
             t={t}
