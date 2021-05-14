@@ -45,7 +45,10 @@ const reducer = (state, action) => {
       const availableBalance = calculateAvailableBalance(balance, token);
       const result = {
         ...action.response,
-        value: availableBalance - toRawLsk(action.payload.response.value),
+        maxAmount: {
+          ...state.maxAmount,
+          value: availableBalance - toRawLsk(action.payload.response.value),
+        },
       };
 
       return { ...state, ...result };
