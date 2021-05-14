@@ -14,7 +14,7 @@ import LiskAmount from '@shared/liskAmount';
 import TransactionsTable from '@shared/transactionsTable';
 import styles from './blockDetails.css';
 
-const getFields = (data, token, t) => ({
+const getFields = (data, token, t, currentHeight) => ({
   id: {
     label: t('Block ID'),
     classList: `${grid['col-xs-12']} ${grid['col-sm-10']} ${grid['col-md-8']} ${grid['col-lg-6']}`,
@@ -33,7 +33,7 @@ const getFields = (data, token, t) => ({
   confirmations: {
     label: t('Confirmations'),
     classList: `${grid['col-xs-3']} ${grid['col-sm-2']} ${grid['col-md-2']}`,
-    value: data.confirmations ?? '-',
+    value: currentHeight ? currentHeight - data.height : '-',
   },
   reward: {
     label: t('Reward'),
@@ -55,11 +55,11 @@ const getFields = (data, token, t) => ({
     classList: `${grid['col-xs-3']} ${grid['col-sm-2']} ${grid['col-md-2']}`,
     value: <LiskAmount val={data.totalForged} token={token} />,
   },
-  totalAmount: {
-    label: t('Total amount'),
-    classList: `${grid['col-xs-3']} ${grid['col-sm-2']} ${grid['col-md-2']}`,
-    value: <LiskAmount val={Math.max(data.totalAmount - data.totalFee, 0)} token={token} />,
-  },
+  // totalAmount: {
+  //   label: t('Total amount'),
+  //   classList: `${grid['col-xs-3']} ${grid['col-sm-2']} ${grid['col-md-2']}`,
+  //   value: <LiskAmount val={Math.max(data.totalAmount - data.totalFee, 0)} token={token} />,
+  // },
   date: {
     label: t('Date'),
     classList: `${grid['col-xs-3']} ${grid['col-sm-2']} ${grid['col-md-2']}`,
@@ -81,9 +81,9 @@ const getFields = (data, token, t) => ({
   },
 });
 
-const Rows = ({ data, t }) => {
+const Rows = ({ data, t, currentHeight }) => {
   const token = tokenMap.LSK.key;
-  const fields = getFields(data, token, t);
+  const fields = getFields(data, token, t, currentHeight);
 
   const columns = Object.keys(fields).map(field => (
     <LabeledValue
@@ -103,7 +103,7 @@ const Rows = ({ data, t }) => {
 };
 
 const BlockDetails = ({
-  t, blockDetails, blockTransactions, match,
+  t, blockDetails, blockTransactions, match, currentHeight,
 }) => {
   const canLoadMore = blockTransactions.meta
     ? blockTransactions.data.length < blockTransactions.meta.total
@@ -129,6 +129,7 @@ const BlockDetails = ({
           ) : (
             <Rows
               data={blockDetails.data}
+              currentHeight={currentHeight}
               t={t}
             />
           )}
