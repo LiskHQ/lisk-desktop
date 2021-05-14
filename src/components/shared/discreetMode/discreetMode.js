@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { routes } from '@constants';
-import { getTokenFromAddress } from '@utils/account';
 import { selectSearchParamValue } from '@utils/searchParams';
 import styles from './discreetMode.css';
 
 class DiscreetMode extends Component {
   handleBlurOnOtherWalletPage() {
-    const { account, location: { search } } = this.props;
+    const { account, location: { search }, token } = this.props;
     const address = selectSearchParamValue(search, routes.account.searchParam);
-    const token = getTokenFromAddress(address);
     return account.info && address === account.info[token].address;
   }
 

@@ -1,8 +1,6 @@
 import moment from 'moment';
-import { tokenMap } from '@constants';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
-import { getTokenFromAddress } from './account';
 import i18n from '../i18n';
 
 const formats = {
@@ -18,13 +16,10 @@ const formats = {
 const getUnitFromFormat = format =>
   Object.keys(formats).find(key => formats[key] === format);
 
-const getNormalizedTimestamp = (tx) => {
-  const token = getTokenFromAddress(tx.sender.address) || tokenMap.BTC.key;
-  return ({
-    BTC: t => t,
-    LSK: getUnixTimestampFromValue,
-  }[token](tx.timestamp));
-};
+const getNormalizedTimestamp = (tx, token) => ({
+  BTC: t => t,
+  LSK: getUnixTimestampFromValue,
+}[token](tx.timestamp));
 
 const styles = {
   borderColor: {
@@ -114,10 +109,10 @@ export const graphOptions = ({
   },
 });
 
-export const getChartDateFormat = (transactions) => {
+export const getChartDateFormat = (transactions, token) => {
   const last = moment();
   const first = transactions.length
-    && moment(getNormalizedTimestamp(transactions.slice(-1)[0]));
+    && moment(getNormalizedTimestamp(transactions.slice(-1)[0], token));
 
   if (!first || !last) return '';
   if (last.diff(first, 'years') <= 1) return formats.month;
@@ -169,14 +164,14 @@ export const getBalanceData = ({
   const data = transactions
     .sort((a, b) => (b.timestamp - a.timestamp))
     .reduce(({ allTransactions, graphTransactions }, item, index) => {
-      const date = moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD');
+      const date = moment(getNormalizedTimestamp(item, token)).format('YYYY-MM-DD');
       const tx = transactions[index - 1];
       const txValue = tx ? parseFloat(fromRawLsk(getTxValue(tx, address))) : 0;
       const lastBalance = allTransactions[allTransactions.length - 1]
         ? allTransactions[allTransactions.length - 1].y
         : parseFloat(fromRawLsk(balance));
       const transactionData = {
-        x: moment(getNormalizedTimestamp(item)).format('YYYY-MM-DD'),
+        x: moment(getNormalizedTimestamp(item, token)).format('YYYY-MM-DD'),
         y: lastBalance - txValue,
       };
 
