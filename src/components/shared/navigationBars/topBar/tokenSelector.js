@@ -25,13 +25,13 @@ const TokenSelector = ({
 
   return (
     <Tooltip
-      className={`${styles.tooltipWrappe} ${disabled && `${styles.disabled} disabled`}`}
+      className={`${disabled && `${styles.disabled} disabled`}`}
       size="maxContent"
       position="bottom"
       content={(
         <Icon
           name={`${token.toLowerCase()}Icon`}
-          className={`${styles.toggle} token-selector-${token} ${activeToken === token ? '' : styles.disabled}`}
+          className={`${styles.toggle} token-selector-${token} ${activeToken === token ? styles.disabled : ''}`}
           onClick={activateToken}
         />
       )}
