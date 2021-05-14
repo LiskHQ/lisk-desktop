@@ -5,9 +5,8 @@ import { DEFAULT_NUMBER_OF_SIGNATURES } from '@constants';
 import { actionTypes, reducer, getInitialState } from './reducer';
 
 const getNumberOfSignatures = (account) => {
-  const lskAccount = account.info.LSK;
-  if (lskAccount.summary.isMultisignature) {
-    return lskAccount.keys.numberOfSignatures;
+  if (account?.summary?.isMultisignature) {
+    return account.keys.numberOfSignatures;
   }
   return DEFAULT_NUMBER_OF_SIGNATURES;
 };
@@ -26,13 +25,18 @@ const useTransactionFeeCalculation = ({
       ...params,
       selectedPriority: priorityOptions[0],
     }, token);
-    dispatch({ type: actionTypes.setMaxAmount, payload: { response: minFee, account, token } });
 
-    const maxAmount = await getTransactionFee({
+    dispatch({ type: actionTypes.setMinFee, payload: { response: minFee, account, token } });
+
+    const maxAmountFee = await getTransactionFee({
       ...params,
       transaction: { ...params.transaction, amount: account.token?.balance },
     }, token);
-    dispatch({ type: actionTypes.setMaxAmount, payload: { response: maxAmount, account, token } });
+
+    dispatch({
+      type: actionTypes.setMaxAmount,
+      payload: { response: maxAmountFee, account, token },
+    });
   };
 
   useEffect(() => {
