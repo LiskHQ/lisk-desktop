@@ -7,9 +7,11 @@ const accounts = {
       address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
       balance: '9897000000000000',
       isMigrated: true,
+      isMultisignature: false,
     },
     token: { balance: '9897000000000000' },
     sequence: { nonce: '1' },
+    keys: { numberOfSignatures: 0, mandatoryKeys: [], optionalKeys: [] },
     dpos: {
       delegate: {},
     },

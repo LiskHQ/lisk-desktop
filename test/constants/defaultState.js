@@ -1,7 +1,11 @@
+import accounts from './accounts';
+
 export default {
   account: {
     info: {
-      LSK: {},
+      LSK: {
+        ...accounts.genesis,
+      },
       BTC: {},
     },
   },
