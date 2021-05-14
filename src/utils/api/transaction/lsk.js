@@ -260,7 +260,7 @@ export const getTransactionFee = async ({
 
   // tie breaker is only meant for medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
-    ? 0 : minFeePerByte * feePerByte * Math.random();
+    ? 0 : (minFeePerByte * feePerByte * Math.random());
 
   const size = transactions.getBytes(schema, {
     ...transactionObject,
@@ -269,7 +269,7 @@ export const getTransactionFee = async ({
     ),
   }).length;
 
-  const calculatedFee = Number(minFee + BigInt(size * feePerByte) + BigInt(tieBreaker));
+  const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
   const fee = Math.min(calculatedFee, maxAssetFee);
   const roundedValue = transactions.convertBeddowsToLSK(fee.toString());
 
