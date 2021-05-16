@@ -3,7 +3,7 @@ import { moduleAssetSchemas } from '@constants';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 import accounts from '../../../../test/constants/accounts';
 
-describe('useIpc', () => {
+describe('useTransactionFeeCalculation', () => {
   moduleAssetSchemas['2:0'] = {
     $id: 'lisk/transfer-asset',
     title: 'Transfer transaction asset',
