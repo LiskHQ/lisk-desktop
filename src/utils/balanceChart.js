@@ -123,7 +123,7 @@ export const getChartDateFormat = (transactions, token) => {
   return formats.year;
 };
 
-const isIncomming = (tx, address) => tx.asset.recipient?.address === address;
+const isIncoming = (tx, address) => tx.asset.recipient?.address === address;
 const isOutgoing = (tx, address) => tx.sender.address === address;
 
 /**
@@ -132,10 +132,25 @@ const isOutgoing = (tx, address) => tx.sender.address === address;
  * @param {String} address Account address
  */
 const getTxValue = (tx, address) => (
-  (isIncomming(tx, address) ? parseInt(tx.amount, 10) : 0)
-    - (isOutgoing(tx, address) ? parseInt(tx.amount, 10) : 0)
-    - (isOutgoing(tx, address) ? parseInt(tx.fee, 10) : 0)
+  (isIncoming(tx, address) ? parseInt(tx.asset.amount, 10) : 0)
+    - (isOutgoing(tx, address) ? parseInt(tx.asset?.amount ?? 0, 10) : 0)
+    - (tx.moduleAssetId === '5:1'
+      ? tx.asset.votes.reduce((sum, vote) => { sum += parseInt(vote.amount, 10); return sum; }, 0)
+      : 0)
+    - parseInt(tx.fee, 10)
 );
+
+/**
+ *  Converts the timestamp to YYYY-MM-DD format
+ * @param {Number} timestamp - Tx timestamp received from the API
+ * @param {String} token - Option of LSK and BTC
+ * @returns {String} - Date in YYYY-MM-DD format
+ */
+const getDate = (timestamp, token) => {
+  const multiplier = token === 'LSK' ? 1000 : 1;
+  const date = new Date(timestamp * multiplier);
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+};
 
 /**
  * Returns balance data grouped by an specific amount
@@ -162,16 +177,16 @@ export const getBalanceData = ({
   transactions, balance, address, token,
 }) => {
   const data = transactions
-    .sort((a, b) => (b.timestamp - a.timestamp))
+    .sort((a, b) => (b.block.timestamp - a.block.timestamp))
     .reduce(({ allTransactions, graphTransactions }, item, index) => {
-      const date = moment(getNormalizedTimestamp(item, token)).format('YYYY-MM-DD');
+      const date = getDate(item.block.timestamp, token);
       const tx = transactions[index - 1];
       const txValue = tx ? parseFloat(fromRawLsk(getTxValue(tx, address))) : 0;
       const lastBalance = allTransactions[allTransactions.length - 1]
         ? allTransactions[allTransactions.length - 1].y
         : parseFloat(fromRawLsk(balance));
       const transactionData = {
-        x: moment(getNormalizedTimestamp(item, token)).format('YYYY-MM-DD'),
+        x: getDate(item.block.timestamp, token),
         y: lastBalance - txValue,
       };
 
@@ -198,8 +213,4 @@ export const getBalanceData = ({
       pointBorderColor: styles.borderColor[token],
     }],
   };
-};
-
-export default {
-  graphOptions,
 };
