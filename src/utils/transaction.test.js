@@ -1,13 +1,23 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { splitModuleAndAssetIds } from '@utils/moduleAssets';
-import { getTxAmount, transformTransaction, containsTransactionType } from './transaction';
+import { getAddressFromBase32Address } from '@utils/account';
+import {
+  getTxAmount,
+  transformTransaction,
+  containsTransactionType,
+  createTransactionObject,
+} from './transaction';
 import accounts from '../../test/constants/accounts';
+
+const {
+  transfer, voteDelegate, registerMultisignatureGroup, registerDelegate, reclaimLSK, unlockToken,
+} = MODULE_ASSETS_NAME_ID_MAP;
 
 describe('API: LSK Transactions', () => {
   describe('getTxAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+        moduleAssetId: transfer,
         asset: { amount: 100000000 },
       };
 
@@ -16,8 +26,8 @@ describe('API: LSK Transactions', () => {
 
     it('should return amount of votes in Beddows', () => {
       const tx = {
-        title: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+        title: voteDelegate,
+        moduleAssetId: voteDelegate,
         asset: {
           votes: [
             {
@@ -35,8 +45,8 @@ describe('API: LSK Transactions', () => {
 
     it('should return amount of unlock in Beddows', () => {
       const tx = {
-        title: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        title: unlockToken,
+        moduleAssetId: unlockToken,
         asset: {
           unlockingObjects: [
             {
@@ -53,11 +63,102 @@ describe('API: LSK Transactions', () => {
     });
   });
 
+  describe('createTransactionObject', () => {
+    it('creates a transaction object for transfer transaction', () => {
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        recipient: '',
+        amount: '1',
+        fee: '1000000',
+        data: 'test',
+      };
+      const txObj = createTransactionObject(tx, transfer);
+
+      expect(txObj).toMatchSnapshot();
+    });
+
+    it('creates a transaction object for vote transaction', () => {
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        recipient: '',
+        amount: '1',
+        fee: '1000000',
+        votes: [
+          { amount: '100', delegateAddress: accounts.genesis.summary.address },
+          {
+            amount: '-100',
+            delegateAddress: accounts.delegate.summary.address,
+          },
+        ],
+      };
+      const txObj = createTransactionObject(tx, voteDelegate);
+
+      expect(txObj).toMatchSnapshot();
+    });
+
+    it('creates a transaction object for delegate registration transaction', () => {
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        fee: '1000000',
+        username: 'username',
+      };
+      const txObj = createTransactionObject(tx, registerDelegate);
+
+      expect(txObj).toMatchSnapshot();
+    });
+
+    it('creates a transaction object for reclaimLSK transaction', () => {
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        fee: '1000000',
+        amount: '10000000',
+      };
+      const txObj = createTransactionObject(tx, reclaimLSK);
+
+      expect(txObj).toMatchSnapshot();
+    });
+
+    it('creates a transaction object for unlockToken transaction', () => {
+      const unlockingObjects = [
+        { delegateAddress: accounts.genesis.summary.address, amount: '-1000' },
+        { delegateAddress: accounts.delegate.summary.address, amount: '1000' },
+      ];
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        fee: '1000000',
+        unlockingObjects,
+      };
+      const txObj = createTransactionObject(tx, unlockToken);
+
+      expect(txObj).toMatchSnapshot();
+    });
+
+    it('creates a transaction object for registerMultisignatureGroup transaction', () => {
+      const tx = {
+        senderPublicKey: '',
+        nonce: 1,
+        fee: '1000000',
+        amount: '10000000',
+        numberOfSignatures: 2,
+        mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
+        optionalKeys: [accounts.second_passphrase_account.summary.publicKey],
+      };
+      const txObj = createTransactionObject(tx, registerMultisignatureGroup);
+
+      expect(txObj).toMatchSnapshot();
+    });
+  });
+
   describe('transformTransaction', () => {
     const binaryAddress = 'd04699e57c4a3846c988f3c15306796f8eae5c1c';
 
     it('should a transfer transaction with type signature of lisk service', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(MODULE_ASSETS_NAME_ID_MAP.transfer);
+      const [moduleID, assetID] = splitModuleAndAssetIds(transfer);
       const tx = {
         moduleID,
         assetID,
@@ -68,32 +169,11 @@ describe('API: LSK Transactions', () => {
         asset: { amount: 100000000, recipientAddress: binaryAddress, data: '' },
       };
 
-      const expectedTransaction = {
-        id: '12',
-        moduleAssetId: '2:0',
-        fee: '0.1',
-        nonce: '1',
-        sender: {
-          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
-        },
-        signatures: undefined,
-        asset: {
-          recipient: {
-            address: 'lskzzzz3xu4xpzz6x2zzuzzbvzpz2zzrvz3zzxuzz3mzozzox24z2zzuzzzzzvuzz3z577dz7',
-          },
-          amount: '100000000',
-          data: '',
-        },
-      };
-
-      expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
+      expect(transformTransaction(tx)).toMatchSnapshot();
     });
 
     it('should a register delegate transaction with type signature of lisk service', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(
-        MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
-      );
+      const [moduleID, assetID] = splitModuleAndAssetIds(registerDelegate);
       const tx = {
         moduleID,
         assetID,
@@ -104,28 +184,11 @@ describe('API: LSK Transactions', () => {
         asset: { username: 'super_delegate' },
       };
 
-      const expectedTransaction = {
-        id: '12',
-        moduleAssetId: '5:0',
-        fee: '0.1',
-        nonce: '1',
-        sender: {
-          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
-        },
-        signatures: undefined,
-        asset: {
-          username: 'super_delegate',
-        },
-      };
-
-      expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
+      expect(transformTransaction(tx)).toMatchSnapshot();
     });
 
     it('should a vote delegate transaction with type signature of lisk service', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(
-        MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-      );
+      const [moduleID, assetID] = splitModuleAndAssetIds(voteDelegate);
       const tx = {
         moduleID,
         assetID,
@@ -134,38 +197,20 @@ describe('API: LSK Transactions', () => {
         id: Buffer.from('123', 'hex'),
         senderPublicKey: accounts.genesis.summary.publicKey,
         asset: {
-          votes: [{
-            amount: '100',
-            delegateAddress: '123',
-          }],
+          votes: [
+            {
+              amount: '100',
+              delegateAddress: '123',
+            },
+          ],
         },
       };
 
-      const expectedTransaction = {
-        id: '12',
-        moduleAssetId: '5:1',
-        fee: '0.1',
-        nonce: '1',
-        sender: {
-          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
-        },
-        signatures: undefined,
-        asset: {
-          votes: [{
-            amount: 100,
-            delegateAddress: 'lskzpxzckpryh',
-          }],
-        },
-      };
-
-      expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
+      expect(transformTransaction(tx)).toMatchSnapshot();
     });
 
     it('should transform a reclaimLSK transaction', () => {
-      const [moduleID, assetID] = splitModuleAndAssetIds(
-        MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
-      );
+      const [moduleID, assetID] = splitModuleAndAssetIds(reclaimLSK);
       const tx = {
         moduleID,
         assetID,
@@ -178,51 +223,78 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      const expectedTransaction = {
-        id: '12',
-        moduleAssetId: '1000:0',
-        fee: '0.1',
-        nonce: '1',
-        sender: {
-          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      expect(transformTransaction(tx)).toMatchSnapshot();
+    });
+
+    it('should transform a unlockToken transaction', () => {
+      const [moduleID, assetID] = splitModuleAndAssetIds(unlockToken);
+      const unlockObjects = [
+        {
+          delegateAddress:
+            getAddressFromBase32Address(accounts.delegate.summary.address),
+          amount: 10000000n,
+          height: { start: 1000000 },
         },
-        signatures: undefined,
+        {
+          delegateAddress:
+            getAddressFromBase32Address(accounts.send_all_account.summary.address),
+          amount: -10000000n,
+          height: { start: 1000000 },
+        },
+      ];
+
+      const tx = {
+        moduleID,
+        assetID,
+        fee: 0.1,
+        nonce: 1,
+        id: Buffer.from('123', 'hex'),
+        senderPublicKey: accounts.genesis.summary.publicKey,
+        asset: { unlockObjects },
+      };
+
+      expect(transformTransaction(tx)).toMatchSnapshot();
+    });
+
+    it('should transform a registerMultisignatureGroup transaction', () => {
+      const [moduleID, assetID] = splitModuleAndAssetIds(registerMultisignatureGroup);
+      const mandatoryKeys = [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey].map(key => Buffer.from(key, 'hex'));
+      const optionalKeys = [accounts.second_passphrase_account.summary.publicKey].map(key => Buffer.from(key, 'hex'));
+
+      const tx = {
+        moduleID,
+        assetID,
+        id: Buffer.from('123', 'hex'),
+        senderPublicKey: accounts.genesis.summary.publicKey,
+        nonce: 1,
+        fee: '1000000',
+        amount: '10000000',
         asset: {
-          amount: '100',
+          numberOfSignatures: 2,
+          mandatoryKeys,
+          optionalKeys,
         },
       };
 
-      expect(transformTransaction(tx)).toMatchObject(expectedTransaction);
+      expect(transformTransaction(tx)).toMatchSnapshot();
     });
   });
 
   describe('containsTransactionType', () => {
     it('should return true', () => {
-      let pending = [
-        { moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate },
-      ];
-      expect(containsTransactionType(
-        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-      )).toEqual(true);
-      pending = [
-        { moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer },
-        { moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate },
-      ];
-      expect(containsTransactionType(
-        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-      )).toEqual(true);
+      let pending = [{ moduleAssetId: voteDelegate }];
+      expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
+
+      pending = [{ moduleAssetId: transfer }, { moduleAssetId: voteDelegate }];
+      expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
     });
 
     it('should return false', () => {
       let pending = [];
-      expect(containsTransactionType(
-        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-      )).toEqual(false);
-      pending = [{ moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer }];
-      expect(containsTransactionType(
-        pending, MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-      )).toEqual(false);
+      expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
+
+      pending = [{ moduleAssetId: transfer }];
+      expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
     });
   });
 });

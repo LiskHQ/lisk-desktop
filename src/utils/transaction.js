@@ -8,55 +8,46 @@ import {
 } from '@utils/account';
 import { transformStringDateToUnixTimestamp } from '@utils/datetime';
 import { toRawLsk } from '@utils/lsk';
-import { splitModuleAndAssetIds } from '@utils/moduleAssets';
+import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@utils/moduleAssets';
 
 const {
-  transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK,
+  transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,
 } = MODULE_ASSETS_NAME_ID_MAP;
+
+const EMPTY_BUFFER = Buffer.from('');
+const convertStringToBinary = value => Buffer.from(value, 'hex');
+const convertBinaryToString = value => value.toString('hex');
+
 /**
- * Gets the amount of a given transaction
- *
- * @param {Object} transaction The transaction object
- * @returns {String} Amount in Beddows/Satoshi
+ * Converts a transaction returned by lisk elements back to the signature
+ * used by lisk desktop
+ * @param {object} transaction - the transaction object
+ * @returns the transformed transaction
  */
-const getTxAmount = ({ moduleAssetId, asset }) => {
-  if (moduleAssetId === transfer) {
-    return asset.amount;
-  }
-
-  if (moduleAssetId === unlockToken) {
-    return asset.unlockingObjects.reduce((sum, unlockingObject) =>
-      sum + parseInt(unlockingObject.amount, 10), 0);
-  }
-  if (moduleAssetId === voteDelegate) {
-    return asset.votes.reduce((sum, vote) =>
-      sum + parseInt(vote.amount, 10), 0);
-  }
-
-  return undefined;
-};
-
 // eslint-disable-next-line max-statements
-const transformTransaction = (transaction) => {
-  const moduleAssetId = [transaction.moduleID, transaction.assetID].join(':');
-  const senderAddress = extractAddressFromPublicKey(transaction.senderPublicKey);
-  const senderPublicKey = transaction.senderPublicKey.toString('hex');
-
+const transformTransaction = ({
+  moduleID, assetID, id, asset, nonce, fee, senderPublicKey, signatures,
+}) => {
+  const moduleAssetId = joinModuleAndAssetIds({ moduleID, assetID });
+  const senderAddress = extractAddressFromPublicKey(senderPublicKey);
   const transformedTransaction = {
-    id: transaction.id.toString('hex'),
     moduleAssetId,
-    fee: String(transaction.fee),
-    nonce: String(transaction.nonce),
-    sender: { publicKey: senderPublicKey, address: senderAddress },
-    signatures: transaction.signatures,
+    id: convertBinaryToString(id),
+    fee: String(fee),
+    nonce: String(nonce),
+    signatures,
+    sender: {
+      address: senderAddress,
+      publicKey: convertBinaryToString(senderPublicKey),
+    },
   };
 
   switch (moduleAssetId) {
     case transfer: {
       transformedTransaction.asset = {
-        recipient: { address: getBase32AddressFromAddress(transaction.asset.recipientAddress) },
-        amount: String(transaction.asset.amount),
-        data: transaction.asset.data,
+        data: asset.data,
+        amount: String(asset.amount),
+        recipient: { address: getBase32AddressFromAddress(asset.recipientAddress) },
       };
 
       break;
@@ -64,14 +55,14 @@ const transformTransaction = (transaction) => {
 
     case registerDelegate: {
       transformedTransaction.asset = {
-        username: transaction.asset.username,
+        username: asset.username,
       };
       break;
     }
 
     case voteDelegate: {
       transformedTransaction.asset = {
-        votes: transaction.asset.votes.map(vote => ({
+        votes: asset.votes.map(vote => ({
           amount: Number(vote.amount),
           delegateAddress: getBase32AddressFromAddress(vote.delegateAddress),
         })),
@@ -81,14 +72,14 @@ const transformTransaction = (transaction) => {
 
     case reclaimLSK: {
       transformedTransaction.asset = {
-        amount: transaction.asset.amount,
+        amount: asset.amount,
       };
       break;
     }
 
     case unlockToken: {
       transformedTransaction.asset = {
-        unlockObjects: transaction.asset.unlockObjects.map(unlockingObject => ({
+        unlockObjects: asset.unlockObjects.map(unlockingObject => ({
           delegateAddress: getBase32AddressFromAddress(unlockingObject.delegateAddress),
           amount: Number(unlockingObject.amount),
           unvoteHeight: unlockingObject.height.start,
@@ -97,15 +88,14 @@ const transformTransaction = (transaction) => {
       break;
     }
 
-    // case registerMultisignatureGroup: {
-    // @todo fix me
-    // transformedTransaction.asset = {
-    //   numberOfSignatures: tx.numberOfSignatures,
-    //   mandatoryKeys: tx.mandatoryKeys,
-    //   optionalKeys: tx.optionalKeys,
-    // };
-    // break;
-    // }
+    case registerMultisignatureGroup: {
+      transformedTransaction.asset = {
+        numberOfSignatures: asset.numberOfSignatures,
+        mandatoryKeys: asset.mandatoryKeys.map(convertBinaryToString),
+        optionalKeys: asset.optionalKeys.map(convertBinaryToString),
+      };
+      break;
+    }
 
     default:
       throw Error('Unknown transaction');
@@ -114,6 +104,13 @@ const transformTransaction = (transaction) => {
   return transformedTransaction;
 };
 
+/**
+ * creates a transaction object to be used with the api client from
+ * lisk elements
+ * @param {object} tx - the transaction data
+ * @param {string} moduleAssetId - moduleAssetId
+ * @returns the transaction object
+ */
 // eslint-disable-next-line max-statements
 const createTransactionObject = (tx, moduleAssetId) => {
   const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
@@ -124,7 +121,7 @@ const createTransactionObject = (tx, moduleAssetId) => {
   const transaction = {
     moduleID,
     assetID,
-    senderPublicKey: Buffer.from(senderPublicKey, 'hex'),
+    senderPublicKey: convertStringToBinary(senderPublicKey),
     nonce: BigInt(nonce),
     fee: BigInt(fee),
     signatures: [],
@@ -133,7 +130,7 @@ const createTransactionObject = (tx, moduleAssetId) => {
   switch (moduleAssetId) {
     case transfer: {
       const binaryAddress = recipientAddress
-        ? getAddressFromBase32Address(recipientAddress) : Buffer.from('');
+        ? getAddressFromBase32Address(recipientAddress) : EMPTY_BUFFER;
 
       transaction.asset = {
         recipientAddress: binaryAddress,
@@ -178,14 +175,14 @@ const createTransactionObject = (tx, moduleAssetId) => {
       break;
     }
 
-    // case registerMultisignatureGroup: {
-    //   transaction.asset = {
-    //     numberOfSignatures: tx.numberOfSignatures,
-    //     mandatoryKeys: tx.mandatoryKeys,
-    //     optionalKeys: tx.optionalKeys,
-    //   };
-    //   break;
-    // }
+    case registerMultisignatureGroup: {
+      transaction.asset = {
+        numberOfSignatures: Number(tx.numberOfSignatures),
+        mandatoryKeys: tx.mandatoryKeys.map(convertStringToBinary),
+        optionalKeys: tx.optionalKeys.map(convertStringToBinary),
+      };
+      break;
+    }
 
     default:
       throw Error('Unknown transaction');
@@ -194,7 +191,7 @@ const createTransactionObject = (tx, moduleAssetId) => {
   return transaction;
 };
 
-export const containsTransactionType = (transactions = [], type) =>
+const containsTransactionType = (transactions = [], type) =>
   transactions.some(tx => tx.moduleAssetId === type);
 
 /**
@@ -203,7 +200,7 @@ export const containsTransactionType = (transactions = [], type) =>
  * @param {Object} params - Params received from withFilters HOC
  * @returns {Object} - Parameters consumable by transaction API method
  */
-export const normalizeTransactionParams = params => Object.keys(params)
+const normalizeTransactionParams = params => Object.keys(params)
   .reduce((acc, item) => {
     switch (item) {
       case 'dateFrom':
@@ -229,4 +226,33 @@ export const normalizeTransactionParams = params => Object.keys(params)
     return acc;
   }, {});
 
-export { getTxAmount, transformTransaction, createTransactionObject };
+/**
+ * Gets the amount of a given transaction
+ *
+ * @param {Object} transaction The transaction object
+ * @returns {String} Amount in Beddows/Satoshi
+ */
+const getTxAmount = ({ moduleAssetId, asset }) => {
+  if (moduleAssetId === transfer) {
+    return asset.amount;
+  }
+
+  if (moduleAssetId === unlockToken) {
+    return asset.unlockingObjects.reduce((sum, unlockingObject) =>
+      sum + Number(unlockingObject.amount), 0);
+  }
+  if (moduleAssetId === voteDelegate) {
+    return asset.votes.reduce((sum, vote) =>
+      sum + Number(vote.amount), 0);
+  }
+
+  return undefined;
+};
+
+export {
+  getTxAmount,
+  transformTransaction,
+  containsTransactionType,
+  createTransactionObject,
+  normalizeTransactionParams,
+};
