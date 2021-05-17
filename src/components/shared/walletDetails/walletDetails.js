@@ -9,7 +9,7 @@ import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
 import styles from './walletDetails.css';
 
-const MyAccount = ({
+const WalletDetails = ({
   t, account, settings, className,
 }) => {
   const tokens = Object.entries(account.info || {})
@@ -44,4 +44,4 @@ const MyAccount = ({
   );
 };
 
-export default MyAccount;
+export default WalletDetails;
