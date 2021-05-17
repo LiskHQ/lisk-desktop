@@ -76,7 +76,7 @@ export const getTransaction = ({
 }) => http({
   network,
   params: {},
-  path: `${httpPaths.transaction}/${params.id}`,
+  path: `${httpPaths.transaction}/${params.transactionId}`,
   baseUrl: network.networks.BTC.serviceUrl,
 }).then(response => ({
   meta: response.meta,
