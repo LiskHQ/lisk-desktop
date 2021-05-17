@@ -17,8 +17,8 @@ import {
 } from './dataRows';
 import styles from './transactionDetails.css';
 
-const Transactions = ({
-  t, activeToken, netCode, transaction, votedDelegates,
+const TransactionDetails = ({
+  t, activeToken, transaction, votedDelegates,
 }) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const { error, isLoading, data } = transaction;
@@ -38,12 +38,10 @@ const Transactions = ({
           <Sender
             transaction={data}
             activeToken={activeToken}
-            netCode={netCode}
           />
           <Recipient
             transaction={data}
             activeToken={activeToken}
-            netCode={netCode}
             t={t}
           />
           <TransactionId t={t} id={data.id} />
@@ -69,4 +67,4 @@ const Transactions = ({
   );
 };
 
-export default withTranslation()(Transactions);
+export default withTranslation()(TransactionDetails);

@@ -12,8 +12,7 @@ import TransactionDetails from './transactionDetails';
 const mapStateToProps = (state, ownProps) => ({
   address: getActiveTokenAccount(state).address,
   id: ownProps.match.params.id,
-  activeToken: state.settings.token ? state.settings.token.active : 'LSK',
-  netCode: state.network.networks.LSK.code,
+  activeToken: state.settings.token?.active ?? 'LSK',
 });
 
 const apis = {
