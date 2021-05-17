@@ -168,7 +168,11 @@ export const FeeAndConfirmation = ({
         </Tooltip>
       </span>
       <span className="tx-confirmation">
-        {currentBlockHeight ? currentBlockHeight - transaction.height : 0}
+        {
+          activeToken === tokenMap.LSK.key
+            ? (currentBlockHeight - transaction.height)
+            : transaction.confirmations
+        }
       </span>
     </div>
   </BoxRow>
