@@ -155,9 +155,7 @@ export const FeeAndConfirmation = ({
         {t('Transaction fee')}
       </span>
       <span className="tx-fee">
-        <LiskAmount val={transaction.fee} />
-        {' '}
-        {activeToken}
+        <LiskAmount val={transaction.fee} token={activeToken} />
       </span>
     </div>
     <div className={`${styles.value}`}>
