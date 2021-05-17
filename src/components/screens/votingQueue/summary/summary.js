@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Piwik from '@utils/piwik';
 import TransactionInfo from '@shared/transactionInfo';
@@ -38,12 +38,14 @@ const Summary = ({
   t, removed = {}, edited = {}, added = {},
   fee, account, prevStep, nextStep, transactions, ...props
 }) => {
+  const [callback, setCallback] = useState(() => {});
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
 
   useEffect(() => {
     if (!account.summary.isMultisignature) {
+      Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
       if (!transactions.transactionsCreatedFailed.length
         && transactions.transactionsCreated.length) {
         nextStep({
@@ -54,13 +56,15 @@ const Summary = ({
           error: true,
         });
       }
+    } else {
+      callback(transactions.transactionsCreated[0]);
     }
   }, [transactions]);
 
-  const submitTransaction = () => {
+  const submitTransaction = (fn) => {
     const { normalizedVotes, votesSubmitted } = props;
-    Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
 
+    setCallback(fn);
     votesSubmitted({
       fee: String(fee),
       votes: normalizedVotes,
@@ -84,7 +88,6 @@ const Summary = ({
       cancelButton={onCancelAction}
       classNames={styles.container}
       createTransaction={submitTransaction}
-      transaction={transactions.transactionsCreated[0]}
     >
       <ToggleIcon isNotHeader />
       <div className={styles.headerContainer}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import to from 'await-to-js';
 
 import { create } from '@api/transaction';
@@ -19,8 +19,7 @@ const Summary = ({
   nextStep,
   network,
 }) => {
-  const [transaction, setTransaction] = useState(undefined);
-  const createTransaction = async () => {
+  const createTransaction = async (callback) => {
     const data = {
       moduleAssetId,
       network,
@@ -34,8 +33,8 @@ const Summary = ({
     const [error, tx] = await to(
       create(data, tokenMap.LSK.key),
     );
-    if (tx) {
-      setTransaction(tx);
+    if (tx && callback) {
+      callback(tx);
     }
     return [error, tx];
   };
@@ -67,7 +66,6 @@ const Summary = ({
       fee={fee}
       classNames={`${styles.box} ${styles.summaryContainer}`}
       createTransaction={createTransaction}
-      transaction={transaction}
     >
       <TransactionInfo
         account={account}

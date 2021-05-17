@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { extractPublicKey } from '@utils/account';
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
@@ -17,37 +17,21 @@ import styles from './transactionSummary.css';
 
 const Footer = ({
   confirmButton, cancelButton, footerClassName, showCancelButton,
-  isHardwareWalletConnected, confirmation, isConfirmed, isMultisignature,
-  account, secondPassphrase, t, transaction, createTransaction,
+  confirmation, isConfirmed, isMultisignature, t, createTransaction,
 }) => {
-  if (isHardwareWalletConnected) {
-    return null;
-  }
-
-  const [download, setDownload] = useState(false);
-  const [copy, setCopy] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const onDownload = () => {
+  const onDownload = (transaction) => {
     const anchor = document.createElement('a');
     anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(transaction))}`);
     anchor.setAttribute('download', `tx-${transaction.moduleID}-${transaction.assetID}.json`);
     anchor.click();
   };
 
-  useEffect(() => {
-    if (transaction && account.summary.isMultisignature) {
-      if (download) {
-        onDownload();
-        setDownload(false);
-      }
-      if (copy) {
-        copyToClipboard(JSON.stringify(transaction));
-        setCopy(false);
-        setCopied(true);
-      }
-    }
-  }, [download, copy, transaction]);
+  const onCopy = (transaction) => {
+    copyToClipboard(JSON.stringify(transaction));
+    setCopied(true);
+  };
 
   return (
     <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
@@ -56,8 +40,7 @@ const Footer = ({
           <SecondaryButton
             className="copy-button"
             onClick={() => {
-              setCopy(true);
-              createTransaction();
+              createTransaction(onCopy);
             }}
           >
             <span className={styles.buttonContent}>
@@ -68,8 +51,7 @@ const Footer = ({
           <PrimaryButton
             className="download-button"
             onClick={() => {
-              setDownload(true);
-              createTransaction();
+              createTransaction(onDownload);
             }}
           >
             <span className={styles.buttonContent}>
@@ -90,11 +72,7 @@ const Footer = ({
           )}
           <PrimaryButton
             className="confirm-button"
-            disabled={
-              (!!account.secondPublicKey && !secondPassphrase.isValid)
-              || (confirmation && !isConfirmed)
-              || confirmButton.disabled
-            }
+            disabled={(confirmation && !isConfirmed) || confirmButton.disabled}
             onClick={confirmButton.onClick}
           >
             {confirmButton.label}
@@ -185,8 +163,8 @@ class TransactionSummary extends React.Component {
 
   render() {
     const {
-      title, children, confirmButton, cancelButton, account, transaction, createTransaction,
-      t, fee, confirmation, classNames, token, footerClassName, showCancelButton = true,
+      title, children, confirmButton, cancelButton, account, createTransaction, t,
+      fee, confirmation, classNames, token, footerClassName, showCancelButton = true,
     } = this.props;
     const {
       secondPassphrase, isHardwareWalletConnected, isConfirmed,
@@ -267,21 +245,19 @@ class TransactionSummary extends React.Component {
           : null
       }
         </BoxContent>
-        <Footer
-          confirmButton={confirmButton}
-          cancelButton={cancelButton}
-          footerClassName={footerClassName}
-          showCancelButton={showCancelButton}
-          isHardwareWalletConnected={isHardwareWalletConnected}
-          confirmation={confirmation}
-          isConfirmed={isConfirmed}
-          account={account}
-          secondPassphrase={secondPassphrase}
-          transaction={transaction}
-          createTransaction={createTransaction}
-          isMultisignature={token === tokenMap.LSK.key && account.summary.isMultisignature}
-          t={t}
-        />
+        {!isHardwareWalletConnected && (
+          <Footer
+            confirmButton={confirmButton}
+            cancelButton={cancelButton}
+            footerClassName={footerClassName}
+            showCancelButton={showCancelButton}
+            confirmation={confirmation}
+            isConfirmed={isConfirmed}
+            createTransaction={createTransaction}
+            isMultisignature={token === tokenMap.LSK.key && account.summary.isMultisignature}
+            t={t}
+          />
+        )}
       </Box>
     );
   }

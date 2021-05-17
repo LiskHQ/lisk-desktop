@@ -9,6 +9,7 @@ class Summary extends React.Component {
   constructor(props) {
     super(props);
 
+    this.callback = () => {};
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
   }
@@ -17,10 +18,10 @@ class Summary extends React.Component {
     this.checkForSuccessOrFailedTransactions();
   }
 
-  submitTransaction() {
-    Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
+  submitTransaction(fn) {
     const { fields } = this.props;
 
+    this.callback = fn;
     this.props.transactionCreated({
       amount: `${toRawLsk(fields.amount.value)}`,
       data: fields.reference ? fields.reference.value : '',
@@ -38,6 +39,7 @@ class Summary extends React.Component {
     } = this.props;
 
     if (!account.summary.isMultisignature) {
+      Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
       if (account.loginType !== loginTypes.passphrase.code
           && transactions.transactionsCreatedFailed.length) {
         nextStep({
@@ -57,6 +59,8 @@ class Summary extends React.Component {
           },
         });
       }
+    } else {
+      this.callback(transactions.transactionsCreated[0]);
     }
   }
 
@@ -68,7 +72,7 @@ class Summary extends React.Component {
 
   render() {
     const {
-      fields, t, token, account, isInitialization, transactions,
+      fields, t, token, account, isInitialization,
     } = this.props;
     const amount = fields.amount.value;
 
@@ -89,7 +93,6 @@ class Summary extends React.Component {
         fee={fromRawLsk(fields.fee.value)}
         token={token}
         createTransaction={this.submitTransaction}
-        transaction={transactions.transactionsCreated[0]}
       >
         <TransactionInfo
           fields={fields}
