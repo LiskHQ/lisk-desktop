@@ -2,6 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
+import { tokenMap } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import Box from '@toolbox/box';
@@ -42,7 +43,11 @@ const BalanceInfo = ({
               />
 
             </div>
-            <LockedBalanceLink activeToken={activeToken} isWalletRoute={isWalletRoute} />
+            {
+              activeToken === tokenMap.LSK.key ? (
+                <LockedBalanceLink activeToken={activeToken} isWalletRoute={isWalletRoute} />
+              ) : null
+            }
           </DiscreetMode>
         </div>
         <SignInTooltipWrapper position="bottom">
