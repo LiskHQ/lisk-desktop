@@ -9,7 +9,7 @@ const useTransactionPriority = (token) => {
   const { t } = useTranslation();
   const network = useSelector(state => state.network);
   const [prioritiesLoadError, setPrioritiesLoadError] = useState(false);
-  const [loadingPriorities, setLoadingPriorities] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [baseFees, setBaseFees] = useState({
     Low: 0,
     Medium: 0,
@@ -21,11 +21,11 @@ const useTransactionPriority = (token) => {
   });
 
   useEffect(() => {
-    setLoadingPriorities(true);
+    setLoading(true);
     getTransactionBaseFees(network, token)
       .then(setBaseFees)
       .catch(setPrioritiesLoadError)
-      .finally(() => setLoadingPriorities(false));
+      .finally(() => setLoading(false));
   }, []);
 
   const selectTransactionPriority = ({ item, index }) => {
@@ -54,7 +54,7 @@ const useTransactionPriority = (token) => {
     selectTransactionPriority,
     priorityOptions,
     prioritiesLoadError,
-    loadingPriorities,
+    loading,
   ];
 };
 
