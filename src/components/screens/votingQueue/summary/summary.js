@@ -38,7 +38,6 @@ const Summary = ({
   t, removed = {}, edited = {}, added = {},
   fee, account, prevStep, nextStep, transactions, ...props
 }) => {
-  const [callback, setCallback] = useState(() => {});
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
@@ -56,18 +55,16 @@ const Summary = ({
           error: true,
         });
       }
-    } else {
-      callback(transactions.transactionsCreated[0]);
     }
   }, [transactions]);
 
   const submitTransaction = (fn) => {
     const { normalizedVotes, votesSubmitted } = props;
 
-    setCallback(fn);
     votesSubmitted({
       fee: String(fee),
       votes: normalizedVotes,
+      callback: typeof fn === 'function' ? fn : undefined,
     });
   };
 

@@ -38,6 +38,12 @@ const Footer = ({
       {isMultisignature ? (
         <>
           <SecondaryButton
+            className="cancel-button"
+            onClick={cancelButton.onClick}
+          >
+            {t('Cancel')}
+          </SecondaryButton>
+          <SecondaryButton
             className="copy-button"
             onClick={() => {
               createTransaction(onCopy);
