@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '@toolbox/box';
@@ -27,30 +27,36 @@ const Editor = ({
 }) => {
   const [requiredSignatures, setRequiredSignatures] = useState(2);
   const [members, setMembers] = useState([placeholderMember]);
-
-  useEffect(() => {
-    const difference = requiredSignatures - members.length;
-    if (difference > 0) {
-      const newMembers = new Array(difference).fill(placeholderMember);
-      setMembers(prevMembers => [...prevMembers, ...newMembers]);
-    }
-  }, [requiredSignatures]);
-
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority, priorityOptions,
+    selectedPriority, selectTransactionPriority,
+    priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority(token);
+
+  const [mandatoryKeys, optionalKeys] = useMemo(() => {
+    const mandatory = members
+      .filter(member => member.isMandatory && member.identifier)
+      .map(member => member.identifier);
+
+    const optional = members
+      .filter(member => !member.isMandatory && member.identifier)
+      .map(member => member.identifier);
+
+    return [mandatory, optional];
+  }, [members]);
 
   const { fee, minFee } = useTransactionFeeCalculation({
     selectedPriority,
     token,
     account,
     priorityOptions,
+    // numberOfSignatures: requiredSignatures,
     transaction: {
       moduleAssetId,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
-      signatures: [], // no of signatures needed?
+      nonce: account.sequence.nonce,
+      senderPublicKey: account.summary.publicKey,
+      optionalKeys,
+      mandatoryKeys,
       // @todo create proper multi-sig tx
     },
   });
@@ -94,8 +100,16 @@ const Editor = ({
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
-    nextStep({ fee: feeValue });
+    nextStep({ fee: feeValue, mandatoryKeys, optionalKeys });
   };
+
+  useEffect(() => {
+    const difference = requiredSignatures - members.length;
+    if (difference > 0) {
+      const newMembers = new Array(difference).fill(placeholderMember);
+      setMembers(prevMembers => [...prevMembers, ...newMembers]);
+    }
+  }, [requiredSignatures]);
 
   return (
     <section className={styles.wrapper}>
@@ -144,6 +158,8 @@ const Editor = ({
           priorityOptions={priorityOptions}
           selectedPriority={selectedPriority.selectedIndex}
           setSelectedPriority={selectTransactionPriority}
+          loadError={prioritiesLoadError}
+          isLoading={loadingPriorities}
         />
         {
           feedback.error && <span className="feedback">{feedback.messages[0]}</span>
