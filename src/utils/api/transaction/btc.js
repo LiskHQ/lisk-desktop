@@ -160,8 +160,8 @@ export const getTransactions = ({
 export const getUnspentTransactionOutputs = (address, network) =>
   http({
     network,
-    baseUrl: '', // @todo add real base url here...
-    path: `utxo/${address}`,
+    baseUrl: network.networks.BTC.serviceUrl,
+    path: `/utxo/${address}`,
     params: { limit: 100 },
   });
 
@@ -195,11 +195,14 @@ const getUnspentTransactionOutputCountToConsume = (satoshiValue, unspentTransact
 export const getTransactionFeeFromUnspentOutputs = ({
   selectedFeePerByte, satoshiValue, unspentTransactionOutputs,
 }) => {
+  console.log('selectedFeePerByte', selectedFeePerByte, satoshiValue);
   const feeInSatoshis = calculateTransactionFee({
     inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue, unspentTransactionOutputs),
     outputCount: 2,
     selectedFeePerByte,
   });
+
+  console.log('feeInSatoshis', feeInSatoshis);
 
   return calculateTransactionFee({
     inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue
@@ -212,14 +215,17 @@ export const getTransactionFeeFromUnspentOutputs = ({
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
  */
-export const getTransactionBaseFees = async () => {
-  const config = getNetworkConfig(tokenMap.LSK.key, { name: 'Mainnet' });
-  const response = await http({
-    baseUrl: config.minerFeesURL,
-  });
-
-  return response;
-};
+export const getTransactionBaseFees = network =>
+  http({
+    baseUrl: network.networks.BTC.minerFeesURL,
+    path: '',
+    params: {},
+    network,
+  }).then((response) => ({
+    Low: response.hourFee,
+    Medium: response.halfHourFee,
+    High: response.fastestFee,
+  }));
 
 /**
  * Returns the actual tx fee based on given tx details and selected processing speed
@@ -227,19 +233,19 @@ export const getTransactionBaseFees = async () => {
  * @param {Object} network - network configuration
  */
 export const getTransactionFee = async ({
-  account, network, txData, selectedPriority,
+  account, network, transaction, selectedPriority,
 }) => {
   const unspentTransactionOutputs = await getUnspentTransactionOutputs(
-    account.address, network,
+    account.summary.address, network,
   );
 
   const value = fromRawLsk(getTransactionFeeFromUnspentOutputs({
-    unspentTransactionOutputs,
-    satoshiValue: txData.amount || 0,
+    unspentTransactionOutputs: unspentTransactionOutputs.data,
+    satoshiValue: transaction.amount || 0,
     selectedFeePerByte: selectedPriority.value,
   }));
 
-  const feedback = txData.amount === 0
+  const feedback = transaction.amount === 0
     ? '-'
     : `${(value ? '' : 'Invalid amount')}`;
 
@@ -267,7 +273,7 @@ export const create = async ({
   network,
   // eslint-disable-next-line consistent-return
 }) => {
-  const config = getNetworkConfig(tokenMap.LSK.key, network);
+  const config = getNetworkConfig(tokenMap.BTC.key, network);
   amount = Number(amount);
   selectedFeePerByte = Number(selectedFeePerByte);
 
@@ -340,7 +346,7 @@ export const create = async ({
 };
 
 export const broadcast = async (transaction, network) => {
-  const config = getNetworkConfig(tokenMap.LSK.key, network);
+  const config = getNetworkConfig(tokenMap.BTC.key, network);
 
   const response = await http({
     baseUrl: config.url,
