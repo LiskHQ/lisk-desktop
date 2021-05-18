@@ -69,9 +69,9 @@ describe('TransactionSummary', () => {
       },
     }}
     />);
+    expect(wrapper.find('.cancel-button').exists()).toBeTruthy();
     expect(wrapper.find('.copy-button').exists()).toBeTruthy();
     expect(wrapper.find('.download-button').exists()).toBeTruthy();
-    expect(wrapper.find('.cancel-button').exists()).toBeFalsy();
     expect(wrapper.find('.confirm-button').exists()).toBeFalsy();
   });
 
