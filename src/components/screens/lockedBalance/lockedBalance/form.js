@@ -68,13 +68,13 @@ const Form = ({
         type: actionTypes.transactionCreatedSuccess,
         data: tx,
       });
-      nextStep({ transactionInfo: tx });
+      nextStep({ transactionInfo: tx, fee, account });
     } else {
       dispatch({
         type: actionTypes.transactionCreatedError,
         data: error,
       });
-      nextStep({ error });
+      nextStep({ error, fee, account });
     }
   };
 

@@ -126,15 +126,49 @@ const RegisterDelegate = ({ account, nickname, t }) => (
   </section>
 );
 
+const UnlockBalance = ({ account, fee, t, transaction }) => {
+  console.log(transaction);
+  return (
+    <>
+      <section>
+        <label>{t('Sender')}</label>
+        <label className="sender-value">
+          <AccountVisual address={account.summary.address} size={25} />
+          <label className={``}>
+            {account.summary.address}
+          </label>
+        </label>
+      </section>
+      <section>
+        <label>{t('Amount')}</label>
+        <label className="amount-summary">
+          {`${amount} ${token}`}
+          <Converter className={styles.secondText} value={amount} />
+        </label>
+      </section>
+      { fields.reference && fields.reference.value
+        ? (
+          <section>
+            <label>{t('Message')}</label>
+            <label className="message-summary">
+              {`${fields.reference.value}`}
+            </label>
+          </section>
+        )
+        : null }
+    </>
+  );
+};
+
 const TransactionInfo = ({ moduleAssetId, ...restProps }) => {
   switch (moduleAssetId) {
     case MODULE_ASSETS_NAME_ID_MAP.reclaimLSK: return <Reclaim {...restProps} />;
     case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: return <RegisterDelegate {...restProps} />;
     case MODULE_ASSETS_NAME_ID_MAP.transfer: return <Send {...restProps} />;
     case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: return <VoteDelegate {...restProps} />;
+    case MODULE_ASSETS_NAME_ID_MAP.unlockToken: return <UnlockBalance {...restProps} />;
     case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup:
       return <RegisterMultisignatureGroup {...restProps} />;
-    // case MODULE_ASSETS_NAME_ID_MAP.unlockToken:
     default:
       return null;
   }
