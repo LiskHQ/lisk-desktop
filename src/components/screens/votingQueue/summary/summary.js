@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import Piwik from '@utils/piwik';
 import TransactionInfo from '@shared/transactionInfo';
