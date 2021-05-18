@@ -2,17 +2,13 @@ import * as bitcoin from 'bitcoinjs-lib';
 import { networkKeys } from '@constants';
 
 /**
- * Returns network code for a given network name
+ * Defines the BTC testnet/mainnet network
  *
- * @param {Object} network
+ * @param {Object} network - Selected network config
  * @param {String} network.name - Mainnet, or Testnet
- * @returns {Number} network code
+ * @returns {Boolean} True if the network is mainnet, false for all others
  */
-export const getNetworkCode = network => (
-  network.name === networkKeys.mainNet
-    ? networkKeys.mainNet
-    : networkKeys.testNet
-);
+export const isMainnetBTC = network => (network.name === networkKeys.mainNet);
 
 /**
  * Returns network config to use for future API calls.
@@ -24,12 +20,11 @@ export const getNetworkCode = network => (
  * match the LSK getNetworkConfig function signature.
  */
 export const getNetworkConfig = (network) => {
-  const networkName = getNetworkCode(network);
-  const isTestnet = networkName === networkKeys.testNet;
-  const serviceUrl = isTestnet ? 'https://btc-test.lisk.io' : 'https://btc.lisk.io';
-  const btcNetwork = isTestnet ? bitcoin.networks.testnet : bitcoin.networks.bitcoin;
-  const derivationPath = isTestnet ? "m/44'/1'/0'/0/0" : "m/44'/0'/0'/0/0";
-  const transactionExplorerURL = `https://www.blockchain.com/${isTestnet ? 'btctest' : 'btc'}/tx`;
+  const isMainnet = isMainnetBTC(network);
+  const serviceUrl = !isMainnet ? 'https://btc-test.lisk.io' : 'https://btc.lisk.io';
+  const btcNetwork = !isMainnet ? bitcoin.networks.testnet : bitcoin.networks.bitcoin;
+  const derivationPath = !isMainnet ? "m/44'/1'/0'/0/0" : "m/44'/0'/0'/0/0";
+  const transactionExplorerURL = `https://www.blockchain.com/${!isMainnet ? 'btctest' : 'btc'}/tx`;
 
   return new Promise(resolve =>
     resolve({
