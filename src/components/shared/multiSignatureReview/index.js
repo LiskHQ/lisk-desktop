@@ -22,13 +22,13 @@ const getAccountRoleText = (accountRole, t) => {
 const Member = ({ member, i, t }) => (
   <div className={`${styles.memberInfo} member-info`}>
     <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>
-    <AccountVisual address={member.accountId} />
+    <AccountVisual address={member.address} />
     <div className={styles.memberDetails}>
       <p className={styles.memberTitle}>
-        {member.name || member.accountId.replace(regex.lskAddressTrunk, '$1...$3')}
-        <span>{`(${getAccountRoleText(member.accountRole, t)})`}</span>
+        {member.name || member.address.replace(regex.lskAddressTrunk, '$1...$3')}
+        <span>{`(${getAccountRoleText(member.isMandatory, t)})`}</span>
       </p>
-      <p className={styles.memberKey}>{member.publicKey.replace(regex.publicKeyTrunk, '$1...$3')}</p>
+      {/* <p className={styles.memberKey}>{member.publicKey.replace(regex.publicKeyTrunk, '$1...$3')}</p> */}
     </div>
   </div>
 );
@@ -37,6 +37,7 @@ const Members = ({ members = [], t }) => {
   const sliceIndex = Math.round(members.length / 2);
   const leftColumn = members.slice(0, sliceIndex);
   const rightColumn = members.slice(sliceIndex, members.length);
+  console.log(members);
   return (
     <div className={styles.membersContainer}>
       <p>{t('Members')}</p>
@@ -65,13 +66,13 @@ const MultiSignatureReview = ({
   t,
   members,
   fee,
-  requiredSignatures,
+  numberOfSignatures,
 }) => (
   <>
     <Members members={members} t={t} />
     <div className={styles.infoContainer}>
       <InfoColumn title={t('Required Signatures')} className="info-requiredSignatures">
-        {requiredSignatures}
+        {numberOfSignatures}
       </InfoColumn>
       <InfoColumn title={t('Transaction fee')} className="info-fee">
         <LiskAmount val={fee} token={tokenMap.LSK.key} />

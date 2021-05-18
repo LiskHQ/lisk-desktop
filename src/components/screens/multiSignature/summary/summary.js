@@ -37,7 +37,7 @@ const Summary = ({
         moduleAssetId,
         fee,
         passphrase: account.passphrase,
-        senderPublicKey: account.senderPublicKey,
+        senderPublicKey: account.summary.publicKey,
       }, tokenMap.LSK.key),
     );
 

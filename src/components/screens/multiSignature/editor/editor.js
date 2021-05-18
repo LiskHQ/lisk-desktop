@@ -16,7 +16,7 @@ const token = tokenMap.LSK.key;
 const MAX_MULTI_SIG_MEMBERS = 64;
 
 const placeholderMember = {
-  identifier: undefined, isMandatory: false,
+  address: undefined, isMandatory: false,
 };
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
@@ -35,12 +35,12 @@ const Editor = ({
 
   const [mandatoryKeys, optionalKeys] = useMemo(() => {
     const mandatory = members
-      .filter(member => member.isMandatory && member.identifier)
-      .map(member => member.identifier);
+      .filter(member => member.isMandatory && member.address)
+      .map(member => member.address);
 
     const optional = members
-      .filter(member => !member.isMandatory && member.identifier)
-      .map(member => member.identifier);
+      .filter(member => !member.isMandatory && member.address)
+      .map(member => member.address);
 
     return [mandatory, optional];
   }, [members]);
@@ -71,8 +71,8 @@ const Editor = ({
     }
   };
 
-  const changeMember = ({ index, identifier, isMandatory }) => {
-    const newMember = { identifier, isMandatory };
+  const changeMember = ({ index, address, isMandatory }) => {
+    const newMember = { address, isMandatory };
     const newMembers = [
       ...members.slice(0, index),
       newMember,
@@ -83,7 +83,7 @@ const Editor = ({
 
   const deleteMember = (index) => {
     if (members.length === 1) {
-      changeMember({ index, identifier: '', isMandatory: false });
+      changeMember({ index, address: '', isMandatory: false });
     } else {
       const newMembers = [
         ...members.slice(0, index),
@@ -100,7 +100,9 @@ const Editor = ({
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
-    nextStep({ fee: feeValue, mandatoryKeys, optionalKeys });
+    nextStep({
+      fee: feeValue, mandatoryKeys, optionalKeys, members, numberOfSignatures: requiredSignatures,
+    });
   };
 
   useEffect(() => {
