@@ -72,7 +72,6 @@ export const votesSubmitted = ({ fee, votes, callback }) =>
       });
     }
 
-    console.log(callback);
     if (tx && callback) {
       callback(tx);
     }
