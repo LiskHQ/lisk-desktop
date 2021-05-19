@@ -5,6 +5,7 @@ import { getModuleAssetSenderLabel, getModuleAssetTitle } from '@utils/moduleAss
 import CopyToClipboard from '@toolbox/copyToClipboard';
 import TransactionTypeFigure from '@shared/transactionTypeFigure';
 import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import { truncateAddress } from '@utils/account';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
@@ -20,7 +21,7 @@ const getDelegateName = (transaction, activeToken) => (
 );
 
 const getTxAsset = (tx) => {
-  if (typeof tx.asset === 'object' && tx.asset !== null && typeof tx.asset.data === 'string') {
+  if (tx.asset?.data && tx.asset.data.length) {
     return tx.asset.data;
   }
   return '-';
@@ -178,33 +179,31 @@ export const FeeAndConfirmation = ({
   </BoxRow>
 );
 
-export const DateAndConfirmation = ({
-  transaction, activeToken, t, currentBlockHeight,
+export const BlockDetails = ({
+  transaction, t,
 }) => (
   <BoxRow>
     <div className={styles.value}>
-      <span className={styles.label}>{t('Date')}</span>
-      <span className={`${styles.date} tx-date`}>
-        <DateTimeFromTimestamp
-          fulltime
-          className="date"
-          time={transaction.timestamp}
-          token={activeToken}
-          showSeconds
+      <span className={styles.label}>{t('Block Id')}</span>
+      <span className={`${styles.date} block-id`}>
+        <CopyToClipboard
+          value={transaction.block.id}
+          text={truncateAddress(transaction.block.id)}
+          className="block-id"
+          containerProps={{
+            size: 'xs',
+            className: 'copy-title',
+          }}
+          copyClassName={styles.copyIcon}
         />
       </span>
     </div>
     <div className={`${styles.value}`}>
       <span className={styles.label}>
-        {t('Confirmations')}
-        <Tooltip position="top">
-          <p>
-            { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
-          </p>
-        </Tooltip>
+        {t('Block height')}
       </span>
       <span className="tx-confirmation">
-        {currentBlockHeight ? currentBlockHeight - transaction.height : 0}
+        {transaction.block.height}
       </span>
     </div>
   </BoxRow>
