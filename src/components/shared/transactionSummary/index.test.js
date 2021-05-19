@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import accounts from '../../../../test/constants/accounts';
 import TransactionSummary from './index';
 
 describe('TransactionSummary', () => {
@@ -12,7 +13,7 @@ describe('TransactionSummary', () => {
   beforeEach(() => {
     props = {
       title: 'mock title',
-      account: {},
+      account: accounts.genesis,
       confirmButton: {
         label: 'Confirm',
         onClick: jest.fn(),
@@ -32,7 +33,7 @@ describe('TransactionSummary', () => {
   it('should render hw wallet confirmation if props.acount.hwInfo', () => {
     const wrapper = mount(<TransactionSummary {...{
       ...props,
-      account: { hwInfo },
+      account: { ...accounts.genesis, hwInfo },
     }}
     />);
     expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
@@ -47,12 +48,50 @@ describe('TransactionSummary', () => {
         ...props.confirmButton,
         disabled: true,
       },
-      account: { hwInfo },
+      account: { ...accounts.genesis, hwInfo },
     }}
     />);
     expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
     expect(wrapper.find('.confirm-button')).toHaveLength(0);
     expect(props.confirmButton.onClick).not.toHaveBeenCalled();
     wrapper.unmount();
+  });
+
+  it('should render copy/download buttons', () => {
+    const wrapper = mount(<TransactionSummary {... {
+      ...props,
+      account: {
+        ...props.account,
+        summary: {
+          ...props.account.summary,
+          isMultisignature: true,
+        },
+      },
+    }}
+    />);
+    expect(wrapper.find('.cancel-button').exists()).toBeTruthy();
+    expect(wrapper.find('.copy-button').exists()).toBeTruthy();
+    expect(wrapper.find('.download-button').exists()).toBeTruthy();
+    expect(wrapper.find('.confirm-button').exists()).toBeFalsy();
+  });
+
+  it('should call props.createTransaction', () => {
+    const createTransaction = jest.fn();
+    const wrapper = mount(<TransactionSummary {... {
+      ...props,
+      account: {
+        ...props.account,
+        summary: {
+          ...props.account.summary,
+          isMultisignature: true,
+        },
+      },
+      createTransaction,
+    }}
+    />);
+    wrapper.find('.copy-button').at(0).simulate('click');
+    expect(createTransaction).toHaveBeenCalledTimes(1);
+    wrapper.find('.download-button').at(0).simulate('click');
+    expect(createTransaction).toHaveBeenCalledTimes(2);
   });
 });

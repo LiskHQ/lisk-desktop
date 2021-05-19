@@ -1,4 +1,5 @@
 import { mountWithRouter } from '@utils/testHelpers';
+import accounts from '../../../../../test/constants/accounts';
 import Summary from './summary';
 
 const added = {
@@ -60,7 +61,7 @@ const edited = {
 
 const props = {
   t: s => s,
-  account: { passphrase: '', info: { LSK: { publicKey: '' } } },
+  account: accounts.genesis,
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
   transactions: { transactionsCreatedFailed: [], transactionsCreated: [] },
@@ -78,8 +79,8 @@ describe('VotingQueue.Summary', () => {
     expect(wrapper).toContainMatchingElement('VoteStats');
     expect(wrapper).toContainMatchingElement('.fee');
     expect(wrapper).toContainMatchingElement('.total-votes');
-    expect(wrapper).toContainMatchingElement('.confirm');
-    expect(wrapper).toContainMatchingElement('.edit-button');
+    expect(wrapper).toContainMatchingElement('.confirm-button');
+    expect(wrapper).toContainMatchingElement('.cancel-button');
   });
 
   it('renders properly when only new votes are present', () => {
@@ -116,7 +117,7 @@ describe('VotingQueue.Summary', () => {
 
   it('calls props.votesSubmitted when confirm button is clicked', () => {
     const wrapper = mountWithRouter(Summary, props);
-    wrapper.find('button.confirm').simulate('click');
+    wrapper.find('button.confirm-button').simulate('click');
 
     expect(props.votesSubmitted).toHaveBeenCalledTimes(1);
   });
@@ -134,10 +135,10 @@ describe('VotingQueue.Summary', () => {
     expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({ error: false }));
   });
 
-  it('calls props.nextStep when transaction is confirmed', () => {
+  it('calls props.nextStep when transaction create fail', () => {
     mountWithRouter(Summary, {
       ...props,
-      transactions: { transactionsCreatedFailed: [{}] },
+      transactions: { transactionsCreated: [], transactionsCreatedFailed: [{}] },
     });
 
     expect(props.nextStep).toHaveBeenCalledTimes(1);

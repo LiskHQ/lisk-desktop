@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import fakeStore from '../../../../../test/unit-test-utils/fakeStore';
 import Delegates from './delegates';
 import delegatesList from '../../../../../test/constants/delegates';
+import accounts from '../../../../../test/constants/accounts';
 
 const activeDelegates = delegatesList.map(item => ({ ...item, publicKey: item.account.publicKey }));
 activeDelegates.push({
@@ -16,11 +17,7 @@ activeDelegates.push({
   publicKey: 'test_pbk',
   rank: 999,
   address: '14018336151296112016L',
-  account: {
-    address: '14018336151296112016L',
-    publicKey: 'test_pbk',
-    secondPublicKey: '',
-  },
+  account: accounts.genesis,
   delegateWeight: 0,
 });
 
