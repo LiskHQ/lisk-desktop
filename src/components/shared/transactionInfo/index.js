@@ -74,42 +74,60 @@ const Reclaim = ({ account, t }) => (
 );
 
 const Send = ({
-  fields, amount, token, t,
-}) => (
-  <>
-    <section>
-      <label>{t('Recipient')}</label>
-      <label className="recipient-value">
-        <AccountVisual address={fields.recipient.address} size={25} />
-        <label className={`${styles.information} recipient-confirm`}>
-          {fields.recipient.title || fields.recipient.address}
-        </label>
-        { fields.recipient.title ? (
-          <span className={styles.secondText}>
-            {fields.recipient.address}
-          </span>
-        ) : null }
-      </label>
-    </section>
-    <section>
-      <label>{t('Amount')}</label>
-      <label className="amount-summary">
-        {`${amount} ${token}`}
-        <Converter className={styles.secondText} value={amount} />
-      </label>
-    </section>
-    { fields.reference && fields.reference.value
-      ? (
-        <section>
-          <label>{t('Message')}</label>
-          <label className="message-summary">
-            {`${fields.reference.value}`}
+  fields, token, transaction, t,
+}) => {
+  console.log(transaction);
+  console.log(fields);
+
+  return (
+    <>
+      <section>
+        <label>{t('Recipient')}</label>
+        <label className="recipient-value">
+          <AccountVisual address={fields.recipient.address} size={25} />
+          <label className={`${styles.information} recipient-confirm`}>
+            {fields.recipient.title || fields.recipient.address}
           </label>
-        </section>
-      )
-      : null }
-  </>
-);
+          { fields.recipient.title ? (
+            <span className={styles.secondText}>
+              {fields.recipient.address}
+            </span>
+          ) : null }
+        </label>
+      </section>
+      <section>
+        <div>
+          <label>{t('Transaction ID')}</label>
+          <label>{transaction.id.toString('hex')}</label>
+        </div>
+        <div>
+          <label>{t('Amount')}</label>
+          <label>{`${transaction.asset.amount} ${token}`}</label>
+        </div>
+      </section>
+      <section>
+        <div>
+          <label>{t('Required signatures')}</label>
+          <label>-</label>
+        </div>
+        <div>
+          <label>{t('Transaction fee')}</label>
+          <label>{transaction.fee}</label>
+        </div>
+      </section>
+      <section>
+        <div>
+          <label>{t('Message')}</label>
+          <label>{transaction.asset.data}</label>
+        </div>
+        <div>
+          <label>{t('Nonce')}</label>
+          <label>{transaction.nonce}</label>
+        </div>
+      </section>
+    </>
+  );
+};
 
 const RegisterDelegate = ({ account, nickname, t }) => (
   <section className="summary-container">
@@ -132,30 +150,20 @@ const UnlockBalance = ({ account, fee, t, transaction }) => {
     <>
       <section>
         <label>{t('Sender')}</label>
-        <label className="sender-value">
+        <label>
           <AccountVisual address={account.summary.address} size={25} />
-          <label className={``}>
+          <label>
             {account.summary.address}
           </label>
         </label>
       </section>
       <section>
-        <label>{t('Amount')}</label>
-        <label className="amount-summary">
-          {`${amount} ${token}`}
-          <Converter className={styles.secondText} value={amount} />
+        <label>{t('Fee')}</label>
+        <label>
+          {fee}
+          <Converter className={styles.secondText} value={fee} />
         </label>
       </section>
-      { fields.reference && fields.reference.value
-        ? (
-          <section>
-            <label>{t('Message')}</label>
-            <label className="message-summary">
-              {`${fields.reference.value}`}
-            </label>
-          </section>
-        )
-        : null }
     </>
   );
 };

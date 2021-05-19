@@ -15,6 +15,8 @@ import { PrimaryButton } from '@toolbox/buttons';
 import LiskAmount from '@shared/liskAmount';
 import styles from './lockedBalance.css';
 
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
+
 const ButtonTitle = ({ unlockableBalance, t }) => {
   if (unlockableBalance === 0) {
     return <>{t('Nothing available to unlock')}</>;
@@ -47,21 +49,21 @@ const Form = ({
   const onClickUnlock = async () => {
     Piwik.trackingEvent('Send_UnlockTransaction', 'button', 'Next step');
     const selectedFee = customFee ? customFee.value : fee.value;
-    const txData = {
-      nonce: account.sequence?.nonce,
-      fee: `${toRawLsk(parseFloat(selectedFee))}`,
-      passphrase: account.passphrase,
-      unlockingObjects: getUnlockableUnlockingObjects(account.dpos?.unlocking, currentBlockHeight),
-      network,
-    };
 
     const [error, tx] = await to(
       create({
-        ...txData,
-        transactionType: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        moduleAssetId,
         network,
+        senderPublicKey: account.summary.publicKey,
+        nonce: account.sequence?.nonce,
+        fee: `${toRawLsk(parseFloat(selectedFee))}`,
+        passphrase: account.passphrase,
+        unlockingObjects: getUnlockableUnlockingObjects(
+          account.dpos?.unlocking, currentBlockHeight,
+        ),
       }, tokenMap.LSK.key),
     );
+    console.log(error, tx);
 
     if (!error) {
       dispatch({

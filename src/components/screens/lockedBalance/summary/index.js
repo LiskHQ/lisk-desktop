@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { withTranslation } from 'react-i18next';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
@@ -16,6 +16,8 @@ const Summary = ({
   fee,
   account,
 }) => {
+  console.log(transactionInfo, error);
+  account.summary.isMultisignature = true;
   const onSubmit = () => {
     if (!error) {
       nextStep({ transactionInfo });
@@ -49,9 +51,10 @@ const Summary = ({
       <TransactionInfo
         moduleAssetId={moduleAssetId}
         transaction={transactionInfo}
+        account={account}
       />
     </TransactionSummary>
   );
 };
 
-export default Summary;
+export default withTranslation()(Summary);

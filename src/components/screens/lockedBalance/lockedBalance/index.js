@@ -21,7 +21,7 @@ const LockedBalance = (props) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   const unlockableBalance = calculateUnlockableBalance(
-    account.dpos?.unlocking, currentBlockHeight,
+    account.dpos?.unlocking, 1341591,
   );
   const [customFee, setCustomFee] = useState();
   const [

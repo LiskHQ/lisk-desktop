@@ -18,6 +18,10 @@ class Summary extends React.Component {
     this.checkForSuccessOrFailedTransactions();
   }
 
+  componentDidMount() {
+    this.submitTransaction(() => {});
+  }
+
   submitTransaction(fn) {
     const { fields } = this.props;
 
@@ -38,7 +42,7 @@ class Summary extends React.Component {
       transactions,
     } = this.props;
 
-    if (!account.summary.isMultisignature) {
+    if (false && !account.summary.isMultisignature) {
       Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
       if (account.loginType !== loginTypes.passphrase.code
           && transactions.transactionsCreatedFailed.length) {
@@ -60,7 +64,7 @@ class Summary extends React.Component {
         });
       }
     } else {
-      this.callback(transactions.transactionsCreated[0]);
+      // this.callback(transactions.transactionsCreated[0]);
     }
   }
 
@@ -72,9 +76,11 @@ class Summary extends React.Component {
 
   render() {
     const {
-      fields, t, token, account, isInitialization,
+      fields, t, token, account, isInitialization, transactions,
     } = this.props;
     const amount = fields.amount.value;
+    const transaction = transactions.transactionsCreated[0];
+    console.log(transaction);
 
     return (
       <TransactionSummary
@@ -98,6 +104,7 @@ class Summary extends React.Component {
           fields={fields}
           amount={amount}
           token={token}
+          transaction={transaction}
           moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.transfer}
         />
       </TransactionSummary>
