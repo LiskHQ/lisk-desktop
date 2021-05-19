@@ -5,7 +5,7 @@ import Box from '@toolbox/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
-import DelegateVotesView from './delegateVotesView';
+// import DelegateVotesView from './delegateVotesView';
 
 // const formatForgingStatus = (status) => {
 //   const result = status.replace(/([A-Z])/g, ' $1');
@@ -60,10 +60,10 @@ const DelegateProfile = ({
           forgedLsk="-"
         />
       </Box>
-      <DelegateVotesView
+      {/* <DelegateVotesView
         t={t}
         voters={voters}
-      />
+      /> */}
     </section>
   );
 };
