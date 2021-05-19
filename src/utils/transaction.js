@@ -208,11 +208,14 @@ export const normalizeTransactionParams = params => Object.keys(params)
     switch (item) {
       case 'dateFrom':
         if (!acc.timestamp) acc.timestamp = ':';
-        acc.timestamp = acc.timestamp.replace(/(\d+)?:/, `${transformStringDateToUnixTimestamp(params[item])}:`);
+        acc.timestamp = acc.timestamp
+          .replace(/(\d+)?:/, `${transformStringDateToUnixTimestamp(params[item])}:`);
         break;
       case 'dateTo':
         if (!acc.timestamp) acc.timestamp = ':';
-        acc.timestamp = acc.timestamp.replace(/:(\d+)?/, `:${transformStringDateToUnixTimestamp(params[item])}`);
+        // We add 86400 so the range is inclusive
+        acc.timestamp = acc.timestamp
+          .replace(/:(\d+)?/, `:${transformStringDateToUnixTimestamp(params[item]) + 86400}`);
         break;
       case 'amountFrom':
         if (!acc.amount) acc.amount = ':';
