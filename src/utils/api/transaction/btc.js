@@ -195,14 +195,11 @@ const getUnspentTransactionOutputCountToConsume = (satoshiValue, unspentTransact
 export const getTransactionFeeFromUnspentOutputs = ({
   selectedFeePerByte, satoshiValue, unspentTransactionOutputs,
 }) => {
-  console.log('selectedFeePerByte', selectedFeePerByte, satoshiValue);
   const feeInSatoshis = calculateTransactionFee({
     inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue, unspentTransactionOutputs),
     outputCount: 2,
     selectedFeePerByte,
   });
-
-  console.log('feeInSatoshis', feeInSatoshis);
 
   return calculateTransactionFee({
     inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue
