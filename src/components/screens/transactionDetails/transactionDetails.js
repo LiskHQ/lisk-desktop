@@ -6,6 +6,7 @@ import { isEmpty } from '@utils/helpers';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
+import { tokenMap } from '@constants';
 import NotFound from '@shared/notFound';
 import Dialog from '@toolbox/dialog/dialog';
 import { selectCurrentBlockHeight } from '@store/selectors';
@@ -13,7 +14,7 @@ import TransactionVotes from './transactionVotes';
 import {
   TransactionId, Sender, Recipient, Message,
   Illustration, AmountAndDate, FeeAndConfirmation,
-  DelegateUsername,
+  DelegateUsername, BlockDetails,
 } from './dataRows';
 import styles from './transactionDetails.css';
 
@@ -45,6 +46,7 @@ const TransactionDetails = ({
             t={t}
           />
           <TransactionId t={t} id={data.id} />
+          { activeToken === tokenMap.LSK.key ? <BlockDetails t={t} transaction={data} /> : null }
           <AmountAndDate
             transaction={data}
             activeToken={activeToken}
