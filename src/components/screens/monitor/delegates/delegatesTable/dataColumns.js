@@ -113,14 +113,7 @@ export const RoundState = ({
         title={t('Round state:')}
         position="left"
         size="maxContent"
-        content={state === undefined
-          ? '-'
-          : (
-            <Icon
-              className={styles.statusIcon}
-              name={icons[state]}
-            />
-          )}
+        content={<Icon className={styles.statusIcon} name={icons[state]} />}
       >
         <p className={styles.statusToolip}>
           {roundStates[state]}
