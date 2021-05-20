@@ -1,10 +1,10 @@
 import React from 'react';
-import { BigNumber } from 'bignumber.js';
+// import { BigNumber } from 'bignumber.js';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { tokenMap, routes } from '@constants';
-import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
+// import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
 import styles from './accounts.css';
@@ -18,16 +18,16 @@ const getOwnerName = (account) => {
   return text;
 };
 
-const BalanceShare = ({ balance, supply }) => {
-  const share = new BigNumber((balance / supply) * 100);
-  return (
-    <span className={styles.balanceShare}>
-      {
-        `${formatAmountBasedOnLocale({ value: share.toFormat(2) })} %`
-      }
-    </span>
-  );
-};
+// const BalanceShare = ({ balance, supply }) => {
+//   const share = new BigNumber((balance / supply) * 100);
+//   return (
+//     <span className={styles.balanceShare}>
+//       {
+//         `${formatAmountBasedOnLocale({ value: share.toFormat(2) })} %`
+//       }
+//     </span>
+//   );
+// };
 
 const AccountRow = ({ data, className, supply }) => (
   <Link
@@ -47,10 +47,10 @@ const AccountRow = ({ data, className, supply }) => (
     <span className={`${grid['col-xs-3']} ${grid['col-md-3']}`}>
       <LiskAmount val={data.token?.balance} showInt token={tokenMap.LSK.key} />
     </span>
-    <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
+    {/* <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
       <BalanceShare balance={data.token?.balance} supply={supply} />
-    </span>
-    <span className={`${grid['col-xs-3']} ${grid['col-md-2']}`}>
+    </span> */}
+    <span className={`${grid['col-xs-5']} ${grid['col-md-3']}`}>
       {getOwnerName(data)}
     </span>
   </Link>
