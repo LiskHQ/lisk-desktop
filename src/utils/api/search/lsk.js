@@ -52,7 +52,9 @@ const getTransactionOrBlock = async ({ network, params, baseUrl }) => {
       params: { publicKey: params.query },
       baseUrl,
     });
-    addresses = [res];
+    if (res.summary?.balance > 0) {
+      addresses = [res];
+    }
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(`There is no account with the given public key: ${params.query}`);
