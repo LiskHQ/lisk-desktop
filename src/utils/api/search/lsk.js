@@ -22,10 +22,11 @@ import { getBlock } from '../block';
 const getTransactionOrBlock = async ({ network, params, baseUrl }) => {
   let transactions = [];
   let blocks = [];
+  let addresses = [];
   try {
     const res = await getTransaction({
       network,
-      params: { id: params.query },
+      params: { transactionId: params.query },
       baseUrl,
     });
     transactions = res.data;
@@ -36,7 +37,7 @@ const getTransactionOrBlock = async ({ network, params, baseUrl }) => {
   try {
     const res = await getBlock({
       network,
-      params: { id: params.query },
+      params: { blockId: params.query },
       baseUrl,
     });
     blocks = res.data;
@@ -45,12 +46,25 @@ const getTransactionOrBlock = async ({ network, params, baseUrl }) => {
     console.log(`There is no block with the given id: ${params.query}`);
   }
 
+  try {
+    const res = await getAccount({
+      network,
+      params: { publicKey: params.query },
+      baseUrl,
+    });
+    addresses = [res];
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(`There is no account with the given public key: ${params.query}`);
+  }
+
   return ({
     data: {
       transactions,
       blocks,
+      addresses,
     },
-    meta: transactions.length || blocks.length,
+    meta: transactions.length || blocks.length || addresses.length,
   });
 };
 
@@ -67,8 +81,7 @@ const getTransactionOrBlock = async ({ network, params, baseUrl }) => {
  */
 // eslint-disable-next-line import/prefer-default-export
 export const search = ({ network, params, baseUrl }) => {
-  if (validateAddress(tokenMap.LSK.key, params.query) === 0
-    || regex.publicKey.test(params.query)) {
+  if (validateAddress(tokenMap.LSK.key, params.query) === 0) {
     return getAccount({
       network,
       params: { address: params.query },
