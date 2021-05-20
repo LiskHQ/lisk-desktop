@@ -81,7 +81,7 @@ class SearchBar extends React.Component {
     const { rowItemIndex } = this.state;
 
     if (addresses.length) this.onSelectAccount(addresses[rowItemIndex].address);
-    if (delegates.length) this.onSelectAccount(delegates[rowItemIndex].account.summary?.address);
+    if (delegates.length) this.onSelectAccount(delegates[rowItemIndex].summary?.address);
     if (transactions.length) this.onSelectTransaction(transactions[rowItemIndex].id);
     if (blocks.length) this.onSelectTransaction(blocks[rowItemIndex].id);
   }
