@@ -10,7 +10,7 @@ export default (t, activeToken, changeSort) => {
     },
     {
       title: t('Date'),
-      classList: grid[isLSK ? 'col-xs-2' : 'col-xs-2'],
+      classList: grid['col-xs-2'],
       sort: {
         fn: changeSort,
         key: 'timestamp',
@@ -18,7 +18,7 @@ export default (t, activeToken, changeSort) => {
     },
     {
       title: t('Transaction Fee'),
-      classList: grid[isLSK ? 'col-xs-2' : 'col-xs-2'],
+      classList: grid['col-xs-2'],
     },
     {
       title: t('Details'),
