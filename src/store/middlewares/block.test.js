@@ -24,14 +24,10 @@ describe('Block middleware', () => {
 
     blockSubscribe.mockImplementation(() => {});
     blockUnsubscribe.mockImplementation(() => {});
-    forgersSubscribe.mockImplementation(() => {});
-    forgersUnsubscribe.mockImplementation(() => {});
     middleware(store)(() => {})(action);
 
     expect(blockSubscribe).toHaveBeenCalledTimes(1);
     expect(blockUnsubscribe).toHaveBeenCalledTimes(1);
-    expect(forgersSubscribe).toHaveBeenCalledTimes(1);
-    expect(forgersUnsubscribe).toHaveBeenCalledTimes(1);
     expect(olderBlocksRetrieved).toHaveBeenCalledTimes(1);
   });
 });
