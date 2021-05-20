@@ -146,7 +146,7 @@ describe('API: LSK Transactions', () => {
 
       expect(http).toHaveBeenCalledWith({
         path: '/api/v2/transactions',
-        params: { block: sampleId },
+        params: { blockId: sampleId },
         network,
         baseUrl: undefined,
       });
