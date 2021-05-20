@@ -26,10 +26,8 @@ const Summary = ({
   numberOfSignatures,
   prevStep,
   nextStep,
-  transactionCreatedSuccess,
-  transactionCreatedError,
 }) => {
-  const submitTransaction = async () => {
+  const signTransaction = async () => {
     const [error, transaction] = await to(
       createMultiSignatureTransaction({
         network,
@@ -44,18 +42,12 @@ const Summary = ({
       }, token),
     );
 
-    // eslint-disable-next-line max-len
-    // if (transaction.signatures.filter(signature => signature.length > 0).length === numberOfSignatures) {
+    console.log(transaction);
+    console.log(error);
 
-    // } else {
-    //   nextStep({ transaction });
-    // }
-    // if (!error) {
-    //   transactionCreatedSuccess(tx);
-    // } else {
-    //   transactionCreatedError(tx);
-    //   nextStep({ transactionInfo: tx });
-    // }
+    if (!error) {
+      nextStep({ transaction });
+    }
   };
 
   const goBack = () => {
@@ -81,7 +73,7 @@ const Summary = ({
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
           <SecondaryButton className="go-back" onClick={goBack}>{t('Edit')}</SecondaryButton>
-          <PrimaryButton className="confirm" size="l" onClick={submitTransaction}>
+          <PrimaryButton className="confirm" size="l" onClick={signTransaction}>
             {t('Sign')}
           </PrimaryButton>
         </BoxFooter>

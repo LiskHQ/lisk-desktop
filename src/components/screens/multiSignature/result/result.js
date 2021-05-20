@@ -8,12 +8,9 @@ import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Result = ({
-  t, transaction, error, transactions, transactionBroadcasted,
+  t, transaction, error,
 }) => {
-  const [status, setStatus] = useState(!error ? 'pending' : 'fail');
-  const success = status !== 'fail';
-
-  const template = success ? {
+  const template = !error ? {
     illustration: 'registerMultisignatureSuccess',
     message: t('You have successfully signed the transaction. You can download or copy the transaction and share it with members.'),
   } : {
@@ -21,26 +18,12 @@ const Result = ({
     message: t('Oops, looks like something went wrong.'),
   };
 
-  useEffect(() => {
-    if (transaction) {
-      // if (transaction.signatures.filter(signature => signature.length > 0).length === numberOfSignatures) {
-
-      // } else {
-      //   nextStep({ transaction });
-      // }
-      // const confirmed = transactions.confirmed
-      //   .filter(tx => tx.id === transaction.id);
-      // const broadcastError = transactions.broadcastedTransactionsError
-      //   .filter(tx => tx.transaction.id === transaction.id);
-
-      // if (confirmed.length) setStatus('ok');
-      // if (broadcastError.length) setStatus('fail');
-    }
-  }, [transactions]);
-
-  useEffect(() => {
-    if (transaction) transactionBroadcasted(transaction);
-  }, [transaction]);
+  const onDownload = () => {
+    const anchor = document.createElement('a');
+    anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(transaction))}`);
+    anchor.setAttribute('download', `tx-${transaction.moduleID}-${transaction.assetID}.json`);
+    anchor.click();
+  };
 
   return (
     <section className={`${styles.wrapper} transaction-status`}>
@@ -51,18 +34,19 @@ const Result = ({
       <TransactionResult
         t={t}
         illustration={template.illustration}
-        success={success}
+        success={!error}
         message={template.message}
         className={styles.content}
         error={JSON.stringify(error)}
       >
-        {success && (
+        {!error && (
           <div className={styles.buttonsContainer}>
             <CopyToClipboard
               Container={SecondaryButton}
               text={t('Copy')}
+              value={JSON.stringify(transaction)}
             />
-            <PrimaryButton>
+            <PrimaryButton onClick={onDownload}>
               <span>
                 <Icon name="download" />
                 {t('Download')}
