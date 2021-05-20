@@ -29,7 +29,7 @@ const getOwnerName = (account) => {
 //   );
 // };
 
-const AccountRow = ({ data, className, supply }) => (
+const AccountRow = ({ data, className }) => (
   <Link
     className={`${grid.row} ${className} accounts-row`}
     to={`${routes.account.path}?address=${data.summary?.address}`}
