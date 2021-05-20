@@ -7,6 +7,7 @@ import {
   DEFAULT_NUMBER_OF_SIGNATURES,
   DEFAULT_SIGNATURE_BYTE_SIZE,
   MODULE_ASSETS_MAP,
+  MODULE_ASSETS_NAME_ID_MAP,
   moduleAssetSchemas,
   BASE_FEES,
 } from '@constants';
@@ -322,6 +323,7 @@ export const createMultiSignatureTransaction = ({
   mandatoryKeys,
   optionalKeys,
   ...transactionObject
+// eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
   const { networkIdentifier } = network.networks.LSK;
   const {
@@ -329,7 +331,16 @@ export const createMultiSignatureTransaction = ({
   } = transactionObject;
 
   const schema = moduleAssetSchemas[moduleAssetId];
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
+    rawTransaction.mandatoryKeys = mandatoryKeys;
+    rawTransaction.optionalKeys = optionalKeys;
+  }
+
   const transaction = createTransactionObject(rawTransaction, moduleAssetId);
+  const keys = {
+    mandatoryKeys: transaction.asset.mandatoryKeys,
+    optionalKeys: transaction.asset.optionalKeys,
+  };
 
   try {
     const signedTransaction = transactions.signMultiSignatureTransaction(
@@ -337,7 +348,7 @@ export const createMultiSignatureTransaction = ({
       transaction,
       Buffer.from(networkIdentifier, 'hex'),
       passphrase,
-      { mandatoryKeys, optionalKeys },
+      keys,
       true,
     );
 
