@@ -3,15 +3,17 @@ import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP, tokenMap } from '@constants';
 import to from 'await-to-js';
 import { createMultiSignatureTransaction } from '@api/transaction';
+import { toRawLsk } from '@utils/lsk';
+import TransactionInfo from '@shared/transactionInfo';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
-import MultiSignatureReview from '../../../shared/multiSignatureReview';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+const token = tokenMap.LSK.key;
 
 const Summary = ({
   t,
@@ -28,26 +30,36 @@ const Summary = ({
   transactionCreatedError,
 }) => {
   const submitTransaction = async () => {
-    const [error, tx] = await to(
+    const [error, transaction] = await to(
       createMultiSignatureTransaction({
         network,
         mandatoryKeys,
         optionalKeys,
         numberOfSignatures,
         moduleAssetId,
-        fee,
+        fee: toRawLsk(fee),
+        nonce: account.sequence.nonce,
         passphrase: account.passphrase,
         senderPublicKey: account.summary.publicKey,
-      }, tokenMap.LSK.key),
+      }, token),
     );
 
-    if (!error) {
-      transactionCreatedSuccess(tx);
-      nextStep({ transactionInfo: tx });
-    } else {
-      transactionCreatedError(tx);
-      nextStep({ transactionInfo: tx });
-    }
+    // eslint-disable-next-line max-len
+    // if (transaction.signatures.filter(signature => signature.length > 0).length === numberOfSignatures) {
+
+    // } else {
+    //   nextStep({ transaction });
+    // }
+    // if (!error) {
+    //   transactionCreatedSuccess(tx);
+    // } else {
+    //   transactionCreatedError(tx);
+    //   nextStep({ transactionInfo: tx });
+    // }
+  };
+
+  const goBack = () => {
+    prevStep({ mandatoryKeys, optionalKeys, numberOfSignatures });
   };
 
   return (
@@ -58,15 +70,17 @@ const Summary = ({
         </div>
         <BoxContent className={styles.content}>
           <ProgressBar current={2} />
-          <MultiSignatureReview
+          <TransactionInfo
             t={t}
-            members={members}
             fee={fee}
+            account={account}
+            members={members}
+            moduleAssetId={moduleAssetId}
             numberOfSignatures={numberOfSignatures}
           />
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
-          <SecondaryButton className="go-back" onClick={prevStep}>{t('Edit')}</SecondaryButton>
+          <SecondaryButton className="go-back" onClick={goBack}>{t('Edit')}</SecondaryButton>
           <PrimaryButton className="confirm" size="l" onClick={submitTransaction}>
             {t('Sign')}
           </PrimaryButton>

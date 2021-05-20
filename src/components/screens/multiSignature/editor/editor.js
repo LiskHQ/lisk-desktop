@@ -13,20 +13,35 @@ import MemberField from './memberField';
 import styles from './styles.css';
 
 const token = tokenMap.LSK.key;
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+
 const MAX_MULTI_SIG_MEMBERS = 64;
 
 const placeholderMember = {
   address: undefined, isMandatory: false,
 };
 
-const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+const getInitialMembersState = (prevState) => prevState.members ?? [placeholderMember];
+const getInitialSignaturesState = (prevState) => prevState.numberOfSignatures ?? 2;
+
+// const validateState = ({ mandatoryKeys, optionalKeys, requiredSignatures }) => {
+//   if (requiredSignatures > MAX_MULTI_SIG_MEMBERS) {
+//     return false;
+//   }
+//   if (requiredSignatures > mandatoryKeys.length + optionalKeys.length) {
+//     return false;
+//   }
+//   return true;
+// };
 
 // eslint-disable-next-line max-statements
 const Editor = ({
-  t, account, nextStep,
+  t, account, nextStep, prevState,
 }) => {
-  const [requiredSignatures, setRequiredSignatures] = useState(2);
-  const [members, setMembers] = useState([placeholderMember]);
+  const [requiredSignatures, setRequiredSignatures] = useState(() =>
+    getInitialSignaturesState(prevState));
+  const [members, setMembers] = useState(() => getInitialMembersState(prevState));
+
   const [customFee, setCustomFee] = useState();
   const [
     selectedPriority, selectTransactionPriority,
@@ -60,10 +75,6 @@ const Editor = ({
       // @todo create proper multi-sig tx
     },
   });
-
-  //   const feedback = validateVotes(votes, account.balance, fee.value, t);
-  const feedback = { error: false };
-  const isCTADisabled = false;
 
   const addMemberField = () => {
     if (members.length < MAX_MULTI_SIG_MEMBERS) {
@@ -113,6 +124,11 @@ const Editor = ({
     }
   }, [requiredSignatures]);
 
+  // @todo
+  // const feedback = { error: validateState({ mandatoryKeys, optionalKeys, requiredSignatures }) };
+  // const isCTADisabled = feedback.error;
+  const isCTADisabled = false;
+
   return (
     <section className={styles.wrapper}>
       <Box className={styles.box}>
@@ -132,8 +148,17 @@ const Editor = ({
             />
           </div>
           <div className={`${styles.membersControls} multisignature-members-controls`}>
-            <span>Members</span>
-            <TertiaryButton size="s" disabled={members.length >= 64} onClick={addMemberField} className="add-new-members">+ Add</TertiaryButton>
+            <span>{t('Members')}</span>
+            <TertiaryButton
+              size="s"
+              disabled={members.length >= 64}
+              onClick={addMemberField}
+              className="add-new-members"
+            >
+              +
+              {' '}
+              {t('Add')}
+            </TertiaryButton>
           </div>
           <div className={styles.contentScrollable}>
             {members.map((member, i) => (
@@ -163,9 +188,9 @@ const Editor = ({
           loadError={prioritiesLoadError}
           isLoading={loadingPriorities}
         />
-        {
+        {/* {
           feedback.error && <span className="feedback">{feedback.messages[0]}</span>
-        }
+        } */}
         <BoxFooter>
           <PrimaryButton
             className="confirm-button"

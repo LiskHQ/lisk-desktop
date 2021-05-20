@@ -6,6 +6,7 @@ import AccountMigration from '@shared/accountMigration';
 import LiskAmount from '@shared/liskAmount';
 import VoteItem from '@shared/voteItem';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import MultiSignatureReview from '@shared/multiSignatureReview';
 
 import styles from './transactionInfo.css';
 
@@ -56,7 +57,11 @@ const VoteDelegate = ({
   );
 };
 
-const RegisterMultisignatureGroup = () => null;
+const RegisterMultisignatureGroup = ({
+  t, members, fee, numberOfSignatures,
+}) => (
+  <MultiSignatureReview t={t} members={members} fee={fee} numberOfSignatures={numberOfSignatures} />
+);
 
 const Reclaim = ({ account, t }) => (
   <>

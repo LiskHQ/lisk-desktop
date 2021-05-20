@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { tokenMap, regex } from '@constants';
+import { toRawLsk } from '@utils/lsk';
 import LiskAmount from '../liskAmount';
 import AccountVisual from '../../toolbox/accountVisual';
 
@@ -8,12 +9,12 @@ import styles from './styles.css';
 
 const getAccountRoleText = (accountRole, t) => {
   switch (accountRole) {
-    case 'mandatory':
+    case true:
       return t('Mandatory');
-    case 'optional':
+    case false:
       return t('Optional');
-    case 'owner':
-      return t('Owner');
+    // case 'owner':
+    //   return t('Owner');
     default:
       return t('Optional');
   }
@@ -28,7 +29,11 @@ const Member = ({ member, i, t }) => (
         {member.name || member.address.replace(regex.lskAddressTrunk, '$1...$3')}
         <span>{`(${getAccountRoleText(member.isMandatory, t)})`}</span>
       </p>
-      {/* <p className={styles.memberKey}>{member.publicKey.replace(regex.publicKeyTrunk, '$1...$3')}</p> */}
+      {/*
+      <p className={styles.memberKey}>
+        {member.publicKey.replace(regex.publicKeyTrunk, '$1...$3')}
+      </p>
+      */}
     </div>
   </div>
 );
@@ -37,7 +42,6 @@ const Members = ({ members = [], t }) => {
   const sliceIndex = Math.round(members.length / 2);
   const leftColumn = members.slice(0, sliceIndex);
   const rightColumn = members.slice(sliceIndex, members.length);
-  console.log(members);
   return (
     <div className={styles.membersContainer}>
       <p>{t('Members')}</p>
@@ -75,7 +79,7 @@ const MultiSignatureReview = ({
         {numberOfSignatures}
       </InfoColumn>
       <InfoColumn title={t('Transaction fee')} className="info-fee">
-        <LiskAmount val={fee} token={tokenMap.LSK.key} />
+        <LiskAmount val={toRawLsk(fee)} token={tokenMap.LSK.key} />
       </InfoColumn>
     </div>
   </>

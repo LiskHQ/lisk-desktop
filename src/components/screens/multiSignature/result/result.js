@@ -8,7 +8,7 @@ import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Result = ({
-  t, transactionInfo, error, transactions, transactionBroadcasted,
+  t, transaction, error, transactions, transactionBroadcasted,
 }) => {
   const [status, setStatus] = useState(!error ? 'pending' : 'fail');
   const success = status !== 'fail';
@@ -22,20 +22,25 @@ const Result = ({
   };
 
   useEffect(() => {
-    if (transactionInfo) {
-      const confirmed = transactions.confirmed
-        .filter(tx => tx.id === transactionInfo.id);
-      const broadcastError = transactions.broadcastedTransactionsError
-        .filter(tx => tx.transaction.id === transactionInfo.id);
+    if (transaction) {
+      // if (transaction.signatures.filter(signature => signature.length > 0).length === numberOfSignatures) {
 
-      if (confirmed.length) setStatus('ok');
-      if (broadcastError.length) setStatus('fail');
+      // } else {
+      //   nextStep({ transaction });
+      // }
+      // const confirmed = transactions.confirmed
+      //   .filter(tx => tx.id === transaction.id);
+      // const broadcastError = transactions.broadcastedTransactionsError
+      //   .filter(tx => tx.transaction.id === transaction.id);
+
+      // if (confirmed.length) setStatus('ok');
+      // if (broadcastError.length) setStatus('fail');
     }
   }, [transactions]);
 
   useEffect(() => {
-    if (transactionInfo) transactionBroadcasted(transactionInfo);
-  }, [transactionInfo]);
+    if (transaction) transactionBroadcasted(transaction);
+  }, [transaction]);
 
   return (
     <section className={`${styles.wrapper} transaction-status`}>
