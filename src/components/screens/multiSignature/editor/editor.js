@@ -36,7 +36,7 @@ const getInitialSignaturesState = (prevState) => prevState.numberOfSignatures ??
 
 // eslint-disable-next-line max-statements
 const Editor = ({
-  t, account, nextStep, prevState,
+  t, account, nextStep, prevState = {},
 }) => {
   const [requiredSignatures, setRequiredSignatures] = useState(() =>
     getInitialSignaturesState(prevState));

@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { fromRawLsk } from '@utils/lsk';
+import accounts from '../../../../../test/constants/accounts';
 
 import Editor from './editor';
 
@@ -37,9 +38,7 @@ describe('Multisignature editor component', () => {
   let wrapper;
   const props = {
     t: v => v,
-    account: {
-
-    },
+    account: accounts.genesis,
     nextStep: jest.fn(),
   };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import TransactionResult from '../../../shared/transactionResult';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';

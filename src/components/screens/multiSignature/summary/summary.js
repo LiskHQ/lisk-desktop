@@ -42,9 +42,6 @@ const Summary = ({
       }, token),
     );
 
-    console.log(transaction);
-    console.log(error);
-
     if (!error) {
       nextStep({ transaction });
     }
