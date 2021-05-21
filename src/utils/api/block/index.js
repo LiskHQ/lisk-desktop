@@ -25,7 +25,7 @@ const getBlockProps = ({ blockId, height }) => {
  * Retrieves block details.
  *
  * @param {Object} data
- * @param {String?} data.params.id - Block id
+ * @param {String?} data.params.blockId - Block id
  * @param {Number?} data.params.height - Block height
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
@@ -53,7 +53,8 @@ const blocksFilters = {
   addressList: { key: 'addressList', test: addressList => !addressList.some(address => validateAddress(tokenMap.LSK.key, address)) },
   timestamp: { key: 'timestamp', test: str => /^(\d+)?:(\d+)?$/.test(str) },
   generatorAddress: { key: 'generatorAddress', test: address => !validateAddress(tokenMap.LSK.key, address) },
-  height: { key: 'height', test: num => (typeof num === 'number') },
+  generatorUsername: { key: 'generatorUsername', test: username => (typeof username === 'string' && validateAddress(tokenMap.LSK.key, username) === 1) },
+  height: { key: 'height', test: num => !Number.isNaN(parseInt(num, 10)) },
   limit: { key: 'limit', test: num => (typeof num === 'number') },
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
   sort: {
@@ -71,7 +72,7 @@ const blocksFilters = {
  * @param {Array<String>?} data.params.addressList - List of account addresses
  * @param {Date?} data.params.dateFrom - Starting timestamp
  * @param {Date?} data.params.dateTo - Ending timestamp
- * @param {String?} data.params.generatorAddress - Address of delegate that forged the blocks
+ * @param {String?} data.params.generator - Address or username of delegate the forger
  * @param {Number?} data.params.offset - Index of the first result
  * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
@@ -83,9 +84,6 @@ const blocksFilters = {
 export const getBlocks = ({
   params = {}, network, baseUrl,
 }) => {
-  // Use HTTP to retrieve accounts with given sorting and pagination parameters
-  const normParams = {};
-
   if (typeof params.dateFrom === 'string') {
     params.dateFrom = transformStringDateToUnixTimestamp(params.dateFrom);
   }
@@ -94,11 +92,18 @@ export const getBlocks = ({
     params.dateTo = transformStringDateToUnixTimestamp(params.dateTo);
   }
 
-  Object.keys(params).forEach((key) => {
+  if (typeof params.generator === 'string') {
+    params.generatorUsername = params.generator;
+    params.generatorAddress = params.generator;
+    delete params.generator;
+  }
+
+  const normParams = Object.keys(params).reduce((acc, key) => {
     if (blocksFilters[key].test(params[key])) {
-      normParams[blocksFilters[key].key] = params[key];
+      acc[blocksFilters[key].key] = params[key];
     }
-  });
+    return acc;
+  }, {});
 
   return http({
     path: httpPaths.blocks,

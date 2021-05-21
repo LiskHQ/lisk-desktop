@@ -175,10 +175,6 @@ export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlo
     0,
   );
 
-export const getTokenFromAddress = address => (
-  cryptography.validateBase32Address(address) ? tokenMap.LSK.key : tokenMap.BTC.key
-);
-
 export const isAccountInitialized = account => account
   && account.info
   && account.info.LSK

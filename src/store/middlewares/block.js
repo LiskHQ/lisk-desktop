@@ -1,5 +1,4 @@
 import { blockSubscribe, blockUnsubscribe } from '@api/block';
-import { forgersSubscribe, forgersUnsubscribe } from '@api/delegate';
 import { tokenMap, actionTypes } from '@constants';
 import {
   olderBlocksRetrieved,
@@ -21,7 +20,6 @@ const blockListener = ({ getState, dispatch }) => {
   const state = getState();
   blockUnsubscribe();
 
-  // eslint-disable-next-line max-statements
   const callback = (block) => {
     const { settings, network } = getState();
     const activeToken = settings.token && state.settings.token.active;
@@ -51,20 +49,6 @@ const blockListener = ({ getState, dispatch }) => {
   );
 };
 
-const forgingListener = ({ getState, dispatch }) => {
-  const state = getState();
-  forgersUnsubscribe();
-
-  const callback = () => dispatch(forgersRetrieved());
-
-  forgersSubscribe(
-    state.network,
-    callback,
-    generateOnDisconnect(dispatch),
-    generateOnReconnect(dispatch),
-  );
-};
-
 const blockMiddleware = store => (
   next => (action) => {
     next(action);
@@ -72,7 +56,6 @@ const blockMiddleware = store => (
       case actionTypes.networkConfigSet:
         store.dispatch(olderBlocksRetrieved());
         blockListener(store);
-        forgingListener(store);
         break;
       case actionTypes.olderBlocksRetrieved:
         store.dispatch(forgersRetrieved());

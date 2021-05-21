@@ -22,8 +22,7 @@ describe('voting middleware', () => {
       type: actionTypes.accountLoggedOut,
     };
     const expectedAction = {
-      type: actionTypes.votesRetrieved,
-      data: [],
+      type: actionTypes.votesReset,
     };
     const next = jest.fn();
     const store = {

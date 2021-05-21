@@ -13,9 +13,9 @@ import { getNetworkConfig } from '@api/network';
 import styles from './networkSelector.css';
 
 const getNetwork = (name, url) => {
-  const { nodes, initialSupply } = networks[name];
+  const { serviceUrl, initialSupply } = networks[name];
   const address = name === networkKeys.customNode
-    ? addHttp(url) : nodes[0];
+    ? addHttp(url) : serviceUrl;
 
   return {
     name,

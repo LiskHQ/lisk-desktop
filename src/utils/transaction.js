@@ -25,8 +25,8 @@ const getTxAmount = ({ moduleAssetId, asset }) => {
   }
 
   if (moduleAssetId === unlockToken) {
-    return asset.unlockingObjects.reduce((sum, unlockingObject) =>
-      sum + parseInt(unlockingObject.amount, 10), 0);
+    return asset.unlockObjects.reduce((sum, unlockObject) =>
+      sum + parseInt(unlockObject.amount, 10), 0);
   }
   if (moduleAssetId === voteDelegate) {
     return asset.votes.reduce((sum, vote) =>
@@ -88,10 +88,10 @@ const transformTransaction = (transaction) => {
 
     case unlockToken: {
       transformedTransaction.asset = {
-        unlockObjects: transaction.asset.unlockObjects.map(unlockingObject => ({
-          delegateAddress: getBase32AddressFromAddress(unlockingObject.delegateAddress),
-          amount: Number(unlockingObject.amount),
-          unvoteHeight: unlockingObject.height.start,
+        unlockObjects: transaction.asset.unlockObjects.map(unlockObject => ({
+          delegateAddress: getBase32AddressFromAddress(unlockObject.delegateAddress),
+          amount: Number(unlockObject.amount),
+          unvoteHeight: unlockObject.height.start,
         })),
       };
       break;
@@ -204,23 +204,35 @@ export const containsTransactionType = (transactions = [], type) =>
  * @returns {Object} - Parameters consumable by transaction API method
  */
 export const normalizeTransactionParams = params => Object.keys(params)
+  // eslint-disable-next-line complexity
   .reduce((acc, item) => {
     switch (item) {
       case 'dateFrom':
-        if (!acc.timestamp) acc.timestamp = ':';
-        acc.timestamp = acc.timestamp.replace(/(\d+)?:/, `${transformStringDateToUnixTimestamp(params[item])}:`);
+        if (params[item]) {
+          if (!acc.timestamp) acc.timestamp = ':';
+          acc.timestamp = acc.timestamp
+            .replace(/(\d+)?:/, `${transformStringDateToUnixTimestamp(params[item])}:`);
+        }
         break;
       case 'dateTo':
-        if (!acc.timestamp) acc.timestamp = ':';
-        acc.timestamp = acc.timestamp.replace(/:(\d+)?/, `:${transformStringDateToUnixTimestamp(params[item])}`);
+        if (params[item]) {
+          if (!acc.timestamp) acc.timestamp = ':';
+          // We add 86400 so the range is inclusive
+          acc.timestamp = acc.timestamp
+            .replace(/:(\d+)?/, `:${transformStringDateToUnixTimestamp(params[item]) + 86400}`);
+        }
         break;
       case 'amountFrom':
-        if (!acc.amount) acc.amount = ':';
-        acc.amount = acc.amount.replace(/(\d+)?:/, `${toRawLsk(params[item])}:`);
+        if (params[item]) {
+          if (!acc.amount) acc.amount = ':';
+          acc.amount = acc.amount.replace(/(\d+)?:/, `${toRawLsk(params[item])}:`);
+        }
         break;
       case 'amountTo':
-        if (!acc.amount) acc.amount = ':';
-        acc.amount = acc.amount.replace(/:(\d+)?/, `:${toRawLsk(params[item])}`);
+        if (params[item]) {
+          if (!acc.amount) acc.amount = ':';
+          acc.amount = acc.amount.replace(/:(\d+)?/, `:${toRawLsk(params[item])}`);
+        }
         break;
       default:
         acc[item] = params[item];

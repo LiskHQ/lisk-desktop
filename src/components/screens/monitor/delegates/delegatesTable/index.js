@@ -11,7 +11,7 @@ const TableWrapper = compose(
       ((a.nextForgingTime > b.nextForgingTime) ? 1 : -1) * (direction === 'asc' ? 1 : -1),
   }),
 )(({
-  delegates, handleLoadMore, t, activeTab,
+  delegates, handleLoadMore, t, activeTab, blocks,
   changeSort, sort, canLoadMore, watchList, setActiveTab,
 }) => (
   <Table
@@ -24,6 +24,7 @@ const TableWrapper = compose(
       activeTab,
       watchList,
       setActiveTab,
+      blocks,
     }}
     header={header(activeTab, changeSort, t)}
     currentSort={sort}
@@ -69,6 +70,7 @@ const DelegatesTable = ({
   sanctionedDelegates,
   activeTab,
   changeSort,
+  blocks,
   filters,
   sort,
   t,
@@ -91,6 +93,7 @@ const DelegatesTable = ({
   return (
     <TableWrapper
       delegates={delegatesToShow}
+      blocks={blocks}
       setActiveTab={setActiveTab}
       watchList={watchList}
       handleLoadMore={handleLoadMore}

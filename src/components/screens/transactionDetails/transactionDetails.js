@@ -6,6 +6,7 @@ import { isEmpty } from '@utils/helpers';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
+import { tokenMap } from '@constants';
 import NotFound from '@shared/notFound';
 import Dialog from '@toolbox/dialog/dialog';
 import { selectCurrentBlockHeight } from '@store/selectors';
@@ -13,12 +14,12 @@ import TransactionVotes from './transactionVotes';
 import {
   TransactionId, Sender, Recipient, Message,
   Illustration, AmountAndDate, FeeAndConfirmation,
-  DelegateUsername,
+  DelegateUsername, BlockDetails,
 } from './dataRows';
 import styles from './transactionDetails.css';
 
-const Transactions = ({
-  t, activeToken, netCode, transaction, votedDelegates,
+const TransactionDetails = ({
+  t, activeToken, transaction, votedDelegates,
 }) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const { error, isLoading, data } = transaction;
@@ -38,15 +39,14 @@ const Transactions = ({
           <Sender
             transaction={data}
             activeToken={activeToken}
-            netCode={netCode}
           />
           <Recipient
             transaction={data}
             activeToken={activeToken}
-            netCode={netCode}
             t={t}
           />
           <TransactionId t={t} id={data.id} />
+          { activeToken === tokenMap.LSK.key ? <BlockDetails t={t} transaction={data} /> : null }
           <AmountAndDate
             transaction={data}
             activeToken={activeToken}
@@ -69,4 +69,4 @@ const Transactions = ({
   );
 };
 
-export default withTranslation()(Transactions);
+export default withTranslation()(TransactionDetails);

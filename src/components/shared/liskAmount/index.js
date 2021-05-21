@@ -20,16 +20,17 @@ const getInt = value => value.replace(IntegerReg, '');
  * Displays the LSK/BTC amount with Token sign next to the value
  *
  * @param {Object} params
- * @param {String} params.val Amount in Beddows
+ * @param {Boolean?} params.convert Should convert the value to Beddows/Satoshi. Default true.
+ * @param {String} params.val Amount in Beddows/Satoshi or LSK/BTC
  * @param {Boolean} params.showRounded Round the number (decimal)
  * @param {Boolean} params.showInt Remove the floating points
- * @param {String} params.token An option of LSK and BTC
+ * @param {String?} params.token An option of LSK and BTC
  */
 const LiskAmount = ({
-  val, showRounded, showInt, token,
+  val, showRounded, showInt, token, convert = true,
 }) => {
   if (val === undefined) return (<span />);
-  let value = fromRawLsk(val);
+  let value = convert === false ? val : fromRawLsk(val);
   if (showInt) value = getInt(value);
   else if (showRounded) value = trim(value);
   return (

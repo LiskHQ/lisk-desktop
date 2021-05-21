@@ -10,7 +10,7 @@ export default (t, activeToken, changeSort) => {
     },
     {
       title: t('Date'),
-      classList: grid['col-xs-1'],
+      classList: grid['col-xs-2'],
       sort: {
         fn: changeSort,
         key: 'timestamp',
@@ -18,15 +18,15 @@ export default (t, activeToken, changeSort) => {
     },
     {
       title: t('Transaction Fee'),
-      classList: grid['col-xs-1'],
+      classList: grid['col-xs-2'],
     },
     {
       title: t('Details'),
-      classList: isLSK ? `${grid['col-xs-4']} ${grid['col-md-4']}` : 'hidden',
+      classList: isLSK ? `${grid['col-xs-2']} ${grid['col-md-2']}` : 'hidden',
     },
     {
       title: t('Amount'),
-      classList: grid['col-xs-2'],
+      classList: grid[isLSK ? 'col-xs-2' : 'col-xs-3'],
     },
   ]);
 };

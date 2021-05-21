@@ -60,6 +60,7 @@ export const forgersRetrieved = () => async (dispatch, getState) => {
     params: { limit: ROUND_LENGTH },
   });
   let forgers = [];
+  const indexBook = {};
 
   // Get the list of usernames that already forged in this round
   const haveForgedInRound = latestBlocks
@@ -69,18 +70,22 @@ export const forgersRetrieved = () => async (dispatch, getState) => {
   // check previous blocks and define missed blocks
   if (data) {
     forgers = data.map((forger, index) => {
+      indexBook[forger.address] = index;
       if (haveForgedInRound.indexOf(forger.username) > -1) {
-        return { ...forger, status: 'forging' };
+        return { ...forger, state: 'forging' };
       }
       if (index < remainingBlocksInRound) {
-        return { ...forger, status: 'awaitingSlot' };
+        return { ...forger, state: 'awaitingSlot' };
       }
-      return { ...forger, status: 'missedBlock' };
+      return { ...forger, state: 'missedBlock' };
     });
   }
 
   dispatch({
     type: actionTypes.forgersRetrieved,
-    data: forgers,
+    data: {
+      forgers,
+      indexBook,
+    },
   });
 };

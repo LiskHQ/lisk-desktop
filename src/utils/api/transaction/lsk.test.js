@@ -146,7 +146,7 @@ describe('API: LSK Transactions', () => {
 
       expect(http).toHaveBeenCalledWith({
         path: '/api/v2/transactions',
-        params: { block: sampleId },
+        params: { blockId: sampleId },
         network,
         baseUrl: undefined,
       });
@@ -285,7 +285,7 @@ describe('API: LSK Transactions', () => {
         title: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
         asset: {
-          unlockingObjects: [
+          unlockObjects: [
             {
               amount: '100000000',
             },

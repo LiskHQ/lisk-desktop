@@ -6,10 +6,11 @@ describe('DiscreetMode Component', () => {
   let wrapper;
 
   const props = {
+    token: 'LSK',
     account: {
       info: {
-        LSK: { address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy' },
-        BTC: { address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo' },
+        LSK: { summary: { address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy' } },
+        BTC: { summary: { address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo' } },
       },
     },
     isDiscreetMode: true,

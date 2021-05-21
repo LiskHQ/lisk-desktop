@@ -9,15 +9,11 @@ import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
 import styles from './walletDetails.css';
 
-const MyAccount = ({
+const WalletDetails = ({
   t, account, settings, className,
 }) => {
-  const info = account.info || {};
-  const token = settings.token;
-
-  const coins = Object.entries(info)
-    .map(([key, coin]) => token.list[key] && coin)
-    .filter(coin => coin);
+  const tokens = Object.entries(account.info || {})
+    .filter(([key, info]) => settings.token.list[key] && info);
 
   return (
     <Box className={`${styles.box} ${className}`}>
@@ -26,16 +22,16 @@ const MyAccount = ({
       </BoxHeader>
       <BoxContent className={`${styles.container} coin-container`}>
         {
-        coins.map((coin, index) => (
-          <BoxRow key={`${coin.address}-${index}`} className={`${styles.row} coin-row`}>
-            <Icon name={coin.token === tokenMap.BTC.key ? 'btcIcon' : 'lskIcon'} />
+        tokens.map(([token, info]) => (
+          <BoxRow key={`${info.address}-${token}`} className={`${styles.row} coin-row`}>
+            <Icon name={token === tokenMap.BTC.key ? 'btcIcon' : 'lskIcon'} />
             <div className={styles.details}>
-              <span>{t('{{token}} balance', { token: tokenMap[coin.token === tokenMap.BTC.key ? coin.token : tokenMap.LSK.key].label })}</span>
+              <span>{t('{{token}} balance', { token: tokenMap[token].label })}</span>
               <DiscreetMode>
                 <span className={styles.amounts}>
                   <LiskAmount
-                    val={coin.token === tokenMap.BTC.key ? coin.balance : coin.summary?.balance}
-                    token={coin.token === tokenMap.BTC.key ? coin.token : tokenMap.LSK.key}
+                    val={info.summary?.balance}
+                    token={token}
                   />
                 </span>
               </DiscreetMode>
@@ -48,4 +44,4 @@ const MyAccount = ({
   );
 };
 
-export default MyAccount;
+export default WalletDetails;
