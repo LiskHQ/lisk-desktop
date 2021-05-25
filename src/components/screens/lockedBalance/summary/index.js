@@ -51,7 +51,7 @@ const Summary = ({
         transaction={transactionInfo}
         account={account}
         date={date}
-        isMultisignature
+        isMultisignature={account.summary.isMultisignature}
       />
     </TransactionSummary>
   );

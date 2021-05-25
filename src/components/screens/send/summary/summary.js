@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { loginTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
@@ -9,23 +10,14 @@ class Summary extends React.Component {
   constructor(props) {
     super(props);
 
-    this.callback = () => {};
+    this.date = moment().format('DD MMMM YYYY, h:mm:ss A');
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
   }
 
-  componentDidUpdate() {
-    this.checkForSuccessOrFailedTransactions();
-  }
-
   componentDidMount() {
-    this.submitTransaction(() => {});
-  }
-
-  submitTransaction(fn) {
     const { fields } = this.props;
 
-    this.callback = fn;
     this.props.transactionCreated({
       amount: `${toRawLsk(fields.amount.value)}`,
       data: fields.reference ? fields.reference.value : '',
@@ -34,7 +26,7 @@ class Summary extends React.Component {
     });
   }
 
-  checkForSuccessOrFailedTransactions() {
+  submitTransaction(fn) {
     const {
       account,
       fields,
@@ -42,7 +34,7 @@ class Summary extends React.Component {
       transactions,
     } = this.props;
 
-    if (false && !account.summary.isMultisignature) {
+    if (!account.summary.isMultisignature) {
       Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
       if (account.loginType !== loginTypes.passphrase.code
           && transactions.transactionsCreatedFailed.length) {
@@ -64,7 +56,7 @@ class Summary extends React.Component {
         });
       }
     } else {
-      // this.callback(transactions.transactionsCreated[0]);
+      fn(transactions.transactionsCreated[0]);
     }
   }
 
@@ -80,7 +72,7 @@ class Summary extends React.Component {
     } = this.props;
     const amount = fields.amount.value;
     const transaction = transactions.transactionsCreated[0];
-    console.log(transaction);
+    account.summary.isMultisignature = true;
 
     return (
       <TransactionSummary
@@ -96,16 +88,17 @@ class Summary extends React.Component {
           onClick: this.prevStep,
         }}
         showCancelButton={!isInitialization}
-        fee={fromRawLsk(fields.fee.value)}
         token={token}
         createTransaction={this.submitTransaction}
       >
         <TransactionInfo
           fields={fields}
-          amount={amount}
           token={token}
-          transaction={transaction}
           moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.transfer}
+          transaction={transaction || {}}
+          account={account}
+          date={this.date}
+          isMultisignature={account.summary.isMultisignature}
         />
       </TransactionSummary>
     );

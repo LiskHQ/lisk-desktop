@@ -81,7 +81,7 @@ const Reclaim = ({ account, t }) => (
 );
 
 const Send = ({
-  fields, amount, token, transaction, t,
+  fields, token, transaction, t,
 }) => {
   console.log(transaction);
   return (
@@ -100,11 +100,27 @@ const Send = ({
           ) : null }
         </label>
       </section>
+      <section className={styles.msignRow}>
+        <div className={styles.col}>
+          <label>{t('Transaction ID')}</label>
+          <label>
+            {transaction.id?.readInt32LE()}
+          </label>
+        </div>
+        <div className={styles.col}>
+          <label>{t('Amount')}</label>
+          <label>
+            <LiskAmount
+              val={transaction.asset?.amount}
+              token={token}
+            />
+          </label>
+        </div>
+      </section>
       <section>
-        <label>{t('Amount')}</label>
-        <label className="amount-summary">
-          {`${amount} ${token}`}
-          <Converter className={styles.secondText} value={amount} />
+        <label>{t('Message')}</label>
+        <label className="recipient-value">
+          {transaction.asset?.data}
         </label>
       </section>
     </>
