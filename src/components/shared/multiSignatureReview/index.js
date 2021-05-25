@@ -15,6 +15,7 @@ const getAccountRoleText = (accountRole, t) => {
       return t('Optional');
     // case 'owner':
     //   return t('Owner');
+    /* istanbul ignore next */
     default:
       return t('Optional');
   }
