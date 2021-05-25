@@ -8,15 +8,15 @@ describe('Multisignature Review component', () => {
     t: v => v,
     members: [
       {
-        accountId: '8195226425328336181L', publicKey: '8155694652104526882', accountRole: 'mandatory',
+        address: '8195226425328336181L', isMandatory: true,
       },
-      { accountId: '6195226421328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
-      { accountId: '4827364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
-      { accountId: '5738363111328339181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: '' },
-      { accountId: '9484364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'owner' },
+      { address: '6195226421328336181L', isMandatory: false },
+      { address: '4827364921328336181L', isMandatory: false },
+      { address: '5738363111328339181L', isMandatory: false },
+      { address: '9484364921328336181L', isMandatory: false },
     ],
-    fee: 2000000,
-    requiredSignatures: 2,
+    fee: 0.02,
+    numberOfSignatures: 2,
   };
 
   beforeEach(() => {

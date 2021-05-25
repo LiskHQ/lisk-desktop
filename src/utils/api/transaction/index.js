@@ -19,3 +19,4 @@ export const getTransactionStats = transactionAPI.getTransactionStats;
 export const getTransactions = transactionAPI.getTransactions;
 export const getUnspentTransactionOutputs = transactionAPI.getUnspentTransactionOutputs;
 export const getSchemas = transactionAPI.getSchemas;
+export const createMultiSignatureTransaction = transactionAPI.createMultiSignatureTransaction;

@@ -13,6 +13,7 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import copyToClipboard from 'copy-to-clipboard';
 import Icon from '@toolbox/icon';
 import { tokenMap } from '@constants';
+import { downloadJSON } from '@utils/helpers';
 import styles from './transactionSummary.css';
 
 const Footer = ({
@@ -22,10 +23,7 @@ const Footer = ({
   const [copied, setCopied] = useState(false);
 
   const onDownload = (transaction) => {
-    const anchor = document.createElement('a');
-    anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(transaction))}`);
-    anchor.setAttribute('download', `tx-${transaction.moduleID}-${transaction.assetID}.json`);
-    anchor.click();
+    downloadJSON(transaction, `tx-${transaction.moduleID}-${transaction.assetID}`);
   };
 
   const onCopy = (transaction) => {
