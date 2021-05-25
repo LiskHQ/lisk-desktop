@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { mountWithRouter } from '@utils/testHelpers';
+import { truncateAddress } from '@utils/account';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
 
@@ -103,7 +104,8 @@ describe('Transaction Details Component', () => {
         { id: transaction.id },
       );
       expect(wrapper.find('header h1')).toHaveText('Transaction details');
-      expect(wrapper.find('.transaction-id .copy-title').first().text().trim()).toBe(`${transaction.data.id}`);
+      const expectedId = truncateAddress(transaction.data.id);
+      expect(wrapper.find('.transaction-id .copy-title').first().text().trim()).toBe(expectedId);
     });
 
     it('Should load delegate names after vote transaction loading finished', () => {
