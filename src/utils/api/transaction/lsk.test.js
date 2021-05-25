@@ -468,7 +468,7 @@ describe('API: LSK Transactions', () => {
         numberOfSignatures: 2,
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
-        optionalKeys: [accounts.second_passphrase_account.summary.publicKey],
+        optionalKeys: [accounts.delegate_candidate.summary.publicKey],
       };
       const result = await getTransactionFee({
         transaction,
