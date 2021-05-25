@@ -1,4 +1,5 @@
 import React from 'react';
+import { downloadJSON } from '@utils/helpers';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
 import TransactionResult from '../../../shared/transactionResult';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
@@ -19,10 +20,7 @@ const Result = ({
   };
 
   const onDownload = () => {
-    const anchor = document.createElement('a');
-    anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(transaction))}`);
-    anchor.setAttribute('download', `tx-${transaction.moduleID}-${transaction.assetID}.json`);
-    anchor.click();
+    downloadJSON(transaction, `tx-${transaction.moduleID}-${transaction.assetID}`);
   };
 
   return (

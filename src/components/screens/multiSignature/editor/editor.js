@@ -65,14 +65,12 @@ const Editor = ({
     token,
     account,
     priorityOptions,
-    // numberOfSignatures: requiredSignatures,
     transaction: {
       moduleAssetId,
       nonce: account.sequence.nonce,
       senderPublicKey: account.summary.publicKey,
       optionalKeys,
       mandatoryKeys,
-      // @todo create proper multi-sig tx
     },
   });
 
