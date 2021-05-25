@@ -123,7 +123,6 @@ class passphraseInput extends React.Component {
 
   render() {
     const { t } = this.props;
-    const secondPPFeedback = (this.props.isSecondPassphrase && this.props.secondPPFeedback) || '';
     const {
       focus,
       inputsLength,
@@ -134,7 +133,7 @@ class passphraseInput extends React.Component {
       values,
     } = this.state;
     const iconName = showPassphrase ? 'showPassphraseIcon' : 'hidePassphraseIcon';
-    const isFeedbackOnError = validationError || secondPPFeedback !== '';
+    const isFeedbackOnError = validationError;
 
     return (
       <>
@@ -164,7 +163,7 @@ class passphraseInput extends React.Component {
                     setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
                     placeholder="_________"
                     className={[
-                      partialPassphraseError[i] || passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : '',
+                      partialPassphraseError[i] || passphraseIsInvalid ? 'error' : '',
                       focus === i ? 'selected' : '',
                     ].join(' ')}
                     value={values[i] || ''}
@@ -186,7 +185,7 @@ class passphraseInput extends React.Component {
             <Feedback
               className={styles.errorMessage}
               status={isFeedbackOnError ? 'error' : ''}
-              message={secondPPFeedback || validationError}
+              message={validationError}
             />
           </div>
         </div>
