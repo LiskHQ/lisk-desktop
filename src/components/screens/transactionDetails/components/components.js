@@ -103,6 +103,7 @@ export const TransactionId = ({ t }) => {
     <ValueAndLabel label={t('Transaction ID')} className={styles.transactionId}>
       <span className="transaction-id">
         <CopyToClipboard
+          text={truncateAddress(id)}
           value={id}
           className="tx-id"
           containerProps={{

@@ -21,7 +21,7 @@ const LayoutSchema = {
     className: '',
   },
   [voteDelegate]: {
-    components: [...baseComponents, Illustration, Message, TransactionVotes],
+    components: [...baseComponents, Illustration, TransactionVotes],
     className: styles.voteLayout,
   },
   [registerDelegate]: {

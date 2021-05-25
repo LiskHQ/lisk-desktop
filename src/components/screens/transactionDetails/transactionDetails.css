@@ -73,6 +73,7 @@
       "illustration illustration"
       "sender sender"
       "transactionId date"
+      "blockId blockHeight"
       "votes votes"
       "fee confirmations";
   }
@@ -81,8 +82,8 @@
     grid-template-areas:
       "illustration illustration"
       "sender sender"
-      "date confirmations"
-      "transactionId transactionId"
-      "message message";
+      "transactionId date"
+      "blockId blockHeight"
+      "confirmations fee";
   }
 }
