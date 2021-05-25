@@ -90,3 +90,60 @@
   margin: 10px 10px 0 0;
   white-space: nowrap;
 }
+
+.msignRow {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: flex-start;
+
+  & > .col {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+
+    & > label:first-child {
+      font-family: var(--content-font);
+      font-size: 13px;
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.2px;
+      line-height: 20px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.memberInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 30px;
+
+  & > .memberDetails {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+
+    & > .memberTitle {
+      @mixin headingSmall;
+
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--color-maastricht-blue);
+      font-family: var(--content-font);
+
+      & > span {
+        @mixin contentNormal;
+
+        margin-left: 10px;
+        color: black;
+      }
+    }
+
+    & > .memberKey {
+      @mixin contentNormal;
+
+      margin: 0;
+      color: var(--color-slate-gray);
+    }
+  }
+}

@@ -40,6 +40,7 @@
   "Amount can't be zero.": "Amount can't be zero.",
   "Amount of Transaction": "Amount of Transaction",
   "Amount per transaction (LSK)": "Amount per transaction (LSK)",
+  "Amount to unlock": "Amount to unlock",
   "An error occurred while rendering this page": "An error occurred while rendering this page",
   "An error occurred.": "An error occurred.",
   "An initial one-time transfer fee will be deducted from the new account.": "An initial one-time transfer fee will be deducted from the new account.",

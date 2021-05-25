@@ -1,5 +1,7 @@
 import React from 'react';
+import withData from '@utils/withData';
 import { withTranslation } from 'react-i18next';
+import { getAccounts } from '@api/account';
 import AccountVisual from '@toolbox/accountVisual';
 import Converter from '@shared/converter';
 import AccountMigration from '@shared/accountMigration';
@@ -74,11 +76,9 @@ const Reclaim = ({ account, t }) => (
 );
 
 const Send = ({
-  fields, token, transaction, t,
+  fields, amount, token, transaction, t,
 }) => {
   console.log(transaction);
-  console.log(fields);
-
   return (
     <>
       <section>
@@ -96,34 +96,11 @@ const Send = ({
         </label>
       </section>
       <section>
-        <div>
-          <label>{t('Transaction ID')}</label>
-          <label>{transaction.id.toString('hex')}</label>
-        </div>
-        <div>
-          <label>{t('Amount')}</label>
-          <label>{`${transaction.asset.amount} ${token}`}</label>
-        </div>
-      </section>
-      <section>
-        <div>
-          <label>{t('Required signatures')}</label>
-          <label>-</label>
-        </div>
-        <div>
-          <label>{t('Transaction fee')}</label>
-          <label>{transaction.fee}</label>
-        </div>
-      </section>
-      <section>
-        <div>
-          <label>{t('Message')}</label>
-          <label>{transaction.asset.data}</label>
-        </div>
-        <div>
-          <label>{t('Nonce')}</label>
-          <label>{transaction.nonce}</label>
-        </div>
+        <label>{t('Amount')}</label>
+        <label className="amount-summary">
+          {`${amount} ${token}`}
+          <Converter className={styles.secondText} value={amount} />
+        </label>
       </section>
     </>
   );
@@ -144,31 +121,40 @@ const RegisterDelegate = ({ account, nickname, t }) => (
   </section>
 );
 
-const UnlockBalance = ({ account, fee, t, transaction }) => {
-  console.log(transaction);
-  return (
-    <>
-      <section>
-        <label>{t('Sender')}</label>
+const UnlockBalance = ({ account, t, transaction }) => (
+  <>
+    <section>
+      <label>{t('Sender')}</label>
+      <label>
+        <AccountVisual address={account.summary.address} size={25} />
         <label>
-          <AccountVisual address={account.summary.address} size={25} />
-          <label>
-            {account.summary.address}
-          </label>
+          {account.summary.address}
         </label>
-      </section>
-      <section>
-        <label>{t('Fee')}</label>
+      </label>
+    </section>
+    <section className={styles.msignRow}>
+      <div className={styles.col}>
+        <label>{t('Transaction ID')}</label>
         <label>
-          {fee}
-          <Converter className={styles.secondText} value={fee} />
+          {transaction.id.readInt32LE()}
         </label>
-      </section>
-    </>
-  );
-};
+      </div>
+      <div className={styles.col}>
+        <label>{t('Amount to unlock')}</label>
+        <label>
+          <LiskAmount
+            val={transaction.asset.unlockObjects.reduce(
+              (total, { amount }) => total + Number(amount), 0,
+            )}
+            token={tokenMap.LSK.key}
+          />
+        </label>
+      </div>
+    </section>
+  </>
+);
 
-const TransactionInfo = ({ moduleAssetId, ...restProps }) => {
+const CustomTransactionInfo = ({ moduleAssetId, ...restProps }) => {
   switch (moduleAssetId) {
     case MODULE_ASSETS_NAME_ID_MAP.reclaimLSK: return <Reclaim {...restProps} />;
     case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: return <RegisterDelegate {...restProps} />;
@@ -181,5 +167,84 @@ const TransactionInfo = ({ moduleAssetId, ...restProps }) => {
       return null;
   }
 };
+
+const Members = withData({
+  accounts: {
+    apiUtil: (network, { token, ...params }) => getAccounts({ network, params }, token),
+    defaultData: [],
+    getApiParams: (state, props) => ({
+      token: state.settings.token.active,
+      publicKeyList: [...props.keys.mandatoryKeys, ...props.keys.optionalKeys],
+      network: state.network,
+    }),
+    autoload: true,
+    transformResponse: response => response.data,
+  },
+})(({ accounts, keys, t }) => (
+  <section>
+    <label>{t('Members')}</label>
+    {accounts.data?.map((account, i) => (
+      <div
+        className={`${styles.memberInfo} member-info`}
+        key={`tx-info-msign-member-${i + 1}.`}
+      >
+        <AccountVisual address={account.summary.address} />
+        <div className={styles.memberDetails}>
+          <p className={styles.memberTitle}>
+            {account.summary.username || account.summary.address}
+            <span>{(i + 1) > keys.numberOfSignatures ? `(${t('Optional')})` : `(${t('Mandatory')})`}</span>
+          </p>
+          <p className={styles.memberKey}>{account.summary.publicKey}</p>
+        </div>
+      </div>
+    ))}
+  </section>
+));
+
+const TransactionInfo = ({
+  isMultisignature, t, transaction, date, account, ...restProps
+}) => (
+  <>
+    <CustomTransactionInfo
+      t={t}
+      transaction={transaction}
+      account={account}
+      {...restProps}
+    />
+    {isMultisignature && (
+      <>
+        <section className={styles.msignRow}>
+          <div className={styles.col}>
+            <label>{t('Required signatures')}</label>
+            <label>
+              {account.keys.numberOfSignatures}
+            </label>
+          </div>
+          <div className={styles.col}>
+            <label>{t('Transaction fee')}</label>
+            <label>
+              <LiskAmount val={transaction.fee} token={tokenMap.LSK.key} />
+            </label>
+          </div>
+        </section>
+        <section className={styles.msignRow}>
+          <div className={styles.col}>
+            <label>{t('Date')}</label>
+            <label>
+              {date}
+            </label>
+          </div>
+          <div className={styles.col}>
+            <label>{t('Nonce')}</label>
+            <label>
+              {Number(transaction.nonce)}
+            </label>
+          </div>
+        </section>
+        <Members t={t} keys={{ numberOfSignatures: 1, mandatoryKeys: ['1849c3a63b7c336fec832fbf394457e86b9c3b2ceef6e1029fd4c0c35b16ed88'], optionalKeys: ['80e295a2d700934ba50ba14fbdf6aebce6f226915fa105ed0a6d202ba1c464a0', '820e421aaaacd58db8aab4d5e01f9ad9e37abfa57ed58ee6ad23b4b908bda5b0'] }} />
+      </>
+    )}
+  </>
+);
 
 export default withTranslation()(TransactionInfo);

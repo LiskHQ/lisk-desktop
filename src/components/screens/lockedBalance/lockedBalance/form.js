@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
+import moment from 'moment';
 import { MODULE_ASSETS_NAME_ID_MAP, actionTypes, tokenMap } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
@@ -63,14 +64,15 @@ const Form = ({
         ),
       }, tokenMap.LSK.key),
     );
-    console.log(error, tx);
 
     if (!error) {
       dispatch({
         type: actionTypes.transactionCreatedSuccess,
         data: tx,
       });
-      nextStep({ transactionInfo: tx, fee, account });
+      nextStep({
+        transactionInfo: tx, fee, account, date: moment().format('DD MMMM YYYY, h:mm:ss A'),
+      });
     } else {
       dispatch({
         type: actionTypes.transactionCreatedError,
