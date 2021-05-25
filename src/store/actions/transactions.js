@@ -18,7 +18,7 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
 /**
  * Action trigger after a new transaction is broadcasted to the network
  * then the transaction is add to the pending transaction array in transaction reducer
- * Used in:  Send, Vote, Second passphrase registration, and delegate registration.
+ * Used in:  Send, Vote, and delegate registration.
  * @param {Object} params - all params
  * @param {String} params.senderPublicKey - alphanumeric string
  */
