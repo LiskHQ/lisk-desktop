@@ -250,8 +250,8 @@ const getTxAmount = ({ moduleAssetId, asset }) => {
   }
 
   if (moduleAssetId === unlockToken) {
-    return asset.unlockingObjects?.reduce((sum, unlockingObject) =>
-      sum + Number(unlockingObject.amount), 0);
+    return asset.unlockObjects.reduce((sum, unlockObject) =>
+      sum + parseInt(unlockObject.amount, 10), 0);
   }
   if (moduleAssetId === voteDelegate) {
     return asset.votes.reduce((sum, vote) =>

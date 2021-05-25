@@ -264,25 +264,33 @@ export const Members = ({ t }) => {
   );
 };
 
-export const BlockId = ({ t, transaction }) => (
-  <ValueAndLabel className={styles.blockId} label={t('Block ID')}>
-    <span>
-      <CopyToClipboard
-        value={transaction.block.id}
-        text={truncateAddress(transaction.block.id)}
-        className="block-id"
-        containerProps={{
-          size: 'xs',
-          className: 'copy-title',
-        }}
-        copyClassName={styles.copyIcon}
-      />
-    </span>
-  </ValueAndLabel>
-);
+export const BlockId = ({ t }) => {
+  const { transaction } = useContext(Context);
 
-export const BlockHeight = ({ t, transaction }) => (
-  <ValueAndLabel className={styles.blockHeight} label={t('Block Height')}>
-    <span>{transaction.block.height}</span>
-  </ValueAndLabel>
-);
+  return (
+    <ValueAndLabel className={styles.blockId} label={t('Block ID')}>
+      <span>
+        <CopyToClipboard
+          value={transaction.block.id}
+          text={truncateAddress(transaction.block.id)}
+          className="block-id"
+          containerProps={{
+            size: 'xs',
+            className: 'copy-title',
+          }}
+          copyClassName={styles.copyIcon}
+        />
+      </span>
+    </ValueAndLabel>
+  );
+};
+
+export const BlockHeight = ({ t }) => {
+  const { transaction } = useContext(Context);
+
+  return (
+    <ValueAndLabel className={styles.blockHeight} label={t('Block Height')}>
+      <span>{transaction.block.height}</span>
+    </ValueAndLabel>
+  );
+};
