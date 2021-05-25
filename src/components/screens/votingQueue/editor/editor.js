@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-
+import moment from 'moment';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
@@ -133,8 +133,9 @@ const Editor = ({
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
+    const date = moment().format('DD MMMM YYYY, h:mm:ss A');
     nextStep({
-      added, edited, removed, fee: toRawLsk(feeValue), normalizedVotes,
+      added, edited, removed, fee: toRawLsk(feeValue), normalizedVotes, date,
     });
   };
 

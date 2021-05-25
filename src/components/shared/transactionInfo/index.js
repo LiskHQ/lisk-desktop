@@ -51,9 +51,6 @@ const VoteDelegate = ({
       {removedLength ? <ItemList heading={t('Removed votes')} items={removed} /> : null}
       <div className={styles.infoContainer}>
         <InfoColumn title={t('Total votes after confirmation')} className="total-votes">{`${addedLength + editedLength}/10`}</InfoColumn>
-        <InfoColumn title={t('Transaction fee')} className="fee">
-          <LiskAmount val={fee} />
-        </InfoColumn>
       </div>
     </>
   );

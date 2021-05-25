@@ -48,7 +48,7 @@ export const voteEdited = data => ({
  * Adds pending state and then after the duration of one round
  * cleans the pending state
  */
-export const votesSubmitted = ({ fee, votes, callback }) =>
+export const votesSubmitted = ({ fee, votes }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
     const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
     const { network, account } = getState();
@@ -70,10 +70,6 @@ export const votesSubmitted = ({ fee, votes, callback }) =>
         type: actionTypes.transactionCreatedError,
         data: error,
       });
-    }
-
-    if (tx && callback) {
-      callback(tx);
     }
 
     dispatch({ type: actionTypes.votesSubmitted });

@@ -35,7 +35,6 @@ const Summary = ({
     label: t('Go back'),
     onClick: () => { prevStep({ nickname }); },
   };
-  console.log(transactionInfo);
 
   return (
     <TransactionSummary

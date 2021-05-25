@@ -36,13 +36,26 @@ const getResultProps = ({ added, removed, edited }) => {
 
 const Summary = ({
   t, removed = {}, edited = {}, added = {},
-  fee, account, prevStep, nextStep, transactions, ...props
+  fee, account, prevStep, nextStep, transactions,
+  date, ...props
 }) => {
+  console.log(transactions);
+  const transaction = transactions.transactionsCreated[0];
+  account.summary.isMultisignature = true;
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
 
   useEffect(() => {
+    const { normalizedVotes, votesSubmitted } = props;
+
+    votesSubmitted({
+      fee: String(fee),
+      votes: normalizedVotes,
+    });
+  }, []);
+
+  const submitTransaction = () => {
     if (!account.summary.isMultisignature) {
       Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
       if (!transactions.transactionsCreatedFailed.length
@@ -56,16 +69,6 @@ const Summary = ({
         });
       }
     }
-  }, [transactions]);
-
-  const submitTransaction = (fn) => {
-    const { normalizedVotes, votesSubmitted } = props;
-
-    votesSubmitted({
-      fee: String(fee),
-      votes: normalizedVotes,
-      callback: typeof fn === 'function' ? fn : undefined,
-    });
   };
 
   const onConfirmAction = {
@@ -84,7 +87,9 @@ const Summary = ({
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       classNames={styles.container}
-      createTransaction={submitTransaction}
+      createTransaction={(callback) => {
+        callback(transaction);
+      }}
     >
       <ToggleIcon isNotHeader />
       <div className={styles.headerContainer}>
@@ -105,6 +110,10 @@ const Summary = ({
         removed={removed}
         fee={fee}
         moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.voteDelegate}
+        transaction={transaction || {}}
+        account={account}
+        date={date}
+        isMultisignature={account.summary.isMultisignature}
       />
     </TransactionSummary>
   );
