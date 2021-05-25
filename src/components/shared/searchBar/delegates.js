@@ -17,10 +17,10 @@ const Delegates = ({
           key={index}
           data-index={index}
           className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} delegates-row`}
-          onClick={() => onSelectedRow(delegate.address)}
+          onClick={() => onSelectedRow(delegate.summary.address)}
           onMouseEnter={updateRowItemIndex}
         >
-          <AccountVisual address={delegate.address} />
+          <AccountVisual address={delegate.summary.address} />
           <div className={styles.accountInformation}>
             <div>
               <span className={`${styles.delegateName} delegate-name`}>
@@ -28,15 +28,15 @@ const Delegates = ({
                   highlightClassName={styles.highlight}
                   searchWords={[searchTextValue]}
                   autoEscape
-                  textToHighlight={delegate.username}
+                  textToHighlight={delegate.dpos.delegate.username}
                 />
               </span>
             </div>
-            <span className={styles.accountSubtitle}>{delegate.address}</span>
+            <span className={styles.accountSubtitle}>{delegate.summary.address}</span>
           </div>
           <span className={styles.accountBalance}>
             <span className={styles.tag}>
-              {t('Delegate #{{rank}}', { rank: delegate.rank })}
+              {t('Delegate #{{rank}}', { rank: delegate.dpos.delegate.rank })}
             </span>
           </span>
         </div>

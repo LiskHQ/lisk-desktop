@@ -12,6 +12,7 @@ import BlockDetails from './blockDetails';
 
 const mapStateToProps = (state, ownProps) => ({
   id: selectSearchParamValue(ownProps.history.location.search, 'id'),
+  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
 });
 const ComposedBlockDetails = compose(
   withRouter,

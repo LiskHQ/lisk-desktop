@@ -5,7 +5,7 @@ import functionMapper from '../functionMapper';
 const networkAPI = functionMapper(lsk, btc);
 
 export const getPeers = networkAPI.getPeers;
-export const getNetworkCode = networkAPI.getNetworkCode;
+export const isMainnetBTC = networkAPI.isMainnetBTC;
 export const getNetworkConfig = networkAPI.getNetworkConfig;
 export const getNetworkStatistics = networkAPI.getNetworkStatistics;
 export const getNetworkStatus = networkAPI.getNetworkStatus;

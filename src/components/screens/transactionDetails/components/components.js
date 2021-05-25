@@ -12,7 +12,7 @@ import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
 import MultiSignatureMembers from '@shared/multisignatureMembers';
 import Tooltip from '@toolbox/tooltip/tooltip';
-import { extractAddressFromPublicKey } from '@utils/account';
+import { extractAddressFromPublicKey, truncateAddress } from '@utils/account';
 
 import { Context } from '../transactionDetails';
 import AccountInfo from './accountInfo';
@@ -27,7 +27,7 @@ const getDelegateName = (transaction, activeToken) => (
 );
 
 const getTxAsset = (tx) => {
-  if (typeof tx.asset === 'object' && tx.asset !== null && typeof tx.asset.data === 'string') {
+  if (tx.asset?.data && tx.asset.data.length) {
     return tx.asset.data;
   }
   return '-';
@@ -179,9 +179,7 @@ export const Fee = ({ t }) => {
   return (
     <ValueAndLabel label={t('Transaction fee')} className={styles.fee}>
       <span className="tx-fee">
-        <LiskAmount val={fee} />
-        {' '}
-        {activeToken}
+        <LiskAmount val={fee} token={activeToken} />
       </span>
     </ValueAndLabel>
   );
@@ -193,7 +191,10 @@ export const Confirmations = ({ t }) => {
     activeToken, transaction,
   } = useContext(Context);
 
-  const confirmations = currentBlockHeight ? currentBlockHeight - transaction.height : 0;
+  const confirmations = activeToken === tokenMap.LSK.key
+    ? (currentBlockHeight - transaction.height)
+    : transaction.confirmations;
+
   return (
     <ValueAndLabel
       className={styles.confirmations}
@@ -262,3 +263,26 @@ export const Members = ({ t }) => {
     <MultiSignatureMembers t={t} members={members} className={styles.multiSignatureMembers} />
   );
 };
+
+export const BlockId = ({ t, transaction }) => (
+  <ValueAndLabel className={styles.blockId} label={t('Block ID')}>
+    <span>
+      <CopyToClipboard
+        value={transaction.block.id}
+        text={truncateAddress(transaction.block.id)}
+        className="block-id"
+        containerProps={{
+          size: 'xs',
+          className: 'copy-title',
+        }}
+        copyClassName={styles.copyIcon}
+      />
+    </span>
+  </ValueAndLabel>
+);
+
+export const BlockHeight = ({ t, transaction }) => (
+  <ValueAndLabel className={styles.blockHeight} label={t('Block Height')}>
+    <span>{transaction.block.height}</span>
+  </ValueAndLabel>
+);

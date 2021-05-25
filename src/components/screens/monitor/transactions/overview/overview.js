@@ -125,7 +125,7 @@ const formatDates = (date, period) => {
 };
 
 const formatDistributionByValues = distributions =>
-  moduleAssetIds.map(id => (distributions[id] || 0) || 0);
+  moduleAssetIds.map(id => (distributions[id] ? parseInt(distributions[id], 10) : 0));
 
 const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');

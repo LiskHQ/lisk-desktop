@@ -52,26 +52,26 @@ const TransactionRow = ({
           />
         </span>
       </span>
-      <span className={grid[isLSK ? 'col-xs-1' : 'col-xs-2']}>
+      <span className={grid['col-xs-2']}>
         {
           isPending
             ? <Spinner completed={!isPending} label={t('Pending...')} />
             : <DateTimeFromTimestamp time={data.block.timestamp} token={activeToken} />
         }
       </span>
-      <span className={grid['col-xs-1']}>
+      <span className={grid['col-xs-2']}>
         <LiskAmount val={data.fee} token={activeToken} />
       </span>
       {
         isLSK
           ? (
-            <span className={`${grid['col-xs-4']} ${grid['col-md-4']}`}>
+            <span className={`${grid['col-xs-2']} ${grid['col-md-2']}`}>
               <TransactionAsset t={t} transaction={data} delegates={delegates} />
             </span>
           )
           : null
       }
-      <span className={grid['col-xs-2']}>
+      <span className={grid[isLSK ? 'col-xs-2' : 'col-xs-3']}>
         <TransactionAmount
           host={host}
           token={activeToken}

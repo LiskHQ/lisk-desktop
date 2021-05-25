@@ -94,6 +94,12 @@ const voting = (state = {}, action) => {
         };
         return votesDict;
       }, {});
+
+    /**
+     * Resets the vote dictionary after the user signs out.
+     */
+    case actionTypes.votesReset:
+      return {};
     default:
       return state;
   }

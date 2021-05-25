@@ -48,7 +48,7 @@ describe('API: LSK Transactions', () => {
         title: unlockToken,
         moduleAssetId: unlockToken,
         asset: {
-          unlockingObjects: [
+          unlockObjects: [
             {
               amount: '100000000',
             },

@@ -58,8 +58,9 @@ const Form = ({
     const [error, tx] = await to(
       create({
         ...txData,
-        transactionType: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
         network,
+        senderPublicKey: account.summary?.publicKey,
       }, tokenMap.LSK.key),
     );
 

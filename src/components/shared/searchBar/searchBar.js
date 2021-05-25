@@ -81,7 +81,7 @@ class SearchBar extends React.Component {
     const { rowItemIndex } = this.state;
 
     if (addresses.length) this.onSelectAccount(addresses[rowItemIndex].address);
-    if (delegates.length) this.onSelectAccount(delegates[rowItemIndex].account.summary?.address);
+    if (delegates.length) this.onSelectAccount(delegates[rowItemIndex].summary?.address);
     if (transactions.length) this.onSelectTransaction(transactions[rowItemIndex].id);
     if (blocks.length) this.onSelectTransaction(blocks[rowItemIndex].id);
   }
@@ -117,7 +117,9 @@ class SearchBar extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { searchTextValue, rowItemIndex } = this.state;
-    const { t, suggestions, setSearchBarRef } = this.props;
+    const {
+      t, suggestions, setSearchBarRef, activeToken,
+    } = this.props;
     const isSearchTextError = searchTextValue.length && searchTextValue.length < 3;
     const isEmptyResults = !suggestions.isLoading && !suggestions.data.addresses.length
       && !suggestions.data.delegates.length
@@ -183,6 +185,7 @@ class SearchBar extends React.Component {
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}
                 t={t}
+                activeToken={activeToken}
               />
             )
             : null

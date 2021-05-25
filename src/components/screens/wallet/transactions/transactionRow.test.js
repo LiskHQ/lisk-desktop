@@ -12,7 +12,7 @@ describe('Single Transaction Component', () => {
         timestamp: 1617806451178,
       },
       asset: {
-        unlockingObjects: [
+        unlockObjects: [
           {
             amount: '80000000000',
             unvoteHeight: 34482,

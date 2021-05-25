@@ -4,7 +4,7 @@ import Header from './header';
 
 const getUniqueKey = (data, index, key) => {
   if (typeof key === 'string' && !(/\./.test(key))) {
-    return `table-row-${data[key]}`;
+    return `table-row-${data[key]}-${index}`;
   }
   if (typeof key === 'function') {
     return `table-row-${key(data)}`;

@@ -71,7 +71,9 @@ const Identity = ({
           </span>
         )}
       >
-        <span>{t('Click to see full and old addresses')}</span>
+        <span>
+          {legacyAddress ? t('Click to see full and old addresses') : t('Click to see the full address')}
+        </span>
       </Tooltip>
       <Tooltip
         className={classNames.tooltipFull}
@@ -84,9 +86,11 @@ const Identity = ({
           </span>
         )}
       >
-        <span>{t('Click to hide full and old addresses')}</span>
+        <span>{legacyAddress ? t('Click to hide full and old addresses') : t('Click to hide the full address')}</span>
       </Tooltip>
-      <Legacy legacyAddress={legacyAddress} />
+      {
+        legacyAddress ? <Legacy legacyAddress={legacyAddress} /> : null
+      }
     </div>
   );
 };

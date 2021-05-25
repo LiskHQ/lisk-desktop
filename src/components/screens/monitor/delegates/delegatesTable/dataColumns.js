@@ -1,5 +1,4 @@
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import { fromRawLsk } from '@utils/lsk';
@@ -8,14 +7,16 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import Icon from '@toolbox/icon';
 import AccountVisual from '@toolbox/accountVisual';
 import {
+  getDelegateDetailsClass,
   getStatusClass,
   getDelegateWeightClass,
   getRoundStateClass,
   getForgingTimeClass,
+  getDelegateRankClass,
 } from './tableHeader';
 import styles from '../delegates.css';
 
-const roundStatus = {
+const roundStates = {
   forging: 'Forging',
   awaitingSlot: 'Awaiting slot',
   missedBlock: 'Missed block',
@@ -35,6 +36,12 @@ const delegateStatus = {
   nonEligible: 'Non-eligible to forge',
 };
 
+export const DelegateRank = ({ data, activeTab }) => (
+  <span className={getDelegateRankClass(activeTab)}>
+    <span>{data.rank}</span>
+  </span>
+);
+
 export const DelegateWeight = ({ value, activeTab }) => {
   const formatted = formatAmountBasedOnLocale({
     value: fromRawLsk(value),
@@ -53,7 +60,7 @@ export const DelegateDetails = ({
 }) => {
   const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'watched';
   return (
-    <span className={grid['col-xs-5']}>
+    <span className={getDelegateDetailsClass(activeTab)}>
       <div className={styles.delegateColumn}>
         <Tooltip
           tooltipClassName={styles.tooltipContainer}
@@ -90,56 +97,57 @@ export const DelegateDetails = ({
   );
 };
 
-export const RoundStatus = ({
-  activeTab, data, t, time,
-}) => (
-  <span className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
-    <Tooltip
-      title={t(roundStatus[data.status])}
-      position="left"
-      size="maxContent"
-      content={(
-        <Icon
-          className={styles.statusIcon}
-          name={icons[data.status]}
-        />
-      )}
-      footer={(
-        <p>{data.status === 'missedBlock' ? '-' : time}</p>
-      )}
-    >
-      <p className={styles.statusToolip}>
-        {data.lastBlock && `Last block forged ${data.lastBlock}`}
-      </p>
-    </Tooltip>
-    {data.isBanned && (
+export const RoundState = ({
+  activeTab, state, isBanned, t, time,
+}) => {
+  // if (activeTab === 'active') console.log('lastBlock', lastBlock);
+  if (state === undefined) {
+    return (
+      <span className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>-</span>
+    );
+  }
+
+  return (
+    <span className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
       <Tooltip
+        title={t('Round state:')}
         position="left"
         size="maxContent"
-        content={<Icon className={styles.statusIcon} name="delegateWarning" />}
-        footer={(
-          <p>{time}</p>
-        )}
+        content={<Icon className={styles.statusIcon} name={icons[state]} />}
       >
-        <p>
-          {t('This delegate will be punished in upcoming rounds')}
+        <p className={styles.statusToolip}>
+          {roundStates[state]}
         </p>
       </Tooltip>
-    )}
-  </span>
-);
-
-export const DelegateStatus = ({ activeTab, data }) => {
-  const status = data.totalVotesReceived < 1e11 ? 'nonEligible' : data.status;
-  return (
-    <span className={getStatusClass(activeTab)}>
-      <span className={`${styles.delegateStatus} ${styles[status]}`}>{delegateStatus[status]}</span>
+      {isBanned && (
+        <Tooltip
+          position="left"
+          size="maxContent"
+          content={<Icon className={styles.statusIcon} name="delegateWarning" />}
+          footer={(
+            <p>{time}</p>
+          )}
+        >
+          <p>
+            {t('This delegate will be punished in upcoming rounds')}
+          </p>
+        </Tooltip>
+      )}
     </span>
   );
 };
 
-export const ForgingTime = ({ activeTab, time, status }) => (
+export const DelegateStatus = ({ activeTab, status, totalVotesReceived }) => {
+  const statusKey = totalVotesReceived < 1e11 ? 'nonEligible' : status;
+  return (
+    <span className={getStatusClass(activeTab)}>
+      <span className={`${styles.delegateStatus} ${styles[statusKey]}`}>{delegateStatus[statusKey]}</span>
+    </span>
+  );
+};
+
+export const ForgingTime = ({ activeTab, time, state }) => (
   <span className={getForgingTimeClass(activeTab)}>
-    {status === 'missedBlock' ? '-' : time}
+    {state === 'missedBlock' ? '-' : time}
   </span>
 );

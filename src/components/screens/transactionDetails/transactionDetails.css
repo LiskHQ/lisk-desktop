@@ -30,10 +30,10 @@
       "illustration illustration"
       "sender sender"
       "recipient recipient"
-      "date confirmations"
-      "transactionId transactionId"
+      "transactionId date"
+      "blockId blockHeight"
       "amount fee"
-      "message message";
+      "confirmations message";
 
     & > * {
       width: 100%;
@@ -53,10 +53,10 @@
       "illustration illustration"
       "sender sender"
       "recipient recipient"
-      "date confirmations"
-      "transactionId transactionId"
+      "transactionId date"
+      "blockId blockHeight"
       "amount fee"
-      "message message";
+      "confirmations message";
   }
 
   & .multiSigLayout {
@@ -72,10 +72,9 @@
     grid-template-areas:
       "illustration illustration"
       "sender sender"
-      "date fee"
-      "transactionId transactionId"
-      "message confirmations"
-      "votes votes";
+      "transactionId date"
+      "votes votes"
+      "fee confirmations";
   }
 
   & .registerDelegate {
@@ -84,6 +83,6 @@
       "sender sender"
       "date confirmations"
       "transactionId transactionId"
-      "fee fee";
+      "message message";
   }
 }

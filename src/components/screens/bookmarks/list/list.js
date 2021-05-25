@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { tokenMap, routes } from '@constants';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import { truncateAddress } from '@utils/account';
 import { Input } from '@toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
@@ -98,9 +99,9 @@ export class BookmarksList extends React.Component {
     });
   }
 
-  onRowClick(e) {
+  onRowClick(e, bookmark) {
     const { editedAddress } = this.state;
-    if (editedAddress) {
+    if (editedAddress || bookmark.disabled) {
       e.preventDefault();
     }
   }
@@ -157,9 +158,9 @@ export class BookmarksList extends React.Component {
             selectedBookmarks.length
               ? selectedBookmarks.map(bookmark => (
                 <Link
-                  onClick={this.onRowClick}
+                  onClick={e => this.onRowClick(e, bookmark)}
                   key={bookmark.address}
-                  className={`${styles.row} ${editedAddress === bookmark.address ? styles.editting : ''} bookmark-list-row`}
+                  className={`${styles.row} ${editedAddress === bookmark.address ? styles.editing : ''} ${bookmark.disabled ? styles.disabled : ''} bookmark-list-row`}
                   to={`${routes.account.path}?address=${bookmark.address}`}
                 >
                   <div className={styles.avatarAndDescriptionWrapper}>
@@ -223,14 +224,28 @@ export class BookmarksList extends React.Component {
                           )
                           : (
                             <>
-                              <TertiaryButton
-                                onClick={e => this.editBookmark(e, bookmark)}
-                                className="bookmarks-edit-button"
-                                size="m"
-                                disabled={bookmark.isDelegate}
-                              >
-                                <Icon name="edit" />
-                              </TertiaryButton>
+                              {
+                                !bookmark.disabled
+                                  ? (
+                                    <TertiaryButton
+                                      onClick={e => this.editBookmark(e, bookmark)}
+                                      className="bookmarks-edit-button"
+                                      size="m"
+                                      disabled={bookmark.isDelegate || bookmark.disabled}
+                                    >
+                                      <Icon name="edit" />
+                                    </TertiaryButton>
+                                  ) : (
+                                    <Tooltip
+                                      position="bottom left"
+                                      size="maxContent"
+                                      indent
+                                      content={<Icon name="delegateWarning" />}
+                                    >
+                                      <span>{t('This is a legacy account and can not be used on this network.')}</span>
+                                    </Tooltip>
+                                  )
+                              }
                               <TertiaryButton
                                 onClick={e => this.deleteBookmark(e, bookmark)}
                                 className="bookmarks-delete-button"

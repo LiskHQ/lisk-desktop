@@ -9,6 +9,7 @@ export const getStatusClass = (activeTab) => {
     case 'sanctioned':
       return grid['col-xs-7'];
     case 'watched':
+    case 'standby':
       return grid['col-xs-2'];
     default:
       return grid['col-xs-4'];
@@ -23,6 +24,17 @@ export const getDelegateWeightClass = (activeTab) => {
       return `${grid['col-xs-2']} ${styles.voteWeight}`;
     default:
       return `${grid['col-xs-3']} ${styles.voteWeight}`;
+  }
+};
+
+export const getDelegateRankClass = (activeTab) => {
+  switch (activeTab) {
+    case 'watched':
+      return `${grid['col-xs-1']} ${styles.rank}`;
+    case 'standby':
+      return `${grid['col-xs-2']} ${styles.rank}`;
+    default:
+      return 'hidden';
   }
 };
 
@@ -48,11 +60,20 @@ export const getForgingTimeClass = (activeTab) => {
   }
 };
 
+export const getDelegateDetailsClass = (activeTab) => {
+  switch (activeTab) {
+    case 'watched':
+      return `${grid['col-xs-4']} ${styles.delegateHeader}`;
+    default:
+      return `${grid['col-xs-5']} ${styles.delegateHeader}`;
+  }
+};
+
 // eslint-disable-next-line complexity
 export default (activeTab, changeSort, t) => ([
   {
     title: t('Delegate'),
-    classList: `${grid['col-xs-5']} ${styles.delegateHeader}`,
+    classList: getDelegateDetailsClass(activeTab),
   },
   {
     title: t('Delegate weight'),
@@ -62,6 +83,10 @@ export default (activeTab, changeSort, t) => ([
       message: t('The total LSK voted to a delegate.'),
       position: 'top',
     },
+  },
+  {
+    title: t('Rank'),
+    classList: getDelegateRankClass(activeTab),
   },
   {
     title: t('Forging time'),

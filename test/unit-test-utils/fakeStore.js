@@ -49,6 +49,7 @@ const defaultStore = {
   blocks: {
     latestBlocks: delegates,
     forgers,
+    indexBook: forgers.reduce((acc, item, index) => { acc[item.address] = index; return acc; }, {}),
     total: 10000,
   },
 };

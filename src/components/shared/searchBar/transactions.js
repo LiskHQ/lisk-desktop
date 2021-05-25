@@ -1,22 +1,22 @@
 import React from 'react';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_MAP } from '@constants';
 import Icon from '@toolbox/icon';
+import { truncateAddress } from '@utils/account';
 import LiskAmount from '../liskAmount';
 import styles from './transactionsAndBlocks.css';
 
 const getTxConfig = (t, transactions) => {
-  const config = MODULE_ASSETS_NAME_ID_MAP[transactions[0].moduleAssetName];
-  const { amount, fee } = transactions[0];
+  const { asset, fee } = transactions[0];
 
   return {
-    icon: transactions[0].title === 'transfer' ? undefined : config.icon,
-    subTitle: transactions[0].title === 'transfer' ? t('Amount') : t('Fee'),
-    value: transactions[0].title === 'transfer' ? amount : fee,
+    icon: transactions[0].moduleAssetId === '2:0' ? undefined : MODULE_ASSETS_MAP['2:0'].icon,
+    subTitle: transactions[0].moduleAssetId === '2:0' ? t('Amount') : t('Fee'),
+    value: transactions[0].moduleAssetId === '2:0' ? asset.amount : fee,
   };
 };
 
 const Transactions = ({
-  t, transactions, onSelectedRow, rowItemIndex, updateRowItemIndex,
+  t, transactions, onSelectedRow, rowItemIndex, updateRowItemIndex, activeToken,
 }) => {
   const txConfig = getTxConfig(t, transactions);
 
@@ -36,10 +36,9 @@ const Transactions = ({
           onMouseEnter={updateRowItemIndex}
         >
           {txConfig.icon ? <Icon name={txConfig.icon} /> : null }
-          <span className={`${styles.transactionId} transaction-id`}>{transactions[0].id}</span>
+          <span className={`${styles.transactionId} transaction-id`}>{truncateAddress(transactions[0].id)}</span>
           <span className={styles.transactionMessage}>
-            <LiskAmount val={txConfig.value} />
-            <span>{t(' LSK')}</span>
+            <LiskAmount val={txConfig.value} token={activeToken} />
           </span>
         </div>
       </div>

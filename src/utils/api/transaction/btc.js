@@ -31,24 +31,33 @@ const normalizeTransactionsResponse = ({
 }) => list.map(({
   tx, feeSatoshi, confirmations, timestamp,
 }) => {
-  const data = {
+  const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
+  const recipientAddress = validateAddress(tokenMap.BTC.key, extractedAddress, network) === 0
+    ? extractedAddress : 'Unparsed Address';
+
+  return {
     id: tx.txid,
-    timestamp: timestamp ? Number(timestamp) * 1000 : null,
+    block: {
+      timestamp: timestamp ? Number(timestamp) * 1000 : null,
+    },
     confirmations: confirmations || 0,
-    type: 0,
-    title: 'transfer',
-    data: '',
+    isPending: !confirmations,
+    nonce: 0,
+    moduleAssetId: '2:0',
+    moduleAssetName: 'token:transfer',
     fee: feeSatoshi,
     explorerLink: `${network.networks.BTC.transactionExplorerURL}/${tx.txid}`,
+    sender: {
+      address: tx.inputs[0].txDetail.scriptPubKey.addresses[0],
+    },
+    asset: {
+      amount: tx.outputs[0].satoshi.toString(),
+      recipient: {
+        address: recipientAddress,
+      },
+      data: '',
+    },
   };
-
-  data.senderId = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
-  const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
-  data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, network) === 0
-    ? extractedAddress : 'Unparsed Address';
-  data.amount = tx.outputs[0].satoshi.toString();
-
-  return data;
 });
 
 /**
@@ -67,7 +76,7 @@ export const getTransaction = ({
 }) => http({
   network,
   params: {},
-  path: `${httpPaths.transaction}/${params.id}`,
+  path: `${httpPaths.transaction}/${params.transactionId}`,
   baseUrl: network.networks.BTC.serviceUrl,
 }).then(response => ({
   meta: response.meta,
@@ -151,8 +160,8 @@ export const getTransactions = ({
 export const getUnspentTransactionOutputs = (address, network) =>
   http({
     network,
-    baseUrl: '', // @todo add real base url here...
-    path: `utxo/${address}`,
+    baseUrl: network.networks.BTC.serviceUrl,
+    path: `/utxo/${address}`,
     params: { limit: 100 },
   });
 
@@ -203,14 +212,17 @@ export const getTransactionFeeFromUnspentOutputs = ({
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
  */
-export const getTransactionBaseFees = async () => {
-  const config = getNetworkConfig(tokenMap.LSK.key, { name: 'Mainnet' });
-  const response = await http({
-    baseUrl: config.minerFeesURL,
-  });
-
-  return response;
-};
+export const getTransactionBaseFees = network =>
+  http({
+    baseUrl: network.networks.BTC.minerFeesURL,
+    path: '',
+    params: {},
+    network,
+  }).then((response) => ({
+    Low: response.hourFee,
+    Medium: response.halfHourFee,
+    High: response.fastestFee,
+  }));
 
 /**
  * Returns the actual tx fee based on given tx details and selected processing speed
@@ -218,19 +230,19 @@ export const getTransactionBaseFees = async () => {
  * @param {Object} network - network configuration
  */
 export const getTransactionFee = async ({
-  account, network, txData, selectedPriority,
+  account, network, transaction, selectedPriority,
 }) => {
   const unspentTransactionOutputs = await getUnspentTransactionOutputs(
-    account.address, network,
+    account.summary.address, network,
   );
 
   const value = fromRawLsk(getTransactionFeeFromUnspentOutputs({
-    unspentTransactionOutputs,
-    satoshiValue: txData.amount || 0,
+    unspentTransactionOutputs: unspentTransactionOutputs.data,
+    satoshiValue: transaction.amount || 0,
     selectedFeePerByte: selectedPriority.value,
   }));
 
-  const feedback = txData.amount === 0
+  const feedback = transaction.amount === 0
     ? '-'
     : `${(value ? '' : 'Invalid amount')}`;
 
@@ -258,7 +270,7 @@ export const create = async ({
   network,
   // eslint-disable-next-line consistent-return
 }) => {
-  const config = getNetworkConfig(tokenMap.LSK.key, network);
+  const config = getNetworkConfig(tokenMap.BTC.key, network);
   amount = Number(amount);
   selectedFeePerByte = Number(selectedFeePerByte);
 
@@ -331,7 +343,7 @@ export const create = async ({
 };
 
 export const broadcast = async (transaction, network) => {
-  const config = getNetworkConfig(tokenMap.LSK.key, network);
+  const config = getNetworkConfig(tokenMap.BTC.key, network);
 
   const response = await http({
     baseUrl: config.url,

@@ -19,11 +19,11 @@ const TransactionRow = ({
     activeToken: state.settings.token.active,
   }));
   const isConfirmed = currentBlockHeight - data.height > 0;
-  const unlockAmount = data.asset?.unlockingObjects
-    && data.asset.unlockingObjects.reduce((total, item) => {
+  const unlockAmount = data.asset?.unlockObjects
+    ? data.asset.unlockObjects.reduce((total, item) => {
       total += item.amount;
       return total;
-    }, 0);
+    }, 0) : 0;
   const direction = host === data.asset?.recipient?.address ? 'incoming' : 'outgoing';
 
   return (
