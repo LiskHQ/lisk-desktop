@@ -112,11 +112,17 @@
   }
 }
 
+.membersContainer {
+  overflow-y: scroll;
+  max-height: 200px;
+  width: 100%;
+}
+
 .memberInfo {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 22px;
 
   & > .memberDetails {
     display: flex;
