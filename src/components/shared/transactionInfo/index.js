@@ -246,7 +246,10 @@ const TransactionInfo = ({
           <div className={styles.col}>
             <label>{t('Transaction fee')}</label>
             <label>
-              <LiskAmount val={transaction.fee} token={tokenMap.LSK.key} />
+              <LiskAmount
+                val={restProps.fee || transaction.fee}
+                token={tokenMap.LSK.key}
+              />
             </label>
           </div>
         </section>

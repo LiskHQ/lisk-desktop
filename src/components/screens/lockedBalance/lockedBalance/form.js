@@ -5,7 +5,6 @@ import to from 'await-to-js';
 import moment from 'moment';
 import { MODULE_ASSETS_NAME_ID_MAP, actionTypes, tokenMap } from '@constants';
 import { toRawLsk } from '@utils/lsk';
-import Piwik from '@utils/piwik';
 import { getUnlockableUnlockingObjects } from '@utils/account';
 import { create } from '@api/transaction';
 import Box from '@toolbox/box';
@@ -48,7 +47,6 @@ const Form = ({
   const network = useSelector(state => state.network);
 
   const onClickUnlock = async () => {
-    Piwik.trackingEvent('Send_UnlockTransaction', 'button', 'Next step');
     const selectedFee = customFee ? customFee.value : fee.value;
 
     const [error, tx] = await to(

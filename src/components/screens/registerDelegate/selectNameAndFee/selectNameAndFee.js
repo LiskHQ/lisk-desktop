@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import to from 'await-to-js';
+import moment from 'moment';
+import { create } from '@api/transaction';
+import { toRawLsk } from '@utils/lsk';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@constants';
 import { getDelegate } from '@api/delegate';
-import { regex, tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
@@ -51,6 +55,33 @@ const SelectNameAndFee = ({ account, ...props }) => {
       { ..._state, ...newState }
     ),
   );
+
+  const onConfirm = async () => {
+    const data = {
+      moduleAssetId,
+      network,
+      senderPublicKey: account.summary.publicKey,
+      passphrase: account.passphrase,
+      nonce: account.sequence?.nonce,
+      fee: toRawLsk(parseFloat(fee)),
+      username: state.nickname,
+    };
+
+    const [error, tx] = await to(
+      create(data, tokenMap.LSK.key),
+    );
+
+    if (!error) {
+      nextStep({
+        nickname: state.nickname,
+        fee: state.customFee ? state.customFee.value : fee.value,
+        transactionInfo: tx,
+        date: moment().format('DD MMMM YYYY, h:mm:ss A'),
+      });
+    } else {
+      nextStep({ error });
+    }
+  };
 
   const getNicknameFromPrevState = () => {
     if (Object.entries(prevState).length) {
@@ -194,12 +225,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
       </BoxContent>
       <BoxFooter>
         <PrimaryButton
-          onClick={() => {
-            nextStep({
-              nickname: state.nickname,
-              fee: state.customFee ? state.customFee.value : fee.value,
-            });
-          }}
+          onClick={onConfirm}
           disabled={isBtnDisabled()}
           className={`${styles.confirmBtn} confirm-btn`}
         >

@@ -1,11 +1,8 @@
 import React from 'react';
-import to from 'await-to-js';
-
-import { create } from '@api/transaction';
-import { toRawLsk } from '@utils/lsk';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
+import { toRawLsk } from '@utils/lsk';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
@@ -17,33 +14,16 @@ const Summary = ({
   fee,
   t,
   nextStep,
-  network,
+  transactionInfo,
+  date,
+  error,
 }) => {
-  const createTransaction = async (callback) => {
-    const data = {
-      moduleAssetId,
-      network,
-      senderPublicKey: account.summary.publicKey,
-      passphrase: account.passphrase,
-      nonce: account.sequence?.nonce,
-      fee: toRawLsk(parseFloat(fee)),
-      username: nickname,
-    };
-
-    const [error, tx] = await to(
-      create(data, tokenMap.LSK.key),
-    );
-    if (tx && callback) {
-      callback(tx);
-    }
-    return [error, tx];
-  };
-
-  const onSubmit = async () => {
-    const [error, tx] = await createTransaction();
-
+  account.summary.isMultisignature = true;
+  const onSubmit = () => {
     if (!error) {
-      nextStep({ transactionInfo: tx });
+      nextStep({ transactionInfo });
+    } else {
+      nextStep({ error });
     }
   };
 
@@ -55,6 +35,7 @@ const Summary = ({
     label: t('Go back'),
     onClick: () => { prevStep({ nickname }); },
   };
+  console.log(transactionInfo);
 
   return (
     <TransactionSummary
@@ -63,14 +44,19 @@ const Summary = ({
       account={account}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      fee={fee}
       classNames={`${styles.box} ${styles.summaryContainer}`}
-      createTransaction={createTransaction}
+      createTransaction={(callback) => {
+        callback(transactionInfo);
+      }}
     >
       <TransactionInfo
-        account={account}
         nickname={nickname}
-        moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.registerDelegate}
+        moduleAssetId={moduleAssetId}
+        transaction={transactionInfo}
+        account={account}
+        date={date}
+        isMultisignature={account.summary.isMultisignature}
+        fee={toRawLsk(parseFloat(fee))}
       />
     </TransactionSummary>
   );
