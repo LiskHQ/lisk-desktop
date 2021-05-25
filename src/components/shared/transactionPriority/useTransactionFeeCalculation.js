@@ -55,6 +55,8 @@ const useTransactionFeeCalculation = ({
     transaction.username,
     selectedPriority.selectedIndex,
     selectedPriority.value,
+    transaction.mandatoryKeys,
+    transaction.optionalKeys,
   ]);
 
   return state;

@@ -1,6 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Summary from './summary';
+import accounts from '../../../../../test/constants/accounts';
+import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
+
+const mockTransaction = { id: 1 };
+jest.mock('@api/transaction/lsk', () => ({
+  createMultiSignatureTransaction: jest.fn(() => Promise.resolve(mockTransaction)),
+}));
 
 describe('Multisignature summary component', () => {
   let wrapper;
@@ -8,16 +15,14 @@ describe('Multisignature summary component', () => {
     t: v => v,
     prevStep: jest.fn(),
     nextStep: jest.fn(),
-    transactionCreatedSuccess: jest.fn(),
-    fee: 2000000,
+    fee: 0.02,
+    account: accounts.genesis,
     members: [
-      {
-        accountId: '8195226425328336181L', publicKey: '8155694652104526882', accountRole: 'mandatory',
-      },
-      { accountId: '6195226421328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
-      { accountId: '4827364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
-      { accountId: '5738363111328339181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
-      { accountId: '9484364921328336181L', publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', accountRole: 'optional' },
+      { address: '8195226425328336181L', isMandatory: true },
+      { address: '6195226421328336181L', isMandatory: false },
+      { address: '4827364921328336181L', isMandatory: false },
+      { address: '5738363111328339181L', isMandatory: false },
+      { address: '9484364921328336181L', isMandatory: false },
     ],
   };
 
@@ -25,11 +30,10 @@ describe('Multisignature summary component', () => {
     wrapper = mount(<Summary {...props} />);
   });
 
-  it('Should call props.nextStep and props.transactionCreatedSuccess', () => {
-    const tx = { id: 1 };
+  it('Should call props.nextStep', async () => {
     wrapper.find('button.confirm').simulate('click');
-    expect(props.transactionCreatedSuccess).toBeCalledWith(tx);
-    expect(props.nextStep).toBeCalledWith({ transactionInfo: tx });
+    await flushPromises();
+    expect(props.nextStep).toHaveBeenCalledWith({ transaction: mockTransaction });
   });
 
   it('Should call props.prevStep', () => {

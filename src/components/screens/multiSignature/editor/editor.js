@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '@toolbox/box';
@@ -13,33 +13,52 @@ import MemberField from './memberField';
 import styles from './styles.css';
 
 const token = tokenMap.LSK.key;
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+
 const MAX_MULTI_SIG_MEMBERS = 64;
 
 const placeholderMember = {
-  identifier: undefined, isMandatory: false,
+  address: undefined, isMandatory: false,
 };
 
-const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+const getInitialMembersState = (prevState) => prevState.members ?? [placeholderMember];
+const getInitialSignaturesState = (prevState) => prevState.numberOfSignatures ?? 2;
+
+// const validateState = ({ mandatoryKeys, optionalKeys, requiredSignatures }) => {
+//   if (requiredSignatures > MAX_MULTI_SIG_MEMBERS) {
+//     return false;
+//   }
+//   if (requiredSignatures > mandatoryKeys.length + optionalKeys.length) {
+//     return false;
+//   }
+//   return true;
+// };
 
 // eslint-disable-next-line max-statements
 const Editor = ({
-  t, account, nextStep,
+  t, account, nextStep, prevState = {},
 }) => {
-  const [requiredSignatures, setRequiredSignatures] = useState(2);
-  const [members, setMembers] = useState([placeholderMember]);
-
-  useEffect(() => {
-    const difference = requiredSignatures - members.length;
-    if (difference > 0) {
-      const newMembers = new Array(difference).fill(placeholderMember);
-      setMembers(prevMembers => [...prevMembers, ...newMembers]);
-    }
-  }, [requiredSignatures]);
+  const [requiredSignatures, setRequiredSignatures] = useState(() =>
+    getInitialSignaturesState(prevState));
+  const [members, setMembers] = useState(() => getInitialMembersState(prevState));
 
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority, priorityOptions,
+    selectedPriority, selectTransactionPriority,
+    priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority(token);
+
+  const [mandatoryKeys, optionalKeys] = useMemo(() => {
+    const mandatory = members
+      .filter(member => member.isMandatory && member.address)
+      .map(member => member.address);
+
+    const optional = members
+      .filter(member => !member.isMandatory && member.address)
+      .map(member => member.address);
+
+    return [mandatory, optional];
+  }, [members]);
 
   const { fee, minFee } = useTransactionFeeCalculation({
     selectedPriority,
@@ -48,16 +67,12 @@ const Editor = ({
     priorityOptions,
     transaction: {
       moduleAssetId,
-      nonce: account.nonce,
-      senderPublicKey: account.publicKey,
-      signatures: [], // no of signatures needed?
-      // @todo create proper multi-sig tx
+      nonce: account.sequence.nonce,
+      senderPublicKey: account.summary.publicKey,
+      optionalKeys,
+      mandatoryKeys,
     },
   });
-
-  //   const feedback = validateVotes(votes, account.balance, fee.value, t);
-  const feedback = { error: false };
-  const isCTADisabled = false;
 
   const addMemberField = () => {
     if (members.length < MAX_MULTI_SIG_MEMBERS) {
@@ -65,8 +80,8 @@ const Editor = ({
     }
   };
 
-  const changeMember = ({ index, identifier, isMandatory }) => {
-    const newMember = { identifier, isMandatory };
+  const changeMember = ({ index, address, isMandatory }) => {
+    const newMember = { address, isMandatory };
     const newMembers = [
       ...members.slice(0, index),
       newMember,
@@ -77,7 +92,7 @@ const Editor = ({
 
   const deleteMember = (index) => {
     if (members.length === 1) {
-      changeMember({ index, identifier: '', isMandatory: false });
+      changeMember({ index, address: '', isMandatory: false });
     } else {
       const newMembers = [
         ...members.slice(0, index),
@@ -94,8 +109,23 @@ const Editor = ({
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
-    nextStep({ fee: feeValue });
+    nextStep({
+      fee: feeValue, mandatoryKeys, optionalKeys, members, numberOfSignatures: requiredSignatures,
+    });
   };
+
+  useEffect(() => {
+    const difference = requiredSignatures - members.length;
+    if (difference > 0) {
+      const newMembers = new Array(difference).fill(placeholderMember);
+      setMembers(prevMembers => [...prevMembers, ...newMembers]);
+    }
+  }, [requiredSignatures]);
+
+  // @todo
+  // const feedback = { error: validateState({ mandatoryKeys, optionalKeys, requiredSignatures }) };
+  // const isCTADisabled = feedback.error;
+  const isCTADisabled = false;
 
   return (
     <section className={styles.wrapper}>
@@ -116,8 +146,17 @@ const Editor = ({
             />
           </div>
           <div className={`${styles.membersControls} multisignature-members-controls`}>
-            <span>Members</span>
-            <TertiaryButton size="s" disabled={members.length >= 64} onClick={addMemberField} className="add-new-members">+ Add</TertiaryButton>
+            <span>{t('Members')}</span>
+            <TertiaryButton
+              size="s"
+              disabled={members.length >= 64}
+              onClick={addMemberField}
+              className="add-new-members"
+            >
+              +
+              {' '}
+              {t('Add')}
+            </TertiaryButton>
           </div>
           <div className={styles.contentScrollable}>
             {members.map((member, i) => (
@@ -144,10 +183,12 @@ const Editor = ({
           priorityOptions={priorityOptions}
           selectedPriority={selectedPriority.selectedIndex}
           setSelectedPriority={selectTransactionPriority}
+          loadError={prioritiesLoadError}
+          isLoading={loadingPriorities}
         />
-        {
+        {/* {
           feedback.error && <span className="feedback">{feedback.messages[0]}</span>
-        }
+        } */}
         <BoxFooter>
           <PrimaryButton
             className="confirm-button"
