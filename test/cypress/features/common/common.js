@@ -32,8 +32,8 @@ Given(/^I login$/, function () {
   cy.get(ss.loginBtn).click();
 });
 
-Then(/^I enter ([^\s]+) passphrase of ([^\s]+)$/, function (passphraseType, accountName) {
-  const passphrase = accounts[accountName][(passphraseType === 'second') ?  'secondPassphrase' : 'passphrase'];
+Then(/^I enter the passphrase of ([^\s]+)$/, function (accountName) {
+  const passphrase = accounts[accountName]['passphrase'];
   cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
     const passphraseWordsArray = passphrase.split(' ');
@@ -47,9 +47,6 @@ Given(/^I am on (.*?) page$/, function (page) {
   switch (page) {
     case 'dashboard':
       cy.visit(urls.dashboard);
-      break;
-    case 'second passphrase registration':
-      cy.visit(urls.secondPassphrase);
       break;
     case 'register delegate':
       cy.visit(urls.registerDelegate);
@@ -117,9 +114,6 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
       break;
     case 'voting':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate vote');
-      break;
-    case 'second passphrase registration':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Second passphrase registration');
       break;
     case 'delegate registration':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate registration');

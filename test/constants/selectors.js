@@ -6,15 +6,9 @@ const delegatesPage = {
   goToConfirmationButton: '.go-to-confirmation-button',
   votingHeader: '.voting-header',
 };
-const secondPassphraseRegistrationPage = {
-  goToConfirmation: '.go-to-confirmation',
-  confirmationCheckbox: '.confirmation-checkbox',
-  goToWallet: '.go-to-wallet',
-};
 
 const ss = {
   ...delegatesPage,
-  ...secondPassphraseRegistrationPage,
   becomeDelegateLink: '.register-delegate',
   app: '#app',
   monitorNetwork: '#network',
@@ -103,9 +97,6 @@ const ss = {
   getToDashboardBtn: '.get-to-your-dashboard-button',
   confirmCheckbox: '.confirm-checkbox',
   settingsBtn: '#settings',
-  registerSecondPassphraseBtn: '.register-second-passphrase',
-  secondPassphraseIsRegisteredLabel: '.second-passphrase-registered',
-  secondPassphraseSettingsSection: '.second-passphrase',
   currencySelect: '.currency input',
   currencyOptions: '.currency .option',
   autoLogoutTrigger: '.autoLog',
@@ -118,8 +109,6 @@ const ss = {
   referenceConfirmLabel: '.reference',
   convertorElement: '.convertor',
   convertedPrice: '.converted-price',
-  secondPassphraseInput: '.second-passphrase input',
-  secondPassphraseNextBtn: '.second-passphrase-next',
   resultMessage: '.result-box-message',
   okayButton: '.okay-button',
   initializeBanner: '.initialize-banner',
