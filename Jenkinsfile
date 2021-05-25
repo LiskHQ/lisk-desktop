@@ -55,6 +55,7 @@ pipeline {
 			steps {
 					unstash 'build'
 					sh '''
+					mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME
 					rsync -axl --delete $WORKSPACE/app/build/ /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
 					rm -rf $WORKSPACE/app/build
 					'''
@@ -107,16 +108,6 @@ pipeline {
 				  onlyStable: false,
 				  sourceEncoding: 'ASCII'
 			junit 'coverage/jest/junit.xml'
-		}
-		fixed {
-			script {
-				build_info = getBuildInfo()
-			}
-		}
-		failure {
-			script {
-				build_info = getBuildInfo()
-			}
 		}
 		cleanup {
 			ansiColor('xterm') {
