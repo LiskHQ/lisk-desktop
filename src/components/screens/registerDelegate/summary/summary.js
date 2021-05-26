@@ -59,8 +59,6 @@ const Summary = ({
   return (
     <TransactionSummary
       title={t('Summary of delegate registration')}
-      t={t}
-      account={account}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       fee={fee}

@@ -72,15 +72,13 @@ class Summary extends React.Component {
 
   render() {
     const {
-      fields, t, token, account, isInitialization,
+      fields, t, token, isInitialization,
     } = this.props;
     const amount = fields.amount.value;
 
     return (
       <TransactionSummary
         title={t('Transaction summary')}
-        t={t}
-        account={account}
         confirmButton={{
           label: isInitialization ? t('Send') : t('Send {{amount}} {{token}}', { amount, token }),
           onClick: this.submitTransaction,
@@ -91,7 +89,6 @@ class Summary extends React.Component {
         }}
         showCancelButton={!isInitialization}
         fee={fields.fee.value}
-        token={token}
         createTransaction={this.submitTransaction}
       >
         <TransactionInfo

@@ -79,8 +79,6 @@ const Summary = ({
 
   return (
     <TransactionSummary
-      t={t}
-      account={account}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       classNames={styles.container}
