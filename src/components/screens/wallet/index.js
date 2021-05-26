@@ -14,7 +14,7 @@ import {
 import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
-import MultiSignatureTab from './multiSignature';
+// import MultiSignatureTab from './multiSignature';
 import VotesTab from './votes';
 import Transactions from './transactions';
 
@@ -25,7 +25,9 @@ const Wallet = ({ t, history }) => {
   const { discreetMode } = useSelector(selectSettings);
   const { confirmed, pending } = useSelector(selectTransactions);
   const {
-    isDelegate, address, isMultisignature,
+    isDelegate,
+    address,
+    // isMultisignature,
   } = account.info[activeToken].summary;
 
   useEffect(() => {
@@ -77,7 +79,7 @@ const Wallet = ({ t, history }) => {
             />
           )
           : null}
-        {isMultisignature
+        {/* {isMultisignature
           ? (
             <MultiSignatureTab
               // tabClassName="delegate-statistics"
@@ -85,7 +87,7 @@ const Wallet = ({ t, history }) => {
               tabId="multiSignatures"
             />
           )
-          : null}
+          : null} */}
       </TabsContainer>
     </section>
   );
