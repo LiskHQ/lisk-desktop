@@ -1,6 +1,6 @@
 import React from 'react';
 import { loginTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { toRawLsk, fromRawLsk } from '@utils/lsk';
+import { toRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
@@ -90,7 +90,7 @@ class Summary extends React.Component {
           onClick: this.prevStep,
         }}
         showCancelButton={!isInitialization}
-        fee={fromRawLsk(fields.fee.value)}
+        fee={fields.fee.value}
         token={token}
         createTransaction={this.submitTransaction}
       >

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { getNetworkCode } from '@api/network';
 import { validateAddress } from '@utils/validators';
 import AccountVisual from '@toolbox/accountVisual';
 import AutoSuggest from '@toolbox/autoSuggest';
@@ -37,7 +36,7 @@ class BookmarkAutoSuggest extends React.Component {
       .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase())
           || account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
     const isValidAddress = validateAddress(
-      token, recipient.value, getNetworkCode(network),
+      token, recipient.value, network,
     ) === 0;
     const isInvalid = !isValidBookmark && !isValidAddress && recipient.value;
 

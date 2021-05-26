@@ -10,18 +10,14 @@ import ActionBar from './actionBar';
 const AccountInfo = ({
   address, t, activeToken, hwInfo, account, username, bookmark, isMultisignature, host,
 }) => {
-  const [showLegacy, setShowLegacy] = useState(false);
-  const onClick = () => {
-    if (activeToken === 'LSK' && account.summary.legacyAddress) {
-      setShowLegacy(!showLegacy);
-    }
-  };
+  const [showFullAddress, setShowFullAddress] = useState(false);
+  const onClick = () => setShowFullAddress(!showFullAddress);
 
   return (
     <Box className={styles.wrapper}>
       <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
         <h2 className={styles.title}>{t('Wallet address')}</h2>
-        <div className={`${styles.info} ${showLegacy ? styles.showLegacy : ''}`}>
+        <div className={`${styles.info} ${showFullAddress ? styles.showFullAddress : ''}`}>
           <AccountVisual
             address={address}
             size={40}
@@ -33,7 +29,7 @@ const AccountInfo = ({
                 legacyAddress={account.summary.legacyAddress}
                 username={username}
                 bookmark={bookmark}
-                showLegacy={showLegacy}
+                showLegacy={showFullAddress}
                 setShowLegacy={onClick}
               />
             ) : null

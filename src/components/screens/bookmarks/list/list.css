@@ -107,18 +107,27 @@
         opacity: 0;
         transition: opacity var(--animation-speed-fast) ease;
 
+        & > div,
         & > button {
           min-width: initial;
           padding: 0 10px;
+          vertical-align: middle;
         }
       }
 
       &:hover,
-      &.editting {
+      &.editing {
         background-color: var(--color-rows-hover);
 
         & .buttonContainer {
           opacity: 1;
+        }
+      }
+
+      &.disabled {
+        & .description,
+        & .avatar {
+          opacity: 0.4;
         }
       }
     }

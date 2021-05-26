@@ -3,6 +3,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
   Confirmations, Date, Amount, Fee, RequiredSignatures, TransactionVotes,
+  BlockId, BlockHeight,
 } from './components';
 import { Members } from './components/components';
 import styles from './transactionDetails.css';
@@ -12,7 +13,7 @@ const {
   // reclaimLSK,
 } = MODULE_ASSETS_NAME_ID_MAP;
 
-const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date];
+const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date, BlockId, BlockHeight];
 
 const LayoutSchema = {
   [transfer]: {
@@ -20,7 +21,7 @@ const LayoutSchema = {
     className: '',
   },
   [voteDelegate]: {
-    components: [...baseComponents, Illustration, Message, TransactionVotes],
+    components: [...baseComponents, Illustration, TransactionVotes],
     className: styles.voteLayout,
   },
   [registerDelegate]: {

@@ -67,6 +67,7 @@ module.exports = {
     'src/actions/voting.js',
     'src/store/middlewares/login.js',
     'src/store/middlewares/network.js',
+    'src/store/middlewares/account.js',
     'src/store/index.js',
     'src/store/reducers/settings.js',
     'src/store/reducers/bookmarks.js',
@@ -95,6 +96,7 @@ module.exports = {
     'src/components/shared/rankOrStatus/index.js',
     'src/components/shared/transactionAmount/index.js',
     'src/components/shared/searchBar/transactions.js',
+    'src/components/shared/navigationBars/topBar/networkName.js',
     'src/components/toolbox/tabsContainer/tabsContainer.js',
     'src/components/toolbox/copyToClipboard/index.js',
     'src/components/toolbox/dropdown/toolBoxDropdown.js',
@@ -171,6 +173,8 @@ module.exports = {
     'src/store/actions/transactions.js',
     'src/store/selectors.js',
     'src/store/reducers/voting.js',
+    'src/utils/voting.js',
+    'src/utils/getNetwork.js',
   ],
   coverageThreshold: {
     global: {

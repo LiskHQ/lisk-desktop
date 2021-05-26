@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { extractPublicKey } from '@utils/account';
-import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import LiskAmount from '@shared/liskAmount';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
@@ -189,65 +189,63 @@ class TransactionSummary extends React.Component {
         <BoxContent className={`${styles.content} summary-content`}>
           <HardwareWalletIllustration account={account} size="s" />
           {children}
-          {fee && (
-            <section>
-              <label>
-                {t('Transaction fee')}
-                <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
-                  <p className={styles.tooltipText}>{tooltip.children}</p>
-                </Tooltip>
-              </label>
-              <label className={`${styles.feeValue} fee-value`}>
-                {`${formatAmountBasedOnLocale({ value: fee })} ${token}`}
-              </label>
-            </section>
-          )}
-          {
-        confirmation
-          ? (
-            <label className={styles.checkboxLabel}>
-              <CheckBox
-                checked={isConfirmed}
-                onChange={this.onConfirmationChange}
-                className={`${styles.checkbox} confirmation-checkbox`}
-              />
-              {confirmation}
+          <section>
+            <label>
+              {t('Transaction fee')}
+              <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
+                <p className={styles.tooltipText}>{tooltip.children}</p>
+              </Tooltip>
             </label>
-          )
-          : null
-      }
+            <label className={`${styles.feeValue} fee-value`}>
+              <LiskAmount val={fee} token={token} convert={false} />
+            </label>
+          </section>
           {
-        account.secondPublicKey
-          ? (
-            <section className={`${styles.tooltipContainer} summary-second-passphrase`}>
-              <label>
-                {t('Second passphrase')}
-                <Tooltip
-                  position="right"
-                  className={`${styles.tooltip}`}
-                  title={t('What is your second passphrase?')}
-                >
-                  <>
-                    <p className={`${styles.tooltupText}`}>
-                      {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
-                    </p>
-                    <p className={`${styles.tooltipText}`}>
-                      {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
-                    </p>
-                  </>
-                </Tooltip>
-              </label>
-              <PassphraseInput
-                isSecondPassphrase={!!account.secondPublicKey}
-                secondPPFeedback={secondPassphrase.feedback}
-                inputsLength={12}
-                maxInputsLength={24}
-                onFill={this.checkSecondPassphrase}
-              />
-            </section>
-          )
-          : null
-      }
+            confirmation
+              ? (
+                <label className={styles.checkboxLabel}>
+                  <CheckBox
+                    checked={isConfirmed}
+                    onChange={this.onConfirmationChange}
+                    className={`${styles.checkbox} confirmation-checkbox`}
+                  />
+                  {confirmation}
+                </label>
+              )
+              : null
+          }
+          {
+            account.secondPublicKey
+              ? (
+                <section className={`${styles.tooltipContainer} summary-second-passphrase`}>
+                  <label>
+                    {t('Second passphrase')}
+                    <Tooltip
+                      position="right"
+                      className={`${styles.tooltip}`}
+                      title={t('What is your second passphrase?')}
+                    >
+                      <>
+                        <p className={`${styles.tooltupText}`}>
+                          {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
+                        </p>
+                        <p className={`${styles.tooltipText}`}>
+                          {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
+                        </p>
+                      </>
+                    </Tooltip>
+                  </label>
+                  <PassphraseInput
+                    isSecondPassphrase={!!account.secondPublicKey}
+                    secondPPFeedback={secondPassphrase.feedback}
+                    inputsLength={12}
+                    maxInputsLength={24}
+                    onFill={this.checkSecondPassphrase}
+                  />
+                </section>
+              )
+              : null
+          }
         </BoxContent>
         {!isHardwareWalletConnected && (
           <Footer

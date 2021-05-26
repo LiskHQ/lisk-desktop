@@ -10,11 +10,10 @@ jest.mock('../http', () => ({
 
 describe('API: BTC Accounts', () => {
   const network = {
-    serviceUrl: 'http://sample.com/',
     networks: {
       BTC: {
+        serviceUrl: 'http://sample.com/',
         name: 'mainnet',
-        url: 'https://btc.lisk.io',
         network: bitcoin.networks.bitcoin,
         derivationPath: "m/44'/0'/0'/0/0",
       },
@@ -41,6 +40,7 @@ describe('API: BTC Accounts', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
+        baseUrl: 'http://sample.com/',
         path: `/account/${address}`,
       });
     });
@@ -56,6 +56,7 @@ describe('API: BTC Accounts', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
+        baseUrl: 'http://sample.com/',
         path: `/account/${address}`,
       });
     });
@@ -71,9 +72,13 @@ describe('API: BTC Accounts', () => {
       });
 
       expect(result).toEqual({
-        address,
-        balance: 0,
-        token: 'BTC',
+        summary: {
+          address,
+          balance: 0,
+        },
+        token: {
+          balance: 0,
+        },
       });
     });
   });

@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@constants';
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
-import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 import i18n from '../../../../i18n';
@@ -103,8 +102,8 @@ describe('Summary', () => {
   });
 
   it('should show props.fields.fee.value and use it in transactionCreated if props.token is not LSK', () => {
-    const txFee = 12451;
-    const formattedtxFee = formatAmountBasedOnLocale({ value: fromRawLsk(txFee) });
+    const txFee = 0.00012451;
+    const formattedtxFee = formatAmountBasedOnLocale({ value: txFee });
     wrapper.setProps({
       token: 'BTC',
       fields: {
@@ -122,7 +121,7 @@ describe('Summary', () => {
     expect(wrapper.find('.fee-value')).toIncludeText(formattedtxFee);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(props.transactionCreated).toBeCalledWith(expect.objectContaining({
-      fee: toRawLsk(txFee),
+      fee: 12451,
     }));
   });
 

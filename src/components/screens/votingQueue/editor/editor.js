@@ -54,9 +54,14 @@ const getVoteStats = votes =>
       } else if (confirmed !== unconfirmed) {
         // edited vote
         stats.edited[address] = { unconfirmed, confirmed, username };
+      } else {
+        // untouched
+        stats.untouched[address] = { unconfirmed, confirmed, username };
       }
       return stats;
-    }, { added: {}, edited: {}, removed: {} });
+    }, {
+      added: {}, edited: {}, removed: {}, untouched: {},
+    });
 
 /**
  * Validates given votes against the following criteria:
@@ -79,7 +84,10 @@ const validateVotes = (votes, balance, fee, t) => {
     messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
   }
 
-  if (Object.keys(votesStats.added).length + Object.keys(votesStats.edited).length > 10) {
+  if (Object.keys(votesStats.added).length
+      + Object.keys(votesStats.edited).length
+      + Object.keys(votesStats.untouched).length
+      - Object.keys(votesStats.removed).length > 10) {
     messages.push(t('You can\'t vote for more than 10 delegates.'));
   }
 

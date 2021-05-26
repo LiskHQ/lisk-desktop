@@ -8,7 +8,7 @@ export default (changeSort, t) => ([
     classList: grid['col-xs-3'],
   },
   {
-    title: t('WS'),
+    title: t('Port'),
     classList: grid['col-xs-2'],
   },
   {

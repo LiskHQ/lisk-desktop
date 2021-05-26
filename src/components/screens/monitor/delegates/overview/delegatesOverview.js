@@ -1,7 +1,7 @@
 // istanbul ignore file
 import React from 'react';
 
-import { fromRawLsk } from '@utils/lsk';
+// import { fromRawLsk } from '@utils/lsk';
 import { colorPalette, ROUND_LENGTH } from '@constants';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
@@ -21,7 +21,7 @@ const Overview = ({
   registrations,
   t,
   totalBlocks,
-  supply,
+  // supply,
 }) => {
   const doughnutChartData = {
     labels: [t('Standby delegates'), t('Active delegates')],
@@ -109,11 +109,11 @@ const Overview = ({
                 value={transactionsCount.data}
                 icon="transactionsMonitor"
               />
-              <NumericInfo
+              {/* <NumericInfo
                 title="Total LSK"
                 value={fromRawLsk(supply)}
                 icon="distribution"
-              />
+              /> */}
             </div>
           </div>
         </div>

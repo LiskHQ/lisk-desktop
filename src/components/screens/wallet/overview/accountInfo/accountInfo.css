@@ -46,6 +46,8 @@
       font-family: var(--heading-font);
       color: var(--color-strong-mystic);
       display: inline-block;
+      cursor: pointer;
+      user-select: none;
     }
 
     & .primary {
@@ -106,7 +108,7 @@
     }
   }
 
-  & .showLegacy {
+  & .showFullAddress {
     & .identity {
       & .truncated {
         opacity: 0;
@@ -120,7 +122,7 @@
       }
     }
 
-    & + footer {
+    & ~ footer {
       transform: translateY(50%);
       pointer-events: none;
       opacity: 0;
@@ -137,6 +139,7 @@
     left: 0;
     width: 100%;
     transition: all ease 200ms;
+    z-index: 3;
 
     & .helperIcon {
       width: 40px;

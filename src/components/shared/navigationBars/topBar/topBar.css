@@ -127,9 +127,18 @@
 .disabled {
   pointer-events: none;
   cursor: default;
+}
 
-  & .label,
-  & img {
-    opacity: 0.5;
+.tokenSelector {
+  opacity: 0.5;
+  margin-right: 16px;
+
+  &.active {
+    opacity: 1;
+
+    & img {
+      pointer-events: none;
+      cursor: default;
+    }
   }
 }

@@ -15,6 +15,7 @@ jest.mock('i18next', () => ({
 }));
 jest.mock('@api/account', () => ({
   getAccount: jest.fn(),
+  extractAddress: jest.fn(),
 }));
 jest.mock('./transactions', () => ({
   updateTransactions: jest.fn(),
@@ -63,7 +64,11 @@ describe('actions: account', () => {
           name: 'Mainnet',
           networks: {
             LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
+              serviceUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+            BTC: {
+              serviceUrl: 'hhtp://localhost:4000',
               nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
           },

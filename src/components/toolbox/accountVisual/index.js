@@ -233,7 +233,7 @@ class AccountVisual extends React.Component {
       );
     }
 
-    if (validateAddress(tokenMap.LSK.key, address) === 1) {
+    if (validateAddress(tokenMap.LSK.key, address) === 1 && !(/^[1-9]\d{0,19}L$/.test(address))) {
       return null;
     }
     const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(size);

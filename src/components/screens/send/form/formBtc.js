@@ -20,11 +20,13 @@ const FormBtc = (props) => {
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
   const { fee, maxAmount, minFee } = useTransactionFeeCalculation({
     selectedPriority,
-    priorityOptions,
     token,
     account,
+    priorityOptions,
     transaction: {
-      amount: toRawLsk(amount.value), moduleAssetId, recipient: recipient.value,
+      amount: toRawLsk(amount.value),
+      moduleAssetId,
+      recipient: recipient.value,
     },
   });
 

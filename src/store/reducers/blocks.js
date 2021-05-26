@@ -3,6 +3,7 @@ import { actionTypes, ROUND_LENGTH } from '@constants';
 const initialState = {
   latestBlocks: [],
   forgers: [],
+  indexBook: {},
   total: 0,
 };
 
@@ -27,7 +28,8 @@ const blocks = (state = initialState, action) => {
     case actionTypes.forgersRetrieved:
       return {
         ...state,
-        forgers: action.data,
+        forgers: action.data.forgers,
+        indexBook: action.data.indexBook,
       };
     default:
       return state;
