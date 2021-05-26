@@ -9,7 +9,7 @@ describe('Transactions', () => {
         asset: {
           data: 'testing',
         },
-        id: 123,
+        id: '123',
         type: 0,
         moduleAssetName: 'transfer',
       },
@@ -48,7 +48,7 @@ describe('Transactions', () => {
         asset: {
           data: 'testing',
         },
-        id: 123,
+        id: '123',
         type: 0,
         moduleAssetName: 'transfer',
       },
@@ -73,7 +73,7 @@ describe('Transactions', () => {
         asset: {
           data: 'testing',
         },
-        id: 123,
+        id: '123',
         type: 2,
         moduleAssetName: 'registerDelegate',
       },
@@ -98,7 +98,7 @@ describe('Transactions', () => {
         asset: {
           data: 'testing',
         },
-        id: 123,
+        id: '123',
         type: 3,
         moduleAssetName: 'voteDelegate',
       },

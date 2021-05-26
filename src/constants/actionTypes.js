@@ -60,6 +60,7 @@ const actionTypes = {
   votesRetrieved: 'VOTES_RETRIEVED',
   votesSubmitted: 'VOTES_SUBMITTED',
   votesCleared: 'VOTES_CLEARED',
+  votesReset: 'VOTES_RESET',
   votesConfirmed: 'VOTES_CONFIRMED',
   voteEdited: 'VOTE_EDITED',
   deviceListUpdated: 'DEVICE_LIST_UPDATED',

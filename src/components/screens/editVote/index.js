@@ -33,7 +33,7 @@ const AddVote = ({
   history, t,
 }) => {
   const dispatch = useDispatch();
-  const host = useSelector(state => state.account.info.LSK.address);
+  const host = useSelector(state => state.account.info.LSK.summary.address);
   const address = selectSearchParamValue(history.location.search, 'address');
   const existingVote = useSelector(state => state.voting[address || host]);
   const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');

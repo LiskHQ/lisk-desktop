@@ -72,6 +72,7 @@ const filters = {
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.params
+ * @param {String} data.params.blockId The id of the block in which txs are included
  * @param {String} data.params.address Sender or recipient account
  * @param {String} data.params.dateFrom Unix timestamp, the start time of txs
  * @param {String} data.params.dateTo Unix timestamp, the end time of txs
@@ -95,7 +96,7 @@ export const getTransactions = ({
 
   // if blockId, ignore others
   if (params.blockId) {
-    normParams.block = params.blockId;
+    normParams.blockId = params.blockId;
   } else {
     // Validate params and fix keys
     Object.keys(params).forEach((key) => {

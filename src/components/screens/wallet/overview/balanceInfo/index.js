@@ -4,42 +4,16 @@ import { useSelector } from 'react-redux';
 
 import { tokenMap } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
-import {
-  calculateBalanceLockedInUnvotes,
-  calculateBalanceLockedInVotes,
-  getActiveTokenAccount,
-} from '@utils/account';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import DialogLink from '@toolbox/dialog/link';
-import Icon from '@toolbox/icon';
-import LiskAmount from '../../../../shared/liskAmount';
-import DiscreetMode from '../../../../shared/discreetMode';
-import Converter from '../../../../shared/converter';
+import LiskAmount from '@shared/liskAmount';
+import DiscreetMode from '@shared/discreetMode';
+import Converter from '@shared/converter';
+import SignInTooltipWrapper from '@shared/signInTooltipWrapper';
+import LockedBalanceLink from './unlocking';
 import styles from './balanceInfo.css';
-import SignInTooltipWrapper from '../../../../shared/signInTooltipWrapper';
-
-const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
-  const host = useSelector(state => getActiveTokenAccount(state));
-  const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
-  const lockedInUnvotes = activeToken === tokenMap.LSK.key && isWalletRoute && host
-    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking) : undefined;
-
-  if (lockedInUnvotes + lockedInVotes > 0) {
-    return (
-      <DialogLink
-        className={`${styles.lockedBalance} open-unlock-balance-dialog`}
-        component="lockedBalance"
-      >
-        <Icon name="lock" />
-        {`${fromRawLsk(lockedInUnvotes + lockedInVotes)} ${tokenMap.LSK.key}`}
-      </DialogLink>
-    );
-  }
-
-  return null;
-};
 
 const BalanceInfo = ({
   t, activeToken, balance, isWalletRoute, address, username,
@@ -69,7 +43,11 @@ const BalanceInfo = ({
               />
 
             </div>
-            <LockedBalanceLink activeToken={activeToken} isWalletRoute={isWalletRoute} />
+            {
+              activeToken === tokenMap.LSK.key ? (
+                <LockedBalanceLink activeToken={activeToken} isWalletRoute={isWalletRoute} />
+              ) : null
+            }
           </DiscreetMode>
         </div>
         <SignInTooltipWrapper position="bottom">

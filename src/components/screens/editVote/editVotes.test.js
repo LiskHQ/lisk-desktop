@@ -34,7 +34,8 @@ describe('EditVote', () => {
     account: {
       passphrase: 'test',
       info: {
-        LSK: { address: '123456L' },
+        LSK: { summary: { address: '123456L' } },
+        BTC: { summary: { address: '123456L' } },
       },
     },
   };

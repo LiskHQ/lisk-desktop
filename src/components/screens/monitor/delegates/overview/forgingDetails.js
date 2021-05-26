@@ -17,15 +17,15 @@ const FORGERS_TO_SHOW = 6;
 
 const getForgingStats = (data, forgedInRound) => {
   if (forgedInRound === 0) return [0, 103, 0];
-  const statuses = {
+  const states = {
     forging: 0,
     awaitingSlot: 0,
     missedBlock: 0,
   };
   data.forEach((item) => {
-    statuses[item.status]++;
+    states[item.state] += 1;
   });
-  return Object.values(statuses);
+  return [states.forging, states.awaitingSlot, states.missedBlock];
 };
 
 const ProgressBar = ({ forgedInRound }) => (

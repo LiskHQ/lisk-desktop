@@ -2,7 +2,6 @@ import bitcoin from 'bitcoinjs-lib';
 import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
 import bip32 from 'bip32';
 
-import { tokenMap } from '@constants';
 import http from '../http';
 
 /**
@@ -44,10 +43,13 @@ export const extractAddress = (passphrase, network) => {
 const normalizeAccountResponse = ({
   response, address,
 }) => ({
-  address,
-  balance: response.data.confirmed_balance,
-  initialized: true,
-  token: tokenMap.BTC.key,
+  summary: {
+    address,
+    balance: response.data.confirmed_balance,
+  },
+  token: {
+    balance: response.data.confirmed_balance,
+  },
 });
 
 /**
@@ -69,9 +71,13 @@ export const getAccount = async ({
     params.passphrase, network,
   );
   let account = {
-    address,
-    balance: 0,
-    token: tokenMap.BTC.key,
+    summary: {
+      address,
+      balance: 0,
+    },
+    token: {
+      balance: 0,
+    },
   };
 
   try {

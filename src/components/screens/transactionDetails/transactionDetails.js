@@ -4,9 +4,10 @@ import { isEmpty } from '@utils/helpers';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
+import { routes } from '@constants';
 import NotFound from '@shared/notFound';
 import Dialog from '@toolbox/dialog/dialog';
-import { routes } from '@constants';
+
 import styles from './transactionDetails.css';
 import LayoutSchema from './layoutSchema';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import LiskAmount from '@shared/liskAmount';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
@@ -163,33 +163,31 @@ class TransactionSummary extends React.Component {
         <BoxContent className={`${styles.content} summary-content`}>
           <HardwareWalletIllustration account={account} size="s" />
           {children}
-          {fee && (
-            <section>
-              <label>
-                {t('Transaction fee')}
-                <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
-                  <p className={styles.tooltipText}>{tooltip.children}</p>
-                </Tooltip>
-              </label>
-              <label className={`${styles.feeValue} fee-value`}>
-                {`${formatAmountBasedOnLocale({ value: fee })} ${token}`}
-              </label>
-            </section>
-          )}
-          {
-        confirmation
-          ? (
-            <label className={styles.checkboxLabel}>
-              <CheckBox
-                checked={isConfirmed}
-                onChange={this.onConfirmationChange}
-                className={`${styles.checkbox} confirmation-checkbox`}
-              />
-              {confirmation}
+          <section>
+            <label>
+              {t('Transaction fee')}
+              <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
+                <p className={styles.tooltipText}>{tooltip.children}</p>
+              </Tooltip>
             </label>
-          )
-          : null
-      }
+            <label className={`${styles.feeValue} fee-value`}>
+              <LiskAmount val={fee} token={token} convert={false} />
+            </label>
+          </section>
+          {
+            confirmation
+              ? (
+                <label className={styles.checkboxLabel}>
+                  <CheckBox
+                    checked={isConfirmed}
+                    onChange={this.onConfirmationChange}
+                    className={`${styles.checkbox} confirmation-checkbox`}
+                  />
+                  {confirmation}
+                </label>
+              )
+              : null
+          }
         </BoxContent>
         {!isHardwareWalletConnected && (
           <Footer
