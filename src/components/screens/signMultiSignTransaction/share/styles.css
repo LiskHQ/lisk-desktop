@@ -15,4 +15,9 @@
   & > img {
     margin-right: 8px;
   }
+
+  &.primay {
+    color: var(--color-strong-white);
+    text-decoration: none;
+  }
 }
