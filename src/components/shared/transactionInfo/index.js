@@ -99,7 +99,7 @@ const Send = ({
       <div className={styles.col}>
         <label>{t('Transaction ID')}</label>
         <label>
-          {Buffer.from(transaction.id, 'hex')}
+          {transaction?.id ? Buffer.from(transaction.id, 'hex') : '-'}
         </label>
       </div>
       <div className={styles.col}>
@@ -151,7 +151,7 @@ const UnlockBalance = ({ account, t, transaction }) => (
       <div className={styles.col}>
         <label>{t('Transaction ID')}</label>
         <label>
-          {Buffer.from(transaction.id, 'hex')}
+          {transaction?.id ? Buffer.from(transaction.id, 'hex') : '-'}
         </label>
       </div>
       <div className={styles.col}>

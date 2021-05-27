@@ -41,6 +41,7 @@ const Summary = ({
       account={account}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
+      fee={!account.summary.isMultisignature && fee}
       classNames={`${styles.box} ${styles.summaryContainer}`}
       createTransaction={(callback) => {
         callback(transactionInfo);

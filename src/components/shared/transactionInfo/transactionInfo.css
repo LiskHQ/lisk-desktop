@@ -100,6 +100,13 @@
     display: flex;
     flex-direction: column;
     flex-basis: 50%;
+    max-width: 50%;
+
+    & > label {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
 
     & > label:first-child {
       font-family: var(--content-font);

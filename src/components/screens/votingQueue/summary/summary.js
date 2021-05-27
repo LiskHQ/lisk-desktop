@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import { fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import TransactionInfo from '@shared/transactionInfo';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
@@ -84,6 +84,7 @@ const Summary = ({
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       classNames={styles.container}
+      fee={!account.summary.isMultisignature && fromRawLsk(fee)}
       createTransaction={(callback) => {
         callback(transaction);
       }}

@@ -10,6 +10,7 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 const Summary = ({
   transactionInfo,
   error,
+  fee,
   prevStep,
   t,
   nextStep,
@@ -39,6 +40,7 @@ const Summary = ({
       account={account}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
+      fee={!account.summary.isMultisignature && fee.value}
       classNames={`${styles.box} ${styles.summaryContainer}`}
       createTransaction={(callback) => {
         callback(transactionInfo);
