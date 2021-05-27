@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
-import { transformTransaction } from '../../../../utils/transaction';
+import { transactionToJSON, transformTransaction } from '../../../../utils/transaction';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
@@ -16,15 +16,15 @@ const ImportData = ({ t, nextStep }) => {
   const [error, setError] = useState();
 
   const onReview = () => {
-    nextStep({ transaction });
+    nextStep({ transaction: transformTransaction(transaction) });
   };
 
   const validateAndSetTransaction = (input) => {
     try {
-      const parsedInput = transformTransaction(input);
-      console.log(parsedInput);
+      const parsedInput = JSON.parse(input);
       setTransaction(parsedInput);
     } catch (e) {
+      console.error(e);
       setError(e);
     }
   };
