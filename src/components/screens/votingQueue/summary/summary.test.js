@@ -1,4 +1,4 @@
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import accounts from '../../../../../test/constants/accounts';
 import Summary from './summary';
 
@@ -59,22 +59,36 @@ const edited = {
   },
 };
 
+const store = {
+  account: {
+    passphrase: 'test',
+    info: {
+      LSK: accounts.genesis,
+    },
+  },
+  settings: {
+    token: {
+      active: 'LSK',
+    },
+  },
+};
+
 const props = {
   t: s => s,
   account: accounts.genesis,
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
+  prevStep: jest.fn(),
   transactions: { transactionsCreatedFailed: [], transactionsCreated: [] },
 };
 
-beforeEach(() => {
-  props.votesSubmitted.mockClear();
-  props.nextStep.mockClear();
+afterEach(() => {
+  jest.clearAllMocks();
 });
 
 describe('VotingQueue.Summary', () => {
   it('renders properly', () => {
-    const wrapper = mountWithRouter(Summary, props);
+    const wrapper = mountWithRouterAndStore(Summary, props, {}, store);
 
     expect(wrapper).toContainMatchingElement('VoteStats');
     expect(wrapper).toContainMatchingElement('.fee');
@@ -84,62 +98,62 @@ describe('VotingQueue.Summary', () => {
   });
 
   it('renders properly when only new votes are present', () => {
-    const wrapper = mountWithRouter(Summary, {
+    const wrapper = mountWithRouterAndStore(Summary, {
       ...props, added,
-    });
+    }, {}, store);
 
     expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
   });
 
   it('renders properly when only removed votes are present', () => {
-    const wrapper = mountWithRouter(Summary, {
+    const wrapper = mountWithRouterAndStore(Summary, {
       ...props, removed,
-    });
+    }, {}, store);
 
     expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
   });
 
   it('renders properly when only edited votes are present', () => {
-    const wrapper = mountWithRouter(Summary, {
+    const wrapper = mountWithRouterAndStore(Summary, {
       ...props, edited,
-    });
+    }, {}, store);
 
     expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
   });
 
   it('renders properly when a mixture of votes is present', () => {
-    const wrapper = mountWithRouter(Summary, {
+    const wrapper = mountWithRouterAndStore(Summary, {
       ...props, edited, removed, added,
-    });
+    }, {}, store);
 
     expect(wrapper).toContainMatchingElements(12, '.vote-item-address');
   });
 
   it('calls props.votesSubmitted when confirm button is clicked', () => {
-    const wrapper = mountWithRouter(Summary, props);
+    const wrapper = mountWithRouterAndStore(Summary, props, {}, store);
     wrapper.find('button.confirm-button').simulate('click');
 
-    expect(props.votesSubmitted).toHaveBeenCalledTimes(1);
+    expect(props.votesSubmitted).toHaveBeenCalledTimes(2);
   });
 
   it('calls props.nextStep when transaction is confirmed', () => {
-    mountWithRouter(Summary, {
+    mountWithRouterAndStore(Summary, {
       ...props,
       added,
       removed,
       edited,
       transactions: { transactionsCreated: [{}], transactionsCreatedFailed: [] },
-    });
+    }, {}, store);
 
     expect(props.nextStep).toHaveBeenCalledTimes(1);
     expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({ error: false }));
   });
 
   it('calls props.nextStep when transaction create fail', () => {
-    mountWithRouter(Summary, {
+    mountWithRouterAndStore(Summary, {
       ...props,
       transactions: { transactionsCreated: [], transactionsCreatedFailed: [{}] },
-    });
+    }, {}, store);
 
     expect(props.nextStep).toHaveBeenCalledTimes(1);
     expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({ error: true }));

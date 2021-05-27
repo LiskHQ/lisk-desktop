@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Piwik from '@utils/piwik';
 import TransactionInfo from '@shared/transactionInfo';
@@ -38,6 +39,7 @@ const Summary = ({
   t, removed = {}, edited = {}, added = {},
   fee, account, prevStep, nextStep, transactions, ...props
 }) => {
+  const dispatch = useDispatch();
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
@@ -61,10 +63,19 @@ const Summary = ({
   const submitTransaction = (fn) => {
     const { normalizedVotes, votesSubmitted } = props;
 
-    votesSubmitted({
+    dispatch(votesSubmitted({
       fee: String(fee),
       votes: normalizedVotes,
       callback: typeof fn === 'function' ? fn : undefined,
+    }));
+  };
+
+  const createTransaction = () => {
+    const { normalizedVotes, votesSubmitted } = props;
+
+    return votesSubmitted({
+      fee: String(fee),
+      votes: normalizedVotes,
     });
   };
 
@@ -82,7 +93,7 @@ const Summary = ({
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       classNames={styles.container}
-      createTransaction={submitTransaction}
+      createTransaction={createTransaction}
     >
       <ToggleIcon isNotHeader />
       <div className={styles.headerContainer}>
