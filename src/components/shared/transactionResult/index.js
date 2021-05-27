@@ -17,32 +17,32 @@ const TransactionResult = ({
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {
-      typeof illustration === 'string'
-        ? <Illustration name={illustration} />
-        : React.cloneElement(illustration)
-    }
+        typeof illustration === 'string'
+          ? <Illustration name={illustration} />
+          : React.cloneElement(illustration)
+      }
       <h1 className="result-box-header">{title}</h1>
       <p className="transaction-status body-message">{message}</p>
       {children}
       {
-      !success
-        ? (
-          <>
-            <p>{t('Does the problem still persist?')}</p>
-            <a
-              className="report-error-link"
-              href={getErrorReportMailto(error)}
-              target="_top"
-              rel="noopener noreferrer"
-            >
-              <TertiaryButton>
-                {t('Report the error via E-Mail')}
-              </TertiaryButton>
-            </a>
-          </>
-        )
-        : null
-    }
+        !success
+          ? (
+            <>
+              <p>{t('Does the problem still persist?')}</p>
+              <a
+                className="report-error-link"
+                href={getErrorReportMailto(error)}
+                target="_top"
+                rel="noopener noreferrer"
+              >
+                <TertiaryButton>
+                  {t('Report the error via E-Mail')}
+                </TertiaryButton>
+              </a>
+            </>
+          )
+          : null
+      }
     </div>
   );
 };
