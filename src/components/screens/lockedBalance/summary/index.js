@@ -10,13 +10,11 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 const Summary = ({
   transactionInfo,
   error,
-  date,
   prevStep,
   t,
   nextStep,
   account,
 }) => {
-  account.summary.isMultisignature = true;
   const onSubmit = () => {
     if (!error) {
       nextStep({ transactionInfo });
@@ -50,7 +48,6 @@ const Summary = ({
         moduleAssetId={moduleAssetId}
         transaction={transactionInfo}
         account={account}
-        date={date}
         isMultisignature={account.summary.isMultisignature}
       />
     </TransactionSummary>

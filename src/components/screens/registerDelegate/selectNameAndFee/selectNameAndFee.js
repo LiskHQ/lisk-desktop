@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import to from 'await-to-js';
-import moment from 'moment';
 import { create } from '@api/transaction';
 import { toRawLsk } from '@utils/lsk';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@constants';
@@ -76,7 +75,6 @@ const SelectNameAndFee = ({ account, ...props }) => {
         nickname: state.nickname,
         fee: state.customFee ? state.customFee.value : fee.value,
         transactionInfo: tx,
-        date: moment().format('DD MMMM YYYY, h:mm:ss A'),
       });
     } else {
       nextStep({ error });

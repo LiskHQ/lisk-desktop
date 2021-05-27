@@ -15,10 +15,8 @@ const Summary = ({
   t,
   nextStep,
   transactionInfo,
-  date,
   error,
 }) => {
-  account.summary.isMultisignature = true;
   const onSubmit = () => {
     if (!error) {
       nextStep({ transactionInfo });
@@ -53,7 +51,6 @@ const Summary = ({
         moduleAssetId={moduleAssetId}
         transaction={transactionInfo}
         account={account}
-        date={date}
         isMultisignature={account.summary.isMultisignature}
         fee={toRawLsk(parseFloat(fee))}
       />

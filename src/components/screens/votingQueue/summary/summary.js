@@ -36,12 +36,9 @@ const getResultProps = ({ added, removed, edited }) => {
 
 const Summary = ({
   t, removed = {}, edited = {}, added = {},
-  fee, account, prevStep, nextStep, transactions,
-  date, ...props
+  fee, account, prevStep, nextStep, transactions, ...props
 }) => {
-  console.log(transactions);
   const transaction = transactions.transactionsCreated[0];
-  account.summary.isMultisignature = true;
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
@@ -112,7 +109,6 @@ const Summary = ({
         moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.voteDelegate}
         transaction={transaction || {}}
         account={account}
-        date={date}
         isMultisignature={account.summary.isMultisignature}
       />
     </TransactionSummary>

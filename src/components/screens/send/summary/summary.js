@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { loginTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
@@ -9,8 +8,6 @@ import TransactionInfo from '@shared/transactionInfo';
 class Summary extends React.Component {
   constructor(props) {
     super(props);
-
-    this.date = moment().format('DD MMMM YYYY, h:mm:ss A');
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
   }
@@ -72,7 +69,6 @@ class Summary extends React.Component {
     } = this.props;
     const amount = fields.amount.value;
     const transaction = transactions.transactionsCreated[0];
-    account.summary.isMultisignature = true;
 
     return (
       <TransactionSummary
@@ -97,7 +93,6 @@ class Summary extends React.Component {
           moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.transfer}
           transaction={transaction || {}}
           account={account}
-          date={this.date}
           isMultisignature={account.summary.isMultisignature}
         />
       </TransactionSummary>
