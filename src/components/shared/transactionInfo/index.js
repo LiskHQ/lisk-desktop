@@ -83,7 +83,7 @@ const TransactionInfo = ({
           </div>
           <div className={styles.col}>
             <label>{t('Transaction fee')}</label>
-            <label>
+            <label className="fee">
               <LiskAmount
                 val={restProps.fee || transaction.fee}
                 token={tokenMap.LSK.key}
@@ -105,7 +105,7 @@ const TransactionInfo = ({
             </label>
           </div>
         </section>
-        <Members t={t} keys={{ numberOfSignatures: 1, mandatoryKeys: ['1849c3a63b7c336fec832fbf394457e86b9c3b2ceef6e1029fd4c0c35b16ed88', '096c6c53fa947754492981047628fc6ecc21808940ec5b7a0818d33f78495311'], optionalKeys: ['80e295a2d700934ba50ba14fbdf6aebce6f226915fa105ed0a6d202ba1c464a0', '820e421aaaacd58db8aab4d5e01f9ad9e37abfa57ed58ee6ad23b4b908bda5b0', '5251831e01ce3cdaae44ca542c22aac0ac43632cc8245ae1248f132b442ab540'] }} />
+        <Members t={t} keys={account.keys} />
       </>
     )}
   </>

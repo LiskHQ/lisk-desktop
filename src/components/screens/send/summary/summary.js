@@ -84,7 +84,7 @@ class Summary extends React.Component {
           onClick: this.prevStep,
         }}
         showCancelButton={!isInitialization}
-        fee={!account.summary.isMultisignature && fromRawLsk(fields.fee.value)}
+        fee={!account.summary.isMultisignature && fields.fee.value}
         token={token}
         createTransaction={this.submitTransaction}
       >
