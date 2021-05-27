@@ -55,8 +55,8 @@ const Form = ({
         senderPublicKey: account.summary.publicKey,
         nonce: account.sequence?.nonce,
         fee: `${toRawLsk(parseFloat(selectedFee))}`,
-        unlockingObjects: getUnlockableUnlockingObjects(
         passphrase: account.passphrase,
+        unlockingObjects: getUnlockableUnlockingObjects(
           account.dpos?.unlocking, currentBlockHeight,
         ),
       }, tokenMap.LSK.key),
