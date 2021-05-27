@@ -45,14 +45,14 @@ const Members = withData({
     <div className={styles.membersContainer}>
       {accounts.data?.map((account, i) => (
         <div
-          className={`${styles.memberInfo} member-info`}
-          key={`tx-info-msign-member-${i + 1}.`}
+          className={styles.memberInfo}
+          key={i + 1}
         >
           <AccountVisual address={account.summary.address} />
           <div className={styles.memberDetails}>
             <p className={styles.memberTitle}>
               {account.summary.username || account.summary.address}
-              <span>{(i + 1) > keys.numberOfSignatures ? `(${t('Optional')})` : `(${t('Mandatory')})`}</span>
+              <span>{(i + 1) > keys.numberOfSignatures ? t('Optional') : t('Mandatory')}</span>
             </p>
             <p className={styles.memberKey}>{account.summary.publicKey}</p>
           </div>
