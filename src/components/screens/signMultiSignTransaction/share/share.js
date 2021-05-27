@@ -62,12 +62,12 @@ const Share = ({
               Container={SecondaryButton}
               text={t('Copy')}
               className={styles.buttonContent}
-              value={`${tx.name}.json`}
+              value={tx.json}
             />
             <PrimaryButton>
               <a
                 href={`data:text/json;charset=utf-8,${tx.uri}`}
-                download={tx.name}
+                download={`${tx.name}.json`}
                 className={`${styles.buttonContent} ${styles.primary}`}
               >
                 <Icon name="download" />
