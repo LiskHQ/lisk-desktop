@@ -81,4 +81,9 @@
   & > img {
     margin-right: 10px;
   }
+
+  &.primary {
+    color: var(--color-strong-white);
+    text-decoration: none;
+  }
 }
