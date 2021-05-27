@@ -40,4 +40,9 @@
       margin-right: 8px;
     }
   }
+
+  & .primary {
+    color: var(--color-strong-white);
+    text-decoration: none;
+  }
 }
