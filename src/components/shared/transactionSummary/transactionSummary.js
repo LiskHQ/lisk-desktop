@@ -36,7 +36,7 @@ const TransactionSummary = ({
     }
   }, [confirmButton.disabled]);
 
-  const tooltipMessages = tooltips[token]();
+  const tooltipMessages = tooltips[token](t);
 
   return (
     <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
