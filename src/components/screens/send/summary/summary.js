@@ -85,9 +85,8 @@ class Summary extends React.Component {
         }}
         cancelButton={{
           label: t('Edit transaction'),
-          onClick: this.prevStep,
+          onClick: isInitialization ? null : this.prevStep,
         }}
-        showCancelButton={!isInitialization}
         fee={fields.fee.value}
         createTransaction={this.submitTransaction}
       >
