@@ -6,6 +6,7 @@ import {
   transformTransaction,
   containsTransactionType,
   createTransactionObject,
+  transactionToJSON,
 } from './transaction';
 import accounts from '../../test/constants/accounts';
 
@@ -295,6 +296,29 @@ describe('API: LSK Transactions', () => {
 
       pending = [{ moduleAssetId: transfer }];
       expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
+    });
+  });
+
+  describe('transactionToJSON', () => {
+    beforeEach(() => {
+      // eslint-disable-next-line no-extend-native
+      BigInt.prototype.toJSON = function () { return `${this.toString()}n`; };
+    });
+
+    afterEach(() => {
+      // eslint-disable-next-line no-extend-native
+      BigInt.prototype.toJSON = undefined;
+    });
+    const transaction = createTransactionObject({
+      nonce: '2',
+      amount: 10000,
+      fee: '123123',
+      senderPublicKey: accounts.genesis.summary.publicKey,
+      recipientAddress: accounts.delegate.summary.address,
+    }, transfer);
+    it('should return the transaction as JSON', () => {
+      const json = transactionToJSON(transaction);
+      expect(json).toMatchSnapshot();
     });
   });
 });

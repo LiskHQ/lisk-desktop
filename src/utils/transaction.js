@@ -191,6 +191,38 @@ const createTransactionObject = (tx, moduleAssetId) => {
   return transaction;
 };
 
+const isBufferArray = (arr) => arr.every(element => Buffer.isBuffer(element));
+
+const convertBuffersToHex = (value) => {
+  let result = value;
+  if (Array.isArray(value) && isBufferArray(value)) {
+    result = value.map(convertBinaryToString);
+  } else if (Buffer.isBuffer(value)) {
+    result = convertBinaryToString(value);
+  }
+
+  return result;
+};
+
+const convertObjectToHex = (data) => {
+  const obj = {};
+  // eslint-disable-next-line no-restricted-syntax, no-unused-vars, guard-for-in
+  for (const key in data) {
+    const value = data[key];
+    if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
+      obj[key] = convertObjectToHex(value);
+    } else {
+      obj[key] = convertBuffersToHex(value);
+    }
+  }
+  return obj;
+};
+
+const transactionToJSON = (transaction) => {
+  const obj = convertObjectToHex(transaction);
+  return JSON.stringify(obj);
+};
+
 const containsTransactionType = (transactions = [], type) =>
   transactions.some(tx => tx.moduleAssetId === type);
 
@@ -263,6 +295,7 @@ const getTxAmount = ({ moduleAssetId, asset }) => {
 
 export {
   getTxAmount,
+  transactionToJSON,
   transformTransaction,
   containsTransactionType,
   createTransactionObject,
