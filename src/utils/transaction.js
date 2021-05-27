@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import {
   MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
@@ -47,7 +48,7 @@ const transformTransaction = ({
       transformedTransaction.asset = {
         data: asset.data,
         amount: String(asset.amount),
-        recipient: { address: getBase32AddressFromAddress(asset.recipientAddress) },
+        recipient: { address: getBase32AddressFromAddress(Buffer.from(asset.recipientAddress, 'hex')) },
       };
 
       break;
