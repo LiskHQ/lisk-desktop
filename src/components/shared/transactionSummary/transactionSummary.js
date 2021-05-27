@@ -12,14 +12,14 @@ import Footer from './footer';
 import styles from './transactionSummary.css';
 
 const tooltips = {
-  LSK: {
+  LSK: t => ({
     title: 'Transaction fee',
-    children: `Every transaction needs to be confirmed and forged into Lisk blockchain network. 
-                Such operations require hardware resources and because of that there is a small fee for processing those.`,
-  },
-  BTC: {
-    children: 'Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.',
-  },
+    children: t(`Every transaction needs to be confirmed and forged into Lisk blockchain network. 
+                Such operations require hardware resources and because of that there is a small fee for processing those.`),
+  }),
+  BTC: t => ({
+    children: t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.'),
+  }),
 };
 
 const TransactionSummary = ({
@@ -35,6 +35,8 @@ const TransactionSummary = ({
       confirmButton.onClick();
     }
   }, [confirmButton.disabled]);
+
+  const tooltipMessages = tooltips[token]();
 
   return (
     <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
@@ -54,8 +56,8 @@ const TransactionSummary = ({
             <section>
               <label>
                 {t('Transaction fee')}
-                <Tooltip title={t(tooltips[token].title)} position="right">
-                  <p className={styles.tooltipText}>{t(tooltips[token].children)}</p>
+                <Tooltip title={tooltipMessages.title} position="right">
+                  <p className={styles.tooltipText}>{tooltipMessages.children}</p>
                 </Tooltip>
               </label>
               <label className={`${styles.feeValue} fee-value`}>
