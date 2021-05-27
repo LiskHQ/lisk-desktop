@@ -16,7 +16,7 @@ export const Context = React.createContext({
 });
 
 const TransactionDetails = ({
-  t, activeToken, network, history,
+  t, activeToken, network, history, schema, title,
   transaction: { error, isLoading, data },
 }) => {
   const isFirstRender = useRef(true);
@@ -38,24 +38,22 @@ const TransactionDetails = ({
     return <NotFound />;
   }
 
-  const Layout = LayoutSchema[data.moduleAssetId] || LayoutSchema.default;
+  const Layout = LayoutSchema[schema ?? data.moduleAssetId] || LayoutSchema.default;
 
   return (
-    <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
-      <Box isLoading={isLoading} className={styles.wrapper}>
-        <BoxHeader>
-          <h1>{t('Transaction details')}</h1>
-        </BoxHeader>
-        <BoxContent className={`${styles.mainContent} ${Layout.className}`}>
-          <Context.Provider value={{
-            transaction: data, activeToken, network,
-          }}
-          >
-            {Layout.components.map((Component, index) => <Component key={index} t={t} />)}
-          </Context.Provider>
-        </BoxContent>
-      </Box>
-    </Dialog>
+    <Box isLoading={isLoading} className={styles.container}>
+      <BoxHeader>
+        <h1>{title ?? t('Transaction details')}</h1>
+      </BoxHeader>
+      <BoxContent className={`${styles.mainContent} ${Layout.className}`}>
+        <Context.Provider value={{
+          transaction: data, activeToken, network,
+        }}
+        >
+          {Layout.components.map((Component, index) => <Component key={index} t={t} />)}
+        </Context.Provider>
+      </BoxContent>
+    </Box>
   );
 };
 

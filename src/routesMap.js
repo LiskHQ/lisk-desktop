@@ -17,7 +17,7 @@ import SignMessage from '@screens/signMessage';
 import TermsOfUse from '@screens/termsOfUse';
 import Wallet from '@screens/wallet';
 import Explorer from '@screens/wallet/explorer';
-import TransactionDetails from '@screens/transactionDetails';
+import TransactionDetailsModal from '@screens/transactionDetailsModal';
 import VerifyMessage from '@screens/verifyMessage';
 import Request from '@screens/request';
 import LockedBalance from '@screens/lockedBalance';
@@ -56,7 +56,7 @@ export default {
   verifyMessage: VerifyMessage,
   registerDelegate: RegisterDelegate,
   search: SearchBar,
-  transactionDetails: TransactionDetails,
+  transactionDetails: TransactionDetailsModal,
   newRelease: NewReleaseDialog,
   request: Request,
   lockedBalance: LockedBalance,

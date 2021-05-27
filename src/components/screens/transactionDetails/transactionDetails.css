@@ -1,6 +1,8 @@
 @import '../../../app/mixins.css';
 
-.wrapper {
+.container {
+  height: auto;
+
   overflow-y: auto;
   max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
   display: block;
@@ -9,10 +11,6 @@
     padding-left: var(--horizontal-padding-l) !important;
     padding-right: var(--horizontal-padding-l) !important;
   }
-}
-
-.container {
-  height: auto;
 
   & .votes {
     grid-area: votes;
