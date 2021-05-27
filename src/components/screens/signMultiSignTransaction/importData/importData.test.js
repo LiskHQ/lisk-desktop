@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import ImportData from './importData';
 
-describe('Multisignature ImportData component', () => {
+describe.skip('Multisignature ImportData component', () => {
   let wrapper;
   const props = {
     t: v => v,

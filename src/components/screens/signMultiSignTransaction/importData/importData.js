@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
+import { transformTransaction } from '../../../../utils/transaction';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
@@ -10,61 +11,9 @@ import styles from './styles.css';
 
 const reader = new FileReader();
 
-// eslint-disable-next-line max-statements
-const inputValidator = ({
-  senderId, senderPublicKey, fee, asset,
-  nonce, signatures, lsTrackingId, id,
-}) => {
-  const validation = {
-    valid: true,
-    errors: [],
-  };
-
-  if (typeof id !== 'string' && typeof lsTrackingId !== 'string') {
-    validation.valid = false;
-    validation.errors.push('id and lsTrackingId are invalid');
-  }
-
-  if (typeof senderId !== 'string' && typeof senderPublicKey !== 'string') {
-    validation.valid = false;
-    validation.errors.push('senderId and senderPuclickKey are invalid');
-  }
-
-  if (!parseInt(fee, 10)) {
-    validation.valid = false;
-    validation.errors.push('fee is invalid');
-  }
-
-  if (!parseInt(nonce, 10)) {
-    validation.valid = false;
-    validation.errors.push('nonce is invalid');
-  }
-
-  if (!asset || !Array.isArray(asset.mandatoryKeys) || !Array.isArray(asset.optionalKeys)) {
-    validation.valid = false;
-    validation.errors.push('keys are invalid');
-  }
-
-  if (!Array.isArray(signatures)) {
-    validation.valid = false;
-    validation.errors.push('signatures is invalid');
-  } else {
-    signatures.find((signature) => {
-      if (typeof signature !== 'string' && typeof signature.signature !== 'string') {
-        validation.valid = false;
-        validation.errors.push('a signature is invalid');
-        return true;
-      }
-      return false;
-    });
-  }
-
-  return validation;
-};
-
 const ImportData = ({ t, nextStep }) => {
-  const [transaction, setTransaction] = useState(undefined);
-  const [error, setError] = useState(undefined);
+  const [transaction, setTransaction] = useState();
+  const [error, setError] = useState();
 
   const onReview = () => {
     nextStep({ transaction });
@@ -72,13 +21,8 @@ const ImportData = ({ t, nextStep }) => {
 
   const validateAndSetTransaction = (input) => {
     try {
-      const parsedInput = JSON.parse(input);
-      const validation = inputValidator(parsedInput);
-      if (!validation.valid) {
-        setError(validation.errors.toString());
-      } else {
-        setError(undefined);
-      }
+      const parsedInput = transformTransaction(input);
+      console.log(parsedInput);
       setTransaction(parsedInput);
     } catch (e) {
       setError(e);
