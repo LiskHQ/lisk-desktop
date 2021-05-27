@@ -18,10 +18,11 @@ const httpPaths = {
  * @returns {Promise}
  */
 export const getNetworkStatus = ({
-  baseUrl,
+  baseUrl, network,
 }) => http({
   baseUrl,
   path: httpPaths.networkStatus,
+  network,
 });
 
 const getServiceUrl = ({ name, address = 'http://localhost:4000' }) => {
