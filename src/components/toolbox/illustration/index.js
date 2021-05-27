@@ -17,10 +17,6 @@ import votingSuccessDark from '../../../assets/images/illustrations/voting-submi
 import votingSuccess from '../../../assets/images/illustrations/voting-submitted.svg';
 import votingError from '../../../assets/images/illustrations/voting-failed.svg';
 import votingErrorDark from '../../../assets/images/illustrations/voting-failed-dark.svg';
-import secondPassphraseSuccess from '../../../assets/images/illustrations/2nd-passphrase-submitted.svg';
-import secondPassphraseSuccessrDark from '../../../assets/images/illustrations/2nd-passphrase-submitted-dark.svg';
-import secondPassphraseError from '../../../assets/images/illustrations/2nd-passphrase-failed.svg';
-import secondPassphraseErrorDark from '../../../assets/images/illustrations/2nd-passphrase-failed-dark.svg';
 import pageNotFound from '../../../assets/images/illustrations/illustration-page-not-found.svg';
 import pageNotFoundDark from '../../../assets/images/illustrations/illustration-page-not-found-dark.svg';
 import errorBoundaryPage from '../../../assets/images/illustrations/illustration-error-boundary-page.svg';
@@ -60,8 +56,6 @@ export const illustrations = {
   transactionError,
   votingSuccess,
   votingError,
-  secondPassphraseSuccess,
-  secondPassphraseError,
   pageNotFound,
   errorBoundaryPage,
   hubReadyToGo,
@@ -82,8 +76,6 @@ export const illustrations = {
   errorBoundaryPageDark,
   votingSuccessDark,
   votingErrorDark,
-  secondPassphraseSuccessrDark,
-  secondPassphraseErrorDark,
   transactionSuccessDark,
   transactionErrorDark,
   emptyBookmarksListDark,

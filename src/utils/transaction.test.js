@@ -146,7 +146,7 @@ describe('API: LSK Transactions', () => {
         amount: '10000000',
         numberOfSignatures: 2,
         mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
-        optionalKeys: [accounts.second_passphrase_account.summary.publicKey],
+        optionalKeys: [accounts.delegate_candidate.summary.publicKey],
       };
       const txObj = createTransactionObject(tx, registerMultisignatureGroup);
 
@@ -259,7 +259,7 @@ describe('API: LSK Transactions', () => {
     it('should transform a registerMultisignatureGroup transaction', () => {
       const [moduleID, assetID] = splitModuleAndAssetIds(registerMultisignatureGroup);
       const mandatoryKeys = [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey].map(key => Buffer.from(key, 'hex'));
-      const optionalKeys = [accounts.second_passphrase_account.summary.publicKey].map(key => Buffer.from(key, 'hex'));
+      const optionalKeys = [accounts.delegate_candidate.summary.publicKey].map(key => Buffer.from(key, 'hex'));
 
       const tx = {
         moduleID,

@@ -24,7 +24,7 @@ Feature: Send
 
   Scenario: Launch protocol prefills fields  - from logged out state
     Given I follow the launch protokol link
-    When I enter first passphrase of genesis
+    When I enter the passphrase of genesis
     When I login
     Then Send form fields are prefilled
 

@@ -96,6 +96,7 @@ export const getActiveTokenAccount = state => ({
  * @returns {String} Truncated address
  */
 export const truncateAddress = (address, size = 'small') => {
+  if (!address) return address;
   const reg = size === 'small' ? regex.lskAddressTrunk : regex.btcAddressTrunk;
   return address.replace(reg, '$1...$3');
 };

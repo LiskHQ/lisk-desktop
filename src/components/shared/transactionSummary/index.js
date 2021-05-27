@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { extractPublicKey } from '@utils/account';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import LiskAmount from '@shared/liskAmount';
 import Box from '@toolbox/box';
@@ -8,7 +7,6 @@ import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
 import CheckBox from '@toolbox/checkBox';
 import HardwareWalletIllustration from '@toolbox/hardwareWalletIllustration';
-import PassphraseInput from '@toolbox/passphraseInput';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import copyToClipboard from 'copy-to-clipboard';
 import Icon from '@toolbox/icon';
@@ -94,13 +92,7 @@ class TransactionSummary extends React.Component {
 
     this.state = {
       isHardwareWalletConnected: !!(account.hwInfo && account.hwInfo.deviceId),
-      secondPassphrase: {
-        isValid: false,
-        feedback: '',
-        value: null,
-      },
     };
-    this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
     this.confirmOnClick = this.confirmOnClick.bind(this);
     this.onConfirmationChange = this.onConfirmationChange.bind(this);
     this.getTooltip = this.getTooltip.bind(this);
@@ -123,26 +115,8 @@ class TransactionSummary extends React.Component {
     }
   }
 
-  checkSecondPassphrase(passphrase, error) {
-    const { account, t } = this.props;
-    const expectedPublicKey = !error && extractPublicKey(passphrase);
-    const isPassphraseValid = account.secondPublicKey === expectedPublicKey;
-    const feedback = !error && !isPassphraseValid ? t('Oops! Wrong passphrase') : '';
-
-    this.setState({
-      secondPassphrase: {
-        ...this.state.secondPassphrase,
-        isValid: !error && feedback === '' && passphrase !== '',
-        feedback,
-        value: passphrase,
-      },
-    });
-  }
-
   confirmOnClick() {
-    this.props.confirmButton.onClick({
-      secondPassphrase: this.state.secondPassphrase.value,
-    });
+    this.props.confirmButton.onClick();
   }
 
   onConfirmationChange() {
@@ -171,7 +145,7 @@ class TransactionSummary extends React.Component {
       fee, confirmation, classNames, token, footerClassName, showCancelButton = true,
     } = this.props;
     const {
-      secondPassphrase, isHardwareWalletConnected, isConfirmed,
+      isHardwareWalletConnected, isConfirmed,
     } = this.state;
 
     const tooltip = this.getTooltip();
@@ -211,38 +185,6 @@ class TransactionSummary extends React.Component {
                   />
                   {confirmation}
                 </label>
-              )
-              : null
-          }
-          {
-            account.secondPublicKey
-              ? (
-                <section className={`${styles.tooltipContainer} summary-second-passphrase`}>
-                  <label>
-                    {t('Second passphrase')}
-                    <Tooltip
-                      position="right"
-                      className={`${styles.tooltip}`}
-                      title={t('What is your second passphrase?')}
-                    >
-                      <>
-                        <p className={`${styles.tooltupText}`}>
-                          {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
-                        </p>
-                        <p className={`${styles.tooltipText}`}>
-                          {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
-                        </p>
-                      </>
-                    </Tooltip>
-                  </label>
-                  <PassphraseInput
-                    isSecondPassphrase={!!account.secondPublicKey}
-                    secondPPFeedback={secondPassphrase.feedback}
-                    inputsLength={12}
-                    maxInputsLength={24}
-                    onFill={this.checkSecondPassphrase}
-                  />
-                </section>
               )
               : null
           }
