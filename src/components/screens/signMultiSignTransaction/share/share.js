@@ -1,5 +1,4 @@
-import React from 'react';
-import { downloadJSON } from '@utils/helpers';
+import React, { useEffect, useState } from 'react';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
@@ -10,21 +9,33 @@ import TransactionResult from '@shared/transactionResult';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
+const successMessage = t => ({
+  illustration: 'registerMultisignatureSuccess',
+  message: t('You have successfully signed the transaction. You can download or copy the transaction and send it back to the initiator.'),
+});
+
+const errorMessage = (t, error) => ({
+  illustration: 'registerMultisignatureError',
+  message: t('Error: {{error}}', { error }),
+});
+
 const Share = ({
   t, transactionInfo, error,
 }) => {
+  const [tx, setTx] = useState({
+    json: '',
+    uri: '',
+  });
   const success = !error && transactionInfo;
-  const template = success ? {
-    illustration: 'registerMultisignatureSuccess',
-    message: t('You have successfully signed the transaction. You can download or copy the transaction and send it back to the initiator.'),
-  } : {
-    illustration: 'registerMultisignatureError',
-    message: t(`Error: ${error}`),
-  };
+  const template = success ? successMessage(t) : errorMessage(t, error);
 
-  const onDownload = () => {
-    downloadJSON(transactionInfo, transactionInfo.id);
-  };
+  useEffect(() => {
+    setTx({
+      json: JSON.stringify(transactionInfo),
+      uri: encodeURIComponent(JSON.stringify(transactionInfo)),
+      name: transactionInfo.id,
+    });
+  }, []);
 
   return (
     <section>
@@ -51,13 +62,17 @@ const Share = ({
               Container={SecondaryButton}
               text={t('Copy')}
               className={styles.buttonContent}
-              value={JSON.stringify(transactionInfo)}
+              value={`${tx.name}.json`}
             />
-            <PrimaryButton onClick={onDownload}>
-              <span className={styles.buttonContent}>
+            <PrimaryButton>
+              <a
+                href={`data:text/json;charset=utf-8,${tx.uri}`}
+                download={tx.name}
+                className={`${styles.buttonContent} ${styles.primary}`}
+              >
                 <Icon name="download" />
                 {t('Download')}
-              </span>
+              </a>
             </PrimaryButton>
           </BoxFooter>
         )}
