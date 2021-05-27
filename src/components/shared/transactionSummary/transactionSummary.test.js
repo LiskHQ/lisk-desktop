@@ -3,26 +3,51 @@ import { mount } from 'enzyme';
 import accounts from '../../../../test/constants/accounts';
 import TransactionSummary from './transactionSummary';
 
+const hwInfo = {
+  deviceModel: 'Trezor Model T',
+  deviceId: 'mock id',
+};
+const ordinaryAccount = { info: { LSK: accounts.genesis } };
+const multisigAccount = {
+  info: {
+    LSK: {
+      ...accounts.genesis,
+      summary: {
+        ...accounts.genesis.summary,
+        isMultisignature: true,
+      },
+    },
+  },
+};
+const accountWithHW = {
+  info: {
+    LSK: {
+      ...accounts.genesis,
+      hwInfo,
+    },
+  },
+};
+
 describe('TransactionSummary', () => {
-  let props;
-  const hwInfo = {
-    deviceModel: 'Trezor Model T',
-    deviceId: 'mock id',
+  const props = {
+    title: 'mock title',
+    account: ordinaryAccount,
+    confirmButton: {
+      label: 'Confirm',
+      onClick: jest.fn(),
+    },
+    cancelButton: {
+      label: 'Cancel',
+      onClick: jest.fn(),
+    },
+    t: key => key,
+    token: 'LSK',
+    createTransaction: jest.fn(),
+    fee: '10000',
   };
 
-  beforeEach(() => {
-    props = {
-      title: 'mock title',
-      account: accounts.genesis,
-      confirmButton: {
-        label: 'Confirm',
-        onClick: jest.fn(),
-      },
-      cancelButton: {
-        label: 'Cancel',
-      },
-      t: key => key,
-    };
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   it('should render title', () => {
@@ -30,10 +55,10 @@ describe('TransactionSummary', () => {
     expect(wrapper.find('h2').text()).toEqual(props.title);
   });
 
-  it('should render hw wallet confirmation if props.acount.hwInfo', () => {
+  it('should render hw wallet confirmation if props.account.hwInfo', () => {
     const wrapper = mount(<TransactionSummary {...{
       ...props,
-      account: { ...accounts.genesis, hwInfo },
+      account: accountWithHW,
     }}
     />);
     expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
@@ -41,14 +66,14 @@ describe('TransactionSummary', () => {
     expect(props.confirmButton.onClick).toHaveBeenCalled();
   });
 
-  it('should not render hw wallet confirmation if props.acount.hwInfo and props.confirmButton.disabled', () => {
+  it('should not render hw wallet confirmation if props.account.hwInfo and props.confirmButton.disabled', () => {
     const wrapper = mount(<TransactionSummary {...{
       ...props,
       confirmButton: {
         ...props.confirmButton,
         disabled: true,
       },
-      account: { ...accounts.genesis, hwInfo },
+      account: accountWithHW,
     }}
     />);
     expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
@@ -57,16 +82,10 @@ describe('TransactionSummary', () => {
     wrapper.unmount();
   });
 
-  it('should render copy/download buttons', () => {
+  it('should render copy/download buttons for multisig accounts', () => {
     const wrapper = mount(<TransactionSummary {... {
       ...props,
-      account: {
-        ...props.account,
-        summary: {
-          ...props.account.summary,
-          isMultisignature: true,
-        },
-      },
+      account: multisigAccount,
     }}
     />);
     expect(wrapper.find('.cancel-button').exists()).toBeTruthy();
@@ -77,21 +96,12 @@ describe('TransactionSummary', () => {
 
   it('should call props.createTransaction', () => {
     const createTransaction = jest.fn();
-    const wrapper = mount(<TransactionSummary {... {
+    mount(<TransactionSummary {... {
       ...props,
-      account: {
-        ...props.account,
-        summary: {
-          ...props.account.summary,
-          isMultisignature: true,
-        },
-      },
+      account: multisigAccount,
       createTransaction,
     }}
     />);
-    wrapper.find('.copy-button').at(0).simulate('click');
     expect(createTransaction).toHaveBeenCalledTimes(1);
-    wrapper.find('.download-button').at(0).simulate('click');
-    expect(createTransaction).toHaveBeenCalledTimes(2);
   });
 });
