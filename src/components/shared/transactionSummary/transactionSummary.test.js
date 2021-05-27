@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '../../../../test/constants/accounts';
-import TransactionSummary from './index';
+import TransactionSummary from './transactionSummary';
 
 describe('TransactionSummary', () => {
   let props;
