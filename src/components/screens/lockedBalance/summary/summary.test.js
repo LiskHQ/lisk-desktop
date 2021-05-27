@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as transactionsApi from '@api/transaction';
-import Summary from './index';
+import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
-describe.skip('Lock balance Summary', () => {
+describe('Delegate Registration Summary', () => {
   jest.mock('@api/transaction', () => ({
     create: jest.fn(),
   }));
@@ -40,7 +40,7 @@ describe.skip('Lock balance Summary', () => {
     props.nextStep.mockRestore();
   });
 
-  it('renders properly Summary component', () => {
+  it('renders properly Symmary component', () => {
     const wrapper = mount(<Summary {...props} />);
     expect(wrapper).toContainMatchingElement('.summary-container');
     expect(wrapper).toContainMatchingElement('.nickname-label');
@@ -57,7 +57,7 @@ describe.skip('Lock balance Summary', () => {
     expect(props.prevStep).toBeCalled();
   });
 
-  it.skip('submit user data when click in confirm button', async () => {
+  it('submit user data when click in confirm button', async () => {
     transactionsApi.create = jest.fn().mockImplementation(() => Promise.resolve(response));
     const wrapper = mount(<Summary {...props} />);
     expect(props.nextStep).not.toBeCalled();
@@ -67,7 +67,7 @@ describe.skip('Lock balance Summary', () => {
     expect(props.nextStep).toBeCalledWith({ transactionInfo: response });
   });
 
-  it.skip('submit user data when click in confirm button but fails', async () => {
+  it('submit user data when click in confirm button but fails', async () => {
     transactionsApi.create = jest.fn().mockImplementation(() => Promise.reject(new Error('Some error')));
     const wrapper = mount(<Summary {...props} />);
     wrapper.find('button.confirm-button').simulate('click');

@@ -64,7 +64,6 @@ const props = {
   account: accounts.genesis,
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
-  fee: 10000000,
   transactions: { transactionsCreatedFailed: [], transactionsCreated: [] },
 };
 
@@ -78,7 +77,7 @@ describe('VotingQueue.Summary', () => {
     const wrapper = mountWithRouter(Summary, props);
 
     expect(wrapper).toContainMatchingElement('VoteStats');
-    expect(wrapper).toContainMatchingElement('.fee-value');
+    expect(wrapper).toContainMatchingElement('.fee');
     expect(wrapper).toContainMatchingElement('.total-votes');
     expect(wrapper).toContainMatchingElement('.confirm-button');
     expect(wrapper).toContainMatchingElement('.cancel-button');
@@ -123,7 +122,7 @@ describe('VotingQueue.Summary', () => {
     expect(props.votesSubmitted).toHaveBeenCalledTimes(1);
   });
 
-  it.skip('calls props.nextStep when transaction is confirmed', () => {
+  it('calls props.nextStep when transaction is confirmed', () => {
     mountWithRouter(Summary, {
       ...props,
       added,
@@ -136,7 +135,7 @@ describe('VotingQueue.Summary', () => {
     expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({ error: false }));
   });
 
-  it.skip('calls props.nextStep when transaction create fail', () => {
+  it('calls props.nextStep when transaction create fail', () => {
     mountWithRouter(Summary, {
       ...props,
       transactions: { transactionsCreated: [], transactionsCreatedFailed: [{}] },
