@@ -3,17 +3,15 @@ import { mount } from 'enzyme';
 import Share from './share';
 
 describe('Sign Multisignature Tx Share component', () => {
-  let wrapper;
-
   const props = {
     t: v => v,
+    transactionInfo: { id: 1 },
   };
 
   it('Should render properly on success', () => {
-    wrapper = mount(
+    const wrapper = mount(
       <Share
         {...props}
-        transactionInfo={{ id: 1 }}
       />,
     );
     const html = wrapper.html();
@@ -24,7 +22,7 @@ describe('Sign Multisignature Tx Share component', () => {
   });
 
   it('Should render properly on error', () => {
-    wrapper = mount(
+    const wrapper = mount(
       <Share
         {...props}
         error="testerror"
@@ -32,7 +30,7 @@ describe('Sign Multisignature Tx Share component', () => {
     );
     const html = wrapper.html();
     expect(html).toContain('transaction-status');
-    expect(html).toContain('Error: testerror');
+    expect(html).toContain('testerror');
     expect(html).toContain('Report the error via E-Mail');
   });
 });
