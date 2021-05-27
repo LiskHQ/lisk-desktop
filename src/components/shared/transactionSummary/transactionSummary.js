@@ -79,4 +79,15 @@ const TransactionSummary = ({
   );
 };
 
-export default TransactionSummary;
+/* istanbul ignore next */
+const areEqual = (prevProps, nextProps) =>
+  (prevProps.footerClassName === nextProps.footerClassName
+  && prevProps.classNames === nextProps.classNames
+  && prevProps.token === nextProps.token
+  && prevProps.account?.balance === nextProps.account?.balance
+  && (
+    (!prevProps.confirmButton.disabled && !nextProps.confirmButton.disabled)
+    || (prevProps.confirmButton.disabled === nextProps.confirmButton.disabled)
+  ));
+
+export default React.memo(TransactionSummary, areEqual);
