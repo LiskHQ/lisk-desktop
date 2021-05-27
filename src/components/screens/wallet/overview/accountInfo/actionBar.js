@@ -1,5 +1,6 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
+import { tokenMap } from '@constants';
 import { getAddress } from '@utils/hwManager';
 import { isEmpty } from '@utils/helpers';
 import Icon from '@toolbox/icon';
@@ -27,14 +28,15 @@ const ActionBar = ({
         size="maxContent"
         content={(
           <CopyToClipboard
-            value={address}
+            value={activeToken === tokenMap.BTC.token
+              ? address : `Address: ${address} - Public key: ${account.summary.publicKey}`}
             type="icon"
             copyClassName={styles.copyIcon}
             className={styles.copyIcon}
           />
         )}
       >
-        <p>{t('Copy address')}</p>
+        <p>{activeToken === tokenMap.BTC.token ? t('Copy address') : t('Copy address and public key')}</p>
       </Tooltip>
     </div>
     <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>

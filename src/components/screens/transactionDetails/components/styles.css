@@ -83,6 +83,14 @@
   grid-area: votes;
 }
 
+.blockId {
+  grid-area: blockHeight;
+}
+
+.blockHeight {
+  grid-area: blockId;
+}
+
 .multiSignatureMembers {
   grid-area: members;
 

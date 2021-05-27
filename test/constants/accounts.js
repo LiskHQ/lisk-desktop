@@ -83,19 +83,6 @@ const accounts = {
       delegate: {},
     },
   },
-  second_passphrase_candidate: {
-    passphrase: 'dolphin inhale planet talk insect release maze engine guilt loan attend lawn',
-    summary: {
-      publicKey: 'ecf6a5cc0b7168c7948ccfaa652cce8a41256bdac1be62eb52f68cde2fb69f2d',
-      serverPublicKey: 'ecf6a5cc0b7168c7948ccfaa652cce8a41256bdac1be62eb52f68cde2fb69f2d',
-      address: 'lskvagp38bkmuetwazdww84bvkzc2g58u2aodn24z',
-    },
-    token: { },
-    sequence: { },
-    dpos: {
-      delegate: {},
-    },
-  },
   send_all_account: {
     passphrase: 'oyster flush inquiry bright leopard gas replace ball hold pudding teach swear',
     summary: {
@@ -104,22 +91,6 @@ const accounts = {
       address: 'lskkx46qy3wkwtfbh4gzbq57tx6dzfexu5yufwh5b',
     },
     token: { },
-    sequence: { },
-    dpos: {
-      delegate: {},
-    },
-  },
-  second_passphrase_account: {
-    passphrase: 'awkward service glimpse punch genre calm grow life bullet boil match like',
-    summary: {
-      publicKey: 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
-      serverPublicKey: 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
-      secondPassphrase: 'forest around decrease farm vanish permit hotel clay senior matter endorse domain',
-      secondPublicKey: 'ec057d8816b18b83a2baac387eebf8af707f8fb565c963476a0e4533e8481eaf',
-      address: 'lskm4qfwau9ajpyx3m59axfederx5ne9qb6grbuy3',
-      balance: 1000e8,
-    },
-    token: { balance: 1000e8 },
     sequence: { },
     dpos: {
       delegate: {},

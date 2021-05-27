@@ -8,9 +8,10 @@ import styles from '../delegates.css';
 import {
   DelegateWeight,
   DelegateDetails,
-  RoundStatus,
+  RoundState,
   DelegateStatus,
   ForgingTime,
+  DelegateRank,
 } from './dataColumns';
 
 const getForgingTime = (time) => {
@@ -27,9 +28,11 @@ const getForgingTime = (time) => {
 };
 
 const DelegateRow = ({
-  data, className, t, activeTab, watchList, setActiveTab,
+  data, className, t, activeTab, watchList, setActiveTab, blocks,
 }) => {
-  const formattedForgingTime = getForgingTime(data.nextForgingTime);
+  const formattedForgingTime = getForgingTime(
+    data.nextForgingTime || blocks.forgers[blocks.indexBook[data.address]]?.nextForgingTime,
+  );
   const dispatch = useDispatch();
 
   const isWatched = watchList.find(address => address === data.address);
@@ -62,14 +65,50 @@ const DelegateRow = ({
         addToWatchList={addToWatchList}
         removeFromWatchList={removeFromWatchList}
       />
-      <DelegateWeight value={data.totalVotesReceived} activeTab={activeTab} />
-      {(activeTab === 'active' || activeTab === 'watched') && (
-        <>
-          <ForgingTime activeTab={activeTab} status={data.status} time={formattedForgingTime} />
-          <RoundStatus data={data} t={t} time={formattedForgingTime} activeTab={activeTab} />
-        </>
-      )}
-      {(activeTab !== 'active') && <DelegateStatus data={data} activeTab={activeTab} />}
+      <DelegateWeight
+        value={data.totalVotesReceived}
+        activeTab={activeTab}
+      />
+      {
+        (activeTab === 'watched' || activeTab === 'standby')
+          ? (
+            <DelegateRank
+              data={data}
+              activeTab={activeTab}
+            />
+          ) : null
+      }
+      {
+        (activeTab === 'active' || activeTab === 'watched')
+          ? (
+            <>
+              <ForgingTime
+                state={data.state}
+                time={formattedForgingTime}
+                activeTab={activeTab}
+              />
+              <RoundState
+                status={data.status}
+                state={data.state || blocks.forgers[blocks.indexBook[data.address]]?.state}
+                lastBlock={data.lastBlock}
+                isBanned={data.isBanned}
+                t={t}
+                time={formattedForgingTime}
+                activeTab={activeTab}
+              />
+            </>
+          ) : null
+      }
+      {
+        activeTab !== 'active'
+          ? (
+            <DelegateStatus
+              status={data.status}
+              totalVotesReceived={data.totalVotesReceived}
+              activeTab={activeTab}
+            />
+          ) : null
+      }
     </Link>
   );
 };

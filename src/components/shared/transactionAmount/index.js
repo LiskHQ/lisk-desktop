@@ -36,7 +36,10 @@ TransactionAmount.propTypes = {
   host: PropTypes.string,
   recipient: PropTypes.string,
   token: PropTypes.string.isRequired,
-  amount: PropTypes.string,
+  amount: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   showInt: PropTypes.bool,
   showRounded: PropTypes.bool,
 };

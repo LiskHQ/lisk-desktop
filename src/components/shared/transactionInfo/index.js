@@ -3,7 +3,6 @@ import withData from '@utils/withData';
 import { withTranslation } from 'react-i18next';
 import { getAccounts } from '@api/account';
 import AccountVisual from '@toolbox/accountVisual';
-import Converter from '@shared/converter';
 import AccountMigration from '@shared/accountMigration';
 import LiskAmount from '@shared/liskAmount';
 import VoteItem from '@shared/voteItem';
@@ -99,7 +98,7 @@ const Send = ({
       <div className={styles.col}>
         <label>{t('Transaction ID')}</label>
         <label>
-          {transaction?.id ? Buffer.from(transaction.id, 'hex') : '-'}
+          {transaction && transaction.id ? Buffer.from(transaction.id, 'hex') : '-'}
         </label>
       </div>
       <div className={styles.col}>
@@ -151,7 +150,7 @@ const UnlockBalance = ({ account, t, transaction }) => (
       <div className={styles.col}>
         <label>{t('Transaction ID')}</label>
         <label>
-          {transaction?.id ? Buffer.from(transaction.id, 'hex') : '-'}
+          {transaction && transaction.id ? Buffer.from(transaction.id, 'hex') : '-'}
         </label>
       </div>
       <div className={styles.col}>

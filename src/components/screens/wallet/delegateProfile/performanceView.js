@@ -49,7 +49,7 @@ const PerformanceView = ({
           text={t('Last Forged Block')}
           icon="productivity"
           value={lastForgedBlocks}
-          isLink
+          isLink={false}
           className={`${styles.performanceIcon} ${styles.productivityIcon}`}
         />
         <Item

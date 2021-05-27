@@ -15,14 +15,6 @@ Then(/^I should see more than 30 transactions$/, function () {
   cy.get(ss.transactionRow).should('have.length.greaterThan', 30);
 });
 
-Then(/^I should see outgoing transaction in table$/, function () {
-  cy.get(ss.transactionsTable).contains('Second passphrase registration');
-});
-
-Then(/^I should not see outgoing transaction in table$/, function () {
-  cy.get(ss.transactionsTable).contains('Second passphrase registration').should('not.exist');
-});
-
 Then(/^I should see incoming transaction in table$/, function () {
   cy.get(ss.transactionsTable).contains('16278883833535792633L').should('exist');
 });

@@ -1,5 +1,14 @@
 import i18n from 'i18next';
 
+const getErrorMessage = (error) => {
+  if (error.indexOf('404 Not Found') > -1) {
+    return '';
+  } if (error.indexOf('DISCONNECTED') > -1 || error.indexOf('net:') > -1) {
+    return 'Please check your internet connection.';
+  }
+  return error || 'There was a problem updating the application';
+};
+
 export default ({ // eslint-disable-line max-statements
   autoUpdater, dialog, win, electron,
 }) => {
@@ -20,9 +29,9 @@ export default ({ // eslint-disable-line max-statements
     console.error(error);
     if (updater.error !== error) {
       updater.error = error;
-      if (error?.toString().indexOf('404 Not Found') === -1) {
-        // this condition is because of https://github.com/LiskHQ/lisk-desktop/issues/647
-        dialog.showErrorBox(`${i18n.t('Error')}: `, 'There was a problem updating the application');
+      const message = getErrorMessage(error ? error.toString() : '');
+      if (message) {
+        dialog.showErrorBox(`${i18n.t('Error')}: `, message);
       }
     }
   });

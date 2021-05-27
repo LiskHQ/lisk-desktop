@@ -28,22 +28,30 @@ describe('Delegates', () => {
     const newProps = { ...props };
     newProps.delegates = [
       {
-        account: {
+        summary: {
           address: '123456L',
         },
-        username: 'John',
-        rank: 34,
-        rewards: 23423,
-        vote: 123,
+        dpos: {
+          delegate: {
+            username: 'John',
+            rank: 34,
+            rewards: 23423,
+            vote: 123,
+          },
+        },
       },
       {
-        account: {
+        summary: {
           address: '123457L',
         },
-        username: 'Anna',
-        rank: 26,
-        rewards: 23421,
-        vote: 127,
+        dpos: {
+          delegate: {
+            username: 'Anna',
+            rank: 26,
+            rewards: 23421,
+            vote: 127,
+          },
+        },
       },
     ];
     wrapper = mount(<Delegates {...newProps} />);
@@ -58,13 +66,17 @@ describe('Delegates', () => {
     const newProps = { ...props };
     newProps.delegates = [
       {
-        account: {
+        summary: {
           address: '123456L',
         },
-        username: 'John',
-        rank: 34,
-        rewards: 23423,
-        vote: 123,
+        dpos: {
+          delegate: {
+            username: 'John',
+            rank: 34,
+            rewards: 23423,
+            vote: 123,
+          },
+        },
       },
     ];
     wrapper = mount(<Delegates {...newProps} />);

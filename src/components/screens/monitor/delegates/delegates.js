@@ -135,6 +135,7 @@ const DelegatesMonitor = ({
                 <DelegatesTable
                   setActiveTab={setActiveTab}
                   delegates={delegatesWithForgingTimes}
+                  blocks={blocks}
                   watchList={watchList}
                   watchedDelegates={watchedDelegates}
                   standByDelegates={standByDelegates}

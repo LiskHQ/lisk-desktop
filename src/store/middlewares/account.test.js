@@ -13,6 +13,7 @@ jest.mock('../../history');
 
 jest.mock('@api/transaction', () => ({
   getTransactions: jest.fn(),
+  emptyTransactionsData: jest.fn(),
 }));
 
 jest.mock('@actions', () => ({
@@ -266,18 +267,6 @@ describe('Account middleware', () => {
         { token: { active: tokenMap.LSK.key } },
       );
       expect(emptyTransactionsData).toHaveBeenCalled();
-    });
-  });
-
-  describe('on settingsUpdated', () => {
-    it('should update logged accounts with enabled tokens', async () => {
-      const settingsUpdatedAction = {
-        type: actionTypes.settingsUpdated,
-        data: { token: { list: { BTC: true } } },
-      };
-      middleware(store)(next)(settingsUpdatedAction);
-      expect(accountDataUpdated).toHaveBeenCalledWith('enabled');
-      expect(store.dispatch).toHaveBeenCalled();
     });
   });
 

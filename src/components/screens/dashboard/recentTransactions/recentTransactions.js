@@ -43,7 +43,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
   const activeToken = tokenMap[settings.token.active];
 
   useEffect(() => {
-    if (!!account.info && account.info[activeToken] && !isLoaded && !transactions.data.length) {
+    if (!!account.info && account.info[activeToken.key] && !isLoaded) {
       setLoaded(true);
       transactions.loadData();
     }

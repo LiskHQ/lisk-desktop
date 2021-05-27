@@ -53,7 +53,7 @@ describe('API: BTC Transactions', () => {
         }));
       await getTransaction({
         network,
-        params: { id: sampleId },
+        params: { transactionId: sampleId },
       });
 
       expect(http).toHaveBeenCalledWith({

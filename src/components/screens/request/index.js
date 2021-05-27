@@ -15,7 +15,7 @@ const Request = ({
   account, t, token,
 }) => {
   const TagName = TagNameMap[token];
-  const address = account.info ? account.info[token].address : '';
+  const address = account.info ? account.info[token].summary.address : '';
   return <TagName address={address} t={t} />;
 };
 

@@ -60,9 +60,11 @@ describe('SearchBar', () => {
           ...props.suggestions.data,
           addresses: [
             {
-              address: '123456L',
-              title: 'John',
-              balance: '120',
+              summary: {
+                address: '123456L',
+                title: 'John',
+                balance: '120',
+              },
             },
           ],
         },
@@ -91,9 +93,8 @@ describe('SearchBar', () => {
               asset: {
                 data: 'testing',
               },
-              id: 123456123234234,
-              type: 0,
-              title: 'transfer',
+              id: '123456123234234',
+              moduleAssetId: '2:0',
             },
           ],
         },
@@ -118,22 +119,30 @@ describe('SearchBar', () => {
           ...props.suggestions.data,
           delegates: [
             {
-              account: {
+              summary: {
                 address: '123456L',
               },
-              username: 'genesis_10',
-              rank: 34,
-              rewards: 23423,
-              vote: 123,
+              dpos: {
+                delegate: {
+                  username: 'genesis_10',
+                  rank: 34,
+                  rewards: 23423,
+                  vote: 123,
+                },
+              },
             },
             {
-              account: {
+              summary: {
                 address: '123457L',
               },
-              username: 'genesis_101',
-              rank: 26,
-              rewards: 23421,
-              vote: 127,
+              dpos: {
+                delegate: {
+                  username: 'genesis_101',
+                  rank: 26,
+                  rewards: 23421,
+                  vote: 127,
+                },
+              },
             },
           ],
         },

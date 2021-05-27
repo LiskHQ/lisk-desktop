@@ -1,7 +1,7 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import { loginTypes, actionTypes, tokenMap } from '@constants';
-import { getAccount } from '@api/account';
+import { getAccount, extractAddress as extractBitcoinAddress } from '@api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
 import { extractPublicKey } from '@utils/account';
 import { networkStatusUpdated } from './network';
@@ -107,7 +107,15 @@ export const login = ({ passphrase, publicKey, hwInfo }) =>
     const params = Object.keys(settings.token.list)
       .filter(key => settings.token.list[key])
       .reduce((acc, token) => {
-        acc[token] = { publicKey: publicKey ?? extractPublicKey(passphrase) };
+        if (token === tokenMap.BTC.key) {
+          acc[token] = {
+            address: extractBitcoinAddress(passphrase, network),
+          };
+        } else {
+          acc[token] = {
+            publicKey: publicKey ?? extractPublicKey(passphrase),
+          };
+        }
         return acc;
       }, {});
 

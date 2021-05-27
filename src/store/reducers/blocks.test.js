@@ -56,21 +56,27 @@ describe('Reducer: blocks(state, action)', () => {
 
     const action = {
       type: actionTypes.forgersRetrieved,
-      data: [
-        {
-          totalVotesReceived: 1e9,
-          status: 'awaitingSlot',
-          lastBlock: 10000,
-          username: accounts.genesis.dpos.delegate.username,
-          nextForgingTime: 1620049927,
-          address: accounts.genesis.summary.address,
+      data: {
+        forgers: [
+          {
+            totalVotesReceived: 1e9,
+            state: 'awaitingSlot',
+            lastBlock: 10000,
+            username: accounts.genesis.dpos.delegate.username,
+            nextForgingTime: 1620049927,
+            address: accounts.genesis.summary.address,
+          },
+        ],
+        indexBook: {
+          [accounts.genesis.summary.address]: 0,
         },
-      ],
+      },
     };
     const changedBlocks = blocksReducer(state, action);
     expect(changedBlocks).toEqual({
       latestBlocks: [],
-      forgers: action.data,
+      forgers: action.data.forgers,
+      indexBook: action.data.indexBook,
     });
   });
 });

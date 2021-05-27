@@ -7,6 +7,10 @@ import { signVoteTransaction } from '@utils/hwManager';
 import { getVotes } from '@api/delegate';
 import { passphraseUsed } from './account';
 
+export const votesReset = () => ({
+  type: actionTypes.votesReset,
+});
+
 /**
  * Clears the existing changes on votes.
  * The vote queue will be empty after this action dispatched

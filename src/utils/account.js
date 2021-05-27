@@ -96,6 +96,7 @@ export const getActiveTokenAccount = state => ({
  * @returns {String} Truncated address
  */
 export const truncateAddress = (address, size = 'small') => {
+  if (!address) return address;
   const reg = size === 'small' ? regex.lskAddressTrunk : regex.btcAddressTrunk;
   return address.replace(reg, '$1...$3');
 };
@@ -174,10 +175,6 @@ export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlo
         ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );
-
-export const getTokenFromAddress = address => (
-  cryptography.validateBase32Address(address) ? tokenMap.LSK.key : tokenMap.BTC.key
-);
 
 export const isAccountInitialized = account => account
   && account.info
