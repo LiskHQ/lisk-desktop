@@ -134,16 +134,3 @@ export const camelize = str =>
         : word.toUpperCase()),
     )
     .replace(/\s+/g, '');
-
-/**
- * downloads the provided json to the user's machine
- * @param {object} data the payload to be stringified
- * @param {string} name the name of the JSON
- */
-/* istanbul ignore next */
-export const downloadJSON = (data, name) => {
-  const anchor = document.createElement('a');
-  anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`);
-  anchor.setAttribute('download', `${name}.json`);
-  anchor.click();
-};
