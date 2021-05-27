@@ -1,3 +1,5 @@
+import { transactionToJSON } from './transaction';
+
 /**
  * Deeply merge two objects recursively, if the value isn't an object it considers
  * the value of the second object.
@@ -143,7 +145,8 @@ export const camelize = str =>
 /* istanbul ignore next */
 export const downloadJSON = (data, name) => {
   const anchor = document.createElement('a');
-  anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`);
+  const json = transactionToJSON(data);
+  anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(json)}`);
   anchor.setAttribute('download', `${name}.json`);
   anchor.click();
 };

@@ -338,6 +338,8 @@ Object {
 }
 `;
 
+exports[`API: LSK Transactions transactionToJSON should return the transaction as JSON 1`] = `"{\\"moduleID\\":2,\\"assetID\\":0,\\"senderPublicKey\\":\\"0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a\\",\\"nonce\\":\\"2n\\",\\"fee\\":\\"123123n\\",\\"signatures\\":[],\\"asset\\":{\\"recipientAddress\\":\\"b778fc95b9f07407e6409d73c8af1919d9035002\\",\\"amount\\":\\"10000n\\"}}"`;
+
 exports[`API: LSK Transactions transformTransaction should a register delegate transaction with type signature of lisk service 1`] = `
 Object {
   "asset": Object {

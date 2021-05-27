@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import { transactionToJSON } from '@utils/transaction';
 import LiskAmount from '@shared/liskAmount';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
@@ -25,7 +26,7 @@ const Footer = ({
   };
 
   const onCopy = (transaction) => {
-    copyToClipboard(JSON.stringify(transaction));
+    copyToClipboard(transactionToJSON(transaction));
     setCopied(true);
   };
 
