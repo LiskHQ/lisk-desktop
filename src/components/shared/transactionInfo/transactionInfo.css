@@ -48,10 +48,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-
-    &:last-child {
-      padding-left: 10px;
-    }
+    padding-bottom: 10px;
   }
 }
 
