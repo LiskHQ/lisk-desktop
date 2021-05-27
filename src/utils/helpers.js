@@ -1,4 +1,4 @@
-import { transactionToJSON } from './transaction';
+// import { transactionToJSON } from './transaction';
 
 /**
  * Deeply merge two objects recursively, if the value isn't an object it considers
@@ -137,16 +137,16 @@ export const camelize = str =>
     )
     .replace(/\s+/g, '');
 
-/**
- * downloads the provided json to the user's machine
- * @param {object} data the payload to be stringified
- * @param {string} name the name of the JSON
- */
-/* istanbul ignore next */
-export const downloadJSON = (data, name) => {
-  const anchor = document.createElement('a');
-  const json = transactionToJSON(data);
-  anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(json)}`);
-  anchor.setAttribute('download', `${name}.json`);
-  anchor.click();
-};
+// /**
+//  * downloads the provided json to the user's machine
+//  * @param {object} data the payload to be stringified
+//  * @param {string} name the name of the JSON
+//  */
+// /* istanbul ignore next */
+// export const downloadJSON = (data, name) => {
+//   // const anchor = document.createElement('a');
+//   // const json = transactionToJSON(data);
+//   // anchor.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(json)}`);
+//   // anchor.setAttribute('download', `${name}.json`);
+//   // anchor.click();
+// };
