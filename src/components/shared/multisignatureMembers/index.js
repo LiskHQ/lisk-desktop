@@ -7,7 +7,7 @@ import styles from './styles.css';
 
 const Member = ({ member, i, t }) => (
   <div className={`${styles.memberInfo} member-info`}>
-    <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>
+    {i && <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>}
     <AccountVisual address={member.address} />
     <div className={styles.memberDetails}>
       <p className={styles.memberTitle}>
@@ -37,5 +37,22 @@ const Members = ({ members, t, className }) => {
     </div>
   );
 };
+
+export const SignedAndRemainingMembers = ({
+  signed, remaining, className, t,
+}) => (
+  <div className={`${styles.membersContainer} ${className}`}>
+    <div>
+      <p>{t('Signed')}</p>
+      {signed.map((member, i) =>
+        <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />)}
+    </div>
+    <div>
+      <p>{t('Remaining')}</p>
+      {remaining.map((member, i) =>
+        <Member member={member} key={`registerMultiSignature-members-list-${i}-remaining`} t={t} />)}
+    </div>
+  </div>
+);
 
 export default Members;
