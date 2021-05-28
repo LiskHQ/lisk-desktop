@@ -14,11 +14,16 @@ const {
 } = MODULE_ASSETS_NAME_ID_MAP;
 
 const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date, BlockId, BlockHeight];
+const previewBaseComponents = [Sender, TransactionId, Fee];
 
 const LayoutSchema = {
   [transfer]: {
     components: [...baseComponents, Recipient, Illustration, Amount, Message],
     className: '',
+  },
+  [`${transfer}-preview`]: {
+    components: [...previewBaseComponents, Recipient, Illustration, Amount, Message],
+    className: styles.transferPreview,
   },
   [voteDelegate]: {
     components: [...baseComponents, Illustration, TransactionVotes],

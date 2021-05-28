@@ -79,4 +79,13 @@
       "blockId blockHeight"
       "confirmations fee";
   }
+
+  & .transferPreview {
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "recipient recipient"
+      "transactionId fee"
+      "amount message";
+  }
 }
