@@ -18,6 +18,18 @@ const {
 const EMPTY_BUFFER = Buffer.from('');
 const convertStringToBinary = value => Buffer.from(value, 'hex');
 const convertBinaryToString = value => value.toString('hex');
+const convertBigIntToString = value => {
+  if (typeof value === 'bigint') {
+    return String(value);
+  }
+  if (typeof value === 'string') {
+    if (value.slice(-1) === 'n') {
+      return value.slice(0, -1);
+    }
+    return value;
+  }
+  return value;
+};
 
 /**
  * Converts a transaction returned by lisk elements back to the signature
@@ -34,8 +46,8 @@ const transformTransaction = ({
   const transformedTransaction = {
     moduleAssetId,
     id: convertBinaryToString(id),
-    fee: String(fee),
-    nonce: String(nonce),
+    fee: convertBigIntToString(fee),
+    nonce: convertBigIntToString(nonce),
     signatures,
     sender: {
       address: senderAddress,
@@ -47,7 +59,7 @@ const transformTransaction = ({
     case transfer: {
       transformedTransaction.asset = {
         data: asset.data,
-        amount: String(asset.amount),
+        amount: convertBigIntToString(asset.amount),
         recipient: { address: getBase32AddressFromAddress(Buffer.from(asset.recipientAddress, 'hex')) },
       };
 
