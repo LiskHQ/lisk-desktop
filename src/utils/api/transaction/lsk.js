@@ -7,7 +7,6 @@ import {
   DEFAULT_NUMBER_OF_SIGNATURES,
   DEFAULT_SIGNATURE_BYTE_SIZE,
   MODULE_ASSETS_MAP,
-  MODULE_ASSETS_NAME_ID_MAP,
   moduleAssetSchemas,
   BASE_FEES,
 } from '@constants';
