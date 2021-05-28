@@ -1,9 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as transactionsApi from '@api/transaction';
 import Summary from './index';
 import accounts from '../../../../../test/constants/accounts';
-import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 describe('Delegate Registration Summary', () => {
   const props = {

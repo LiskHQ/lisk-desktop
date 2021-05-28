@@ -1,9 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as transactionsApi from '@api/transaction';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
-import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 describe('Delegate Registration Summary', () => {
   const props = {
@@ -14,15 +12,6 @@ describe('Delegate Registration Summary', () => {
     nextStep: jest.fn(),
     t: key => key,
     transactionInfo: {},
-  };
-
-  const response = {
-    account: props.account,
-    username: props.nickname,
-    passphrase: props.passphrase,
-    recipientId: '123123L',
-    amount: 0,
-    nonce: '123',
   };
 
   afterEach(() => {

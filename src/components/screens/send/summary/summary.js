@@ -68,7 +68,7 @@ class Summary extends React.Component {
       fields, t, token, account, isInitialization, transactions,
     } = this.props;
     const transaction = transactions.transactionsCreated[0];
-    const amount = fromRawLsk(transaction.asset?.amount);
+    const amount = fromRawLsk(transaction?.asset?.amount);
 
     return (
       <TransactionSummary
