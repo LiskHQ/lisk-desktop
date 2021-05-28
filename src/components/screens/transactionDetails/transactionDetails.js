@@ -42,9 +42,11 @@ const TransactionDetails = ({
 
   return (
     <Box isLoading={isLoading} className={styles.container}>
-      <BoxHeader>
-        <h1>{title ?? t('Transaction details')}</h1>
-      </BoxHeader>
+      {title && (
+        <BoxHeader>
+          <h1>{title}</h1>
+        </BoxHeader>
+      )}
       <BoxContent className={`${styles.mainContent} ${Layout.className}`}>
         <Context.Provider value={{
           transaction: data, activeToken, network,

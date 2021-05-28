@@ -7,17 +7,12 @@
   max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
   display: block;
 
-  & > header {
-    padding-left: var(--horizontal-padding-l) !important;
-    padding-right: var(--horizontal-padding-l) !important;
-  }
-
   & .votes {
     grid-area: votes;
   }
 
   & .mainContent {
-    padding: 0 20px;
+    padding: 2px 0;
     min-height: 400px;
     display: grid;
     justify-items: flex-start;
