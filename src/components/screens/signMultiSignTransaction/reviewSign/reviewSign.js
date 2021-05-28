@@ -1,6 +1,7 @@
 import React from 'react';
 import { transactions } from '@liskhq/lisk-client';
 import { extractAddressFromPublicKey } from '@utils/account';
+import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
@@ -17,6 +18,7 @@ const ReviewSign = ({
   account,
   prevStep,
   nextStep,
+  history,
 }) => (
   <section>
     <Box className={styles.boxContainer}>
@@ -38,6 +40,17 @@ const ReviewSign = ({
           }}
         />
       </BoxContent>
+      <BoxFooter
+        direction="horizontal"
+        className={styles.footer}
+      >
+        <SecondaryButton size="l" onClick={() => removeSearchParamsFromUrl(history, ['modal'])}>
+          {t('Reject')}
+        </SecondaryButton>
+        <PrimaryButton size="l" onClick={() => nextStep()}>
+          {t('Sign')}
+        </PrimaryButton>
+      </BoxFooter>
     </Box>
   </section>
 );
