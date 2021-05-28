@@ -64,6 +64,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
       nonce: account.sequence?.nonce,
       fee: toRawLsk(parseFloat(fee)),
       username: state.nickname,
+      keys: account.keys,
     };
 
     const [error, tx] = await to(

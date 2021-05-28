@@ -63,7 +63,12 @@ export const votesSubmitted = ({ fee, votes }) =>
     const transaction = {
       fee, votes, nonce, passphrase, senderPublicKey,
     };
-    const params = { ...transaction, network, moduleAssetId };
+    const params = {
+      ...transaction,
+      network,
+      moduleAssetId,
+      keys: account.info.LSK.keys,
+    };
 
     const [error, tx] = account.loginType === loginTypes.passphrase.code
       ? await to(create(params, tokenMap.LSK.key))

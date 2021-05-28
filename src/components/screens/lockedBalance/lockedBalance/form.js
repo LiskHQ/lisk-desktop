@@ -59,6 +59,7 @@ const Form = ({
         unlockingObjects: getUnlockableUnlockingObjects(
           account.dpos?.unlocking, currentBlockHeight,
         ),
+        keys: account.keys,
       }, tokenMap.LSK.key),
     );
 
