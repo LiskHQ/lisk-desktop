@@ -293,6 +293,7 @@ export const getTransactionFee = async ({
  * @param {String} transaction.moduleAssetId The combination of module Id and asset Id.
  * @param {Object} transaction.network Network config from the redux store
  * @param {Object} transaction.keys keys of the multisig account
+ * @param {Object} transaction.transactionObject Details of the transaction, including passphrase
  * @returns {Promise} promise that resolves to a transaction or
  * rejects with an error
  */
@@ -326,47 +327,6 @@ export const create = ({
     } else {
       signedTransaction = transactions.signTransaction(schema, transaction, netId, passphrase);
     }
-
-    resolve(signedTransaction);
-  } catch (error) {
-    reject(error);
-  }
-});
-
-export const createMultiSignatureTransaction = ({
-  network,
-  moduleAssetId,
-  mandatoryKeys,
-  optionalKeys,
-  ...transactionObject
-// eslint-disable-next-line max-statements
-}) => new Promise((resolve, reject) => {
-  const { networkIdentifier } = network.networks.LSK;
-  const {
-    passphrase, ...rawTransaction
-  } = transactionObject;
-
-  const schema = moduleAssetSchemas[moduleAssetId];
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-    rawTransaction.mandatoryKeys = mandatoryKeys;
-    rawTransaction.optionalKeys = optionalKeys;
-  }
-
-  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
-  const keys = {
-    mandatoryKeys: transaction.asset.mandatoryKeys,
-    optionalKeys: transaction.asset.optionalKeys,
-  };
-
-  try {
-    const signedTransaction = transactions.signMultiSignatureTransaction(
-      schema,
-      transaction,
-      Buffer.from(networkIdentifier, 'hex'),
-      passphrase,
-      keys,
-      true,
-    );
 
     resolve(signedTransaction);
   } catch (error) {
