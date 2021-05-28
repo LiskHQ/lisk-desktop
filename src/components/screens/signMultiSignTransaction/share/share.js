@@ -11,9 +11,9 @@ import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Share = ({
-  t, transactionInfo, error,
+  t, transaction, error,
 }) => {
-  const success = !error && transactionInfo;
+  const success = !error && transaction;
   const template = success ? {
     illustration: 'registerMultisignatureSuccess',
     message: t('You have successfully signed the transaction. You can download or copy the transaction and send it back to the initiator.'),
@@ -23,7 +23,7 @@ const Share = ({
   };
 
   const onDownload = () => {
-    downloadJSON(transactionInfo, transactionInfo.id);
+    downloadJSON(transaction, transaction.id);
   };
 
   return (
@@ -51,7 +51,7 @@ const Share = ({
               Container={SecondaryButton}
               text={t('Copy')}
               className={styles.buttonContent}
-              value={JSON.stringify(transactionInfo)}
+              value={JSON.stringify(transaction)}
             />
             <PrimaryButton onClick={onDownload}>
               <span className={styles.buttonContent}>

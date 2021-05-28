@@ -19,6 +19,7 @@ const ReviewSign = ({
   prevStep,
   nextStep,
   history,
+  error,
 }) => (
   <section>
     <Box className={styles.boxContainer}>
@@ -35,8 +36,7 @@ const ReviewSign = ({
           account={account}
           transaction={{
             data: transaction,
-            error: false,
-            isLoading: false,
+            error,
           }}
         />
       </BoxContent>
@@ -47,7 +47,7 @@ const ReviewSign = ({
         <SecondaryButton size="l" onClick={() => removeSearchParamsFromUrl(history, ['modal'])}>
           {t('Reject')}
         </SecondaryButton>
-        <PrimaryButton size="l" onClick={() => nextStep()}>
+        <PrimaryButton size="l" onClick={() => nextStep({ transaction })}>
           {t('Sign')}
         </PrimaryButton>
       </BoxFooter>
