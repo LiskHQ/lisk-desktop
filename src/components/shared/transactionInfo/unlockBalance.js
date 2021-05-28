@@ -10,7 +10,7 @@ const UnlockBalance = ({ account, t, transaction = {} }) => (
       <label>{t('Sender')}</label>
       <label>
         <AccountVisual address={account.summary.address} size={25} />
-        <label>
+        <label className="address-label">
           {account.summary.address}
         </label>
       </label>
@@ -24,7 +24,7 @@ const UnlockBalance = ({ account, t, transaction = {} }) => (
       </div>
       <div className={styles.col}>
         <label>{t('Amount to unlock')}</label>
-        <label>
+        <label className="amount-label">
           <LiskAmount
             val={transaction.asset.unlockObjects.reduce(
               (total, { amount }) => total + Number(amount), 0,

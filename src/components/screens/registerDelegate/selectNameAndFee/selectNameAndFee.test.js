@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { networks } from '@constants';
 import * as delegatesApi from '@api/delegate';
-import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
+import { getTransactionBaseFees, getTransactionFee, create } from '@api/transaction';
 import { fromRawLsk } from '@utils/lsk';
 import accounts from '../../../../../test/constants/accounts';
 import SelectNameAndFee from './selectNameAndFee';
@@ -21,6 +21,8 @@ const transactionBaseFees = {
 };
 
 const mockFeeFactor = 100;
+const mockTransaction = {};
+create.mockResolvedValue(mockTransaction);
 getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
 getTransactionFee.mockImplementation((params) => {
   const selectedTransactionPriority = params.selectedPriority.selectedIndex;
@@ -32,7 +34,7 @@ getTransactionFee.mockImplementation((params) => {
   });
 });
 
-describe.skip('SelectNameAndFee', () => {
+describe('SelectNameAndFee', () => {
   let wrapper;
 
   const props = {
@@ -81,7 +83,11 @@ describe.skip('SelectNameAndFee', () => {
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
     wrapper.find('button.confirm-btn').simulate('click');
     await flushPromises();
-    expect(props.nextStep).toBeCalled();
+    expect(props.nextStep).toBeCalledWith({
+      fee: '0.000156',
+      nickname: 'mydelegate',
+      transactionInfo: mockTransaction,
+    });
   });
 
   it('type an invalid nickname', () => {

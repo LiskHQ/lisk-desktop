@@ -59,13 +59,15 @@ const edited = {
   },
 };
 
+const transaction = {};
+
 const props = {
   t: s => s,
   account: accounts.genesis,
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
-  fee: 10000000,
-  transactions: { transactionsCreatedFailed: [], transactionsCreated: [] },
+  fee: 1000000000,
+  transactions: { transactionsCreatedFailed: [], transactionsCreated: [transaction] },
 };
 
 beforeEach(() => {
@@ -123,25 +125,28 @@ describe('VotingQueue.Summary', () => {
     expect(props.votesSubmitted).toHaveBeenCalledTimes(1);
   });
 
-  it.skip('calls props.nextStep when transaction is confirmed', () => {
-    mountWithRouter(Summary, {
+  it('calls props.nextStep when transaction is confirmed', () => {
+    const wrapper = mountWithRouter(Summary, {
       ...props,
       added,
       removed,
       edited,
-      transactions: { transactionsCreated: [{}], transactionsCreatedFailed: [] },
     });
 
+    wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
-    expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({ error: false }));
+    expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining(
+      { error: false, locked: 100, unlockable: 120 },
+    ));
   });
 
-  it.skip('calls props.nextStep when transaction create fail', () => {
-    mountWithRouter(Summary, {
+  it('calls props.nextStep when transaction create fail', () => {
+    const wrapper = mountWithRouter(Summary, {
       ...props,
       transactions: { transactionsCreated: [], transactionsCreatedFailed: [{}] },
     });
 
+    wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
     expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({ error: true }));
   });

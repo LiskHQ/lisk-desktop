@@ -3,7 +3,7 @@ import AccountVisual from '@toolbox/accountVisual';
 import styles from './transactionInfo.css';
 
 const RegisterDelegate = ({ account, nickname, t }) => (
-  <section className="summary-container">
+  <section>
     <label className="nickname-label">{t('Your nickname')}</label>
     <div className={styles.userInformation}>
       <AccountVisual
