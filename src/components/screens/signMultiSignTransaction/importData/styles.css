@@ -39,4 +39,10 @@
   &.error {
     border: 1px solid var(--error-background-color);
   }
+
+  &.filled {
+    & > textarea {
+      background: none;
+    }
+  }
 }

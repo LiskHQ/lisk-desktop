@@ -16,7 +16,11 @@ const ImportData = ({ t, nextStep }) => {
   const [error, setError] = useState();
 
   const onReview = () => {
-    nextStep({ transaction: transformTransaction(transaction) });
+    try {
+      nextStep({ transaction: transformTransaction(transaction) });
+    } catch (e) {
+      nextStep({ error: e });
+    }
   };
 
   const validateAndSetTransaction = (input) => {
@@ -24,8 +28,7 @@ const ImportData = ({ t, nextStep }) => {
       const parsedInput = JSON.parse(input);
       setTransaction(parsedInput);
     } catch (e) {
-      console.error(e);
-      setError(e);
+      setError('Invalid transaction');
     }
   };
 
@@ -62,14 +65,14 @@ const ImportData = ({ t, nextStep }) => {
               />
             </label>
           </p>
-          <div className={`${styles.textAreaContainer} ${error && styles.error}`}>
+          <div className={`${styles.textAreaContainer} ${error && styles.error} ${transaction && styles.filled}`}>
             <textarea
               onPaste={onPaste}
               value={JSON.stringify(transaction)}
               readOnly
             />
             <Feedback
-              message={`${t('Invalid file')}: ${error}`}
+              message={error}
               size="m"
               status={error ? 'error' : 'ok'}
             />
