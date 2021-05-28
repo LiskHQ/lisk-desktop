@@ -9,6 +9,11 @@ import i18n from '../../../../i18n';
 describe('Summary', () => {
   let wrapper;
   let props;
+  const transaction = {
+    asset: {
+      amount: 112300000,
+    },
+  };
 
   beforeEach(() => {
     props = {
@@ -21,7 +26,7 @@ describe('Summary', () => {
       },
       fields: {
         recipient: {
-          address: '123123L',
+          address: '1lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
         },
         amount: {
           value: '1.123',
@@ -47,7 +52,7 @@ describe('Summary', () => {
       transactions: {
         pending: [],
         failed: '',
-        transactionsCreated: [],
+        transactionsCreated: [transaction],
         transactionsCreatedFailed: [],
         broadcastedTransactionsError: [],
       },
@@ -63,19 +68,6 @@ describe('Summary', () => {
     expect(wrapper).toContainMatchingElement('.summary-footer');
     expect(wrapper.find('button.confirm-button')).toHaveText('Send 1.123 LSK');
     expect(wrapper.find('.amount-summary')).toIncludeText('1.123 LSK');
-  });
-
-  it('should render German decimal point  properly', () => {
-    wrapper.setProps({
-      fields: {
-        ...props.fields,
-        amount: {
-          value: '1,123',
-        },
-      },
-    });
-    expect(wrapper.find('button.confirm-button')).toHaveText('Send 1,123 LSK');
-    expect(wrapper.find('.amount-summary')).toIncludeText('1,123 LSK');
   });
 
   it('should goind to previous page', () => {
@@ -117,6 +109,13 @@ describe('Summary', () => {
         reference: undefined,
       },
       account: accounts.genesis,
+      transactions: {
+        pending: [],
+        failed: '',
+        transactionsCreated: [],
+        transactionsCreatedFailed: [],
+        broadcastedTransactionsError: [],
+      },
     });
     expect(wrapper.find('.fee-value')).toIncludeText(formattedtxFee);
     wrapper.find('.confirm-button').at(0).simulate('click');

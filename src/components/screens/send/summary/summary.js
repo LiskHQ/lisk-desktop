@@ -1,6 +1,6 @@
 import React from 'react';
 import { loginTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { toRawLsk } from '@utils/lsk';
+import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
@@ -67,8 +67,8 @@ class Summary extends React.Component {
     const {
       fields, t, token, account, isInitialization, transactions,
     } = this.props;
-    const amount = fields.amount.value;
     const transaction = transactions.transactionsCreated[0];
+    const amount = fromRawLsk(transaction.asset?.amount);
 
     return (
       <TransactionSummary

@@ -28,9 +28,9 @@ const Send = ({
           {transaction.id ? Buffer.from(transaction.id, 'hex') : '-'}
         </label>
       </div>
-      <div className={`${styles.col} amount-summary`}>
+      <div className={styles.col}>
         <label>{t('Amount')}</label>
-        <label>
+        <label className="amount-summary">
           <LiskAmount
             val={transaction.asset?.amount}
             token={token}
@@ -40,7 +40,7 @@ const Send = ({
     </section>
     <section>
       <label>{t('Message')}</label>
-      <label className="recipient-value">
+      <label className="message-value">
         {transaction.asset?.data}
       </label>
     </section>

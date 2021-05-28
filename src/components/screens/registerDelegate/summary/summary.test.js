@@ -6,25 +6,14 @@ import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 describe('Delegate Registration Summary', () => {
-  jest.mock('@api/transaction', () => ({
-    create: jest.fn(),
-  }));
-
-  const network = {
-    networks: {
-      LSK: { networkIdentifier: 'sample_identifier' },
-    },
-  };
-
   const props = {
     account: accounts.genesis,
-    fee: 10,
-    prevState: {},
     nickname: 'mydelegate',
-    nextStep: jest.fn(),
     prevStep: jest.fn(),
+    fee: 10,
+    nextStep: jest.fn(),
     t: key => key,
-    network,
+    transactionInfo: {},
   };
 
   const response = {
@@ -42,7 +31,6 @@ describe('Delegate Registration Summary', () => {
 
   it('renders properly Symmary component', () => {
     const wrapper = mount(<Summary {...props} />);
-    expect(wrapper).toContainMatchingElement('.summary-container');
     expect(wrapper).toContainMatchingElement('.nickname-label');
     expect(wrapper).toContainMatchingElement('.nickname');
     expect(wrapper).toContainMatchingElement('.address');
@@ -57,22 +45,17 @@ describe('Delegate Registration Summary', () => {
     expect(props.prevStep).toBeCalled();
   });
 
-  it('submit user data when click in confirm button', async () => {
-    transactionsApi.create = jest.fn().mockImplementation(() => Promise.resolve(response));
+  it('submit user data when click in confirm button', () => {
     const wrapper = mount(<Summary {...props} />);
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
-    await flushPromises();
-    expect(transactionsApi.create).toHaveBeenCalled();
-    expect(props.nextStep).toBeCalledWith({ transactionInfo: response });
+    expect(props.nextStep).toBeCalledWith({ transactionInfo: props.transactionInfo });
   });
 
-  it('submit user data when click in confirm button but fails', async () => {
-    transactionsApi.create = jest.fn().mockImplementation(() => Promise.reject(new Error('Some error')));
-    const wrapper = mount(<Summary {...props} />);
+  it('submit user data when click in confirm button but fails', () => {
+    const error = {};
+    const wrapper = mount(<Summary {...props} error={error} />);
     wrapper.find('button.confirm-button').simulate('click');
-
-    await flushPromises();
-    expect(props.nextStep).not.toBeCalled();
+    expect(props.nextStep).toBeCalledWith({ error });
   });
 });
