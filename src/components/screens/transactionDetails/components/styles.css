@@ -84,11 +84,15 @@
 }
 
 .blockId {
-  grid-area: blockHeight;
+  grid-area: blockId;
 }
 
 .blockHeight {
-  grid-area: blockId;
+  grid-area: blockHeight;
+}
+
+.signedAndRemainingMembersList {
+  grid-area: signedAndRemainingMembersList;
 }
 
 .multiSignatureMembers {

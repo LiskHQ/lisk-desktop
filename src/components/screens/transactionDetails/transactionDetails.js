@@ -11,11 +11,12 @@ import LayoutSchema from './layoutSchema';
 
 export const Context = React.createContext({
   transaction: {},
+  account: {},
 });
 
 const TransactionDetails = ({
   t, activeToken, network, history, schema, title,
-  transaction: { error, isLoading, data },
+  transaction: { error, isLoading, data }, account,
 }) => {
   const isFirstRender = useRef(true);
   useEffect(() => {
@@ -47,7 +48,7 @@ const TransactionDetails = ({
       )}
       <BoxContent className={`${styles.mainContent} ${Layout.className}`}>
         <Context.Provider value={{
-          transaction: data, activeToken, network,
+          activeToken, network, account, transaction: data,
         }}
         >
           {Layout.components.map((Component, index) => <Component key={index} t={t} />)}

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useContext, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -10,7 +11,7 @@ import TransactionTypeFigure from '@shared/transactionTypeFigure';
 import { DateTimeFromTimestamp } from '@toolbox/timestamp';
 import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
-import MultiSignatureMembers from '@shared/multisignatureMembers';
+import MultiSignatureMembers, { SignedAndRemainingMembers } from '@shared/multisignatureMembers';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import { extractAddressFromPublicKey, truncateAddress } from '@utils/account';
 
@@ -157,7 +158,7 @@ export const Date = ({ t }) => {
     activeToken, transaction,
   } = useContext(Context);
 
-  return (
+  return transaction.block?.timestamp ? (
     <ValueAndLabel label={t('Date')} className={styles.date}>
       <span className={`${styles.date} tx-date`}>
         <DateTimeFromTimestamp
@@ -169,7 +170,8 @@ export const Date = ({ t }) => {
         />
       </span>
     </ValueAndLabel>
-  );
+  )
+    : <span>-</span>;
 };
 
 export const Fee = ({ t }) => {
@@ -293,5 +295,59 @@ export const BlockHeight = ({ t }) => {
     <ValueAndLabel className={styles.blockHeight} label={t('Block Height')}>
       <span>{transaction.block.height}</span>
     </ValueAndLabel>
+  );
+};
+
+const calculateRemainingAndSignedMembers = (
+  keys = { optionalKeys: [], mandatoryKeys: [] },
+  signatures = [],
+) => {
+  const { mandatoryKeys, optionalKeys } = keys;
+  const signed = [];
+  const remaining = [];
+
+  mandatoryKeys.forEach((key, index) => {
+    const hasSigned = Boolean(signatures[index]);
+    const value = {
+      publicKey: key, mandatory: true, address: extractAddressFromPublicKey(key),
+    };
+
+    if (hasSigned) {
+      signed.push(value);
+    } else {
+      remaining.push(value);
+    }
+  });
+
+  optionalKeys.forEach((key, index) => {
+    const hasSigned = Boolean(signatures[index]);
+    const value = {
+      publicKey: key, mandatory: false, address: extractAddressFromPublicKey(key),
+    };
+
+    if (hasSigned) {
+      signed.push(value);
+    } else {
+      remaining.push(value);
+    }
+  });
+
+  return [signed, remaining];
+};
+
+export const SignedAndRemainingMembersList = ({ t }) => {
+  const { transaction, account } = useContext(Context);
+
+  const [signed, remaining] = useMemo(() => calculateRemainingAndSignedMembers(
+    account.keys, transaction.signatures,
+  ), []);
+
+  return (
+    <SignedAndRemainingMembers
+      signed={signed}
+      remaining={remaining}
+      className={styles.signedAndRemainingMembersList}
+      t={t}
+    />
   );
 };

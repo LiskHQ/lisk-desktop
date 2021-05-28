@@ -86,6 +86,7 @@
       "sender sender"
       "recipient recipient"
       "transactionId fee"
-      "amount message";
+      "amount message"
+      "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
 }

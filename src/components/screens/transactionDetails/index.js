@@ -10,7 +10,7 @@ import { withTranslation } from 'react-i18next';
 import TransactionDetails from './transactionDetails';
 
 const mapStateToProps = (state, ownProps) => ({
-  address: getActiveTokenAccount(state).address,
+  account: getActiveTokenAccount(state),
   id: ownProps.match.params.id,
   activeToken: state.settings.token?.active ?? 'LSK',
 });

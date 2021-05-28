@@ -3,9 +3,8 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
   Confirmations, Date, Amount, Fee, RequiredSignatures, TransactionVotes,
-  BlockId, BlockHeight,
+  BlockId, BlockHeight, Members, SignedAndRemainingMembersList,
 } from './components';
-import { Members } from './components/components';
 import styles from './transactionDetails.css';
 
 const {
@@ -14,7 +13,7 @@ const {
 } = MODULE_ASSETS_NAME_ID_MAP;
 
 const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date, BlockId, BlockHeight];
-const previewBaseComponents = [Sender, TransactionId, Fee];
+const previewBaseComponents = [Sender, TransactionId, Fee, SignedAndRemainingMembersList];
 
 const LayoutSchema = {
   [transfer]: {
