@@ -244,4 +244,9 @@ AddBookmark.propTypes = {
   }).isRequired,
 };
 
-export default AddBookmark;
+const areEqual = (prevProps, nextProps) => (
+  prevProps.history.location.search === nextProps.history.location.search
+  && prevProps.account.data === nextProps.account.data
+);
+
+export default React.memo(AddBookmark, areEqual);
