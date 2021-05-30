@@ -1,7 +1,6 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import withFilters from '@utils/withFilters';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
 import Box from '@toolbox/box';
