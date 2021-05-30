@@ -99,7 +99,7 @@ const AddBookmark = ({
       {
         value: usernameValue,
         feedback: usernameFeedback,
-        readonly: isDelegate === true || usernameFeedback !== '',
+        readonly: Boolean(isDelegate) === true || usernameFeedback !== '',
       },
     ]);
   }, []);
