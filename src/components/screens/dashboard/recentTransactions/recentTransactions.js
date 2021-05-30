@@ -41,6 +41,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
   const settings = useSelector(state => state.settings);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = tokenMap[settings.token.active];
+  const host = account.info && account.info[activeToken] ? account.info[activeToken].summary.address : '';
 
   useEffect(() => {
     if (!!account.info && account.info[activeToken.key] && !isLoaded) {
@@ -66,7 +67,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
           error={transactions.error}
           canLoadMore={false}
           additionalRowProps={{
-            t, activeToken: activeToken.key, host: account.address, currentBlockHeight,
+            t, activeToken: activeToken.key, host, currentBlockHeight,
           }}
           emptyState={account.passphrase ? NoTransactions : NotSignedIn}
         />
