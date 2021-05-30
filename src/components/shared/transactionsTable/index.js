@@ -33,9 +33,10 @@ const TransactionsTable = ({
 }) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const handleLoadMore = () => {
+    // filter the blanks out
     const params = Object.keys(filters).reduce((acc, key) => ({
       ...acc,
-      ...(filters[key] && { [key]: key === 'moduleAssetId' ? MODULE_ASSETS_NAME_ID_MAP[filters[key]] : filters[key] }),
+      ...(filters[key] && { [key]: filters[key] }),
     }), {
       offset: transactions.meta.count + transactions.meta.offset,
       sort,
