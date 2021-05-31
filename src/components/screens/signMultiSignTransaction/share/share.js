@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { downloadJSON } from '@utils/helpers';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
@@ -11,7 +11,6 @@ import { transactions } from '@liskhq/lisk-client';
 import { moduleAssetSchemas, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { createTransactionObject } from '@utils/transaction';
 import { transactionBroadcasted } from '@actions';
-import { transactionCreated } from '@actions/transactions';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
@@ -39,10 +38,10 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
   return transaction;
 };
 
-// eslint-disable-next-line max-statements
 const Share = ({
-  t, transaction, error, networkIdentifier, account, createdTransaction, dispatch,
+  t, transaction, error, networkIdentifier, account, dispatch,
 }) => {
+  const [signedTransaction, setSignedTransaction] = useState();
   const success = !error && transaction;
   const template = success ? {
     illustration: 'registerMultisignatureSuccess',
@@ -56,7 +55,6 @@ const Share = ({
     downloadJSON(transaction, transaction.id);
   };
 
-  // eslint-disable-next-line max-statements
   useEffect(() => {
     const { mandatoryKeys, optionalKeys } = account.info.LSK.keys;
     const flatTransaction = flattenTransaction(transaction);
@@ -66,9 +64,6 @@ const Share = ({
       optionalKeys: optionalKeys.map(key => Buffer.from(key, 'hex')),
     };
 
-    console.log(keys);
-    console.log(transactionObject);
-
     const includeSender = transaction.moduleAssetId
       === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 
@@ -77,22 +72,21 @@ const Share = ({
         moduleAssetSchemas[transaction.moduleAssetId],
         transactionObject,
         Buffer.from(networkIdentifier, 'hex'),
-        // account.passphrase,
-        'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+        account.passphrase,
         keys,
         includeSender,
       );
 
-      dispatch(transactionCreated(tx));
-      console.log(tx);
+      setSignedTransaction(tx);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   }, []);
 
   const broadcastTransaction = () => {
-    if (createdTransaction) {
-      dispatch(transactionBroadcasted(createdTransaction));
+    if (signedTransaction) {
+      dispatch(transactionBroadcasted(signedTransaction));
     }
   };
 
