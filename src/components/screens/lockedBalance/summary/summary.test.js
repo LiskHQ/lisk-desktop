@@ -1,28 +1,30 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Summary from './summary';
+import Summary from './index';
 import accounts from '../../../../../test/constants/accounts';
 
 describe('Delegate Registration Summary', () => {
   const props = {
+    transactionInfo: {
+      asset: {
+        unlockObjects: [{ amount: '2500000000000' }],
+      },
+    },
     account: accounts.genesis,
-    nickname: 'mydelegate',
-    prevStep: jest.fn(),
     fee: 10,
     nextStep: jest.fn(),
+    prevStep: jest.fn(),
     t: key => key,
-    transactionInfo: {},
   };
 
   afterEach(() => {
     props.nextStep.mockRestore();
   });
 
-  it('renders properly Symmary component', () => {
+  it('renders properly Summary component', () => {
     const wrapper = mount(<Summary {...props} />);
-    expect(wrapper).toContainMatchingElement('.nickname-label');
-    expect(wrapper).toContainMatchingElement('.nickname');
-    expect(wrapper).toContainMatchingElement('.address');
+    expect(wrapper).toContainMatchingElement('.address-label');
+    expect(wrapper).toContainMatchingElement('.amount-label');
     expect(wrapper).toContainMatchingElement('button.confirm-button');
     expect(wrapper).toContainMatchingElement('button.cancel-button');
   });

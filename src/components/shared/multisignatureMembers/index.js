@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { regex } from '@constants';
-import AccountVisual from '../../toolbox/accountVisual';
+import AccountVisual from '@toolbox/accountVisual';
+import { truncateAddress } from '@utils/account';
 
 import styles from './styles.css';
 
@@ -14,7 +15,7 @@ const Member = ({ member, i, t }) => (
         {member.name || member.address.replace(regex.lskAddressTrunk, '$1...$3')}
         <span>{`(${member.mandatory ? t('Mandatory') : t('Optional')})`}</span>
       </p>
-      <p className={styles.memberKey}>{member.publicKey.replace(regex.publicKeyTrunk, '$1...$3')}</p>
+      <p className={styles.memberKey}>{truncateAddress(member.publicKey)}</p>
     </div>
   </div>
 );

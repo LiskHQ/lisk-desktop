@@ -163,17 +163,19 @@ class TransactionSummary extends React.Component {
         <BoxContent className={`${styles.content} summary-content`}>
           <HardwareWalletIllustration account={account} size="s" />
           {children}
-          <section>
-            <label>
-              {t('Transaction fee')}
-              <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
-                <p className={styles.tooltipText}>{tooltip.children}</p>
-              </Tooltip>
-            </label>
-            <label className={`${styles.feeValue} fee-value`}>
-              <LiskAmount val={fee} token={token} convert={false} />
-            </label>
-          </section>
+          {fee && (
+            <section>
+              <label>
+                {t('Transaction fee')}
+                <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
+                  <p className={styles.tooltipText}>{tooltip.children}</p>
+                </Tooltip>
+              </label>
+              <label className={`${styles.feeValue} fee-value`}>
+                <LiskAmount val={fee} token={token} convert={false} />
+              </label>
+            </section>
+          )}
           {
             confirmation
               ? (

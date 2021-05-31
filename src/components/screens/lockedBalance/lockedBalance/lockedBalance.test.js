@@ -105,7 +105,9 @@ describe('Unlock LSK modal', () => {
     wrapper.find('.unlock-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
-    expect(nextStep).toBeCalledWith({ transactionInfo: tx });
+    expect(nextStep).toBeCalledWith(
+      expect.objectContaining({ transactionInfo: expect.any(Object) }),
+    );
   });
 
   it('calls nextStep passing error', async () => {
@@ -118,6 +120,8 @@ describe('Unlock LSK modal', () => {
     wrapper.find('.unlock-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
-    expect(nextStep).toBeCalledWith({ error });
+    expect(nextStep).toBeCalledWith(
+      expect.objectContaining({ error: expect.any(Object) }),
+    );
   });
 });

@@ -4,7 +4,6 @@ import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
 import { MODULE_ASSETS_NAME_ID_MAP, actionTypes, tokenMap } from '@constants';
 import { toRawLsk } from '@utils/lsk';
-import Piwik from '@utils/piwik';
 import { getUnlockableUnlockingObjects } from '@utils/account';
 import { create } from '@api/transaction';
 import Box from '@toolbox/box';
@@ -14,6 +13,8 @@ import BoxHeader from '@toolbox/box/header';
 import { PrimaryButton } from '@toolbox/buttons';
 import LiskAmount from '@shared/liskAmount';
 import styles from './lockedBalance.css';
+
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const ButtonTitle = ({ unlockableBalance, t }) => {
   if (unlockableBalance === 0) {
@@ -45,22 +46,20 @@ const Form = ({
   const network = useSelector(state => state.network);
 
   const onClickUnlock = async () => {
-    Piwik.trackingEvent('Send_UnlockTransaction', 'button', 'Next step');
     const selectedFee = customFee ? customFee.value : fee.value;
-    const txData = {
-      nonce: account.sequence?.nonce,
-      fee: `${toRawLsk(parseFloat(selectedFee))}`,
-      passphrase: account.passphrase,
-      unlockingObjects: getUnlockableUnlockingObjects(account.dpos?.unlocking, currentBlockHeight),
-      network,
-    };
 
     const [error, tx] = await to(
       create({
-        ...txData,
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        moduleAssetId,
         network,
-        senderPublicKey: account.summary?.publicKey,
+        senderPublicKey: account.summary.publicKey,
+        nonce: account.sequence?.nonce,
+        fee: `${toRawLsk(parseFloat(selectedFee))}`,
+        passphrase: account.passphrase,
+        unlockingObjects: getUnlockableUnlockingObjects(
+          account.dpos?.unlocking, currentBlockHeight,
+        ),
+        keys: account.keys,
       }, tokenMap.LSK.key),
     );
 
@@ -69,13 +68,15 @@ const Form = ({
         type: actionTypes.transactionCreatedSuccess,
         data: tx,
       });
-      nextStep({ transactionInfo: tx });
+      nextStep({
+        transactionInfo: tx, fee, account,
+      });
     } else {
       dispatch({
         type: actionTypes.transactionCreatedError,
         data: error,
       });
-      nextStep({ error });
+      nextStep({ error, fee, account });
     }
   };
 

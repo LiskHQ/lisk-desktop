@@ -52,7 +52,7 @@ export const voteEdited = data => ({
  * Adds pending state and then after the duration of one round
  * cleans the pending state
  */
-export const votesSubmitted = ({ fee, votes, callback }) =>
+export const votesSubmitted = ({ fee, votes }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
     const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
     const { network, account } = getState();
@@ -63,7 +63,12 @@ export const votesSubmitted = ({ fee, votes, callback }) =>
     const transaction = {
       fee, votes, nonce, passphrase, senderPublicKey,
     };
-    const params = { ...transaction, network, moduleAssetId };
+    const params = {
+      ...transaction,
+      network,
+      moduleAssetId,
+      keys: account.info.LSK.keys,
+    };
 
     const [error, tx] = account.loginType === loginTypes.passphrase.code
       ? await to(create(params, tokenMap.LSK.key))
@@ -74,10 +79,6 @@ export const votesSubmitted = ({ fee, votes, callback }) =>
         type: actionTypes.transactionCreatedError,
         data: error,
       });
-    }
-
-    if (tx && callback) {
-      callback(tx);
     }
 
     dispatch({ type: actionTypes.votesSubmitted });
