@@ -24,7 +24,7 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
   };
 
   switch (moduleAssetId) {
-    case '2:0': {
+    case MODULE_ASSETS_NAME_ID_MAP.transfer: {
       transaction.recipientAddress = asset.recipient.address;
       transaction.amount = asset.amount;
       transaction.data = asset.data;
@@ -76,18 +76,21 @@ const Share = ({
         moduleAssetSchemas[transaction.moduleAssetId],
         transactionObject,
         Buffer.from(networkIdentifier, 'hex'),
-        'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+        account.passphrase,
         keys,
         includeSender,
       );
       console.log(tx);
-      if (tx) {
-        dispatch(transactionBroadcasted(tx));
-      }
     } catch (e) {
       console.error(e);
     }
   }, []);
+
+  const submitTransaction = () => {
+    if (tx) {
+      dispatch(transactionBroadcasted(tx));
+    }
+  };
 
   return (
     <section>
