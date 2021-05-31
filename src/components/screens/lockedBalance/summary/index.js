@@ -1,21 +1,20 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
-import { toRawLsk } from '@utils/lsk';
 import styles from './summary.css';
 
-const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
+const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const Summary = ({
-  account,
-  nickname,
-  prevStep,
-  fee,
-  t,
-  nextStep,
   transactionInfo,
   error,
+  fee,
+  prevStep,
+  t,
+  nextStep,
+  account,
 }) => {
   const onSubmit = () => {
     if (!error) {
@@ -26,37 +25,35 @@ const Summary = ({
   };
 
   const onConfirmAction = {
-    label: t('Become a delegate'),
+    label: t('Confirm'),
     onClick: onSubmit,
   };
   const onCancelAction = {
-    label: t('Go back'),
-    onClick: () => { prevStep({ nickname }); },
+    label: t('Cancel'),
+    onClick: () => { prevStep(); },
   };
 
   return (
     <TransactionSummary
-      title={t('Summary of delegate registration')}
+      title={t('Summary of unlock LSK')}
       t={t}
       account={account}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      fee={!account.summary.isMultisignature && fee}
+      fee={!account.summary.isMultisignature && fee.value}
       classNames={`${styles.box} ${styles.summaryContainer}`}
       createTransaction={(callback) => {
         callback(transactionInfo);
       }}
     >
       <TransactionInfo
-        nickname={nickname}
         moduleAssetId={moduleAssetId}
         transaction={transactionInfo}
         account={account}
         isMultisignature={account.summary.isMultisignature}
-        fee={toRawLsk(parseFloat(fee))}
       />
     </TransactionSummary>
   );
 };
 
-export default Summary;
+export default withTranslation()(Summary);

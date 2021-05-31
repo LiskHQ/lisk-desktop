@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import { fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import TransactionInfo from '@shared/transactionInfo';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
@@ -38,11 +38,21 @@ const Summary = ({
   t, removed = {}, edited = {}, added = {},
   fee, account, prevStep, nextStep, transactions, ...props
 }) => {
+  const transaction = transactions.transactionsCreated[0];
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
 
   useEffect(() => {
+    const { normalizedVotes, votesSubmitted } = props;
+
+    votesSubmitted({
+      fee: String(fee),
+      votes: normalizedVotes,
+    });
+  }, []);
+
+  const submitTransaction = () => {
     if (!account.summary.isMultisignature) {
       Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
       if (!transactions.transactionsCreatedFailed.length
@@ -56,16 +66,6 @@ const Summary = ({
         });
       }
     }
-  }, [transactions]);
-
-  const submitTransaction = (fn) => {
-    const { normalizedVotes, votesSubmitted } = props;
-
-    votesSubmitted({
-      fee: String(fee),
-      votes: normalizedVotes,
-      callback: typeof fn === 'function' ? fn : undefined,
-    });
   };
 
   const onConfirmAction = {
@@ -84,7 +84,10 @@ const Summary = ({
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       classNames={styles.container}
-      createTransaction={submitTransaction}
+      fee={!account.summary.isMultisignature && fromRawLsk(fee)}
+      createTransaction={(callback) => {
+        callback(transaction);
+      }}
     >
       <ToggleIcon isNotHeader />
       <div className={styles.headerContainer}>
@@ -105,6 +108,9 @@ const Summary = ({
         removed={removed}
         fee={fee}
         moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.voteDelegate}
+        transaction={transaction || {}}
+        account={account}
+        isMultisignature={account.summary.isMultisignature}
       />
     </TransactionSummary>
   );

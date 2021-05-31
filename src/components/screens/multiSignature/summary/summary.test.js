@@ -6,10 +6,16 @@ import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 const mockTransaction = { id: 1 };
 jest.mock('@api/transaction/lsk', () => ({
-  createMultiSignatureTransaction: jest.fn(() => Promise.resolve(mockTransaction)),
+  create: jest.fn(() => Promise.resolve(mockTransaction)),
 }));
 
 describe('Multisignature summary component', () => {
+  const members = [accounts.genesis, accounts.delegate].map(item => ({
+    address: item.summary.address,
+    isMandatory: true,
+  }));
+  const mandatoryKeys = [accounts.genesis, accounts.delegate].map(item => item.summary.publicKey);
+
   let wrapper;
   const props = {
     t: v => v,
@@ -17,13 +23,17 @@ describe('Multisignature summary component', () => {
     nextStep: jest.fn(),
     fee: 0.02,
     account: accounts.genesis,
-    members: [
-      { address: '8195226425328336181L', isMandatory: true },
-      { address: '6195226421328336181L', isMandatory: false },
-      { address: '4827364921328336181L', isMandatory: false },
-      { address: '5738363111328339181L', isMandatory: false },
-      { address: '9484364921328336181L', isMandatory: false },
-    ],
+    members,
+    numberOfSignatures: 2,
+    mandatoryKeys,
+    optionalKeys: [],
+    network: {
+      networks: {
+        LSK: { networkIdentifier: '01e47ba4e3e57981642150f4b45f64c2160c10bac9434339888210a4fa5df097' },
+        BTC: { networkIdentifier: '01e47ba4e3e57981642150f4b45f64c2160c10bac9434339888210a4fa5df097' },
+      },
+      name: 'customNode',
+    },
   };
 
   beforeEach(() => {

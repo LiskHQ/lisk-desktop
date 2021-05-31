@@ -46,6 +46,7 @@ const Summary = ({
       nonce: account.info.LSK.sequence.nonce,
       fee: toRawLsk(minFee.value),
       amount: account.info.LSK.legacy.balance,
+      keys: account.info.LSK.sequence.keys,
     };
 
     const [error, tx] = await to(

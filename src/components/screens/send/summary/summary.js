@@ -1,6 +1,6 @@
 import React from 'react';
 import { loginTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { toRawLsk } from '@utils/lsk';
+import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
@@ -8,20 +8,13 @@ import TransactionInfo from '@shared/transactionInfo';
 class Summary extends React.Component {
   constructor(props) {
     super(props);
-
-    this.callback = () => {};
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
   }
 
-  componentDidUpdate() {
-    this.checkForSuccessOrFailedTransactions();
-  }
-
-  submitTransaction(fn) {
+  componentDidMount() {
     const { fields } = this.props;
 
-    this.callback = fn;
     this.props.transactionCreated({
       amount: `${toRawLsk(fields.amount.value)}`,
       data: fields.reference ? fields.reference.value : '',
@@ -30,7 +23,7 @@ class Summary extends React.Component {
     });
   }
 
-  checkForSuccessOrFailedTransactions() {
+  submitTransaction(fn) {
     const {
       account,
       fields,
@@ -60,7 +53,7 @@ class Summary extends React.Component {
         });
       }
     } else {
-      this.callback(transactions.transactionsCreated[0]);
+      fn(transactions.transactionsCreated[0]);
     }
   }
 
@@ -72,9 +65,10 @@ class Summary extends React.Component {
 
   render() {
     const {
-      fields, t, token, account, isInitialization,
+      fields, t, token, account, isInitialization, transactions,
     } = this.props;
-    const amount = fields.amount.value;
+    const transaction = transactions.transactionsCreated[0];
+    const amount = fromRawLsk(transaction?.asset?.amount);
 
     return (
       <TransactionSummary
@@ -90,15 +84,17 @@ class Summary extends React.Component {
           onClick: this.prevStep,
         }}
         showCancelButton={!isInitialization}
-        fee={fields.fee.value}
+        fee={!account.summary.isMultisignature && fields.fee.value}
         token={token}
         createTransaction={this.submitTransaction}
       >
         <TransactionInfo
           fields={fields}
-          amount={amount}
           token={token}
           moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.transfer}
+          transaction={transaction || {}}
+          account={account}
+          isMultisignature={account.summary.isMultisignature}
         />
       </TransactionSummary>
     );

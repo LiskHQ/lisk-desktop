@@ -2,7 +2,7 @@ import React from 'react';
 
 import { MODULE_ASSETS_NAME_ID_MAP, tokenMap } from '@constants';
 import to from 'await-to-js';
-import { createMultiSignatureTransaction } from '@api/transaction';
+import { create } from '@api/transaction';
 import { toRawLsk } from '@utils/lsk';
 import TransactionInfo from '@shared/transactionInfo';
 import Box from '../../../toolbox/box';
@@ -29,7 +29,7 @@ const Summary = ({
 }) => {
   const signTransaction = async () => {
     const [error, transaction] = await to(
-      createMultiSignatureTransaction({
+      create({
         network,
         mandatoryKeys,
         optionalKeys,
@@ -39,6 +39,7 @@ const Summary = ({
         nonce: account.sequence.nonce,
         passphrase: account.passphrase,
         senderPublicKey: account.summary.publicKey,
+        keys: account.keys,
       }, token),
     );
 

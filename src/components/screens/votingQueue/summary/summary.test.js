@@ -59,12 +59,15 @@ const edited = {
   },
 };
 
+const transaction = {};
+
 const props = {
   t: s => s,
   account: accounts.genesis,
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
-  transactions: { transactionsCreatedFailed: [], transactionsCreated: [] },
+  fee: 1000000000,
+  transactions: { transactionsCreatedFailed: [], transactionsCreated: [transaction] },
 };
 
 beforeEach(() => {
@@ -77,7 +80,7 @@ describe('VotingQueue.Summary', () => {
     const wrapper = mountWithRouter(Summary, props);
 
     expect(wrapper).toContainMatchingElement('VoteStats');
-    expect(wrapper).toContainMatchingElement('.fee');
+    expect(wrapper).toContainMatchingElement('.fee-value');
     expect(wrapper).toContainMatchingElement('.total-votes');
     expect(wrapper).toContainMatchingElement('.confirm-button');
     expect(wrapper).toContainMatchingElement('.cancel-button');
@@ -123,24 +126,27 @@ describe('VotingQueue.Summary', () => {
   });
 
   it('calls props.nextStep when transaction is confirmed', () => {
-    mountWithRouter(Summary, {
+    const wrapper = mountWithRouter(Summary, {
       ...props,
       added,
       removed,
       edited,
-      transactions: { transactionsCreated: [{}], transactionsCreatedFailed: [] },
     });
 
+    wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
-    expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({ error: false }));
+    expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining(
+      { error: false, locked: 100, unlockable: 120 },
+    ));
   });
 
   it('calls props.nextStep when transaction create fail', () => {
-    mountWithRouter(Summary, {
+    const wrapper = mountWithRouter(Summary, {
       ...props,
       transactions: { transactionsCreated: [], transactionsCreatedFailed: [{}] },
     });
 
+    wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
     expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({ error: true }));
   });
