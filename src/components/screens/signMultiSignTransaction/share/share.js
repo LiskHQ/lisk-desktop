@@ -11,6 +11,7 @@ import { transactions } from '@liskhq/lisk-client';
 import { moduleAssetSchemas, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { createTransactionObject } from '@utils/transaction';
 import { transactionBroadcasted } from '@actions';
+import { transactionCreated } from '@actions/transactions';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
@@ -40,7 +41,7 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
 
 // eslint-disable-next-line max-statements
 const Share = ({
-  t, transaction, error, networkIdentifier, account, dispatch,
+  t, transaction, error, networkIdentifier, account, createdTransaction, dispatch,
 }) => {
   const success = !error && transaction;
   const template = success ? {
@@ -76,19 +77,22 @@ const Share = ({
         moduleAssetSchemas[transaction.moduleAssetId],
         transactionObject,
         Buffer.from(networkIdentifier, 'hex'),
-        account.passphrase,
+        // account.passphrase,
+        'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
         keys,
         includeSender,
       );
+
+      dispatch(transactionCreated(tx));
       console.log(tx);
     } catch (e) {
       console.error(e);
     }
   }, []);
 
-  const submitTransaction = () => {
-    if (tx) {
-      dispatch(transactionBroadcasted(tx));
+  const broadcastTransaction = () => {
+    if (createdTransaction) {
+      dispatch(transactionBroadcasted(createdTransaction));
     }
   };
 
@@ -110,7 +114,6 @@ const Share = ({
             error={error}
           />
         </BoxContent>
-        {/* TODO use TransactionSummary */}
         {success && (
           <BoxFooter className={styles.footer} direction="horizontal">
             <CopyToClipboard
@@ -124,6 +127,9 @@ const Share = ({
                 <Icon name="download" />
                 {t('Download')}
               </span>
+            </PrimaryButton>
+            <PrimaryButton onClick={broadcastTransaction}>
+              {t('Send')}
             </PrimaryButton>
           </BoxFooter>
         )}

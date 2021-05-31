@@ -8,11 +8,13 @@ const Share = (props) => {
   const account = useSelector(state => state.account);
   const networkIdentifier = useSelector(state => state.network.networks.LSK.networkIdentifier);
   const dispatch = useDispatch();
+  const createdTransaction = useSelector(state => state.transactions.transactionsCreated[0]);
   return (
     <ShareComp
       t={t}
       account={account}
       networkIdentifier={networkIdentifier}
+      createdTransaction={createdTransaction}
       dispatch={dispatch}
       {...props}
     />
