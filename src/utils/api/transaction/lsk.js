@@ -7,6 +7,7 @@ import {
   DEFAULT_NUMBER_OF_SIGNATURES,
   DEFAULT_SIGNATURE_BYTE_SIZE,
   MODULE_ASSETS_MAP,
+  MODULE_ASSETS_NAME_ID_MAP,
   moduleAssetSchemas,
   BASE_FEES,
 } from '@constants';
@@ -315,13 +316,15 @@ export const create = ({
   try {
     let signedTransaction;
 
-    if (keys.numberOfSignatures > 0) {
+    if (keys.numberOfSignatures > 0
+      || moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
       const keysInBuffer = {
         mandatoryKeys: keys.mandatoryKeys.map(item => Buffer.from(item, 'hex')),
         optionalKeys: keys.optionalKeys.map(item => Buffer.from(item, 'hex')),
       };
       signedTransaction = transactions.signMultiSignatureTransaction(
-        schema, transaction, netId, passphrase, keysInBuffer, true,
+        schema, transaction, netId, passphrase, keysInBuffer,
+        moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
       );
     } else {
       signedTransaction = transactions.signTransaction(schema, transaction, netId, passphrase);
