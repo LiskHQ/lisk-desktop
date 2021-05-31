@@ -2,6 +2,7 @@ export default {
   address: /^lsk[a-z0-9]{0,38}$/,
   legacyAddress: /^[1-9]\d{0,19}L$/,
   publicKey: /^[0-9a-f]{64}$/,
+  username: /^[a-z0-9!@$&_.]{3,20}$/,
   delegateName: /^[a-z0-9!@$&_.]{3,20}$/,
   transactionId: /^[0-9a-z]{64}/,
   blockId: /^[0-9a-z]{64}/,
