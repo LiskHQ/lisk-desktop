@@ -1,10 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import ShareComp from './share';
 
 const Share = (props) => {
   const { t } = useTranslation();
-  return <ShareComp t={t} {...props} />;
+  const account = useSelector(state => state.account);
+  const networkIdentifier = useSelector(state => state.network.networks.LSK.networkIdentifier);
+  const dispatch = useDispatch();
+  return (
+    <ShareComp
+      t={t}
+      account={account}
+      networkIdentifier={networkIdentifier}
+      dispatch={dispatch}
+      {...props}
+    />
+  );
 };
 
 export default Share;

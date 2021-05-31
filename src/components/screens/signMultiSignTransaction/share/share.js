@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { downloadJSON } from '@utils/helpers';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
@@ -7,11 +7,40 @@ import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import CopyToClipboard from '@toolbox/copyToClipboard';
 import Icon from '@toolbox/icon';
 import TransactionResult from '@shared/transactionResult';
+import { transactions } from '@liskhq/lisk-client';
+import { moduleAssetSchemas, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { createTransactionObject } from '@utils/transaction';
+import { transactionBroadcasted } from '@actions';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
+const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
+  const transaction = {
+    senderPublicKey: rest.sender.publicKey,
+    nonce: rest.nonce,
+    moduleAssetId,
+    fee: rest.fee,
+    signatures: rest.signatures.map(sig => Buffer.from(sig, 'hex')),
+  };
+
+  switch (moduleAssetId) {
+    case '2:0': {
+      transaction.recipientAddress = asset.recipient.address;
+      transaction.amount = asset.amount;
+      transaction.data = asset.data;
+      break;
+    }
+
+    default:
+      break;
+  }
+
+  return transaction;
+};
+
+// eslint-disable-next-line max-statements
 const Share = ({
-  t, transaction, error,
+  t, transaction, error, networkIdentifier, account, dispatch,
 }) => {
   const success = !error && transaction;
   const template = success ? {
@@ -25,6 +54,40 @@ const Share = ({
   const onDownload = () => {
     downloadJSON(transaction, transaction.id);
   };
+
+  // eslint-disable-next-line max-statements
+  useEffect(() => {
+    const { mandatoryKeys, optionalKeys } = account.info.LSK.keys;
+    const flatTransaction = flattenTransaction(transaction);
+    const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
+    const keys = {
+      mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
+      optionalKeys: optionalKeys.map(key => Buffer.from(key, 'hex')),
+    };
+
+    console.log(keys);
+    console.log(transactionObject);
+
+    const includeSender = transaction.moduleAssetId
+      === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+
+    try {
+      const tx = transactions.signMultiSignatureTransaction(
+        moduleAssetSchemas[transaction.moduleAssetId],
+        transactionObject,
+        Buffer.from(networkIdentifier, 'hex'),
+        'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+        keys,
+        includeSender,
+      );
+      console.log(tx);
+      if (tx) {
+        dispatch(transactionBroadcasted(tx));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
   return (
     <section>
