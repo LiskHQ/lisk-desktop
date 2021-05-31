@@ -128,7 +128,7 @@ const transformTransaction = ({
 const createTransactionObject = (tx, moduleAssetId) => {
   const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
   const {
-    senderPublicKey, nonce, amount, recipientAddress, data, fee = 0,
+    senderPublicKey, nonce, amount, recipientAddress, data, signatures = [], fee = 0,
   } = tx;
 
   const transaction = {
@@ -137,7 +137,7 @@ const createTransactionObject = (tx, moduleAssetId) => {
     senderPublicKey: convertStringToBinary(senderPublicKey),
     nonce: BigInt(nonce),
     fee: BigInt(fee),
-    signatures: [],
+    signatures,
   };
 
   switch (moduleAssetId) {
