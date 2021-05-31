@@ -3,6 +3,7 @@ import {
   actionTypes, loginTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
 import { create } from '@api/transaction';
+import { getAccount } from '@api/account';
 import { signVoteTransaction } from '@utils/hwManager';
 import { getVotes } from '@api/delegate';
 import { passphraseUsed } from './account';
@@ -42,10 +43,25 @@ export const votesConfirmed = () => ({
  * @param {String} data.voteAmount - (New) vote amount in Beddows
  * @returns {Object} Pure action object
  */
-export const voteEdited = data => ({
-  type: actionTypes.voteEdited,
-  data,
-});
+export const voteEdited = data => async (dispatch, getState) => {
+  const { network, settings } = getState();
+  const normalizedVotes = await Promise.all(data.map(async (vote) => {
+    if (vote.username) {
+      return vote;
+    }
+    const account = await getAccount({
+      network, params: { address: vote.address },
+    }, settings.token.active);
+    const username = account.dpos?.delegate?.username ?? '';
+
+    return { ...vote, username };
+  }));
+
+  return dispatch({
+    type: actionTypes.voteEdited,
+    data: normalizedVotes,
+  });
+};
 
 /**
  * Makes Api call to register votes
