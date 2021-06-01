@@ -27,7 +27,7 @@ describe('setVotesByLaunchProtocol', () => {
   const dispatch = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
+    jest.clearAllMocks();
   });
 
   it('Should dispatch voteEdited with empty array if no usernames in query params', async () => {
@@ -62,10 +62,7 @@ describe('setVotesByLaunchProtocol', () => {
     accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: [] }));
     accounts.getAccount.mockImplementation(() => Promise.resolve({ data: [] }));
     await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=ad')(dispatch, getState);
-    expect(accounts.getAccounts).toHaveBeenCalledWith({
-      params: { usernameList: ['genesis_5'] },
-      network,
-    }, 'LSK');
+    expect(accounts.getAccounts).not.toHaveBeenCalled();
     expect(accounts.getAccount).not.toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalled();
   });
@@ -89,15 +86,13 @@ describe('setVotesByLaunchProtocol', () => {
     const delegates = Object.values(mockAccounts)
       .filter(account => account.dpos.delegate.username && account.summary.address);
     const usernameList = delegates.map(account => account.dpos.delegate.username);
-    const accountsList = delegates.map(account => ({
-      address: account.summary.address,
-      amount: '',
-      username: account.dpos.delegate.username,
-    }));
     const url = `?modal=votingQueue&unvotes=${usernameList.join(',')}`;
-    accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: accountsList }));
+    accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: delegates }));
 
     await setVotesByLaunchProtocol(url)(dispatch, getState);
-    expect(dispatch).toHaveBeenCalledWith(voteEdited(accountsList));
+    expect(accounts.getAccounts).toHaveBeenCalledWith({
+      params: { usernameList: ['genesis_17', 'test'] },
+      network,
+    }, 'LSK');
   });
 });
