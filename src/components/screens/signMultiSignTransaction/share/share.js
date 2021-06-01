@@ -1,12 +1,13 @@
-import React from 'react';
-import { downloadJSON } from '@utils/helpers';
+import React, { useState } from 'react';
+import { downloadJSON, transactionToJSON } from '@utils/transaction';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import CopyToClipboard from '@toolbox/copyToClipboard';
 import Icon from '@toolbox/icon';
 import TransactionResult from '@shared/transactionResult';
+
+import copyToClipboard from 'copy-to-clipboard';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
@@ -43,11 +44,17 @@ const Share = ({
   const success = !error && transaction;
   const template = getTemplate(t, error, isBroadcasted);
 
+  const [copied, setCopied] = useState(false);
+
   const onDownload = () => {
-    downloadJSON(transaction, transaction.id);
+    downloadJSON(transaction, `tx-${transaction.moduleID}-${transaction.assetID}`);
   };
 
-  console.log(transaction);
+  const onCopy = () => {
+    copyToClipboard(transactionToJSON(transaction));
+    setCopied(true);
+  };
+
   return (
     <section>
       <Box className={styles.boxContainer}>
@@ -68,12 +75,15 @@ const Share = ({
         </BoxContent>
         {success && (
           <BoxFooter className={styles.footer} direction="horizontal">
-            <CopyToClipboard
-              Container={SecondaryButton}
-              text={t('Copy')}
-              className={styles.buttonContent}
-              value={JSON.stringify(transaction)}
-            />
+            <SecondaryButton
+              className="copy-button"
+              onClick={onCopy}
+            >
+              <span className={styles.buttonContent}>
+                <Icon name={copied ? 'checkmark' : 'copy'} />
+                {t(copied ? 'Copied' : 'Copy')}
+              </span>
+            </SecondaryButton>
             <PrimaryButton onClick={onDownload}>
               <span className={styles.buttonContent}>
                 <Icon name="download" />
