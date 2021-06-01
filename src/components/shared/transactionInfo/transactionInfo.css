@@ -96,8 +96,8 @@
   & > .col {
     display: flex;
     flex-direction: column;
-    flex-basis: 50%;
-    max-width: 50%;
+    flex-basis: 100%;
+    max-width: 100%;
 
     & > label {
       text-overflow: ellipsis;
