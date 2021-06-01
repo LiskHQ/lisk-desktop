@@ -67,7 +67,7 @@ const ReviewSign = ({
         moduleAssetSchemas[transaction.moduleAssetId],
         transactionObject,
         Buffer.from(networkIdentifier, 'hex'),
-        account.passphras,
+        account.passphrase,
         keys,
         includeSender,
       );
