@@ -12,13 +12,6 @@ import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const getTemplate = (t, error, isBroadcasted) => {
-  if (error) {
-    return {
-      illustration: 'registerMultisignatureError',
-      message: t(`Error: ${error}`),
-    };
-  }
-
   if (!error) {
     if (isBroadcasted) {
       return {
@@ -34,7 +27,7 @@ const getTemplate = (t, error, isBroadcasted) => {
 
   return {
     illustration: 'registerMultisignatureError',
-    message: t('Error: Unknown error'),
+    message: t(`Error: ${error}`),
   };
 };
 
