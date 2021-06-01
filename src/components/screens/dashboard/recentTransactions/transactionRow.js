@@ -54,7 +54,7 @@ const TransactionRow = ({
           sender={data.sender.address}
           recipient={data.asset?.recipient?.address}
           moduleAssetId={data.moduleAssetId}
-          amount={data.asset.amount || unlockAmount}
+          amount={data.asset?.amount || unlockAmount}
         />
       </span>
     </DialogLink>
