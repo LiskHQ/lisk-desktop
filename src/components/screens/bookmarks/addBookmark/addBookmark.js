@@ -99,7 +99,7 @@ const AddBookmark = ({
       {
         value: usernameValue,
         feedback: usernameFeedback,
-        readonly: Boolean(isDelegate) === true || usernameFeedback !== '',
+        readonly: isDelegate === 'true',
       },
     ]);
   }, []);
@@ -244,9 +244,4 @@ AddBookmark.propTypes = {
   }).isRequired,
 };
 
-const areEqual = (prevProps, nextProps) => (
-  prevProps.history.location.search === nextProps.history.location.search
-  && prevProps.account.data === nextProps.account.data
-);
-
-export default React.memo(AddBookmark, areEqual);
+export default AddBookmark;
