@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@utils/account';
 import { withRouter } from 'react-router';
@@ -9,6 +9,7 @@ const ReviewSign = (props) => {
   const { t } = useTranslation();
   const networkIdentifier = useSelector(state => state.network.networks.LSK.networkIdentifier);
   const account = useSelector(getActiveTokenAccount);
+  const dispatch = useDispatch();
 
   return (
     <ReviewSignComp
@@ -16,6 +17,7 @@ const ReviewSign = (props) => {
       {...props}
       networkIdentifier={networkIdentifier}
       account={account}
+      dispatch={dispatch}
     />
   );
 };

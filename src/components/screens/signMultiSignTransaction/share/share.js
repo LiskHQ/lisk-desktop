@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { downloadJSON } from '@utils/helpers';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
@@ -7,89 +7,47 @@ import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import CopyToClipboard from '@toolbox/copyToClipboard';
 import Icon from '@toolbox/icon';
 import TransactionResult from '@shared/transactionResult';
-import { transactions } from '@liskhq/lisk-client';
-import { moduleAssetSchemas, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { createTransactionObject } from '@utils/transaction';
-import { transactionBroadcasted } from '@actions';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
-const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
-  const transaction = {
-    senderPublicKey: rest.sender.publicKey,
-    nonce: rest.nonce,
-    moduleAssetId,
-    fee: rest.fee,
-    signatures: rest.signatures.map(sig => Buffer.from(sig, 'hex')),
-  };
-
-  switch (moduleAssetId) {
-    case MODULE_ASSETS_NAME_ID_MAP.transfer: {
-      transaction.recipientAddress = asset.recipient.address;
-      transaction.amount = asset.amount;
-      transaction.data = asset.data;
-      break;
-    }
-
-    default:
-      break;
+const getTemplate = (t, error, isBroadcasted) => {
+  if (error) {
+    return {
+      illustration: 'registerMultisignatureError',
+      message: t(`Error: ${error}`),
+    };
   }
 
-  return transaction;
+  if (!error) {
+    if (isBroadcasted) {
+      return {
+        illustration: 'registerMultisignatureSuccess',
+        message: t('You have successfully sent the transaction. You can download or copy the transaction and send it back to the initiator.'),
+      };
+    }
+    return {
+      illustration: 'registerMultisignatureSuccess',
+      message: t('You have successfully signed the transaction. You can download or copy the transaction and send it back to the initiator.'),
+    };
+  }
+
+  return {
+    illustration: 'registerMultisignatureError',
+    message: t('Error: Unknown error'),
+  };
 };
 
 const Share = ({
-  t, transaction, error, networkIdentifier, account, dispatch,
+  t, transaction, error, isBroadcasted = false,
 }) => {
-  const [signedTransaction, setSignedTransaction] = useState();
   const success = !error && transaction;
-  const template = success ? {
-    illustration: 'registerMultisignatureSuccess',
-    message: t('You have successfully signed the transaction. You can download or copy the transaction and send it back to the initiator.'),
-  } : {
-    illustration: 'registerMultisignatureError',
-    message: t(`Error: ${error}`),
-  };
+  const template = getTemplate(t, error, isBroadcasted);
 
   const onDownload = () => {
     downloadJSON(transaction, transaction.id);
   };
 
-  useEffect(() => {
-    const { mandatoryKeys, optionalKeys } = account.info.LSK.keys;
-    const flatTransaction = flattenTransaction(transaction);
-    const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
-    const keys = {
-      mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
-      optionalKeys: optionalKeys.map(key => Buffer.from(key, 'hex')),
-    };
-
-    const includeSender = transaction.moduleAssetId
-      === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
-
-    try {
-      const tx = transactions.signMultiSignatureTransaction(
-        moduleAssetSchemas[transaction.moduleAssetId],
-        transactionObject,
-        Buffer.from(networkIdentifier, 'hex'),
-        account.passphrase,
-        keys,
-        includeSender,
-      );
-
-      setSignedTransaction(tx);
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-    }
-  }, []);
-
-  const broadcastTransaction = () => {
-    if (signedTransaction) {
-      dispatch(transactionBroadcasted(signedTransaction));
-    }
-  };
-
+  console.log(transaction);
   return (
     <section>
       <Box className={styles.boxContainer}>
@@ -121,9 +79,6 @@ const Share = ({
                 <Icon name="download" />
                 {t('Download')}
               </span>
-            </PrimaryButton>
-            <PrimaryButton onClick={broadcastTransaction}>
-              {t('Send')}
             </PrimaryButton>
           </BoxFooter>
         )}
