@@ -1,6 +1,7 @@
 import { actionTypes, networks, loginTypes } from '@constants';
 import * as TransactionApi from '@api/transaction';
 import * as delegateApi from '@api/delegate';
+import * as accountApi from '@api/account';
 import {
   voteEdited,
   votesCleared,
@@ -9,6 +10,7 @@ import {
   votesRetrieved,
 } from './voting';
 import sampleVotes from '../../../test/constants/votes';
+import accounts from '../../../test/constants/accounts';
 
 jest.mock('@api/transaction', () => ({
   create: jest.fn(),
@@ -18,12 +20,17 @@ jest.mock('@api/delegate', () => ({
   getVotes: jest.fn(),
 }));
 
+jest.mock('@api/account', () => ({
+  getAccount: jest.fn(),
+}));
+
 describe('actions: voting', () => {
   const getState = () => ({
     network: {
       name: networks.mainnet.name,
       networks: {
         LSK: {
+          serviceUrl: 'http://example.api',
         },
       },
     },
@@ -41,6 +48,11 @@ describe('actions: voting', () => {
         },
       },
     },
+    settings: {
+      token: {
+        active: 'LSK',
+      },
+    },
   });
 
   beforeEach(() => {
@@ -48,17 +60,15 @@ describe('actions: voting', () => {
   });
 
   describe('voteEdited', () => {
-    it('should create an action to add data to toggle the vote status for any given delegate', () => {
+    it('should create an action to add data to toggle the vote status for any given delegate', async () => {
+      accountApi.getAccount.mockResolvedValue({ data: accounts.genesis });
       const data = [{
         address: 'dummy',
         amount: 1e10,
       }];
-      const expectedAction = {
-        data,
-        type: actionTypes.voteEdited,
-      };
-
-      expect(voteEdited(data)).toEqual(expectedAction);
+      const dispatch = jest.fn();
+      await voteEdited(data)(dispatch, getState);
+      expect(accountApi.getAccount).toHaveBeenCalled();
     });
   });
 
