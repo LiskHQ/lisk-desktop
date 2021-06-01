@@ -29,6 +29,11 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
       break;
     }
 
+    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: {
+      transaction.votes = asset.votes;
+      break;
+    }
+
     default:
       break;
   }
@@ -52,7 +57,9 @@ const ReviewSign = ({
     let err;
 
     const { mandatoryKeys, optionalKeys } = account.keys;
+    console.log('Sign Tx 1', transaction);
     const flatTransaction = flattenTransaction(transaction);
+    console.log('Sign Tx 2', flatTransaction);
     const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
     const keys = {
       mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
@@ -71,6 +78,7 @@ const ReviewSign = ({
         keys,
         includeSender,
       );
+      console.log('Sign Tx 3', signedTransaction);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
