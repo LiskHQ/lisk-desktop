@@ -73,6 +73,7 @@ describe('Transaction Details Component', () => {
 
   const props = {
     t: v => v,
+    title: 'Transaction details',
     history: {
       push: jest.fn(),
       replace: jest.fn(),
