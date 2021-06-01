@@ -28,7 +28,7 @@ const convertBigIntToString = value => {
     }
     return value;
   }
-  return value;
+  return String(value);
 };
 
 /**
