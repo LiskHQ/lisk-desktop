@@ -4,23 +4,25 @@ import { voteEdited } from './voting';
 import mockAccounts from '../../../test/constants/accounts';
 
 jest.mock('@api/account', () => ({
-  getAccount: jest.fn().mockImplementation(data => Promise.resolve({ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: data.username })),
+  getAccount: jest.fn().mockImplementation(data => Promise.resolve({
+    summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
+    dpos: { delegate: { username: data.username } },
+  })),
   getAccounts: jest.fn(),
 }));
 
 describe('setVotesByLaunchProtocol', () => {
-  const getState = () => ({
-    network: {
-      status: { online: true },
-      name: 'Mainnet',
-      networks: {
-        LSK: {
-          nodeUrl: 'hhtp://localhost:4000',
-          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-        },
+  const network = {
+    status: { online: true },
+    name: 'Mainnet',
+    networks: {
+      LSK: {
+        nodeUrl: 'hhtp://localhost:4000',
+        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
       },
     },
-  });
+  };
+  const getState = () => ({ network });
 
   const dispatch = jest.fn();
 
@@ -30,32 +32,57 @@ describe('setVotesByLaunchProtocol', () => {
 
   it('Should dispatch voteEdited with empty array if no usernames in query params', async () => {
     accounts.getAccounts.mockImplementation(() => Promise.resolve([]));
+    accounts.getAccount.mockImplementation({ data: mockAccounts.genesis });
     await setVotesByLaunchProtocol('?modal=votingQueue')(dispatch, getState);
-    expect(dispatch).toHaveBeenCalledWith(voteEdited([]));
+    expect(accounts.getAccount).not.toHaveBeenCalled();
+    expect(dispatch).toHaveBeenCalled();
   });
 
   it('Should dispatch voteEdited with a single username in the query params', async () => {
-    const data = [{
-      address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
-      amount: '',
-      username: 'genesis_5',
-    }];
-    accounts.getAccounts.mockImplementation(() => Promise.resolve({ data }));
+    const account = {
+      summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
+      dpos: { delegate: { username: 'genesis_5' } },
+    };
+    accounts.getAccounts.mockImplementation(() => Promise.resolve({
+      data: [account],
+    }));
+    accounts.getAccount.mockImplementation({
+      data: account,
+    });
     await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=genesis_5')(dispatch, getState);
-    const votes = ['genesis_5']
-      .map(username => ({ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username, amount: '' }));
-    expect(dispatch).toHaveBeenCalledWith(voteEdited(votes));
+    expect(accounts.getAccounts).toHaveBeenCalledWith({
+      params: { usernameList: ['genesis_5'] },
+      network,
+    }, 'LSK');
+    expect(accounts.getAccount).not.toHaveBeenCalledWith();
+    expect(dispatch).toHaveBeenCalled();
   });
 
   it('Should dispatch voteEdited with empty data if the username is invalid', async () => {
     accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: [] }));
+    accounts.getAccount.mockImplementation(() => Promise.resolve({ data: [] }));
     await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=ad')(dispatch, getState);
-    expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ data: [] }));
+    expect(accounts.getAccounts).toHaveBeenCalledWith({
+      params: { usernameList: ['genesis_5'] },
+      network,
+    }, 'LSK');
+    expect(accounts.getAccount).not.toHaveBeenCalled();
+    expect(dispatch).toHaveBeenCalled();
   });
 
   it('Should dispatch voteEdited with empty data if the usernames are invalid', async () => {
+    const account = {
+      summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
+      dpos: { delegate: { username: 'genesis_5' } },
+    };
+    accounts.getAccounts.mockImplementation({
+      data: [account, account],
+    });
+    accounts.getAccount.mockImplementation(() => Promise.resolve({ data: [] }));
     await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=ad,genesis_5')(dispatch, getState);
-    expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ data: [] }));
+    expect(accounts.getAccounts).not.toHaveBeenCalled();
+    expect(accounts.getAccount).not.toHaveBeenCalled();
+    expect(dispatch).toHaveBeenCalled();
   });
 
   it('Should dispatch voteEdited with an array of valid usernames in query params', async () => {
