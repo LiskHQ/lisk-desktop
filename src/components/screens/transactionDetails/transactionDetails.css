@@ -2,7 +2,6 @@
 
 .container {
   height: auto;
-
   overflow-y: auto;
   max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
   display: block;

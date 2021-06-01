@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
-import { transactionToJSON, transformTransaction } from '../../../../utils/transaction';
+import { transformTransaction } from '../../../../utils/transaction';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
