@@ -1,12 +1,9 @@
 import React from 'react';
-import { transactions } from '@liskhq/lisk-client';
-import { extractAddressFromPublicKey } from '@utils/account';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import Box from '../../../toolbox/box';
 import BoxContent from '../../../toolbox/box/content';
 import BoxFooter from '../../../toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons';
-import MultiSignatureReview from '../../../shared/multiSignatureReview';
 import ProgressBar from '../progressBar';
 import styles from '../styles.css';
 import TransactionDetails from '../../transactionDetails/transactionDetails';
@@ -14,9 +11,7 @@ import TransactionDetails from '../../transactionDetails/transactionDetails';
 const ReviewSign = ({
   t,
   transaction,
-  networkIdentifier,
   account,
-  prevStep,
   nextStep,
   history,
   error,
