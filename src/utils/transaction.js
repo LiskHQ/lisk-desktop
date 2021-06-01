@@ -76,8 +76,8 @@ const transformTransaction = ({
     case voteDelegate: {
       transformedTransaction.asset = {
         votes: asset.votes.map(vote => ({
-          amount: Number(vote.amount),
-          delegateAddress: getBase32AddressFromAddress(vote.delegateAddress),
+          amount: convertBigIntToString(vote.amount),
+          delegateAddress: getBase32AddressFromAddress(Buffer.from(vote.delegateAddress, 'hex')),
         })),
       };
       break;
