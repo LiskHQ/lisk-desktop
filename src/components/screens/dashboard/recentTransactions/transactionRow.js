@@ -35,11 +35,11 @@ const TransactionRow = ({
       <span className={grid['col-xs-8']}>
         <TransactionTypeFigure
           icon={direction}
-          address={direction === 'incoming' ? data.sender.address : data.asset.recipient?.address}
+          address={direction === 'incoming' ? data.sender.address : data.asset?.recipient?.address}
           moduleAssetId={data.moduleAssetId}
         />
         <TransactionAddress
-          address={direction === 'incoming' ? data.sender.address : data.asset.recipient?.address}
+          address={direction === 'incoming' ? data.sender.address : data.asset?.recipient?.address}
           bookmarks={bookmarks}
           t={t}
           token={activeToken}

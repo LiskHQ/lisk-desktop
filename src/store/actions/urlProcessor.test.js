@@ -1,6 +1,5 @@
 import * as accounts from '@api/account';
 import setVotesByLaunchProtocol from './urlProcessor';
-import { voteEdited } from './voting';
 import mockAccounts from '../../../test/constants/accounts';
 
 jest.mock('@api/account', () => ({
