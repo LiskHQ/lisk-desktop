@@ -22,9 +22,8 @@ import styles from './styles.css';
 const getDelegateName = (transaction, activeToken) => (
   (activeToken === 'LSK'
   && transaction.asset
-  && transaction.asset.delegate
-  && transaction.asset.delegate.username)
-    ? transaction.asset.delegate.username : null
+  && transaction.asset.username)
+    ? transaction.asset.username : null
 );
 
 const getTxAsset = (tx) => {

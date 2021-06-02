@@ -1,6 +1,6 @@
 import QRCode from 'qrcode.react';
 import React from 'react';
-import renderPaperwallet from '@utils/paperwallet';
+import renderPaperWallet from '@utils/paperWallet';
 import { SecondaryButton } from '@toolbox/buttons';
 import CopyToClipboard from '@toolbox/copyToClipboard';
 import Icon from '@toolbox/icon';
@@ -15,13 +15,13 @@ class PassphraseBackup extends React.Component {
     };
 
     this.walletName = `${props.paperWalletName}.pdf`;
-    this.generatePaperwallet = this.generatePaperwallet.bind(this);
+    this.generatePaperWallet = this.generatePaperWallet.bind(this);
     this.setCanvasRef = this.setCanvasRef.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   /* istanbul ignore next */
-  generatePaperwallet() {
+  generatePaperWallet() {
     import(/* webpackChunkName: "jspdf" */ 'jspdf')
       .then((module) => {
         const JSPDF = module.default;
@@ -29,7 +29,7 @@ class PassphraseBackup extends React.Component {
           ...this.props,
           qrcode: this.canvasRef.firstChild.toDataURL(),
         };
-        renderPaperwallet(JSPDF, data, this.walletName);
+        renderPaperWallet(JSPDF, data, this.walletName);
       });
   }
 
@@ -81,7 +81,7 @@ class PassphraseBackup extends React.Component {
                 <Icon name="fileOutline" />
                 <p className="option-value">{this.walletName}</p>
               </div>
-              <SecondaryButton className={styles.downloadBtn} size="xs" onClick={this.generatePaperwallet}>
+              <SecondaryButton className={styles.downloadBtn} size="xs" onClick={this.generatePaperWallet}>
                 {t('Download')}
               </SecondaryButton>
             </div>

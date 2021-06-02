@@ -88,13 +88,21 @@
       "amount message"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
-
+  
   & .votePreview {
     grid-template-areas:
       "illustration illustration"
       "sender sender"
       "transactionId fee"
       "votes votes"
+      "signedAndRemainingMembersList signedAndRemainingMembersList";
+  }
+
+  & .registerDelegatePreview {
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "transactionId fee"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
 }

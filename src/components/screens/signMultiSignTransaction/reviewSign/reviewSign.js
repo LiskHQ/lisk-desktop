@@ -32,6 +32,9 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
     case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: {
       transaction.votes = asset.votes;
       break;
+    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: {
+      transaction.username = asset.username;
+      break;
     }
 
     default:
