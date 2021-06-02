@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import { transactionToJSON } from '@utils/transaction';
+import { transactionToJSON, downloadJSON } from '@utils/transaction';
 import LiskAmount from '@shared/liskAmount';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
@@ -12,7 +12,7 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import copyToClipboard from 'copy-to-clipboard';
 import Icon from '@toolbox/icon';
 import { tokenMap } from '@constants';
-import { downloadJSON } from '@utils/helpers';
+
 import styles from './transactionSummary.css';
 
 const Footer = ({

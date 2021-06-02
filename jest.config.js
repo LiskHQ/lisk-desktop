@@ -98,6 +98,7 @@ module.exports = {
     'src/components/shared/transactionAmount/index.js',
     'src/components/shared/searchBar/transactions.js',
     'src/components/shared/navigationBars/topBar/networkName.js',
+    'src/components/shared/multisignatureMembers/index.js',
     'src/components/toolbox/tabsContainer/tabsContainer.js',
     'src/components/toolbox/copyToClipboard/index.js',
     'src/components/toolbox/dropdown/toolBoxDropdown.js',

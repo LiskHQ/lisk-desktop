@@ -1,19 +1,23 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Share from './share';
+import accounts from '../../../../../test/constants/accounts';
 
 describe('Sign Multisignature Tx Share component', () => {
   let wrapper;
 
   const props = {
     t: v => v,
+    networkIdentifier: '',
+    account: { info: { LSK: accounts.genesis } },
+    dispatch: jest.fn(),
   };
 
   it('Should render properly on success', () => {
     wrapper = mount(
       <Share
         {...props}
-        transactionInfo={{ id: 1 }}
+        transaction={{ id: 1 }}
       />,
     );
     const html = wrapper.html();
