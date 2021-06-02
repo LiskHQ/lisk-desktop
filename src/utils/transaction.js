@@ -76,8 +76,8 @@ const transformTransaction = ({
     case voteDelegate: {
       transformedTransaction.asset = {
         votes: asset.votes.map(vote => ({
-          amount: Number(vote.amount),
-          delegateAddress: getBase32AddressFromAddress(vote.delegateAddress),
+          amount: convertBigIntToString(vote.amount),
+          delegateAddress: getBase32AddressFromAddress(Buffer.from(vote.delegateAddress, 'hex')),
         })),
       };
       break;
@@ -222,7 +222,9 @@ const convertObjectToHex = (data) => {
   // eslint-disable-next-line no-restricted-syntax, no-unused-vars, guard-for-in
   for (const key in data) {
     const value = data[key];
-    if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
+    if (key === 'votes') {
+      obj[key] = value.map(item => convertObjectToHex(item));
+    } else if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
       obj[key] = convertObjectToHex(value);
     } else {
       obj[key] = convertBuffersToHex(value);

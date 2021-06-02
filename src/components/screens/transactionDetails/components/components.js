@@ -339,7 +339,7 @@ export const SignedAndRemainingMembersList = ({ t }) => {
 
   const [signed, remaining] = useMemo(() => calculateRemainingAndSignedMembers(
     account.keys, transaction.signatures,
-  ), []);
+  ), [account]);
 
   return (
     <SignedAndRemainingMembers

@@ -29,10 +29,13 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
       break;
     }
 
-    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: {
+    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate:
+      transaction.votes = asset.votes;
+      break;
+
+    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate:
       transaction.username = asset.username;
       break;
-    }
 
     default:
       break;
@@ -50,13 +53,14 @@ const ReviewSign = ({
   history,
   error,
   dispatch,
+  senderAccount,
 }) => {
   // eslint-disable-next-line max-statements
   const signTransaction = () => {
     let signedTransaction;
     let err;
 
-    const { mandatoryKeys, optionalKeys } = account.keys;
+    const { mandatoryKeys, optionalKeys } = senderAccount.data.keys;
     const flatTransaction = flattenTransaction(transaction);
     const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
     const keys = {
@@ -109,7 +113,7 @@ const ReviewSign = ({
             t={t}
             activeToken="LSK"
             schema={`${transaction.moduleAssetId}-preview`}
-            account={account}
+            account={senderAccount.data}
             transaction={{
               data: transaction,
               error,
