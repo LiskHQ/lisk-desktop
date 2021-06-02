@@ -8,7 +8,7 @@ import styles from './styles.css';
 
 const Member = ({ member, i, t }) => (
   <div className={`${styles.memberInfo} member-info`}>
-    {i && <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>}
+    {i !== undefined && <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>}
     <AccountVisual address={member.address} />
     <div className={styles.memberDetails}>
       <p className={styles.memberTitle}>
