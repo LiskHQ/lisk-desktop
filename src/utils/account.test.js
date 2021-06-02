@@ -9,6 +9,7 @@ import {
   extractAddressFromPassphrase,
   isAccountInitialized,
   hasEnoughBalanceForInitialization,
+  calculateRemainingAndSignedMembers,
 } from './account';
 
 const passphrase = accounts.genesis.passphrase;
@@ -153,6 +154,58 @@ describe('Utils: Account', () => {
     it('should return false if balance is not enough', () => {
       const result = hasEnoughBalanceForInitialization('0');
       expect(result).toBe(false);
+    });
+  });
+
+  describe('calculateRemainingAndSignedMembers', () => {
+    it('should return signed and remaining members', () => {
+      const keys = {
+        mandatoryKeys: ['c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
+          'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494'],
+        optionalKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+          '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+          '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
+        numberOfSignatures: 2,
+      };
+
+      const signatures = [];
+      const result = calculateRemainingAndSignedMembers(keys, signatures);
+      expect(result).toMatchSnapshot();
+    });
+
+    it('should return signed and remaining members', () => {
+      const keys = {
+        mandatoryKeys: ['c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
+          'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494'],
+        optionalKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+          '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+          '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
+        numberOfSignatures: 2,
+      };
+
+      const signatures = ['haha'];
+      const result = calculateRemainingAndSignedMembers(keys, signatures);
+      expect(result).toMatchSnapshot();
+    });
+
+    it('should return signed and remaining members', () => {
+      const keys = {
+        mandatoryKeys: ['c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
+          'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494'],
+        optionalKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+          '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+          '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
+        numberOfSignatures: 2,
+      };
+
+      const signatures = [
+        'sender_signature',
+        'haha',
+        '',
+        'does not matter',
+      ];
+      const result = calculateRemainingAndSignedMembers(keys, signatures, true);
+      expect(result).toMatchSnapshot();
     });
   });
 });
