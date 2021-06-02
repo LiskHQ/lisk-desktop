@@ -50,16 +50,15 @@ const ReviewSign = ({
   history,
   error,
   dispatch,
+  senderAccount,
 }) => {
   // eslint-disable-next-line max-statements
   const signTransaction = () => {
     let signedTransaction;
     let err;
 
-    const { mandatoryKeys, optionalKeys } = account.keys;
-    console.log('Sign Tx 1', transaction);
+    const { mandatoryKeys, optionalKeys } = senderAccount.data.keys;
     const flatTransaction = flattenTransaction(transaction);
-    console.log('Sign Tx 2', flatTransaction);
     const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
     const keys = {
       mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
@@ -78,7 +77,6 @@ const ReviewSign = ({
         keys,
         includeSender,
       );
-      console.log('Sign Tx 3', signedTransaction);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
@@ -112,7 +110,7 @@ const ReviewSign = ({
             t={t}
             activeToken="LSK"
             schema={`${transaction.moduleAssetId}-preview`}
-            account={account}
+            account={senderAccount.data}
             transaction={{
               data: transaction,
               error,
