@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { downloadJSON, transactionToJSON } from '@utils/transaction';
+import copyToClipboard from 'copy-to-clipboard';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import TransactionResult from '@shared/transactionResult';
-import CopyToClipboard from '@toolbox/copyToClipboard';
 import Icon from '@toolbox/icon';
+import TransactionResult from '../../../shared/transactionResult';
 
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
@@ -11,6 +11,8 @@ import styles from './styles.css';
 const Result = ({
   t, transaction, error,
 }) => {
+  const [copied, setCopied] = useState(false);
+
   const template = !error ? {
     illustration: 'registerMultisignatureSuccess',
     message: t('You have successfully signed the transaction. You can download or copy the transaction and share it with members.'),
@@ -21,6 +23,11 @@ const Result = ({
 
   const onDownload = () => {
     downloadJSON(transaction, `tx-${transaction.moduleID}-${transaction.assetID}`);
+  };
+
+  const onCopy = () => {
+    copyToClipboard(transactionToJSON(transaction));
+    setCopied(true);
   };
 
   return (
@@ -39,11 +46,15 @@ const Result = ({
       >
         {!error && (
           <div className={styles.buttonsContainer}>
-            <CopyToClipboard
-              Container={SecondaryButton}
-              text={t('Copy')}
-              value={transactionToJSON(transaction)}
-            />
+            <SecondaryButton
+              className="copy-button"
+              onClick={onCopy}
+            >
+              <span className={styles.buttonContent}>
+                <Icon name={copied ? 'checkmark' : 'copy'} />
+                {t(copied ? 'Copied' : 'Copy')}
+              </span>
+            </SecondaryButton>
             <PrimaryButton onClick={onDownload}>
               <span>
                 <Icon name="download" />
