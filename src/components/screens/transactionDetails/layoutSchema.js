@@ -28,6 +28,10 @@ const LayoutSchema = {
     components: [...baseComponents, Illustration, TransactionVotes],
     className: styles.voteLayout,
   },
+  [`${voteDelegate}-preview`]: {
+    components: [...previewBaseComponents, Illustration, TransactionVotes],
+    className: styles.votePreview,
+  },
   [registerDelegate]: {
     components: [...baseComponents, Illustration],
     className: styles.registerDelegate,

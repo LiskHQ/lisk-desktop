@@ -14,6 +14,7 @@ const accounts = {
     keys: { numberOfSignatures: 0, mandatoryKeys: [], optionalKeys: [] },
     dpos: {
       delegate: {},
+      sentVotes: [],
     },
   },
   delegate: {
@@ -55,6 +56,7 @@ const accounts = {
     sequence: { nonce: '0' },
     dpos: {
       delegate: {},
+      sentVotes: [],
     },
   },
   delegate_candidate: {
@@ -81,6 +83,7 @@ const accounts = {
     sequence: {},
     dpos: {
       delegate: {},
+      sentVotes: [],
     },
   },
   send_all_account: {
@@ -94,6 +97,7 @@ const accounts = {
     sequence: { },
     dpos: {
       delegate: {},
+      sentVotes: [],
     },
   },
   without_initialization: {
@@ -107,6 +111,7 @@ const accounts = {
     sequence: { },
     dpos: {
       delegate: {},
+      sentVotes: [],
     },
   },
   testnet_guy: {
@@ -119,6 +124,7 @@ const accounts = {
     sequence: { },
     dpos: {
       delegate: {},
+      sentVotes: [],
     },
   },
   mainnet_delegate: {
