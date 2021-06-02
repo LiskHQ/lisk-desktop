@@ -29,6 +29,7 @@ const TransactionVotes = ({ t, votedDelegates }) => {
               key={`vote-${vote.delegateAddress}`}
               vote={{ confirmed: vote.amount }}
               address={vote.delegateAddress}
+              truncate
               title={
                 votedDelegates.data[vote.delegateAddress]
                 && votedDelegates.data[vote.delegateAddress].username
