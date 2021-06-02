@@ -12,6 +12,7 @@ import TransactionDetails from '@screens/transactionDetails/transactionDetails';
 import ProgressBar from '../progressBar';
 import styles from '../styles.css';
 
+// eslint-disable-next-line max-statements
 const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
   const transaction = {
     senderPublicKey: rest.sender.publicKey,
@@ -41,6 +42,13 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
       transaction.unlockObjects = asset.unlockObjects;
       break;
 
+    case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup: {
+      transaction.numberOfSignatures = asset.numberOfSignatures;
+      transaction.mandatoryKeys = asset.mandatoryKeys;
+      transaction.optionalKeys = asset.optionalKeys;
+      break;
+    }
+
     default:
       break;
   }
@@ -59,6 +67,7 @@ const ReviewSign = ({
   dispatch,
   senderAccount,
 }) => {
+  console.log(transaction);
   // eslint-disable-next-line max-statements
   const signTransaction = () => {
     let signedTransaction;
