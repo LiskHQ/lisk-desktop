@@ -34,7 +34,7 @@ const LayoutSchema = {
   },
   [`${registerDelegate}-preview`]: {
     components: [...previewBaseComponents],
-    className: styles.registerDelegate,
+    className: styles.registerDelegatePreview,
   },
   [registerMultisignatureGroup]: {
     components: [...baseComponents, RequiredSignatures, Members],
