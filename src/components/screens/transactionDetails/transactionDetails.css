@@ -114,4 +114,14 @@
       "amount amount"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
+
+  & .multiSigRegisterPreview {
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "members members"
+      "requiredSignatures requiredSignatures"
+      "transactionId fee"
+      "signedAndRemainingMembersList signedAndRemainingMembersList";
+  }
 }

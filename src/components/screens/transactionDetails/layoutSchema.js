@@ -44,6 +44,10 @@ const LayoutSchema = {
     components: [...baseComponents, RequiredSignatures, Members],
     className: styles.multiSigLayout,
   },
+  [`${registerMultisignatureGroup}-preview`]: {
+    components: [...previewBaseComponents, Illustration, Members, RequiredSignatures],
+    className: styles.multiSigRegisterPreview,
+  },
   [unlockToken]: {
     components: [...baseComponents, Illustration, Amount],
     className: styles.unlockToken,
