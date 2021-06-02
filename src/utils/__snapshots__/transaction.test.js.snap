@@ -383,8 +383,8 @@ Object {
   "asset": Object {
     "votes": Array [
       Object {
-        "amount": 100,
-        "delegateAddress": "lskzpxzckpryh",
+        "amount": "100",
+        "delegateAddress": "lskvj27a26",
       },
     ],
   },
