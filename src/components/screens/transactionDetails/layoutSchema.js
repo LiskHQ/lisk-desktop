@@ -32,6 +32,10 @@ const LayoutSchema = {
     components: [...baseComponents, Illustration],
     className: styles.registerDelegate,
   },
+  [`${registerDelegate}-preview`]: {
+    components: [...previewBaseComponents],
+    className: styles.registerDelegate,
+  },
   [registerMultisignatureGroup]: {
     components: [...baseComponents, RequiredSignatures, Members],
     className: styles.multiSigLayout,
