@@ -144,7 +144,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
 export const transactionBroadcasted = transaction =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
-    const { network, settings } = getState();
+    const { network, settings, account } = getState();
     const activeToken = settings.token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
@@ -168,7 +168,8 @@ export const transactionBroadcasted = transaction =>
       data: transaction,
     });
 
-    if (activeToken !== tokenMap.BTC.key) {
+    if (activeToken !== tokenMap.BTC.key
+      && transaction.sender.address === account.info.LSK.summary.address) {
       const transformedTransaction = transformTransaction(transaction);
       dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
     }
