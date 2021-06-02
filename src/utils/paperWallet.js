@@ -1,10 +1,10 @@
 /* istanbul ignore file */
-import logo from '../assets/images/paperwallet/lisk-logo-blue-on-white-rgb.png';
-import usbStick from '../assets/images/paperwallet/usb-stick.png';
-import printer from '../assets/images/paperwallet/print.png';
-import fonts from './paperwalletFonts';
+import logo from '../assets/images/paperWallet/lisk-logo-blue-on-white-rgb.png';
+import usbStick from '../assets/images/paperWallet/usb-stick.png';
+import printer from '../assets/images/paperWallet/print.png';
+import fonts from './paperWalletFonts';
 
-class Paperwallet {
+class PaperWallet {
   constructor(JSPDF, props) {
     this.doc = new JSPDF({
       orientation: 'p',
@@ -34,9 +34,9 @@ class Paperwallet {
     };
 
     this.doc.addFileToVFS('gilroy-bold.ttf', fonts.GilroyBold)
-      .addFont('gilroy-bold.ttf', 'gilroy', 'bold');
+      .addFont('gilroy-bold.ttf', 'gilroy', 'normal', 'bold');
     this.doc.addFileToVFS('gilroy-medium.ttf', fonts.GilroyMedium)
-      .addFont('gilroy-medium.ttf', 'gilroy', 'normal');
+      .addFont('gilroy-medium.ttf', 'gilroy', 'normal', 'normal');
     this.doc.setTextColor('#303030').setFont('gilroy');
   }
 
@@ -52,15 +52,15 @@ class Paperwallet {
 
     this.doc.addImage(logo, 'PNG', 32, 72, 67, 26);
 
-    this.doc.setFontStyle('bold').setFontSize(16)
+    this.doc.setFont('gilroy', 'normal', 'bold').setFontSize(16)
       .text(t('{{passphraseName}} paper wallet', { passphraseName }), 135, 64, {
         ...textOptions,
         lineHeightFactor: 1.18,
       });
-    this.doc.setFontStyle('normal').setFontSize(14)
+    this.doc.setFont('gilroy', 'normal', 'normal').setFontSize(14)
       .text(t('Store this document in a safe place.'), 135, 84, textOptions);
 
-    this.doc.setFontStyle('bold').setFontSize(16)
+    this.doc.setFont('gilroy', 'normal', 'bold').setFontSize(16)
       .text(date.join('.'), 568, 75, {
         ...textOptions,
         align: 'right',
@@ -76,7 +76,7 @@ class Paperwallet {
     this.doc.addImage(printer, 'PNG', 32, 185, 36, 36);
     this.doc.addImage(usbStick, 'PNG', 32, 229, 36, 36);
 
-    this.doc.setFontStyle('normal').setFontSize(14);
+    this.doc.setFont('gilroy', 'normal', 'normal').setFontSize(14);
     this.doc.text(t('How we recommend to store it.'), 32, 147, textOptions);
     this.doc.text(t('Print it on paper and store it in a safe place'), 76, 194, textOptions);
     this.doc.text(t('Save it on an encrypted hard drive: USB key or a backup drive'), 76, 238, textOptions);
@@ -87,17 +87,17 @@ class Paperwallet {
     const { account, t } = this.props;
     const textOptions = this.textOptions;
 
-    this.doc.setFontStyle('normal').setFontSize(14)
+    this.doc.setFont('gilroy', 'normal', 'normal').setFontSize(14)
       .text(t('Wallet address:'), 32, 300, textOptions);
-    this.doc.setFontStyle('bold').setFontSize(18)
+    this.doc.setFont('gilroy', 'normal', 'bold').setFontSize(18)
       .text(account.address, 32, 340, {
         ...textOptions,
         lineHeightFactor: 2.22,
       });
 
-    this.doc.setFontStyle('normal').setFontSize(14)
+    this.doc.setFont('gilroy', 'normal', 'normal').setFontSize(14)
       .text(t('Passphrase:'), 32, 406, textOptions);
-    this.doc.setFontStyle('bold').setFontSize(18)
+    this.doc.setFont('gilroy', 'normal', 'bold').setFontSize(18)
       .text(this.passphrase, 32.5, 464, {
         ...textOptions,
         align: 'justify',
@@ -114,7 +114,7 @@ class Paperwallet {
     const { qrcode, t } = this.props;
     const textOptions = this.textOptions;
     const marginTop = this.passphrase.length * 45;
-    this.doc.setFontSize(14).setFontStyle('normal');
+    this.doc.setFont('gilroy', 'normal', 'normal').setFontSize(14);
     this.doc.text(t('Access your account by scanning the QR code below with the Lisk Mobile App:'), 32, 495 + marginTop, textOptions);
     this.doc.addImage(qrcode, 'PNG', 240, 564 + marginTop, 120, 120);
     return this;
@@ -129,9 +129,9 @@ class Paperwallet {
   }
 }
 
-const renderPaperwallet = (JSPDF, data, walletName) => {
-  const pdf = new Paperwallet(JSPDF, data);
+const renderPaperWallet = (JSPDF, data, walletName) => {
+  const pdf = new PaperWallet(JSPDF, data);
   pdf.save(walletName);
 };
 
-export default renderPaperwallet;
+export default renderPaperWallet;

@@ -1,7 +1,6 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import withFilters from '@utils/withFilters';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
 import Box from '@toolbox/box';
@@ -33,9 +32,10 @@ const TransactionsTable = ({
 }) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const handleLoadMore = () => {
+    // filter the blanks out
     const params = Object.keys(filters).reduce((acc, key) => ({
       ...acc,
-      ...(filters[key] && { [key]: key === 'moduleAssetId' ? MODULE_ASSETS_NAME_ID_MAP[filters[key]] : filters[key] }),
+      ...(filters[key] && { [key]: filters[key] }),
     }), {
       offset: transactions.meta.count + transactions.meta.offset,
       sort,

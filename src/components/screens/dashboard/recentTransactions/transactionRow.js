@@ -21,7 +21,7 @@ const TransactionRow = ({
   const isConfirmed = currentBlockHeight - data.height > 0;
   const unlockAmount = data.asset?.unlockObjects
     ? data.asset.unlockObjects.reduce((total, item) => {
-      total += item.amount;
+      total += Number(item.amount);
       return total;
     }, 0) : 0;
   const direction = host === data.asset?.recipient?.address ? 'incoming' : 'outgoing';
@@ -35,11 +35,11 @@ const TransactionRow = ({
       <span className={grid['col-xs-8']}>
         <TransactionTypeFigure
           icon={direction}
-          address={direction === 'incoming' ? data.sender.address : data.asset.recipient?.address}
+          address={direction === 'incoming' ? data.sender.address : data.asset?.recipient?.address}
           moduleAssetId={data.moduleAssetId}
         />
         <TransactionAddress
-          address={direction === 'incoming' ? data.sender.address : data.asset.recipient?.address}
+          address={direction === 'incoming' ? data.sender.address : data.asset?.recipient?.address}
           bookmarks={bookmarks}
           t={t}
           token={activeToken}
@@ -54,7 +54,7 @@ const TransactionRow = ({
           sender={data.sender.address}
           recipient={data.asset?.recipient?.address}
           moduleAssetId={data.moduleAssetId}
-          amount={data.amount || data.asset.amount || unlockAmount}
+          amount={data.asset?.amount || unlockAmount}
         />
       </span>
     </DialogLink>
