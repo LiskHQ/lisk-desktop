@@ -222,7 +222,7 @@ const convertObjectToHex = (data) => {
   // eslint-disable-next-line no-restricted-syntax, no-unused-vars, guard-for-in
   for (const key in data) {
     const value = data[key];
-    if (key === 'votes') {
+    if (key === 'votes' || key === 'unlockObjects') {
       obj[key] = value.map(item => convertObjectToHex(item));
     } else if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
       obj[key] = convertObjectToHex(value);
