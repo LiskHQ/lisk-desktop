@@ -62,7 +62,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
       senderPublicKey: account.summary.publicKey,
       passphrase: account.passphrase,
       nonce: account.sequence?.nonce,
-      fee: toRawLsk(parseFloat(fee)),
+      fee: toRawLsk(parseFloat(fee.value)),
       username: state.nickname,
       keys: account.keys,
     };
@@ -74,7 +74,6 @@ const SelectNameAndFee = ({ account, ...props }) => {
     if (!error) {
       nextStep({
         nickname: state.nickname,
-        fee: state.customFee ? state.customFee.value : fee.value,
         transactionInfo: tx,
       });
     } else {
