@@ -302,8 +302,16 @@ export const SignedAndRemainingMembersList = ({ t }) => {
 
   const isMultisignatureGroupRegistration = transaction.moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+
+  const keys = isMultisignatureGroupRegistration
+    ? {
+      optionalKeys: transaction.asset.optionalKeys,
+      mandatoryKeys: transaction.asset.mandatoryKeys,
+    }
+    : account.keys;
+
   const { signed, remaining } = useMemo(() => calculateRemainingAndSignedMembers(
-    account.keys, transaction.signatures, isMultisignatureGroupRegistration,
+    keys, transaction.signatures, isMultisignatureGroupRegistration,
   ), [account]);
 
   return (
