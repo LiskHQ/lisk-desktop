@@ -252,6 +252,11 @@ export const getTransactionFee = async ({
   const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
 
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
+    const { optionalKeys, mandatoryKeys } = transaction;
+    numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
+  }
+
   const minFee = transactions.computeMinFee(schema, {
     ...transactionObject,
     signatures: undefined,
