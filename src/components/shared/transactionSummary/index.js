@@ -21,8 +21,9 @@ const Footer = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
-  const onDownload = (transaction) => {
-    downloadJSON(transaction, `tx-${transaction.moduleID}-${transaction.assetID}`);
+  const onDownload = (transaction = {}) => {
+    const jsonTransaction = JSON.parse(transactionToJSON(transaction));
+    downloadJSON(transaction, `tx-${jsonTransaction.id}`);
   };
 
   const onCopy = (transaction) => {
