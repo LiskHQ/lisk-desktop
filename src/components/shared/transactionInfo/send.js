@@ -23,12 +23,6 @@ const Send = ({
     </section>
     <section className={styles.msignRow}>
       <div className={styles.col}>
-        <label>{t('Transaction ID')}</label>
-        <label>
-          {transaction.id ? Buffer.from(transaction.id, 'hex') : '-'}
-        </label>
-      </div>
-      <div className={styles.col}>
         <label>{t('Amount')}</label>
         <label className="amount-summary">
           <LiskAmount
@@ -41,7 +35,7 @@ const Send = ({
     <section>
       <label>{t('Message')}</label>
       <label className="message-value">
-        {transaction.asset?.data}
+        {transaction.asset?.data || '-'}
       </label>
     </section>
   </>

@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
 import { MODULE_ASSETS_NAME_ID_MAP, actionTypes, tokenMap } from '@constants';
 import { toRawLsk } from '@utils/lsk';
-import { getUnlockableUnlockingObjects } from '@utils/account';
+import { getUnlockableUnlockObjects } from '@utils/account';
 import { create } from '@api/transaction';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
@@ -56,7 +56,7 @@ const Form = ({
         nonce: account.sequence?.nonce,
         fee: `${toRawLsk(parseFloat(selectedFee))}`,
         passphrase: account.passphrase,
-        unlockingObjects: getUnlockableUnlockingObjects(
+        unlockObjects: getUnlockableUnlockObjects(
           account.dpos?.unlocking, currentBlockHeight,
         ),
         keys: account.keys,

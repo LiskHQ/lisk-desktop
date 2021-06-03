@@ -446,12 +446,12 @@ Object {
   "asset": Object {
     "unlockObjects": Array [
       Object {
-        "amount": 10000000,
+        "amount": "10000000",
         "delegateAddress": "lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy",
         "unvoteHeight": 1000000,
       },
       Object {
-        "amount": -10000000,
+        "amount": "-10000000",
         "delegateAddress": "lskkx46qy3wkwtfbh4gzbq57tx6dzfexu5yufwh5b",
         "unvoteHeight": 1000000,
       },

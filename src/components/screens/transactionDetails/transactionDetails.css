@@ -105,4 +105,13 @@
       "transactionId fee"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
+
+  & .unlockTokenPreview {
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "transactionId fee"
+      "amount amount"
+      "signedAndRemainingMembersList signedAndRemainingMembersList";
+  }
 }

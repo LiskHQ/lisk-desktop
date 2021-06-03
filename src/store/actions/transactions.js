@@ -167,10 +167,9 @@ export const transactionBroadcasted = transaction =>
       type: actionTypes.broadcastedTransactionSuccess,
       data: transaction,
     });
-
+    const transformedTransaction = transformTransaction(transaction);
     if (activeToken !== tokenMap.BTC.key
-      && transaction.sender.address === account.info.LSK.summary.address) {
-      const transformedTransaction = transformTransaction(transaction);
+      && transformedTransaction.sender.address === account.info.LSK.summary.address) {
       dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
     }
 

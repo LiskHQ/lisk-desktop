@@ -37,6 +37,10 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
       transaction.username = asset.username;
       break;
 
+    case MODULE_ASSETS_NAME_ID_MAP.unlockToken:
+      transaction.unlockObjects = asset.unlockObjects;
+      break;
+
     default:
       break;
   }
