@@ -48,6 +48,10 @@ const LayoutSchema = {
     components: [...baseComponents, Illustration, Amount],
     className: styles.unlockToken,
   },
+  [`${unlockToken}-preview`]: {
+    components: [...previewBaseComponents, Illustration, Amount],
+    className: styles.unlockTokenPreview,
+  },
   default: {
     components: [...baseComponents],
     className: styles.generalLayout,

@@ -17,12 +17,6 @@ const UnlockBalance = ({ account, t, transaction = {} }) => (
     </section>
     <section className={styles.msignRow}>
       <div className={styles.col}>
-        <label>{t('Transaction ID')}</label>
-        <label>
-          {transaction.id ? Buffer.from(transaction.id, 'hex') : '-'}
-        </label>
-      </div>
-      <div className={styles.col}>
         <label>{t('Amount to unlock')}</label>
         <label className="amount-label">
           <LiskAmount

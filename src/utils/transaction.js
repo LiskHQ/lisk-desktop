@@ -93,9 +93,9 @@ const transformTransaction = ({
     case unlockToken: {
       transformedTransaction.asset = {
         unlockObjects: asset.unlockObjects.map(unlockObject => ({
-          delegateAddress: getBase32AddressFromAddress(unlockObject.delegateAddress),
-          amount: Number(unlockObject.amount),
-          unvoteHeight: unlockObject.height.start,
+          delegateAddress: getBase32AddressFromAddress(Buffer.from(unlockObject.delegateAddress, 'hex')),
+          amount: convertBigIntToString(unlockObject.amount),
+          unvoteHeight: unlockObject.unvoteHeight,
         })),
       };
       break;
@@ -172,10 +172,10 @@ const createTransactionObject = (tx, moduleAssetId) => {
 
     case unlockToken: {
       transaction.asset = {
-        unlockObjects: tx.unlockingObjects.map(unlockingObject => ({
-          amount: BigInt(unlockingObject.amount),
-          delegateAddress: getAddressFromBase32Address(unlockingObject.delegateAddress),
-          unvoteHeight: unlockingObject.unvoteHeight,
+        unlockObjects: tx.unlockObjects.map(unlockObject => ({
+          amount: BigInt(unlockObject.amount),
+          delegateAddress: getAddressFromBase32Address(unlockObject.delegateAddress),
+          unvoteHeight: unlockObject.unvoteHeight,
         })),
       };
       break;
@@ -222,7 +222,7 @@ const convertObjectToHex = (data) => {
   // eslint-disable-next-line no-restricted-syntax, no-unused-vars, guard-for-in
   for (const key in data) {
     const value = data[key];
-    if (key === 'votes') {
+    if (key === 'votes' || key === 'unlockObjects') {
       obj[key] = value.map(item => convertObjectToHex(item));
     } else if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
       obj[key] = convertObjectToHex(value);
