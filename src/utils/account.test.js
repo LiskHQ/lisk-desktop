@@ -4,7 +4,7 @@ import {
   extractAddressFromPublicKey,
   getActiveTokenAccount,
   calculateUnlockableBalance,
-  getUnlockableUnlockingObjects,
+  getUnlockableUnlockObjects,
   calculateBalanceLockedInVotes,
   extractAddressFromPassphrase,
   isAccountInitialized,
@@ -121,13 +121,13 @@ describe('Utils: Account', () => {
         const currentBlockHeight = 5000;
 
         expect(
-          getUnlockableUnlockingObjects(unlocking, currentBlockHeight),
+          getUnlockableUnlockObjects(unlocking, currentBlockHeight),
         ).toEqual([{ amount: '3000000000', unvoteHeight: 100, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' }]);
       });
 
       it('should return 0 when unlocking is undefined', () => {
         const currentBlockHeight = 5000;
-        expect(getUnlockableUnlockingObjects(undefined, currentBlockHeight)).toEqual([]);
+        expect(getUnlockableUnlockObjects(undefined, currentBlockHeight)).toEqual([]);
       });
     });
   });

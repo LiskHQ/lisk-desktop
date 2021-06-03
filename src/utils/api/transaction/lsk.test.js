@@ -535,7 +535,7 @@ describe('API: LSK Transactions', () => {
         moduleAssetId: unlockToken,
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-        unlockingObjects: [
+        unlockObjects: [
           { delegateAddress: accounts.genesis.summary.address, amount: '-10000000' },
           { delegateAddress: accounts.delegate_candidate.summary.address, amount: '-340000000' },
         ],
