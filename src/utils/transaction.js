@@ -93,9 +93,9 @@ const transformTransaction = ({
     case unlockToken: {
       transformedTransaction.asset = {
         unlockObjects: asset.unlockObjects.map(unlockObject => ({
-          delegateAddress: getBase32AddressFromAddress(unlockObject.delegateAddress),
-          amount: Number(unlockObject.amount),
-          unvoteHeight: unlockObject.height.start,
+          delegateAddress: getBase32AddressFromAddress(Buffer.from(unlockObject.delegateAddress, 'hex')),
+          amount: convertBigIntToString(unlockObject.amount),
+          unvoteHeight: unlockObject.unvoteHeight,
         })),
       };
       break;
@@ -171,11 +171,12 @@ const createTransactionObject = (tx, moduleAssetId) => {
     }
 
     case unlockToken: {
+      console.log('createTransactionObject', tx);
       transaction.asset = {
-        unlockObjects: tx.unlockingObjects.map(unlockingObject => ({
-          amount: BigInt(unlockingObject.amount),
-          delegateAddress: getAddressFromBase32Address(unlockingObject.delegateAddress),
-          unvoteHeight: unlockingObject.unvoteHeight,
+        unlockObjects: tx.unlockObjects.map(unlockObject => ({
+          amount: BigInt(unlockObject.amount),
+          delegateAddress: getAddressFromBase32Address(unlockObject.delegateAddress),
+          unvoteHeight: unlockObject.unvoteHeight,
         })),
       };
       break;

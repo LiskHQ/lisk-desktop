@@ -124,7 +124,7 @@ describe('API: LSK Transactions', () => {
     });
 
     it('creates a transaction object for unlockToken transaction', () => {
-      const unlockingObjects = [
+      const unlockObjects = [
         { delegateAddress: accounts.genesis.summary.address, amount: '-1000' },
         { delegateAddress: accounts.delegate.summary.address, amount: '1000' },
       ];
@@ -132,7 +132,7 @@ describe('API: LSK Transactions', () => {
         senderPublicKey: '',
         nonce: 1,
         fee: '1000000',
-        unlockingObjects,
+        unlockObjects,
       };
       const txObj = createTransactionObject(tx, unlockToken);
 

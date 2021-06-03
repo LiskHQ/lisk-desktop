@@ -4,7 +4,7 @@ import {
   calculateBalanceLockedInVotes,
   calculateUnlockableBalance,
   getActiveTokenAccount,
-  getUnlockableUnlockingObjects,
+  getUnlockableUnlockObjects,
 } from '@utils/account';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionPriority, { useTransactionFeeCalculation } from '@shared/transactionPriority';
@@ -39,7 +39,7 @@ const LockedBalance = (props) => {
       senderPublicKey: account.summary?.publicKey,
       nonce: account.sequence?.nonce,
       passphrase: account.passphrase,
-      unlockingObjects: getUnlockableUnlockingObjects(account.dpos?.unlocking, currentBlockHeight),
+      unlockObjects: getUnlockableUnlockObjects(account.dpos?.unlocking, currentBlockHeight),
     },
   });
 

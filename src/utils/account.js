@@ -138,7 +138,7 @@ export const isBlockHeightReached = (unlockHeight, currentBlockHeight) =>
  * @param {Number} currentBlockHeight - Current block height
  * @returns {Array} Array of LSK rows available to unlock
  */
-export const getUnlockableUnlockingObjects = (unlocking = [], currentBlockHeight = 0) =>
+export const getUnlockableUnlockObjects = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.filter(vote => isBlockHeightReached(vote.height.end, currentBlockHeight))
     .map(vote => ({
       delegateAddress: vote.delegateAddress,

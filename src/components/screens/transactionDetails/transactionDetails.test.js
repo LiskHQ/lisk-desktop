@@ -286,7 +286,7 @@ describe('Transaction Details Component', () => {
           },
           id: 123,
           asset: {
-            unlockingObjects: [
+            unlockObjects: [
               {
                 amount: 100,
               }, {
