@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { removeSearchParamsFromUrl } from '@utils/searchParams';
+import { routes } from '@constants';
 import LiskAmount from '@shared/liskAmount';
 import Box from '@toolbox/box';
 import BoxFooter from '@toolbox/box/footer';
@@ -53,7 +53,7 @@ const Result = ({
   t, history, locked, unlockable, error, transactionBroadcasted, transactions,
 }) => {
   const closeModal = () => {
-    removeSearchParamsFromUrl(history, ['modal']);
+    history.push(routes.wallet.path);
   };
 
   useEffect(() => {
