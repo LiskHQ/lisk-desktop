@@ -234,13 +234,13 @@ describe('API: LSK Transactions', () => {
           delegateAddress:
             getAddressFromBase32Address(accounts.delegate.summary.address),
           amount: 10000000n,
-          height: { start: 1000000 },
+          unvoteHeight: 1000000,
         },
         {
           delegateAddress:
             getAddressFromBase32Address(accounts.send_all_account.summary.address),
           amount: -10000000n,
-          height: { start: 1000000 },
+          unvoteHeight: 1000000,
         },
       ];
 
