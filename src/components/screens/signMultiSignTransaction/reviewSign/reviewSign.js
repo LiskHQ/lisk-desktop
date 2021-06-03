@@ -1,14 +1,14 @@
 import React from 'react';
-import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import { transactions } from '@liskhq/lisk-client';
 import { moduleAssetSchemas, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { createTransactionObject } from '@utils/transaction';
-import { transactionBroadcasted } from '@actions';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import BoxFooter from '@toolbox/box/footer';
 import BoxContent from '@toolbox/box/content';
 import Box from '@toolbox/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';
+import { removeSearchParamsFromUrl } from '@utils/searchParams';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import BoxFooter from '@toolbox/box/footer';
+
 import ProgressBar from '../progressBar';
 import styles from '../styles.css';
 
@@ -56,7 +56,6 @@ const ReviewSign = ({
   nextStep,
   history,
   error,
-  dispatch,
   senderAccount,
 }) => {
   // eslint-disable-next-line max-statements
@@ -94,14 +93,8 @@ const ReviewSign = ({
   };
 
   const onSignClick = () => {
-    const [signedtx, err] = signTransaction();
-    nextStep({ transaction: signedtx, error: err });
-  };
-
-  const onSendClick = () => {
-    const [signedtx, err] = signTransaction();
-    dispatch(transactionBroadcasted(signedtx));
-    nextStep({ transaction: signedtx, isBroadcasted: true, error: err });
+    const [signedTx, err] = signTransaction();
+    nextStep({ transaction: signedTx, error: err });
   };
 
   return (
@@ -133,9 +126,6 @@ const ReviewSign = ({
           </SecondaryButton>
           <PrimaryButton size="l" onClick={onSignClick}>
             {t('Sign')}
-          </PrimaryButton>
-          <PrimaryButton size="l" onClick={onSendClick}>
-            {t('Sign and Send')}
           </PrimaryButton>
         </BoxFooter>
       </Box>
