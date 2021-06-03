@@ -30,11 +30,11 @@ const Member = ({ member, i, t }) => (
         {member.name || member.address.replace(regex.lskAddressTrunk, '$1...$3')}
         <span>{`(${getAccountRoleText(member.isMandatory, t)})`}</span>
       </p>
-      {/*
-      <p className={styles.memberKey}>
-        {member.publicKey.replace(regex.publicKeyTrunk, '$1...$3')}
-      </p>
-      */}
+      {member.publicKey && (
+        <p className={styles.memberKey}>
+          {member.publicKey.replace(regex.publicKeyTrunk, '$1...$3')}
+        </p>
+      )}
     </div>
   </div>
 );
