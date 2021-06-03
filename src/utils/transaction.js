@@ -171,7 +171,6 @@ const createTransactionObject = (tx, moduleAssetId) => {
     }
 
     case unlockToken: {
-      console.log('createTransactionObject', tx);
       transaction.asset = {
         unlockObjects: tx.unlockObjects.map(unlockObject => ({
           amount: BigInt(unlockObject.amount),
