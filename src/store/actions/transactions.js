@@ -167,6 +167,7 @@ export const transactionBroadcasted = transaction =>
       type: actionTypes.broadcastedTransactionSuccess,
       data: transaction,
     });
+
     const transformedTransaction = transformTransaction(transaction);
     if (activeToken !== tokenMap.BTC.key
       && transformedTransaction.sender.address === account.info.LSK.summary.address) {

@@ -54,9 +54,10 @@
   & .multiSigLayout {
     grid-template-areas:
       "sender sender"
-      "transactionId transactionId"
-      "date fee"
-      "confirmations requiredSignatures"
+      "date transactionId"
+      "fee confirmations"
+      "blockId blockHeight"
+      "requiredSignatures requiredSignatures"
       "members members";
   }
 
@@ -112,6 +113,16 @@
       "sender sender"
       "transactionId fee"
       "amount amount"
+      "signedAndRemainingMembersList signedAndRemainingMembersList";
+  }
+
+  & .multiSigRegisterPreview {
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "members members"
+      "requiredSignatures requiredSignatures"
+      "transactionId fee"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
 }
