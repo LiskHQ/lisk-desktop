@@ -165,7 +165,6 @@ describe('Utils: Account', () => {
         optionalKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
           '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
           '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
-        numberOfSignatures: 2,
       };
 
       const signatures = [];
@@ -180,7 +179,6 @@ describe('Utils: Account', () => {
         optionalKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
           '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
           '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
-        numberOfSignatures: 2,
       };
 
       const signatures = ['haha'];
@@ -195,7 +193,6 @@ describe('Utils: Account', () => {
         optionalKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
           '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
           '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
-        numberOfSignatures: 2,
       };
 
       const signatures = [

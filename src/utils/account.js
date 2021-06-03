@@ -188,7 +188,7 @@ export const hasEnoughBalanceForReclaim = (balance = 0) =>
   Number(balance) >= balanceNeededForReclaim;
 
 export const calculateRemainingAndSignedMembers = (
-  keys = { optionalKeys: [], mandatoryKeys: [], numberOfSignatures: 0 },
+  keys = { optionalKeys: [], mandatoryKeys: [] },
   signaturesInTransaction = [],
   ignoreFirstSignature = false,
 ) => {
