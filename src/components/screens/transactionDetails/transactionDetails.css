@@ -54,9 +54,10 @@
   & .multiSigLayout {
     grid-template-areas:
       "sender sender"
-      "transactionId transactionId"
-      "date fee"
-      "confirmations requiredSignatures"
+      "date transactionId"
+      "fee confirmations"
+      "blockId blockHeight"
+      "requiredSignatures requiredSignatures"
       "members members";
   }
 
