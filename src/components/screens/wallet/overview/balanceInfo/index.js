@@ -44,7 +44,7 @@ const BalanceInfo = ({
 
             </div>
             {
-              activeToken === tokenMap.LSK.key ? (
+              activeToken === tokenMap.LSK.key && isWalletRoute ? (
                 <LockedBalanceLink activeToken={activeToken} isWalletRoute={isWalletRoute} />
               ) : null
             }
