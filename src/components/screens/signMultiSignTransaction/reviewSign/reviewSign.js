@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { transactions } from '@liskhq/lisk-client';
 import { moduleAssetSchemas, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { createTransactionObject } from '@utils/transaction';
 import BoxContent from '@toolbox/box/content';
 import Box from '@toolbox/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';
-import { removeSearchParamsFromUrl } from '@utils/searchParams';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import BoxFooter from '@toolbox/box/footer';
 
 import ProgressBar from '../progressBar';
+import { ActionBar, Feedback } from './footer';
 import styles from '../styles.css';
 
 const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
@@ -58,6 +56,14 @@ const ReviewSign = ({
   error,
   senderAccount,
 }) => {
+  const isMember = useMemo(() => {
+    if (senderAccount.data?.keys) {
+      const { mandatoryKeys, optionalKeys } = senderAccount.data.keys;
+      return mandatoryKeys.includes(account.summary.publicKey)
+        || optionalKeys.includes(account.summary.publicKey);
+    }
+    return null;
+  }, [senderAccount.data]);
   // eslint-disable-next-line max-statements
   const signTransaction = () => {
     let signedTransaction;
@@ -117,17 +123,22 @@ const ReviewSign = ({
             }}
           />
         </BoxContent>
-        <BoxFooter
-          direction="horizontal"
-          className={styles.footer}
-        >
-          <SecondaryButton size="l" onClick={() => removeSearchParamsFromUrl(history, ['modal'])}>
-            {t('Reject')}
-          </SecondaryButton>
-          <PrimaryButton size="l" onClick={onSignClick}>
-            {t('Sign')}
-          </PrimaryButton>
-        </BoxFooter>
+        {
+          isMember ? (
+            <ActionBar
+              t={t}
+              history={history}
+              onSignClick={onSignClick}
+            />
+          ) : null
+        }
+        {
+          isMember === false ? (
+            <Feedback
+              t={t}
+            />
+          ) : null
+        }
       </Box>
     </section>
   );
