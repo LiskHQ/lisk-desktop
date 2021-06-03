@@ -1,6 +1,7 @@
 import React from 'react';
 import TransactionResult from '@shared/transactionResult';
 import DialogHolder from '@toolbox/dialog/holder';
+import { transactionToJSON } from '@utils/transaction';
 import DelegateAnimation from '../animations/delegateAnimation';
 import styles from './status.css';
 
@@ -31,11 +32,12 @@ class Status extends React.Component {
   // istanbul ignore next
   checkTransactionStatus() {
     const { transactions, transactionInfo } = this.props;
+    const transaction = JSON.parse(transactionToJSON(transactionInfo));
 
     const success = transactions.confirmed
-      .filter(tx => tx.id === transactionInfo.id);
+      .filter(tx => tx.id === transaction.id);
     const error = transactions.broadcastedTransactionsError
-      .filter(tx => tx.transaction.id === transactionInfo.id);
+      .filter(tx => tx.transaction.id === transaction.id);
 
     if (success.length) this.setState({ status: 'ok' });
     if (error.length) this.setState({ status: 'fail' });
