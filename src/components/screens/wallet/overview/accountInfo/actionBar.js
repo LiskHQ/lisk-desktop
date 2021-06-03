@@ -28,7 +28,7 @@ const ActionBar = ({
         size="maxContent"
         content={(
           <CopyToClipboard
-            value={activeToken === tokenMap.BTC.token
+            value={activeToken === tokenMap.BTC.key
               ? address : `Address: ${address} - Public key: ${account.summary.publicKey}`}
             type="icon"
             copyClassName={styles.copyIcon}
@@ -36,7 +36,7 @@ const ActionBar = ({
           />
         )}
       >
-        <p>{activeToken === tokenMap.BTC.token ? t('Copy address') : t('Copy address and public key')}</p>
+        <p>{activeToken === tokenMap.BTC.key ? t('Copy address') : t('Copy address and public key')}</p>
       </Tooltip>
     </div>
     <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
