@@ -56,6 +56,37 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
   return transaction;
 };
 
+const getNumbersOfSignaturesRequired = ({ keys, isGroupRegistration }) => {
+  if (isGroupRegistration) {
+    // +1 to account for double sender signature
+    return keys.mandatoryKeys.length + keys.optionalKeys.length + 1;
+  }
+  return keys.numberOfSignatures;
+};
+
+const getKeys = ({ senderAccount, transaction, isGroupRegistration }) => {
+  if (isGroupRegistration) {
+    return transaction.asset;
+  }
+
+  return senderAccount.keys;
+};
+
+const getOwnSignatureIndex = ({ keys, publicKey, isGroupRegistration }) => {
+  const ownIndex = [
+    ...keys.mandatoryKeys,
+    ...keys.optionalKeys,
+  ].findIndex(key => key === publicKey);
+
+  if (isGroupRegistration) {
+    return ownIndex + 1;
+  }
+  return ownIndex;
+};
+
+const getNonEmptySignatures = (signatures) =>
+  signatures.filter(signature => Boolean(signature));
+
 const ReviewSign = ({
   t,
   transaction,
@@ -67,13 +98,54 @@ const ReviewSign = ({
   dispatch,
   senderAccount,
 }) => {
-  console.log(transaction);
+  // eslint-disable-next-line max-statements
+  const showSendButton = () => {
+    if (senderAccount.data?.keys) {
+      const isGroupRegistration = transaction.moduleAssetId
+        === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+      const keys = getKeys({
+        senderAccount: senderAccount.data, transaction, isGroupRegistration,
+      });
+
+      const required = getNumbersOfSignaturesRequired({
+        keys, transaction, isGroupRegistration,
+      });
+
+      const alreadySigned = getNonEmptySignatures(transaction.signatures).length;
+
+      // +1 to add the signature that this account will add by clicking "Sign and Send"
+      if (required === alreadySigned + 1) {
+        const publicKey = account.info.LSK.summary.publicKey;
+
+        const index = getOwnSignatureIndex({
+          keys, publicKey, isGroupRegistration,
+        });
+
+        const hasCurrentAccountSigned = Boolean(transaction.signatures[index]);
+
+        if (!hasCurrentAccountSigned) {
+          return true;
+        }
+        return false;
+      }
+
+      return false;
+    }
+    return false;
+  };
+
   // eslint-disable-next-line max-statements
   const signTransaction = () => {
     let signedTransaction;
     let err;
 
-    const { mandatoryKeys, optionalKeys } = senderAccount.data.keys;
+    const isGroupRegistration = transaction.moduleAssetId
+        === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+
+    const { mandatoryKeys, optionalKeys } = getKeys({
+      senderAccount: senderAccount.data, transaction, isGroupRegistration,
+    });
+
     const flatTransaction = flattenTransaction(transaction);
     const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
     const keys = {
@@ -143,9 +215,11 @@ const ReviewSign = ({
           <PrimaryButton size="l" onClick={onSignClick}>
             {t('Sign')}
           </PrimaryButton>
-          <PrimaryButton size="l" onClick={onSendClick}>
-            {t('Sign and Send')}
-          </PrimaryButton>
+          {showSendButton() && (
+            <PrimaryButton size="l" onClick={onSendClick}>
+              {t('Sign and Send')}
+            </PrimaryButton>
+          )}
         </BoxFooter>
       </Box>
     </section>
