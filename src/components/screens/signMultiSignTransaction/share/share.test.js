@@ -15,9 +15,9 @@ describe('Sign Multisignature Tx Share component', () => {
     asset: {
       recipientAddress: 'd04699e57c4a3846c988f3c15306796f8eae5c1c',
       amount: '100000000n',
-      data: ''
+      data: '',
     },
-    id: '717ebbf620adfc70e53859acca9fbc61c300a2bf090455facd35de006d41e733'
+    id: '717ebbf620adfc70e53859acca9fbc61c300a2bf090455facd35de006d41e733',
   };
 
   const props = {
