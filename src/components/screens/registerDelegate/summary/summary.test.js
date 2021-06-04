@@ -8,10 +8,11 @@ describe('Delegate Registration Summary', () => {
     account: accounts.genesis,
     nickname: 'mydelegate',
     prevStep: jest.fn(),
-    fee: 10,
     nextStep: jest.fn(),
     t: key => key,
-    transactionInfo: {},
+    transactionInfo: {
+      fee: 1900000000,
+    },
   };
 
   afterEach(() => {
