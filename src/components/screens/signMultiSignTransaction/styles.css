@@ -38,7 +38,6 @@
   }
 }
 
-
 .txDetails {
-  max-height: calc(100vh - 80px - 290px);
+  max-height: calc(100vh - 80px - 290px); /* stylelint-disable-line unit-whitelist */
 }
