@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BoxFooter from '@toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import Icon from '@toolbox/icon';
@@ -35,27 +35,36 @@ export const CopyAndSendFooter = ({
   onCopy,
   copied,
   onDownload,
-}) => (
-  <BoxFooter className={styles.footer} direction="horizontal">
-    <SecondaryButton
-      className="copy-button"
-      onClick={onCopy}
-    >
-      <span className={styles.buttonContent}>
-        <Icon name={copied ? 'checkmark' : 'copy'} />
-        {t(copied ? 'Copied' : 'Copy')}
-      </span>
-    </SecondaryButton>
-    <SecondaryButton onClick={onDownload}>
-      <span className={styles.buttonContent}>
-        <Icon name="download" />
-        {t('Download')}
-      </span>
-    </SecondaryButton>
-    <PrimaryButton onClick={onSend}>
-      <span className={styles.buttonContent}>
-        {t('Send')}
-      </span>
-    </PrimaryButton>
-  </BoxFooter>
-);
+}) => {
+  const [sent, setSent] = useState(false);
+
+  const onClick = (e) => {
+    onSend(e);
+    setSent(true);
+  };
+
+  return (
+    <BoxFooter className={styles.footer} direction="horizontal">
+      <SecondaryButton
+        className="copy-button"
+        onClick={onCopy}
+      >
+        <span className={styles.buttonContent}>
+          <Icon name={copied ? 'checkmark' : 'copy'} />
+          {t(copied ? 'Copied' : 'Copy')}
+        </span>
+      </SecondaryButton>
+      <SecondaryButton onClick={onDownload}>
+        <span className={styles.buttonContent}>
+          <Icon name="download" />
+          {t('Download')}
+        </span>
+      </SecondaryButton>
+      <PrimaryButton onClick={onClick} disabled={sent}>
+        <span className={styles.buttonContent}>
+          {t('Send')}
+        </span>
+      </PrimaryButton>
+    </BoxFooter>
+  );
+};
