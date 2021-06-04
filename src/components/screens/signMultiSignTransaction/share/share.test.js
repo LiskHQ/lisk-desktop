@@ -23,8 +23,13 @@ describe('Sign Multisignature Tx Share component', () => {
   const props = {
     t: v => v,
     networkIdentifier: '',
-    account: { info: { LSK: accounts.genesis } },
-    dispatch: jest.fn(),
+    senderAccount: {
+      keys: {
+        numberOfSignatures: 2,
+        mandatoryKeys: ['2fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a','0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a'],
+        optionalKeys: [],
+      },
+    },
     transaction,
   };
 
