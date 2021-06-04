@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentBlockHeight } from '@store/selectors';
 import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@utils/moduleAssets';
 import { getTxAmount } from '@utils/transaction';
-import { tokenMap } from '@constants';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import CopyToClipboard from '@toolbox/copyToClipboard';
 import TransactionTypeFigure from '@shared/transactionTypeFigure';
 import { DateTimeFromTimestamp } from '@toolbox/timestamp';
@@ -13,7 +13,7 @@ import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
 import MultiSignatureMembers, { SignedAndRemainingMembers } from '@shared/multisignatureMembers';
 import Tooltip from '@toolbox/tooltip/tooltip';
-import { extractAddressFromPublicKey, truncateAddress } from '@utils/account';
+import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@utils/account';
 
 import { Context } from '../transactionDetails';
 import AccountInfo from './accountInfo';
@@ -297,48 +297,21 @@ export const BlockHeight = ({ t }) => {
   );
 };
 
-const calculateRemainingAndSignedMembers = (
-  keys = { optionalKeys: [], mandatoryKeys: [] },
-  signatures = [],
-) => {
-  const { mandatoryKeys, optionalKeys } = keys;
-  const signed = [];
-  const remaining = [];
-
-  mandatoryKeys.forEach((key, index) => {
-    const hasSigned = Boolean(signatures[index]);
-    const value = {
-      publicKey: key, mandatory: true, address: extractAddressFromPublicKey(key),
-    };
-
-    if (hasSigned) {
-      signed.push(value);
-    } else {
-      remaining.push(value);
-    }
-  });
-
-  optionalKeys.forEach((key, index) => {
-    const hasSigned = Boolean(signatures[index]);
-    const value = {
-      publicKey: key, mandatory: false, address: extractAddressFromPublicKey(key),
-    };
-
-    if (hasSigned) {
-      signed.push(value);
-    } else {
-      remaining.push(value);
-    }
-  });
-
-  return [signed, remaining];
-};
-
 export const SignedAndRemainingMembersList = ({ t }) => {
   const { transaction, account } = useContext(Context);
 
-  const [signed, remaining] = useMemo(() => calculateRemainingAndSignedMembers(
-    account.keys, transaction.signatures,
+  const isMultisignatureGroupRegistration = transaction.moduleAssetId
+    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+
+  const keys = isMultisignatureGroupRegistration
+    ? {
+      optionalKeys: transaction.asset.optionalKeys,
+      mandatoryKeys: transaction.asset.mandatoryKeys,
+    }
+    : account.keys;
+
+  const { signed, remaining } = useMemo(() => calculateRemainingAndSignedMembers(
+    keys, transaction.signatures, isMultisignatureGroupRegistration,
   ), [account]);
 
   return (

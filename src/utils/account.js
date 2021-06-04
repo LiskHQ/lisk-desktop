@@ -186,3 +186,43 @@ export const hasEnoughBalanceForInitialization = (balance = 0) =>
 
 export const hasEnoughBalanceForReclaim = (balance = 0) =>
   Number(balance) >= balanceNeededForReclaim;
+
+export const calculateRemainingAndSignedMembers = (
+  keys = { optionalKeys: [], mandatoryKeys: [] },
+  signaturesInTransaction = [],
+  ignoreFirstSignature = false,
+) => {
+  const signatures = ignoreFirstSignature
+    ? signaturesInTransaction.slice(1) : signaturesInTransaction;
+  const { mandatoryKeys, optionalKeys } = keys;
+  const signed = [];
+  const remaining = [];
+
+  mandatoryKeys.forEach((key, index) => {
+    const hasSigned = Boolean(signatures[index]);
+    const value = {
+      publicKey: key, mandatory: true, address: extractAddressFromPublicKey(key),
+    };
+
+    if (hasSigned) {
+      signed.push(value);
+    } else {
+      remaining.push(value);
+    }
+  });
+
+  optionalKeys.forEach((key, index) => {
+    const hasSigned = Boolean(signatures[index + mandatoryKeys.length]);
+    const value = {
+      publicKey: key, mandatory: false, address: extractAddressFromPublicKey(key),
+    };
+
+    if (hasSigned) {
+      signed.push(value);
+    } else {
+      remaining.push(value);
+    }
+  });
+
+  return { signed, remaining };
+};

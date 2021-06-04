@@ -10,6 +10,7 @@ import ProgressBar from '../progressBar';
 import { ActionBar, Feedback } from './footer';
 import styles from '../styles.css';
 
+// eslint-disable-next-line max-statements
 const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
   const transaction = {
     senderPublicKey: rest.sender.publicKey,
@@ -39,6 +40,13 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
       transaction.unlockObjects = asset.unlockObjects;
       break;
 
+    case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup: {
+      transaction.numberOfSignatures = asset.numberOfSignatures;
+      transaction.mandatoryKeys = asset.mandatoryKeys;
+      transaction.optionalKeys = asset.optionalKeys;
+      break;
+    }
+
     default:
       break;
   }
@@ -64,12 +72,19 @@ const ReviewSign = ({
     }
     return null;
   }, [senderAccount.data]);
+
   // eslint-disable-next-line max-statements
   const signTransaction = () => {
     let signedTransaction;
     let err;
 
-    const { mandatoryKeys, optionalKeys } = senderAccount.data.keys;
+    const isGroupRegistration = transaction.moduleAssetId
+        === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+
+    const { mandatoryKeys, optionalKeys } = getKeys({
+      senderAccount: senderAccount.data, transaction, isGroupRegistration,
+    });
+
     const flatTransaction = flattenTransaction(transaction);
     const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
     const keys = {
