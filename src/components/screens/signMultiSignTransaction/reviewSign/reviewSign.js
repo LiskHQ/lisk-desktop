@@ -7,6 +7,7 @@ import Box from '@toolbox/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';
 
 import ProgressBar from '../progressBar';
+import { getKeys, showSignButton } from '../helpers';
 import { ActionBar, Feedback } from './footer';
 import styles from '../styles.css';
 
@@ -65,10 +66,8 @@ const ReviewSign = ({
   senderAccount,
 }) => {
   const isMember = useMemo(() => {
-    if (senderAccount.data?.keys) {
-      const { mandatoryKeys, optionalKeys } = senderAccount.data.keys;
-      return mandatoryKeys.includes(account.summary.publicKey)
-        || optionalKeys.includes(account.summary.publicKey);
+    if (senderAccount.data.keys) {
+      return showSignButton(senderAccount.data, account, transaction);
     }
     return null;
   }, [senderAccount.data]);
@@ -115,7 +114,11 @@ const ReviewSign = ({
 
   const onSignClick = () => {
     const [signedTx, err] = signTransaction();
-    nextStep({ transaction: signedTx, error: err });
+    nextStep({
+      transaction: signedTx,
+      error: err,
+      senderAccount: senderAccount.data,
+    });
   };
 
   return (
