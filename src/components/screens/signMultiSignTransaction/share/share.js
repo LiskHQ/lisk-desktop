@@ -44,7 +44,7 @@ const Share = ({
   const [copied, setCopied] = useState(false);
 
   const onDownload = () => {
-    downloadJSON(transaction, `tx-${transaction.moduleID}-${transaction.assetID}`);
+    downloadJSON(transaction, `tx-${transaction.id}`);
   };
 
   const onCopy = () => {
