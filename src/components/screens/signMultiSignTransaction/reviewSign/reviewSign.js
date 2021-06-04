@@ -122,43 +122,42 @@ const ReviewSign = ({
   };
 
   return (
-    <section>
-      <Box className={styles.boxContainer}>
-        <header>
-          <h1>{t('Sign multisignature transaction')}</h1>
-          <p>{t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}</p>
-        </header>
-        <BoxContent>
-          <ProgressBar current={2} />
-          <TransactionDetails
+    <Box className={styles.boxContainer}>
+      <header>
+        <h1>{t('Sign multisignature transaction')}</h1>
+        <p>{t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}</p>
+      </header>
+      <BoxContent>
+        <ProgressBar current={2} />
+        <TransactionDetails
+          t={t}
+          activeToken="LSK"
+          schema={`${transaction.moduleAssetId}-preview`}
+          account={senderAccount.data}
+          transaction={{
+            data: transaction,
+            error,
+          }}
+          containerStyle={styles.txDetails}
+        />
+      </BoxContent>
+      {
+        isMember ? (
+          <ActionBar
             t={t}
-            activeToken="LSK"
-            schema={`${transaction.moduleAssetId}-preview`}
-            account={senderAccount.data}
-            transaction={{
-              data: transaction,
-              error,
-            }}
+            history={history}
+            onSignClick={onSignClick}
           />
-        </BoxContent>
-        {
-          isMember ? (
-            <ActionBar
-              t={t}
-              history={history}
-              onSignClick={onSignClick}
-            />
-          ) : null
-        }
-        {
-          isMember === false ? (
-            <Feedback
-              t={t}
-            />
-          ) : null
-        }
-      </Box>
-    </section>
+        ) : null
+      }
+      {
+        isMember === false ? (
+          <Feedback
+            t={t}
+          />
+        ) : null
+      }
+    </Box>
   );
 };
 export default ReviewSign;

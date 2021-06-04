@@ -9,6 +9,7 @@
     align-items: flex-start;
     padding: 20px 20px 0 20px;
     height: auto;
+    overflow-y: auto;
 
     & > p {
       margin-bottom: 0;
@@ -35,4 +36,9 @@
       box-sizing: border-box;
     }
   }
+}
+
+
+.txDetails {
+  max-height: calc(100vh - 80px - 290px);
 }
