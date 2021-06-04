@@ -6,8 +6,8 @@ import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
 import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
 import { Input } from '@toolbox/inputs';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@constants';
+import { extractAddressFromPublicKey } from '@utils/account';
 import ProgressBar from '../progressBar';
 import MemberField from './memberField';
 import styles from './styles.css';
@@ -109,8 +109,23 @@ const Editor = ({
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
+    const extractedMembers = members.map(member => {
+      if (regex.publicKey.test(member.address)) {
+        return {
+          ...member,
+          address: extractAddressFromPublicKey(member.address),
+          publicKey: member.address,
+        };
+      }
+      return member;
+    });
+
     nextStep({
-      fee: feeValue, mandatoryKeys, optionalKeys, members, numberOfSignatures: requiredSignatures,
+      fee: feeValue,
+      mandatoryKeys,
+      optionalKeys,
+      members: extractedMembers,
+      numberOfSignatures: requiredSignatures,
     });
   };
 

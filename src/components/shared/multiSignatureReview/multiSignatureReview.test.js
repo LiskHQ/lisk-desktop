@@ -8,12 +8,12 @@ describe('Multisignature Review component', () => {
     t: v => v,
     members: [
       {
-        address: '8195226425328336181L', isMandatory: true,
+        address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', isMandatory: true,
       },
-      { address: '6195226421328336181L', isMandatory: false },
-      { address: '4827364921328336181L', isMandatory: false },
-      { address: '5738363111328339181L', isMandatory: false },
-      { address: '9484364921328336181L', isMandatory: false },
+      { address: 'lskehj0am9afxdz8arztqajy52acnoubkzvmo9cjy', isMandatory: false, publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a' },
+      { address: 'lskehj1am9afxdz8arztqajy52acnoubkzvmo9cjy', isMandatory: false },
+      { address: 'lskehj2am9afxdz8arztqajy52acnoubkzvmo9cjy', isMandatory: false },
+      { address: 'lskehj3am9afxdz8arztqajy52acnoubkzvmo9cjy', isMandatory: false },
     ],
     fee: 0.02,
     numberOfSignatures: 2,

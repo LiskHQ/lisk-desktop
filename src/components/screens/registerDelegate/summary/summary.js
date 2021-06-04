@@ -2,7 +2,7 @@ import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
-import { toRawLsk } from '@utils/lsk';
+import { fromRawLsk } from '@utils/lsk';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
@@ -11,7 +11,6 @@ const Summary = ({
   account,
   nickname,
   prevStep,
-  fee,
   t,
   nextStep,
   transactionInfo,
@@ -41,7 +40,7 @@ const Summary = ({
       account={account}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      fee={!account.summary.isMultisignature && fee}
+      fee={!account.summary.isMultisignature && fromRawLsk(transactionInfo.fee)}
       classNames={`${styles.box} ${styles.summaryContainer}`}
       createTransaction={(callback) => {
         callback(transactionInfo);
@@ -53,7 +52,6 @@ const Summary = ({
         transaction={transactionInfo}
         account={account}
         isMultisignature={account.summary.isMultisignature}
-        fee={toRawLsk(parseFloat(fee))}
       />
     </TransactionSummary>
   );

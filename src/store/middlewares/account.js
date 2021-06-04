@@ -83,7 +83,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
       if (!transaction) return false;
       return (
         account.summary?.address === transaction.sender.address
-        || account.summary?.address === transaction.asset?.recipient.address
+        || account.summary?.address === transaction.asset?.recipient?.address
       );
     }).length > 0;
 

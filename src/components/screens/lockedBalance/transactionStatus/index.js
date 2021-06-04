@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
+import { routes } from '@constants';
 import { transactionBroadcasted } from '@actions';
-import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import { PrimaryButton } from '@toolbox/buttons';
 import TransactionResult from '@shared/transactionResult';
 import styles from './status.css';
@@ -22,7 +22,7 @@ const Status = ({
     t,
     success,
     () => {
-      removeSearchParamsFromUrl(history, ['modal'], true);
+      history.push(routes.wallet.path);
     },
   );
 

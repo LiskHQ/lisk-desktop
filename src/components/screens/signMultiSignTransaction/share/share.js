@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import copyToClipboard from 'copy-to-clipboard';
+import { useDispatch } from 'react-redux';
+
 import { downloadJSON, transactionToJSON } from '@utils/transaction';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
-import BoxFooter from '@toolbox/box/footer';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import Icon from '@toolbox/icon';
 import TransactionResult from '@shared/transactionResult';
+import { transactionBroadcasted } from '@actions';
 
-import copyToClipboard from 'copy-to-clipboard';
 import ProgressBar from '../progressBar';
+import { CopyAndSendFooter, CopyFooter } from './footer';
+import { showSendButton } from '../helpers';
 import styles from './styles.css';
 
 const getTemplate = (t, error, isBroadcasted) => {
@@ -32,20 +34,26 @@ const getTemplate = (t, error, isBroadcasted) => {
 };
 
 const Share = ({
-  t, transaction, error, isBroadcasted = false,
+  t, transaction, senderAccount, error, isBroadcasted = false,
 }) => {
+  const dispatch = useDispatch();
+  const isComplete = showSendButton(senderAccount, transaction);
   const success = !error && transaction;
   const template = getTemplate(t, error, isBroadcasted);
 
   const [copied, setCopied] = useState(false);
 
   const onDownload = () => {
-    downloadJSON(transaction, `tx-${transaction.moduleID}-${transaction.assetID}`);
+    downloadJSON(transaction, `tx-${transaction.id}`);
   };
 
   const onCopy = () => {
     copyToClipboard(transactionToJSON(transaction));
     setCopied(true);
+  };
+
+  const onSend = () => {
+    dispatch(transactionBroadcasted(transaction));
   };
 
   return (
@@ -66,24 +74,22 @@ const Share = ({
             error={error}
           />
         </BoxContent>
-        {success && (
-          <BoxFooter className={styles.footer} direction="horizontal">
-            <SecondaryButton
-              className="copy-button"
-              onClick={onCopy}
-            >
-              <span className={styles.buttonContent}>
-                <Icon name={copied ? 'checkmark' : 'copy'} />
-                {t(copied ? 'Copied' : 'Copy')}
-              </span>
-            </SecondaryButton>
-            <PrimaryButton onClick={onDownload}>
-              <span className={styles.buttonContent}>
-                <Icon name="download" />
-                {t('Download')}
-              </span>
-            </PrimaryButton>
-          </BoxFooter>
+        {success && !isComplete && (
+          <CopyFooter
+            t={t}
+            onCopy={onCopy}
+            copied={copied}
+            onDownload={onDownload}
+          />
+        )}
+        {success && isComplete && (
+          <CopyAndSendFooter
+            t={t}
+            onCopy={onCopy}
+            copied={copied}
+            onSend={onSend}
+            onDownload={onDownload}
+          />
         )}
       </Box>
     </section>

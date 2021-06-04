@@ -84,7 +84,6 @@ describe('SelectNameAndFee', () => {
     wrapper.find('button.confirm-btn').simulate('click');
     await flushPromises();
     expect(props.nextStep).toBeCalledWith({
-      fee: '0.000156',
       nickname: 'mydelegate',
       transactionInfo: mockTransaction,
     });
