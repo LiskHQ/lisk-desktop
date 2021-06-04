@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Share from './share';
-import accounts from '../../../../../test/constants/accounts';
 
 describe('Sign Multisignature Tx Share component', () => {
   let wrapper;
