@@ -11,14 +11,6 @@ import { getKeys, showSignButton } from '../helpers';
 import { ActionBar, Feedback } from './footer';
 import styles from '../styles.css';
 
-const getKeys = ({ senderAccount, transaction, isGroupRegistration }) => {
-  if (isGroupRegistration) {
-    return transaction.asset;
-  }
-
-  return senderAccount.keys;
-};
-
 // eslint-disable-next-line max-statements
 const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
   const transaction = {
