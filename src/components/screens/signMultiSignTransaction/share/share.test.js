@@ -25,7 +25,7 @@ describe('Sign Multisignature Tx Share component', () => {
     senderAccount: {
       keys: {
         numberOfSignatures: 2,
-        mandatoryKeys: ['2fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a','0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a'],
+        mandatoryKeys: ['2fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a'],
         optionalKeys: [],
       },
     },
