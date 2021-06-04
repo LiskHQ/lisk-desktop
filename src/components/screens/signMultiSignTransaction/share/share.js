@@ -10,6 +10,7 @@ import { transactionBroadcasted } from '@actions';
 
 import ProgressBar from '../progressBar';
 import { CopyAndSendFooter, CopyFooter } from './footer';
+import { showSendButton } from '../helpers';
 import styles from './styles.css';
 
 const getTemplate = (t, error, isBroadcasted) => {
@@ -33,11 +34,10 @@ const getTemplate = (t, error, isBroadcasted) => {
 };
 
 const Share = ({
-  t, transaction, error, isBroadcasted = false,
+  t, transaction, senderAccount, error, isBroadcasted = false,
 }) => {
   const dispatch = useDispatch();
-  const isComplete = transaction.signatures.length > 1
-    && !transaction.signatures.some(item => item.length === 0);
+  const isComplete = showSendButton(senderAccount, transaction);
   const success = !error && transaction;
   const template = getTemplate(t, error, isBroadcasted);
 
