@@ -21,7 +21,7 @@ export const CopyFooter = ({
       </span>
     </SecondaryButton>
     <PrimaryButton onClick={onDownload}>
-      <span className={`${styles.buttonContent} ${styles.download}`}>
+      <span className={styles.buttonContent}>
         <Icon name="download" />
         {t('Download')}
       </span>
