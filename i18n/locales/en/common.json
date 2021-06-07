@@ -312,7 +312,7 @@
   "Nothing available to unlock": "Nothing available to unlock",
   "Nothing has been found. Make sure to double check the ID you typed.": "Nothing has been found. Make sure to double check the ID you typed.",
   "Number": "Number",
-  "Number of signatures must be greater than or equal to the number of members.": "Number of signatures must be greater than or equal to the number of members.",
+  "Number of signatures must be lower than or equal to the number of members.": "Number of signatures must be lower than or equal to the number of members.",
   "Official guidelines": "Official guidelines",
   "Ok": "Ok",
   "Old Vote Amount": "Old Vote Amount",
