@@ -18,7 +18,7 @@ const getTemplate = (t, status, errorMessage) => {
     case 'SIGN_SUCCEEDED':
       return {
         illustration: 'registerMultisignatureSuccess',
-        message: t('You have successfully sent the transaction. You can download or copy the transaction and send it back to the initiator.'),
+        message: t('You have successfully signed the transaction. You can download or copy the transaction and send it back to the initiator.'),
       };
     case 'SIGN_FAILED':
       return {
@@ -38,7 +38,7 @@ const getTemplate = (t, status, errorMessage) => {
     default:
       return {
         illustration: 'registerMultisignatureSuccess',
-        message: t('You have successfully sent the transaction. You can download or copy the transaction and send it back to the initiator.'),
+        message: t('Pending transaction status.'),
       };
   }
 };
