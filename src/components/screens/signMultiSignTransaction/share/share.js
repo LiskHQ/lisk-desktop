@@ -23,17 +23,17 @@ const getTemplate = (t, status, errorMessage) => {
     case 'SIGN_FAILED':
       return {
         illustration: 'registerMultisignatureError',
-        message: t(`Error: ${errorMessage}`),
+        message: t('Error signing the transaction: {{errorMessage}}', { errorMessage }),
       };
     case 'BROADCASTED':
       return {
-        illustration: 'registerMultisignatureSuccess',
+        illustration: 'transactionSuccess',
         message: t("The transaction is now broadcasted on the blockchain. It will appear in sender account's wallet after confirmation."),
       };
     case 'BROADCAST_FAILED':
       return {
-        illustration: 'registerMultisignatureError',
-        message: t('There was an error broadcasting the transaction. Try later.'),
+        illustration: 'transactionError',
+        message: t('Error broadcasting the transaction: {{errorMessage}}', { errorMessage }),
       };
     default:
       return {
@@ -50,9 +50,10 @@ const Share = ({
 }) => {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(error ? 'SIGN_FAILED' : 'SIGN_SUCCEEDED');
+  const [errorMessage, setErrorMessage] = useState(error);
   const isComplete = showSendButton(senderAccount, transaction);
   const success = !error && transaction;
-  const template = getTemplate(t, status, error);
+  const template = getTemplate(t, status, errorMessage);
 
   const [copied, setCopied] = useState(false);
 
@@ -73,6 +74,9 @@ const Share = ({
   useEffect(() => {
     if (broadcastedTransactionsError.length) {
       setStatus('BROADCAST_FAILED');
+      setErrorMessage(
+        broadcastedTransactionsError[broadcastedTransactionsError.length - 1].error.message,
+      );
     }
   }, [broadcastedTransactionsError]);
 
