@@ -58,7 +58,8 @@ const Share = ({
   const [copied, setCopied] = useState(false);
 
   const onDownload = () => {
-    downloadJSON(transaction, `tx-${transaction.id}`);
+    const id = transaction.id.toString('hex');
+    downloadJSON(transaction, `tx-${id}`);
   };
 
   const onCopy = () => {
