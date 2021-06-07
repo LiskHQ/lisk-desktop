@@ -25,7 +25,7 @@ const Members = ({ members, t, className }) => {
   const rightColumn = members.slice(sliceIndex, members.length);
   return (
     <div className={`${styles.membersContainer} ${className}`}>
-      <p>{t('Members')}</p>
+      <p className={styles.title}>{t('Members')}</p>
       <div>
         {leftColumn.map((member, i) =>
           <Member member={member} i={i} key={`registerMultiSignature-members-list-${i}`} t={t} />)}
