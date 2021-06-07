@@ -32,6 +32,7 @@
     @mixin contentLargest semi-bold;
 
     font-size: 16px;
+    color: var(--color-maastricht-blue);
   }
 }
 
