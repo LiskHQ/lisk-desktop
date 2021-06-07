@@ -16,31 +16,67 @@ const BookmarkIcon = ({ bookmark }) => (
   />
 );
 
+const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature) => {
+  if (isLoggedInAccount) {
+    if (isMultisignature) {
+      return 'multisigAccountDetails';
+    }
+    return 'multiSignature';
+  }
+  if (isMultisignature) {
+    return 'multisigAccountDetails';
+  }
+  return null;
+};
+
+const MultiSignatureButton = ({
+  t, component, isMultisignature,
+}) => (
+  <div className={styles.helperIcon}>
+    <Tooltip
+      className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisignature ? styles.whiteBackground : ''}`}
+      position="bottom"
+      size="maxContent"
+      content={(
+        <DialogLink component={component}>
+          <Icon name="multiSignatureOutline" className={styles.multisigIcon} />
+        </DialogLink>
+            )}
+    >
+      <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature')}</p>
+    </Tooltip>
+  </div>
+);
+
 // eslint-disable-next-line complexity
 const ActionBar = ({
   address, host, activeToken, username, account, bookmark, hwInfo, isMultisignature, t,
-}) => (
-  <footer>
-    <div className={styles.helperIcon}>
-      <Tooltip
-        className={styles.tooltipWrapper}
-        position="bottom"
-        size="maxContent"
-        content={(
-          <CopyToClipboard
-            value={activeToken === tokenMap.BTC.key
-              ? address : `Address: ${address} - Public key: ${account.summary.publicKey}`}
-            type="icon"
-            copyClassName={styles.copyIcon}
-            className={styles.copyIcon}
-          />
+}) => {
+  const isLoggedInAccount = address === host;
+  const component = getMultiSignatureComponent(isLoggedInAccount, isMultisignature);
+
+  return (
+    <footer>
+      <div className={styles.helperIcon}>
+        <Tooltip
+          className={styles.tooltipWrapper}
+          position="bottom"
+          size="maxContent"
+          content={(
+            <CopyToClipboard
+              value={activeToken === tokenMap.BTC.key
+                ? address : `Address: ${address} - Public key: ${account.summary.publicKey}`}
+              type="icon"
+              copyClassName={styles.copyIcon}
+              className={styles.copyIcon}
+            />
         )}
-      >
-        <p>{activeToken === tokenMap.BTC.key ? t('Copy address') : t('Copy address and public key')}</p>
-      </Tooltip>
-    </div>
-    <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
-      {
+        >
+          <p>{activeToken === tokenMap.BTC.key ? t('Copy address') : t('Copy address and public key')}</p>
+        </Tooltip>
+      </div>
+      <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
+        {
         host === address ? (
           <Tooltip
             className={styles.tooltipWrapper}
@@ -66,8 +102,8 @@ const ActionBar = ({
           </Tooltip>
         )
       }
-    </div>
-    {
+      </div>
+      {
       host !== address ? (
         <div className={styles.helperIcon}>
           <Tooltip
@@ -96,8 +132,7 @@ const ActionBar = ({
         </div>
       ) : null
     }
-    {
-      hwInfo && !isEmpty(hwInfo) && host === address && (
+      {hwInfo && !isEmpty(hwInfo) && host === address && (
         <div
           className={`${styles.helperIcon} verify-address ${styles.tooltipWrapper}`}
           onClick={() => getAddress({
@@ -115,25 +150,16 @@ const ActionBar = ({
             <span>{t('Verify the address in your hardware wallet device.')}</span>
           </Tooltip>
         </div>
-      )
-    }
-    {address === host && (
-      <div className={styles.helperIcon}>
-        <Tooltip
-          className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisignature ? styles.whiteBackground : ''}`}
-          position="bottom"
-          size="maxContent"
-          content={(
-            <DialogLink component={isMultisignature ? 'multisigAccountDetails' : 'multiSignature'}>
-              <Icon name="multiSignatureOutline" className={styles.multisigIcon} />
-            </DialogLink>
-          )}
-        >
-          <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature')}</p>
-        </Tooltip>
-      </div>
-    )}
-  </footer>
-);
+      )}
+      {component && (
+        <MultiSignatureButton
+          t={t}
+          component={component}
+          isMultisignature={isMultisignature}
+        />
+      )}
+    </footer>
+  );
+};
 
 export default ActionBar;
