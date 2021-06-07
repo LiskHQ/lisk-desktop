@@ -38,7 +38,11 @@ describe('useTransactionFeeCalculation', () => {
     account: {
       ...accounts.genesis,
       summary: { ...accounts.genesis.summary, isMultisignature: true },
-      keys: { numberOfSignatures: 10 },
+      keys: {
+        numberOfSignatures: 10,
+        optionalKeys: [],
+        mandatoryKeys: [],
+      },
     },
     selectedPriority: { value: 1, selectedIndex: 0 },
     transaction: {
