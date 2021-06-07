@@ -53,7 +53,7 @@ const ImportData = ({ t, nextStep }) => {
         </header>
         <BoxContent>
           <ProgressBar current={1} />
-          <p className={styles.fileInputlabel}>
+          <p className={styles.fileInputLabel}>
             {t('Paste transaction value')}
             <label className={styles.fileInputBtn}>
               {t('Read from JSON file')}
