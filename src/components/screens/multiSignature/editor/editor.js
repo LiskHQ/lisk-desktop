@@ -32,8 +32,8 @@ const validateState = ({
   if (requiredSignatures > MAX_MULTI_SIG_MEMBERS) {
     messages.push(t('Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.', { MAX_MULTI_SIG_MEMBERS }));
   }
-  if (requiredSignatures < mandatoryKeys.length + optionalKeys.length) {
-    messages.push(t('Number of signatures must be greater than or equal to the number of members.'));
+  if (requiredSignatures > mandatoryKeys.length + optionalKeys.length) {
+    messages.push(t('Number of signatures must be lower than or equal to the number of members.'));
   }
   if (mandatoryKeys.some(item => !regex.publicKey.test(item))
   || optionalKeys.some(item => !regex.publicKey.test(item))) {
