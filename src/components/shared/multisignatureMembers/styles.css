@@ -8,6 +8,10 @@
   flex-wrap: wrap;
 
   & p {
+    color: var(--color-maastricht-blue);
+  }
+
+  & > p {
     width: 100%;
     text-align: left;
     color: var(--color-maastricht-blue);

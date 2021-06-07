@@ -3,7 +3,7 @@
 .infoContainer {
   display: flex;
   padding-top: 20px;
-  border-top: 1px solid var(--darker-border-color);
+  border-top: 1px solid var(--color-platinum);
 
   & .infoColumn {
     display: flex;
