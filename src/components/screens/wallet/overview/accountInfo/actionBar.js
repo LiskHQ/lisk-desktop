@@ -117,20 +117,22 @@ const ActionBar = ({
         </div>
       )
     }
-    <div className={styles.helperIcon}>
-      <Tooltip
-        className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisignature ? styles.whiteBackground : ''}`}
-        position="bottom"
-        size="maxContent"
-        content={(
-          <DialogLink component={isMultisignature ? 'multisigAccountDetails' : 'multiSignature'}>
-            <Icon name="multiSignatureOutline" className={styles.multisigIcon} />
-          </DialogLink>
-        )}
-      >
-        <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature')}</p>
-      </Tooltip>
-    </div>
+    {address === host && (
+      <div className={styles.helperIcon}>
+        <Tooltip
+          className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisignature ? styles.whiteBackground : ''}`}
+          position="bottom"
+          size="maxContent"
+          content={(
+            <DialogLink component={isMultisignature ? 'multisigAccountDetails' : 'multiSignature'}>
+              <Icon name="multiSignatureOutline" className={styles.multisigIcon} />
+            </DialogLink>
+          )}
+        >
+          <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature')}</p>
+        </Tooltip>
+      </div>
+    )}
   </footer>
 );
 
