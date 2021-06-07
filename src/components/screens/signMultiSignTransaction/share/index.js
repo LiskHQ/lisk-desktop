@@ -6,6 +6,7 @@ import ShareComp from './share';
 const Share = (props) => {
   const { t } = useTranslation();
   const account = useSelector(state => state.account);
+  const { broadcastedTransactionsError } = useSelector(state => state.transactions);
   const networkIdentifier = useSelector(state => state.network.networks.LSK.networkIdentifier);
   const dispatch = useDispatch();
 
@@ -13,6 +14,7 @@ const Share = (props) => {
     <ShareComp
       t={t}
       account={account}
+      broadcastedTransactionsError={broadcastedTransactionsError}
       networkIdentifier={networkIdentifier}
       dispatch={dispatch}
       {...props}
