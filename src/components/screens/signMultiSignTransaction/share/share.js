@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import copyToClipboard from 'copy-to-clipboard';
 import { useDispatch } from 'react-redux';
 
@@ -13,33 +13,46 @@ import { CopyAndSendFooter, CopyFooter } from './footer';
 import { showSendButton } from '../helpers';
 import styles from './styles.css';
 
-const getTemplate = (t, error, isBroadcasted) => {
-  if (!error) {
-    if (isBroadcasted) {
+const getTemplate = (t, status, errorMessage) => {
+  switch (status) {
+    case 'SIGN_SUCCEEDED':
       return {
         illustration: 'registerMultisignatureSuccess',
         message: t('You have successfully sent the transaction. You can download or copy the transaction and send it back to the initiator.'),
       };
-    }
-    return {
-      illustration: 'registerMultisignatureSuccess',
-      message: t('You have successfully signed the transaction. You can download or copy the transaction and send it back to the initiator.'),
-    };
+    case 'SIGN_FAILED':
+      return {
+        illustration: 'registerMultisignatureError',
+        message: t(`Error: ${errorMessage}`),
+      };
+    case 'BROADCASTED':
+      return {
+        illustration: 'registerMultisignatureSuccess',
+        message: t("The transaction is now broadcasted on the blockchain. It will appear in sender account's wallet after confirmation."),
+      };
+    case 'BROADCAST_FAILED':
+      return {
+        illustration: 'registerMultisignatureError',
+        message: t('There was an error broadcasting the transaction. Try later.'),
+      };
+    default:
+      return {
+        illustration: 'registerMultisignatureSuccess',
+        message: t('You have successfully sent the transaction. You can download or copy the transaction and send it back to the initiator.'),
+      };
   }
-
-  return {
-    illustration: 'registerMultisignatureError',
-    message: t(`Error: ${error}`),
-  };
 };
 
+// eslint-disable-next-line max-statements
 const Share = ({
-  t, transaction, senderAccount, error, isBroadcasted = false,
+  t, transaction, senderAccount, error,
+  broadcastedTransactionsError,
 }) => {
   const dispatch = useDispatch();
+  const [status, setStatus] = useState(error ? 'SIGN_FAILED' : 'SIGN_SUCCEEDED');
   const isComplete = showSendButton(senderAccount, transaction);
   const success = !error && transaction;
-  const template = getTemplate(t, error, isBroadcasted);
+  const template = getTemplate(t, status, error);
 
   const [copied, setCopied] = useState(false);
 
@@ -54,7 +67,14 @@ const Share = ({
 
   const onSend = () => {
     dispatch(transactionBroadcasted(transaction));
+    setStatus('BROADCASTED');
   };
+
+  useEffect(() => {
+    if (broadcastedTransactionsError.length) {
+      setStatus('BROADCAST_FAILED');
+    }
+  }, [broadcastedTransactionsError]);
 
   return (
     <section>
