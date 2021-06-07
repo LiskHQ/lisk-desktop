@@ -6,7 +6,9 @@ import { actionTypes, reducer, getInitialState } from './reducer';
 
 const getNumberOfSignatures = (account) => {
   if (account?.summary?.isMultisignature) {
-    return account.keys.numberOfSignatures;
+    // because of min fee calculation bug in lisk elements
+    // return account.keys.numberOfSignatures;
+    return account.keys.optionalKeys.length + account.keys.mandatoryKeys.length;
   }
   return DEFAULT_NUMBER_OF_SIGNATURES;
 };
