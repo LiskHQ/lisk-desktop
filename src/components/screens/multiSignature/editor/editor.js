@@ -51,11 +51,13 @@ const Editor = ({
   const [mandatoryKeys, optionalKeys] = useMemo(() => {
     const mandatory = members
       .filter(member => member.isMandatory && member.address)
-      .map(member => member.address);
+      .map(member => member.address)
+      .sort();
 
     const optional = members
       .filter(member => !member.isMandatory && member.address)
-      .map(member => member.address);
+      .map(member => member.address)
+      .sort();
 
     return [mandatory, optional];
   }, [members]);

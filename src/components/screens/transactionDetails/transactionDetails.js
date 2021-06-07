@@ -17,6 +17,7 @@ export const Context = React.createContext({
 const TransactionDetails = ({
   t, activeToken, network, history, schema, title,
   transaction: { error, isLoading, data }, account,
+  containerStyle,
 }) => {
   const isFirstRender = useRef(true);
   useEffect(() => {
@@ -40,7 +41,7 @@ const TransactionDetails = ({
   const Layout = LayoutSchema[schema ?? data.moduleAssetId] || LayoutSchema.default;
 
   return (
-    <Box isLoading={isLoading} className={styles.container}>
+    <Box isLoading={isLoading} className={`${styles.container} ${containerStyle}`}>
       {title && (
         <BoxHeader>
           <h1>{title}</h1>

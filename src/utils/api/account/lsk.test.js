@@ -210,6 +210,9 @@ describe('API: LSK Account', () => {
           token: 'LSK',
           publicKey,
         },
+        sequence: {
+          nonce: 0,
+        },
       });
     });
 
