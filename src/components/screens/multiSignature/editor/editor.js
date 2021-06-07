@@ -10,6 +10,7 @@ import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@constants';
 import { extractAddressFromPublicKey } from '@utils/account';
 import ProgressBar from '../progressBar';
 import MemberField from './memberField';
+import Feedback from './feedback';
 import styles from './styles.css';
 
 const token = tokenMap.LSK.key;
@@ -24,15 +25,25 @@ const placeholderMember = {
 const getInitialMembersState = (prevState) => prevState.members ?? [placeholderMember];
 const getInitialSignaturesState = (prevState) => prevState.numberOfSignatures ?? 2;
 
-// const validateState = ({ mandatoryKeys, optionalKeys, requiredSignatures }) => {
-//   if (requiredSignatures > MAX_MULTI_SIG_MEMBERS) {
-//     return false;
-//   }
-//   if (requiredSignatures > mandatoryKeys.length + optionalKeys.length) {
-//     return false;
-//   }
-//   return true;
-// };
+const validateState = ({
+  mandatoryKeys, optionalKeys, requiredSignatures, t,
+}) => {
+  const messages = [];
+  if (requiredSignatures > MAX_MULTI_SIG_MEMBERS) {
+    messages.push(t('Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.', { MAX_MULTI_SIG_MEMBERS }));
+  }
+  if (requiredSignatures < mandatoryKeys.length + optionalKeys.length) {
+    messages.push(t('Number of signatures must be greater than or equal to the number of members.'));
+  }
+  if (mandatoryKeys.some(item => !regex.publicKey.test(item))
+  || optionalKeys.some(item => !regex.publicKey.test(item))) {
+    messages.push(t('Please enter a valid public key for each member.'));
+  }
+  return {
+    error: (mandatoryKeys.length + optionalKeys.length) ? messages.length : -1,
+    messages,
+  };
+};
 
 // eslint-disable-next-line max-statements
 const Editor = ({
@@ -139,10 +150,9 @@ const Editor = ({
     }
   }, [requiredSignatures]);
 
-  // @todo
-  // const feedback = { error: validateState({ mandatoryKeys, optionalKeys, requiredSignatures }) };
-  // const isCTADisabled = feedback.error;
-  const isCTADisabled = false;
+  const feedback = validateState({
+    mandatoryKeys, optionalKeys, requiredSignatures, t,
+  });
 
   return (
     <section className={styles.wrapper}>
@@ -203,14 +213,14 @@ const Editor = ({
           loadError={prioritiesLoadError}
           isLoading={loadingPriorities}
         />
-        {/* {
-          feedback.error && <span className="feedback">{feedback.messages[0]}</span>
-        } */}
+        {
+          feedback.error > 0 && <Feedback messages={feedback.messages} />
+        }
         <BoxFooter>
           <PrimaryButton
             className="confirm-button"
             size="l"
-            disabled={isCTADisabled}
+            disabled={feedback.error !== 0}
             onClick={goToNextStep}
           >
             {t('Go to Confirmation')}
