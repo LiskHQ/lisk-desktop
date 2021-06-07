@@ -1,9 +1,10 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import Share from './share';
+import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 describe('Sign Multisignature Tx Share component', () => {
-  let wrapper;
   const transaction = {
     moduleID: 2,
     assetID: 0,
@@ -29,11 +30,12 @@ describe('Sign Multisignature Tx Share component', () => {
         optionalKeys: [],
       },
     },
+    broadcastedTransactionsError: [],
     transaction,
   };
 
   it('Should render properly on success', () => {
-    wrapper = mount(
+    const wrapper = mount(
       <Share
         {...props}
         transaction={transaction}
@@ -47,7 +49,7 @@ describe('Sign Multisignature Tx Share component', () => {
   });
 
   it('Should render properly on error', () => {
-    wrapper = mount(
+    const wrapper = mount(
       <Share
         {...props}
         error="testerror"
@@ -57,5 +59,25 @@ describe('Sign Multisignature Tx Share component', () => {
     expect(html).toContain('transaction-status');
     expect(html).toContain('Error: testerror');
     expect(html).toContain('Report the error via E-Mail');
+  });
+
+  it('Should display an error message if broadcasting fails', async () => {
+    const wrapper = mount(
+      <Share
+        {...props}
+        transaction={{
+          ...props.transaction,
+          signatures: [props.transaction.signatures[0], props.transaction.signatures[0]],
+        }}
+      />,
+    );
+    const sendButton = wrapper.find('.send-button button');
+    expect(sendButton).not.toBeDisabled();
+    sendButton.simulate('click');
+    await flushPromises();
+    act(() => { wrapper.update(); });
+    wrapper.setProps({ broadcastedTransactionsError: [{ status: 'broadcast failed.' }] });
+    act(() => { wrapper.update(); });
+    expect(wrapper.html()).toContain('There was an error broadcasting the transaction. Try later.');
   });
 });
