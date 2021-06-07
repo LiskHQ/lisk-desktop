@@ -15,21 +15,10 @@ export const Context = React.createContext({
 });
 
 const TransactionDetails = ({
-  t, activeToken, network, history, schema, title,
+  t, activeToken, network, schema, title,
   transaction: { error, isLoading, data }, account,
   containerStyle,
 }) => {
-  const isFirstRender = useRef(true);
-  useEffect(() => {
-    if (!isFirstRender.current) {
-      history.push(routes.dashboard.path);
-    }
-  }, [activeToken]);
-
-  useEffect(() => {
-    isFirstRender.current = false;
-  }, []);
-
   if (!error && isEmpty(data)) {
     return <div />;
   }
