@@ -75,8 +75,25 @@
   @mixin contentNormal;
 
   margin-bottom: 10px;
+  color: var(--color-maastricht-blue);
 }
 
 .inputWithDropdown {
   margin-right: 18px;
+}
+
+.feedback {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+
+  & > span {
+    width: 100%;
+    background: var(--error-background-color);
+    color: var(--color-strong-white);
+    border-radius: var(--border-radius-standard);
+    display: block;
+    padding: var(--vertical-padding-s) var(--horizontal-padding-m);
+    box-sizing: border-box;
+  }
 }
