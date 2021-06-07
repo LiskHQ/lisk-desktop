@@ -39,8 +39,8 @@ export const CopyAndSendFooter = ({
   const [sent, setSent] = useState(false);
 
   const onClick = (e) => {
-    onSend(e);
     setSent(true);
+    onSend(e);
   };
 
   return (
@@ -60,7 +60,11 @@ export const CopyAndSendFooter = ({
           {t('Download')}
         </span>
       </SecondaryButton>
-      <PrimaryButton onClick={onClick} disabled={sent}>
+      <PrimaryButton
+        onClick={onClick}
+        disabled={sent}
+        className="send-button"
+      >
         <span className={styles.buttonContent}>
           {t('Send')}
         </span>
