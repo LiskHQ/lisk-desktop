@@ -21,7 +21,7 @@ describe('Sign Multisignature Tx Share component', () => {
   };
 
   const props = {
-    t: v => v,
+    t: (str, dict) => (dict ? str.replace('{{errorMessage}}', dict.errorMessage) : str),
     networkIdentifier: '',
     senderAccount: {
       keys: {
@@ -57,7 +57,7 @@ describe('Sign Multisignature Tx Share component', () => {
     );
     const html = wrapper.html();
     expect(html).toContain('transaction-status');
-    expect(html).toContain('Error: testerror');
+    expect(html).toContain('Error signing the transaction: testerror');
     expect(html).toContain('Report the error via E-Mail');
   });
 
@@ -76,8 +76,8 @@ describe('Sign Multisignature Tx Share component', () => {
     sendButton.simulate('click');
     await flushPromises();
     act(() => { wrapper.update(); });
-    wrapper.setProps({ broadcastedTransactionsError: [{ status: 'broadcast failed.' }] });
+    wrapper.setProps({ broadcastedTransactionsError: [{ error: { message: 'Bad request.' } }] });
     act(() => { wrapper.update(); });
-    expect(wrapper.html()).toContain('There was an error broadcasting the transaction. Try later.');
+    expect(wrapper.html()).toContain('Error broadcasting the transaction: Bad request.');
   });
 });
