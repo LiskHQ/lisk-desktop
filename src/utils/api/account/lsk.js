@@ -99,6 +99,9 @@ export const getAccount = async ({
             address,
             token: tokenMap.LSK.key,
           },
+          sequence: {
+            nonce: 0,
+          },
         };
         return account;
       }
