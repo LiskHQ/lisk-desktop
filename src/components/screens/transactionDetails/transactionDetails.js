@@ -1,9 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { isEmpty } from '@utils/helpers';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
-import { routes } from '@constants';
 import NotFound from '@shared/notFound';
 
 import styles from './transactionDetails.css';
@@ -15,21 +14,10 @@ export const Context = React.createContext({
 });
 
 const TransactionDetails = ({
-  t, activeToken, network, history, schema, title,
+  t, activeToken, network, schema, title,
   transaction: { error, isLoading, data }, account,
   containerStyle,
 }) => {
-  const isFirstRender = useRef(true);
-  useEffect(() => {
-    if (!isFirstRender.current) {
-      history.push(routes.dashboard.path);
-    }
-  }, [activeToken]);
-
-  useEffect(() => {
-    isFirstRender.current = false;
-  }, []);
-
   if (!error && isEmpty(data)) {
     return <div />;
   }

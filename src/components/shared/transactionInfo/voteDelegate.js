@@ -33,6 +33,7 @@ const VoteDelegate = ({
   const addedLength = Object.keys(added).length;
   const editedLength = Object.keys(edited).length;
   const removedLength = Object.keys(removed).length;
+  const sentVotes = account.dpos.sentVotes?.length ?? 0;
 
   return (
     <>
@@ -44,7 +45,7 @@ const VoteDelegate = ({
           title={t('Total votes after confirmation')}
           className="total-votes"
         >
-          {`${account.dpos.sentVotes.length + addedLength - removedLength}/10`}
+          {`${sentVotes + addedLength - removedLength}/10`}
         </InfoColumn>
       </div>
     </>
