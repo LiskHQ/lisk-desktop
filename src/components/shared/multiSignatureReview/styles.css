@@ -3,7 +3,7 @@
 .infoContainer {
   display: flex;
   padding-top: 20px;
-  border-top: 1px solid var(--darker-border-color);
+  border-top: 1px solid var(--color-platinum);
 
   & .infoColumn {
     display: flex;
@@ -25,6 +25,7 @@
 
   & > p {
     width: 100%;
+    color: var(--color-maastricht-blue);
   }
 
   & > div {
@@ -63,6 +64,7 @@
 
         margin-left: 10px;
         color: black;
+        color: var(--color-maastricht-blue);
       }
     }
 
@@ -79,10 +81,12 @@
   @mixin contentNormal semi-bold;
 
   margin-bottom: 10px;
+  color: var(--color-maastricht-blue);
 }
 
 .infoValue {
   @mixin contentNormal;
 
   font-size: 16px;
+  color: var(--color-maastricht-blue);
 }

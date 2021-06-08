@@ -7,9 +7,14 @@
   flex-direction: row;
   flex-wrap: wrap;
 
+  & p {
+    color: var(--color-maastricht-blue);
+  }
+
   & > p {
     width: 100%;
     text-align: left;
+    color: var(--color-maastricht-blue);
   }
 
   & > div {
@@ -48,6 +53,7 @@
 
         margin-left: 10px;
         color: black;
+        color: var(--color-maastricht-blue);
       }
     }
 

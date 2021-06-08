@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { tokenMap, regex } from '@constants';
+import { tokenMap } from '@constants';
 import { toRawLsk } from '@utils/lsk';
+import { truncateAddress } from '@utils/account';
 import LiskAmount from '../liskAmount';
 import AccountVisual from '../../toolbox/accountVisual';
 
@@ -27,12 +28,12 @@ const Member = ({ member, i, t }) => (
     <AccountVisual address={member.address} />
     <div className={styles.memberDetails}>
       <p className={styles.memberTitle}>
-        {member.name || member.address.replace(regex.lskAddressTrunk, '$1...$3')}
+        {member.name || truncateAddress(member.address)}
         <span>{`(${getAccountRoleText(member.isMandatory, t)})`}</span>
       </p>
       {member.publicKey && (
         <p className={styles.memberKey}>
-          {member.publicKey.replace(regex.publicKeyTrunk, '$1...$3')}
+          {truncateAddress(member.publicKey)}
         </p>
       )}
     </div>

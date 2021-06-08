@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 
 import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
@@ -56,7 +57,7 @@ describe('Multisignature editor component', () => {
     expect(wrapper).toContainMatchingElement('footer');
   });
 
-  it.skip('CTA is disabled when form is invalid', () => {
+  it('CTA is disabled when form is invalid', () => {
     expect(wrapper.find('.confirm-button').at(0)).toBeDisabled();
   });
 
@@ -69,7 +70,7 @@ describe('Multisignature editor component', () => {
     expect(wrapper.find('.add-new-members').at(0)).toBeDisabled();
   });
 
-  it('delete icon is only visible if required signatues < members.length', () => {
+  it('delete icon is only visible if required signatures < members.length', () => {
     expect(wrapper).not.toContainMatchingElement('.delete-icon');
     for (let i = 0; i < 3; ++i) {
       wrapper.find('.add-new-members').at(0).simulate('click');
@@ -84,6 +85,15 @@ describe('Multisignature editor component', () => {
   });
 
   it('props.nextStep is called when the CTA is clicked', () => {
+    wrapper.find('input.input-with-dropdown-input').at(0).simulate(
+      'change',
+      { target: { value: accounts.genesis.summary.publicKey } },
+    );
+    wrapper.find('input.input-with-dropdown-input').at(1).simulate(
+      'change',
+      { target: { value: accounts.delegate.summary.publicKey } },
+    );
+    act(() => { wrapper.update(); });
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
   });

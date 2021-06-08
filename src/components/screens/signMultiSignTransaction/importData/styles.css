@@ -5,8 +5,10 @@
   display: none;
 }
 
-.fileInputlabel {
+.fileInputLabel {
   @mixin contentNormal normal;
+
+  color: var(--color-maastricht-blue);
 }
 
 .fileInputBtn {
@@ -30,6 +32,7 @@
     resize: none;
     border: none;
     box-sizing: border-box;
+    color: var(--color-maastricht-blue);
   }
 
   &:focus-within {

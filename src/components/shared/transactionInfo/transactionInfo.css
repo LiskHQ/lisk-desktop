@@ -145,7 +145,7 @@
         @mixin contentNormal;
 
         margin-left: 10px;
-        color: black;
+        color: var(--color-maastricht-blue);
       }
     }
 

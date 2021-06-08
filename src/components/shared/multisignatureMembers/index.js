@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { regex } from '@constants';
 import AccountVisual from '@toolbox/accountVisual';
 import { truncateAddress } from '@utils/account';
 
@@ -12,7 +11,7 @@ const Member = ({ member, i, t }) => (
     <AccountVisual address={member.address} />
     <div className={styles.memberDetails}>
       <p className={styles.memberTitle}>
-        {member.name || member.address.replace(regex.lskAddressTrunk, '$1...$3')}
+        {member.name || truncateAddress(member.address)}
         <span>{`(${member.mandatory ? t('Mandatory') : t('Optional')})`}</span>
       </p>
       <p className={styles.memberKey}>{truncateAddress(member.publicKey)}</p>
@@ -26,7 +25,7 @@ const Members = ({ members, t, className }) => {
   const rightColumn = members.slice(sliceIndex, members.length);
   return (
     <div className={`${styles.membersContainer} ${className}`}>
-      <p>{t('Members')}</p>
+      <p className={styles.title}>{t('Members')}</p>
       <div>
         {leftColumn.map((member, i) =>
           <Member member={member} i={i} key={`registerMultiSignature-members-list-${i}`} t={t} />)}

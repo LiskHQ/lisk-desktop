@@ -1,4 +1,5 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { joinModuleAndAssetIds } from '@utils/moduleAssets';
 
 const getNumbersOfSignaturesRequired = ({ keys, isGroupRegistration }) => {
   if (isGroupRegistration) {
@@ -21,7 +22,8 @@ const getNonEmptySignatures = (signatures) =>
 
 // eslint-disable-next-line max-statements
 export const showSendButton = (senderAccount, transaction) => {
-  const isGroupRegistration = transaction.moduleAssetId
+  const moduleAssetId = transaction.moduleAssetId || joinModuleAndAssetIds(transaction);
+  const isGroupRegistration = moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
   const keys = getKeys({
     senderAccount, transaction, isGroupRegistration,
