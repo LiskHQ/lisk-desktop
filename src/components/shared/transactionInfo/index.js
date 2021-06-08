@@ -27,7 +27,39 @@ const CustomTransactionInfo = ({ moduleAssetId, ...restProps }) => {
   }
 };
 
-const Members = withData({
+const MemberType = ({
+  t, keys, account,
+}) => {
+  const type = keys.mandatoryKeys.includes(account.summary.publicKey) ? t('Mandatory') : t('Optional');
+  return (
+    <p className={styles.memberTitle}>
+      {account.summary.username || account.summary.address}
+      <span>{`(${type})`}</span>
+    </p>
+  );
+};
+
+const Members = ({ accounts, keys, t }) => (
+  <section>
+    <label>{t('Members')}</label>
+    <div className={styles.membersContainer}>
+      {accounts.data?.map((account, i) => (
+        <div
+          className={styles.memberInfo}
+          key={i + 1}
+        >
+          <AccountVisual address={account.summary.address} />
+          <div className={styles.memberDetails}>
+            <MemberType t={t} keys={keys} account={account} />
+            <p className={styles.memberKey}>{account.summary.publicKey}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+const MembersWithData = withData({
   accounts: {
     apiUtil: (network, { token, ...params }) => getAccounts({ network, params }, token),
     defaultData: [],
@@ -39,28 +71,7 @@ const Members = withData({
     autoload: true,
     transformResponse: response => response.data,
   },
-})(({ accounts, keys, t }) => (
-  <section>
-    <label>{t('Members')}</label>
-    <div className={styles.membersContainer}>
-      {accounts.data?.map((account, i) => (
-        <div
-          className={styles.memberInfo}
-          key={i + 1}
-        >
-          <AccountVisual address={account.summary.address} />
-          <div className={styles.memberDetails}>
-            <p className={styles.memberTitle}>
-              {account.summary.username || account.summary.address}
-              <span>{`(${(i + 1) > keys.numberOfSignatures ? t('Optional') : t('Mandatory')})`}</span>
-            </p>
-            <p className={styles.memberKey}>{account.summary.publicKey}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-));
+})(Members);
 
 const TransactionInfo = ({
   isMultisignature, t, transaction, date, account, ...restProps
@@ -105,7 +116,7 @@ const TransactionInfo = ({
             </label>
           </div>
         </section>
-        <Members t={t} keys={account.keys} />
+        <MembersWithData t={t} keys={account.keys} />
       </>
     )}
   </>
