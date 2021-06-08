@@ -20,5 +20,10 @@
   & .infoContainer {
     border-top: 1px solid var(--color-platinum);
     text-align: left;
+
+    & > p,
+    & > span {
+      color: var(--color-maastricht-blue);
+    }
   }
 }
