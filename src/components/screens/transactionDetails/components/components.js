@@ -307,6 +307,7 @@ export const SignedAndRemainingMembersList = ({ t }) => {
     ? {
       optionalKeys: transaction.asset.optionalKeys,
       mandatoryKeys: transaction.asset.mandatoryKeys,
+      numberOfSignatures: transaction.asset.numberOfSignatures,
     }
     : account.keys;
 
@@ -318,6 +319,7 @@ export const SignedAndRemainingMembersList = ({ t }) => {
     <SignedAndRemainingMembers
       signed={signed}
       remaining={remaining}
+      numberOfSignatures={keys?.numberOfSignatures ?? 0}
       className={styles.signedAndRemainingMembersList}
       t={t}
     />
