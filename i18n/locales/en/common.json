@@ -509,6 +509,7 @@
   "Transaction aborted on device": "Transaction aborted on device",
   "Transaction failed": "Transaction failed",
   "Transaction fee": "Transaction fee",
+  "Transaction is already fully signed.": "Transaction is already fully signed.",
   "Transaction submitted": "Transaction submitted",
   "Transaction summary": "Transaction summary",
   "Transactions": "Transactions",

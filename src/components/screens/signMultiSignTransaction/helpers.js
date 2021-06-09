@@ -20,8 +20,20 @@ export const getKeys = ({ senderAccount, transaction, isGroupRegistration }) => 
 const getNonEmptySignatures = (signatures) =>
   signatures.filter(signature => signature !== null && signature.length);
 
+export const findNonEmptySignatureIndices = (signatures) => {
+  const indices = [];
+
+  signatures.forEach((signature, index) => {
+    if (signature === null || signature.length === 0) {
+      indices.push(index);
+    }
+  });
+
+  return indices;
+};
+
 // eslint-disable-next-line max-statements
-export const showSendButton = (senderAccount, transaction) => {
+export const isTransactionFullySigned = (senderAccount, transaction) => {
   const moduleAssetId = transaction.moduleAssetId || joinModuleAndAssetIds(transaction);
   const isGroupRegistration = moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
@@ -38,6 +50,7 @@ export const showSendButton = (senderAccount, transaction) => {
   return (required === alreadySigned);
 };
 
+// eslint-disable-next-line max-statements
 export const showSignButton = (senderAccount, account, transaction) => {
   const isGroupRegistration = transaction.moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
@@ -52,6 +65,7 @@ export const showSignButton = (senderAccount, account, transaction) => {
     mandatoryKeys = senderAccount.keys.mandatoryKeys;
     optionalKeys = senderAccount.keys.optionalKeys;
   }
+
   return mandatoryKeys.includes(account.summary.publicKey)
-      || optionalKeys.includes(account.summary.publicKey);
+    || optionalKeys.includes(account.summary.publicKey);
 };

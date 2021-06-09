@@ -39,20 +39,27 @@ const Members = ({ members, t, className }) => {
 };
 
 export const SignedAndRemainingMembers = ({
-  signed, remaining, className, t,
-}) => (
-  <div className={`${styles.membersContainer} ${className}`}>
-    <div>
-      <p>{t('Signed')}</p>
-      {signed.map((member, i) =>
-        <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />)}
+  signed, remaining, numberOfSignatures, className, t,
+}) => {
+  const signaturesNeeded = numberOfSignatures - signed.length;
+
+  return (
+    <div className={`${styles.membersContainer} ${className}`}>
+      <div>
+        <p>{t('Signed')}</p>
+        {signed.map((member, i) =>
+          <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />)}
+      </div>
+      <div>
+        <p>
+          <span>{t('Remaining')}</span>
+          <span>{` ${signaturesNeeded}/${numberOfSignatures}`}</span>
+        </p>
+        {remaining.map((member, i) =>
+          <Member member={member} key={`registerMultiSignature-members-list-${i}-remaining`} t={t} />)}
+      </div>
     </div>
-    <div>
-      <p>{t('Remaining')}</p>
-      {remaining.map((member, i) =>
-        <Member member={member} key={`registerMultiSignature-members-list-${i}-remaining`} t={t} />)}
-    </div>
-  </div>
-);
+  );
+};
 
 export default Members;

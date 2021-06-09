@@ -7,7 +7,9 @@ import Box from '@toolbox/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';
 
 import ProgressBar from '../progressBar';
-import { getKeys, showSignButton } from '../helpers';
+import {
+  getKeys, showSignButton, isTransactionFullySigned, findNonEmptySignatureIndices,
+} from '../helpers';
 import { ActionBar, Feedback } from './footer';
 import styles from '../styles.css';
 
@@ -72,6 +74,13 @@ const ReviewSign = ({
     return null;
   }, [senderAccount.data]);
 
+  const isFullySigned = useMemo(() => {
+    if (senderAccount.data.keys) {
+      return isTransactionFullySigned(senderAccount.data, transaction);
+    }
+    return null;
+  }, [senderAccount.data]);
+
   // eslint-disable-next-line max-statements
   const signTransaction = () => {
     let signedTransaction;
@@ -103,6 +112,14 @@ const ReviewSign = ({
         keys,
         includeSender,
       );
+
+      // remove unnecessary signatures
+      if (isFullySigned) {
+        const emptySignatureIndices = findNonEmptySignatureIndices(transaction.signatures);
+        emptySignatureIndices.forEach(index => {
+          signedTransaction.signatures[index] = Buffer.from('');
+        });
+      }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
@@ -120,6 +137,13 @@ const ReviewSign = ({
       senderAccount: senderAccount.data,
     });
   };
+
+  const nextButton = {
+    title: isFullySigned ? t('Continue') : t('Sign'),
+    onClick: onSignClick,
+  };
+
+  const showFeedback = !isMember || isFullySigned;
 
   return (
     <Box className={styles.boxContainer}>
@@ -146,14 +170,16 @@ const ReviewSign = ({
           <ActionBar
             t={t}
             history={history}
-            onSignClick={onSignClick}
+            nextButton={nextButton}
           />
         ) : null
       }
       {
-        isMember === false ? (
+        showFeedback ? (
           <Feedback
             t={t}
+            isMember={isMember}
+            isFullySigned={isFullySigned}
           />
         ) : null
       }
