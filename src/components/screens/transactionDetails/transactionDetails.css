@@ -130,8 +130,7 @@
       "amount amount"
       "transactionId date"
       "blockId blockHeight"
-      "fee confirmations"
-      "signedAndRemainingMembersList signedAndRemainingMembersList";
+      "fee confirmations";
 
     & > * {
       &:nth-last-child(2) {
