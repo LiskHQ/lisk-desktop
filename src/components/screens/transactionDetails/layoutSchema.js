@@ -12,48 +12,50 @@ const {
   // reclaimLSK,
 } = MODULE_ASSETS_NAME_ID_MAP;
 
-const baseComponents = [Sender, Confirmations, TransactionId, Fee, Date, BlockId, BlockHeight];
-const previewBaseComponents = [Sender, TransactionId, Fee, SignedAndRemainingMembersList];
+const baseComponents = [Illustration, Sender];
+const timeComponents = [TransactionId, Date, BlockId, BlockHeight, Fee, Confirmations];
+const previewBaseComponents = [Illustration, Sender];
+const restComponents = [TransactionId, Fee, SignedAndRemainingMembersList];
 
 const LayoutSchema = {
   [transfer]: {
-    components: [...baseComponents, Recipient, Illustration, Amount, Message],
-    className: '',
+    components: [...baseComponents, Recipient, Amount, Message, ...timeComponents],
+    className: styles.transferLayout,
   },
   [`${transfer}-preview`]: {
-    components: [...previewBaseComponents, Recipient, Illustration, Amount, Message],
+    components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents],
     className: styles.transferPreview,
   },
   [voteDelegate]: {
-    components: [...baseComponents, Illustration, TransactionVotes],
+    components: [...baseComponents, ...timeComponents, TransactionVotes],
     className: styles.voteLayout,
   },
   [`${voteDelegate}-preview`]: {
-    components: [...previewBaseComponents, Illustration, TransactionVotes],
+    components: [...previewBaseComponents, TransactionVotes, ...restComponents],
     className: styles.votePreview,
   },
   [registerDelegate]: {
-    components: [...baseComponents, Illustration],
+    components: [...baseComponents, ...timeComponents],
     className: styles.registerDelegate,
   },
   [`${registerDelegate}-preview`]: {
-    components: [...previewBaseComponents, Illustration],
+    components: [...previewBaseComponents, ...restComponents],
     className: styles.registerDelegatePreview,
   },
   [registerMultisignatureGroup]: {
-    components: [...baseComponents, RequiredSignatures, Members],
+    components: [...baseComponents, ...timeComponents, Members, RequiredSignatures],
     className: styles.multiSigLayout,
   },
   [`${registerMultisignatureGroup}-preview`]: {
-    components: [...previewBaseComponents, Illustration, Members, RequiredSignatures],
+    components: [...previewBaseComponents, Members, RequiredSignatures, ...restComponents],
     className: styles.multiSigRegisterPreview,
   },
   [unlockToken]: {
-    components: [...baseComponents, Illustration, Amount],
+    components: [...baseComponents, Amount, ...timeComponents],
     className: styles.unlockToken,
   },
   [`${unlockToken}-preview`]: {
-    components: [...previewBaseComponents, Illustration, Amount],
+    components: [...previewBaseComponents, Amount, ...restComponents],
     className: styles.unlockTokenPreview,
   },
   default: {

@@ -22,10 +22,10 @@
       "illustration illustration"
       "sender sender"
       "recipient recipient"
+      "amount message"
       "transactionId date"
       "blockId blockHeight"
-      "amount fee"
-      "confirmations message";
+      "fee confirmations";
 
     & > * {
       width: 100%;
@@ -40,6 +40,14 @@
     }
   }
 
+  & .transferLayout {
+    & > * {
+      &:nth-last-child(2) {
+        border-bottom: none;
+      }
+    }
+  }
+
   & .generalLayout {
     grid-template-areas:
       "illustration illustration"
@@ -47,18 +55,20 @@
       "recipient recipient"
       "transactionId date"
       "blockId blockHeight"
-      "amount fee"
-      "confirmations message";
+      "fee confirmations"
+      "blockId blockHeight"
+      "amount message";
   }
 
   & .multiSigLayout {
     grid-template-areas:
+      "illustration illustration"
       "sender sender"
       "date transactionId"
       "fee confirmations"
       "blockId blockHeight"
-      "requiredSignatures requiredSignatures"
-      "members members";
+      "members members"
+      "requiredSignatures requiredSignatures";
   }
 
   & .voteLayout {
@@ -67,8 +77,8 @@
       "sender sender"
       "transactionId date"
       "blockId blockHeight"
-      "votes votes"
-      "fee confirmations";
+      "fee confirmations"
+      "votes votes";
   }
 
   & .registerDelegate {
@@ -77,7 +87,13 @@
       "sender sender"
       "transactionId date"
       "blockId blockHeight"
-      "confirmations fee";
+      "fee confirmations";
+
+    & > * {
+      &:nth-last-child(2) {
+        border-bottom: none;
+      }
+    }
   }
 
   & .transferPreview {
@@ -85,8 +101,8 @@
       "illustration illustration"
       "sender sender"
       "recipient recipient"
-      "transactionId fee"
       "amount message"
+      "transactionId fee"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
 
@@ -94,8 +110,8 @@
     grid-template-areas:
       "illustration illustration"
       "sender sender"
-      "transactionId fee"
       "votes votes"
+      "transactionId fee"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
 
@@ -107,12 +123,28 @@
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
 
+  & .unlockToken {
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "amount amount"
+      "transactionId date"
+      "blockId blockHeight"
+      "fee confirmations";
+
+    & > * {
+      &:nth-last-child(2) {
+        border-bottom: none;
+      }
+    }
+  }
+
   & .unlockTokenPreview {
     grid-template-areas:
       "illustration illustration"
       "sender sender"
-      "transactionId fee"
       "amount amount"
+      "transactionId fee"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
 
@@ -120,8 +152,8 @@
     grid-template-areas:
       "illustration illustration"
       "sender sender"
-      "members members"
       "requiredSignatures requiredSignatures"
+      "members members"
       "transactionId fee"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
