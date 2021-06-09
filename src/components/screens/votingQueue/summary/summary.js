@@ -38,7 +38,7 @@ const Summary = ({
   t, removed = {}, edited = {}, added = {},
   fee, account, prevStep, nextStep, transactions, ...props
 }) => {
-  const transaction = transactions.transactionsCreated[0];
+  const transaction = transactions.transactionsCreated[transactions.transactionsCreated.length - 1];
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
