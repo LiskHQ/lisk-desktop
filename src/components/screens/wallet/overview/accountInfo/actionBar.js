@@ -17,16 +17,13 @@ const BookmarkIcon = ({ bookmark }) => (
 );
 
 const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature) => {
-  if (isLoggedInAccount) {
-    if (isMultisignature) {
-      return 'multisigAccountDetails';
-    }
-    return 'multiSignature';
+  if (!isLoggedInAccount) {
+    return null;
   }
   if (isMultisignature) {
     return 'multisigAccountDetails';
   }
-  return null;
+  return 'multiSignature';
 };
 
 const MultiSignatureButton = ({
