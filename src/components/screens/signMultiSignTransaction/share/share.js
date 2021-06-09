@@ -10,7 +10,7 @@ import { transactionBroadcasted } from '@actions';
 
 import ProgressBar from '../progressBar';
 import { CopyAndSendFooter, CopyFooter } from './footer';
-import { showSendButton } from '../helpers';
+import { isTransactionFullySigned } from '../helpers';
 import styles from './styles.css';
 
 const getTemplate = (t, status, errorMessage) => {
@@ -51,7 +51,7 @@ const Share = ({
   const dispatch = useDispatch();
   const [status, setStatus] = useState(error ? 'SIGN_FAILED' : 'SIGN_SUCCEEDED');
   const [errorMessage, setErrorMessage] = useState(error);
-  const isComplete = showSendButton(senderAccount, transaction);
+  const isFullySigned = isTransactionFullySigned(senderAccount, transaction);
   const success = !error && transaction;
   const template = getTemplate(t, status, errorMessage);
 
@@ -99,7 +99,7 @@ const Share = ({
             error={error}
           />
         </BoxContent>
-        {success && !isComplete && (
+        {success && !isFullySigned && (
           <CopyFooter
             t={t}
             onCopy={onCopy}
@@ -107,7 +107,7 @@ const Share = ({
             onDownload={onDownload}
           />
         )}
-        {success && isComplete && (
+        {success && isFullySigned && (
           <CopyAndSendFooter
             t={t}
             onCopy={onCopy}
