@@ -20,7 +20,7 @@ const restComponents = [TransactionId, Fee, SignedAndRemainingMembersList];
 const LayoutSchema = {
   [transfer]: {
     components: [...baseComponents, Recipient, Amount, Message, ...timeComponents],
-    className: '',
+    className: styles.transferLayout,
   },
   [`${transfer}-preview`]: {
     components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents],

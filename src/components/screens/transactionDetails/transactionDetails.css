@@ -40,6 +40,14 @@
     }
   }
 
+  & .transferLayout {
+    & > * {
+      &:nth-last-child(2) {
+        border-bottom: none;
+      }
+    }
+  }
+
   & .generalLayout {
     grid-template-areas:
       "illustration illustration"
@@ -79,7 +87,13 @@
       "sender sender"
       "transactionId date"
       "blockId blockHeight"
-      "confirmations fee";
+      "fee confirmations";
+
+    & > * {
+      &:nth-last-child(2) {
+        border-bottom: none;
+      }
+    }
   }
 
   & .transferPreview {
@@ -118,6 +132,12 @@
       "blockId blockHeight"
       "fee confirmations"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
+
+    & > * {
+      &:nth-last-child(2) {
+        border-bottom: none;
+      }
+    }
   }
 
   & .unlockTokenPreview {
