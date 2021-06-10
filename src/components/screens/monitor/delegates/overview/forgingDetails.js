@@ -49,7 +49,7 @@ const ForgingDetails = ({
   const delegatesForgedLabels = [
     t('Forging'),
     t('Awaiting slot'),
-    t('Missed block'),
+    t('Missed slot'),
   ];
 
   const doughnutChartData = {
@@ -86,7 +86,7 @@ const ForgingDetails = ({
             forgers.length
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.title}>{t('Delegates Forging Status')}</h2>
+                  <h2 className={styles.title}>{t('Slot status')}</h2>
                   <div className={`${styles.chart} showOnLargeViewPort`}>
                     <DoughnutChart
                       data={doughnutChartData}

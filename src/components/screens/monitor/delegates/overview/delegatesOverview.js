@@ -56,7 +56,7 @@ const Overview = ({
               ? (
                 <>
                   <div className={styles.chartBox}>
-                    <h2 className={styles.title}>{t('Total')}</h2>
+                    <h2 className={styles.title}>{t('Delegation status')}</h2>
                     <div className={`${styles.chart} showOnLargeViewPort`}>
                       <DoughnutChart
                         data={doughnutChartData}
@@ -122,7 +122,7 @@ const Overview = ({
             registrations.data.length
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.title}>{t('Registered Delegates')}</h2>
+                  <h2 className={styles.title}>{t('Registered delegates')}</h2>
                   <div className={styles.chart}>
                     <LineChart
                       data={{

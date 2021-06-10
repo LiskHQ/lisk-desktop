@@ -80,7 +80,7 @@ export default (activeTab, changeSort, t) => ([
     classList: getDelegateWeightClass(activeTab),
     tooltip: {
       title: t('Delegate weight'),
-      message: t('The total LSK voted to a delegate.'),
+      message: t('The total LSK locked to a delegate by votes.'),
       position: 'top',
     },
   },

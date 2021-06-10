@@ -19,7 +19,7 @@ import styles from '../delegates.css';
 const roundStates = {
   forging: 'Forging',
   awaitingSlot: 'Awaiting slot',
-  missedBlock: 'Missed block',
+  missedBlock: 'Missed slot',
 };
 
 const icons = {
@@ -33,7 +33,7 @@ const delegateStatus = {
   standby: 'Standby',
   banned: 'Banned',
   punished: 'Punished',
-  nonEligible: 'Non-eligible to forge',
+  nonEligible: 'Ineligible',
 };
 
 export const DelegateRank = ({ data, activeTab }) => (
