@@ -98,7 +98,16 @@ describe('actions: account', () => {
     });
 
     it('should call account API methods on newBlockCreated action when online', async () => {
-      accountApi.getAccount.mockResolvedValue({ balance: 10e8 });
+      accountApi.getAccount.mockResolvedValue({
+        summary: {
+          address: accounts.genesis.summary.address,
+          publicKey: accounts.genesis.summary.publicKey,
+          balance: 10e8,
+        },
+        token: {
+          balance: 10e8,
+        },
+      });
 
       await accountDataUpdated('active')(dispatch, getState);
       expect(dispatch).toHaveBeenCalledTimes(2);
