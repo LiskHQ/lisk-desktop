@@ -315,11 +315,18 @@ export const SignedAndRemainingMembersList = ({ t }) => {
     keys, transaction.signatures, isMultisignatureGroupRegistration,
   ), [account]);
 
+  const required = isMultisignatureGroupRegistration
+    ? keys.optionalKeys.length + keys.mandatoryKeys.length
+    : keys.numberOfSignatures;
+
+  const needed = required - signed.length;
+
   return (
     <SignedAndRemainingMembers
       signed={signed}
       remaining={remaining}
-      numberOfSignatures={keys?.numberOfSignatures ?? 0}
+      needed={needed}
+      required={required}
       className={styles.signedAndRemainingMembersList}
       t={t}
     />
