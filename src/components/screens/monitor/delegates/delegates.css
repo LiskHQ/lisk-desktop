@@ -8,7 +8,10 @@
   & > div {
     display: flex;
     flex-direction: column;
-    margin-left: 8px;
+
+    &:last-child {
+      margin-left: 8px;
+    }
 
     & > .delegateName {
       @mixin headingSmall;
@@ -113,11 +116,12 @@
 
       & > .eyeIconTooltip {
         align-self: center;
-        margin-right: 10px;
+        /* margin-right: 10px; */
 
         & > .eyeIcon {
           display: flex;
           position: relative;
+          padding: 15px;
 
           &.watchedDelegate {
             & > img {
@@ -134,7 +138,7 @@
       }
 
       & .tooltipContainer {
-        left: -40px;
+        left: -25px;
 
         & > main > .watchedTooltip {
           @mixin contentNormal bold;
