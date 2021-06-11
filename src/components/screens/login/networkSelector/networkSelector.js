@@ -142,7 +142,7 @@ const NetworkSelector = ({
                       onChange={onChangeInput}
                       name="customNetwork"
                       value={address}
-                      placeholder="the url to the lisk service node you want to conenct to"
+                      placeholder="eg. https://mainnet-service.lisk.io or 192.168.0.1:4000"
                       size="xs"
                       className={`custom-network ${styles.input} ${isValid ? '' : styles.errorInput}`}
                       onKeyDown={e => e.keyCode === keyCodes.enter && onConnectToCustomNode(e)}
