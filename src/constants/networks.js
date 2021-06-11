@@ -17,7 +17,7 @@ const networks = {
     serviceUrl: 'https://testnet-service.lisk.io',
   },
   [networkKeys.customNode]: {
-    label: 'Custom Node',
+    label: 'Custom Lisk Service Url',
 
     // a default value, to keep the object signature consistent
     serviceUrl: 'http://localhost:9901',
