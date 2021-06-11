@@ -80,6 +80,9 @@ export const accountDataUpdated = tokensTypes =>
     const [error, info] = await to(getAccounts({ network, params }));
 
     if (info) {
+      // Uninitialized account don't have a public key stored on the blockchain.
+      // but we already have it on the Redux store.
+      info.LSK.summary.publicKey = account.info.LSK.summary.publicKey;
       dispatch({
         type: actionTypes.accountUpdated,
         data: info,
