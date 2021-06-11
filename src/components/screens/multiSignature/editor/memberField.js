@@ -7,15 +7,15 @@ import { InputWithDropdown } from '../../../toolbox/inputs';
 import styles from './styles.css';
 
 const MemberField = ({
-  t, index, address, isMandatory, showDeleteIcon, onChangeMember, onDeleteMember,
+  t, index, publicKey, isMandatory, showDeleteIcon, onChangeMember, onDeleteMember,
 }) => {
   const changeCategory = (flag) => {
-    onChangeMember({ index, address, isMandatory: flag });
+    onChangeMember({ index, publicKey, isMandatory: flag });
   };
 
   const changeIdentifier = (e) => {
     const value = e.target.value;
-    onChangeMember({ index, address: value, isMandatory });
+    onChangeMember({ index, publicKey: value, isMandatory });
   };
 
   const deleteMember = () => onDeleteMember(index);
@@ -25,7 +25,7 @@ const MemberField = ({
       <InputWithDropdown
         t={t}
         className={styles.inputWithDropdown}
-        value={address}
+        value={publicKey}
         onChange={changeIdentifier}
         ButtonComponent={SecondaryButton}
         buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
