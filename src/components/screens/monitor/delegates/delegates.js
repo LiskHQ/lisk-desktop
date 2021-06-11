@@ -113,7 +113,7 @@ const DelegatesMonitor = ({
         startTime={latestBlocks[forgedInRound]?.timestamp}
       />
       <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
-        <BoxHeader className="delegates-table">
+        <BoxHeader className={`${styles.tabSelector} delegates-table`}>
           {tabs.tabs.length === 1
             ? <h2>{tabs.tabs[0].name}</h2>
             : <BoxTabs {...tabs} />}

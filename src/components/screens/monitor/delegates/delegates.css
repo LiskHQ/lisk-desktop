@@ -48,8 +48,9 @@
   padding: 0 !important;
 }
 
-.voteRow {
-  align-items: center;
+.tabSelector {
+  margin-bottom: 15px !important;
+  padding-bottom: 15px !important;
 }
 
 .votesColumnTitle {
@@ -113,11 +114,12 @@
 
       & > .eyeIconTooltip {
         align-self: center;
-        margin-right: 10px;
 
         & > .eyeIcon {
           display: flex;
           position: relative;
+          width: 28px;
+          height: 28px;
 
           &.watchedDelegate {
             & > img {
@@ -129,6 +131,7 @@
           & > img {
             visibility: hidden;
             opacity: 0;
+            width: 18px;
           }
         }
       }
