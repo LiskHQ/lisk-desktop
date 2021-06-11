@@ -9,7 +9,7 @@ describe('Utils: getNetwork', () => {
     const response = [
       { label: 'Mainnet', name: 'mainnet' },
       { label: 'Testnet', name: 'testnet' },
-      { label: 'Custom Node', name: 'customNode' },
+      { label: 'Custom Lisk Service Url', name: 'customNode' },
     ];
     it('returns names and labels', () => {
       expect(getNetworksList()).toEqual(response);
