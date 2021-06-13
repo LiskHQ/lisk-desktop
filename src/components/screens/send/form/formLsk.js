@@ -25,7 +25,7 @@ const FormLsk = (props) => {
     priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority(token);
   const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), account.summary.balance, token);
+  const [amount, setAmountField] = useAmountField(getInitialValue('amount'), account.summary?.balance ?? 0, token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
   const { fee, maxAmount, minFee } = useTransactionFeeCalculation({
