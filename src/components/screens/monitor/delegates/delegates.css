@@ -116,7 +116,6 @@
 
       & > .eyeIconTooltip {
         align-self: center;
-        /* margin-right: 10px; */
 
         & > .eyeIcon {
           display: flex;
