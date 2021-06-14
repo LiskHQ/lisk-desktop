@@ -52,8 +52,8 @@ const TransactionAsset = ({
   }
 
   return (
-    <div className="transaction-reference">
-      <span className={`${styles.txDetails} ${className}`}>{data}</span>
+    <div className={`${styles.transactionReference} transaction-reference`}>
+      <span className={className}>{data}</span>
     </div>
   );
 };
