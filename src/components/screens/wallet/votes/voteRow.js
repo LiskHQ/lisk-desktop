@@ -1,7 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '@constants';
-import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import { truncateAddress } from '@utils/account';
 import AccountVisual from '@toolbox/accountVisual';
 import tableStyles from '@toolbox/table/table.css';
@@ -20,7 +19,7 @@ const VoteRow = ({
   return (
     <div className={`${tableStyles.row} ${styles.row} vote-row`}>
       {/* Account visual */}
-      <div className={grid['col-sm-3']} onClick={onClick}>
+      <div className={grid['col-sm-5']} onClick={onClick}>
         <div className={`${styles.info}`}>
           <AccountVisual
             className={`${styles.avatar}`}
@@ -34,26 +33,8 @@ const VoteRow = ({
         </div>
       </div>
 
-      {/* Banned/Punished */}
-      <div className={grid['col-sm-2']} onClick={onClick}>
-        {account
-          ? `${formatAmountBasedOnLocale({ value: account.dpos.delegate.productivity })}%`
-          /* istanbul ignore next */
-          : '-'}
-      </div>
-
-      {/* Rank */}
-      <div className={grid['col-sm-2']} onClick={onClick}>
-        <span>
-          {
-            /* istanbul ignore next */
-            account?.dpos.delegate.rank ? `#${account.dpos.delegate.rank}` : '-'
-          }
-        </span>
-      </div>
-
       {/* Delegate weight */}
-      <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`} onClick={onClick}>
+      <div className={grid['col-sm-3']} onClick={onClick}>
         <span>
           <LiskAmount
             val={account?.dpos.delegate.totalVotesReceived ?? 0}
@@ -64,7 +45,7 @@ const VoteRow = ({
 
       {/* Vote amount */}
       {account ? (
-        <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} ${styles.flexRightAlign}`} onClick={onClick}>
+        <div className={`${grid['col-sm-3']} ${styles.flexRightAlign}`} onClick={onClick}>
           <span className={styles.votes}>
             <LiskAmount
               val={data.amount}
