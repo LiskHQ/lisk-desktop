@@ -4,7 +4,7 @@ import { generatePassphrase } from '@utils/passphrase';
 import { extractAddressFromPassphrase } from '@utils/account';
 import { routes } from '@constants';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
-import MultiStep from '@shared/multiStep';
+import MultiStep from '@shared/registerMultiStep';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
@@ -53,7 +53,6 @@ class Register extends React.Component {
           <MultiStep
             navStyles={{ multiStepWrapper: styles.wrapper }}
             progressBar={MultiStepProgressBar}
-            showNav
           >
             <ChooseAvatar
               accounts={accounts}
