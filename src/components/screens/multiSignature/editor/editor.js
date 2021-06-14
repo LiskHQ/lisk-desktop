@@ -19,7 +19,7 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 const MAX_MULTI_SIG_MEMBERS = 64;
 
 const placeholderMember = {
-  address: undefined, isMandatory: false,
+  publicKey: undefined, isMandatory: false,
 };
 
 const getInitialMembersState = (prevState) => prevState.members ?? [placeholderMember];
@@ -35,8 +35,10 @@ const validateState = ({
   if (requiredSignatures > mandatoryKeys.length + optionalKeys.length) {
     messages.push(t('Number of signatures must be lower than or equal to the number of members.'));
   }
-  if (mandatoryKeys.some(item => !regex.publicKey.test(item))
-  || optionalKeys.some(item => !regex.publicKey.test(item))) {
+  if (
+    mandatoryKeys.some(item => !regex.publicKey.test(item))
+    || optionalKeys.some(item => !regex.publicKey.test(item))
+  ) {
     messages.push(t('Please enter a valid public key for each member.'));
   }
   return {
@@ -61,13 +63,13 @@ const Editor = ({
 
   const [mandatoryKeys, optionalKeys] = useMemo(() => {
     const mandatory = members
-      .filter(member => member.isMandatory && member.address)
-      .map(member => member.address)
+      .filter(member => member.isMandatory && member.publicKey)
+      .map(member => member.publicKey)
       .sort();
 
     const optional = members
-      .filter(member => !member.isMandatory && member.address)
-      .map(member => member.address)
+      .filter(member => !member.isMandatory && member.publicKey)
+      .map(member => member.publicKey)
       .sort();
 
     return [mandatory, optional];
@@ -93,8 +95,8 @@ const Editor = ({
     }
   };
 
-  const changeMember = ({ index, address, isMandatory }) => {
-    const newMember = { address, isMandatory };
+  const changeMember = ({ index, publicKey, isMandatory }) => {
+    const newMember = { publicKey, isMandatory };
     const newMembers = [
       ...members.slice(0, index),
       newMember,
@@ -105,7 +107,7 @@ const Editor = ({
 
   const deleteMember = (index) => {
     if (members.length === 1) {
-      changeMember({ index, address: '', isMandatory: false });
+      changeMember({ index, publicKey: '', isMandatory: false });
     } else {
       const newMembers = [
         ...members.slice(0, index),
@@ -123,11 +125,10 @@ const Editor = ({
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
     const extractedMembers = members.map(member => {
-      if (regex.publicKey.test(member.address)) {
+      if (regex.publicKey.test(member.publicKey)) {
         return {
           ...member,
-          address: extractAddressFromPublicKey(member.address),
-          publicKey: member.address,
+          address: extractAddressFromPublicKey(member.publicKey),
         };
       }
       return member;

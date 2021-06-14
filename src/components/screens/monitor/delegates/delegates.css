@@ -8,7 +8,10 @@
   & > div {
     display: flex;
     flex-direction: column;
-    margin-left: 8px;
+
+    &:last-child {
+      margin-left: 8px;
+    }
 
     & > .delegateName {
       @mixin headingSmall;
@@ -118,6 +121,7 @@
           position: relative;
           width: 28px;
           height: 28px;
+          margin-right: 8px;
 
           &.watchedDelegate {
             & > img {
@@ -135,7 +139,7 @@
       }
 
       & .tooltipContainer {
-        left: -40px;
+        left: -25px;
 
         & > main > .watchedTooltip {
           @mixin contentNormal bold;

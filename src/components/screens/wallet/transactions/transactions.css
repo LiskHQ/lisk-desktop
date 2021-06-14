@@ -95,6 +95,11 @@
   }
 }
 
+.transactionReference {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 @keyframes appear {
   0% {
     height: 0;

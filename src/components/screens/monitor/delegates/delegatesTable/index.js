@@ -34,14 +34,16 @@ const TableWrapper = compose(
 
 const filterDelegates = (delegates, filters) => ({
   ...delegates,
-  data: filters.search
-    ? delegates.data.filter(delegate => delegate.username.includes(filters.search))
+  data: filters.search || filters.address
+    ? delegates.data.filter(delegate =>
+      delegate.username.includes(filters.search)
+        && (!filters.address || filters.address.includes(delegate.address)))
     : delegates.data,
 });
 
 const selectDelegates = ({
   activeTab, delegates, standByDelegates, sanctionedDelegates,
-  watchedDelegates, filters,
+  watchedDelegates, filters, watchList,
 }) => {
   switch (activeTab) {
     case 'active':
@@ -54,7 +56,7 @@ const selectDelegates = ({
       return filterDelegates(sanctionedDelegates, filters);
 
     case 'watched':
-      return filterDelegates(watchedDelegates, filters);
+      return filterDelegates(watchedDelegates, { search: filters.search || '', address: watchList });
 
     default:
       return undefined;
@@ -76,7 +78,13 @@ const DelegatesTable = ({
   t,
 }) => {
   const delegatesToShow = selectDelegates({
-    activeTab, delegates, standByDelegates, sanctionedDelegates, watchedDelegates, filters,
+    activeTab,
+    delegates,
+    standByDelegates,
+    sanctionedDelegates,
+    watchedDelegates,
+    filters,
+    watchList,
   });
 
   const canLoadMore = activeTab === 'standby' && (standByDelegates.meta?.offset + standByDelegates.meta?.count) < standByDelegates.meta?.total;

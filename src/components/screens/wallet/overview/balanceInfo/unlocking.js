@@ -22,30 +22,15 @@ const Link = ({ sum }) => (
   </DialogLink>
 );
 
-const Text = ({ sum }) => (
-  <span
-    className={`${styles.lockedBalance} open-unlock-balance-dialog`}
-    component="lockedBalance"
-  >
-    <Icon name="lock" />
-    {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
-  </span>
-);
-
 const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
   const host = useSelector(state => getActiveTokenAccount(state));
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   const lockedInUnvotes = activeToken === tokenMap.LSK.key && isWalletRoute && host
-    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking) : undefined;
+    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking) : 0;
 
-  if (lockedInUnvotes > 0) {
+  if (lockedInUnvotes + lockedInVotes > 0) {
     return (
       <Link sum={lockedInUnvotes + lockedInVotes} />
-    );
-  }
-  if (lockedInVotes > 0) {
-    return (
-      <Text sum={lockedInVotes} />
     );
   }
   return null;
