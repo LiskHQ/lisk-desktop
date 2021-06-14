@@ -6,7 +6,7 @@ const MultiStepProgressBar = ({ total, current }) => {
 
   return (
     <div className={styles.container}>
-      {steps.map((step, i) => (
+      {steps.map((_, i) => (
         <div className={current >= i ? styles.active : styles.inactive} key={i} />
       ))}
     </div>
