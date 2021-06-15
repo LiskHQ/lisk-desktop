@@ -58,7 +58,7 @@ describe('Multisignature account details', () => {
       const wrapper = mountWithRouterAndStore(
         MultisigAccountDetails,
         props,
-        {},
+        { pathname: '/wallet' },
         store,
       );
 
