@@ -6,7 +6,7 @@ import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
 
 const ConfirmPassphrase = ({
-  t, passphrase, onConfirmPassphrase, prevStep, nextStep,
+  t, passphrase, prevStep, nextStep,
 }) => (
   <>
     <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
@@ -20,10 +20,7 @@ const ConfirmPassphrase = ({
       <PassphraseRenderer
         showInfo
         passphrase={passphrase}
-        nextStep={(params) => {
-          onConfirmPassphrase();
-          nextStep(params);
-        }}
+        nextStep={nextStep}
         prevStep={prevStep}
         isConfirmation
       />

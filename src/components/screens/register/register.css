@@ -15,10 +15,6 @@
   }
 }
 
-.alignStart {
-  justify-content: flex-start;
-}
-
 .warningContent {
   margin-left: 10px;
   display: flex;

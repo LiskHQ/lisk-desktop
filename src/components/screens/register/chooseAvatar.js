@@ -68,10 +68,11 @@ class ChooseAvatar extends React.Component {
         </div>
         <div
           ref={this.setWrapperRef}
-          className={`
-          ${styles.avatarsHolder} ${grid['col-xs-10']}
-          ${selected.address ? styles.avatarSelected : ''}
-          choose-avatar`}
+          className={
+            `${styles.avatarsHolder} ${grid['col-xs-10']}
+            ${selected.address ? styles.avatarSelected : ''}
+            choose-avatar`
+          }
         >
           {
             accounts.map((account, key) => (
