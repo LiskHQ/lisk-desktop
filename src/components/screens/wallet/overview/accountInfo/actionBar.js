@@ -16,7 +16,13 @@ const BookmarkIcon = ({ bookmark }) => (
   />
 );
 
-const getMultiSignatureComponent = (isMultisignature) => {
+const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature) => {
+  if (!isLoggedInAccount && !isMultisignature) {
+    return null;
+  }
+  if (!isLoggedInAccount && isMultisignature) {
+    return 'multisigAccountDetails';
+  }
   if (isMultisignature) {
     return 'multisigAccountDetails';
   }
@@ -46,8 +52,8 @@ const MultiSignatureButton = ({
 const ActionBar = ({
   address, host, activeToken, username, account, bookmark, hwInfo, isMultisignature, t,
 }) => {
-  // const isLoggedInAccount = address === host;
-  const component = getMultiSignatureComponent(isMultisignature);
+  const isLoggedInAccount = address === host;
+  const component = getMultiSignatureComponent(isLoggedInAccount, isMultisignature);
 
   return (
     <footer>
