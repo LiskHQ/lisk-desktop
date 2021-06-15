@@ -23,9 +23,6 @@ const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature, activeT
   if (!isLoggedInAccount && !isMultisignature) {
     return null;
   }
-  if (!isLoggedInAccount && isMultisignature) {
-    return 'multisigAccountDetails';
-  }
   if (isMultisignature) {
     return 'multisigAccountDetails';
   }
