@@ -7,13 +7,14 @@ import { getAccount } from '@api/account';
 import withData from '@utils/withData';
 import { selectSearchParamValue } from '@utils/searchParams';
 import { selectAccount } from '@store/selectors';
+import { routes } from '@constants';
 import MultisigAccountDetailsComp from './multisigAccountDetails';
 
 const MultisigAccountDetails = ({ account, history }) => {
   const { t } = useTranslation();
   const hostAccount = useSelector(selectAccount);
   const network = useSelector(state => state.network);
-  const isHost = history.location.pathname === '/wallet';
+  const isHost = history.location.pathname === routes.wallet.path;
 
   useEffect(() => {
     if (!isHost) {

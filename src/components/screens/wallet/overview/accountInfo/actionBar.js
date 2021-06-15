@@ -17,7 +17,7 @@ const BookmarkIcon = ({ bookmark }) => (
 );
 
 const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature, activeToken) => {
-  if (activeToken !== 'LSK') {
+  if (activeToken !== tokenMap.LSK.key) {
     return null;
   }
   if (!isLoggedInAccount && !isMultisignature) {
