@@ -1,3 +1,4 @@
+import { routes } from '@constants';
 import { mountWithRouterAndStore } from '../../../utils/testHelpers';
 import MultisigAccountDetails from './index';
 
@@ -58,7 +59,7 @@ describe('Multisignature account details', () => {
       const wrapper = mountWithRouterAndStore(
         MultisigAccountDetails,
         props,
-        {},
+        { pathname: routes.wallet.path },
         store,
       );
 

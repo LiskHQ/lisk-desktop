@@ -13,6 +13,9 @@ import Members from '@shared/multisignatureMembers';
 import styles from './styles.css';
 
 const MultisigAccountDetails = ({ t, account }) => {
+  if (Object.keys(account).length === 0) {
+    return null;
+  }
   const { numberOfSignatures, optionalKeys, mandatoryKeys } = account.keys;
 
   const members = useMemo(() => (

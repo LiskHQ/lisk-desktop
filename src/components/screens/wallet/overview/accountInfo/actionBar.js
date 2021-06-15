@@ -16,8 +16,11 @@ const BookmarkIcon = ({ bookmark }) => (
   />
 );
 
-const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature) => {
-  if (!isLoggedInAccount) {
+const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature, activeToken) => {
+  if (activeToken !== tokenMap.LSK.key) {
+    return null;
+  }
+  if (!isLoggedInAccount && !isMultisignature) {
     return null;
   }
   if (isMultisignature) {
@@ -50,7 +53,7 @@ const ActionBar = ({
   address, host, activeToken, username, account, bookmark, hwInfo, isMultisignature, t,
 }) => {
   const isLoggedInAccount = address === host;
-  const component = getMultiSignatureComponent(isLoggedInAccount, isMultisignature);
+  const component = getMultiSignatureComponent(isLoggedInAccount, isMultisignature, activeToken);
 
   return (
     <footer>

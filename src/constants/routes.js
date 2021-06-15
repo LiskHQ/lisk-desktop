@@ -160,7 +160,7 @@ export const modals = {
     forbiddenTokens: [tokenMap.BTC.key],
   },
   multisigAccountDetails: {
-    isPrivate: true,
+    isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   signMultiSignTransaction: {
