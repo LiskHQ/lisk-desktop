@@ -53,7 +53,7 @@ const VoteRow = ({
   const { votes } = data.asset;
   return (
     <DialogLink
-      className={`${grid.row} ${className} ${styles.voteRow} vote-row`}
+      className={`${grid.row} ${className} ${styles.tableRow} vote-row`}
       component="transactionDetails"
       data={{ transactionId: data.id, token: 'LSK' }}
     >

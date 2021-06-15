@@ -62,7 +62,7 @@
     color: var(--color-maastricht-blue);
     display: flex;
     justify-content: flex-start;
-    padding: 20px;
+    padding: 20px 8px;
     text-align: left;
 
     &:last-child {

@@ -51,8 +51,9 @@
   padding: 0 !important;
 }
 
-.voteRow {
-  align-items: center;
+.tabSelector {
+  margin-bottom: 15px !important;
+  padding-bottom: 15px !important;
 }
 
 .votesColumnTitle {
@@ -108,8 +109,6 @@
     text-overflow: ellipsis;
     overflow: inherit;
     display: block;
-    padding-right: 8px;
-    padding-left: 8px;
 
     & > .delegateColumn {
       display: flex;
@@ -120,7 +119,9 @@
         & > .eyeIcon {
           display: flex;
           position: relative;
-          padding: 15px;
+          width: 28px;
+          height: 28px;
+          margin-right: 8px;
 
           &.watchedDelegate {
             & > img {
@@ -132,6 +133,7 @@
           & > img {
             visibility: hidden;
             opacity: 0;
+            width: 18px;
           }
         }
       }
