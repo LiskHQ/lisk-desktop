@@ -39,14 +39,16 @@ const Summary = ({
 
   const onSubmit = async () => {
     const data = {
-      moduleAssetId,
       network,
-      senderPublicKey,
       passphrase: account.passphrase,
-      nonce: account.info.LSK.sequence.nonce,
-      fee: toRawLsk(minFee.value),
-      amount: account.info.LSK.legacy.balance,
-      keys: account.info.LSK.sequence.keys,
+      account: account.info.LSK,
+      transactionObject: {
+        moduleAssetId,
+        senderPublicKey,
+        nonce: account.info.LSK.sequence.nonce,
+        fee: toRawLsk(minFee.value),
+        amount: account.info.LSK.legacy.balance,
+      },
     };
 
     const [error, tx] = await to(
