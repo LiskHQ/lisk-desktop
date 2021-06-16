@@ -304,15 +304,18 @@ export const getTransactionFee = async ({
  */
 export const create = ({
   network,
-  moduleAssetId,
-  keys,
-  ...transactionObject
+  account,
+  passphrase,
+  transactionObject,
 // eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
   const { networkIdentifier } = network.networks.LSK;
   const {
-    passphrase, ...rawTransaction
+    moduleAssetId, ...rawTransaction
   } = transactionObject;
+
+  rawTransaction.nonce = account.sequence.nonce;
+  rawTransaction.senderPublicKey = account.summary.publicKey;
 
   const schema = moduleAssetSchemas[moduleAssetId];
   const transaction = createTransactionObject(rawTransaction, moduleAssetId);
@@ -321,11 +324,11 @@ export const create = ({
   try {
     let signedTransaction;
 
-    if (keys.numberOfSignatures > 0
+    if (account.keys.numberOfSignatures > 0
       || moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
       const keysInBuffer = {
-        mandatoryKeys: keys.mandatoryKeys.map(item => Buffer.from(item, 'hex')),
-        optionalKeys: keys.optionalKeys.map(item => Buffer.from(item, 'hex')),
+        mandatoryKeys: account.keys.mandatoryKeys.map(item => Buffer.from(item, 'hex')),
+        optionalKeys: account.keys.optionalKeys.map(item => Buffer.from(item, 'hex')),
       };
       signedTransaction = transactions.signMultiSignatureTransaction(
         schema, transaction, netId, passphrase, keysInBuffer,
