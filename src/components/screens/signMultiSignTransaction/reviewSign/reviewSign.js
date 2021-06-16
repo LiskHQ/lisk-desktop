@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { transactions } from '@liskhq/lisk-client';
 import { moduleAssetSchemas, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { createTransactionObject } from '@utils/transaction';
+import { isEmpty } from '@utils/helpers';
 import BoxContent from '@toolbox/box/content';
 import Box from '@toolbox/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';
@@ -144,6 +145,10 @@ const ReviewSign = ({
   };
 
   const showFeedback = !isMember || isFullySigned;
+
+  if (isEmpty(senderAccount.data)) {
+    return <div />;
+  }
 
   return (
     <Box className={styles.boxContainer}>
