@@ -88,6 +88,7 @@ class MultiStep extends React.Component {
     };
 
     extraProps.prevState = { ...step.data[step.current + 1] };
+    console.log(children, step);
 
     return (
       <div className={className}>
@@ -101,7 +102,7 @@ class MultiStep extends React.Component {
           prevStep={step.prevStep}
         />
         {
-        React.cloneElement(children[step.current], extraProps)
+        children[step.current] && React.cloneElement(children[step.current], extraProps)
       }
       </div>
     );
