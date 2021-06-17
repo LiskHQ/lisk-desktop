@@ -34,7 +34,8 @@ const MultiSignatureButton = ({
 }) => (
   <DialogLink
     className={styles.helperIcon}
-    component={component}>
+    component={component}
+  >
     <Tooltip
       className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisignature ? styles.whiteBackground : ''}`}
       position="bottom"
