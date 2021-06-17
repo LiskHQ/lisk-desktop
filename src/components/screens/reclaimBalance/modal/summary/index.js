@@ -39,9 +39,7 @@ const Summary = ({
 
   const onSubmit = async () => {
     const data = {
-      moduleAssetId,
       network,
-      senderPublicKey,
       passphrase: account.passphrase,
       nonce: 0,
       fee: toRawLsk(minFee.value),

@@ -80,10 +80,13 @@ export const votesSubmitted = ({ fee, votes }) =>
       fee, votes, nonce, passphrase, senderPublicKey,
     };
     const params = {
-      ...transaction,
       network,
-      moduleAssetId,
-      keys: account.info.LSK.keys,
+      account: account.info.LSK,
+      passphrase,
+      transactionObject: {
+        ...transaction,
+        moduleAssetId,
+      },
     };
 
     const [error, tx] = account.loginType === loginTypes.passphrase.code

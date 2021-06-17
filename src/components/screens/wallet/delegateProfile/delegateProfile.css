@@ -165,7 +165,7 @@
   padding-right: 20px;
 }
 
-.voteItem {
+.voteRow {
   width: 238px;
   width: max-content;
   display: flex;
@@ -184,7 +184,7 @@
     width: calc(100% - 30px);
     height: 1px;
     left: 15px;
-    margin-top: 35px;
+    margin-top: 60px;
     z-index: 0;
     background: var(--color-platinum);
   }

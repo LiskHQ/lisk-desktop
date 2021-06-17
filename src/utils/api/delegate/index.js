@@ -52,6 +52,7 @@ const txFilters = {
   offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
   search: { key: 'search', test: str => (typeof str === 'string' && str.length > 0) },
   status: { key: 'status', test: str => (typeof str === 'string' && str.length > 0) },
+  aggregate: { key: 'aggregate', test: value => typeof value === 'boolean' },
   sort: {
     key: 'sort',
     test: str => [

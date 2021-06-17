@@ -5,31 +5,15 @@ import Box from '@toolbox/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
-// import DelegateVotesView from './delegateVotesView';
-
-// const formatForgingStatus = (status) => {
-//   const result = status.replace(/([A-Z])/g, ' $1');
-//   return result.charAt(0).toUpperCase() + result.slice(1);
-// };
-
-// const getDelegateStatus = (awaitingForgers, forgingTimes, delegateAddress) => {
-//   const matchingForger = awaitingForgers.filter(forger => forger.address === delegateAddress);
-//   if (matchingForger.length && forgingTimes) {
-//     const publicKey = matchingForger.publicKey;
-//     const status = forgingTimes[publicKey].status;
-//     return formatForgingStatus(status);
-//   }
-//   return undefined;
-// };
+import DelegateVotesView from './delegateVotesView';
 
 const DelegateProfile = ({
   delegate, account, t, voters,
   lastBlockForged,
-  // forgers,
 }) => {
   const { data } = delegate;
   useEffect(() => {
-    voters.loadData();
+    voters.loadData({ aggregate: true });
   }, [account]);
 
   useEffect(() => {
@@ -60,10 +44,10 @@ const DelegateProfile = ({
           forgedLsk="-"
         />
       </Box>
-      {/* <DelegateVotesView
+      <DelegateVotesView
         t={t}
         voters={voters}
-      /> */}
+      />
     </section>
   );
 };

@@ -4,9 +4,8 @@ import { BigNumber } from 'bignumber.js';
 
 import { tokenMap } from '@constants';
 import { validateAddress } from '../../validators';
-import { extractAddress, getDerivedPathFromPassphrase } from '../account';
+import { getDerivedPathFromPassphrase } from '../account';
 import { fromRawLsk } from '../../lsk';
-import { getNetworkConfig } from '../network';
 import http from '../http';
 
 const httpPrefix = '';
@@ -27,7 +26,6 @@ const httpPaths = {
 const normalizeTransactionsResponse = ({
   network,
   list,
-  // eslint-disable-next-line max-statements
 }) => list.map(({
   tx, feeSatoshi, confirmations, timestamp,
 }) => {
@@ -263,31 +261,26 @@ export const getTransactionFee = async ({
  */
 // eslint-disable-next-line max-statements
 export const create = async ({
-  passphrase,
-  recipientId: recipientAddress,
-  amount,
-  selectedFeePerByte,
   network,
-  // eslint-disable-next-line consistent-return
+  account,
+  passphrase,
+  transactionObject,
 }) => {
-  const config = getNetworkConfig(tokenMap.BTC.key, network);
-  amount = Number(amount);
-  selectedFeePerByte = Number(selectedFeePerByte);
+  const config = network.networks.BTC;
 
-  const senderAddress = extractAddress(passphrase, config);
-  const unspentTxOuts = await getUnspentTransactionOutputs(senderAddress, network);
+  const rawTransaction = {
+    senderAddress: account.summary.address,
+    amount: Number(transactionObject.amount),
+    fee: Number(transactionObject.fee),
+    recipientAddress: transactionObject.recipientAddress,
+  };
 
-  // Estimate total cost (currently estimates max cost by assuming the worst case)
-  const estimatedMinerFee = calculateTransactionFee({
-    inputCount: unspentTxOuts.length,
-    outputCount: 2,
-    selectedFeePerByte,
-  });
-
-  const estimatedTotal = amount + estimatedMinerFee;
+  const unspentTxOuts = await getUnspentTransactionOutputs(account.summary.address, network);
+  const estimatedMinerFee = rawTransaction.fee;
+  const estimatedTotal = rawTransaction.amount + estimatedMinerFee;
 
   // Check if balance is sufficient
-  const unspentTxOutsTotal = unspentTxOuts.reduce((total, tx) => {
+  const unspentTxOutsTotal = unspentTxOuts.data.reduce((total, tx) => {
     total += tx.value;
     return total;
   }, 0);
@@ -302,7 +295,7 @@ export const create = async ({
   const txOutsToConsume = [];
 
   while (sumOfConsumedOutputs < estimatedTotal) {
-    const tx = unspentTxOuts[txOutIndex];
+    const tx = unspentTxOuts.data[txOutIndex];
     txOutsToConsume.push(tx);
     txOutIndex += 1;
     sumOfConsumedOutputs += tx.value;
@@ -311,30 +304,24 @@ export const create = async ({
   const txb = new bitcoin.TransactionBuilder(config.network);
 
   // Add inputs from unspent txOuts
-  // eslint-disable-next-line
-    for (const tx of txOutsToConsume) {
+  txOutsToConsume.forEach((tx) => {
     txb.addInput(tx.tx_hash, tx.tx_pos);
-  }
-
-  // Output to Recipient
-  txb.addOutput(recipientAddress, amount);
-
-  // Calculate final fee
-  const calculatedMinerFee = calculateTransactionFee({
-    inputCount: txOutsToConsume.length,
-    outputCount: 2,
-    selectedFeePerByte,
   });
 
+  // Output to Recipient
+  txb.addOutput(rawTransaction.recipientAddress, rawTransaction.amount);
+
+  const calculatedMinerFee = rawTransaction.fee;
+
   // Calculate total
-  const calculatedTotal = amount + calculatedMinerFee;
+  const calculatedTotal = rawTransaction.amount + calculatedMinerFee;
 
   // Output to Change Address
   const change = sumOfConsumedOutputs - calculatedTotal;
-  txb.addOutput(senderAddress, change);
+  txb.addOutput(rawTransaction.senderAddress, change);
 
   // Sign inputs
-  const derivedPath = getDerivedPathFromPassphrase(passphrase, config);
+  const derivedPath = getDerivedPathFromPassphrase(passphrase, network);
   const keyPair = bitcoin.ECPair.fromWIF(derivedPath.toWIF(), config.network);
   for (let i = 0; i < txOutsToConsume.length; i++) {
     txb.sign(i, keyPair);
@@ -342,14 +329,11 @@ export const create = async ({
   return txb.build().toHex();
 };
 
-export const broadcast = async (transaction, network) => {
-  const config = getNetworkConfig(tokenMap.BTC.key, network);
-
+export const broadcast = async ({ transaction, serviceUrl }) => {
   const response = await http({
-    baseUrl: config.url,
-    path: 'transactions',
+    baseUrl: serviceUrl,
+    path: '/transaction',
     method: 'POST',
-    ...config.requestOptions,
     body: JSON.stringify({ tx: transaction }),
   });
 
