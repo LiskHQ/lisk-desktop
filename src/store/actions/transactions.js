@@ -170,10 +170,10 @@ export const transactionBroadcasted = transaction =>
         dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
       }
 
-    if (activeToken === tokenMap.LSK.key) {
-      const transformedTransaction = transformTransaction(transaction);
-      if (transformedTransaction.sender.address === account.info.LSK.summary.address) {
-        dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
+      if (activeToken === tokenMap.LSK.key) {
+        if (transformedTransaction.sender.address === account.info.LSK.summary.address) {
+          dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
+        }
       }
     }
   };
