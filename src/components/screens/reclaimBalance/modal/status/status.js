@@ -21,11 +21,11 @@ const getTransactionError = (broadcastedTransactionsError, createError) => {
 const Status = ({
   t, transactionBroadcasted, transactions,
   transactionInfo, history, transactionError,
-  accountDataUpdated, balance, isMigrated,
+  balance, isMigrated,
 }) => {
   const broadcastTransaction = () => {
     if (transactionInfo) {
-      //transactionBroadcasted(transactionInfo);
+      transactionBroadcasted(transactionInfo);
     }
   };
 
@@ -37,16 +37,7 @@ const Status = ({
     if (transactionInfo) broadcastTransaction();
   }, []);
 
-  useEffect(() => {
-    console.log(isMigrated);
-    if (isMigrated) {
-      console.log('going to wallet', routes.wallet);
-      history.push(routes.wallet.path);
-    }
-  }, [isMigrated]);
-
-  //const isTransactionSuccess = transactions.broadcastedTransactionsError.length === 0;
-  const isTransactionSuccess = true;
+  const isTransactionSuccess = transactions.broadcastedTransactionsError.length === 0;
 
   const displayTemplate = isTransactionSuccess
     ? {
@@ -54,9 +45,7 @@ const Status = ({
       message: t('Your balance will be transfered in a few seconds.'),
       button: {
         onClick: () => {
-          console.log(1111111111111111);
-          accountDataUpdated();
-          console.log(22222222222222222);
+          history.push(routes.wallet.path);
         },
         title: t('Go to Wallet'),
         className: 'close-modal',
@@ -102,6 +91,7 @@ const Status = ({
               <PrimaryButton
                 className={`${styles.btn} ${displayTemplate.button.className}`}
                 onClick={displayTemplate.button.onClick}
+                disabled={!isMigrated}
               >
                 {displayTemplate.button.title}
               </PrimaryButton>
