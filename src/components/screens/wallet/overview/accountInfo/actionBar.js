@@ -32,20 +32,20 @@ const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature, activeT
 const MultiSignatureButton = ({
   t, component, isMultisignature,
 }) => (
-  <div className={styles.helperIcon}>
+  <DialogLink
+    className={styles.helperIcon}
+    component={component}>
     <Tooltip
       className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisignature ? styles.whiteBackground : ''}`}
       position="bottom"
       size="maxContent"
       content={(
-        <DialogLink component={component}>
-          <Icon name="multiSignatureOutline" className={styles.multisigIcon} />
-        </DialogLink>
-            )}
+        <Icon name="multiSignatureOutline" className={styles.multisigIcon} />
+      )}
     >
       <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature')}</p>
     </Tooltip>
-  </div>
+  </DialogLink>
 );
 
 // eslint-disable-next-line complexity
