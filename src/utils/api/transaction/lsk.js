@@ -324,7 +324,7 @@ export const create = ({
   try {
     let signedTransaction;
 
-    if (account.keys.numberOfSignatures > 0
+    if (account.summary.isMultiSignature
       || moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
       const keysInBuffer = {
         mandatoryKeys: account.keys.mandatoryKeys.map(item => Buffer.from(item, 'hex')),
