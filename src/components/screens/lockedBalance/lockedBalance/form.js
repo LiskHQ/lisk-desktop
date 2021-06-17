@@ -50,16 +50,18 @@ const Form = ({
 
     const [error, tx] = await to(
       create({
-        moduleAssetId,
         network,
-        senderPublicKey: account.summary.publicKey,
-        nonce: account.sequence?.nonce,
-        fee: `${toRawLsk(parseFloat(selectedFee))}`,
+        account,
         passphrase: account.passphrase,
-        unlockObjects: getUnlockableUnlockObjects(
-          account.dpos?.unlocking, currentBlockHeight,
-        ),
-        keys: account.keys,
+        transactionObject: {
+          moduleAssetId,
+          senderPublicKey: account.summary.publicKey,
+          nonce: account.sequence?.nonce,
+          fee: `${toRawLsk(parseFloat(selectedFee))}`,
+          unlockObjects: getUnlockableUnlockObjects(
+            account.dpos?.unlocking, currentBlockHeight,
+          ),
+        },
       }, tokenMap.LSK.key),
     );
 

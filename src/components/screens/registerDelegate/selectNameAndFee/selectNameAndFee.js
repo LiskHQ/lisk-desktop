@@ -57,14 +57,16 @@ const SelectNameAndFee = ({ account, ...props }) => {
 
   const onConfirm = async () => {
     const data = {
-      moduleAssetId,
       network,
-      senderPublicKey: account.summary.publicKey,
+      account,
       passphrase: account.passphrase,
-      nonce: account.sequence?.nonce,
-      fee: toRawLsk(parseFloat(fee.value)),
-      username: state.nickname,
-      keys: account.keys,
+      transactionObject: {
+        senderPublicKey: account.summary.publicKey,
+        nonce: account.sequence?.nonce,
+        fee: toRawLsk(parseFloat(fee.value)),
+        username: state.nickname,
+        moduleAssetId,
+      },
     };
 
     const [error, tx] = await to(

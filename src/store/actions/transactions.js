@@ -4,10 +4,10 @@ import {
   actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes,
 } from '@constants';
 import { getTransactions, create, broadcast } from '@api/transaction';
+import { transformTransaction } from '@utils/transaction';
 import { signSendTransaction } from '@utils/hwManager';
 import { passphraseUsed } from './account';
 import { loadingStarted, loadingFinished } from './loading';
-import { transformTransaction } from '../../utils/transaction';
 
 /**
  * Action trigger when user logout from the application
@@ -100,19 +100,16 @@ export const transactionCreated = data => async (dispatch, getState) => {
     account, settings, network,
   } = getState();
   const activeToken = settings.token.active;
-
   const passphrase = account.passphrase;
-  const nonce = account.info.LSK.sequence.nonce;
-  const senderPublicKey = account.info.LSK.summary.publicKey;
 
   const params = {
-    ...data,
-    senderPublicKey,
+    transactionObject: {
+      ...data,
+      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+    },
+    account: account.info[activeToken],
     passphrase,
-    nonce,
     network,
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
-    keys: account.info.LSK.keys,
   };
 
   const [error, tx] = account.loginType === loginTypes.passphrase.code
@@ -168,10 +165,11 @@ export const transactionBroadcasted = transaction =>
       data: transaction,
     });
 
-    const transformedTransaction = transformTransaction(transaction);
-    if (activeToken !== tokenMap.BTC.key
-      && transformedTransaction.sender.address === account.info.LSK.summary.address) {
-      dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
+    if (activeToken === tokenMap.LSK.key) {
+      const transformedTransaction = transformTransaction(transaction);
+      if (transformedTransaction.sender.address === account.info.LSK.summary.address) {
+        dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
+      }
     }
 
     dispatch(passphraseUsed(new Date()));

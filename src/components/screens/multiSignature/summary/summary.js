@@ -31,15 +31,17 @@ const Summary = ({
     const [error, transaction] = await to(
       create({
         network,
-        mandatoryKeys,
-        optionalKeys,
-        numberOfSignatures,
-        moduleAssetId,
-        fee: toRawLsk(fee),
-        nonce: account.sequence.nonce,
         passphrase: account.passphrase,
-        senderPublicKey: account.summary.publicKey,
-        keys: account.keys,
+        account,
+        transactionObject: {
+          mandatoryKeys,
+          optionalKeys,
+          numberOfSignatures,
+          moduleAssetId,
+          fee: toRawLsk(fee),
+          nonce: account.sequence.nonce,
+          senderPublicKey: account.summary.publicKey,
+        },
       }, token),
     );
 

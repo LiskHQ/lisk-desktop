@@ -68,7 +68,8 @@ class Summary extends React.Component {
       fields, t, token, account, isInitialization, transactions,
     } = this.props;
     const transaction = transactions.transactionsCreated[0];
-    const amount = fromRawLsk(transaction?.asset?.amount);
+    const amount = transaction?.asset?.amount
+      ? fromRawLsk(transaction?.asset?.amount) : fields.amount.value;
 
     return (
       <TransactionSummary
@@ -92,7 +93,7 @@ class Summary extends React.Component {
           fields={fields}
           token={token}
           moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.transfer}
-          transaction={transaction || {}}
+          transaction={typeof transaction === 'object' ? transaction : { asset: { amount: toRawLsk(fields.amount.value) } }}
           account={account}
           isMultisignature={account.summary.isMultisignature}
         />
