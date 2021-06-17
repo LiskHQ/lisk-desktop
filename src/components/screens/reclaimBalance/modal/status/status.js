@@ -26,7 +26,7 @@ const Status = ({
 }) => {
   const broadcastTransaction = () => {
     if (transactionInfo) {
-      //transactionBroadcasted(transactionInfo);
+      transactionBroadcasted(transactionInfo);
     }
   };
 
@@ -38,7 +38,8 @@ const Status = ({
     if (transactionInfo) broadcastTransaction();
   }, []);
 
-  const isTransactionSuccess = transactions.broadcastedTransactionsError.length === 0;
+  const isTransactionSuccess = transactions.broadcastedTransactionsError.length === 0
+    && !transactionError;
 
   const displayTemplate = isTransactionSuccess
     ? {
