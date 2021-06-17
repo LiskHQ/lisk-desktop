@@ -175,5 +175,7 @@ export const transactionBroadcasted = transaction =>
           dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
         }
       }
+
+      dispatch(passphraseUsed(new Date()));
     }
   };
