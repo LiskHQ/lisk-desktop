@@ -26,7 +26,6 @@ const httpPaths = {
 const normalizeTransactionsResponse = ({
   network,
   list,
-  // eslint-disable-next-line max-statements
 }) => list.map(({
   tx, feeSatoshi, confirmations, timestamp,
 }) => {
@@ -266,7 +265,6 @@ export const create = async ({
   account,
   passphrase,
   transactionObject,
-  // eslint-disable-next-line consistent-return
 }) => {
   const config = network.networks.BTC;
 
@@ -306,10 +304,9 @@ export const create = async ({
   const txb = new bitcoin.TransactionBuilder(config.network);
 
   // Add inputs from unspent txOuts
-  // eslint-disable-next-line
-  for (const tx of txOutsToConsume) {
+  txOutsToConsume.forEach((tx) => {
     txb.addInput(tx.tx_hash, tx.tx_pos);
-  }
+  });
 
   // Output to Recipient
   txb.addOutput(rawTransaction.recipientAddress, rawTransaction.amount);
@@ -333,8 +330,6 @@ export const create = async ({
 };
 
 export const broadcast = async ({ transaction, serviceUrl }) => {
-  // const config = getNetworkConfig(tokenMap.BTC.key, network);
-
   const response = await http({
     baseUrl: serviceUrl,
     path: '/transaction',
