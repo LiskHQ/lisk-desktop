@@ -8,7 +8,6 @@ import { useTransactionFeeCalculation, useTransactionPriority } from '@shared/tr
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
 import { toRawLsk } from '@utils/lsk';
-import { transactionToJSON } from '@utils/transaction';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.reclaimLSK;
