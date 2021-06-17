@@ -8,6 +8,7 @@ import { useTransactionFeeCalculation, useTransactionPriority } from '@shared/tr
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
 import { toRawLsk } from '@utils/lsk';
+import { transactionToJSON } from '@utils/transaction';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.reclaimLSK;
@@ -31,9 +32,9 @@ const Summary = ({
     priorityOptions,
     transaction: {
       moduleAssetId,
-      nonce: account.info.LSK.sequence.nonce,
+      nonce: 0,
       senderPublicKey,
-      amount: account.info.LSK.legacy.balance,
+      amount: account.info.LSK.legacy?.balance,
     },
   });
 
@@ -43,10 +44,10 @@ const Summary = ({
       network,
       senderPublicKey,
       passphrase: account.passphrase,
-      nonce: account.info.LSK.sequence.nonce,
+      nonce: 0,
       fee: toRawLsk(minFee.value),
-      amount: account.info.LSK.legacy.balance,
-      keys: account.info.LSK.sequence.keys,
+      amount: account.info.LSK.legacy?.balance,
+      keys: { numberOfSignatures: 0 },
     };
 
     const [error, tx] = await to(
@@ -54,8 +55,10 @@ const Summary = ({
     );
 
     if (!error) {
-      nextStep({ transactionInfo: tx });
+      nextStep({ transactionInfo: tx, balance: account.info.LSK.legacy?.balance });
     }
+
+    nextStep({ transactionError: error });
   };
 
   const onConfirmAction = {

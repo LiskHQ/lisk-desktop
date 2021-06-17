@@ -1,21 +1,32 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectAccount } from '@store/selectors';
 import TransactionResult from '@shared/transactionResult';
 import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
 import { routes, tokenMap } from '@constants';
 import styles from './status.css';
 
+const getTransactionError = (broadcastedTransactionsError, createError) => {
+  if (createError) {
+    return createError;
+  }
+
+  const totalErrors = broadcastedTransactionsError.length;
+  const error = totalErrors > 0
+    && JSON.stringify(broadcastedTransactionsError[totalErrors - 1]);
+
+  return error;
+};
+
 // eslint-disable-next-line max-statements
 const Status = ({
   t, transactionBroadcasted, transactions,
-  transactionInfo, history,
+  transactionInfo, history, transactionError,
+  accountDataUpdated, balance, isMigrated,
 }) => {
-  const account = useSelector(selectAccount);
-
   const broadcastTransaction = () => {
-    transactionBroadcasted(transactionInfo);
+    if (transactionInfo) {
+      //transactionBroadcasted(transactionInfo);
+    }
   };
 
   const onRetry = () => {
@@ -26,10 +37,16 @@ const Status = ({
     if (transactionInfo) broadcastTransaction();
   }, []);
 
-  const isTransactionSuccess = transactions.confirmed.length > 0;
-  const totalErrors = transactions.broadcastedTransactionsError.length;
-  const error = totalErrors > 0
-    && JSON.stringify(transactions.broadcastedTransactionsError[totalErrors - 1]);
+  useEffect(() => {
+    console.log(isMigrated);
+    if (isMigrated) {
+      console.log('going to wallet', routes.wallet);
+      history.push(routes.wallet.path);
+    }
+  }, [isMigrated]);
+
+  //const isTransactionSuccess = transactions.broadcastedTransactionsError.length === 0;
+  const isTransactionSuccess = true;
 
   const displayTemplate = isTransactionSuccess
     ? {
@@ -37,7 +54,9 @@ const Status = ({
       message: t('Your balance will be transfered in a few seconds.'),
       button: {
         onClick: () => {
-          history.push(routes.wallet.path);
+          console.log(1111111111111111);
+          accountDataUpdated();
+          console.log(22222222222222222);
         },
         title: t('Go to Wallet'),
         className: 'close-modal',
@@ -61,7 +80,7 @@ const Status = ({
         success={isTransactionSuccess}
         title={displayTemplate.title}
         className={`${styles.content} ${!isTransactionSuccess && styles.error}`}
-        error={error}
+        error={getTransactionError(transactions.broadcastedTransactionsError, transactionError)}
       >
         {isTransactionSuccess
           ? (
@@ -70,7 +89,7 @@ const Status = ({
                 <li>
                   <span>
                     <LiskAmount
-                      val={parseInt(account.info.LSK.legacy.balance, 10)}
+                      val={parseInt(balance, 10)}
                       token={tokenMap.LSK.key}
                     />
                     {' '}

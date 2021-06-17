@@ -60,6 +60,7 @@ async function getAccounts({ network, params }) {
  * @param {String} tokensTypes - Options of 'enabled' and 'active'
  */
 export const accountDataUpdated = tokensTypes =>
+  // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
     const state = getState();
     const { network, settings, account } = state;
@@ -76,8 +77,11 @@ export const accountDataUpdated = tokensTypes =>
       }
       return acc;
     }, {});
+    console.log(params);
 
     const [error, info] = await to(getAccounts({ network, params }));
+    console.log(info);
+    console.log(error);
 
     if (info) {
       // Uninitialized account don't have a public key stored on the blockchain.

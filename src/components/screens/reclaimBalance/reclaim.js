@@ -5,13 +5,14 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import { PrimaryButton } from '@toolbox/buttons';
 import DialogLink from '@toolbox/dialog/link';
 import AccountMigration from '@shared/accountMigration';
-import { getActiveTokenAccount, hasEnoughBalanceForReclaim } from '@utils/account';
+import { hasEnoughBalanceForReclaim } from '@utils/account';
 import { fromRawLsk } from '@utils/lsk';
 import { balanceNeededForReclaim } from '@constants';
+import { selectActiveTokenAccount } from '@store/selectors';
 import styles from './index.css';
 
 const Reclaim = ({ t }) => {
-  const account = useSelector(state => getActiveTokenAccount(state));
+  const account = useSelector(selectActiveTokenAccount);
   const hasEnoughBalance = hasEnoughBalanceForReclaim(Number(account.token?.balance));
 
   return (

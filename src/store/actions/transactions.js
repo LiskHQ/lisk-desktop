@@ -161,18 +161,18 @@ export const transactionBroadcasted = transaction =>
           transaction,
         },
       });
+    } else {
+      dispatch({
+        type: actionTypes.broadcastedTransactionSuccess,
+        data: transaction,
+      });
+
+      const transformedTransaction = transformTransaction(transaction);
+      if (activeToken !== tokenMap.BTC.key
+        && transformedTransaction.sender.address === account.info.LSK.summary.address) {
+        dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
+      }
+
+      dispatch(passphraseUsed(new Date()));
     }
-
-    dispatch({
-      type: actionTypes.broadcastedTransactionSuccess,
-      data: transaction,
-    });
-
-    const transformedTransaction = transformTransaction(transaction);
-    if (activeToken !== tokenMap.BTC.key
-      && transformedTransaction.sender.address === account.info.LSK.summary.address) {
-      dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
-    }
-
-    dispatch(passphraseUsed(new Date()));
   };
