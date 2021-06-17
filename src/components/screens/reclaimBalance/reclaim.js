@@ -65,7 +65,14 @@ const Reclaim = ({ t }) => {
                   <br />
                   <span>
                     {t('Please use ')}
-                    <span className={styles.link}>{t('external services')}</span>
+                    <span
+                      className={styles.link}
+                      onClick={() => {
+                        window.open('https://lisk.com/blog', '_blank', 'rel=noopener noreferrer');
+                      }}
+                    >
+                      {t('external services')}
+                    </span>
                     {t(' to deposit LSK.')}
                   </span>
                 </>
