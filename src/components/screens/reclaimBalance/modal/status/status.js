@@ -3,6 +3,7 @@ import TransactionResult from '@shared/transactionResult';
 import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
 import { routes, tokenMap } from '@constants';
+import Spinner from '@toolbox/spinner';
 import styles from './status.css';
 
 const getTransactionError = (broadcastedTransactionsError, createError) => {
@@ -25,7 +26,7 @@ const Status = ({
 }) => {
   const broadcastTransaction = () => {
     if (transactionInfo) {
-      transactionBroadcasted(transactionInfo);
+      //transactionBroadcasted(transactionInfo);
     }
   };
 
@@ -94,6 +95,7 @@ const Status = ({
                 disabled={!isMigrated}
               >
                 {displayTemplate.button.title}
+                <Spinner completed={isMigrated} className={styles.spinner} />
               </PrimaryButton>
             </>
           )
