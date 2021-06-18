@@ -149,7 +149,7 @@ const Overview = ({ t, txStats }) => {
   const distributionChartData = {
     labels: listOfLabels
       .map(item => item
-        .replace('Register Multisignature Group', 'Multisig. creation')),
+        .replace('Register multisignature group', 'Multisig. creation')),
     datasets: [
       {
         data: distributionByType,
@@ -191,7 +191,7 @@ const Overview = ({ t, txStats }) => {
                       listOfLabels
                         .map((label, i) => ({
                           text: label
-                            .replace('Register Multisignature Group', 'Multisig. creation'),
+                            .replace('Register multisignature group', 'Multisig. creation'),
                           fillStyle: colorPalette[i],
                         })),
                   },
@@ -213,7 +213,7 @@ const Overview = ({ t, txStats }) => {
                     key={`transaction-GuideTooltip${i}`}
                     color={colorPalette[i]}
                     label={label
-                      .replace('Register Multisignature Group', 'Multisig. creation')}
+                      .replace('Register multisignature group', 'Multisig. creation')}
                   />
                 ))}
             </GuideTooltip>
