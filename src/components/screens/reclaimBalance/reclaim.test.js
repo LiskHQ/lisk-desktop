@@ -17,10 +17,10 @@ describe('Reclaim balance screen', () => {
     account: {
       passphrase: 'test',
       info: {
-        LSK: accounts.empty_account,
+        LSK: accounts.non_migrated,
       },
     },
-    settings: { token: tokenMap.LSK.key },
+    settings: { token: { active: tokenMap.LSK.key } },
   };
 
   beforeEach(() => {
@@ -35,8 +35,8 @@ describe('Reclaim balance screen', () => {
 
   it('should render legacy and new addresses', () => {
     const html = wrapper.html();
-    expect(html).toContain(accounts.empty_account.legacy.address);
-    expect(html).toContain(truncateAddress(accounts.empty_account.summary.address, 'medium'));
+    expect(html).toContain(accounts.non_migrated.legacy.address);
+    expect(html).toContain(truncateAddress(accounts.non_migrated.summary.address, 'medium'));
   });
 
   it('Opens send modal', () => {

@@ -14,7 +14,14 @@ const Introduction = ({ t, nextStep }) => (
       <br />
       {t('You can learn more')}
       {' '}
-      <span className={styles.link}>{t('here')}</span>
+      <span
+        className={styles.link}
+        onClick={() => {
+          window.open('https://lisk.com/blog', '_blank', 'rel=noopener noreferrer');
+        }}
+      >
+        {t('here')}
+      </span>
     </p>
     <PrimaryButton className={styles.button} onClick={() => nextStep()}>{t('Continue')}</PrimaryButton>
   </div>

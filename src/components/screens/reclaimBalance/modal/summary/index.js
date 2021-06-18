@@ -40,14 +40,13 @@ const Summary = ({
   const onSubmit = async () => {
     const data = {
       network,
-      passphrase: account.passphrase,
       account: account.info.LSK,
+      passphrase: account.passphrase,
       transactionObject: {
         moduleAssetId,
-        senderPublicKey,
-        nonce: account.info.LSK.sequence.nonce,
         fee: toRawLsk(minFee.value),
         amount: account.info.LSK.legacy.balance,
+        keys: { numberOfSignatures: 0 },
       },
     };
 
@@ -56,7 +55,9 @@ const Summary = ({
     );
 
     if (!error) {
-      nextStep({ transactionInfo: tx });
+      nextStep({ transactionInfo: tx, balance: account.info.LSK.legacy?.balance });
+    } else {
+      nextStep({ transactionError: error, balance: account.info.LSK.legacy?.balance });
     }
   };
 

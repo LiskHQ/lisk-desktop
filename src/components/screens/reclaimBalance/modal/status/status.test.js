@@ -9,7 +9,7 @@ describe('Status', () => {
     account: {
       passphrase: 'test',
       info: {
-        LSK: accounts.empty_account,
+        LSK: accounts.non_migrated,
       },
     },
   };
@@ -23,6 +23,7 @@ describe('Status', () => {
       transactionsCreatedFailed: [],
       broadcastedTransactionsError: [],
     },
+    transactionInfo: {},
     history: { push: jest.fn() },
   };
 
@@ -35,7 +36,7 @@ describe('Status', () => {
   });
 
   it('should render close modal and go to wallet when success', () => {
-    const newProps = { ...props };
+    const newProps = { ...props, isMigrated: true };
     newProps.transactions.confirmed = [{ amount: 1 }];
     wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
     wrapper.find('.close-modal').at(0).simulate('click');

@@ -64,3 +64,11 @@
     }
   }
 }
+
+.btn {
+  display: flex;
+
+  & > .spinner {
+    margin-left: 10px;
+  }
+}

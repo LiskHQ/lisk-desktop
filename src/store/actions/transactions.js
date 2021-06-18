@@ -158,19 +158,19 @@ export const transactionBroadcasted = transaction =>
           transaction,
         },
       });
-    }
+    } else {
+      dispatch({
+        type: actionTypes.broadcastedTransactionSuccess,
+        data: transaction,
+      });
 
-    dispatch({
-      type: actionTypes.broadcastedTransactionSuccess,
-      data: transaction,
-    });
-
-    if (activeToken === tokenMap.LSK.key) {
-      const transformedTransaction = transformTransaction(transaction);
-      if (transformedTransaction.sender.address === account.info.LSK.summary.address) {
-        dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
+      if (activeToken === tokenMap.LSK.key) {
+        const transformedTransaction = transformTransaction(transaction);
+        if (transformedTransaction.sender.address === account.info.LSK.summary.address) {
+          dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
+        }
       }
-    }
 
-    dispatch(passphraseUsed(new Date()));
+      dispatch(passphraseUsed(new Date()));
+    }
   };
