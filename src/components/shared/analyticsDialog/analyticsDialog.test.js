@@ -22,8 +22,8 @@ describe('Analytics dialog component', () => {
 
   it('Should render with Opt-in (Analytics) message and call FlashMessageHolder.deleteMessage on cancel click', () => {
     wrapper = mountWithRouter(AnalyticsDialog, props);
-    expect(wrapper).toIncludeText('Anonymous Data Collection');
-    expect(wrapper).toIncludeText('Privacy Policy');
+    expect(wrapper).toIncludeText('Anonymous data collection');
+    expect(wrapper).toIncludeText('Privacy policy');
     wrapper.find('button').first().simulate('click');
     expect(FlashMessageHolder.deleteMessage).toBeCalledTimes(1);
   });
