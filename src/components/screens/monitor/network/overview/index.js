@@ -67,51 +67,51 @@ const HeightDistributionChart = ({ t, heightDistribution }) => {
     <>
       <div className={styles.column}>
         {
-              heightDistribution
-                ? (
-                  <div className={styles.chartBox}>
-                    <h2 className={styles.title}>{t('Peer heights')}</h2>
-                    <div className={`${styles.chart} showOnLargeViewPort`}>
-                      <DoughnutChart
-                        data={chartProps.data}
-                        options={{
-                          ...chartProps.options,
-                          legend: { display: true },
-                        }}
-                      />
-                      {
-                        heightDistribution.others.length && !false
-                          ? <OthersTooltip title={t('Height')} data={heightDistribution.others} />
-                          : null
-                      }
-                    </div>
-                    <div className={`${styles.chart} hideOnLargeViewPort`}>
-                      <DoughnutChart
-                        data={chartProps.data}
-                        options={{
-                          ...chartProps.options,
-                          legend: { display: false },
-                        }}
-                      />
-                    </div>
-                    <div className="hideOnLargeViewPort">
-                      <GuideTooltip>
-                        {
-                          heightDistribution.labels
-                            .map((label, i) => (
-                              <GuideTooltipItem
-                                key={`distribution-GuideTooltip-${i}-${label}`}
-                                label={label}
-                                color={colorPalette[i]}
-                              />
-                            ))
-}
-                      </GuideTooltip>
-                    </div>
-                  </div>
-                )
-                : <BoxEmptyState><p>{t('No height information')}</p></BoxEmptyState>
-            }
+          heightDistribution
+            ? (
+              <div className={styles.chartBox}>
+                <h2 className={styles.title}>{t('Peer heights')}</h2>
+                <div className={`${styles.chart} showOnLargeViewPort`}>
+                  <DoughnutChart
+                    data={chartProps.data}
+                    options={{
+                      ...chartProps.options,
+                      legend: { display: true },
+                    }}
+                  />
+                  {
+                    heightDistribution.others.length && !false
+                      ? <OthersTooltip title={t('Height')} data={heightDistribution.others} />
+                      : null
+                  }
+                </div>
+                <div className={`${styles.chart} hideOnLargeViewPort`}>
+                  <DoughnutChart
+                    data={chartProps.data}
+                    options={{
+                      ...chartProps.options,
+                      legend: { display: false },
+                    }}
+                  />
+                </div>
+                <div className="hideOnLargeViewPort">
+                  <GuideTooltip>
+                    {
+                      heightDistribution.labels
+                        .map((label, i) => (
+                          <GuideTooltipItem
+                            key={`distribution-GuideTooltip-${i}-${label}`}
+                            label={label}
+                            color={colorPalette[i]}
+                          />
+                        ))
+                    }
+                  </GuideTooltip>
+                </div>
+              </div>
+            )
+            : <BoxEmptyState><p>{t('No height information')}</p></BoxEmptyState>
+        }
       </div>
     </>
   );
@@ -268,7 +268,7 @@ const Overview = ({
                               color={colorPalette[i]}
                             />
                           ))
-}
+                      }
                     </GuideTooltip>
                   </div>
                 </div>
