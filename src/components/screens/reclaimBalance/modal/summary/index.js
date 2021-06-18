@@ -33,7 +33,7 @@ const Summary = ({
       moduleAssetId,
       nonce: 0,
       senderPublicKey,
-      amount: account.info.LSK.legacy?.balance,
+      amount: account.info.LSK.legacy.balance,
     },
   });
 
@@ -48,7 +48,7 @@ const Summary = ({
       transactionObject: {
         moduleAssetId,
         fee: toRawLsk(minFee.value),
-        amount: account.info.LSK.legacy?.balance,
+        amount: account.info.LSK.legacy.balance,
         keys: { numberOfSignatures: 0 },
       },
     };

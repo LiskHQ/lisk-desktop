@@ -4,7 +4,7 @@ import { transactionBroadcasted } from '@actions';
 import Status from './status';
 
 const mapStateToProps = state => ({
-  isMigrated: state.account.info?.LSK?.summary.isMigrated,
+  isMigrated: state.account.info.LSK.summary.isMigrated,
   transactions: state.transactions,
   network: state.network,
 });
