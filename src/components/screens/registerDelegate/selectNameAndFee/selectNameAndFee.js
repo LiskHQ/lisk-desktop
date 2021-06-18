@@ -177,14 +177,12 @@ const SelectNameAndFee = ({ account, ...props }) => {
       <BoxContent className={`${styles.container} select-name-container`}>
         <p className={`${styles.description} select-name-text-description`}>
           {
-            t(`Delegates are the most commited Lisk community members responsible for 
-          securing the network and processing all the transactions on Lisk’s blockchain 
-          network.`)
+            t('Register as a delegate to assign a nickname and allow votes to be locked to your account.')
           }
         </p>
         <p className={`${styles.description} select-name-text-description`}>
           {
-            t('The top 101 delegates are able to forge new blocks and receive forging rewards.')
+            t('Depending on the number of votes locked to your account (delegate weight), your account can become eligible to forge new blocks on the Lisk blockchain. With every new round (103 blocks), the top 101 active delegates and 2 randomly selected standby delegates each become eligible to forge a new block. For each block forged and accepted by the Lisk network, a delegate receives a new block reward and the transaction fees collected from each sender. The minimum required delegate weight to become eligible is 1000 LSK.')
           }
         </p>
         <label className={styles.nicknameLabel}>
