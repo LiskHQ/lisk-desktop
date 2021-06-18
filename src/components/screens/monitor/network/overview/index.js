@@ -70,7 +70,7 @@ const HeightDistributionChart = ({ t, heightDistribution }) => {
               heightDistribution
                 ? (
                   <div className={styles.chartBox}>
-                    <h2 className={styles.title}>{t('Height distribution')}</h2>
+                    <h2 className={styles.title}>{t('Peer heights')}</h2>
                     <div className={`${styles.chart} showOnLargeViewPort`}>
                       <DoughnutChart
                         data={chartProps.data}
@@ -110,7 +110,7 @@ const HeightDistributionChart = ({ t, heightDistribution }) => {
                     </div>
                   </div>
                 )
-                : <BoxEmptyState><p>{t('No versions distribution information')}</p></BoxEmptyState>
+                : <BoxEmptyState><p>{t('No height information')}</p></BoxEmptyState>
             }
       </div>
     </>
@@ -147,7 +147,7 @@ const PeersChart = ({ t, basic }) => {
           basic
             ? (
               <div className={styles.chartBox}>
-                <h2 className={styles.title}>{t('Peers')}</h2>
+                <h2 className={styles.title}>{t('Peer connectivity')}</h2>
                 <div className={`${styles.chart} showOnLargeViewPort`}>
                   <DoughnutChart
                     data={chartProps.data}
@@ -180,7 +180,7 @@ const PeersChart = ({ t, basic }) => {
                 </div>
               </div>
             )
-            : <BoxEmptyState><p>{t('No peers information')}</p></BoxEmptyState>
+            : <BoxEmptyState><p>{t('No connectivity information')}</p></BoxEmptyState>
         }
       </div>
     </>
@@ -233,7 +233,7 @@ const Overview = ({
             versionsDistribution
               ? (
                 <div className={styles.chartBox}>
-                  <h2 className={styles.title}>{t('Versions distribution')}</h2>
+                  <h2 className={styles.title}>{t('Peer versions')}</h2>
                   <div className={`${styles.chart} showOnLargeViewPort`}>
                     <DoughnutChart
                       data={versionChartProps.data}
@@ -273,7 +273,7 @@ const Overview = ({
                   </div>
                 </div>
               )
-              : <BoxEmptyState><p>{t('No height distribution information')}</p></BoxEmptyState>
+              : <BoxEmptyState><p>{t('No version information')}</p></BoxEmptyState>
           }
         </div>
         <HeightDistributionChart t={t} heightDistribution={heightDistribution} />
