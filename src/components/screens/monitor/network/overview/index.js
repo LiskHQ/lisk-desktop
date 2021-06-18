@@ -223,7 +223,7 @@ const Overview = ({
             {t('Network statistics')}
           </h1>
           <Tooltip position="bottom right" indent>
-            <p>{t('Statistics shown only reflect the peers connected to the Lisk Service node.')}</p>
+            <p>{t('The statistics shown only reflects peers connected to the current Lisk Service node.')}</p>
           </Tooltip>
         </div>
       </BoxHeader>
