@@ -172,7 +172,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
   return (
     <Box width="medium" className={styles.box}>
       <BoxHeader>
-        <h1>{t('Become a delegate')}</h1>
+        <h1>{t('Register delegate')}</h1>
       </BoxHeader>
       <BoxContent className={`${styles.container} select-name-container`}>
         <p className={`${styles.description} select-name-text-description`}>

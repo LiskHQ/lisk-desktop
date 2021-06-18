@@ -15,7 +15,7 @@ const getModuleAssetTitle = (t = str => str) => ({
   [MODULE_ASSETS_NAME_ID_MAP.reclaimLSK]: t('Reclaim'),
   [MODULE_ASSETS_NAME_ID_MAP.unlockToken]: t('Unlock'),
   [MODULE_ASSETS_NAME_ID_MAP.voteDelegate]: t('Vote'),
-  [MODULE_ASSETS_NAME_ID_MAP.registerDelegate]: t('Register Delegate'),
+  [MODULE_ASSETS_NAME_ID_MAP.registerDelegate]: t('Register delegate'),
   [MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup]: t('Register multisignature group'),
 });
 

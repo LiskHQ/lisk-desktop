@@ -25,7 +25,7 @@ const Summary = ({
   };
 
   const onConfirmAction = {
-    label: t('Become a delegate'),
+    label: t('Register delegate'),
     onClick: onSubmit,
   };
   const onCancelAction = {
