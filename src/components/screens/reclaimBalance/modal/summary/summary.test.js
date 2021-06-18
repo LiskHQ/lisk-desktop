@@ -38,7 +38,7 @@ describe('Reclaim balance Summary', () => {
     account: {
       passphrase: 'test',
       info: {
-        LSK: accounts.empty_account,
+        LSK: accounts.non_migrated,
       },
     },
     settings: { token: tokenMap.LSK.key },
@@ -55,16 +55,16 @@ describe('Reclaim balance Summary', () => {
   };
 
   const response = {
-    amount: 1e10,
+    amount: 13600000000,
     nonce: '123',
   };
 
   it('renders properly Symmary component', () => {
     const wrapper = mountWithRouterAndStore(Summary, props, {}, state);
     const html = wrapper.html();
-    expect(html).toContain(accounts.empty_account.legacy.address);
-    expect(html).toContain(truncateAddress(accounts.empty_account.summary.address, 'medium'));
-    expect(html).toContain('98,970,000 LSK');
+    expect(html).toContain(accounts.non_migrated.legacy.address);
+    expect(html).toContain(truncateAddress(accounts.non_migrated.summary.address, 'medium'));
+    expect(html).toContain('136 LSK');
     expect(html).toContain('0.001 LSK');
     expect(html).toContain('confirm-button');
   });
@@ -75,6 +75,9 @@ describe('Reclaim balance Summary', () => {
     wrapper.find('button.confirm-button').simulate('click');
     await flushPromises();
     expect(create).toHaveBeenCalled();
-    expect(props.nextStep).toBeCalledWith({ transactionInfo: response });
+    expect(props.nextStep).toBeCalledWith({
+      transactionInfo: response,
+      balance: accounts.non_migrated.legacy?.balance,
+    });
   });
 });
