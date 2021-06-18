@@ -59,9 +59,9 @@ const Summary = ({
 
     if (!error) {
       nextStep({ transactionInfo: tx, balance: account.info.LSK.legacy?.balance });
+    } else {
+      nextStep({ transactionError: error, balance: account.info.LSK.legacy?.balance });
     }
-
-    nextStep({ transactionError: error, balance: account.info.LSK.legacy?.balance });
   };
 
   const onConfirmAction = {
