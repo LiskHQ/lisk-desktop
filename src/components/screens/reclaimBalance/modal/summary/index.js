@@ -31,7 +31,7 @@ const Summary = ({
     priorityOptions,
     transaction: {
       moduleAssetId,
-      nonce: 0,
+      nonce: account.info.LSK.sequence.nonce,
       senderPublicKey,
       amount: account.info.LSK.legacy.balance,
     },
@@ -40,10 +40,7 @@ const Summary = ({
   const onSubmit = async () => {
     const data = {
       network,
-      account: {
-        ...account.info.LSK,
-        sequence: { nonce: 0 },
-      },
+      account: account.info.LSK,
       passphrase: account.passphrase,
       transactionObject: {
         moduleAssetId,
