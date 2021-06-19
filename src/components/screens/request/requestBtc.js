@@ -8,7 +8,7 @@ const RequestBtc = ({
 }) => (
   <RequestWrapper copyLabel={t('Copy address')} copyValue={address} t={t} title={t('Request BTC')} className={styles.BTCWrapper}>
     <span className={`${styles.label}`}>
-      {t('Copy the address or scan the QR code, to easily request BTC from Lisk or Lisk Mobile users.')}
+      {t('Request BTC from another Lisk user. Copy the BTC address or scan the QR code to share your request.')}
     </span>
     <label className={`${styles.fieldGroup}`}>
       <span className={`${styles.fieldLabel}`}>{t('BTC address')}</span>
