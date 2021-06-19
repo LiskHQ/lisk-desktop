@@ -74,7 +74,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
         <div className={styles.viewAll}>
           <Link to={routes.wallet.path} className="view-all">
             <SecondaryButton size="s">
-              {t('View All')}
+              {t('View all')}
             </SecondaryButton>
           </Link>
         </div>
