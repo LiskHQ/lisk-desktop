@@ -39,7 +39,7 @@ const SignMessageInput = ({ nextStep, t, history }) => {
         <BoxInfoText>
           <span>{t('Sign a message to prove its integrity')}</span>
           <Tooltip className={styles.tooltip} position="bottom">
-            <p>{t('To verify the integrity of a signed message use the Verify message tool.')}</p>
+            <p>{t('To verify the integrity of a signed message use the "Verify message" tool in the sidebar.')}</p>
           </Tooltip>
         </BoxInfoText>
         <label className={styles.fieldGroup}>

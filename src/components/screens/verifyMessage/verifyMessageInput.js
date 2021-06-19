@@ -145,7 +145,7 @@ export default class VerifyMessageInput extends React.Component {
           <BoxInfoText>
             {t('Verify the integrity of a signed message')}
             <Tooltip position="bottom">
-              <p>{t('To create a signed message use the Sign message tool.')}</p>
+              <p>{t('To create a signed message use the "Sign message" tool in the sidebar.')}</p>
             </Tooltip>
           </BoxInfoText>
           <div className={styles.inputViewSwitcher}>
