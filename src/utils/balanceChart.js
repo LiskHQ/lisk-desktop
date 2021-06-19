@@ -102,7 +102,7 @@ export const graphOptions = ({
         return moment(tooltipItem[0].xLabel).format(i18n.t('MMM DD YYYY'));
       },
       label(tooltipItem) {
-        return `${i18n.t('Account Balance')}:          ${tooltipItem.yLabel} ${token}`;
+        return `${i18n.t('Account balance')}:          ${tooltipItem.yLabel} ${token}`;
       },
     },
     mode: 'index',

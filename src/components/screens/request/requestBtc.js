@@ -11,7 +11,7 @@ const RequestBtc = ({
       {t('Copy the address or scan the QR code, to easily request BTC from Lisk or Lisk Mobile users.')}
     </span>
     <label className={`${styles.fieldGroup}`}>
-      <span className={`${styles.fieldLabel}`}>{t('BTC Address')}</span>
+      <span className={`${styles.fieldLabel}`}>{t('BTC address')}</span>
       <AutoResizeTextarea
         name="shareLink"
         value={address}

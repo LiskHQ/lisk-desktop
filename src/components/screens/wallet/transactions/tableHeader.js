@@ -17,7 +17,7 @@ export default (t, activeToken, changeSort) => {
       },
     },
     {
-      title: t('Transaction Fee'),
+      title: t('Transaction fee'),
       classList: grid['col-xs-2'],
     },
     {
