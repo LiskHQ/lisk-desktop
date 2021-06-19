@@ -49,7 +49,7 @@ const Status = ({
         onClick: () => {
           history.push(routes.wallet.path);
         },
-        title: t('Go to Wallet'),
+        title: t('Go to wallet'),
         className: 'close-modal',
       },
     }

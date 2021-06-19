@@ -224,7 +224,7 @@ const Editor = ({
             disabled={feedback.error !== 0}
             onClick={goToNextStep}
           >
-            {t('Go to Confirmation')}
+            {t('Go to confirmation')}
           </PrimaryButton>
         </BoxFooter>
       </Box>
