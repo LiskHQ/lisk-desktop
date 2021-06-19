@@ -41,7 +41,7 @@ class ErrorBoundary extends React.Component {
           </PrimaryButton>
           <a target="_blank" href={getMailReference()} rel="noopener noreferrer">
             <TertiaryButton className={styles.reportButton}>
-              {t('Report the error via E-Mail')}
+              {t('Report the error via email')}
             </TertiaryButton>
           </a>
         </div>

@@ -43,6 +43,6 @@ describe('Multisignature result component', () => {
     const html = wrapper.html();
     expect(html).toContain('transaction-status');
     expect(html).toContain('Oops, looks like something went wrong.');
-    expect(html).toContain('Report the error via E-Mail');
+    expect(html).toContain('Report the error via email');
   });
 });

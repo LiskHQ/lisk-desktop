@@ -36,7 +36,7 @@ const TransactionResult = ({
               rel="noopener noreferrer"
             >
               <TertiaryButton>
-                {t('Report the error via E-Mail')}
+                {t('Report the error via email')}
               </TertiaryButton>
             </a>
           </>
