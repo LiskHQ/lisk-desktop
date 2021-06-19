@@ -164,7 +164,7 @@ const Editor = ({
         <BoxContent className={styles.contentContainer}>
           <ProgressBar current={1} />
           <div>
-            <span className={styles.requiredSignaturesHeading}>{t('Required Signatures')}</span>
+            <span className={styles.requiredSignaturesHeading}>{t('Required signatures')}</span>
             <Input
               className={`${styles.requiredSignaturesInput} multisignature-editor-input`}
               value={requiredSignatures ?? ''}

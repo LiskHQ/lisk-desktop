@@ -238,7 +238,7 @@ export const RequiredSignatures = ({ t }) => {
   const requiredSignatures = asset.numberOfSignatures;
 
   return (
-    <ValueAndLabel className={styles.requiredSignatures} label={t('Required Signatures')}>
+    <ValueAndLabel className={styles.requiredSignatures} label={t('Required signatures')}>
       <span>{requiredSignatures}</span>
     </ValueAndLabel>
   );

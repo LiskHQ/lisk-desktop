@@ -77,7 +77,7 @@ const MultiSignatureReview = ({
   <>
     <Members members={members} t={t} />
     <div className={styles.infoContainer}>
-      <InfoColumn title={t('Required Signatures')} className="info-requiredSignatures">
+      <InfoColumn title={t('Required signatures')} className="info-requiredSignatures">
         {numberOfSignatures}
       </InfoColumn>
       <InfoColumn title={t('Transaction fee')} className="info-fee">
