@@ -21,7 +21,7 @@ export const NoTransactions = withTranslation()(({ t }) => {
   return (
     <BoxEmptyState>
       <Icon name="iconEmptyRecentTransactions" />
-      <h1>{t('No Transactions Yet')}</h1>
+      <h1>{t('No transactions yet')}</h1>
       <p>{t('A great way to start is to top up your account with some {{value}}.', { value: activeToken.key })}</p>
     </BoxEmptyState>
   );
