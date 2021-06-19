@@ -21,11 +21,11 @@ import styles from './editVote.css';
 const getTitles = t => ({
   edit: {
     title: t('Edit vote'),
-    description: t('You can increase or decrease your vote amount, or remove your vote from this delegate.'),
+    description: t('Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will added to the voting queue.'),
   },
   add: {
-    title: t('Add to voting queue'),
-    description: t('Input your vote weight. This value shows how much you trust in this delegate. You can’t use these tokens until you undo your vote.'),
+    title: t('Add vote'),
+    description: t('Insert a vote amount for this delegate. Your new vote will added to the voting queue.'),
   },
 });
 
@@ -74,7 +74,7 @@ const AddVote = ({
               amount={voteAmount}
               setAmountField={setVoteAmount}
               title={t('Vote amount (LSK)')}
-              inputPlaceHolder={t('Insert the vote amount')}
+              inputPlaceHolder={t('Insert vote amount')}
               name="vote"
               displayConverter
             />

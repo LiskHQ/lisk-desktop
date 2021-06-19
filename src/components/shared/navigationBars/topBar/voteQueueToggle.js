@@ -7,7 +7,7 @@ import DialogLink from '@toolbox/dialog/link';
 import Icon from '@toolbox/icon';
 import styles from './topBar.css';
 
-const SignedInTip = ({ t }) => <p>{t('Voting Queue')}</p>;
+const SignedInTip = ({ t }) => <p>{t('Voting queue')}</p>;
 
 const SignedOutTip = ({ t }) => (
   <div className={styles.signedOutTip}>
