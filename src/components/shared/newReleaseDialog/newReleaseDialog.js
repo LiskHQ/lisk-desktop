@@ -35,7 +35,7 @@ class NewReleaseDialog extends React.Component {
             <p>{t('Would you like to download it now?')}</p>
           </Dialog.Description>
 
-          <h3>{t('Release Notes')}</h3>
+          <h3>{t('Release notes')}</h3>
           <div className={styles.releaseNotes}>
             {releaseNotes}
           </div>

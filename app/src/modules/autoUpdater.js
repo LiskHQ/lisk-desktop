@@ -70,7 +70,7 @@ export default ({ // eslint-disable-line max-statements
   autoUpdater.on('update-not-available', () => {
     if (!updater.menuItem.enabled) {
       dialog.showMessageBox({
-        title: i18n.t('No Updates'),
+        title: i18n.t('No updates'),
         message: i18n.t('Current version is up-to-date.'),
       });
     }
