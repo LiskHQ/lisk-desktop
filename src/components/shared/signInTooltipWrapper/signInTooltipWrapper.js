@@ -22,7 +22,7 @@ const SignInTooltipWrapper = ({
           </Link>
 )}
       >
-        <p>{t('In order to use this Lisk feature you need to sign in to your Lisk account.')}</p>
+        <p>{t('In order to use this feature you need to sign in to your Lisk account.')}</p>
       </Tooltip>
     );
 };
