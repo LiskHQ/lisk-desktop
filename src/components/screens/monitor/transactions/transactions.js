@@ -28,7 +28,7 @@ const fields = t => [{
   type: 'select',
 }, {
   label: t('Height'),
-  placeholder: t('Eg. {{value}}', { value: '10180477' }),
+  placeholder: t('e.g. {{value}}', { value: '10180477' }),
   name: 'height',
   type: 'integer',
 }];

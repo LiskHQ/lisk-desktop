@@ -198,7 +198,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
             onChange={onChangeNickname}
             name="delegate-nickname"
             value={state.nickname}
-            placeholder={t('ie. peter_pan')}
+            placeholder={t('e.g. peter_pan')}
             className={`${styles.inputNickname} select-name-input`}
             disabled={state.inputDisabled}
             error={state.error}
