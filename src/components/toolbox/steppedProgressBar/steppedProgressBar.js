@@ -4,7 +4,7 @@ import styles from './styles.css';
 
 const Step = ({ children, current, active }) => (
   <span className={
-    [styles.step, current ? styles.current : '', active ? styles.active : '']
+    [styles.step, current || active ? styles.active : '']
       .filter(Boolean).join(' ')
 }
   >
