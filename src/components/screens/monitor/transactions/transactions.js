@@ -4,21 +4,21 @@ import TransactionsTable from '@shared/transactionsTable';
 import Overview from './overview';
 
 const fields = t => [{
-  label: t('Date Range'),
+  label: t('Date range'),
   name: 'date',
   type: 'date-range',
 }, {
-  label: t('Amount Range'),
+  label: t('Amount range'),
   name: 'amount',
   type: 'number-range',
 }, {
   label: t('Address'),
-  placeholder: t('Address or Public key'),
+  placeholder: t('Address or public key'),
   name: 'address',
   type: 'address',
 }, {
   label: t('Recipient'),
-  placeholder: t('Address or Public key'),
+  placeholder: t('Address or public key'),
   name: 'recipient',
   type: 'address',
 }, {
@@ -28,7 +28,7 @@ const fields = t => [{
   type: 'select',
 }, {
   label: t('Height'),
-  placeholder: t('Eg. {{value}}', { value: '10180477' }),
+  placeholder: t('e.g. {{value}}', { value: '10180477' }),
   name: 'height',
   type: 'integer',
 }];

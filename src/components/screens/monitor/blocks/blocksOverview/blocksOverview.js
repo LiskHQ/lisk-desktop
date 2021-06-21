@@ -42,7 +42,7 @@ class BlocksOverview extends React.Component {
     ];
 
     const doughnutChartData = {
-      labels: [t('Empty'), t('Not Empty')],
+      labels: [t('Empty'), t('Not empty')],
       datasets: [{
         backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
         data: blocks.data.reduce((acc, block) => {
@@ -181,7 +181,7 @@ class BlocksOverview extends React.Component {
                   />
                   <GuideTooltipItem
                     color={chartStyles.ultramarineBlue}
-                    label={t('Not Empty')}
+                    label={t('Not empty')}
                   />
                 </GuideTooltip>
               </div>

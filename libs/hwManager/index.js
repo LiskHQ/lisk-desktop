@@ -54,7 +54,7 @@ export class HwManager {
   /**
    * Set transport for specific type of wallet.
    * @param {object} data -> Object with type and transport
-   * @param {string} data.name -> name of wallet brand. eg. ledger, trezor
+   * @param {string} data.name -> name of wallet brand. e.g. ledger, trezor
    * @param {any} data.transport -> Transport used to communicate with the wallets
    */
   setTransport({ name, transport }) {

@@ -5,12 +5,12 @@ import FilterDropdownButton from '@shared/filterDropdownButton';
 const FilterDropdown = ({ t, filters, applyFilters }) => {
   const fields = [
     {
-      label: t('Date Range'),
+      label: t('Date range'),
       name: 'date',
       type: 'date-range',
     },
     {
-      label: t('Amount Range'),
+      label: t('Amount range'),
       name: 'amount',
       type: 'number-range',
     },

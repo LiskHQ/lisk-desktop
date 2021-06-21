@@ -52,7 +52,7 @@ storiesOf('Toolbox', module)
         value="ok value"
         label="Label"
         onChange={action('changed')}
-        placeholder="ie. 192.168.0.1"
+        placeholder="e.g. 192.168.0.1"
       />
       <Input
         type="text"
@@ -60,7 +60,7 @@ storiesOf('Toolbox', module)
         value="validating..."
         label="Label"
         onChange={action('changed')}
-        placeholder="ie. 192.168.0.1"
+        placeholder="e.g. 192.168.0.1"
       />
       <Input
         type="text"
@@ -68,7 +68,7 @@ storiesOf('Toolbox', module)
         value="0alkawja;jk"
         label="Label"
         onChange={action('changed')}
-        placeholder="ie. 192.168.0.1"
+        placeholder="e.g. 192.168.0.1"
       />
       <DarkWrapper display="block">
         <Input
@@ -77,7 +77,7 @@ storiesOf('Toolbox', module)
           value="ok value"
           label="Label"
           onChange={action('changed')}
-          placeholder="ie. 192.168.0.1"
+          placeholder="e.g. 192.168.0.1"
           dark
         />
         <Input
@@ -86,7 +86,7 @@ storiesOf('Toolbox', module)
           value="validating..."
           label="Label"
           onChange={action('changed')}
-          placeholder="ie. 192.168.0.1"
+          placeholder="e.g. 192.168.0.1"
           dark
         />
         <Input
@@ -95,7 +95,7 @@ storiesOf('Toolbox', module)
           value="0alkawja;jk"
           label="Label"
           onChange={action('changed')}
-          placeholder="ie. 192.168.0.1"
+          placeholder="e.g. 192.168.0.1"
           dark
         />
       </DarkWrapper>

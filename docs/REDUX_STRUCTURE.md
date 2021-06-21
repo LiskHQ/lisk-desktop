@@ -107,7 +107,7 @@ The function would be something similar to:
 ```javascript
 // account API example
 /**
- * @param {String} {tokenKey} - Token key. eg. LSK, BTC
+ * @param {String} {tokenKey} - Token key. e.g. LSK, BTC
  * @param {String} {address} - Address of the account.
  * @param {Object} {networkConfig} - config for  mainnet, testnet, custom node
  */

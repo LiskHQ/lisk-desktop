@@ -46,14 +46,14 @@ const PerformanceView = ({
     <Box className={`${grid.row} ${styles.content}`}>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
-          text={t('Last Forged Block')}
+          text={t('Last forged block')}
           icon="productivity"
           value={lastForgedBlocks}
           isLink={false}
           className={`${styles.performanceIcon} ${styles.productivityIcon}`}
         />
         <Item
-          text={t('Forged Blocks')}
+          text={t('Forged blocks')}
           value={forgedBlocks || '-'}
           icon="forgedBlocks"
           className={`${styles.performanceIcon} ${styles.forgedBlocksIcon}`}
@@ -61,7 +61,7 @@ const PerformanceView = ({
       </Box>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
-          text={t('Consecutive Missed Blocks')}
+          text={t('Consecutive missed blocks')}
           value={consecutiveMissedBlocks}
           icon="missedBlocks"
           className={`${styles.performanceIcon} ${styles.missedBlocksIcon}`}

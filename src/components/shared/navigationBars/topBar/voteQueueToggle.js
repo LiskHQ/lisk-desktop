@@ -7,12 +7,12 @@ import DialogLink from '@toolbox/dialog/link';
 import Icon from '@toolbox/icon';
 import styles from './topBar.css';
 
-const SignedInTip = ({ t }) => <p>{t('Voting Queue')}</p>;
+const SignedInTip = ({ t }) => <p>{t('Voting queue')}</p>;
 
 const SignedOutTip = ({ t }) => (
   <div className={styles.signedOutTip}>
     <b>{t('Please sign in')}</b>
-    <p>{t('In order to use this Lisk feature you need to sign in to your Lisk account.')}</p>
+    <p>{t('In order to use this feature you need to sign in to your Lisk account.')}</p>
     <Link to={routes.login.path}>
       {t('Sign in')}
     </Link>

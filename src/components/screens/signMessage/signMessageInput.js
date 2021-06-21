@@ -33,13 +33,13 @@ const SignMessageInput = ({ nextStep, t, history }) => {
   return (
     <Box>
       <BoxHeader>
-        <h1>{t('Sign a message')}</h1>
+        <h1>{t('Sign message')}</h1>
       </BoxHeader>
       <BoxContent className={styles.noPadding}>
         <BoxInfoText>
-          <span>{t('The sign message tool allows you to prove ownership of a transaction')}</span>
+          <span>{t('Sign a message to prove its integrity')}</span>
           <Tooltip className={styles.tooltip} position="bottom">
-            <p>{t('Recipients will be able to confirm the transfer  by viewing the signature which verifies the ownership without exposing any sensitive account information.')}</p>
+            <p>{t('To verify the integrity of a signed message use the "Verify message" tool in the sidebar.')}</p>
           </Tooltip>
         </BoxInfoText>
         <label className={styles.fieldGroup}>

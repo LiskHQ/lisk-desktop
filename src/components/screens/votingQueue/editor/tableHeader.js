@@ -6,11 +6,11 @@ const header = t => ([
     classList: styles.infoColumn,
   },
   {
-    title: t('Old Vote Amount'),
+    title: t('Old vote amount'),
     classList: styles.oldAmountColumn,
   },
   {
-    title: t('New Vote Amount'),
+    title: t('New vote amount'),
     classList: styles.newAmountColumn,
     tooltip: {
       message: t('The updated amount after voting'),
