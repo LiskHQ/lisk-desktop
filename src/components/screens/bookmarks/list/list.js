@@ -156,6 +156,7 @@ export class BookmarksList extends React.Component {
           <BoxContent className={`${styles.bookmarkList} bookmark-list-container`}>
             {
             selectedBookmarks.length
+              // eslint-disable-next-line complexity
               ? selectedBookmarks.map(bookmark => (
                 <Link
                   onClick={e => this.onRowClick(e, bookmark)}
@@ -229,7 +230,9 @@ export class BookmarksList extends React.Component {
                                   ? (
                                     <TertiaryButton
                                       onClick={e => this.editBookmark(e, bookmark)}
-                                      className="bookmarks-edit-button"
+                                      className={
+                                        `bookmarks-edit-button ${bookmark.isDelegate && styles.hide}`
+                                      }
                                       size="m"
                                       disabled={bookmark.isDelegate || bookmark.disabled}
                                     >
