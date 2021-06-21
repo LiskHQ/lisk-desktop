@@ -187,6 +187,12 @@
     & .qrCodeIcon {
       width: 26px;
       margin: 6px;
+
+      &.white {
+        filter: brightness(100) !important;
+        width: 18px;
+        margin: 10px;
+      }
     }
 
     & .bookmark {
@@ -197,6 +203,30 @@
       width: 26px;
       height: 26px;
       margin: 6px;
+    }
+
+    & .copyButtonWrapper {
+      & .row {
+        display: flex;
+        flex-flow: row nowrap;
+        padding-left: 15px;
+        cursor: auto;
+        height: 38px;
+
+        &:first-child {
+          border-bottom: solid 1px var(--dark-border-color);
+        }
+
+        & > span {
+          line-height: 38px;
+        }
+
+        & img {
+          cursor: pointer;
+          filter: none;
+        }
+      }
+
     }
   }
 
@@ -214,6 +244,10 @@
 .tooltipWrapper {
   width: 100%;
   height: 100%;
+  
+  &.noPadding > div {
+    padding: 0;
+  }
 }
 
 .whiteBackground {
