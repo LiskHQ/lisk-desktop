@@ -33,8 +33,13 @@ const VoteRow = ({
         </div>
       </div>
 
+      {/* Delegate rank */}
+      <div className={grid['col-sm-2']} onClick={onClick}>
+        <span>{account?.dpos.delegate.rank}</span>
+      </div>
+
       {/* Delegate weight */}
-      <div className={grid['col-sm-3']} onClick={onClick}>
+      <div className={grid['col-sm-2']} onClick={onClick}>
         <span>
           <LiskAmount
             val={account?.dpos.delegate.totalVotesReceived ?? 0}
@@ -45,7 +50,7 @@ const VoteRow = ({
 
       {/* Vote amount */}
       {account ? (
-        <div className={`${grid['col-sm-3']} ${styles.flexRightAlign}`} onClick={onClick}>
+        <div className={`${grid['col-sm-2']} ${styles.flexRightAlign}`} onClick={onClick}>
           <span className={styles.votes}>
             <LiskAmount
               val={data.amount}
