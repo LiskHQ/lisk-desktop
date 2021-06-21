@@ -15,7 +15,7 @@ export default t => ([
     classList: grid['col-sm-2'],
     tooltip: {
       title: t('Delegate weight'),
-      message: t('The total amount of all votes a delegate has received.'),
+      message: t('The total amount of votes received for a delegate.'),
       position: 'bottom',
     },
   },
@@ -24,7 +24,7 @@ export default t => ([
     classList: `${grid['col-sm-2']} ${styles.flexRightAlign}`,
     tooltip: {
       title: t('Vote amount'),
-      message: t('The amount of LSK blocked for voting.'),
+      message: t('The total amount of votes received from this account.'),
       position: 'left',
     },
   },

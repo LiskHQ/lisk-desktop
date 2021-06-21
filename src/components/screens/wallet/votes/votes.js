@@ -62,7 +62,7 @@ const Votes = ({
             component="registerDelegate"
           >
             <SecondaryButton size="m">
-              {t('Register a delegate')}
+              {t('Register delegate')}
             </SecondaryButton>
           </DialogLink>
           )}

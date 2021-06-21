@@ -57,13 +57,13 @@ const menuLinks = t => ([
     {
       icon: 'signMessage',
       id: 'signMessage',
-      label: t('Sign Message'),
+      label: t('Sign message'),
       modal: 'signMessage',
     },
     {
       icon: 'verifyMessage',
       id: 'verifyMessage',
-      label: t('Verify Message'),
+      label: t('Verify message'),
       modal: 'verifyMessage',
     },
   ],

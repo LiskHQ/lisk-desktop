@@ -39,16 +39,16 @@ const MultisigAccountDetails = ({ t, account }) => {
         </BoxHeader>
         <BoxContent className={styles.mainContent}>
           <BoxInfoText>
-            <span>{t('This is a multisignature account, which allows a group of members to control shared LSK.')}</span>
+            <span>{t('This is a multisignature account that is controlled by a group of accounts.')}</span>
             <span><br /></span>
-            <span>{t('This account requires {{numberOfSignatures}} signatures to create a transaction.', { numberOfSignatures })}</span>
+            <span>{t('This account requires {{numberOfSignatures}} signatures to create a valid transaction.', { numberOfSignatures })}</span>
           </BoxInfoText>
           <Members members={members} t={t} />
           <div className={styles.infoContainer}>
             <p>
-              {t('Required Signatures')}
+              {t('Required signatures')}
               <Tooltip position="top right">
-                <p>{t('Use the "Sign Multisignature" panel from the sidebar to sign transactions."')}</p>
+                <p>{t('To provide a required signature, use the "Sign multisignature" tool in the sidebar."')}</p>
               </Tooltip>
             </p>
             <span>{numberOfSignatures}</span>

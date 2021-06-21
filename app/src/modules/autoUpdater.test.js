@@ -134,7 +134,7 @@ describe.skip('autoUpdater', () => {
     checkForUpdates({});
 
     callbacks['update-not-available']({ version });
-    expect(dialogSpy).to.have.been.calledWith({ title: 'No Updates', message: 'Current version is up-to-date.' });
+    expect(dialogSpy).to.have.been.calledWith({ title: 'No updates', message: 'Current version is up-to-date.' });
 
     dialogSpy.resetHistory();
     callbacks['update-not-available']({ version });

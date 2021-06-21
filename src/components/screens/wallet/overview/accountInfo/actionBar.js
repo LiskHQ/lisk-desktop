@@ -44,10 +44,63 @@ const MultiSignatureButton = ({
         <Icon name="registerMultisignatureGroup" className={styles.multisigIcon} />
       )}
     >
-      <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature')}</p>
+      <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature account')}</p>
     </Tooltip>
   </DialogLink>
 );
+
+const CopyAddressAndPublicKey = ({
+  address, publicKey, activeToken, t,
+}) => {
+  if (activeToken === tokenMap.BTC.key || !publicKey) {
+    return (
+      <Tooltip
+        className={styles.tooltipWrapper}
+        position="bottom"
+        size="maxContent"
+        content={(
+          <CopyToClipboard
+            value={address}
+            type="icon"
+            copyClassName={styles.copyIcon}
+            className={styles.copyIcon}
+          />
+      )}
+      >
+        <p>{t('Copy address')}</p>
+      </Tooltip>
+    );
+  }
+  return (
+    <Tooltip
+      className={`${styles.tooltipWrapper} ${styles.noPadding}`}
+      position="bottom"
+      size="maxContent"
+      content={<Icon name="copy" className={`${styles.qrCodeIcon} ${styles.white}`} />}
+    >
+      <div className={styles.copyButtonWrapper}>
+        <div className={styles.row}>
+          <span>{t('Copy address')}</span>
+          <CopyToClipboard
+            value={address}
+            copyClassName={styles.copyIcon}
+            className={styles.copyIcon}
+            type="icon"
+          />
+        </div>
+        <div className={styles.row}>
+          <span>{t('Copy public key')}</span>
+          <CopyToClipboard
+            value={publicKey}
+            copyClassName={styles.copyIcon}
+            className={styles.copyIcon}
+            type="icon"
+          />
+        </div>
+      </div>
+    </Tooltip>
+  );
+};
 
 // eslint-disable-next-line complexity
 const ActionBar = ({
@@ -59,22 +112,12 @@ const ActionBar = ({
   return (
     <footer>
       <div className={styles.helperIcon}>
-        <Tooltip
-          className={styles.tooltipWrapper}
-          position="bottom"
-          size="maxContent"
-          content={(
-            <CopyToClipboard
-              value={activeToken === tokenMap.BTC.key
-                ? address : `Address: ${address} - Public key: ${account.summary.publicKey}`}
-              type="icon"
-              copyClassName={styles.copyIcon}
-              className={styles.copyIcon}
-            />
-        )}
-        >
-          <p>{activeToken === tokenMap.BTC.key ? t('Copy address') : t('Copy address and public key')}</p>
-        </Tooltip>
+        <CopyAddressAndPublicKey
+          address={address}
+          publicKey={account.summary.publicKey}
+          activeToken={activeToken}
+          t={t}
+        />
       </div>
       <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
         {
@@ -117,11 +160,11 @@ const ActionBar = ({
                 data={username ? {
                   formAddress: address,
                   label: account.dpos?.delegate?.username,
-                  isDelegate: account.summary?.isDelegate,
+                  isDelegate: account.summary.isDelegate,
                 } : {
                   formAddress: address,
                   label: bookmark ? bookmark.title : '',
-                  isDelegate: account.summary?.isDelegate,
+                  isDelegate: account.summary.isDelegate,
                 }}
               >
                 <BookmarkIcon bookmark={bookmark} />

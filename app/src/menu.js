@@ -36,7 +36,7 @@ const addAboutMenuForNonMac = ({ template, electron }) => {
 
 const addCheckForUpdates = ({ template, checkForUpdates }) => {
   template[template.length - 1].submenu.push({
-    label: i18n.t('Check for updates...'),
+    label: i18n.t('Check for Updates...'),
     click: checkForUpdates,
   });
 };
@@ -87,7 +87,7 @@ const menu = {
           },
           {
             role: 'selectall',
-            label: i18n.t('Select all'),
+            label: i18n.t('Select All'),
           },
         ],
       },
@@ -100,7 +100,7 @@ const menu = {
           },
           {
             role: 'togglefullscreen',
-            label: i18n.t('Toggle full screen'),
+            label: i18n.t('Toggle Full Screen'),
           },
         ],
       },

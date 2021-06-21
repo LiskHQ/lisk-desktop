@@ -25,7 +25,7 @@ const Summary = ({
   };
 
   const onConfirmAction = {
-    label: t('Become a delegate'),
+    label: t('Register delegate'),
     onClick: onSubmit,
   };
   const onCancelAction = {
@@ -35,7 +35,7 @@ const Summary = ({
 
   return (
     <TransactionSummary
-      title={t('Summary of delegate registration')}
+      title={t('Delegate registration summary')}
       t={t}
       account={account}
       confirmButton={onConfirmAction}

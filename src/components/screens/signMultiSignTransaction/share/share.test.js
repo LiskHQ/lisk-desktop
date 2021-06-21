@@ -58,7 +58,7 @@ describe('Sign Multisignature Tx Share component', () => {
     const html = wrapper.html();
     expect(html).toContain('transaction-status');
     expect(html).toContain('Error signing the transaction: testerror');
-    expect(html).toContain('Report the error via E-Mail');
+    expect(html).toContain('Report the error via email');
   });
 
   it('Should display an error message if broadcasting fails', async () => {
