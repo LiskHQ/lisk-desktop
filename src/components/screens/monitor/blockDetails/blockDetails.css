@@ -17,6 +17,18 @@
       width: 100%;
     }
   }
+
+  & .generator {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    text-decoration: none;
+
+    & > span {
+      padding-left: 5px;
+      color: var(--color-maastricht-blue);
+    }
+  }
 }
 
 h1 {
