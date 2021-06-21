@@ -35,7 +35,7 @@ const Summary = ({
 
   return (
     <TransactionSummary
-      title={t('Summary of unlock LSK')}
+      title={t('Unlock LSK summary')}
       t={t}
       account={account}
       confirmButton={onConfirmAction}

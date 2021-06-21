@@ -122,7 +122,7 @@ const ConfirmMessage = ({
   return (
     <Box>
       <BoxHeader>
-        <h1>{t('Sign a message')}</h1>
+        <h1>{t('Sign message')}</h1>
       </BoxHeader>
       {
         confirmationPending ? <ConfirmationPending t={t} account={account} /> : null

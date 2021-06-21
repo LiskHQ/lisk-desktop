@@ -43,7 +43,7 @@ const MultiSignatureButton = ({
         </DialogLink>
             )}
     >
-      <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature')}</p>
+      <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature account')}</p>
     </Tooltip>
   </div>
 );

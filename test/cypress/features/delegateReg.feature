@@ -6,7 +6,7 @@ Feature: Register delegate
     Given I am on wallet page
     And I click on votesTab
     Given I click on becomeDelegateLink
-    Then I see this title: Become a delegate
+    Then I see this title: Register delegate
     When I enter the delegate name
     And I go to confirmation
     And I click on confirmButton

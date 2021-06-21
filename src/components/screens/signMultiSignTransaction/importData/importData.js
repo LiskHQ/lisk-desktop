@@ -49,7 +49,7 @@ const ImportData = ({ t, nextStep }) => {
       <Box className={styles.boxContainer}>
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
-          <p>{t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}</p>
+          <p>{t('Provide a signature for a transaction which belongs to a multisignature account.')}</p>
         </header>
         <BoxContent>
           <ProgressBar current={1} />

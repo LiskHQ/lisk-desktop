@@ -65,7 +65,7 @@ const FilterBar = ({
           size="xs"
           onClick={clearAllFilters}
         >
-          {t('Clear All filters')}
+          {t('Clear all filters')}
         </SecondaryButton>
       </div>
     </div>

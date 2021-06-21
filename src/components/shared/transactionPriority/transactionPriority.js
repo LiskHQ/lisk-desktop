@@ -124,7 +124,7 @@ const TransactionPriority = ({
           <Tooltip position="right">
             <p className={styles.tooltipText}>
               {
-                t('When the network is busy, transactions with higher priority get processed sooner.')
+                t('When the network is busy, transactions with a higher priority are confirmed sooner.')
               }
             </p>
           </Tooltip>
@@ -163,10 +163,10 @@ const TransactionPriority = ({
             <p className={styles.tooltipText}>
               {
                 t(`
-                  You can choose a high, medium, or low transaction priority, each requiring a 
-                  corresponding transaction fee. Or you can pay any desired fee of no less than 
-                  ${minFee} ${token}. If you don't know which to choose, we recommend you choose 
-                  one of the provided options instead.
+                  You can choose a high, medium, or low transaction priority, each requiring a
+                  corresponding transaction fee. Or you can pay any desired fee of no less than
+                  ${minFee} ${token}. If you don't know what fee to pay, choose
+                  one of the provided transaction priorities.
                 `)
               }
             </p>

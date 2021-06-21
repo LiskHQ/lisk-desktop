@@ -93,7 +93,7 @@ class Settings extends React.Component {
               </div>
             </section>
             <section>
-              <h2>{t('Appearances')}</h2>
+              <h2>{t('Appearance')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
                   name="darkMode"
@@ -102,8 +102,8 @@ class Settings extends React.Component {
                   onChange={this.handleCheckboxChange}
                 />
                 <div>
-                  <span className={styles.labelName}>{t('Dark Mode')}</span>
-                  <p>{t('Switch to the dark mode.')}</p>
+                  <span className={styles.labelName}>{t('Dark mode')}</span>
+                  <p>{t('Enable dark mode.')}</p>
                 </div>
               </label>
             </section>
@@ -117,8 +117,8 @@ class Settings extends React.Component {
                   onChange={this.toggleAutoLog}
                 />
                 <div>
-                  <span className={styles.labelName}>{t('Auto Logout')}</span>
-                  <p>{t('Log out automatically after 10 minutes.')}</p>
+                  <span className={styles.labelName}>{t('Auto sign out')}</span>
+                  <p>{t('Sign out automatically after 10 minutes.')}</p>
                 </div>
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
@@ -129,8 +129,8 @@ class Settings extends React.Component {
                   onChange={this.handleCheckboxChange}
                 />
                 <div>
-                  <span className={styles.labelName}>{t('Discreet Mode')}</span>
-                  <p>{t('Hide balance and transactions amounts')}</p>
+                  <span className={styles.labelName}>{t('Discreet mode')}</span>
+                  <p>{t('Hide balance and transactions amounts.')}</p>
                 </div>
               </label>
             </section>
@@ -145,7 +145,7 @@ class Settings extends React.Component {
                 />
                 <div>
                   <span className={styles.labelName}>{t('Network switcher')}</span>
-                  <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
+                  <p>{t('Enable network switcher to connect to different networks or service nodes when signing in.')}</p>
                 </div>
               </label>
               {
@@ -160,7 +160,7 @@ class Settings extends React.Component {
                       />
                       <div>
                         <span className={styles.labelName}>{t('Enable BTC')}</span>
-                        <p>{t('By enabling it, you will be able to manage your BTC inside the application.')}</p>
+                        <p>{t('Enable Bitcoin wallet support.')}</p>
                       </div>
                     </label>
                   )
@@ -180,9 +180,9 @@ class Settings extends React.Component {
                   <span className={styles.labelName}>
                     {t('Anonymous analytics collection')}
                   </span>
-                  <p>{t('Help improve Lisk by allowing Lisk to gather anonymous usage data used for analytical purposes.')}</p>
+                  <p>{t('Help improve Lisk by sending anonymous usage data.')}</p>
                   <a target="_blank" href={externalLinks.privacyPolicy} className={styles.link}>
-                    {t('Privacy Policy')}
+                    {t('Privacy policy')}
                   </a>
                 </div>
               </label>

@@ -149,7 +149,7 @@ const Overview = ({ t, txStats }) => {
   const distributionChartData = {
     labels: listOfLabels
       .map(item => item
-        .replace('Register Multisignature Group', 'Multisig. creation')),
+        .replace('Register multisignature group', 'Regsiter multisig.')),
     datasets: [
       {
         data: distributionByType,
@@ -179,7 +179,7 @@ const Overview = ({ t, txStats }) => {
       </BoxHeader>
       <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
-          <h2 className={styles.title}>{t('Distribution of transaction types')}</h2>
+          <h2 className={styles.title}>{t('Transaction types')}</h2>
           <div className={`${styles.graph} showOnLargeViewPort`}>
             <DoughnutChart
               data={distributionChartData}
@@ -191,7 +191,7 @@ const Overview = ({ t, txStats }) => {
                       listOfLabels
                         .map((label, i) => ({
                           text: label
-                            .replace('Register Multisignature Group', 'Multisig. creation'),
+                            .replace('Register multisignature group', 'Register multisig.'),
                           fillStyle: colorPalette[i],
                         })),
                   },
@@ -213,7 +213,7 @@ const Overview = ({ t, txStats }) => {
                     key={`transaction-GuideTooltip${i}`}
                     color={colorPalette[i]}
                     label={label
-                      .replace('Register Multisignature Group', 'Multisig. creation')}
+                      .replace('Register multisignature group', 'Register multisig.')}
                   />
                 ))}
             </GuideTooltip>
@@ -238,18 +238,18 @@ const Overview = ({ t, txStats }) => {
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
           <div className={styles.top}>
-            <h2 className={styles.title}>{t('Transactions number / volume (LSK)')}</h2>
+            <h2 className={styles.title}>{t('Transaction volume / number (LSK)')}</h2>
             <aside className={styles.legends}>
               <h5 className={`${styles.legend} ${styles.volume}`}>
                 <span>{t('Volume')}</span>
                 <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The aggregated LSK volume transferred on the given time period.')}</p>
+                  <p>{t('The aggregated LSK volume transferred over the selected time period.')}</p>
                 </Tooltip>
               </h5>
               <h5 className={`${styles.legend} ${styles.number}`}>
                 <span>{t('Number')}</span>
                 <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The number of transactions submitted on the given time period.')}</p>
+                  <p>{t('The number of transactions submitted over the selected time period.')}</p>
                 </Tooltip>
               </h5>
             </aside>

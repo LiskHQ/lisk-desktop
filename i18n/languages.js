@@ -6,9 +6,9 @@ const languages = {
     name: t('English'),
     common: require('./locales/en/common.json'),
   },
-  de: {
-    name: t('German'),
-    common: require('./locales/de/common.json'),
-  },
+  // de: {
+  //   name: t('German'),
+  //   common: require('./locales/de/common.json'),
+  // },
 };
 export default languages;
