@@ -159,11 +159,11 @@ const ActionBar = ({
                 data={username ? {
                   formAddress: address,
                   label: account.dpos?.delegate?.username,
-                  isDelegate: account.summary?.isDelegate,
+                  isDelegate: account.summary.isDelegate,
                 } : {
                   formAddress: address,
                   label: bookmark ? bookmark.title : '',
-                  isDelegate: account.summary?.isDelegate,
+                  isDelegate: account.summary.isDelegate,
                 }}
               >
                 <BookmarkIcon bookmark={bookmark} />
