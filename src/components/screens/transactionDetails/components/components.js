@@ -140,7 +140,7 @@ export const Amount = ({
   const addresses = [transaction.asset.recipient ?? '', transaction.sender.address];
 
   return (
-    <ValueAndLabel label={t('Amount of Transaction')} className={styles.amount}>
+    <ValueAndLabel label={t('Amount of transaction')} className={styles.amount}>
       <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
         <span className="tx-amount">
           <LiskAmount val={getTxAmount(transaction)} />
@@ -238,7 +238,7 @@ export const RequiredSignatures = ({ t }) => {
   const requiredSignatures = asset.numberOfSignatures;
 
   return (
-    <ValueAndLabel className={styles.requiredSignatures} label={t('Required Signatures')}>
+    <ValueAndLabel className={styles.requiredSignatures} label={t('Required signatures')}>
       <span>{requiredSignatures}</span>
     </ValueAndLabel>
   );
@@ -291,7 +291,7 @@ export const BlockHeight = ({ t }) => {
   const { transaction } = useContext(Context);
 
   return (
-    <ValueAndLabel className={styles.blockHeight} label={t('Block Height')}>
+    <ValueAndLabel className={styles.blockHeight} label={t('Block height')}>
       <span>{transaction.block.height}</span>
     </ValueAndLabel>
   );

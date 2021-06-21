@@ -28,7 +28,7 @@ const getTemplate = (t, status, errorMessage) => {
     case 'BROADCASTED':
       return {
         illustration: 'transactionSuccess',
-        message: t("The transaction is now broadcasted on the blockchain. It will appear in sender account's wallet after confirmation."),
+        message: t("The transaction was broadcasted to the network. It will appear in sender account's wallet after confirmation."),
       };
     case 'BROADCAST_FAILED':
       return {
@@ -85,8 +85,8 @@ const Share = ({
     <section>
       <Box className={styles.boxContainer}>
         <header>
-          <h1>{t('Register multisignature account')}</h1>
-          <p>{t('If you have received a multisignature transaction that requires your signature, use this tool to review and sign it.')}</p>
+          <h1>{t('Sign multisignature transaction')}</h1>
+          <p>{t('Provide a signature for a transaction which belongs to a multisignature account.')}</p>
         </header>
         <BoxContent>
           <ProgressBar current={4} />

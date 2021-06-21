@@ -116,7 +116,7 @@ class FilterDropdownButton extends React.Component {
       <>
         {fields.length > 3 && (
         <span onClick={this.extendFilters} className={[styles.actionable, 'more-less-switch'].join(' ')}>
-          {areFiltersExtended ? t('Less filters') : t('More Filters')}
+          {areFiltersExtended ? t('Less filters') : t('More filters')}
         </span>
         )}
         <PrimaryButton
@@ -125,7 +125,7 @@ class FilterDropdownButton extends React.Component {
           type="submit"
           size="s"
         >
-          {t('Apply Filters')}
+          {t('Apply filters')}
         </PrimaryButton>
       </>
     );

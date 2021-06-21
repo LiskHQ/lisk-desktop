@@ -153,7 +153,7 @@ const Editor = ({
         <ToggleIcon isNotHeader />
         <div className={styles.headerContainer}>
           <header>
-            {t('Voting Queue')}
+            {t('Voting queue')}
           </header>
           {!showEmptyState && (
             <VoteStats

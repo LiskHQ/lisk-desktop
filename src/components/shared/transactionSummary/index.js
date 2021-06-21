@@ -132,11 +132,10 @@ class TransactionSummary extends React.Component {
     return {
       LSK: {
         title: t('Transaction fee'),
-        children: t(`Every transaction needs to be confirmed and forged into Lisk blockchain network. 
-                    Such operations require hardware resources and because of that there is a small fee for processing those.`),
+        children: t('Transaction fees are required for every transaction to be accepted and forged by the Lisk network. When the network is busy, transactions with a higher fee are confirmed sooner.'),
       },
       BTC: {
-        children: t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.'),
+        children: t('Transaction fees are required for every transaction to be accepted and mined by the Bitcoin network. When the network is busy, transactions with a higher fee are confirmed sooner.'),
       },
     }[token];
   }

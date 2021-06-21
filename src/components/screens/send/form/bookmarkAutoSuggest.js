@@ -42,7 +42,7 @@ class BookmarkAutoSuggest extends React.Component {
 
     this.props.updateField({
       ...(isInvalid ? {
-        feedback: t('Provide a correct wallet address or a name of a bookmarked account'),
+        feedback: t('Provide a correct wallet address or the name of a bookmarked account'),
         address: '',
       } : {
         feedback: '',
@@ -76,7 +76,7 @@ class BookmarkAutoSuggest extends React.Component {
         onChangeDelayed={this.validateBookmark}
         items={bookmarks}
         onChange={this.onInputChange}
-        placeholder={t('Insert public address or a name')}
+        placeholder={t('Insert public address or name')}
         selectedItem={recipient}
         onSelectItem={this.onSelectedAccount}
         renderIcon={() => (

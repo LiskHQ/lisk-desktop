@@ -6,7 +6,7 @@ import styles from './styles.css';
 
 const TransactionDetailsModal = (props) => (
   <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
-    <TransactionDetails {...props} title="Transaction Details" />
+    <TransactionDetails {...props} title="Transaction details" />
   </Dialog>
 );
 

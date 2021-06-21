@@ -34,7 +34,7 @@ class AnalyticsDialog extends React.Component {
     return (
       <Dialog hasClose>
         <Dialog.Title>
-          {t('Anonymous Data Collection')}
+          {t('Anonymous data collection')}
         </Dialog.Title>
         <Dialog.Description>
           <p>
@@ -50,7 +50,7 @@ class AnalyticsDialog extends React.Component {
               target="_blank"
               href={externalLinks.privacyPolicy}
             >
-              {t('Privacy Policy')}
+              {t('Privacy policy')}
             </a>
           </p>
         </Dialog.Description>

@@ -47,7 +47,7 @@ const FormBase = ({
           setAmountField={fieldUpdateFunctions.setAmountField}
           title={t('Amount')}
           maxAmountTitle={t('Send entire balance')}
-          inputPlaceHolder={t('Insert the amount of transaction')}
+          inputPlaceHolder={t('Insert transaction amount')}
           name="amount"
           displayConverter
         />

@@ -92,11 +92,11 @@ const Summary = ({
       <ToggleIcon isNotHeader />
       <div className={styles.headerContainer}>
         <header>
-          {t('Voting Summary')}
+          {t('Voting summary')}
         </header>
         <VoteStats
           t={t}
-          heading={t('Voting Summary')}
+          heading={t('Voting summary')}
           added={Object.keys(added).length}
           edited={Object.keys(edited).length}
           removed={Object.keys(removed).length}

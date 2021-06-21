@@ -43,7 +43,7 @@ describe('EditVote', () => {
     const wrapper = mountWithRouterAndStore(
       EditVote, propsWithoutSearch, {}, { ...state, voting: noVote },
     );
-    expect(wrapper.html()).toContain('Add to voting queue');
+    expect(wrapper.html()).toContain('Add vote');
     expect(wrapper.find('.confirm').exists()).toBeTruthy();
     expect(wrapper.find('.remove-vote').exists()).not.toBeTruthy();
   });

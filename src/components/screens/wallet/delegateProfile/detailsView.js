@@ -21,21 +21,21 @@ const DetailsView = ({
       <div className={`${grid.row} ${styles.itemContainer}`}>
         <Icon name="star" className={styles.icon} />
         <div className={`${grid.col} ${styles.item}`}>
-          <div className={styles.title}>Rank</div>
+          <div className={styles.title}>{t('Rank')}</div>
           <div className={styles.value}>{rank || '-'}</div>
         </div>
       </div>
       <div className={`${grid.row} ${styles.itemContainer}`}>
         <Icon name="clockActive" className={styles.icon} />
         <div className={`${grid.col} ${styles.item}`}>
-          <div className={styles.title}>Status</div>
+          <div className={styles.title}>{t('Status')}</div>
           <div className={styles.value}>{status}</div>
         </div>
       </div>
       <div className={`${grid.row} ${styles.itemContainer}`}>
         <Icon name="weight" className={styles.icon} />
         <div className={`${grid.col} ${styles.item}`}>
-          <div className={styles.title}>Delegate Weight</div>
+          <div className={styles.title}>{t('Delegate weight')}</div>
           <div className={styles.value}>
             <LiskAmount val={delegateWeight} token={tokenMap.LSK.key} />
           </div>
@@ -44,7 +44,7 @@ const DetailsView = ({
       <div className={`${grid.row} ${styles.itemContainer}`}>
         <Icon name="calendar" className={styles.icon} />
         <div className={`${grid.col} ${styles.item}`}>
-          <div className={styles.title}>Last Block Forged</div>
+          <div className={styles.title}>{t('Last block forged')}</div>
           <div className={styles.value}>
             {lastBlockForged ? (
               <DateTimeFromTimestamp

@@ -88,7 +88,7 @@ const Form = ({
         <h1>{t('Locked balance details')}</h1>
       </BoxHeader>
       <BoxContent className={styles.content}>
-        <p>{t('Find details of your locked balance and the unlock waiting period. Use this panel to submit an unlock request when waiting periods are over.')}</p>
+        <p>{t('Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.')}</p>
         { children }
       </BoxContent>
       <BoxFooter>

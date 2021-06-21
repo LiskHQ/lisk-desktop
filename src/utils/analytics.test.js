@@ -36,7 +36,7 @@ describe.skip('Analytics Util', () => {
     expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk.');
     wrapper.find('a.url-link').simulate('click');
     dialogWrapper.update();
-    expect(dialogWrapper).toIncludeText('Anonymous Data Collection');
+    expect(dialogWrapper).toIncludeText('Anonymous data collection');
   });
 
   it('Should call FlashMessageHolder.addMessage when showAnalytics is set', () => {
@@ -51,7 +51,7 @@ describe.skip('Analytics Util', () => {
     expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk.');
     wrapper.find('a.url-link').simulate('click');
     dialogWrapper.update();
-    expect(dialogWrapper).toIncludeText('Anonymous Data Collection');
+    expect(dialogWrapper).toIncludeText('Anonymous data collection');
   });
 
   it('Should call FlashMessageHolder.addMessage after the users see the banner for the first time', () => {
@@ -70,7 +70,7 @@ describe.skip('Analytics Util', () => {
     expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk.');
     wrapper.find('a.url-link').simulate('click');
     dialogWrapper.update();
-    expect(dialogWrapper).toIncludeText('Anonymous Data Collection');
+    expect(dialogWrapper).toIncludeText('Anonymous data collection');
   });
 
   it('Should call FlashMessageHolder.addMessage after app runs', () => {
@@ -90,7 +90,7 @@ describe.skip('Analytics Util', () => {
     expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk.');
     wrapper.find('a.url-link').simulate('click');
     dialogWrapper.update();
-    expect(dialogWrapper).toIncludeText('Anonymous Data Collection');
+    expect(dialogWrapper).toIncludeText('Anonymous data collection');
   });
 
   it('Should call FlashMessageHolder.addMessage 7 days after it was closed', () => {
@@ -105,7 +105,7 @@ describe.skip('Analytics Util', () => {
     wrapper.update();
     wrapper.find('a.url-link').simulate('click');
     dialogWrapper.update();
-    expect(dialogWrapper).toIncludeText('Anonymous Data Collection');
+    expect(dialogWrapper).toIncludeText('Anonymous data collection');
     dialogWrapper.find('button.cancel-button').simulate('click');
     props.settings.statisticsFollowingDay = moment().format('YYYY-MM-DD');
     wrapper.unmount();
