@@ -46,7 +46,7 @@ ${signature}
     wrapper.find('.continue button').simulate('click');
     expect(wrapper).toContainExactlyOneMatchingElement('.go-back button');
     wrapper.find('.go-back button').simulate('click');
-    expect(wrapper).toContainExactlyOneMatchingElement('.continue button');
+    expect(props.history.push).toHaveBeenCalledWith('/wallet');
   });
 
   it('should allow to verify valid inputs', () => {
@@ -65,11 +65,6 @@ ${signature}
     wrapper.find('.signature input').simulate('change', { target: { value: signature, name: 'signature' } });
     wrapper.find('.continue button').simulate('click');
     expect(wrapper.find('h1')).toIncludeText('The signature is correct');
-    wrapper.find('.go-back button').simulate('click');
-    wrapper.find('img.inputs-view-icon').simulate('click');
-    expect(wrapper.find('.message input')).toHaveProp('value', message);
-    expect(wrapper.find('.publicKey input')).toHaveProp('value', publicKey);
-    expect(wrapper.find('.signature input')).toHaveProp('value', signature);
   });
 
   it('should allow to verify invalid inputs', () => {
