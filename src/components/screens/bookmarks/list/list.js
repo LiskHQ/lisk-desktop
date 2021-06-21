@@ -231,7 +231,7 @@ export class BookmarksList extends React.Component {
                                     <TertiaryButton
                                       onClick={e => this.editBookmark(e, bookmark)}
                                       className={
-                                        `bookmarks-edit-button ${bookmark.isDelegate && styles.hide}`
+                                        `bookmarks-edit-button ${bookmark.isDelegate ? styles.hide : ''}`
                                       }
                                       size="m"
                                       disabled={bookmark.isDelegate || bookmark.disabled}
