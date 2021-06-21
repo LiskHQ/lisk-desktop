@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 import withData from '@utils/withData';
 import { getTransactions } from '@api/transaction';
 import { normalizeTransactionParams } from '@utils/transaction';
+import { DEFAULT_LIMIT } from '@constants';
 import Transactions from './transactions';
 
 export default compose(
@@ -13,6 +14,7 @@ export default compose(
         getTransactions({ network, params: normalizeTransactionParams(params) }, token),
       getApiParams: state => ({
         token: state.settings.token.active,
+        limit: DEFAULT_LIMIT,
       }),
       defaultData: [],
       autoload: true,
