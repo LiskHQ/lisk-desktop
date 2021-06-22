@@ -6,7 +6,7 @@ import Icon from '@toolbox/icon';
 import styles from './transactionTypeFigure.css';
 
 const TransactionTypeFigure = ({
-  moduleAssetId, address, avatarSize = 40, className = '', icon,
+  moduleAssetId, address, avatarSize = 40, className = '', icon, iconOnly,
 }) => {
   const renderAvatar = () => {
     if (validateAddress(tokenMap.LSK.key, address) === 0) {
@@ -19,7 +19,7 @@ const TransactionTypeFigure = ({
     <div className={`${styles.wrapper} ${className} transaction-image`}>
       { icon ? <Icon name={icon} className={styles.inOutIcon} /> : null }
       {
-        moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer
+        moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer && !iconOnly
           ? renderAvatar()
           : <Icon name={MODULE_ASSETS_MAP[moduleAssetId].icon} className={styles.transactionIcon} />
       }

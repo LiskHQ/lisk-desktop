@@ -46,7 +46,7 @@ const getTemplate = (t, status, errorMessage) => {
 // eslint-disable-next-line max-statements
 const Share = ({
   t, transaction, senderAccount, error,
-  broadcastedTransactionsError,
+  broadcastedTransactionsError, history,
 }) => {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(error ? 'SIGN_FAILED' : 'SIGN_SUCCEEDED');
@@ -114,6 +114,7 @@ const Share = ({
             copied={copied}
             onSend={onSend}
             onDownload={onDownload}
+            history={history}
           />
         )}
       </Box>

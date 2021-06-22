@@ -144,6 +144,7 @@ import deleteIcon from '../../../assets/images/icons/delete.svg';
 import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.svg';
 import download from '../../../assets/images/icons/download.svg';
 import registerMultisignatureGroup from '../../../assets/images/icons/multisignature.svg';
+import multisignatureTransaction from '../../../assets/images/icons/multisignatureTransaction.svg';
 import multiSignatureOutline from '../../../assets/images/icons/multisignature-outline.svg';
 import upload from '../../../assets/images/icons/upload.svg';
 import delegateForged from '../../../assets/images/icons/delegate-forged.svg';
@@ -314,6 +315,7 @@ export const icons = {
   linkIcon,
   arrowRightWithStroke,
   arrowRightWithStrokeDark,
+  multisignatureTransaction,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

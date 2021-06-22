@@ -51,6 +51,7 @@ export const Illustration = () => {
       <TransactionTypeFigure
         address={sender.address}
         moduleAssetId={moduleAssetId}
+        iconOnly
       />
       <h2 className="tx-header">{title}</h2>
     </div>

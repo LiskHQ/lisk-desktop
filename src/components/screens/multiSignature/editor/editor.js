@@ -19,7 +19,7 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 const MAX_MULTI_SIG_MEMBERS = 64;
 
 const placeholderMember = {
-  publicKey: undefined, isMandatory: false,
+  publicKey: undefined, isMandatory: true,
 };
 
 const getInitialMembersState = (prevState) => prevState.members ?? [placeholderMember];

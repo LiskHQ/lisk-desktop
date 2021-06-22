@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { SecondaryButton } from '../../../toolbox/buttons';
-import Icon from '../../../toolbox/icon';
-import { InputWithDropdown } from '../../../toolbox/inputs';
+import { SecondaryButton } from '@toolbox/buttons';
+import Icon from '@toolbox/icon';
+import { InputWithDropdown } from '@toolbox/inputs';
 
 import styles from './styles.css';
 
@@ -27,14 +27,15 @@ const MemberField = ({
         className={styles.inputWithDropdown}
         value={publicKey}
         onChange={changeIdentifier}
+        placeholder={t('Account public key')}
         ButtonComponent={SecondaryButton}
         buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
       >
-        <span onClick={() => changeCategory(true)}>
-          {t('Mandatory')}
-        </span>
         <span onClick={() => changeCategory(false)}>
           {t('Optional')}
+        </span>
+        <span onClick={() => changeCategory(true)}>
+          {t('Mandatory')}
         </span>
       </InputWithDropdown>
       {showDeleteIcon && <span className={`${styles.deleteIcon} delete-icon`} onClick={deleteMember}><Icon name="deleteIcon" /></span>}
