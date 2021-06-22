@@ -1,7 +1,7 @@
 @import '../../../../app/mixins.css';
 
 .detailsContainer,
-.performanceContainer {
+.highlightContainer {
   & h1.heading {
     @mixin headingNormal;
 
@@ -96,7 +96,7 @@
 }
 
 .column {
-  & .performance {
+  & .highlight {
     padding: 0;
     display: flex;
     flex-direction: row;
@@ -106,63 +106,65 @@
     &:nth-child(2) {
       margin: 0;
     }
+
+    & .content {
+      width: max-content;
+      display: flex;
+      flex-direction: column;
+      padding-left: 20px;
+      padding-top: 20px;
+
+      & .title {
+        @mixin contentNormal;
+
+        color: var(--color-slate-gray);
+        margin-bottom: 15px;
+      }
+
+      & > *:not(.title):not(.highlighIcon) {
+        @mixin delegatePerformanceValueFont;
+
+        color: var(--color-maastricht-blue);
+      }
+    }
+
+    & .highlighIcon {
+      align-self: flex-end;
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+      height: 120px;
+      width: 170px;
+
+      &.productivity {
+        height: 122px;
+        width: 206px;
+      }
+
+      &.forgedBlocks {
+        padding-right: 20px;
+      }
+
+      &.missedBlocks {
+        justify-content: flex-end;
+        align-items: center;
+        height: 156px;
+        width: 216px;
+      }
+
+      &.reward {
+        height: 108px;
+        width: 196px;
+        padding-right: 20px;
+      }
+    }
   }
 }
 
-.performanceContent {
-  width: max-content;
-  display: flex;
-  flex-direction: column;
-  padding-left: 20px;
-  padding-top: 20px;
 
-  & .performanceText {
-    @mixin contentNormal;
-
-    color: var(--color-slate-gray);
-    margin-bottom: 15px;
-  }
-
-  & .performanceValue {
-    @mixin delegatePerformanceValueFont;
-
-    color: var(--color-maastricht-blue);
-  }
-}
 
 .icon {
   height: 16px;
-}
-
-.performanceIcon {
-  align-self: flex-end;
-  display: flex;
-  flex: 1;
-  justify-content: flex-end;
-  height: 120px;
-  width: 170px;
-}
-
-.productivityIcon {
-  height: 122px;
-  width: 206px;
-}
-
-.forgedBlocksIcon {
-  padding-right: 20px;
-}
-
-.missedBlocksIcon {
-  justify-content: flex-end;
-  align-items: center;
-  height: 156px;
-  width: 216px;
-}
-
-.forgedLskIcon {
-  height: 108px;
-  width: 196px;
-  padding-right: 20px;
 }
 
 .voteRow {
