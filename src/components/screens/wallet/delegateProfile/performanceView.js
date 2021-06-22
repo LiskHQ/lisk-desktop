@@ -6,72 +6,66 @@ import { routes } from '@constants';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
+import LiskAmount from '@shared/liskAmount';
 import Icon from '@toolbox/icon';
 import styles from './delegateProfile.css';
 
 const Item = ({
-  icon, className, text, value, isLink,
+  icon, title, children,
 }) => (
-  <BoxContent className={`${styles.performance} performance`}>
-    <div className={styles.performanceContent}>
-      <div className={styles.performanceText}>{text}</div>
-      {
-        isLink
-          ? (
-            <NavLink
-              to={`${routes.block.path}?id=${value}`}
-              className={styles.performanceValue}
-              id={value}
-              exact
-            >
-              {value}
-            </NavLink>
-          )
-          : <div className={styles.performanceValue}>{value}</div>
-      }
+  <BoxContent className={`${styles.highlight} performance`}>
+    <div className={styles.content}>
+      <div className={styles.title}>{title}</div>
+      { children }
     </div>
-    <div className={className}>
+    <div className={`${styles.highlighIcon} ${styles[icon]}`}>
       <Icon name={icon} />
     </div>
   </BoxContent>
 );
 
 const PerformanceView = ({
-  t, forgedBlocks, lastForgedBlocks, forgedLsk, consecutiveMissedBlocks,
+  t, data,
 }) => (
-  <Box className={`${grid['col-xs-12']} ${grid['col-md-8']} ${styles.performanceContainer} performance-container`}>
+  <Box className={`${grid['col-xs-12']} ${grid['col-md-8']} ${styles.highlightContainer} performance-container`}>
     <BoxHeader>
       <h1 className={styles.heading}>{t('Performance')}</h1>
     </BoxHeader>
     <Box className={`${grid.row} ${styles.content}`}>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
-          text={t('Last forged block')}
+          title={t('Last forged block')}
           icon="productivity"
-          value={lastForgedBlocks}
-          isLink={false}
-          className={`${styles.performanceIcon} ${styles.productivityIcon}`}
-        />
+        >
+          <NavLink
+            to={`${routes.block.path}?height=${data.lastForgedHeight}`}
+            className={styles.performanceValue}
+            id={data.lastForgedHeight}
+            exact
+          >
+            {data.lastForgedHeight}
+          </NavLink>
+        </Item>
         <Item
-          text={t('Forged blocks')}
-          value={forgedBlocks || '-'}
+          title={t('Forged blocks')}
           icon="forgedBlocks"
-          className={`${styles.performanceIcon} ${styles.forgedBlocksIcon}`}
-        />
+        >
+          <div className={styles.performanceValue}>{data.producedBlocks || '-'}</div>
+        </Item>
       </Box>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
-          text={t('Consecutive missed blocks')}
-          value={consecutiveMissedBlocks}
+          title={t('Consecutive missed blocks')}
           icon="missedBlocks"
-          className={`${styles.performanceIcon} ${styles.missedBlocksIcon}`}
-        />
+        >
+          <div className={styles.performanceValue}>{data.consecutiveMissedBlocks}</div>
+        </Item>
         <Item
-          text={t('Forged LSK')}
-          value={forgedLsk || '-'}
-          icon="forgedLsk"
-          className={`${styles.performanceIcon} ${styles.forgedLskIcon}`}
-        />
+          title={t('Rewards (LSK)')}
+          icon="reward"
+        >
+          <div><LiskAmount val={data.rewards || 0} /></div>
+        </Item>
       </Box>
     </Box>
   </Box>
