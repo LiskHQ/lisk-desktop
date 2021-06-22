@@ -13,6 +13,7 @@ import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import Table from '@toolbox/table';
 import FilterBar from '@shared/filterBar';
+import { DEFAULT_LIMIT } from '@constants';
 import styles from './transactions.css';
 import header from './tableHeader';
 import TransactionRow from './transactionRow';
@@ -133,6 +134,7 @@ export default compose(
         token: state.settings.token.active,
         address,
         sort,
+        limit: DEFAULT_LIMIT,
       }),
       defaultData: { data: [], meta: {} },
       autoload: true,

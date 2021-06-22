@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { getBlocks } from '@api/block';
 import withData from '@utils/withData';
 import { transformStringDateToUnixTimestamp } from '@utils/datetime';
+import { DEFAULT_LIMIT } from '@constants';
 import Blocks from './blocks';
 
 const transformParams = params => Object.keys(params)
@@ -38,6 +39,9 @@ const ComposedBlocks = compose(
     blocks: {
       apiUtil: (network, params) =>
         getBlocks({ network, params: transformParams(params) }),
+      getApiParams: () => ({
+        limit: DEFAULT_LIMIT,
+      }),
       defaultData: [],
       autoload: true,
       transformResponse: (response, oldData, urlSearchParams) => (

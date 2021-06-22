@@ -41,7 +41,7 @@ const Votes = ({
   useEffect(() => {
     if (isEmpty(accounts.data) && votes.data.length) {
       const addressList = votes.data.map(vote => vote.address);
-      accounts.loadData({ addressList });
+      accounts.loadData({ addressList, isDelegate: true });
     }
   }, [votes.data]);
 

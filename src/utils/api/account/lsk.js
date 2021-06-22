@@ -121,16 +121,25 @@ const accountFilters = {
   },
 };
 
-const getRequests = (values) => {
+const getRequests = (values, isDelegate) => {
   const paramList = values.find(item => Array.isArray(item.list) && item.list.length);
   if (paramList) {
     return paramList.list
       .filter(item => regex[paramList.name].test(item))
-      .map(item => ({
-        method: wsMethods.accounts,
-        params: { [paramList.name]: item },
-        jsonrpc: '2.0',
-      }));
+      .map((item) => {
+        const params = isDelegate
+          ? {
+            [paramList.name]: item,
+            isDelegate: true,
+          } : {
+            [paramList.name]: item,
+          };
+        return {
+          method: wsMethods.accounts,
+          params,
+          jsonrpc: '2.0',
+        };
+      });
   }
   return false;
 };
@@ -161,7 +170,7 @@ export const getAccounts = async ({
     { name: 'address', list: params.addressList },
     { name: 'publicKey', list: params.publicKeyList },
     { name: 'username', list: params.usernameList },
-  ]);
+  ], params.isDelegate);
   if (requests.length) {
     return ws({
       requests,

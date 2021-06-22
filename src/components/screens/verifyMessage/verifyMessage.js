@@ -19,7 +19,7 @@ export default function VerifyMessage({
     <Dialog hasClose className={styles.wrapper}>
       <MultiStep finalCallback={finalCallback}>
         <VerifyMessageInput t={t} history={history} />
-        <Result t={t} />
+        <Result t={t} history={history} />
       </MultiStep>
     </Dialog>
   );

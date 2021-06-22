@@ -3,6 +3,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { getBlocks } from '@api/block';
 import withData from '@utils/withData';
+import { DEFAULT_LIMIT } from '@constants';
 import BlocksOverview from './blocksOverview';
 
 export default compose(
@@ -11,7 +12,7 @@ export default compose(
     blocks: {
       apiUtil: (network, params) => getBlocks({ network, params }),
       transformResponse: response => response.data,
-      defaultUrlSearchParams: { limit: '10' },
+      defaultUrlSearchParams: { limit: DEFAULT_LIMIT },
       defaultData: [],
       autoload: true,
     },

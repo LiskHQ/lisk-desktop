@@ -1,7 +1,7 @@
 import to from 'await-to-js';
 
 import {
-  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes,
+  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes, DEFAULT_LIMIT,
 } from '@constants';
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { transformTransaction } from '@utils/transaction';
@@ -40,7 +40,7 @@ export const addNewPendingTransaction = data => ({
  */
 export const transactionsRetrieved = ({
   address,
-  limit = 30,
+  limit = DEFAULT_LIMIT,
   offset = 0,
   filters = {},
 }) => async (dispatch, getState) => {
