@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { SecondaryButton } from '../../../toolbox/buttons';
-import Icon from '../../../toolbox/icon';
-import { InputWithDropdown } from '../../../toolbox/inputs';
+import { SecondaryButton } from '@toolbox/buttons';
+import Icon from '@toolbox/icon';
+import { InputWithDropdown } from '@toolbox/inputs';
 
 import styles from './styles.css';
 
