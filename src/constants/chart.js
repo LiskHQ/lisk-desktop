@@ -23,4 +23,5 @@ export const colorPalette = [
   chartStyles.maastrichtBlue,
   chartStyles.linthPink,
   chartStyles.darkBlue,
+  chartStyles.slateGray,
 ];

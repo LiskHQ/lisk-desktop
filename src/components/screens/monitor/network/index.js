@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import withLocalSort from '@utils/withLocalSort';
 import { getNetworkStatistics, getPeers } from '@api/network';
 import withData from '@utils/withData';
-import { tokenMap } from '@constants';
+import { tokenMap, DEFAULT_LIMIT } from '@constants';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
@@ -113,6 +113,9 @@ export default compose(
     },
     peers: {
       apiUtil: (network, params) => getPeers({ network, params }, tokenMap.LSK.key),
+      getApiParams: () => ({
+        limit: DEFAULT_LIMIT,
+      }),
       defaultData: [],
       autoload: true,
       transformResponse: (response, peers, urlSearchParams) => (

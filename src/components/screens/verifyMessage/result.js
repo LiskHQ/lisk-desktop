@@ -2,13 +2,14 @@ import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { SecondaryButton } from '@toolbox/buttons';
+import { PrimaryButton } from '@toolbox/buttons';
 import BoxFooter from '@toolbox/box/footer';
 import Illustration from '@toolbox/illustration';
+import { routes } from '@constants';
 import styles from './verifyMessage.css';
 
 export default function Result({
-  inputs, prevStep, t,
+  inputs, history, t,
 }) {
   let isCorrect = false;
   try {
@@ -21,6 +22,10 @@ export default function Result({
     isCorrect = false;
   }
 
+  const closeModal = () => {
+    history.push(routes.wallet.path);
+  };
+
   return (
     <div className={styles.result}>
       <Illustration
@@ -29,7 +34,7 @@ export default function Result({
       />
       <h1>{isCorrect ? t('The signature is correct') : t('The signature is incorrect')}</h1>
       <BoxFooter direction="horizontal">
-        <SecondaryButton onClick={prevStep} className="go-back">{t('Go back')}</SecondaryButton>
+        <PrimaryButton onClick={closeModal} className="go-back">{t('Back to wallet')}</PrimaryButton>
       </BoxFooter>
     </div>
   );
@@ -37,6 +42,6 @@ export default function Result({
 
 Result.propTypes = {
   inputs: PropTypes.object,
-  prevStep: PropTypes.func,
   t: PropTypes.func.isRequired,
+  history: PropTypes.object,
 };

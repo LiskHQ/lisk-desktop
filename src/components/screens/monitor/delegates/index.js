@@ -9,7 +9,7 @@ import { getNetworkStatus } from '@api/network';
 import { getTransactions, getRegisteredDelegates } from '@api/transaction';
 import withData from '@utils/withData';
 import withFilters from '@utils/withFilters';
-import { MODULE_ASSETS_NAME_ID_MAP, tokenMap } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, tokenMap, DEFAULT_LIMIT } from '@constants';
 import Delegates from './delegates';
 
 const defaultUrlSearchParams = { search: '' };
@@ -58,7 +58,7 @@ const ComposedDelegates = compose(
           network,
           params: {
             ...params,
-            limit: params.limit || 30,
+            limit: params.limit || DEFAULT_LIMIT,
             status: 'standby',
           },
         }),

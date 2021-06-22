@@ -5,19 +5,40 @@ import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
 import styles from './transactionAmount.css';
 
+const getTxDirectionConfig = (moduleAssetId, host, recipient) => {
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken
+    || moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.reclaimLSK) {
+    return {
+      sign: '',
+      style: styles.unlock,
+    };
+  }
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer && host === recipient) {
+    return {
+      sign: '',
+      style: styles.receive,
+    };
+  }
+  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
+    return {
+      sign: '- ',
+      style: '',
+    };
+  }
+  return false;
+};
+
 const TransactionAmount = ({
   recipient, moduleAssetId, token, showRounded, showInt, host, amount,
 }) => {
-  const isIncoming = host === recipient
-    || moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken;
+  const config = getTxDirectionConfig(moduleAssetId, host, recipient);
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
-      { moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer
-        || moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken
+      { config
         ? (
           <DiscreetMode shouldEvaluateForOtherAccounts>
-            <span className={isIncoming ? styles.receive : ''}>
-              {isIncoming ? '' : '- '}
+            <span className={config.style}>
+              {config.sign}
               <LiskAmount
                 val={amount}
                 showRounded={showRounded}

@@ -9,11 +9,10 @@ import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import Table from '@toolbox/table';
+import { DEFAULT_LIMIT } from '@constants';
 import styles from './accounts.css';
 import header from './tableHeader';
 import AccountRow from './accountRow';
-
-const LIMIT = 30;
 
 export const AccountsPure = ({
   accounts,
@@ -25,7 +24,7 @@ export const AccountsPure = ({
     accounts.loadData({ offset: accounts.meta.count + accounts.meta.offset });
   };
   const supply = networkStatus.data.supply;
-  const canLoadMore = accounts.meta ? accounts.meta.count === LIMIT : false;
+  const canLoadMore = accounts.meta ? accounts.meta.count === DEFAULT_LIMIT : false;
 
   return (
     <Box main isLoading={accounts.isLoading} className="accounts-box">
@@ -56,7 +55,7 @@ export default compose(
           network,
           params: {
             ...params,
-            limit: params.limit || LIMIT,
+            limit: DEFAULT_LIMIT,
             offset: params.offset || 0,
             sort: 'balance:desc',
           },
