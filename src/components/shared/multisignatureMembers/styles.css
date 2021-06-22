@@ -8,6 +8,8 @@
   flex-wrap: wrap;
 
   & p {
+    @mixin contentNormal bold;
+
     color: var(--color-maastricht-blue);
   }
 

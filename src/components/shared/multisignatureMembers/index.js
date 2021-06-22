@@ -43,12 +43,12 @@ export const SignedAndRemainingMembers = ({
 }) => (
   <div className={`${styles.membersContainer} ${className}`}>
     <div>
-      <p>{t('Signed')}</p>
+      <p className={styles.label}>{t('Signed')}</p>
       {signed.map((member, i) =>
         <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />)}
     </div>
     <div>
-      <p>
+      <p className={styles.label}>
         <span>{t('Remaining')}</span>
         <span>{` ${needed}/${required}`}</span>
       </p>
