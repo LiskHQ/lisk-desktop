@@ -130,7 +130,7 @@ import clockActive from '../../../assets/images/icons/clock-active.svg';
 import star from '../../../assets/images/icons/star.svg';
 import calendar from '../../../assets/images/icons/calendar.svg';
 import weight from '../../../assets/images/icons/weight.svg';
-import forgedLsk from '../../../assets/images/icons/forged-lsk.svg';
+import reward from '../../../assets/images/icons/forged-lsk.svg';
 import productivity from '../../../assets/images/icons/productivity.svg';
 import missedBlocks from '../../../assets/images/icons/missed-blocks.svg';
 import forgedBlocks from '../../../assets/images/icons/forged-blocks.svg';
@@ -187,7 +187,7 @@ export const icons = {
   feedbackActive,
   fileOutline,
   forgedBlocks,
-  forgedLsk,
+  reward,
   help,
   helpActive,
   helpCenter,
