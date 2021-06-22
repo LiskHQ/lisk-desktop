@@ -22,7 +22,7 @@ const MultiSignature = ({ history }) => {
       >
         <ImportData />
         <ReviewSign />
-        <Share />
+        <Share history={history} />
       </MultiStep>
     </Dialog>
   );
