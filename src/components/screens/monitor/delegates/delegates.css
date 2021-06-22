@@ -93,12 +93,6 @@
       display: inline;
       margin-top: 0;
       margin-bottom: 3px;
-
-      &:not(:last-child)::after {
-        content: '•';
-        display: inline-block;
-        padding: 0 5px;
-      }
     }
   }
 }
