@@ -1,11 +1,11 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
-import { transformTransaction } from '../../../../utils/transaction';
-import Box from '../../../toolbox/box';
-import BoxContent from '../../../toolbox/box/content';
-import BoxFooter from '../../../toolbox/box/footer';
-import { PrimaryButton } from '../../../toolbox/buttons';
-import Feedback from '../../../toolbox/feedback/feedback';
+import { transformTransaction } from '@utils/transaction';
+import Box from '@toolbox/box';
+import BoxContent from '@toolbox/box/content';
+import BoxFooter from '@toolbox/box/footer';
+import { PrimaryButton } from '@toolbox/buttons';
+import Feedback from '@toolbox/feedback/feedback';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
