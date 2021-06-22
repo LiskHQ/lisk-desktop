@@ -42,7 +42,7 @@ const moduleAssetMap = {
   },
   [moduleAssetNameIdMap.registerMultisignatureGroup]: {
     maxFee: 5e8,
-    icon: 'registerMultisignatureGroup',
+    icon: 'multisignatureTransaction',
   },
   [moduleAssetNameIdMap.reclaimLSK]: {
     maxFee: 1e7,
