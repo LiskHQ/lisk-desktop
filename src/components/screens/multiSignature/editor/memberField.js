@@ -31,11 +31,11 @@ const MemberField = ({
         ButtonComponent={SecondaryButton}
         buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
       >
-        <span onClick={() => changeCategory(true)}>
-          {t('Mandatory')}
-        </span>
         <span onClick={() => changeCategory(false)}>
           {t('Optional')}
+        </span>
+        <span onClick={() => changeCategory(true)}>
+          {t('Mandatory')}
         </span>
       </InputWithDropdown>
       {showDeleteIcon && <span className={`${styles.deleteIcon} delete-icon`} onClick={deleteMember}><Icon name="deleteIcon" /></span>}
