@@ -159,18 +159,22 @@ const TransactionPriority = ({
       <div className={`${styles.col} fee-container`}>
         <span className={`${styles.fieldLabel}`}>
           {t('Transaction fee')}
-          <Tooltip position="left">
-            <p className={styles.tooltipText}>
-              {
-                t(`
-                  You can choose a high, medium, or low transaction priority, each requiring a
-                  corresponding transaction fee. Or you can pay any desired fee of no less than
-                  ${minFee} ${token}. If you don't know what fee to pay, choose
-                  one of the provided transaction priorities.
-                `)
-              }
-            </p>
-          </Tooltip>
+          {
+            tokenRelevantPriorities.some(item => item.value !== 0) ? (
+              <Tooltip position="left">
+                <p className={styles.tooltipText}>
+                  {
+                    t(`
+                      You can choose a high, medium, or low transaction priority, each requiring a
+                      corresponding transaction fee. Or you can pay any desired fee of no less than
+                      ${minFee} ${token}. If you don't know what fee to pay, choose
+                      one of the provided transaction priorities.
+                    `)
+                  }
+                </p>
+              </Tooltip>
+            ) : null
+          }
         </span>
         {
           // eslint-disable-next-line no-nested-ternary
