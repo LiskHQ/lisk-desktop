@@ -27,6 +27,7 @@ const MemberField = ({
         className={styles.inputWithDropdown}
         value={publicKey}
         onChange={changeIdentifier}
+        placeholder={t('Account public key')}
         ButtonComponent={SecondaryButton}
         buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
       >
