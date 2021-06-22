@@ -188,9 +188,12 @@
   max-height: 17px;
 }
 
-.delegateHeader {
-  padding-left: 45px;
+header {
+  & .delegateHeader {
+    padding-left: 45px;
+  }
 }
+
 
 .roundStateHeader {
   padding-left: 0;
