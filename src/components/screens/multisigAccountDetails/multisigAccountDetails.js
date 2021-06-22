@@ -47,7 +47,10 @@ const MultisigAccountDetails = ({ t, account }) => {
           <div className={styles.infoContainer}>
             <p>
               {t('Required signatures')}
-              <Tooltip position="top right">
+              <Tooltip
+                position="top right"
+                indent
+              >
                 <p>{t('To provide a required signature, use the "Sign multisignature" tool in the sidebar."')}</p>
               </Tooltip>
             </p>
