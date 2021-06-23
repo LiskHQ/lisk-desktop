@@ -51,7 +51,12 @@ const Reclaim = ({ t }) => {
                     {t('Hence your LSK in your old account can not be used to pay the fee. Read more')}
                   </p>
                   <br />
-                  <p className={styles.link}>
+                  <p
+                    className={styles.link}
+                    onClick={() => {
+                      window.open('https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount', '_blank', 'rel=noopener noreferrer');
+                    }}
+                  >
                     {t('Read more')}
                   </p>
                 </>
@@ -68,7 +73,7 @@ const Reclaim = ({ t }) => {
                     <span
                       className={styles.link}
                       onClick={() => {
-                        window.open('https://lisk.com/blog', '_blank', 'rel=noopener noreferrer');
+                        window.open('https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount', '_blank', 'rel=noopener noreferrer');
                       }}
                     >
                       {t('external services')}
