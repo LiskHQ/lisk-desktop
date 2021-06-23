@@ -17,7 +17,7 @@ const Introduction = ({ t, nextStep }) => (
       <span
         className={styles.link}
         onClick={() => {
-          window.open('https://lisk.com/blog', '_blank', 'rel=noopener noreferrer');
+          window.open('https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration', '_blank', 'rel=noopener noreferrer');
         }}
       >
         {t('here')}
