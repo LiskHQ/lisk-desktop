@@ -3,8 +3,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import LoadLatestButton from './loadLatestButton';
 
-const close = jest.fn();
-
 describe('LoadLatestButton', () => {
   const props = {
     onClick: jest.fn(),
