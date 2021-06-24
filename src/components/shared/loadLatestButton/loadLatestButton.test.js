@@ -1,66 +1,47 @@
 import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
-import io from 'socket.io-client';
-import { subscribeConnections } from '@api/ws';
-import LoadLatestButton from '.';
-
-jest.mock('socket.io-client');
-
-const on = (ev, callback) => {
-  setTimeout(() => {
-    callback(ev);
-  }, 1);
-};
-const close = jest.fn();
-io.mockImplementation(() => ({ on, close }));
+import LoadLatestButton from './loadLatestButton';
 
 describe('LoadLatestButton', () => {
   const props = {
     onClick: jest.fn(),
-    event: 'test.event',
+    entity: 'block',
     children: 'Test load button',
-  };
-  const render = () => {
-    const wrapper = mount(<LoadLatestButton {...props} />);
-    return wrapper;
+    latestBlocks: [
+      { height: 11111111 },
+    ],
   };
 
-  it('renders empty by default', () => {
-    const wrapper = render();
+  it('renders accept transaction and block for entity and render empty by default', () => {
+    const blockProps = { ...props, entity: 'block' };
+    let wrapper = mount(<LoadLatestButton {...blockProps} />);
+    expect(wrapper).toBeEmptyRender();
+
+    const transactionProps = { ...props, entity: 'transaction' };
+    wrapper = mount(<LoadLatestButton {...transactionProps} />);
     expect(wrapper).toBeEmptyRender();
   });
 
-  it('shows button on websocket event and hides the button on click', () => {
-    jest.useFakeTimers();
-
-    const wrapper = render();
+  it('shows button when there is a new block', () => {
+    const wrapper = mount(<LoadLatestButton {...props} />);
     expect(wrapper).toBeEmptyRender();
-    act(() => {
-      jest.runOnlyPendingTimers();
+    wrapper.setProps({
+      latestBlocks: [
+        { height: 11111114 },
+      ],
     });
-    wrapper.update();
+    act(() => {
+      wrapper.update();
+    });
     expect(wrapper).toContainExactlyOneMatchingElement('button');
     expect(wrapper).toHaveText(props.children);
 
-    wrapper.find('button').simulate('click');
+    wrapper.find('button').at(0).simulate('click');
     expect(props.onClick).toHaveBeenCalledWith();
     act(() => {
-      jest.runOnlyPendingTimers();
+      wrapper.update();
     });
     expect(wrapper).toBeEmptyRender();
-    expect(subscribeConnections[props.event]).toBeDefined();
-  });
-
-  it('clears the timeout before unmounting', () => {
-    jest.useFakeTimers();
-    const wrapper = render();
-    expect(subscribeConnections[props.event]).toBeDefined();
-    expect(close).toHaveBeenCalledTimes(0);
-
-    wrapper.unmount();
-    expect(clearTimeout).toHaveBeenCalledTimes(1);
-    expect(close).toHaveBeenCalledTimes(1);
-    expect(subscribeConnections[props.event]).not.toBeDefined();
   });
 });
