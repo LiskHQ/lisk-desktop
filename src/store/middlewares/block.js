@@ -29,7 +29,9 @@ const blockListener = ({ getState, dispatch }) => {
     if (activeToken === tokenMap.LSK.key) {
       dispatch({
         type: actionTypes.newBlockCreated,
-        data: { block },
+        data: {
+          block: block.data.length ? block.data[0] : {},
+        },
       });
       dispatch(forgersRetrieved());
     }
