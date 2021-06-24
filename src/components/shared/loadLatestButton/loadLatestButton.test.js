@@ -8,7 +8,9 @@ describe('LoadLatestButton', () => {
     onClick: jest.fn(),
     entity: 'block',
     children: 'Test load button',
-    latestBlocks: [],
+    latestBlocks: [
+      { height: 11111111 },
+    ],
   };
 
   it('renders empty by default', () => {
@@ -21,7 +23,7 @@ describe('LoadLatestButton', () => {
     expect(wrapper).toBeEmptyRender();
     wrapper.setProps({
       latestBlocks: [
-        { height: 11111112 },
+        { height: 11111114 },
       ],
     });
     act(() => {
