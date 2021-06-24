@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { PrimaryButton } from '@toolbox/buttons';
@@ -8,10 +8,12 @@ import styles from './loadLatestButton.css';
 const shouldShow = {
   block: (updateHeight, latestBlocks) => (
     latestBlocks.length > 0
+    && updateHeight > 0
     && latestBlocks[0].height > (updateHeight + 2)
   ),
   transaction: (updateHeight, latestBlocks) => (
     latestBlocks.length > 0
+    && updateHeight > 0
     && latestBlocks[0].height > updateHeight
     && latestBlocks[0].numberOfTransactions > 0
   ),
@@ -28,6 +30,12 @@ const LoadLatestButton = ({
     setUpdateHeight(latestBlocks[0].height);
     onClick();
   };
+
+  useEffect(() => {
+    if (latestBlocks.length > 0 && updateHeight === 0) {
+      setUpdateHeight(latestBlocks[0].height);
+    }
+  }, [latestBlocks.length]);
 
   return shouldShow[entity](updateHeight, latestBlocks)
     ? (
