@@ -53,7 +53,7 @@ const Blocks = ({
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
         </BoxHeader>
         <LoadLatestButton
-          event="update.block"
+          entity="block"
           onClick={loadLastBlocks}
         >
           {t('New blocks')}

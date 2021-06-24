@@ -64,7 +64,7 @@ const TransactionsTable = ({
       {isLoadMoreEnabled
         && (
         <LoadLatestButton
-          event="update.transactions.confirmed"
+          entity="transaction"
           onClick={transactions.loadData}
         >
           {t('New transactions')}
