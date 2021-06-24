@@ -48,7 +48,7 @@ const LoadLatestButton = ({
 };
 
 LoadLatestButton.propTypes = {
-  entity: PropTypes.string.isRequired,
+  entity: PropTypes.oneOf(['block', 'transaction']),
   onClick: PropTypes.func.isRequired,
 };
 
