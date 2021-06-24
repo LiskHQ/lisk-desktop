@@ -158,6 +158,7 @@ import initialiseIcon from '../../../assets/images/icons/initialise-icon.svg';
 import initialiseRegistration from '../../../assets/images/icons/initialise-registration.svg';
 import warningYellow from '../../../assets/images/icons/warning-yellow.svg';
 import linkIcon from '../../../assets/images/icons/link-icon.svg';
+import refresh from '../../../assets/images/icons/refresh.svg';
 
 export const icons = {
   academy,
@@ -316,6 +317,7 @@ export const icons = {
   arrowRightWithStroke,
   arrowRightWithStrokeDark,
   multisignatureTransaction,
+  refresh,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
