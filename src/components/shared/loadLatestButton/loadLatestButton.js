@@ -8,9 +8,9 @@ import styles from './loadLatestButton.css';
 const shouldShow = {
   block: (updateHeight, latestBlocks) => (
     latestBlocks.length > 0
-    && latestBlocks[0].height > updateHeight
+    && latestBlocks[0].height > (updateHeight + 2)
   ),
-  transaction: () => (updateHeight, latestBlocks) => (
+  transaction: (updateHeight, latestBlocks) => (
     latestBlocks.length > 0
     && latestBlocks[0].height > updateHeight
     && latestBlocks[0].numberOfTransactions > 0
@@ -32,8 +32,8 @@ const LoadLatestButton = ({
   return shouldShow[entity](updateHeight, latestBlocks)
     ? (
       <PrimaryButton onClick={handleClick} className={styles.button}>
-        <Icon name="arrowUpCircle" className={styles.icon} />
-        {children}
+        <Icon name="refresh" className={styles.icon} />
+        <span>{children}</span>
       </PrimaryButton>
     )
     : null;
