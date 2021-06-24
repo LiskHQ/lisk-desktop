@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { PrimaryButton } from '@toolbox/buttons';
@@ -18,8 +17,9 @@ const shouldShow = {
   ),
 };
 
-const LoadLatestButton = ({ children, onClick, entity }) => {
-  const { latestBlocks } = useSelector(state => state.blocks);
+const LoadLatestButton = ({
+  children, onClick, entity, latestBlocks,
+}) => {
   const [updateHeight, setUpdateHeight] = useState(
     latestBlocks.length ? latestBlocks[0].height : 0,
   );
@@ -29,7 +29,7 @@ const LoadLatestButton = ({ children, onClick, entity }) => {
     onClick();
   };
 
-  return shouldShow[entity](latestBlocks, updateHeight)
+  return shouldShow[entity](updateHeight, latestBlocks)
     ? (
       <PrimaryButton onClick={handleClick} className={styles.button}>
         <Icon name="arrowUpCircle" className={styles.icon} />
