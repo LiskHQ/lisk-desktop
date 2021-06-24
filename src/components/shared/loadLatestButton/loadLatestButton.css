@@ -12,7 +12,7 @@
   animation: slideDown var(--animation-speed-fast) ease-in;
   animation-fill-mode: forwards;
   position: absolute;
-  z-index: 2;
+  z-index: 4;
   transform: translateX(-50%);
   left: 50%;
   background: var(--color-white);
