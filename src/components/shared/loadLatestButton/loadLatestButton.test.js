@@ -13,8 +13,13 @@ describe('LoadLatestButton', () => {
     ],
   };
 
-  it('renders empty by default', () => {
-    const wrapper = mount(<LoadLatestButton {...props} />);
+  it('renders accept transaction and block for entity and render empty by default', () => {
+    const blockProps = { ...props, entity: 'block' };
+    let wrapper = mount(<LoadLatestButton {...blockProps} />);
+    expect(wrapper).toBeEmptyRender();
+
+    const transactionProps = { ...props, entity: 'transaction' };
+    wrapper = mount(<LoadLatestButton {...transactionProps} />);
     expect(wrapper).toBeEmptyRender();
   });
 
