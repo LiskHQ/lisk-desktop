@@ -30,7 +30,7 @@ describe('Sign Multisignature Tx Share component', () => {
         optionalKeys: [],
       },
     },
-    broadcastedTransactionsError: [],
+    txBroadcastError: null,
     transaction,
   };
 
@@ -76,7 +76,7 @@ describe('Sign Multisignature Tx Share component', () => {
     sendButton.simulate('click');
     await flushPromises();
     act(() => { wrapper.update(); });
-    wrapper.setProps({ broadcastedTransactionsError: [{ error: { message: 'Bad request.' } }] });
+    wrapper.setProps({ txBroadcastError: { error: { message: 'Bad request.' } } });
     act(() => { wrapper.update(); });
     expect(wrapper.html()).toContain('Error broadcasting the transaction: Bad request.');
   });

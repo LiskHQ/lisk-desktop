@@ -106,10 +106,10 @@ describe('TransactionStatus', () => {
   it('should call broadcast function again in retry', () => {
     const newProps = { ...props };
     newProps.transactions = {
-      broadcastedTransactionsError: [{
+      txBroadcastError: {
         error: { message: 'errorMessage' },
         transaction: { recipient: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', amount: 1, reference: 'test' },
-      }],
+      },
       transactionsCreated: [{ id: 1 }],
       txSignatureError: { id: 2 },
     };

@@ -8,7 +8,7 @@ describe('Reducer: transactions', () => {
     confirmed: [],
     transactionsCreated: [],
     txSignatureError: null,
-    broadcastedTransactionsError: [],
+    txBroadcastError: null,
   };
   const mockTransactions = [{
     amount: 100000000000,
@@ -158,20 +158,20 @@ describe('Reducer: transactions', () => {
         confirmed: [],
         transactionsCreated: [],
         txSignatureError: null,
-        broadcastedTransactionsError: [{ id: '123' }],
+        txBroadcastError: { id: '123' },
       };
       const actionResult = resetTransactionResult();
       const changedState = transactions(newState, actionResult);
       expect(changedState.transactionsCreated).toEqual([]);
-      expect(changedState.broadcastedTransactionsError).toEqual([]);
+      expect(changedState.txBroadcastError).toEqual(null);
       expect(changedState.txSignatureError).toEqual(null);
     });
   });
-  it('should add broadcastedTransactionsError', () => {
+  it('should add txBroadcastError', () => {
     const networkError = { message: 'network error' };
     const state = {
       transactionsCreated: [],
-      broadcastedTransactionsError: [],
+      txBroadcastError: null,
     };
     let changedState = transactions(state, {
       type: actionTypes.broadcastedTransactionError,
@@ -179,29 +179,29 @@ describe('Reducer: transactions', () => {
     });
     expect(changedState).toEqual({
       ...state,
-      broadcastedTransactionsError: [
-        { error: networkError, transaction: mockTransactions[0] },
-      ],
+      txBroadcastError: { error: networkError, transaction: mockTransactions[0] },
     });
-    changedState = transactions(changedState, {
-      type: actionTypes.broadcastedTransactionError,
-      data: { transaction: mockTransactions[1], error: networkError },
-    });
-    expect(changedState).toEqual({
-      ...state,
-      broadcastedTransactionsError: [
-        { error: networkError, transaction: mockTransactions[0] },
-        { error: networkError, transaction: mockTransactions[1] },
-      ],
-    });
+
+    // @todo we should not be able to add more errors
+    // changedState = transactions(changedState, {
+    //   type: actionTypes.broadcastedTransactionError,
+    //   data: { transaction: mockTransactions[1], error: networkError },
+    // });
+    // expect(changedState).toEqual({
+    //   ...state,
+    //   txBroadcastError: [
+    //     { error: networkError, transaction: mockTransactions[0] },
+    //     { error: networkError, transaction: mockTransactions[1] },
+    //   ],
+    // });
   });
 
-  it('should not stack the same transaction in broadcastedTransactionsError and should replace it with the latest error', () => {
+  it('should not stack the same transaction in txBroadcastError and should replace it with the latest error', () => {
     const networkError = { message: 'network error' };
     const apiError = { message: 'API error' };
     const state = {
       transactionsCreated: [],
-      broadcastedTransactionsError: [{ error: networkError, transaction: mockTransactions[0] }],
+      txBroadcastError: { error: networkError, transaction: mockTransactions[0] },
     };
     const action = {
       type: actionTypes.broadcastedTransactionError,
@@ -210,7 +210,7 @@ describe('Reducer: transactions', () => {
     const changedState = transactions(state, action);
     expect(changedState).toEqual({
       ...state,
-      broadcastedTransactionsError: [{ error: apiError, transaction: mockTransactions[0] }],
+      txBroadcastError: { error: apiError, transaction: mockTransactions[0] },
     });
   });
 
@@ -227,11 +227,11 @@ describe('Reducer: transactions', () => {
   //     confirmed: [],
   //     transactionsCreated: [],
   //     txSignatureError: null,
-  //     broadcastedTransactionsError: [{ transaction: tx }],
+  //     txBroadcastError: { transaction: tx },
   //   };
   //   const actionResult = broadcastedTransactionSuccess(tx);
   //   const changedState = transactions(newState, actionResult);
   //   expect(changedState.transactionsCreated).toEqual([]);
-  //   expect(changedState.broadcastedTransactionsError).toEqual([]);
+  //   expect(changedState.txBroadcastError).toEqual(null);
   // });
 });

@@ -46,7 +46,7 @@ const getTemplate = (t, status, errorMessage) => {
 // eslint-disable-next-line max-statements
 const Share = ({
   t, transaction, senderAccount, error,
-  broadcastedTransactionsError, history,
+  txBroadcastError, history,
 }) => {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(error ? 'SIGN_FAILED' : 'SIGN_SUCCEEDED');
@@ -73,13 +73,13 @@ const Share = ({
   };
 
   useEffect(() => {
-    if (broadcastedTransactionsError.length) {
+    if (txBroadcastError) {
       setStatus('BROADCAST_FAILED');
       setErrorMessage(
-        broadcastedTransactionsError[broadcastedTransactionsError.length - 1].error.message,
+        txBroadcastError.error.message,
       );
     }
-  }, [broadcastedTransactionsError]);
+  }, [txBroadcastError]);
 
   return (
     <section>
