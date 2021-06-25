@@ -59,7 +59,7 @@ const edited = {
   },
 };
 
-const transaction = {};
+const transaction = { id: 1 };
 
 const props = {
   t: s => s,
