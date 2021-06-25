@@ -22,8 +22,8 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
  * @param {Object} params - all params
  * @param {String} params.senderPublicKey - alphanumeric string
  */
-export const addNewPendingTransaction = data => ({
-  type: actionTypes.addNewPendingTransaction,
+export const pendingTransactionAdded = data => ({
+  type: actionTypes.pendingTransactionAdded,
   data,
 });
 
@@ -167,7 +167,7 @@ export const transactionBroadcasted = transaction =>
       if (activeToken === tokenMap.LSK.key) {
         const transformedTransaction = transformTransaction(transaction);
         if (transformedTransaction.sender.address === account.info.LSK.summary.address) {
-          dispatch(addNewPendingTransaction({ ...transformedTransaction, isPending: true }));
+          dispatch(pendingTransactionAdded({ ...transformedTransaction, isPending: true }));
         }
       }
 

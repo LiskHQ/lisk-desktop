@@ -1,6 +1,6 @@
 const actionTypes = {
   emptyTransactionsData: 'EMPTY_TRANSACTIONS_DATA',
-  addNewPendingTransaction: 'ADD_NEW_PENDING_TRANSACTION',
+  pendingTransactionAdded: 'PENDING_TRANSACTION_ADDED',
   getTransactions: 'GET_TRANSACTIONS',
   getTransactionsSuccess: 'GET_TRANSACTIONS_SUCCESS',
   getTransactionSuccess: 'GET_TRANSACTION_SUCCESS',

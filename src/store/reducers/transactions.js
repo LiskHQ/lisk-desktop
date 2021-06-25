@@ -31,7 +31,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
 
     // Used to insert a the broadcasted transaction to the list
     // before the tx is approved.
-    case actionTypes.addNewPendingTransaction:
+    case actionTypes.pendingTransactionAdded:
       return {
         ...state,
         pending: [action.data, ...state.pending],
