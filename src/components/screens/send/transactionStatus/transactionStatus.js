@@ -20,14 +20,14 @@ const bookmarkInformation = (bookmarks, fields) => {
 const getMessagesDetails = (transactions, fields, t, isHardwareWalletConnected) => {
   const isHardwareWalletError = isHardwareWalletConnected && fields.hwTransactionStatus === 'error';
   const messages = statusMessage(t);
-  let messageDetails = !transactions.broadcastedTransactionsError.length
+  let messageDetails = !transactions.txBroadcastError
     ? messages.success
     : messages.error;
 
-  if (transactions.broadcastedTransactionsError[0]
-      && transactions.broadcastedTransactionsError[0].error
-      && transactions.broadcastedTransactionsError[0].error.message) {
-    messageDetails.paragraph = transactions.broadcastedTransactionsError[0].error.message;
+  if (transactions.txBroadcastError
+      && transactions.txBroadcastError.error
+      && transactions.txBroadcastError.error.message) {
+    messageDetails.paragraph = transactions.txBroadcastError.error.message;
   }
 
   if (isHardwareWalletConnected) {
@@ -55,25 +55,26 @@ const TransactionStatus = ({
   const isHardwareWalletConnected = !!(account.hwInfo && account.hwInfo.deviceId);
 
   const broadcast = () => {
-    const { transactionsCreated, transactionsCreatedFailed } = transactions;
+    const { transactionsCreated, txSignatureError } = transactions;
 
     if (transactionsCreated.length) {
       transactionsCreated.forEach(tx => transactionBroadcasted(tx));
     }
-    if (transactionsCreatedFailed.length) {
-      transactionsCreatedFailed.forEach(tx => transactionBroadcasted(tx));
-    }
+    // @todo Why did we do this?
+    // if (txSignatureError) {
+    //   txSignatureError.forEach(tx => transactionBroadcasted(tx));
+    // }
   };
 
   const onRetry = () => {
-    const { broadcastedTransactionsError } = transactions;
+    const { txBroadcastError } = transactions;
 
     if (isHardwareWalletConnected) {
       resetTransactionResult();
       prevStep({ ...fields, hwTransactionStatus: false });
     } else {
-      broadcastedTransactionsError.forEach(({ transaction }) =>
-        transactionBroadcasted(transaction));
+      // @todo Why do we do this?
+      // transactionBroadcasted(txBroadcastError);
     }
   };
 
@@ -89,10 +90,9 @@ const TransactionStatus = ({
     transactions, fields, t,
     isHardwareWalletConnected,
   );
-  const success = transactions.broadcastedTransactionsError.length === 0 && !isHardwareWalletError;
-  const totalErrors = transactions.broadcastedTransactionsError.length;
-  const error = totalErrors > 0
-    && JSON.stringify(transactions.broadcastedTransactionsError[totalErrors - 1]);
+  const success = !transactions.txBroadcastError && !isHardwareWalletError;
+  const error = transactions.txBroadcastError
+    && JSON.stringify(transactions.txBroadcastError);
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
@@ -105,7 +105,7 @@ const TransactionStatus = ({
         error={error}
       >
         {
-          isHardwareWalletError || transactions.broadcastedTransactionsError.length
+          isHardwareWalletError || transactions.txBroadcastError
             ? (
               <SecondaryButton
                 className={`${styles.btn} retry`}

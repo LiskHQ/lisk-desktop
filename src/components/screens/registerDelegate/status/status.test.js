@@ -19,7 +19,7 @@ describe('Delegate Registration Status', () => {
     },
     transactions: {
       confirmed: [],
-      broadcastedTransactionsError: [],
+      txBroadcastError: null,
     },
     transactionBroadcasted: jest.fn(),
     t: key => key,

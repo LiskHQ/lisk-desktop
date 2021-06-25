@@ -34,7 +34,7 @@ class Summary extends React.Component {
     if (!account.summary.isMultisignature) {
       Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
       if (account.loginType !== loginTypes.passphrase.code
-          && transactions.transactionsCreatedFailed.length) {
+          && transactions.txSignatureError) {
         nextStep({
           fields: {
             ...fields,
@@ -44,7 +44,7 @@ class Summary extends React.Component {
       }
 
       if (transactions.transactionsCreated.length
-        && !transactions.transactionsCreatedFailed.length) {
+        && !transactions.txSignatureError) {
         nextStep({
           fields: {
             ...fields,

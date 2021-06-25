@@ -14,7 +14,7 @@ describe('unlock transaction Status', () => {
   const store = {
     transactions: {
       confirmed: [],
-      broadcastedTransactionsError: [],
+      txBroadcastError: null,
       transactionsCreated: [],
     },
   };

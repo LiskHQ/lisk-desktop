@@ -53,8 +53,8 @@ describe('Summary', () => {
         pending: [],
         failed: '',
         transactionsCreated: [transaction],
-        transactionsCreatedFailed: [],
-        broadcastedTransactionsError: [],
+        txSignatureError: null,
+        txBroadcastError: null,
       },
       token: tokenMap.LSK.key,
     };
@@ -109,8 +109,8 @@ describe('Summary', () => {
       pending: [],
       failed: '',
       transactionsCreated: [{ fee: txFee }],
-      transactionsCreatedFailed: [],
-      broadcastedTransactionsError: [],
+      txSignatureError: null,
+      txBroadcastError: null,
     };
     newProps.account = accounts.genesis;
     wrapper = mount(<Summary {...newProps} />);

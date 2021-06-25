@@ -55,12 +55,12 @@ const Summary = ({
   const submitTransaction = () => {
     if (!account.summary.isMultisignature) {
       Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
-      if (!transactions.transactionsCreatedFailed.length
+      if (!transactions.txSignatureError
         && transactions.transactionsCreated.length) {
         nextStep({
           locked, unlockable, error: false,
         });
-      } else if (transactions.transactionsCreatedFailed.length) {
+      } else if (transactions.txSignatureError) {
         nextStep({
           error: true,
         });

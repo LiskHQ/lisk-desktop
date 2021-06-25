@@ -7,7 +7,7 @@ describe('Reducer: transactions', () => {
     pending: [],
     confirmed: [],
     transactionsCreated: [],
-    transactionsCreatedFailed: [],
+    txSignatureError: null,
     broadcastedTransactionsError: [],
   };
   const mockTransactions = [{
@@ -157,14 +157,14 @@ describe('Reducer: transactions', () => {
         pending: [],
         confirmed: [],
         transactionsCreated: [],
-        transactionsCreatedFailed: [],
+        txSignatureError: null,
         broadcastedTransactionsError: [{ id: '123' }],
       };
       const actionResult = resetTransactionResult();
       const changedState = transactions(newState, actionResult);
       expect(changedState.transactionsCreated).toEqual([]);
       expect(changedState.broadcastedTransactionsError).toEqual([]);
-      expect(changedState.transactionsCreatedFailed).toEqual([]);
+      expect(changedState.txSignatureError).toEqual(null);
     });
   });
   it('should add broadcastedTransactionsError', () => {
@@ -226,7 +226,7 @@ describe('Reducer: transactions', () => {
   //     pending: [],
   //     confirmed: [],
   //     transactionsCreated: [],
-  //     transactionsCreatedFailed: [],
+  //     txSignatureError: null,
   //     broadcastedTransactionsError: [{ transaction: tx }],
   //   };
   //   const actionResult = broadcastedTransactionSuccess(tx);

@@ -10,7 +10,7 @@ describe('Multisignature result component', () => {
     transactionBroadcasted: jest.fn(),
     transactions: {
       confirmed: [],
-      broadcastedTransactionsError: [],
+      txBroadcastError: null,
       transactionsCreated: [],
     },
   };

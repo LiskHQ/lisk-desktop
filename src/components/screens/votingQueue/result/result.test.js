@@ -4,7 +4,7 @@ import Result from './result';
 const props = {
   t: s => s,
   history: { push: jest.fn() },
-  transactions: { transactionsCreatedFailed: [], transactionsCreated: [{}] },
+  transactions: { txSignatureError: null, transactionsCreated: [{}] },
   transactionBroadcasted: jest.fn(),
 };
 

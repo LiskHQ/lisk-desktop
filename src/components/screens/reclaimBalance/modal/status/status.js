@@ -6,14 +6,14 @@ import { routes, tokenMap } from '@constants';
 import Spinner from '@toolbox/spinner';
 import styles from './status.css';
 
-const getTransactionError = (broadcastedTransactionsError, createError) => {
+// @todo fix consistent return
+const getTransactionError = (txBroadcastError, createError) => {
   if (createError) {
     return createError;
   }
 
-  const totalErrors = broadcastedTransactionsError.length;
-  const error = totalErrors > 0
-    && JSON.stringify(broadcastedTransactionsError[totalErrors - 1]);
+  const error = txBroadcastError !== null
+    && JSON.stringify(txBroadcastError);
 
   return error;
 };
@@ -38,7 +38,7 @@ const Status = ({
     if (transactionInfo) broadcastTransaction();
   }, []);
 
-  const isTransactionSuccess = transactions.broadcastedTransactionsError.length === 0
+  const isTransactionSuccess = transactions.txBroadcastError === null
     && !transactionError;
 
   const displayTemplate = isTransactionSuccess
@@ -71,7 +71,7 @@ const Status = ({
         success={isTransactionSuccess}
         title={displayTemplate.title}
         className={`${styles.content} ${!isTransactionSuccess && styles.error}`}
-        error={getTransactionError(transactions.broadcastedTransactionsError, transactionError)}
+        error={getTransactionError(transactions.txBroadcastError, transactionError)}
       >
         {isTransactionSuccess
           ? (

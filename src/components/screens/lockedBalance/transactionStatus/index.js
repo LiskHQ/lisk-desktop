@@ -30,11 +30,9 @@ const Status = ({
     if (transactionInfo) {
       const confirmed = transactions.confirmed
         .filter(tx => tx.id === transactionInfo.id);
-      const broadcastError = transactions.broadcastedTransactionsError
-        .filter(tx => tx.transaction.id === transactionInfo.id);
 
       if (confirmed.length) setStatus('ok');
-      if (broadcastError.length) setStatus('fail');
+      if (transactions.txBroadcastError) setStatus('fail');
     }
   }, [transactions]);
 

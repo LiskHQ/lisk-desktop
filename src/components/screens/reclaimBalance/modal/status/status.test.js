@@ -20,8 +20,8 @@ describe('Status', () => {
     transactions: {
       confirmed: [],
       transactionsCreated: [],
-      transactionsCreatedFailed: [],
-      broadcastedTransactionsError: [],
+      txSignatureError: null,
+      txBroadcastError: null,
     },
     transactionInfo: {},
     history: { push: jest.fn() },
@@ -46,7 +46,7 @@ describe('Status', () => {
   it('should render error message in case of transaction failed', () => {
     const newProps = { ...props };
     newProps.transactions.confirmed = [];
-    newProps.transactions.broadcastedTransactionsError = [{ amount: 1 }];
+    newProps.transactions.txBroadcastError = { amount: 1 };
     wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
     expect(wrapper).toContainMatchingElement('.report-error-link');
   });
@@ -55,12 +55,12 @@ describe('Status', () => {
     const newProps = { ...props };
     newProps.transactions = {
       confirmed: [],
-      broadcastedTransactionsError: [{
+      txBroadcastError: {
         error: { message: 'errorMessage' },
         transaction: { amount: 1 },
-      }],
+      },
       transactionsCreated: [{ id: 1 }],
-      transactionsCreatedFailed: [{ id: 2 }],
+      txSignatureError: { id: 2 },
     };
 
     wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
