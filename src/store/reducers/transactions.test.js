@@ -138,26 +138,6 @@ describe('Reducer: transactions', () => {
     });
   });
 
-  describe('accountSwitched', () => {
-    it('should reset all data', () => {
-      const state = {
-        ...defaultState,
-        pending: [{
-          amount: 110000000000,
-          id: '16295820046284152275',
-          timestamp: 33506748,
-        }],
-        confirmed: mockTransactions,
-      };
-      const action = { type: actionTypes.accountSwitched };
-      const changedState = transactions(state, action);
-      expect(changedState).toEqual({
-        ...defaultState,
-        count: 0,
-      });
-    });
-  });
-
   describe('emptyTransactionsData', () => {
     it('should reset all data', () => {
       const state = {

@@ -11,7 +11,6 @@ const actionTypes = {
   timerReset: 'TIMER_RESET',
   accountRemoved: 'ACCOUNT_REMOVED',
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
-  accountSwitched: 'ACCOUNT_SWITCHED',
   accountUpdated: 'ACCOUNT_UPDATED',
   delegateRegisteredSuccess: 'DELEGATE_REGISTERED_SUCCESS',
   delegateRetrieved: 'DELEGATE_RETRIEVED',

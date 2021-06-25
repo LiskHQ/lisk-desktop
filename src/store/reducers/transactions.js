@@ -104,10 +104,6 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         transactionsCreatedFailed: [],
         broadcastedTransactionsError: [],
       };
-    case (actionTypes.accountSwitched):
-      return {
-        ...state, pending: [], confirmed: [], count: 0,
-      };
     default:
       return state;
   }
