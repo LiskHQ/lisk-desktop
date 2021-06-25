@@ -138,41 +138,6 @@ describe('Reducer: transactions', () => {
     });
   });
 
-  describe('transactionFailedClear', () => {
-    it('should remove property `failed`', () => {
-      const errorMessage = 'transaction failed';
-      const state = {
-        ...defaultState,
-        failed: { errorMessage },
-      };
-
-      const action = {
-        type: actionTypes.transactionFailedClear,
-      };
-      const changedState = transactions(state, action);
-      expect(changedState).toEqual({ ...defaultState });
-    });
-  });
-
-  describe('transactionsFailed', () => {
-    it('should filter out failed transactions from pending', () => {
-      const state = {
-        ...defaultState,
-        pending: [mockTransactions[1]],
-      };
-      const data = {
-        failed: [mockTransactions[1]],
-      };
-      const action = {
-        data,
-        type: actionTypes.transactionsFailed,
-      };
-      const pendingTransactionsFiltered = transactions(state, action);
-      const stateWithNoPendingTransactions = { ...defaultState };
-      expect(pendingTransactionsFiltered).toEqual(stateWithNoPendingTransactions);
-    });
-  });
-
   describe('accountSwitched', () => {
     it('should reset all data', () => {
       const state = {

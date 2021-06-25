@@ -25,24 +25,20 @@ const initialState = {
 };
 const transactions = (state = initialState, action) => { // eslint-disable-line complexity
   switch (action.type) {
+    // Used for cleaning the state, specially when the account signs out
     case actionTypes.emptyTransactionsData:
       return initialState;
+
+    // Used to insert a the broadcasted transaction to the list
+    // before the tx is approved.
     case actionTypes.addNewPendingTransaction:
       return {
         ...state,
         pending: [action.data, ...state.pending],
       };
+
     case actionTypes.transactionFailed:
       return { ...state, failed: { ...action.data } };
-    case actionTypes.transactionFailedClear:
-      return { ...state, failed: undefined };
-    case actionTypes.transactionsFailed:
-      return {
-        ...state, // Filter any failed transaction from pending
-        pending: state.pending.filter(pendingTransaction =>
-          action.data.failed.filter(transaction =>
-            transaction.id === pendingTransaction.id).length === 0),
-      };
     case actionTypes.transactionsRetrieved: {
       const confirmed = action.data.offset === 0
         ? [
@@ -65,7 +61,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.transactionCreatedSuccess:
       return {
         ...state,
-        transactionsCreated: [...state.transactionsCreated, action.data],
+        transactionsCreated: action.data,
       };
     // TODO can be remove after move send (create) tx to utils file
     // istanbul ignore next
@@ -73,7 +69,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
       const { message = 'The transaction failed', name = 'TransactionFailedError' } = action.data;
       return {
         ...state,
-        transactionsCreatedFailed: [...state.transactionsCreatedFailed, { message, name }],
+        transactionsCreatedFailed: { message, name },
       }; }
     // TODO can be remove after use HOC for send (broadcast) tx
     // istanbul ignore next

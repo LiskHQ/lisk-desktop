@@ -8,7 +8,6 @@ describe('TransactionStatus', () => {
     t: v => v,
     finalCallback: jest.fn(),
     failedTransactions: undefined,
-    transactionFailedClear: jest.fn(),
     bookmarks: {
       LSK: [],
     },
