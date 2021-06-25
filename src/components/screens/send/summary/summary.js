@@ -43,7 +43,7 @@ class Summary extends React.Component {
         });
       }
 
-      if (transactions.transactionsCreated.length
+      if (transactions.signedTransaction
         && !transactions.txSignatureError) {
         nextStep({
           fields: {
@@ -53,7 +53,7 @@ class Summary extends React.Component {
         });
       }
     } else {
-      fn(transactions.transactionsCreated[0]);
+      fn(transactions.signedTransaction);
     }
   }
 
@@ -67,7 +67,7 @@ class Summary extends React.Component {
     const {
       fields, t, token, account, isInitialization, transactions,
     } = this.props;
-    const transaction = transactions.transactionsCreated[0];
+    const transaction = transactions.signedTransaction;
     const amount = transaction?.asset?.amount
       ? fromRawLsk(transaction?.asset?.amount) : fields.amount.value;
 

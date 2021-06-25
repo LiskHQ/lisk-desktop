@@ -38,7 +38,6 @@ const Summary = ({
   t, removed = {}, edited = {}, added = {},
   fee, account, prevStep, nextStep, transactions, ...props
 }) => {
-  const transaction = transactions.transactionsCreated[transactions.transactionsCreated.length - 1];
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
@@ -56,7 +55,7 @@ const Summary = ({
     if (!account.summary.isMultisignature) {
       Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
       if (!transactions.txSignatureError
-        && transactions.transactionsCreated.length) {
+        && transactions.signedTransaction) {
         nextStep({
           locked, unlockable, error: false,
         });
@@ -86,7 +85,7 @@ const Summary = ({
       classNames={styles.container}
       fee={!account.summary.isMultisignature && fromRawLsk(fee)}
       createTransaction={(callback) => {
-        callback(transaction);
+        callback(transactions.signedTransaction);
       }}
     >
       <ToggleIcon isNotHeader />
@@ -108,7 +107,7 @@ const Summary = ({
         removed={removed}
         fee={fee}
         moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.voteDelegate}
-        transaction={transaction || {}}
+        transaction={transactions.signedTransaction || {}}
         account={account}
         isMultisignature={account.summary.isMultisignature}
       />

@@ -67,7 +67,7 @@ const props = {
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
   fee: 1000000000,
-  transactions: { txSignatureError: null, transactionsCreated: [transaction] },
+  transactions: { txSignatureError: null, signedTransaction: transaction },
 };
 
 beforeEach(() => {
@@ -143,7 +143,7 @@ describe('VotingQueue.Summary', () => {
   it('calls props.nextStep when transaction create fail', () => {
     const wrapper = mountWithRouter(Summary, {
       ...props,
-      transactions: { transactionsCreated: [], txSignatureError: {} },
+      transactions: { signedTransaction: null, txSignatureError: {} },
     });
 
     wrapper.find('button.confirm-button').simulate('click');

@@ -55,10 +55,10 @@ const TransactionStatus = ({
   const isHardwareWalletConnected = !!(account.hwInfo && account.hwInfo.deviceId);
 
   const broadcast = () => {
-    const { transactionsCreated, txSignatureError } = transactions;
+    const { signedTransaction, txSignatureError } = transactions;
 
-    if (transactionsCreated.length) {
-      transactionsCreated.forEach(tx => transactionBroadcasted(tx));
+    if (signedTransaction) {
+      transactionBroadcasted(signedTransaction);
     }
     // @todo Why did we do this?
     // if (txSignatureError) {

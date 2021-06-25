@@ -6,7 +6,7 @@ describe('Reducer: transactions', () => {
   const defaultState = {
     pending: [],
     confirmed: [],
-    transactionsCreated: [],
+    signedTransaction: null,
     txSignatureError: null,
     txBroadcastError: null,
   };
@@ -156,13 +156,13 @@ describe('Reducer: transactions', () => {
       const newState = {
         pending: [],
         confirmed: [],
-        transactionsCreated: [],
+        signedTransaction: null,
         txSignatureError: null,
         txBroadcastError: { id: '123' },
       };
       const actionResult = resetTransactionResult();
       const changedState = transactions(newState, actionResult);
-      expect(changedState.transactionsCreated).toEqual([]);
+      expect(changedState.signedTransaction).toEqual(null);
       expect(changedState.txBroadcastError).toEqual(null);
       expect(changedState.txSignatureError).toEqual(null);
     });
@@ -170,7 +170,7 @@ describe('Reducer: transactions', () => {
   it('should add txBroadcastError', () => {
     const networkError = { message: 'network error' };
     const state = {
-      transactionsCreated: [],
+      signedTransaction: null,
       txBroadcastError: null,
     };
     let changedState = transactions(state, {
@@ -200,7 +200,7 @@ describe('Reducer: transactions', () => {
     const networkError = { message: 'network error' };
     const apiError = { message: 'API error' };
     const state = {
-      transactionsCreated: [],
+      signedTransaction: null,
       txBroadcastError: { error: networkError, transaction: mockTransactions[0] },
     };
     const action = {
@@ -225,13 +225,13 @@ describe('Reducer: transactions', () => {
   //   const newState = {
   //     pending: [],
   //     confirmed: [],
-  //     transactionsCreated: [],
+  //     signedTransaction: null,
   //     txSignatureError: null,
   //     txBroadcastError: { transaction: tx },
   //   };
   //   const actionResult = broadcastedTransactionSuccess(tx);
   //   const changedState = transactions(newState, actionResult);
-  //   expect(changedState.transactionsCreated).toEqual([]);
+  //   expect(changedState.signedTransaction).toEqual(null);
   //   expect(changedState.txBroadcastError).toEqual(null);
   // });
 });

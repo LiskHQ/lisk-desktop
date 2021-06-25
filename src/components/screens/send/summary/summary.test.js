@@ -52,7 +52,7 @@ describe('Summary', () => {
       transactions: {
         pending: [],
         failed: '',
-        transactionsCreated: [transaction],
+        signedTransaction: transaction,
         txSignatureError: null,
         txBroadcastError: null,
       },
@@ -108,7 +108,7 @@ describe('Summary', () => {
     newProps.transactions = {
       pending: [],
       failed: '',
-      transactionsCreated: [{ fee: txFee }],
+      signedTransaction: { fee: txFee },
       txSignatureError: null,
       txBroadcastError: null,
     };

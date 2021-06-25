@@ -32,7 +32,7 @@ describe('TransactionStatus', () => {
     resetTransactionResult: jest.fn(),
     transactionBroadcasted: jest.fn(),
     transactions: {
-      transactionsCreated: [],
+      signedTransaction: null,
       txSignatureError: null,
       txBroadcastError: null,
     },
@@ -110,7 +110,7 @@ describe('TransactionStatus', () => {
         error: { message: 'errorMessage' },
         transaction: { recipient: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', amount: 1, reference: 'test' },
       },
-      transactionsCreated: [{ id: 1 }],
+      signedTransaction: { id: 1 },
       txSignatureError: { id: 2 },
     };
 

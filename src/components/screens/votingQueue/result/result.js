@@ -58,7 +58,7 @@ const Result = ({
 
   useEffect(() => {
     if (!error) {
-      const tx = transactions.transactionsCreated[0];
+      const tx = transactions.signedTransaction;
       transactionBroadcasted(tx);
     }
   }, []);
