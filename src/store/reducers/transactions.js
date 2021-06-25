@@ -19,9 +19,9 @@ const initialState = {
     amountTo: '',
     message: '',
   },
-  transactionsCreated: [],
-  transactionsCreatedFailed: [],
-  broadcastedTransactionsError: [],
+  signedTransaction: null,
+  txSignatureError: null,
+  txBroadcastError: null,
 };
 const transactions = (state = initialState, action) => { // eslint-disable-line complexity
   switch (action.type) {
@@ -37,6 +37,9 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         pending: [action.data, ...state.pending],
       };
 
+    // Depending on the offset,
+    // Stores the latest txs at the top of the list
+    // and older txs at the bottom.
     case actionTypes.transactionsRetrieved: {
       const confirmed = action.data.offset === 0
         ? [
@@ -54,53 +57,52 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         pending: addNewTransactions(state.pending, action.data.confirmed),
       };
     }
-    // TODO can be remove after move send (create) tx to utils file
-    // istanbul ignore next
+
+    // Stored the signed transaction to be used for broadcasting or downloading
     case actionTypes.transactionCreatedSuccess:
       return {
         ...state,
-        transactionsCreated: action.data,
+        signedTransaction: action.data,
       };
-    // TODO can be remove after move send (create) tx to utils file
-    // istanbul ignore next
-    case actionTypes.transactionCreatedError: {
-      const { message = 'The transaction failed', name = 'TransactionFailedError' } = action.data;
+
+    // Stores the transaction signature error. This error is thrown at the time of
+    // creating the raw transaction object or signing it using Lisk Element / Bitcoin lib.
+    case actionTypes.transactionCreatedError:
       return {
         ...state,
-        transactionsCreatedFailed: { message, name },
-      }; }
-    // TODO can be remove after use HOC for send (broadcast) tx
-    // istanbul ignore next
+        txSignatureError: {
+          ...action.data,
+          message: 'The transaction failed',
+          name: 'TransactionFailedError',
+        },
+      };
+
+    // Removes the signed transactions and previous errors.
+    // We've already broadcasted, we don't need them any longer.
     case actionTypes.broadcastedTransactionSuccess:
       return {
         ...state,
-        transactionsCreated: state.transactionsCreated.filter(tx => tx.id !== action.data.id),
-        broadcastedTransactionsError: state.broadcastedTransactionsError
-          .filter(tx => tx.transaction.id !== action.data.id),
+        signedTransaction: null,
+        txBroadcastError: null,
       };
-    // TODO can be remove after use HOC for send (broadcast) tx
-    // istanbul ignore next
+
+    // Stores the transaction broadcast error returned by the API
     case actionTypes.broadcastedTransactionError:
       return {
         ...state,
-        transactionsCreated: state.transactionsCreated.filter(tx => tx.id !== action.data.id),
-        broadcastedTransactionsError: state.broadcastedTransactionsError
-          .some(tx => tx.transaction.id === action.data.transaction.id)
-          ? state.broadcastedTransactionsError.map((tx) => {
-            if (tx.transaction.id === action.data.transaction.id) {
-              return action.data;
-            }
-            return tx;
-          })
-          : [...state.broadcastedTransactionsError, action.data],
+        signedTransaction: null,
+        txBroadcastError: action.data,
       };
-    // TODO can be remove after use HOC for send tx
+
+    // Removes all errors and the signed transaction
+    // To start a fresh transaction.
+    // @todo Check if this is redundant since we already have broadcastedTransactionSuccess
     case actionTypes.resetTransactionResult:
       return {
         ...state,
-        transactionsCreated: [],
-        transactionsCreatedFailed: [],
-        broadcastedTransactionsError: [],
+        signedTransaction: null,
+        txSignatureError: null,
+        txBroadcastError: null,
       };
     default:
       return state;
