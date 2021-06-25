@@ -7,16 +7,29 @@ import { timerReset } from '@actions';
 import { account } from '@constants';
 import styles from './autoSignOut.css';
 
-const TimeOutToast = ({ t, ...props }) => {
+const getWarningTime = (expireTime) => {
+  if (!expireTime) {
+    return null;
+  }
+
+  const diff = account.lockDuration - account.warnLockDuration;
+  const expireTimeInMilliseconds = new Date(expireTime).getTime();
+
+  return new Date(expireTimeInMilliseconds - diff);
+};
+
+const TimeOutToast = ({ t, expireTime, ...props }) => {
+  console.log(props.warningTime, props.expireTime);
   const dispatch = useDispatch();
   const renderToast = parseInt(props.minutes, 10) === 0 && parseInt(props.seconds, 10) === 1;
+  //const renderToast = true;
+  console.log(parseInt(props.minutes, 10), parseInt(props.seconds, 10));
 
   const onResetTime = () => {
-    dispatch(timerReset(new Date()));
+    dispatch(timerReset(new Date(expireTime)));
   };
 
   const diff = (account.lockDuration - account.warnLockDuration) / 1000;
-  console.log(diff);
   const absTime = Math.abs(diff);
   const minutes = absTime / 60 >= 1 ? `${Math.floor(absTime / 60)}m ` : '';
   const seconds = absTime % 60 >= 1 ? `${absTime % 60}s` : '';
@@ -47,12 +60,20 @@ const TimeOutToast = ({ t, ...props }) => {
 
 const WarningAutoSignOut = ({
   t,
-  warningTime,
+  expireTime,
 }) => (
   <Countdown
-    date={warningTime}
+    date={getWarningTime(expireTime)}
     renderer={
-      ({ minutes, seconds }) => <TimeOutToast t={t} minutes={minutes} seconds={seconds} />
+      ({ minutes, seconds }) => (
+        <TimeOutToast
+          t={t}
+          minutes={minutes}
+          seconds={seconds}
+          warningTime={getWarningTime(expireTime)}
+          expireTime={expireTime}
+        />
+      )
     }
   />
 );

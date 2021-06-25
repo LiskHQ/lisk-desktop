@@ -76,7 +76,6 @@ const SingOut = ({ t, history }) => {
   );
 };
 
-// eslint-disable-next-line max-statements
 const SideBar = ({
   t, location, history,
 }) => {
@@ -88,8 +87,6 @@ const SideBar = ({
   const autoSignOut = useSelector(state => state.settings.autoLog);
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
   const renderAutoSignOut = autoSignOut && expireTime;
-  account.warnLockDuration;
-  const renderWarningAutoSingOut = autoSignOut && expireTime;
 
   return (
     <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
@@ -128,15 +125,13 @@ const SideBar = ({
       </div>
       {
         renderAutoSignOut && (
-          <AutoSignOut
-            expireTime={expireTime}
-            onCountdownComplete={() => dispatch(accountLoggedOut())}
-          />
-        )
-      }
-      {
-        renderWarningAutoSingOut && (
-          <WarningAutoSignOut warningTime={expireTime} />
+          <>
+            <AutoSignOut
+              expireTime={expireTime}
+              onCountdownComplete={() => dispatch(accountLoggedOut())}
+            />
+            <WarningAutoSignOut expireTime={expireTime} />
+          </>
         )
       }
     </nav>
