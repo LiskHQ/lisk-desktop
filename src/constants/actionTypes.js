@@ -48,7 +48,6 @@ const actionTypes = {
   switchChannel: 'SWITCH_CHANNEL',
   transactionAddDelegateName: 'TRANSACTION_ADD_DELEGATE_NAME',
   transactionCleared: 'TRANSACTION_CLEARED',
-  transactionFailed: 'TRANSACTION_FAILED',
   transactionLoadFailed: 'TRANSACTION_LOAD_FAILED',
   transactionLoadRequested: 'TRANSACTION_LOAD_REQUESTED',
   updateTransactions: 'UPDATE_TRANSACTIONS',

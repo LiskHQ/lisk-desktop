@@ -121,23 +121,6 @@ describe('Reducer: transactions', () => {
     });
   });
 
-  describe('transactionFailed', () => {
-    it('should add property `failed` with error message if action.type = actionTypes.transactionFailed', () => {
-      const state = {
-        ...defaultState,
-      };
-
-      const errorMessage = 'transaction failed';
-
-      const action = {
-        data: { errorMessage },
-        type: actionTypes.transactionFailed,
-      };
-      const changedState = transactions(state, action);
-      expect(changedState).toEqual({ ...state, failed: { errorMessage } });
-    });
-  });
-
   describe('emptyTransactionsData', () => {
     it('should reset all data', () => {
       const state = {

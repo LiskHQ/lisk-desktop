@@ -37,8 +37,6 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         pending: [action.data, ...state.pending],
       };
 
-    case actionTypes.transactionFailed:
-      return { ...state, failed: { ...action.data } };
     case actionTypes.transactionsRetrieved: {
       const confirmed = action.data.offset === 0
         ? [
