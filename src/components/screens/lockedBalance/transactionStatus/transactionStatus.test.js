@@ -15,7 +15,7 @@ describe('unlock transaction Status', () => {
     transactions: {
       confirmed: [],
       txBroadcastError: null,
-      signedTransaction: null,
+      signedTransaction: {},
     },
   };
 

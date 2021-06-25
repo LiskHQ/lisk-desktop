@@ -143,7 +143,7 @@ describe('VotingQueue.Summary', () => {
   it('calls props.nextStep when transaction create fail', () => {
     const wrapper = mountWithRouter(Summary, {
       ...props,
-      transactions: { signedTransaction: null, txSignatureError: {} },
+      transactions: { signedTransaction: {}, txSignatureError: {} },
     });
 
     wrapper.find('button.confirm-button').simulate('click');

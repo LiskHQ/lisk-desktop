@@ -32,7 +32,7 @@ describe('TransactionStatus', () => {
     resetTransactionResult: jest.fn(),
     transactionBroadcasted: jest.fn(),
     transactions: {
-      signedTransaction: null,
+      signedTransaction: {},
       txSignatureError: null,
       txBroadcastError: null,
     },

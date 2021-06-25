@@ -19,7 +19,7 @@ const initialState = {
     amountTo: '',
     message: '',
   },
-  signedTransaction: null,
+  signedTransaction: {},
   txSignatureError: null,
   txBroadcastError: null,
 };
@@ -82,7 +82,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.broadcastedTransactionSuccess:
       return {
         ...state,
-        signedTransaction: null,
+        signedTransaction: {},
         txBroadcastError: null,
       };
 
@@ -90,7 +90,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.broadcastedTransactionError:
       return {
         ...state,
-        signedTransaction: null,
+        signedTransaction: {},
         txBroadcastError: action.data,
       };
 
@@ -100,7 +100,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.resetTransactionResult:
       return {
         ...state,
-        signedTransaction: null,
+        signedTransaction: {},
         txSignatureError: null,
         txBroadcastError: null,
       };

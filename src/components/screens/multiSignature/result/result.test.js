@@ -11,7 +11,7 @@ describe('Multisignature result component', () => {
     transactions: {
       confirmed: [],
       txBroadcastError: null,
-      signedTransaction: null,
+      signedTransaction: {},
     },
   };
 

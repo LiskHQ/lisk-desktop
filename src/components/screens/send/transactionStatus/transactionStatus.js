@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { getIndexOfBookmark } from '@utils/bookmarks';
+import { isEmpty } from '@utils/helpers';
 import { SecondaryButton, PrimaryButton } from '@toolbox/buttons';
 import TransactionResult from '@shared/transactionResult';
 import DialogLink from '@toolbox/dialog/link';
@@ -57,7 +58,7 @@ const TransactionStatus = ({
   const broadcast = () => {
     const { signedTransaction, txSignatureError } = transactions;
 
-    if (signedTransaction) {
+    if (!isEmpty(signedTransaction)) {
       transactionBroadcasted(signedTransaction);
     }
     // @todo Why did we do this?

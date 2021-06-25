@@ -1,6 +1,7 @@
 import React from 'react';
 import { loginTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
+import { isEmpty } from '@utils/helpers';
 import Piwik from '@utils/piwik';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
@@ -43,7 +44,7 @@ class Summary extends React.Component {
         });
       }
 
-      if (transactions.signedTransaction
+      if (!isEmpty(transactions.signedTransaction)
         && !transactions.txSignatureError) {
         nextStep({
           fields: {
@@ -93,7 +94,11 @@ class Summary extends React.Component {
           fields={fields}
           token={token}
           moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.transfer}
-          transaction={typeof transaction === 'object' ? transaction : { asset: { amount: toRawLsk(fields.amount.value) } }}
+          transaction={
+            !isEmpty(transaction)
+              ? transaction
+              : { asset: { amount: toRawLsk(fields.amount.value) } }
+          }
           account={account}
           isMultisignature={account.summary.isMultisignature}
         />

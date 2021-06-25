@@ -95,7 +95,7 @@ describe('Summary', () => {
 
   it('should show props.fields.fee.value and use it in transactionCreated if props.token is not LSK', () => {
     const txFee = 0.00012451;
-    const formattedtxFee = formatAmountBasedOnLocale({ value: txFee });
+    const formattedTxFee = formatAmountBasedOnLocale({ value: txFee });
     const newProps = { ...props };
     newProps.token = 'BTC';
     newProps.fields = {
@@ -114,7 +114,7 @@ describe('Summary', () => {
     };
     newProps.account = accounts.genesis;
     wrapper = mount(<Summary {...newProps} />);
-    expect(wrapper.find('.fee-value')).toIncludeText(formattedtxFee);
+    expect(wrapper.find('.fee-value')).toIncludeText(formattedTxFee);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(props.transactionCreated).toBeCalledWith(expect.objectContaining({
       fee: 12451,

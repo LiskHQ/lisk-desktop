@@ -19,7 +19,7 @@ describe('Status', () => {
     transactionBroadcasted: jest.fn(),
     transactions: {
       confirmed: [],
-      signedTransaction: null,
+      signedTransaction: {},
       txSignatureError: null,
       txBroadcastError: null,
     },
