@@ -79,14 +79,6 @@ describe('Reducer: account(state, action)', () => {
     clock.restore();
   });
 
-  it('should return remove passphrase from account object if actionTypes.removePassphrase is called', () => {
-    const action = {
-      type: actionTypes.removePassphrase,
-    };
-    const changedAccount = account(state, action);
-    expect(changedAccount.passphrase).toEqual(null);
-  });
-
   it('should reduce account when accountLoggedIn has been triggered', () => {
     const action = {
       data: {

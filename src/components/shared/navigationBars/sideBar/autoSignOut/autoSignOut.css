@@ -33,4 +33,22 @@
 
 .toastText {
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-decoration: underline;
+  margin-bottom: 0;
+}
+
+button {
+  border: 1px solid var(--color-strong-mystic);
+  border-radius: 5px;
+  background-color: transparent;
+  padding: 8px;
+  color: var(--color-strong-mystic);
+  width: 150px;
+  align-self: center;
+  cursor: pointer;
 }

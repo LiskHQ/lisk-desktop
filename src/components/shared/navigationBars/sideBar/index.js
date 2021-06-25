@@ -2,13 +2,14 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { routes, modals } from '@constants';
+import { routes, modals, account } from '@constants';
 import Piwik from '@utils/piwik';
 import { accountLoggedOut } from '@actions';
 import Icon from '@toolbox/icon';
 import DialogLink from '@toolbox/dialog/link';
 import styles from './sideBar.css';
 import AutoSignOut from './autoSignOut';
+import WarningAutoSignOut from './autoSignOut/warning';
 import menuLinks from './menuLinks';
 
 const Inner = ({
@@ -75,6 +76,7 @@ const SingOut = ({ t, history }) => {
   );
 };
 
+// eslint-disable-next-line max-statements
 const SideBar = ({
   t, location, history,
 }) => {
@@ -86,6 +88,8 @@ const SideBar = ({
   const autoSignOut = useSelector(state => state.settings.autoLog);
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
   const renderAutoSignOut = autoSignOut && expireTime;
+  account.warnLockDuration;
+  const renderWarningAutoSingOut = autoSignOut && expireTime;
 
   return (
     <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
@@ -128,6 +132,11 @@ const SideBar = ({
             expireTime={expireTime}
             onCountdownComplete={() => dispatch(accountLoggedOut())}
           />
+        )
+      }
+      {
+        renderWarningAutoSingOut && (
+          <WarningAutoSignOut warningTime={expireTime} />
         )
       }
     </nav>

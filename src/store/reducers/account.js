@@ -8,8 +8,6 @@ import { actionTypes, account as accountConstants } from '@constants';
 // eslint-disable-next-line complexity
 const account = (state = {}, action) => {
   switch (action.type) {
-    case actionTypes.removePassphrase:
-      return { ...state, passphrase: null, expireTime: 0 };
     case actionTypes.accountUpdated:
       return {
         ...state,
