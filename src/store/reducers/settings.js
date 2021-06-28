@@ -1,4 +1,4 @@
-import { actionTypes, tokenKeys, settings as settingsConst } from '@constants';
+import { actionTypes, tokenKeys } from '@constants';
 import { deepMergeObj } from '@utils/helpers';
 
 export const channels = {
