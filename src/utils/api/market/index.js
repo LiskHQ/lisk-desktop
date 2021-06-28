@@ -1,10 +1,9 @@
 import http from '../http';
 
-const httpPrefix = '/api/v1';
+const httpPrefix = '/api/v2';
 
 export const httpPaths = {
   prices: `${httpPrefix}/market/prices`,
-  news: `${httpPrefix}/market/newsfeed`,
 };
 
 /**
@@ -12,9 +11,9 @@ export const httpPaths = {
  *
  * @returns {Promise} http call
  */
-export const getPrices = () => http({
+export const getPrices = ({ network }) => http({
   path: httpPaths.prices,
-  baseUrl: 'https://cloud.lisk.io',
+  network,
 });
 
 /**
@@ -27,7 +26,7 @@ export const getPrices = () => http({
 export const getNews = ({
   params = {},
 }) => http({
-  path: httpPaths.news,
-  params,
+  path: '/api/v1/market/newsfeed',
   baseUrl: 'https://cloud.lisk.io',
+  params,
 });
