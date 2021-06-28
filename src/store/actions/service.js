@@ -13,10 +13,10 @@ const tickerReducer = (acc, key) => ({
 
 // eslint-disable-next-line import/prefer-default-export
 export const pricesRetrieved = () => (dispatch, getState) => {
-  const { settings: { token } } = getState();
+  const { settings: { token }, network } = getState();
   const activeToken = token.active;
 
-  return getPrices()
+  return getPrices({ network })
     .then(({ data }) => {
       const priceTickerReduced = data.reduce(tickerReducer, {});
       dispatch({

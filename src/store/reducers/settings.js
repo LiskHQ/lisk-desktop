@@ -47,13 +47,7 @@ export const initialState = {
 const settings = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.settingsRetrieved: {
-      const newSettings = deepMergeObj(
-        action.data,
-        {
-          currency: action.data.currency === 'CHF' ? settingsConst.currencies[0] : action.data.currency,
-        },
-      );
-      return validateToken(newSettings);
+      return validateToken(action.data);
     }
     case actionTypes.settingsUpdated:
       return validateToken(deepMergeObj(state, action.data));

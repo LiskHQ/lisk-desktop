@@ -28,6 +28,7 @@ const BalanceInfo = ({
   const sendTitle = isWalletRoute
     ? t('Send {{token}}', { token: activeToken })
     : t('Send {{token}} here', { token: activeToken });
+
   return (
     <Box className={`${styles.wrapper}`}>
       <BoxContent className={styles.content}>
