@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import copyToClipboard from 'copy-to-clipboard';
-import { useDispatch } from 'react-redux';
 
 import { downloadJSON, transactionToJSON } from '@utils/transaction';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import { TransactionResult } from '@shared/transactionResult';
-import { transactionBroadcasted } from '@actions';
 
 import ProgressBar from '../progressBar';
 import { CopyAndSendFooter, CopyFooter } from './footer';
@@ -16,16 +14,14 @@ import styles from './styles.css';
 
 // eslint-disable-next-line max-statements
 const Share = ({
-  t, transaction, senderAccount, error,
-  txBroadcastError, history,
+  t, transaction, senderAccount,
+  txBroadcastError, history, error,
+  transactionBroadcasted,
 }) => {
-  const dispatch = useDispatch();
   const [status, setStatus] = useState('PENDING');
-  const [errorMessage, setErrorMessage] = useState(error);
-  const isFullySigned = isTransactionFullySigned(senderAccount, transaction);
-  const template = statusMessages(t, errorMessage)[status];
-
   const [copied, setCopied] = useState(false);
+  const isFullySigned = isTransactionFullySigned(senderAccount, transaction);
+  const template = statusMessages(t, txBroadcastError?.error?.message || error)[status];
 
   const onDownload = () => {
     const id = transaction.id.toString('hex');
@@ -38,24 +34,21 @@ const Share = ({
   };
 
   const onSend = () => {
-    dispatch(transactionBroadcasted(transaction));
+    transactionBroadcasted(transaction);
     setStatus('BROADCASTED');
   };
 
   useEffect(() => {
     if (txBroadcastError) {
       setStatus('BROADCAST_FAILED');
-      setErrorMessage(
-        txBroadcastError.error.message,
-      );
     }
   }, [txBroadcastError]);
 
   useEffect(() => {
     if (!error && transaction) {
-      useState('SIGN_SUCCEEDED');
+      setStatus('SIGN_SUCCEEDED');
     } else if (error && transaction) {
-      useState('SIGN_FAILED');
+      setStatus('SIGN_FAILED');
     }
   }, [transaction, error]);
 
@@ -70,9 +63,10 @@ const Share = ({
           <ProgressBar current={4} />
           <TransactionResult
             t={t}
-            message={template.message}
+            message={template}
+            illustration="signMultisignature"
             className={styles.content}
-            status={status}
+            status={{ code: status, message: error }}
           />
         </BoxContent>
         {status === 'SIGN_SUCCEEDED' && !isFullySigned && (
