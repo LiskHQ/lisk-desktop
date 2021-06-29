@@ -38,7 +38,7 @@ const Result = ({
         message={template}
         className={styles.content}
       >
-        {!error && (
+        {!error ? (
           <div className={styles.buttonsContainer}>
             <SecondaryButton
               className="copy-button"
@@ -55,8 +55,8 @@ const Result = ({
                 {t('Download')}
               </span>
             </PrimaryButton>
-            </div>
-        )}
+          </div>
+        ) : null}
       </TransactionResult>
     </section>
   );

@@ -11,6 +11,7 @@ describe('Multisignature result component', () => {
     transactions: {
       confirmed: [],
       txBroadcastError: null,
+      txSignatureError: null,
       signedTransaction: {},
     },
   };
@@ -37,6 +38,7 @@ describe('Multisignature result component', () => {
     wrapper = mount(
       <Result
         {...props}
+        transactions={{ ...props.transactions, txBroadcastError: { message: 'error:test' } }}
         error={{ message: 'error:test' }}
       />,
     );
