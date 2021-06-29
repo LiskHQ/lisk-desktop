@@ -14,7 +14,7 @@ const TimeOutToast = ({
 
   const onResetTime = () => {
     upDateCount();
-    dispatch(timerReset(new Date()));
+    dispatch(timerReset());
   };
 
   const diff = (account.lockDuration - account.warnLockDuration) / 1000;

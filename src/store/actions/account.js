@@ -20,24 +20,13 @@ export const accountLoggedOut = () => ({
  * Fires an action to reset the account automatic sign out timer
  * @param {Date} date - Current date
  */
-export const timerReset = date => ({
+export const timerReset = () => ({
   type: actionTypes.timerReset,
-  data: date,
+  data: new Date(),
 });
 
 export const accountLoading = () => ({
   type: actionTypes.accountLoading,
-});
-
-/**
- * Updated Date on which passphrase was used last.
- * We determine the inactivity duration to sign out automatically
- *
- * @param {Date} data - A native Javascript date object.
- */
-export const passphraseUsed = data => ({
-  type: actionTypes.passphraseUsed,
-  data,
 });
 
 async function getAccounts({ network, params }) {

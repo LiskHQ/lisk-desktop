@@ -16,11 +16,6 @@ const account = (state = {}, action) => {
           ...action.data,
         },
       };
-    case actionTypes.passphraseUsed:
-      return {
-        ...state,
-        expireTime: new Date(action.data.getTime() + accountConstants.lockDuration),
-      };
     case actionTypes.accountLoggedIn:
       return {
         ...action.data,

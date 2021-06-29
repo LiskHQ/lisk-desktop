@@ -38,7 +38,7 @@ class Settings extends React.Component {
       account, timerReset, settings,
     } = this.props;
     if (!settings.autolog && account.passphrase) {
-      timerReset(new Date());
+      timerReset();
     }
     this.handleCheckboxChange({ target });
   }

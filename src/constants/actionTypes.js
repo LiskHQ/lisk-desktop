@@ -35,7 +35,6 @@ const actionTypes = {
   lastBtcUpdateSet: 'NETWORK_LAST_BTC_UPDATE_SET',
   newBlockCreated: 'NEW_BLOCK_CREATED',
   olderBlocksRetrieved: 'OLDER_BLOCKS_RETRIEVED',
-  passphraseUsed: 'PASSPHRASE_USED',
   pricesRetrieved: 'PRICES_RETRIEVED',
   searchDelegate: 'SEARCH_DELEGATE',
   searchVotes: 'SEARCH_VOTES',

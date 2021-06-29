@@ -65,20 +65,6 @@ describe('Reducer: account(state, action)', () => {
     expect(changedAccount).toEqual({ loading: true });
   });
 
-  it('should extend expireTime if action.type = actionTypes.passphraseUsed', () => {
-    const clock = useFakeTimers(new Date('2017-12-29').getTime());
-    const action = {
-      type: actionTypes.passphraseUsed,
-      data: new Date('2017-12-29T00:00:00.000Z'),
-    };
-    const changedAccount = account(state, action);
-    expect(changedAccount).toEqual({
-      ...state,
-      expireTime: new Date('2017-12-29T00:10:00.000Z'),
-    });
-    clock.restore();
-  });
-
   it('should reduce account when accountLoggedIn has been triggered', () => {
     const action = {
       data: {
