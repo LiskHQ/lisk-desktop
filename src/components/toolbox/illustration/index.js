@@ -11,6 +11,8 @@ import trezor from '../../../assets/images/illustrations/illustration-trezor-con
 import trezorDark from '../../../assets/images/illustrations/illustration-trezor-confirm-dark.svg';
 import transactionSuccess from '../../../assets/images/illustrations/transaction-success.svg';
 import transactionSuccessDark from '../../../assets/images/illustrations/transaction-success-dark.svg';
+import transactionPending from '../../../assets/images/illustrations/transaction-pending.svg';
+import transactionPendingDark from '../../../assets/images/illustrations/transaction-pending-dark.svg';
 import transactionError from '../../../assets/images/illustrations/transaction-error.svg';
 import transactionErrorDark from '../../../assets/images/illustrations/transaction-error-dark.svg';
 import votingSuccessDark from '../../../assets/images/illustrations/voting-submitted-dark.svg';
@@ -85,6 +87,8 @@ export const illustrations = {
   registerMultisignatureSuccess,
   registerMultisignatureError,
   reclaimBalanceIntro,
+  transactionPending,
+  transactionPendingDark,
 };
 
 const Illustration = ({ name, className, noTheme }) => {
