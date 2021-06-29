@@ -47,7 +47,7 @@ const TransactionStatus = ({
   fields,
   t,
 }) => {
-  const isHardwareWalletConnected = !account.hwInfo?.deviceId;
+  const isHardwareWalletConnected = !!account.hwInfo?.deviceId;
 
   const broadcast = () => {
     if (!isEmpty(transactions.signedTransaction)) {
@@ -91,7 +91,7 @@ const TransactionStatus = ({
         status={status}
       >
         {
-          isHardwareWalletError || transactions.txBroadcastError
+          isHardwareWalletError
             ? (
               <SecondaryButton
                 className={`${styles.btn} retry`}
