@@ -91,7 +91,7 @@ describe('TransactionStatus', () => {
 
   it('should call onPrevStep function on hwWallet', () => {
     const newProps = { ...props };
-    newProps.fields.isHardwareWalletConnected = true;
+    newProps.account.hwInfo.deviceId = 'mock';
     newProps.fields.hwTransactionStatus = 'error';
     newProps.failedTransactions = [{
       error: { message: 'errorMessage' },
@@ -101,23 +101,6 @@ describe('TransactionStatus', () => {
     expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.retry').at(0).simulate('click');
     expect(props.prevStep).toBeCalled();
-  });
-
-  it('should call broadcast function again in retry', () => {
-    const newProps = { ...props };
-    newProps.transactions = {
-      txBroadcastError: {
-        error: { message: 'errorMessage' },
-        transaction: { recipient: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', amount: 1, reference: 'test' },
-      },
-      signedTransaction: { id: 1 },
-      txSignatureError: { id: 2 },
-    };
-
-    wrapper = mountWithRouter(TransactionStatus, newProps);
-    expect(wrapper).toContainMatchingElement('.report-error-link');
-    wrapper.find('.retry').at(0).simulate('click');
-    expect(props.transactionBroadcasted).toBeCalled();
   });
 
   it('should call resetTransactionResult on unmount', () => {
