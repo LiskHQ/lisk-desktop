@@ -1,5 +1,5 @@
 const settings = {
-  currencies: ['USD', 'EUR'],
+  currencies: ['USD', 'EUR', 'CHF'],
   keys: {
     loginKey: 'loginKey',
     liskServiceUrl: 'liskServiceUrl',
