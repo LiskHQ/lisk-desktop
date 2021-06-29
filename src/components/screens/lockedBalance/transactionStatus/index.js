@@ -1,56 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { routes } from '@constants';
-import { transactionBroadcasted } from '@actions';
+import { transactionBroadcasted as transactionBroadcastedAction } from '@actions';
 import { PrimaryButton } from '@toolbox/buttons';
-import TransactionResult from '@shared/transactionResult';
+import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
+import statusMessages from './statusMessages';
 import styles from './status.css';
-import displayTemplate from './displayTemplate';
 
 const Status = ({
-  t, history, transactionInfo, error,
+  t, history, transactionInfo, transactions, transactionBroadcasted,
 }) => {
-  const transactions = useSelector(state => state.transactions);
-  const dispatch = useDispatch();
-  const [status, setStatus] = useState(!error ? 'pending' : 'fail');
-  const success = status !== 'fail';
-
-  const template = displayTemplate(
-    t,
-    success,
-    () => {
-      history.push(routes.wallet.path);
-    },
-  );
+  const status = getBroadcastStatus(transactions, false); // handle HW error
+  const onSuccess = () => history.push(routes.wallet.path);
+  const template = statusMessages(t, onSuccess)[status.code];
 
   useEffect(() => {
-    if (transactionInfo) {
-      const confirmed = transactions.confirmed
-        .filter(tx => tx.id === transactionInfo.id);
-
-      if (confirmed.length) setStatus('ok');
-      if (transactions.txBroadcastError) setStatus('fail');
-    }
-  }, [transactions]);
-
-  useEffect(() => {
-    if (transactionInfo) dispatch(transactionBroadcasted(transactionInfo));
+    if (transactionInfo) transactionBroadcasted(transactionInfo);
   }, [transactionInfo]);
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
       <TransactionResult
         t={t}
-        illustration={success ? 'transactionSuccess' : 'transactionError'}
-        success={success}
+        illustration="default"
+        status={status}
         title={template.title}
         message={template.message}
         className={styles.content}
-        primaryButon={template.button}
-        error={JSON.stringify(error)}
       >
         {template.button && (
           <PrimaryButton
@@ -65,7 +44,17 @@ const Status = ({
   );
 };
 
+const mapStateToProps = state => ({
+  account: state.account,
+  transactions: state.transactions,
+});
+
+const mapDispatchToProps = dispatch => ({
+  transactionBroadcasted: (data) => dispatch(transactionBroadcastedAction(data)),
+});
+
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
   withRouter,
   withTranslation(),
 )(Status);
