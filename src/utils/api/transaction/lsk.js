@@ -13,7 +13,7 @@ import {
 } from '@constants';
 
 import { joinModuleAndAssetIds } from '@utils/moduleAssets';
-import { createTransactionObject } from '@utils/transaction';
+import { createTransactionObject, convertStringToBinary } from '@utils/transaction';
 import { validateAddress } from '../../validators';
 import http from '../http';
 import { getDelegates } from '../delegate';
@@ -309,33 +309,43 @@ export const create = ({
   transactionObject,
 // eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
-  const { networkIdentifier } = network.networks.LSK;
-  const {
-    moduleAssetId, ...rawTransaction
-  } = transactionObject;
+  const { summary: { publicKey, isMultiSignature }, keys, sequence } = account;
+  const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
-  rawTransaction.nonce = account.sequence.nonce;
-  rawTransaction.senderPublicKey = account.summary.publicKey;
+  const { moduleAssetId, ...rawTransaction } = transactionObject;
+  rawTransaction.nonce = sequence.nonce;
+  rawTransaction.senderPublicKey = publicKey;
+  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
 
   const schema = moduleAssetSchemas[moduleAssetId];
-  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
-  const netId = Buffer.from(networkIdentifier, 'hex');
 
   try {
     let signedTransaction;
 
-    if (account.summary.isMultiSignature
-      || moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-      const keysInBuffer = {
-        mandatoryKeys: account.keys.mandatoryKeys.map(item => Buffer.from(item, 'hex')),
-        optionalKeys: account.keys.optionalKeys.map(item => Buffer.from(item, 'hex')),
+    const isMultiSignatureRegistration = moduleAssetId
+      === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+
+    if (isMultiSignature || isMultiSignatureRegistration) {
+      const keysInBinary = {
+        mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
+        optionalKeys: keys.optionalKeys.map(convertStringToBinary),
       };
+
       signedTransaction = transactions.signMultiSignatureTransaction(
-        schema, transaction, netId, passphrase, keysInBuffer,
-        moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
+        schema,
+        transaction,
+        networkIdentifier,
+        passphrase,
+        keysInBinary,
+        isMultiSignatureRegistration,
       );
     } else {
-      signedTransaction = transactions.signTransaction(schema, transaction, netId, passphrase);
+      signedTransaction = transactions.signTransaction(
+        schema,
+        transaction,
+        networkIdentifier,
+        passphrase,
+      );
     }
 
     resolve(signedTransaction);

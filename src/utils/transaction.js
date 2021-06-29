@@ -16,7 +16,7 @@ const {
 } = MODULE_ASSETS_NAME_ID_MAP;
 
 const EMPTY_BUFFER = Buffer.from('');
-const convertStringToBinary = value => Buffer.from(value, 'hex');
+export const convertStringToBinary = value => Buffer.from(value, 'hex');
 const convertBinaryToString = value => value.toString('hex');
 const convertBigIntToString = value => {
   if (typeof value === 'bigint') {
