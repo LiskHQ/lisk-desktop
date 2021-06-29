@@ -8,13 +8,15 @@ import { account } from '@constants';
 import styles from './autoSignOut.css';
 
 const TimeOutToast = ({
-  t, upDateCount, completed,
+  t, upDateCount, completed, expireTime,
 }) => {
   const dispatch = useDispatch();
 
   const onResetTime = () => {
-    upDateCount();
-    dispatch(timerReset());
+    if (new Date().getTime() < new Date(expireTime).getTime()) {
+      upDateCount();
+      dispatch(timerReset());
+    }
   };
 
   const diff = (account.lockDuration - account.warnLockDuration) / 1000;
@@ -49,6 +51,7 @@ const TimeOutToast = ({
 const WarningAutoSignOut = ({
   t,
   warningTime,
+  expireTime,
 }) => {
   const [count, setCount] = useState(1);
 
@@ -66,6 +69,7 @@ const WarningAutoSignOut = ({
             t={t}
             completed={completed}
             upDateCount={upDateCount}
+            expireTime={expireTime}
           />
         )
       }

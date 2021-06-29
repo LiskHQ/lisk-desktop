@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
@@ -78,13 +78,16 @@ const AutoSignOutWrapper = () => {
   }
 
   return (
-    <>
+    <div className={styles.signOutContainer}>
       <AutoSignOut
         expireTime={expireTime}
         onCountdownComplete={() => dispatch(accountLoggedOut())}
       />
-      <WarningAutoSignOut warningTime={warningTime} />
-    </>
+      <WarningAutoSignOut
+        warningTime={warningTime}
+        expireTime={expireTime}
+      />
+    </div>
   );
 };
 
@@ -119,6 +122,7 @@ const SideBar = ({
 
   return (
     <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
+      <AutoSignOutWrapper />
       <div className={`${styles.container} menu-items`}>
         {
           items.map((group, i) => (
@@ -152,7 +156,6 @@ const SideBar = ({
           ))
         }
       </div>
-      <AutoSignOutWrapper />
     </nav>
   );
 };
