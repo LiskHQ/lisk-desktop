@@ -55,6 +55,39 @@ const MenuLink = ({
   );
 };
 
+const getWarningTime = (expireTime) => {
+  if (!expireTime) {
+    return null;
+  }
+
+  const diff = account.lockDuration - account.warnLockDuration;
+  const expireTimeInMilliseconds = new Date(expireTime).getTime();
+
+  return new Date(expireTimeInMilliseconds - diff);
+};
+
+const AutoSignOutWrapper = () => {
+  const dispatch = useDispatch();
+  const expireTime = useSelector(state => state.account.expireTime);
+  const warningTime = getWarningTime(expireTime);
+  const autoSignOut = useSelector(state => state.settings.autoLog);
+  const renderAutoSignOut = autoSignOut && expireTime;
+
+  if (!renderAutoSignOut) {
+    return null;
+  }
+
+  return (
+    <>
+      <AutoSignOut
+        expireTime={expireTime}
+        onCountdownComplete={() => dispatch(accountLoggedOut())}
+      />
+      <WarningAutoSignOut warningTime={warningTime} />
+    </>
+  );
+};
+
 const SingOut = ({ t, history }) => {
   const dispatch = useDispatch();
 
@@ -79,14 +112,10 @@ const SingOut = ({ t, history }) => {
 const SideBar = ({
   t, location, history,
 }) => {
-  const dispatch = useDispatch();
   const items = menuLinks(t);
   const token = useSelector(state => state.settings.token.active);
   const isLoggedOut = useSelector(state => !state.account.info || !state.account.info[token]);
-  const expireTime = useSelector(state => state.account.expireTime);
-  const autoSignOut = useSelector(state => state.settings.autoLog);
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
-  const renderAutoSignOut = autoSignOut && expireTime;
 
   return (
     <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
@@ -123,17 +152,7 @@ const SideBar = ({
           ))
         }
       </div>
-      {
-        renderAutoSignOut && (
-          <>
-            <AutoSignOut
-              expireTime={expireTime}
-              onCountdownComplete={() => dispatch(accountLoggedOut())}
-            />
-            <WarningAutoSignOut expireTime={expireTime} />
-          </>
-        )
-      }
+      <AutoSignOutWrapper />
     </nav>
   );
 };

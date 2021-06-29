@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Countdown from 'react-countdown';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
@@ -7,26 +7,14 @@ import { timerReset } from '@actions';
 import { account } from '@constants';
 import styles from './autoSignOut.css';
 
-const getWarningTime = (expireTime) => {
-  if (!expireTime) {
-    return null;
-  }
-
-  const diff = account.lockDuration - account.warnLockDuration;
-  const expireTimeInMilliseconds = new Date(expireTime).getTime();
-
-  return new Date(expireTimeInMilliseconds - diff);
-};
-
-const TimeOutToast = ({ t, expireTime, ...props }) => {
-  console.log(props.warningTime, props.expireTime);
+const TimeOutToast = ({
+  t, upDateCount, completed,
+}) => {
   const dispatch = useDispatch();
-  const renderToast = parseInt(props.minutes, 10) === 0 && parseInt(props.seconds, 10) === 1;
-  //const renderToast = true;
-  console.log(parseInt(props.minutes, 10), parseInt(props.seconds, 10));
 
   const onResetTime = () => {
-    dispatch(timerReset(new Date(expireTime)));
+    upDateCount();
+    dispatch(timerReset(new Date()));
   };
 
   const diff = (account.lockDuration - account.warnLockDuration) / 1000;
@@ -36,7 +24,7 @@ const TimeOutToast = ({ t, expireTime, ...props }) => {
 
   /* istanbul ignore next */
   return (
-    renderToast && toast(
+    completed && toast(
       <div className={styles.toastText}>
         <p className={styles.title}>{t('Warning session timeout')}</p>
         <p>{t('Your session will timed out in {{time}} if no network activity occur.', { time: `${minutes}${seconds}` })}</p>
@@ -60,22 +48,29 @@ const TimeOutToast = ({ t, expireTime, ...props }) => {
 
 const WarningAutoSignOut = ({
   t,
-  expireTime,
-}) => (
-  <Countdown
-    date={getWarningTime(expireTime)}
-    renderer={
-      ({ minutes, seconds }) => (
-        <TimeOutToast
-          t={t}
-          minutes={minutes}
-          seconds={seconds}
-          warningTime={getWarningTime(expireTime)}
-          expireTime={expireTime}
-        />
-      )
-    }
-  />
-);
+  warningTime,
+}) => {
+  const [count, setCount] = useState(1);
+
+  const upDateCount = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <Countdown
+      key={`timeout-warning-countdown-${count}`}
+      date={warningTime}
+      renderer={
+        ({ completed }) => (
+          <TimeOutToast
+            t={t}
+            completed={completed}
+            upDateCount={upDateCount}
+          />
+        )
+      }
+    />
+  );
+};
 
 export default withTranslation()(WarningAutoSignOut);
