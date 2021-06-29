@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React, { useState } from 'react';
 import Countdown from 'react-countdown';
 import { toast } from 'react-toastify';
@@ -24,7 +25,6 @@ const TimeOutToast = ({
   const minutes = absTime / 60 >= 1 ? `${Math.floor(absTime / 60)}m ` : '';
   const seconds = absTime % 60 >= 1 ? `${absTime % 60}s` : '';
 
-  /* istanbul ignore next */
   return (
     completed && toast(
       <div className={styles.toastText}>
