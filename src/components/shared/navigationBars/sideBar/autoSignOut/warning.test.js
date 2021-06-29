@@ -1,7 +1,16 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { timerReset } from '@actions';
 import { account } from '@constants';
 import Warning from './warning';
+
+jest.mock('react-toastify', () => ({
+  toast: (component) => (component),
+}));
+
+jest.mock('@actions', () => ({
+  timerReset: jest.fn(),
+}));
 
 describe('Warning', () => {
   const date = Date.now();
@@ -19,7 +28,7 @@ describe('Warning', () => {
     wrapper = mount(<Warning {...props} />);
   });
 
-  it('Should render empty component', () => {
+  it('Should render empty component and call  timeReset', () => {
     expect(wrapper).toBeEmptyRender();
 
     wrapper.setProps({
@@ -27,5 +36,7 @@ describe('Warning', () => {
     });
     wrapper.update();
     expect(wrapper).not.toBeEmptyRender();
+    wrapper.find('.reset-time-button').simulate('click');
+    expect(timerReset).toHaveBeenCalled();
   });
 });

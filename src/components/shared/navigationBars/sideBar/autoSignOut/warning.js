@@ -31,7 +31,7 @@ const TimeOutToast = ({
         <p className={styles.title}>{t('Warning session timeout')}</p>
         <p>{t('Your session will timed out in {{time}} if no network activity occur.', { time: `${minutes}${seconds}` })}</p>
         <button
-          className={styles.button}
+          className={`${styles.button} reset-time-button`}
           onClick={onResetTime}
         >
           {t('Reset time')}
