@@ -31,6 +31,8 @@ const illustrations = {
   },
 };
 
+const errorTypes = ['SIGN_FAILED', 'BROADCAST_FAILED', 'error'];
+
 /**
  * Defines the status of the broadcasted tx.
  *
@@ -53,32 +55,32 @@ export const TransactionResult = ({
 }) => (
   <div className={`${styles.wrapper} ${className}`}>
     {
-    typeof illustration === 'string'
-      ? <Illustration name={illustrations[illustration][status.code]} />
-      : React.cloneElement(illustration)
-  }
+      typeof illustration === 'string'
+        ? <Illustration name={illustrations[illustration][status.code]} />
+        : React.cloneElement(illustration)
+    }
     <h1 className="result-box-header">{title}</h1>
     <p className="transaction-status body-message">{message}</p>
     {children}
     {
-    status.code === 'error'
-      ? (
-        <>
-          <p>{t('Does the problem still persist?')}</p>
-          <a
-            className="report-error-link"
-            href={getErrorReportMailto(status.message)}
-            target="_top"
-            rel="noopener noreferrer"
-          >
-            <TertiaryButton>
-              {t('Report the error via email')}
-            </TertiaryButton>
-          </a>
-        </>
-      )
-      : null
-  }
+      errorTypes.includes(status.code)
+        ? (
+          <>
+            <p>{t('Does the problem still persist?')}</p>
+            <a
+              className="report-error-link"
+              href={getErrorReportMailto(status.message)}
+              target="_top"
+              rel="noopener noreferrer"
+            >
+              <TertiaryButton>
+                {t('Report the error via email')}
+              </TertiaryButton>
+            </a>
+          </>
+        )
+        : null
+    }
   </div>
 );
 
