@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { getIndexOfBookmark } from '@utils/bookmarks';
 import { isEmpty } from '@utils/helpers';
 import { SecondaryButton, PrimaryButton } from '@toolbox/buttons';
-import TransactionResult from '@shared/transactionResult';
+import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
 import DialogLink from '@toolbox/dialog/link';
-import statusMessage from './statusMessages';
+import statusMessages from './statusMessages';
 import styles from './transactionStatus.css';
 
 const bookmarkInformation = (bookmarks, fields) => {
@@ -18,27 +18,21 @@ const bookmarkInformation = (bookmarks, fields) => {
   };
 };
 
-const getMessagesDetails = (transactions, fields, t, isHardwareWalletConnected) => {
-  const isHardwareWalletError = isHardwareWalletConnected && fields.hwTransactionStatus === 'error';
-  const messages = statusMessage(t);
-  let messageDetails = !transactions.txBroadcastError
-    ? messages.success
-    : messages.error;
+const getHwError = (isHardwareWalletConnected, fields) => (
+  isHardwareWalletConnected && fields.hwTransactionStatus === 'error'
+);
 
-  if (transactions.txBroadcastError
-      && transactions.txBroadcastError.error
-      && transactions.txBroadcastError.error.message) {
-    messageDetails.paragraph = transactions.txBroadcastError.error.message;
+const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
+  const messages = statusMessages(t);
+  const code = isHardwareWalletError ? 'hw' : status.code;
+  const messageDetails = messages[code];
+
+  if (status.code === 'error'
+      && transactions.txBroadcastError?.error?.message) {
+    messageDetails.message = transactions.txBroadcastError.error.message;
   }
 
-  if (isHardwareWalletConnected) {
-    messageDetails = isHardwareWalletError ? messages.hw : messages.success;
-  }
-
-  return {
-    isHardwareWalletError,
-    messageDetails,
-  };
+  return messageDetails;
 };
 
 // eslint-disable-next-line complexity
@@ -53,18 +47,12 @@ const TransactionStatus = ({
   fields,
   t,
 }) => {
-  const isHardwareWalletConnected = !!(account.hwInfo && account.hwInfo.deviceId);
+  const isHardwareWalletConnected = !account.hwInfo?.deviceId;
 
   const broadcast = () => {
-    const { signedTransaction, txSignatureError } = transactions;
-
-    if (!isEmpty(signedTransaction)) {
-      transactionBroadcasted(signedTransaction);
+    if (!isEmpty(transactions.signedTransaction)) {
+      transactionBroadcasted(transactions.signedTransaction);
     }
-    // @todo Why did we do this?
-    // if (txSignatureError) {
-    //   txSignatureError.forEach(tx => transactionBroadcasted(tx));
-    // }
   };
 
   const onRetry = () => {
@@ -74,8 +62,7 @@ const TransactionStatus = ({
       resetTransactionResult();
       prevStep({ ...fields, hwTransactionStatus: false });
     } else {
-      // @todo Why do we do this?
-      // transactionBroadcasted(txBroadcastError);
+      transactionBroadcasted(txBroadcastError.transaction);
     }
   };
 
@@ -87,23 +74,21 @@ const TransactionStatus = ({
   }, []);
 
   const { isBookmarked } = bookmarkInformation(bookmarks, fields);
-  const { isHardwareWalletError, messageDetails } = getMessagesDetails(
-    transactions, fields, t,
-    isHardwareWalletConnected,
+  const isHardwareWalletError = getHwError(isHardwareWalletConnected, fields);
+  const status = getBroadcastStatus(transactions, isHardwareWalletError);
+  const template = getMessagesDetails(
+    transactions, status, t,
+    isHardwareWalletError,
   );
-  const success = !transactions.txBroadcastError && !isHardwareWalletError;
-  const error = transactions.txBroadcastError
-    && JSON.stringify(transactions.txBroadcastError);
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
       <TransactionResult
         t={t}
-        title={messageDetails.title}
-        illustration={success ? 'transactionSuccess' : 'transactionError'}
-        message={messageDetails.paragraph}
-        success={success}
-        error={error}
+        title={template.title}
+        illustration="default"
+        message={template.message}
+        status={status}
       >
         {
           isHardwareWalletError || transactions.txBroadcastError
