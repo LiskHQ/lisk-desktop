@@ -6,7 +6,7 @@ import {
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { transformTransaction } from '@utils/transaction';
 import { signSendTransaction } from '@utils/hwManager';
-import { passphraseUsed } from './account';
+import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
 /**
@@ -171,6 +171,6 @@ export const transactionBroadcasted = transaction =>
         }
       }
 
-      dispatch(passphraseUsed(new Date()));
+      dispatch(timerReset());
     }
   };

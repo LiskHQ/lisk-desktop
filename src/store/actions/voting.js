@@ -6,7 +6,7 @@ import { create } from '@api/transaction';
 import { getAccount } from '@api/account';
 import { signVoteTransaction } from '@utils/hwManager';
 import { getVotes } from '@api/delegate';
-import { passphraseUsed } from './account';
+import { timerReset } from './account';
 
 export const votesReset = () => ({
   type: actionTypes.votesReset,
@@ -101,7 +101,7 @@ export const votesSubmitted = ({ fee, votes }) =>
     }
 
     dispatch({ type: actionTypes.votesSubmitted });
-    dispatch(passphraseUsed(new Date()));
+    dispatch(timerReset());
     return dispatch({
       type: actionTypes.transactionCreatedSuccess,
       data: tx,

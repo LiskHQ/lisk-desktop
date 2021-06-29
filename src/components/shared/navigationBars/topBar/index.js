@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { containsTransactionType } from '@utils/transaction';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { accountLoggedOut, passphraseUsed } from '@actions';
+import { accountLoggedOut, timerReset } from '@actions';
 import TopBar from './topBar';
 
 const mapStateToProps = state => ({
@@ -23,7 +23,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   logOut: accountLoggedOut,
-  resetTimer: () => passphraseUsed(new Date()),
+  resetTimer: () => timerReset(),
 };
 
 export default withRouter(

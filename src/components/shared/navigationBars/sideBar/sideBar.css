@@ -11,6 +11,7 @@
   background-color: var(--color-side-bar);
   z-index: var(--normal-index);
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .container {
@@ -119,4 +120,9 @@
   & .label {
     color: var(--color-white);
   }
+}
+
+.signOutContainer {
+  width: 0;
+  height: 0;
 }

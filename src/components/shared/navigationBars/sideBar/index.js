@@ -2,13 +2,14 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { routes, modals } from '@constants';
+import { routes, modals, account } from '@constants';
 import Piwik from '@utils/piwik';
 import { accountLoggedOut } from '@actions';
 import Icon from '@toolbox/icon';
 import DialogLink from '@toolbox/dialog/link';
 import styles from './sideBar.css';
 import AutoSignOut from './autoSignOut';
+import WarningAutoSignOut from './autoSignOut/warning';
 import menuLinks from './menuLinks';
 
 const Inner = ({
@@ -54,6 +55,42 @@ const MenuLink = ({
   );
 };
 
+const getWarningTime = (expireTime) => {
+  if (!expireTime) {
+    return null;
+  }
+
+  const diff = account.lockDuration - account.warnLockDuration;
+  const expireTimeInMilliseconds = new Date(expireTime).getTime();
+
+  return new Date(expireTimeInMilliseconds - diff);
+};
+
+const AutoSignOutWrapper = () => {
+  const dispatch = useDispatch();
+  const expireTime = useSelector(state => state.account.expireTime);
+  const warningTime = getWarningTime(expireTime);
+  const autoSignOut = useSelector(state => state.settings.autoLog);
+  const renderAutoSignOut = autoSignOut && expireTime;
+
+  if (!renderAutoSignOut) {
+    return null;
+  }
+
+  return (
+    <div className={styles.signOutContainer}>
+      <AutoSignOut
+        expireTime={expireTime}
+        onCountdownComplete={() => dispatch(accountLoggedOut())}
+      />
+      <WarningAutoSignOut
+        warningTime={warningTime}
+        expireTime={expireTime}
+      />
+    </div>
+  );
+};
+
 const SingOut = ({ t, history }) => {
   const dispatch = useDispatch();
 
@@ -78,17 +115,14 @@ const SingOut = ({ t, history }) => {
 const SideBar = ({
   t, location, history,
 }) => {
-  const dispatch = useDispatch();
   const items = menuLinks(t);
   const token = useSelector(state => state.settings.token.active);
   const isLoggedOut = useSelector(state => !state.account.info || !state.account.info[token]);
-  const expireTime = useSelector(state => state.account.expireTime);
-  const autoSignOut = useSelector(state => state.settings.autoLog);
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
-  const renderAutoSignOut = autoSignOut && expireTime;
 
   return (
     <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
+      <AutoSignOutWrapper />
       <div className={`${styles.container} menu-items`}>
         {
           items.map((group, i) => (
@@ -122,14 +156,6 @@ const SideBar = ({
           ))
         }
       </div>
-      {
-        renderAutoSignOut && (
-          <AutoSignOut
-            expireTime={expireTime}
-            onCountdownComplete={() => dispatch(accountLoggedOut())}
-          />
-        )
-      }
     </nav>
   );
 };
