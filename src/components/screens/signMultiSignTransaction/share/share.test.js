@@ -22,6 +22,7 @@ describe('Sign Multisignature Tx Share component', () => {
 
   const props = {
     t: (str, dict) => (dict ? str.replace('{{errorMessage}}', dict.errorMessage) : str),
+    history: jest.fn(),
     networkIdentifier: '',
     senderAccount: {
       keys: {
@@ -32,6 +33,7 @@ describe('Sign Multisignature Tx Share component', () => {
     },
     txBroadcastError: null,
     transaction,
+    transactionBroadcasted: jest.fn(),
   };
 
   it('Should render properly on success', () => {
@@ -52,6 +54,7 @@ describe('Sign Multisignature Tx Share component', () => {
     const wrapper = mount(
       <Share
         {...props}
+        txBroadcastError={{ error: { message: 'testerror' } }}
         error="testerror"
       />,
     );
