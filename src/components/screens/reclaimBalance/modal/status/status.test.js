@@ -50,22 +50,4 @@ describe('Status', () => {
     wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
     expect(wrapper).toContainMatchingElement('.report-error-link');
   });
-
-  it('should call broadcast function again in retry', () => {
-    const newProps = { ...props };
-    newProps.transactions = {
-      confirmed: [],
-      txBroadcastError: {
-        error: { message: 'errorMessage' },
-        transaction: { amount: 1 },
-      },
-      signedTransaction: { id: 1 },
-      txSignatureError: { id: 2 },
-    };
-
-    wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
-    expect(wrapper).toContainMatchingElement('.report-error-link');
-    wrapper.find('.on-retry').at(0).simulate('click');
-    expect(props.transactionBroadcasted).toBeCalled();
-  });
 });
