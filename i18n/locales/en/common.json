@@ -1,4 +1,5 @@
 {
+  "\n                      You can choose a high, medium, or low transaction priority, each requiring a\n                      corresponding transaction fee. Or you can pay any desired fee of no less than\n                      {{minFee}} {{token}}. If you don't know what fee to pay, choose\n                      one of the provided transaction priorities.\n                    ": "\n                      You can choose a high, medium, or low transaction priority, each requiring a\n                      corresponding transaction fee. Or you can pay any desired fee of no less than\n                      {{minFee}} {{token}}. If you don't know what fee to pay, choose\n                      one of the provided transaction priorities.\n                    ",
   " - Confirm transaction on your {{deviceModel}}": " - Confirm transaction on your {{deviceModel}}",
   " is out. ": " is out. ",
   " to deposit LSK.": " to deposit LSK.",
