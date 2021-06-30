@@ -15,7 +15,7 @@ const SuccessAction = ({
       <li>
         <span>
           <LiskAmount
-            val={parseInt(balance, 10)}
+            val={Number(balance)}
             token={tokenMap.LSK.key}
           />
           {' '}
