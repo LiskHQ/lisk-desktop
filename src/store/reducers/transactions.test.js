@@ -169,14 +169,14 @@ describe('Reducer: transactions', () => {
     });
   });
 
-  describe('transactionCreatedError', () => {
+  describe('transactionSignError', () => {
     it('should store the signed creation/signature error', () => {
       const state = {
         ...defaultState,
         txSignatureError: null,
       };
       const action = {
-        type: actionTypes.transactionCreatedError,
+        type: actionTypes.transactionSignError,
         data: { error: 'someError' },
       };
       const changedState = transactions(state, action);

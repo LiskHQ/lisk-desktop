@@ -19,9 +19,9 @@ const mapDispatchToProps = dispatch => ({
       data,
     });
   },
-  transactionCreatedError: (error) => {
+  transactionSignError: (error) => {
     dispatch({
-      type: actionTypes.transactionCreatedError,
+      type: actionTypes.transactionSignError,
       error,
     });
   },

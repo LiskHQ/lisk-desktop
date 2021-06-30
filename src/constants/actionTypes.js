@@ -61,7 +61,7 @@ const actionTypes = {
   voteEdited: 'VOTE_EDITED',
   deviceListUpdated: 'DEVICE_LIST_UPDATED',
   transactionCreatedSuccess: 'TRANSACTION_CREATED_SUCCESS',
-  transactionCreatedError: 'TRANSACTION_CREATED_ERROR',
+  transactionSignError: 'TRANSACTION_SIGN_ERROR',
   resetTransactionResult: 'RESET_TRANSACTION_RESULTS',
   broadcastedTransactionSuccess: 'BROADCAST_TRANSACTION_SUCCESS',
   broadcastedTransactionError: 'BROADCASTED_TRANSACTION_ERROR',

@@ -118,7 +118,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
 
   if (error || (account.loginType !== loginTypes.passphrase.code && !tx.signatures)) {
     dispatch({
-      type: actionTypes.transactionCreatedError,
+      type: actionTypes.transactionSignError,
       data: error,
     });
   }

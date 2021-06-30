@@ -95,7 +95,7 @@ export const votesSubmitted = ({ fee, votes }) =>
 
     if (error) {
       return dispatch({
-        type: actionTypes.transactionCreatedError,
+        type: actionTypes.transactionSignError,
         data: error,
       });
     }

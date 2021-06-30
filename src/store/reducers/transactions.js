@@ -67,7 +67,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
 
     // Stores the transaction signature error. This error is thrown at the time of
     // creating the raw transaction object or signing it using Lisk Element / Bitcoin lib.
-    case actionTypes.transactionCreatedError:
+    case actionTypes.transactionSignError:
       return {
         ...state,
         txSignatureError: {
