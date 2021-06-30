@@ -23,6 +23,11 @@ const ImportData = ({ t, nextStep }) => {
     }
   };
 
+  const resetState = () => {
+    setTransaction(undefined);
+    setError(undefined);
+  };
+
   const validateAndSetTransaction = (input) => {
     try {
       const parsedInput = JSON.parse(input);
@@ -34,12 +39,14 @@ const ImportData = ({ t, nextStep }) => {
 
   const onFileInputChange = ({ target }) => reader.readAsText(target.files[0]);
   const onPaste = (evt) => {
+    resetState();
     const paste = evt.clipboardData.getData('text');
     validateAndSetTransaction(paste);
   };
 
   useEffect(() => {
     reader.onload = ({ target }) => {
+      resetState();
       validateAndSetTransaction(target.result);
     };
   }, []);
