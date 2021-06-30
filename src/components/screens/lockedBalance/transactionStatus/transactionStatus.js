@@ -9,7 +9,7 @@ const TransactionStatus = (props) => {
   const {
     t, history, transactionInfo, transactions, transactionBroadcasted,
   } = props;
-  const status = getBroadcastStatus(transactions, false); // handle HW error
+  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
   const onSuccess = () => history.push(routes.wallet.path);
   const template = statusMessages(t, onSuccess)[status.code];
 

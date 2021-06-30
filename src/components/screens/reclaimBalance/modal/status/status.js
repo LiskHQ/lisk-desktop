@@ -72,7 +72,7 @@ const Status = ({
     if (transactionInfo) broadcastTransaction();
   }, []);
 
-  const status = getBroadcastStatus(transactions, false); // fix the second parameter
+  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
   const template = statusMessages(t, history, onRetry)[status.code];
 
   return (

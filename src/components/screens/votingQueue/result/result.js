@@ -23,7 +23,7 @@ const Result = ({
     }
   }, []);
 
-  const status = getBroadcastStatus(transactions, false);
+  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
   const template = statusMessages(t, locked, unlockable)[status.code];
 
   return (

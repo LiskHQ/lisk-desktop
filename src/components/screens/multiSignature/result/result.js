@@ -22,7 +22,7 @@ const Result = ({
     setCopied(true);
   };
 
-  const status = getBroadcastStatus(transactions, false); // fix the second param
+  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
   const template = statusMessages(t)[status.code];
 
   return (
