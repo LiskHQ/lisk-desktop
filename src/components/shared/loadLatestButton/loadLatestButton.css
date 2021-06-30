@@ -19,6 +19,7 @@
   color: var(--color-ultramarine-blue);
   border-radius: 30px;
   box-shadow: var(--box-shadow-standard), 0 0 0 10px var(--color-body-bg);
+  width: auto;
 
   & .icon {
     vertical-align: bottom;
