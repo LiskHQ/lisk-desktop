@@ -22,6 +22,7 @@ describe('Sign Multisignature Tx Share component', () => {
 
   const props = {
     t: (str, dict) => (dict ? str.replace('{{errorMessage}}', dict.errorMessage) : str),
+    history: jest.fn(),
     networkIdentifier: '',
     senderAccount: {
       keys: {
@@ -30,8 +31,9 @@ describe('Sign Multisignature Tx Share component', () => {
         optionalKeys: [],
       },
     },
-    broadcastedTransactionsError: [],
+    txBroadcastError: null,
     transaction,
+    transactionBroadcasted: jest.fn(),
   };
 
   it('Should render properly on success', () => {
@@ -52,6 +54,7 @@ describe('Sign Multisignature Tx Share component', () => {
     const wrapper = mount(
       <Share
         {...props}
+        txBroadcastError={{ error: { message: 'testerror' } }}
         error="testerror"
       />,
     );
@@ -76,7 +79,7 @@ describe('Sign Multisignature Tx Share component', () => {
     sendButton.simulate('click');
     await flushPromises();
     act(() => { wrapper.update(); });
-    wrapper.setProps({ broadcastedTransactionsError: [{ error: { message: 'Bad request.' } }] });
+    wrapper.setProps({ txBroadcastError: { error: { message: 'Bad request.' } } });
     act(() => { wrapper.update(); });
     expect(wrapper.html()).toContain('Error broadcasting the transaction: Bad request.');
   });

@@ -1,53 +1,13 @@
 import React, { useEffect } from 'react';
 
 import { routes } from '@constants';
-import LiskAmount from '@shared/liskAmount';
 import Box from '@toolbox/box';
 import BoxFooter from '@toolbox/box/footer';
 import { PrimaryButton } from '@toolbox/buttons';
-import TransactionResult from '@shared/transactionResult';
+import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
 import ToggleIcon from '../toggleIcon';
-
+import statusMessages from './statusMessages';
 import styles from './styles.css';
-
-const unlockTime = 5;
-
-const LiskAmountFormatted = ({ val }) => (
-  <span className={styles.subHeadingBold}>
-    <LiskAmount val={val} token="LSK" />
-  </span>
-);
-
-const getMessage = ({ t, locked, unlockable }) => {
-  if (!locked && unlockable) {
-    return (
-      <>
-        <LiskAmountFormatted val={unlockable} />
-        {' '}
-        <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
-      </>
-    );
-  } if (locked && !unlockable) {
-    return (
-      <>
-        <LiskAmountFormatted val={locked} />
-        {' '}
-        <span>{t('will be locked for voting.')}</span>
-      </>
-    );
-  } if (locked && unlockable) {
-    return (
-      <>
-        <span>{t('You have now locked')}</span>
-        <LiskAmountFormatted val={locked} />
-        <span>{t('for voting and may unlock')}</span>
-        <LiskAmountFormatted val={unlockable} />
-        <span>{t('in {{unlockTime}} hours.', { unlockTime })}</span>
-      </>
-    );
-  }
-  return '';
-};
 
 const Result = ({
   t, history, locked, unlockable, error, transactionBroadcasted, transactions,
@@ -58,12 +18,13 @@ const Result = ({
 
   useEffect(() => {
     if (!error) {
-      const tx = transactions.transactionsCreated[0];
+      const tx = transactions.signedTransaction;
       transactionBroadcasted(tx);
     }
   }, []);
 
-  const message = getMessage({ t, unlockable, locked });
+  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
+  const template = statusMessages(t, locked, unlockable)[status.code];
 
   return (
     <section>
@@ -74,10 +35,10 @@ const Result = ({
         </header>
         <TransactionResult
           t={t}
-          title={t('Votes have been submitted')}
-          illustration={error ? 'transactionError' : 'votingSuccess'}
-          message={message}
-          success={!error}
+          title={template.title}
+          illustration="vote"
+          status={status}
+          message={template.message}
         />
         <BoxFooter direction="horizontal" className={styles.footer}>
           <PrimaryButton className="dialog-close-button" size="l" onClick={closeModal}>

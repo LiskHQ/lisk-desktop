@@ -19,9 +19,9 @@ describe('Status', () => {
     transactionBroadcasted: jest.fn(),
     transactions: {
       confirmed: [],
-      transactionsCreated: [],
-      transactionsCreatedFailed: [],
-      broadcastedTransactionsError: [],
+      signedTransaction: {},
+      txSignatureError: null,
+      txBroadcastError: null,
     },
     transactionInfo: {},
     history: { push: jest.fn() },
@@ -46,26 +46,8 @@ describe('Status', () => {
   it('should render error message in case of transaction failed', () => {
     const newProps = { ...props };
     newProps.transactions.confirmed = [];
-    newProps.transactions.broadcastedTransactionsError = [{ amount: 1 }];
+    newProps.transactions.txBroadcastError = { amount: 1 };
     wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
     expect(wrapper).toContainMatchingElement('.report-error-link');
-  });
-
-  it('should call broadcast function again in retry', () => {
-    const newProps = { ...props };
-    newProps.transactions = {
-      confirmed: [],
-      broadcastedTransactionsError: [{
-        error: { message: 'errorMessage' },
-        transaction: { amount: 1 },
-      }],
-      transactionsCreated: [{ id: 1 }],
-      transactionsCreatedFailed: [{ id: 2 }],
-    };
-
-    wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
-    expect(wrapper).toContainMatchingElement('.report-error-link');
-    wrapper.find('.on-retry').at(0).simulate('click');
-    expect(props.transactionBroadcasted).toBeCalled();
   });
 });

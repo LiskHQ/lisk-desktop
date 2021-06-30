@@ -210,7 +210,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
         <TransactionPriority
           token={token}
           fee={fee}
-          minFee={minFee.value}
+          minFee={Number(minFee.value)}
           customFee={state.customFee ? state.customFee.value : undefined}
           moduleAssetId={moduleAssetId}
           setCustomFee={changeCustomFee}

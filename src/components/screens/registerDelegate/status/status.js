@@ -1,8 +1,8 @@
 import React from 'react';
-import TransactionResult from '@shared/transactionResult';
-import DialogHolder from '@toolbox/dialog/holder';
+import { TransactionResult } from '@shared/transactionResult';
 import { transactionToJSON } from '@utils/transaction';
 import DelegateAnimation from '../animations/delegateAnimation';
+import statusMessages from './statusMessages';
 import styles from './status.css';
 
 class Status extends React.Component {
@@ -13,7 +13,6 @@ class Status extends React.Component {
       status: 'pending',
     };
 
-    this.onRetry = this.onRetry.bind(this);
     this.checkTransactionStatus = this.checkTransactionStatus.bind(this);
   }
 
@@ -36,47 +35,15 @@ class Status extends React.Component {
 
     const success = transactions.confirmed
       .filter(tx => tx.id === transaction.id);
-    const error = transactions.broadcastedTransactionsError
-      .filter(tx => tx.transaction.id === transaction.id);
 
-    if (success.length) this.setState({ status: 'ok' });
-    if (error.length) this.setState({ status: 'fail' });
-  }
-
-  // TODO update test coverage in PR #2199
-  // istanbul ignore next
-  onRetry() {
-    this.setState({ status: 'pending' });
-    this.broadcastTransaction();
+    if (success.length) this.setState({ status: 'success' });
+    if (transactions.txBroadcastError) this.setState({ status: 'error' });
   }
 
   render() {
     const { t } = this.props;
     const { status } = this.state;
-
-    const isTransactionSuccess = status !== 'fail';
-
-    // TODO update test coverage in PR #2199
-    // istanbul ignore next
-    const displayTemplate = isTransactionSuccess
-      ? {
-        title: t('Delegate registration submitted'),
-        message: t('You will be notified when your transaction is confirmed.'),
-        button: {
-          onClick: DialogHolder.hideDialog,
-          title: t('Close'),
-          className: 'close-modal',
-        },
-      }
-      : {
-        title: t('Delegate registration failed'),
-        message: t('Something went wrong with the registration. Please try again below!'),
-        button: {
-          onClick: this.onRetry,
-          title: t('Try again'),
-          className: 'on-retry',
-        },
-      };
+    const template = statusMessages(t)[status];
 
     return (
       <div className={`${styles.wrapper} status-container`}>
@@ -88,10 +55,9 @@ class Status extends React.Component {
               onLoopComplete={this.checkTransactionStatus}
             />
           )}
-          success={isTransactionSuccess}
-          title={displayTemplate.title}
-          message={displayTemplate.message}
-          primaryButton={displayTemplate.button}
+          status={{ code: status }}
+          title={template.title}
+          message={template.message}
           className={styles.content}
           t={t}
         />

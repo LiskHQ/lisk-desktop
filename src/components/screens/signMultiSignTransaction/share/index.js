@@ -1,25 +1,22 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import ShareComp from './share';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withTranslation } from 'react-i18next';
+import { withRouter } from 'react-router';
+import { transactionBroadcasted } from '@actions';
+import Share from './share';
 
-const Share = (props) => {
-  const { t } = useTranslation();
-  const account = useSelector(state => state.account);
-  const { broadcastedTransactionsError } = useSelector(state => state.transactions);
-  const networkIdentifier = useSelector(state => state.network.networks.LSK.networkIdentifier);
-  const dispatch = useDispatch();
+const mapStateToProps = state => ({
+  state: state.account,
+  txBroadcastError: state.transactions.txBroadcastError,
+  networkIdentifier: state.network.networks.LSK.networkIdentifier,
+});
 
-  return (
-    <ShareComp
-      t={t}
-      account={account}
-      broadcastedTransactionsError={broadcastedTransactionsError}
-      networkIdentifier={networkIdentifier}
-      dispatch={dispatch}
-      {...props}
-    />
-  );
+const mapDispatchToProps = {
+  transactionBroadcasted,
 };
 
-export default Share;
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
+  withTranslation(),
+)(Share);

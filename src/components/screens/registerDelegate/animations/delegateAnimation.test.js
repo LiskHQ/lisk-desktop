@@ -38,8 +38,8 @@ describe('Delegate animation component', () => {
   it('Should pass correct animation name to Animation component', () => {
     const animations = {
       pending: 'delegateCreated',
-      ok: 'delegateConfirmed',
-      fail: 'delegateDeclined',
+      success: 'delegateConfirmed',
+      error: 'delegateDeclined',
     };
 
     Object.keys(animations).forEach((status) => {
@@ -60,7 +60,7 @@ describe('Delegate animation component', () => {
     expect(wrapper.find('Animation')).toHaveProp('name', animations.pending);
     eventsMap.loopComplete();
     expect(props.onLoopComplete).toBeCalled();
-    wrapper.setProps({ status: 'ok' });
+    wrapper.setProps({ status: 'success' });
     wrapper.unmount();
   });
 });

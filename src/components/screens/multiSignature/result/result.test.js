@@ -10,8 +10,9 @@ describe('Multisignature result component', () => {
     transactionBroadcasted: jest.fn(),
     transactions: {
       confirmed: [],
-      broadcastedTransactionsError: [],
-      transactionsCreated: [],
+      txBroadcastError: null,
+      txSignatureError: null,
+      signedTransaction: {},
     },
   };
 
@@ -37,6 +38,7 @@ describe('Multisignature result component', () => {
     wrapper = mount(
       <Result
         {...props}
+        transactions={{ ...props.transactions, txBroadcastError: { message: 'error:test' } }}
         error={{ message: 'error:test' }}
       />,
     );

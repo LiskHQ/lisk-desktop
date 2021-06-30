@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
+import { isEmpty } from '@utils/helpers';
 import TransactionInfo from '@shared/transactionInfo';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
@@ -38,7 +39,6 @@ const Summary = ({
   t, removed = {}, edited = {}, added = {},
   fee, account, prevStep, nextStep, transactions, ...props
 }) => {
-  const transaction = transactions.transactionsCreated[transactions.transactionsCreated.length - 1];
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
@@ -55,12 +55,12 @@ const Summary = ({
   const submitTransaction = () => {
     if (!account.summary.isMultisignature) {
       Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
-      if (!transactions.transactionsCreatedFailed.length
-        && transactions.transactionsCreated.length) {
+      if (!transactions.txSignatureError
+        && !isEmpty(transactions.signedTransaction)) {
         nextStep({
           locked, unlockable, error: false,
         });
-      } else if (transactions.transactionsCreatedFailed.length) {
+      } else if (transactions.txSignatureError) {
         nextStep({
           error: true,
         });
@@ -86,7 +86,7 @@ const Summary = ({
       classNames={styles.container}
       fee={!account.summary.isMultisignature && fromRawLsk(fee)}
       createTransaction={(callback) => {
-        callback(transaction);
+        callback(transactions.signedTransaction);
       }}
     >
       <ToggleIcon isNotHeader />
@@ -108,7 +108,7 @@ const Summary = ({
         removed={removed}
         fee={fee}
         moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.voteDelegate}
-        transaction={transaction || {}}
+        transaction={transactions.signedTransaction}
         account={account}
         isMultisignature={account.summary.isMultisignature}
       />

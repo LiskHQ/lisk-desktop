@@ -1,37 +1,75 @@
 /* eslint-disable complexity */
 import React from 'react';
-import { getErrorReportMailto } from '@utils/helpers';
+import { getErrorReportMailto, isEmpty } from '@utils/helpers';
+import { transactionToJSON } from '@utils/transaction';
 import { TertiaryButton } from '@toolbox/buttons';
 import Illustration from '@toolbox/illustration';
 import styles from './transactionResult.css';
 
-const TransactionResult = ({
-  success, title, message, t, error, children, illustration, className, sharedData,
-}) => {
-  if (sharedData) {
-    illustration = sharedData.illustration;
-    title = sharedData.title;
-    message = sharedData.message;
-    success = sharedData.success;
+const illustrations = {
+  default: {
+    pending: 'transactionPending',
+    success: 'transactionSuccess',
+    error: 'transactionError',
+  },
+  vote: {
+    pending: 'votingSuccess',
+    success: 'votingSuccess',
+    error: 'transactionError',
+  },
+  registerMultisignature: {
+    pending: 'registerMultisignatureSuccess',
+    success: 'registerMultisignatureSuccess',
+    error: 'registerMultisignatureError',
+  },
+  signMultisignature: {
+    SIGN_SUCCEEDED: 'registerMultisignatureSuccess',
+    SIGN_FAILED: 'registerMultisignatureError',
+    BROADCASTED: 'transactionSuccess',
+    BROADCAST_FAILED: 'transactionError',
+    PENDING: 'registerMultisignatureSuccess',
+  },
+};
+
+const errorTypes = ['SIGN_FAILED', 'BROADCAST_FAILED', 'error'];
+
+/**
+ * Defines the status of the broadcasted tx.
+ *
+ * @param {Object} transactions - Transactions status from the redux store
+ * @param {*} isHardwareWalletError ??
+ * @returns {Object} The status code and message
+ */
+export const getBroadcastStatus = (transactions, isHardwareWalletError) => {
+  if (!isEmpty(transactions.signedTransaction)) {
+    return { code: 'pending' };
   }
-  return (
-    <div className={`${styles.wrapper} ${className}`}>
-      {
+  if (!transactions.txBroadcastError && !isHardwareWalletError) {
+    return { code: 'success' };
+  }
+  return { code: 'error', message: transactionToJSON(transactions.txBroadcastError) };
+};
+
+export const TransactionResult = ({
+  title, message, t, status, children, illustration, className,
+}) => (
+  <div className={`${styles.wrapper} ${className}`}>
+    {
       typeof illustration === 'string'
-        ? <Illustration name={illustration} />
+        ? <Illustration name={illustrations[illustration][status.code]} />
         : React.cloneElement(illustration)
     }
-      <h1 className="result-box-header">{title}</h1>
-      <p className="transaction-status body-message">{message}</p>
-      {children}
-      {
-      !success
+    <h1 className="result-box-header">{title}</h1>
+    <p className="transaction-status body-message">{message}</p>
+    {children}
+    {
+      errorTypes.includes(status.code)
         ? (
           <>
             <p>{t('Does the problem still persist?')}</p>
             <a
               className="report-error-link"
-              href={getErrorReportMailto(error)}
+              href={getErrorReportMailto(status.message)}
               target="_top"
               rel="noopener noreferrer"
             >
@@ -43,8 +81,7 @@ const TransactionResult = ({
         )
         : null
     }
-    </div>
-  );
-};
+  </div>
+);
 
 export default TransactionResult;
