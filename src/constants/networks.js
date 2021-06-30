@@ -10,7 +10,7 @@ export const initialSupply = 10000000000000000;
 const networks = {
   [networkKeys.mainNet]: {
     label: 'Mainnet',
-    serviceUrl: 'https://mainnet-service.lisk.io',
+    serviceUrl: 'https://service.lisk.io',
   },
   [networkKeys.testNet]: {
     label: 'Testnet',
