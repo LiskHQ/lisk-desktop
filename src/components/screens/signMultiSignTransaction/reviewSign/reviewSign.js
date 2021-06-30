@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { transactions } from '@liskhq/lisk-client';
 import { moduleAssetSchemas, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { createTransactionObject } from '@utils/transaction';
+import { createTransactionObject, flattenTransaction } from '@utils/transaction';
 import { isEmpty } from '@utils/helpers';
 import BoxContent from '@toolbox/box/content';
 import Box from '@toolbox/box';
@@ -13,50 +13,6 @@ import {
 } from '../helpers';
 import { ActionBar, Feedback } from './footer';
 import styles from '../styles.css';
-
-// eslint-disable-next-line max-statements
-const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
-  const transaction = {
-    moduleAssetId,
-    fee: rest.fee,
-    nonce: rest.nonce,
-    senderPublicKey: rest.sender.publicKey,
-    signatures: rest.signatures.map(signature => Buffer.from(signature, 'hex')),
-  };
-
-  switch (moduleAssetId) {
-    case MODULE_ASSETS_NAME_ID_MAP.transfer: {
-      transaction.recipientAddress = asset.recipient.address;
-      transaction.amount = asset.amount;
-      transaction.data = asset.data;
-      break;
-    }
-
-    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate:
-      transaction.votes = asset.votes;
-      break;
-
-    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate:
-      transaction.username = asset.username;
-      break;
-
-    case MODULE_ASSETS_NAME_ID_MAP.unlockToken:
-      transaction.unlockObjects = asset.unlockObjects;
-      break;
-
-    case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup: {
-      transaction.numberOfSignatures = asset.numberOfSignatures;
-      transaction.mandatoryKeys = asset.mandatoryKeys;
-      transaction.optionalKeys = asset.optionalKeys;
-      break;
-    }
-
-    default:
-      break;
-  }
-
-  return transaction;
-};
 
 const ReviewSign = ({
   t,
