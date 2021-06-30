@@ -17,11 +17,11 @@ import styles from '../styles.css';
 // eslint-disable-next-line max-statements
 const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
   const transaction = {
-    senderPublicKey: rest.sender.publicKey,
-    nonce: rest.nonce,
     moduleAssetId,
     fee: rest.fee,
-    signatures: rest.signatures.map(sig => Buffer.from(sig, 'hex')),
+    nonce: rest.nonce,
+    senderPublicKey: rest.sender.publicKey,
+    signatures: rest.signatures.map(signature => Buffer.from(signature, 'hex')),
   };
 
   switch (moduleAssetId) {
