@@ -13,7 +13,9 @@ import {
 } from '@constants';
 
 import { joinModuleAndAssetIds } from '@utils/moduleAssets';
-import { createTransactionObject, convertStringToBinary } from '@utils/transaction';
+import {
+  createTransactionObject, convertStringToBinary, transformTransaction, flattenTransaction,
+} from '@utils/transaction';
 import { validateAddress } from '../../validators';
 import http from '../http';
 import { getDelegates } from '../delegate';
@@ -327,8 +329,8 @@ export const create = ({
 
     if (isMultiSignature || isMultiSignatureRegistration) {
       const keysInBinary = {
-        mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
         optionalKeys: keys.optionalKeys.map(convertStringToBinary),
+        mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
       };
 
       signedTransaction = transactions.signMultiSignatureTransaction(
@@ -339,6 +341,35 @@ export const create = ({
         keysInBinary,
         isMultiSignatureRegistration,
       );
+
+      const transactionKeys = {
+        mandatoryKeys: rawTransaction.mandatoryKeys,
+        optionalKeys: rawTransaction.optionalKeys,
+      };
+
+      const needsDoubleSign = [
+        ...transactionKeys.mandatoryKeys,
+        ...transactionKeys.optionalKeys,
+      ].includes(publicKey);
+
+      if (isMultiSignatureRegistration && needsDoubleSign) {
+        const transformedTransaction = transformTransaction(signedTransaction);
+        const flattenedTransaction = flattenTransaction(transformedTransaction);
+        const tx = createTransactionObject(flattenedTransaction, moduleAssetId);
+        const transactionKeysInBinary = {
+          mandatoryKeys: transactionKeys.mandatoryKeys.map(convertStringToBinary),
+          optionalKeys: transactionKeys.optionalKeys.map(convertStringToBinary),
+        };
+
+        signedTransaction = transactions.signMultiSignatureTransaction(
+          schema,
+          tx,
+          networkIdentifier,
+          passphrase,
+          transactionKeysInBinary,
+          isMultiSignatureRegistration,
+        );
+      }
     } else {
       signedTransaction = transactions.signTransaction(
         schema,
