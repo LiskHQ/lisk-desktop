@@ -85,6 +85,7 @@ const VoteRow = ({
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) => (
   prevProps.data.address === nextProps.data.address
+  && prevProps.data.amount === nextProps.data.amount
   && (!!prevProps.accounts[nextProps.data.address]
     || !nextProps.accounts[nextProps.data.address])
 );
