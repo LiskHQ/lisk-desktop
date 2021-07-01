@@ -311,7 +311,11 @@ export const create = ({
   transactionObject,
 // eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
-  const { summary: { publicKey, isMultiSignature }, keys, sequence } = account;
+  const {
+    summary: { publicKey, isMultisignature },
+    keys,
+    sequence,
+  } = account;
   const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
   const { moduleAssetId, ...rawTransaction } = transactionObject;
@@ -327,7 +331,7 @@ export const create = ({
     const isMultiSignatureRegistration = moduleAssetId
       === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 
-    if (isMultiSignature || isMultiSignatureRegistration) {
+    if (isMultisignature || isMultiSignatureRegistration) {
       const keysInBinary = {
         optionalKeys: keys.optionalKeys.map(convertStringToBinary),
         mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
@@ -343,8 +347,8 @@ export const create = ({
       );
 
       const transactionKeys = {
-        mandatoryKeys: rawTransaction.mandatoryKeys,
-        optionalKeys: rawTransaction.optionalKeys,
+        mandatoryKeys: rawTransaction.mandatoryKeys ?? [],
+        optionalKeys: rawTransaction.optionalKeys ?? [],
       };
 
       const needsDoubleSign = [
