@@ -16,7 +16,7 @@ import styles from './styles.css';
 const Share = ({
   t, transaction, senderAccount,
   txBroadcastError, history, error,
-  transactionBroadcasted,
+  transactionBroadcasted, prevStep,
 }) => {
   const [status, setStatus] = useState('PENDING');
   const [copied, setCopied] = useState(false);
@@ -75,6 +75,7 @@ const Share = ({
             onCopy={onCopy}
             copied={copied}
             onDownload={onDownload}
+            prevStep={prevStep}
           />
         )}
         {status === 'SIGN_SUCCEEDED' && isFullySigned && (
@@ -85,6 +86,7 @@ const Share = ({
             onSend={onSend}
             onDownload={onDownload}
             history={history}
+            prevStep={prevStep}
           />
         )}
       </Box>

@@ -9,7 +9,7 @@ import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Result = ({
-  t, transactions, error, transaction,
+  t, transactions, error, transaction, prevStep,
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -37,27 +37,34 @@ const Result = ({
         status={status}
         message={template}
         className={styles.content}
-      >
-        {!error ? (
-          <div className={styles.buttonsContainer}>
-            <SecondaryButton
-              className="copy-button"
-              onClick={onCopy}
-            >
-              <span className={styles.buttonContent}>
-                <Icon name={copied ? 'checkmark' : 'copy'} />
-                {t(copied ? 'Copied' : 'Copy')}
-              </span>
-            </SecondaryButton>
-            <PrimaryButton onClick={onDownload}>
-              <span>
-                <Icon name="download" />
-                {t('Download')}
-              </span>
-            </PrimaryButton>
-          </div>
-        ) : null}
-      </TransactionResult>
+      />
+      {!error ? (
+        <div className={styles.buttonsContainer}>
+          <SecondaryButton
+            className="go-back-button"
+            onClick={prevStep}
+          >
+            <span className={styles.buttonContent}>
+              {t('Go back')}
+            </span>
+          </SecondaryButton>
+          <SecondaryButton
+            className="copy-button"
+            onClick={onCopy}
+          >
+            <span className={styles.buttonContent}>
+              <Icon name={copied ? 'checkmark' : 'copy'} />
+              {t(copied ? 'Copied' : 'Copy')}
+            </span>
+          </SecondaryButton>
+          <PrimaryButton onClick={onDownload}>
+            <span>
+              <Icon name="download" />
+              {t('Download')}
+            </span>
+          </PrimaryButton>
+        </div>
+      ) : null}
     </section>
   );
 };

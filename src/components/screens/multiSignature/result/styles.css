@@ -21,14 +21,15 @@
 }
 
 .buttonsContainer {
-  margin-top: 40px;
+  margin: 20px 0;
   display: flex;
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .buttonsContainer button {
-  width: 200px;
+  width: 160px;
+  margin: 0 10px;
 
   & > span {
     @mixin contentLarge;

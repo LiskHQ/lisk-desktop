@@ -39,7 +39,7 @@ const Footer = ({
             className="cancel-button"
             onClick={cancelButton.onClick}
           >
-            {t('Cancel')}
+            {t('Go back')}
           </SecondaryButton>
           <SecondaryButton
             className="copy-button"

@@ -10,8 +10,17 @@ export const CopyFooter = ({
   onCopy,
   copied,
   onDownload,
+  prevStep,
 }) => (
   <BoxFooter className={styles.footer} direction="horizontal">
+    <SecondaryButton
+      className="go-back-button"
+      onClick={prevStep}
+    >
+      <span className={styles.buttonContent}>
+        {t('Go back')}
+      </span>
+    </SecondaryButton>
     <SecondaryButton
       className="copy-button"
       onClick={onCopy}
@@ -37,6 +46,7 @@ export const CopyAndSendFooter = ({
   copied,
   onDownload,
   history,
+  prevStep,
 }) => {
   const [sent, setSent] = useState(false);
 
@@ -51,6 +61,12 @@ export const CopyAndSendFooter = ({
 
   return (
     <BoxFooter className={styles.footer} direction="horizontal">
+      <SecondaryButton
+        className="go-back-button"
+        onClick={prevStep}
+      >
+        {t('Go back')}
+      </SecondaryButton>
       {
         !sent ? (
           <>
