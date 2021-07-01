@@ -156,7 +156,7 @@ const TransactionPriority = ({
           })}
         </div>
       </div>
-      <div className={`${styles.col} fee-container`}>
+      <div className={`${styles.col} ${styles.fee} fee-container`}>
         <span className={`${styles.fieldLabel}`}>
           {t('Transaction fee')}
           {
@@ -167,9 +167,9 @@ const TransactionPriority = ({
                     t(`
                       You can choose a high, medium, or low transaction priority, each requiring a
                       corresponding transaction fee. Or you can pay any desired fee of no less than
-                      ${minFee} ${token}. If you don't know what fee to pay, choose
+                      {{minFee}} {{token}}. If you don't know what fee to pay, choose
                       one of the provided transaction priorities.
-                    `)
+                    `, { minFee, token })
                   }
                 </p>
               </Tooltip>
@@ -199,7 +199,7 @@ const TransactionPriority = ({
                 feedback={`fee must be between ${minFee} and ${fromRawLsk(maxFee)}`}
               />
             ) : (
-              <span className={`${styles.feeValue} fee-value`} onClick={onClickCustomEdit}>
+              <span className={`${styles.value} fee-value`} onClick={onClickCustomEdit}>
                 {getFeeStatus({ fee, token, customFee })}
                 {isCustom && showEditIcon && <Icon name="edit" />}
               </span>

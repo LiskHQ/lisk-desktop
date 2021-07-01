@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { getIndexOfBookmark } from '@utils/bookmarks';
+import { isEmpty } from '@utils/helpers';
 import { SecondaryButton, PrimaryButton } from '@toolbox/buttons';
-import TransactionResult from '@shared/transactionResult';
+import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
 import DialogLink from '@toolbox/dialog/link';
-import statusMessage from './statusMessages';
+import statusMessages from './statusMessages';
 import styles from './transactionStatus.css';
 
 const bookmarkInformation = (bookmarks, fields) => {
@@ -17,27 +18,21 @@ const bookmarkInformation = (bookmarks, fields) => {
   };
 };
 
-const getMessagesDetails = (transactions, fields, t, isHardwareWalletConnected) => {
-  const isHardwareWalletError = isHardwareWalletConnected && fields.hwTransactionStatus === 'error';
-  const messages = statusMessage(t);
-  let messageDetails = !transactions.broadcastedTransactionsError.length
-    ? messages.success
-    : messages.error;
+const getHwError = (isHardwareWalletConnected, fields) => (
+  isHardwareWalletConnected && fields.hwTransactionStatus === 'error'
+);
 
-  if (transactions.broadcastedTransactionsError[0]
-      && transactions.broadcastedTransactionsError[0].error
-      && transactions.broadcastedTransactionsError[0].error.message) {
-    messageDetails.paragraph = transactions.broadcastedTransactionsError[0].error.message;
+const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
+  const messages = statusMessages(t);
+  const code = isHardwareWalletError ? 'hw' : status.code;
+  const messageDetails = messages[code];
+
+  if (status.code === 'error'
+      && transactions.txBroadcastError?.error?.message) {
+    messageDetails.message = transactions.txBroadcastError.error.message;
   }
 
-  if (isHardwareWalletConnected) {
-    messageDetails = isHardwareWalletError ? messages.hw : messages.success;
-  }
-
-  return {
-    isHardwareWalletError,
-    messageDetails,
-  };
+  return messageDetails;
 };
 
 // eslint-disable-next-line complexity
@@ -52,28 +47,22 @@ const TransactionStatus = ({
   fields,
   t,
 }) => {
-  const isHardwareWalletConnected = !!(account.hwInfo && account.hwInfo.deviceId);
+  const isHardwareWalletConnected = !!account.hwInfo?.deviceId;
 
   const broadcast = () => {
-    const { transactionsCreated, transactionsCreatedFailed } = transactions;
-
-    if (transactionsCreated.length) {
-      transactionsCreated.forEach(tx => transactionBroadcasted(tx));
-    }
-    if (transactionsCreatedFailed.length) {
-      transactionsCreatedFailed.forEach(tx => transactionBroadcasted(tx));
+    if (!isEmpty(transactions.signedTransaction)) {
+      transactionBroadcasted(transactions.signedTransaction);
     }
   };
 
   const onRetry = () => {
-    const { broadcastedTransactionsError } = transactions;
+    const { txBroadcastError } = transactions;
 
     if (isHardwareWalletConnected) {
       resetTransactionResult();
       prevStep({ ...fields, hwTransactionStatus: false });
     } else {
-      broadcastedTransactionsError.forEach(({ transaction }) =>
-        transactionBroadcasted(transaction));
+      transactionBroadcasted(txBroadcastError.transaction);
     }
   };
 
@@ -85,27 +74,24 @@ const TransactionStatus = ({
   }, []);
 
   const { isBookmarked } = bookmarkInformation(bookmarks, fields);
-  const { isHardwareWalletError, messageDetails } = getMessagesDetails(
-    transactions, fields, t,
-    isHardwareWalletConnected,
+  const isHardwareWalletError = getHwError(isHardwareWalletConnected, fields);
+  const status = getBroadcastStatus(transactions, isHardwareWalletError);
+  const template = getMessagesDetails(
+    transactions, status, t,
+    isHardwareWalletError,
   );
-  const success = transactions.broadcastedTransactionsError.length === 0 && !isHardwareWalletError;
-  const totalErrors = transactions.broadcastedTransactionsError.length;
-  const error = totalErrors > 0
-    && JSON.stringify(transactions.broadcastedTransactionsError[totalErrors - 1]);
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
       <TransactionResult
         t={t}
-        title={messageDetails.title}
-        illustration={success ? 'transactionSuccess' : 'transactionError'}
-        message={messageDetails.paragraph}
-        success={success}
-        error={error}
+        title={template.title}
+        illustration="default"
+        message={template.message}
+        status={status}
       >
         {
-          isHardwareWalletError || transactions.broadcastedTransactionsError.length
+          isHardwareWalletError
             ? (
               <SecondaryButton
                 className={`${styles.btn} retry`}

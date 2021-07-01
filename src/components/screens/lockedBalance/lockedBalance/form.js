@@ -75,7 +75,7 @@ const Form = ({
       });
     } else {
       dispatch({
-        type: actionTypes.transactionCreatedError,
+        type: actionTypes.transactionSignError,
         data: error,
       });
       nextStep({ error, fee, account });

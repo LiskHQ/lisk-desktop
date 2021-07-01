@@ -1,27 +1,61 @@
 import React, { useEffect } from 'react';
-import TransactionResult from '@shared/transactionResult';
+import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
 import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
-import { routes, tokenMap } from '@constants';
+import { tokenMap } from '@constants';
 import Spinner from '@toolbox/spinner';
+import statusMessages from './statusMessages';
 import styles from './status.css';
 
-const getTransactionError = (broadcastedTransactionsError, createError) => {
-  if (createError) {
-    return createError;
-  }
+const SuccessAction = ({
+  template, isMigrated, balance, t,
+}) => (
+  <>
+    <ul className={styles.successList}>
+      <li>
+        <span>
+          <LiskAmount
+            val={Number(balance)}
+            token={tokenMap.LSK.key}
+          />
+          {' '}
+          {t('was deposited on your account')}
+        </span>
+      </li>
+      <li><span>{t('Reclaim transaction was sent')}</span></li>
+    </ul>
+    <p className="transaction-status body-message">{template.message}</p>
+    <PrimaryButton
+      className={`${styles.btn} ${template.button.className}`}
+      onClick={template.button.onClick}
+      disabled={!isMigrated}
+    >
+      {template.button.title}
+      <Spinner completed={isMigrated} className={styles.spinner} />
+    </PrimaryButton>
+  </>
+);
 
-  const totalErrors = broadcastedTransactionsError.length;
-  const error = totalErrors > 0
-    && JSON.stringify(broadcastedTransactionsError[totalErrors - 1]);
+const FailAction = ({ template }) => (
+  <>
+    <p className="transaction-status body-message">{template.message}</p>
+    <PrimaryButton
+      className={`${styles.btn} ${template.button.className}`}
+      onClick={template.button.onClick}
+    >
+      {template.button.title}
+    </PrimaryButton>
+  </>
+);
 
-  return error;
-};
+const PendingAction = ({ template }) => (
+  <p className="transaction-status body-message">{template.message}</p>
+);
 
 // eslint-disable-next-line max-statements
 const Status = ({
   t, transactionBroadcasted, transactions,
-  transactionInfo, history, transactionError,
+  transactionInfo, history,
   balance, isMigrated,
 }) => {
   const broadcastTransaction = () => {
@@ -38,79 +72,40 @@ const Status = ({
     if (transactionInfo) broadcastTransaction();
   }, []);
 
-  const isTransactionSuccess = transactions.broadcastedTransactionsError.length === 0
-    && !transactionError;
-
-  const displayTemplate = isTransactionSuccess
-    ? {
-      title: t('Done!'),
-      message: t('Your balance will be transfered in a few seconds.'),
-      button: {
-        onClick: () => {
-          history.push(routes.wallet.path);
-        },
-        title: t('Go to wallet'),
-        className: 'close-modal',
-      },
-    }
-    : {
-      title: t('Transaction failed'),
-      message: t('There was an error in the transaction. Please try again.'),
-      button: {
-        onClick: onRetry,
-        title: t('Try again'),
-        className: 'on-retry',
-      },
-    };
+  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
+  const template = statusMessages(t, history, onRetry)[status.code];
 
   return (
     <div className={`${styles.wrapper} status-container`}>
       <TransactionResult
         t={t}
-        illustration={isTransactionSuccess ? 'transactionSuccess' : 'transactionError'}
-        success={isTransactionSuccess}
-        title={displayTemplate.title}
-        className={`${styles.content} ${!isTransactionSuccess && styles.error}`}
-        error={getTransactionError(transactions.broadcastedTransactionsError, transactionError)}
+        illustration="default"
+        title={template.title}
+        className={`${styles.content} ${status.code === 'error' && styles.error}`}
+        status={status}
       >
-        {isTransactionSuccess
-          ? (
-            <>
-              <ul className={styles.successList}>
-                <li>
-                  <span>
-                    <LiskAmount
-                      val={parseInt(balance, 10)}
-                      token={tokenMap.LSK.key}
-                    />
-                    {' '}
-                    {t('was deposited on your account')}
-                  </span>
-                </li>
-                <li><span>{t('Reclaim transaction was sent')}</span></li>
-              </ul>
-              <p className="transaction-status body-message">{displayTemplate.message}</p>
-              <PrimaryButton
-                className={`${styles.btn} ${displayTemplate.button.className}`}
-                onClick={displayTemplate.button.onClick}
-                disabled={!isMigrated}
-              >
-                {displayTemplate.button.title}
-                <Spinner completed={isMigrated} className={styles.spinner} />
-              </PrimaryButton>
-            </>
-          )
-          : (
-            <>
-              <p className="transaction-status body-message">{displayTemplate.message}</p>
-              <PrimaryButton
-                className={`${styles.btn} ${displayTemplate.button.className}`}
-                onClick={displayTemplate.button.onClick}
-              >
-                {displayTemplate.button.title}
-              </PrimaryButton>
-            </>
-          )}
+        <>
+          {
+            status.code === 'success' ? (
+              <SuccessAction
+                template={template}
+                isMigrated={isMigrated}
+                balance={balance}
+                t={t}
+              />
+            ) : null
+          }
+          {
+            status.code === 'fail' ? (
+              <FailAction template={template} />
+            ) : null
+          }
+          {
+            status.code === 'pending' ? (
+              <PendingAction template={template} />
+            ) : null
+          }
+        </>
       </TransactionResult>
     </div>
   );

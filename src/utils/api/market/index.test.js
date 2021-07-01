@@ -12,17 +12,22 @@ describe('API: Market', () => {
     it('should return prices data', async () => {
       const expectedResponse = { data: [{}, {}] };
       http.mockImplementation(() => Promise.resolve(expectedResponse));
-      await expect(market.getPrices()).resolves.toEqual(expectedResponse);
+      await expect(market.getPrices({
+        network: { networks: { LSK: { serviceUrl: 'example.com' } } },
+      })).resolves.toEqual(expectedResponse);
+
       expect(http).toHaveBeenCalledWith({
-        baseUrl: 'https://cloud.lisk.io',
         path: market.httpPaths.prices,
+        network: { networks: { LSK: { serviceUrl: 'example.com' } } },
       });
     });
 
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
       http.mockImplementation(() => Promise.reject(new Error(expectedResponse.message)));
-      await expect(market.getPrices()).rejects.toEqual(expectedResponse);
+      await expect(market.getPrices({
+        network: { networks: { LSK: { serviceUrl: 'example.com' } } },
+      })).rejects.toEqual(expectedResponse);
     });
   });
 
@@ -38,7 +43,7 @@ describe('API: Market', () => {
       await expect(market.getNews({ params })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: 'https://cloud.lisk.io',
-        path: market.httpPaths.news,
+        path: '/api/v1/market/newsfeed',
         params,
       });
     });

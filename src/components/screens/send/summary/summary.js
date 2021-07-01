@@ -1,6 +1,7 @@
 import React from 'react';
 import { loginTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
+import { isEmpty } from '@utils/helpers';
 import Piwik from '@utils/piwik';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
@@ -34,7 +35,7 @@ class Summary extends React.Component {
     if (!account.summary.isMultisignature) {
       Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
       if (account.loginType !== loginTypes.passphrase.code
-          && transactions.transactionsCreatedFailed.length) {
+          && transactions.txSignatureError) {
         nextStep({
           fields: {
             ...fields,
@@ -43,8 +44,8 @@ class Summary extends React.Component {
         });
       }
 
-      if (transactions.transactionsCreated.length
-        && !transactions.transactionsCreatedFailed.length) {
+      if (!isEmpty(transactions.signedTransaction)
+        && !transactions.txSignatureError) {
         nextStep({
           fields: {
             ...fields,
@@ -53,7 +54,7 @@ class Summary extends React.Component {
         });
       }
     } else {
-      fn(transactions.transactionsCreated[0]);
+      fn(transactions.signedTransaction);
     }
   }
 
@@ -67,7 +68,7 @@ class Summary extends React.Component {
     const {
       fields, t, token, account, isInitialization, transactions,
     } = this.props;
-    const transaction = transactions.transactionsCreated[0];
+    const transaction = transactions.signedTransaction;
     const amount = transaction?.asset?.amount
       ? fromRawLsk(transaction?.asset?.amount) : fields.amount.value;
 
@@ -93,7 +94,11 @@ class Summary extends React.Component {
           fields={fields}
           token={token}
           moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.transfer}
-          transaction={typeof transaction === 'object' ? transaction : { asset: { amount: toRawLsk(fields.amount.value) } }}
+          transaction={
+            !isEmpty(transaction)
+              ? transaction
+              : { asset: { amount: toRawLsk(fields.amount.value) } }
+          }
           account={account}
           isMultisignature={account.summary.isMultisignature}
         />

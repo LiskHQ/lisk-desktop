@@ -1,31 +1,39 @@
-import { mountWithRouterAndStore } from '@utils/testHelpers';
-import TransactionStatus from './index';
+import React from 'react';
+import { mount } from 'enzyme';
+import TransactionStatus from './transactionStatus';
 
 describe('unlock transaction Status', () => {
-  let wrapper;
-
   const props = {
-    transactionInfo: undefined,
-    error: undefined,
+    transactionInfo: null,
+    error: null,
     t: key => key,
+    transactionBroadcasted: jest.fn(),
     history: {},
   };
 
-  const store = {
+  const propsWithConfirmedTx = {
+    ...props,
+    transactionInfo: { id: 1 },
     transactions: {
-      confirmed: [],
-      broadcastedTransactionsError: [],
-      transactionsCreated: [],
+      confirmed: [{ id: 1 }],
+      txBroadcastError: null,
+      txSignatureError: null,
+      signedTransaction: {},
     },
   };
+  const propsWithError = {
+    ...props,
+    transactions: {
+      confirmed: [],
+      txBroadcastError: { message: 'error:test' },
+      txSignatureError: null,
+      signedTransaction: {},
+    },
+    error: { message: 'error:test' },
+  };
 
-  it('renders properly Status component when transaction is succedfully submitted', () => {
-    wrapper = mountWithRouterAndStore(
-      TransactionStatus,
-      { ...props, transactionInfo: { id: 1 } },
-      {},
-      { transactions: { ...store.transactions, confirmed: [{ id: 1 }] } },
-    );
+  it('renders properly Status component when transaction is successfully submitted', () => {
+    const wrapper = mount(<TransactionStatus {...propsWithConfirmedTx} />);
     const html = wrapper.html();
     expect(html).not.toContain('failed');
     expect(html).not.toContain('something went wrong');
@@ -34,12 +42,7 @@ describe('unlock transaction Status', () => {
   });
 
   it('renders properly Status component when transaction failed', () => {
-    wrapper = mountWithRouterAndStore(
-      TransactionStatus,
-      { ...props, error: { message: 'error:test' } },
-      {},
-      store,
-    );
+    const wrapper = mount(<TransactionStatus {...propsWithError} />);
     const html = wrapper.html();
     expect(html).toContain('failed');
     expect(html).toContain('something went wrong');

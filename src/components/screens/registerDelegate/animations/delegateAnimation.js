@@ -25,9 +25,9 @@ class DelegateAnimation extends React.PureComponent {
     const { status } = this.props;
     const { loop } = this.state;
     switch (status) {
-      case 'ok':
+      case 'success':
         return 'delegateConfirmed';
-      case 'fail':
+      case 'error':
         return 'delegateDeclined';
       default:
         return loop ? 'delegatePending' : 'delegateCreated';
@@ -64,7 +64,7 @@ class DelegateAnimation extends React.PureComponent {
 
 DelegateAnimation.propTypes = {
   className: PropTypes.string,
-  status: PropTypes.oneOf(['ok', 'pending', 'fail']),
+  status: PropTypes.oneOf(['success', 'pending', 'error']),
   onLoopComplete: PropTypes.func.isRequired,
 };
 

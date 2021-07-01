@@ -26,10 +26,6 @@
 }
 
 .wrapper {
-  & > .col:first-child {
-    padding-right: 100px;
-  }
-
   & > .col {
     display: flex;
     flex-direction: column;
@@ -60,6 +56,7 @@
 
         &:disabled {
           opacity: 0;
+          display: none;
         }
 
         &.priorityTitleSelected {
@@ -69,17 +66,24 @@
       }
     }
 
-    & > .feeValue {
-      color: var(--color-maastricht-blue);
-      font-family: var(--content-font);
-      font-weight: normal;
-      font-size: var(--font-size-h6);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: flex-end;
+    &.fee {
+      text-align: right;
 
-      & > img {
-        margin-left: 10px;
+      & .fieldLabel {
+        display: inline-block;
+      }
+
+      & .value {
+        color: var(--color-maastricht-blue);
+        font-family: var(--content-font);
+        font-weight: normal;
+        font-size: var(--font-size-h6);
+        margin-bottom: 10px;
+        display: inline-block;
+
+        & > img {
+          margin-left: 10px;
+        }
       }
     }
   }

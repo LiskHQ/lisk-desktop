@@ -106,7 +106,7 @@ const FormLsk = (props) => {
       <TransactionPriority
         token={token}
         fee={fee}
-        minFee={minFee.value}
+        minFee={Number(minFee.value)}
         customFee={customFee ? customFee.value : undefined}
         moduleAssetId={moduleAssetId}
         setCustomFee={changeCustomFee}

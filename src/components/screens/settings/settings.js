@@ -35,10 +35,10 @@ class Settings extends React.Component {
   toggleAutoLog({ target }) {
     Piwik.trackingEvent('Settings', 'button', 'Toggle autoLog');
     const {
-      account, timerReset,
+      account, timerReset, settings,
     } = this.props;
-    if (target && account.passphrase) {
-      timerReset(new Date());
+    if (!settings.autolog && account.passphrase) {
+      timerReset();
     }
     this.handleCheckboxChange({ target });
   }

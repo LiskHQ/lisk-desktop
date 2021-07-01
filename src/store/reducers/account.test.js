@@ -1,4 +1,3 @@
-import { useFakeTimers } from 'sinon';
 import { actionTypes } from '@constants';
 import account from './account';
 import accounts from '../../../test/constants/accounts';
@@ -63,28 +62,6 @@ describe('Reducer: account(state, action)', () => {
     };
     const changedAccount = account(state, action);
     expect(changedAccount).toEqual({ loading: true });
-  });
-
-  it('should extend expireTime if action.type = actionTypes.passphraseUsed', () => {
-    const clock = useFakeTimers(new Date('2017-12-29').getTime());
-    const action = {
-      type: actionTypes.passphraseUsed,
-      data: new Date('2017-12-29T00:00:00.000Z'),
-    };
-    const changedAccount = account(state, action);
-    expect(changedAccount).toEqual({
-      ...state,
-      expireTime: new Date('2017-12-29T00:10:00.000Z'),
-    });
-    clock.restore();
-  });
-
-  it('should return remove passphrase from account object if actionTypes.removePassphrase is called', () => {
-    const action = {
-      type: actionTypes.removePassphrase,
-    };
-    const changedAccount = account(state, action);
-    expect(changedAccount.passphrase).toEqual(null);
   });
 
   it('should reduce account when accountLoggedIn has been triggered', () => {

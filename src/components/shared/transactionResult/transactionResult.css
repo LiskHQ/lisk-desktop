@@ -16,12 +16,16 @@
     color: var(--color-maastricht-blue);
   }
 
+  & a,
   & > p {
     @mixin contentLarge;
 
-    color: var(--color-slate-gray);
     margin: 10px 0;
     text-align: center;
+  }
+
+  & > p {
+    color: var(--color-slate-gray);
   }
 
   & .button {

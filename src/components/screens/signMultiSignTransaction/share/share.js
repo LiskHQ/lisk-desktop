@@ -1,61 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import copyToClipboard from 'copy-to-clipboard';
-import { useDispatch } from 'react-redux';
 
 import { downloadJSON, transactionToJSON } from '@utils/transaction';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
-import TransactionResult from '@shared/transactionResult';
-import { transactionBroadcasted } from '@actions';
+import { TransactionResult } from '@shared/transactionResult';
 
 import ProgressBar from '../progressBar';
 import { CopyAndSendFooter, CopyFooter } from './footer';
 import { isTransactionFullySigned } from '../helpers';
+import statusMessages from './statusMessages';
 import styles from './styles.css';
-
-const getTemplate = (t, status, errorMessage) => {
-  switch (status) {
-    case 'SIGN_SUCCEEDED':
-      return {
-        illustration: 'registerMultisignatureSuccess',
-        message: t('You have successfully signed the transaction. You can download or copy the transaction and send it back to the initiator.'),
-      };
-    case 'SIGN_FAILED':
-      return {
-        illustration: 'registerMultisignatureError',
-        message: t('Error signing the transaction: {{errorMessage}}', { errorMessage }),
-      };
-    case 'BROADCASTED':
-      return {
-        illustration: 'transactionSuccess',
-        message: t("The transaction was broadcasted to the network. It will appear in sender account's wallet after confirmation."),
-      };
-    case 'BROADCAST_FAILED':
-      return {
-        illustration: 'transactionError',
-        message: t('Error broadcasting the transaction: {{errorMessage}}', { errorMessage }),
-      };
-    default:
-      return {
-        illustration: 'registerMultisignatureSuccess',
-        message: t('Pending transaction status.'),
-      };
-  }
-};
 
 // eslint-disable-next-line max-statements
 const Share = ({
-  t, transaction, senderAccount, error,
-  broadcastedTransactionsError, history,
+  t, transaction, senderAccount,
+  txBroadcastError, history, error,
+  transactionBroadcasted,
 }) => {
-  const dispatch = useDispatch();
-  const [status, setStatus] = useState(error ? 'SIGN_FAILED' : 'SIGN_SUCCEEDED');
-  const [errorMessage, setErrorMessage] = useState(error);
-  const isFullySigned = isTransactionFullySigned(senderAccount, transaction);
-  const success = !error && transaction;
-  const template = getTemplate(t, status, errorMessage);
-
+  const [status, setStatus] = useState('PENDING');
   const [copied, setCopied] = useState(false);
+  const isFullySigned = isTransactionFullySigned(senderAccount, transaction);
+  const template = statusMessages(t, txBroadcastError?.error?.message || error)[status];
 
   const onDownload = () => {
     const id = transaction.id.toString('hex');
@@ -68,18 +34,23 @@ const Share = ({
   };
 
   const onSend = () => {
-    dispatch(transactionBroadcasted(transaction));
+    transactionBroadcasted(transaction);
     setStatus('BROADCASTED');
   };
 
   useEffect(() => {
-    if (broadcastedTransactionsError.length) {
+    if (txBroadcastError) {
       setStatus('BROADCAST_FAILED');
-      setErrorMessage(
-        broadcastedTransactionsError[broadcastedTransactionsError.length - 1].error.message,
-      );
     }
-  }, [broadcastedTransactionsError]);
+  }, [txBroadcastError]);
+
+  useEffect(() => {
+    if (!error && transaction) {
+      setStatus('SIGN_SUCCEEDED');
+    } else if (error && transaction) {
+      setStatus('SIGN_FAILED');
+    }
+  }, [transaction, error]);
 
   return (
     <section>
@@ -92,14 +63,13 @@ const Share = ({
           <ProgressBar current={4} />
           <TransactionResult
             t={t}
-            illustration={template.illustration}
-            success={success}
-            message={template.message}
+            message={template}
+            illustration="signMultisignature"
             className={styles.content}
-            error={error}
+            status={{ code: status, message: error }}
           />
         </BoxContent>
-        {success && !isFullySigned && (
+        {status === 'SIGN_SUCCEEDED' && !isFullySigned && (
           <CopyFooter
             t={t}
             onCopy={onCopy}
@@ -107,7 +77,7 @@ const Share = ({
             onDownload={onDownload}
           />
         )}
-        {success && isFullySigned && (
+        {status === 'SIGN_SUCCEEDED' && isFullySigned && (
           <CopyAndSendFooter
             t={t}
             onCopy={onCopy}

@@ -4,7 +4,7 @@ import Result from './result';
 const props = {
   t: s => s,
   history: { push: jest.fn() },
-  transactions: { transactionsCreatedFailed: [], transactionsCreated: [{}] },
+  transactions: { txSignatureError: null, signedTransaction: {} },
   transactionBroadcasted: jest.fn(),
 };
 
@@ -47,7 +47,7 @@ describe('VotingQueue.Resuly', () => {
     mountWithRouter(Result, { ...props, error: false });
 
     expect(props.transactionBroadcasted).toHaveBeenCalledWith(
-      props.transactions.transactionsCreated[0],
+      props.transactions.signedTransaction,
     );
   });
 

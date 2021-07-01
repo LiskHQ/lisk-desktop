@@ -2,33 +2,28 @@ import React, { useState } from 'react';
 import { downloadJSON, transactionToJSON } from '@utils/transaction';
 import copyToClipboard from 'copy-to-clipboard';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
 import Icon from '@toolbox/icon';
-import TransactionResult from '../../../shared/transactionResult';
-
+import statusMessages from './statusMessages';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Result = ({
-  t, transaction, error,
+  t, transactions, error, transaction,
 }) => {
   const [copied, setCopied] = useState(false);
 
-  const template = !error ? {
-    illustration: 'registerMultisignatureSuccess',
-    message: t('You have successfully signed the transaction. You can download or copy the transaction and share it with members.'),
-  } : {
-    illustration: 'registerMultisignatureError',
-    message: t('Oops, looks like something went wrong.'),
-  };
-
   const onDownload = () => {
-    downloadJSON(transaction, `tx-${transaction.id}`);
+    downloadJSON(transaction, `tx-${transactions.signedTransaction.id}`);
   };
 
   const onCopy = () => {
     copyToClipboard(transactionToJSON(transaction));
     setCopied(true);
   };
+
+  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
+  const template = statusMessages(t)[status.code];
 
   return (
     <section className={`${styles.wrapper} transaction-status`}>
@@ -38,13 +33,12 @@ const Result = ({
       <ProgressBar current={4} />
       <TransactionResult
         t={t}
-        illustration={template.illustration}
-        success={!error}
-        message={template.message}
+        illustration="registerMultisignature"
+        status={status}
+        message={template}
         className={styles.content}
-        error={JSON.stringify(error)}
       >
-        {!error && (
+        {!error ? (
           <div className={styles.buttonsContainer}>
             <SecondaryButton
               className="copy-button"
@@ -61,8 +55,8 @@ const Result = ({
                 {t('Download')}
               </span>
             </PrimaryButton>
-            </div>
-        )}
+          </div>
+        ) : null}
       </TransactionResult>
     </section>
   );
