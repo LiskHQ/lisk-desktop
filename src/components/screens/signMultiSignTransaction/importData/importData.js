@@ -23,34 +23,30 @@ const ImportData = ({ t, nextStep }) => {
     }
   };
 
-  const resetState = () => {
-    setTransaction(undefined);
-    setError(undefined);
-  };
-
   const validateAndSetTransaction = (input) => {
     try {
       const parsedInput = JSON.parse(input);
       setTransaction(parsedInput);
+      setError(undefined);
     } catch (e) {
-      setTransaction(input);
+      setTransaction(undefined);
       setError('Invalid transaction');
     }
   };
 
   const onFileInputChange = ({ target }) => reader.readAsText(target.files[0]);
   const onPaste = (evt) => {
-    resetState();
     const paste = evt.clipboardData.getData('text');
     validateAndSetTransaction(paste);
   };
 
   useEffect(() => {
     reader.onload = ({ target }) => {
-      resetState();
       validateAndSetTransaction(target.result);
     };
   }, []);
+
+  console.log(transaction);
 
   return (
     <section>
@@ -76,7 +72,7 @@ const ImportData = ({ t, nextStep }) => {
           <div className={`${styles.textAreaContainer} ${error && styles.error} ${transaction && styles.filled}`}>
             <textarea
               onPaste={onPaste}
-              value={JSON.stringify(transaction)}
+              value={transaction ? JSON.stringify(transaction) : ''}
               readOnly
             />
             <Feedback
