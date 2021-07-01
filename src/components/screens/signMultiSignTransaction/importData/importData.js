@@ -33,6 +33,7 @@ const ImportData = ({ t, nextStep }) => {
       const parsedInput = JSON.parse(input);
       setTransaction(parsedInput);
     } catch (e) {
+      setTransaction(input);
       setError('Invalid transaction');
     }
   };
