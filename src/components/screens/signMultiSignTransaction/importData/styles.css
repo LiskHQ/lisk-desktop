@@ -41,6 +41,9 @@
 
   &.error {
     border: 1px solid var(--error-background-color);
+    & > textarea {
+      background: none;
+    }
   }
 
   &.filled {
