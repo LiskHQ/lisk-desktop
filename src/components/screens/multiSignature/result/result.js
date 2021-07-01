@@ -9,7 +9,7 @@ import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Result = ({
-  t, transactions, error, transaction, prevStep
+  t, transactions, error, transaction, prevStep,
 }) => {
   const [copied, setCopied] = useState(false);
 
