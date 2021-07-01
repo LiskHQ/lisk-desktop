@@ -27,7 +27,9 @@ const ImportData = ({ t, nextStep }) => {
     try {
       const parsedInput = JSON.parse(input);
       setTransaction(parsedInput);
+      setError(undefined);
     } catch (e) {
+      setTransaction(undefined);
       setError('Invalid transaction');
     }
   };
@@ -43,6 +45,8 @@ const ImportData = ({ t, nextStep }) => {
       validateAndSetTransaction(target.result);
     };
   }, []);
+
+  console.log(transaction);
 
   return (
     <section>
@@ -68,7 +72,7 @@ const ImportData = ({ t, nextStep }) => {
           <div className={`${styles.textAreaContainer} ${error && styles.error} ${transaction && styles.filled}`}>
             <textarea
               onPaste={onPaste}
-              value={JSON.stringify(transaction)}
+              value={transaction ? JSON.stringify(transaction) : ''}
               readOnly
             />
             <Feedback
