@@ -37,16 +37,16 @@ const ImportData = ({ t, nextStep }) => {
       });
 
       const schema = moduleAssetSchemas[moduleAssetId];
-      const tx1 = transformTransaction(parsedInput);
-      const flat = flattenTransaction(tx1);
-      const transactionObejct = createTransactionObject(flat, moduleAssetId);
-      const err = validateTransaction(schema, transactionObejct);
+      const transformedTransaction = transformTransaction(parsedInput);
+      const flattenedTransaction = flattenTransaction(transformedTransaction);
+      const transactionObject = createTransactionObject(flattenedTransaction, moduleAssetId);
+      const err = validateTransaction(schema, transactionObject);
+
       if (err) {
         throw Error('Unknown transaction');
       }
       setError(undefined);
     } catch (e) {
-      console.log(e);
       setTransaction(undefined);
       setError('Invalid transaction');
     }
