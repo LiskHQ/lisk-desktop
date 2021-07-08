@@ -36,7 +36,7 @@ const getResultProps = ({ added, removed, edited }) => {
 };
 
 const Summary = ({
-  t, removed = {}, edited = {}, added = {},
+  t, removed = {}, edited = {}, added = {}, selfUnvote = {},
   fee, account, prevStep, nextStep, transactions, ...props
 }) => {
   const {
@@ -58,7 +58,7 @@ const Summary = ({
       if (!transactions.txSignatureError
         && !isEmpty(transactions.signedTransaction)) {
         nextStep({
-          locked, unlockable, error: false,
+          locked, unlockable, error: false, selfUnvote,
         });
       } else if (transactions.txSignatureError) {
         nextStep({
