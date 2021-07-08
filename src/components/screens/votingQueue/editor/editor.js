@@ -40,16 +40,20 @@ const normalizeVotesForTx = votes =>
  * @param {Object} votes - votes object retrieved from the Redux store
  * @returns {Object} - stats object
  */
-const getVoteStats = votes =>
+const getVoteStats = (votes, account) =>
   Object.keys(votes)
     .reduce((stats, address) => {
       const { confirmed, unconfirmed, username } = votes[address];
+
       if (!confirmed && unconfirmed) {
         // new vote
         stats.added[address] = { unconfirmed, username };
       } else if (confirmed && !unconfirmed) {
         // removed vote
         stats.removed[address] = { confirmed, username };
+        if (address === account.summary.address) {
+          stats.selfUnvote = { confirmed, username };
+        }
       } else if (confirmed !== unconfirmed) {
         // edited vote
         stats.edited[address] = { unconfirmed, confirmed, username };
@@ -59,7 +63,7 @@ const getVoteStats = votes =>
       }
       return stats;
     }, {
-      added: {}, edited: {}, removed: {}, untouched: {},
+      added: {}, edited: {}, removed: {}, untouched: {}, selfUnvote: {},
     });
 
 /**
@@ -73,11 +77,11 @@ const getVoteStats = votes =>
  * @returns {Object} The feedback object including error status and messages
  */
 // eslint-disable-next-line max-statements
-const validateVotes = (votes, balance, fee, t) => {
+const validateVotes = (votes, balance, fee, account, t) => {
   const messages = [];
   const areVotesInValid = Object.values(votes).some(vote =>
     (vote.unconfirmed === '' || vote.unconfirmed === undefined));
-  const votesStats = getVoteStats(votes);
+  const votesStats = getVoteStats(votes, account);
 
   if (areVotesInValid) {
     messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
@@ -133,15 +137,20 @@ const Editor = ({
     },
   });
 
-  const { added, edited, removed } = useMemo(() => getVoteStats(votes), [votes]);
-  const feedback = validateVotes(votes, Number(account.token?.balance), fee.value, t);
+  const {
+    added, edited, removed, selfUnvote,
+  } = useMemo(() =>
+    getVoteStats(votes, account),
+  [votes, account]);
+
+  const feedback = validateVotes(votes, Number(account.token?.balance), fee.value, account, t);
 
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
     nextStep({
-      added, edited, removed, fee: toRawLsk(feeValue), normalizedVotes,
+      added, edited, removed, selfUnvote, fee: toRawLsk(feeValue), normalizedVotes,
     });
   };
 
