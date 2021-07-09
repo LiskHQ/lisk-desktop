@@ -11,13 +11,29 @@ const LiskAmountFormatted = ({ val }) => (
   </span>
 );
 
-const getSuccessMessage = (t, locked, unlockable) => {
+const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 }) => {
   if (!locked && unlockable) {
+    const regularUnlockable = unlockable - Number(selfUnvote.confirmed);
+    const selfUnvoteUnlockable = selfUnvote.confirmed;
+
     return (
       <>
-        <LiskAmountFormatted val={unlockable} />
-        {' '}
-        <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
+        {regularUnlockable > 0
+          ? (
+            <>
+              <LiskAmountFormatted val={regularUnlockable} />
+              {' '}
+              <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
+            </>
+          ) : null}
+        {selfUnvoteUnlockable > 0
+          ? (
+            <>
+              <LiskAmountFormatted val={selfUnvoteUnlockable} />
+              {' '}
+              <span>{t('will be available to unlock in 1 month.')}</span>
+            </>
+          ) : null}
       </>
     );
   } if (locked && !unlockable) {
@@ -43,14 +59,14 @@ const getSuccessMessage = (t, locked, unlockable) => {
 };
 
 /* istanbul ignore file */
-const statusMessages = (t, locked, unlockable) => ({
+const statusMessages = (t, locked, unlockable, selfUnvote) => ({
   pending: {
     title: t('Submitting your votes'),
     message: t('Your votes are being submitted to the blockchain.'),
   },
   success: {
     title: t('Votes are submitted'),
-    message: getSuccessMessage(t, locked, unlockable),
+    message: getSuccessMessage(t, locked, unlockable, selfUnvote),
   },
   error: {
     title: t('Vote submission failed'),

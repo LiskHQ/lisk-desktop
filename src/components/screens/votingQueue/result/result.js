@@ -10,7 +10,7 @@ import statusMessages from './statusMessages';
 import styles from './styles.css';
 
 const Result = ({
-  t, history, locked, unlockable, error, transactionBroadcasted, transactions,
+  t, history, locked, unlockable, error, transactionBroadcasted, transactions, selfUnvote,
 }) => {
   const closeModal = () => {
     history.push(routes.wallet.path);
@@ -24,7 +24,7 @@ const Result = ({
   }, []);
 
   const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
-  const template = statusMessages(t, locked, unlockable)[status.code];
+  const template = statusMessages(t, locked, unlockable, selfUnvote)[status.code];
 
   return (
     <section>
