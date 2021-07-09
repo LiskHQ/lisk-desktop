@@ -1,11 +1,14 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
-import { transformTransaction } from '@utils/transaction';
+import { transformTransaction, createTransactionObject, flattenTransaction } from '@utils/transaction';
+import { joinModuleAndAssetIds } from '@utils/moduleAssets';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
 import { PrimaryButton } from '@toolbox/buttons';
 import Feedback from '@toolbox/feedback/feedback';
+import { validateTransaction } from '@liskhq/lisk-transactions';
+import { moduleAssetSchemas } from '@constants';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
@@ -23,10 +26,25 @@ const ImportData = ({ t, nextStep }) => {
     }
   };
 
+  // eslint-disable-next-line max-statements
   const validateAndSetTransaction = (input) => {
     try {
       const parsedInput = JSON.parse(input);
       setTransaction(parsedInput);
+      const moduleAssetId = joinModuleAndAssetIds({
+        moduleID: parsedInput.moduleID,
+        assetID: parsedInput.assetID,
+      });
+
+      const schema = moduleAssetSchemas[moduleAssetId];
+      const transformedTransaction = transformTransaction(parsedInput);
+      const flattenedTransaction = flattenTransaction(transformedTransaction);
+      const transactionObject = createTransactionObject(flattenedTransaction, moduleAssetId);
+      const err = validateTransaction(schema, transactionObject);
+
+      if (err) {
+        throw Error('Unknown transaction');
+      }
       setError(undefined);
     } catch (e) {
       setTransaction(undefined);
@@ -45,8 +63,6 @@ const ImportData = ({ t, nextStep }) => {
       validateAndSetTransaction(target.result);
     };
   }, []);
-
-  console.log(transaction);
 
   return (
     <section>
