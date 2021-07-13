@@ -28,8 +28,8 @@ const TimeOutToast = ({
   return (
     completed && toast(
       <div className={styles.toastText}>
-        <p className={styles.title}>{t('Warning session timeout')}</p>
-        <p>{t('Your session will timed out in {{time}} if no network activity occur.', { time: `${minutes}${seconds}` })}</p>
+        <h5 className={styles.title}>{t('Warning: Session Timeout')}</h5>
+        <p className={styles.content}>{t('Your session will be timed out in {{time}} if no network activity occurs.', { time: `${minutes}${seconds}` })}</p>
         <button
           className={`${styles.button} reset-time-button`}
           onClick={onResetTime}

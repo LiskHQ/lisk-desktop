@@ -6,7 +6,7 @@ import styles from './autoSignOut.css';
 
 const TimeOutToast = ({ t, completed }) => (
   completed && toast(
-    <div className={styles.toastText}>{t('Session timeout')}</div>, {
+    <div className={styles.toastText}>{t('Session timed out')}</div>, {
       toastId: 'time-out',
       autoClose: false,
       closeButton: <span
