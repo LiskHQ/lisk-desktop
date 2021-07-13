@@ -21,12 +21,13 @@ const blockListener = ({ getState, dispatch }) => {
   blockUnsubscribe();
 
   const callback = (block) => {
-    const { settings, network } = getState();
+    const { settings, network, blocks } = getState();
     const activeToken = settings.token && state.settings.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;
     const now = new Date();
 
-    if (activeToken === tokenMap.LSK.key) {
+    if (activeToken === tokenMap.LSK.key
+      && block.data[0].height !== blocks.latestBlocks[0].height) {
       dispatch({
         type: actionTypes.newBlockCreated,
         data: {
