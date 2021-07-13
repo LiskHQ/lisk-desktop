@@ -53,7 +53,7 @@ const filterIncomingTransactions = (transactions, account) => transactions.filte
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
   filterIncomingTransactions(transactions, account).forEach((transaction) => {
     const amount = fromRawLsk(transaction.asset.amount);
-    const message = transaction.asset?.data
+    const message = transaction.asset.data
       ? i18n.t('with message {{message}}', { message: transaction.asset.data })
       : '';
     // eslint-disable-next-line no-new
