@@ -38,8 +38,12 @@
 }
 
 .title {
-  text-decoration: underline;
   margin-bottom: 0;
+  margin-top: 20px;
+}
+
+.content {
+  margin-bottom: 45px;
 }
 
 button {
