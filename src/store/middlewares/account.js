@@ -47,15 +47,13 @@ const votePlaced = (store, action) => {
 };
 
 const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
-  transaction
-  && transaction.recipientId === account.summary?.address
-  && transaction.type === MODULE_ASSETS_NAME_ID_MAP.transfer
+  transaction.asset.recipient?.address === account.summary?.address
 ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
   filterIncomingTransactions(transactions, account).forEach((transaction) => {
-    const amount = fromRawLsk(transaction.amount);
-    const message = transaction.asset && transaction.asset.data
+    const amount = fromRawLsk(transaction.asset.amount);
+    const message = transaction.asset?.data
       ? i18n.t('with message {{message}}', { message: transaction.asset.data })
       : '';
     // eslint-disable-next-line no-new
