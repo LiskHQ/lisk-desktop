@@ -43,7 +43,7 @@ const PerformanceView = ({
             id={data.lastForgedHeight}
             exact
           >
-            {data.lastForgedHeight}
+            {data.lastForgedHeight || '-'}
           </NavLink>
         </Item>
         <Item
