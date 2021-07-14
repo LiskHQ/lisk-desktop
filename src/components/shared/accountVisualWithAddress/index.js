@@ -41,7 +41,7 @@ class AccountVisualWithAddress extends React.Component {
           <>
             <Icon
               className={styles.txIcon}
-              name={MODULE_ASSETS_MAP[moduleAssetId].icon || 'txDefault'}
+              name={MODULE_ASSETS_MAP[moduleAssetId]?.icon ?? 'txDefault'}
             />
             <span className={styles.addressValue}>
               {title}
