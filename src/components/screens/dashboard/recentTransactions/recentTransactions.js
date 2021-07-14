@@ -40,7 +40,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
   const [isLoaded, setLoaded] = useState(!!transactions.data.length);
   const settings = useSelector(state => state.settings);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
-  const activeToken = tokenMap[settings.token.active];
+  const activeToken = tokenMap[settings.token.active].key;
   const host = account.info && account.info[activeToken] ? account.info[activeToken].summary.address : '';
 
   useEffect(() => {
