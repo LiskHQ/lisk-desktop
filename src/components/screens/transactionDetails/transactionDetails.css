@@ -166,10 +166,10 @@
       "blockId blockHeight"
       "fee confirmations";
 
-      & > * {
-        &:nth-last-child(2) {
-          border-bottom: none;
-        }
+    & > * {
+      &:nth-last-child(2) {
+        border-bottom: none;
       }
+    }
   }
 }
