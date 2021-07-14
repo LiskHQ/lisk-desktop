@@ -156,7 +156,7 @@ const BitcoinState = {
   account: {
     passphrase: 'test',
     info: {
-      BTC: { address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo' },
+      BTC: { summary: { address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo' } },
     },
   },
   settings: {
