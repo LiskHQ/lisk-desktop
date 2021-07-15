@@ -12,14 +12,14 @@ const getPendingTime = (unvoteHeight, unlockHeight) => {
   return moment().to(momentSeconds, true);
 };
 
-const UnlockingListItem = ({ unvote, t }) => (
+const UnlockingListItem = ({ unvote, t, currentBlockHeight }) => (
   <li className="unlocking-balance">
     <p>
       <LiskAmount val={unvote.amount} token={tokenMap.LSK.key} />
     </p>
     <p>
       <Icon name="loading" />
-      {`${t('will be available to unlock in')} ${getPendingTime(unvote.height.start, unvote.height.end)}`}
+      {`${t('will be available to unlock in')} ${getPendingTime(currentBlockHeight, unvote.height.end)}`}
     </p>
   </li>
 );
@@ -38,6 +38,7 @@ const UnlockingList = ({ unlocking, currentBlockHeight, t }) => (
         <UnlockingListItem
           key={`${i}-unlocking-balance-list`}
           unvote={unvote}
+          currentBlockHeight={currentBlockHeight}
           t={t}
         />
       );
