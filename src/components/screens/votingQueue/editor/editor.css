@@ -77,6 +77,7 @@
   margin-top: 10px;
   overflow-y: auto;
   max-height: 290px;
+  padding-bottom: 10px;
 
   & header {
     padding: 21px 0 20px 0;
