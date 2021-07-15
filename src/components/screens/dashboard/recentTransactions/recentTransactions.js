@@ -44,11 +44,11 @@ const RecentTransactions = ({ className, t, transactions }) => {
   const host = account.info && account.info[activeToken] ? account.info[activeToken].summary.address : '';
 
   useEffect(() => {
-    if (!!account.info && account.info[activeToken.key] && !isLoaded) {
+    if (host && !isLoaded) {
       setLoaded(true);
       transactions.loadData();
     }
-  }, [account.info]);
+  }, [host]);
 
   return (
     <Box
