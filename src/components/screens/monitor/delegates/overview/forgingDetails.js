@@ -15,17 +15,9 @@ import styles from './overview.css';
 
 const FORGERS_TO_SHOW = 6;
 
-const getForgingStats = (data, forgedInRound) => {
-  if (forgedInRound === 0) return [0, 103, 0];
-  const states = {
-    forging: 0,
-    awaitingSlot: 0,
-    missedBlock: 0,
-  };
-  data.forEach((item) => {
-    states[item.state] += 1;
-  });
-  return [states.forging, states.awaitingSlot, states.missedBlock];
+const getForgingStats = (data, forgedInRound = 0) => {
+  const missedBlocks = data.filter(item => item.state === 'missedBlock').length;
+  return [forgedInRound, ROUND_LENGTH - forgedInRound, missedBlocks];
 };
 
 const ProgressBar = ({ forgedInRound }) => (
