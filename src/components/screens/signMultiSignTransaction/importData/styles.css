@@ -33,6 +33,8 @@
     border: none;
     box-sizing: border-box;
     color: var(--color-maastricht-blue);
+    padding: var(--vertical-padding-l);
+    line-height: 1.4em; /* stylelint-disable-line unit-whitelist */
   }
 
   &:focus-within {

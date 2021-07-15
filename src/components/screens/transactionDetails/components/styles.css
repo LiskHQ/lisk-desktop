@@ -82,6 +82,10 @@
 
 .votes {
   grid-area: votes;
+
+  & .label {
+    margin-top: 15px;
+  }
 }
 
 .blockId {
@@ -107,17 +111,11 @@
   }
 }
 
-.votes {
-  & .label {
-    margin-top: 15px;
-  }
-
-  & .votesContainer {
-    display: flex;
-    align-content: flex-start;
-    width: 100%;
-    flex-wrap: wrap;
-  }
+.votesContainer {
+  display: flex;
+  align-content: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .voteTag {
