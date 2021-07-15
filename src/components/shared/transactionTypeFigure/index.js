@@ -21,7 +21,12 @@ const TransactionTypeFigure = ({
       {
         moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer && !iconOnly
           ? renderAvatar()
-          : <Icon name={MODULE_ASSETS_MAP[moduleAssetId].icon} className={styles.transactionIcon} />
+          : (
+            <Icon
+              name={MODULE_ASSETS_MAP[moduleAssetId]?.icon ?? 'txDefault'}
+              className={styles.transactionIcon}
+            />
+          )
       }
     </div>
   );

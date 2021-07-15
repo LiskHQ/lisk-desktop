@@ -110,7 +110,8 @@ const Transactions = ({
           header={header(t, activeToken, changeSort)}
           currentSort={sort}
           canLoadMore={canLoadMore}
-          error={transactions.error}
+          error={transactions.error.code !== 404 ? transactions.error : undefined}
+          emptyState={{ message: t('This account does not have any transactions.') }}
         />
       </BoxContent>
     </Box>

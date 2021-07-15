@@ -157,4 +157,29 @@
       "transactionId fee"
       "signedAndRemainingMembersList signedAndRemainingMembersList";
   }
+
+  & .reportDelegateMisbehavior {
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "transactionId date"
+      "blockId blockHeight"
+      "fee confirmations";
+
+    & > * {
+      &:nth-last-child(2) {
+        border-bottom: none;
+      }
+    }
+  }
+
+  & .reclaimLSK {
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "transactionId date"
+      "blockId blockHeight"
+      "fee confirmations"
+      "amount amount";
+  }
 }
