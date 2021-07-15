@@ -66,7 +66,8 @@ export const DelegateDetails = ({
           tooltipClassName={styles.tooltipContainer}
           className={styles.eyeIconTooltip}
           position="bottom right"
-          size="s"
+          size="maxContent"
+          indent
           content={(
             <span
               className={`
