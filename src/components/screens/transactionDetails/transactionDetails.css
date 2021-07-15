@@ -172,4 +172,14 @@
       }
     }
   }
+
+  & .reclaimLSK {
+    grid-template-areas:
+      "illustration illustration"
+      "sender sender"
+      "transactionId date"
+      "blockId blockHeight"
+      "fee confirmations"
+      "amount amount";
+  }
 }
