@@ -483,6 +483,7 @@
   "There are no transactions.": "There are no transactions.",
   "There is no connection to the {{model}}. Please check the cables if it happened by accident.": "There is no connection to the {{model}}. Please check the cables if it happened by accident.",
   "There was an error in the transaction. Please try again!": "There was an error in the transaction. Please try again!",
+  "This account does not have any transactions.": "This account does not have any transactions.",
   "This account doesn’t have any voters.": "This account doesn’t have any voters.",
   "This account doesn’t have any votes matching searched username.": "This account doesn’t have any votes matching searched username.",
   "This account doesn’t have any votes.": "This account doesn’t have any votes.",
