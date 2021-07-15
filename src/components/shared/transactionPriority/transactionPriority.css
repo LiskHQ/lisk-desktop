@@ -18,10 +18,23 @@
   color: var(--color-maastricht-blue);
   display: flex;
   margin-bottom: 8px;
+}
 
-  & .loading {
-    color: var(--color-ultramarine-blue);
-    margin-left: 5px;
+.loadingWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  padding-bottom: 14px;
+
+  & > span:first-child {
+    color: var(--color-maastricht-blue);
+    padding-right: 10px;
+  }
+
+  & .spinner > span:after {
+    border-color: var(--color-maastricht-blue);
+    border-bottom-color: transparent;
+    justify-content: flex-end;
   }
 }
 

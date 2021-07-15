@@ -179,11 +179,10 @@ const TransactionPriority = ({
         {
           // eslint-disable-next-line no-nested-ternary
           isLoading ? (
-            <>
-              {t('Loading')}
-              {' '}
-              <Spinner className={styles.loading} />
-            </>
+            <span className={styles.loadingWrapper}>
+              <span>{t('Loading')}</span>
+              <Spinner className={styles.spinner} />
+            </span>
           )
             : (isCustom && !showEditIcon ? (
               <Input
