@@ -90,6 +90,7 @@ const ImportData = ({ t, nextStep }) => {
               onPaste={onPaste}
               value={transaction ? JSON.stringify(transaction) : ''}
               readOnly
+              className={styles.txInput}
             />
             <Feedback
               message={error}
