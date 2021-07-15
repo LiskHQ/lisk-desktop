@@ -107,11 +107,17 @@
   }
 }
 
-.votesContainer {
-  display: flex;
-  align-content: flex-start;
-  width: 100%;
-  flex-wrap: wrap;
+.votes {
+  & .label {
+    margin-top: 15px;
+  }
+
+  & .votesContainer {
+    display: flex;
+    align-content: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+  }
 }
 
 .voteTag {
