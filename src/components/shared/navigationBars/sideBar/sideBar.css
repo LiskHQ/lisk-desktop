@@ -118,7 +118,7 @@
   }
 
   & .label {
-    color: var(--color-white);
+    color: var(--color-strong-white);
   }
 }
 
