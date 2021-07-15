@@ -336,7 +336,7 @@ const normalizeTransactionParams = params => Object.keys(params)
  * @returns {String} Amount in Beddows/Satoshi
  */
 const getTxAmount = ({ moduleAssetId, asset }) => {
-  if (moduleAssetId === transfer) {
+  if (moduleAssetId === transfer || moduleAssetId === reclaimLSK) {
     return asset.amount;
   }
 

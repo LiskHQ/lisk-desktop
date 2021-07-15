@@ -9,7 +9,7 @@ import styles from './transactionDetails.css';
 
 const {
   transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup,
-  reportDelegateMisbehavior, // reclaimLSK,
+  reportDelegateMisbehavior, reclaimLSK,
 } = MODULE_ASSETS_NAME_ID_MAP;
 
 const baseComponents = [Illustration, Sender];
@@ -61,6 +61,10 @@ const LayoutSchema = {
   [reportDelegateMisbehavior]: {
     components: [...baseComponents, ...timeComponents],
     className: styles.reportDelegateMisbehavior,
+  },
+  [reclaimLSK]: {
+    components: [...baseComponents, ...timeComponents, Amount],
+    className: styles.reclaimLSK,
   },
   default: {
     components: [...baseComponents],
