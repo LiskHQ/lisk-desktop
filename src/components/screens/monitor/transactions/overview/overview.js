@@ -180,32 +180,13 @@ const Overview = ({ t, txStats }) => {
       <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Transaction types')}</h2>
-          <div className={`${styles.graph} showOnLargeViewPort`}>
-            <DoughnutChart
-              data={distributionChartData}
-              options={{
-                legend: {
-                  display: true,
-                  labels: {
-                    generateLabels: () =>
-                      listOfLabels
-                        .map((label, i) => ({
-                          text: label
-                            .replace('Register multisignature group', 'Register multisig.'),
-                          fillStyle: colorPalette[i],
-                        })),
-                  },
-                },
-              }}
-            />
-          </div>
-          <div className={`${styles.graph} hideOnLargeViewPort`}>
+          <div className={`${styles.graph}`}>
             <DoughnutChart
               data={distributionChartData}
               options={{ legend: { display: false } }}
             />
           </div>
-          <div className="hideOnLargeViewPort">
+          <div>
             <GuideTooltip>
               {listOfLabels
                 .map((label, i) => (

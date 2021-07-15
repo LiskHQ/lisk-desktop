@@ -12,6 +12,7 @@ const assets = {
   unlockToken: 2,
   registerMultisignatureGroup: 0,
   reclaimLSK: 0,
+  reportDelegateMisbehavior: 3,
 };
 
 const moduleAssetNameIdMap = {
@@ -19,6 +20,7 @@ const moduleAssetNameIdMap = {
   unlockToken: `${modules.dpos}:${assets.unlockToken}`,
   voteDelegate: `${modules.dpos}:${assets.voteDelegate}`,
   registerDelegate: `${modules.dpos}:${assets.registerDelegate}`,
+  reportDelegateMisbehavior: `${modules.dpos}:${assets.reportDelegateMisbehavior}`,
   registerMultisignatureGroup: `${modules.multiSignature}:${assets.registerMultisignatureGroup}`,
   reclaimLSK: `${modules.legacyAccount}:${assets.reclaimLSK}`,
 };
@@ -39,6 +41,10 @@ const moduleAssetMap = {
   [moduleAssetNameIdMap.registerDelegate]: {
     maxFee: 25e8,
     icon: 'registerDelegate',
+  },
+  [moduleAssetNameIdMap.reportDelegateMisbehavior]: {
+    maxFee: 1e7,
+    icon: 'reportDelegateMisbehavior',
   },
   [moduleAssetNameIdMap.registerMultisignatureGroup]: {
     maxFee: 5e8,
