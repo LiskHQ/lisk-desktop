@@ -31,7 +31,7 @@
     padding-right: 10px;
   }
 
-  & .spinner > span:after {
+  & .spinner > span::after {
     border-color: var(--color-maastricht-blue);
     border-bottom-color: transparent;
     justify-content: flex-end;
