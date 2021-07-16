@@ -64,8 +64,9 @@
         border: 1px solid var(--color-periwinkle-blue);
         border-radius: 18px;
         margin-right: 5px;
-        padding: 5px var(--horizontal-padding-m);
+        padding: 5px 0;
         outline: none;
+        width: 90px;
 
         &:disabled {
           opacity: 0;
