@@ -12,7 +12,7 @@ const fields = t => [{
   name: 'amount',
   type: 'number-range',
 }, {
-  label: t('Address'),
+  label: t('Sender'),
   placeholder: t('Address or public key'),
   name: 'senderAddress',
   type: 'address',

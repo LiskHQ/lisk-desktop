@@ -48,7 +48,7 @@ const TransactionsTable = ({
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
     moduleAssetId: value => `${t('Type')}: ${getModuleAssetTitle()[value]}`,
-    senderAddress: value => `${t('Address')}: ${value}`,
+    senderAddress: value => `${t('Sender')}: ${value}`,
     recipientAddress: value => `${t('Recipient')}: ${value}`,
   };
 
@@ -107,8 +107,8 @@ const defaultFilters = {
   amountTo: '',
   moduleAssetId: '',
   height: '',
-  recipient: '',
-  address: '',
+  recipientAddress: '',
+  senderAddress: '',
 };
 
 const defaultSort = 'timestamp:desc';
