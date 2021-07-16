@@ -14,12 +14,12 @@ const fields = t => [{
 }, {
   label: t('Address'),
   placeholder: t('Address or public key'),
-  name: 'address',
+  name: 'senderAddress',
   type: 'address',
 }, {
   label: t('Recipient'),
   placeholder: t('Address or public key'),
-  name: 'recipient',
+  name: 'recipientAddress',
   type: 'address',
 }, {
   label: t('Type'),
@@ -41,8 +41,8 @@ const Transactions = ({ t, transactions }) => {
     amountTo: '',
     moduleAssetId: '',
     height: '',
-    recipient: '',
-    address: '',
+    recipientAddress: '',
+    senderAddress: '',
   };
   const canLoadMore = transactions.meta
     ? transactions.data.length < transactions.meta.total

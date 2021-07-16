@@ -40,6 +40,7 @@ const TransactionsTable = ({
       offset: transactions.meta.count + transactions.meta.offset,
       sort,
     });
+
     transactions.loadData(params);
   };
 
@@ -47,8 +48,8 @@ const TransactionsTable = ({
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
     moduleAssetId: value => `${t('Type')}: ${getModuleAssetTitle()[value]}`,
-    address: value => `${t('Address')}: ${value}`,
-    recipient: value => `${t('Recipient')}: ${value}`,
+    senderAddress: value => `${t('Address')}: ${value}`,
+    recipientAddress: value => `${t('Recipient')}: ${value}`,
   };
 
   return (
