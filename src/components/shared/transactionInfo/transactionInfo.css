@@ -88,6 +88,13 @@
   white-space: nowrap;
 }
 
+/* Unlock */
+.sender {
+  & .address {
+    padding-left: var(--horizontal-padding-xs);
+  }
+}
+
 .msignRow {
   display: flex;
   flex-direction: row !important;

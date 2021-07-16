@@ -12,6 +12,12 @@
   }
 }
 
+.transactionTitle {
+  & > span {
+    padding-left: 35px;
+  }
+}
+
 .sortingColumn {
   cursor: pointer;
 }

@@ -27,12 +27,13 @@ const TransactionAddress = ({
   address, bookmarks, moduleAssetId, token,
 }) => {
   const bookmark = bookmarks[token].find(acc => acc.address === address);
+  const title = getModuleAssetTitle()[moduleAssetId].replace('multisignature', 'multisig.');
 
   return (
     <div className={`${styles.wrapper} transaction-address`}>
       {
         moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer
-          ? <span>{getModuleAssetTitle()[moduleAssetId]}</span>
+          ? <span>{title}</span>
           : <Address address={address} bookmark={bookmark} />
       }
       {bookmark && <Address address={address} className={styles.subTitle} />}

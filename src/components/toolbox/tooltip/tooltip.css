@@ -27,8 +27,10 @@
 .tooltip {
   @mixin contentLarge;
 
-  background-color: var(--color-tooltip);
-  border: 1px solid var(--color-platinum);
+  background-color: var(--color-tooltip-bg);
+  -webkit-backdrop-filter: blur(50px);
+  backdrop-filter: blur(50px);
+  border: 0.5px solid var(--color-platinum);
   border-radius: var(--border-radius-box);
   box-shadow: var(--box-shadow-standard);
   box-sizing: border-box;
@@ -48,7 +50,7 @@
   word-break: initial;
 
   & .tooltipArrow {
-    color: var(--color-tooltip);
+    color: var(--color-tooltip-arrow);
     height: 28px;
     position: absolute;
     stroke: var(--color-platinum);

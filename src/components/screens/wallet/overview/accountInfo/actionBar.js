@@ -41,7 +41,10 @@ const MultiSignatureButton = ({
       position="bottom"
       size="maxContent"
       content={(
-        <Icon name="registerMultisignatureGroup" className={styles.multisigIcon} />
+        <Icon
+          name={isMultisignature ? 'registerMultisignatureGroup' : 'multiSignatureOutline'}
+          className={styles.multisigIcon}
+        />
       )}
     >
       <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature account')}</p>

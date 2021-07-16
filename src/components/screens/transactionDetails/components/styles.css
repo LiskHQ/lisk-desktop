@@ -82,6 +82,10 @@
 
 .votes {
   grid-area: votes;
+
+  & .label {
+    margin-top: 15px;
+  }
 }
 
 .blockId {

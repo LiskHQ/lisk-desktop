@@ -1,12 +1,15 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '@constants';
+import styles from './transactions.css';
 
 export default (t, activeToken, changeSort) => {
   const isLSK = activeToken === tokenMap.LSK.key;
   return ([
     {
       title: t('Transaction'),
-      classList: isLSK ? grid['col-xs-4'] : grid['col-xs-5'],
+      classList: isLSK
+        ? `${grid['col-xs-4']} ${styles.transactionTitle}`
+        : `${grid['col-xs-5']} ${styles.transactionTitle}`,
     },
     {
       title: t('Date'),

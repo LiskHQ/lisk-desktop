@@ -6,11 +6,11 @@ import styles from './transactionInfo.css';
 
 const UnlockBalance = ({ account, t, transaction = {} }) => (
   <>
-    <section>
+    <section className={styles.sender}>
       <label>{t('Sender')}</label>
       <label>
         <AccountVisual address={account.summary.address} size={25} />
-        <label className="address-label">
+        <label className={`${styles.address} address-label`}>
           {account.summary.address}
         </label>
       </label>
