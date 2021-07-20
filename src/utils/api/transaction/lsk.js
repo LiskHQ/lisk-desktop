@@ -19,6 +19,7 @@ import {
 import { validateAddress } from '../../validators';
 import http from '../http';
 import { getDelegates } from '../delegate';
+import { fromRawLsk } from '../../lsk';
 
 const httpPrefix = '/api/v2';
 
@@ -227,6 +228,7 @@ export const getTransactionBaseFees = network =>
   })
     .then((response) => {
       const { feeEstimatePerByte } = response.data;
+
       return {
         Low: feeEstimatePerByte.low,
         Medium: feeEstimatePerByte.medium,
@@ -280,8 +282,9 @@ export const getTransactionFee = async ({
   }).length;
 
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
-  const fee = Math.min(calculatedFee, maxAssetFee);
-  const roundedValue = transactions.convertBeddowsToLSK(fee.toString());
+  const cappedFee = Math.min(calculatedFee, maxAssetFee);
+  const feeInLsk = fromRawLsk(cappedFee.toString());
+  const roundedValue = Number(feeInLsk).toFixed(7).toString();
 
   const feedback = transaction.amount === ''
     ? '-'
