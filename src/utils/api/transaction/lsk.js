@@ -53,6 +53,7 @@ export const getTransaction = ({
 });
 
 const filters = {
+  address: { key: 'address', test: address => !validateAddress(tokenMap.LSK.key, address) },
   senderAddress: { key: 'senderAddress', test: address => !validateAddress(tokenMap.LSK.key, address) },
   recipientAddress: { key: 'recipientAddress', test: address => !validateAddress(tokenMap.LSK.key, address) },
   timestamp: { key: 'timestamp', test: str => /^(\d+)?:(\d+)?$/.test(str) },
