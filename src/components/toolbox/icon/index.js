@@ -159,8 +159,8 @@ import initialiseRegistration from '../../../assets/images/icons/initialise-regi
 import warningYellow from '../../../assets/images/icons/warning-yellow.svg';
 import linkIcon from '../../../assets/images/icons/link-icon.svg';
 import refresh from '../../../assets/images/icons/refresh.svg';
-import reportDelegateMisbehaviorDark from '../../../assets/images/icons/reportDelegateMisbehavior.svg';
-import reportDelegateMisbehavior from '../../../assets/images/icons/reportDelegateMisbehavior-dark.svg';
+import reportDelegateMisbehavior from '../../../assets/images/icons/reportDelegateMisbehavior.svg';
+import reportDelegateMisbehaviorDark from '../../../assets/images/icons/reportDelegateMisbehavior-dark.svg';
 
 export const icons = {
   academy,
