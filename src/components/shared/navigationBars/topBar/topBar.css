@@ -133,7 +133,6 @@
   margin-right: 16px;
 
   &.active {
-
     & img {
       pointer-events: none;
       cursor: default;
