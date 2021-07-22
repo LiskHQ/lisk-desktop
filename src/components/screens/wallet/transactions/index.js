@@ -131,28 +131,19 @@ export default compose(
     transactions: {
       apiUtil: (network, { token, ...params }) =>
         getTransactions({ network, params: normalizeTransactionParams(params) }, token),
-      getApiParams: (state, { address, sort }) => {
-        console.log(address);
-
-        return ({
-          token: state.settings.token.active,
-          address,
-          sort,
-          limit: DEFAULT_LIMIT,
-        });
-      },
+      getApiParams: (state, { address, sort }) => ({
+        token: state.settings.token.active,
+        address,
+        sort,
+        limit: DEFAULT_LIMIT,
+      }),
       defaultData: { data: [], meta: {} },
       autoload: true,
-      transformResponse: (response, oldData, urlSearchParams) => {
-        console.log(response);
-        console.log(oldData);
-        console.log(urlSearchParams);
-        return (
-          urlSearchParams.offset
-            ? { data: [...oldData.data, ...response.data], meta: response.meta }
-            : response
-        );
-      },
+      transformResponse: (response, oldData, urlSearchParams) => (
+        urlSearchParams.offset
+          ? { data: [...oldData.data, ...response.data], meta: response.meta }
+          : response
+      ),
     },
     votedDelegates: {
       apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
