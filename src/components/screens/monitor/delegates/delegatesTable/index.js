@@ -63,6 +63,19 @@ const selectDelegates = ({
   }
 };
 
+const shouldAllowLoadMore = (activeTab, standByDelegates, sanctionedDelegates) => {
+  if (activeTab === 'standby') {
+    return (standByDelegates.meta?.offset + standByDelegates.meta?.count)
+      < standByDelegates.meta?.total;
+  }
+  if (activeTab === 'sanctioned') {
+    return (sanctionedDelegates.meta?.offset + sanctionedDelegates.meta?.count)
+      < sanctionedDelegates.meta?.total;
+  }
+
+  return false;
+};
+
 const DelegatesTable = ({
   setActiveTab,
   delegates,
@@ -87,7 +100,7 @@ const DelegatesTable = ({
     watchList,
   });
 
-  const canLoadMore = activeTab === 'standby' && (standByDelegates.meta?.offset + standByDelegates.meta?.count) < standByDelegates.meta?.total;
+  const canLoadMore = shouldAllowLoadMore(activeTab, standByDelegates, sanctionedDelegates);
 
   const handleLoadMore = () => {
     delegatesToShow.loadData(Object.keys(filters).reduce((acc, key) => ({

@@ -56,7 +56,7 @@ const Transactions = ({
 
   useEffect(() => {
     transactions.loadData();
-  }, [pending.length, confirmedLength]);
+  }, [pending.length, confirmedLength, address]);
 
   /* istanbul ignore next */
   const handleLoadMore = () => {
