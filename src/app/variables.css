@@ -167,7 +167,7 @@ or "warn/action" ineastd of "red/green"
   --color-blue-manatee-transparent: rgba(138, 140, 162, 0.1);
   --color-jade-green-transparent: rgba(43, 214, 123, 0.1);
   --color-tooltip-bg: rgb(255, 255, 255, 0.7);
-  --color-tooltip-arrow: rgb(255, 255, 255, 0.4);
+  --color-tooltip-arrow: rgb(255, 255, 255, 0.7);
 
   /*************************
         Box
@@ -250,5 +250,5 @@ or "warn/action" ineastd of "red/green"
   --color-search-container: var(--color-body-bg);
   --color-vote-item-bg: var(--color-mystic);
   --color-tooltip-bg: rgb(35, 35, 37, 0.7);
-  --color-tooltip-arrow: rgb(35, 35, 37, 0.4);
+  --color-tooltip-arrow: rgb(35, 35, 37, 0.7);
 }

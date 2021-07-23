@@ -130,12 +130,9 @@
 }
 
 .tokenSelector {
-  opacity: 0.5;
   margin-right: 16px;
 
   &.active {
-    opacity: 1;
-
     & img {
       pointer-events: none;
       cursor: default;
