@@ -29,7 +29,11 @@ const DetailsView = ({
         <Icon name="clockActive" className={styles.icon} />
         <div className={`${grid.col} ${styles.item}`}>
           <div className={styles.title}>{t('Status')}</div>
-          <div className={styles.value}>{status}</div>
+          <div className={styles.value}>
+            {
+              delegateWeight < 1e11 ? 'Non eligible' : status
+            }
+          </div>
         </div>
       </div>
       <div className={`${grid.row} ${styles.itemContainer}`}>

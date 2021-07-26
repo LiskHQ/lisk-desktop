@@ -138,11 +138,23 @@ export const RoundState = ({
   );
 };
 
+const getDelegateStatus = (key, totalVotesReceived) => {
+  if (key === 'banned' || key === 'punished') {
+    return [key, delegateStatus[key]];
+  }
+  if (totalVotesReceived < 1e11) {
+    return [key, delegateStatus.nonEligible];
+  }
+
+  return [key, delegateStatus[key]];
+};
+
 export const DelegateStatus = ({ activeTab, status, totalVotesReceived }) => {
-  const statusKey = totalVotesReceived < 1e11 ? 'nonEligible' : status;
+  const [key, value] = getDelegateStatus(status, totalVotesReceived);
+
   return (
     <span className={getStatusClass(activeTab)}>
-      <span className={`${styles.delegateStatus} ${styles[statusKey]}`}>{delegateStatus[statusKey]}</span>
+      <span className={`${styles.delegateStatus} ${styles[key]}`}>{value}</span>
     </span>
   );
 };

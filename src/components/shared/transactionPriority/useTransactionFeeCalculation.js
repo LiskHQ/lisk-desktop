@@ -53,7 +53,7 @@ const useTransactionFeeCalculation = ({
   }, [
     transaction.amount,
     transaction.data,
-    transaction.recipient,
+    transaction.recipientAddress,
     transaction.username,
     selectedPriority.selectedIndex,
     selectedPriority.value,
