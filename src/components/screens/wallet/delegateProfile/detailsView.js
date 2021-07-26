@@ -31,7 +31,7 @@ const DetailsView = ({
           <div className={styles.title}>{t('Status')}</div>
           <div className={styles.value}>
             {
-              delegateWeight < 1e11 ? 'Non eligible' : status
+              delegateWeight < 1e11 ? 'Ineligible' : status
             }
           </div>
         </div>
