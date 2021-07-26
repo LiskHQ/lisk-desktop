@@ -38,6 +38,7 @@ const areEqual = (prevProps, nextProps) => (
   prevProps.value === nextProps.value
   && prevProps.priceTicker[prevProps.token][prevProps.currency]
     === nextProps.priceTicker[nextProps.token][nextProps.currency]
+  && prevProps.isLoading === nextProps.isLoading
 );
 
 export default React.memo(Converter, areEqual);
