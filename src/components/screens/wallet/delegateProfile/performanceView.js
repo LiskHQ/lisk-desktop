@@ -50,7 +50,7 @@ const PerformanceView = ({
           title={t('Forged blocks')}
           icon="forgedBlocks"
         >
-          <div className={styles.performanceValue}>{data.producedBlocks || '-'}</div>
+          <div className={styles.performanceValue}>{data.producedBlocks ?? '-'}</div>
         </Item>
       </Box>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
