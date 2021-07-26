@@ -62,6 +62,7 @@ const filters = {
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
   moduleAssetId: { key: 'moduleAssetId', test: str => /\d:\d/.test(str) },
   height: { key: 'height', test: num => parseInt(num, 10) > 0 },
+  blockId: { key: 'blockId', test: str => typeof str === 'string' },
   sort: {
     key: 'sort',
     test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
@@ -98,21 +99,15 @@ export const getTransactions = ({
   baseUrl,
 }) => {
   const normParams = {};
-
-  // if blockId, ignore others
-  if (params.blockId) {
-    normParams.blockId = params.blockId;
-  } else {
-    // Validate params and fix keys
-    Object.keys(params).forEach((key) => {
-      if (filters[key] && filters[key].test(params[key])) {
-        normParams[filters[key].key] = params[key];
-      } else {
-        // eslint-disable-next-line no-console
-        console.log(`getTransactions: Dropped ${key} parameter, it's invalid.`, params[key]);
-      }
-    });
-  }
+  // Validate params and fix keys
+  Object.keys(params).forEach((key) => {
+    if (filters[key] && filters[key].test(params[key])) {
+      normParams[filters[key].key] = params[key];
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(`getTransactions: Dropped ${key} parameter, it's invalid.`, params[key]);
+    }
+  });
 
   return http({
     network,
