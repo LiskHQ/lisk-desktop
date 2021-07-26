@@ -65,7 +65,9 @@ export const CopyAndSendFooter = ({
         className="go-back-button"
         onClick={prevStep}
       >
-        {t('Go back')}
+        <span className={styles.buttonContent}>
+          {t('Go back')}
+        </span>
       </SecondaryButton>
       {
         !sent ? (
