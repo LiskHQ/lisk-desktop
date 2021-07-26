@@ -22,6 +22,11 @@ describe('BlockDetails page', () => {
     match: {
       url: `/monitor/blocks/${blocks[0].id}`,
     },
+    history: {
+      location: {
+        search: `?id=${blocks[0].id}`,
+      },
+    },
   };
 
   const resizeWindow = (x, y) => {
