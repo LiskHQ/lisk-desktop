@@ -27,7 +27,10 @@ const ComposedBlockDetails = compose(
     blockTransactions: {
       apiUtil: (network, params) => getTransactions({ network, params }, tokenMap.LSK.key),
       defaultData: [],
-      getApiParams: (_, ownProps) => ({ blockId: ownProps.id }),
+      getApiParams: (_, ownProps) => {
+        if (ownProps.id) return { blockId: ownProps.id };
+        return { height: ownProps.height };
+      },
       transformResponse: (response, oldData, urlSearchParams) => (
         urlSearchParams.offset
           ? [...oldData, ...response.data.filter(block =>
