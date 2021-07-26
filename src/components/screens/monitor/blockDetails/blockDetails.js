@@ -108,7 +108,7 @@ const Rows = ({ data, t, currentHeight }) => {
 };
 
 const BlockDetails = ({
-  t, blockDetails, blockTransactions, match, currentHeight,
+  t, blockDetails, blockTransactions, match, currentHeight, history,
 }) => {
   const canLoadMore = blockTransactions.meta
     ? blockTransactions.data.length < blockTransactions.meta.total
@@ -117,7 +117,7 @@ const BlockDetails = ({
   useEffect(() => {
     blockDetails.loadData();
     blockTransactions.loadData();
-  }, [match.url]);
+  }, [match.url, history.location.search]);
 
   return (
     <div>
