@@ -143,7 +143,7 @@ const getDelegateStatus = (key, totalVotesReceived) => {
     return [key, delegateStatus[key]];
   }
   if (totalVotesReceived < 1e11) {
-    return [key, delegateStatus.nonEligible];
+    return ['nonEligible', delegateStatus.nonEligible];
   }
 
   return [key, delegateStatus[key]];
