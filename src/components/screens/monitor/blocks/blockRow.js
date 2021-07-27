@@ -11,20 +11,17 @@ const BlockRow = ({ data, className }) => (
     className={`${grid.row} ${className} ${styles.tableRow}`}
     to={`${routes.block.path}?id=${data.id}`}
   >
-    <span className={grid['col-xs-2']}>
+    <span className={grid['col-xs-3']}>
       {data.height}
     </span>
     <span className={grid['col-xs-3']}>
       <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
     </span>
-    <span className={grid['col-xs-2']}>
-      {data.numberOfTransactions}
-    </span>
-    <span className={grid['col-xs-2']}>
+    <span className={grid['col-xs-3']}>
       {data.generatorUsername}
     </span>
     <span className={grid['col-xs-2']}>
-      <LiskAmount val={data.totalAmount} token="LSK" />
+      {data.numberOfTransactions}
     </span>
     <span className={grid['col-xs-1']}>
       <LiskAmount val={data.totalForged} token="LSK" />
