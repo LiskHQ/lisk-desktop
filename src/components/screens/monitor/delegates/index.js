@@ -111,10 +111,7 @@ const ComposedDelegates = compose(
         apiUtil: (network, params) => getDelegates({ network, params: { ...params, status: 'punished,banned' } }),
         defaultData: [],
         autoload: true,
-        transformResponse: (response) =>
-          stripAccountDataAndMerge(response).filter(
-            (delegate) => delegate.totalVotesReceived > 1e11,
-          ),
+        transformResponse: stripAccountDataAndMerge,
       },
 
       votedDelegates: {
