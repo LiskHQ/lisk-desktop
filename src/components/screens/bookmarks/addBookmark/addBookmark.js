@@ -147,7 +147,7 @@ const AddBookmark = ({
     const feedback = validateBookmarkAddress(active, value, network, bookmarks, t, true);
     clearTimeout(timeout.current);
 
-    if (active === tokenMap.LSK.key && !feedback) {
+    if (active === tokenMap.LSK.key && !feedback && value !== '') {
       timeout.current = setTimeout(() => {
         account.loadData({ address: value });
       }, 300);

@@ -14,12 +14,16 @@ class DiscreetMode extends Component {
   shouldEnableDiscreetMode() {
     const {
       location, isDiscreetMode, shouldEvaluateForOtherAccounts,
+      addresses, account,
     } = this.props;
     if (!isDiscreetMode) return false;
-
     if (shouldEvaluateForOtherAccounts) {
       if (location.pathname.includes(routes.account.path)) {
         return this.handleBlurOnOtherWalletPage();
+      }
+      const { location: { search } } = this.props;
+      if (selectSearchParamValue(search, 'modal') === 'transactionDetails') {
+        return addresses.includes(account.summary?.address);
       }
     }
     return true;

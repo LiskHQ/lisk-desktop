@@ -138,7 +138,7 @@ export const Amount = ({
   const {
     activeToken, transaction,
   } = useContext(Context);
-  const addresses = [transaction.asset.recipient ?? '', transaction.sender.address];
+  const addresses = [transaction.asset.recipient?.address ?? '', transaction.sender.address];
 
   return (
     <ValueAndLabel label={t('Amount of transaction')} className={styles.amount}>
