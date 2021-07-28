@@ -2,12 +2,13 @@ import React from 'react';
 import Countdown from 'react-countdown';
 import { toast } from 'react-toastify';
 import { withTranslation } from 'react-i18next';
+import { timeOutId } from '@constants';
 import styles from './autoSignOut.css';
 
 const TimeOutToast = ({ t, completed }) => (
   completed && toast(
     <div className={styles.toastText}>{t('Session timed out')}</div>, {
-      toastId: 'time-out',
+      toastId: timeOutId,
       autoClose: false,
       closeButton: <span
         className={styles.closeBtn}

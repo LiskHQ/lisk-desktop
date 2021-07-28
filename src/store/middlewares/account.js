@@ -1,5 +1,8 @@
+import { toast } from 'react-toastify';
 import {
-  networks, actionTypes, networkKeys, settings, MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
+  networks, actionTypes, networkKeys, settings,
+  MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
+  timeOutId, timeOutWarningId,
 } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
 import { getActiveTokenAccount } from '@utils/account';
@@ -146,6 +149,8 @@ const accountMiddleware = store => next => async (action) => {
       break;
     case actionTypes.accountUpdated:
     case actionTypes.accountLoggedIn: {
+      toast.dismiss(timeOutId);
+      toast.dismiss(timeOutWarningId);
       checkAccountInitializationState(action);
       break;
     }

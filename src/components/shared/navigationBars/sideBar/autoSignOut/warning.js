@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { timerReset } from '@actions';
-import { account } from '@constants';
+import { account, timeOutWarningId } from '@constants';
 import styles from './autoSignOut.css';
 
 const TimeOutToast = ({
@@ -38,7 +38,7 @@ const TimeOutToast = ({
         </button>
       </div>,
       {
-        toastId: 'warning-time-out',
+        toastId: timeOutWarningId,
         autoClose: false,
         closeButton: <span
           className={styles.closeBtn}
