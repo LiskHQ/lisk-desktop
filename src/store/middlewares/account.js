@@ -49,9 +49,11 @@ const votePlaced = (store, action) => {
   }
 };
 
-const filterIncomingTransactions = (transactions, account) => transactions.filter(transaction => (
-  transaction.asset.recipient?.address === account.summary?.address
-));
+const filterIncomingTransactions = (transactions, account) =>
+  transactions.filter(transaction => (
+    transaction.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer
+    && transaction.asset.recipient?.address === account.summary?.address
+  ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
   filterIncomingTransactions(transactions, account).forEach((transaction) => {
