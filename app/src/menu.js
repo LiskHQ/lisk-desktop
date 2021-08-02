@@ -118,7 +118,7 @@ const menu = {
         submenu: [
           {
             label: i18n.t('Lisk Website'),
-            click: menu.onClickLink.bind(null, electron, 'https://lisk.io'),
+            click: menu.onClickLink.bind(null, electron, 'https://lisk.com'),
           },
           {
             label: i18n.t('Discord'),
@@ -126,7 +126,7 @@ const menu = {
           },
           {
             label: i18n.t('Provide Feedback'),
-            click: menu.onClickLink.bind(null, electron, 'https://lisk.io/contact/i-want-provide-feedback-about-lisk-product/form'),
+            click: menu.onClickLink.bind(null, electron, 'https://lisk.com/contact/i-want-provide-feedback-about-lisk-product/form'),
           },
           {
             label: i18n.t('Lisk Explorer'),
