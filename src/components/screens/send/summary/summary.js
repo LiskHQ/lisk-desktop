@@ -10,6 +10,7 @@ import { signTransaction, transformTransaction } from '@utils/transaction';
 import { useSelector } from 'react-redux';
 
 const Summary = ({
+  transactionDoubleSigned,
   resetTransactionResult,
   transactionCreated,
   isInitialization,
@@ -23,7 +24,6 @@ const Summary = ({
 }) => {
   const networkIdentifier = useSelector(selectNetworkIdentifier);
   const [secondPass, setSecondPass] = useState('');
-  const [doubleSignedTx, setDoubleSignedTx] = useState(null);
 
   useEffect(() => {
     transactionCreated({
@@ -43,15 +43,14 @@ const Summary = ({
         { data: account },
         false,
       );
-      console.log('signedTx', signedTx);
       if (!err) {
-        setDoubleSignedTx(signedTx);
+        transactionDoubleSigned(signedTx);
       }
     }
   }, [secondPass]);
 
   const submitTransaction = (fn) => {
-    if (!account.summary.isMultisignature) {
+    if (!account.summary.isMultisignature || secondPass) {
       Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
       if (account.loginType !== loginTypes.passphrase.code
           && transactions.txSignatureError) {
@@ -73,7 +72,7 @@ const Summary = ({
         });
       }
     } else {
-      fn(doubleSignedTx || transactions.signedTransaction);
+      fn(transactions.signedTransaction);
     }
   };
 
