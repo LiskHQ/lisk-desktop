@@ -129,6 +129,11 @@ export const transactionCreated = data => async (dispatch, getState) => {
   });
 };
 
+export const transactionDoubleSigned = data => ({
+  type: actionTypes.transactionDoubleSigned,
+  data,
+});
+
 /**
  * Calls transactionAPI.broadcast function for put the tx object (signed) into the network
  * @param {Object} transaction
