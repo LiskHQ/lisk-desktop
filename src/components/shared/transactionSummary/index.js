@@ -1,91 +1,15 @@
-import React, { useState } from 'react';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import { transactionToJSON, downloadJSON } from '@utils/transaction';
+import React from 'react';
 import LiskAmount from '@shared/liskAmount';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
-import BoxFooter from '@toolbox/box/footer';
 import CheckBox from '@toolbox/checkBox';
 import HardwareWalletIllustration from '@toolbox/hardwareWalletIllustration';
 import Tooltip from '@toolbox/tooltip/tooltip';
-import copyToClipboard from 'copy-to-clipboard';
-import Icon from '@toolbox/icon';
 import { tokenMap } from '@constants';
+import Footer from './footer';
 
 import styles from './transactionSummary.css';
-
-const Footer = ({
-  confirmButton, cancelButton, footerClassName, showCancelButton,
-  confirmation, isConfirmed, isMultisignature, t, createTransaction,
-}) => {
-  const [copied, setCopied] = useState(false);
-
-  const onDownload = (bufferTx = {}) => {
-    const transaction = JSON.parse(transactionToJSON(bufferTx));
-    downloadJSON(transaction, `tx-${transaction.id}`);
-  };
-
-  const onCopy = (transaction) => {
-    copyToClipboard(transactionToJSON(transaction));
-    setCopied(true);
-  };
-
-  return (
-    <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
-      {isMultisignature ? (
-        <>
-          <SecondaryButton
-            className="cancel-button"
-            onClick={cancelButton.onClick}
-          >
-            {t('Go back')}
-          </SecondaryButton>
-          <SecondaryButton
-            className="copy-button"
-            onClick={() => {
-              createTransaction(onCopy);
-            }}
-          >
-            <span className={styles.buttonContent}>
-              <Icon name={copied ? 'checkmark' : 'copy'} />
-              {t(copied ? 'Copied' : 'Copy')}
-            </span>
-          </SecondaryButton>
-          <PrimaryButton
-            className="download-button"
-            onClick={() => {
-              createTransaction(onDownload);
-            }}
-          >
-            <span className={styles.buttonContent}>
-              <Icon name="download" />
-              {t('Download')}
-            </span>
-          </PrimaryButton>
-        </>
-      ) : (
-        <>
-          {showCancelButton && (
-            <SecondaryButton
-              className="cancel-button"
-              onClick={cancelButton.onClick}
-            >
-              {cancelButton.label}
-            </SecondaryButton>
-          )}
-          <PrimaryButton
-            className="confirm-button"
-            disabled={(confirmation && !isConfirmed) || confirmButton.disabled}
-            onClick={confirmButton.onClick}
-          >
-            {confirmButton.label}
-          </PrimaryButton>
-        </>
-      )}
-    </BoxFooter>
-  );
-};
 
 class TransactionSummary extends React.Component {
   constructor(props) {
@@ -142,8 +66,9 @@ class TransactionSummary extends React.Component {
 
   render() {
     const {
-      title, children, confirmButton, cancelButton, account, createTransaction, t,
-      fee, confirmation, classNames, token, footerClassName, showCancelButton = true,
+      title, children, confirmButton, cancelButton, keys,
+      account, createTransaction, t, fee, confirmation, setSecondPass,
+      classNames, token, footerClassName, showCancelButton = true,
     } = this.props;
     const {
       isHardwareWalletConnected, isConfirmed,
@@ -202,7 +127,11 @@ class TransactionSummary extends React.Component {
             isConfirmed={isConfirmed}
             createTransaction={createTransaction}
             isMultisignature={token === tokenMap.LSK.key && account.summary.isMultisignature}
+            hasSecondPass={
+              keys && keys.mandatoryKeys.length === 2 && keys.optionalKeys.length === 0
+            }
             t={t}
+            setSecondPass={setSecondPass}
           />
         )}
       </Box>
