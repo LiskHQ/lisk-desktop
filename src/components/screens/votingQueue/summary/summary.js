@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import { isEmpty } from '@utils/helpers';
@@ -39,6 +39,7 @@ const Summary = ({
   t, removed = {}, edited = {}, added = {}, selfUnvote = {},
   fee, account, prevStep, nextStep, transactions, ...props
 }) => {
+  const [secondPass, setSecondPass] = useState('');
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
@@ -88,6 +89,8 @@ const Summary = ({
       createTransaction={(callback) => {
         callback(transactions.signedTransaction);
       }}
+      keys={account.keys}
+      setSecondPass={setSecondPass}
     >
       <ToggleIcon isNotHeader />
       <div className={styles.headerContainer}>

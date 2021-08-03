@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
@@ -16,6 +16,7 @@ const Summary = ({
   nextStep,
   account,
 }) => {
+  const [secondPass, setSecondPass] = useState('');
   const onSubmit = () => {
     if (!error) {
       nextStep({ transactionInfo });
@@ -45,6 +46,8 @@ const Summary = ({
       createTransaction={(callback) => {
         callback(transactionInfo);
       }}
+      keys={account.keys}
+      setSecondPass={setSecondPass}
     >
       <TransactionInfo
         moduleAssetId={moduleAssetId}
