@@ -1,5 +1,6 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { joinModuleAndAssetIds } from '@utils/moduleAssets';
+import { getKeys } from '@utils/account';
 
 const getNumbersOfSignaturesRequired = ({ keys, isGroupRegistration }) => {
   if (isGroupRegistration) {
@@ -7,14 +8,6 @@ const getNumbersOfSignaturesRequired = ({ keys, isGroupRegistration }) => {
     return keys.mandatoryKeys.length + keys.optionalKeys.length + 1;
   }
   return keys.numberOfSignatures;
-};
-
-export const getKeys = ({ senderAccount, transaction, isGroupRegistration }) => {
-  if (isGroupRegistration) {
-    return transaction.asset;
-  }
-
-  return senderAccount.keys;
 };
 
 const getNonEmptySignatures = (signatures) =>
