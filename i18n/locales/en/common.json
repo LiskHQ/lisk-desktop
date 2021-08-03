@@ -425,6 +425,7 @@
   "Send LSK and BTC": "Send LSK and BTC",
   "Send a reclaim transaction": "Send a reclaim transaction",
   "Send entire balance": "Send entire balance",
+  "Send using second passphrase right away": "Send using second passphrase right away",
   "Send {{amount}} {{token}}": "Send {{amount}} {{token}}",
   "Send {{token}}": "Send {{token}}",
   "Send {{token}} here": "Send {{token}} here",
