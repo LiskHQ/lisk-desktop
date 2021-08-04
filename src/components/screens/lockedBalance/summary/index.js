@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
+import { signTransaction, transformTransaction } from '@utils/transaction';
+import { selectNetworkIdentifier, selectTransactions } from '@store/selectors';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const Summary = ({
+  transactionDoubleSigned,
   transactionInfo,
   error,
   fee,
@@ -16,10 +21,28 @@ const Summary = ({
   nextStep,
   account,
 }) => {
+  const networkIdentifier = useSelector(selectNetworkIdentifier);
+  const transactions = useSelector(selectTransactions);
   const [secondPass, setSecondPass] = useState('');
+
+  useEffect(() => {
+    if (secondPass) {
+      const [signedTx, err] = signTransaction(
+        transformTransaction(transactions.signedTransaction),
+        secondPass,
+        networkIdentifier,
+        { data: account },
+        false,
+      );
+      if (!err) {
+        transactionDoubleSigned(signedTx);
+      }
+    }
+  }, [secondPass]);
+
   const onSubmit = () => {
     if (!error) {
-      nextStep({ transactionInfo });
+      nextStep();
     } else {
       nextStep({ error });
     }
