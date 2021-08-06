@@ -77,7 +77,7 @@ describe('MenuBuilder', () => {
   });
 
   it('Should open link on click', () => {
-    menu.onClickLink(electron, 'https://lisk.io');
-    expect(electron.shell.openExternal).to.have.been.calledWith('https://lisk.io');
+    menu.onClickLink(electron, 'https://lisk.com');
+    expect(electron.shell.openExternal).to.have.been.calledWith('https://lisk.com');
   });
 });

@@ -36,7 +36,7 @@ describe('Initialization', () => {
   it('Opens lisk blog windows', () => {
     wrapper.find('span').first().simulate('click');
     expect(window.open).toHaveBeenCalledWith(
-      'https://lisk.io/blog/announcement/lisk-account-initialization',
+      'https://lisk.com/blog/announcement/lisk-account-initialization',
       '_blank',
       'rel=noopener noreferrer',
     );
