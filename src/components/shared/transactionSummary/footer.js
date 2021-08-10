@@ -1,3 +1,4 @@
+// istanbul ignore file
 import React, { useState } from 'react';
 import { PrimaryButton, SecondaryButton, TertiaryButton } from '@toolbox/buttons';
 import { transactionToJSON, downloadJSON } from '@utils/transaction';
