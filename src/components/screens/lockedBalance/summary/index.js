@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { transactionDoubleSigned } from '@actions';
 import { MODULE_ASSETS_NAME_ID_MAP, actionTypes } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
@@ -14,7 +15,6 @@ import styles from './summary.css';
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const Summary = ({
-  transactionDoubleSigned,
   transactionInfo,
   error,
   fee,
@@ -55,20 +55,12 @@ const Summary = ({
       Piwik.trackingEvent('RegisterDelegate_SubmitTransaction', 'button', 'Next step');
       if (!transactions.txSignatureError
         && !isEmpty(transactions.signedTransaction)) {
-        nextStep({
-          transactionInfo,
-        });
+        nextStep();
       } else if (transactions.txSignatureError) {
         nextStep({
           error,
         });
       }
-    }
-
-    if (!error) {
-      nextStep();
-    } else {
-      nextStep({ error });
     }
   };
 
