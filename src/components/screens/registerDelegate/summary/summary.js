@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectNetworkIdentifier } from '@store/selectors';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { selectNetworkIdentifier, selectTransactions } from '@store/selectors';
+import { MODULE_ASSETS_NAME_ID_MAP, actionTypes } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
 import { fromRawLsk } from '@utils/lsk';
 import { transactionDoubleSigned } from '@actions';
 import { signTransaction, transformTransaction } from '@utils/transaction';
+import Piwik from '@utils/piwik';
+import { isEmpty } from '@utils/helpers';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
@@ -22,19 +24,20 @@ const Summary = ({
 }) => {
   const dispatch = useDispatch();
   const networkIdentifier = useSelector(selectNetworkIdentifier);
+  const transactions = useSelector(selectTransactions);
   const [secondPass, setSecondPass] = useState('');
-  const onSubmit = () => {
-    if (!error) {
-      nextStep({ transactionInfo });
-    } else {
-      nextStep({ error });
-    }
-  };
+
+  useEffect(() => {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: transactionInfo,
+    });
+  }, []);
 
   useEffect(() => {
     if (secondPass) {
       const [signedTx, err] = signTransaction(
-        transformTransaction(transactionInfo),
+        transformTransaction(transactions.signedTransaction),
         secondPass,
         networkIdentifier,
         { data: account },
@@ -45,6 +48,22 @@ const Summary = ({
       }
     }
   }, [secondPass]);
+
+  const onSubmit = () => {
+    if (!account.summary.isMultisignature || secondPass) {
+      Piwik.trackingEvent('RegisterDelegate_SubmitTransaction', 'button', 'Next step');
+      if (!transactions.txSignatureError
+        && !isEmpty(transactions.signedTransaction)) {
+        nextStep({
+          transactionInfo,
+        });
+      } else if (transactions.txSignatureError) {
+        nextStep({
+          error,
+        });
+      }
+    }
+  };
 
   const onConfirmAction = {
     label: t('Register delegate'),
