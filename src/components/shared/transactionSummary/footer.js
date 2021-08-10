@@ -55,32 +55,29 @@ const NormalActions = ({
   confirmButton,
   hasSecondPass,
   secondPass,
-}) => {
-  console.log(hasSecondPass, { secondPass });
-  return (
-    <div className={styles.primaryActions}>
-      {showCancelButton && (
-        <SecondaryButton
-          className="cancel-button"
-          onClick={cancelButton.onClick}
-        >
-          {cancelButton.label}
-        </SecondaryButton>
-      )}
-      <PrimaryButton
-        className="confirm-button"
-        disabled={
-          (confirmation && !isConfirmed)
-          || confirmButton.disabled
-          || (hasSecondPass && !secondPass)
-        }
-        onClick={confirmButton.onClick}
+}) => (
+  <div className={styles.primaryActions}>
+    {showCancelButton && (
+      <SecondaryButton
+        className="cancel-button"
+        onClick={cancelButton.onClick}
       >
-        {confirmButton.label}
-      </PrimaryButton>
-    </div>
-  );
-};
+        {cancelButton.label}
+      </SecondaryButton>
+    )}
+    <PrimaryButton
+      className="confirm-button"
+      disabled={
+        (confirmation && !isConfirmed)
+        || confirmButton.disabled
+        || (hasSecondPass && !secondPass)
+      }
+      onClick={confirmButton.onClick}
+    >
+      {confirmButton.label}
+    </PrimaryButton>
+  </div>
+);
 
 const Footer = ({
   confirmButton, cancelButton, footerClassName, showCancelButton, hasSecondPass,
@@ -89,8 +86,6 @@ const Footer = ({
   const [copied, setCopied] = useState(false);
   const [useSecondPass, setUseSecondPass] = useState(false);
   const [secondPassPhrase, setSecondPassPhrase] = useState('');
-
-  console.log('secondPassPhrase : ', secondPassPhrase);
 
   const onDownload = (bufferTx = {}) => {
     const transaction = JSON.parse(transactionToJSON(bufferTx));

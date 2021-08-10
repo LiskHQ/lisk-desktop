@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import to from 'await-to-js';
 import { useSelector } from 'react-redux';
 import { selectAccount } from '@store/selectors';
@@ -18,7 +18,6 @@ const Summary = ({
 }) => {
   const account = useSelector(selectAccount);
   const network = useSelector(state => state.network);
-  const [secondPass, setSecondPass] = useState('');
   const senderPublicKey = account.info.LSK.summary.publicKey;
   const [
     // eslint-disable-next-line no-unused-vars
@@ -77,8 +76,6 @@ const Summary = ({
       fee={minFee.value}
       token={tokenMap.LSK.key}
       classNames={styles.summaryContainer}
-      keys={account.info.LSK.keys}
-      setSecondPass={setSecondPass}
     >
       <TransactionInfo account={account} moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.reclaimLSK} />
     </TransactionSummary>
