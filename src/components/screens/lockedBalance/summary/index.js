@@ -45,7 +45,7 @@ const Summary = ({
         false,
       );
       if (!err) {
-        transactionDoubleSigned(signedTx);
+        dispatch(transactionDoubleSigned(signedTx));
       }
     }
   }, [secondPass]);
