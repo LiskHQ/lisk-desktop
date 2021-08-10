@@ -13,7 +13,7 @@ import {
 import { transformStringDateToUnixTimestamp } from '@utils/datetime';
 import { toRawLsk } from '@utils/lsk';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@utils/moduleAssets';
-import { findNonEmptySignatureIndices } from './helpers';
+import { findNonEmptySignatureIndices } from '@screens/signMultiSignTransaction/helpers';
 
 const {
   transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,
