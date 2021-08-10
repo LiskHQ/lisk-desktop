@@ -1,3 +1,5 @@
+@import './../../../app/mixins.css';
+
 .amountFieldHeader {
   display: flex;
   justify-content: space-between;
@@ -41,4 +43,50 @@
   color: var(--color-maastricht-blue);
   display: flex;
   margin-bottom: 8px;
+}
+
+.entireBalanceWarning {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #FFFCE8;
+  border: 1px solid #F7E36D;
+  border-radius: 5px;
+  margin-top: 6px;
+  padding: 10px;
+
+  & > img {
+    width: 20px;
+    margin-right: 10px;
+  }
+
+  & > span {
+    @mixin contentSmall normal;
+
+    color: var(--color-maastricht-black);
+  }
+
+  & > .closeBtn {
+    align-items: center;
+    cursor: pointer;
+    height: 12px;
+  
+    &::before,
+    &::after {
+      background-color: currentColor;
+      color: var(--color-maastricht-black);
+      content: '';
+      height: 13px;
+      position: absolute;
+      width: 1px;
+    }
+  
+    &::before {
+      transform: rotate(45deg);
+    }
+  
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
 }
