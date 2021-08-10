@@ -78,7 +78,7 @@ const Form = ({
         type: actionTypes.transactionSignError,
         data: error,
       });
-      nextStep({ error, fee, account });
+      nextStep({ fee, account });
     }
   };
 

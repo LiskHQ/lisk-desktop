@@ -20,7 +20,6 @@ const Summary = ({
   t,
   nextStep,
   transactionInfo,
-  error,
 }) => {
   const dispatch = useDispatch();
   const networkIdentifier = useSelector(selectNetworkIdentifier);
@@ -59,7 +58,7 @@ const Summary = ({
         });
       } else if (transactions.txSignatureError) {
         nextStep({
-          error,
+          error: transactions.txSignatureError,
         });
       }
     }

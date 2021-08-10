@@ -110,7 +110,7 @@ describe('Unlock LSK modal', () => {
     );
   });
 
-  it('calls nextStep passing error', async () => {
+  it('calls nextStep without passing transactionInfo when error', async () => {
     const error = { message: 'error:test' };
     create.mockImplementation(() =>
       new Promise((_, reject) => {
@@ -121,7 +121,7 @@ describe('Unlock LSK modal', () => {
     act(() => { wrapper.update(); });
     await flushPromises();
     expect(nextStep).toBeCalledWith(
-      expect.objectContaining({ error: expect.any(Object) }),
+      expect.not.objectContaining({ transactionInfo: expect.any(Object) }),
     );
   });
 });

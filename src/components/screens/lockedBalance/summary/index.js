@@ -16,7 +16,6 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const Summary = ({
   transactionInfo,
-  error,
   fee,
   prevStep,
   t,
@@ -52,13 +51,13 @@ const Summary = ({
 
   const onSubmit = () => {
     if (!account.summary.isMultisignature || secondPass) {
-      Piwik.trackingEvent('RegisterDelegate_SubmitTransaction', 'button', 'Next step');
+      Piwik.trackingEvent('UnlockBalance_SubmitTransaction', 'button', 'Next step');
       if (!transactions.txSignatureError
         && !isEmpty(transactions.signedTransaction)) {
         nextStep();
       } else if (transactions.txSignatureError) {
         nextStep({
-          error,
+          error: transactions.txSignatureError,
         });
       }
     }
