@@ -18,30 +18,30 @@
         margin-right: 15px;
         width: 40px;
       }
-  
+
       & > .details {
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-  
+
         & > span:first-child {
           @mixin contentNormal;
-  
+
           color: var(--color-slate-gray);
         }
       }
-  
+
       & .amounts {
         @mixin headingNormal;
-  
+
         color: var(--color-maastricht-blue);
       }
-  
+
       &:last-child {
         border-bottom: none;
       }
     }
-    }
+  }
 }
