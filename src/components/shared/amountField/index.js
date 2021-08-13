@@ -15,13 +15,20 @@ const AmountField = ({
   displayConverter, t,
 }) => {
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
-  const setEntireBalance = () => {
+  const setEntireBalance = (e) => {
+    e.preventDefault();
     const value = formatAmountBasedOnLocale({
       value: fromRawLsk(maxAmount.value),
       format: '0.[00000000]',
     });
     setAmountField({ value }, maxAmount);
     setShowEntireBalanceWarning(true);
+  };
+
+  const resetInput = (e) => {
+    e.preventDefault();
+    setShowEntireBalanceWarning(false);
+    setAmountField({ value: '' }, maxAmount);
   };
 
   const handleAmountChange = ({ target }) => {
@@ -78,13 +85,10 @@ const AmountField = ({
           <span>{t('You are about to send your entire balance')}</span>
           <div
             className={styles.closeBtn}
-            onClick={() => {
-              handleAmountChange({ value: ' ' }, maxAmount);
-              setShowEntireBalanceWarning(false);
-            }}
+            onClick={resetInput}
           />
         </div>
-      ) }
+      )}
     </label>
   );
 };
