@@ -13,6 +13,7 @@
 .amountField {
   align-items: center;
   display: flex;
+  flex-direction: column;
   position: relative;
   width: 100%;
 
@@ -49,8 +50,11 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: #FFFCE8;
-  border: 1px solid #F7E36D;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  background-color: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
   border-radius: 5px;
   margin-top: 6px;
   padding: 10px;
@@ -70,7 +74,9 @@
     align-items: center;
     cursor: pointer;
     height: 12px;
-  
+    right: 22px;
+    position: absolute;
+
     &::before,
     &::after {
       background-color: currentColor;
@@ -80,11 +86,11 @@
       position: absolute;
       width: 1px;
     }
-  
+
     &::before {
       transform: rotate(45deg);
     }
-  
+
     &::after {
       transform: rotate(-45deg);
     }

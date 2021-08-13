@@ -168,6 +168,8 @@ or "warn/action" ineastd of "red/green"
   --color-jade-green-transparent: rgba(43, 214, 123, 0.1);
   --color-tooltip-bg: rgb(255, 255, 255, 0.7);
   --color-tooltip-arrow: rgb(255, 255, 255, 0.7);
+  --color-warning-border: #f7e36d;
+  --color-warning-bg: #fffce8;
 
   /*************************
         Box
