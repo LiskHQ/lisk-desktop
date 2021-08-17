@@ -33,6 +33,9 @@ const AmountField = ({
 
   const handleAmountChange = ({ target }) => {
     setAmountField(target, maxAmount);
+    if (showEntireBalanceWarning && target.value < maxAmount.value) {
+      setShowEntireBalanceWarning(false);
+    }
   };
 
   const ignoreClicks = (e) => {
