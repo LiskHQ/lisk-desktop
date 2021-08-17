@@ -70,7 +70,7 @@ const DelegateRow = ({
         activeTab={activeTab}
       />
       {
-        (activeTab === 'watched' || activeTab === 'standby')
+        (activeTab === 'active' || activeTab === 'watched' || activeTab === 'standby')
           ? (
             <DelegateRank
               data={data}
