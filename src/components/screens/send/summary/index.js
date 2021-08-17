@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
 import { getActiveTokenAccount } from '@utils/account';
-import { transactionCreated, resetTransactionResult } from '@actions';
+import {
+  transactionCreated,
+  resetTransactionResult,
+  transactionDoubleSigned,
+} from '@actions';
 import Summary from './summary';
 
 const mapStateToProps = state => ({
@@ -15,6 +19,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   transactionCreated,
   resetTransactionResult,
+  transactionDoubleSigned,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Summary));

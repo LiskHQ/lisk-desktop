@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import Summary from './index';
 import accounts from '../../../../../test/constants/accounts';
 
@@ -37,15 +38,35 @@ describe('Delegate Registration Summary', () => {
   });
 
   it('submit user data when click in confirm button', () => {
-    const wrapper = mount(<Summary {...props} />);
+    const wrapper = mountWithRouterAndStore(
+      Summary,
+      props,
+      {},
+      {
+        transactions: {
+          txSignatureError: null,
+          signedTransaction: { id: 1 },
+        },
+      },
+    );
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
-    expect(props.nextStep).toBeCalledWith({ transactionInfo: props.transactionInfo });
+    expect(props.nextStep).toBeCalled();
   });
 
   it('submit user data when click in confirm button but fails', () => {
     const error = {};
-    const wrapper = mount(<Summary {...props} error={error} />);
+    const wrapper = mountWithRouterAndStore(
+      Summary,
+      props,
+      {},
+      {
+        transactions: {
+          txSignatureError: error,
+          signedTransaction: { id: 1 },
+        },
+      },
+    );
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({ error });
   });

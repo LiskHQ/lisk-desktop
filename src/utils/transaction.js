@@ -1,15 +1,19 @@
 /* eslint-disable max-lines */
+import { transactions } from '@liskhq/lisk-client';
 import {
   MODULE_ASSETS_NAME_ID_MAP,
+  moduleAssetSchemas,
 } from '@constants';
 import {
   extractAddressFromPublicKey,
   getBase32AddressFromAddress,
   getAddressFromBase32Address,
+  getKeys,
 } from '@utils/account';
 import { transformStringDateToUnixTimestamp } from '@utils/datetime';
 import { toRawLsk } from '@utils/lsk';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@utils/moduleAssets';
+import { findNonEmptySignatureIndices } from '@screens/signMultiSignTransaction/helpers';
 
 const {
   transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,
@@ -282,8 +286,8 @@ const transactionToJSON = (transaction) => {
   return JSON.stringify(obj);
 };
 
-const containsTransactionType = (transactions = [], type) =>
-  transactions.some(tx => tx.moduleAssetId === type);
+const containsTransactionType = (txs = [], type) =>
+  txs.some(tx => tx.moduleAssetId === type);
 
 /**
  * Adapts transaction filter params to match transactions API method
@@ -365,6 +369,71 @@ const downloadJSON = (data, name) => {
   anchor.setAttribute('download', `${name}.json`);
   anchor.click();
 };
+/**
+ * Signs a given multisignature tx with a given passphrase
+ *
+ * @param {Object} transaction - Transaction object to be signed
+ * @param {String} passphrase - Account passphrase to use for signing
+ * @param {String} networkIdentifier - Current network identifier (from Redux store)
+ * @param {Object} senderAccount
+ * @param {Object} senderAccount.data - Details of the account who has initiated the transaction
+ * @param {Boolean} isFullySigned - Is the tx object fully signed?
+ *
+ * @returns [Object, Object] - Signed transaction and err
+ */
+// eslint-disable-next-line max-statements
+const signTransaction = (
+  transaction,
+  passphrase,
+  networkIdentifier,
+  senderAccount,
+  isFullySigned,
+) => {
+  let signedTransaction;
+  let err;
+
+  const isGroupRegistration = transaction.moduleAssetId
+      === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+
+  const { mandatoryKeys, optionalKeys } = getKeys({
+    senderAccount: senderAccount.data, transaction, isGroupRegistration,
+  });
+
+  const flatTransaction = flattenTransaction(transaction);
+  const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
+  const keys = {
+    mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
+    optionalKeys: optionalKeys.map(key => Buffer.from(key, 'hex')),
+  };
+
+  const includeSender = transaction.moduleAssetId
+    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+
+  try {
+    signedTransaction = transactions.signMultiSignatureTransaction(
+      moduleAssetSchemas[transaction.moduleAssetId],
+      transactionObject,
+      Buffer.from(networkIdentifier, 'hex'),
+      passphrase,
+      keys,
+      includeSender,
+    );
+
+    // remove unnecessary signatures
+    if (isFullySigned) {
+      const emptySignatureIndices = findNonEmptySignatureIndices(transaction.signatures);
+      emptySignatureIndices.forEach(index => {
+        signedTransaction.signatures[index] = Buffer.from('');
+      });
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    err = e;
+  }
+
+  return [signedTransaction, err];
+};
 
 export {
   getTxAmount,
@@ -375,4 +444,5 @@ export {
   containsTransactionType,
   createTransactionObject,
   normalizeTransactionParams,
+  signTransaction,
 };

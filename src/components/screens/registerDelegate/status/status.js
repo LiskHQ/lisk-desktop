@@ -17,14 +17,14 @@ class Status extends React.Component {
   }
 
   componentDidMount() {
-    const { transactionInfo } = this.props;
+    const { transactions } = this.props;
     // istanbul ignore else
-    if (transactionInfo) this.broadcastTransaction();
+    if (transactions.signedTransaction) this.broadcastTransaction();
   }
 
   broadcastTransaction() {
-    const { transactionBroadcasted, transactionInfo } = this.props;
-    transactionBroadcasted(transactionInfo);
+    const { transactionBroadcasted, transactions } = this.props;
+    transactionBroadcasted(transactions.signedTransaction);
   }
 
   // TODO update test coverage in PR #2199

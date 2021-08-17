@@ -40,17 +40,11 @@ describe('Delegate Registration Status', () => {
 
   it('broadcast the transaction properly', () => {
     const newProps = {
-      transactionInfo: {
-        id: 1,
-        account: accounts.genesis,
-        username: 'my_delegate_account',
-        passphrase: accounts.genesis.passphrase,
-        secondPassphrase: null,
-        recipientId: '123123L',
-        amount: 0,
-        timeOffset: 0,
-      },
       ...props,
+      transactions: {
+        txSignatureError: null,
+        signedTransaction: { id: 1 },
+      },
     };
     wrapper = mount(<Status {...newProps} />);
 

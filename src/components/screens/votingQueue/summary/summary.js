@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import { isEmpty } from '@utils/helpers';
+import { signTransaction, transformTransaction } from '@utils/transaction';
 import TransactionInfo from '@shared/transactionInfo';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
+import { selectNetworkIdentifier } from '@store/selectors';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
 
@@ -37,8 +40,10 @@ const getResultProps = ({ added, removed, edited }) => {
 
 const Summary = ({
   t, removed = {}, edited = {}, added = {}, selfUnvote = {},
-  fee, account, prevStep, nextStep, transactions, ...props
+  fee, account, prevStep, nextStep, transactions, transactionDoubleSigned, ...props
 }) => {
+  const networkIdentifier = useSelector(selectNetworkIdentifier);
+  const [secondPass, setSecondPass] = useState('');
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
@@ -52,8 +57,23 @@ const Summary = ({
     });
   }, []);
 
+  useEffect(() => {
+    if (secondPass) {
+      const [signedTx, err] = signTransaction(
+        transformTransaction(transactions.signedTransaction),
+        secondPass,
+        networkIdentifier,
+        { data: account },
+        false,
+      );
+      if (!err) {
+        transactionDoubleSigned(signedTx);
+      }
+    }
+  }, [secondPass]);
+
   const submitTransaction = () => {
-    if (!account.summary.isMultisignature) {
+    if (!account.summary.isMultisignature || secondPass) {
       Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
       if (!transactions.txSignatureError
         && !isEmpty(transactions.signedTransaction)) {
@@ -88,6 +108,8 @@ const Summary = ({
       createTransaction={(callback) => {
         callback(transactions.signedTransaction);
       }}
+      keys={account.keys}
+      setSecondPass={setSecondPass}
     >
       <ToggleIcon isNotHeader />
       <div className={styles.headerContainer}>

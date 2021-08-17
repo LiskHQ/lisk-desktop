@@ -226,3 +226,19 @@ export const calculateRemainingAndSignedMembers = (
 
   return { signed, remaining };
 };
+
+/**
+ * Get keys object from account info or multisig tx asset
+ * @param {object} data
+ * @param {object} data.senderAccount - Account info
+ * @param {object} data.transaction - Transaction details
+ * @param {boolean} data.isGroupRegistration - tx moduleAsset check
+ * @returns {object} - Keys, including number and list of mandatory and optional keys
+ */
+export const getKeys = ({ senderAccount, transaction, isGroupRegistration }) => {
+  if (isGroupRegistration) {
+    return transaction.asset;
+  }
+
+  return senderAccount.keys;
+};
