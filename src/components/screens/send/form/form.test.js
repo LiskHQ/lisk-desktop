@@ -278,6 +278,22 @@ describe('Form', () => {
       expect(wrapper.find('.amount Feedback')).toHaveText('');
       expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     });
+
+    it('Should display send entire balance warning', () => {
+      const wrapper = mount(<Form {...props} />);
+      const { address } = accounts.genesis.summary;
+      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
+      wrapper.find('.send-entire-balance-button').at(1).simulate('click');
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+
+      expect(wrapper.find('.entire-balance-warning')).toHaveText('You are about to send your entire balance');
+      wrapper.find('.close-entire-balance-warning').at(0).simulate('click');
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+
+      expect(wrapper.find('.entire-balance-warning'));
+    });
   });
 
   describe('Reference field', () => {
