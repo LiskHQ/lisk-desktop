@@ -83,11 +83,11 @@ const AmountField = ({
         )}
       </span>
       {showEntireBalanceWarning && (
-        <div className={styles.entireBalanceWarning}>
+        <div className={`${styles.entireBalanceWarning} entire-balance-warning`}>
           <Icon name="warningYellow" />
           <span>{t('You are about to send your entire balance')}</span>
           <div
-            className={styles.closeBtn}
+            className={`${styles.closeBtn} close-entire-balance-warning`}
             onClick={resetInput}
           />
         </div>
