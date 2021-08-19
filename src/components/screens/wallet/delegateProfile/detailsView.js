@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import { tokenMap } from '@constants';
+import { tokenMap, MIN_VOTES_RECEIVED } from '@constants';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxHeader from '@toolbox/box/header';
@@ -31,7 +31,7 @@ const DetailsView = ({
           <div className={styles.title}>{t('Status')}</div>
           <div className={styles.value}>
             {
-              delegateWeight < 1e11 ? 'Ineligible' : status
+              delegateWeight < MIN_VOTES_RECEIVED ? 'Ineligible' : status
             }
           </div>
         </div>

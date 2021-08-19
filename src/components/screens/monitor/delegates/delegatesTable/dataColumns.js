@@ -6,6 +6,7 @@ import { truncateAddress } from '@utils/account';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import Icon from '@toolbox/icon';
 import AccountVisual from '@toolbox/accountVisual';
+import { MIN_VOTES_RECEIVED } from '@constants';
 import {
   getDelegateDetailsClass,
   getStatusClass,
@@ -142,7 +143,7 @@ const getDelegateStatus = (key, totalVotesReceived) => {
   if (key === 'banned' || key === 'punished' || key === 'active') {
     return [key, delegateStatus[key]];
   }
-  if (totalVotesReceived < 1e11) {
+  if (totalVotesReceived < MIN_VOTES_RECEIVED) {
     return ['nonEligible', delegateStatus.nonEligible];
   }
 
