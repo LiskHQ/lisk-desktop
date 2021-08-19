@@ -104,5 +104,9 @@ export default (activeTab, changeSort, t) => ([
   {
     title: t('Status'),
     classList: getStatusClass(activeTab),
+    sort: {
+      fn: changeSort,
+      key: 'status',
+    },
   },
 ]);

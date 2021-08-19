@@ -62,10 +62,6 @@ export const forgersRetrieved = () => async (dispatch, getState) => {
   });
   let forgers = [];
   const indexBook = {};
-  const delegates = await getDelegates({
-    network: network.networks.LSK,
-    params: { addressList: data.map(forger => forger.address) },
-  });
 
   // Get the list of usernames that already forged in this round
   const haveForgedInRound = latestBlocks
@@ -74,6 +70,11 @@ export const forgersRetrieved = () => async (dispatch, getState) => {
 
   // check previous blocks and define missed blocks
   if (data) {
+    const delegates = await getDelegates({
+      network: network.networks.LSK,
+      params: { addressList: data.map(forger => forger.address) },
+    });
+
     forgers = data.map((forger, index) => {
       forger.rank = delegates.data.find(
         delegate => forger.address === delegate.summary.address,

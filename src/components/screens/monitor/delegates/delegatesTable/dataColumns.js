@@ -139,7 +139,7 @@ export const RoundState = ({
 };
 
 const getDelegateStatus = (key, totalVotesReceived) => {
-  if (key === 'banned' || key === 'punished') {
+  if (key === 'banned' || key === 'punished' || key === 'active') {
     return [key, delegateStatus[key]];
   }
   if (totalVotesReceived < 1e11) {

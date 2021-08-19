@@ -9,6 +9,20 @@ const TableWrapper = compose(
   withLocalSort('delegates', 'forgingTime:asc', {
     forgingTime: (a, b, direction) =>
       ((a.nextForgingTime > b.nextForgingTime) ? 1 : -1) * (direction === 'asc' ? 1 : -1),
+    status: (a, b, direction) => {
+      if (a.status === 'active') {
+        return 1 * (direction === 'asc' ? 1 : -1);
+      }
+      if (b.status === 'active' || a.status !== 'standby') {
+        return -1 * (direction === 'asc' ? 1 : -1);
+      }
+      if (a.totalVotesReceived < 1e11) {
+        return -1 * (direction === 'asc' ? 1 : -1);
+      }
+      if (b.totalVotesReceived < 1e11) {
+        return 1 * (direction === 'asc' ? 1 : -1);
+      }
+    },
   }),
 )(({
   delegates, handleLoadMore, t, activeTab, blocks,
