@@ -23,6 +23,7 @@ const TableWrapper = compose(
       if (b.totalVotesReceived < MIN_VOTES_RECEIVED) {
         return 1 * (direction === 'asc' ? 1 : -1);
       }
+      return 0;
     },
   }),
 )(({
