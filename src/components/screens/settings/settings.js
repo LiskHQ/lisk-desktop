@@ -149,7 +149,7 @@ class Settings extends React.Component {
                 </div>
               </label>
               {
-                !isHardwareWalletAccount && !isEmpty(account)
+                !isHardwareWalletAccount
                   ? (
                     <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
                       <CheckBox
