@@ -77,9 +77,8 @@ class Settings extends React.Component {
           </BoxHeader>
           <BoxContent className={styles.content}>
             <section>
-              <h2>{t('Locale')}</h2>
+              <h2>{t('Currency')}</h2>
               <div className={styles.fieldGroup}>
-                <span className={styles.labelName}>{t('Currency')}</span>
                 <Select
                   options={currencies.map(currency => ({
                     label: currency, value: currency,
