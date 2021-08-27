@@ -21,11 +21,11 @@ import styles from './editVote.css';
 const getTitles = t => ({
   edit: {
     title: t('Edit vote'),
-    description: t('Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will added to the voting queue.'),
+    description: t('Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will be added to the voting queue.'),
   },
   add: {
     title: t('Add vote'),
-    description: t('Insert a vote amount for this delegate. Your new vote will added to the voting queue.'),
+    description: t('Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'),
   },
 });
 

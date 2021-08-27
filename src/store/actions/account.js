@@ -61,7 +61,10 @@ export const accountDataUpdated = tokensTypes =>
       if (token === tokenMap.LSK.key) {
         acc[token] = { address: account.info[tokenMap.LSK.key].summary.address };
       } else {
-        acc[token] = { address: account.info[token].address };
+        acc[token] = {
+          address: account.info[token].summary.address,
+          passphrase: account.passphrase,
+        };
       }
       return acc;
     }, {});
