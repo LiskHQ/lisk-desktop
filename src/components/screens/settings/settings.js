@@ -1,6 +1,5 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import { isEmpty } from '@utils/helpers';
 import Piwik from '@utils/piwik';
 import { externalLinks, settings as settingsConst } from '@constants';
 import Box from '@toolbox/box';
@@ -78,9 +77,8 @@ class Settings extends React.Component {
           </BoxHeader>
           <BoxContent className={styles.content}>
             <section>
-              <h2>{t('Locale')}</h2>
+              <h2>{t('Currency')}</h2>
               <div className={styles.fieldGroup}>
-                <span className={styles.labelName}>{t('Currency')}</span>
                 <Select
                   options={currencies.map(currency => ({
                     label: currency, value: currency,
@@ -149,7 +147,7 @@ class Settings extends React.Component {
                 </div>
               </label>
               {
-                !isHardwareWalletAccount && !isEmpty(account)
+                !isHardwareWalletAccount
                   ? (
                     <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
                       <CheckBox

@@ -14,6 +14,7 @@ const DelegateProfile = ({
   const { data } = delegate;
   useEffect(() => {
     voters.loadData({ aggregate: true });
+    delegate.loadData();
   }, [account]);
 
   useEffect(() => {
