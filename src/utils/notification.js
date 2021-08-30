@@ -53,8 +53,10 @@ export class Notify {
    * @memberof Notify
    */
   _deposit(amount) { // eslint-disable-line
-    const body = i18next.t('You\'ve received {{value}} LSK.', { value: fromRawLsk(amount) });
-    new window.Notification(i18next.t('LSK received'), { body }); // eslint-disable-line
+    if (amount > 0) {
+      const body = i18next.t('You\'ve received {{value}} LSK.', { value: fromRawLsk(amount) });
+      new window.Notification(i18next.t('LSK received'), { body }); // eslint-disable-line
+    }
   }
 }
 
