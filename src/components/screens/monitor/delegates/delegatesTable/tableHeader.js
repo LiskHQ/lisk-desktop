@@ -29,6 +29,7 @@ export const getDelegateWeightClass = (activeTab) => {
 
 export const getDelegateRankClass = (activeTab) => {
   switch (activeTab) {
+    case 'active':
     case 'watched':
       return `${grid['col-xs-1']} ${styles.rank}`;
     case 'standby':
@@ -52,7 +53,7 @@ export const getRoundStateClass = (activeTab) => {
 export const getForgingTimeClass = (activeTab) => {
   switch (activeTab) {
     case 'active':
-      return grid['col-xs-3'];
+      return grid['col-xs-2'];
     case 'watched':
       return grid['col-xs-2'];
     default:
@@ -103,5 +104,9 @@ export default (activeTab, changeSort, t) => ([
   {
     title: t('Status'),
     classList: getStatusClass(activeTab),
+    sort: {
+      fn: changeSort,
+      key: 'status',
+    },
   },
 ]);

@@ -15,7 +15,7 @@ export { default as account } from './account';
 export { default as actionTypes } from './actionTypes';
 export { chartStyles, colorPalette } from './chart';
 export { firstBlockTime } from './datetime';
-export { ROUND_LENGTH } from './delegates';
+export { ROUND_LENGTH, MIN_VOTES_RECEIVED } from './delegates';
 export { default as externalLinks } from './externalLinks';
 export { default as feedbackLinks } from './feedbackLinks';
 export { default as routes, modals } from './routes';

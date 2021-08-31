@@ -2,6 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import withLocalSort from '@utils/withLocalSort';
 import Table from '@toolbox/table';
+import { MIN_VOTES_RECEIVED } from '@constants';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
 
@@ -9,6 +10,21 @@ const TableWrapper = compose(
   withLocalSort('delegates', 'forgingTime:asc', {
     forgingTime: (a, b, direction) =>
       ((a.nextForgingTime > b.nextForgingTime) ? 1 : -1) * (direction === 'asc' ? 1 : -1),
+    status: (a, b, direction) => {
+      if (a.status === 'active') {
+        return 1 * (direction === 'asc' ? 1 : -1);
+      }
+      if (b.status === 'active' || a.status !== 'standby') {
+        return -1 * (direction === 'asc' ? 1 : -1);
+      }
+      if (a.totalVotesReceived < MIN_VOTES_RECEIVED) {
+        return -1 * (direction === 'asc' ? 1 : -1);
+      }
+      if (b.totalVotesReceived < MIN_VOTES_RECEIVED) {
+        return 1 * (direction === 'asc' ? 1 : -1);
+      }
+      return 0;
+    },
   }),
 )(({
   delegates, handleLoadMore, t, activeTab, blocks,

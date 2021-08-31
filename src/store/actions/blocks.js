@@ -1,7 +1,7 @@
 import { actionTypes, ROUND_LENGTH } from '@constants';
 import { convertUnixSecondsToLiskEpochSeconds } from '@utils/datetime';
 import { getBlocks } from '@api/block';
-import { getForgers } from '@api/delegate';
+import { getForgers, getDelegates } from '@api/delegate';
 
 /**
  * Retrieves latest blocks from Lisk Service.
@@ -51,6 +51,7 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
  * round and determines their status as forging, missedBlock
  * and awaitingSlot.
  */
+// eslint-disable-next-line max-statements
 export const forgersRetrieved = () => async (dispatch, getState) => {
   const { network, blocks: { latestBlocks } } = getState();
   const forgedBlocksInRound = latestBlocks[0].height % ROUND_LENGTH;
@@ -69,7 +70,15 @@ export const forgersRetrieved = () => async (dispatch, getState) => {
 
   // check previous blocks and define missed blocks
   if (data) {
+    const delegates = await getDelegates({
+      network: network.networks.LSK,
+      params: { addressList: data.map(forger => forger.address) },
+    });
+
     forgers = data.map((forger, index) => {
+      forger.rank = delegates.data.find(
+        delegate => forger.address === delegate.summary.address,
+      ).dpos?.delegate?.rank;
       indexBook[forger.address] = index;
       if (haveForgedInRound.indexOf(forger.username) > -1) {
         return { ...forger, state: 'forging' };
