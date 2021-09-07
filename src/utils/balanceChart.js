@@ -26,6 +26,10 @@ const styles = {
     LSK: '#4070f4',
     BTC: '#f7931a',
   },
+  pointBackgroundColor: {
+    light: '#ffffff',
+    dark: 'rgba(28, 28, 30, 0.8)',
+  },
   whiteColor: '#ffffff',
   platinumColor: '#e1e3eb',
   slateGray: '#70778b',
@@ -86,7 +90,7 @@ export const graphOptions = ({
   },
   elements: {
     point: {
-      radius: 2,
+      radius: 4,
       hoverRadius: 3,
       hitRadius: 3,
     },
@@ -174,7 +178,7 @@ const getDate = (timestamp, token) => {
  * @param {Node} canvas Canvas element to be used
  */
 export const getBalanceData = ({
-  transactions, balance, address, token,
+  transactions, balance, address, token, theme = 'light',
 }) => {
   const data = transactions
     .sort((a, b) => (b.block.timestamp - a.block.timestamp))
@@ -211,6 +215,8 @@ export const getBalanceData = ({
       data: Object.values(data.graphTransactions).reverse(),
       borderColor: styles.borderColor[token],
       pointBorderColor: styles.borderColor[token],
+      pointBorderWidth: 3,
+      pointBackgroundColor: styles.pointBackgroundColor[theme],
     }],
   };
 };
