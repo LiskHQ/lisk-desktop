@@ -24,6 +24,7 @@ const DelegateVotesView = ({
   };
 
   const filteredVoters = searchedAddress ? voters.data.votes.filter(v => v.address === searchedAddress) : voters.data.votes;
+  const emptyMessage = searchedAddress ? t('This account does not have any voter for the given address.') : t('This account does not have any voters.');
 
   return (
     <div className={`${grid.row} ${styles.votesWrapper}`}>
@@ -46,14 +47,14 @@ const DelegateVotesView = ({
           )}
         </BoxHeader>
         <BoxContent
-          className={`${grid.col} ${grid['col-xs-12']} ${voters.data.votes.length ? styles.votesContainer : ''} votes-container`}
+          className={`${grid.col} ${grid['col-xs-12']} ${filteredVoters.length ? styles.votesContainer : ''} votes-container`}
         >
           <Table
             data={filteredVoters}
-            canLoadMore={voters.meta && voters.data.votes.length < voters.meta.total}
+            canLoadMore={voters.meta && filteredVoters.length < voters.meta.total && !searchedAddress}
             isLoading={voters.isLoading}
             iterationKey="address"
-            emptyState={{ message: t('This account doesn’t have any voters.') }}
+            emptyState={{ message: emptyMessage }}
             row={VoterRow}
             additionalRowProps={{
               t,

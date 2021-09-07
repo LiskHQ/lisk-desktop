@@ -30,7 +30,12 @@ const apis = {
     apiUtil: (network, params) => getVoters({ network, params }),
     defaultData: defaultVoters,
     getApiParams: (_, ownProps) => ({ address: ownProps.account.summary.address }),
-    transformResponse: response => (response.data.votes ? response.data : defaultVoters),
+    // TODO Improve the response transformation
+    transformResponse: (response, oldData, urlSearchParams) => (
+      urlSearchParams.offset
+        ? { account: oldData.account, votes: [...oldData.votes, ...response.data.votes] }
+        : { account: response.data.account, votes: (Array.isArray(response.data.votes) ? response.data.votes : []) }
+    ),
   },
   lastBlockForged: {
     apiUtil: (network, params) => getBlocks({ network, params }),
