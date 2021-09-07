@@ -76,8 +76,11 @@ import transactionError from '../../../assets/images/icons/transaction-error.svg
 import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
 import transactionSuccess from '../../../assets/images/icons/transaction-success.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
+import txDefaultDark from '../../../assets/images/icons/tx-default-dark.svg';
 import registerDelegate from '../../../assets/images/icons/tx-delegate.svg';
+import registerDelegateDark from '../../../assets/images/icons/tx-delegate-dark.svg';
 import vote from '../../../assets/images/icons/tx-vote.svg';
+import voteDark from '../../../assets/images/icons/tx-vote-dark.svg';
 import addedVotes from '../../../assets/images/icons/added-votes.svg';
 import removedVotes from '../../../assets/images/icons/removed-votes.svg';
 import totalVotes from '../../../assets/images/icons/total-votes.svg';
@@ -138,6 +141,7 @@ import lock from '../../../assets/images/icons/lock.svg';
 import unlock from '../../../assets/images/icons/unlock.svg';
 import loading from '../../../assets/images/icons/loading.svg';
 import unlockToken from '../../../assets/images/icons/tx-unlock.svg';
+import unlockTokenDark from '../../../assets/images/icons/tx-unlock-dark.svg';
 import votingQueueInactive from '../../../assets/images/icons/voting-queue-inactive.svg';
 import votingQueueActive from '../../../assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '../../../assets/images/icons/delete.svg';
@@ -145,6 +149,7 @@ import arrowRightTailed from '../../../assets/images/icons/arrow-right-tailed.sv
 import download from '../../../assets/images/icons/download.svg';
 import registerMultisignatureGroup from '../../../assets/images/icons/multisignature.svg';
 import multisignatureTransaction from '../../../assets/images/icons/multisignatureTransaction.svg';
+import multisignatureTransactionDark from '../../../assets/images/icons/multisignatureTransaction-dark.svg';
 import multiSignatureOutline from '../../../assets/images/icons/multisignature-outline.svg';
 import upload from '../../../assets/images/icons/upload.svg';
 import delegateForged from '../../../assets/images/icons/delegate-forged.svg';
@@ -231,8 +236,11 @@ export const icons = {
   transactionPending,
   transactionSuccess,
   txDefault,
+  txDefaultDark,
   registerDelegate,
+  registerDelegateDark,
   vote,
+  voteDark,
   user,
   userActive,
   verifyMessageInputsView,
@@ -301,6 +309,7 @@ export const icons = {
   unlock,
   loading,
   unlockToken,
+  unlockTokenDark,
   votingQueueInactive,
   votingQueueActive,
   download,
@@ -319,6 +328,7 @@ export const icons = {
   arrowRightWithStroke,
   arrowRightWithStrokeDark,
   multisignatureTransaction,
+  multisignatureTransactionDark,
   refresh,
   reportDelegateMisbehavior,
   reportDelegateMisbehaviorDark,
