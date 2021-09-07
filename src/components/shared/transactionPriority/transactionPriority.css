@@ -57,11 +57,11 @@
 
       & > .priorityTitle {
         background-color: var(--color-white);
-        color: var(--color-maastricht-blue);
+        color: var(--color-tx-priority-btn-default);
         font-family: var(--content-font);
         font-size: 14px;
         line-height: 18px;
-        border: 1px solid var(--color-periwinkle-blue);
+        border: 1px solid var(--color-tx-priority-btn-default);
         border-radius: 18px;
         margin-right: 5px;
         padding: 5px 0;
@@ -74,8 +74,9 @@
         }
 
         &.priorityTitleSelected {
-          background-color: var(--color-ink-blue);
-          color: var(--color-white);
+          border-color: var(--color-tx-priority-btn-bg);
+          background-color: var(--color-tx-priority-btn-bg);
+          color: var(--color-constant-white);
         }
       }
     }
