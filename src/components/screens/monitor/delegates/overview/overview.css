@@ -78,6 +78,10 @@
     & a {
       display: flex;
 
+      &:hover {
+        text-decoration: none;
+      }
+
       & > div,
       & > span {
         display: inline-block;
