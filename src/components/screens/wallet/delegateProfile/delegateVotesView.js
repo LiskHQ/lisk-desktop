@@ -23,7 +23,14 @@ const DelegateVotesView = ({
     voters.loadData({ aggregate: true, offset: voters.meta.count + voters.meta.offset });
   };
 
-  const filteredVoters = searchedAddress ? voters.data.votes.filter(v => v.address === searchedAddress) : voters.data.votes;
+  const votersInfo =
+    searchedAddress
+      ? voters.data.votes.filter(v => v.address === searchedAddress)
+      : voters.data.votes;
+  const canLoadMoreData =
+    voters.meta
+    && voters.meta.total > votersInfo.length
+    && !searchedAddress;
   const emptyMessage = searchedAddress ? t('This account does not have any voter for the given address.') : t('This account does not have any voters.');
 
   return (
@@ -47,11 +54,11 @@ const DelegateVotesView = ({
           )}
         </BoxHeader>
         <BoxContent
-          className={`${grid.col} ${grid['col-xs-12']} ${filteredVoters.length ? styles.votesContainer : ''} votes-container`}
+          className={`${grid.col} ${grid['col-xs-12']} ${votersInfo.length ? styles.votesContainer : ''} votes-container`}
         >
           <Table
-            data={filteredVoters}
-            canLoadMore={voters.meta && filteredVoters.length < voters.meta.total && !searchedAddress}
+            data={votersInfo}
+            canLoadMore={canLoadMoreData}
             isLoading={voters.isLoading}
             iterationKey="address"
             emptyState={{ message: emptyMessage }}

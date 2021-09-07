@@ -33,8 +33,14 @@ const apis = {
     // TODO Improve the response transformation
     transformResponse: (response, oldData, urlSearchParams) => (
       urlSearchParams.offset
-        ? { account: oldData.account, votes: [...oldData.votes, ...response.data.votes] }
-        : { account: response.data.account, votes: (Array.isArray(response.data.votes) ? response.data.votes : []) }
+        ? {
+          account: oldData.account,
+          votes: [...oldData.votes, ...response.data.votes]
+        }
+        : {
+          account: response.data.account,
+          votes: Array.isArray(response.data.votes) ? response.data.votes : []
+        }
     ),
   },
   lastBlockForged: {
