@@ -35,11 +35,11 @@ const apis = {
       urlSearchParams.offset
         ? {
           account: oldData.account,
-          votes: [...oldData.votes, ...response.data.votes]
+          votes: [...oldData.votes, ...response.data.votes],
         }
         : {
           account: response.data.account,
-          votes: Array.isArray(response.data.votes) ? response.data.votes : []
+          votes: Array.isArray(response.data.votes) ? response.data.votes : [],
         }
     ),
   },

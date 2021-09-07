@@ -23,12 +23,10 @@ const DelegateVotesView = ({
     voters.loadData({ aggregate: true, offset: voters.meta.count + voters.meta.offset });
   };
 
-  const votersInfo =
-    searchedAddress
-      ? voters.data.votes.filter(v => v.address === searchedAddress)
-      : voters.data.votes;
-  const canLoadMoreData =
-    voters.meta
+  const votersInfo = searchedAddress
+    ? voters.data.votes.filter(v => v.address === searchedAddress)
+    : voters.data.votes;
+  const canLoadMoreData = voters.meta
     && voters.meta.total > votersInfo.length
     && !searchedAddress;
   const emptyMessage = searchedAddress ? t('This account does not have any voter for the given address.') : t('This account does not have any voters.');
