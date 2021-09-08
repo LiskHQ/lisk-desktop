@@ -53,7 +53,7 @@ export const DoughnutChart = ({
   options,
 }) => (
   <Doughnut
-    data={doughnutChartData(data)}
+    data={doughnutChartData(data, useTheme())}
     width={width}
     height={height}
     options={doughnutChartOptions(useTheme(), options)}

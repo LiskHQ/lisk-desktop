@@ -2,6 +2,7 @@ import lodashMerge from 'lodash.merge';
 import {
   chartStyles,
   colorPalette,
+  colorPaletteDark,
 } from '@constants';
 
 const merge = (...args) => lodashMerge({}, ...args);
@@ -43,10 +44,10 @@ export const barChartData = data => merge({
  * data ONLY for Doughnut chart
  * @param {object} data - More data that can be pass to the chart
  */
-export const doughnutChartData = data => merge({
+export const doughnutChartData = (data, theme) => merge({
   datasets: [
     {
-      backgroundColor: colorPalette,
+      backgroundColor: theme === 'light' ? colorPalette : colorPaletteDark,
     },
   ],
 }, data);
@@ -153,6 +154,7 @@ export const barChartOptions = (theme, options) =>
         gridLines: {
           display: false,
           offsetGridLines: true,
+          zeroLineColor: chartStyles.borderColor[theme],
         },
         ticks: {
           fontColor: chartStyles.slateGray,
@@ -168,6 +170,7 @@ export const barChartOptions = (theme, options) =>
         gridLines: {
           display: true,
           offsetGridLines: true,
+          zeroLineColor: chartStyles.borderColor[theme],
         },
         ticks: {
           display: true,

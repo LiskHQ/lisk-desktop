@@ -25,3 +25,12 @@ export const colorPalette = [
   chartStyles.darkBlue,
   chartStyles.slateGray,
 ];
+
+export const colorPaletteDark = [
+  chartStyles.ufoGreen,
+  '#F7E36D',
+  chartStyles.ultramarineBlue,
+  '#FBD0D1',
+  '#254798',
+  chartStyles.slateGray,
+];
