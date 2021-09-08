@@ -29,8 +29,19 @@ export const accountLoading = () => ({
   type: actionTypes.accountLoading,
 });
 
-async function getAccounts({ network, params }) {
-  return Object.keys(params).reduce(async (accountsPromise, token) => {
+/**
+ * Gets the account info for given addresses of different tokens
+ * We have getAccounts functions for retrieving multiple accounts of
+ * a single blockchain. This one is for retrieving accounts of
+ * different blockchains.
+ *
+ * @param {Object} data
+ * @param {Object} data.network Network config from the Redux store
+ * @param {Object} data.params addresses in the form of {[token]: [address]}
+ * @returns {Promise<[object]>}
+ */
+const getAccounts = async ({ network, params }) =>
+  Object.keys(params).reduce(async (accountsPromise, token) => {
     const accounts = await accountsPromise;
     const baseUrl = network.networks[token].serviceUrl;
     const account = await getAccount({ network, baseUrl, params: params[token] }, token);
@@ -39,7 +50,6 @@ async function getAccounts({ network, params }) {
       [token]: account,
     };
   }, Promise.resolve({}));
-}
 
 /**
  * This action is used to update account balance when new block was forged and
