@@ -60,22 +60,17 @@ const getAccounts = async ({ network, params }) =>
  */
 export const accountDataUpdated = tokensTypes =>
   async (dispatch, getState) => {
-    const state = getState();
-    const { network, settings, account } = state;
+    const { network, settings, account } = getState();
+
+    // Get the list of tokens that are enabled in settings
     const activeTokens = tokensTypes === 'enabled'
       ? Object.keys(settings.token.list)
         .filter(key => settings.token.list[key])
       : [settings.token.active];
 
+    // Collect their addresses to send to the API
     const params = activeTokens.reduce((acc, token) => {
-      if (token === tokenMap.LSK.key) {
-        acc[token] = { address: account.info[tokenMap.LSK.key].summary.address };
-      } else {
-        acc[token] = {
-          address: account.info[token].summary.address,
-          passphrase: account.passphrase,
-        };
-      }
+      acc[token] = { address: account.info[token].summary.address };
       return acc;
     }, {});
 
