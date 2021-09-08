@@ -114,6 +114,7 @@ import blocksMonitorActive from '../../../assets/images/icons/blocksActive.svg';
 import accountsMonitor from '../../../assets/images/icons/accountsMonitor.svg';
 import accountsMonitorActive from '../../../assets/images/icons/accountsMonitorActive.svg';
 import transactionsMonitor from '../../../assets/images/icons/transactionsMonitor.svg';
+import transactionsMonitorDark from '../../../assets/images/icons/transactionsMonitor-dark.svg';
 import transactionsMonitorActive from '../../../assets/images/icons/transactionsMonitorActive.svg';
 import delegatesMonitor from '../../../assets/images/icons/delegatesMonitor.svg';
 import delegatesMonitorActive from '../../../assets/images/icons/delegatesMonitorActive.svg';
@@ -126,9 +127,12 @@ import plus from '../../../assets/images/icons/plus.svg';
 import plusActive from '../../../assets/images/icons/plusActive.svg';
 import remove from '../../../assets/images/icons/remove.svg';
 import totalBlocks from '../../../assets/images/icons/total-blocks.svg';
+import totalBlocksDark from '../../../assets/images/icons/total-blocks-dark.svg';
 import blocksForged from '../../../assets/images/icons/blocks-forged.svg';
+import blocksForgedDark from '../../../assets/images/icons/blocks-forged-dark.svg';
 import distribution from '../../../assets/images/icons/distribution.svg';
 import clock from '../../../assets/images/icons/clock.svg';
+import clockDark from '../../../assets/images/icons/clock-dark.svg';
 import clockActive from '../../../assets/images/icons/clock-active.svg';
 import star from '../../../assets/images/icons/star.svg';
 import calendar from '../../../assets/images/icons/calendar.svg';
@@ -286,6 +290,7 @@ export const icons = {
   accountsMonitor,
   accountsMonitorActive,
   transactionsMonitor,
+  transactionsMonitorDark,
   transactionsMonitorActive,
   delegatesMonitor,
   delegatesMonitorActive,
@@ -298,9 +303,12 @@ export const icons = {
   plusActive,
   remove,
   totalBlocks,
+  totalBlocksDark,
   blocksForged,
+  blocksForgedDark,
   distribution,
   clock,
+  clockDark,
   clockActive,
   searchInput,
   weight,

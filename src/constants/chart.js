@@ -28,8 +28,8 @@ export const colorPalette = [
 
 export const colorPaletteDark = [
   chartStyles.ufoGreen,
-  '#F7E36D',
   chartStyles.ultramarineBlue,
+  '#F7E36D',
   '#FBD0D1',
   '#254798',
   chartStyles.slateGray,

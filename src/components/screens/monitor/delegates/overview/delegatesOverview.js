@@ -1,6 +1,6 @@
 // istanbul ignore file
 import React from 'react';
-
+import { useSelector } from 'react-redux';
 // import { fromRawLsk } from '@utils/lsk';
 import { colorPalette, ROUND_LENGTH } from '@constants';
 import Box from '@toolbox/box';
@@ -23,6 +23,7 @@ const Overview = ({
   totalBlocks,
   // supply,
 }) => {
+  const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
   const doughnutChartData = {
     labels: [t('Standby delegates'), t('Active delegates')],
     datasets: [
@@ -130,6 +131,7 @@ const Overview = ({
                         datasets: [
                           {
                             data: getAmountOfDelegatesInTime(registrations),
+                            pointBackgroundColor: theme === 'light' ? '#ffffff' : 'rgba(28, 28, 30, 0.8)',
                           },
                         ],
                       }}
