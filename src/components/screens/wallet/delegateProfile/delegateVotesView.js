@@ -13,15 +13,23 @@ import styles from './delegateProfile.css';
 const DelegateVotesView = ({
   voters, t,
 }) => {
-  const [searchedAddress, setSearchedAddress] = useState();
+  const [searchedAddress, setSearchedAddress] = useState('');
 
   const onInputChange = (e) => {
     setSearchedAddress(e.target.value);
   };
 
   const handleLoadMore = () => {
-    voters.loadData({ offset: voters.data.length });
+    voters.loadData({ aggregate: true, offset: voters.meta.count + voters.meta.offset });
   };
+
+  const votersInfo = searchedAddress
+    ? voters.data.votes.filter(v => v.address === searchedAddress)
+    : voters.data.votes;
+  const canLoadMoreData = voters.meta
+    && voters.meta.total > votersInfo.length
+    && !searchedAddress;
+  const emptyMessage = searchedAddress ? t('This account does not have any voter for the given address.') : t('This account does not have any voters.');
 
   return (
     <div className={`${grid.row} ${styles.votesWrapper}`}>
@@ -29,7 +37,7 @@ const DelegateVotesView = ({
         <BoxHeader>
           <h1>
             <span>{t('Voters')}</span>
-            <span className={styles.totalVotes}>{`(${voters.meta ? voters.meta.count : '...'})`}</span>
+            <span className={styles.totalVotes}>{`(${voters.meta ? voters.meta.total : '...'})`}</span>
           </h1>
           {voters.data.votes.length > 0 && (
             <span>
@@ -44,14 +52,14 @@ const DelegateVotesView = ({
           )}
         </BoxHeader>
         <BoxContent
-          className={`${grid.col} ${grid['col-xs-12']} ${voters.data.votes.length ? styles.votesContainer : ''} votes-container`}
+          className={`${grid.col} ${grid['col-xs-12']} ${votersInfo.length ? styles.votesContainer : ''} votes-container`}
         >
           <Table
-            data={voters.data.votes}
-            canLoadMore={voters.meta && voters.data.votes.length < voters.meta.count}
+            data={votersInfo}
+            canLoadMore={canLoadMoreData}
             isLoading={voters.isLoading}
             iterationKey="address"
-            emptyState={{ message: t('This account doesn’t have any voters.') }}
+            emptyState={{ message: emptyMessage }}
             row={VoterRow}
             additionalRowProps={{
               t,
