@@ -22,7 +22,9 @@ const win = {
         backgroundThrottling: false,
         // Specifies a script that will be loaded before other scripts run in the page.
         preload: path.resolve(__dirname, '../src/ipc.js'),
-        nodeIntegration: true,
+        // https://www.electronjs.org/docs/latest/tutorial/security#isolation-for-untrusted-content
+        nodeIntegration: false,
+        contextIsolation: true,
       },
     });
 
