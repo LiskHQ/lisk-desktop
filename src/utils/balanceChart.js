@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { chartStyles } from '@constants';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 import i18n from '../i18n';
@@ -26,10 +27,7 @@ const styles = {
     LSK: '#4070f4',
     BTC: '#f7931a',
   },
-  pointBackgroundColor: {
-    light: '#ffffff',
-    dark: 'rgba(28, 28, 30, 0.8)',
-  },
+  pointBackgroundColor: chartStyles.pointBackgroundColor,
   whiteColor: '#ffffff',
   platinumColor: '#e1e3eb',
   slateGray: '#70778b',

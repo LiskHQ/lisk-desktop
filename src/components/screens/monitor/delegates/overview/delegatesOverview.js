@@ -2,7 +2,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 // import { fromRawLsk } from '@utils/lsk';
-import { colorPalette, ROUND_LENGTH } from '@constants';
+import { colorPalette, ROUND_LENGTH, chartStyles } from '@constants';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
@@ -131,7 +131,7 @@ const Overview = ({
                         datasets: [
                           {
                             data: getAmountOfDelegatesInTime(registrations),
-                            pointBackgroundColor: theme === 'light' ? '#ffffff' : 'rgba(28, 28, 30, 0.8)',
+                            pointBackgroundColor: chartStyles.pointBackgroundColor[theme],
                           },
                         ],
                       }}
