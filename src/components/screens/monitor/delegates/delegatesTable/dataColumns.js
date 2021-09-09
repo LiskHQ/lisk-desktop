@@ -150,12 +150,14 @@ const getDelegateStatus = (key, totalVotesReceived) => {
   return [key, delegateStatus[key]];
 };
 
-export const DelegateStatus = ({ activeTab, status, totalVotesReceived }) => {
+export const DelegateStatus = ({
+  activeTab, status, totalVotesReceived, theme,
+}) => {
   const [key, value] = getDelegateStatus(status, totalVotesReceived);
 
   return (
     <span className={getStatusClass(activeTab)}>
-      <span className={`${styles.delegateStatus} ${styles[key]}`}>{value}</span>
+      <span className={`${styles.delegateStatus} ${styles[key]} ${styles[theme]}`}>{value}</span>
     </span>
   );
 };

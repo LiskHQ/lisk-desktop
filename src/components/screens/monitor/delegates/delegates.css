@@ -210,8 +210,16 @@ header {
   }
 
   &.standby {
-    color: var(--color-ink-blue);
-    background-color: var(--color-active-tab);
+
+    &.light {
+      color: var(--color-ink-blue);
+      background-color: var(--color-active-tab);
+    }
+
+    &.dark {
+      color: var(--color-ultramarine-blue);
+      background-color: var(--color-blue-manatee-transparent);
+    }
   }
 
   &.banned {

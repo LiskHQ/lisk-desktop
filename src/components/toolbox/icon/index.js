@@ -157,9 +157,12 @@ import multisignatureTransactionDark from '../../../assets/images/icons/multisig
 import multiSignatureOutline from '../../../assets/images/icons/multisignature-outline.svg';
 import upload from '../../../assets/images/icons/upload.svg';
 import delegateForged from '../../../assets/images/icons/delegate-forged.svg';
+import delegateForgedDark from '../../../assets/images/icons/delegate-forged-dark.svg';
 import delegateMissed from '../../../assets/images/icons/delegate-missed.svg';
+import delegateMissedDark from '../../../assets/images/icons/delegate-missed-dark.svg';
 import delegateWarning from '../../../assets/images/icons/delegate-warning.svg';
 import delegateAwaiting from '../../../assets/images/icons/delegate-awaiting.svg';
+import delegateAwaitingDark from '../../../assets/images/icons/delegate-awaiting-dark.svg';
 import eyeInactive from '../../../assets/images/icons/eye-inactive.svg';
 import eyeActive from '../../../assets/images/icons/eye-active.svg';
 import liskIcon from '../../../assets/images/icons/lisk-icon.svg';
@@ -323,9 +326,12 @@ export const icons = {
   download,
   upload,
   delegateForged,
+  delegateForgedDark,
   delegateMissed,
+  delegateMissedDark,
   delegateWarning,
   delegateAwaiting,
+  delegateAwaitingDark,
   eyeActive,
   eyeInactive,
   liskIcon,
