@@ -138,9 +138,13 @@ import star from '../../../assets/images/icons/star.svg';
 import calendar from '../../../assets/images/icons/calendar.svg';
 import weight from '../../../assets/images/icons/weight.svg';
 import reward from '../../../assets/images/icons/forged-lsk.svg';
+import rewardDark from '../../../assets/images/icons/forged-lsk-dark.svg';
 import productivity from '../../../assets/images/icons/productivity.svg';
+import productivityDark from '../../../assets/images/icons/productivity-dark.svg';
 import missedBlocks from '../../../assets/images/icons/missed-blocks.svg';
+import missedBlocksDark from '../../../assets/images/icons/missed-blocks-dark.svg';
 import forgedBlocks from '../../../assets/images/icons/forged-blocks.svg';
+import forgedBlocksDark from '../../../assets/images/icons/forged-blocks-dark.svg';
 import lock from '../../../assets/images/icons/lock.svg';
 import unlock from '../../../assets/images/icons/unlock.svg';
 import loading from '../../../assets/images/icons/loading.svg';
@@ -203,7 +207,9 @@ export const icons = {
   feedbackActive,
   fileOutline,
   forgedBlocks,
+  forgedBlocksDark,
   reward,
+  rewardDark,
   help,
   helpActive,
   helpCenter,
@@ -279,6 +285,7 @@ export const icons = {
   multiSignatureOutline,
   registerMultisignatureGroup,
   missedBlocks,
+  missedBlocksDark,
   newsFeedBlog,
   newsFeedBlogDark,
   bookmark,
@@ -316,6 +323,7 @@ export const icons = {
   searchInput,
   weight,
   productivity,
+  productivityDark,
   lock,
   unlock,
   loading,
