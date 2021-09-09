@@ -165,6 +165,7 @@ or "warn/action" ineastd of "red/green"
   --color-vote-item-bg: var(--color-silver);
   --color-yellow-transparent: rgba(247, 227, 109, 0.3);
   --color-red-transparent: rgba(255, 69, 87, 0.1);
+  --color-red-semitransparent: rgba(255, 69, 87, 0.3);
   --color-blue-manatee-transparent: rgba(138, 140, 162, 0.1);
   --color-jade-green-transparent: rgba(43, 214, 123, 0.1);
   --color-tooltip-bg: rgb(255, 255, 255, 0.7);

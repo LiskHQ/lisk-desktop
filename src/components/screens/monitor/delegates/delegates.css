@@ -223,13 +223,29 @@ header {
   }
 
   &.banned {
-    color: var(--color-red);
-    background-color: var(--color-red-transparent);
+
+    &.light {
+      color: var(--color-red);
+      background-color: var(--color-red-transparent);
+    }
+
+    &.dark {
+      color: var(--color-red);
+      background-color: var(--color-red-semitransparent);
+    }
   }
 
   &.punished {
-    color: var(--color-maastricht-blue);
-    background-color: var(--color-yellow-transparent);
+
+    &.light {
+      color: var(--color-maastricht-blue);
+      background-color: var(--color-yellow-transparent);
+    }
+
+    &.dark {
+      color: var(--color-warning-border);
+      background-color: var(--color-yellow-transparent);
+    }
   }
 
   &.nonEligible {
