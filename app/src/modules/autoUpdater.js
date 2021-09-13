@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 
 const getErrorMessage = (error) => {
-  if (error.indexOf('404 Not Found') > -1) {
+  if (error.indexOf('404 Not Found') > -1 || error.indexOf('command is disabled') > -1) {
     return '';
   } if (error.indexOf('DISCONNECTED') > -1 || error.indexOf('net:') > -1) {
     return 'Please check your internet connection.';
@@ -18,9 +18,6 @@ export default ({ // eslint-disable-line max-statements
   autoUpdater.autoDownload = false;
 
   autoUpdater.checkForUpdatesAndNotify();
-  setInterval(() => {
-    autoUpdater.checkForUpdatesAndNotify();
-  }, 24 * 60 * 60 * 1000);
 
   autoUpdater.on('error', (error) => {
     // eslint-disable-next-line no-console

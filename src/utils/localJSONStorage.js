@@ -13,7 +13,7 @@ export const getFromStorage = (key, backup, cb) => {
   if (ipc) {
     ipc.on('configRetrieved', (action, data) => {
       info = data[key];
-      cb(info);
+      cb(info || backup);
     });
     ipc.send('retrieveConfig');
   } else {
