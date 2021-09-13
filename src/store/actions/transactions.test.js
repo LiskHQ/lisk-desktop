@@ -1,6 +1,5 @@
 import { actionTypes } from '@constants';
 import * as transactionsApi from '@api/transaction';
-import * as awaitToJs from 'await-to-js';
 import {
   emptyTransactionsData,
   transactionsRetrieved,
@@ -9,17 +8,25 @@ import {
   transactionDoubleSigned,
   transactionBroadcasted,
 } from './transactions';
+import { sampleTransaction } from '../../../test/constants/transactions';
 
 jest.mock('@api/transaction');
 jest.mock('@api/delegate');
-// jest.mock('await-to-js')
-// jest.spyOn(awaitToJs, 'to')
-// const toMock = awaitToJs.to
-transactionsApi.broadcast = jest.fn(() => {})
 
 describe('actions: transactions', () => {
   const dispatch = jest.fn();
   const getState = () => ({
+    account: {
+      passphrase: 'test',
+      info: {
+        LSK: {
+          summary: { address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' },
+        },
+        BTC: {
+          summary: { address: '16Qp9op3fTESTBTCACCOUNTv52ghRzYreUuQ' },
+        },
+      },
+    },
     network: {
       status: { online: true },
       name: 'Mainnet',
@@ -127,30 +134,17 @@ describe('actions: transactions', () => {
   });
 
   describe('transactionBroadcasted', () => {
-    it('should create an action to broadcast transaction', async () => {
-      const data = {
-        recipientAddress: 'lsktbdkqr8axg3rovndj997dveyrfctrpo95e9byc',
-        amount: 149999992,
-        fee: 0.001483953,
-        dynamicFeePerByte: 0.000746375,
-        reference: '',
-        // id: 'a66c3cb626dbb631e53a5bd617cc8c13f06186c91f42e87008331e6dc4dc3cba',
-        // signatures: ['ofh49fhfnYHK8499dvvn', '0egeJT7dgdnek4n5k6994k'],
-        // senderPublicKey: 'MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6',
-      }
-      // toMock.mockResolvedValue(data)
-      // awaitToJs.to = jest.fn.mockImplementation(() => Promise.resolve(data))
-      // jest.spyOn(awaitToJs, 'to').mockImplementation(async () => data)
-      jest.spyOn(awaitToJs, 'to').mockImplementation(async (new Promise(resolve => resolve({}))) => Promise.resolve(data))
+    it('should create an action to broadcast transaction successfully', async () => {
+      transactionsApi.broadcast.mockResolvedValue({data: sampleTransaction})
+
       const expectedAction = {
-        type: actionTypes.transactionBroadcasted,
-        data,
+        type: actionTypes.broadcastedTransactionSuccess,
+        data: sampleTransaction,
       };
-      // transactionsApi.broadcast.mockReturnValue({})
-      // console.log(transactionBroadcasted(data))
-      await transactionBroadcasted(data)(dispatch, getState)
-      // expect(toMock).toHaveBeenCalledTimes(1)
+
+      await transactionBroadcasted(sampleTransaction)(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
+      expect(transactionsApi.broadcast).toHaveBeenCalled()
     });
   });
 });

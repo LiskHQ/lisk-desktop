@@ -25,4 +25,26 @@ const transaction = index => ({
 
 const transactions = Array(30).fill(1).map((item, index) => transaction(index));
 
+const sampleTransaction = {
+  moduleID: 5,
+  assetID: 1,
+  senderPublicKey: '205688492bc52ddabfdc10fa7728b8bcb5942ad17c68ab5c20e96153fd1ac657',
+  nonce: '2n',
+  fee: '142000n',
+  signatures: [
+    '4bfc0ab5e1b3c3fb1ca7362acc917775ce6345f26a261d592d83c62ad156e90221269a3b423516c2b84c1ebdd285d3bf83be688f5a158c1daf7245fecea0350a',
+  ],
+  asset: {
+    votes: [
+      {
+        amount: '2000000000n',
+        delegateAddress: 'b9c228bae5f9a6f8a0bd7787b4c123bf1de4bedd',
+      },
+    ],
+  },
+  id: 'ad0e0acbe8a3ece3087c8362149ca39c470e565d268df32e57de5d3fe2e1ea5c',
+};
+
+export { sampleTransaction }
+
 export default transactions;
