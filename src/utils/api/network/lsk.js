@@ -25,7 +25,7 @@ export const getNetworkStatus = ({
   network,
 });
 
-const getServiceUrl = ({ name, address = 'http://localhost:4000' }) => {
+const getServiceUrl = ({ name = networkKeys.mainNet, address = 'http://localhost:4000' }) => {
   if ([networkKeys.mainNet, networkKeys.testNet].includes(name)) {
     return networks[name].serviceUrl;
   }
