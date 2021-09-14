@@ -68,12 +68,16 @@ export const transactionsRetrieved = ({
           count: response.meta.total,
         },
       });
+      console.log('Success')
+      console.log({confirmed: response})
     })
     .catch((error) => {
+      console.log('Error')
       dispatch({
         type: actionTypes.transactionLoadFailed,
         data: { error },
       });
+      console.log({ data: { error } })
     })
     .finally(() => {
       dispatch(loadingFinished(actionTypes.transactionsRetrieved));

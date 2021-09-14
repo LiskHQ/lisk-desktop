@@ -52,6 +52,10 @@ describe('actions: transactions', () => {
     },
   });
 
+  // afterEach(() => {
+  //   jest.clearAllMocks();
+  // });
+
   describe('getTransactions', () => {
     const data = {
       address: '15626650747375562521L',
@@ -65,6 +69,7 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch getTransactionsSuccess action if resolved', async () => {
+      // transactionsApi.getTransactions.mockClear()
       transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { total: 0 } });
       const expectedAction = {
         count: 0,
@@ -80,6 +85,34 @@ describe('actions: transactions', () => {
         data: expectedAction,
       });
     });
+
+    it('should dispatch transactionsLoadFailed action if rejected', async () => {
+      transactionsApi.getTransactions.mockReset()
+      // transactionsApi.getTransactions.mockRejectedValue(new Error('Transaction retrieve error'));
+      // transactionsApi.getTransactions.mockImplementation(() => Promise.reject(new Error('Transaction retrieve error')).catch(() => {}));
+      // transactionsApi.getTransactions.mockImplementation(() => Promise.reject('Transaction retrieve error'));
+
+      // transactionsApi.getTransactions.mockReset()
+      transactionsApi.getTransactions.mockRejectedValue(new Error('Transaction retrieve error'));
+      // transactionsApi.getTransactions.mockRejectedValue('Transaction retrieve error');
+
+      // transactionsApi.getTransactions = jest.fn().mockRejectedValue(new Error('Transaction retrieve error'))
+      // transactionsApi.getTransactions.catch(() => {})
+      // console.log(transactionsRetrieved(data))
+      expect(transactionsApi.getTransactions).rejects.toThrow('Transaction retrieve error')
+      // expect(transactionsRetrieved(data)).rejects.toMatch('Transaction retrieve error')
+      await transactionsRetrieved(data)(dispatch, getState);
+      // expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: actionTypes.loadingStarted,
+        data: actionTypes.transactionsRetrieved,
+      })
+      // expect(dispatch).toHaveBeenNthCalledWith(1)
+      expect(dispatch).toHaveBeenNthCalledWith(2, {
+        type: actionTypes.transactionLoadFailed,
+        data: {error: 'Transaction retrieve error'},
+      })
+    })
   });
 
   describe('emptyTransaction', () => {
@@ -94,8 +127,8 @@ describe('actions: transactions', () => {
       const data = {
         moduleAssetId: '1938573839:g45krEIjwK',
         id: '4emF3me9YJSbcIuOp',
-        fee: '0.001032519',
-        nonce: 'wijFKdld1iRd039Bws24UR',
+        fee: '1032519n',
+        nonce: '2n',
         signatures: ['xnVCm30IUhtYidgBX', 'uxsFGiaqS3n4ydB'],
         sender: {
           address: '3040783849904107057L',
