@@ -27,7 +27,7 @@ const normalizeTransactionsResponse = ({
   network,
   list,
 }) => list.map(({
-  tx, feeSatoshi, confirmations, timestamp,
+  tx, feeSatoshi, confirmations, timestamp, height,
 }) => {
   const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
   const recipientAddress = validateAddress(tokenMap.BTC.key, extractedAddress, network) === 0
@@ -37,6 +37,7 @@ const normalizeTransactionsResponse = ({
     id: tx.txid,
     block: {
       timestamp: timestamp ? Number(timestamp) * 1000 : null,
+      height,
     },
     confirmations: confirmations || 0,
     isPending: !confirmations,

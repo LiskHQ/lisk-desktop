@@ -1,6 +1,7 @@
 import React from 'react';
 import AccountVisual from '@toolbox/accountVisual';
 import LiskAmount from '@shared/liskAmount';
+import { toRawLsk } from '@utils/lsk';
 import styles from './transactionInfo.css';
 
 const Send = ({
@@ -26,7 +27,7 @@ const Send = ({
         <label>{t('Amount')}</label>
         <label className="amount-summary">
           <LiskAmount
-            val={transaction.asset?.amount}
+            val={transaction.asset?.amount || toRawLsk(fields.amount.value)}
             token={token}
           />
         </label>
