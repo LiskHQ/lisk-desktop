@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
-const { ProvidePlugin } = require('webpack');
 
 const config = {
   mode: 'development',
@@ -89,10 +88,6 @@ const config = {
     },
   },
   plugins: [
-    new ProvidePlugin({
-      process: 'process/browser.js',
-      Buffer: ['buffer', 'Buffer'],
-    }),
     new webpack.EnvironmentPlugin({
       NACL_FAST: 'disable',
     }),

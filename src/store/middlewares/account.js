@@ -93,7 +93,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
     }).length > 0;
 
     showNotificationsForIncomingTransactions(txs, account, token.active);
-    const recentBtcTransaction = token.active === 'BTC'
+    const recentBtcTransaction = token.active === tokenMap.BTC.key
       && transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
 
     if (blockContainsRelevantTransaction || recentBtcTransaction) {

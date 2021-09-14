@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
+const { ContextReplacementPlugin, DefinePlugin, ProvidePlugin } = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -99,6 +99,10 @@ const config = {
     historyApiFallback: true,
   },
   plugins: [
+    new ProvidePlugin({
+      process: 'process/browser.js',
+      Buffer: ['buffer', 'Buffer'],
+    }),
     new DefinePlugin({
       VERSION: `"${bundleVersion}"`,
     }),
