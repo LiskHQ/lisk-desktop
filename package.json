@@ -116,6 +116,7 @@
     "body-parser": "1.18.3",
     "browser-or-node": "1.1.0",
     "chai-enzyme": "*",
+    "chart.js": "2.9.4",
     "cheerio": "1.0.0-rc.2",
     "core-js": "3.11.0",
     "crypto-browserify": "^3.12.0",
