@@ -20,9 +20,12 @@ If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to
 
 ### Setup environemnt
 
+The development environment currently depends on [Node.js version 12 (lts/erbium)](https://nodejs.org/download/release/latest-v12.x/). The below instructions assume [nvm](https://github.com/nvm-sh/nvm) is being used to manage Node.js versions.
+
 ```
 git clone https://github.com/LiskHQ/lisk-desktop.git
 cd lisk-desktop
+nvm install lts/erbium
 npm install
 npm run dev
 ```
