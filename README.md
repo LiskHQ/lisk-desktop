@@ -43,7 +43,7 @@ If you are actively developing in a specific route, and want to be automatically
 
 _loginKey_: _a valid passphrase_
 
-Add the above pair using the storage tab in your dev tools or via JavaScript command: 
+Add the above pair using the storage tab in your dev tools or via JavaScript command:
 
 ```
 localStorage.setItem('loginKey', 'wagon stock borrow episode laundry kitten salute link globe zero feed marble') // desired account passphrase
@@ -119,7 +119,7 @@ npm run pack:win
 Build package for macOS (on macOs)
 
 ```
-npm run pack 
+npm run pack
 ```
 
 #### Linux
@@ -127,7 +127,7 @@ npm run pack
 Build package for Linux (on Linux).
 
 ```
-npm run pack 
+npm run pack
 ```
 
 ## Testing
@@ -160,7 +160,7 @@ Start the development version of Lisk:
 npm run dev
 ```
 Apply blockchain snapshot
- 
+
 ```
 ./test/e2e-test-setup.sh ~/git/lisk/
 ```
