@@ -41,8 +41,11 @@ import verifyMessageErrorDark from '../../../assets/images/illustrations/verify-
 import verifyMessageSuccess from '../../../assets/images/illustrations/verify-message-success.svg';
 import verifyMessageSuccessDark from '../../../assets/images/illustrations/verify-message-success-dark.svg';
 import registrationSuccess from '../../../assets/images/illustrations/registration-success.svg';
+import registrationSuccessDark from '../../../assets/images/illustrations/registration-success-dark.svg';
 import registerMultisignatureSuccess from '../../../assets/images/illustrations/multisignature-success.svg';
+import registerMultisignatureSuccessDark from '../../../assets/images/illustrations/multisignature-success-dark.svg';
 import registerMultisignatureError from '../../../assets/images/illustrations/multisignature-error.svg';
+import registerMultisignatureErrorDark from '../../../assets/images/illustrations/multisignature-error-dark.svg';
 import reclaimBalanceIntro from '../../../assets/images/illustrations/reclaim-balance-intro.svg';
 
 export const illustrations = {
@@ -73,6 +76,7 @@ export const illustrations = {
   verifyMessageError,
   verifyMessageSuccess,
   registrationSuccess,
+  registrationSuccessDark,
   emptyWalletDark,
   pageNotFoundDark,
   errorBoundaryPageDark,
@@ -85,7 +89,9 @@ export const illustrations = {
   verifyMessageErrorDark,
   verifyMessageSuccessDark,
   registerMultisignatureSuccess,
+  registerMultisignatureSuccessDark,
   registerMultisignatureError,
+  registerMultisignatureErrorDark,
   reclaimBalanceIntro,
   transactionPending,
   transactionPendingDark,
