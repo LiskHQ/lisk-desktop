@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useTheme } from '@utils/theme';
 import primaryButtonTheme from './css/primaryButton.css';
 import secondaryButtonTheme from './css/secondaryButton.css';
 import styles from './css/size.css';
@@ -18,7 +17,6 @@ const getButtonWithTheme = (theme) => {
         className,
         styles.button,
         styles[size],
-        useTheme(),
       ].join(' ')}
     />
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '@utils/theme';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import BoxFooter from '@toolbox/box/footer';
@@ -13,7 +14,11 @@ export const ActionBar = ({
     direction="horizontal"
     className={styles.footer}
   >
-    <SecondaryButton size="l" onClick={() => removeSearchParamsFromUrl(history, ['modal'])}>
+    <SecondaryButton
+      className={`${useTheme() === 'dark' && 'dark'}`}
+      size="l"
+      onClick={() => removeSearchParamsFromUrl(history, ['modal'])}
+    >
       {t('Reject')}
     </SecondaryButton>
     <PrimaryButton size="l" onClick={nextButton.onClick}>

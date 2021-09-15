@@ -23,7 +23,7 @@
 }
 
 .contentScrollable {
-  overflow: scroll;
+  overflow-y: scroll;
   max-height: 290px;
   display: flex;
   flex-direction: column;
@@ -41,6 +41,7 @@
 .requiredSignaturesInput {
   width: 140px;
   height: 40px;
+  margin-top: 10px;
 }
 
 .memberFieldContainer {
@@ -52,6 +53,7 @@
 
 .membersControls {
   margin-top: 28px;
+  margin-bottom: 2px;
   display: flex;
 
   & > span {

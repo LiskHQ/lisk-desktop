@@ -175,8 +175,15 @@
   width: 150px;
   height: 5px;
   display: flex;
-  background-color: var(--color-very-light-gray);
   border-radius: 43px;
+
+  &.dark {
+    background-color: var(--color-platinum);
+  }
+
+  &.light {
+    background-color: var(--color-very-light-gray);
+  }
 
   & > .lineForged {
     border-radius: 43px;

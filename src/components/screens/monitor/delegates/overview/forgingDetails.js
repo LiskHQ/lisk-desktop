@@ -22,7 +22,7 @@ const getForgingStats = (data, forgedInRound = 0) => {
 };
 
 const ProgressBar = ({ forgedInRound, theme }) => (
-  <div className={styles.progressBar}>
+  <div className={`${styles.progressBar} ${styles[theme]}`}>
     <div className={`${styles.lineForged} ${styles[theme]}`} style={{ width: `${(forgedInRound / ROUND_LENGTH) * 100}%` }} />
   </div>
 );
