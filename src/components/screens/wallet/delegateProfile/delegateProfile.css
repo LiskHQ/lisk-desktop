@@ -86,6 +86,10 @@
       @mixin contentNormal;
 
       color: var(--color-slate-gray);
+
+      &:global(.dark) {
+        color: var(--color-manatee-gray);
+      }
     }
 
     & .value {
@@ -119,6 +123,10 @@
 
         color: var(--color-slate-gray);
         margin-bottom: 15px;
+
+        &:global(.dark) {
+          color: var(--color-manatee-gray);
+        }
       }
 
       & > *:not(.title):not(.highlighIcon) {

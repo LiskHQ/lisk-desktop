@@ -99,6 +99,7 @@ or "warn/action" ineastd of "red/green"
   --color-maastricht-blue: #0c152e;
   --color-slate-gray: #70778b;
   --color-blue-gray: #8a8ca2;
+  --color-manatee-gray: #9999a0;
   --color-dark-blue: #19224d;
   --color-ink-blue: #254898;
   --color-ghost: #bec1cd;
@@ -112,6 +113,7 @@ or "warn/action" ineastd of "red/green"
   --color-pale-pink: #ffd0d1;
   --color-silver: #eef0f7;
   --color-black: #000;
+  --color-cloud-burst: #1b243f;
 
   /*************************
       Other Colors

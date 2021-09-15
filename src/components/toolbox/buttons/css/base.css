@@ -89,6 +89,10 @@
     border-color: var(--light-border-color);
   }
 
+  &:global(.dark) {
+    border-color: var(--color-manatee-gray);
+  }
+
   &:focus,
   &:hover {
     color: var(--color-ultramarine-blue);

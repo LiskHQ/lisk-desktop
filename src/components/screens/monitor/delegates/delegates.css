@@ -217,7 +217,7 @@ header {
 
     &.dark {
       color: var(--color-ultramarine-blue);
-      background-color: var(--color-blue-manatee-transparent);
+      background-color: var(--color-cloud-burst);
     }
   }
 

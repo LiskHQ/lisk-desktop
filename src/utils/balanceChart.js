@@ -88,9 +88,9 @@ export const graphOptions = ({
   },
   elements: {
     point: {
-      radius: 4,
-      hoverRadius: 3,
-      hitRadius: 3,
+      radius: 5,
+      hoverRadius: 5,
+      hitRadius: 5,
     },
     line: {
       tension: 0,
@@ -213,7 +213,7 @@ export const getBalanceData = ({
       data: Object.values(data.graphTransactions).reverse(),
       borderColor: styles.borderColor[token],
       pointBorderColor: styles.borderColor[token],
-      pointBorderWidth: 3,
+      pointBorderWidth: 4.5,
       pointBackgroundColor: styles.pointBackgroundColor[theme],
     }],
   };

@@ -113,8 +113,9 @@ import blocksMonitor from '../../../assets/images/icons/blocks.svg';
 import blocksMonitorActive from '../../../assets/images/icons/blocksActive.svg';
 import accountsMonitor from '../../../assets/images/icons/accountsMonitor.svg';
 import accountsMonitorActive from '../../../assets/images/icons/accountsMonitorActive.svg';
+import transactions from '../../../assets/images/icons/transactions.svg';
+import transactionsDark from '../../../assets/images/icons/transactions-dark.svg';
 import transactionsMonitor from '../../../assets/images/icons/transactionsMonitor.svg';
-import transactionsMonitorDark from '../../../assets/images/icons/transactionsMonitor-dark.svg';
 import transactionsMonitorActive from '../../../assets/images/icons/transactionsMonitorActive.svg';
 import delegatesMonitor from '../../../assets/images/icons/delegatesMonitor.svg';
 import delegatesMonitorActive from '../../../assets/images/icons/delegatesMonitorActive.svg';
@@ -134,9 +135,13 @@ import distribution from '../../../assets/images/icons/distribution.svg';
 import clock from '../../../assets/images/icons/clock.svg';
 import clockDark from '../../../assets/images/icons/clock-dark.svg';
 import clockActive from '../../../assets/images/icons/clock-active.svg';
+import clockActiveDark from '../../../assets/images/icons/clock-active-dark.svg';
 import star from '../../../assets/images/icons/star.svg';
+import starDark from '../../../assets/images/icons/star-dark.svg';
 import calendar from '../../../assets/images/icons/calendar.svg';
+import calendarDark from '../../../assets/images/icons/calendar-dark.svg';
 import weight from '../../../assets/images/icons/weight.svg';
+import weightDark from '../../../assets/images/icons/weight-dark.svg';
 import reward from '../../../assets/images/icons/forged-lsk.svg';
 import rewardDark from '../../../assets/images/icons/forged-lsk-dark.svg';
 import productivity from '../../../assets/images/icons/productivity.svg';
@@ -193,6 +198,7 @@ export const icons = {
   bookmarksIconEmptyState,
   btcIcon,
   calendar,
+  calendarDark,
   checkboxFilled,
   checkmark,
   copy,
@@ -243,6 +249,7 @@ export const icons = {
   signIn,
   signInActive,
   star,
+  starDark,
   tooltipQuestionMark,
   transactionApproved,
   transactionError,
@@ -299,8 +306,9 @@ export const icons = {
   blocksMonitorActive,
   accountsMonitor,
   accountsMonitorActive,
+  transactions,
+  transactionsDark,
   transactionsMonitor,
-  transactionsMonitorDark,
   transactionsMonitorActive,
   delegatesMonitor,
   delegatesMonitorActive,
@@ -320,8 +328,10 @@ export const icons = {
   clock,
   clockDark,
   clockActive,
+  clockActiveDark,
   searchInput,
   weight,
+  weightDark,
   productivity,
   productivityDark,
   lock,

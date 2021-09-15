@@ -69,4 +69,8 @@
 
 .activeLabel {
   color: var(--color-ink-blue);
+
+  &.dark {
+    color: var(--color-progress-bar);
+  }
 }

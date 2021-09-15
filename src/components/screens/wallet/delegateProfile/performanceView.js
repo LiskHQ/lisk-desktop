@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { NavLink } from 'react-router-dom';
-
+import { useTheme } from '@utils/theme';
 import { routes } from '@constants';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
@@ -12,17 +12,21 @@ import styles from './delegateProfile.css';
 
 const Item = ({
   icon, title, children,
-}) => (
-  <BoxContent className={`${styles.highlight} performance`}>
-    <div className={styles.content}>
-      <div className={styles.title}>{title}</div>
-      { children }
-    </div>
-    <div className={`${styles.highlighIcon} ${styles[icon]}`}>
-      <Icon name={icon} />
-    </div>
-  </BoxContent>
-);
+}) => {
+  const theme = useTheme();
+
+  return (
+    <BoxContent className={`${styles.highlight} performance`}>
+      <div className={styles.content}>
+        <div className={`${styles.title} ${theme}`}>{title}</div>
+        { children }
+      </div>
+      <div className={`${styles.highlighIcon} ${styles[icon]}`}>
+        <Icon name={icon} />
+      </div>
+    </BoxContent>
+  );
+};
 
 const PerformanceView = ({
   t, data,
