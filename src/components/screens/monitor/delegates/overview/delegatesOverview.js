@@ -1,6 +1,5 @@
 // istanbul ignore file
 import React from 'react';
-
 // import { fromRawLsk } from '@utils/lsk';
 import { colorPalette, ROUND_LENGTH } from '@constants';
 import Box from '@toolbox/box';
@@ -107,7 +106,7 @@ const Overview = ({
               <NumericInfo
                 title="Total transactions"
                 value={transactionsCount.data}
-                icon="transactionsMonitor"
+                icon="transactions"
               />
               {/* <NumericInfo
                 title="Total LSK"
@@ -130,6 +129,7 @@ const Overview = ({
                         datasets: [
                           {
                             data: getAmountOfDelegatesInTime(registrations),
+                            pointStyle: 'line',
                           },
                         ],
                       }}

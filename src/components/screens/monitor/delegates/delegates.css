@@ -210,18 +210,39 @@ header {
   }
 
   &.standby {
-    color: var(--color-ink-blue);
-    background-color: var(--color-active-tab);
+    &.light {
+      color: var(--color-ink-blue);
+      background-color: var(--color-active-tab);
+    }
+
+    &.dark {
+      color: var(--color-ultramarine-blue);
+      background-color: var(--color-cloud-burst);
+    }
   }
 
   &.banned {
-    color: var(--color-red);
-    background-color: var(--color-red-transparent);
+    &.light {
+      color: var(--color-red);
+      background-color: var(--color-red-transparent);
+    }
+
+    &.dark {
+      color: var(--color-red);
+      background-color: var(--color-red-semitransparent);
+    }
   }
 
   &.punished {
-    color: var(--color-maastricht-blue);
-    background-color: var(--color-yellow-transparent);
+    &.light {
+      color: var(--color-maastricht-blue);
+      background-color: var(--color-yellow-transparent);
+    }
+
+    &.dark {
+      color: var(--color-warning-border);
+      background-color: var(--color-yellow-transparent);
+    }
   }
 
   &.nonEligible {

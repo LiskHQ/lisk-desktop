@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTheme } from '@utils/theme';
 import BoxFooter from '@toolbox/box/footer';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import { routes } from '@constants';
@@ -11,33 +12,36 @@ export const CopyFooter = ({
   copied,
   onDownload,
   prevStep,
-}) => (
-  <BoxFooter className={styles.footer} direction="horizontal">
-    <SecondaryButton
-      className="go-back-button"
-      onClick={prevStep}
-    >
-      <span className={styles.buttonContent}>
-        {t('Go back')}
-      </span>
-    </SecondaryButton>
-    <SecondaryButton
-      className="copy-button"
-      onClick={onCopy}
-    >
-      <span className={styles.buttonContent}>
-        <Icon name={copied ? 'checkmark' : 'copy'} />
-        {t(copied ? 'Copied' : 'Copy')}
-      </span>
-    </SecondaryButton>
-    <PrimaryButton onClick={onDownload}>
-      <span className={styles.buttonContent}>
-        <Icon name="download" />
-        {t('Download')}
-      </span>
-    </PrimaryButton>
-  </BoxFooter>
-);
+}) => {
+  const theme = useTheme();
+  return (
+    <BoxFooter className={styles.footer} direction="horizontal">
+      <SecondaryButton
+        className={`go-back-button ${theme === 'dark' && 'dark'}`}
+        onClick={prevStep}
+      >
+        <span className={styles.buttonContent}>
+          {t('Go back')}
+        </span>
+      </SecondaryButton>
+      <SecondaryButton
+        className={`copy-button ${theme === 'dark' && 'dark'}`}
+        onClick={onCopy}
+      >
+        <span className={styles.buttonContent}>
+          <Icon name={copied ? 'checkmark' : 'copy'} />
+          {t(copied ? 'Copied' : 'Copy')}
+        </span>
+      </SecondaryButton>
+      <PrimaryButton onClick={onDownload}>
+        <span className={styles.buttonContent}>
+          <Icon name="download" />
+          {t('Download')}
+        </span>
+      </PrimaryButton>
+    </BoxFooter>
+  );
+};
 
 export const CopyAndSendFooter = ({
   t,

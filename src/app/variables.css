@@ -99,6 +99,7 @@ or "warn/action" ineastd of "red/green"
   --color-maastricht-blue: #0c152e;
   --color-slate-gray: #70778b;
   --color-blue-gray: #8a8ca2;
+  --color-manatee-gray: #9999a0;
   --color-dark-blue: #19224d;
   --color-ink-blue: #254898;
   --color-ghost: #bec1cd;
@@ -112,6 +113,7 @@ or "warn/action" ineastd of "red/green"
   --color-pale-pink: #ffd0d1;
   --color-silver: #eef0f7;
   --color-black: #000;
+  --color-cloud-burst: #1b243f;
 
   /*************************
       Other Colors
@@ -127,6 +129,7 @@ or "warn/action" ineastd of "red/green"
   --color-primary-standard: var(--color-ultramarine-blue);
   --color-primary-light: #9db8fa;
   --color-white: #fff;
+  --color-constant-white: #fff;
   --color-danger: #ff7721;
   --color-red: #ff4557;
   --color-content: #19224d;
@@ -164,12 +167,16 @@ or "warn/action" ineastd of "red/green"
   --color-vote-item-bg: var(--color-silver);
   --color-yellow-transparent: rgba(247, 227, 109, 0.3);
   --color-red-transparent: rgba(255, 69, 87, 0.1);
+  --color-red-semitransparent: rgba(255, 69, 87, 0.3);
   --color-blue-manatee-transparent: rgba(138, 140, 162, 0.1);
   --color-jade-green-transparent: rgba(43, 214, 123, 0.1);
   --color-tooltip-bg: rgb(255, 255, 255, 0.7);
   --color-tooltip-arrow: rgb(255, 255, 255, 0.7);
   --color-warning-border: #f7e36d;
   --color-warning-bg: #fffce8;
+  --color-tx-priority-btn-bg: var(--color-ink-blue);
+  --color-tx-priority-btn-default: var(--color-maastricht-blue);
+  --color-progress-bar: var(--color-ink-blue);
 
   /*************************
         Box
@@ -253,4 +260,7 @@ or "warn/action" ineastd of "red/green"
   --color-vote-item-bg: var(--color-mystic);
   --color-tooltip-bg: rgb(35, 35, 37, 0.7);
   --color-tooltip-arrow: rgb(35, 35, 37, 0.7);
+  --color-tx-priority-btn-bg: #254798;
+  --color-tx-priority-btn-default: #86868b;
+  --color-progress-bar: var(--color-jade-green);
 }

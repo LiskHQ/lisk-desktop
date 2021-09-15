@@ -146,10 +146,6 @@
   flex-flow: row nowrap;
   align-items: flex-start;
 
-  & img {
-    filter: hue-rotate(-10deg) saturate(50) brightness(0.5);
-  }
-
   & .main {
     flex-shrink: 0;
     box-sizing: border-box;
@@ -183,11 +179,25 @@
   width: 150px;
   height: 5px;
   display: flex;
-  background-color: var(--color-very-light-gray);
   border-radius: 43px;
 
+  &.dark {
+    background-color: var(--color-platinum);
+  }
+
+  &.light {
+    background-color: var(--color-very-light-gray);
+  }
+
   & > .lineForged {
-    background-color: var(--color-strong-ink-blue);
     border-radius: 43px;
+
+    &.dark {
+      background-color: var(--color-ultramarine-blue);
+    }
+
+    &.light {
+      background-color: var(--color-strong-ink-blue);
+    }
   }
 }

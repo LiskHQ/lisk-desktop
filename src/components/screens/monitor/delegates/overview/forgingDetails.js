@@ -9,6 +9,7 @@ import BoxContent from '@toolbox/box/content';
 import BoxEmptyState from '@toolbox/box/emptyState';
 import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
 import Icon from '@toolbox/icon';
+import { useTheme } from '@utils/theme';
 import NumericInfo from './numericInfo';
 import Forger from './forger';
 import styles from './overview.css';
@@ -20,9 +21,9 @@ const getForgingStats = (data, forgedInRound = 0) => {
   return [forgedInRound, ROUND_LENGTH - forgedInRound, missedBlocks];
 };
 
-const ProgressBar = ({ forgedInRound }) => (
-  <div className={styles.progressBar}>
-    <div className={styles.lineForged} style={{ width: `${(forgedInRound / ROUND_LENGTH) * 100}%` }} />
+const ProgressBar = ({ forgedInRound, theme }) => (
+  <div className={`${styles.progressBar} ${styles[theme]}`}>
+    <div className={`${styles.lineForged} ${styles[theme]}`} style={{ width: `${(forgedInRound / ROUND_LENGTH) * 100}%` }} />
   </div>
 );
 
@@ -119,7 +120,7 @@ const ForgingDetails = ({
                 <Icon name="blocksForged" />
                 <main className={styles.main}>
                   <h6>{t('Blocks forged')}</h6>
-                  <ProgressBar forgedInRound={forgedInRound} />
+                  <ProgressBar forgedInRound={forgedInRound} theme={useTheme()} />
                   <p className={styles.blue}>
                     {`${forgedInRound} / `}
                     <span>{` ${ROUND_LENGTH}`}</span>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@constants';
 import {
@@ -19,6 +20,7 @@ const BalanceGraph = ({
 }) => {
   const [data, setData] = useState(null);
   const [options, setOptions] = useState({});
+  const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
 
   useEffect(() => {
     if (data) {
@@ -41,9 +43,10 @@ const BalanceGraph = ({
         address,
         format,
         token,
+        theme,
       }));
     }
-  }, [transactions]);
+  }, [transactions, theme]);
 
   return (
     <Box className={`${styles.wrapper}`}>

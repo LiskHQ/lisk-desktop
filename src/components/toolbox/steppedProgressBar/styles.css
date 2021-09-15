@@ -35,14 +35,14 @@
 }
 
 .active {
-  border-color: var(--color-ink-blue);
-  background-color: var(--color-ink-blue);
+  border-color: var(--color-progress-bar);
+  background-color: var(--color-progress-bar);
   color: var(--color-white-smoke);
 }
 
 .solid {
   border-style: solid;
-  border-color: var(--color-ink-blue);
+  border-color: var(--color-progress-bar);
 }
 
 .labelContainer {
@@ -69,4 +69,8 @@
 
 .activeLabel {
   color: var(--color-ink-blue);
+
+  &.dark {
+    color: var(--color-progress-bar);
+  }
 }

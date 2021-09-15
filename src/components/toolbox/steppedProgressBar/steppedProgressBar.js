@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-
+import { useTheme } from '@utils/theme';
 import styles from './styles.css';
 
 const Step = ({ children, current, active }) => (
@@ -25,6 +25,7 @@ const Divider = ({ index, active }) => (
 const SteppedProgressBar = ({
   total, current, className, labels,
 }) => {
+  const theme = useTheme();
   const steps = new Array(total).fill(null);
 
   const children = steps.map((_, index) => {
@@ -50,7 +51,7 @@ const SteppedProgressBar = ({
       <div className={styles.labelContainer}>
         {labels.map((label, index) => (
           <span
-            className={index <= current - 1 ? styles.activeLabel : ''}
+            className={`${index <= current - 1 ? styles.activeLabel : ''} ${styles[theme]}`}
             key={index}
           >
             {label}

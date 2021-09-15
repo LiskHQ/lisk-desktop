@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { chartStyles } from '@constants';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 import i18n from '../i18n';
@@ -26,6 +27,7 @@ const styles = {
     LSK: '#4070f4',
     BTC: '#f7931a',
   },
+  pointBackgroundColor: chartStyles.pointBackgroundColor,
   whiteColor: '#ffffff',
   platinumColor: '#e1e3eb',
   slateGray: '#70778b',
@@ -86,9 +88,9 @@ export const graphOptions = ({
   },
   elements: {
     point: {
-      radius: 2,
-      hoverRadius: 3,
-      hitRadius: 3,
+      radius: 5,
+      hoverRadius: 5,
+      hitRadius: 5,
     },
     line: {
       tension: 0,
@@ -174,7 +176,7 @@ const getDate = (timestamp, token) => {
  * @param {Node} canvas Canvas element to be used
  */
 export const getBalanceData = ({
-  transactions, balance, address, token,
+  transactions, balance, address, token, theme = 'light',
 }) => {
   const data = transactions
     .sort((a, b) => (b.block.timestamp - a.block.timestamp))
@@ -211,6 +213,8 @@ export const getBalanceData = ({
       data: Object.values(data.graphTransactions).reverse(),
       borderColor: styles.borderColor[token],
       pointBorderColor: styles.borderColor[token],
+      pointBorderWidth: 4.5,
+      pointBackgroundColor: styles.pointBackgroundColor[theme],
     }],
   };
 };

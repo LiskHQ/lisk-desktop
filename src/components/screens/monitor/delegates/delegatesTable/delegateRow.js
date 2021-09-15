@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { routes } from '@constants';
+import { useTheme } from '@utils/theme';
 import { addedToWatchList, removedFromWatchList } from '@actions';
 import styles from '../delegates.css';
 import {
@@ -34,6 +35,7 @@ const DelegateRow = ({
     data.nextForgingTime || blocks.forgers[blocks.indexBook[data.address]]?.nextForgingTime,
   );
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const isWatched = watchList.find(address => address === data.address);
 
@@ -106,6 +108,7 @@ const DelegateRow = ({
               status={data.status}
               totalVotesReceived={data.totalVotesReceived}
               activeTab={activeTab}
+              theme={theme}
             />
           ) : null
       }
