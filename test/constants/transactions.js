@@ -57,7 +57,7 @@ const transformedAccountTransaction = {
     address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
     publicKey: '205688492bc52ddabfdc10fa7728b8bcb5942ad17c68ab5c20e96153fd1ac657',
   },
-}
+};
 
 const newTransaction = {
   pending: [],
@@ -79,8 +79,8 @@ const newTransaction = {
   },
   txSignatureError: null,
   txBroadcastError: null,
-}
+};
 
-export { sampleTransaction, transformedAccountTransaction, newTransaction }
+export { sampleTransaction, transformedAccountTransaction, newTransaction };
 
 export default transactions;
