@@ -52,6 +52,7 @@ const TransactionStatus = ({
   const isHardwareWalletConnected = !!account.hwInfo?.deviceId;
 
   const broadcast = () => {
+    console.log('broadcast');
     if (!isEmpty(transactions.signedTransaction)) {
       transactionBroadcasted(transactions.signedTransaction);
     }
@@ -73,11 +74,10 @@ const TransactionStatus = ({
     broadcast();
 
     return resetTransactionResult;
-  }, []);
-
-  useEffect(() => {
-    broadcast();
   }, [account.sequence.nonce]);
+
+  console.log(account.sequence.nonce);
+//  console.log(account);
 
   const { isBookmarked } = bookmarkInformation(bookmarks, fields);
   const isHardwareWalletError = getHwError(isHardwareWalletConnected, fields);
@@ -87,7 +87,8 @@ const TransactionStatus = ({
     isHardwareWalletError,
   );
 
-  if (status.code === 'error' && status.message.contains('nonce')) {
+  if (status.code === 'error' && status.message.includes('nonce')) {
+    console.log('---- update account');
     accountDataUpdated();
   }
 
