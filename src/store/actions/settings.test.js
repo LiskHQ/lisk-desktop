@@ -46,7 +46,7 @@ describe('actions: setting', () => {
           type: actionTypes.settingsRetrieved,
         };
 
-        await settingsRetrieved()(dispatch)
+        settingsRetrieved()(dispatch)
         expect(dispatch).toHaveBeenCalledWith(expectedAction);
       })
     })
