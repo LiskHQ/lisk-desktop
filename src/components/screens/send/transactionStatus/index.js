@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { getAccount } from '@api/account';
 import { getActiveTokenAccount } from '@utils/account';
-import { transactionBroadcasted, resetTransactionResult } from '@actions';
+import { transactionBroadcasted, resetTransactionResult, transactionCreated } from '@actions';
 import withData from '@utils/withData';
 import TransactionStatus from './transactionStatus';
 
@@ -17,6 +17,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   resetTransactionResult,
   transactionBroadcasted,
+  transactionCreated,
 };
 
 const apis = {

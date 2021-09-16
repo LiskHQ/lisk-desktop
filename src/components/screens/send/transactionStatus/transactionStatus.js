@@ -4,6 +4,7 @@ import { isEmpty } from '@utils/helpers';
 import { SecondaryButton, PrimaryButton } from '@toolbox/buttons';
 import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
 import DialogLink from '@toolbox/dialog/link';
+import { toRawLsk } from '@utils/lsk';
 import statusMessages from './statusMessages';
 import styles from './transactionStatus.css';
 
@@ -36,9 +37,11 @@ const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
 };
 
 // eslint-disable-next-line complexity
+// eslint-disable-next-line max-statements
 const TransactionStatus = ({
   transactionBroadcasted,
   resetTransactionResult,
+  transactionCreated,
   recipientAccount,
   transactions,
   bookmarks,
@@ -76,6 +79,18 @@ const TransactionStatus = ({
 
   useEffect(() => {
     broadcast();
+  }, [transactions.signedTransaction]);
+
+  useEffect(() => {
+    if (account.sequence.nonce > transactions.txBroadcastError?.transaction?.nonce) {
+      console.log('- create tx with updated nonce -');
+      transactionCreated({
+        amount: `${toRawLsk(fields.amount.value)}`,
+        data: fields.reference ? fields.reference.value : '',
+        recipientAddress: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+        fee: toRawLsk(parseFloat(fields.fee.value)),
+      });
+    }
   }, [account.sequence.nonce]);
 
   const { isBookmarked } = bookmarkInformation(bookmarks, fields);
