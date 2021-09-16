@@ -96,11 +96,12 @@ describe('actions: transactions', () => {
         address: '15626650747375562521L',
       };
       transactionsApi.getTransactions.mockResolvedValue({
-        data: transactionData, meta: { total: 0 },
+        data: transactionData,
+        meta: { total: 0 },
       });
       const expectedAction = {
         count: 0,
-        confirmed: [],
+        confirmed: transactionData,
         address: transactionData.address,
         filters: {},
         offset: 0,
