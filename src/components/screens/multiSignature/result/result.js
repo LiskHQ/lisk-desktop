@@ -14,7 +14,8 @@ const Result = ({
   const [copied, setCopied] = useState(false);
 
   const onDownload = () => {
-    downloadJSON(transaction, `tx-${transactions.signedTransaction.id}`);
+    const transactionId = transaction.id.toString('hex');
+    downloadJSON(transaction, `tx-${transactionId}`);
   };
 
   const onCopy = () => {
