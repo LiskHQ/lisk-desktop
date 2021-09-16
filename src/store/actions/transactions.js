@@ -6,7 +6,7 @@ import {
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { transformTransaction } from '@utils/transaction';
 import { signSendTransaction } from '@utils/hwManager';
-import { timerReset } from './account';
+import { timerReset, accountDataUpdated } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
 /**
@@ -145,20 +145,18 @@ export const transactionBroadcasted = transaction =>
     const activeToken = settings.token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
-    const [error] = await to(broadcast(
+    let [error] = await to(broadcast(
       { transaction, serviceUrl },
       activeToken,
     ));
 
-    dispatch({
-      type: actionTypes.broadcastedTransactionError,
-      data: {
-        error: 'nonce is invalid',
-        transaction,
-      },
-    });
+    error = 'nonce is invalid';
 
     if (error) {
+      if (error.includes('nonce')) {
+        console.log('---- update account');
+        dispatch(accountDataUpdated());
+      }
       dispatch({
         type: actionTypes.broadcastedTransactionError,
         data: {

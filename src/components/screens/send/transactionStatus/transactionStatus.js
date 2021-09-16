@@ -36,11 +36,9 @@ const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
 };
 
 // eslint-disable-next-line complexity
-// eslint-disable-next-line max-statements
 const TransactionStatus = ({
   transactionBroadcasted,
   resetTransactionResult,
-  accountDataUpdated,
   recipientAccount,
   transactions,
   bookmarks,
@@ -77,7 +75,6 @@ const TransactionStatus = ({
   }, [account.sequence.nonce]);
 
   console.log(account.sequence.nonce);
-//  console.log(account);
 
   const { isBookmarked } = bookmarkInformation(bookmarks, fields);
   const isHardwareWalletError = getHwError(isHardwareWalletConnected, fields);
@@ -86,11 +83,6 @@ const TransactionStatus = ({
     transactions, status, t,
     isHardwareWalletError,
   );
-
-  if (status.code === 'error' && status.message.includes('nonce')) {
-    console.log('---- update account');
-    accountDataUpdated();
-  }
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
