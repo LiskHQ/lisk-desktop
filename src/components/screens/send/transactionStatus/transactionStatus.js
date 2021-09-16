@@ -50,8 +50,10 @@ const TransactionStatus = ({
   const isHardwareWalletConnected = !!account.hwInfo?.deviceId;
 
   const broadcast = () => {
-    console.log('broadcast');
     if (!isEmpty(transactions.signedTransaction)) {
+      console.log('BROADCAST');
+      console.log(`nonce: ${account.sequence.nonce}`);
+      console.log(`txId: ${transactions.signedTransaction.id.toString('hex')}`);
       transactionBroadcasted(transactions.signedTransaction);
     }
   };
@@ -69,12 +71,12 @@ const TransactionStatus = ({
 
   useEffect(() => {
     recipientAccount.loadData({ address: fields.recipient.address });
-    broadcast();
-
     return resetTransactionResult;
-  }, [account.sequence.nonce]);
+  }, []);
 
-  console.log(account.sequence.nonce);
+  useEffect(() => {
+    broadcast();
+  }, [account.sequence.nonce]);
 
   const { isBookmarked } = bookmarkInformation(bookmarks, fields);
   const isHardwareWalletError = getHwError(isHardwareWalletConnected, fields);
