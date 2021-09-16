@@ -37,18 +37,18 @@ describe('actions: setting', () => {
 
   describe('settingsRetrieved', () => {
     it('should create an action to retrieve settings', () => {
-      const initialState = { autoLog: true }
+      const initialState = { autoLog: true };
 
-      window.localStorage.getItem = jest.fn(() => JSON.stringify(settings))
+      window.localStorage.getItem = jest.fn(() => JSON.stringify(settings));
       getFromStorage('settings', initialState, async (data) => {
         const expectedAction = {
           data,
           type: actionTypes.settingsRetrieved,
         };
 
-        settingsRetrieved()(dispatch)
+        settingsRetrieved()(dispatch);
         expect(dispatch).toHaveBeenCalledWith(expectedAction);
-      })
-    })
-  })
+      });
+    });
+  });
 });

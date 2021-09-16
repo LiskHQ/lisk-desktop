@@ -94,8 +94,10 @@ describe('actions: transactions', () => {
     it('should dispatch getTransactionsSuccess action if resolved and default argument values are used', async () => {
       const transactionData = {
         address: '15626650747375562521L',
-      }
-      transactionsApi.getTransactions.mockResolvedValue({ data: transactionData, meta: { total: 0 } });
+      };
+      transactionsApi.getTransactions.mockResolvedValue({
+        data: transactionData, meta: { total: 0 },
+      });
       const expectedAction = {
         count: 0,
         confirmed: [],
@@ -115,20 +117,20 @@ describe('actions: transactions', () => {
       const transactionError = new Error('Transaction retrieve error');
       transactionsApi.getTransactions.mockRejectedValue(transactionError);
 
-      expect(transactionsApi.getTransactions).rejects.toThrow('Transaction retrieve error')
+      expect(transactionsApi.getTransactions).rejects.toThrow('Transaction retrieve error');
 
       await transactionsRetrieved(data)(dispatch, getState);
-      expect(transactionsApi.getTransactions).rejects.toThrow(transactionError)
-      expect(dispatch).toHaveBeenCalledTimes(2)
+      expect(transactionsApi.getTransactions).rejects.toThrow(transactionError);
+      expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: actionTypes.loadingStarted,
         data: actionTypes.transactionsRetrieved,
-      })
+      });
       expect(dispatch).toHaveBeenNthCalledWith(2, {
         type: actionTypes.transactionLoadFailed,
         data: { error: transactionError },
-      })
-    })
+      });
+    });
   });
 
   describe('emptyTransaction', () => {
@@ -148,10 +150,10 @@ describe('actions: transactions', () => {
         signatures: ['xnVCm30IUhtYidgBX', 'uxsFGiaqS3n4ydB'],
         sender: {
           address: '3040783849904107057L',
-          publicKey: 'MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6'
+          publicKey: 'MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6',
         },
         isPending: true,
-      }
+      };
       const expectedAction = {
         type: actionTypes.pendingTransactionAdded,
         data,
@@ -169,48 +171,48 @@ describe('actions: transactions', () => {
 
   describe('transactionCreated', () => {
     it('should dispatch transactionCreatedSuccess action if there are no errors', async () => {
-      transactionsApi.create.mockResolvedValue({ tx: newTransaction })
+      transactionsApi.create.mockResolvedValue({ tx: newTransaction });
       const expectedAction = {
         type: actionTypes.transactionCreatedSuccess,
         data: { tx: newTransaction },
-      }
-      await transactionCreated(newTransaction)(dispatch, getState)
-      expect(transactionsApi.create).toHaveBeenCalled()
-      expect(dispatch).toHaveBeenCalledWith(expectedAction)
-    })
+      };
+      await transactionCreated(newTransaction)(dispatch, getState);
+      expect(transactionsApi.create).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+    });
 
     it('should dispatch transactionSignError action if there are errors', async () => {
       const transactionError = new Error('Transaction create error');
-      loginTypes.passphrase.code = 1
-      hwManagerApi.signSendTransaction.mockRejectedValue(transactionError)
-      expect(hwManagerApi.signSendTransaction).rejects.toThrow(transactionError)
+      loginTypes.passphrase.code = 1;
+      hwManagerApi.signSendTransaction.mockRejectedValue(transactionError);
+      expect(hwManagerApi.signSendTransaction).rejects.toThrow(transactionError);
       const expectedAction = {
         type: actionTypes.transactionSignError,
         data: transactionError,
-      }
-      await transactionCreated(newTransaction)(dispatch, getState)
-      expect(hwManagerApi.signSendTransaction).toHaveBeenCalled()
-      expect(dispatch).toHaveBeenCalledWith(expectedAction)
-    })
+      };
+      await transactionCreated(newTransaction)(dispatch, getState);
+      expect(hwManagerApi.signSendTransaction).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+    });
 
     it('should dispatch transactionSignError action if there are no transaction signatures', async () => {
-      loginTypes.passphrase.code = 1
+      loginTypes.passphrase.code = 1;
       const noSignatureTransaction = {
         pending: [],
         confirmed: [],
         count: null,
         filters: {},
-      }
-      hwManagerApi.signSendTransaction.mockResolvedValue({tx: noSignatureTransaction})
+      };
+      hwManagerApi.signSendTransaction.mockResolvedValue({ tx: noSignatureTransaction });
       const expectedAction = {
         type: actionTypes.transactionSignError,
         data: null,
-      }
-      await transactionCreated(newTransaction)(dispatch, getState)
-      expect(hwManagerApi.signSendTransaction).toHaveBeenCalled()
-      expect(dispatch).toHaveBeenCalledWith(expectedAction)
-    })
-  })
+      };
+      await transactionCreated(newTransaction)(dispatch, getState);
+      expect(hwManagerApi.signSendTransaction).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+    });
+  });
 
   describe('transactionDoubleSigned', () => {
     it('should create an action to reset transaction result', () => {
@@ -218,7 +220,7 @@ describe('actions: transactions', () => {
         id: 'a66c3cb626dbb631e53a5bd617cc8c13f06186c91f42e87008331e6dc4dc3cba',
         signatures: ['ofh49fhfnYHK8499dvvn', '0egeJT7dgdnek4n5k6994k'],
         senderPublicKey: 'MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6',
-      }
+      };
       const expectedAction = {
         type: actionTypes.transactionDoubleSigned,
         data,
@@ -229,11 +231,13 @@ describe('actions: transactions', () => {
 
   describe('transactionBroadcasted', () => {
     it('should dispatch broadcastedTransactionSuccess action if there are no errors', async () => {
-      transactionsApi.broadcast.mockResolvedValue({data: sampleTransaction})
-      transactionsModifyApi.transformTransaction.mockImplementation(() => transformedAccountTransaction)
+      transactionsApi.broadcast.mockResolvedValue({ data: sampleTransaction });
+      transactionsModifyApi.transformTransaction.mockImplementation(
+        () => transformedAccountTransaction,
+      );
       jest
         .spyOn(global, 'Date')
-        .mockImplementationOnce(() => new Date('2021-09-15T11:07:29.864Z'))
+        .mockImplementationOnce(() => new Date('2021-09-15T11:07:29.864Z'));
       const expectedAction = {
         type: actionTypes.broadcastedTransactionSuccess,
         data: sampleTransaction,
@@ -241,19 +245,19 @@ describe('actions: transactions', () => {
       const lastExpectedAction = {
         type: actionTypes.timerReset,
         data: new Date(),
-      }
+      };
 
-      await transactionBroadcasted(sampleTransaction)(dispatch, getState)
-      expect(transactionsApi.broadcast).toHaveBeenCalled()
+      await transactionBroadcasted(sampleTransaction)(dispatch, getState);
+      expect(transactionsApi.broadcast).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
       expect(dispatch).toHaveBeenLastCalledWith(lastExpectedAction);
     });
 
     it('should dispatch broadcastedTransactionError action if there\'s an error', async () => {
       const transactionBroadcastError = new Error('Transaction broadcast error');
-      transactionsApi.broadcast.mockRejectedValue(transactionBroadcastError)
+      transactionsApi.broadcast.mockRejectedValue(transactionBroadcastError);
 
-      expect(transactionsApi.broadcast).rejects.toThrow(transactionBroadcastError)
+      expect(transactionsApi.broadcast).rejects.toThrow(transactionBroadcastError);
       const expectedAction = {
         type: actionTypes.broadcastedTransactionError,
         data: {
@@ -261,22 +265,22 @@ describe('actions: transactions', () => {
           transaction: sampleTransaction,
         },
       };
-      expect(transactionsApi.broadcast).toHaveBeenCalled()
-      await transactionBroadcasted(sampleTransaction)(dispatch, getState)
+      expect(transactionsApi.broadcast).toHaveBeenCalled();
+      await transactionBroadcasted(sampleTransaction)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
 
     it('should dispatch pendingTransactionAdded action if transformedTransaction sender address is the same as LSK address', async () => {
-      transactionsApi.broadcast.mockResolvedValue({data: sampleTransaction})
-      transactionsModifyApi.transformTransaction.mockReturnValue(transformedAccountTransaction)
+      transactionsApi.broadcast.mockResolvedValue({ data: sampleTransaction });
+      transactionsModifyApi.transformTransaction.mockReturnValue(transformedAccountTransaction);
 
       const expectedAction = {
         type: actionTypes.pendingTransactionAdded,
         data: { ...transformedAccountTransaction, isPending: true },
-      }
-      await transactionBroadcasted(sampleTransaction)(dispatch, getState)
-      expect(transactionsModifyApi.transformTransaction).toHaveBeenCalled()
-      expect(dispatch).toHaveBeenCalledWith(expectedAction)
-    })
+      };
+      await transactionBroadcasted(sampleTransaction)(dispatch, getState);
+      expect(transactionsModifyApi.transformTransaction).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+    });
   });
 });
