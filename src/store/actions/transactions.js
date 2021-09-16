@@ -150,6 +150,14 @@ export const transactionBroadcasted = transaction =>
       activeToken,
     ));
 
+    dispatch({
+      type: actionTypes.broadcastedTransactionError,
+      data: {
+        error: 'nonce is invalid',
+        transaction,
+      },
+    });
+
     if (error) {
       dispatch({
         type: actionTypes.broadcastedTransactionError,
