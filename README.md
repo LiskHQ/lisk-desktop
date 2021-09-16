@@ -18,9 +18,12 @@ Please see [CONTRIBUTING_GUIDE.md](/docs/CONTRIBUTING_GUIDE.md) for more informa
 
 If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to [fonts folder](./src/assets/fonts). If you don't have the fonts, you need to remove lines 25 - 81 of [type.css](./src/components/app/type.css). After that, the `build` and `dev` npm scripts run without any errors.
 
-### Setup environemnt
+### Setup environment
 
 The development environment currently depends on [Node.js version 12 (lts/erbium)](https://nodejs.org/download/release/latest-v12.x/). The below instructions assume [nvm](https://github.com/nvm-sh/nvm) is being used to manage Node.js versions.
+
+*Note*:
+For *Windows* users, make sure to set the correct [msvs_version](https://www.npmjs.com/package/node-gyp#on-windows) config for installing and packing the Lisk Desktop application.
 
 ```
 git clone https://github.com/LiskHQ/lisk-desktop.git

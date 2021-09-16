@@ -16,9 +16,9 @@
     "node": ">=v12.7.0"
   },
   "scripts": {
-    "dev": "DEBUG=true NACL_FAST=disable && webpack serve --config ./config/webpack.config.dev",
-    "dev:hw": " DEBUG=true webpack serve --config ./config/webpack.config.dev --https",
-    "start": "DEBUG=true npm run rebuild && electron ./app/",
+    "dev": "cross-env DEBUG=true NACL_FAST=disable && webpack serve --config ./config/webpack.config.dev",
+    "dev:hw": "cross-env DEBUG=true webpack serve --config ./config/webpack.config.dev --https",
+    "start": "cross-env DEBUG=true npm run rebuild && electron ./app/",
     "rebuild": "electron-rebuild -m app/node_modules/node-hid && electron-rebuild -m app/node_modules/usb",
     "build": "npm-run-all clean:build copy:files build:prod build:electron",
     "build:prod": "webpack --config ./config/webpack.config.prod",
@@ -112,6 +112,7 @@
     "bignumber.js": "8.0.1",
     "bip32": "1.0.4",
     "bitcoinjs-lib": "4.0.5",
+    "bitcore-lib": "9.0.0",
     "bitcore-mnemonic": "9.0.0",
     "body-parser": "1.18.3",
     "browser-or-node": "1.1.0",
@@ -199,6 +200,7 @@
     "chai-as-promised": "7.1.1",
     "chai-enzyme": "1.0.0-beta.1",
     "cpx": "1.5.0",
+    "cross-env": "7.0.3",
     "css-hot-loader": "1.4.3",
     "css-loader": "5.2.4",
     "cypress": "6.3.0",
