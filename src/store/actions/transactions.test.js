@@ -1,5 +1,7 @@
-import { actionTypes } from '@constants';
+import { actionTypes, loginTypes } from '@constants';
 import * as transactionsApi from '@api/transaction';
+import * as transactionsModifyApi from '@utils/transaction';
+import * as hwManagerApi from '@utils/hwManager';
 import {
   emptyTransactionsData,
   transactionsRetrieved,
@@ -7,13 +9,20 @@ import {
   pendingTransactionAdded,
   transactionDoubleSigned,
   transactionBroadcasted,
+  transactionCreated,
 } from './transactions';
-import { sampleTransaction } from '../../../test/constants/transactions';
+import { sampleTransaction, transformedAccountTransaction, newTransaction } from '../../../test/constants/transactions';
 
 jest.mock('@api/transaction');
 jest.mock('@api/delegate');
+jest.mock('@utils/transaction');
+jest.mock('@utils/hwManager');
 
 describe('actions: transactions', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   const dispatch = jest.fn();
   const getState = () => ({
     account: {
@@ -26,6 +35,7 @@ describe('actions: transactions', () => {
           summary: { address: '16Qp9op3fTESTBTCACCOUNTv52ghRzYreUuQ' },
         },
       },
+      loginType: 0,
     },
     network: {
       status: { online: true },
@@ -52,10 +62,6 @@ describe('actions: transactions', () => {
     },
   });
 
-  // afterEach(() => {
-  //   jest.clearAllMocks();
-  // });
-
   describe('getTransactions', () => {
     const data = {
       address: '15626650747375562521L',
@@ -69,7 +75,6 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch getTransactionsSuccess action if resolved', async () => {
-      // transactionsApi.getTransactions.mockClear()
       transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { total: 0 } });
       const expectedAction = {
         count: 0,
@@ -86,31 +91,42 @@ describe('actions: transactions', () => {
       });
     });
 
+    it('should dispatch getTransactionsSuccess action if resolved and default argument values are used', async () => {
+      const transactionData = {
+        address: '15626650747375562521L',
+      }
+      transactionsApi.getTransactions.mockResolvedValue({ data: transactionData, meta: { total: 0 } });
+      const expectedAction = {
+        count: 0,
+        confirmed: [],
+        address: transactionData.address,
+        filters: {},
+        offset: 0,
+      };
+
+      await transactionsRetrieved(transactionData)(dispatch, getState);
+      expect(dispatch).toHaveBeenLastCalledWith({
+        type: actionTypes.transactionsRetrieved,
+        data: expectedAction,
+      });
+    });
+
     it('should dispatch transactionsLoadFailed action if rejected', async () => {
-      transactionsApi.getTransactions.mockReset()
-      // transactionsApi.getTransactions.mockRejectedValue(new Error('Transaction retrieve error'));
-      // transactionsApi.getTransactions.mockImplementation(() => Promise.reject(new Error('Transaction retrieve error')).catch(() => {}));
-      // transactionsApi.getTransactions.mockImplementation(() => Promise.reject('Transaction retrieve error'));
+      const transactionError = new Error('Transaction retrieve error');
+      transactionsApi.getTransactions.mockRejectedValue(transactionError);
 
-      // transactionsApi.getTransactions.mockReset()
-      transactionsApi.getTransactions.mockRejectedValue(new Error('Transaction retrieve error'));
-      // transactionsApi.getTransactions.mockRejectedValue('Transaction retrieve error');
-
-      // transactionsApi.getTransactions = jest.fn().mockRejectedValue(new Error('Transaction retrieve error'))
-      // transactionsApi.getTransactions.catch(() => {})
-      // console.log(transactionsRetrieved(data))
       expect(transactionsApi.getTransactions).rejects.toThrow('Transaction retrieve error')
-      // expect(transactionsRetrieved(data)).rejects.toMatch('Transaction retrieve error')
+
       await transactionsRetrieved(data)(dispatch, getState);
-      // expect(dispatch).toHaveBeenCalledWith({
+      expect(transactionsApi.getTransactions).rejects.toThrow(transactionError)
+      expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: actionTypes.loadingStarted,
         data: actionTypes.transactionsRetrieved,
       })
-      // expect(dispatch).toHaveBeenNthCalledWith(1)
       expect(dispatch).toHaveBeenNthCalledWith(2, {
         type: actionTypes.transactionLoadFailed,
-        data: {error: 'Transaction retrieve error'},
+        data: { error: transactionError },
       })
     })
   });
@@ -151,6 +167,51 @@ describe('actions: transactions', () => {
     });
   });
 
+  describe('transactionCreated', () => {
+    it('should dispatch transactionCreatedSuccess action if there are no errors', async () => {
+      transactionsApi.create.mockResolvedValue({ tx: newTransaction })
+      const expectedAction = {
+        type: actionTypes.transactionCreatedSuccess,
+        data: { tx: newTransaction },
+      }
+      await transactionCreated(newTransaction)(dispatch, getState)
+      expect(transactionsApi.create).toHaveBeenCalled()
+      expect(dispatch).toHaveBeenCalledWith(expectedAction)
+    })
+
+    it('should dispatch transactionSignError action if there are errors', async () => {
+      const transactionError = new Error('Transaction create error');
+      loginTypes.passphrase.code = 1
+      hwManagerApi.signSendTransaction.mockRejectedValue(transactionError)
+      expect(hwManagerApi.signSendTransaction).rejects.toThrow(transactionError)
+      const expectedAction = {
+        type: actionTypes.transactionSignError,
+        data: transactionError,
+      }
+      await transactionCreated(newTransaction)(dispatch, getState)
+      expect(hwManagerApi.signSendTransaction).toHaveBeenCalled()
+      expect(dispatch).toHaveBeenCalledWith(expectedAction)
+    })
+
+    it('should dispatch transactionSignError action if there are no transaction signatures', async () => {
+      loginTypes.passphrase.code = 1
+      const noSignatureTransaction = {
+        pending: [],
+        confirmed: [],
+        count: null,
+        filters: {},
+      }
+      hwManagerApi.signSendTransaction.mockResolvedValue({tx: noSignatureTransaction})
+      const expectedAction = {
+        type: actionTypes.transactionSignError,
+        data: null,
+      }
+      await transactionCreated(newTransaction)(dispatch, getState)
+      expect(hwManagerApi.signSendTransaction).toHaveBeenCalled()
+      expect(dispatch).toHaveBeenCalledWith(expectedAction)
+    })
+  })
+
   describe('transactionDoubleSigned', () => {
     it('should create an action to reset transaction result', () => {
       const data = {
@@ -160,24 +221,62 @@ describe('actions: transactions', () => {
       }
       const expectedAction = {
         type: actionTypes.transactionDoubleSigned,
-        data
+        data,
       };
       expect(transactionDoubleSigned(data)).toEqual(expectedAction);
     });
   });
 
   describe('transactionBroadcasted', () => {
-    it('should create an action to broadcast transaction successfully', async () => {
+    it('should dispatch broadcastedTransactionSuccess action if there are no errors', async () => {
       transactionsApi.broadcast.mockResolvedValue({data: sampleTransaction})
-
+      transactionsModifyApi.transformTransaction.mockImplementation(() => transformedAccountTransaction)
+      jest
+        .spyOn(global, 'Date')
+        .mockImplementationOnce(() => new Date('2021-09-15T11:07:29.864Z'))
       const expectedAction = {
         type: actionTypes.broadcastedTransactionSuccess,
         data: sampleTransaction,
       };
+      const lastExpectedAction = {
+        type: actionTypes.timerReset,
+        data: new Date(),
+      }
 
       await transactionBroadcasted(sampleTransaction)(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledWith(expectedAction);
       expect(transactionsApi.broadcast).toHaveBeenCalled()
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+      expect(dispatch).toHaveBeenLastCalledWith(lastExpectedAction);
     });
+
+    it('should dispatch broadcastedTransactionError action if there\'s an error', async () => {
+      const transactionBroadcastError = new Error('Transaction broadcast error');
+      transactionsApi.broadcast.mockRejectedValue(transactionBroadcastError)
+
+      expect(transactionsApi.broadcast).rejects.toThrow(transactionBroadcastError)
+      const expectedAction = {
+        type: actionTypes.broadcastedTransactionError,
+        data: {
+          error: transactionBroadcastError,
+          transaction: sampleTransaction,
+        },
+      };
+      expect(transactionsApi.broadcast).toHaveBeenCalled()
+      await transactionBroadcasted(sampleTransaction)(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+    });
+
+    it('should dispatch pendingTransactionAdded action if transformedTransaction sender address is the same as LSK address', async () => {
+      transactionsApi.broadcast.mockResolvedValue({data: sampleTransaction})
+      transactionsModifyApi.transformTransaction.mockReturnValue(transformedAccountTransaction)
+
+      const expectedAction = {
+        type: actionTypes.pendingTransactionAdded,
+        data: { ...transformedAccountTransaction, isPending: true },
+      }
+      await transactionBroadcasted(sampleTransaction)(dispatch, getState)
+      expect(transactionsModifyApi.transformTransaction).toHaveBeenCalled()
+      expect(dispatch).toHaveBeenCalledWith(expectedAction)
+    })
   });
 });
