@@ -145,16 +145,17 @@ export const transactionBroadcasted = transaction =>
     const activeToken = settings.token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
-    let [error] = await to(broadcast(
+    const [error] = await to(broadcast(
       { transaction, serviceUrl },
       activeToken,
     ));
 
-    error = 'nonce is invalid';
-
     if (error) {
-      if (error.includes('nonce')) {
-        console.log('---- update account');
+      console.log(error);
+      if (error.message.includes('nonce')) {
+        console.log('--------------');
+        console.log('update account');
+        console.log('--------------');
         dispatch(accountDataUpdated());
       }
       dispatch({
