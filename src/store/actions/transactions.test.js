@@ -76,7 +76,7 @@ describe('actions: transactions', () => {
 
   describe('broadcastTransaction', () => {
     it('should dispatch accountDataUpdated when broadcast transaction fails because of invalid nonce', async () => {
-      const error = { message: 'invalid nonce' };
+      const error = { message: 'nonce is lower than account nonce' };
       to.mockImplementation(() => (
         [error]
       ));
