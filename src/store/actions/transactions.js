@@ -151,11 +151,7 @@ export const transactionBroadcasted = transaction =>
     ));
 
     if (error) {
-      console.log(error);
       if (error.message.includes('nonce')) {
-        console.log('--------------');
-        console.log('update account');
-        console.log('--------------');
         dispatch(accountDataUpdated());
       }
       dispatch({

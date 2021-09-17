@@ -54,9 +54,6 @@ const TransactionStatus = ({
 
   const broadcast = () => {
     if (!isEmpty(transactions.signedTransaction)) {
-      console.log('BROADCAST');
-      console.log(`nonce: ${account.sequence.nonce}`);
-      console.log(`txId: ${transactions.signedTransaction.id.toString('hex')}`);
       transactionBroadcasted(transactions.signedTransaction);
     }
   };
@@ -77,17 +74,18 @@ const TransactionStatus = ({
     return resetTransactionResult;
   }, []);
 
+  // Broadcast transacion when signedTransaction is updated
   useEffect(() => {
     broadcast();
   }, [transactions.signedTransaction]);
 
+  // Create a new tx when account nonce is updated and bigger than failed tx nonce.
   useEffect(() => {
     if (account.sequence.nonce > transactions.txBroadcastError?.transaction?.nonce) {
-      console.log('- create tx with updated nonce -');
       transactionCreated({
         amount: `${toRawLsk(fields.amount.value)}`,
         data: fields.reference ? fields.reference.value : '',
-        recipientAddress: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+        recipientAddress: fields.recipient.address,
         fee: toRawLsk(parseFloat(fields.fee.value)),
       });
     }
