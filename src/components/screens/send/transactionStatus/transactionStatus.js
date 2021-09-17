@@ -74,6 +74,7 @@ const TransactionStatus = ({
     return resetTransactionResult;
   }, []);
 
+  // TODO remove this logic when #3801 is implemented
   // Broadcast transacion when signedTransaction is updated
   useEffect(() => {
     broadcast();

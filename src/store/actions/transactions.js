@@ -151,7 +151,7 @@ export const transactionBroadcasted = transaction =>
     ));
 
     if (error) {
-      if (error.message.includes('nonce')) {
+      if (error.message.includes('nonce is lower than account nonce')) {
         dispatch(accountDataUpdated());
       }
       dispatch({
