@@ -72,4 +72,4 @@ const newTransaction = {
   txBroadcastError: null,
 };
 
-export { getState, transformedAccountTransaction, newTransaction }
+export { getState, transformedAccountTransaction, newTransaction };
