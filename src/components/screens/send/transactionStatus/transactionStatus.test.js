@@ -14,6 +14,7 @@ describe('TransactionStatus', () => {
     account: {
       summary: { address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' },
       hwInfo: { deviceId: 'MOCK' },
+      sequence: { nonce: 1 },
     },
     prevStep: jest.fn(),
     fields: {
@@ -31,6 +32,7 @@ describe('TransactionStatus', () => {
     },
     resetTransactionResult: jest.fn(),
     transactionBroadcasted: jest.fn(),
+    transactionCreated: jest.fn(),
     transactions: {
       signedTransaction: {},
       txSignatureError: null,
@@ -66,6 +68,7 @@ describe('TransactionStatus', () => {
         summary: {
           address: props.fields.recipient.address,
         },
+        sequence: { nonce: 1 },
         hwInfo: { deviceId: 'MOCK' },
       },
     });
@@ -106,5 +109,29 @@ describe('TransactionStatus', () => {
   it('should call resetTransactionResult on unmount', () => {
     wrapper.unmount();
     expect(props.resetTransactionResult).toHaveBeenCalled();
+  });
+
+  it('should call transactionCreated when account nonce is bigger than failed transaction', () => {
+    props.transactionCreated.mockReset();
+    const newProps = {
+      ...props,
+      account: {
+        ...props.account,
+        sequence: { nonce: 2 },
+      },
+    };
+    newProps.fields = {
+      recipient: { address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy' },
+      amount: { value: 100000000 },
+      fee: { value: 6000000 },
+    };
+    newProps.transactions.txBroadcastError = {
+      error: { message: 'nonce error' },
+      transaction: {
+        recipient: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', amount: 1, reference: 'test', nonce: 1,
+      },
+    };
+    wrapper = mountWithRouter(TransactionStatus, newProps);
+    expect(props.transactionCreated).toHaveBeenCalledTimes(1);
   });
 });
