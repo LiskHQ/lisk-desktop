@@ -8,7 +8,7 @@ export const getNetworksList = () =>
       name,
     }));
 
-export const getNetworkName = network => network.name || 'customNode';
+export const getNetworkName = network => network.name || networkKeys.mainNet;
 
 /**
  * Returns human readable error messages
