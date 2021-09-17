@@ -7,7 +7,7 @@ import { getTransactions, create, broadcast } from '@api/transaction';
 import { transformTransaction } from '@utils/transaction';
 import { signSendTransaction } from '@utils/hwManager';
 import { timerReset } from './account';
-import { loadingStarted } from './loading';
+import { loadingStarted, loadingFinished } from './loading';
 
 /**
  * Action trigger when user logout from the application
@@ -73,6 +73,8 @@ export const transactionsRetrieved = ({
       type: actionTypes.transactionLoadFailed,
       data: { error },
     });
+  } finally {
+    dispatch(loadingFinished(actionTypes.transactionsRetrieved));
   }
 };
 

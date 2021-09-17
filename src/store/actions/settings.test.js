@@ -10,27 +10,31 @@ describe('actions: setting', () => {
   const dispatch = jest.fn();
   const settings = { autoLog: false };
 
-  afterEach(() => {
+  beforeEach(() => {
     jest.restoreAllMocks();
   });
 
   describe('settingsUpdated', () => {
     it('should create an action to update settings', () => {
-      const data = { autoLog: false };
-
+      // Arrange
       const expectedAction = {
-        data,
+        data: settings,
         type: actionTypes.settingsUpdated,
       };
-      expect(settingsUpdated(data)).toEqual(expectedAction);
+
+      // Assert
+      expect(settingsUpdated(settings)).toEqual(expectedAction);
     });
   });
 
   describe('settingsReset', () => {
     it('should create an action to reset settings', () => {
+      // Arrange
       const expectedAction = {
         type: actionTypes.settingsReset,
       };
+
+      // Assert
       expect(settingsReset()).toEqual(expectedAction);
     });
   });
@@ -41,12 +45,16 @@ describe('actions: setting', () => {
 
       window.localStorage.getItem = jest.fn(() => JSON.stringify(settings));
       getFromStorage('settings', initialState, async (data) => {
+        // Arrange
         const expectedAction = {
           data,
           type: actionTypes.settingsRetrieved,
         };
 
+        // Act
         settingsRetrieved()(dispatch);
+
+        // Assert
         expect(dispatch).toHaveBeenCalledWith(expectedAction);
       });
     });
