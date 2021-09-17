@@ -1,11 +1,20 @@
 import { actionTypes } from '@constants';
 import * as transactionsApi from '@api/transaction';
+import to from 'await-to-js';
 import {
   transactionsRetrieved,
+  transactionBroadcasted,
 } from './transactions';
+import {
+  accountDataUpdated,
+} from './account';
 
 jest.mock('@api/transaction');
 jest.mock('@api/delegate');
+jest.mock('await-to-js');
+jest.mock('./account', () => ({
+  accountDataUpdated: jest.fn(),
+}));
 
 describe('actions: transactions', () => {
   const dispatch = jest.fn();
@@ -61,6 +70,24 @@ describe('actions: transactions', () => {
       expect(dispatch).toHaveBeenLastCalledWith({
         type: actionTypes.transactionsRetrieved,
         data: expectedAction,
+      });
+    });
+  });
+
+  describe('broadcastTransaction', () => {
+    it('should dispatch accountDataUpdated when broadcast transaction fails because of invalid nonce', async () => {
+      const error = { message: 'invalid nonce' };
+      to.mockImplementation(() => (
+        [error]
+      ));
+
+      await transactionBroadcasted()(dispatch, getState);
+      expect(accountDataUpdated).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenLastCalledWith({
+        type: actionTypes.broadcastedTransactionError,
+        data: {
+          error,
+        },
       });
     });
   });
