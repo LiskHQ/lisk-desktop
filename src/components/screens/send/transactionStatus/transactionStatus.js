@@ -81,10 +81,7 @@ const TransactionStatus = ({
 
   // Create a new tx when account nonce is updated and bigger than failed tx nonce.
   useEffect(() => {
-    console.log(1);
-    console.log(account.sequence.nonce, transactions.txBroadcastError?.transaction?.nonce);
     if (account.sequence.nonce > transactions.txBroadcastError?.transaction?.nonce) {
-      console.log(2);
       transactionCreated({
         amount: `${toRawLsk(fields.amount.value)}`,
         data: fields.reference ? fields.reference.value : '',
