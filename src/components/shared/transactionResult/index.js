@@ -69,7 +69,7 @@ export const TransactionResult = ({
             <p>{t('Does the problem still persist?')}</p>
             <a
               className="report-error-link"
-              href={getErrorReportMailto(status.message)}
+              href={getErrorReportMailto(status.message, message)}
               target="_top"
               rel="noopener noreferrer"
             >

@@ -57,10 +57,10 @@ export const filterObjectPropsWithValue = (object = {}, value) => (
  * @param {string} error - error message to put into the email body
  * @returns {sting} mailto link with recipient, subject, and body
  */
-export const getErrorReportMailto = (error = 'Unknown error occured') => {
+export const getErrorReportMailto = (error = 'Unknown error occurred', errorMessage) => {
   const recipient = 'hubdev@lisk.io';
   const subject = `User Reported Error - Lisk - ${VERSION}`; // eslint-disable-line no-undef
-  const body = encodeURIComponent(`\nImportant metadata for the team, please do not edit: \n\n${JSON.stringify(error)}\n`);
+  const body = encodeURIComponent(`\nImportant metadata for the team, please do not edit: \n\n${errorMessage}\n\n${error}\n`);
   return `mailto:${recipient}?&subject=${subject}&body=${body}`;
 };
 

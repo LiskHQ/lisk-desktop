@@ -89,7 +89,7 @@ export const resetTransactionResult = () => ({
  * Calls transactionAPI.create for create the tx object that will broadcast
  * @param {Object} data
  * @param {String} data.recipientAddress
- * @param {Number} data.amount - In raw format (satoshis, beddows)
+ * @param {Number} data.amount - In raw format (satoshi, beddows)
  * @param {Number} data.fee - In raw format, used for updating the TX List.
  * @param {Number} data.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} data.reference - Data field for LSK transactions
@@ -133,7 +133,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * Calls transactionAPI.broadcast function for put the tx object (signed) into the network
  * @param {Object} transaction
  * @param {String} transaction.recipientAddress
- * @param {Number} transaction.amount - In raw format (satoshis, beddows)
+ * @param {Number} transaction.amount - In raw format (satoshi, beddows)
  * @param {Number} transaction.fee - In raw format, used for updating the TX List.
  * @param {Number} transaction.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} transaction.reference - Data field for LSK transactions
