@@ -29,7 +29,7 @@ For *Windows* users, make sure to set the correct [msvs_version](https://www.npm
 git clone https://github.com/LiskHQ/lisk-desktop.git
 cd lisk-desktop
 nvm install lts/erbium
-npm install
+npm ci
 npm run dev
 ```
 
