@@ -7,7 +7,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding-right: 24px;
+  padding-right: 16px;
 
   /* Message */
   & > p {

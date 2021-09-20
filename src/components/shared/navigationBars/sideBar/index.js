@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { routes, modals, account } from '@constants';
-import Piwik from '@utils/piwik';
 import { accountLoggedOut } from '@actions';
 import Icon from '@toolbox/icon';
 import DialogLink from '@toolbox/dialog/link';
@@ -91,29 +90,8 @@ const AutoSignOutWrapper = () => {
   );
 };
 
-const SingOut = ({ t, history }) => {
-  const dispatch = useDispatch();
-
-  const signOut = () => {
-    Piwik.trackingEvent('Header', 'button', 'Open logout dialog');
-    dispatch(accountLoggedOut());
-    history.replace(`${routes.login.path}`);
-  };
-
-  return (
-    <div className={styles.item}>
-      <span className={`${styles.holder} logoutBtn`} onClick={signOut}>
-        <span className={styles.iconWrapper}>
-          <Icon name="signOut" className={styles.icon} />
-        </span>
-        <span className={styles.label}>{t('Sign out')}</span>
-      </span>
-    </div>
-  );
-};
-
 const SideBar = ({
-  t, location, history,
+  t, location,
 }) => {
   const items = menuLinks(t);
   const token = useSelector(state => state.settings.token.active);
@@ -144,14 +122,6 @@ const SideBar = ({
                   />
                 ))
               }
-              {
-                (i === items.length - 1 && !isLoggedOut)
-                  ? (
-                    <SingOut t={t} history={history} />
-                  )
-                  : null
-              }
-
             </div>
           ))
         }
