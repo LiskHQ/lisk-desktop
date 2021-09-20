@@ -38,7 +38,7 @@ const PerformanceView = ({
     <Box className={`${grid.row} ${styles.content}`}>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
-          title={t('Last forged block')}
+          title={t('Productivity')}
           icon="productivity"
         >
           <NavLink
@@ -47,7 +47,7 @@ const PerformanceView = ({
             id={data.lastForgedHeight}
             exact
           >
-            {data.lastForgedHeight || '-'}
+            {'99.45%' || '-'}
           </NavLink>
         </Item>
         <Item
@@ -59,16 +59,16 @@ const PerformanceView = ({
       </Box>
       <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
         <Item
-          title={t('Consecutive missed blocks')}
-          icon="missedBlocks"
-        >
-          <div className={styles.performanceValue}>{data.consecutiveMissedBlocks}</div>
-        </Item>
-        <Item
           title={t('Rewards (LSK)')}
           icon="reward"
         >
           <div><LiskAmount val={data.rewards || 0} /></div>
+        </Item>
+        <Item
+          title={t('Consecutive missed blocks')}
+          icon="missedBlocks"
+        >
+          <div className={styles.performanceValue}>{data.consecutiveMissedBlocks}</div>
         </Item>
       </Box>
     </Box>
