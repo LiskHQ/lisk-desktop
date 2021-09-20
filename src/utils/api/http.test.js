@@ -54,12 +54,14 @@ describe('HTTP', () => {
 
   it('should throw error when response.ok is false', async () => {
     const statusText = 'Response.ok is false';
+    const message = 'api error';
     global.fetch = jest.fn(() => Promise.resolve({
       ok: false,
-      status: 200,
+      status: 400,
       statusText,
+      json: () => Promise.resolve({ message }),
     }));
-    await expect(http(data)).rejects.toEqual(Error(statusText));
+    await expect(http(data)).rejects.toEqual(Error(message));
   });
 
   it('should throw error', async () => {
