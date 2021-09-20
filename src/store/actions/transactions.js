@@ -6,7 +6,7 @@ import {
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { transformTransaction } from '@utils/transaction';
 import { signSendTransaction } from '@utils/hwManager';
-import { timerReset, accountDataUpdated } from './account';
+import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
 /**
@@ -151,9 +151,6 @@ export const transactionBroadcasted = transaction =>
     ));
 
     if (error) {
-      if (error.message.includes('nonce is lower than account nonce')) {
-        dispatch(accountDataUpdated());
-      }
       dispatch({
         type: actionTypes.broadcastedTransactionError,
         data: {
