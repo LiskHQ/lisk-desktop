@@ -39,7 +39,6 @@ const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
 const TransactionStatus = ({
   transactionBroadcasted,
   resetTransactionResult,
-  transactionCreated,
   recipientAccount,
   transactions,
   bookmarks,
@@ -70,6 +69,7 @@ const TransactionStatus = ({
   useEffect(() => {
     recipientAccount.loadData({ address: fields.recipient.address });
     broadcast();
+
     return resetTransactionResult;
   }, []);
 
