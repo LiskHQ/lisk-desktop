@@ -56,28 +56,26 @@ export const transactionsRetrieved = ({
     offset,
   };
 
-  getTransactions({ network, params }, token)
-    .then((response) => {
-      dispatch({
-        type: actionTypes.transactionsRetrieved,
-        data: {
-          offset,
-          address,
-          filters,
-          confirmed: response.data,
-          count: response.meta.total,
-        },
-      });
-    })
-    .catch((error) => {
-      dispatch({
-        type: actionTypes.transactionLoadFailed,
-        data: { error },
-      });
-    })
-    .finally(() => {
-      dispatch(loadingFinished(actionTypes.transactionsRetrieved));
+  try {
+    const { data, meta } = await getTransactions({ network, params }, token);
+    dispatch({
+      type: actionTypes.transactionsRetrieved,
+      data: {
+        offset,
+        address,
+        filters,
+        confirmed: data,
+        count: meta.total,
+      },
     });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.transactionLoadFailed,
+      data: { error },
+    });
+  } finally {
+    dispatch(loadingFinished(actionTypes.transactionsRetrieved));
+  }
 };
 
 // TODO remove this function once create and broadcast HOC be implemented
@@ -122,7 +120,6 @@ export const transactionCreated = data => async (dispatch, getState) => {
       data: error,
     });
   }
-
   dispatch({
     type: actionTypes.transactionCreatedSuccess,
     data: tx,
