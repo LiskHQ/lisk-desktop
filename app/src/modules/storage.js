@@ -11,6 +11,7 @@ export const setConfig = ({
 };
 
 export const readConfig = () => {
-  const value = storage.get('config');
+  // Ensure to return empty config if storage does not hold any value
+  const value = storage.get('config') || {};
   win.send({ event: 'configRetrieved', value });
 };
