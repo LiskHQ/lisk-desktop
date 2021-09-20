@@ -63,13 +63,13 @@ export const getErrorReportMailto = ({
   const recipient = 'hubdev@lisk.io';
   const subject = `User Reported Error - Lisk - ${VERSION}`; // eslint-disable-line no-undef
   const body = encodeURIComponent(`
-    \nImportant metadata for the team, please do not edit: \n\n${errorMessage}\n\n${error}\n
+    \nImportant metadata for the team, please do not edit:
     \r
-    networkIdentifier: ${networkIdentifier}
+    Lisk Core Version: ${liskCoreVersion}, NetworkIdentifier: ${networkIdentifier}, ServiceURL: ${serviceUrl}
     \r
-    serviceUrl: ${serviceUrl}
+    Error Message: ${errorMessage}
     \r
-    liskCoreVersion: ${liskCoreVersion}
+    Transaction: ${error}
   `);
   return `mailto:${recipient}?&subject=${subject}&body=${body}`;
 };
