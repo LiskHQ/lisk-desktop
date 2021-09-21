@@ -29,10 +29,12 @@ const http = ({
       },
       ...restOptions,
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
+          const { message } = await response.json();
           const error = Error(response.statusText);
           error.code = response.status;
+          error.message = message;
           throw error;
         }
         return response.json();
