@@ -1,14 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { routes } from '@constants';
 import { isEmpty } from '@utils/helpers';
 import Icon from '@toolbox/icon';
 import DialogLink from '@toolbox/dialog/link';
 import { PrimaryButton } from '@toolbox/buttons';
 import Tooltip from '@toolbox/tooltip/tooltip';
-import Piwik from '@utils/piwik';
-import { accountLoggedOut } from '@actions';
 import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
@@ -16,24 +13,7 @@ import Search from './search';
 import Toggle from './toggle';
 import TokenSelector from './tokenSelector';
 import VoteQueueToggle from './voteQueueToggle';
-
-const SingOut = ({ history }) => {
-  const dispatch = useDispatch();
-
-  const signOut = () => {
-    Piwik.trackingEvent('Header', 'button', 'Open logout dialog');
-    dispatch(accountLoggedOut());
-    history.replace(`${routes.login.path}`);
-  };
-
-  return (
-    <div className={styles.logoutBtn}>
-      <span className={`${styles.iconWrapper} logoutBtn`} onClick={signOut}>
-        <Icon name="signOut" className={styles.icon} />
-      </span>
-    </div>
-  );
-};
+import SignOut from './signOut';
 
 const TopBar = ({
   t,
@@ -115,7 +95,7 @@ const TopBar = ({
             </Link>
           ) : null
         }
-        {!isUserLogout && <SingOut t={t} history={history} />}
+        {!isUserLogout && <SignOut t={t} history={history} />}
       </div>
     </div>
   );
