@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { routes } from '@constants';
 import { isEmpty } from '@utils/helpers';
 import Icon from '@toolbox/icon';
@@ -14,6 +13,7 @@ import Search from './search';
 import Toggle from './toggle';
 import TokenSelector from './tokenSelector';
 import VoteQueueToggle from './voteQueueToggle';
+import SignOut from './signOut';
 
 const TopBar = ({
   t,
@@ -95,6 +95,7 @@ const TopBar = ({
             </Link>
           ) : null
         }
+        {!isUserLogout && <SignOut t={t} history={history} />}
       </div>
     </div>
   );

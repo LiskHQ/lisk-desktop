@@ -8,8 +8,8 @@ const NavigationBars = ({
   history,
 }) => (
   <>
-    <TopBar location={location} />
-    <SideBar isSignInFlow={isSignInFlow} history={history} location={location} />
+    <TopBar location={location} history={history} />
+    <SideBar isSignInFlow={isSignInFlow} location={location} />
   </>
 );
 
