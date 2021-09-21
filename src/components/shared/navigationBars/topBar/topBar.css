@@ -140,10 +140,13 @@
   }
 }
 
+.logoutTooltipWrapper {
+  margin-right: 22px;
+}
+
 .logoutBtn {
   cursor: pointer;
   display: flex;
   align-items: center;
   height: 100%;
-  padding-right: 24px;
 }

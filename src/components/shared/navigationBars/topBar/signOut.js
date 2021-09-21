@@ -18,7 +18,7 @@ const SignOut = ({ t, history }) => {
 
   return (
     <Tooltip
-      className={styles.tooltipWrapper}
+      className={styles.logoutTooltipWrapper}
       size="maxContent"
       position="bottom"
       content={(
