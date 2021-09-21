@@ -19,6 +19,24 @@ const Item = ({
     <BoxContent className={`${styles.highlight} performance`}>
       <div className={styles.content}>
         <div className={`${styles.title} ${theme}`}>{title}</div>
+        {children}
+      </div>
+      <div className={`${styles.highlighIcon} ${styles[icon]}`}>
+        <Icon name={icon} />
+      </div>
+    </BoxContent>
+  );
+};
+
+const FullItem = ({
+  icon, title, children,
+}) => {
+  const theme = useTheme();
+
+  return (
+    <BoxContent className={`${styles.full} performance`}>
+      <div className={styles.content}>
+        <div className={`${styles.title} ${theme}`}>{title}</div>
         { children }
       </div>
       <div className={`${styles.highlighIcon} ${styles[icon]}`}>
@@ -28,15 +46,36 @@ const Item = ({
   );
 };
 
+const ActiveDelegate = () => {
+  const theme = useTheme();
+
+  return (
+    <div className={`${styles.delegateDescription} ${theme}`}>
+      <p>This delegate is among the first 101 delegates in delegate weight ranking.</p>
+
+      <p>The first 101 delegates will always be selected to forge new blocks.</p>
+    </div>
+  );
+};
+
 const PerformanceView = ({
   t, data,
 }) => (
-  <Box className={`${grid['col-xs-12']} ${grid['col-md-8']} ${styles.highlightContainer} performance-container`}>
+  <Box className={`${grid['col-xs-12']} ${grid['col-md-9']} ${styles.highlightContainer} performance-container`}>
     <BoxHeader>
       <h1 className={styles.heading}>{t('Performance')}</h1>
     </BoxHeader>
     <Box className={`${grid.row} ${styles.content}`}>
-      <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
+      <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
+        <FullItem
+          title={t('Status')}
+          icon="delegateActive"
+        >
+          <div className={styles.performanceValue}>{`${data.status[0].toUpperCase()}${data.status.slice(1)}` ?? '-'}</div>
+          <ActiveDelegate />
+        </FullItem>
+      </Box>
+      <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
         <Item
           title={t('Productivity')}
           icon="productivity"
@@ -57,7 +96,7 @@ const PerformanceView = ({
           <div className={styles.performanceValue}>{data.producedBlocks ?? '-'}</div>
         </Item>
       </Box>
-      <Box className={`${grid.col} ${grid['col-xs-6']} ${grid['col-md-6']} ${styles.column}`}>
+      <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
         <Item
           title={t('Rewards (LSK)')}
           icon="reward"
