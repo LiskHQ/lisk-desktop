@@ -17,7 +17,7 @@ import Toggle from './toggle';
 import TokenSelector from './tokenSelector';
 import VoteQueueToggle from './voteQueueToggle';
 
-const SingOut = ({ t, history }) => {
+const SingOut = ({ history }) => {
   const dispatch = useDispatch();
 
   const signOut = () => {
