@@ -8,7 +8,8 @@ export const getNetworksList = () =>
       name,
     }));
 
-export const getNetworkName = network => network.name || 'customNode';
+// Return mainnet as back off network name when cache/local storage does not exists
+export const getNetworkName = network => network.name || networkKeys.mainNet;
 
 /**
  * Returns human readable error messages

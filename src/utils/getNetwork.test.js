@@ -16,31 +16,31 @@ describe('Utils: getNetwork', () => {
     });
   });
 
-  describe.skip('getNetworkName', () => {
-    it('should discover mainnet', () => {
-      const network = {
-        name: 'customNode',
-      };
-      expect(getNetworkName(network, 'LSK')).toEqual('mainnet');
+  describe('getNetworkName', () => {
+    it('should return mainnet if network config does not have name set', () => {
+      const network = {};
+      expect(getNetworkName(network)).toEqual('mainnet');
     });
 
-    it('should discover testnet', () => {
+    it('should return customNode', () => {
       const network = {
         name: 'customNode',
       };
-      expect(getNetworkName(network, 'LSK')).toEqual('testnet');
+      expect(getNetworkName(network)).toEqual(network.name);
     });
 
-    it('should mark as customNode otherwise', () => {
+    it('should return testnet', () => {
       const network = {
-        name: 'customNode',
-        networks: {
-          LSK: {
-            nethash: 'sample_hash',
-          },
-        },
+        name: 'testnet',
       };
-      expect(getNetworkName(network, 'LSK')).toEqual('customNode');
+      expect(getNetworkName(network)).toEqual(network.name);
+    });
+
+    it('should return mainnet', () => {
+      const network = {
+        name: 'mainnet',
+      };
+      expect(getNetworkName(network)).toEqual(network.name);
     });
   });
 
