@@ -7,10 +7,10 @@ import styles from './newReleaseMessage.css';
 
 const NewReleaseMessage = ({
   t,
-  version,
-  releaseSummary,
-  updateNow,
-  readMore,
+  version = '2.0.3',
+  releaseSummary = 'This version improves the overall usability and responsiveness of the application UI.',
+  updateNow = () => {},
+  readMore = () => {},
   ...props
 }) => (
   <FlashMessage shouldShow {...props}>

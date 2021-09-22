@@ -14,10 +14,16 @@ const useIpc = (history) => {
 
   const { ipc } = window;
 
-  if (!ipc) return;
+  //if (!ipc) return;
 
   useEffect(() => {
-    ipc.on('update:available', (action, { version, releaseNotes }) => {
+    console.log(1);
+    FlashMessageHolder.addMessage(
+      <NewReleaseMessage />,
+      'NewRelease',
+    );
+    console.log(2);
+    /* ipc.on('update:available', (action, { version, releaseNotes }) => {
       const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
       dispatch(appUpdateAvailable({
         version, ipc, releaseNotes,
@@ -48,7 +54,7 @@ const useIpc = (history) => {
 
     ipc.on('update:downloading', (action, { label }) => {
       toast.success(label);
-    });
+    }); */
   }, []);
 };
 
