@@ -64,10 +64,13 @@ const RecentTransactions = ({ className, t, transactions }) => {
           isLoading={transactions.isLoading}
           row={TransactionRow}
           header={header(t)}
-          error={transactions.error}
+          error={transactions.error.code !== 404 ? transactions.error : undefined}
           canLoadMore={false}
           additionalRowProps={{
-            t, activeToken: activeToken.key, host, currentBlockHeight,
+            t,
+            activeToken: activeToken.key,
+            host,
+            currentBlockHeight,
           }}
           emptyState={account.passphrase ? NoTransactions : NotSignedIn}
         />
