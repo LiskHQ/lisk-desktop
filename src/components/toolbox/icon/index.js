@@ -150,6 +150,7 @@ import missedBlocks from '../../../assets/images/icons/missed-blocks.svg';
 import missedBlocksDark from '../../../assets/images/icons/missed-blocks-dark.svg';
 import forgedBlocks from '../../../assets/images/icons/forged-blocks.svg';
 import forgedBlocksDark from '../../../assets/images/icons/forged-blocks-dark.svg';
+import consecutiveMissedBlocks from '../../../assets/images/icons/consecutive-missed-blocks.svg';
 import lock from '../../../assets/images/icons/lock.svg';
 import unlock from '../../../assets/images/icons/unlock.svg';
 import loading from '../../../assets/images/icons/loading.svg';
@@ -202,6 +203,7 @@ export const icons = {
   calendarDark,
   checkboxFilled,
   checkmark,
+  consecutiveMissedBlocks,
   copy,
   dashboardIcon,
   dashboardIconActive,

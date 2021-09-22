@@ -71,7 +71,7 @@ const PerformanceView = ({
           title={t('Status')}
           icon="delegateActive"
         >
-          <div className={styles.performanceValue}>{`${data.status[0].toUpperCase()}${data.status.slice(1)}` ?? '-'}</div>
+          <div className={styles.performanceValue}>{data.status ? `${data.status[0].toUpperCase()}${data.status.slice(1)}` : '-'}</div>
           <ActiveDelegate />
         </FullItem>
       </Box>
@@ -105,7 +105,7 @@ const PerformanceView = ({
         </Item>
         <Item
           title={t('Consecutive missed blocks')}
-          icon="missedBlocks"
+          icon="consecutiveMissedBlocks"
         >
           <div className={styles.performanceValue}>{data.consecutiveMissedBlocks}</div>
         </Item>

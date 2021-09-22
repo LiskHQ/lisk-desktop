@@ -10,7 +10,6 @@
 
   & .content {
     flex-flow: row nowrap;
-    width: calc(100% + 1em); /* stylelint-disable-line unit-whitelist */
   }
 }
 
@@ -147,13 +146,21 @@
       &.productivity {
         height: 122px;
         width: 206px;
+
+        & img {
+          width: 100%;
+        }
       }
 
       &.forgedBlocks {
         padding-right: 20px;
+
+        & img {
+          width: 100%;
+        }
       }
 
-      &.missedBlocks {
+      &.consecutiveMissedBlocks {
         justify-content: flex-end;
         align-items: center;
         height: 156px;
@@ -164,6 +171,10 @@
         height: 108px;
         width: 196px;
         padding-right: 20px;
+
+        & img {
+          width: 100%;
+        }
       }
     }
   }
@@ -198,6 +209,10 @@
       & .delegateDescription {
         & p {
           font-size: var(--paragraph-font-size-s);
+        }
+
+        & p:first-child {
+          margin-bottom: 7px;
         }
 
         & p:last-child {
