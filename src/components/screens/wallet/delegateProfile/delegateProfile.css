@@ -218,6 +218,11 @@
         & p:last-child {
           margin-top: 0 !important;
         }
+
+        & p:only-child {
+          margin-top: var(--paragraph-font-size-s) !important;
+          margin-bottom: var(--paragraph-font-size-s) !important;
+        }
       }
 
       & > *:not(.title):not(.delegateDescription):not(.highlighIcon) {
@@ -236,6 +241,18 @@
       width: 170px;
 
       &.delegateActive {
+        padding-right: 10px;
+      }
+
+      &.delegateStandby {
+        padding-right: 10px;
+      }
+
+      &.delegatePunished {
+        padding-right: 10px;
+      }
+
+      &.delegateBanned {
         padding-right: 10px;
       }
     }

@@ -174,6 +174,9 @@ import delegateWarning from '../../../assets/images/icons/delegate-warning.svg';
 import delegateAwaiting from '../../../assets/images/icons/delegate-awaiting.svg';
 import delegateAwaitingDark from '../../../assets/images/icons/delegate-awaiting-dark.svg';
 import delegateActive from '../../../assets/images/icons/delegate-active.svg';
+import delegateStandby from '../../../assets/images/icons/delegate-standby.svg';
+import delegatePunished from '../../../assets/images/icons/delegate-punished.svg';
+import delegateBanned from '../../../assets/images/icons/delegate-banned.svg';
 import eyeInactive from '../../../assets/images/icons/eye-inactive.svg';
 import eyeActive from '../../../assets/images/icons/eye-active.svg';
 import liskIcon from '../../../assets/images/icons/lisk-icon.svg';
@@ -354,6 +357,9 @@ export const icons = {
   delegateAwaiting,
   delegateAwaitingDark,
   delegateActive,
+  delegateStandby,
+  delegatePunished,
+  delegateBanned,
   eyeActive,
   eyeInactive,
   liskIcon,
