@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { NavLink } from 'react-router-dom';
 import { useTheme } from '@utils/theme';
@@ -7,6 +7,7 @@ import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import LiskAmount from '@shared/liskAmount';
+import DialogLink from '@toolbox/dialog/link';
 import Icon from '@toolbox/icon';
 import styles from './delegateProfile.css';
 
@@ -71,12 +72,34 @@ const StandyDelegate = () => {
   );
 };
 
+const detailsData = {
+  // eslint-disable-next-line no-multi-str
+  reason: 'This delegate was punished 3 times. Two more  punishments will cause the permanent ban of the delegate.',
+  data: [
+    { startHeight: 10273851, endHeight: 10273872 },
+    { startHeight: 10058635, endHeight: 10278851 },
+    { startHeight: 10273951, endHeight: 10274851 },
+  ],
+};
+
+// Use context to pass data into modal
+export const DelegatePerformanceContext = createContext({
+  performance: detailsData,
+});
+
 const PunishedDelegate = () => {
   const theme = useTheme();
 
   return (
     <div className={`${styles.delegateDescription} ${theme}`}>
       <p>This delegate can not forge new blocks temporarily due to a protocol violation.</p>
+      <DialogLink
+        className={grid.row}
+        component="delegatePerformance"
+        // data={{ title: 'Punishment', data: detailsData }}
+      >
+        <div className={`${styles.details} ${grid.col} ${grid['col-md-12']}`}><p>Details &gt;</p></div>
+      </DialogLink>
     </div>
   );
 };
@@ -119,7 +142,7 @@ const PerformanceView = ({
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
           <FullItem
             title={t('Status')}
-            icon={getDelegateIcon(data.status)}
+            icon={getDelegateIcon(data.status ?? 'default')}
           >
             <div className={styles.performanceValue}>{data.status ? `${data.status[0].toUpperCase()}${data.status.slice(1)}` : '-'}</div>
             <DelegateComponent />

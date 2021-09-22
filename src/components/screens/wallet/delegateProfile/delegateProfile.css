@@ -223,6 +223,13 @@
           margin-top: var(--paragraph-font-size-s) !important;
           margin-bottom: var(--paragraph-font-size-s) !important;
         }
+
+        & .details {
+          & p {
+            color: var(--color-link-active);
+            cursor: pointer;
+          }
+        }
       }
 
       & > *:not(.title):not(.delegateDescription):not(.highlighIcon) {
