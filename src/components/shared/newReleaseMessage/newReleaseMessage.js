@@ -2,7 +2,8 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import FlashMessage from '@toolbox/flashMessage/flashMessage';
-import { TertiaryButton } from '@toolbox/buttons';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import Icon from '@toolbox/icon';
 import styles from './newReleaseMessage.css';
 
 const NewReleaseMessage = ({
@@ -13,28 +14,26 @@ const NewReleaseMessage = ({
   readMore = () => {},
   ...props
 }) => (
-  <FlashMessage shouldShow {...props}>
+  <FlashMessage shouldShow hasCloseAction={false} {...props}>
     <FlashMessage.Content>
-      <strong>{t('Lisk {{version}}', { version })}</strong>
+      <Icon name="warningFolder" />
+      {t('Lisk {{version}}', { version })}
       {t(' is out. ')}
       {releaseSummary}
-      <span> </span>
-      <TertiaryButton
+      <SecondaryButton
         className={styles.button}
         size="s"
         onClick={updateNow}
       >
         {t('Update now')}
-      </TertiaryButton>
-      <span>{` ${t('or')} `}</span>
-      <TertiaryButton
+      </SecondaryButton>
+      <PrimaryButton
         className={styles.button}
         size="s"
         onClick={readMore}
       >
         {t('Read more')}
-      </TertiaryButton>
-      <span>.</span>
+      </PrimaryButton>
     </FlashMessage.Content>
   </FlashMessage>
 );
