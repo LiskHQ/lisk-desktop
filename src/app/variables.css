@@ -151,7 +151,8 @@ or "warn/action" ineastd of "red/green"
   --color-highlight-checkboxes: rgba(64, 112, 244, 0.08);
   --color-onboarding-bg: var(--color-maastricht-blue);
   --color-strong-white: var(--color-white);
-  --color-flash-message: var(--color-maastricht-blue);
+  --color-flash-message: rgba(64, 112, 244, 0.15);
+  --color-flash-message-border: rgba(64, 112, 244, 0.3);
   --color-strong-mystic: var(--color-mystic);
   --color-passphrase-bg: var(--color-white);
   --color-shadow-word-option: var(--color-ultramarine-blue);
@@ -246,7 +247,8 @@ or "warn/action" ineastd of "red/green"
   --overlay-color: rgba(28, 28, 30, 0.8);
   --color-content-light: #fff;
   --color-ink-blue: #fff;
-  --color-flash-message: var(--color-white-smoke);
+  --color-flash-message: rgba(64, 112, 244, 0.25);
+  --color-flash-message-border: rgba(64, 112, 244, 0.6);
   --color-strong-mystic: #edf0f5;
   --color-passphrase-bg: #000;
   --color-dark-blue: var(--color-ultramarine-blue);
