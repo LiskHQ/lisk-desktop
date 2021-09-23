@@ -2,16 +2,26 @@ import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client'
 import {
   tokenMap, regex, balanceNeededForReclaim, balanceNeededForInitialization,
 } from '@constants';
+import { getCustomDerivationPublicKey } from '@utils/explicitBipKeyDerivation';
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
  *
  * @param {String} passphrase - Valid Mnemonic passphrase
+ * @param {Boolean} data.isCustomDerivation - custom derivation for HW
  * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
-export const extractPublicKey = (passphrase) => {
+export const extractPublicKey = (passphrase, isCustomDerivation = false) => {
+  if (isCustomDerivation) {
+    const publicKey = getCustomDerivationPublicKey(passphrase);
+    console.log('getCustomDerivationPublicKey:', publicKey);
+    return publicKey;
+  }
+
   if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
-    return cryptography.getKeys(passphrase).publicKey.toString('hex');
+    const publicKey = cryptography.getKeys(passphrase).publicKey.toString('hex');
+    console.log('getCustomDerivationPublicKey:', publicKey);
+    return publicKey;
   }
   throw Error('Invalid passphrase');
 };

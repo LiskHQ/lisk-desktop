@@ -99,7 +99,9 @@ class Login extends React.Component {
     if (this.alreadyLoggedWithThisAddress(extractAddressFromPassphrase(passphrase), network)) {
       this.redirectToReferrer();
     } else {
-      login({ passphrase });
+      // Get isCustomDerivation from settings
+      const isCustomDerivation = true;
+      login({ passphrase, isCustomDerivation });
     }
   }
 
@@ -107,8 +109,6 @@ class Login extends React.Component {
   render() {
     const { t, settings } = this.props;
     // const canHWSignIn = !network.networks?.LSK;
-    const inputsLength = ??;
-    const maxInputsLength = ??;
 
     return (
       <>
@@ -140,8 +140,8 @@ class Login extends React.Component {
               <fieldset className={`${styles.inputsHolder}`}>
                 <label className={styles.inputLabel}>{t('Passphrase')}</label>
                 <PassphraseInput
-                  inputsLength={inputsLength}
-                  maxInputsLength={maxInputsLength}
+                  inputsLength={12}
+                  maxInputsLength={24}
                   onFill={this.checkPassphrase}
                 />
                 <DiscreetModeToggle className={styles.discreetMode} />

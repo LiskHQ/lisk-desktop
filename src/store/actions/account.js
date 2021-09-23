@@ -98,8 +98,11 @@ export const accountDataUpdated = tokensTypes =>
  * @param {String} data.passphrase - BIP39 passphrase of the account
  * @param {String} data.publicKey - Lisk publicKey used for hardware wallet login
  * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
+ * @param {Boolean} data.isCustomDerivation - custom derivation for HW
  */
-export const login = ({ passphrase, publicKey, hwInfo }) =>
+export const login = ({
+  passphrase, publicKey, hwInfo, isCustomDerivation,
+}) =>
   async (dispatch, getState) => {
     const { network, settings } = getState();
     dispatch(accountLoading());
@@ -112,6 +115,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) =>
             address: extractBitcoinAddress(passphrase, network),
           };
         } else {
+          const publicKey = publicKey ?? extractPublicKey(passphrase, isCustomDerivation);
           acc[token] = {
             publicKey: publicKey ?? extractPublicKey(passphrase),
           };
