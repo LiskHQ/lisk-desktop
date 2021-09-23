@@ -10,8 +10,8 @@ const isValidLocalhost = url => url.hostname === 'localhost' && url.port.length 
 const isValidRemote = url => /(([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3})/.test(url.hostname);
 
 const isValidIp = url => (isValidLocalhost(url)
-|| isValidRemote(url)
-|| isValidUrlRegEx(url.toString()));
+  || isValidRemote(url)
+  || isValidUrlRegEx(url.toString()));
 
 export const addHttp = (url) => {
   const domainReg = /^(?:f|ht)tps?:\/\//i;
@@ -40,15 +40,24 @@ export const validateUrl = (value) => {
 };
 
 // Ignore coverage because this is only development feature
-export const getAutoLogInData = /* istanbul ignore next */ () => ({
-  [settings.keys.loginKey]: localStorage.getItem(settings.keys.loginKey),
-  [settings.keys.liskServiceUrl]: localStorage.getItem(settings.keys.liskServiceUrl),
-});
+export const getAutoLogInData = /* istanbul ignore next */ () => {
+  try {
+    const { network } = JSON.parse(localStorage.getItem('settings'));
+
+    return {
+      [settings.keys.loginKey]: localStorage.getItem(settings.keys.loginKey),
+      [settings.keys.liskServiceUrl]: network?.address ?? '',
+      [settings.keys.liskCustomNodeUrl]: network?.liskCustomNodeUrl ?? '',
+    };
+  } catch (error) {
+    return {};
+  }
+};
 
 // Ignore coverage because this is only development feature
 export const shouldAutoLogIn = /* istanbul ignore next */ autologin =>
   autologin[settings.keys.liskServiceUrl] && autologin[settings.keys.liskServiceUrl] !== ''
-    && autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
+  && autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
 
 export const findMatchingLoginNetwork = () => {
   const { liskServiceUrl } = getAutoLogInData();
