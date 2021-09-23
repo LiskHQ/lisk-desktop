@@ -2,6 +2,7 @@ import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from '@utils
 import RecentTransactions, { NoTransactions, NotSignedIn } from './recentTransactions';
 
 const t = str => str;
+const transactionError = { error: { code: 404 } };
 
 const LiskTransactions = {
   data: [
@@ -69,6 +70,7 @@ const LiskTransactions = {
   isLoading: false,
   meta: { count: 10 },
   loadData: jest.fn(),
+  ...transactionError,
 };
 
 const BitcoinTransactions = {
@@ -107,6 +109,7 @@ const BitcoinTransactions = {
   isLoading: false,
   meta: { count: 2 },
   loadData: jest.fn(),
+  ...transactionError,
 };
 
 const noTx = {
@@ -114,6 +117,7 @@ const noTx = {
   isLoading: false,
   meta: { count: 0 },
   loadData: jest.fn(),
+  ...transactionError,
 };
 
 const bookmarks = {
