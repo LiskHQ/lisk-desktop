@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { setDefaults, withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@utils/account';
 import { login, settingsUpdated } from '@actions';
-import Login from './login';
+// import Login from './login';
+import HWLogin from './hwLogin';
 
 setDefaults({
   wait: true,
@@ -28,4 +29,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(Login));
+)(withTranslation()(HWLogin));
