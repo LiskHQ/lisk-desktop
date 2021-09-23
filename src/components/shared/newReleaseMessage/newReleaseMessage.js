@@ -28,7 +28,7 @@ const NewReleaseMessage = ({
         {t('Update now')}
       </SecondaryButton>
       <PrimaryButton
-        className={styles.button}
+        className={`${styles.button} ${styles.primary}`}
         size="s"
         onClick={readMore}
       >

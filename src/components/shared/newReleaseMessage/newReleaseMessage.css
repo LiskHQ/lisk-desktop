@@ -3,4 +3,8 @@
   padding: 15px 20px !important;
   margin-left: 12px;
   border-radius: 5px;
+
+  &.primary {
+    background-color: var(--color-ink-blue);
+  }
 }
