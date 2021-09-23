@@ -96,7 +96,7 @@ const PunishedDelegate = () => {
       <DialogLink
         className={grid.row}
         component="delegatePerformance"
-        // data={{ title: 'Punishment', data: detailsData }}
+        data={{ status: 'punished' }}
       >
         <div className={`${styles.details} ${grid.col} ${grid['col-md-12']}`}><p>Details &gt;</p></div>
       </DialogLink>
