@@ -1,9 +1,11 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
+  align-self: center;
   align-items: center;
   background-color: var(--color-flash-message);
-  border-bottom: 1px solid var(--light-border-color);
+  border: 1px solid var(--color-flash-message-border);
+  border-radius: 5px;
   box-sizing: border-box;
   display: flex;
   flex-grow: 0;
@@ -11,23 +13,25 @@
   flex-direction: row;
   justify-content: flex-start;
   overflow: hidden;
-  padding: 0 24px;
   position: relative;
-  width: 100%;
   z-index: 99;
+  margin: 20px;
+  padding: 0 20px;
+  max-width: var(--main-box-width);
+  width: calc(100% - 40px);
 
   & img {
-    margin-right: 7px;
+    margin-right: 16px;
   }
 
-  & .text {
-    @mixin contentNormal;
+  & .content {
+    @mixin contentLargest;
 
     align-items: center;
-    color: var(--color-strong-mystic);
+    color: var(--color-black);
     display: flex;
-    padding: 16px 0;
-    margin-right: 12px;
+    padding: 12px 0;
+    width: 100%;
 
     & strong {
       font-size: inherit;

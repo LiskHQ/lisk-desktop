@@ -20,19 +20,17 @@ const Content = ({
   );
 
   return (
-    <span className={`${styles.text} ${className} display-text`}>
-      <span>
-        {!!icon && <Icon name={icon} className="icon" />}
-        {children}
-        {!!(link.label && link.action) && (
-          <a
-            className={`${styles.link} ${link.className || ''} url-link`}
-            {...generateLinkProps(link.action)}
-          >
-            {link.label}
-          </a>
-        )}
-      </span>
+    <span className={`${styles.content} ${className} display-text`}>
+      {!!icon && <Icon name={icon} className="icon" />}
+      {children}
+      {!!(link.label && link.action) && (
+        <a
+          className={`${styles.link} ${link.className || ''} url-link`}
+          {...generateLinkProps(link.action)}
+        >
+          {link.label}
+        </a>
+      )}
     </span>
   );
 };

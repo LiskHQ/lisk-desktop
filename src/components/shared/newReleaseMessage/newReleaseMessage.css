@@ -1,5 +1,26 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.btnContainer {
+  display: flex;
+  margin-left: auto;
+}
+
 .button {
   height: auto !important;
-  padding: 0 !important;
-  min-width: 0;
+  padding: 15px 20px !important;
+  margin-left: 12px;
+  border-radius: 5px;
+
+  &.primary {
+    background-color: var(--color-ink-blue);
+
+    &:global(.dark) {
+      color: var(--color-zodiac-blue);
+    }
+  }
 }
