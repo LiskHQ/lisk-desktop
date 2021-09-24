@@ -26,7 +26,6 @@ const DelegateProfile = ({
   if (!data.dpos?.delegate) {
     return null;
   }
-  const userData = { ...data.dpos.delegate, address: data.summary.address };
 
   return (
     <section className={`${styles.container} container`}>
@@ -40,7 +39,7 @@ const DelegateProfile = ({
         />
         <PerformanceView
           t={t}
-          data={userData}
+          data={data.dpos.delegate}
         />
       </Box>
       <DelegateVotesView

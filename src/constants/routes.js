@@ -169,6 +169,6 @@ export const modals = {
   },
   delegatePerformance: {
     isPrivate: false,
-    forbiddenTokens: [],
+    forbiddenTokens: [tokenMap.BTC.key],
   },
 };

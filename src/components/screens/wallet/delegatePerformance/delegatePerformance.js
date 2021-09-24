@@ -19,24 +19,15 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
   }
 
   const { dpos: { delegate: { pomHeights, status, consecutiveMissedBlocks } } } = data;
-  let title = '';
-  switch (status) {
-    case 'punished':
-      title = 'Punishment details';
-      break;
-
-    case 'banned':
-      title = 'Banning details';
-      break;
-
-    default:
-      title = 'Unknown details';
-  }
+  const headerTitle = {
+    punished: 'Punishment details',
+    banned: 'Banning details',
+  };
 
   return (
     <Box isLoading={isLoading} className={`${styles.container}`}>
       <BoxHeader className={styles.container}>
-        <h1>{title}</h1>
+        <h1>{headerTitle[status]}</h1>
       </BoxHeader>
       <BoxContent className={styles.content}>
         <Box className={grid.row}>
