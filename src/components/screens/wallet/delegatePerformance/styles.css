@@ -6,6 +6,7 @@
 .content {
   display: flex;
   flex-direction: row;
+  padding-top: 0 !important;
 
   & .description {
     color: var(--color-slate-gray);
@@ -27,6 +28,13 @@
 
     & .end {
       text-align: right;
+    }
+  }
+
+  @media (--xLarge-viewport) {
+    & .performanceContainer {
+      flex-flow: row nowrap;
+      padding-left: 0;
     }
   }
 }

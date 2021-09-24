@@ -39,23 +39,27 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
         <h1>{title}</h1>
       </BoxHeader>
       <BoxContent className={styles.content}>
-        <p className={styles.description}>
-          {delegatePerformanceDetails(pomHeights.length, status, consecutiveMissedBlocks)}
-        </p>
+        <Box className={grid.row}>
+          <Box className={`${grid['col-md-12']} ${grid['col-xs-12']}`}>
+            <p className={styles.description}>
+              {delegatePerformanceDetails(pomHeights.length, status, consecutiveMissedBlocks)}
+            </p>
+          </Box>
+        </Box>
         <Box className={`${grid.row} ${styles.performanceContainer}`}>
-          <Box className={`${grid['col-md-6']}`}>
+          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']}`}>
             <p className={`${styles.start} ${styles.header}`}>Punishment starts</p>
           </Box>
-          <Box className={`${grid['col-md-6']}`}>
+          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']}`}>
             <p className={`${styles.end} ${styles.header}`}>Punishment ends</p>
           </Box>
         </Box>
         {pomHeights && pomHeights.map((height, index) => (
           <Box className={`${grid.row} ${styles.performanceContainer}`} key={`${height}-${index}`}>
-            <Box className={`${grid['col-md-6']}`}>
+            <Box className={`${grid['col-md-6']} ${grid['col-xs-12']}`}>
               <p className={styles.start}>{height.start}</p>
             </Box>
-            <Box className={`${grid['col-md-6']}`}>
+            <Box className={`${grid['col-md-6']} ${grid['col-xs-12']}`}>
               <p className={styles.end}>{height.end}</p>
             </Box>
           </Box>
