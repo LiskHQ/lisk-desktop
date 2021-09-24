@@ -175,6 +175,7 @@ import delegateAwaiting from '../../../assets/images/icons/delegate-awaiting.svg
 import delegateAwaitingDark from '../../../assets/images/icons/delegate-awaiting-dark.svg';
 import delegateActive from '../../../assets/images/icons/delegate-active.svg';
 import delegateStandby from '../../../assets/images/icons/delegate-standby.svg';
+import delegateNonEligible from '../../../assets/images/icons/delegate-non-eligible.svg';
 import delegatePunished from '../../../assets/images/icons/delegate-punished.svg';
 import delegateBanned from '../../../assets/images/icons/delegate-banned.svg';
 import eyeInactive from '../../../assets/images/icons/eye-inactive.svg';
@@ -358,6 +359,7 @@ export const icons = {
   delegateAwaitingDark,
   delegateActive,
   delegateStandby,
+  delegateNonEligible,
   delegatePunished,
   delegateBanned,
   eyeActive,

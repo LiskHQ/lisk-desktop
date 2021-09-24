@@ -32,7 +32,7 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
     default:
       title = 'Unknown details';
   }
-  // {`${grid.row} ${styles.content}`}
+
   return (
     <Box isLoading={isLoading} className={`${styles.container}`}>
       <BoxHeader className={styles.container}>

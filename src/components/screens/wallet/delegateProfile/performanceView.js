@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { NavLink } from 'react-router-dom';
 import { useTheme } from '@utils/theme';
@@ -72,20 +72,18 @@ const StandyDelegate = () => {
   );
 };
 
-const detailsData = {
-  // eslint-disable-next-line no-multi-str
-  reason: 'This delegate was punished 3 times. Two more  punishments will cause the permanent ban of the delegate.',
-  data: [
-    { startHeight: 10273851, endHeight: 10273872 },
-    { startHeight: 10058635, endHeight: 10278851 },
-    { startHeight: 10273951, endHeight: 10274851 },
-  ],
-};
+const NonEligibleDelegate = () => {
+  const theme = useTheme();
 
-// Use context to pass data into modal
-export const DelegatePerformanceContext = createContext({
-  performance: detailsData,
-});
+  return (
+    <div className={`${styles.delegateDescription} ${theme}`}>
+      <p>
+        The delegate weight is below 1,000 LSK meaning that the delegate is not eligible
+        to forge.
+      </p>
+    </div>
+  );
+};
 
 const PunishedDelegate = () => {
   const theme = useTheme();
@@ -115,7 +113,7 @@ const BannedDelegate = () => {
 };
 
 const getDelegateIcon = (status) => {
-  const capitalizedStatus = `${status[0].toUpperCase()}${status.slice(1)}`;
+  const capitalizedStatus = status !== 'non-eligible' ? `${status[0].toUpperCase()}${status.slice(1)}` : 'NonEligible';
   return `delegate${capitalizedStatus}`;
 };
 
@@ -123,6 +121,7 @@ const getDelegateComponent = (status) => {
   const components = {
     active: ActiveDelegate,
     standby: StandyDelegate,
+    'non-eligible': NonEligibleDelegate,
     punished: PunishedDelegate,
     banned: BannedDelegate,
   };
