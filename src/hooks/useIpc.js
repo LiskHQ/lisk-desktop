@@ -1,28 +1,27 @@
 import React, { useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+// import { toast } from 'react-toastify';
+// import { useDispatch } from 'react-redux';
 
-import htmlStringToReact from '@utils/htmlStringToReact';
-import { regex } from '@constants';
-import { addSearchParamsToUrl } from '@utils/searchParams';
-import { appUpdateAvailable } from '@actions';
+// import htmlStringToReact from '@utils/htmlStringToReact';
+// import { regex } from '@constants';
+// import { addSearchParamsToUrl } from '@utils/searchParams';
+// import { appUpdateAvailable } from '@actions';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import NewReleaseMessage from '@shared/newReleaseMessage/newReleaseMessage';
 
-const useIpc = (history) => {
-  const dispatch = useDispatch();
+const useIpc = () => {
+// const useIpc = (history) => {
+  // const dispatch = useDispatch();
 
-  const { ipc } = window;
+  // const { ipc } = window;
 
-  //if (!ipc) return;
+  // if (!ipc) return;
 
   useEffect(() => {
-    console.log(1);
     FlashMessageHolder.addMessage(
       <NewReleaseMessage />,
       'NewRelease',
     );
-    console.log(2);
     /* ipc.on('update:available', (action, { version, releaseNotes }) => {
       const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
       dispatch(appUpdateAvailable({

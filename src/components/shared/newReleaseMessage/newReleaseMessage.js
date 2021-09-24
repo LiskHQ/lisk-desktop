@@ -31,14 +31,14 @@ const NewReleaseMessage = ({
               size="s"
               onClick={updateNow}
             >
-              {t('Update now')}
+              {t('Read more')}
             </SecondaryButton>
             <PrimaryButton
               className={`${styles.button} ${styles.primary} ${theme}`}
               size="s"
               onClick={readMore}
             >
-              {t('Read more')}
+              {t('Update now')}
             </PrimaryButton>
           </div>
         </div>
