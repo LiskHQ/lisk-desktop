@@ -1,3 +1,15 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.btnContainer {
+  display: flex;
+  margin-left: auto;
+}
+
 .button {
   height: auto !important;
   padding: 15px 20px !important;

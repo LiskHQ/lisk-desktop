@@ -15,20 +15,20 @@
   position: relative;
   z-index: 99;
   margin: 20px;
-  padding: 4px 20px;
+  padding: 0 20px;
 
   & img {
-    margin-right: 7px;
+    margin-right: 16px;
   }
 
-  & .text {
+  & .content {
     @mixin contentLargest;
 
     align-items: center;
     color: var(--color-black);
     display: flex;
-    padding: 16px 0;
-    margin-right: 12px;
+    padding: 12px 0;
+    width: 100%;
 
     & strong {
       font-size: inherit;

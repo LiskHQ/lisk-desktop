@@ -16,24 +16,28 @@ const NewReleaseMessage = ({
 }) => (
   <FlashMessage shouldShow hasCloseAction={false} {...props}>
     <FlashMessage.Content>
-      <Icon name="warningFolder" />
-      {t('Lisk {{version}}', { version })}
-      {t(' is out. ')}
-      {releaseSummary}
-      <SecondaryButton
-        className={styles.button}
-        size="s"
-        onClick={updateNow}
-      >
-        {t('Update now')}
-      </SecondaryButton>
-      <PrimaryButton
-        className={`${styles.button} ${styles.primary}`}
-        size="s"
-        onClick={readMore}
-      >
-        {t('Read more')}
-      </PrimaryButton>
+      <div className={styles.container}>
+        <Icon name="warningFolder" />
+        {t('Lisk {{version}}', { version })}
+        {t(' is out. ')}
+        {releaseSummary}
+        <div className={styles.btnContainer}>
+          <SecondaryButton
+            className={styles.button}
+            size="s"
+            onClick={updateNow}
+          >
+            {t('Update now')}
+          </SecondaryButton>
+          <PrimaryButton
+            className={`${styles.button} ${styles.primary}`}
+            size="s"
+            onClick={readMore}
+          >
+            {t('Read more')}
+          </PrimaryButton>
+        </div>
+      </div>
     </FlashMessage.Content>
   </FlashMessage>
 );
