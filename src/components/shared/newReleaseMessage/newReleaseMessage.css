@@ -18,5 +18,9 @@
 
   &.primary {
     background-color: var(--color-ink-blue);
+
+    &:global(.dark) {
+      color: var(--color-zodiac-blue);
+    }
   }
 }

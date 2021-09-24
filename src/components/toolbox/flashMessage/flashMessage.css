@@ -1,6 +1,7 @@
 @import '../../../app/mixins.css';
 
 .wrapper {
+  align-self: center;
   align-items: center;
   background-color: var(--color-flash-message);
   border: 1px solid var(--color-flash-message-border);
@@ -16,6 +17,8 @@
   z-index: 99;
   margin: 20px;
   padding: 0 20px;
+  max-width: var(--main-box-width);
+  width: calc(100% - 40px);
 
   & img {
     margin-right: 16px;
