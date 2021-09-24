@@ -108,6 +108,13 @@ const BannedDelegate = () => {
   return (
     <div className={`${styles.delegateDescription} ${theme}`}>
       <p>This delegate is permanently banned from forging new blocks.</p>
+      <DialogLink
+        className={grid.row}
+        component="delegatePerformance"
+        data={{ status: 'banned' }}
+      >
+        <div className={`${styles.details} ${grid.col} ${grid['col-md-12']}`}><p>Details &gt;</p></div>
+      </DialogLink>
     </div>
   );
 };
