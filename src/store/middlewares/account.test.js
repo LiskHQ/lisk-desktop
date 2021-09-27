@@ -169,6 +169,7 @@ describe('Account middleware', () => {
       };
       middleware(store)(next)(accountLoggedOutAction);
       expect(networkSelected).toHaveBeenCalledWith(settings.network);
+      expect(networkStatusUpdated).toHaveBeenCalled();
     });
 
     it('should set the network from defaults if no value stored in the settings', () => {
