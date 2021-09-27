@@ -105,7 +105,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
   }
 };
 
-const readStoredNetwork = async ({ dispatch, getState }) => {
+const readStoredNetwork = ({ dispatch, getState }) => {
   const {
     statistics, statisticsRequest, statisticsFollowingDay, network,
   } = getState().settings;
