@@ -9,10 +9,10 @@ import styles from './newReleaseMessage.css';
 
 const NewReleaseMessage = ({
   t,
-  version = '2.0.3',
-  releaseSummary = 'This version improves the overall usability and responsiveness of the application UI.',
-  updateNow = () => {},
-  readMore = () => {},
+  version,
+  releaseSummary,
+  updateNow,
+  readMore,
   ...props
 }) => {
   const theme = useTheme();

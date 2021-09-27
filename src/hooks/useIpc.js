@@ -1,28 +1,24 @@
 import React, { useEffect } from 'react';
-// import { toast } from 'react-toastify';
-// import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
-// import htmlStringToReact from '@utils/htmlStringToReact';
-// import { regex } from '@constants';
-// import { addSearchParamsToUrl } from '@utils/searchParams';
-// import { appUpdateAvailable } from '@actions';
+import htmlStringToReact from '@utils/htmlStringToReact';
+import { regex } from '@constants';
+import { addSearchParamsToUrl } from '@utils/searchParams';
+import { appUpdateAvailable } from '@actions';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import NewReleaseMessage from '@shared/newReleaseMessage/newReleaseMessage';
 
 const useIpc = () => {
-// const useIpc = (history) => {
-  // const dispatch = useDispatch();
+const useIpc = (history) => {
+  const dispatch = useDispatch();
 
-  // const { ipc } = window;
+  const { ipc } = window;
 
-  // if (!ipc) return;
+  if (!ipc) return;
 
   useEffect(() => {
-    FlashMessageHolder.addMessage(
-      <NewReleaseMessage />,
-      'NewRelease',
-    );
-    /* ipc.on('update:available', (action, { version, releaseNotes }) => {
+    ipc.on('update:available', (action, { version, releaseNotes }) => {
       const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
       dispatch(appUpdateAvailable({
         version, ipc, releaseNotes,
@@ -53,7 +49,7 @@ const useIpc = () => {
 
     ipc.on('update:downloading', (action, { label }) => {
       toast.success(label);
-    }); */
+    });
   }, []);
 };
 
