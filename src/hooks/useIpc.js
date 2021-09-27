@@ -9,7 +9,6 @@ import { appUpdateAvailable } from '@actions';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import NewReleaseMessage from '@shared/newReleaseMessage/newReleaseMessage';
 
-const useIpc = () => {
 const useIpc = (history) => {
   const dispatch = useDispatch();
 

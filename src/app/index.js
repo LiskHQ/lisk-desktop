@@ -29,8 +29,7 @@ const App = ({ history }) => {
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
   const serviceUrl = useSelector(selectServiceUrl);
 
-  useIpc();
-  // useIpc(history);
+  useIpc(history);
 
   useEffect(() => {
     setLoaded(true);
