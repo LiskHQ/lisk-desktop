@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { settings, networks } from '@constants';
+import { settings } from '@constants';
 
 // https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 const pattern = new RegExp(/[-a-zA-Z0-9@:%_+.~#?&/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&/=]*)?/gi);
@@ -10,8 +10,8 @@ const isValidLocalhost = url => url.hostname === 'localhost' && url.port.length 
 const isValidRemote = url => /(([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3})/.test(url.hostname);
 
 const isValidIp = url => (isValidLocalhost(url)
-|| isValidRemote(url)
-|| isValidUrlRegEx(url.toString()));
+  || isValidRemote(url)
+  || isValidUrlRegEx(url.toString()));
 
 export const addHttp = (url) => {
   const domainReg = /^(?:f|ht)tps?:\/\//i;
