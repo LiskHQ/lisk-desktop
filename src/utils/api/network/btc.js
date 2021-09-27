@@ -21,7 +21,7 @@ export const isMainnetBTC = network => (network.name === networkKeys.mainNet);
  */
 export const getNetworkConfig = (network) => {
   const isMainnet = isMainnetBTC(network);
-  const serviceUrl = !isMainnet ? 'https://btc-test.lisk.io' : 'https://btc.lisk.io';
+  const serviceUrl = !isMainnet ? 'https://btc-test.lisk.com' : 'https://btc.lisk.com';
   const btcNetwork = !isMainnet ? bitcoin.networks.testnet : bitcoin.networks.bitcoin;
   const derivationPath = !isMainnet ? "m/44'/1'/0'/0/0" : "m/44'/0'/0'/0/0";
   const transactionExplorerURL = `https://www.blockchain.com/${!isMainnet ? 'btctest' : 'btc'}/tx`;
