@@ -24,16 +24,13 @@ const getNetwork = (name, url) => {
   };
 };
 
-const getInitialState = (address) => {
-  const { liskServiceUrl } = getAutoLogInData();
-  return {
-    address: liskServiceUrl || address,
-    connected: true,
-    isValid: true,
-    isCustomSelected: false,
-    isValidationLoading: false,
-  };
-};
+const getInitialState = (address) => ({
+  address,
+  connected: true,
+  isValid: true,
+  isCustomSelected: false,
+  isValidationLoading: false,
+});
 
 // eslint-disable-next-line max-statements
 const NetworkSelector = ({
