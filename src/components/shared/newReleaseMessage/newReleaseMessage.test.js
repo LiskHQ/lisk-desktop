@@ -2,6 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 import NewReleaseMessage from './newReleaseMessage';
 
+jest.mock('@utils/theme', () => ({
+  useTheme: () => 'dark',
+}));
+
 describe('New release message banner', () => {
   const props = {
     t: v => v,
