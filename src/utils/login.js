@@ -42,13 +42,11 @@ export const validateUrl = (value) => {
 // Ignore coverage because this is only development feature
 export const getAutoLogInData = /* istanbul ignore next */ () => ({
   [settings.keys.loginKey]: localStorage.getItem(settings.keys.loginKey),
-  [settings.keys.liskServiceUrl]: localStorage.getItem(settings.keys.liskServiceUrl),
 });
 
 // Ignore coverage because this is only development feature
-export const shouldAutoLogIn = /* istanbul ignore next */ autologin =>
-  autologin[settings.keys.liskServiceUrl] && autologin[settings.keys.liskServiceUrl] !== ''
-    && autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
+export const shouldAutoLogIn = /* istanbul ignore next */ autoLogin =>
+  autoLogin[settings.keys.loginKey] && autoLogin[settings.keys.loginKey] !== '';
 
 export const findMatchingLoginNetwork = () => {
   const { liskServiceUrl } = getAutoLogInData();
