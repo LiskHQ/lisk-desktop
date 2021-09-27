@@ -114,7 +114,7 @@ describe('Login', () => {
       };
       wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
       wrapper.update();
-      wrapper.find('button.login-button').simulate('click');
+      wrapper.find('button.login-button').simulate('submit');
       expect(props.login).toHaveBeenCalled();
     });
   });
