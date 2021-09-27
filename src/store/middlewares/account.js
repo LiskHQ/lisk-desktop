@@ -105,7 +105,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
   }
 };
 
-const autoLogInIfNecessary = async ({ dispatch, getState }) => {
+const readStoredNetwork = async ({ dispatch, getState }) => {
   const {
     statistics, statisticsRequest, statisticsFollowingDay, network,
   } = getState().settings;
@@ -140,7 +140,7 @@ const accountMiddleware = store => next => async (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.settingsRetrieved:
-      autoLogInIfNecessary(store);
+      readStoredNetwork(store);
       break;
     case actionTypes.newBlockCreated:
       await checkTransactionsAndUpdateAccount(store, action);
