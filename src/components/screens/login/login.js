@@ -12,7 +12,10 @@ import { getNetworksList } from '@utils/getNetwork';
 import Piwik from '@utils/piwik';
 import { PrimaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
+import CheckBox from '@toolbox/checkBox';
+import { Input } from '@toolbox/inputs';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
+import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 // import Icon from '@toolbox/icon/index';
 import NetworkSelector from './networkSelector';
 import styles from './login.css';
@@ -35,6 +38,8 @@ class Login extends React.Component {
       network: loginNetwork.name,
       address,
       validationError: false,
+      isCustomDerivation: false,
+      derivationPath: defaultDerivationPath,
     };
 
     this.secondIteration = false;
@@ -44,6 +49,8 @@ class Login extends React.Component {
     this.checkPassphrase = this.checkPassphrase.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onLoginSubmission = this.onLoginSubmission.bind(this);
+    this.toogleCustomDerivation = this.toogleCustomDerivation.bind(this);
+    this.onChangeDerivationPath = this.onChangeDerivationPath.bind(this);
   }
 
   async componentDidMount() {
@@ -87,6 +94,22 @@ class Login extends React.Component {
     });
   }
 
+  toogleCustomDerivation(e) {
+    e.preventDefault();
+    this.setState({
+      ...this.state,
+      isCustomDerivation: !this.state.isCustomDerivation,
+    });
+  }
+
+  onChangeDerivationPath(e) {
+    e.preventDefault();
+    this.setState({
+      ...this.state,
+      derivationPath: e.target.value,
+    });
+  }
+
   onFormSubmit(e) {
     e.preventDefault();
     this.onLoginSubmission(this.state.passphrase);
@@ -95,11 +118,13 @@ class Login extends React.Component {
   onLoginSubmission(passphrase) {
     Piwik.trackingEvent('Login', 'button', 'Login submission');
     const { network, login } = this.props;
+    const { isCustomDerivation, derivationPath } = this.state;
     this.secondIteration = true;
+
     if (this.alreadyLoggedWithThisAddress(extractAddressFromPassphrase(passphrase), network)) {
       this.redirectToReferrer();
     } else {
-      login({ passphrase });
+      login({ passphrase, isCustomDerivation, derivationPath });
     }
   }
 
@@ -143,6 +168,25 @@ class Login extends React.Component {
                   onFill={this.checkPassphrase}
                 />
                 <DiscreetModeToggle className={styles.discreetMode} />
+              </fieldset>
+              <fieldset className={`${styles.inputsHolder}`}>
+                <label className={styles.inputLabel}>
+                  <CheckBox
+                    name="darkMode"
+                    className={``}
+                    checked={this.state.isCustomDerivation}
+                    onChange={this.toogleCustomDerivation}
+                  />
+                  {t('Use custom derivation')}
+                </label>
+                {this.state.isCustomDerivation && (
+                  <Input
+                    className={``}
+                    size="l"
+                    onChange={this.onChangeDerivationPath}
+                    value={this.state.derivationPath}
+                  />
+                )}
               </fieldset>
               <div className={`${styles.buttonsHolder}`}>
                 <PrimaryButton
