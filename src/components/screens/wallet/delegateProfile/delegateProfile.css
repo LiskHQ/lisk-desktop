@@ -192,8 +192,7 @@
     & .content {
       display: flex;
       flex-direction: column;
-      padding-left: 20px;
-      padding-top: 20px;
+      padding: 20px 20px 0 20px;
 
       & .title {
         @mixin contentNormal;
@@ -229,6 +228,10 @@
             color: var(--color-link-active);
             cursor: pointer;
           }
+        }
+
+        &:global(.dark) {
+          color: var(--color-manatee-gray);
         }
       }
 

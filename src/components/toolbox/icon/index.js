@@ -151,6 +151,7 @@ import missedBlocksDark from '../../../assets/images/icons/missed-blocks-dark.sv
 import forgedBlocks from '../../../assets/images/icons/forged-blocks.svg';
 import forgedBlocksDark from '../../../assets/images/icons/forged-blocks-dark.svg';
 import consecutiveMissedBlocks from '../../../assets/images/icons/consecutive-missed-blocks.svg';
+import consecutiveMissedBlocksDark from '../../../assets/images/icons/consecutive-missed-blocks-dark.svg';
 import lock from '../../../assets/images/icons/lock.svg';
 import unlock from '../../../assets/images/icons/unlock.svg';
 import loading from '../../../assets/images/icons/loading.svg';
@@ -174,10 +175,15 @@ import delegateWarning from '../../../assets/images/icons/delegate-warning.svg';
 import delegateAwaiting from '../../../assets/images/icons/delegate-awaiting.svg';
 import delegateAwaitingDark from '../../../assets/images/icons/delegate-awaiting-dark.svg';
 import delegateActive from '../../../assets/images/icons/delegate-active.svg';
+import delegateActiveDark from '../../../assets/images/icons/delegate-active-dark.svg';
 import delegateStandby from '../../../assets/images/icons/delegate-standby.svg';
+import delegateStandbyDark from '../../../assets/images/icons/delegate-standby-dark.svg';
 import delegateNonEligible from '../../../assets/images/icons/delegate-non-eligible.svg';
+import delegateNonEligibleDark from '../../../assets/images/icons/delegate-non-eligible-dark.svg';
 import delegatePunished from '../../../assets/images/icons/delegate-punished.svg';
+import delegatePunishedDark from '../../../assets/images/icons/delegate-punished-dark.svg';
 import delegateBanned from '../../../assets/images/icons/delegate-banned.svg';
+import delegateBannedDark from '../../../assets/images/icons/delegate-banned-dark.svg';
 import eyeInactive from '../../../assets/images/icons/eye-inactive.svg';
 import eyeActive from '../../../assets/images/icons/eye-active.svg';
 import liskIcon from '../../../assets/images/icons/lisk-icon.svg';
@@ -208,6 +214,7 @@ export const icons = {
   checkboxFilled,
   checkmark,
   consecutiveMissedBlocks,
+  consecutiveMissedBlocksDark,
   copy,
   dashboardIcon,
   dashboardIconActive,
@@ -362,6 +369,11 @@ export const icons = {
   delegateNonEligible,
   delegatePunished,
   delegateBanned,
+  delegateActiveDark,
+  delegateStandbyDark,
+  delegateNonEligibleDark,
+  delegatePunishedDark,
+  delegateBannedDark,
   eyeActive,
   eyeInactive,
   liskIcon,

@@ -87,7 +87,7 @@
 
 @define-mixin delegatePerformanceValueFont {
   font-family: var(--heading-font);
-  font-size: 35px;
+  font-size: 22px;
   font-weight: 300;
-  line-height: 40px;
+  line-height: 22px;
 }
