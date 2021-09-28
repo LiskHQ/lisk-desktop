@@ -31,9 +31,9 @@ const ckdPriv = ({ key, chainCode }, index) => {
   };
 };
 
-export const defaultPath = "m/44'/134'/0'";
+export const defaultDerivationPath = "m/44'/134'/0'";
 
-export const getCustomDerivationPublicKey = (passphrase, path = defaultPath) => {
+export const getCustomDerivationPublicKey = (passphrase, path = defaultDerivationPath) => {
   const mn = new Mnemonic(passphrase);
   const masterSeed = mn.toSeed();
 
