@@ -14,6 +14,7 @@ import { PrimaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
 import CheckBox from '@toolbox/checkBox';
 import { Input } from '@toolbox/inputs';
+import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
 import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 // import Icon from '@toolbox/icon/index';
@@ -98,6 +99,20 @@ class Login extends React.Component {
 
   toogleRecoveryPhraseMode(e) {
     e.preventDefault();
+
+    if (!this.state.isRecoveryPhraseMode) {
+      FlashMessageHolder.addMessage(
+        <div>
+          <p>WARNING: You are about to use the recovery phrase of your hardware wallet to access your Lisk account.</p>
+          <p>Using your recovery phrase this way should be avoided, and if you don't need to access your funds now, we recommend waiting for full support of hardware wallets in Lisk Desktop 2.2.0.</p>
+          <p>Lisk desktop does not store your recovery seed anywhere and is open-source. However, be aware that if your computer is compromised or running malware, entering your recovery phrase could lead to the loss of all crypto assets stored with your device, not only LSK tokens.</p>
+        </div>,
+        'RecoveryPhraseWarning',
+      );
+    } else {
+      FlashMessageHolder.deleteMessage('RecoveryPhraseWarning');
+    }
+
     this.setState({
       ...this.state,
       isRecoveryPhraseMode: !this.state.isRecoveryPhraseMode,
