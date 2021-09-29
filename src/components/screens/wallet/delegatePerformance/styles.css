@@ -37,4 +37,11 @@
       padding-left: 0;
     }
   }
+
+  @media (min-width: 1601px) {
+    & .performanceContainer {
+      flex-flow: row nowrap;
+      padding-left: 0;
+    }
+  }
 }

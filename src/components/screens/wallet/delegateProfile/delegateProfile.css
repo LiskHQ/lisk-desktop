@@ -94,6 +94,12 @@
     & .value {
       margin-top: 8px;
       color: var(--color-maastricht-blue);
+
+      @media (--large-viewport) {
+        & :last-child {
+          @mixin contentSmall;
+        }
+      }
     }
   }
 }
