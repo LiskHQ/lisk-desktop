@@ -1,8 +1,10 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { useTheme } from '@utils/theme';
 import FlashMessage from '@toolbox/flashMessage/flashMessage';
-import { TertiaryButton } from '@toolbox/buttons';
+import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import Icon from '@toolbox/icon';
 import styles from './newReleaseMessage.css';
 
 const NewReleaseMessage = ({
@@ -12,32 +14,38 @@ const NewReleaseMessage = ({
   updateNow,
   readMore,
   ...props
-}) => (
-  <FlashMessage shouldShow {...props}>
-    <FlashMessage.Content>
-      <strong>{t('Lisk {{version}}', { version })}</strong>
-      {t(' is out. ')}
-      {releaseSummary}
-      <span> </span>
-      <TertiaryButton
-        className={styles.button}
-        size="s"
-        onClick={updateNow}
-      >
-        {t('Update now')}
-      </TertiaryButton>
-      <span>{` ${t('or')} `}</span>
-      <TertiaryButton
-        className={styles.button}
-        size="s"
-        onClick={readMore}
-      >
-        {t('Read more')}
-      </TertiaryButton>
-      <span>.</span>
-    </FlashMessage.Content>
-  </FlashMessage>
-);
+}) => {
+  const theme = useTheme();
+
+  return (
+    <FlashMessage shouldShow hasCloseAction={false} {...props}>
+      <FlashMessage.Content>
+        <div className={styles.container}>
+          <Icon name="warningFolder" />
+          {t('Lisk {{version}}', { version })}
+          {t(' is out. ')}
+          {releaseSummary}
+          <div className={styles.btnContainer}>
+            <SecondaryButton
+              className={`${styles.button} ${theme === 'dark' ? theme : ''}`}
+              size="s"
+              onClick={updateNow}
+            >
+              {t('Read more')}
+            </SecondaryButton>
+            <PrimaryButton
+              className={`${styles.button} ${styles.primary} ${theme}`}
+              size="s"
+              onClick={readMore}
+            >
+              {t('Update now')}
+            </PrimaryButton>
+          </div>
+        </div>
+      </FlashMessage.Content>
+    </FlashMessage>
+  );
+};
 
 NewReleaseMessage.propTypes = {
   version: PropTypes.string.isRequired,
