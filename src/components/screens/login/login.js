@@ -38,7 +38,8 @@ class Login extends React.Component {
       network: loginNetwork.name,
       address,
       validationError: false,
-      isCustomDerivation: false,
+      isRecoveryPhraseMode: false,
+      showCustomDerivationPath: false,
       derivationPath: defaultDerivationPath,
     };
 
@@ -49,7 +50,8 @@ class Login extends React.Component {
     this.checkPassphrase = this.checkPassphrase.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onLoginSubmission = this.onLoginSubmission.bind(this);
-    this.toogleCustomDerivation = this.toogleCustomDerivation.bind(this);
+    this.toogleRecoveryPhraseMode = this.toogleRecoveryPhraseMode.bind(this);
+    this.toogleCustomDerivationPath = this.toogleCustomDerivationPath.bind(this);
     this.onChangeDerivationPath = this.onChangeDerivationPath.bind(this);
   }
 
@@ -94,11 +96,19 @@ class Login extends React.Component {
     });
   }
 
-  toogleCustomDerivation(e) {
+  toogleRecoveryPhraseMode(e) {
     e.preventDefault();
     this.setState({
       ...this.state,
-      isCustomDerivation: !this.state.isCustomDerivation,
+      isRecoveryPhraseMode: !this.state.isRecoveryPhraseMode,
+    });
+  }
+
+  toogleCustomDerivationPath(e) {
+    e.preventDefault();
+    this.setState({
+      ...this.state,
+      showCustomDerivationPath: !this.state.showCustomDerivationPath,
     });
   }
 
@@ -118,13 +128,13 @@ class Login extends React.Component {
   onLoginSubmission(passphrase) {
     Piwik.trackingEvent('Login', 'button', 'Login submission');
     const { network, login } = this.props;
-    const { isCustomDerivation, derivationPath } = this.state;
+    const { isRecoveryPhraseMode, derivationPath } = this.state;
     this.secondIteration = true;
 
     if (this.alreadyLoggedWithThisAddress(extractAddressFromPassphrase(passphrase), network)) {
       this.redirectToReferrer();
     } else {
-      login({ passphrase, isCustomDerivation, derivationPath });
+      login({ passphrase, isRecoveryPhraseMode, derivationPath });
     }
   }
 
@@ -172,14 +182,23 @@ class Login extends React.Component {
               <fieldset className={`${styles.inputsHolder}`}>
                 <label className={styles.inputLabel}>
                   <CheckBox
-                    name="darkMode"
+                    name="recoveryMode"
                     className={``}
-                    checked={this.state.isCustomDerivation}
-                    onChange={this.toogleCustomDerivation}
+                    checked={this.state.isRecoveryPhraseMode}
+                    onChange={this.toogleRecoveryPhraseMode}
                   />
-                  {t('Use custom derivation')}
+                  {t('Enable recovery phrase mode (optional)')}
                 </label>
-                {this.state.isCustomDerivation && (
+                <label className={styles.inputLabel}>
+                  <CheckBox
+                    name="customDerivation"
+                    className={``}
+                    checked={this.state.showCustomDerivationPath}
+                    onChange={this.toogleCustomDerivationPath}
+                  />
+                  {t('Modify derivation path (optional)')}
+                </label>
+                {this.state.showCustomDerivationPath && (
                   <Input
                     className={``}
                     size="l"

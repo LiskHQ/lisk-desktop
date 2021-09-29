@@ -8,12 +8,12 @@ import { getCustomDerivationPublicKey } from '@utils/explicitBipKeyDerivation';
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
  *
  * @param {String} passphrase - Valid Mnemonic passphrase
- * @param {Boolean} isCustomDerivation - enable custom derivation for HW
+ * @param {Boolean} isRecoveryPhraseMode - enable custom derivation for HW
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
-export const extractPublicKey = (passphrase, isCustomDerivation = false, derivationPath) => {
-  if (isCustomDerivation) {
+export const extractPublicKey = (passphrase, isRecoveryPhraseMode = false, derivationPath) => {
+  if (isRecoveryPhraseMode) {
     const publicKey = getCustomDerivationPublicKey(passphrase, derivationPath);
     console.log('CustomDerivationPublicKey:', publicKey);
     return publicKey;

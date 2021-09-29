@@ -98,11 +98,11 @@ export const accountDataUpdated = tokensTypes =>
  * @param {String} data.passphrase - BIP39 passphrase of the account
  * @param {String} data.publicKey - Lisk publicKey used for hardware wallet login
  * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
- * @param {Boolean} data.isCustomDerivation - enable custom derivation for HW
+ * @param {Boolean} data.isRecoveryPhraseMode - enable custom derivation for HW
  * @param {String} data.derivationPath - custom derivation path for HW
  */
 export const login = ({
-  passphrase, publicKey, hwInfo, isCustomDerivation, derivationPath,
+  passphrase, publicKey, hwInfo, isRecoveryPhraseMode, derivationPath,
 }) =>
   async (dispatch, getState) => {
     const { network, settings } = getState();
@@ -118,7 +118,7 @@ export const login = ({
         } else {
           acc[token] = {
             publicKey: publicKey ?? extractPublicKey(
-              passphrase, isCustomDerivation, derivationPath,
+              passphrase, isRecoveryPhraseMode, derivationPath,
             ),
           };
         }
