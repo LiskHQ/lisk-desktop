@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import { mount } from 'enzyme';
 import { routes } from '@constants';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
-import { Login } from './login';
+import { LoginComponent } from './login';
 import accounts from '../../../../test/constants/accounts';
 
 jest.mock('@toolbox/flashMessage/holder', () => ({
@@ -74,7 +74,7 @@ describe('Login', () => {
   beforeEach(() => {
     jest.restoreAllMocks();
     localStorage.getItem = jest.fn().mockReturnValue(JSON.stringify(undefined));
-    wrapper = mount(<Login {...props} />);
+    wrapper = mount(<LoginComponent {...props} />);
   });
 
   afterEach(() => {

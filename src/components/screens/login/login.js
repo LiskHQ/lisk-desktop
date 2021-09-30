@@ -21,7 +21,7 @@ import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import NetworkSelector from './networkSelector';
 import styles from './login.css';
 
-export class Login extends React.Component {
+export class LoginComponent extends React.Component {
   constructor() { // eslint-disable-line max-statements
     super();
     const { liskServiceUrl } = getAutoLogInData();
@@ -134,7 +134,6 @@ export class Login extends React.Component {
   }
 
   toogleRecoveryPhraseMode() {
-    console.log('toogleRecoveryPhraseMode', this.state.isRecoveryPhraseMode);
     this.setState({
       ...this.state,
       isRecoveryPhraseMode: !this.state.isRecoveryPhraseMode,
@@ -274,4 +273,4 @@ export class Login extends React.Component {
   }
 }
 
-export default withTranslation()(Login);
+export default withTranslation()(LoginComponent);
