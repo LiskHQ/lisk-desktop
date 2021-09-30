@@ -17,9 +17,25 @@ import { Input } from '@toolbox/inputs';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
 import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
-// import Icon from '@toolbox/icon/index';
+import FlashMessage from '@toolbox/flashMessage/flashMessage';
+import Icon from '@toolbox/icon';
 import NetworkSelector from './networkSelector';
 import styles from './login.css';
+
+const PhraseRevoveryWarningMessage = () => (
+  <FlashMessage shouldShow hasCloseAction={false} className={styles.flashMessage}>
+    <FlashMessage.Content>
+      <div className={styles.warningContainer}>
+        <p>
+          <Icon name="warningYellow" />
+          WARNING: You are about to use the recovery phrase of your hardware wallet to access your Lisk account.
+        </p>
+        <p>Using your recovery phrase this way should be avoided, and if you don't need to access your funds now, we recommend waiting for full support of hardware wallets in Lisk Desktop 2.2.0.</p>
+        <p>Lisk desktop does not store your recovery seed anywhere and is open-source. However, be aware that if your computer is compromised or running malware, entering your recovery phrase could lead to the loss of all crypto assets stored with your device, not only LSK tokens.</p>
+      </div>
+    </FlashMessage.Content>
+  </FlashMessage>
+);
 
 class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
@@ -97,16 +113,10 @@ class Login extends React.Component {
     });
   }
 
-  toogleRecoveryPhraseMode(e) {
-    e.preventDefault();
-
+  toogleRecoveryPhraseMode() {
     if (!this.state.isRecoveryPhraseMode) {
       FlashMessageHolder.addMessage(
-        <div>
-          <p>WARNING: You are about to use the recovery phrase of your hardware wallet to access your Lisk account.</p>
-          <p>Using your recovery phrase this way should be avoided, and if you don't need to access your funds now, we recommend waiting for full support of hardware wallets in Lisk Desktop 2.2.0.</p>
-          <p>Lisk desktop does not store your recovery seed anywhere and is open-source. However, be aware that if your computer is compromised or running malware, entering your recovery phrase could lead to the loss of all crypto assets stored with your device, not only LSK tokens.</p>
-        </div>,
+        <PhraseRevoveryWarningMessage />,
         'RecoveryPhraseWarning',
       );
     } else {
@@ -119,8 +129,7 @@ class Login extends React.Component {
     });
   }
 
-  toogleCustomDerivationPath(e) {
-    e.preventDefault();
+  toogleCustomDerivationPath() {
     this.setState({
       ...this.state,
       showCustomDerivationPath: !this.state.showCustomDerivationPath,
@@ -128,7 +137,6 @@ class Login extends React.Component {
   }
 
   onChangeDerivationPath(e) {
-    e.preventDefault();
     this.setState({
       ...this.state,
       derivationPath: e.target.value,
@@ -193,29 +201,27 @@ class Login extends React.Component {
                   onFill={this.checkPassphrase}
                 />
                 <DiscreetModeToggle className={styles.discreetMode} />
-              </fieldset>
-              <fieldset className={`${styles.inputsHolder}`}>
-                <label className={styles.inputLabel}>
+                <div className={styles.checkboxWrapper}>
                   <CheckBox
                     name="recoveryMode"
-                    className={``}
                     checked={this.state.isRecoveryPhraseMode}
                     onChange={this.toogleRecoveryPhraseMode}
                   />
-                  {t('Enable recovery phrase mode (optional)')}
-                </label>
-                <label className={styles.inputLabel}>
-                  <CheckBox
-                    name="customDerivation"
-                    className={``}
-                    checked={this.state.showCustomDerivationPath}
-                    onChange={this.toogleCustomDerivationPath}
-                  />
-                  {t('Modify derivation path (optional)')}
-                </label>
+                  <span>{t('Enable recovery phrase mode (optional)')}</span>
+                </div>
+                {this.state.isRecoveryPhraseMode && (
+                  <div className={styles.checkboxWrapper}>
+                    <CheckBox
+                      name="customDerivation"
+                      checked={this.state.showCustomDerivationPath}
+                      onChange={this.toogleCustomDerivationPath}
+                    />
+                    <span>{t('Modify derivation path (optional)')}</span>
+                  </div>
+                )}
                 {this.state.showCustomDerivationPath && (
                   <Input
-                    className={``}
+                    className={styles.derivationPathInput}
                     size="l"
                     onChange={this.onChangeDerivationPath}
                     value={this.state.derivationPath}
