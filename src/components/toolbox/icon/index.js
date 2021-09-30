@@ -96,6 +96,7 @@ import walletIcon from '../../../assets/images/icons/wallet.svg';
 import walletIconActive from '../../../assets/images/icons/wallet-active.svg';
 import warningIcon from '../../../assets/images/icons/warning-icon.svg';
 import warningRound from '../../../assets/images/icons/warning-round.svg';
+import warningFolder from '../../../assets/images/icons/warning-folder.svg';
 import qrCode from '../../../assets/images/icons/qr-code.svg';
 import signMessage from '../../../assets/images/icons/sign.svg';
 import signMessageActive from '../../../assets/images/icons/signActive.svg';
@@ -150,6 +151,8 @@ import missedBlocks from '../../../assets/images/icons/missed-blocks.svg';
 import missedBlocksDark from '../../../assets/images/icons/missed-blocks-dark.svg';
 import forgedBlocks from '../../../assets/images/icons/forged-blocks.svg';
 import forgedBlocksDark from '../../../assets/images/icons/forged-blocks-dark.svg';
+import consecutiveMissedBlocks from '../../../assets/images/icons/consecutive-missed-blocks.svg';
+import consecutiveMissedBlocksDark from '../../../assets/images/icons/consecutive-missed-blocks-dark.svg';
 import lock from '../../../assets/images/icons/lock.svg';
 import unlock from '../../../assets/images/icons/unlock.svg';
 import loading from '../../../assets/images/icons/loading.svg';
@@ -172,6 +175,16 @@ import delegateMissedDark from '../../../assets/images/icons/delegate-missed-dar
 import delegateWarning from '../../../assets/images/icons/delegate-warning.svg';
 import delegateAwaiting from '../../../assets/images/icons/delegate-awaiting.svg';
 import delegateAwaitingDark from '../../../assets/images/icons/delegate-awaiting-dark.svg';
+import delegateActive from '../../../assets/images/icons/delegate-active.svg';
+import delegateActiveDark from '../../../assets/images/icons/delegate-active-dark.svg';
+import delegateStandby from '../../../assets/images/icons/delegate-standby.svg';
+import delegateStandbyDark from '../../../assets/images/icons/delegate-standby-dark.svg';
+import delegateNonEligible from '../../../assets/images/icons/delegate-non-eligible.svg';
+import delegateNonEligibleDark from '../../../assets/images/icons/delegate-non-eligible-dark.svg';
+import delegatePunished from '../../../assets/images/icons/delegate-punished.svg';
+import delegatePunishedDark from '../../../assets/images/icons/delegate-punished-dark.svg';
+import delegateBanned from '../../../assets/images/icons/delegate-banned.svg';
+import delegateBannedDark from '../../../assets/images/icons/delegate-banned-dark.svg';
 import eyeInactive from '../../../assets/images/icons/eye-inactive.svg';
 import eyeActive from '../../../assets/images/icons/eye-active.svg';
 import liskIcon from '../../../assets/images/icons/lisk-icon.svg';
@@ -201,6 +214,8 @@ export const icons = {
   calendarDark,
   checkboxFilled,
   checkmark,
+  consecutiveMissedBlocks,
+  consecutiveMissedBlocksDark,
   copy,
   dashboardIcon,
   dashboardIconActive,
@@ -272,6 +287,7 @@ export const icons = {
   walletIconActive,
   warningIcon,
   warningRound,
+  warningFolder,
   addedVotes,
   removedVotes,
   totalVotes,
@@ -350,6 +366,16 @@ export const icons = {
   delegateWarning,
   delegateAwaiting,
   delegateAwaitingDark,
+  delegateActive,
+  delegateStandby,
+  delegateNonEligible,
+  delegatePunished,
+  delegateBanned,
+  delegateActiveDark,
+  delegateStandbyDark,
+  delegateNonEligibleDark,
+  delegatePunishedDark,
+  delegateBannedDark,
   eyeActive,
   eyeInactive,
   liskIcon,

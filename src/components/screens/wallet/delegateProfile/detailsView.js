@@ -16,7 +16,7 @@ const DetailsView = ({
   const theme = useTheme();
 
   return (
-    <Box className={`${grid.col} ${grid['col-xs-12']} ${grid['col-md-4']} ${styles.detailsContainer} details-container`}>
+    <Box className={`${grid.col} ${grid['col-xs-12']} ${grid['col-md-3']} ${styles.detailsContainer} details-container`}>
       <BoxHeader>
         <h1 className={styles.heading}>{t('Details')}</h1>
       </BoxHeader>

@@ -395,7 +395,7 @@ export const create = ({
  * @param {object} transaction
  * @param {Object} network
  * @param {string} network.name - the network name, e.g. mainnet, betanet
- * @param {string} network.address - the node address e.g. https://betanet-lisk.io
+ * @param {string} network.address - the node address e.g. https://service.lisk.com
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = async ({ transaction, serviceUrl }) => {

@@ -10,7 +10,6 @@
 
   & .content {
     flex-flow: row nowrap;
-    width: calc(100% + 1em); /* stylelint-disable-line unit-whitelist */
   }
 }
 
@@ -95,6 +94,12 @@
     & .value {
       margin-top: 8px;
       color: var(--color-maastricht-blue);
+
+      @media (--large-viewport) {
+        & :last-child {
+          @mixin contentSmall;
+        }
+      }
     }
   }
 }
@@ -147,13 +152,21 @@
       &.productivity {
         height: 122px;
         width: 206px;
+
+        & img {
+          width: 100%;
+        }
       }
 
       &.forgedBlocks {
         padding-right: 20px;
+
+        & img {
+          width: 100%;
+        }
       }
 
-      &.missedBlocks {
+      &.consecutiveMissedBlocks {
         justify-content: flex-end;
         align-items: center;
         height: 156px;
@@ -164,6 +177,99 @@
         height: 108px;
         width: 196px;
         padding-right: 20px;
+
+        & img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  & .full {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 332px;
+
+    &:nth-child(2) {
+      margin: 0;
+    }
+
+    & .content {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 20px 0 20px;
+
+      & .title {
+        @mixin contentNormal;
+
+        color: var(--color-slate-gray);
+        margin-bottom: 15px;
+
+        &:global(.dark) {
+          color: var(--color-manatee-gray);
+        }
+      }
+
+      & .delegateDescription {
+        & p {
+          font-size: var(--paragraph-font-size-s);
+        }
+
+        & p:first-child {
+          margin-bottom: 7px;
+        }
+
+        & p:last-child {
+          margin-top: 0 !important;
+        }
+
+        & p:only-child {
+          margin-top: var(--paragraph-font-size-s) !important;
+          margin-bottom: var(--paragraph-font-size-s) !important;
+        }
+
+        & .details {
+          & p {
+            color: var(--color-link-active);
+            cursor: pointer;
+          }
+        }
+
+        &:global(.dark) {
+          color: var(--color-manatee-gray);
+        }
+      }
+
+      & > *:not(.title):not(.delegateDescription):not(.highlighIcon) {
+        @mixin delegatePerformanceValueFont;
+
+        color: var(--color-maastricht-blue);
+      }
+    }
+
+    & .highlighIcon {
+      align-self: flex-end;
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+      height: 120px;
+      width: 170px;
+
+      &.delegateActive {
+        padding-right: 10px;
+      }
+
+      &.delegateStandby {
+        padding-right: 10px;
+      }
+
+      &.delegatePunished {
+        padding-right: 10px;
+      }
+
+      &.delegateBanned {
+        padding-right: 10px;
       }
     }
   }

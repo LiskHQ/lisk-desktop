@@ -49,6 +49,7 @@ const NetworkSelector = ({
       wrapperClassName={styles.NetworkSelector}
       className={`${styles.menu} network-dropdown`}
       buttonLabel={(<span>{networks[selectedNetworkName]?.label}</span>)}
+      buttonType="button"
       ButtonComponent={SecondaryButton}
       align="right"
     >

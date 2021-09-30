@@ -78,7 +78,7 @@ const Login = ({
           className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
         >
           <RegisterTitle t={t} />
-          <form onSubmit={e => e.preventDefault()}>
+          <form onSubmit={onFormSubmit}>
             {
               settings.showNetwork ? (
                 <fieldset className={`${styles.inputsHolder}`}>
@@ -98,7 +98,6 @@ const Login = ({
             </fieldset>
             <div className={`${styles.buttonsHolder}`}>
               <PrimaryButton
-                onClick={onFormSubmit}
                 className={`${styles.button} login-button`}
                 type="submit"
                 disabled={!passphrase.isValid}

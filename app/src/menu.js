@@ -129,8 +129,8 @@ const menu = {
             click: menu.onClickLink.bind(null, electron, 'https://lisk.com/contact/i-want-provide-feedback-about-lisk-product/form'),
           },
           {
-            label: i18n.t('Lisk Explorer'),
-            click: menu.onClickLink.bind(null, electron, 'https://explorer.lisk.io'),
+            label: i18n.t('Explorer'),
+            click: menu.onClickLink.bind(null, electron, 'https://liskscan.com'),
           },
           {
             type: 'separator',
