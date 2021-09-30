@@ -191,7 +191,7 @@ describe('Account middleware', () => {
       };
       middleware(noNetworkStore)(next)(accountLoggedOutAction);
       expect(networkSelected).toHaveBeenCalledWith({
-        address: 'https://service.lisk.io',
+        address: 'https://service.lisk.com',
         name: 'mainnet',
       });
     });
