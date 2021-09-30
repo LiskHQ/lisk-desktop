@@ -27,6 +27,6 @@ export const getNews = ({
   params = {},
 }) => http({
   path: '/api/v1/market/newsfeed',
-  baseUrl: 'https://cloud.lisk.io',
+  baseUrl: 'https://cloud.lisk.com',
   params,
 });
