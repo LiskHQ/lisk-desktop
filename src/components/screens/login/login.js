@@ -16,28 +16,10 @@ import CheckBox from '@toolbox/checkBox';
 import { Input } from '@toolbox/inputs';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
+import WarningMessage from '@shared/warningMessage';
 import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
-import FlashMessage from '@toolbox/flashMessage/flashMessage';
-import Icon from '@toolbox/icon';
 import NetworkSelector from './networkSelector';
 import styles from './login.css';
-
-const PhraseRevoveryWarningMessage = ({ t }) => (
-  <FlashMessage shouldShow hasCloseAction={false} className={styles.flashMessage}>
-    <FlashMessage.Content>
-      <div className={styles.warningContainer}>
-        <div>
-          <Icon name="warningYellow" />
-        </div>
-        <div>
-          <p className={styles.title}>{t('WARNING: You are about to use the recovery phrase of your hardware wallet to access your Lisk account.')}</p>
-          <p>{t('Using your recovery phrase this way should be avoided, and if you don’t need to access your funds now, we recommend waiting for full support of hardware wallets in Lisk Desktop 2.2.0.')}</p>
-          <p>{t('Lisk desktop does not store your recovery seed anywhere and is open-source. However, be aware that if your computer is compromised or running malware, entering your recovery phrase could lead to the loss of all crypto assets stored with your device, not only LSK tokens.')}</p>
-        </div>
-      </div>
-    </FlashMessage.Content>
-  </FlashMessage>
-);
 
 class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
@@ -116,9 +98,19 @@ class Login extends React.Component {
   }
 
   toogleRecoveryPhraseMode() {
+    const { t } = this.props;
     if (!this.state.isRecoveryPhraseMode) {
       FlashMessageHolder.addMessage(
-        <PhraseRevoveryWarningMessage t={this.props.t} />,
+        (
+          <WarningMessage
+            title={t('WARNING: You are about to use the recovery phrase of your hardware wallet to access your Lisk account.')}
+          >
+            <>
+              <p>{t('Using your recovery phrase this way should be avoided, and if you don’t need to access your funds now, we recommend waiting for full support of hardware wallets in Lisk Desktop 2.2.0.')}</p>
+              <p>{t('Lisk desktop does not store your recovery seed anywhere and is open-source. However, be aware that if your computer is compromised or running malware, entering your recovery phrase could lead to the loss of all crypto assets stored with your device, not only LSK tokens.')}</p>
+            </>
+          </WarningMessage>
+        ),
         'RecoveryPhraseWarning',
       );
     } else {
