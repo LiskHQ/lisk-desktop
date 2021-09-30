@@ -21,7 +21,7 @@ import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import NetworkSelector from './networkSelector';
 import styles from './login.css';
 
-class Login extends React.Component {
+export class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
     super();
     const { liskServiceUrl } = getAutoLogInData();
@@ -71,7 +71,6 @@ class Login extends React.Component {
     if (this.props.account?.summary?.address) {
       this.redirectToReferrer();
     }
-
     if (this.state.isRecoveryPhraseMode) {
       this.addWarningMessage();
     } else {
@@ -135,6 +134,7 @@ class Login extends React.Component {
   }
 
   toogleRecoveryPhraseMode() {
+    console.log('toogleRecoveryPhraseMode', this.state.isRecoveryPhraseMode);
     this.setState({
       ...this.state,
       isRecoveryPhraseMode: !this.state.isRecoveryPhraseMode,
@@ -216,6 +216,7 @@ class Login extends React.Component {
                 <div className={styles.checkboxWrapper}>
                   <CheckBox
                     name="recoveryMode"
+                    className="recovery-phrase-check"
                     checked={this.state.isRecoveryPhraseMode}
                     onChange={this.toogleRecoveryPhraseMode}
                   />
