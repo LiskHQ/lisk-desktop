@@ -4,6 +4,7 @@ import { tokenMap } from '@constants';
 import { getNetworkConfig } from '@api/network';
 import { PrimaryButton } from '@toolbox/buttons';
 import { Input } from '@toolbox/inputs';
+import { addHttp } from '@utils/login';
 import styles from '../networkSelector.css';
 
 const validateNode = async (address) => {
@@ -37,8 +38,9 @@ const EditMode = ({
     clearTimeout(timeout.current);
     // validate the URL with debouncer
     timeout.current = setTimeout(() => {
+      const normalized = addHttp(value);
       setLoading(true);
-      validateNode(value)
+      validateNode(normalized)
         .then(() => {
           setAddress({
             value,
@@ -68,12 +70,13 @@ const EditMode = ({
   };
 
   const connect = () => {
+    const normalized = addHttp(address.value);
     networkSelected({
       name: 'customNode',
       initialSupply: 1,
-      address: address.value,
+      address: normalized,
     });
-    customNetworkStored(address.value);
+    customNetworkStored(normalized);
     setMode('read');
     dropdownRef.current.toggleDropdown(false);
   };
