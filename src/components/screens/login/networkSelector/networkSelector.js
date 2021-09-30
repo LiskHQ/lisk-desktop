@@ -35,13 +35,6 @@ const NetworkSelector = ({
   const childRef = useRef(null);
   const selectedNetworkName = network.name || settings.network?.name || 'mainnet';
 
-  // const changeNetworkInSettings = (networkName) => {
-  //   const { name, address } = getNetwork(networkName, state.address);
-  //   if (address !== 'http://') {
-  //     settingsUpdated({ network: { name, address } });
-  //   }
-  // };
-
   return (
     <DropdownButton
       ref={childRef}
