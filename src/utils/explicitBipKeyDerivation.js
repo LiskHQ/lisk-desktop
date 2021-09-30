@@ -1,6 +1,8 @@
-import Mnemonic from 'bitcore-mnemonic';
 import nacl from 'tweetnacl';
 import createHmac from 'create-hmac';
+
+if (global._bitcore) delete global._bitcore;
+const mnemonic = require('bitcore-mnemonic');
 
 const ED25519_CURVE = 'ed25519 seed';
 const HARDENED_OFFSET = 0x80000000;
@@ -34,7 +36,7 @@ const ckdPriv = ({ key, chainCode }, index) => {
 export const defaultDerivationPath = "m/44'/134'/0'";
 
 export const getCustomDerivationPublicKey = (passphrase, path = defaultDerivationPath) => {
-  const mn = new Mnemonic(passphrase);
+  const mn = new mnemonic(passphrase);
   const masterSeed = mn.toSeed();
 
   let node = getMasterKeyFromSeed(masterSeed);
