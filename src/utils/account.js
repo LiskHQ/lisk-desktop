@@ -15,13 +15,11 @@ import { getCustomDerivationPublicKey } from '@utils/explicitBipKeyDerivation';
 export const extractPublicKey = (passphrase, isRecoveryPhraseMode = false, derivationPath) => {
   if (isRecoveryPhraseMode) {
     const publicKey = getCustomDerivationPublicKey(passphrase, derivationPath);
-    console.log('CustomDerivationPublicKey:', publicKey);
     return publicKey;
   }
 
   if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
     const publicKey = cryptography.getKeys(passphrase).publicKey.toString('hex');
-    console.log('RegularPublicKey:', publicKey);
     return publicKey;
   }
   throw Error('Invalid passphrase');
