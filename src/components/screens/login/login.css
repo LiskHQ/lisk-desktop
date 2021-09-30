@@ -130,3 +130,40 @@
 .discreetMode {
   margin-top: 16px;
 }
+
+.checkboxWrapper {
+  width: auto;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 22px;
+
+  & > span {
+    @mixin contentNormal;
+  
+    color: var(--color-slate-gray);
+    cursor: pointer;
+    user-select: none;
+    margin-left: 10px;
+  }
+}
+
+.derivationPathInput {
+  height: 40px !important;
+  margin-top: 12px;
+}
+
+.warningContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.flashMessage {
+  background-color: var(--color-white);
+  border-color: transparent;
+}
