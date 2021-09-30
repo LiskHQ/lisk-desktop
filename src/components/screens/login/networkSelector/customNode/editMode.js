@@ -27,8 +27,8 @@ const EditMode = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState({
-    value: storedCustomNetwork.length ? storedCustomNetwork : '',
-    error: storedCustomNetwork.length ? 0 : -1,
+    value: storedCustomNetwork ?? '',
+    error: storedCustomNetwork ? 0 : -1,
     feedback: '',
   });
   const timeout = useRef();
@@ -79,7 +79,7 @@ const EditMode = ({
   };
 
   useEffect(() => {
-    if (storedCustomNetwork.length === 0 && address.value) {
+    if (!storedCustomNetwork && address.value) {
       setAddress({
         value: '',
         error: -1,

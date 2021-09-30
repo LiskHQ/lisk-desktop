@@ -29,7 +29,7 @@ const Network = ({ network, t, token }) => {
         >
           <p className="network-address">
             {
-              network?.networks
+              network.networks
                 ? network.networks[token]?.serviceUrl
                 : '-'
             }
