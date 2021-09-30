@@ -22,16 +22,18 @@ import Icon from '@toolbox/icon';
 import NetworkSelector from './networkSelector';
 import styles from './login.css';
 
-const PhraseRevoveryWarningMessage = () => (
+const PhraseRevoveryWarningMessage = ({ t }) => (
   <FlashMessage shouldShow hasCloseAction={false} className={styles.flashMessage}>
     <FlashMessage.Content>
       <div className={styles.warningContainer}>
-        <p>
+        <div>
           <Icon name="warningYellow" />
-          WARNING: You are about to use the recovery phrase of your hardware wallet to access your Lisk account.
-        </p>
-        <p>Using your recovery phrase this way should be avoided, and if you don't need to access your funds now, we recommend waiting for full support of hardware wallets in Lisk Desktop 2.2.0.</p>
-        <p>Lisk desktop does not store your recovery seed anywhere and is open-source. However, be aware that if your computer is compromised or running malware, entering your recovery phrase could lead to the loss of all crypto assets stored with your device, not only LSK tokens.</p>
+        </div>
+        <div>
+          <p className={styles.title}>{t('WARNING: You are about to use the recovery phrase of your hardware wallet to access your Lisk account.')}</p>
+          <p>{t('Using your recovery phrase this way should be avoided, and if you don’t need to access your funds now, we recommend waiting for full support of hardware wallets in Lisk Desktop 2.2.0.')}</p>
+          <p>{t('Lisk desktop does not store your recovery seed anywhere and is open-source. However, be aware that if your computer is compromised or running malware, entering your recovery phrase could lead to the loss of all crypto assets stored with your device, not only LSK tokens.')}</p>
+        </div>
       </div>
     </FlashMessage.Content>
   </FlashMessage>
@@ -116,7 +118,7 @@ class Login extends React.Component {
   toogleRecoveryPhraseMode() {
     if (!this.state.isRecoveryPhraseMode) {
       FlashMessageHolder.addMessage(
-        <PhraseRevoveryWarningMessage />,
+        <PhraseRevoveryWarningMessage t={this.props.t} />,
         'RecoveryPhraseWarning',
       );
     } else {
