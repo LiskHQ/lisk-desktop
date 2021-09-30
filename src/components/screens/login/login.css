@@ -143,7 +143,7 @@
 
   & > span {
     @mixin contentNormal;
-  
+
     color: var(--color-slate-gray);
     cursor: pointer;
     user-select: none;
