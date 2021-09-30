@@ -1,3 +1,4 @@
+import { getCustomDerivationPublicKey } from '@utils/explicitBipKeyDerivation';
 import accounts from '../../test/constants/accounts';
 import {
   extractPublicKey,
@@ -16,10 +17,19 @@ const passphrase = accounts.genesis.passphrase;
 const publicKey = accounts.genesis.summary.serverPublicKey;
 const address = accounts.genesis.summary.address;
 
+jest.mock('@utils/explicitBipKeyDerivation', () => ({
+  getCustomDerivationPublicKey: jest.fn(),
+}));
+
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
     it('should return a hex string from any given string', () => {
       expect(extractPublicKey(passphrase)).toEqual(publicKey);
+    });
+
+    it('should call getCustomDerivationPublicKey', () => {
+      extractPublicKey(passphrase, true, '1/2');
+      expect(getCustomDerivationPublicKey).toHaveBeenCalledWith(passphrase, '1/2');
     });
   });
 

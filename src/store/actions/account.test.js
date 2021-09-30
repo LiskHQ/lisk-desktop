@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { actionTypes } from '@constants';
 import * as accountApi from '@api/account';
+import { extractPublicKey } from '@utils/account';
 import {
   accountLoggedOut,
   accountDataUpdated,
@@ -22,6 +23,9 @@ jest.mock('./transactions', () => ({
 }));
 jest.mock('./network', () => ({
   networkStatusUpdated: jest.fn(),
+}));
+jest.mock('@utils/account', () => ({
+  extractPublicKey: jest.fn(),
 }));
 
 const network = {
@@ -171,6 +175,12 @@ describe('actions: account', () => {
           },
         }),
       }));
+    });
+
+    it('should call extractPublicKey with params', async () => {
+      accountApi.getAccount.mockResolvedValue({ balance, address });
+      await login({ passphrase, isRecoveryPhraseMode: false, derivationPath: '1/2' })(dispatch, getState);
+      expect(extractPublicKey).toHaveBeenCalledWith(passphrase, false, '1/2');
     });
 
     it.skip('should fire an error toast if getAccount fails ', async () => {
