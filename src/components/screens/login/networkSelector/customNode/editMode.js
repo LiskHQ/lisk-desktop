@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { tokenMap } from '@constants';
+import { tokenMap, networkKeys } from '@constants';
 import { getNetworkConfig } from '@api/network';
 import { PrimaryButton } from '@toolbox/buttons';
 import { Input } from '@toolbox/inputs';
@@ -10,7 +10,7 @@ import styles from '../networkSelector.css';
 const validateNode = async (address) => {
   try {
     const response = await getNetworkConfig({
-      name: 'customNode',
+      name: networkKeys.customNode,
       address,
     }, tokenMap.LSK.key);
     if (response) {
@@ -72,7 +72,7 @@ const EditMode = ({
   const connect = () => {
     const normalized = addHttp(address.value);
     networkSelected({
-      name: 'customNode',
+      name: networkKeys.customNode,
       initialSupply: 1,
       address: normalized,
     });

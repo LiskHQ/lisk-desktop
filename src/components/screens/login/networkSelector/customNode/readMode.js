@@ -2,6 +2,7 @@ import React from 'react';
 
 import { TertiaryButton } from '@toolbox/buttons';
 import Icon from '@toolbox/icon';
+import { networkKeys } from '@constants';
 import styles from '../networkSelector.css';
 
 const ReadMode = ({
@@ -21,7 +22,7 @@ const ReadMode = ({
 
   const connect = () => {
     networkSelected({
-      name: 'customNode',
+      name: networkKeys.customNode,
       initialSupply: 1,
       address: storedCustomNetwork,
     });
