@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { networkKeys } from '@constants';
 import { getNetworkName } from '@utils/getNetwork';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './network.css';
 
 const Network = ({ network, t, token }) => {
@@ -15,10 +17,25 @@ const Network = ({ network, t, token }) => {
   return (
     <section className={`${styles.wrapper} network-status`}>
       <span className={`${styles.status} ${statusColor}`} />
-      <p>
+      <div className={styles.message}>
         <span>{t('Connected to:')}</span>
-        <span>{networksList[activeNetwork]}</span>
-      </p>
+        <Tooltip
+          className={styles.tooltipWrapper}
+          size="maxContent"
+          position="bottom left"
+          content={(
+            <span className="network-name">{networksList[activeNetwork]}</span>
+          )}
+        >
+          <p className="network-address">
+            {
+              network.networks
+                ? network.networks[token]?.serviceUrl
+                : '-'
+            }
+          </p>
+        </Tooltip>
+      </div>
     </section>
   );
 };

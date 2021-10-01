@@ -21,12 +21,12 @@ describe('Add a new bookmark component', () => {
       networks: {
         BTC: {
           network: bitcoin.networks.testnet,
-          serviceUrl: 'https://btc.lisk.io',
+          serviceUrl: 'https://btc.lisk.com',
           minerFeesURL: 'https://bitcoinfees.earn.com/api/v1/fees/recommended',
           derivationPath: "m/44'/1'/0'/0/0",
         },
         LSK: {
-          serviceUrl: 'https://service.lisk.io',
+          serviceUrl: 'https://service.lisk.com',
         },
       },
     },

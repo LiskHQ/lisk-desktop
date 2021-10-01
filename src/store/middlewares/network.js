@@ -1,8 +1,10 @@
 import { actionTypes, settings } from '@constants';
 import { getAutoLogInData, shouldAutoLogIn } from '@utils/login';
-import { networkConfigSet, login } from '@actions';
+import { networkConfigSet, login, settingsUpdated } from '@actions';
 
-const network = ({ dispatch }) => next => async (action) => {
+// @todo update settings when a new network is selected
+
+const network = ({ dispatch, getState }) => next => async (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.networkSelected: {
@@ -16,6 +18,10 @@ const network = ({ dispatch }) => next => async (action) => {
       }
       break;
     }
+    case actionTypes.customNetworkStored:
+    case actionTypes.customNetworkRemoved:
+      dispatch(settingsUpdated({ storedCustomNetwork: getState().network.storedCustomNetwork }));
+      break;
     default:
       break;
   }
