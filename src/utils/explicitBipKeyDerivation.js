@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import nacl from 'tweetnacl';
 import createHmac from 'create-hmac';
 
