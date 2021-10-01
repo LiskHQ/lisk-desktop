@@ -37,13 +37,13 @@ const RecoveryPhrase = ({
     if (isRecoveryPhraseMode) {
       addWarningMessage(t);
     } else {
-      removeWarningMessage(t);
+      removeWarningMessage();
     }
   }, [isRecoveryPhraseMode]);
 
   useEffect(() => {
     if (!isEmpty(account)) {
-      removeWarningMessage(t);
+      removeWarningMessage();
     }
   }, [account]);
 
