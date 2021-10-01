@@ -42,3 +42,23 @@ export const networkSelected = data => ({
   data,
   type: actionTypes.networkSelected,
 });
+
+/**
+ * Returns required action object to store a custom network URL
+ *
+ * @param {string} data - A valid network URL
+ * @returns {object} the action object
+ */
+export const customNetworkStored = data => ({
+  data,
+  type: actionTypes.customNetworkStored,
+});
+
+/**
+ * Returns required action object to remove a custom network URL
+ *
+ * @returns {object} the action object
+ */
+export const customNetworkRemoved = () => ({
+  type: actionTypes.customNetworkRemoved,
+});

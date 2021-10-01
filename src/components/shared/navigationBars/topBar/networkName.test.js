@@ -41,7 +41,8 @@ describe('Network', () => {
         network,
       };
       const wrapper = mount(<Network {...props} />);
-      expect(wrapper.find('p').text()).toBe('Connected to:devnet');
+      expect(wrapper.find('.network-name').text()).toBe('devnet');
+      expect(wrapper.find('.network-address').text()).toBe('http://localhost:4000');
     });
 
     it.skip('should detect mainnet nethash', () => {
@@ -59,7 +60,7 @@ describe('Network', () => {
         },
       };
       const wrapper = mount(<Network {...props} />);
-      expect(wrapper.find('p').text()).toBe('Connected to:mainnet');
+      expect(wrapper.find('.network-name').text()).toBe('mainnet');
     });
 
     it.skip('should detect testnet nethash', () => {
@@ -77,7 +78,7 @@ describe('Network', () => {
         },
       };
       const wrapper = mount(<Network {...props} />);
-      expect(wrapper.find('p').text()).toBe('Connected to:testnet');
+      expect(wrapper.find('.network-name').text()).toBe('testnet');
     });
   });
 
@@ -97,7 +98,7 @@ describe('Network', () => {
         },
       };
       const wrapper = mount(<Network {...props} />);
-      expect(wrapper.find('p').text()).toBe('Connected to:mainnet');
+      expect(wrapper.find('.network-name').text()).toBe('mainnet');
     });
 
     it('renders testnet', () => {
@@ -115,7 +116,7 @@ describe('Network', () => {
         },
       };
       const wrapper = mount(<Network {...props} />);
-      expect(wrapper.find('p').text()).toBe('Connected to:testnet');
+      expect(wrapper.find('.network-name').text()).toBe('testnet');
     });
   });
 
@@ -129,11 +130,13 @@ describe('Network', () => {
         networks: {
           BTC: {
             nethash: customNodeHash,
+            serviceUrl: 'http://localhost:8080',
           },
         },
       },
     };
     const wrapper = mount(<Network {...props} />);
-    expect(wrapper.find('p').text()).toBe('Connected to:devnet');
+    expect(wrapper.find('.network-name').text()).toBe('devnet');
+    expect(wrapper.find('.network-address').text()).toBe('http://localhost:8080');
   });
 });
