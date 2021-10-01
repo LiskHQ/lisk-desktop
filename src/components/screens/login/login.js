@@ -7,15 +7,12 @@ import { routes } from '@constants';
 import { parseSearchParams, stringifySearchParams } from '@utils/searchParams';
 import { getNetworksList } from '@utils/getNetwork';
 import Piwik from '@utils/piwik';
+import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import { PrimaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
-import CheckBox from '@toolbox/checkBox';
-import { Input } from '@toolbox/inputs';
-import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
-import WarningMessage from '@shared/warningMessage';
-import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import NetworkSelector from './networkSelector';
+import RecoveryPhrase from './recoveryPhrase';
 import styles from './login.css';
 
 const RegisterTitle = ({ t }) => (
@@ -46,6 +43,8 @@ const redirectToReferrer = (history) => {
 const Login = ({
   t, settings, network, history, account, login,
 }) => {
+  const [isRecoveryPhraseMode, setIsRecoveryPhrase] = useState(false);
+  const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
   const [passphrase, setPass] = useState({ value: '', isValid: false });
   const setPassphrase = (value, error) => {
     setPass({
@@ -57,7 +56,7 @@ const Login = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
     Piwik.trackingEvent('Login', 'button', 'Login submission');
-    login({ passphrase: passphrase.value });
+    login({ passphrase: passphrase.value, isRecoveryPhraseMode, derivationPath });
   };
 
   useEffect(() => {
@@ -99,6 +98,14 @@ const Login = ({
                 onFill={setPassphrase}
               />
               <DiscreetModeToggle className={styles.discreetMode} />
+              <RecoveryPhrase
+                t={t}
+                history={history}
+                isRecoveryPhraseMode={isRecoveryPhraseMode}
+                setIsRecoveryPhrase={setIsRecoveryPhrase}
+                derivationPath={derivationPath}
+                setDerivationPath={setDerivationPath}
+              />
             </fieldset>
             <div className={`${styles.buttonsHolder}`}>
               <PrimaryButton
