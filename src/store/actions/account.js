@@ -98,7 +98,7 @@ export const accountDataUpdated = tokensTypes =>
  * @param {String} data.passphrase - BIP39 passphrase of the account
  * @param {String} data.publicKey - Lisk publicKey used for hardware wallet login
  * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
- * @param {Boolean} data.isRecoveryPhraseMode - enable custom derivation for HW
+ * @param {boolean} data.isRecoveryPhraseMode - enable custom derivation for HW
  * @param {String} data.derivationPath - custom derivation path for HW
  */
 export const login = ({
