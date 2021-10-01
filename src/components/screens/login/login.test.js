@@ -132,18 +132,17 @@ describe('Login', () => {
 
   describe('Recovery phrase mode', () => {
     it('Should show and hide warning', () => {
-      wrapper.setState({ isRecoveryPhraseMode: true });
-      wrapper.update();
+      wrapper.find('.recovery-phrase-check input').simulate('change', { target: { checked: true } });
       expect(FlashMessageHolder.addMessage).toHaveBeenCalled();
 
-      wrapper.setState({ isRecoveryPhraseMode: false });
-      wrapper.update();
+      wrapper.find('.recovery-phrase-check input').simulate('change', { target: { checked: true } });
       expect(FlashMessageHolder.deleteMessage).toHaveBeenCalled();
     });
 
     it('Should allow custom path and call login with', () => {
-      const derivationPath = "m/44'/134'/1'";
-      wrapper.setState({ isRecoveryPhraseMode: true, derivationPath });
+      const derivationPath = "m/44'/134'/0'";
+      wrapper.find('.recovery-phrase-check input').simulate('change', { target: { checked: true } });
+      wrapper.find('.custom-derivation-check input').simulate('change', { target: { checked: true } });
       const clipboardData = {
         getData: () => accounts.delegate.passphrase,
       };

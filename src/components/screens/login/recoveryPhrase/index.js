@@ -34,6 +34,7 @@ const RecoveryPhrase = ({
   const [showCustomDerivationPath, setShowCustomDerivationPath] = useState(false);
 
   useEffect(() => {
+    console.log('Use effect', isRecoveryPhraseMode);
     if (isRecoveryPhraseMode) {
       addWarningMessage(t);
     } else {
@@ -46,6 +47,8 @@ const RecoveryPhrase = ({
       removeWarningMessage();
     }
   }, [account]);
+
+  console.log('re-render');
 
   return (
     <>
@@ -64,6 +67,7 @@ const RecoveryPhrase = ({
         <div className={styles.checkboxWrapper}>
           <CheckBox
             name="customDerivation"
+            className="custom-derivation-check"
             checked={showCustomDerivationPath}
             onChange={() => {
               setShowCustomDerivationPath(!showCustomDerivationPath);
