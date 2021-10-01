@@ -3,6 +3,7 @@ import CheckBox from '@toolbox/checkBox';
 import { Input } from '@toolbox/inputs';
 import WarningMessage from '@shared/warningMessage';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import { isEmpty } from '@utils/helpers';
 import styles from './recoveryPhrase.css';
 
 const addWarningMessage = (t) => {
@@ -26,7 +27,7 @@ const removeWarningMessage = () => {
 };
 
 const RecoveryPhrase = ({
-  t, history,
+  t, account,
   isRecoveryPhraseMode, setIsRecoveryPhrase,
   derivationPath, setDerivationPath,
 }) => {
@@ -41,8 +42,10 @@ const RecoveryPhrase = ({
   }, [isRecoveryPhraseMode]);
 
   useEffect(() => {
-    console.log(history);
-  }, [history]);
+    if (!isEmpty(account)) {
+      removeWarningMessage(t);
+    }
+  }, [account]);
 
   return (
     <>

@@ -100,7 +100,7 @@ const Login = ({
               <DiscreetModeToggle className={styles.discreetMode} />
               <RecoveryPhrase
                 t={t}
-                history={history}
+                account={account}
                 isRecoveryPhraseMode={isRecoveryPhraseMode}
                 setIsRecoveryPhrase={setIsRecoveryPhrase}
                 derivationPath={derivationPath}
