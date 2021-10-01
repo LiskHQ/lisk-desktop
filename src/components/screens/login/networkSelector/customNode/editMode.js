@@ -16,9 +16,9 @@ const validateNode = async (address) => {
     if (response) {
       return true;
     }
-    throw new Error('error connecting');
-  } catch {
-    throw new Error('error connecting');
+    throw new Error(`Failed to return response for custom node url: ${address}`);
+  } catch (err) {
+    throw new Error(`Error getting network config for address: ${address}: ${err.message}`);
   }
 };
 
