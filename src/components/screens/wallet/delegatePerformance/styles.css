@@ -24,10 +24,18 @@
 
     & .start {
       text-align: left;
+
+      & .details {
+        color: var(--color-maastricht-blue);
+      }
     }
 
     & .end {
       text-align: right;
+
+      & .details {
+        color: var(--color-maastricht-blue);
+      }
     }
   }
 
