@@ -1,17 +1,18 @@
 import { toast } from 'react-toastify';
 import { actionTypes } from '@constants';
 import * as accountApi from '@api/account';
-import {
-  accountLoggedOut,
-  accountDataUpdated,
-  login,
-} from './account';
+import { accountLoggedOut, accountDataUpdated, login } from './account';
 import accounts from '../../../test/constants/accounts';
 import * as networkActions from './network';
 
 jest.mock('i18next', () => ({
-  t: jest.fn(key => key),
+  t: jest.fn((key) => key),
   init: jest.fn(),
+}));
+jest.mock('react-toastify', () => ({
+  toast: {
+    error: jest.fn(),
+  },
 }));
 jest.mock('@api/account', () => ({
   getAccount: jest.fn(),
@@ -65,11 +66,13 @@ describe('actions: account', () => {
           networks: {
             LSK: {
               serviceUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+              nethash:
+                '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
             BTC: {
               serviceUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+              nethash:
+                '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
           },
         },
@@ -77,10 +80,7 @@ describe('actions: account', () => {
           token: {
             active: 'LSK',
           },
-          list: [
-            { LSK: true },
-            { BTC: false },
-          ],
+          list: [{ LSK: true }, { BTC: false }],
         },
         account: {
           passphrase: accounts.genesis.passphrase,
@@ -111,7 +111,9 @@ describe('actions: account', () => {
 
       await accountDataUpdated('active')(dispatch, getState);
       expect(dispatch).toHaveBeenCalledTimes(2);
-      expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({ online: true });
+      expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({
+        online: true,
+      });
     });
 
     it('should call account API methods on newBlockCreated action when offline', async () => {
@@ -120,17 +122,23 @@ describe('actions: account', () => {
 
       await accountDataUpdated('active')(dispatch, getState);
       expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({
-        online: false, code,
+        online: false,
+        code,
       });
+    });
+
+    it.skip('gets the active token from the token list in settings when token types is enabled', async () => {
+      await accountDataUpdated('enabled')(dispatch, getState);
     });
   });
 
   describe('login', () => {
     let state;
-    const getState = () => (state);
+    const getState = () => state;
     const balance = 10e8;
     const {
-      passphrase, summary: { address, publicKey },
+      passphrase,
+      summary: { address, publicKey },
     } = accounts.genesis;
 
     beforeEach(() => {
@@ -150,34 +158,45 @@ describe('actions: account', () => {
 
     it('should call account api and dispatch accountLoggedIn ', async () => {
       await login({ passphrase })(dispatch, getState);
-      expect(dispatch).toHaveBeenNthCalledWith(1, expect.objectContaining({
-        type: actionTypes.accountLoading,
-      }));
+      expect(dispatch).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({
+          type: actionTypes.accountLoading,
+        })
+      );
 
-      expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
-        type: actionTypes.accountLoggedIn,
-      }));
+      expect(dispatch).toHaveBeenNthCalledWith(
+        2,
+        expect.objectContaining({
+          type: actionTypes.accountLoggedIn,
+        })
+      );
     });
 
     it('should call account api and dispatch accountLoggedIn with ledger loginType', async () => {
       accountApi.getAccount.mockResolvedValue({ balance, address });
-      await login({ hwInfo: { deviceModel: 'Ledger Nano S' }, publicKey })(dispatch, getState);
-      expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
-        type: actionTypes.accountLoggedIn,
-        data: expect.objectContaining({
-          info: {
-            LSK: expect.objectContaining({ address, balance }),
-            BTC: expect.objectContaining({ address, balance }),
-          },
-        }),
-      }));
+      await login({ hwInfo: { deviceModel: 'Ledger Nano S' }, publicKey })(
+        dispatch,
+        getState
+      );
+      expect(dispatch).toHaveBeenNthCalledWith(
+        2,
+        expect.objectContaining({
+          type: actionTypes.accountLoggedIn,
+          data: expect.objectContaining({
+            info: {
+              LSK: expect.objectContaining({ address, balance }),
+              BTC: expect.objectContaining({ address, balance }),
+            },
+          }),
+        })
+      );
     });
 
-    it.skip('should fire an error toast if getAccount fails ', async () => {
-      jest.spyOn(toast, 'error');
+    it('should fire an error toast if getAccount fails ', async () => {
       accountApi.getAccount.mockRejectedValue({ message: 'custom error' });
       await login({ passphrase })(dispatch, getState);
-      expect(toast.error).toHaveBeenNthCalledWith(1, 'Unable to connect to the node, no response from the server.');
+      expect(toast.error).toHaveBeenCalledTimes(1);
     });
   });
 });

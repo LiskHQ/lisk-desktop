@@ -2,6 +2,7 @@ import { actionTypes, networks, loginTypes } from '@constants';
 import * as TransactionApi from '@api/transaction';
 import * as delegateApi from '@api/delegate';
 import * as accountApi from '@api/account';
+import * as hwManager from '@utils/hwManager';
 import {
   voteEdited,
   votesCleared,
@@ -22,6 +23,10 @@ jest.mock('@api/delegate', () => ({
 
 jest.mock('@api/account', () => ({
   getAccount: jest.fn(),
+}));
+
+jest.mock('@utils/hwManager', () => ({
+  signVoteTransaction: jest.fn(),
 }));
 
 describe('actions: voting', () => {
@@ -70,11 +75,23 @@ describe('actions: voting', () => {
       await voteEdited(data)(dispatch, getState);
       expect(accountApi.getAccount).toHaveBeenCalled();
     });
+
+    it('creates an action to add data to toggle the vote status for any given delegate, without calling getAccount', async () => {
+      const data = [{
+        address: 'dummy',
+        amount: 1e10,
+        username: 'genesis',
+      }];
+      const dispatch = jest.fn();
+      await voteEdited(data)(dispatch, getState);
+      expect(accountApi.getAccount).not.toHaveBeenCalled();
+    });
   });
 
   describe('votesSubmitted', () => {
     it('should call create transactions', async () => {
-      TransactionApi.create.mockResolvedValue({ data: sampleVotes[0] });
+      const tx = { data: sampleVotes[0] };
+      TransactionApi.create.mockResolvedValue(tx);
       const data = [{
         address: 'dummy',
         amount: 1e10,
@@ -83,6 +100,60 @@ describe('actions: voting', () => {
 
       await votesSubmitted(data)(dispatch, getState);
       expect(TransactionApi.create).toHaveBeenCalled();
+      expect(hwManager.signVoteTransaction).not.toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.votesSubmitted,
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    });
+
+    it('dispatches a transactionSignError action if an error occurs', async () => {
+      const error = new Error('Error message.');
+      TransactionApi.create.mockRejectedValue(error);
+      const data = [{
+        address: 'dummy',
+        amount: 1e10,
+      }];
+      const dispatch = jest.fn();
+
+      await votesSubmitted(data)(dispatch, getState);
+      expect(TransactionApi.create).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    });
+
+    it('calls signVoteTransaction when loginType is not passphrase', async () => {
+      const tx = { data: sampleVotes[0] };
+      hwManager.signVoteTransaction.mockResolvedValue(tx);
+      const data = [{
+        address: 'dummy',
+        amount: 1e10,
+      }];
+      const dispatch = jest.fn();
+
+      const _getState = () => {
+        const state = getState();
+        state.account.loginType = loginTypes.ledger.code;
+        return state;
+      };
+      await votesSubmitted(data)(dispatch, _getState);
+      expect(TransactionApi.create).not.toHaveBeenCalled();
+      expect(hwManager.signVoteTransaction).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.votesSubmitted,
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
     });
   });
 
