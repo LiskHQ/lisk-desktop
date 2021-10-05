@@ -162,14 +162,14 @@ describe('actions: account', () => {
         1,
         expect.objectContaining({
           type: actionTypes.accountLoading,
-        })
+        }),
       );
 
       expect(dispatch).toHaveBeenNthCalledWith(
         2,
         expect.objectContaining({
           type: actionTypes.accountLoggedIn,
-        })
+        }),
       );
     });
 
@@ -177,7 +177,7 @@ describe('actions: account', () => {
       accountApi.getAccount.mockResolvedValue({ balance, address });
       await login({ hwInfo: { deviceModel: 'Ledger Nano S' }, publicKey })(
         dispatch,
-        getState
+        getState,
       );
       expect(dispatch).toHaveBeenNthCalledWith(
         2,
@@ -189,7 +189,7 @@ describe('actions: account', () => {
               BTC: expect.objectContaining({ address, balance }),
             },
           }),
-        })
+        }),
       );
     });
 
