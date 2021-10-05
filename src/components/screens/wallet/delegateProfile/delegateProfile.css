@@ -6,10 +6,12 @@
     @mixin headingNormal;
 
     font-size: 20px;
+    padding-left: 8px;
   }
 
   & .content {
     flex-flow: row nowrap;
+    margin-left: 0;
   }
 }
 
