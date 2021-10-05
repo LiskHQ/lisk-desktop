@@ -174,7 +174,6 @@
 
       &.consecutiveMissedBlocks {
         right: 12px;
-        z-index: 0;
         align-items: center;
         height: 156px;
         position: absolute;
