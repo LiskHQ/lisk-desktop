@@ -32,14 +32,12 @@ module.exports = {
     '^@toolbox(.*)$': resolve(__dirname, './src/components/toolbox/$1'),
     '^@actions(.*)$': resolve(__dirname, './src/store/actions/$1'),
     '^@store(.*)$': resolve(__dirname, './src/store/$1'),
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+      '<rootDir>/__mocks__/fileMock.js',
   },
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
-  collectCoverageFrom: [
-    'src/**/*.js',
-    'app/src/**/*.js',
-  ],
+  collectCoverageFrom: ['src/**/*.js', 'app/src/**/*.js'],
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '.test.js',
@@ -159,15 +157,11 @@ module.exports = {
     'src/store/actions/bookmarks.js',
     'src/utils/api/transaction/lsk.js',
     'src/utils/transaction.js',
-    'src/store/actions/voting.js',
     'src/components/shared/filterDropdownButton/addressFilter.js',
     'src/components/shared/transactionsTable/transactionRow.js',
     'src/store/selectors.js',
     'src/components/shared/transactionSummary/index.js',
     'src/routes.js',
-    'src/store/actions/account.js',
-    'src/store/actions/blocks.js',
-    'src/store/actions/bookmarks.js',
     'src/store/selectors.js',
     'src/store/reducers/voting.js',
     'src/utils/voting.js',
@@ -196,10 +190,7 @@ module.exports = {
       statements: 90,
     },
   },
-  setupFiles: [
-    '<rootDir>/config/setupJest.js',
-    'jest-canvas-mock',
-  ],
+  setupFiles: ['<rootDir>/config/setupJest.js', 'jest-canvas-mock'],
   transform: {
     '^.+\\.js$': 'babel-jest',
   },
@@ -209,17 +200,15 @@ module.exports = {
     TEST: true,
     VERSION: '',
   },
-  coverageReporters: process.env.ON_JENKINS ? [
-    'text',
-    'lcov',
-    'cobertura',
-  ] : [
-    'html',
-    'json',
-  ],
+  coverageReporters: process.env.ON_JENKINS
+    ? ['text', 'lcov', 'cobertura']
+    : ['html', 'json'],
   reporters: [
     'default',
-    ['jest-junit', { suiteName: 'jest tests', outputDirectory: '<rootDir>/coverage/jest' }],
+    [
+      'jest-junit',
+      { suiteName: 'jest tests', outputDirectory: '<rootDir>/coverage/jest' },
+    ],
   ],
   setupFilesAfterEnv: ['./node_modules/jest-enzyme/lib/index.js'],
   testEnvironment: 'enzyme',
