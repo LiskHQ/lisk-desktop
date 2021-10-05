@@ -16,7 +16,7 @@ const Item = ({
 
   return (
     <BoxContent className={`${styles.highlight} performance`}>
-      <div className={styles.content}>
+      <div className={`${styles.content} ${styles[icon]}`}>
         <div className={`${styles.title} ${theme}`}>{title}</div>
         {children}
       </div>
