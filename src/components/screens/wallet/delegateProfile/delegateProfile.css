@@ -124,6 +124,10 @@
       flex-direction: column;
       padding-left: 20px;
       padding-top: 20px;
+      
+      &.consecutiveMissedBlocks {
+        flex-basis: 50%;
+      }
 
       & .title {
         @mixin contentNormal;
@@ -169,10 +173,11 @@
       }
 
       &.consecutiveMissedBlocks {
-        justify-content: flex-end;
+        right: 12px;
+        z-index: 0;
         align-items: center;
         height: 156px;
-        width: 216px;
+        position: absolute;
       }
 
       &.reward {
