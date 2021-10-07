@@ -36,6 +36,14 @@ const ckdPriv = ({ key, chainCode }, index) => {
 
 export const defaultDerivationPath = "m/44'/134'/0'";
 
+/**
+ * Derives public pair from a given valid mnemonic passphrase
+ * for a given derivation path.
+ *
+ * @param {string} passphrase - Valid mnemonic passphrase
+ * @param {string?} path - Valid derivation pass
+ * @returns {object} - public key in hex string
+ */
 export const getCustomDerivationPublicKey = (passphrase, path = defaultDerivationPath) => {
   const mn = new mnemonic(passphrase);
   const masterSeed = mn.toSeed();
@@ -54,4 +62,35 @@ export const getCustomDerivationPublicKey = (passphrase, path = defaultDerivatio
   const keyPair = nacl.sign.keyPair.fromSeed(node.key);
 
   return Buffer.from(keyPair.publicKey).toString('hex');
+};
+
+/**
+ * Derives private-public pair from a given valid mnemonic passphrase
+ * for a given derivation path.
+ *
+ * @param {string} passphrase - Valid mnemonic passphrase
+ * @param {string?} path - Valid derivation pass
+ * @returns {object} - public and private key pair in hex string
+ */
+export const getCustomDerivationKeyPair = (passphrase, path = defaultDerivationPath) => {
+  const mn = new mnemonic(passphrase);
+  const masterSeed = mn.toSeed();
+
+  let node = getMasterKeyFromSeed(masterSeed);
+
+  const segments = path.split('/')
+    .slice(1)
+    .map(el => el.replace("'", ''))
+    .map(el => parseInt(el, 10));
+
+  segments.forEach((index) => {
+    node = ckdPriv(node, index + HARDENED_OFFSET);
+  });
+
+  const keyPair = nacl.sign.keyPair.fromSeed(node.key);
+
+  return {
+    publicKey: Buffer.from(keyPair.publicKey).toString('hex'),
+    privateKey: Buffer.from(keyPair.secretKey).toString('hex'),
+  };
 };
