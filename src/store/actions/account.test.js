@@ -65,12 +65,12 @@ describe('actions: account', () => {
           name: 'Mainnet',
           networks: {
             LSK: {
-              serviceUrl: 'hhtp://localhost:4000',
+              serviceUrl: 'http://localhost:4000',
               nethash:
                 '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
             BTC: {
-              serviceUrl: 'hhtp://localhost:4000',
+              serviceUrl: 'http://localhost:4000',
               nethash:
                 '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
@@ -79,7 +79,7 @@ describe('actions: account', () => {
         settings: {
           token: {
             active: 'LSK',
-            list: [{ LSK: true }, { BTC: false }],
+            list: { LSK: true, BTC: false },
           },
         },
         account: {
@@ -139,7 +139,7 @@ describe('actions: account', () => {
         },
       });
 
-      await accountDataUpdated('active')(dispatch, getState);
+      await accountDataUpdated('enabled')(dispatch, getState);
       expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({
         online: true,
       });

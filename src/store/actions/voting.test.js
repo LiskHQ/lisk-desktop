@@ -30,6 +30,7 @@ jest.mock('@utils/hwManager', () => ({
 }));
 
 describe('actions: voting', () => {
+  let dispatch;
   const getState = () => ({
     network: {
       name: networks.mainnet.name,
@@ -61,6 +62,7 @@ describe('actions: voting', () => {
   });
 
   beforeEach(() => {
+    dispatch = jest.fn();
     jest.clearAllMocks();
   });
 
@@ -71,7 +73,6 @@ describe('actions: voting', () => {
         address: 'dummy',
         amount: 1e10,
       }];
-      const dispatch = jest.fn();
       await voteEdited(data)(dispatch, getState);
       expect(accountApi.getAccount).toHaveBeenCalled();
     });
@@ -82,7 +83,6 @@ describe('actions: voting', () => {
         amount: 1e10,
         username: 'genesis',
       }];
-      const dispatch = jest.fn();
       await voteEdited(data)(dispatch, getState);
       expect(accountApi.getAccount).not.toHaveBeenCalled();
     });
@@ -96,7 +96,6 @@ describe('actions: voting', () => {
         address: 'dummy',
         amount: 1e10,
       }];
-      const dispatch = jest.fn();
 
       await votesSubmitted(data)(dispatch, getState);
       expect(transactionApi.create).toHaveBeenCalled();
@@ -118,7 +117,6 @@ describe('actions: voting', () => {
         address: 'dummy',
         amount: 1e10,
       }];
-      const dispatch = jest.fn();
 
       await votesSubmitted(data)(dispatch, getState);
       expect(transactionApi.create).toHaveBeenCalled();
@@ -136,7 +134,6 @@ describe('actions: voting', () => {
         address: 'dummy',
         amount: 1e10,
       }];
-      const dispatch = jest.fn();
 
       const _getState = () => {
         const state = getState();
@@ -184,7 +181,6 @@ describe('actions: voting', () => {
         type: actionTypes.votesRetrieved,
         data: votes,
       };
-      const dispatch = jest.fn();
       delegateApi.getVotes.mockImplementation(() => Promise.resolve({ data: votes }));
       await votesRetrieved()(dispatch, getState);
 
