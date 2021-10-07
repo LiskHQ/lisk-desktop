@@ -34,7 +34,6 @@ const RecoveryPhrase = ({
   const [showCustomDerivationPath, setShowCustomDerivationPath] = useState(false);
 
   useEffect(() => {
-    console.log('Use effect', isRecoveryPhraseMode);
     if (isRecoveryPhraseMode) {
       addWarningMessage(t);
     } else {
@@ -47,8 +46,6 @@ const RecoveryPhrase = ({
       removeWarningMessage();
     }
   }, [account]);
-
-  console.log('re-render');
 
   return (
     <>
