@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { loginTypes, actionTypes, tokenMap } from '@constants';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
-import { extractPublicKey } from '@utils/account';
+import { extractKeyPair } from '@utils/account';
 import { networkStatusUpdated } from './network';
 
 /**
@@ -80,6 +80,7 @@ export const accountDataUpdated = tokensTypes =>
       // Uninitialized account don't have a public key stored on the blockchain.
       // but we already have it on the Redux store.
       info.LSK.summary.publicKey = account.info.LSK.summary.publicKey;
+      info.LSK.summary.privateKey = account.info.LSK.summary.privateKey;
       dispatch({
         type: actionTypes.accountUpdated,
         data: info,
@@ -116,10 +117,16 @@ export const login = ({
             address: extractBitcoinAddress(passphrase, network),
           };
         } else {
-          acc[token] = {
-            publicKey: publicKey ?? extractPublicKey(
+          let keyPair = {};
+          if (passphrase) {
+            keyPair = extractKeyPair(
               passphrase, isRecoveryPhraseMode, derivationPath,
-            ),
+            );
+          } else if (publicKey) {
+            keyPair.publicKey = publicKey;
+          }
+          acc[token] = {
+            ...keyPair,
           };
         }
         return acc;
