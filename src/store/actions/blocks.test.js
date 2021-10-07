@@ -41,7 +41,7 @@ describe('action: blocks', () => {
   });
 
   describe('olderBlocksRetrieved', () => {
-    it('gets block batches and converts timestamps', async () => {
+    it('should get blocks by batch and converts the block timestamp', async () => {
       const receivedBlock = {
         id: 'c4591583a761d6ad26632f8bfead1214ed42fabc8adb1d3957129277d9efeed1',
         height: 14730631,
@@ -121,14 +121,17 @@ describe('action: blocks', () => {
       const forger1 = {
         ...forger,
         username: 'menfei',
+        state: 'forging',
         address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y97',
       };
       const forger2 = {
         ...forger,
+        state: 'awaitingSlot',
         address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y98',
       };
       const forger3 = {
         ...forger,
+        state: 'missedBlock',
         address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
       };
       getForgers.mockResolvedValue({
@@ -174,38 +177,7 @@ describe('action: blocks', () => {
       expect(dispatch).toBeCalledWith({
         type: actionTypes.forgersRetrieved,
         data: {
-          forgers: [
-            {
-              address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y97',
-              isConsensusParticipant: true,
-              minActiveHeight: 1,
-              nextForgingTime: 1616058987,
-              rank: 103,
-              state: 'forging',
-              totalVotesReceived: '109000000000',
-              username: 'menfei',
-            },
-            {
-              address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y98',
-              isConsensusParticipant: true,
-              minActiveHeight: 1,
-              nextForgingTime: 1616058987,
-              rank: 103,
-              state: 'awaitingSlot',
-              totalVotesReceived: '109000000000',
-              username: 'genesis_84',
-            },
-            {
-              address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
-              isConsensusParticipant: true,
-              minActiveHeight: 1,
-              nextForgingTime: 1616058987,
-              rank: 103,
-              state: 'missedBlock',
-              totalVotesReceived: '109000000000',
-              username: 'genesis_84',
-            },
-          ],
+          forgers: [forger1, forger2, forger3],
           indexBook: {
             lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y97: 0,
             lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y98: 1,

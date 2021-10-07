@@ -8,7 +8,7 @@ const names = [
   'menfei',
 ];
 
-const block = (index) => ({
+const block = (index, numberOfBlocks) => ({
   id: `35998991827805762${index}`,
   height: 10322980 + index,
   version: 1,
@@ -28,12 +28,12 @@ const block = (index) => ({
   totalAmount: index === 0 ? '0' : `${index}0000000`,
   totalFee: index === 0 ? '0' : `${index}000000`,
   reward: '300000000',
-  totalForged: `${30 + index}0000000`,
+  totalForged: `${numberOfBlocks + index}0000000`,
 });
 
 export const blocks = Array(30)
   .fill(1)
-  .map((item, index) => block(index));
+  .map((item, index) => block(index, 30));
 export const blocksf100 = Array(100)
   .fill(1)
-  .map((item, index) => block(index));
+  .map((item, index) => block(index, 100));

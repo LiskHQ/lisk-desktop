@@ -1,5 +1,5 @@
 import { actionTypes, networks, loginTypes } from '@constants';
-import * as TransactionApi from '@api/transaction';
+import * as transactionApi from '@api/transaction';
 import * as delegateApi from '@api/delegate';
 import * as accountApi from '@api/account';
 import * as hwManager from '@utils/hwManager';
@@ -91,7 +91,7 @@ describe('actions: voting', () => {
   describe('votesSubmitted', () => {
     it('should call create transactions', async () => {
       const tx = { data: sampleVotes[0] };
-      TransactionApi.create.mockResolvedValue(tx);
+      transactionApi.create.mockResolvedValue(tx);
       const data = [{
         address: 'dummy',
         amount: 1e10,
@@ -99,7 +99,7 @@ describe('actions: voting', () => {
       const dispatch = jest.fn();
 
       await votesSubmitted(data)(dispatch, getState);
-      expect(TransactionApi.create).toHaveBeenCalled();
+      expect(transactionApi.create).toHaveBeenCalled();
       expect(hwManager.signVoteTransaction).not.toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenCalledWith({
@@ -113,7 +113,7 @@ describe('actions: voting', () => {
 
     it('dispatches a transactionSignError action if an error occurs', async () => {
       const error = new Error('Error message.');
-      TransactionApi.create.mockRejectedValue(error);
+      transactionApi.create.mockRejectedValue(error);
       const data = [{
         address: 'dummy',
         amount: 1e10,
@@ -121,7 +121,7 @@ describe('actions: voting', () => {
       const dispatch = jest.fn();
 
       await votesSubmitted(data)(dispatch, getState);
-      expect(TransactionApi.create).toHaveBeenCalled();
+      expect(transactionApi.create).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.transactionSignError,
@@ -144,7 +144,7 @@ describe('actions: voting', () => {
         return state;
       };
       await votesSubmitted(data)(dispatch, _getState);
-      expect(TransactionApi.create).not.toHaveBeenCalled();
+      expect(transactionApi.create).not.toHaveBeenCalled();
       expect(hwManager.signVoteTransaction).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenCalledWith({
