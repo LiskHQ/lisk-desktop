@@ -36,6 +36,8 @@ describe('action: blocks', () => {
     },
   });
 
+  const dispatch = jest.fn();
+
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -71,7 +73,6 @@ describe('action: blocks', () => {
         data: [receivedBlock],
         meta: { count: 1, offset: 0, total: 1 },
       });
-      const dispatch = jest.fn();
 
       await olderBlocksRetrieved()(dispatch, getState);
 
@@ -101,7 +102,6 @@ describe('action: blocks', () => {
       getForgers.mockResolvedValue({
         data: null,
       });
-      const dispatch = jest.fn();
 
       await forgersRetrieved()(dispatch, getState);
 
@@ -167,7 +167,6 @@ describe('action: blocks', () => {
       getDelegates.mockResolvedValue({
         data: [delegate1, delegate2, delegate3],
       });
-      const dispatch = jest.fn();
 
       await forgersRetrieved()(dispatch, getState);
 

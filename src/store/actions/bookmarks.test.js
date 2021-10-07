@@ -23,7 +23,7 @@ describe('actions: boomarks', () => {
     },
     token: tokenMap.LSK.key,
   };
-
+  const dispatch = jest.fn();
   describe('bookmarksRetrieved', () => {
     afterEach(() => {
       jest.resetAllMocks();
@@ -36,7 +36,6 @@ describe('actions: boomarks', () => {
           BTC: [],
         });
       });
-      const dispatch = jest.fn();
 
       bookmarksRetrieved()(dispatch);
       expect(getFromStorage).toBeCalledTimes(1);

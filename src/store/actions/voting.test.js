@@ -30,7 +30,6 @@ jest.mock('@utils/hwManager', () => ({
 }));
 
 describe('actions: voting', () => {
-  let dispatch;
   const getState = () => ({
     network: {
       name: networks.mainnet.name,
@@ -61,8 +60,9 @@ describe('actions: voting', () => {
     },
   });
 
+  const dispatch = jest.fn();
+
   beforeEach(() => {
-    dispatch = jest.fn();
     jest.clearAllMocks();
   });
 
