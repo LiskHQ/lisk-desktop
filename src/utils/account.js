@@ -127,13 +127,14 @@ export const getAddressFromBase32Address = (data) => {
 /**
  * This is selector, getting active token account from the Redux store
  *
+ * @todo this doesn't return active token, but a mix of entire account
  * @param {Object} state - Redux store state
  * @returns {Object} - account details or empty object
  */
 export const getActiveTokenAccount = state => ({
   ...state.account,
   ...((state.account.info && state.account.info[
-    state.settings.token && state.settings.token.active
+    state.settings.token?.active
       ? state.settings.token.active
       : tokenMap.LSK.key
   ]) || {}),

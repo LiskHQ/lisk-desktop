@@ -307,12 +307,11 @@ export const getTransactionFee = async ({
 export const create = ({
   network,
   account,
-  privateKey,
   transactionObject,
 // eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
   const {
-    summary: { publicKey, isMultisignature },
+    summary: { publicKey, isMultisignature, privateKey },
     keys,
     sequence,
   } = account;

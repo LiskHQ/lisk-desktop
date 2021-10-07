@@ -72,17 +72,15 @@ export const votesSubmitted = ({ fee, votes }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
     const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
     const { network, account } = getState();
-    const privateKey = account.info.LSK.summary.privateKey;
     const senderPublicKey = account.info.LSK.summary.publicKey;
     const nonce = account.info.LSK.sequence.nonce;
 
     const transaction = {
-      fee, votes, nonce, privateKey, senderPublicKey,
+      fee, votes, nonce, senderPublicKey,
     };
     const params = {
       network,
       account: account.info.LSK,
-      privateKey,
       transactionObject: {
         ...transaction,
         moduleAssetId,

@@ -41,7 +41,6 @@ const Summary = ({
     const data = {
       network,
       account: account.info.LSK,
-      privateKey: account.info.LSK.summary.privateKey,
       transactionObject: {
         moduleAssetId,
         fee: toRawLsk(minFee.value),
