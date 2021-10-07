@@ -1,10 +1,17 @@
 import { tokenMap, actionTypes } from '@constants';
+import { getFromStorage } from '@utils/localJSONStorage';
+import { emptyBookmarks } from '@utils/bookmarks';
 import {
+  bookmarksRetrieved,
   bookmarkAdded,
   bookmarkRemoved,
   bookmarkUpdated,
 } from './bookmarks';
 import accounts from '../../../test/constants/accounts';
+
+jest.mock('@utils/localJSONStorage', () => ({
+  getFromStorage: jest.fn(),
+}));
 
 describe('actions: boomarks', () => {
   const data = {
@@ -16,6 +23,34 @@ describe('actions: boomarks', () => {
     },
     token: tokenMap.LSK.key,
   };
+  const dispatch = jest.fn();
+  describe('bookmarksRetrieved', () => {
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
+
+    it('gets bookmarks from localJSONStorage', () => {
+      getFromStorage.mockImplementation((_, __, cb) => {
+        cb({
+          LSK: [{}],
+          BTC: [],
+        });
+      });
+
+      bookmarksRetrieved()(dispatch);
+      expect(getFromStorage).toBeCalledTimes(1);
+      expect(getFromStorage.mock.calls[0][0]).toBe('bookmarks');
+      expect(getFromStorage.mock.calls[0][1]).toBe(emptyBookmarks);
+      expect(dispatch).toBeCalledTimes(1);
+      expect(dispatch).toBeCalledWith({
+        type: actionTypes.bookmarksRetrieved,
+        data: {
+          LSK: [{ disabled: true }],
+          BTC: [],
+        },
+      });
+    });
+  });
 
   it('should create an action to add a bookmark account', () => {
     const expectedAction = {
