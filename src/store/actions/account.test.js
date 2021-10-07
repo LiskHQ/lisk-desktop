@@ -79,8 +79,8 @@ describe('actions: account', () => {
         settings: {
           token: {
             active: 'LSK',
+            list: [{ LSK: true }, { BTC: false }],
           },
-          list: [{ LSK: true }, { BTC: false }],
         },
         account: {
           passphrase: accounts.genesis.passphrase,
@@ -127,8 +127,22 @@ describe('actions: account', () => {
       });
     });
 
-    it.skip('gets the active token from the token list in settings when token types is enabled', async () => {
-      await accountDataUpdated('enabled')(dispatch, getState);
+    it('gets the active token from the token list in settings when token types is enabled', async () => {
+      accountApi.getAccount.mockResolvedValue({
+        summary: {
+          address: accounts.genesis.summary.address,
+          publicKey: accounts.genesis.summary.publicKey,
+          balance: 10e8,
+        },
+        token: {
+          balance: 10e8,
+        },
+      });
+
+      await accountDataUpdated('active')(dispatch, getState);
+      expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({
+        online: true,
+      });
     });
   });
 
