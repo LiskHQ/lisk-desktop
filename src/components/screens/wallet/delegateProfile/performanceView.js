@@ -136,7 +136,7 @@ const getDelegateComponent = (status) => {
 const PerformanceView = ({
   t, data,
 }) => {
-  const DelegateComponent = getDelegateComponent(data.status);
+  const DelegateComponent = getDelegateComponent(data.status ?? 'non-eligible');
   return (
     <Box className={`${grid['col-xs-12']} ${grid['col-md-9']} ${styles.highlightContainer} performance-container`}>
       <BoxHeader>
@@ -146,7 +146,7 @@ const PerformanceView = ({
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
           <FullItem
             title={t('Status')}
-            icon={getDelegateIcon(data.status ?? 'default')}
+            icon={getDelegateIcon(data.status ?? 'non-eligible')}
           >
             <div className={styles.performanceValue}>{data.status ? `${data.status[0].toUpperCase()}${data.status.slice(1)}` : '-'}</div>
             <DelegateComponent />
