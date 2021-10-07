@@ -2,7 +2,35 @@ import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client'
 import {
   tokenMap, regex, balanceNeededForReclaim, balanceNeededForInitialization,
 } from '@constants';
-import { getCustomDerivationPublicKey } from '@utils/explicitBipKeyDerivation';
+import { getCustomDerivationKeyPair } from '@utils/explicitBipKeyDerivation';
+
+/**
+ * Extracts Lisk PrivateKey/PublicKey pair from a given valid Mnemonic passphrase
+ *
+ * @param {String} passphrase - Valid Mnemonic passphrase
+ * @param {boolean} isRecoveryPhraseMode - enable custom derivation for HW
+ * @param {String} derivationPath - custom derivation path for HW
+ * @returns {object} - Extracted publicKey for a given valid passphrase
+ */
+export const extractKeyPair = (passphrase, isRecoveryPhraseMode = false, derivationPath) => {
+  if (isRecoveryPhraseMode) {
+    const keyPair = getCustomDerivationKeyPair(passphrase, derivationPath);
+    return {
+      ...keyPair,
+      isValid: true,
+    };
+  }
+
+  if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
+    const keyPair = cryptography.getKeys(passphrase);
+    return {
+      publicKey: keyPair.publicKey.toString('hex'),
+      privateKey: keyPair.privateKey.toString('hex'),
+      isValid: true,
+    };
+  }
+  return { isValid: false };
+};
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
@@ -13,13 +41,30 @@ import { getCustomDerivationPublicKey } from '@utils/explicitBipKeyDerivation';
  * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
 export const extractPublicKey = (passphrase, isRecoveryPhraseMode = false, derivationPath) => {
-  if (isRecoveryPhraseMode) {
-    return getCustomDerivationPublicKey(passphrase, derivationPath);
+  const keyPair = extractKeyPair(passphrase, isRecoveryPhraseMode, derivationPath);
+
+  if (keyPair.isValid) {
+    return keyPair.publicKey;
   }
 
-  if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
-    return cryptography.getKeys(passphrase).publicKey.toString('hex');
+  throw Error('Invalid passphrase');
+};
+
+/**
+ * Extracts Lisk PrivateKey from a given valid Mnemonic passphrase
+ *
+ * @param {String} passphrase - Valid Mnemonic passphrase
+ * @param {boolean} isRecoveryPhraseMode - enable custom derivation for HW
+ * @param {String} derivationPath - custom derivation path for HW
+ * @returns {String?} - Extracted PrivateKey for a given valid passphrase
+ */
+export const extractPrivateKey = (passphrase, isRecoveryPhraseMode = false, derivationPath) => {
+  const keyPair = extractKeyPair(passphrase, isRecoveryPhraseMode, derivationPath);
+
+  if (keyPair.isValid) {
+    return keyPair.privateKey;
   }
+
   throw Error('Invalid passphrase');
 };
 
