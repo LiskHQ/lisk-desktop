@@ -31,7 +31,7 @@ const Summary = ({
     const [error, transaction] = await to(
       create({
         network,
-        passphrase: account.passphrase,
+        privateKey: account.info.LSK.summary.privateKey,
         account,
         transactionObject: {
           mandatoryKeys,
