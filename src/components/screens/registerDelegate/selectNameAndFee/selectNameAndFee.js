@@ -59,7 +59,6 @@ const SelectNameAndFee = ({ account, ...props }) => {
     const data = {
       network,
       account,
-      passphrase: account.passphrase,
       transactionObject: {
         senderPublicKey: account.summary.publicKey,
         nonce: account.sequence?.nonce,

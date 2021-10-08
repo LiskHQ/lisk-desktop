@@ -52,7 +52,6 @@ const Form = ({
       create({
         network,
         account,
-        passphrase: account.passphrase,
         transactionObject: {
           moduleAssetId,
           senderPublicKey: account.summary.publicKey,

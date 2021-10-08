@@ -90,7 +90,7 @@ describe('API: LSK Account', () => {
 
   describe('getAccount', () => {
     const {
-      summary: { address, publicKey },
+      summary: { address, publicKey, privateKey },
       dpos: { delegate: { username } },
       passphrase,
     } = accounts.delegate;
@@ -198,7 +198,8 @@ describe('API: LSK Account', () => {
       const result = await getAccount({
         network,
         params: {
-          passphrase,
+          publicKey,
+          privateKey,
         },
         baseUrl,
       });
@@ -209,6 +210,7 @@ describe('API: LSK Account', () => {
           balance: 0,
           token: 'LSK',
           publicKey,
+          privateKey,
         },
         sequence: {
           nonce: 0,
@@ -255,7 +257,8 @@ describe('API: LSK Account', () => {
       const result = await getAccount({
         network,
         params: {
-          passphrase,
+          privateKey,
+          publicKey,
         },
         baseUrl,
       });
@@ -266,6 +269,7 @@ describe('API: LSK Account', () => {
           balance: 0,
           token: 'LSK',
           publicKey,
+          privateKey,
         },
       });
     });

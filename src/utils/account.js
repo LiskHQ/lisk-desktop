@@ -2,17 +2,69 @@ import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client'
 import {
   tokenMap, regex, balanceNeededForReclaim, balanceNeededForInitialization,
 } from '@constants';
+import { getCustomDerivationKeyPair } from '@utils/explicitBipKeyDerivation';
+
+/**
+ * Extracts Lisk PrivateKey/PublicKey pair from a given valid Mnemonic passphrase
+ *
+ * @param {String} passphrase - Valid Mnemonic passphrase
+ * @param {boolean} isRecoveryPhraseMode - enable custom derivation for HW
+ * @param {String} derivationPath - custom derivation path for HW
+ * @returns {object} - Extracted publicKey for a given valid passphrase
+ */
+export const extractKeyPair = (passphrase, isRecoveryPhraseMode = false, derivationPath) => {
+  if (isRecoveryPhraseMode) {
+    const keyPair = getCustomDerivationKeyPair(passphrase, derivationPath);
+    return {
+      ...keyPair,
+      isValid: true,
+    };
+  }
+
+  if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
+    const keyPair = cryptography.getKeys(passphrase);
+    return {
+      publicKey: keyPair.publicKey.toString('hex'),
+      privateKey: keyPair.privateKey.toString('hex'),
+      isValid: true,
+    };
+  }
+  return { isValid: false };
+};
 
 /**
  * Extracts Lisk PublicKey from a given valid Mnemonic passphrase
  *
  * @param {String} passphrase - Valid Mnemonic passphrase
+ * @param {boolean} isRecoveryPhraseMode - enable custom derivation for HW
+ * @param {String} derivationPath - custom derivation path for HW
  * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
-export const extractPublicKey = (passphrase) => {
-  if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
-    return cryptography.getKeys(passphrase).publicKey.toString('hex');
+export const extractPublicKey = (passphrase, isRecoveryPhraseMode = false, derivationPath) => {
+  const keyPair = extractKeyPair(passphrase, isRecoveryPhraseMode, derivationPath);
+
+  if (keyPair.isValid) {
+    return keyPair.publicKey;
   }
+
+  throw Error('Invalid passphrase');
+};
+
+/**
+ * Extracts Lisk PrivateKey from a given valid Mnemonic passphrase
+ *
+ * @param {String} passphrase - Valid Mnemonic passphrase
+ * @param {boolean} isRecoveryPhraseMode - enable custom derivation for HW
+ * @param {String} derivationPath - custom derivation path for HW
+ * @returns {String?} - Extracted PrivateKey for a given valid passphrase
+ */
+export const extractPrivateKey = (passphrase, isRecoveryPhraseMode = false, derivationPath) => {
+  const keyPair = extractKeyPair(passphrase, isRecoveryPhraseMode, derivationPath);
+
+  if (keyPair.isValid) {
+    return keyPair.privateKey;
+  }
+
   throw Error('Invalid passphrase');
 };
 
@@ -75,13 +127,14 @@ export const getAddressFromBase32Address = (data) => {
 /**
  * This is selector, getting active token account from the Redux store
  *
+ * @todo this doesn't return active token, but a mix of entire account
  * @param {Object} state - Redux store state
  * @returns {Object} - account details or empty object
  */
 export const getActiveTokenAccount = state => ({
   ...state.account,
   ...((state.account.info && state.account.info[
-    state.settings.token && state.settings.token.active
+    state.settings.token?.active
       ? state.settings.token.active
       : tokenMap.LSK.key
   ]) || {}),

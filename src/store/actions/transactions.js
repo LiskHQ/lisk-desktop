@@ -98,7 +98,6 @@ export const transactionCreated = data => async (dispatch, getState) => {
     account, settings, network,
   } = getState();
   const activeToken = settings.token.active;
-  const passphrase = account.passphrase;
 
   const params = {
     transactionObject: {
@@ -106,7 +105,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     },
     account: account.info[activeToken],
-    passphrase,
+    passphrase: account.passphrase,
     network,
   };
 

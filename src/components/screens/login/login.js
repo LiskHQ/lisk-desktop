@@ -7,11 +7,12 @@ import { routes } from '@constants';
 import { parseSearchParams, stringifySearchParams } from '@utils/searchParams';
 import { getNetworksList } from '@utils/getNetwork';
 import Piwik from '@utils/piwik';
+import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import { PrimaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
-// import Icon from '@toolbox/icon/index';
 import NetworkSelector from './networkSelector';
+import RecoveryPhrase from './recoveryPhrase';
 import styles from './login.css';
 
 const RegisterTitle = ({ t }) => (
@@ -42,6 +43,8 @@ const redirectToReferrer = (history) => {
 const Login = ({
   t, settings, network, history, account, login,
 }) => {
+  const [isRecoveryPhraseMode, setIsRecoveryPhrase] = useState(false);
+  const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
   const [passphrase, setPass] = useState({ value: '', isValid: false });
   const setPassphrase = (value, error) => {
     setPass({
@@ -53,7 +56,7 @@ const Login = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
     Piwik.trackingEvent('Login', 'button', 'Login submission');
-    login({ passphrase: passphrase.value });
+    login({ passphrase: passphrase.value, isRecoveryPhraseMode, derivationPath });
   };
 
   useEffect(() => {
@@ -95,6 +98,14 @@ const Login = ({
                 onFill={setPassphrase}
               />
               <DiscreetModeToggle className={styles.discreetMode} />
+              <RecoveryPhrase
+                t={t}
+                account={account}
+                isRecoveryPhraseMode={isRecoveryPhraseMode}
+                setIsRecoveryPhrase={setIsRecoveryPhrase}
+                derivationPath={derivationPath}
+                setDerivationPath={setDerivationPath}
+              />
             </fieldset>
             <div className={`${styles.buttonsHolder}`}>
               <PrimaryButton

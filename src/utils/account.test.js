@@ -1,6 +1,8 @@
+import { getCustomDerivationKeyPair } from '@utils/explicitBipKeyDerivation';
 import accounts from '../../test/constants/accounts';
 import {
   extractPublicKey,
+  extractPrivateKey,
   extractAddressFromPublicKey,
   getActiveTokenAccount,
   calculateUnlockableBalance,
@@ -13,13 +15,36 @@ import {
 } from './account';
 
 const passphrase = accounts.genesis.passphrase;
-const publicKey = accounts.genesis.summary.serverPublicKey;
-const address = accounts.genesis.summary.address;
+const {
+  address,
+  privateKey,
+  publicKey,
+} = accounts.genesis.summary;
+
+jest.mock('@utils/explicitBipKeyDerivation', () => ({
+  getCustomDerivationKeyPair: jest.fn(),
+}));
 
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
     it('should return a hex string from any given string', () => {
       expect(extractPublicKey(passphrase)).toEqual(publicKey);
+    });
+
+    it('should call getCustomDerivationKeyPair', () => {
+      extractPublicKey(passphrase, true, '1/2');
+      expect(getCustomDerivationKeyPair).toHaveBeenCalledWith(passphrase, '1/2');
+    });
+  });
+
+  describe('extractPrivateKey', () => {
+    it('should return a hex string from any given string', () => {
+      expect(extractPrivateKey(passphrase)).toEqual(privateKey);
+    });
+
+    it('should call getCustomDerivationKeyPair', () => {
+      extractPrivateKey(passphrase, true, '1/2');
+      expect(getCustomDerivationKeyPair).toHaveBeenCalledWith(passphrase, '1/2');
     });
   });
 
