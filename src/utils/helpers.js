@@ -60,7 +60,7 @@ export const filterObjectPropsWithValue = (object = {}, value) => (
 export const getErrorReportMailto = ({
   error = 'Unknown error occurred', errorMessage, networkIdentifier, serviceUrl, liskCoreVersion,
 }) => {
-  const recipient = 'hubdev@lisk.io';
+  const recipient = 'hubdev@lisk.com';
   const subject = `User Reported Error - Lisk - ${VERSION}`; // eslint-disable-line no-undef
   const body = encodeURIComponent(`
     \nImportant metadata for the team, please do not edit:
