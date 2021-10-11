@@ -1,11 +1,12 @@
 import {
-  accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved, emptyTransactionsData,
+  accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved, emptyTransactionsData
 } from '@actions';
 
 import {
-  tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes,
+  tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes
 } from '@constants';
 import * as transactionApi from '@api/transaction';
+import { getAutoLogInData } from '@utils/login';
 import middleware from './account';
 import history from '../../history';
 
@@ -22,6 +23,13 @@ jest.mock('@actions', () => ({
   settingsUpdated: jest.fn(),
   votesRetrieved: jest.fn(),
   emptyTransactionsData: jest.fn(),
+  networkSelected: jest.fn(),
+  networkStatusUpdated: jest.fn(),
+}));
+
+jest.mock('@utils/login', () => ({
+  getAutoLogInData: jest.fn(),
+  shouldAutoLogIn: jest.fn(),
 }));
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
@@ -142,15 +150,29 @@ describe('Account middleware', () => {
   });
 
   describe('Basic behavior', () => {
-    it('should pass the action to next middleware', () => {
+    it('should pass the action to next middleware', async () => {
+      await transactionApi.getTransactions.mockResolvedValue({ data: transactions });
       middleware(store)(next)(newBlockCreated);
       expect(next).toHaveBeenCalledWith(newBlockCreated);
+    });
+    it('should not pass the action to next middleware', () => {
+      const actionNewBlockCreatedAction = {
+        type: actionTypes.newBlockCreated,
+        data: {
+          block: {
+            numberOfTransactions: 0,
+            id: '513008230952104224',
+          },
+        },
+      };
+      middleware(store)(next)(actionNewBlockCreatedAction);
+      expect(next).toHaveBeenCalledWith(actionNewBlockCreatedAction);
     });
   });
 
   describe('on newBlockCreated', () => {
-    it('should call account API methods', () => {
-      transactionApi.getTransactions.mockResolvedValue({ data: transactions });
+    it('should call account API methods', async () => {
+      await transactionApi.getTransactions.mockResolvedValue({ data: transactions });
       const promise = middleware(store)(next);
       promise(newBlockCreated).then(() => {
         jest.runOnlyPendingTimers();
@@ -236,7 +258,7 @@ describe('Account middleware', () => {
         '10 LSK Received',
         {
           body:
-          'Your account just received 10 LSK with message Message',
+            'Your account just received 10 LSK with message Message',
         },
       );
     });
@@ -248,10 +270,16 @@ describe('Account middleware', () => {
       middleware(store)(next)(transactionsRetrievedAction);
       expect(votesRetrieved).toHaveBeenCalled();
     });
+    it('should not dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
+      transactionsRetrievedAction
+        .data.confirmed[0].type = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
+      middleware(store)(next)(transactionsRetrievedAction);
+      expect(votesRetrieved).not.toHaveBeenCalled();
+    });
   });
 
   describe('on storeCreated', () => {
-    it.skip('should do nothing if autologin data NOT found in localStorage', () => {
+    it.skip('should do nothing if autologin data is NOT found in localStorage', () => {
       middleware(store)(next)(storeCreatedAction);
       expect(store.dispatch).not.toHaveBeenCalledTimes(liskAPIClientMock);
     });
@@ -267,6 +295,80 @@ describe('Account middleware', () => {
         { token: { active: tokenMap.LSK.key } },
       );
       expect(emptyTransactionsData).toHaveBeenCalled();
+    });
+  });
+
+  describe('on accountSettingsUpdated', () => {
+    it('Account Setting Update Sucessfull', () => {
+      const state = store.getState();
+      store.getState = () => ({
+        ...state,
+        account: {
+          ...state.account,
+          info: {
+            LSK: { summary: { address: '123456L' } },
+            BTC: { summary: { address: '123456L' } },
+          },
+        },
+      });
+      const accountSettingsUpdatedAction = {
+        type: actionTypes.settingsUpdated,
+        data: { token: 'LSK' },
+      };
+      middleware(store)(next)(accountSettingsUpdatedAction);
+      expect(store.dispatch).toHaveBeenCalled();
+    });
+    it('Account Setting Update Unsucessfull', () => {
+      const accountSettingsUpdatedAction = {
+        type: actionTypes.settingsUpdated,
+        data: { token: '' },
+      };
+      middleware(store)(next)(accountSettingsUpdatedAction);
+      expect(store.dispatch).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('on accountSettingsRetrieved', () => {
+    it('Account Setting Retrieve Sucessfull', async () => {
+      const accountSettingsRetrievedAction = {
+        type: actionTypes.settingsRetrieved,
+        data: { token: 'LSK' },
+      };
+      getAutoLogInData.mockImplementation(() => ({
+        settings: {
+          keys: {
+            loginKey: true,
+            liskServiceUrl: 'test',
+          },
+        },
+      }));
+      await middleware(store)(next)(accountSettingsRetrievedAction);
+      expect(next).toHaveBeenCalledWith(accountSettingsRetrievedAction);
+    });
+    it('Account Setting Retrieve Sucessfull without statistics', async () => {
+      const state = store.getState();
+      store.getState = () => ({
+        ...state,
+        settings: {
+          ...state.settings,
+          statistics: true,
+        },
+      });
+
+      const accountSettingsRetrievedAction = {
+        type: actionTypes.settingsRetrieved,
+        data: { token: 'LSK' },
+      };
+      getAutoLogInData.mockImplementation(() => ({
+        settings: {
+          keys: {
+            loginKey: true,
+            liskServiceUrl: 'test',
+          },
+        },
+      }));
+      await middleware(store)(next)(accountSettingsRetrievedAction);
+      expect(next).toHaveBeenCalledWith(accountSettingsRetrievedAction);
     });
   });
 
@@ -287,6 +389,14 @@ describe('Account middleware', () => {
       };
       middleware(store)(next)(action);
       expect(history.push).toHaveBeenCalledWith(routes.reclaim.path);
+    });
+    it('should not redirect to the reclaim screen if the account is migrated with actionUpdate', () => {
+      const action = {
+        type: actionTypes.accountUpdated,
+        data: { info: { LSK: { summary: { isMigrated: true } } } },
+      };
+      middleware(store)(next)(action);
+      expect(next).toHaveBeenCalledWith(action);
     });
   });
 });
