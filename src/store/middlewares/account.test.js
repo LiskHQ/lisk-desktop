@@ -1,9 +1,9 @@
 import {
-  accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved, emptyTransactionsData
+  accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved, emptyTransactionsData,
 } from '@actions';
 
 import {
-  tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes
+  tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes,
 } from '@constants';
 import * as transactionApi from '@api/transaction';
 import { getAutoLogInData } from '@utils/login';
