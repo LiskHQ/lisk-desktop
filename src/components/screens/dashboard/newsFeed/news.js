@@ -6,7 +6,7 @@ import styles from './news.css';
 
 const News = ({
   // eslint-disable-next-line camelcase
-  content, timestamp, url, title, author, image_url, source, t,
+  content_t, timestamp, url, title, author, image_url, source, t,
 }) => {
   const date = moment.unix(timestamp).format('DD MMM YYYY');
   const newsTitle = title || author;
@@ -31,7 +31,7 @@ const News = ({
       </div>
       <div className={styles.description}>
         <TweetParser>
-          {content.replace(/<br \/>/g, '').replace(url, '')}
+          {content_t.replace(/<br \/>/g, '').replace(url, '')}
         </TweetParser>
       </div>
       {
