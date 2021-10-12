@@ -34,7 +34,7 @@ const delegateStatus = {
   standby: 'Standby',
   banned: 'Banned',
   punished: 'Punished',
-  nonEligible: 'Ineligible',
+  inEligible: 'Ineligible',
 };
 
 export const DelegateRank = ({ data, activeTab }) => (
@@ -139,21 +139,21 @@ export const RoundState = ({
   );
 };
 
-const getDelegateStatus = (key, totalVotesReceived) => {
+const getDelegateStatus = (key, voteWeight) => {
   if (key === 'banned' || key === 'punished' || key === 'active') {
     return [key, delegateStatus[key]];
   }
-  if (totalVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
-    return ['nonEligible', delegateStatus.nonEligible];
+  if (voteWeight < DEFAULT_STANDBY_THRESHOLD) {
+    return ['inEligible', delegateStatus.inEligible];
   }
 
   return [key, delegateStatus[key]];
 };
 
 export const DelegateStatus = ({
-  activeTab, status, totalVotesReceived, theme,
+  activeTab, status, voteWeight, theme,
 }) => {
-  const [key, value] = getDelegateStatus(status, totalVotesReceived);
+  const [key, value] = getDelegateStatus(status, voteWeight);
 
   return (
     <span className={getStatusClass(activeTab)}>
