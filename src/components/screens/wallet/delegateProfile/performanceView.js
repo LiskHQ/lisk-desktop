@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { MIN_VOTES_RECEIVED } from '@constants';
+import { DEFAULT_STANDBY_THRESHOLD } from '@constants';
 import { useTheme } from '@utils/theme';
 import { capitalize } from '@utils/helpers';
 import Box from '@toolbox/box';
@@ -15,7 +15,7 @@ export const getStatus = (data) => {
   if (data.status) {
     return data.status;
   }
-  if (data.totalVotesReceived > MIN_VOTES_RECEIVED) {
+  if (data.totalVotesReceived > DEFAULT_STANDBY_THRESHOLD) {
     return 'standBy';
   }
   return 'inEligible';
