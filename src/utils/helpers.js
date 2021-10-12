@@ -155,4 +155,4 @@ export const camelize = str =>
  * @param {String} str - The string to convert to capitalized
  * @return {String} capitalized string
  */
-export const capitalize = str => str.replace(/^\w/, (c) => c.toUpperCase());
+export const capitalize = str => str.toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
