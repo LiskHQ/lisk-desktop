@@ -17,10 +17,10 @@ const TableWrapper = compose(
       if (b.status === 'active' || a.status !== 'standby') {
         return -1 * (direction === 'asc' ? 1 : -1);
       }
-      if (a.totalVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
+      if (a.voteWeight < DEFAULT_STANDBY_THRESHOLD) {
         return -1 * (direction === 'asc' ? 1 : -1);
       }
-      if (b.totalVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
+      if (b.voteWeight < DEFAULT_STANDBY_THRESHOLD) {
         return 1 * (direction === 'asc' ? 1 : -1);
       }
       return 0;
