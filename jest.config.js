@@ -61,6 +61,8 @@ module.exports = {
     'src/actions/network/lsk.js',
     'src/store/index.js',
     'src/store/reducers/filters.js', // To be removed in #2175
+    'src/store/middlewares/network.js',
+    'src/store/middlewares/account.js',
     'src/components/screens/',
     'src/components/shared/errorBoundary/index.js',
     'src/components/shared/registerMultiStep/index.js',
