@@ -15,7 +15,7 @@ export const getStatus = (data) => {
   if (data.status) {
     return data.status;
   }
-  if (data.totalVotesReceived > DEFAULT_STANDBY_THRESHOLD) {
+  if (data.voteWeight > DEFAULT_STANDBY_THRESHOLD) {
     return 'standBy';
   }
   return 'inEligible';
