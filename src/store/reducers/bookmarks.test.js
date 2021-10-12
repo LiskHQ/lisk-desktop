@@ -1,5 +1,7 @@
-import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved, bookmarkRetrieved } from '@actions';
-import { actionTypes, tokenMap } from '@constants';
+import {
+  bookmarkAdded, bookmarkUpdated, bookmarkRemoved,
+} from '@actions';
+import { actionTypes } from '@constants';
 import bookmarks from './bookmarks';
 import accounts from '../../../test/constants/accounts';
 

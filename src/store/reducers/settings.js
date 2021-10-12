@@ -47,7 +47,6 @@ export const initialState = {
 const settings = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.settingsRetrieved: {
-      console.log(validateToken(action.data));
       return validateToken(action.data);
     }
     case actionTypes.settingsUpdated:
