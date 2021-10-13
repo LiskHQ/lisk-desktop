@@ -4,8 +4,9 @@ import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
+import { tokenMap } from '@constants';
 import { voteEdited } from '@actions';
-import { selectActiveToken, selectAccountBalance } from '@store/selectors';
+import { selectAccountBalance } from '@store/selectors';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Dialog from '@toolbox/dialog/dialog';
 import Box from '@toolbox/box';
@@ -40,7 +41,7 @@ const AddVote = ({
   const host = useSelector(state => state.account.info.LSK.summary.address);
   const address = selectSearchParamValue(history.location.search, 'address');
   const existingVote = useSelector(state => state.voting[address || host]);
-  const activeToken = useSelector(selectActiveToken);
+  const activeToken = tokenMap.LSK.key;
   const balance = useSelector(selectAccountBalance);
   const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');
   const mode = existingVote ? 'edit' : 'add';
