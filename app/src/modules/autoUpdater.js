@@ -80,7 +80,7 @@ export default ({ // eslint-disable-line max-statements
       buttons: [i18n.t('Restart now'), i18n.t('Later')],
       message: i18n.t('Updates downloaded, application has to be restarted to apply the updates.'),
     }).then((result) => {
-      const buttonIndex = result.response;
+      const buttonIndex = result?.response;
       /* istanbul ignore next */
       if (buttonIndex === 0) {
         autoUpdater.quitAndInstall();
