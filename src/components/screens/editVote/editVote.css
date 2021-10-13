@@ -21,6 +21,7 @@
     padding: var(--vertical-padding-l) var(--horizontal-padding-l);
     width: 60%;
     position: relative;
+    background-image: url('../../../../src/assets/images/waves_pattern.svg');
 
     & .balanceTitle {
       font-size: var(--font-size-small-secondary);
