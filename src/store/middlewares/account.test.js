@@ -34,6 +34,8 @@ jest.mock('@utils/login', () => ({
 
 jest.mock('@api/transaction');
 
+jest.mock('@utils/lsk');
+
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {
   type: actionTypes.storeCreated,
@@ -149,7 +151,7 @@ describe('Account middleware', () => {
     });
     store = {
       dispatch: jest.fn().mockImplementation(() => ({})),
-      getState: () => defaultState,
+      getState: () => ({ ...defaultState }),
     };
   });
 
@@ -178,14 +180,6 @@ describe('Account middleware', () => {
   });
 
   describe('on newBlockCreated', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(() => {
-      jest.runAllTimers();
-    });
-
     it('should call account API methods', async () => {
       middleware(store)(next)(newBlockCreated);
       jest.runOnlyPendingTimers();
@@ -193,68 +187,55 @@ describe('Account middleware', () => {
     });
 
     it('should call account BTC API methods when BTC is the active token', async () => {
-      const state = store.getState();
-      state.settings = { token: { active: 'BTC' } };
-      const address = 'n45uoyzDvep8cwgkfxq3H3te1ujWyu1kkB';
-      state.account = { address };
-      state.transactions.confirmed = [{ senderId: address, confirmations: 1 }];
-      middleware(store)(next)(newBlockCreated);
-      jest.runOnlyPendingTimers();
-      await expect(transactionsRetrieved)
-        .toHaveBeenCalledWith({
-          address, filters: undefined, pendingTransactions: state.transactions.pending,
-        });
-    });
+      // Arrange
+      const btcAddress = 'n45uoyzDvep8cwgkfxq3H3te1ujWyu1kkB';
+      store = {
+        dispatch: jest.fn().mockImplementation(() => ({})),
+        getState: () => ({
+          ...defaultState,
+          settings: { token: { active: 'BTC' } },
+          account: { summary: { address: btcAddress } },
+          transactions: { confirmed: [{ senderId: btcAddress, confirmations: 1 }] },
+        }),
+      };
 
-    it('should not fetch transactions if confirmed tx list does not contain recent transaction', () => {
-      const state = store.getState();
-      store.getState = () => ({
-        ...state,
-        transactions: {
-          ...state.transactions,
-          confirmed: [{ confirmations: 10 }],
-          address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
-        },
-      });
-      const currentState = store.getState();
+      // Act
+      await middleware(store)(next)(newBlockCreated);
 
-      middleware(store)(next)(newBlockCreated);
-      jest.runOnlyPendingTimers();
-      expect(accountDataUpdated).toHaveBeenCalledWith({
-        account: currentState.account,
-        transactions: currentState.transactions,
+      // Assert
+      expect(transactionApi.getTransactions).toHaveBeenCalledWith({ network: expect.anything(), params: expect.anything() }, 'BTC');
+      expect(accountDataUpdated).toHaveBeenCalled();
+      expect(transactionsRetrieved).toHaveBeenCalledWith({
+        address: btcAddress,
+        filters: undefined,
       });
     });
 
-    it('should fetch transactions if confirmed tx list contains recent transaction', () => {
-      const state = store.getState();
-      store.getState = () => ({
-        ...state,
-        transactions: {
-          pending: [{
-            id: 12498250891724098,
-          }],
-          confirmed: [{ confirmations: 10, address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79' }],
-        },
-        network: {
-          status: { online: true },
-          name: 'Custom Node',
-          networks: {
-            LSK: {
-              nodeUrl: 'http://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
-          },
-        },
-      });
-      const currentState = store.getState();
+    it('should call account LSK API methods when LSK is the active token', async () => {
+      // Act
+      await middleware(store)(next)(newBlockCreated);
 
-      middleware(store)(next)(newBlockCreated);
-      jest.runOnlyPendingTimers();
-      expect(accountDataUpdated).toHaveBeenCalledWith({
-        account: currentState.account,
-        transactions: currentState.transactions,
+      // Assert
+      expect(transactionApi.getTransactions).toHaveBeenCalledWith({ network: expect.anything(), params: expect.anything() }, 'LSK');
+      expect(accountDataUpdated).toHaveBeenCalled();
+      expect(transactionsRetrieved).toHaveBeenCalledWith({
+        address: expect.anything(),
+        filters: undefined,
       });
+    });
+
+    it('should not dispatch when getTransactions returns invalid transaction', async () => {
+      // Arrange
+      transactionApi.getTransactions.mockResolvedValue({
+        data: [undefined],
+      });
+
+      // Act
+      await middleware(store)(next)(newBlockCreated);
+
+      // Assert
+      expect(accountDataUpdated).toHaveBeenCalledTimes(0);
+      expect(transactionsRetrieved).toHaveBeenCalledTimes(0);
     });
 
     it.skip('should show Notification on incoming transaction', () => {
