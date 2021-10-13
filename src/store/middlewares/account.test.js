@@ -32,6 +32,8 @@ jest.mock('@utils/login', () => ({
   shouldAutoLogIn: jest.fn(),
 }));
 
+jest.mock('@api/transaction');
+
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {
   type: actionTypes.storeCreated,
@@ -99,7 +101,7 @@ const network = {
   name: 'Custom Node',
   networks: {
     LSK: {
-      nodeUrl: 'hhtp://localhost:4000',
+      nodeUrl: 'http://localhost:4000',
       nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
     },
   },
@@ -136,14 +138,20 @@ const defaultState = {
 
 describe('Account middleware', () => {
   const next = jest.fn();
-  const store = {
-    dispatch: jest.fn().mockImplementation(() => ({})),
-    getState: () => defaultState,
-  };
+  let store;
 
-  jest.useFakeTimers();
   window.Notification = () => { };
   const windowNotificationSpy = jest.spyOn(window, 'Notification');
+
+  beforeEach(() => {
+    transactionApi.getTransactions.mockResolvedValue({
+      data: transactions,
+    });
+    store = {
+      dispatch: jest.fn().mockImplementation(() => ({})),
+      getState: () => defaultState,
+    };
+  });
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -151,7 +159,6 @@ describe('Account middleware', () => {
 
   describe('Basic behavior', () => {
     it('should pass the action to next middleware', async () => {
-      await transactionApi.getTransactions.mockResolvedValue({ data: transactions });
       middleware(store)(next)(newBlockCreated);
       expect(next).toHaveBeenCalledWith(newBlockCreated);
     });
@@ -171,29 +178,32 @@ describe('Account middleware', () => {
   });
 
   describe('on newBlockCreated', () => {
-    it('should call account API methods', async () => {
-      await transactionApi.getTransactions.mockResolvedValue({ data: transactions });
-      const promise = middleware(store)(next);
-      promise(newBlockCreated).then(() => {
-        jest.runOnlyPendingTimers();
-        expect(store.dispatch).toHaveBeenCalled();
-      });
+    beforeEach(() => {
+      jest.useFakeTimers();
     });
 
-    it('should call account BTC API methods when BTC is the active token', () => {
+    afterEach(() => {
+      jest.runAllTimers();
+    });
+
+    it('should call account API methods', async () => {
+      middleware(store)(next)(newBlockCreated);
+      jest.runOnlyPendingTimers();
+      await expect(next).toHaveBeenCalled();
+    });
+
+    it('should call account BTC API methods when BTC is the active token', async () => {
       const state = store.getState();
       state.settings = { token: { active: 'BTC' } };
       const address = 'n45uoyzDvep8cwgkfxq3H3te1ujWyu1kkB';
       state.account = { address };
       state.transactions.confirmed = [{ senderId: address, confirmations: 1 }];
-      const promise = middleware(store)(next);
-      promise(newBlockCreated).then(() => {
-        jest.runOnlyPendingTimers();
-        expect(transactionsRetrieved)
-          .toHaveBeenCalledWith({
-            address, filters: undefined, pendingTransactions: state.transactions.pending,
-          });
-      });
+      middleware(store)(next)(newBlockCreated);
+      jest.runOnlyPendingTimers();
+      await expect(transactionsRetrieved)
+        .toHaveBeenCalledWith({
+          address, filters: undefined, pendingTransactions: state.transactions.pending,
+        });
     });
 
     it('should not fetch transactions if confirmed tx list does not contain recent transaction', () => {
@@ -208,13 +218,11 @@ describe('Account middleware', () => {
       });
       const currentState = store.getState();
 
-      const promise = middleware(store)(next);
-      promise(newBlockCreated).then(() => {
-        jest.runOnlyPendingTimers();
-        expect(accountDataUpdated).toHaveBeenCalledWith({
-          account: currentState.account,
-          transactions: currentState.transactions,
-        });
+      middleware(store)(next)(newBlockCreated);
+      jest.runOnlyPendingTimers();
+      expect(accountDataUpdated).toHaveBeenCalledWith({
+        account: currentState.account,
+        transactions: currentState.transactions,
       });
     });
 
@@ -233,7 +241,7 @@ describe('Account middleware', () => {
           name: 'Custom Node',
           networks: {
             LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
+              nodeUrl: 'http://localhost:4000',
               nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
           },
@@ -241,13 +249,11 @@ describe('Account middleware', () => {
       });
       const currentState = store.getState();
 
-      const promise = middleware(store)(next);
-      promise(newBlockCreated).then(() => {
-        jest.runOnlyPendingTimers();
-        expect(accountDataUpdated).toHaveBeenCalledWith({
-          account: currentState.account,
-          transactions: currentState.transactions,
-        });
+      middleware(store)(next)(newBlockCreated);
+      jest.runOnlyPendingTimers();
+      expect(accountDataUpdated).toHaveBeenCalledWith({
+        account: currentState.account,
+        transactions: currentState.transactions,
       });
     });
 
@@ -373,7 +379,7 @@ describe('Account middleware', () => {
   });
 
   describe('on accountUpdated', () => {
-    it('should not redirect to the reclaim screen if the account is migrated', () => {
+    it('should not redirect to the reclaim screen if the account is migrated', async () => {
       const action = {
         type: actionTypes.accountLoggedIn,
         data: { info: { LSK: { summary: { isMigrated: true } } } },
@@ -382,7 +388,7 @@ describe('Account middleware', () => {
       expect(history.push).not.toHaveBeenCalledWith(routes.reclaim.path);
     });
 
-    it('should redirect to the reclaim screen if the account is not migrated', () => {
+    it('should redirect to the reclaim screen if the account is not migrated', async () => {
       const action = {
         type: actionTypes.accountLoggedIn,
         data: { info: { LSK: { summary: { isMigrated: false } } } },
@@ -390,7 +396,7 @@ describe('Account middleware', () => {
       middleware(store)(next)(action);
       expect(history.push).toHaveBeenCalledWith(routes.reclaim.path);
     });
-    it('should not redirect to the reclaim screen if the account is migrated with actionUpdate', () => {
+    it('should not redirect to the reclaim screen if the account is migrated with actionUpdate', async () => {
       const action = {
         type: actionTypes.accountUpdated,
         data: { info: { LSK: { summary: { isMigrated: true } } } },
