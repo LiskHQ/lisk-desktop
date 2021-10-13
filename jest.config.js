@@ -64,6 +64,8 @@ module.exports = {
     'src/store/reducers/bookmarks.js',
     'src/store/reducers/network.js',
     'src/store/reducers/filters.js', // To be removed in #2175
+    'src/store/middlewares/network.js',
+    'src/store/middlewares/account.js',
     'src/components/screens/',
     'src/components/shared/errorBoundary/index.js',
     'src/components/shared/registerMultiStep/index.js',
