@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
 import { voteEdited } from '@actions';
+import { selectActiveToken, selectAccountBalance } from '@store/selectors';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Dialog from '@toolbox/dialog/dialog';
 import Box from '@toolbox/box';
@@ -13,6 +14,8 @@ import BoxFooter from '@toolbox/box/footer';
 import BoxHeader from '@toolbox/box/header';
 import BoxInfoText from '@toolbox/box/infoText';
 import AmountField from '@shared/amountField';
+import LiskAmount from '@shared/liskAmount';
+import Converter from '@shared/converter';
 import { PrimaryButton, WarningButton } from '@toolbox/buttons';
 import useVoteAmountField from './useVoteAmountField';
 
@@ -29,6 +32,7 @@ const getTitles = t => ({
   },
 });
 
+// eslint-disable-next-line max-statements
 const AddVote = ({
   history, t,
 }) => {
@@ -36,6 +40,8 @@ const AddVote = ({
   const host = useSelector(state => state.account.info.LSK.summary.address);
   const address = selectSearchParamValue(history.location.search, 'address');
   const existingVote = useSelector(state => state.voting[address || host]);
+  const activeToken = useSelector(selectActiveToken);
+  const balance = useSelector(selectAccountBalance);
   const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');
   const mode = existingVote ? 'edit' : 'add';
 
@@ -68,6 +74,17 @@ const AddVote = ({
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>
             <span>{titles.description}</span>
+          </BoxInfoText>
+          <BoxInfoText className={styles.accountInfo}>
+            <p className={styles.balanceTitle}>Available balance</p>
+            <div className={styles.balanceDetails}>
+              <LiskAmount val={balance} token={activeToken} />
+              <Converter
+                className={styles.fiatValue}
+                value={fromRawLsk(balance)}
+                error=""
+              />
+            </div>
           </BoxInfoText>
           <label className={styles.fieldGroup}>
             <AmountField
