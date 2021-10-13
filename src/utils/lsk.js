@@ -33,8 +33,9 @@ export const toRawLsk = (value) => {
  *
  * @returns {Promise} resolves with True after 100ms
  */
-export const delay = () => new Promise((resolve) => {
+/* istanbul ignore next */
+export const delay = (ms = 1500) => new Promise((resolve) => {
   setTimeout(() => {
     resolve();
-  }, 1500);
+  }, ms);
 });
