@@ -35,6 +35,7 @@ export const removeUndefinedKeys = obj => Object.keys(obj).reduce((acc, key) => 
  * @returns {Boolean}
  */
 export const isEmpty = (collection) => {
+  if (!collection) return true;
   if (Array.isArray(collection)) {
     return collection.length === 0;
   }
