@@ -16,7 +16,7 @@ import LockedBalanceLink from './unlocking';
 import styles from './balanceInfo.css';
 
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, username,
+  t, activeToken, balance, isWalletRoute, address, username, isBanned,
 }) => {
   const vote = useSelector(state => state.voting[address]);
   const initialValue = isWalletRoute
@@ -59,6 +59,7 @@ const BalanceInfo = ({
                   <SecondaryButton
                     className={`${styles.voteButton} open-add-vote-dialog`}
                     size="m"
+                    disabled={isBanned}
                   >
                     {voteButtonTitle}
                   </SecondaryButton>

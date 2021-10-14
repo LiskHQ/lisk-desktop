@@ -62,6 +62,7 @@ const Overview = ({
           isWalletRoute={isWalletRoute}
           username={account?.dpos?.delegate?.username}
           address={address}
+          isBanned={account?.dpos?.delegate?.isBanned}
         />
       </div>
       <div className={`${grid['col-xs-12']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.balanceChart}`}>
