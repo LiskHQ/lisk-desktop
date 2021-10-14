@@ -18,6 +18,7 @@ const config = {
     fallback: {
       net: false,
       fs: false,
+      os: false,
       crypto: require.resolve('crypto-browserify'),
       stream: require.resolve('stream-browserify'),
       path: require.resolve('path-browserify'),
