@@ -125,7 +125,7 @@ describe('VotingQueue.Editor', () => {
   afterEach(() => {
     // Reset balance
     props.account.token.balance = accounts.genesis.token.balance;
-  })
+  });
 
   it('Render only the changed votes', () => {
     const wrapper = mountWithRouter(Editor, { ...props, votes: mixedVotes });
