@@ -106,7 +106,7 @@ const AddVote = ({
               </WarningButton>
             )
           }
-          <PrimaryButton className={`${styles.confirmButton} confirm`} onClick={confirm}>
+          <PrimaryButton className={`${styles.confirmButton} confirm`} onClick={confirm} disabled={voteAmount.error}>
             {t('Confirm')}
           </PrimaryButton>
         </BoxFooter>
