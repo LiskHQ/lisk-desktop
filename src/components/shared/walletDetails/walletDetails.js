@@ -8,6 +8,8 @@ import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import BoxRow from '@toolbox/box/row';
 import Icon from '@toolbox/icon';
+import Converter from '@shared/converter';
+import { fromRawLsk } from '@utils/lsk';
 import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
 import LockedBalanceLink from '../../screens/wallet/overview/balanceInfo/unlocking';
@@ -36,18 +38,28 @@ const WalletDetails = ({
               to={routes.wallet.path}
               onClick={() =>
                 dispatch(settingsUpdated({ token: { active: token } }))}
+              className={styles.link}
             >
               <Icon name={token === tokenMap.BTC.key ? 'btcIcon' : 'lskIcon'} />
               <div className={styles.details}>
                 <span>
                   {t('{{token}} balance', { token: tokenMap[token].label })}
                 </span>
-                <DiscreetMode>
-                  <span className={styles.amounts}>
-                    <LiskAmount val={info.summary?.balance} token={token} />
-                  </span>
-                  {token === tokenMap.LSK.key ? <LockedBalanceLink /> : null}
-                </DiscreetMode>
+                <div className={styles.valuesRow}>
+                  <DiscreetMode>
+                    <div className={`${styles.cryptoValue} balance-value`}>
+                      <div><LiskAmount val={info.summary?.balance} token={token} /></div>
+                      <div>
+                        <Converter
+                          className={styles.fiatValue}
+                          value={fromRawLsk(info.summary?.balance)}
+                          error=""
+                        />
+                      </div>
+                    </div>
+                    {token === tokenMap.LSK.key ? <LockedBalanceLink /> : null}
+                  </DiscreetMode>
+                </div>
               </div>
             </Link>
           </BoxRow>

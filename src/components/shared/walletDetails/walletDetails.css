@@ -13,6 +13,7 @@
   & > .row {
     & > a {
       display: flex;
+      align-items: flex-start;
 
       & > img {
         margin-right: 15px;
@@ -44,4 +45,61 @@
       }
     }
   }
+}
+
+.valuesRow {
+  display: flex;
+  flex: 1;
+
+  & .cryptoValue {
+    @mixin headingNormalIntermediate normal;
+
+    color: var(--color-ink-blue);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .fiatValue {
+    @mixin contentLargest normal;
+
+    color: var(--color-ink-blue);
+    opacity: 0.8;
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    align-content: baseline;
+
+    & > div {
+      white-space: pre;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.lockedBalance {
+  @mixin headingNormal normal;
+
+  color: var(--color-ink-blue);
+
+  &.pointer {
+    cursor: pointer;
+  }
+
+  & > img {
+    width: 17px;
+    margin-right: 8px;
+  }
+}
+
+.link:link,
+.link:visited,
+.link:hover,
+.link:active {
+  text-decoration: none;
 }
