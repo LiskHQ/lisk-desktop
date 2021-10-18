@@ -1,0 +1,35 @@
+.flashContainer {
+  background-color: var(--color-warning-bg);
+  border-color: var(--color-warning-border);
+  border-width: 1px;
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  font-size: 18px;
+}
+
+.btnContainer {
+  display: flex;
+  margin-left: auto;
+}
+
+.button {
+  height: auto !important;
+  padding: 15px 20px !important;
+  margin-left: 12px;
+  border-radius: 5px;
+  border-color: var(--color-zodiac-blue);
+  color: var(--color-zodiac-blue);
+
+  &.primary {
+    background-color: var(--color-ink-blue);
+
+    &:global(.dark) {
+      color: var(--color-zodiac-blue);
+    }
+  }
+}

@@ -4,31 +4,42 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import withData from '@utils/withData';
+import { addSearchParamsToUrl } from '@utils/searchParams';
 import { getTransactions } from '@api/transaction';
 import { selectTransactions } from '@store/selectors';
+import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import WarnPunishedDelegate from '@shared/warnPunishedDelegate/warnPunishedDelegate';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
 import styles from './overview.css';
 
 const Overview = ({
-  t, activeToken, transactions, hwInfo,
-  discreetMode, isWalletRoute, account,
+  t,
+  activeToken,
+  transactions,
+  hwInfo,
+  discreetMode,
+  isWalletRoute,
+  account,
 }) => {
   const {
-    address, publicKey, balance = 0, isMultisignature,
+    address,
+    publicKey,
+    balance = 0,
+    isMultisignature,
   } = account?.summary ?? {};
   const { confirmed } = useSelector(selectTransactions);
-  const bookmark = useSelector(
-    state => state.bookmarks[activeToken].find(item => (item.address === address)),
-  );
+  const bookmark = useSelector((state) =>
+    state.bookmarks[activeToken].find((item) => item.address === address));
 
   const host = useSelector(
-    state => (
-      state.account
-      && state.account.info
-      && state.account.info[activeToken]
-      && state.account.info[activeToken].summary?.address) || '',
+    (state) =>
+      (state.account
+        && state.account.info
+        && state.account.info[activeToken]
+        && state.account.info[activeToken].summary?.address)
+      || '',
   );
 
   useEffect(() => {
@@ -37,9 +48,24 @@ const Overview = ({
     }
   }, [address]);
 
+  const readMore = () => {
+    addSearchParamsToUrl({ modal: 'readMore' });
+  };
+
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
-      <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
+      {
+      FlashMessageHolder.addMessage(
+        <WarnPunishedDelegate
+          message="This delegate has been permanently banned from MM.DD.YYYY"
+          readMore={readMore}
+        />,
+        'WarnPunishedDelegate',
+      )
+    }
+      <div
+        className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}
+      >
         <AccountInfo
           t={t}
           hwInfo={hwInfo}
@@ -53,7 +79,9 @@ const Overview = ({
           isMultisignature={isMultisignature}
         />
       </div>
-      <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
+      <div
+        className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}
+      >
         <BalanceInfo
           t={t}
           activeToken={activeToken}
@@ -65,7 +93,9 @@ const Overview = ({
           isBanned={account?.dpos?.delegate?.isBanned}
         />
       </div>
-      <div className={`${grid['col-xs-12']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.balanceChart}`}>
+      <div
+        className={`${grid['col-xs-12']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.balanceChart}`}
+      >
         {address && (
           <BalanceChart
             t={t}
@@ -84,8 +114,9 @@ const Overview = ({
 export default compose(
   withData({
     transactions: {
-      apiUtil: (network, { token, ...params }) => getTransactions({ network, params }, token),
-      getApiParams: state => ({
+      apiUtil: (network, { token, ...params }) =>
+        getTransactions({ network, params }, token),
+      getApiParams: (state) => ({
         token: state.settings.token.active,
       }),
       defaultData: { data: [], meta: {} },

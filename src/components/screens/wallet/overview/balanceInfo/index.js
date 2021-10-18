@@ -8,6 +8,7 @@ import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import DialogLink from '@toolbox/dialog/link';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
 import Converter from '@shared/converter';
@@ -16,12 +17,16 @@ import LockedBalanceLink from './unlocking';
 import styles from './balanceInfo.css';
 
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, username, isBanned,
+  t,
+  activeToken,
+  balance,
+  isWalletRoute,
+  address,
+  username,
+  isBanned,
 }) => {
-  const vote = useSelector(state => state.voting[address]);
-  const initialValue = isWalletRoute
-    ? {}
-    : { recipient: address };
+  const vote = useSelector((state) => state.voting[address]);
+  const initialValue = isWalletRoute ? {} : { recipient: address };
 
   const voteButtonTitle = vote ? t('Edit vote') : t('Add to votes');
 
@@ -42,31 +47,48 @@ const BalanceInfo = ({
                 value={fromRawLsk(balance)}
                 error=""
               />
-
             </div>
-            {
-              activeToken === tokenMap.LSK.key && isWalletRoute ? (
-                <LockedBalanceLink activeToken={activeToken} isWalletRoute={isWalletRoute} />
-              ) : null
-            }
+            {activeToken === tokenMap.LSK.key && isWalletRoute ? (
+              <LockedBalanceLink
+                activeToken={activeToken}
+                isWalletRoute={isWalletRoute}
+              />
+            ) : null}
           </DiscreetMode>
         </div>
         <SignInTooltipWrapper position="bottom">
           <div className={styles.actionRow}>
-            {
-              username ? (
-                <DialogLink component="editVote" className={`${styles.button} add-vote`}>
-                  <SecondaryButton
-                    className={`${styles.voteButton} open-add-vote-dialog`}
-                    size="m"
-                    disabled={isBanned}
-                  >
-                    {voteButtonTitle}
-                  </SecondaryButton>
-                </DialogLink>
-              ) : null
-            }
-            <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
+            {username ? (
+              <DialogLink
+                component="editVote"
+                className={`${styles.button} add-vote`}
+              >
+                <Tooltip
+                  position="bottom"
+                  size="maxContent"
+                  content={(
+                    <SecondaryButton
+                      className={`${styles.voteButton} open-add-vote-dialog`}
+                      size="m"
+                      disabled={isBanned}
+                    >
+                      {voteButtonTitle}
+                    </SecondaryButton>
+                  )}
+                >
+                  <p>
+                    {isBanned
+                      ? t('You cannot vote for this delegate')
+                      : t('Vote for delegate')}
+                  </p>
+                </Tooltip>
+              </DialogLink>
+            ) : null}
+            <DialogLink
+              component="send"
+              className={`${styles.button} tx-send-bt`}
+              data={initialValue}
+            >
               <PrimaryButton
                 className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
                 size="m"
@@ -76,7 +98,6 @@ const BalanceInfo = ({
             </DialogLink>
           </div>
         </SignInTooltipWrapper>
-
       </BoxContent>
     </Box>
   );
