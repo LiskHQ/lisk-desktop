@@ -18,7 +18,7 @@ const getAmountFeedbackAndError = (value, balance) => {
     value,
     token: tokenMap.LSK.key,
     funds: balance,
-    checklist: ['FORMAT', 'VOTE_10X', 'VOTES_MAX'],
+    checklist: ['FORMAT', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'VOTES_MAX'],
   });
 
   return { error: !!feedback, feedback };
