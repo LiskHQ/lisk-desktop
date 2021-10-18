@@ -50,21 +50,24 @@
 .valuesRow {
   display: flex;
   flex: 1;
+  color: black !important;
 
   & .cryptoValue {
     @mixin headingNormalIntermediate normal;
 
-    color: var(--color-ink-blue);
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
+    color: var(--color-maastricht-blue);
+    font-size: 18px;
+    font-weight: 600;
   }
 
   & .fiatValue {
     @mixin contentLargest normal;
 
-    color: var(--color-ink-blue);
+    color: var(--color-slate-gray);
+    font-family: var(--heading-font);
+    font-size: 16px;
     opacity: 0.8;
+    margin-left: 10px;
   }
 
   & > div {
@@ -85,7 +88,9 @@
 .lockedBalance {
   @mixin headingNormal normal;
 
-  color: var(--color-ink-blue);
+  color: var(--color-maastricht-blue);
+  font-family: var(--heading-font);
+  font-size: 16px;
 
   &.pointer {
     cursor: pointer;
