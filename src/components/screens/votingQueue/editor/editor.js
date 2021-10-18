@@ -102,7 +102,7 @@ const validateVotes = (votes, balance, fee, account, t) => {
     messages.push(t('You don\'t have enough LSK in your account.'));
   }
 
-  if ((balance - addedVoteAmount) < minAccountBalance) {
+  if ((balance - addedVoteAmount) < minAccountBalance && (balance - addedVoteAmount)) {
     messages.push('The vote amounts are too high. You should keep 0.05 LSK available in your account.');
   }
 
