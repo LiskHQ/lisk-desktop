@@ -53,35 +53,40 @@ const FullItem = ({
   </BoxContent>
 );
 
-const ActiveDelegate = ({ theme }) => (
-  <div className={`${styles.delegateDescription} ${theme}`}>
-    <p>This delegate is among the first 101 delegates in delegate weight ranking.</p>
-
-    <p>The first 101 delegates will always be selected to forge new blocks.</p>
-  </div>
-);
-
-const StandByDelegate = ({ theme }) => (
+const ActiveDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      The delegate weight is at least 1,000 LSK meaning that the delegate can be chosen
-      for one of the two randomly assigned slots for standby delegates.
+      {t('This delegate is among the first 101 delegates in delegate weight ranking.')}
+    </p>
+
+    <p>
+      {t('The first 101 delegates will always be selected to forge new blocks.')}
     </p>
   </div>
 );
 
-const InEligibleDelegate = ({ theme }) => (
+const StandByDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      The delegate weight is below 1,000 LSK meaning that the delegate is not eligible
-      to forge.
+      {t(`The delegate weight is at least 1,000 LSK meaning that the delegate can be chosen
+      for one of the two randomly assigned slots for standby delegates.`)}
     </p>
   </div>
 );
 
-const PunishedDelegate = ({ theme }) => (
+const InEligibleDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
-    <p>This delegate can not forge new blocks temporarily due to a protocol violation.</p>
+    <p>
+      {t('The delegate weight is below 1,000 LSK meaning that the delegate is not eligible to forge.')}
+    </p>
+  </div>
+);
+
+const PunishedDelegate = ({ theme, t }) => (
+  <div className={`${styles.delegateDescription} ${theme}`}>
+    <p>
+      {t('This delegate can not forge new blocks temporarily due to a protocol violation.')}
+    </p>
     <DialogLink
       className={grid.row}
       component="delegatePerformance"
@@ -92,9 +97,11 @@ const PunishedDelegate = ({ theme }) => (
   </div>
 );
 
-const BannedDelegate = ({ theme }) => (
+const BannedDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
-    <p>This delegate is permanently banned from forging new blocks.</p>
+    <p>
+      {t('This delegate is permanently banned from forging new blocks.')}
+    </p>
     <DialogLink
       className={grid.row}
       component="delegatePerformance"
@@ -139,7 +146,7 @@ const PerformanceView = ({
             icon={getDelegateIcon(status)}
           >
             <div className={styles.performanceValue}>{capitalize(status)}</div>
-            <DelegateComponent theme={theme} />
+            <DelegateComponent theme={theme} t={t} />
           </FullItem>
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
