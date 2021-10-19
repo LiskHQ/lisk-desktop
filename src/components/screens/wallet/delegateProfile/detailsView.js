@@ -33,8 +33,8 @@ const DetailsView = ({ t, data, lastBlockForged }) => {
           <Icon name="clockActive" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
             <div className={`${styles.title} ${theme}`}>{t('Status')}</div>
-            <div className={styles.value}>
-              { status }
+            <div className={`${styles.value} ${styles.capitalized}`}>
+              { status.toLowerCase() }
             </div>
           </div>
         </div>
