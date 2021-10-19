@@ -137,9 +137,11 @@
       z-index: 15;
       width: max-content;
       padding-top: 2px;
+      transform: translateY(0) translateX(-25%);
 
       & span {
         margin-top: 6px;
+        width: 60%;
         position: relative;
         background-color: var(--color-white) !important;
         color: var(--color-slate-gray) !important;
@@ -155,7 +157,7 @@
         height: 10px;
         position: absolute;
         background: var(--color-white);
-        left: 23px;
+        left: 30%;
         transform: rotate(45deg);
         border-color: var(--color-platinum);
         border-style: solid;
