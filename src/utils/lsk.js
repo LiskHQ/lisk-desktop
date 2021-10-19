@@ -24,3 +24,18 @@ export const toRawLsk = (value) => {
   const amount = numeral(value).value();
   return new BigNumber(amount * new BigNumber(10).pow(8)).decimalPlaces(0).toNumber();
 };
+
+/**
+ * After a new block is created and broadcasted
+ * it takes a few ms for Lisk Service
+ * to update transactions index, so we need to wait
+ * before retrieving the the transaction by blockId
+ *
+ * @returns {Promise} resolves with True after 100ms
+ */
+/* istanbul ignore next */
+export const delay = (ms = 1500) => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve();
+  }, ms);
+});

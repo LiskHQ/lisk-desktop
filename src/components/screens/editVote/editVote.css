@@ -13,6 +13,36 @@
     padding: 0 0 var(--horizontal-padding-l) 0;
   }
 
+  & .accountInfo {
+    color: var(--color-ink-blue);
+    border: 0.5px solid var(--color-extra-light-gray);
+    box-shadow: 0 4px 10px rgba(234, 234, 234, 0.36);
+    border-radius: 6px;
+    padding: var(--vertical-padding-l) var(--horizontal-padding-l);
+    width: 60%;
+    position: relative;
+    background-image: url('../../../../src/assets/images/waves_pattern.svg');
+
+    & .balanceTitle {
+      font-size: var(--font-size-small-secondary);
+      margin: 0;
+    }
+
+    & .balanceDetails {
+      display: flex;
+      flex: 1;
+      font-family: var(--heading-font);
+      font-weight: var(--font-weight-bold);
+
+      & .fiatValue {
+        color: var(--color-ink-blue);
+        opacity: 0.8;
+        position: absolute;
+        right: var(--vertical-padding-l);
+      }
+    }
+  }
+
   & button.confirmButton {
     width: 100%;
   }
