@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { compose } from 'redux';
@@ -9,6 +10,7 @@ import { getTransactions } from '@api/transaction';
 import { selectTransactions } from '@store/selectors';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import WarnPunishedDelegate from '@shared/warnPunishedDelegate/warnPunishedDelegate';
+import { withRouter } from 'react-router';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
@@ -22,6 +24,7 @@ const Overview = ({
   discreetMode,
   isWalletRoute,
   account,
+  history,
 }) => {
   const {
     address,
@@ -42,27 +45,47 @@ const Overview = ({
       || '',
   );
 
+  const readMore = () => {
+    addSearchParamsToUrl({ modal: 'readMore' });
+  };
+
+  const isBanned = account?.dpos?.delegate?.isBanned;
+
+  const pomHeights = account?.dpos?.delegate?.pomHeights;
+
+  const showWarning = () => {
+    if (!isWalletRoute && address && (isBanned || pomHeights?.length)) {
+      FlashMessageHolder.addMessage(
+        <WarnPunishedDelegate
+          isBanned={isBanned}
+          pomHeights={pomHeights}
+          readMore={readMore}
+        />,
+        'WarnPunishedDelegate',
+      );
+    } else {
+      FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
+    }
+  };
+
+  useEffect(() => {
+    const params = history?.location.search;
+    if (params === '') {
+      FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
+    }
+  }, []);
+
   useEffect(() => {
     if (!isWalletRoute && address) {
       transactions.loadData({ address });
     }
   }, [address]);
 
-  const readMore = () => {
-    addSearchParamsToUrl({ modal: 'readMore' });
-  };
-
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       {
-      FlashMessageHolder.addMessage(
-        <WarnPunishedDelegate
-          message="This delegate has been permanently banned from MM.DD.YYYY"
-          readMore={readMore}
-        />,
-        'WarnPunishedDelegate',
-      )
-    }
+        showWarning()
+      }
       <div
         className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}
       >
@@ -90,7 +113,7 @@ const Overview = ({
           isWalletRoute={isWalletRoute}
           username={account?.dpos?.delegate?.username}
           address={address}
-          isBanned={account?.dpos?.delegate?.isBanned}
+          isBanned={isBanned}
         />
       </div>
       <div
@@ -112,6 +135,7 @@ const Overview = ({
 };
 
 export default compose(
+  withRouter,
   withData({
     transactions: {
       apiUtil: (network, { token, ...params }) =>
