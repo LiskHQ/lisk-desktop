@@ -26,6 +26,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
+        flex-grow: 1;
 
         & > span:first-child {
           @mixin contentNormal;
@@ -51,6 +52,7 @@
   display: flex;
   flex: 1;
   color: black !important;
+  width: 100%;
 
   & .cryptoValue {
     @mixin headingNormalIntermediate normal;
@@ -58,6 +60,9 @@
     color: var(--color-maastricht-blue);
     font-size: 18px;
     font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
   }
 
   & .fiatValue {
@@ -75,6 +80,7 @@
     flex-direction: column;
     align-items: baseline;
     align-content: baseline;
+    width: 100%;
 
     & > div {
       white-space: pre;
@@ -107,4 +113,8 @@
 .link:hover,
 .link:active {
   text-decoration: none;
+}
+
+.link {
+  width: 100%;
 }
