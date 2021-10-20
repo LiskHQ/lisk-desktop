@@ -1,5 +1,6 @@
 import {
-  accountDataUpdated, transactionsRetrieved, settingsUpdated, votesRetrieved, emptyTransactionsData,
+  accountDataUpdated, transactionsRetrieved, settingsUpdated,
+  votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
 } from '@actions';
 
 import {
@@ -119,6 +120,17 @@ const account = {
   },
 };
 
+const settings = {
+  token: { active: 'LSK' },
+  statistics: false,
+  network: {
+    name: 'customNode',
+    address: 'http://example.com',
+  },
+  statisticsRequest: true,
+  statisticsFollowingDay: true,
+};
+
 const defaultState = {
   network,
   account,
@@ -135,7 +147,7 @@ const defaultState = {
     },
   },
   delegate: {},
-  settings: { token: { active: 'LSK' }, statistics: false },
+  settings,
 };
 
 describe('Account middleware', () => {
@@ -176,6 +188,41 @@ describe('Account middleware', () => {
       };
       middleware(store)(next)(actionNewBlockCreatedAction);
       expect(next).toHaveBeenCalledWith(actionNewBlockCreatedAction);
+    });
+  });
+
+  describe('on settingsRetrieved', () => {
+    it('should set the network from the settings', () => {
+      const accountLoggedOutAction = {
+        type: actionTypes.settingsRetrieved,
+      };
+      middleware(store)(next)(accountLoggedOutAction);
+      expect(networkSelected).toHaveBeenCalledWith(settings.network);
+      expect(networkStatusUpdated).toHaveBeenCalled();
+    });
+
+    it('should set the network from defaults if no value stored in the settings', () => {
+      const accountLoggedOutAction = {
+        type: actionTypes.settingsRetrieved,
+      };
+
+      const noNetworkState = {
+        ...defaultState,
+        settings: {
+          ...defaultState.settings,
+          network: {},
+        },
+      };
+
+      const noNetworkStore = {
+        dispatch: jest.fn().mockImplementation(() => ({})),
+        getState: () => noNetworkState,
+      };
+      middleware(noNetworkStore)(next)(accountLoggedOutAction);
+      expect(networkSelected).toHaveBeenCalledWith({
+        address: 'https://service.lisk.com',
+        name: 'mainnet',
+      });
     });
   });
 

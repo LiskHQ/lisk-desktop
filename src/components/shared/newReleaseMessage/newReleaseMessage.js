@@ -27,16 +27,16 @@ const NewReleaseMessage = ({
           {releaseSummary}
           <div className={styles.btnContainer}>
             <SecondaryButton
-              className={`${styles.button} ${theme === 'dark' ? theme : ''}`}
+              className={`${styles.button} read-more ${theme === 'dark' ? theme : ''}`}
               size="s"
-              onClick={updateNow}
+              onClick={readMore}
             >
               {t('Read more')}
             </SecondaryButton>
             <PrimaryButton
-              className={`${styles.button} ${styles.primary} ${theme}`}
+              className={`${styles.button} update-now ${styles.primary} ${theme}`}
               size="s"
-              onClick={readMore}
+              onClick={updateNow}
             >
               {t('Update now')}
             </PrimaryButton>

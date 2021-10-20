@@ -2,8 +2,14 @@ import React from 'react';
 import i18next from 'i18next';
 import { mount } from 'enzyme';
 import { routes } from '@constants';
+import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
+
+jest.mock('@toolbox/flashMessage/holder', () => ({
+  addMessage: jest.fn(),
+  deleteMessage: jest.fn(),
+}));
 
 describe('Login', () => {
   let wrapper;
@@ -66,6 +72,7 @@ describe('Login', () => {
   const { passphrase } = accounts.genesis;
 
   beforeEach(() => {
+    jest.restoreAllMocks();
     localStorage.getItem = jest.fn().mockReturnValue(JSON.stringify(undefined));
     wrapper = mount(<Login {...props} />);
   });
@@ -115,7 +122,38 @@ describe('Login', () => {
       wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
       wrapper.update();
       wrapper.find('button.login-button').simulate('submit');
-      expect(props.login).toHaveBeenCalled();
+      expect(props.login).toHaveBeenCalledWith({
+        derivationPath: "m/44'/134'/0'",
+        isRecoveryPhraseMode: false,
+        passphrase: accounts.delegate.passphrase,
+      });
+    });
+  });
+
+  describe('Recovery phrase mode', () => {
+    it('Should show and hide warning', () => {
+      wrapper.find('.recovery-phrase-check input').simulate('change', { target: { checked: true } });
+      expect(FlashMessageHolder.addMessage).toHaveBeenCalled();
+
+      wrapper.find('.recovery-phrase-check input').simulate('change', { target: { checked: true } });
+      expect(FlashMessageHolder.deleteMessage).toHaveBeenCalled();
+    });
+
+    it('Should allow custom path and call login with', () => {
+      const derivationPath = "m/44'/134'/0'";
+      wrapper.find('.recovery-phrase-check input').simulate('change', { target: { checked: true } });
+      wrapper.find('.custom-derivation-check input').simulate('change', { target: { checked: true } });
+      const clipboardData = {
+        getData: () => accounts.delegate.passphrase,
+      };
+      wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
+      wrapper.update();
+      wrapper.find('button.login-button').simulate('submit');
+      expect(props.login).toHaveBeenCalledWith({
+        derivationPath,
+        isRecoveryPhraseMode: true,
+        passphrase: accounts.delegate.passphrase,
+      });
     });
   });
 });

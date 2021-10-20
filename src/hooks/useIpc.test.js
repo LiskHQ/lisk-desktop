@@ -60,7 +60,7 @@ describe('useIpc', () => {
     callbacks['update:available']({}, { version, releaseNotes });
     wrapper.update();
     expect(wrapper).toIncludeText('dummy text');
-    wrapper.find('button').at(1).simulate('click');
+    wrapper.find('button.read-more').simulate('click');
 
     expect(mockHistory.push).toBeCalledTimes(1);
   });
@@ -74,7 +74,7 @@ describe('useIpc', () => {
     const releaseNotes = '<h4>dummy text</h4><h3>Fixed bugs</h3>';
     callbacks['update:available']({}, { version, releaseNotes });
     wrapper.update();
-    wrapper.find('button').at(0).simulate('click');
+    wrapper.find('button.update-now').simulate('click');
     jest.runAllTimers();
     dialogWrapper.update();
 

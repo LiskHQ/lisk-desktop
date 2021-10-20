@@ -24,9 +24,9 @@ describe('New release message banner', () => {
   it('Should render correctly with all passed props', () => {
     expect(wrapper).not.toIncludeText('Fixed bugs');
     expect(wrapper).toIncludeText('Release Summary');
-    wrapper.find('button').at(0).simulate('click');
+    wrapper.find('button.update-now').simulate('click');
     expect(props.updateNow).toHaveBeenCalled();
-    wrapper.find('button').at(1).simulate('click');
+    wrapper.find('button.read-more').simulate('click');
     expect(props.readMore).toHaveBeenCalled();
   });
 });

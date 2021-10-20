@@ -39,6 +39,7 @@ describe('Reducer: network(state, action)', () => {
     const newState = {
       status: action.data,
       networks: {},
+      storedCustomNetwork: '',
     };
     const changedState = network(state, action);
     expect(changedState).toEqual(newState);
@@ -56,8 +57,36 @@ describe('Reducer: network(state, action)', () => {
       status: {},
       networks: {},
       lastBtcUpdate: action.data,
+      storedCustomNetwork: '',
     };
     const changedState = network(state, action);
     expect(changedState).toEqual(newState);
+  });
+
+  it('should store new network info on customNetworkStored', () => {
+    const action = {
+      type: actionTypes.customNetworkStored,
+      data: 'http://example.com',
+    };
+    const state = {
+      storedCustomNetwork: '',
+    };
+    const changedState = network(state, action);
+    expect(changedState).toEqual({
+      storedCustomNetwork: 'http://example.com',
+    });
+  });
+
+  it('should remove existing network info on customNetworkRemoved', () => {
+    const action = {
+      type: actionTypes.customNetworkRemoved,
+    };
+    const state = {
+      storedCustomNetwork: 'http://example.com',
+    };
+    const changedState = network(state, action);
+    expect(changedState).toEqual({
+      storedCustomNetwork: '',
+    });
   });
 });

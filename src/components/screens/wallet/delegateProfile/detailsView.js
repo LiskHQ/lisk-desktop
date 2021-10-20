@@ -1,19 +1,20 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTheme } from '@utils/theme';
-import { tokenMap, MIN_VOTES_RECEIVED } from '@constants';
+import { tokenMap } from '@constants';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxHeader from '@toolbox/box/header';
 import Icon from '@toolbox/icon';
 import { DateTimeFromTimestamp } from '@toolbox/timestamp';
 import LiskAmount from '@shared/liskAmount';
+import { getStatus } from './performanceView';
 import styles from './delegateProfile.css';
 
-const DetailsView = ({
-  t, rank, delegateWeight, lastBlockForged, status,
-}) => {
+const DetailsView = ({ t, data, lastBlockForged }) => {
   const theme = useTheme();
+  const { rank } = data;
+  const status = getStatus(data);
 
   return (
     <Box className={`${grid.col} ${grid['col-xs-12']} ${grid['col-md-3']} ${styles.detailsContainer} details-container`}>
@@ -32,10 +33,8 @@ const DetailsView = ({
           <Icon name="clockActive" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
             <div className={`${styles.title} ${theme}`}>{t('Status')}</div>
-            <div className={styles.value}>
-              {
-                delegateWeight < MIN_VOTES_RECEIVED ? 'Ineligible' : status
-              }
+            <div className={`${styles.value} ${styles.capitalized}`}>
+              { status.toLowerCase() }
             </div>
           </div>
         </div>
@@ -44,7 +43,7 @@ const DetailsView = ({
           <div className={`${grid.col} ${styles.item}`}>
             <div className={`${styles.title} ${theme}`}>{t('Delegate weight')}</div>
             <div className={styles.value}>
-              <LiskAmount val={delegateWeight} token={tokenMap.LSK.key} />
+              <LiskAmount val={data.totalVotesReceived} token={tokenMap.LSK.key} />
             </div>
           </div>
         </div>

@@ -302,12 +302,11 @@ export const getTransactionFee = async ({
 export const create = ({
   network,
   account,
-  passphrase,
   transactionObject,
 // eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
   const {
-    summary: { publicKey, isMultisignature },
+    summary: { publicKey, isMultisignature, privateKey },
     keys,
     sequence,
   } = account;
@@ -332,11 +331,11 @@ export const create = ({
         mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
       };
 
-      signedTransaction = transactions.signMultiSignatureTransaction(
+      signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
         schema,
         transaction,
         networkIdentifier,
-        passphrase,
+        Buffer.from(privateKey, 'hex'),
         keysInBinary,
         isMultiSignatureRegistration,
       );
@@ -360,21 +359,21 @@ export const create = ({
           optionalKeys: transactionKeys.optionalKeys.map(convertStringToBinary),
         };
 
-        signedTransaction = transactions.signMultiSignatureTransaction(
+        signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
           schema,
           tx,
           networkIdentifier,
-          passphrase,
+          Buffer.from(privateKey, 'hex'),
           transactionKeysInBinary,
           isMultiSignatureRegistration,
         );
       }
     } else {
-      signedTransaction = transactions.signTransaction(
+      signedTransaction = transactions.signTransactionWithPrivateKey(
         schema,
         transaction,
         networkIdentifier,
-        passphrase,
+        Buffer.from(privateKey, 'hex'),
       );
     }
 

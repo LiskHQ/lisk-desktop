@@ -180,8 +180,8 @@ import delegateActive from '../../../assets/images/icons/delegate-active.svg';
 import delegateActiveDark from '../../../assets/images/icons/delegate-active-dark.svg';
 import delegateStandby from '../../../assets/images/icons/delegate-standby.svg';
 import delegateStandbyDark from '../../../assets/images/icons/delegate-standby-dark.svg';
-import delegateNonEligible from '../../../assets/images/icons/delegate-non-eligible.svg';
-import delegateNonEligibleDark from '../../../assets/images/icons/delegate-non-eligible-dark.svg';
+import delegateInEligible from '../../../assets/images/icons/delegate-non-eligible.svg';
+import delegateInEligibleDark from '../../../assets/images/icons/delegate-non-eligible-dark.svg';
 import delegatePunished from '../../../assets/images/icons/delegate-punished.svg';
 import delegatePunishedDark from '../../../assets/images/icons/delegate-punished-dark.svg';
 import delegateBanned from '../../../assets/images/icons/delegate-banned.svg';
@@ -369,12 +369,12 @@ export const icons = {
   delegateAwaitingDark,
   delegateActive,
   delegateStandby,
-  delegateNonEligible,
+  delegateInEligible,
   delegatePunished,
   delegateBanned,
   delegateActiveDark,
   delegateStandbyDark,
-  delegateNonEligibleDark,
+  delegateInEligibleDark,
   delegatePunishedDark,
   delegateBannedDark,
   eyeActive,

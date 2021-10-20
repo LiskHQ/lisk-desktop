@@ -1,6 +1,9 @@
 import { actionTypes } from '@constants';
 import { getNetworkConfig } from '@api/network';
-import { networkSelected, networkConfigSet, networkStatusUpdated } from './network';
+import {
+  networkSelected, networkConfigSet, networkStatusUpdated,
+  customNetworkStored, customNetworkRemoved,
+} from './network';
 
 jest.mock('@api/network', () => ({ getNetworkConfig: jest.fn() }));
 
@@ -41,6 +44,21 @@ describe('actions: network', () => {
       });
       expect(action.data).toMatchObject({ name: data.name, networks: expect.anything() });
       expect(getNetworkConfig).toHaveBeenCalled();
+    });
+  });
+
+  describe('customNetworkStored', () => {
+    it('should create customNetworkStored action', () => {
+      const data = 'http:example.com';
+      const action = customNetworkStored(data);
+      expect(action).toMatchObject({ type: actionTypes.customNetworkStored, data });
+    });
+  });
+
+  describe('customNetworkRemoved', () => {
+    it('should create customNetworkRemoved action', () => {
+      const action = customNetworkRemoved();
+      expect(action).toMatchObject({ type: actionTypes.customNetworkRemoved });
     });
   });
 });
