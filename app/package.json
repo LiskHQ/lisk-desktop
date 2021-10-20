@@ -6,7 +6,7 @@
   "main": "./build/main.js",
   "author": {
     "name": "Lisk Foundation",
-    "email": "admin@lisk.io"
+    "email": "admin@lisk.com"
   },
   "dependencies": {
     "get-port": "5.1.1",

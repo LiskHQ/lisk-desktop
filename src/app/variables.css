@@ -140,6 +140,7 @@ or "warn/action" ineastd of "red/green"
   --color-dark-gray: #868ba1;
   --color-light-gray: #e6e6e6;
   --color-very-light-gray: #dfe6f2;
+  --color-extra-light-gray: #dbe1ee;
   --color-content-grayblue: #7383a7;
   --color-background-wrapper: var(--color-mystic);
   --color-background-header: #fbfcfd;

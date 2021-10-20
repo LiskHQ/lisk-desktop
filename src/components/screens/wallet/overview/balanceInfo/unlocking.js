@@ -12,17 +12,19 @@ import {
 import Icon from '@toolbox/icon';
 import styles from './balanceInfo.css';
 
-const Link = ({ sum }) => (
+const Link = ({ sum, style, icon }) => (
   <DialogLink
-    className={`${styles.lockedBalance} ${styles.pointer} open-unlock-balance-dialog`}
+    className={`${styles.lockedBalance} ${styles.pointer} ${style} open-unlock-balance-dialog`}
     component="lockedBalance"
   >
-    <Icon name="lock" />
+    <Icon name={icon || 'lock'} />
     {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
   </DialogLink>
 );
 
-const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
+const LockedBalanceLink = ({
+  activeToken, isWalletRoute, style, icon,
+}) => {
   const host = useSelector(state => getActiveTokenAccount(state));
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   const lockedInUnvotes = activeToken === tokenMap.LSK.key && isWalletRoute && host
@@ -30,7 +32,7 @@ const LockedBalanceLink = ({ activeToken, isWalletRoute }) => {
 
   if (lockedInUnvotes + lockedInVotes > 0) {
     return (
-      <Link sum={lockedInUnvotes + lockedInVotes} />
+      <Link sum={lockedInUnvotes + lockedInVotes} style={style} icon={icon} />
     );
   }
   return null;

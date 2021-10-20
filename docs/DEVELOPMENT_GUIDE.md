@@ -25,7 +25,7 @@ This is a live document, please expect updates and unfinished content.
 This project and everyone participating in it is governed by the
 [Lisk Code of Conduct](https://github.com/LiskHQ/lisk/blob/development/docs/CODE_OF_CONDUCT.md). By participating, you are
 expected to uphold this code. Please report the unacceptable behavior to
-[info@lisk.io](mailto:info@lisk.io).
+[info@lisk.com](mailto:info@lisk.com).
 
 ## Project License
 

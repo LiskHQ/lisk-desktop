@@ -60,6 +60,9 @@ module.exports = {
     'src/actions/transactions.js',
     'src/actions/network/lsk.js',
     'src/store/index.js',
+    'src/store/reducers/settings.js',
+    'src/store/reducers/bookmarks.js',
+    'src/store/reducers/network.js',
     'src/store/reducers/filters.js', // To be removed in #2175
     'src/store/middlewares/network.js',
     'src/store/middlewares/account.js',
