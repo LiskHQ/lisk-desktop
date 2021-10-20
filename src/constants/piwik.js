@@ -1,5 +1,5 @@
 export default {
-  URL: 'https://matomo.lisk.io',
+  URL: 'https://matomo.lisk.com',
   SITE_ID: 1,
   DELETE_CUSTOM_VARIABLE: 'deleteCustomVariable',
   ENABLE_HEART_BEAT_TIMER: 'enableHeartBeatTimer',
