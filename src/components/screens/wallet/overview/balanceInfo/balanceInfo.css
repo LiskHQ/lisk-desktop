@@ -84,13 +84,6 @@
     }
   }
 
-  & .voteButton:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-    color: gray;
-    font-weight: 100;
-  }
-
   & .sendButton {
     &.LSK {
       background-color: var(--color-ultramarine-blue);
@@ -115,4 +108,11 @@
     width: 17px;
     margin-right: 8px;
   }
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  color: gray;
+  font-weight: 100;
 }

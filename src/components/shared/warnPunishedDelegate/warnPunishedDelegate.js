@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -13,12 +13,19 @@ const WarnPunishedDelegate = ({
   readMore,
   isBanned,
   pomHeights,
+  startHeight,
+  endHeight,
+  timestamp,
   ...props
 }) => {
   const theme = useTheme();
 
-  const getPunishmentDetails = (punishedHeights, punishedTimestamp) => {
-    const { start, end } = punishedHeights && punishedHeights[punishedHeights.length - 1];
+  useEffect(() => {
+    timestamp.loadData();
+  }, []);
+
+  const getPunishmentDetails = (punishedTimestamp) => {
+    const { start, end } = pomHeights && pomHeights[pomHeights.length - 1];
     const startDate = new Date(punishedTimestamp * 1000);
     const punishmentStartDate = moment(startDate).format('MM.DD.YYYY');
     // 10: block slot interval, 60: minutes, 24: hours
@@ -28,11 +35,15 @@ const WarnPunishedDelegate = ({
     return { daysLeft, punishmentStartDate };
   };
 
-  const { daysLeft, punishmentStartDate } = getPunishmentDetails(pomHeights, 1629632440);
+  const { daysLeft, punishmentStartDate } = getPunishmentDetails(
+    timestamp.data.timestamp,
+  );
 
   const message = isBanned
-    ? 'This delegate has been permanently banned from MM.DD.YYYY'
-    : `Caution! This delegate has been punished for ${daysLeft} days starting from ${punishmentStartDate}`;
+    ? `This delegate has been permanently banned from ${punishmentStartDate && punishmentStartDate}`
+    : `Caution! This delegate has been punished for ${
+      daysLeft && daysLeft
+    } days starting from ${punishmentStartDate && punishmentStartDate}`;
 
   return (
     <FlashMessage

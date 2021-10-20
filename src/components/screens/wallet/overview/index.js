@@ -9,7 +9,7 @@ import { addSearchParamsToUrl } from '@utils/searchParams';
 import { getTransactions } from '@api/transaction';
 import { selectTransactions } from '@store/selectors';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
-import WarnPunishedDelegate from '@shared/warnPunishedDelegate/warnPunishedDelegate';
+import WarnPunishedDelegate from '@shared/warnPunishedDelegate';
 import { withRouter } from 'react-router';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';

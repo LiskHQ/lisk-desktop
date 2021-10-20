@@ -16,6 +16,7 @@ import SignInTooltipWrapper from '@shared/signInTooltipWrapper';
 import LockedBalanceLink from './unlocking';
 import styles from './balanceInfo.css';
 
+// eslint-disable-next-line complexity
 const BalanceInfo = ({
   t,
   activeToken,
@@ -60,7 +61,7 @@ const BalanceInfo = ({
           <div className={styles.actionRow}>
             {username ? (
               <DialogLink
-                component="editVote"
+                component={!isBanned && 'editVote'}
                 className={`${styles.button} add-vote`}
               >
                 <Tooltip
@@ -68,9 +69,9 @@ const BalanceInfo = ({
                   size="maxContent"
                   content={(
                     <SecondaryButton
-                      className={`${styles.voteButton} open-add-vote-dialog`}
+                      className={`${styles.voteButton} ${
+                        isBanned && styles.disabled} ${!isBanned && 'open-add-vote-dialog'}`}
                       size="m"
-                      disabled={isBanned}
                     >
                       {voteButtonTitle}
                     </SecondaryButton>
