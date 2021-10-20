@@ -1,3 +1,4 @@
+import { act } from 'react-dom/test-utils';
 import * as votingActions from '@actions';
 import { mountWithRouterAndStore } from '@utils/testHelpers';
 import EditVote from './index';
@@ -34,8 +35,8 @@ describe('EditVote', () => {
     account: {
       passphrase: 'test',
       info: {
-        LSK: { summary: { address: '123456L' } },
-        BTC: { summary: { address: '123456L' } },
+        LSK: { summary: { address: '123456L', balance: 10004674000 } },
+        BTC: { summary: { address: '123456L', balance: 0 } },
       },
     },
   };
@@ -93,6 +94,25 @@ describe('EditVote', () => {
       address: '123456L',
       amount: 2e9,
     }]);
+  });
+
+  it('should display error if called with amount that will cause insufficient balance after voting', () => {
+    const wrapper = mountWithRouterAndStore(
+      EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
+    );
+    let amountField = wrapper.find('input[name="vote"]').at(0);
+    amountField.simulate('change', {
+      target: {
+        value: 100,
+        name: 'vote',
+      },
+    });
+    act(() => { jest.advanceTimersByTime(300); });
+    wrapper.update();
+    amountField = wrapper.find('input[name="vote"]').at(0);
+
+    expect(amountField.find('.error')).toHaveClassName('error');
+    expect(wrapper.find('.amount Feedback')).toHaveText('The vote amount is too high. You should keep at least 0.05 LSK available in your account.');
   });
 
   it('should dispatch remove vote for host if called with address search param', () => {

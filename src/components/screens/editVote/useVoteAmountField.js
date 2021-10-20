@@ -10,13 +10,15 @@ let loaderTimeout = null;
  * Returns error and feedback of vote amount field.
  *
  * @param {String} value - The vote amount value in Beddows
+ * @param {Number} balance - The account balance value in Beddows
  * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value) => {
+const getAmountFeedbackAndError = (value, balance) => {
   const { message: feedback } = validateAmountFormat({
     value,
     token: tokenMap.LSK.key,
-    checklist: ['FORMAT', 'VOTE_10X'],
+    funds: balance,
+    checklist: ['FORMAT', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'VOTES_MAX'],
   });
 
   return { error: !!feedback, feedback };
@@ -43,9 +45,10 @@ const getAmountFeedbackAndError = (value) => {
  * Also provides a setter function
  *
  * @param {String} initialValue - The initial vote amount value in Beddows
+ * @param {Number} accountBalance - The account balance value in Beddows
  * @returns {[Boolean, Function]} The error flag, The setter function
  */
-const useVoteAmountField = (initialValue) => {
+const useVoteAmountField = (initialValue, accountBalance) => {
   const { i18n } = useTranslation();
   const [amountField, setAmountField] = useState({
     value: initialValue,
@@ -65,7 +68,7 @@ const useVoteAmountField = (initialValue) => {
     }
   }, [initialValue]);
 
-  const onAmountInputChange = ({ value }) => {
+  const onAmountInputChange = ({ value }, balance = accountBalance) => {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
     clearTimeout(loaderTimeout);
@@ -79,7 +82,7 @@ const useVoteAmountField = (initialValue) => {
       setAmountField({
         isLoading: false,
         value,
-        ...getAmountFeedbackAndError(value),
+        ...getAmountFeedbackAndError(value, balance),
       });
     }, 300);
   };
