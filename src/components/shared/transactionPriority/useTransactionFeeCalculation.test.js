@@ -42,6 +42,7 @@ describe('useTransactionFeeCalculation', () => {
         numberOfSignatures: 10,
         optionalKeys: [],
         mandatoryKeys: [],
+        members: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
       },
     },
     selectedPriority: { value: 1, selectedIndex: 0 },
