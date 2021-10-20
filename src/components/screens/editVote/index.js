@@ -79,7 +79,9 @@ const AddVote = ({
           <BoxInfoText className={styles.accountInfo}>
             <p className={styles.balanceTitle}>Available balance</p>
             <div className={styles.balanceDetails}>
-              <LiskAmount val={balance} token={activeToken} />
+              <span className={styles.lskValue}>
+                <LiskAmount val={balance} token={activeToken} />
+              </span>
               <Converter
                 className={styles.fiatValue}
                 value={fromRawLsk(balance)}
