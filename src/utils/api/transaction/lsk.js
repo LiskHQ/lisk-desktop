@@ -266,7 +266,6 @@ export const getTransactionFee = async ({
     numberOfSignatures,
     numberOfEmptySignatures,
   });
-  console.log('minFee', minFee);
 
   // tie breaker is only meant for medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
@@ -277,7 +276,6 @@ export const getTransactionFee = async ({
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
   const cappedFee = Math.min(calculatedFee, maxAssetFee);
   const feeInLsk = fromRawLsk(cappedFee.toString());
-  console.log('feeInLsk', feeInLsk);
   const roundedValue = Number(feeInLsk).toFixed(7).toString();
 
   const feedback = transaction.amount === ''

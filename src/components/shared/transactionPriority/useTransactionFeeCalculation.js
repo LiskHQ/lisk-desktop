@@ -18,11 +18,9 @@ const useTransactionFeeCalculation = ({
   const [state, dispatch] = useReducer(reducer, account, getInitialState);
 
   const calculateTransactionFees = async (params) => {
-    console.log('calculate normal fee');
     const fee = await getTransactionFee(params, token);
     dispatch({ type: actionTypes.setFee, payload: { response: fee, account, token } });
 
-    console.log('calculate MIN fee');
     const minFee = await getTransactionFee({
       ...params,
       selectedPriority: priorityOptions[0],
@@ -30,7 +28,6 @@ const useTransactionFeeCalculation = ({
 
     dispatch({ type: actionTypes.setMinFee, payload: { response: minFee, account, token } });
 
-    console.log('calculate MAX fee');
     const maxAmountFee = await getTransactionFee({
       ...params,
       transaction: { ...params.transaction, amount: account.token?.balance },
