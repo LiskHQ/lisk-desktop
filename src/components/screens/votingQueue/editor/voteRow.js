@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { tokenMap } from '@constants';
 import { voteEdited } from '@actions';
+import { selectAccountBalance } from '@store/selectors';
 import { fromRawLsk, toRawLsk } from '@utils/lsk';
 import { truncateAddress } from '@utils/account';
 import AccountVisual from '@toolbox/accountVisual';
@@ -24,7 +25,8 @@ const VoteRow = ({
 }) => {
   const [state, setState] = useState(unconfirmed === '' ? ComponentState.editing : ComponentState.notEditing);
   const dispatch = useDispatch();
-  const [voteAmount, setVoteAmount] = useVoteAmountField(fromRawLsk(unconfirmed));
+  const balance = useSelector(selectAccountBalance);
+  const [voteAmount, setVoteAmount] = useVoteAmountField(fromRawLsk(unconfirmed), balance);
   const truncatedAddress = truncateAddress(address);
 
   const handleFormSubmission = (e) => {
