@@ -43,7 +43,7 @@ const AddVote = ({
   const existingVote = useSelector(state => state.voting[address || host]);
   const activeToken = tokenMap.LSK.key;
   const balance = useSelector(selectAccountBalance);
-  const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');
+  const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '', balance);
   const mode = existingVote ? 'edit' : 'add';
 
   const confirm = () => {
@@ -106,7 +106,7 @@ const AddVote = ({
               </WarningButton>
             )
           }
-          <PrimaryButton className={`${styles.confirmButton} confirm`} onClick={confirm}>
+          <PrimaryButton className={`${styles.confirmButton} confirm`} onClick={confirm} disabled={voteAmount.error}>
             {t('Confirm')}
           </PrimaryButton>
         </BoxFooter>

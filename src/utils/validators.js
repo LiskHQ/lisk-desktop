@@ -60,7 +60,7 @@ export const validateLSKPublicKey = (publicKey) => {
  * - Validate structure of the value, just one . or ,
  * - Not ending with . or ,
  * - Check that has no more than 8 floating points digits
- * @param {Object.<string, srting>} data
+ * @param {Object.<string, string>} data
  * @param {string} data.value
  * @param {string} [data.token="LSK"] The active token
  * @param {string} [data.locale="en"] The locale for testing the format against
@@ -104,6 +104,13 @@ export const validateAmountFormat = ({
     },
     MIN_BALANCE: {
       message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
+      fn: () => {
+        const rawValue = toRawLsk(numeral(value).value());
+        return funds - rawValue < minAccountBalance;
+      },
+    },
+    VOTES_MAX: {
+      message: i18n.t('The vote amount is too high. You should keep at least 0.05 LSK available in your account.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
         return funds - rawValue < minAccountBalance;
