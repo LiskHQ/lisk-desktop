@@ -50,7 +50,6 @@ const Overview = ({
   };
 
   const isBanned = account?.dpos?.delegate?.isBanned;
-
   const pomHeights = account?.dpos?.delegate?.pomHeights;
 
   const showWarning = () => {

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { compose } from 'redux';
+import withData from '@utils/withData';
+import { getAccount } from '@api/account';
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
 import { tokenMap } from '@constants';
 import { voteEdited } from '@actions';
@@ -18,9 +20,17 @@ import AmountField from '@shared/amountField';
 import LiskAmount from '@shared/liskAmount';
 import Converter from '@shared/converter';
 import { PrimaryButton, WarningButton } from '@toolbox/buttons';
+import Icon from '@toolbox/icon';
 import useVoteAmountField from './useVoteAmountField';
 
 import styles from './editVote.css';
+
+const WarningMessage = ({ t }) => (
+  <div className={styles.warningContainer}>
+    <Icon name="warningYellow" />
+    {t('Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of XX days. In addition, please note that your vote will not be counted until the XX day period has expired.')}
+  </div>
+);
 
 const getTitles = t => ({
   edit: {
@@ -35,16 +45,20 @@ const getTitles = t => ({
 
 // eslint-disable-next-line max-statements
 const AddVote = ({
-  history, t,
+  history, t, account,
 }) => {
   const dispatch = useDispatch();
   const host = useSelector(state => state.account.info.LSK.summary.address);
   const address = selectSearchParamValue(history.location.search, 'address');
+  const pomHeights = account.data.dpos?.delegate?.pomHeights;
   const existingVote = useSelector(state => state.voting[address || host]);
-  const activeToken = tokenMap.LSK.key;
   const balance = useSelector(selectAccountBalance);
   const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '', balance);
   const mode = existingVote ? 'edit' : 'add';
+
+  useEffect(() => {
+    account.loadData();
+  }, [address]);
 
   const confirm = () => {
     dispatch(voteEdited([{
@@ -68,6 +82,7 @@ const AddVote = ({
 
   return (
     <Dialog hasClose className={styles.wrapper}>
+      {pomHeights?.length && <WarningMessage t={t} />}
       <Box>
         <BoxHeader>
           <h1>{titles.title}</h1>
@@ -80,7 +95,7 @@ const AddVote = ({
             <p className={styles.balanceTitle}>Available balance</p>
             <div className={styles.balanceDetails}>
               <span className={styles.lskValue}>
-                <LiskAmount val={balance} token={activeToken} />
+                <LiskAmount val={balance} token={tokenMap.LSK.key} />
               </span>
               <Converter
                 className={styles.fiatValue}
@@ -117,4 +132,20 @@ const AddVote = ({
   );
 };
 
-export default withRouter(withTranslation()(AddVote));
+const apis = {
+  account: {
+    apiUtil: (network, { token, ...params }) => getAccount({ network, params }, token),
+    getApiParams: (state, props) => ({
+      token: tokenMap.LSK.key,
+      address: selectSearchParamValue(props.history.location.search, 'address'),
+      network: state.network,
+    }),
+    transformResponse: response => response,
+  },
+};
+
+export default compose(
+  withRouter,
+  withData(apis),
+  withTranslation(),
+)(AddVote);
