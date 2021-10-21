@@ -8,6 +8,30 @@ import { SecondaryButton } from '@toolbox/buttons';
 import Icon from '@toolbox/icon';
 import styles from './warnPunishedDelegate.css';
 
+const getPunishmentDetails = (punishedTimestamp, pomHeights) => {
+  const { start, end } = pomHeights && pomHeights[pomHeights.length - 1];
+  const startDate = new Date(punishedTimestamp * 1000);
+  const punishmentStartDate = moment(startDate).format('MM.DD.YYYY');
+  // 10: block slot interval, 60: minutes, 24: hours
+  const numOfBlockPerDay = 10 * 60 * 24;
+  const daysLeft = Math.ceil((end - start) / numOfBlockPerDay);
+
+  return { daysLeft, punishmentStartDate };
+};
+
+const getMessage = ({
+  isBanned, pomHeights, timestamp, t,
+}) => {
+  const { daysLeft, punishmentStartDate } = getPunishmentDetails(
+    timestamp.data.timestamp,
+    pomHeights,
+  );
+
+  return isBanned
+    ? t('This delegate has been permanently banned from {{punishmentStartDate}}', { punishmentStartDate })
+    : t('Caution! This delegate has been punished for {{daysLeft}} days starting from {{punishmentStartDate}}', { daysLeft, punishmentStartDate })
+};
+
 const WarnPunishedDelegate = ({
   t,
   readMore,
@@ -24,26 +48,9 @@ const WarnPunishedDelegate = ({
     timestamp.loadData();
   }, []);
 
-  const getPunishmentDetails = (punishedTimestamp) => {
-    const { start, end } = pomHeights && pomHeights[pomHeights.length - 1];
-    const startDate = new Date(punishedTimestamp * 1000);
-    const punishmentStartDate = moment(startDate).format('MM.DD.YYYY');
-    // 10: block slot interval, 60: minutes, 24: hours
-    const numOfBlockPerDay = 10 * 60 * 24;
-    const daysLeft = Math.ceil((end - start) / numOfBlockPerDay);
-
-    return { daysLeft, punishmentStartDate };
-  };
-
-  const { daysLeft, punishmentStartDate } = getPunishmentDetails(
-    timestamp.data.timestamp,
-  );
-
-  const message = isBanned
-    ? `This delegate has been permanently banned from ${punishmentStartDate && punishmentStartDate}`
-    : `Caution! This delegate has been punished for ${
-      daysLeft && daysLeft
-    } days starting from ${punishmentStartDate && punishmentStartDate}`;
+  const message = getMessage({
+    isBanned, pomHeights, timestamp, t,
+  });
 
   return (
     <FlashMessage
