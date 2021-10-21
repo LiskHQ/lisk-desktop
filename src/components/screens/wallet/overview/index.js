@@ -16,6 +16,21 @@ import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
 import styles from './overview.css';
 
+const addWarningMessage = ({ isBanned, pomHeights, readMore }) => {
+  FlashMessageHolder.addMessage(
+    <WarnPunishedDelegate
+      isBanned={isBanned}
+      pomHeights={pomHeights}
+      readMore={readMore}
+    />,
+    'WarnPunishedDelegate',
+  );
+};
+
+const removeWarningMessage = () => {
+  FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
+};
+
 const Overview = ({
   t,
   activeToken,
@@ -32,10 +47,12 @@ const Overview = ({
     balance = 0,
     isMultisignature,
   } = account?.summary ?? {};
+  const isBanned = account?.dpos?.delegate?.isBanned;
+  const pomHeights = account?.dpos?.delegate?.pomHeights;
+
   const { confirmed } = useSelector(selectTransactions);
   const bookmark = useSelector((state) =>
     state.bookmarks[activeToken].find((item) => item.address === address));
-
   const host = useSelector(
     (state) =>
       (state.account
@@ -45,32 +62,24 @@ const Overview = ({
       || '',
   );
 
-  const readMore = () => {
-    addSearchParamsToUrl({ modal: 'readMore' });
-  };
-
-  const isBanned = account?.dpos?.delegate?.isBanned;
-  const pomHeights = account?.dpos?.delegate?.pomHeights;
-
   const showWarning = () => {
     if (!isWalletRoute && address && (isBanned || pomHeights?.length)) {
-      FlashMessageHolder.addMessage(
-        <WarnPunishedDelegate
-          isBanned={isBanned}
-          pomHeights={pomHeights}
-          readMore={readMore}
-        />,
-        'WarnPunishedDelegate',
-      );
+      addWarningMessage({
+        isBanned,
+        pomHeights,
+        readMore: () => {
+          // TODO open blog entry
+        },
+      });
     } else {
-      FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
+      removeWarningMessage();
     }
   };
 
   useEffect(() => {
     const params = history?.location.search;
     if (params === '') {
-      FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
+      removeWarningMessage();
     }
   }, []);
 
