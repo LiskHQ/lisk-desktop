@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { routes } from '@constants';
 import { useTheme } from '@utils/theme';
 import FlashMessage from '@toolbox/flashMessage/flashMessage';
+import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import { SecondaryButton } from '@toolbox/buttons';
 import Icon from '@toolbox/icon';
 import styles from './warnPunishedDelegate.css';
@@ -34,12 +36,10 @@ const getMessage = ({
 
 const WarnPunishedDelegate = ({
   t,
-  readMore,
   isBanned,
   pomHeights,
-  startHeight,
-  endHeight,
   timestamp,
+  history,
   ...props
 }) => {
   const theme = useTheme();
@@ -47,6 +47,12 @@ const WarnPunishedDelegate = ({
   useEffect(() => {
     timestamp.loadData();
   }, []);
+
+  useEffect(() => {
+    if (history.location.pathname !== routes.account.path) {
+      FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
+    }
+  }, [history.location.pathname]);
 
   const message = getMessage({
     isBanned, pomHeights, timestamp, t,
