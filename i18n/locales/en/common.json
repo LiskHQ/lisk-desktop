@@ -72,7 +72,7 @@
   "Bytes counter": "Bytes counter",
   "Cancel": "Cancel",
   "Caution! This delegate has been punished for {{daysLeft}} days starting from {{punishmentStartDate}}": "Caution! This delegate has been punished for {{daysLeft}} days starting from {{punishmentStartDate}}",
-  "Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of XX days. In addition, please note that your vote will not be counted until the XX day period has expired.": "Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of XX days. In addition, please note that your vote will not be counted until the XX day period has expired.",
+  "Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of {{lockedTime}} days. In addition, please note that your vote will not be counted until the {{daysLeft}} day period has expired.": "Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of {{lockedTime}} days. In addition, please note that your vote will not be counted until the {{daysLeft}} day period has expired.",
   "Changed votes": "Changed votes",
   "Check for Updates...": "Check for Updates...",
   "Choose your avatar": "Choose your avatar",

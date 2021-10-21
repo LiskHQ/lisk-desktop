@@ -10,6 +10,7 @@ import { SecondaryButton } from '@toolbox/buttons';
 import Icon from '@toolbox/icon';
 import styles from './warnPunishedDelegate.css';
 
+// TODO move this calculation to utils
 const getPunishmentDetails = (punishedTimestamp, pomHeights) => {
   const { start, end } = pomHeights && pomHeights[pomHeights.length - 1];
   const startDate = new Date(punishedTimestamp * 1000);
