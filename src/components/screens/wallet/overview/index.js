@@ -67,7 +67,9 @@ const Overview = ({
         isBanned,
         pomHeights,
         readMore: () => {
-          // TODO open blog entry
+          // TODO define blog entry url
+          const url = '';
+          window.open(url, '_blank', 'rel="noopener noreferrer');
         },
       });
     } else {
