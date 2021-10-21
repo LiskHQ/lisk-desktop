@@ -84,6 +84,15 @@
     }
   }
 
+  & .registerDelegate {
+    @mixin contentLarge semi-bold;
+
+    line-height: 40px;
+    color: var(--color-ultramarine-blue);
+    flex-grow: 1;
+    cursor: pointer;
+  }
+
   & .sendButton {
     &.LSK {
       background-color: var(--color-ultramarine-blue);

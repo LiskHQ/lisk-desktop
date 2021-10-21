@@ -63,7 +63,14 @@ const BalanceInfo = ({
                     {voteButtonTitle}
                   </SecondaryButton>
                 </DialogLink>
-              ) : null
+              ) : (
+                <DialogLink
+                  className={`${styles.registerDelegate} register-delegate`}
+                  component="registerDelegate"
+                >
+                  {t('Register delegate')}
+                </DialogLink>
+              )
             }
             <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
               <PrimaryButton
