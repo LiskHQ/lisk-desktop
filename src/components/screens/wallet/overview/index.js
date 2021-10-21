@@ -5,7 +5,6 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import withData from '@utils/withData';
-import { addSearchParamsToUrl } from '@utils/searchParams';
 import { getTransactions } from '@api/transaction';
 import { selectTransactions } from '@store/selectors';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
@@ -63,7 +62,7 @@ const Overview = ({
   );
 
   const showWarning = () => {
-    if (!isWalletRoute && address && (isBanned || pomHeights?.length)) {
+    if (!isWalletRoute && host && address && (isBanned || pomHeights?.length)) {
       addWarningMessage({
         isBanned,
         pomHeights,
