@@ -37,7 +37,7 @@ const WarnPunishedDelegate = ({
       className={styles.flashContainer}
     >
       <FlashMessage.Content>
-        <div className={styles.container}>
+        <div className={`${styles.container} ${theme === 'dark' ? theme : ''}`}>
           <Icon name="warningYellow" />
           {`${message}`}
           <div className={styles.btnContainer}>

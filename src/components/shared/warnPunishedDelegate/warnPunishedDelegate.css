@@ -10,6 +10,10 @@
   align-items: center;
   width: 100%;
   font-size: 18px;
+
+  &:global(.dark) {
+    color: var(--color-zodiac-blue);
+  }
 }
 
 .btnContainer {
