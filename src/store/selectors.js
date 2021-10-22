@@ -6,8 +6,8 @@ const selectBTCAddress = state => state.account.info.BTC.address;
 const selectPublicKey = state => state.account.info[state.settings.token.active].publicKey;
 const selectTransactions = state => state.transactions;
 const selectActiveTokenAccount = state => state.account.info[state.settings.token.active];
-const selectAccountBalance = state =>
-  state.account.info[state.settings.token.active].summary.balance;
+const selectAccountBalance = state => (
+  state.account.info && state.account.info[state.settings.token.active]?.summary?.balance);
 const selectBookmarks = state => state.bookmarks[state.settings.token.active];
 const selectBookmark = (state, address) =>
   state.bookmarks[state.settings.token.active].find(item => (item.address === address));

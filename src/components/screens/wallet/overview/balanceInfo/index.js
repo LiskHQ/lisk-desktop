@@ -12,12 +12,30 @@ import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
 import Converter from '@shared/converter';
 import SignInTooltipWrapper from '@shared/signInTooltipWrapper';
+import { selectAccountBalance } from '@store/selectors';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import LockedBalanceLink from './unlocking';
 import styles from './balanceInfo.css';
+
+const EmptyBalanceTooltipWrapper = ({
+  children, t, hostBalance,
+}) => (hostBalance === 0
+  ? (
+    <Tooltip
+      className={styles.wrapper}
+      position="bottom"
+      content={React.cloneElement(children, { className: `${children.props.className} ${styles.child} disabled` })}
+    >
+      <p>{t('Top up your account to start. You can use the request panel to receive tokens from other user accounts.')}</p>
+    </Tooltip>
+  )
+  : children
+);
 
 const BalanceInfo = ({
   t, activeToken, balance, isWalletRoute, address, username,
 }) => {
+  const hostBalance = useSelector(selectAccountBalance);
   const vote = useSelector(state => state.voting[address]);
   const initialValue = isWalletRoute
     ? {}
@@ -52,37 +70,39 @@ const BalanceInfo = ({
           </DiscreetMode>
         </div>
         <SignInTooltipWrapper position="bottom">
-          <div className={styles.actionRow}>
-            {
-              username ? (
-                <DialogLink component="editVote" className={`${styles.button} add-vote`}>
-                  <SecondaryButton
-                    className={`${styles.voteButton} open-add-vote-dialog`}
-                    size="m"
+          <EmptyBalanceTooltipWrapper hostBalance={hostBalance} t={t}>
+            <div className={styles.actionRow}>
+              {
+                username ? (
+                  <DialogLink component="editVote" className={`${styles.button} add-vote`}>
+                    <SecondaryButton
+                      className={`${styles.voteButton} open-add-vote-dialog`}
+                      size="m"
+                    >
+                      {voteButtonTitle}
+                    </SecondaryButton>
+                  </DialogLink>
+                ) : (
+                  <DialogLink
+                    className={`${styles.registerDelegate} register-delegate`}
+                    component="registerDelegate"
                   >
-                    {voteButtonTitle}
-                  </SecondaryButton>
-                </DialogLink>
-              ) : (
-                <DialogLink
-                  className={`${styles.registerDelegate} register-delegate`}
-                  component="registerDelegate"
+                    {t('Register delegate')}
+                  </DialogLink>
+                )
+              }
+              <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
+                <PrimaryButton
+                  className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
+                  size="m"
+                  disable={hostBalance === 0}
                 >
-                  {t('Register delegate')}
-                </DialogLink>
-              )
-            }
-            <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
-              <PrimaryButton
-                className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
-                size="m"
-              >
-                {sendTitle}
-              </PrimaryButton>
-            </DialogLink>
-          </div>
+                  {sendTitle}
+                </PrimaryButton>
+              </DialogLink>
+            </div>
+          </EmptyBalanceTooltipWrapper>
         </SignInTooltipWrapper>
-
       </BoxContent>
     </Box>
   );
