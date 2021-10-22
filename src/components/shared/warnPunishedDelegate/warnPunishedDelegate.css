@@ -33,3 +33,14 @@
     }
   }
 }
+
+.editVoteContainer {
+  background-color: var(--color-warning-bg);
+  border: solid 1px var(--color-warning-border);
+  border-radius: 5px;
+  display: flex;
+  align-items: flex-start;
+  font-size: 18px;
+  padding: 10px;
+  margin-top: 10px;
+}

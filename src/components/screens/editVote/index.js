@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { compose } from 'redux';
-import moment from 'moment';
 import withData from '@utils/withData';
 import { getAccount } from '@api/account';
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
@@ -20,44 +19,12 @@ import BoxInfoText from '@toolbox/box/infoText';
 import AmountField from '@shared/amountField';
 import LiskAmount from '@shared/liskAmount';
 import Converter from '@shared/converter';
+import WarnPunishedDelegate from '@shared/warnPunishedDelegate';
 import { PrimaryButton, WarningButton } from '@toolbox/buttons';
-import Icon from '@toolbox/icon';
 import { getBlock } from '@api/block';
 import useVoteAmountField from './useVoteAmountField';
 
 import styles from './editVote.css';
-
-// TODO move this calculation to utils
-const getPunishmentDetails = (punishedTimestamp, pomHeights) => {
-  const { start, end } = pomHeights && pomHeights[pomHeights.length - 1];
-  const startDate = new Date(punishedTimestamp * 1000);
-  const punishmentStartDate = moment(startDate).format('MM.DD.YYYY');
-  // 10: block slot interval, 60: minutes, 24: hours
-  const numOfBlockPerDay = 10 * 60 * 24;
-  const daysLeft = Math.ceil((end - start) / numOfBlockPerDay);
-
-  return { daysLeft, punishmentStartDate };
-};
-
-const WarningMessage = ({ t, pomHeights, timestamp }) => {
-  const { daysLeft } = getPunishmentDetails(
-    timestamp.data.timestamp,
-    pomHeights,
-  );
-
-  return (
-    <div className={styles.warningContainer}>
-      <Icon name="warningYellow" />
-      {t(
-        'Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of {{lockedTime}} days. In addition, please note that your vote will not be counted until the {{daysLeft}} day period has expired.',
-        {
-          lockedTime: 'XX',
-          daysLeft,
-        },
-      )}
-    </div>
-  );
-};
 
 const getTitles = t => ({
   edit: {
@@ -117,7 +84,9 @@ const AddVote = ({
 
   return (
     <Dialog hasClose className={styles.wrapper}>
-      {pomHeights?.length && <WarningMessage t={t} pomHeights={pomHeights} timestamp={timestamp} />}
+      {pomHeights?.length && (
+        <WarnPunishedDelegate pomHeights={pomHeights} timestamp={timestamp} editVote />
+      )}
       <Box>
         <BoxHeader>
           <h1>{titles.title}</h1>
