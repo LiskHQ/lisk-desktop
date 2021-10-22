@@ -118,3 +118,11 @@
     margin-right: 8px;
   }
 }
+
+.emptyBalanceTooltipWrapper {
+  display: inline-block;
+}
+
+.emptyBalanceTooltipChild {
+  pointer-events: none;
+}

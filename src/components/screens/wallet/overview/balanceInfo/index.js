@@ -22,9 +22,9 @@ const EmptyBalanceTooltipWrapper = ({
 }) => (hostBalance === 0
   ? (
     <Tooltip
-      className={styles.wrapper}
+      className={styles.emptyBalanceTooltipWrapper}
       position="bottom"
-      content={React.cloneElement(children, { className: `${children.props.className} ${styles.child} disabled` })}
+      content={React.cloneElement(children, { className: `${children.props.className} ${styles.emptyBalanceTooltipChild} disabled` })}
     >
       <p>{t('Top up your account to start. You can use the request panel to receive tokens from other user accounts.')}</p>
     </Tooltip>
