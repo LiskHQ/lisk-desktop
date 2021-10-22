@@ -6,9 +6,9 @@ import styles from './news.css';
 
 const News = ({
   // eslint-disable-next-line camelcase
-  content_t, timestamp, url, title, author, image_url, source, t,
+  content_t, createdAt, url, title, author, image_url, source, t,
 }) => {
-  const date = moment.unix(timestamp).format('DD MMM YYYY');
+  const date = moment.unix(createdAt).format('DD MMM YYYY');
   const newsTitle = title || author;
   const authorText = author === 'LiskHQ' ? null
     // eslint-disable-next-line react/jsx-one-expression-per-line
