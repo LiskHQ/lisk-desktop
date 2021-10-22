@@ -1,13 +1,13 @@
 import { mountWithRouter } from '@utils/testHelpers';
 import { truncateAddress } from '@utils/account';
-import blocks from '../../../../../test/constants/blocks';
+import { blocks } from '../../../../../test/constants/blocks';
 import transactions from '../../../../../test/constants/transactions';
 import BlockDetails from './blockDetails';
 
 describe('BlockDetails page', () => {
   let wrapper;
   const props = {
-    t: key => key,
+    t: (key) => key,
     blockDetails: {
       isLoading: false,
       data: blocks[0],
@@ -42,7 +42,9 @@ describe('BlockDetails page', () => {
   it('renders a page properly without errors', () => {
     expect(wrapper.find('h1').at(0)).toHaveText('Block details');
     expect(wrapper.find('label').at(0)).toHaveText('Block ID');
-    expect(wrapper.find('span.copy-title').at(0)).toHaveText(truncateAddress(blocks[0].id));
+    expect(wrapper.find('span.copy-title').at(0)).toHaveText(
+      truncateAddress(blocks[0].id),
+    );
     expect(wrapper.find('label').at(1)).toHaveText('Height');
     expect(wrapper.find('label').at(2)).toHaveText('Date');
     expect(wrapper.find('label').at(3)).toHaveText('Confirmations');
@@ -66,7 +68,9 @@ describe('BlockDetails page', () => {
     wrapper = mountWithRouter(BlockDetails, newProps);
     expect(wrapper.find('h1').at(0)).toHaveText('Block details');
     expect(wrapper).toContainMatchingElement('Feedback');
-    expect(wrapper.find('span').at(0)).toHaveText('Failed to load block details.');
+    expect(wrapper.find('span').at(0)).toHaveText(
+      'Failed to load block details.',
+    );
   });
 
   it('renders a page with transaction list', () => {

@@ -3,7 +3,7 @@ import sinon, { spy, stub } from 'sinon'; // eslint-disable-line import/no-extra
 import ipcMock from 'electron-ipc-mock'; // eslint-disable-line import/no-extraneous-dependencies
 import autoUpdater from './autoUpdater';
 
-describe.skip('autoUpdater', () => {
+describe('autoUpdater', () => {
   const version = '1.2.3';
   const releaseNotes = 'this notes';
   const loadURL = spy();
@@ -59,6 +59,7 @@ describe.skip('autoUpdater', () => {
     params = {
       autoUpdater: {
         checkForUpdates: spy(),
+        checkForUpdatesAndNotify: spy(),
         on: (name, callback) => {
           callbacks[name] = callback;
         },
@@ -92,31 +93,28 @@ describe.skip('autoUpdater', () => {
 
   it('should call params.autoUpdater.checkForUpdates', () => {
     autoUpdater(params);
-    expect(params.autoUpdater.checkForUpdates).to.have.been.calledWithExactly();
+    expect(params.autoUpdater.checkForUpdatesAndNotify).to.have.been.calledWithExactly();
   });
 
-  it('should check for updates every 24 hours', () => {
+  it.skip('should check for updates every 24 hours', () => {
     autoUpdater(params);
-    expect(params.autoUpdater.checkForUpdates).to.have.callCount(1);
+    expect(params.autoUpdater.checkForUpdatesAndNotify).to.have.callCount(1);
     clock.tick(24 * 60 * 60 * 1000);
-    expect(params.autoUpdater.checkForUpdates).to.have.callCount(2);
+    expect(params.autoUpdater.checkForUpdatesAndNotify).to.have.callCount(2);
     clock.tick(24 * 60 * 60 * 1000);
-    expect(params.autoUpdater.checkForUpdates).to.have.callCount(3);
+    expect(params.autoUpdater.checkForUpdatesAndNotify).to.have.callCount(3);
   });
 
   it('should show error box when there was an error', () => {
     autoUpdater(params);
     callbacks.error(undefined);
-    expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
+    expect(params.dialog.showErrorBox).to.have.callCount(0);
 
     callbacks.error('404 Not Found');
-    expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
-
-    callbacks.error(null);
-    expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
+    expect(params.dialog.showErrorBox).to.have.callCount(0);
 
     callbacks.error('error');
-    expect(params.dialog.showErrorBox).to.have.been.calledWith('Error: ', 'There was a problem updating the application');
+    expect(params.dialog.showErrorBox).to.have.callCount(1);
   });
 
   it('should show info box when update downloaded', () => {

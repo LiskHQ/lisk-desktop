@@ -154,6 +154,7 @@ import forgedBlocksDark from '../../../assets/images/icons/forged-blocks-dark.sv
 import consecutiveMissedBlocks from '../../../assets/images/icons/consecutive-missed-blocks.svg';
 import consecutiveMissedBlocksDark from '../../../assets/images/icons/consecutive-missed-blocks-dark.svg';
 import lock from '../../../assets/images/icons/lock.svg';
+import zodiacBlueLock from '../../../assets/images/icons/zodiac-blue-lock.svg';
 import unlock from '../../../assets/images/icons/unlock.svg';
 import loading from '../../../assets/images/icons/loading.svg';
 import unlockToken from '../../../assets/images/icons/tx-unlock.svg';
@@ -179,8 +180,8 @@ import delegateActive from '../../../assets/images/icons/delegate-active.svg';
 import delegateActiveDark from '../../../assets/images/icons/delegate-active-dark.svg';
 import delegateStandby from '../../../assets/images/icons/delegate-standby.svg';
 import delegateStandbyDark from '../../../assets/images/icons/delegate-standby-dark.svg';
-import delegateNonEligible from '../../../assets/images/icons/delegate-non-eligible.svg';
-import delegateNonEligibleDark from '../../../assets/images/icons/delegate-non-eligible-dark.svg';
+import delegateIneligible from '../../../assets/images/icons/delegate-non-eligible.svg';
+import delegateIneligibleDark from '../../../assets/images/icons/delegate-non-eligible-dark.svg';
 import delegatePunished from '../../../assets/images/icons/delegate-punished.svg';
 import delegatePunishedDark from '../../../assets/images/icons/delegate-punished-dark.svg';
 import delegateBanned from '../../../assets/images/icons/delegate-banned.svg';
@@ -368,12 +369,12 @@ export const icons = {
   delegateAwaitingDark,
   delegateActive,
   delegateStandby,
-  delegateNonEligible,
+  delegateIneligible,
   delegatePunished,
   delegateBanned,
   delegateActiveDark,
   delegateStandbyDark,
-  delegateNonEligibleDark,
+  delegateIneligibleDark,
   delegatePunishedDark,
   delegateBannedDark,
   eyeActive,
@@ -390,6 +391,7 @@ export const icons = {
   refresh,
   reportDelegateMisbehavior,
   reportDelegateMisbehaviorDark,
+  zodiacBlueLock,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

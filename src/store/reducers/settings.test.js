@@ -34,4 +34,15 @@ describe('Reducer: settings(state, action)', () => {
     const FinalStep = settings(changedState, action);
     expect(FinalStep).toEqual(initializeState);
   });
+
+  it('should return retrieved settings if action.type = actionTypes.settingsRetrieved', () => {
+    let state;
+    const action = {
+      type: actionTypes.settingsRetrieved,
+      data: { },
+    };
+
+    const changedState = settings(state, action);
+    expect(changedState).toEqual(action.data);
+  });
 });

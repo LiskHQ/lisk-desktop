@@ -4,7 +4,7 @@ import {
   MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
   timeOutId, timeOutWarningId,
 } from '@constants';
-import { fromRawLsk } from '@utils/lsk';
+import { fromRawLsk, delay } from '@utils/lsk';
 import { getActiveTokenAccount } from '@utils/account';
 import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
@@ -14,20 +14,6 @@ import analytics from '@utils/analytics';
 import { getTransactions } from '@api/transaction';
 import i18n from '../../i18n';
 import history from '../../history';
-
-/**
- * After a new block is created and broadcasted
- * it takes a few ms for Lisk Service
- * to update transactions index, so we need to wait
- * before retrieving the the transaction by blockId
- *
- * @returns {Promise} resolves with True after 100ms
- */
-const delay = () => new Promise((resolve) => {
-  setTimeout(() => {
-    resolve();
-  }, 1500);
-});
 
 const getRecentTransactionOfType = (transactionsList, type) => (
   transactionsList.filter(transaction => (
@@ -50,7 +36,8 @@ const votePlaced = (store, action) => {
 
 const filterIncomingTransactions = (transactions, account) =>
   transactions.filter(transaction => (
-    transaction.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer
+    transaction
+    && transaction.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer
     && transaction.asset.recipient?.address === account.summary?.address
   ));
 

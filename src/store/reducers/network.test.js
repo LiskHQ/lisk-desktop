@@ -2,21 +2,18 @@ import { actionTypes } from '@constants';
 import network from './network';
 
 describe('Reducer: network(state, action)', () => {
-  it.skip('should return state object with passed network setup if action is networkSet', () => {
+  it('should return state object with passed network setup if action is networkSet', () => {
     const state = {
       networks: {
-        BTC: {
-        },
+        BTC: {},
       },
     };
     const action = {
-      type: actionTypes.networkSet,
+      type: actionTypes.networkConfigSet,
       data: {
         name: 'Custom Node',
         token: 'LSK',
-        network: {
-          nodeUrl: 'http://localhost:4000',
-        },
+        network: state.network,
       },
     };
 
@@ -31,7 +28,7 @@ describe('Reducer: network(state, action)', () => {
     expect(changedState).toEqual(newState);
   });
 
-  it.skip('should return state object with updated status of network if action is networkStatusUpdated', () => {
+  it('should return state object with updated status of network if action is networkStatusUpdated', () => {
     let state;
     const online = true;
     const action = {
@@ -42,6 +39,25 @@ describe('Reducer: network(state, action)', () => {
     const newState = {
       status: action.data,
       networks: {},
+      storedCustomNetwork: '',
+    };
+    const changedState = network(state, action);
+    expect(changedState).toEqual(newState);
+  });
+
+  it('should return state object with updated last BTC set', () => {
+    let state;
+    const lastBtcUpdate = 0;
+    const action = {
+      type: actionTypes.lastBtcUpdateSet,
+      data: { lastBtcUpdate },
+    };
+
+    const newState = {
+      status: {},
+      networks: {},
+      lastBtcUpdate: action.data,
+      storedCustomNetwork: '',
     };
     const changedState = network(state, action);
     expect(changedState).toEqual(newState);
