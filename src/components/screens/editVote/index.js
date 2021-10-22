@@ -41,10 +41,10 @@ const AddVote = ({
   const host = useSelector(state => state.account.info.LSK.summary.address);
   const address = selectSearchParamValue(history.location.search, 'address');
   const existingVote = useSelector(state => state.voting[address || host]);
-  const activeToken = tokenMap.LSK.key;
   const balance = useSelector(selectAccountBalance);
   const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '', balance);
   const mode = existingVote ? 'edit' : 'add';
+  const maxAmount = { value: 1e9 };
 
   const confirm = () => {
     dispatch(voteEdited([{
@@ -80,7 +80,7 @@ const AddVote = ({
             <p className={styles.balanceTitle}>Available balance</p>
             <div className={styles.balanceDetails}>
               <span className={styles.lskValue}>
-                <LiskAmount val={balance} token={activeToken} />
+                <LiskAmount val={balance} token={tokenMap.LSK.key} />
               </span>
               <Converter
                 className={styles.fiatValue}
@@ -92,11 +92,14 @@ const AddVote = ({
           <label className={styles.fieldGroup}>
             <AmountField
               amount={voteAmount}
+              maxAmount={maxAmount}
               setAmountField={setVoteAmount}
               title={t('Vote amount (LSK)')}
               inputPlaceHolder={t('Insert vote amount')}
               name="vote"
               displayConverter
+              maxAmountTitle={t('Use maximum amount')}
+              t={t}
             />
           </label>
         </BoxContent>
