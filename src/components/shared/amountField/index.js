@@ -53,7 +53,7 @@ const AmountField = ({
           maxAmount && (
             <TertiaryButton
               onClick={setEntireBalance}
-              className="send-entire-balance-button"
+              className="use-entire-balance-button"
               size="xs"
             >
               {maxAmountTitle}
