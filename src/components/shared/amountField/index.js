@@ -12,7 +12,7 @@ import styles from './amountField.css';
 const AmountField = ({
   amount, maxAmount, setAmountField, className,
   title, maxAmountTitle, inputPlaceHolder, name,
-  displayConverter, t,
+  displayConverter, t, entireBalanceWarning,
 }) => {
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
   const setEntireBalance = (e) => {
@@ -82,10 +82,10 @@ const AmountField = ({
           />
         )}
       </span>
-      {showEntireBalanceWarning && (
+      {(showEntireBalanceWarning && entireBalanceWarning !== false) && (
         <div className={`${styles.entireBalanceWarning} entire-balance-warning`}>
           <Icon name="warningYellow" />
-          <span>{t('You are about to send your entire balance')}</span>
+          <span>{entireBalanceWarning || t('You are about to send your entire balance')}</span>
           <div
             className={`${styles.closeBtn} close-entire-balance-warning`}
             onClick={resetInput}
