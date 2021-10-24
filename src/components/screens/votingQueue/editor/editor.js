@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, minAccountBalance } from '@constants';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, MIN_ACCOUNT_BALANCE } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '@toolbox/box';
@@ -102,7 +102,7 @@ const validateVotes = (votes, balance, fee, account, t) => {
     messages.push(t('You don\'t have enough LSK in your account.'));
   }
 
-  if ((balance - addedVoteAmount) < minAccountBalance && (balance - addedVoteAmount)) {
+  if ((balance - addedVoteAmount) < MIN_ACCOUNT_BALANCE && (balance - addedVoteAmount)) {
     messages.push('The vote amounts are too high. You should keep 0.05 LSK available in your account.');
   }
 
