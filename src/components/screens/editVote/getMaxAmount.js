@@ -5,7 +5,7 @@ import {
   MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
 import { toRawLsk } from '@utils/lsk';
-import { normalizeVotesForTx, getNumberOfSignatures } from '@shared/transactionPriority/useTransactionFeeCalculation';
+import { normalizeVotesForTx, getNumberOfSignatures } from '@shared/transactionPriority';
 
 /**
  * Calculates the maximum vote amount possible. It
@@ -20,7 +20,7 @@ import { normalizeVotesForTx, getNumberOfSignatures } from '@shared/transactionP
  */
 // eslint-disable-next-line
 export const getMaxAmount = async (account, network, voting, address) => {
-  const balance = account?.summary?.balance ?? 0;
+  const balance = account.summary?.balance ?? 0;
   const totalUnconfirmedVotes = Object.values(voting)
     .filter(vote => vote.confirmed < vote.unconfirmed)
     .map(vote => vote.unconfirmed - vote.confirmed)
@@ -39,8 +39,8 @@ export const getMaxAmount = async (account, network, voting, address) => {
         unconfirmed: maxVoteAmount,
       },
     }),
-    nonce: account.sequence.nonce,
-    senderPublicKey: account?.summary?.publicKey,
+    nonce: account.sequence?.nonce,
+    senderPublicKey: account.summary?.publicKey,
     moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
   };
 
