@@ -25,22 +25,6 @@ const getAmountFeedbackAndError = (value, balance) => {
 };
 
 /**
- * Calculates the maximum free/available balance to use for voting,
- * Accounts for votes in vote queue and voting fee cap
- *
- * @param {Object} state - The Redux state
- * @returns {Number} - Available balance
- */
-// const getMaxAmount = (state) => {
-//   const { balance } = state.account.info.LSK;
-//   const totalUnconfirmedVotes = Object.values(state.voting)
-//     .map(vote => Math.max(vote.confirmed, vote.unconfirmed))
-//     .reduce((total, amount) => (total + amount), 0);
-
-//   return balance - totalUnconfirmedVotes - 1e8; // only considering fee cap
-// };
-
-/**
  * Formats and defines potential errors of the vote mount value
  * Also provides a setter function
  *
