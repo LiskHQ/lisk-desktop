@@ -84,7 +84,7 @@ const AddVote = ({
 
   return (
     <Dialog hasClose className={styles.wrapper}>
-      {pomHeights?.length && (
+      {pomHeights?.length > 0 && (
         <WarnPunishedDelegate pomHeights={pomHeights} timestamp={timestamp} vote />
       )}
       <Box>
