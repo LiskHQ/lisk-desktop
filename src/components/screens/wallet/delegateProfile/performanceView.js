@@ -68,8 +68,8 @@ const ActiveDelegate = ({ theme, t }) => (
 const StandByDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      {t(`The delegate weight is at least 1,000 LSK meaning that the delegate can be chosen
-      for one of the two randomly assigned slots for standby delegates.`)}
+      {t(`A delegate needs at least 1000 LSK voting weight to be chosen
+      for one of the two randomly assigned standby delegate slots.`)}
     </p>
   </div>
 );
