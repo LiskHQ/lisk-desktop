@@ -56,11 +56,11 @@ const FullItem = ({
 const ActiveDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      {t('This delegate is among the first 101 delegates in delegate weight ranking.')}
+      {t('This delegate is among the first 101 delegates by delegate weight.')}
     </p>
 
     <p>
-      {t('The first 101 delegates will always be selected to forge new blocks.')}
+      {t('Active delegates are select to generate blocks every round.')}
     </p>
   </div>
 );
@@ -68,8 +68,13 @@ const ActiveDelegate = ({ theme, t }) => (
 const StandByDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      {t(`The delegate weight is at least 1,000 LSK meaning that the delegate can be chosen
-      for one of the two randomly assigned slots for standby delegates.`)}
+      {t(`The delegate has at least 1,000 LSK delegate weight, but is not among the
+      top 101 by delegate weight.`)}
+    </p>
+    <p>
+      {
+        t('Standby delegates can be chosen at random for one of two slots per round for generating a block.')
+      }
     </p>
   </div>
 );
@@ -85,7 +90,7 @@ const InEligibleDelegate = ({ theme, t }) => (
 const PunishedDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      {t('This delegate can not forge new blocks temporarily due to a protocol violation.')}
+      {t('The delegate is temporarily punished and their delegate weight is set to 0 due to a misbehavior.')}
     </p>
     <DialogLink
       className={grid.row}
@@ -100,7 +105,7 @@ const PunishedDelegate = ({ theme, t }) => (
 const BannedDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      {t('This delegate is permanently banned from forging new blocks.')}
+      {t('The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.')}
     </p>
     <DialogLink
       className={grid.row}
