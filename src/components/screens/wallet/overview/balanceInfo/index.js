@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { tokenMap } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from '@toolbox/buttons';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import DialogLink from '@toolbox/dialog/link';
@@ -13,29 +13,15 @@ import DiscreetMode from '@shared/discreetMode';
 import Converter from '@shared/converter';
 import SignInTooltipWrapper from '@shared/signInTooltipWrapper';
 import { selectAccountBalance } from '@store/selectors';
-import Tooltip from '@toolbox/tooltip/tooltip';
 import LockedBalanceLink from './unlocking';
+import EmptyBalanceTooltipWrapper from './emptyBalanceTooltipWrapper';
 import styles from './balanceInfo.css';
-
-const EmptyBalanceTooltipWrapper = ({
-  children, t, hostBalance,
-}) => (hostBalance === 0
-  ? (
-    <Tooltip
-      className={styles.emptyBalanceTooltipWrapper}
-      position="bottom"
-      content={React.cloneElement(children, { className: `${children.props.className} ${styles.emptyBalanceTooltipChild} disabled` })}
-    >
-      <p>{t('Top up your account to start. You can use the request panel to receive tokens from other user accounts.')}</p>
-    </Tooltip>
-  )
-  : children
-);
 
 const BalanceInfo = ({
   t, activeToken, balance, isWalletRoute, address, username,
 }) => {
   const hostBalance = useSelector(selectAccountBalance);
+  const disableButtons = hostBalance === 0;
   const vote = useSelector(state => state.voting[address]);
   const initialValue = isWalletRoute
     ? {}
@@ -70,7 +56,7 @@ const BalanceInfo = ({
           </DiscreetMode>
         </div>
         <SignInTooltipWrapper position="bottom">
-          <EmptyBalanceTooltipWrapper hostBalance={hostBalance} t={t}>
+          <EmptyBalanceTooltipWrapper hostBalance={hostBalance}>
             <div className={styles.actionRow}>
               {
                 username ? (
@@ -78,6 +64,7 @@ const BalanceInfo = ({
                     <SecondaryButton
                       className={`${styles.voteButton} open-add-vote-dialog`}
                       size="m"
+                      disabled={disableButtons}
                     >
                       {voteButtonTitle}
                     </SecondaryButton>
@@ -87,7 +74,12 @@ const BalanceInfo = ({
                     className={`${styles.registerDelegate} register-delegate`}
                     component="registerDelegate"
                   >
-                    {t('Register delegate')}
+                    <TertiaryButton
+                      size="m"
+                      disabled={disableButtons}
+                    >
+                      {t('Register delegate')}
+                    </TertiaryButton>
                   </DialogLink>
                 )
               }
@@ -95,7 +87,7 @@ const BalanceInfo = ({
                 <PrimaryButton
                   className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
                   size="m"
-                  disable={hostBalance === 0}
+                  disabled={disableButtons}
                 >
                   {sendTitle}
                 </PrimaryButton>

@@ -91,6 +91,10 @@
     color: var(--color-ultramarine-blue);
     flex-grow: 1;
     cursor: pointer;
+
+    & > button {
+      padding: 0;
+    }
   }
 
   & .sendButton {
