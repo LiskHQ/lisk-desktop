@@ -28,7 +28,7 @@ const EmptyBalanceTooltipWrapper = ({
     ? (
       <Tooltip
         className={styles.emptyBalanceTooltipWrapper}
-        position="bottom"
+        position="bottom left"
         content={React.cloneElement(children, { className: `${children.props.className} ${styles.emptyBalanceTooltipChild} disabled` })}
       >
         <p>{t(getMessage(networkName))}</p>
