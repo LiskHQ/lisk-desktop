@@ -66,7 +66,7 @@ const useVoteAmountField = (initialValue, accountBalance) => {
       setAmountField({
         isLoading: false,
         value,
-        ...getAmountFeedbackAndError(value, balance),
+        ...getAmountFeedbackAndError(value, balance.value),
       });
     }, 300);
   };

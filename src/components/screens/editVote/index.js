@@ -97,7 +97,7 @@ const AddVote = ({
           <label className={styles.fieldGroup}>
             <AmountField
               amount={voteAmount}
-              maxAmount={{ value: maxAmount }}
+              maxAmount={{ value: maxAmount || balance }}
               setAmountField={setVoteAmount}
               title={t('Vote amount (LSK)')}
               inputPlaceHolder={t('Insert vote amount')}
