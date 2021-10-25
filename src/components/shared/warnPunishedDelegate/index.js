@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import { getBlock } from '@api/block';
 import withData from '@utils/withData';
@@ -8,13 +9,17 @@ import { withTranslation } from 'react-i18next';
 import VoteWarning from './voteWarning';
 import WarnPunishedDelegate from './warnPunishedDelegate';
 
-const getPunishmentDetails = (punishedTimestamp, pomHeights) => {
-  const { start, end } = pomHeights && pomHeights[pomHeights.length - 1];
+const mapStateToProps = (state) => ({
+  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
+});
+
+const getPunishmentDetails = (punishedTimestamp, pomHeights, currentHeight) => {
+  const { end } = pomHeights && pomHeights[pomHeights.length - 1];
   const startDate = new Date(punishedTimestamp * 1000);
   const punishmentStartDate = moment(startDate).format('MM.DD.YYYY');
-  // 10: block slot interval, 60: minutes, 24: hours
-  const numOfBlockPerDay = 10 * 60 * 24;
-  const daysLeft = Math.ceil((end - start) / numOfBlockPerDay);
+  // 6: blocks per minute, 60: minutes, 24: hours
+  const numOfBlockPerDay = 24 * 60 * 6;
+  const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
 
   return { daysLeft, punishmentStartDate };
 };
@@ -27,6 +32,7 @@ const Warning = ({ vote, ...props }) => {
   const { daysLeft, punishmentStartDate } = getPunishmentDetails(
     props.block.data.timestamp,
     props.pomHeights,
+    props.currentHeight,
   );
 
   if (vote) {
@@ -54,6 +60,7 @@ const apis = {
 
 export default compose(
   withRouter,
+  connect(mapStateToProps),
   withData(apis),
   withTranslation(),
 )(Warning);
