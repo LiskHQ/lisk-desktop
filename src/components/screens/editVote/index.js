@@ -39,7 +39,7 @@ const getTitles = t => ({
 
 // eslint-disable-next-line max-statements
 const AddVote = ({
-  history, t, account, timestamp,
+  history, t, account, block,
 }) => {
   const dispatch = useDispatch();
   const host = useSelector(state => state.account.info.LSK.summary.address);
@@ -56,7 +56,7 @@ const AddVote = ({
 
   useEffect(() => {
     if (pomHeights?.length) {
-      timestamp.loadData({
+      block.loadData({
         height: pomHeights[pomHeights.length - 1]?.start,
       });
     }
@@ -85,7 +85,7 @@ const AddVote = ({
   return (
     <Dialog hasClose className={styles.wrapper}>
       {pomHeights?.length > 0 && (
-        <WarnPunishedDelegate pomHeights={pomHeights} timestamp={timestamp} vote />
+        <WarnPunishedDelegate pomHeights={pomHeights} block={block} vote />
       )}
       <Box>
         <BoxHeader>
@@ -146,7 +146,7 @@ const apis = {
     }),
     transformResponse: response => response,
   },
-  timestamp: {
+  block: {
     apiUtil: (network, params) => getBlock({ network, params }),
     transformResponse: response => (response.data && response.data[0]),
   },

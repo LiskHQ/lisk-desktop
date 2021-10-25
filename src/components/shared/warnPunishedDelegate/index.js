@@ -21,11 +21,11 @@ const getPunishmentDetails = (punishedTimestamp, pomHeights) => {
 
 const Warning = ({ vote, ...props }) => {
   useEffect(() => {
-    props.timestamp.loadData();
+    props.block.loadData();
   }, []);
 
   const { daysLeft, punishmentStartDate } = getPunishmentDetails(
-    props.timestamp.data.timestamp,
+    props.block.data.timestamp,
     props.pomHeights,
   );
 
@@ -43,7 +43,7 @@ const Warning = ({ vote, ...props }) => {
 };
 
 const apis = {
-  timestamp: {
+  block: {
     apiUtil: (network, params) => getBlock({ network, params }),
     getApiParams: (_, ownProps) => ({
       height: ownProps.pomHeights[ownProps.pomHeights.length - 1]?.start,
