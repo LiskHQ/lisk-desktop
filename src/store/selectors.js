@@ -1,8 +1,10 @@
 const selectAccount = state => state.account;
 const selectActiveToken = state => state.settings.token.active;
 const selectAddress = state => state.account.info[state.settings.token.active].address;
-const selectLSKAddress = state => state.account.info.LSK.address;
-const selectBTCAddress = state => state.account.info.BTC.address;
+const selectLSKAddress = state =>
+  (state.account.info ? state.account.info.LSK.summary.address : undefined);
+const selectBTCAddress = state =>
+  (state.account.info ? state.account.info.BTC.summary.address : undefined);
 const selectPublicKey = state => state.account.info[state.settings.token.active].publicKey;
 const selectTransactions = state => state.transactions;
 const selectActiveTokenAccount = state => state.account.info[state.settings.token.active];
