@@ -35,6 +35,7 @@ export const removeUndefinedKeys = obj => Object.keys(obj).reduce((acc, key) => 
  * @returns {Boolean}
  */
 export const isEmpty = (collection) => {
+  if (!collection) return true;
   if (Array.isArray(collection)) {
     return collection.length === 0;
   }
@@ -134,7 +135,7 @@ export const kFormatter = (num, precision = 0) => {
  * equipment class name
  * Equipment Class Name
  *
- * @param {String} str - The string to convert ot camelCase
+ * @param {String} str - The string to convert to camelCase
  * @return {String} camelCased string
  */
 export const camelize = str =>
@@ -146,3 +147,13 @@ export const camelize = str =>
         : word.toUpperCase()),
     )
     .replace(/\s+/g, '');
+
+/**
+ * Convert given strings to capitalized format
+ * sample string -> Sample string
+ * sampleString -> Samplestring
+ *
+ * @param {String} str - The string to convert to capitalized
+ * @return {String} capitalized string
+ */
+export const capitalize = str => str.toLowerCase().replace(/^\w/, (c) => c.toUpperCase());

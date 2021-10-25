@@ -1,0 +1,29 @@
+.warningContainer {
+  display: flex;
+  align-items: flex-start;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    & > .title {
+      color: var(--color-black);
+      font-weight: 500;
+    }
+
+    & > p {
+      margin: 7px 0;
+    }
+
+    & > img {
+      margin-right: 10px;
+      margin-top: 4px;
+    }
+  }
+}
+
+.flashMessage {
+  background-color: var(--color-white);
+  border-color: transparent;
+}

@@ -5,7 +5,6 @@ import {
   tokenMap,
   minFeePerByte,
   DEFAULT_NUMBER_OF_SIGNATURES,
-  DEFAULT_SIGNATURE_BYTE_SIZE,
   MODULE_ASSETS_MAP,
   MODULE_ASSETS_NAME_ID_MAP,
   moduleAssetSchemas,
@@ -242,7 +241,7 @@ export const getTransactionBaseFees = network =>
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
-  transaction, selectedPriority, numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
+  transaction, selectedPriority, account, numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
 }) => {
   const feePerByte = selectedPriority.value;
 
@@ -252,30 +251,26 @@ export const getTransactionFee = async ({
   const schema = moduleAssetSchemas[moduleAssetId];
   const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
+  let numberOfEmptySignatures;
 
   if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
     const { optionalKeys, mandatoryKeys } = transaction;
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
+  } else if (account?.summary?.isMultisignature) {
+    numberOfEmptySignatures = account.keys.members.length - numberOfSignatures;
   }
 
-  const minFee = transactions.computeMinFee(schema, {
-    ...transactionObject,
-    signatures: undefined,
-  }, {
+  const minFee = transactions.computeMinFee(schema, transactionObject, {
     baseFees: BASE_FEES,
     numberOfSignatures,
+    numberOfEmptySignatures,
   });
 
   // tie breaker is only meant for medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : (minFeePerByte * feePerByte * Math.random());
 
-  const size = transactions.getBytes(schema, {
-    ...transactionObject,
-    signatures: new Array(numberOfSignatures).fill(
-      Buffer.alloc(DEFAULT_SIGNATURE_BYTE_SIZE),
-    ),
-  }).length;
+  const size = transactions.getBytes(schema, transactionObject).length;
 
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
   const cappedFee = Math.min(calculatedFee, maxAssetFee);
@@ -307,12 +302,11 @@ export const getTransactionFee = async ({
 export const create = ({
   network,
   account,
-  passphrase,
   transactionObject,
 // eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
   const {
-    summary: { publicKey, isMultisignature },
+    summary: { publicKey, isMultisignature, privateKey },
     keys,
     sequence,
   } = account;
@@ -337,11 +331,11 @@ export const create = ({
         mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
       };
 
-      signedTransaction = transactions.signMultiSignatureTransaction(
+      signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
         schema,
         transaction,
         networkIdentifier,
-        passphrase,
+        Buffer.from(privateKey, 'hex'),
         keysInBinary,
         isMultiSignatureRegistration,
       );
@@ -365,21 +359,21 @@ export const create = ({
           optionalKeys: transactionKeys.optionalKeys.map(convertStringToBinary),
         };
 
-        signedTransaction = transactions.signMultiSignatureTransaction(
+        signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
           schema,
           tx,
           networkIdentifier,
-          passphrase,
+          Buffer.from(privateKey, 'hex'),
           transactionKeysInBinary,
           isMultiSignatureRegistration,
         );
       }
     } else {
-      signedTransaction = transactions.signTransaction(
+      signedTransaction = transactions.signTransactionWithPrivateKey(
         schema,
         transaction,
         networkIdentifier,
-        passphrase,
+        Buffer.from(privateKey, 'hex'),
       );
     }
 

@@ -151,3 +151,52 @@
   color: var(--color-white);
   border-radius: var(--border-radius-standard);
 }
+
+.customNode {
+  display: flex;
+  padding: 5px 20px;
+
+  & .title {
+    @mixin contentNormal;
+
+    box-sizing: border-box;
+    color: var(--color-slate-gray);
+    cursor: pointer;
+    width: 100%;
+  }
+
+  &.readMode {
+    flex-flow: row nowrap;
+    height: 20px;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover {
+      background-color: var(--color-rows-hover);
+      color: var(--color-ultramarine-blue);
+      text-decoration: none;
+    }
+
+    & .actions {
+      display: flex;
+      flex-flow: row nowrap;
+    }
+
+    & button {
+      padding: 0;
+      min-width: 40px;
+    }
+  }
+
+  &.editMode {
+    flex-flow: column nowrap;
+
+    & .actions {
+      padding: 5px 0 0;
+      height: 75px;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: space-between;
+    }
+  }
+}

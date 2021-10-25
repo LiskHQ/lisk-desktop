@@ -1,7 +1,12 @@
 import { toast } from 'react-toastify';
 import { actionTypes } from '@constants';
 import * as accountApi from '@api/account';
-import { accountLoggedOut, accountDataUpdated, login } from './account';
+import { extractKeyPair } from '@utils/account';
+import {
+  accountLoggedOut,
+  accountDataUpdated,
+  login,
+} from './account';
 import accounts from '../../../test/constants/accounts';
 import * as networkActions from './network';
 
@@ -23,6 +28,9 @@ jest.mock('./transactions', () => ({
 }));
 jest.mock('./network', () => ({
   networkStatusUpdated: jest.fn(),
+}));
+jest.mock('@utils/account', () => ({
+  extractKeyPair: jest.fn(),
 }));
 
 const network = {
@@ -170,7 +178,7 @@ describe('actions: account', () => {
       };
     });
 
-    it('should call account api and dispatch accountLoggedIn ', async () => {
+    it('should call account api and dispatch accountLoggedIn', async () => {
       await login({ passphrase })(dispatch, getState);
       expect(dispatch).toHaveBeenNthCalledWith(
         1,
@@ -207,7 +215,14 @@ describe('actions: account', () => {
       );
     });
 
-    it('should fire an error toast if getAccount fails ', async () => {
+    it('should call extractPublicKey with params', async () => {
+      accountApi.getAccount.mockResolvedValue({ balance, address });
+      await login({ passphrase, isRecoveryPhraseMode: false, derivationPath: '1/2' })(dispatch, getState);
+      expect(extractKeyPair).toHaveBeenCalledWith(passphrase, false, '1/2');
+    });
+
+    it.skip('should fire an error toast if getAccount fails ', async () => {
+      jest.spyOn(toast, 'error');
       accountApi.getAccount.mockRejectedValue({ message: 'custom error' });
       await login({ passphrase })(dispatch, getState);
       expect(toast.error).toHaveBeenCalledTimes(1);

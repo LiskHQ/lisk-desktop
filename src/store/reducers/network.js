@@ -3,6 +3,7 @@ import { actionTypes } from '@constants';
 const initialState = {
   status: {},
   networks: {},
+  storedCustomNetwork: '',
 };
 
 /**
@@ -33,6 +34,16 @@ const network = (state = initialState, action) => {
       return {
         ...state,
         lastBtcUpdate: action.data,
+      };
+    case actionTypes.customNetworkStored:
+      return {
+        ...state,
+        storedCustomNetwork: action.data,
+      };
+    case actionTypes.customNetworkRemoved:
+      return {
+        ...state,
+        storedCustomNetwork: '',
       };
     default:
       return state;

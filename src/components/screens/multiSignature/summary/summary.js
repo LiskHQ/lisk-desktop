@@ -31,7 +31,6 @@ const Summary = ({
     const [error, transaction] = await to(
       create({
         network,
-        passphrase: account.passphrase,
         account,
         transactionObject: {
           mandatoryKeys,

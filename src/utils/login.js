@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { settings, networks } from '@constants';
+import { settings } from '@constants';
 
 // https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 const pattern = new RegExp(/[-a-zA-Z0-9@:%_+.~#?&/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&/=]*)?/gi);
@@ -10,8 +10,8 @@ const isValidLocalhost = url => url.hostname === 'localhost' && url.port.length 
 const isValidRemote = url => /(([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3})/.test(url.hostname);
 
 const isValidIp = url => (isValidLocalhost(url)
-|| isValidRemote(url)
-|| isValidUrlRegEx(url.toString()));
+  || isValidRemote(url)
+  || isValidUrlRegEx(url.toString()));
 
 export const addHttp = (url) => {
   const domainReg = /^(?:f|ht)tps?:\/\//i;
@@ -42,16 +42,8 @@ export const validateUrl = (value) => {
 // Ignore coverage because this is only development feature
 export const getAutoLogInData = /* istanbul ignore next */ () => ({
   [settings.keys.loginKey]: localStorage.getItem(settings.keys.loginKey),
-  [settings.keys.liskServiceUrl]: localStorage.getItem(settings.keys.liskServiceUrl),
 });
 
 // Ignore coverage because this is only development feature
-export const shouldAutoLogIn = /* istanbul ignore next */ autologin =>
-  autologin[settings.keys.liskServiceUrl] && autologin[settings.keys.liskServiceUrl] !== ''
-    && autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
-
-export const findMatchingLoginNetwork = () => {
-  const { liskServiceUrl } = getAutoLogInData();
-  return Object.values(networks).find(({ nodes }) =>
-    (Array.isArray(nodes) ? nodes.includes(liskServiceUrl) : false));
-};
+export const shouldAutoLogIn = /* istanbul ignore next */ autoLogin =>
+  !!autoLogin[settings.keys.loginKey] && autoLogin[settings.keys.loginKey] !== '';

@@ -1,12 +1,11 @@
 import { toast } from 'react-toastify';
 import {
-  networks, actionTypes, networkKeys, settings,
+  networks, actionTypes, networkKeys,
   MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
   timeOutId, timeOutWarningId,
 } from '@constants';
 import { fromRawLsk, delay } from '@utils/lsk';
 import { getActiveTokenAccount } from '@utils/account';
-import { getAutoLogInData } from '@utils/login';
 import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
@@ -93,18 +92,16 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
   }
 };
 
-const autoLogInIfNecessary = async ({ dispatch, getState }) => {
+const readStoredNetwork = ({ dispatch, getState }) => {
   const {
     statistics, statisticsRequest, statisticsFollowingDay, network,
   } = getState().settings;
-  const autoLoginData = getAutoLogInData();
 
-  const address = autoLoginData[settings.keys.liskServiceUrl];
-  const config = address
-    ? { name: networkKeys.customNode, address }
+  const config = network?.name && network.address
+    ? network
     : {
-      name: network?.name || networkKeys.mainNet,
-      address: network?.address || networks.mainnet.serviceUrl,
+      name: networkKeys.mainNet,
+      address: networks.mainnet.serviceUrl,
     };
   dispatch(networkSelected(config));
   dispatch(networkStatusUpdated({ online: true }));
@@ -130,7 +127,7 @@ const accountMiddleware = store => next => async (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.settingsRetrieved:
-      autoLogInIfNecessary(store);
+      readStoredNetwork(store);
       break;
     case actionTypes.newBlockCreated:
       await checkTransactionsAndUpdateAccount(store, action);

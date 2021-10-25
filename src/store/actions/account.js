@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { loginTypes, actionTypes, tokenMap } from '@constants';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
-import { extractPublicKey } from '@utils/account';
+import { extractKeyPair } from '@utils/account';
 import { networkStatusUpdated } from './network';
 
 /**
@@ -80,6 +80,7 @@ export const accountDataUpdated = tokensTypes =>
       // Uninitialized account don't have a public key stored on the blockchain.
       // but we already have it on the Redux store.
       info.LSK.summary.publicKey = account.info.LSK.summary.publicKey;
+      info.LSK.summary.privateKey = account.info.LSK.summary.privateKey;
       dispatch({
         type: actionTypes.accountUpdated,
         data: info,
@@ -98,8 +99,12 @@ export const accountDataUpdated = tokensTypes =>
  * @param {String} data.passphrase - BIP39 passphrase of the account
  * @param {String} data.publicKey - Lisk publicKey used for hardware wallet login
  * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
+ * @param {boolean} data.isRecoveryPhraseMode - enable custom derivation for HW
+ * @param {String} data.derivationPath - custom derivation path for HW
  */
-export const login = ({ passphrase, publicKey, hwInfo }) =>
+export const login = ({
+  passphrase, publicKey, hwInfo, isRecoveryPhraseMode, derivationPath,
+}) =>
   async (dispatch, getState) => {
     const { network, settings } = getState();
     dispatch(accountLoading());
@@ -112,8 +117,16 @@ export const login = ({ passphrase, publicKey, hwInfo }) =>
             address: extractBitcoinAddress(passphrase, network),
           };
         } else {
+          let keyPair = {};
+          if (passphrase) {
+            keyPair = extractKeyPair(
+              passphrase, isRecoveryPhraseMode, derivationPath,
+            );
+          } else if (publicKey) {
+            keyPair.publicKey = publicKey;
+          }
           acc[token] = {
-            publicKey: publicKey ?? extractPublicKey(passphrase),
+            ...keyPair,
           };
         }
         return acc;

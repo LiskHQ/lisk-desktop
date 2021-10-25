@@ -1,0 +1,24 @@
+@import '../../../../app/mixins.css';
+
+.checkboxWrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 22px;
+
+  & > span {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+    cursor: pointer;
+    user-select: none;
+    margin-left: var(--horizontal-padding-s);
+  }
+}
+
+.derivationPathInput {
+  height: 40px !important;
+  margin-top: var(--vertical-padding-m);
+}

@@ -10,18 +10,26 @@
   padding-right: 22px;
 
   /* Message */
-  & > p {
+  & > .message {
     @mixin contentNormal semi-bold;
 
     color: var(--color-blue-gray);
     margin-left: 8px;
 
     /* Network name */
-    & > span:last-child {
+    & > div {
       margin-left: 5px;
       font-weight: var(--font-weight-very-bold);
       text-transform: capitalize;
       display: inline-block;
+    }
+
+    & > * {
+      vertical-align: middle;
+    }
+
+    & p {
+      text-transform: lowercase;
     }
   }
 }
