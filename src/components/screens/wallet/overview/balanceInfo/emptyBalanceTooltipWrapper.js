@@ -9,13 +9,13 @@ import styles from './balanceInfo.css';
 const getMessage = networkName => {
   switch (networkName) {
     case networkKeys.mainNet:
-      return 'Purchase LSK from an exchange, or Request LSK from another Lisk user through wallet panel.';
+      return 'Purchase LSK from an exchange, or request LSK from another Lisk user through the wallet panel.';
     case networkKeys.testNet:
-      return 'Request LSK from Lisk Testnet faucet, or Request LSK from another Lisk user through wallet panel';
+      return 'Request LSK from the Lisk Testnet faucet, or request LSK from another Lisk user through the wallet panel.';
     case networkKeys.customNode:
-      return 'Request LSK from Faucet account, or Request LSK from another Lisk user through wallet panel';
+      return 'Request LSK from a faucet account, or request LSK from another Lisk user through the wallet panel.';
     default:
-      return 'Request LSK from Faucet account, or Request LSK from another Lisk user through wallet panel';
+      return 'Request LSK from a faucet account, or request LSK from another Lisk user through the wallet panel.';
   }
 };
 
