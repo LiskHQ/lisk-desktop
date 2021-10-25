@@ -1,6 +1,8 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { DEFAULT_STANDBY_THRESHOLD } from '@constants';
+
+import { DEFAULT_STANDBY_THRESHOLD, routes } from '@constants';
 import { useTheme } from '@utils/theme';
 import { capitalize } from '@utils/helpers';
 import Box from '@toolbox/box';
@@ -156,10 +158,17 @@ const PerformanceView = ({
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
           <Item
-            title={t('Productivity')}
+            title={t('Last forged block')}
             icon="productivity"
           >
-            <div className={styles.performanceValue}>{'99.45%' || '-'}</div>
+            <NavLink
+              to={`${routes.block.path}?height=${data.lastForgedHeight}`}
+              className={styles.performanceValue}
+              id={data.lastForgedHeight}
+              exact
+            >
+              {data.lastForgedHeight || '-'}
+            </NavLink>
           </Item>
           <Item
             title={t('Forged blocks')}
