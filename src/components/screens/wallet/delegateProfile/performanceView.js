@@ -105,7 +105,7 @@ const PunishedDelegate = ({ theme, t }) => (
 const BannedDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      {t('The delegate is permanently banned from generating blocks due to missing too many blocks.')}
+      {t('The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.')}
     </p>
     <DialogLink
       className={grid.row}
