@@ -52,12 +52,24 @@ const DelegatesMonitor = ({
   }, [watchList.length]);
 
   const handleFilter = ({ target: { value } }) => {
+    let api;
+    switch (activeTab) {
+      case 'sanctioned':
+        api = 'sanctionedDelegates';
+        break;
+      case 'watched':
+        api = 'watchedDelegates';
+        break;
+      default:
+        api = 'standByDelegates';
+        break;
+    }
     applyFilters({
       ...filters,
       search: value,
       offset: 0,
       limit: 100,
-    });
+    }, api);
   };
 
   const tabs = {
