@@ -43,14 +43,13 @@ const FormBase = ({
         </span>
         <AmountField
           amount={fields.amount}
+          onChange={fieldUpdateFunctions.setAmountField}
           maxAmount={maxAmount}
-          setAmountField={fieldUpdateFunctions.setAmountField}
-          title={t('Amount')}
-          maxAmountTitle={t('Send entire balance')}
-          inputPlaceHolder={t('Insert transaction amount')}
-          name="amount"
-          t={t}
           displayConverter
+          label={t('Amount')}
+          placeHolder={t('Insert transaction amount')}
+          useMaxLabel={t('Send maximum amount')}
+          name="amount"
         />
         { children }
       </BoxContent>
