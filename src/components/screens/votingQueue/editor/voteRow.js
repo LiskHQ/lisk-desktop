@@ -88,11 +88,11 @@ const VoteRow = ({
           >
             <AmountField
               amount={voteAmount}
-              setAmountField={setVoteAmount}
-              inputPlaceHolder={t('Vote amount')}
-              name="vote"
-              className={styles.editAmountInput}
+              onChange={setVoteAmount}
               displayConverter={false}
+              placeHolder={t('Vote amount')}
+              className={styles.editAmountInput}
+              name="vote"
             />
             <div className={styles.formButtonsContainer}>
               <SecondaryButton

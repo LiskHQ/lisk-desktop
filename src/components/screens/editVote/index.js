@@ -97,15 +97,14 @@ const AddVote = ({
           <label className={styles.fieldGroup}>
             <AmountField
               amount={voteAmount}
+              onChange={setVoteAmount}
               maxAmount={{ value: maxAmount || balance }}
-              setAmountField={setVoteAmount}
-              title={t('Vote amount (LSK)')}
-              inputPlaceHolder={t('Insert vote amount')}
-              name="vote"
               displayConverter
-              maxAmountTitle={t('Use maximum amount')}
-              entireBalanceWarning={t('You are about to vote almost your entire balance')}
-              t={t}
+              label={t('Vote amount (LSK)')}
+              placeholder={t('Insert vote amount')}
+              useMaxLabel={t('Use maximum amount')}
+              useMaxWarning={t('You are about to vote almost your entire balance')}
+              name="vote"
             />
           </label>
         </BoxContent>
