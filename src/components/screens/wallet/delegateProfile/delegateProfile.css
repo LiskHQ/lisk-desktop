@@ -12,6 +12,10 @@
   & .content {
     flex-flow: row nowrap;
     margin-left: 0;
+
+    & a {
+      text-decoration: none;
+    }
   }
 }
 
