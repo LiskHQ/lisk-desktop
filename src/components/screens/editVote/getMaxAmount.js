@@ -18,8 +18,7 @@ import { normalizeVotesForTx, getNumberOfSignatures } from '@shared/transactionP
  * @param {object} voting - List of votes from the Redux store
  * @returns {Number} - Maximum possible vote amount
  */
-// eslint-disable-next-line
-export const getMaxAmount = async (account, network, voting, address) => {
+const getMaxAmount = async (account, network, voting, address) => {
   const balance = account.summary?.balance ?? 0;
   const totalUnconfirmedVotes = Object.values(voting)
     .filter(vote => vote.confirmed < vote.unconfirmed)
@@ -61,3 +60,5 @@ export const getMaxAmount = async (account, network, voting, address) => {
   }
   return maxVoteAmount - VOTE_AMOUNT_STEP;
 };
+
+export default getMaxAmount;

@@ -19,7 +19,7 @@ import LiskAmount from '@shared/liskAmount';
 import Converter from '@shared/converter';
 import { PrimaryButton, WarningButton } from '@toolbox/buttons';
 import useVoteAmountField from './useVoteAmountField';
-import { getMaxAmount } from './getMaxAmount';
+import getMaxAmount from './getMaxAmount';
 import styles from './editVote.css';
 
 const getTitles = t => ({
