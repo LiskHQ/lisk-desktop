@@ -84,9 +84,6 @@ const AddVote = ({
 
   return (
     <Dialog hasClose className={styles.wrapper}>
-      {pomHeights?.length > 0 && (
-        <WarnPunishedDelegate pomHeights={pomHeights} block={block} vote />
-      )}
       <Box>
         <BoxHeader>
           <h1>{titles.title}</h1>
@@ -108,6 +105,12 @@ const AddVote = ({
               />
             </div>
           </BoxInfoText>
+          {pomHeights?.length > 0 && (
+          <>
+            <WarnPunishedDelegate pomHeights={pomHeights} block={block} vote />
+            <span className={styles.space} />
+          </>
+          )}
           <label className={styles.fieldGroup}>
             <AmountField
               amount={voteAmount}

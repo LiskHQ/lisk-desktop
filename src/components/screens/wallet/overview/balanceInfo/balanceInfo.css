@@ -91,6 +91,10 @@
     color: var(--color-ultramarine-blue);
     flex-grow: 1;
     cursor: pointer;
+
+    & > button {
+      padding: 0;
+    }
   }
 
   & .sendButton {
@@ -124,4 +128,12 @@
   opacity: 0.5;
   color: gray;
   font-weight: 100;
+}
+
+.emptyBalanceTooltipWrapper {
+  display: inline-block;
+}
+
+.emptyBalanceTooltipChild {
+  pointer-events: none;
 }

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { tokenMap } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from '@toolbox/buttons';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import DialogLink from '@toolbox/dialog/link';
@@ -13,7 +13,9 @@ import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
 import Converter from '@shared/converter';
 import SignInTooltipWrapper from '@shared/signInTooltipWrapper';
+import { selectAccountBalance } from '@store/selectors';
 import LockedBalanceLink from './unlocking';
+import EmptyBalanceTooltipWrapper from './emptyBalanceTooltipWrapper';
 import styles from './balanceInfo.css';
 
 // eslint-disable-next-line complexity
@@ -26,8 +28,12 @@ const BalanceInfo = ({
   username,
   isBanned,
 }) => {
-  const vote = useSelector((state) => state.voting[address]);
-  const initialValue = isWalletRoute ? {} : { recipient: address };
+  const hostBalance = useSelector(selectAccountBalance);
+  const disableButtons = hostBalance === 0;
+  const vote = useSelector(state => state.voting[address]);
+  const initialValue = isWalletRoute
+    ? {}
+    : { recipient: address };
 
   const voteButtonTitle = vote ? t('Edit vote') : t('Add to votes');
 
@@ -58,46 +64,59 @@ const BalanceInfo = ({
           </DiscreetMode>
         </div>
         <SignInTooltipWrapper position="bottom">
-          <div className={styles.actionRow}>
-            {username ? (
-              <DialogLink
-                component={!isBanned && 'editVote'}
-                className={`${styles.button} add-vote`}
-              >
-                <Tooltip
-                  position="bottom"
-                  size="maxContent"
-                  content={(
-                    <SecondaryButton
-                      className={`${styles.voteButton} ${
-                        isBanned && styles.disabled} ${!isBanned && 'open-add-vote-dialog'}`}
-                      size="m"
-                    >
-                      {voteButtonTitle}
-                    </SecondaryButton>
+          <EmptyBalanceTooltipWrapper hostBalance={hostBalance}>
+            <div className={styles.actionRow}>
+              {
+                username ? (
+                  <DialogLink
+                    component={!isBanned && 'editVote'}
+                    className={`${styles.button} add-vote`}
+                  >
+                    <Tooltip
+                      position="bottom"
+                      size="maxContent"
+                      content={(
+                        <SecondaryButton
+                          className={`${styles.voteButton} ${
+                            isBanned && styles.disabled} ${!isBanned && 'open-add-vote-dialog'}`}
+                          size="m"
+                        >
+                          {voteButtonTitle}
+                        </SecondaryButton>
                   )}
+                    >
+                      <p>
+                        {isBanned
+                          ? t('You cannot vote for this delegate')
+                          : t('Vote for delegate')}
+                      </p>
+                    </Tooltip>
+                  </DialogLink>
+                ) : (
+                  <DialogLink
+                    className={`${styles.registerDelegate} register-delegate`}
+                    component="registerDelegate"
+                  >
+                    <TertiaryButton
+                      size="m"
+                      disabled={disableButtons}
+                    >
+                      {t('Register delegate')}
+                    </TertiaryButton>
+                  </DialogLink>
+                )
+              }
+              <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
+                <PrimaryButton
+                  className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
+                  size="m"
+                  disabled={disableButtons}
                 >
-                  <p>
-                    {isBanned
-                      ? t('You cannot vote for this delegate')
-                      : t('Vote for delegate')}
-                  </p>
-                </Tooltip>
+                  {sendTitle}
+                </PrimaryButton>
               </DialogLink>
-            ) : null}
-            <DialogLink
-              component="send"
-              className={`${styles.button} tx-send-bt`}
-              data={initialValue}
-            >
-              <PrimaryButton
-                className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
-                size="m"
-              >
-                {sendTitle}
-              </PrimaryButton>
-            </DialogLink>
-          </div>
+            </div>
+          </EmptyBalanceTooltipWrapper>
         </SignInTooltipWrapper>
       </BoxContent>
     </Box>
