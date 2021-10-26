@@ -43,7 +43,7 @@ const AddVote = ({
   const address = selectSearchParamValue(history.location.search, 'address');
   const existingVote = useSelector(state => state.voting[address || host]);
   const balance = useSelector(selectAccountBalance);
-  const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '', balance);
+  const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');
   const mode = existingVote ? 'edit' : 'add';
   const [maxAmount, setMaxAmount] = useState(0);
   useEffect(() => {

@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from '@utils/validators';
+import { selectAccountBalance } from '@store/selectors';
 import { tokenMap, regex } from '@constants';
+import { useSelector } from 'react-redux';
 
 let loaderTimeout = null;
 
@@ -32,8 +34,9 @@ const getAmountFeedbackAndError = (value, balance) => {
  * @param {Number} accountBalance - The account balance value in Beddows
  * @returns {[Boolean, Function]} The error flag, The setter function
  */
-const useVoteAmountField = (initialValue, accountBalance) => {
+const useVoteAmountField = (initialValue) => {
   const { i18n } = useTranslation();
+  const balance = useSelector(selectAccountBalance);
   const [amountField, setAmountField] = useState({
     value: initialValue,
     isLoading: false,
@@ -52,7 +55,7 @@ const useVoteAmountField = (initialValue, accountBalance) => {
     }
   }, [initialValue]);
 
-  const onAmountInputChange = ({ value }, balance = accountBalance) => {
+  const onAmountInputChange = ({ value }) => {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
     clearTimeout(loaderTimeout);
@@ -62,11 +65,12 @@ const useVoteAmountField = (initialValue, accountBalance) => {
       value,
       isLoading: true,
     });
+    const feedback = getAmountFeedbackAndError(value, balance);
     loaderTimeout = setTimeout(() => {
       setAmountField({
         isLoading: false,
         value,
-        ...getAmountFeedbackAndError(value, balance.value),
+        ...feedback,
       });
     }, 300);
   };
