@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { tokenMap } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from '@toolbox/buttons';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import DialogLink from '@toolbox/dialog/link';
@@ -12,12 +12,16 @@ import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
 import Converter from '@shared/converter';
 import SignInTooltipWrapper from '@shared/signInTooltipWrapper';
+import { selectAccountBalance } from '@store/selectors';
 import LockedBalanceLink from './unlocking';
+import EmptyBalanceTooltipWrapper from './emptyBalanceTooltipWrapper';
 import styles from './balanceInfo.css';
 
 const BalanceInfo = ({
   t, activeToken, balance, isWalletRoute, address, username,
 }) => {
+  const hostBalance = useSelector(selectAccountBalance);
+  const disableButtons = hostBalance === 0;
   const vote = useSelector(state => state.voting[address]);
   const initialValue = isWalletRoute
     ? {}
@@ -52,37 +56,45 @@ const BalanceInfo = ({
           </DiscreetMode>
         </div>
         <SignInTooltipWrapper position="bottom">
-          <div className={styles.actionRow}>
-            {
-              username ? (
-                <DialogLink component="editVote" className={`${styles.button} add-vote`}>
-                  <SecondaryButton
-                    className={`${styles.voteButton} open-add-vote-dialog`}
-                    size="m"
+          <EmptyBalanceTooltipWrapper hostBalance={hostBalance}>
+            <div className={styles.actionRow}>
+              {
+                username ? (
+                  <DialogLink component="editVote" className={`${styles.button} add-vote`}>
+                    <SecondaryButton
+                      className={`${styles.voteButton} open-add-vote-dialog`}
+                      size="m"
+                      disabled={disableButtons}
+                    >
+                      {voteButtonTitle}
+                    </SecondaryButton>
+                  </DialogLink>
+                ) : (
+                  <DialogLink
+                    className={`${styles.registerDelegate} register-delegate`}
+                    component="registerDelegate"
                   >
-                    {voteButtonTitle}
-                  </SecondaryButton>
-                </DialogLink>
-              ) : (
-                <DialogLink
-                  className={`${styles.registerDelegate} register-delegate`}
-                  component="registerDelegate"
+                    <TertiaryButton
+                      size="m"
+                      disabled={disableButtons}
+                    >
+                      {t('Register delegate')}
+                    </TertiaryButton>
+                  </DialogLink>
+                )
+              }
+              <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
+                <PrimaryButton
+                  className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
+                  size="m"
+                  disabled={disableButtons}
                 >
-                  {t('Register delegate')}
-                </DialogLink>
-              )
-            }
-            <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
-              <PrimaryButton
-                className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
-                size="m"
-              >
-                {sendTitle}
-              </PrimaryButton>
-            </DialogLink>
-          </div>
+                  {sendTitle}
+                </PrimaryButton>
+              </DialogLink>
+            </div>
+          </EmptyBalanceTooltipWrapper>
         </SignInTooltipWrapper>
-
       </BoxContent>
     </Box>
   );

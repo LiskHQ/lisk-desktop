@@ -91,6 +91,10 @@
     color: var(--color-ultramarine-blue);
     flex-grow: 1;
     cursor: pointer;
+
+    & > button {
+      padding: 0;
+    }
   }
 
   & .sendButton {
@@ -117,4 +121,12 @@
     width: 17px;
     margin-right: 8px;
   }
+}
+
+.emptyBalanceTooltipWrapper {
+  display: inline-block;
+}
+
+.emptyBalanceTooltipChild {
+  pointer-events: none;
 }
