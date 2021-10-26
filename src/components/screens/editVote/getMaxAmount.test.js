@@ -43,7 +43,7 @@ const network = {
             name: 'legacyAccount:reclaimLSK',
           },
         ],
-        serviceUrl: 'https://testnet-service.lisk.com'
+        serviceUrl: 'https://testnet-service.lisk.com',
       },
     },
     name: 'testnet',
