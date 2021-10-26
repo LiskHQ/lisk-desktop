@@ -17,12 +17,12 @@ function withFilters(apiName, initialFilters, initialSort) {
         };
       }
 
-      applyFilters(f) {
+      applyFilters(f, api = apiName) {
         const { sort } = this.state;
         const filters = { ...f, sort };
         this.setState({ filters: f });
         const usedFilters = Object.keys(filters).filter(key => filters[key] !== '').reduce((acc, key) => { acc[key] = filters[key]; return acc; }, {});
-        this.props[apiName].loadData(usedFilters);
+        this.props[api].loadData(usedFilters);
       }
 
       clearFilter(name) {
