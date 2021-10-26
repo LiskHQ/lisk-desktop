@@ -71,7 +71,7 @@
   "By voting you decide who is trusted to verify transactions and maintain the Lisk network, whilst collecting the rewards for doing so.": "By voting you decide who is trusted to verify transactions and maintain the Lisk network, whilst collecting the rewards for doing so.",
   "Bytes counter": "Bytes counter",
   "Cancel": "Cancel",
-  "Caution! This delegate has been punished for {{daysLeft}} days starting from {{punishmentStartDate}}": "Caution! This delegate has been punished for {{daysLeft}} days starting from {{punishmentStartDate}}",
+  "Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.": "Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.",
   "Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of {{daysLeft}} days.": "Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of {{daysLeft}} days.",
   "Changed votes": "Changed votes",
   "Check for Updates...": "Check for Updates...",
