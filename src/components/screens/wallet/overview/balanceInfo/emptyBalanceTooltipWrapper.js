@@ -27,7 +27,7 @@ const EmptyBalanceTooltipWrapper = ({
   return (hostBalance === 0
     ? (
       <Tooltip
-        className={styles.emptyBalanceTooltipWrapper}
+        className={`${styles.emptyBalanceTooltipWrapper} empty-balance-tooltip-wrapper`}
         position="bottom left"
         content={React.cloneElement(children, { className: `${children.props.className} ${styles.emptyBalanceTooltipChild} disabled` })}
       >
