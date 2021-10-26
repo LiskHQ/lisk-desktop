@@ -8,7 +8,7 @@ import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
 import Converter from '@shared/converter';
 import LockedBalanceLink from './unlocking';
-import ButtonsWrapper from './buttonsWrapper';
+import ActionBar from './actionBar';
 import styles from './balanceInfo.css';
 
 const BalanceInfo = ({
@@ -34,7 +34,7 @@ const BalanceInfo = ({
           }
         </DiscreetMode>
       </div>
-      <ButtonsWrapper
+      <ActionBar
         address={address}
         username={username}
         isWalletRoute={isWalletRoute}

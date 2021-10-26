@@ -8,7 +8,7 @@ import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
 import EmptyBalanceTooltipWrapper from './emptyBalanceTooltipWrapper';
 import styles from './balanceInfo.css';
 
-const ButtonsWrapper = ({
+const ActionBar = ({
   username, address, t, isWalletRoute, activeToken,
 }) => {
   const hostBalance = useSelector(selectAccountBalance);
@@ -73,4 +73,4 @@ const ButtonsWrapper = ({
   );
 };
 
-export default withTranslation()(ButtonsWrapper);
+export default withTranslation()(ActionBar);

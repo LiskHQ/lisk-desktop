@@ -1,6 +1,6 @@
 import { mountWithRouterAndStore } from '@utils/testHelpers';
 import { tokenMap } from '@constants';
-import ButtonsWrapper from './buttonsWrapper';
+import ActionBar from './actionBar';
 
 describe('Reclaim balance screen', () => {
   const hostAddress = 'lskmjr8hrnhzc6j653eto5fbh2p3kwdpa9ccdnhk6';
@@ -37,7 +37,7 @@ describe('Reclaim balance screen', () => {
 
   it('Should display register delegate button and send', () => {
     wrapper = mountWithRouterAndStore(
-      ButtonsWrapper,
+      ActionBar,
       props,
       {},
       { ...state, account: { info: { LSK: balanceAccount } } },
@@ -51,7 +51,7 @@ describe('Reclaim balance screen', () => {
 
   it('Should not display register delegate button', () => {
     wrapper = mountWithRouterAndStore(
-      ButtonsWrapper,
+      ActionBar,
       { ...props, activeToken: tokenMap.BTC.key, address: 'mnrutC4CgQhMos4f8HWYRy8rKQ3UisGwYJ' },
       {},
       { ...state, account: { info: { LSK: balanceAccount } } },
@@ -63,7 +63,7 @@ describe('Reclaim balance screen', () => {
     expect(html).not.toContain('open-add-vote-dialog');
 
     wrapper = mountWithRouterAndStore(
-      ButtonsWrapper,
+      ActionBar,
       { ...props, address: explorerAddress },
       {},
       { ...state, account: { info: { LSK: balanceAccount } } },
@@ -77,7 +77,7 @@ describe('Reclaim balance screen', () => {
 
   it('Should display add/edit vote correctly', () => {
     wrapper = mountWithRouterAndStore(
-      ButtonsWrapper,
+      ActionBar,
       { ...props, username: 'delegate' },
       {},
       { ...state, account: { info: { LSK: balanceAccount } } },
@@ -91,7 +91,7 @@ describe('Reclaim balance screen', () => {
     expect(html).not.toContain('Edit vote');
 
     wrapper = mountWithRouterAndStore(
-      ButtonsWrapper,
+      ActionBar,
       { ...props, username: 'delegate' },
       {},
       {
@@ -110,7 +110,7 @@ describe('Reclaim balance screen', () => {
 
   it('Should disable buttons', () => {
     wrapper = mountWithRouterAndStore(
-      ButtonsWrapper,
+      ActionBar,
       props,
       {},
       { ...state, account: { info: { LSK: noBalanceAccount } } },
