@@ -8,14 +8,15 @@ const selectBTCAddress = state =>
 const selectPublicKey = state => state.account.info[state.settings.token.active].publicKey;
 const selectTransactions = state => state.transactions;
 const selectActiveTokenAccount = state => state.account.info[state.settings.token.active];
-const selectAccountBalance = state =>
-  state.account.info[state.settings.token.active].summary.balance;
+const selectAccountBalance = state => (
+  state.account.info ? state.account.info[state.settings.token.active].summary.balance : undefined);
 const selectBookmarks = state => state.bookmarks[state.settings.token.active];
 const selectBookmark = (state, address) =>
   state.bookmarks[state.settings.token.active].find(item => (item.address === address));
 const selectSettings = state => state.settings;
 const selectServiceUrl = state => state.network.networks?.LSK?.serviceUrl;
 const selectNetworkIdentifier = state => state.network.networks?.LSK?.networkIdentifier;
+const selectNetworkName = state => state.network.name;
 const selectCurrentBlockHeight = state => state.blocks.latestBlocks[0]?.height || 0;
 const selectActiveTokenNetwork = state => state.network.networks[state.settings.token.active];
 
@@ -35,5 +36,6 @@ export {
   selectServiceUrl,
   selectCurrentBlockHeight,
   selectNetworkIdentifier,
+  selectNetworkName,
   selectActiveTokenNetwork,
 };

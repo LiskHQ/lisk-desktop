@@ -2,10 +2,9 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { selectLSKAddress } from '@store/selectors';
 import { tokenMap } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from '@toolbox/buttons';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import DialogLink from '@toolbox/dialog/link';
@@ -13,12 +12,16 @@ import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
 import Converter from '@shared/converter';
 import SignInTooltipWrapper from '@shared/signInTooltipWrapper';
+import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
 import LockedBalanceLink from './unlocking';
+import EmptyBalanceTooltipWrapper from './emptyBalanceTooltipWrapper';
 import styles from './balanceInfo.css';
 
 const ButtonsWrapper = ({
   username, address, t, isWalletRoute, activeToken,
 }) => {
+  const hostBalance = useSelector(selectAccountBalance);
+  const disableButtons = hostBalance === 0;
   const vote = useSelector(state => state.voting[address]);
   const lskAddress = useSelector(selectLSKAddress);
   const initialValue = isWalletRoute
@@ -32,38 +35,49 @@ const ButtonsWrapper = ({
     : t('Send {{token}} here', { token: activeToken });
 
   return (
-    <>
-      {
-        username && (
-          <DialogLink component="editVote" className={`${styles.button} add-vote`}>
-            <SecondaryButton
-              className={`${styles.voteButton} open-add-vote-dialog`}
+    <SignInTooltipWrapper position="bottom">
+      <EmptyBalanceTooltipWrapper hostBalance={hostBalance}>
+        <div className={styles.actionRow}>
+          {
+            username && (
+              <DialogLink component="editVote" className={`${styles.button} add-vote`}>
+                <SecondaryButton
+                  className={`${styles.voteButton} open-add-vote-dialog`}
+                  size="m"
+                  disabled={disableButtons}
+                >
+                  {voteButtonTitle}
+                </SecondaryButton>
+              </DialogLink>
+            )
+          }
+          {
+            (!username && lskAddress === address) && (
+              <DialogLink
+                className={`${styles.registerDelegate} register-delegate`}
+                component="registerDelegate"
+              >
+                <TertiaryButton
+                  size="m"
+                  disabled={disableButtons}
+                >
+                  {t('Register delegate')}
+                </TertiaryButton>
+              </DialogLink>
+            )
+          }
+          <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
+            <PrimaryButton
+              className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
               size="m"
+              disabled={disableButtons}
             >
-              {voteButtonTitle}
-            </SecondaryButton>
+              {sendTitle}
+            </PrimaryButton>
           </DialogLink>
-        )
-      }
-      {
-        (!username && lskAddress === address) && (
-          <DialogLink
-            className={`${styles.registerDelegate} register-delegate`}
-            component="registerDelegate"
-          >
-            {t('Register delegate')}
-          </DialogLink>
-        )
-      }
-      <DialogLink component="send" className={`${styles.button} tx-send-bt`} data={initialValue}>
-        <PrimaryButton
-          className={`${styles.sendButton} ${styles[activeToken]} open-send-dialog`}
-          size="m"
-        >
-          {sendTitle}
-        </PrimaryButton>
-      </DialogLink>
-    </>
+        </div>
+      </EmptyBalanceTooltipWrapper>
+    </SignInTooltipWrapper>
   );
 };
 
@@ -90,17 +104,13 @@ const BalanceInfo = ({
           }
         </DiscreetMode>
       </div>
-      <SignInTooltipWrapper position="bottom">
-        <div className={styles.actionRow}>
-          <ButtonsWrapper
-            address={address}
-            username={username}
-            t={t}
-            isWalletRoute={isWalletRoute}
-            activeToken={activeToken}
-          />
-        </div>
-      </SignInTooltipWrapper>
+      <ButtonsWrapper
+        address={address}
+        username={username}
+        t={t}
+        isWalletRoute={isWalletRoute}
+        activeToken={activeToken}
+      />
     </BoxContent>
   </Box>
 );
