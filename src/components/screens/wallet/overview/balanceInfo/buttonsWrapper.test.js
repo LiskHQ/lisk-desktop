@@ -1,7 +1,6 @@
 import { mountWithRouterAndStore } from '@utils/testHelpers';
 import { tokenMap } from '@constants';
 import ButtonsWrapper from './buttonsWrapper';
-import styles from './index.css';
 
 describe('Reclaim balance screen', () => {
   const hostAddress = 'lskmjr8hrnhzc6j653eto5fbh2p3kwdpa9ccdnhk6';
