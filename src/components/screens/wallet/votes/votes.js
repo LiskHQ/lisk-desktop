@@ -7,8 +7,6 @@ import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import { Input } from '@toolbox/inputs';
 import Table from '@toolbox/table';
-import DialogLink from '@toolbox/dialog/link';
-import { SecondaryButton } from '@toolbox/buttons';
 import styles from './votes.css';
 import VoteRow from './voteRow';
 import header from './votesTableHeader';
@@ -19,7 +17,7 @@ const getMessages = t => ({
 });
 
 const Votes = ({
-  votes, accounts, address, t, history, hostVotes = {}, isDelegate,
+  votes, accounts, address, t, history, hostVotes = {},
 }) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
@@ -56,16 +54,6 @@ const Votes = ({
       <BoxHeader>
         <h1>{t('Voted delegates')}</h1>
         <div className={`${styles.filterHolder}`}>
-          {!isDelegate && (
-          <DialogLink
-            className={`${styles.registerDelegate} register-delegate`}
-            component="registerDelegate"
-          >
-            <SecondaryButton size="m">
-              {t('Register delegate')}
-            </SecondaryButton>
-          </DialogLink>
-          )}
           <Input
             className="search"
             disabled={!votes.data.length}
