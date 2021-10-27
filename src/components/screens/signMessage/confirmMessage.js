@@ -78,7 +78,7 @@ const ConfirmMessage = ({
     ref.current = setTimeout(() => setCopied(false), 3000);
   };
 
-  const signUsingPassphrase = () => {
+  const signUsingPrivateKey = () => {
     const msgBytes = cryptography.digestMessage(message);
     const signedMessage = cryptography.signDataWithPrivateKey(msgBytes, Buffer.from(account.summary.privateKey, 'hex'));
     const result = cryptography.printSignedMessage({
@@ -104,7 +104,7 @@ const ConfirmMessage = ({
 
   useEffect(() => {
     if (account.loginType === loginTypes.passphrase.code) {
-      setSignature(signUsingPassphrase());
+      setSignature(signUsingPrivateKey());
     } else {
       signUsingHW()
         .then(setSignature)
