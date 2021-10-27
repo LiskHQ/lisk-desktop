@@ -27,6 +27,7 @@ const BalanceInfo = ({
   address,
   username,
   isBanned,
+  pomHeights,
 }) => {
   const hostBalance = useSelector(selectAccountBalance);
   const disableButtons = hostBalance === 0;
@@ -34,6 +35,10 @@ const BalanceInfo = ({
   const initialValue = isWalletRoute
     ? {}
     : { recipient: address };
+
+  const pomStart = pomHeights?.length
+    ? { ...pomHeights[pomHeights.length - 1] }
+    : {};
 
   const voteButtonTitle = vote ? t('Edit vote') : t('Add to votes');
 
@@ -70,6 +75,7 @@ const BalanceInfo = ({
                 username ? (
                   <DialogLink
                     component={!isBanned && 'editVote'}
+                    data={pomStart}
                     className={`${styles.button} add-vote`}
                   >
                     <Tooltip

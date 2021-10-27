@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import React from 'react';
 import { withTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { compose } from 'redux';
-import withData from '@utils/withData';
-import { getAccount } from '@api/account';
+
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
 import { tokenMap } from '@constants';
 import { voteEdited } from '@actions';
@@ -21,7 +20,6 @@ import LiskAmount from '@shared/liskAmount';
 import Converter from '@shared/converter';
 import WarnPunishedDelegate from '@shared/warnPunishedDelegate';
 import { PrimaryButton, WarningButton } from '@toolbox/buttons';
-import { getBlock } from '@api/block';
 import useVoteAmountField from './useVoteAmountField';
 
 import styles from './editVote.css';
@@ -39,28 +37,15 @@ const getTitles = t => ({
 
 // eslint-disable-next-line max-statements
 const AddVote = ({
-  history, t, account, block,
+  history, t, start, end,
 }) => {
   const dispatch = useDispatch();
   const host = useSelector(state => state.account.info.LSK.summary.address);
   const address = selectSearchParamValue(history.location.search, 'address');
-  const pomHeights = account.data.dpos?.delegate?.pomHeights;
   const existingVote = useSelector(state => state.voting[address || host]);
   const balance = useSelector(selectAccountBalance);
   const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '', balance);
   const mode = existingVote ? 'edit' : 'add';
-
-  useEffect(() => {
-    account.loadData();
-  }, [address]);
-
-  useEffect(() => {
-    if (pomHeights?.length) {
-      block.loadData({
-        height: pomHeights[pomHeights.length - 1]?.start,
-      });
-    }
-  }, [pomHeights]);
 
   const confirm = () => {
     dispatch(voteEdited([{
@@ -105,9 +90,9 @@ const AddVote = ({
               />
             </div>
           </BoxInfoText>
-          {pomHeights?.length > 0 && (
+          {!start && (
           <>
-            <WarnPunishedDelegate pomHeights={pomHeights} block={block} vote />
+            <WarnPunishedDelegate pomHeight={{ start, end }} vote />
             <span className={styles.space} />
           </>
           )}
@@ -139,24 +124,7 @@ const AddVote = ({
   );
 };
 
-const apis = {
-  account: {
-    apiUtil: (network, { token, ...params }) => getAccount({ network, params }, token),
-    getApiParams: (state, props) => ({
-      token: tokenMap.LSK.key,
-      address: selectSearchParamValue(props.history.location.search, 'address'),
-      network: state.network,
-    }),
-    transformResponse: response => response,
-  },
-  block: {
-    apiUtil: (network, params) => getBlock({ network, params }),
-    transformResponse: response => (response.data && response.data[0]),
-  },
-};
-
 export default compose(
   withRouter,
-  withData(apis),
   withTranslation(),
 )(AddVote);
