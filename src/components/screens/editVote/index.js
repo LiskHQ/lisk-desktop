@@ -1,6 +1,6 @@
-import React from 'react';
-import { withTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { compose } from 'redux';
 
@@ -21,7 +21,7 @@ import Converter from '@shared/converter';
 import WarnPunishedDelegate from '@shared/warnPunishedDelegate';
 import { PrimaryButton, WarningButton } from '@toolbox/buttons';
 import useVoteAmountField from './useVoteAmountField';
-
+import getMaxAmount from './getMaxAmount';
 import styles from './editVote.css';
 
 const getTitles = t => ({
@@ -40,12 +40,18 @@ const AddVote = ({
   history, t, start, end,
 }) => {
   const dispatch = useDispatch();
+  const { account, network, voting } = useSelector(state => state);
   const host = useSelector(state => state.account.info.LSK.summary.address);
   const address = selectSearchParamValue(history.location.search, 'address');
   const existingVote = useSelector(state => state.voting[address || host]);
   const balance = useSelector(selectAccountBalance);
-  const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '', balance);
+  const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');
   const mode = existingVote ? 'edit' : 'add';
+  const [maxAmount, setMaxAmount] = useState(0);
+  useEffect(() => {
+    getMaxAmount(account.info.LSK, network, voting, address || host)
+      .then(setMaxAmount);
+  }, [account, voting]);
 
   const confirm = () => {
     dispatch(voteEdited([{
@@ -78,7 +84,7 @@ const AddVote = ({
             <span>{titles.description}</span>
           </BoxInfoText>
           <BoxInfoText className={styles.accountInfo}>
-            <p className={styles.balanceTitle}>Available balance</p>
+            <p className={styles.balanceTitle}>{t('Available balance')}</p>
             <div className={styles.balanceDetails}>
               <span className={styles.lskValue}>
                 <LiskAmount val={balance} token={tokenMap.LSK.key} />
@@ -99,11 +105,14 @@ const AddVote = ({
           <label className={styles.fieldGroup}>
             <AmountField
               amount={voteAmount}
-              setAmountField={setVoteAmount}
-              title={t('Vote amount (LSK)')}
-              inputPlaceHolder={t('Insert vote amount')}
-              name="vote"
+              onChange={setVoteAmount}
+              maxAmount={{ value: maxAmount || balance }}
               displayConverter
+              label={t('Vote amount (LSK)')}
+              placeholder={t('Insert vote amount')}
+              useMaxLabel={t('Use maximum amount')}
+              useMaxWarning={t('You are about to vote almost your entire balance')}
+              name="vote"
             />
           </label>
         </BoxContent>

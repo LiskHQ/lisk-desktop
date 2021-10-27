@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { moduleAssetSchemas, minAccountBalance } from '@constants';
+import { moduleAssetSchemas, MIN_ACCOUNT_BALANCE } from '@constants';
 
 import { mountWithRouter } from '@utils/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
@@ -145,7 +145,7 @@ describe('VotingQueue.Editor', () => {
   });
 
   it('Shows an error if trying to vote with amounts leading to insufficient balance', async () => {
-    props.account.token.balance = `${parseInt(accounts.genesis.token.balance, 10) + (minAccountBalance * 0.8)}`;
+    props.account.token.balance = `${parseInt(accounts.genesis.token.balance, 10) + (MIN_ACCOUNT_BALANCE * 0.8)}`;
     const wrapper = mountWithRouter(Editor, { ...props, votes: minimumBalanceVotes });
     await flushPromises();
     act(() => { wrapper.update(); });

@@ -19,13 +19,13 @@ const getPunishmentDetails = (punishedTimestamp, pomHeight, currentHeight) => {
   // 6: blocks per minute, 60: minutes, 24: hours
   const numOfBlockPerDay = 24 * 60 * 6;
   const daysLeft = Math.ceil((pomHeight.end - currentHeight) / numOfBlockPerDay);
-
+  console.log({ daysLeft, punishmentStartDate });
   return { daysLeft, punishmentStartDate };
 };
 
 const Warning = ({ vote, ...props }) => {
   useEffect(() => {
-    if (props.pomHeight.start && props.currentHeight && !props.block.data) {
+    if (props) {
       props.block.loadData();
     }
   }, [props.pomHeight]);

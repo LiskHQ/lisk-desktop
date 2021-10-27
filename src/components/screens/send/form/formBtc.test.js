@@ -107,7 +107,7 @@ describe('FormBtc', () => {
     });
 
     it.skip('should allow to set entire balance', async () => {
-      wrapper.find('button.send-entire-balance-button').simulate('click');
+      wrapper.find('button.use-entire-balance-button').simulate('click');
       act(() => { jest.runAllTimers(); });
       wrapper.update();
       await flushPromises();
