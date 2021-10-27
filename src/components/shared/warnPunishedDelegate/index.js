@@ -24,7 +24,7 @@ const getPunishmentDetails = (punishedTimestamp, pomHeight, currentHeight) => {
 
 const Warning = ({ vote, ...props }) => {
   useEffect(() => {
-    if (props) {
+    if (props.pomHeight.start && props.currentHeight) {
       props.block.loadData();
     }
   }, [props.pomHeight]);
