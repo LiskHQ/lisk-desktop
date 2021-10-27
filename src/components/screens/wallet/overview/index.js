@@ -15,11 +15,11 @@ import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
 import styles from './overview.css';
 
-const addWarningMessage = ({ isBanned, pomHeights, readMore }) => {
+const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
   FlashMessageHolder.addMessage(
     <WarnPunishedDelegate
       isBanned={isBanned}
-      pomHeights={pomHeights}
+      pomHeight={pomHeight}
       readMore={readMore}
     />,
     'WarnPunishedDelegate',
@@ -65,7 +65,7 @@ const Overview = ({
     if (!isWalletRoute && host && address && (isBanned || pomHeights?.length)) {
       addWarningMessage({
         isBanned,
-        pomHeights,
+        pomHeight: pomHeights[pomHeights.length - 1],
         readMore: () => {
           // TODO define blog entry url
           const url = '';
@@ -123,6 +123,7 @@ const Overview = ({
           username={account?.dpos?.delegate?.username}
           address={address}
           isBanned={isBanned}
+          pomHeights={pomHeights}
         />
       </div>
       <div
