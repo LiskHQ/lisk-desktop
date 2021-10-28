@@ -37,13 +37,14 @@ const getTitles = t => ({
 
 // eslint-disable-next-line max-statements
 const AddVote = ({
-  history, t, pomStart, ...props
+  history, t,
 }) => {
-  console.log('Add Vote', pomStart, props);
   const dispatch = useDispatch();
   const { account, network, voting } = useSelector(state => state);
   const host = useSelector(state => state.account.info.LSK.summary.address);
   const address = selectSearchParamValue(history.location.search, 'address');
+  const start = selectSearchParamValue(history.location.search, 'start');
+  const end = selectSearchParamValue(history.location.search, 'end');
   const existingVote = useSelector(state => state.voting[address || host]);
   const balance = useSelector(selectAccountBalance);
   const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');
@@ -97,9 +98,9 @@ const AddVote = ({
               />
             </div>
           </BoxInfoText>
-          {!pomStart && (
+          {start !== undefined && (
           <>
-            <WarnPunishedDelegate pomHeight={{ start: pomStart }} vote />
+            <WarnPunishedDelegate pomHeight={{ start, end }} vote />
             <span className={styles.space} />
           </>
           )}

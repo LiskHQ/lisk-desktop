@@ -123,7 +123,9 @@ const Overview = ({
           username={account?.dpos?.delegate?.username}
           address={address}
           isBanned={isBanned}
-          pomHeights={pomHeights}
+          pomStart={pomHeights?.length
+            ? { ...pomHeights[pomHeights.length - 1] }
+            : {}}
         />
       </div>
       <div

@@ -11,8 +11,7 @@ import styles from './balanceInfo.css';
 
 // eslint-disable-next-line complexity
 const ActionBar = ({
-  username, address, t, isWalletRoute, activeToken, isBanned,
-  pomStart,
+  username, address, t, isWalletRoute, activeToken, isBanned, pomStart,
 }) => {
   const hostBalance = useSelector(selectAccountBalance);
   const disableButtons = hostBalance === 0;
