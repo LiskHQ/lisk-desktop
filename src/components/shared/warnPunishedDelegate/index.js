@@ -18,16 +18,20 @@ const getPunishmentDetails = (punishedTimestamp, pomHeight, currentHeight) => {
   const punishmentStartDate = moment(startDate).format('MM.DD.YYYY');
   // 6: blocks per minute, 60: minutes, 24: hours
   const numOfBlockPerDay = 24 * 60 * 6;
+  console.log('daysLeft', pomHeight);
   const daysLeft = Math.ceil((pomHeight.end - currentHeight) / numOfBlockPerDay);
+  console.log('daysLeft', daysLeft);
   return { daysLeft, punishmentStartDate };
 };
 
 const Warning = ({ vote, ...props }) => {
   useEffect(() => {
-    if (props.pomHeight.start && props.currentHeight) {
+    if (props.pomHeight.start) {
       props.block.loadData();
     }
-  }, [props.pomHeight]);
+  }, [props.pomHeight.start]);
+
+  console.log('-----', vote, props);
 
   const { daysLeft, punishmentStartDate } = getPunishmentDetails(
     props.block.data.timestamp,
@@ -36,17 +40,29 @@ const Warning = ({ vote, ...props }) => {
   );
 
   if (vote) {
-    return <VoteWarning {...props} daysLeft={daysLeft} />;
+    <EditVoteWarning daysLeft={daysLeft} {...props} />;
   }
 
   return (
-    <WarnPunishedDelegate
+    <DelegateProfileWarning
       daysLeft={daysLeft}
       punishmentStartDate={punishmentStartDate}
       {...props}
     />
   );
 };
+
+export const DelegateProfileWarning = ({ daysLeft, punishmentStartDate, ...props }) => (
+  <WarnPunishedDelegate
+    daysLeft={daysLeft}
+    punishmentStartDate={punishmentStartDate}
+    {...props}
+  />
+);
+
+export const EditVoteWarning = ({ daysLeft, ...props }) => (
+  <VoteWarning {...props} daysLeft={daysLeft} />
+);
 
 const apis = {
   block: {

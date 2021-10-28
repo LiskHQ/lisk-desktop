@@ -37,8 +37,9 @@ const getTitles = t => ({
 
 // eslint-disable-next-line max-statements
 const AddVote = ({
-  history, t, start, end,
+  history, t, pomStart, ...props
 }) => {
+  console.log('Add Vote', pomStart, props);
   const dispatch = useDispatch();
   const { account, network, voting } = useSelector(state => state);
   const host = useSelector(state => state.account.info.LSK.summary.address);
@@ -96,9 +97,9 @@ const AddVote = ({
               />
             </div>
           </BoxInfoText>
-          {!start && (
+          {!pomStart && (
           <>
-            <WarnPunishedDelegate pomHeight={{ start, end }} vote />
+            <WarnPunishedDelegate pomHeight={{ start: pomStart }} vote />
             <span className={styles.space} />
           </>
           )}
