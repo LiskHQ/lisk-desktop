@@ -1,12 +1,12 @@
 /* eslint-disable import/prefer-default-export */
-import { tokenMap, minAccountBalance } from '@constants';
+import { tokenMap, MIN_ACCOUNT_BALANCE } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 
 const calculateAvailableBalance = (balance, token) => {
   if (token !== tokenMap.LSK.key) {
     return balance;
   }
-  return Math.max(balance - minAccountBalance, 0);
+  return Math.max(balance - MIN_ACCOUNT_BALANCE, 0);
 };
 
 const initialFee = {

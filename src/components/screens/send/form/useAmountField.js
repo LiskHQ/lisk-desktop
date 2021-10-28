@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
-import { tokenMap, minAccountBalance, regex } from '@constants';
+import { tokenMap, MIN_ACCOUNT_BALANCE, regex } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import { validateAmountFormat } from '@utils/validators';
 
@@ -34,7 +34,8 @@ const useAmountField = (initialValue, balance, token) => {
     let { message: feedback } = validateAmountFormat({
       value,
       token,
-      funds: token !== tokenMap.LSK.key ? maxAmount : Number(maxAmount) + Number(minAccountBalance),
+      funds: token !== tokenMap.LSK.key
+        ? maxAmount : Number(maxAmount) + Number(MIN_ACCOUNT_BALANCE),
       checklist: token !== tokenMap.LSK.key ? checklist : [...checklist, 'MIN_BALANCE'],
     });
 

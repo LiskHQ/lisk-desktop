@@ -3,11 +3,17 @@ import * as votingActions from '@actions';
 import { mountWithRouterAndStore } from '@utils/testHelpers';
 import EditVote from './index';
 
+jest.mock('@api/transaction', () => ({
+  getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
+}));
+
 jest.mock('@actions/voting', () => ({
   voteEdited: jest.fn(),
 }));
 
 describe('EditVote', () => {
+  const genesis = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+  const delegate = 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy';
   const propsWithoutSearch = {
     t: str => str,
     history: {
@@ -22,21 +28,26 @@ describe('EditVote', () => {
     history: {
       push: jest.fn(),
       location: {
-        search: '?address=987665L&modal=editVote',
+        search: `?address=${delegate}&modal=editVote`,
       },
     },
   };
   const noVote = {};
   const withVotes = {
-    '123456L': { confirmed: 1e9, unconfirmed: 1e9 },
-    '987665L': { confirmed: 1e9, unconfirmed: 1e9 },
+    [genesis]: { confirmed: 1e9, unconfirmed: 1e9 },
+    [delegate]: { confirmed: 1e9, unconfirmed: 1e9 },
   };
   const state = {
     account: {
       passphrase: 'test',
       info: {
-        LSK: { summary: { address: '123456L', balance: 10004674000 } },
-        BTC: { summary: { address: '123456L', balance: 0 } },
+        LSK: { summary: { address: genesis, balance: 10004674000 } },
+        BTC: { summary: { address: genesis, balance: 0 } },
+      },
+    },
+    settings: {
+      token: {
+        active: 'LSK',
       },
     },
   };
@@ -63,7 +74,7 @@ describe('EditVote', () => {
     );
     wrapper.find('.remove-vote').at(0).simulate('click');
     expect(votingActions.voteEdited).toHaveBeenCalledWith([{
-      address: '123456L',
+      address: genesis,
       amount: 0,
     }]);
   });
@@ -74,7 +85,7 @@ describe('EditVote', () => {
     );
     wrapper.find('.remove-vote').at(0).simulate('click');
     expect(votingActions.voteEdited).toHaveBeenCalledWith([{
-      address: '987665L',
+      address: delegate,
       amount: 0,
     }]);
   });
@@ -91,7 +102,7 @@ describe('EditVote', () => {
     });
     wrapper.find('.confirm').at(0).simulate('click');
     expect(votingActions.voteEdited).toHaveBeenCalledWith([{
-      address: '123456L',
+      address: genesis,
       amount: 2e9,
     }]);
   });
@@ -107,6 +118,7 @@ describe('EditVote', () => {
         name: 'vote',
       },
     });
+    wrapper.update();
     act(() => { jest.advanceTimersByTime(300); });
     wrapper.update();
     amountField = wrapper.find('input[name="vote"]').at(0);
@@ -127,7 +139,7 @@ describe('EditVote', () => {
     });
     wrapper.find('.confirm').at(0).simulate('click');
     expect(votingActions.voteEdited).toHaveBeenCalledWith([{
-      address: '987665L',
+      address: delegate,
       amount: 2e9,
     }]);
   });
