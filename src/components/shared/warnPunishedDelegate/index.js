@@ -36,7 +36,7 @@ const Warning = ({ vote, ...props }) => {
   );
 
   if (vote) {
-    <EditVoteWarning daysLeft={daysLeft} {...props} />;
+    return <EditVoteWarning daysLeft={daysLeft} {...props} />;
   }
 
   return (
