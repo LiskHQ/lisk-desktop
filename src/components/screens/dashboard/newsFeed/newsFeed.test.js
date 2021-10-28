@@ -9,7 +9,7 @@ describe('NewsFeed', () => {
     data: [{
       source: 'test1',
       sourceId: 'test1',
-      content_t: 'test',
+      content: 'test',
       createdAt: new Date(timestampNow),
       url: 'test',
       author: 'liskHQ',
@@ -18,7 +18,7 @@ describe('NewsFeed', () => {
     {
       source: 'test2',
       sourceId: 'test2',
-      content_t: 'test',
+      content: 'test',
       createdAt: new Date(),
       url: 'test',
       author: 'liskHQ',
@@ -27,7 +27,7 @@ describe('NewsFeed', () => {
     {
       source: 'test3',
       sourceId: 'test3',
-      content_t: 'test',
+      content: 'test',
       createdAt: new Date(),
       url: 'test',
       author: 'liskHQ',
@@ -36,7 +36,7 @@ describe('NewsFeed', () => {
     {
       source: 'test4',
       sourceId: 'test4',
-      content_t: 'test',
+      content: 'test',
       createdAt: new Date(),
       url: 'test',
       author: 'liskHQ',
@@ -45,7 +45,7 @@ describe('NewsFeed', () => {
     {
       source: 'test5',
       sourceId: 'test5',
-      content_t: 'test',
+      content: 'test',
       createdAt: new Date(),
       url: 'test',
       author: 'liskHQ',
