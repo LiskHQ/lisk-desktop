@@ -35,7 +35,7 @@ const Overview = ({
   activeToken,
   transactions,
   hwInfo,
-  discreetMode,
+  discreteMode,
   isWalletRoute,
   account,
   history,

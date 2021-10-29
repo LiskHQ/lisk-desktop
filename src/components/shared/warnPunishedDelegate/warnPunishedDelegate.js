@@ -5,7 +5,6 @@ import { routes } from '@constants';
 import { useTheme } from '@utils/theme';
 import FlashMessage from '@toolbox/flashMessage/flashMessage';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
-// import { SecondaryButton } from '@toolbox/buttons';
 import Icon from '@toolbox/icon';
 import styles from './warnPunishedDelegate.css';
 
