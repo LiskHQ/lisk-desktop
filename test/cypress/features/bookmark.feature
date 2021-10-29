@@ -1,12 +1,12 @@
 Feature: Add bookmark
 
   Background:
-    Given I login as genesis on devnet
+    Given I login as genesis on testnet
     Given I am on wallet page
     When I click on searchIcon
 
   Scenario: Add a delegate to bookmarks
-    And I search for account 537318935439898807L
+    And I search for account lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79
     Then I click on searchAccountRow
     Then I should be on Account page
     Then I click on addBookmarkIcon
@@ -16,7 +16,7 @@ Feature: Add bookmark
     Then The bookmarkList should contain delegate
 
   Scenario: Add regular account to bookmarks
-    And I search for account 16422276087748907680L
+    And I search for account lskckzngagcs4d5gvsgxmgnabyfyj8pz266gv8s8t
     Then I click on searchAccountRow
     Then I should be on Account page
     Then I click on addBookmarkIcon
