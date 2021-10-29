@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
-import { networks, ss, urls, accounts } from '@constants'
+import { networks, ss, urls, accounts } from '../../../constants';
 import numeral from 'numeral';
 import { fromRawLsk } from '../../../../src/utils/lsk';
 

@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps';
-import { networks, urls, accounts, ss } from '@constants'
-import { settings } from '@constants';
+import { networks, urls, accounts, ss, settings } from '../../../constants';
 
 const txConfirmationTimeout = 15000;
 
