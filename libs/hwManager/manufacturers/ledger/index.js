@@ -1,9 +1,7 @@
 /* istanbul ignore file */
+import { cryptography, transactions } from '@liskhq/lisk-client';
 import { LedgerAccount, LiskLedger } from '@hirishh/lisk-ledger.js';
-import {
-  convertBufferToHex,
-  getTransactionBytes,
-} from './utils';
+
 import {
   ADD_DEVICE,
 } from '../../constants';
@@ -136,9 +134,9 @@ const signTransaction = async (transporter, { device, data }) => {
     transport = await transporter.open(device.path);
     const liskLedger = new LiskLedger(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    const signature = await liskLedger.signTX(ledgerAccount, getTransactionBytes(data.tx));
+    const signature = await liskLedger.signTX(ledgerAccount, transactions.getBytes(data.tx));
     transport.close();
-    return convertBufferToHex(signature);
+    return cryptography.bufferToHex(signature);
   } catch (error) {
     if (transport) transport.close();
     throw new Error(error);
@@ -154,7 +152,7 @@ const signMessage = async (transporter, { device, data }) => {
     const ledgerAccount = getLedgerAccount(data.index);
     const signature = await liskLedger.signMSG(ledgerAccount, data.message);
     transport.close();
-    return convertBufferToHex(signature.slice(0, 64));
+    return cryptography.bufferToHex(signature.slice(0, 64));
   } catch (error) {
     if (transport) transport.close();
     throw new Error(error);
