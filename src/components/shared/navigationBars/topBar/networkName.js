@@ -15,7 +15,7 @@ const Network = ({ network, t, token }) => {
   const statusColor = network.status.online ? styles.online : styles.offline;
 
   return (
-    <section className={`${styles.wrapper} network-status`}>
+    <section className={styles.wrapper}>
       <span className={`${styles.status} ${statusColor}`} />
       <div className={styles.message}>
         <span>{t('Connected to:')}</span>
