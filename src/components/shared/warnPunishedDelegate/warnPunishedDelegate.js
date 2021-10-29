@@ -25,8 +25,14 @@ const WarnPunishedDelegate = ({
   }, [history.location.pathname]);
 
   const message = isBanned
-    ? t('This delegate has been permanently banned from {{punishmentStartDate}}', { punishmentStartDate })
-    : t('Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.', { punishmentStartDate, daysLeft });
+    ? t(
+        'This delegate has been permanently banned from {{punishmentStartDate}}',
+        { punishmentStartDate }
+      )
+    : t(
+        'Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.',
+        { punishmentStartDate, daysLeft }
+      );
 
   return (
     <FlashMessage
@@ -40,7 +46,7 @@ const WarnPunishedDelegate = ({
           <Icon name="warningYellow" />
           {`${message}`}
           <div className={styles.btnContainer}>
-            {/* TODO: re-enable button when readmore blog content becomes available. */}
+            {/* TODO: re-enable button when readmore blog content becomes available.- #3907 */}
             {/* <SecondaryButton
               className={`${styles.button} ${theme === 'dark' ? theme : ''}`}
               size="s"

@@ -67,7 +67,7 @@ const Overview = ({
         isBanned,
         pomHeight: pomHeights[pomHeights.length - 1],
         readMore: () => {
-          // TODO define blog entry url
+          // TODO define blog entry url - #3907
           const url = '';
           window.open(url, '_blank', 'rel="noopener noreferrer');
         },
@@ -118,7 +118,7 @@ const Overview = ({
           t={t}
           activeToken={activeToken}
           balance={balance}
-          isDiscreetMode={discreetMode}
+          isDiscreteMode={discreteMode}
           isWalletRoute={isWalletRoute}
           username={account?.dpos?.delegate?.username}
           address={address}
@@ -136,7 +136,7 @@ const Overview = ({
             t={t}
             transactions={isWalletRoute ? confirmed : transactions.data.data}
             token={activeToken}
-            isDiscreetMode={discreetMode && host === address}
+            isDiscreteMode={discreteMode && host === address}
             balance={balance}
             address={address}
           />
