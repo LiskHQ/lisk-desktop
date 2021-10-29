@@ -4,16 +4,21 @@ import { networks, urls, accounts, ss, settings } from '../../../constants';
 
 const txConfirmationTimeout = 15000;
 
-Given(/^Network switcher is disabled$/, function() {
+Given(/^Network switcher is disabled$/, function () {
   window.localStorage.setItem('settings', 
     JSON.stringify({ ...settings, 'showNetwork': false }));
+});
+
+Given(/^Network is set to testnet$/, function () {
+  window.localStorage.setItem('settings', 
+    JSON.stringify({ ...settings, 'showNetwork': true, network: { name: 'testnet', address:'https://testnet-service.lisk.com' } }));
 });
 
 Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
   cy.visit(urls.login);
   cy.get(ss.networkDropdown).click();
   cy.get(ss.networkOptions).eq(2).click();
-  cy.get(ss.addressInput).clear().type(networks[network].node);
+  cy.get(ss.addressInput).clear().type(networks[network].serviceUrl);
   cy.get(ss.connectButton).click();
 
   cy.get(ss.passphraseInput).first().click();
@@ -131,6 +136,10 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
   }
 });
 
+Then(/^I should see (.*?)$/, function (elementName) {
+  cy.get(ss[elementName]).should('be.visible');
+});
+
 Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
   switch (pageName.toLowerCase()) {
     case 'account':
@@ -192,7 +201,7 @@ Then(/^The (.*?) button must (.*?) active$/, function (elementName, check) {
   }
 });
 
-And(/^I search for account ([^s]+)$/, function (string) {
+And(/^I search for account (.*?)$/, function (string) {
   cy.server();
   cy.get(ss.searchInput).type(string);
 });
