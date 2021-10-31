@@ -138,9 +138,7 @@ const PerformanceView = ({
 }) => {
   const theme = useTheme();
   const status = getStatus(data);
-  console.log('status', status);
   const DelegateComponent = getDelegateComponent(status);
-  console.log('DelegateComponent', DelegateComponent);
 
   return (
     <Box className={`${grid['col-xs-12']} ${grid['col-md-9']} ${styles.highlightContainer} performance-container`}>
