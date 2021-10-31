@@ -18,7 +18,7 @@ export const getStatus = (data) => {
     return data.status;
   }
   if (data.voteWeight >= DEFAULT_STANDBY_THRESHOLD) {
-    return 'standBy';
+    return 'standby';
   }
   return 'inEligible';
 };
@@ -138,7 +138,9 @@ const PerformanceView = ({
 }) => {
   const theme = useTheme();
   const status = getStatus(data);
+  console.log('status', status);
   const DelegateComponent = getDelegateComponent(status);
+  console.log('DelegateComponent', DelegateComponent);
 
   return (
     <Box className={`${grid['col-xs-12']} ${grid['col-md-9']} ${styles.highlightContainer} performance-container`}>
