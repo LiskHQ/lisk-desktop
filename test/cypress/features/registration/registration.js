@@ -28,5 +28,5 @@ Given(/^I confirm my passphrase$/, function () {
 });
 
 Then(/^I see the success message$/, function () {
-  cy.get(ss.app).contains('Perfect! Almost done');
+  cy.get(ss.app).contains('Perfect! You\'re all set');
 });

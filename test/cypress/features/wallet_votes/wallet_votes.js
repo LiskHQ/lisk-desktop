@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import { ss, networks, accounts } from '../../../constants';
+import { Then } from 'cypress-cucumber-preprocessor/steps';
+import { ss } from '../../../constants';
 
 Then(/^I open votes tab$/, function () {
   cy.get(ss.votesTab).click();
@@ -26,6 +26,6 @@ Then(/^I filter votes$/, function () {
   cy.get(ss.searchDelegateInput).click().type('genesis_17');
 });
 
-Then(/^I see (\d+) delegates in table$/, function (number) {
+Then(/^I should see (\d+) delegates in table$/, function (number) {
   cy.get(ss.voteRow).should('have.length', number);
 });
