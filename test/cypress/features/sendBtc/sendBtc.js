@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import { ss, networks, accounts, urls } from '../../../constants';
+import { Then } from 'cypress-cucumber-preprocessor/steps';
+import { ss } from '../../../constants';
 
 const transactionFee = 0.1;
 

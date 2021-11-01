@@ -1,9 +1,9 @@
 /* global Cypress */
-import { networks } from '../../src/constants';
+import networks from '../../src/constants/networks';
 
 const nets = {
-  mainnet: { ...networks.mainnet, serviceUrl: networks.mainnet.serviceUrl },
-  testnet: { ...networks.testnet, serviceUrl: networks.testnet.serviceUrl },
+  mainnet: networks.mainnet,
+  testnet: networks.testnet,
   devnet: {
     serviceUrl: Cypress.env('serviceUrl'),
   },

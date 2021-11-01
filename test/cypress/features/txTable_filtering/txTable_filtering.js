@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import { ss, networks, accounts } from '../../../constants';
+import { Then } from 'cypress-cucumber-preprocessor/steps';
+import { ss } from '../../../constants';
 
 Then(/^I click filter transactions$/, function () {
   cy.get(ss.filterTransactionsBtn).click();

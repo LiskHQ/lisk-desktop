@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
-import { networks, ss, urls, accounts } from '../../../constants';
 import numeral from 'numeral';
+import { networks, ss } from '../../../constants';
 import { fromRawLsk } from '../../../../src/utils/lsk';
 
 Given(/^showNetwork setting is true$/, function () {
