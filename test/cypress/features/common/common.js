@@ -77,7 +77,7 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
   cy.server();
   switch (page.toLowerCase()) {
     case 'wallet':
-      cy.visit(`${urls.account}?address=${accounts[identifier].address}`);
+      cy.visit(`${urls.account}?address=${accounts[identifier].summary.address}`);
       break;
   }
 });

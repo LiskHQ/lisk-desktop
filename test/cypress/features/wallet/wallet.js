@@ -39,5 +39,5 @@ Then(/^I send LSK$/, function () {
 });
 
 Then(/^I should see ([^s]+) in recipient$/, function (accountName) {
-  cy.get(ss.recipientInput).should('have.value', accounts[accountName].address);
+  cy.get(ss.recipientInput).should('have.value', accounts[accountName].summary.address);
 });

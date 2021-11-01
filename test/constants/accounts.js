@@ -78,7 +78,7 @@ const accounts = {
     summary: {
       publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
       serverPublicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
-      address: '1941002779612196826L',
+      address: 'lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz',
     },
     token: {},
     sequence: {},
