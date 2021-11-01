@@ -35,7 +35,7 @@ const Overview = ({
   activeToken,
   transactions,
   hwInfo,
-  discreteMode,
+  discreetMode,
   isWalletRoute,
   account,
   history,
@@ -118,7 +118,7 @@ const Overview = ({
           t={t}
           activeToken={activeToken}
           balance={balance}
-          isDiscreteMode={discreteMode}
+          isDiscreetMode={discreetMode}
           isWalletRoute={isWalletRoute}
           username={account?.dpos?.delegate?.username}
           address={address}
@@ -136,7 +136,7 @@ const Overview = ({
             t={t}
             transactions={isWalletRoute ? confirmed : transactions.data.data}
             token={activeToken}
-            isDiscreteMode={discreteMode && host === address}
+            isDiscreetMode={discreetMode && host === address}
             balance={balance}
             address={address}
           />
