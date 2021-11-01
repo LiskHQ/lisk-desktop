@@ -51,7 +51,7 @@ const Wallet = ({ t, history }) => {
         hwInfo={account.hwInfo}
         transactions={confirmed}
       />
-      <TabsContainer>
+      <TabsContainer name="main-tabs">
         <Transactions
           pending={pending || []}
           confirmedLength={confirmed.length}
