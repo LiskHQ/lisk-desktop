@@ -122,7 +122,7 @@ class passphraseInput extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, keyPress } = this.props;
     const {
       focus,
       inputsLength,
@@ -174,6 +174,7 @@ class passphraseInput extends React.Component {
                     onPaste={this.handlePaste}
                     onChange={this.handleValueChange}
                     onKeyDown={this.keyAction}
+                    onKeyPress={keyPress}
                     data-index={i}
                   />
                 </span>
