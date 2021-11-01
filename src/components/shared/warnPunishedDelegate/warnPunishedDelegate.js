@@ -26,13 +26,13 @@ const WarnPunishedDelegate = ({
 
   const message = isBanned
     ? t(
-        'This delegate has been permanently banned from {{punishmentStartDate}}',
-        { punishmentStartDate }
-      )
+      'This delegate has been permanently banned from {{punishmentStartDate}}',
+      { punishmentStartDate },
+    )
     : t(
-        'Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.',
-        { punishmentStartDate, daysLeft }
-      );
+      'Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.',
+      { punishmentStartDate, daysLeft },
+    );
 
   return (
     <FlashMessage
