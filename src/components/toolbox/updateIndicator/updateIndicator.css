@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 8px 0;
+}
+
+.progressContent {
+  margin-left: 16px;
+
+  & > p {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & > .progressBar {
+    margin-top: 8px;
+    width: 230px;
+    height: 5px;
+    display: flex;
+    border-radius: 43px;
+    background-color: var(--color-platinum);
+    
+    & > .lineForged {
+      border-radius: 43px;
+      background-color: var(--color-ultramarine-blue);  
+    }
+  }
+}
+
+.closeBtn {
+  margin-left: 20px;
+
+  &::before,
+  &::after {
+    background-color: var(--color-strong-white);
+    content: '';
+    height: 11px;
+    position: absolute;
+    width: 1px;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+.completedContent {
+  margin: 0 16px;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+}
