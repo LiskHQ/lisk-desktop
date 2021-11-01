@@ -17,7 +17,7 @@ const CustomNodeHOC = (props) => {
       t={t}
       settings={settings}
       networkSelected={params => dispatch(networkSelected(params))}
-      customNetworkRemoved={params => dispatch(customNetworkRemoved(params))}
+      customNetworkRemoved={() => dispatch(customNetworkRemoved())}
       customNetworkStored={params => dispatch(customNetworkStored(params))}
       {...props}
     />

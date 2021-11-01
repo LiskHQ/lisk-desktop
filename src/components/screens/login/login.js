@@ -59,6 +59,12 @@ const Login = ({
     login({ passphrase: passphrase.value, isRecoveryPhraseMode, derivationPath });
   };
 
+  const handleKeyPress = (e) => {
+    if (e.charCode === 13) {
+      onFormSubmit(e);
+    }
+  };
+
   useEffect(() => {
     // istanbul ignore else
     if (!settings.areTermsOfUseAccepted && network.networks?.LSK) {
@@ -96,6 +102,7 @@ const Login = ({
                 inputsLength={12}
                 maxInputsLength={24}
                 onFill={setPassphrase}
+                keyPress={handleKeyPress}
               />
               <DiscreetModeToggle className={styles.discreetMode} />
               <RecoveryPhrase
