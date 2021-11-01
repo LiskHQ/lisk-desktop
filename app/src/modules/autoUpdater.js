@@ -39,8 +39,8 @@ export default ({ // eslint-disable-line max-statements
     logMessage = `${logMessage} (${progressObj.transferred}/${progressObj.total})`;
     // eslint-disable-next-line no-console
     console.log(logMessage);
-    if (win?.browser) {
-      win.browser.setProgressBar(progressObj.transferred / progressObj.total);
+    if (win?.send) {
+      win.send({ event: 'downloadProgress', value: progressObj });
     }
   });
 
@@ -75,17 +75,7 @@ export default ({ // eslint-disable-line max-statements
   });
 
   autoUpdater.on('update-downloaded', () => {
-    dialog.showMessageBox({
-      title: i18n.t('Update download finished'),
-      buttons: [i18n.t('Restart now'), i18n.t('Later')],
-      message: i18n.t('Updates downloaded, application has to be restarted to apply the updates.'),
-    }).then((result) => {
-      const buttonIndex = result?.response;
-      /* istanbul ignore next */
-      if (buttonIndex === 0) {
-        autoUpdater.quitAndInstall();
-      }
-    });
+    win.send({ event: 'updateDownloaded', value: () => { autoUpdater.quitAndInstall(); } });
   });
 
   // export this to MenuItem click callback

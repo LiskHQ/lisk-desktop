@@ -6,7 +6,7 @@ import { PrimaryButton } from '@toolbox/buttons';
 import styles from './updateIndicator.css';
 
 const Content = ({
-  transferred, total, completed, t, closeToast,
+  transferred, total, onAction, completed, t, closeToast,
 }) => (
   <div className={styles.container}>
     <Icon name={completed ? 'downloadUpdateFinish' : 'downloadUpdateProgress'} />
@@ -19,7 +19,7 @@ const Content = ({
               <span>100%</span>
             </div>
             <PrimaryButton
-              onClick={() => {}}
+              onClick={onAction}
             >
               {t('Restart app')}
             </PrimaryButton>
@@ -46,14 +46,14 @@ const Content = ({
 const UpdateIndicator = ({ t }) => {
   const { ipc } = window;
   const toastId = 'update-download';
-  const onProgress = (transferred, total) => {
+  const onProgress = (action, { transferred, total }) => {
     toast.update(toastId, {
-      render: () => <Content t={t} transferred={50} total={100} />,
+      render: () => <Content t={t} transferred={transferred} total={total} />,
     });
   };
-  const onComplete = () => {
+  const onComplete = (action, onAction) => {
     toast.update(toastId, {
-      render: () => <Content t={t} completed />,
+      render: () => <Content t={t} onAction={onAction} completed />,
     });
   };
 
