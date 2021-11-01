@@ -143,7 +143,6 @@ const signTransaction = async (transporter, { device, data }) => {
   }
 };
 
-// eslint-disable-next-line max-statements
 const signMessage = async (transporter, { device, data }) => {
   let transport = null;
   try {

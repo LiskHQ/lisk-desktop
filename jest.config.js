@@ -6,6 +6,7 @@ module.exports = {
     '<rootDir>/app/src/**/*.test.js',
     '<rootDir>/src/**/*.test.js',
     '<rootDir>/test/integration/*.test.js',
+    '<rootDir>/libs/**/*.test.js',
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
