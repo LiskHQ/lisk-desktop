@@ -17,7 +17,7 @@ const AccountCard = ({
   onSelectAccount,
   t,
 }) => (
-  <div id={account.address} className={`${styles.account} hw-account`}>
+  <div id={account.summary.address} className={`${styles.account} hw-account`}>
     <header className={styles.header}>
       { accountOnEditMode === index
         ? (
@@ -55,11 +55,11 @@ const AccountCard = ({
 
     <div className={styles.content}>
       <AccountVisual
-        address={account.address || ''}
+        address={account.summary.address || ''}
         size={55}
       />
       <div className={`${styles.row} row-address`}>
-        <p>{account.address}</p>
+        <p>{account.summary.address}</p>
         <span>{t('Address')}</span>
       </div>
       <div className={`${styles.row} row-balance`}>
