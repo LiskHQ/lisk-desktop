@@ -53,7 +53,7 @@ export default ({ // eslint-disable-line max-statements
       autoUpdater.downloadUpdate();
       setTimeout(() => {
         if (!updater.error) {
-          win.send({ event: 'update:downloading', value: { label: i18n.t('Download started!') } });
+          win.send({ event: 'updateStart', value: null });
         }
       }, 500);
     });

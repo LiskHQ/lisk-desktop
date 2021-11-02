@@ -123,3 +123,7 @@ ipcMain.on('storeConfig', (event, data) => {
 ipcMain.on('retrieveConfig', () => {
   readConfig();
 });
+
+ipcMain.on('update:quitAndInstall', () => {
+  autoUpdater.quitAndInstall();
+});

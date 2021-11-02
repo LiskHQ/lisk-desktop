@@ -5,7 +5,7 @@ import { PrimaryButton } from '@toolbox/buttons';
 import styles from './updateIndicator.css';
 
 const UpdateIndicator = ({
-  transferred, total, onAction, completed, t, closeToast,
+  transferred = 0, total = 1, quitAndInstall, completed, t, closeToast,
 }) => (
   <div className={styles.container}>
     <Icon name={completed ? 'downloadUpdateFinish' : 'downloadUpdateProgress'} />
@@ -18,7 +18,7 @@ const UpdateIndicator = ({
               <span>100%</span>
             </div>
             <PrimaryButton
-              onClick={onAction}
+              onClick={quitAndInstall}
             >
               {t('Restart app')}
             </PrimaryButton>
@@ -29,7 +29,7 @@ const UpdateIndicator = ({
             <div className={styles.progressContent}>
               <p>
                 <span>{t('Loading in progress')}</span>
-                <span>50%</span>
+                <span>{`${(transferred / total) * 100}%`}</span>
               </p>
               <div className={styles.progressBar}>
                 <div className={styles.lineForged} style={{ width: `${(transferred / total) * 100}%` }} />

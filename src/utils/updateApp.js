@@ -7,20 +7,31 @@ export default {
     const { ipc } = window;
     const toastId = 'update-download';
 
-    toast(<UpdateIndicator />, {
-      toastId,
-      autoClose: false,
-    });
-
     if (ipc) {
+      ipc.on('updateStart', () => {
+        toast(<UpdateIndicator />, {
+          toastId,
+          autoClose: false,
+          closeOnClick: false,
+        });
+      });
+
       ipc.on('downloadProgress', (action, { transferred, total }) => {
         toast.update(toastId, {
           render: () => <UpdateIndicator transferred={transferred} total={total} />,
         });
       });
-      ipc.on('updateDownloaded', (action, onAction) => {
+
+      ipc.on('updateDownloaded', () => {
         toast.update(toastId, {
-          render: () => <UpdateIndicator onAction={onAction} completed />,
+          render: () => (
+            <UpdateIndicator
+              quitAndInstall={() => {
+                ipc.send('update:quitAndInstall');
+              }}
+              completed
+            />
+          ),
         });
       });
     }
