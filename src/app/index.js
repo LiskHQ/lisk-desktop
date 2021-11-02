@@ -14,7 +14,6 @@ import { routes } from '@constants';
 import NavigationBars from '@shared/navigationBars';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DialogHolder from '@toolbox/dialog/holder';
-import UpdateIndicator from '@toolbox/updateIndicator';
 import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@actions';
 import { retrieveSchemas } from '@utils/moduleAssets';
 import { selectServiceUrl } from '@store/selectors';
@@ -69,7 +68,6 @@ const App = ({ history }) => {
         />
         <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
           <section className="scrollContainer">
-            <UpdateIndicator />
             <FlashMessageHolder />
             <div className={`${styles.mainContent} ${styles.mainBox}`}>
               <Switch>

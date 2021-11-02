@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import Icon from '@toolbox/icon';
 import { PrimaryButton } from '@toolbox/buttons';
 import styles from './updateIndicator.css';
 
-const Content = ({
+const UpdateIndicator = ({
   transferred, total, onAction, completed, t, closeToast,
 }) => (
   <div className={styles.container}>
@@ -42,39 +41,5 @@ const Content = ({
     }
   </div>
 );
-
-const UpdateIndicator = ({ t }) => {
-  const { ipc } = window;
-  const toastId = 'update-download';
-  const onProgress = (action, { transferred, total }) => {
-    toast.update(toastId, {
-      render: () => <Content t={t} transferred={transferred} total={total} />,
-    });
-  };
-  const onComplete = (action, onAction) => {
-    toast.update(toastId, {
-      render: () => <Content t={t} onAction={onAction} completed />,
-    });
-  };
-
-  if (ipc) {
-    ipc.on('downloadProgress', onProgress);
-    ipc.on('updateDownloaded', onComplete);
-  }
-
-  useEffect(() => {
-    toast(<Content t={t} />, {
-      toastId,
-      autoClose: false,
-    });
-  }, []);
-
-  return (
-    <>
-      <PrimaryButton onClick={onProgress}>increase</PrimaryButton>
-      <PrimaryButton onClick={onComplete}>complete</PrimaryButton>
-    </>
-  );
-};
 
 export default withTranslation()(UpdateIndicator);
