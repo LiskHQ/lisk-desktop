@@ -55,19 +55,6 @@ app.on('ready', () => {
   if (process.platform === 'win32') {
     app.setAppUserModelId('io.lisk.hub');
   }
-
-  win.send({ event: 'downloadUpdateStart' });
-  let i = 0;
-  setTimeout(function updater() {
-    if (i === 1000) {
-      win.send({ event: 'downloadUpdateCompleted' });
-    } else {
-      const progressObj = { transferred: i, total: 1000 };
-      win.send({ event: 'downloadUpdateProgress', value: progressObj });
-      i++;
-      setTimeout(updater, 20);
-    }
-  }, 20);
 });
 
 app.on('window-all-closed', () => {
