@@ -9,7 +9,7 @@ export default {
 
     if (ipc) {
       ipc.on('downloadUpdateStart', () => {
-        toast(<UpdateIndicator />, {
+        toast.info(<UpdateIndicator />, {
           toastId,
           autoClose: false,
           closeOnClick: false,
