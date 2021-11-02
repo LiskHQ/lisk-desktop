@@ -4,7 +4,7 @@ import {
 } from '@constants';
 import { create } from '@api/transaction';
 import { getAccount } from '@api/account';
-import { signVoteTransaction } from '@utils/hwManager';
+import { signTransactionByHW } from '@utils/hwManager';
 import { getVotes } from '@api/delegate';
 import { timerReset } from './account';
 
@@ -85,11 +85,27 @@ export const votesSubmitted = ({ fee, votes }) =>
         ...transaction,
         moduleAssetId,
       },
+      isHwSigning: account.loginType !== loginTypes.passphrase.code,
     };
 
-    const [error, tx] = account.loginType === loginTypes.passphrase.code
-      ? await to(create(params, tokenMap.LSK.key))
-      : await to(signVoteTransaction(account, transaction));
+    let [error, tx] = await to(create(params, tokenMap.LSK.key));
+
+    if (error) {
+      dispatch({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    }
+
+    if (params.isHwSigning) {
+      // tx contain transactionObject and transactionBytes that needs to be signed by HW
+      [error, tx] = await to(signTransactionByHW(
+        account,
+        tx.networkIdentifier,
+        tx.transactionObject,
+        tx.transactionBytes,
+      ));
+    }
 
     if (error) {
       return dispatch({

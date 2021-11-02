@@ -21,7 +21,7 @@ const {
 
 const EMPTY_BUFFER = Buffer.from('');
 export const convertStringToBinary = value => Buffer.from(value, 'hex');
-const convertBinaryToString = value => value.toString('hex');
+const convertBinaryToString = value => value && value.toString('hex');
 const convertBigIntToString = value => {
   if (typeof value === 'bigint') {
     return String(value);

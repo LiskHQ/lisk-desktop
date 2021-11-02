@@ -5,7 +5,7 @@ import {
 } from '@constants';
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { transformTransaction } from '@utils/transaction';
-import { signSendTransaction } from '@utils/hwManager';
+import { signTransactionByHW } from '@utils/hwManager';
 import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
@@ -107,13 +107,29 @@ export const transactionCreated = data => async (dispatch, getState) => {
     account: account.info[activeToken],
     passphrase: account.passphrase,
     network,
+    isHwSigning: account.loginType !== loginTypes.passphrase.code,
   };
 
-  const [error, tx] = account.loginType === loginTypes.passphrase.code
-    ? await to(create(params, activeToken))
-    : await to(signSendTransaction(account, data));
+  let [error, tx] = await to(create(params, activeToken));
 
-  if (error || (account.loginType !== loginTypes.passphrase.code && !tx.signatures)) {
+  if (error) {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
+    });
+  }
+
+  if (params.isHwSigning) {
+    // tx contain txObject and txBytes that needs to be signed by HW
+    [error, tx] = await to(signTransactionByHW(
+      account,
+      tx.networkIdentifier,
+      tx.transactionObject,
+      tx.transactionBytes,
+    ));
+  }
+
+  if (error) {
     dispatch({
       type: actionTypes.transactionSignError,
       data: error,
