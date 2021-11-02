@@ -15,6 +15,7 @@
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
+    line-height: 18px;
   }
 
   & > .progressBar {
@@ -23,7 +24,7 @@
     height: 5px;
     display: flex;
     border-radius: 43px;
-    background-color: var(--color-platinum);
+    background-color: var(--light-border-color);
     
     & > .lineForged {
       border-radius: 43px;
@@ -58,4 +59,8 @@
   width: max-content;
   display: flex;
   flex-direction: column;
+}
+
+.percentage {
+  font-weight: 500;
 }
