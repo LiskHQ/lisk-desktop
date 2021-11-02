@@ -29,7 +29,7 @@ const UpdateIndicator = ({
             <div className={styles.progressContent}>
               <p>
                 <span>{t('Loading in progress')}</span>
-                <span className={styles.percentage}>{`${(transferred / total) * 100}%`}</span>
+                <span className={styles.percentage}>{`${parseFloat((transferred / total) * 100).toFixed(2)}%`}</span>
               </p>
               <div className={styles.progressBar}>
                 <div className={styles.lineForged} style={{ width: `${(transferred / total) * 100}%` }} />
