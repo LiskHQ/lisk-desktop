@@ -53,7 +53,7 @@ export default ({ // eslint-disable-line max-statements
       autoUpdater.downloadUpdate();
       setTimeout(() => {
         if (!updater.error) {
-          win.send({ event: 'downloadUpdateStart', value: null });
+          win.send({ event: 'downloadUpdateStart' });
         }
       }, 500);
     });
@@ -75,7 +75,7 @@ export default ({ // eslint-disable-line max-statements
   });
 
   autoUpdater.on('update-downloaded', () => {
-    win.send({ event: 'downloadUpdateCompleted', value: () => { autoUpdater.quitAndInstall(); } });
+    win.send({ event: 'downloadUpdateCompleted' });
   });
 
   // export this to MenuItem click callback
