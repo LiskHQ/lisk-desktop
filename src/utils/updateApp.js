@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react';
 import { toast } from 'react-toastify';
 import UpdateIndicator from '@toolbox/updateIndicator';
