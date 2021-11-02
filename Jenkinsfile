@@ -21,7 +21,7 @@ pipeline {
 							}
 						}
 					},
-					"build": {
+					"linux": {
 						withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
 							nvm(getNodejsVersion()) {
 								sh '''
@@ -50,20 +50,31 @@ pipeline {
 					rm -rf $WORKSPACE/app/build
 					'''
 					githubNotify context: 'Jenkins test deployment',
-					             description: 'Commit was deployed to test',
-					             status: 'SUCCESS',
-					             targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
-
+						     description: 'Commit was deployed to test',
+						     status: 'SUCCESS',
+						     targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
 			}
 		}
 		stage('test') {
 			steps {
-			    nvm(getNodejsVersion()) {
-			        ansiColor('xterm') {
-			            wrap([$class: 'Xvfb']) {
-				            sh 'CYPRESS_baseUrl=https://jenkins.lisk.com/test/${JOB_NAME%/*}/$BRANCH_NAME/#/ npm run cypress:run'			            }
-			        }
-			    }
+				parallel (
+					"cypress": {
+						nvm(getNodejsVersion()) {
+							ansiColor('xterm') {
+								wrap([$class: 'Xvfb']) {
+									sh 'CYPRESS_baseUrl=https://jenkins.lisk.com/test/${JOB_NAME%/*}/$BRANCH_NAME/#/ npm run cypress:run'
+								}
+							}
+						}
+					},
+					"jest": {
+						nvm(getNodejsVersion()) {
+							ansiColor('xterm') {
+								sh 'ON_JENKINS=true npm run test'
+							}
+						}
+					},
+				)
 			}
 		}
 	}
