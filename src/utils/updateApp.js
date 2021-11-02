@@ -8,7 +8,7 @@ export default {
     const toastId = 'update-download';
 
     if (ipc) {
-      ipc.on('updateStart', () => {
+      ipc.on('downloadUpdateStart', () => {
         toast(<UpdateIndicator />, {
           toastId,
           autoClose: false,
@@ -16,18 +16,18 @@ export default {
         });
       });
 
-      ipc.on('downloadProgress', (action, { transferred, total }) => {
+      ipc.on('downloadUpdateProgress', (action, { transferred, total }) => {
         toast.update(toastId, {
           render: () => <UpdateIndicator transferred={transferred} total={total} />,
         });
       });
 
-      ipc.on('updateDownloaded', () => {
+      ipc.on('downloadUpdateCompleted', () => {
         toast.update(toastId, {
           render: () => (
             <UpdateIndicator
               quitAndInstall={() => {
-                ipc.send('update:quitAndInstall');
+                ipc.send('updateQuitAndInstall');
               }}
               completed
             />

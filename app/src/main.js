@@ -124,6 +124,6 @@ ipcMain.on('retrieveConfig', () => {
   readConfig();
 });
 
-ipcMain.on('update:quitAndInstall', () => {
+ipcMain.on('updateQuitAndInstall', () => {
   autoUpdater.quitAndInstall();
 });

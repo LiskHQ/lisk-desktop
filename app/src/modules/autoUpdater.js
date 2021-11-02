@@ -40,7 +40,7 @@ export default ({ // eslint-disable-line max-statements
     // eslint-disable-next-line no-console
     console.log(logMessage);
     if (win?.send) {
-      win.send({ event: 'downloadProgress', value: progressObj });
+      win.send({ event: 'downloadUpdateProgress', value: progressObj });
     }
   });
 
@@ -53,7 +53,7 @@ export default ({ // eslint-disable-line max-statements
       autoUpdater.downloadUpdate();
       setTimeout(() => {
         if (!updater.error) {
-          win.send({ event: 'updateStart', value: null });
+          win.send({ event: 'downloadUpdateStart', value: null });
         }
       }, 500);
     });
@@ -75,7 +75,7 @@ export default ({ // eslint-disable-line max-statements
   });
 
   autoUpdater.on('update-downloaded', () => {
-    win.send({ event: 'updateDownloaded', value: () => { autoUpdater.quitAndInstall(); } });
+    win.send({ event: 'downloadUpdateCompleted', value: () => { autoUpdater.quitAndInstall(); } });
   });
 
   // export this to MenuItem click callback
