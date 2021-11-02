@@ -33,14 +33,17 @@
 
 .closeBtn {
   margin-left: 20px;
+  cursor: pointer;
 
   &::before,
   &::after {
-    background-color: var(--color-strong-white);
+    background-color: var(--overlay-color);
     content: '';
     height: 11px;
     position: absolute;
-    width: 1px;
+    width: 2px;
+
+    
   }
 
   &::before {
@@ -54,6 +57,7 @@
 
 .completedContent {
   margin: 0 16px;
+  line-height: 24px;
   width: max-content;
   display: flex;
   flex-direction: column;

@@ -92,6 +92,7 @@ body {
   min-height: 30px;
   line-height: 30px;
   padding: 8px 16px;
+  cursor: default;
 
   &[class*="success"] {
     background-color: var(--color-ufo-green);

@@ -13,10 +13,10 @@ const UpdateIndicator = ({
       completed
         ? (
           <>
-            <div className={styles.completedContent}>
+            <p className={styles.completedContent}>
               <span>{t('Download completed')}</span>
               <span className={styles.percentage}>100%</span>
-            </div>
+            </p>
             <PrimaryButton
               onClick={quitAndInstall}
             >
@@ -29,7 +29,7 @@ const UpdateIndicator = ({
             <div className={styles.progressContent}>
               <p>
                 <span>{t('Loading in progress')}</span>
-                <span className={styles.percentage}>{`${parseFloat((transferred / total) * 100).toFixed(2)}%`}</span>
+                <span className={styles.percentage}>{`${Math.floor((transferred / total) * 100)}%`}</span>
               </p>
               <div className={styles.progressBar}>
                 <div className={styles.lineForged} style={{ width: `${(transferred / total) * 100}%` }} />
