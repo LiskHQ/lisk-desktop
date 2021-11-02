@@ -118,11 +118,10 @@ describe('autoUpdater', () => {
   });
 
   it('should show info box when update downloaded', () => {
-    const dialogSpy = spy(params.dialog, 'showMessageBox');
     autoUpdater(params);
     callbacks['update-downloaded']({ version });
 
-    expect(dialogSpy).to.have.been.calledWith();
+    expect(params.win.send).to.have.been.calledWith({ event: 'downloadUpdateCompleted' });
   });
 
   it('should show info box if update was requested but not available', () => {
@@ -165,6 +164,7 @@ describe('autoUpdater', () => {
     ipcRenderer.send('update', { text: 'update' });
     clock.tick(100);
     expect(params.autoUpdater.downloadUpdate).to.have.been.calledWithExactly();
+    expect(params.win.send).to.have.been.calledWith({ event: 'downloadUpdateStart' });
   });
 
   /* it('should not download the update if update is available and the "Later" button was pressed',
@@ -179,7 +179,7 @@ describe('autoUpdater', () => {
   it('should set the progress bar when being in download progress', () => {
     autoUpdater(params);
     callbacks['download-progress']({ transferred: 50, total: 100 });
-    expect(params.win.browser.setProgressBar).to.have.been.calledWith(50 / 100);
+    expect(params.win.send).to.have.been.calledWith({ event: 'downloadUpdateProgress', value: { transferred: 50, total: 100 } });
   });
 
   it('should not fail if browser is not defined when being in download progress', () => {
