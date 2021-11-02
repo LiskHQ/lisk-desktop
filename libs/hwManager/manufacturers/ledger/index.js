@@ -1,5 +1,4 @@
 /* istanbul ignore file */
-import { cryptography, transactions } from '@liskhq/lisk-client';
 import { LedgerAccount, LiskLedger } from '@hirishh/lisk-ledger.js';
 
 import {
@@ -119,24 +118,26 @@ const getAddress = async (transporter, { device, data }) => {
     transport = await transporter.open(device.path);
     const liskLedger = new LiskLedger(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    const { publicKey } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
+    const { address } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
     transport.close();
-    return publicKey;
+    return address;
   } catch (error) {
     if (transport) transport.close();
     throw error;
   }
 };
 
+// eslint-disable-next-line max-statements
 const signTransaction = async (transporter, { device, data }) => {
   let transport = null;
   try {
     transport = await transporter.open(device.path);
     const liskLedger = new LiskLedger(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    const signature = await liskLedger.signTX(ledgerAccount, transactions.getBytes(data.tx));
+    const txToBeSigned = Buffer.concat([data.networkIdentifier, data.transactionBytes]);
+    const signature = await liskLedger.signTX(ledgerAccount, txToBeSigned);
     transport.close();
-    return cryptography.bufferToHex(signature);
+    return signature;
   } catch (error) {
     if (transport) transport.close();
     throw new Error(error);
@@ -151,7 +152,7 @@ const signMessage = async (transporter, { device, data }) => {
     const ledgerAccount = getLedgerAccount(data.index);
     const signature = await liskLedger.signMSG(ledgerAccount, data.message);
     transport.close();
-    return cryptography.bufferToHex(signature.slice(0, 64));
+    return signature.slice(0, 64);
   } catch (error) {
     if (transport) transport.close();
     throw new Error(error);
