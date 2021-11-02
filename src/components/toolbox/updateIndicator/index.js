@@ -18,6 +18,7 @@ const UpdateIndicator = ({
               <span className={styles.percentage}>100%</span>
             </p>
             <PrimaryButton
+              className="quit-to-install-btn"
               onClick={quitAndInstall}
             >
               {t('Restart app')}
@@ -35,7 +36,7 @@ const UpdateIndicator = ({
                 <div className={styles.lineForged} style={{ width: `${(transferred / total) * 100}%` }} />
               </div>
             </div>
-            <span className={styles.closeBtn} onClick={closeToast} />
+            <span className={`${styles.closeBtn} close-update-indicator-icon`} onClick={closeToast} />
           </>
         )
     }
