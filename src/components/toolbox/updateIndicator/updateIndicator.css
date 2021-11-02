@@ -42,8 +42,6 @@
     height: 11px;
     position: absolute;
     width: 2px;
-
-    
   }
 
   &::before {
