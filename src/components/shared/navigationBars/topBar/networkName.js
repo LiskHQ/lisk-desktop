@@ -11,7 +11,7 @@ const Network = ({ network, t, token }) => {
     [networkKeys.testNet]: t('Testnet').toLowerCase(),
     [networkKeys.customNode]: t('Devnet').toLowerCase(),
   };
-  const activeNetwork = getNetworkName(network, token);
+  const activeNetwork = getNetworkName(network);
   const statusColor = network.status.online ? styles.online : styles.offline;
 
   return (
