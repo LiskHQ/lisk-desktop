@@ -9,10 +9,8 @@
   margin-left: 16px;
 
   & > p {
-    margin-top: 0px;
     margin-bottom: 10px;
     margin-top: 0px;
-    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     line-height: 18px;
@@ -25,10 +23,10 @@
     display: flex;
     border-radius: 43px;
     background-color: var(--light-border-color);
-    
+
     & > .lineForged {
       border-radius: 43px;
-      background-color: var(--color-ultramarine-blue);  
+      background-color: var(--color-ultramarine-blue);
     }
   }
 }
