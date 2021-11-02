@@ -16,5 +16,15 @@ contextBridge.exposeInMainWorld(
         func(event, ...args);
       });
     },
+    once: (channel, func) => {
+      ipcRenderer.once(channel, (event, ...args) => {
+        func(event, ...args);
+      });
+    },
+    removeListener: (channel, func) => {
+      ipcRenderer.removeListener(channel, (event, ...args) => {
+        func(event, ...args);
+      });
+    },
   },
 );
