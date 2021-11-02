@@ -1,4 +1,4 @@
-import { getAccountsFromDevice, signSendTransaction, signVoteTransaction } from './hwManager';
+import { getAccountsFromDevice, signMessageByHW, signTransactionByHW } from './hwManager';
 import * as accountApi from './api/account';
 import accounts from '../../test/constants/accounts';
 import * as communication from '../../libs/hwManager/communication';
@@ -6,6 +6,7 @@ import * as communication from '../../libs/hwManager/communication';
 jest.mock('../../libs/hwManager/communication', () => ({
   getPublicKey: jest.fn(),
   signTransaction: jest.fn(),
+  signMessage: jest.fn(),
 }));
 
 jest.mock('./api/account', () => ({
@@ -16,6 +17,7 @@ describe('hwManager util', () => {
   const signature = 'abc123ABC789';
   beforeEach(() => {
     communication.signTransaction.mockResolvedValueOnce(signature);
+    communication.signMessage.mockResolvedValueOnce(signature);
   });
 
   afterEach(() => {
@@ -38,13 +40,13 @@ describe('hwManager util', () => {
     });
   });
 
-  describe('signSendTransaction', () => {
-    it.skip('should return a transaction object with the proper signature', async () => {
+  describe('signTransactionByHW', () => {
+    it('should return a transaction object with the proper signature', async () => {
       const account = {
         info: {
           LSK: {
-            address: '7955155501030618852L',
-            publicKey: '9c854ea85fbcb32e2c5d2c7a820a354a6627213ebb74b42b1ee851d4e4fa035e',
+            address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
+            publicKey: 'fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c5882122',
           },
         },
         hwInfo: {
@@ -52,51 +54,60 @@ describe('hwManager util', () => {
           derivationIndex: 0,
         },
       };
-      const fee = '10000000';
 
-      const data = {
-        amount: '100000000',
-        data: 'testing',
-        recipientId: '7955155501030618852L',
+      const transactionObject = {
+        asset: {
+          amount: '100000000',
+          data: 'testing',
+          recipientAddress: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
+        },
+        fee: '10000000',
+        moduleID: 2,
+        assetID: 0,
+        nonce: '1',
+        senderAddress: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
       };
 
-      const signedTransactions = await signSendTransaction(account, data);
+      const networkIdentifier = Buffer.from('15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c', 'hex');
+      const transactionBytes = Buffer.from('15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c', 'hex');
 
-      expect(signedTransactions).toHaveProperty('id');
-      expect(signedTransactions).toEqual(expect.objectContaining({
-        signature,
-        amount: data.amount,
-        fee,
-        recipientId: data.recipientId,
-        senderPublicKey: account.info.LSK.publicKey,
-        asset: { data: data.data },
-      }));
+      const signedTransaction = await signTransactionByHW(
+        account,
+        networkIdentifier,
+        transactionObject,
+        transactionBytes,
+      );
+
+      expect(signedTransaction.signatures[0]).toEqual(signature);
+      expect(communication.signTransaction).toHaveBeenCalledWith({
+        deviceId: account.hwInfo.deviceId,
+        index: account.hwInfo.derivationIndex,
+        networkIdentifier,
+        transactionBytes,
+      });
     });
   });
 
-  describe('signVoteTransaction', () => {
-    it.skip('should return a transaction object with the proper signature', async () => {
+  describe('signMessageByHW', () => {
+    it('should return a signature for given message', async () => {
+      // Arrange
       const account = {
-        address: '7955155501030618852L',
-        publicKey: '9c854ea85fbcb32e2c5d2c7a820a354a6627213ebb74b42b1ee851d4e4fa035e',
         hwInfo: {
           deviceId: '060E803263E985C022CA2C9B',
           derivationIndex: 0,
         },
       };
+      const message = 'hello';
 
-      const votedList = ['3193057832bb1c9782a8e4a32e543b535ed9d750b1b10383f8b6f50853569609'];
-      const unvotedList = ['473c354cdf627b82e9113e02a337486dd3afc5615eb71ffd311c5a0beda37b8c'];
+      // Act
+      const signedMessage = await signMessageByHW({ account, message });
 
-      const signedTransactions = await signVoteTransaction(account, votedList, unvotedList);
-      signedTransactions.forEach((tx) => {
-        expect(tx).toHaveProperty('id');
-        expect(tx).toHaveProperty('signature', signature);
-        expect(tx).toHaveProperty('amount', '0');
-        expect(tx).toHaveProperty('asset');
-        expect(tx).toHaveProperty('fee', '100000000');
-        expect(tx).toHaveProperty('recipientId', '7955155501030618852L');
-        expect(tx).toHaveProperty('senderPublicKey', '9c854ea85fbcb32e2c5d2c7a820a354a6627213ebb74b42b1ee851d4e4fa035e');
+      // Assert
+      expect(signedMessage).toEqual(signature);
+      expect(communication.signMessage).toHaveBeenCalledWith({
+        deviceId: account.hwInfo.deviceId,
+        index: account.hwInfo.derivationIndex,
+        message,
       });
     });
   });

@@ -93,8 +93,7 @@ class SelectAccount extends React.Component {
     const { t } = this.props;
     const { hwAccounts } = this.state;
     const lastAccount = hwAccounts[hwAccounts.length - 1];
-
-    if (!lastAccount && lastAccount.shouldShow) {
+    if (lastAccount && lastAccount.shouldShow === false) {
       hwAccounts[hwAccounts.length - 1] = {
         ...lastAccount,
         shouldShow: true,
