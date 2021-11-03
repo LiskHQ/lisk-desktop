@@ -32,10 +32,8 @@ const DelegateProfile = ({
       <Box className={`${grid.row} ${styles.statsContainer} stats-container`}>
         <DetailsView
           t={t}
-          status={data.dpos.delegate.status}
+          data={data.dpos.delegate}
           lastBlockForged={lastBlockForged.data.timestamp}
-          delegateWeight={data.dpos.delegate.totalVotesReceived}
-          rank={data.dpos.delegate.rank}
         />
         <PerformanceView
           t={t}

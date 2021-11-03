@@ -7,6 +7,7 @@ import {
   sizeOfString,
   isReactComponent,
   kFormatter,
+  capitalize,
 } from './helpers';
 
 describe('helpers', () => {
@@ -92,6 +93,7 @@ describe('helpers', () => {
       expect(isReactComponent(NoComponent)).toEqual(false);
     });
   });
+
   describe('kFormatter', () => {
     it('uses K notation for numbers in thousands range', () => {
       expect(kFormatter(1000)).toEqual('1K');
@@ -111,6 +113,14 @@ describe('helpers', () => {
       expect(kFormatter(999)).toEqual(999);
       expect(kFormatter(0)).toEqual(0);
       expect(kFormatter(1, 1)).toEqual(1);
+    });
+  });
+
+  describe('Capitalize', () => {
+    it('should capitalize strings', () => {
+      expect(capitalize('sample string')).toEqual('Sample string');
+      expect(capitalize('samplestring')).toEqual('Samplestring');
+      expect(capitalize('sampleString')).toEqual('Samplestring');
     });
   });
 });

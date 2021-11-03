@@ -1,6 +1,6 @@
 # Lisk Desktop
 
-[![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=lisk-desktop/development)](https://jenkins.lisk.io/job/lisk-desktop/job/development)
+[![Build Status](https://jenkins.lisk.com/buildStatus/icon?job=lisk-desktop/development)](https://jenkins.lisk.com/job/lisk-desktop/job/development)
 [![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-desktop/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-desktop?branch=development)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/LiskHQ/lisk-desktop)
@@ -223,7 +223,7 @@ See [contributors section](https://github.com/LiskHQ/lisk-desktop/graphs/contrib
 
 ## License
 
-Copyright © 2016-2018 Lisk Foundation
+Copyright © 2016-2021 Lisk Foundation
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

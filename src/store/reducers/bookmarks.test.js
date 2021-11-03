@@ -1,7 +1,5 @@
 import {
-  bookmarkAdded,
-  bookmarkUpdated,
-  bookmarkRemoved,
+  bookmarkAdded, bookmarkUpdated, bookmarkRemoved,
 } from '@actions';
 import { actionTypes } from '@constants';
 import bookmarks from './bookmarks';
@@ -103,5 +101,17 @@ describe('Reducer: bookmarks(state, action)', () => {
 
     expect(changedState.LSK[0]).toEqual(account);
     expect(changedState.LSK[1]).toEqual(undefined);
+  });
+
+  it('should return validated bookmarks if action.type = actionType.bookmarksRetrieved', () => {
+    const action = {
+      type: actionTypes.bookmarksRetrieved,
+      data: { LSK: [account, account2], BTC: [] },
+    };
+
+    let state;
+
+    const changedState = bookmarks(state, action);
+    expect(changedState).toEqual(action.data);
   });
 });

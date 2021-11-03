@@ -97,6 +97,10 @@
       margin-top: 8px;
       color: var(--color-maastricht-blue);
 
+      &.capitalized {
+        text-transform: capitalize;
+      }
+
       @media (--large-viewport) {
         & :last-child {
           @mixin contentSmall;

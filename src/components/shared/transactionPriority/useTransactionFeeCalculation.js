@@ -4,15 +4,48 @@ import { getTransactionFee } from '@api/transaction';
 import { DEFAULT_NUMBER_OF_SIGNATURES } from '@constants';
 import { actionTypes, reducer, getInitialState } from './reducer';
 
-const getNumberOfSignatures = (account) => {
+/**
+ * Converts the votes object stored in Redux store
+ * which looks like { delegateAddress: { confirmed, unconfirmed } }
+ * into an array of objects that Lisk Element expects, looking like
+ * [{ delegatesAddress, amount }]
+ *
+ * @param {Object} votes - votes object retrieved from the Redux store
+ * @returns {Array} Array of votes as Lisk Element expects
+ */
+export const normalizeVotesForTx = votes =>
+  Object.keys(votes)
+    .filter(address => votes[address].confirmed !== votes[address].unconfirmed)
+    .map(delegateAddress => ({
+      delegateAddress,
+      amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed).toString(),
+    }));
+
+/**
+ * Returns the number of signatures required to sign
+ * a transaction. Returns 1 for ordinary accounts.
+ *
+ * @param {object} account - the active account info
+ * @returns {number} Number of signatures
+ */
+export const getNumberOfSignatures = (account) => {
   if (account?.summary?.isMultisignature) {
-    // because of min fee calculation bug in lisk elements
-    // return account.keys.numberOfSignatures;
-    return account.keys.optionalKeys.length + account.keys.mandatoryKeys.length;
+    return account.keys.numberOfSignatures;
   }
   return DEFAULT_NUMBER_OF_SIGNATURES;
 };
 
+/**
+ * Custom hook to define tx fee
+ *
+ * @param {object} data
+ * @param {string} data.token - Option of LSK and BTC
+ * @param {object} data.account - Active account info
+ * @param {object} data.selectedPriority - Selected priority info
+ * @param {object} data.transaction - Raw transaction payload
+ * @param {array} data.priorityOptions - Array of priority configs for High, Mid, Low
+ * @returns {object}
+ */
 const useTransactionFeeCalculation = ({
   token, account, selectedPriority, transaction, priorityOptions,
 }) => {

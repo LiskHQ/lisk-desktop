@@ -5,14 +5,18 @@ import NewsParser from './newsParser';
 import styles from './news.css';
 
 const News = ({
-  // eslint-disable-next-line camelcase
-  content_t, timestamp, url, title, author, image_url, source, t,
+  content, createdAt, url, title, author, imageUrl, source, t,
 }) => {
-  const date = moment.unix(timestamp).format('DD MMM YYYY');
+  const date = moment.unix(createdAt).format('DD MMM YYYY');
   const newsTitle = title || author;
-  const authorText = author === 'LiskHQ' ? null
-    // eslint-disable-next-line react/jsx-one-expression-per-line
-    : <span> {t('Written by')} <b className={styles.author}>{author}</b></span>;
+  const authorText = author === 'LiskHQ'
+    ? null
+    : (
+      <span>
+        <span>{t('Written by')}</span>
+        <b className={styles.author}>{author}</b>
+      </span>
+    );
   const iconSource = source === 'twitter_lisk' ? 'newsFeedTwitter' : 'newsFeedBlog';
   return (
     <div
@@ -31,12 +35,12 @@ const News = ({
       </div>
       <div className={styles.description}>
         <NewsParser>
-          {content_t.replace(/<br \/>/g, '').replace(url, '')}
+          {content.replace(/<br \/>/g, '').replace(url, '')}
         </NewsParser>
       </div>
       {
         // eslint-disable-next-line camelcase
-        image_url ? <img className={styles.img} src={image_url} alt={title} /> : null
+        imageUrl ? <img className={styles.img} src={imageUrl} alt={title} /> : null
       }
     </div>
   );

@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { moduleAssetSchemas } from '@constants';
+import { moduleAssetSchemas, MIN_ACCOUNT_BALANCE } from '@constants';
 
 import { mountWithRouter } from '@utils/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
@@ -113,6 +113,20 @@ describe('VotingQueue.Editor', () => {
     },
   };
 
+  const minimumBalanceVotes = {
+    [addresses[0]]: {
+      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.6),
+    },
+    [addresses[1]]: {
+      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.4),
+    },
+  };
+
+  afterEach(() => {
+    // Reset balance
+    props.account.token.balance = accounts.genesis.token.balance;
+  });
+
   it('Render only the changed votes', () => {
     const wrapper = mountWithRouter(Editor, { ...props, votes: mixedVotes });
     expect(wrapper.find('VoteRow')).toHaveLength(1);
@@ -128,5 +142,13 @@ describe('VotingQueue.Editor', () => {
     await flushPromises();
     act(() => { wrapper.update(); });
     expect(wrapper.find('.feedback').text()).toBe('You don\'t have enough LSK in your account.');
+  });
+
+  it('Shows an error if trying to vote with amounts leading to insufficient balance', async () => {
+    props.account.token.balance = `${parseInt(accounts.genesis.token.balance, 10) + (MIN_ACCOUNT_BALANCE * 0.8)}`;
+    const wrapper = mountWithRouter(Editor, { ...props, votes: minimumBalanceVotes });
+    await flushPromises();
+    act(() => { wrapper.update(); });
+    expect(wrapper.find('.feedback').text()).toBe('The vote amounts are too high. You should keep 0.05 LSK available in your account.');
   });
 });

@@ -56,8 +56,6 @@ const FormLsk = (props) => {
     setCustomFee(value);
   };
 
-  // console.log('fields', fields);
-
   return (
     <FormBase
       {...props}

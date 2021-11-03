@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import withLocalSort from '@utils/withLocalSort';
 import Table from '@toolbox/table';
-import { MIN_VOTES_RECEIVED } from '@constants';
+import { DEFAULT_STANDBY_THRESHOLD } from '@constants';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
 
@@ -17,10 +17,10 @@ const TableWrapper = compose(
       if (b.status === 'active' || a.status !== 'standby') {
         return -1 * (direction === 'asc' ? 1 : -1);
       }
-      if (a.totalVotesReceived < MIN_VOTES_RECEIVED) {
+      if (a.voteWeight < DEFAULT_STANDBY_THRESHOLD) {
         return -1 * (direction === 'asc' ? 1 : -1);
       }
-      if (b.totalVotesReceived < MIN_VOTES_RECEIVED) {
+      if (b.voteWeight < DEFAULT_STANDBY_THRESHOLD) {
         return 1 * (direction === 'asc' ? 1 : -1);
       }
       return 0;
