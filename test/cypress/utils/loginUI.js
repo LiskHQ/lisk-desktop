@@ -1,4 +1,4 @@
-import ss from '@fixtures/selectors';
+import { ss } from '../../constants';
 
 export default function loginUI(passphrase) {
   cy.get(ss.passphraseInput).first().click();

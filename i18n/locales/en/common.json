@@ -436,7 +436,7 @@
   "Send {{token}}": "Send {{token}}",
   "Send {{token}} here": "Send {{token}} here",
   "Sender": "Sender",
-  "Session timed out": "Your session was timed out after 10 minutes of no network activity. Please sign in to continue using your account.",
+  "Session timed out": "Session timed out",
   "Settings": "Settings",
   "Settings saved!": "Settings saved!",
   "Share": "Share",

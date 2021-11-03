@@ -1,7 +1,7 @@
 Feature: Wallet
 
   Background:
-    Given I login as genesis on devnet
+    Given I login as genesis on testnet
     Given I am on wallet page
     
   # Scenario: 30 tx are shown, clicking show more loads more transactions

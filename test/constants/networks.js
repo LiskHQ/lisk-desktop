@@ -1,13 +1,12 @@
 /* global Cypress */
-import { networks as nets } from '@constants';
+import networks from '../../src/constants/networks';
 
-const networks = {
-  mainnet: { ...nets.mainnet, node: nets.mainnet.nodes[0] },
-  testnet: { ...nets.testnet, node: nets.testnet.nodes[0] },
+const nets = {
+  mainnet: networks.mainnet,
+  testnet: networks.testnet,
   devnet: {
-    node: Cypress.env('coreUrl'),
     serviceUrl: Cypress.env('serviceUrl'),
   },
 };
 
-export default networks;
+export default nets;
