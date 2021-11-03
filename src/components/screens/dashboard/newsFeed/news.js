@@ -14,6 +14,7 @@ const News = ({
     : (
       <span>
         <span>{t('Written by')}</span>
+        <span> </span>
         <b className={styles.author}>{author}</b>
       </span>
     );
