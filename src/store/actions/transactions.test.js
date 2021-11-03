@@ -185,11 +185,11 @@ describe('actions: transactions', () => {
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
 
-    it('should dispatch transactionSignError action if there are errors', async () => {
+    it('should dispatch transactionSignError action if there are errors during transaction creation', async () => {
       // Arrange
       const transactionError = new Error('Transaction create error');
       loginTypes.passphrase.code = 1;
-      hwManagerApi.signSendTransaction.mockRejectedValue(transactionError);
+      transactionsApi.create.mockRejectedValue(transactionError);
       const expectedAction = {
         type: actionTypes.transactionSignError,
         data: transactionError,
@@ -199,31 +199,29 @@ describe('actions: transactions', () => {
       await transactionCreated(newTransaction)(dispatch, getState);
 
       // Assert
-      expect(hwManagerApi.signSendTransaction).rejects.toThrow(transactionError);
-      expect(hwManagerApi.signSendTransaction).toHaveBeenCalled();
+      expect(transactionsApi.create).rejects.toThrow(transactionError);
+      expect(transactionsApi.create).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
 
-    it('should dispatch transactionSignError action if there are no transaction signatures', async () => {
+    it('should dispatch transactionSignError when signTransactionByHW returns error', async () => {
       // Arrange
+      transactionsApi.create.mockResolvedValue([{ tx: { networkIdentifier: '', transactionObject: {}, transactionBytes: '' } }]);
       loginTypes.passphrase.code = 1;
-      const noSignatureTransaction = {
-        pending: [],
-        confirmed: [],
-        count: null,
-        filters: {},
-      };
-      hwManagerApi.signSendTransaction.mockResolvedValue({ tx: noSignatureTransaction });
+      const transactionError = new Error('Transaction sign error');
+      const result = { error: transactionError, tx: null };
+      hwManagerApi.signTransactionByHW.mockRejectedValue(result);
       const expectedAction = {
         type: actionTypes.transactionSignError,
-        data: null,
+        data: result,
       };
 
       // Act
       await transactionCreated(newTransaction)(dispatch, getState);
 
       // Assert
-      expect(hwManagerApi.signSendTransaction).toHaveBeenCalled();
+      // expect(hwManagerApi.signTransactionByHW).rejects.toThrow(transactionError);
+      expect(hwManagerApi.signTransactionByHW).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });

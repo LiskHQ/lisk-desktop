@@ -30,7 +30,7 @@ describe('TransactionSummary', () => {
     expect(wrapper.find('h2').text()).toEqual(props.title);
   });
 
-  it('should render hw wallet confirmation if props.acount.hwInfo', () => {
+  it('should render hw wallet confirmation if props.account.hwInfo', () => {
     const wrapper = mount(<TransactionSummary {...{
       ...props,
       account: { ...accounts.genesis, hwInfo },
@@ -41,7 +41,7 @@ describe('TransactionSummary', () => {
     expect(props.confirmButton.onClick).toHaveBeenCalled();
   });
 
-  it('should not render hw wallet confirmation if props.acount.hwInfo and props.confirmButton.disabled', () => {
+  it('should not render hw wallet confirmation if props.account.hwInfo and props.confirmButton.disabled', () => {
     const wrapper = mount(<TransactionSummary {...{
       ...props,
       confirmButton: {

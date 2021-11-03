@@ -55,11 +55,11 @@ const AccountCard = ({
 
     <div className={styles.content}>
       <AccountVisual
-        address={account.summary.address || ''}
+        address={account.summary?.address || ''}
         size={55}
       />
       <div className={`${styles.row} row-address`}>
-        <p>{account.summary.address}</p>
+        <p>{account.summary?.address}</p>
         <span>{t('Address')}</span>
       </div>
       <div className={`${styles.row} row-balance`}>

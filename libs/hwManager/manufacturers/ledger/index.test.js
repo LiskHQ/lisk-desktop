@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import * as apiClient from '@liskhq/lisk-client';
 
 import {
   LEDGER,
@@ -26,7 +25,13 @@ describe('ledger', () => {
     path: '',
     manufacturer: LEDGER.name,
   };
-  const data = { index: 0, showOnDevice: true };
+  const data = {
+    index: 0,
+    showOnDevice: true,
+    networkIdentifier: Buffer.from('networkIdentifier'),
+    transactionBytes: Buffer.from('transactionBytes'),
+    message: Buffer.from('hello'),
+  };
   const transporter = {
     open: () => ({ close: () => jest.fn() }),
   };
@@ -56,24 +61,16 @@ describe('ledger', () => {
   });
 
   it('Should return signed transaction from ledger device', async () => {
-    // Arrange
-    const helloBuff = Buffer.from('hello');
-    const helloHex = '68656c6c6f';
-    apiClient.transactions.getBytes.mockReturnValue(helloBuff);
-    apiClient.cryptography.bufferToHex.mockReturnValue(helloHex);
     // Act
     const signedTrx = await ledger.default.signTransaction(transporter, { device, data });
     // Assert
-    expect(signedTrx).to.eql(helloHex);
+    expect(signedTrx).to.eql(Buffer.from('68656c6c6f'));
   });
 
   it('Should return signed message from ledger device', async () => {
-    // Arrange
-    const helloHex = '68656c6c6f';
-    apiClient.cryptography.bufferToHex.mockReturnValue(helloHex);
     // Act
     const signedMsg = await ledger.default.signMessage(transporter, { device, data });
     // Assert
-    expect(signedMsg).to.eql(helloHex);
+    expect(signedMsg).to.eql(Buffer.from('hello'));
   });
 });
