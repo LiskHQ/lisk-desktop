@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { transactions } from '@liskhq/lisk-client';
+import { transactions, cryptography } from '@liskhq/lisk-client';
 
 import {
   tokenMap,
@@ -423,4 +423,21 @@ export const broadcast = async ({ transaction, serviceUrl }) => {
   });
 
   return response;
+};
+
+/**
+ * Computes transaction id
+ * @param {object} transaction
+ * @returns {Promise} returns transaction id for a given transaction object
+ */
+export const computeTransactionId = ({ transaction }) => {
+  const moduleAssetId = joinModuleAndAssetIds({
+    moduleID: transaction.moduleID,
+    assetID: transaction.assetID,
+  });
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const transactionBytes = transactions.getBytes(schema, transaction);
+  const id = cryptography.hash(transactionBytes);
+
+  return id;
 };

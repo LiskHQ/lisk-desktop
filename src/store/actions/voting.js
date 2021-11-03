@@ -2,7 +2,7 @@ import to from 'await-to-js';
 import {
   actionTypes, loginTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
-import { create } from '@api/transaction';
+import { create, computeTransactionId } from '@api/transaction';
 import { getAccount } from '@api/account';
 import { signTransactionByHW } from '@utils/hwManager';
 import { getVotes } from '@api/delegate';
@@ -106,6 +106,7 @@ export const votesSubmitted = ({ fee, votes }) =>
         tx.transactionObject,
         tx.transactionBytes,
       ));
+      tx.id = computeTransactionId({ transaction: tx });
     }
 
     if (error) {

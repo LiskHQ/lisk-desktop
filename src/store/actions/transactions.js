@@ -3,7 +3,12 @@ import to from 'await-to-js';
 import {
   actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes, DEFAULT_LIMIT,
 } from '@constants';
-import { getTransactions, create, broadcast } from '@api/transaction';
+import {
+  getTransactions,
+  create,
+  computeTransactionId,
+  broadcast,
+} from '@api/transaction';
 import { transformTransaction } from '@utils/transaction';
 import { signTransactionByHW } from '@utils/hwManager';
 import { timerReset } from './account';
@@ -128,6 +133,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
       tx.transactionObject,
       tx.transactionBytes,
     ));
+    tx.id = computeTransactionId({ transaction: tx });
   }
 
   if (error) {
