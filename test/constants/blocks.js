@@ -31,9 +31,6 @@ const block = (index, numberOfBlocks) => ({
   totalForged: `${numberOfBlocks + index}0000000`,
 });
 
-export const blocks = Array(30)
-  .fill(1)
-  .map((item, index) => block(index, 30));
-export const blocksf100 = Array(100)
-  .fill(1)
-  .map((item, index) => block(index, 100));
+const blocks = Array(30).fill(1).map((item, index) => block(index));
+
+export default blocks;

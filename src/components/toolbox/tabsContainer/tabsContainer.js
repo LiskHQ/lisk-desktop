@@ -57,7 +57,7 @@ class TabsContainer extends React.Component {
     const { activeTab } = this.state;
 
     return (React.Children.count(children) > 1 ? (
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} name={this.props.name}>
         <Switcher
           options={React.Children.map(children.filter(React.isValidElement), tab => ({
             name: tab.props.tabName,

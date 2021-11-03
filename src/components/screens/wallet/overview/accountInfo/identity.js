@@ -36,7 +36,7 @@ const Identity = ({
   let classNames = {
     tooltipTruncated: `${styles.tooltip} ${styles.primary} ${styles.truncated}`,
     tooltipFull: `${styles.tooltip} ${styles.primaryTooltip} ${styles.full}`,
-    spanTruncated: `${styles.text} ${styles.primary} ${styles.noSelect} account-primary-truncated`,
+    spanTruncated: `${styles.text} ${styles.primary} ${styles.noSelect} account-primary`,
     spanFull: `${styles.text} ${styles.primary} ${styles.noSelect} delegate-primary-full`,
   };
 
