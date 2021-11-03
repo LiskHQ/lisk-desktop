@@ -4,9 +4,11 @@ import { networks, urls, accounts, ss, settings } from '../../../constants';
 
 const txConfirmationTimeout = 15000;
 
-Given(/^Network switcher is disabled$/, function () {
+Given(/^Network switcher is (enabled|disabled)$/, function (status) {
+  const showNetwork = status === 'enabled';
+  console.log('showNetwork', showNetwork);
   window.localStorage.setItem('settings', 
-    JSON.stringify({ ...settings, 'showNetwork': false }));
+    JSON.stringify({ ...settings, 'showNetwork': showNetwork }));
 });
 
 Given(/^Network is set to testnet$/, function () {
