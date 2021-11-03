@@ -2,8 +2,9 @@ import React from 'react';
 import to from 'await-to-js';
 import { useSelector } from 'react-redux';
 import { selectAccount } from '@store/selectors';
-import { create } from '@api/transaction';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { create, computeTransactionId } from '@api/transaction';
+import { signTransactionByHW } from '@utils/hwManager';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes } from '@constants';
 import { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
@@ -37,7 +38,9 @@ const Summary = ({
     },
   });
 
+  // eslint-disable-next-line max-statements
   const onSubmit = async () => {
+    const isHwSigning = account.loginType !== loginTypes.passphrase.code;
     const data = {
       network,
       account: account.info.LSK,
@@ -47,11 +50,27 @@ const Summary = ({
         amount: account.info.LSK.legacy.balance,
         keys: { numberOfSignatures: 0 },
       },
+      isHwSigning,
     };
 
-    const [error, tx] = await to(
+    let [error, tx] = await to(
       create(data, tokenMap.LSK.key),
     );
+
+    if (error) {
+      nextStep({ transactionError: error, balance: account.info.LSK.legacy?.balance });
+    }
+
+    if (isHwSigning) {
+      // tx contain txObject and txBytes that needs to be signed by HW
+      [error, tx] = await to(signTransactionByHW(
+        account,
+        tx.networkIdentifier,
+        tx.transactionObject,
+        tx.transactionBytes,
+      ));
+      tx.id = computeTransactionId({ transaction: tx });
+    }
 
     if (!error) {
       nextStep({ transactionInfo: tx, balance: account.info.LSK.legacy?.balance });

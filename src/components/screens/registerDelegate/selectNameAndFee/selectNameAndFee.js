@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import to from 'await-to-js';
-import { create } from '@api/transaction';
+import { signTransactionByHW } from '@utils/hwManager';
+import { create, computeTransactionId } from '@api/transaction';
 import { toRawLsk } from '@utils/lsk';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@constants';
+import {
+  tokenMap,
+  MODULE_ASSETS_NAME_ID_MAP,
+  loginTypes,
+  regex,
+} from '@constants';
 import { getDelegate } from '@api/delegate';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '@toolbox/box';
@@ -55,7 +61,9 @@ const SelectNameAndFee = ({ account, ...props }) => {
     ),
   );
 
+  // eslint-disable-next-line max-statements
   const onConfirm = async () => {
+    const isHwSigning = account.loginType !== loginTypes.passphrase.code;
     const data = {
       network,
       account,
@@ -66,11 +74,27 @@ const SelectNameAndFee = ({ account, ...props }) => {
         username: state.nickname,
         moduleAssetId,
       },
+      isHwSigning,
     };
 
-    const [error, tx] = await to(
+    let [error, tx] = await to(
       create(data, tokenMap.LSK.key),
     );
+
+    if (error) {
+      nextStep({ error });
+    }
+
+    if (isHwSigning) {
+      // tx contain txObject and txBytes that needs to be signed by HW
+      [error, tx] = await to(signTransactionByHW(
+        account,
+        tx.networkIdentifier,
+        tx.transactionObject,
+        tx.transactionBytes,
+      ));
+      tx.id = computeTransactionId({ transaction: tx });
+    }
 
     if (!error) {
       nextStep({

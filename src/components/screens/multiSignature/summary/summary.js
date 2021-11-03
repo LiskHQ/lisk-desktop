@@ -1,8 +1,8 @@
 import React from 'react';
-
-import { MODULE_ASSETS_NAME_ID_MAP, tokenMap } from '@constants';
+import { signTransactionByHW } from '@utils/hwManager';
+import { MODULE_ASSETS_NAME_ID_MAP, loginTypes, tokenMap } from '@constants';
 import to from 'await-to-js';
-import { create } from '@api/transaction';
+import { create, computeTransactionId } from '@api/transaction';
 import { toRawLsk } from '@utils/lsk';
 import TransactionInfo from '@shared/transactionInfo';
 import Box from '../../../toolbox/box';
@@ -28,7 +28,8 @@ const Summary = ({
   nextStep,
 }) => {
   const signTransaction = async () => {
-    const [error, transaction] = await to(
+    const isHwSigning = account.loginType !== loginTypes.passphrase.code;
+    let [error, transaction] = await to(
       create({
         network,
         account,
@@ -41,10 +42,28 @@ const Summary = ({
           nonce: account.sequence.nonce,
           senderPublicKey: account.summary.publicKey,
         },
+        isHwSigning,
       }, token),
     );
 
-    if (!error) {
+    if (error) {
+      nextStep({ error });
+    }
+
+    if (isHwSigning) {
+      // transaction contain transactionObject and transactionBytes that needs to be signed by HW
+      [error, transaction] = await to(signTransactionByHW(
+        account,
+        transaction.networkIdentifier,
+        transaction.transactionObject,
+        transaction.transactionBytes,
+      ));
+      transaction.id = computeTransactionId({ transaction });
+    }
+
+    if (error) {
+      nextStep({ error });
+    } else {
       nextStep({ transaction });
     }
   };

@@ -2,10 +2,16 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import to from 'await-to-js';
-import { MODULE_ASSETS_NAME_ID_MAP, actionTypes, tokenMap } from '@constants';
+import { signTransactionByHW } from '@utils/hwManager';
+import {
+  MODULE_ASSETS_NAME_ID_MAP,
+  actionTypes,
+  loginTypes,
+  tokenMap,
+} from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import { getUnlockableUnlockObjects } from '@utils/account';
-import { create } from '@api/transaction';
+import { create, computeTransactionId } from '@api/transaction';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
@@ -45,10 +51,12 @@ const Form = ({
   const dispatch = useDispatch();
   const network = useSelector(state => state.network);
 
+  // eslint-disable-next-line max-statements
   const onClickUnlock = async () => {
     const selectedFee = customFee ? customFee.value : fee.value;
+    const isHwSigning = account.loginType !== loginTypes.passphrase.code;
 
-    const [error, tx] = await to(
+    let [error, tx] = await to(
       create({
         network,
         account,
@@ -61,8 +69,28 @@ const Form = ({
             account.dpos?.unlocking, currentBlockHeight,
           ),
         },
+        isHwSigning,
       }, tokenMap.LSK.key),
     );
+
+    if (error) {
+      dispatch({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+      nextStep({ fee, account });
+    }
+
+    if (isHwSigning) {
+      // tx contain txObject and txBytes that needs to be signed by HW
+      [error, tx] = await to(signTransactionByHW(
+        account,
+        tx.networkIdentifier,
+        tx.transactionObject,
+        tx.transactionBytes,
+      ));
+      tx.id = computeTransactionId({ transaction: tx });
+    }
 
     if (!error) {
       dispatch({
@@ -88,7 +116,7 @@ const Form = ({
       </BoxHeader>
       <BoxContent className={styles.content}>
         <p>{t('Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.')}</p>
-        { children }
+        {children}
       </BoxContent>
       <BoxFooter>
         <PrimaryButton
