@@ -1,3 +1,17 @@
+.header {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-mystic);
+}
+
+.tableHeader {
+  position: sticky;
+  top: 70px;
+  background: white;
+  z-index: 3;
+  border-bottom: 2px solid var(--color-mystic);
+}
+
 .content {
   padding: 0 !important;
 }

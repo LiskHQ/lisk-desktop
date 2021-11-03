@@ -39,10 +39,10 @@ const Sort = ({
   return <span className={styles.titleWrapper}>{children}</span>;
 };
 
-const Header = ({ data, currentSort }) => {
+const Header = ({ data, currentSort, headerClassName }) => {
   if (Array.isArray(data)) {
     return (
-      <header className={`${grid.row} ${styles.row} ${styles.header}`}>
+      <header className={`${grid.row} ${styles.row} ${styles.header} ${headerClassName || ''}`}>
         {
           data.map((item, index) => (
             // @todo should define the default grid size

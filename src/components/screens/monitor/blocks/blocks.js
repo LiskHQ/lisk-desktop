@@ -48,7 +48,7 @@ const Blocks = ({
     <div>
       <BlocksOverview t={t} />
       <Box isLoading={blocks.isLoading} width="full" main>
-        <BoxHeader>
+        <BoxHeader className={styles.header}>
           <h2 className="blocks-header-title">{t('All blocks')}</h2>
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
         </BoxHeader>
@@ -69,6 +69,7 @@ const Blocks = ({
             row={BlockRow}
             loadData={handleLoadMore}
             header={header(changeSort, t)}
+            headerClassName={styles.tableHeader}
             currentSort={sort}
             canLoadMore={canLoadMore}
             error={blocks.error}
