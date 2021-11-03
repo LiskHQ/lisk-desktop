@@ -95,6 +95,7 @@ export const votesSubmitted = ({ fee, votes }) =>
         type: actionTypes.transactionSignError,
         data: error,
       });
+      return;
     }
 
     if (params.isHwSigning) {
@@ -108,15 +109,17 @@ export const votesSubmitted = ({ fee, votes }) =>
     }
 
     if (error) {
-      return dispatch({
+      dispatch({
         type: actionTypes.transactionSignError,
         data: error,
       });
+
+      return;
     }
 
     dispatch({ type: actionTypes.votesSubmitted });
     dispatch(timerReset());
-    return dispatch({
+    dispatch({
       type: actionTypes.transactionCreatedSuccess,
       data: tx,
     });

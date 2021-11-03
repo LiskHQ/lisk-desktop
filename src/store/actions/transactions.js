@@ -117,6 +117,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
       type: actionTypes.transactionSignError,
       data: error,
     });
+    return;
   }
 
   if (params.isHwSigning) {
@@ -134,11 +135,12 @@ export const transactionCreated = data => async (dispatch, getState) => {
       type: actionTypes.transactionSignError,
       data: error,
     });
+  } else {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
   }
-  dispatch({
-    type: actionTypes.transactionCreatedSuccess,
-    data: tx,
-  });
 };
 
 export const transactionDoubleSigned = data => ({
