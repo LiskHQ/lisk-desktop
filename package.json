@@ -130,6 +130,7 @@
     "get-port": "4.1.0",
     "hard-source-webpack-plugin": "0.13.1",
     "history": "=4.7.2",
+    "html-entities": "1.4.0",
     "i18next": "17.0.16",
     "is-electron": "2.2.0",
     "js-sha256": "0.9.0",
