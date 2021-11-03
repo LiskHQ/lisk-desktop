@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import Icon from '@toolbox/icon';
-import TweetParser from './twitterParser';
+import NewsParser from './newsParser';
 import styles from './news.css';
 
 const News = ({
@@ -30,9 +30,9 @@ const News = ({
         </div>
       </div>
       <div className={styles.description}>
-        <TweetParser>
+        <NewsParser>
           {content_t.replace(/<br \/>/g, '').replace(url, '')}
-        </TweetParser>
+        </NewsParser>
       </div>
       {
         // eslint-disable-next-line camelcase
