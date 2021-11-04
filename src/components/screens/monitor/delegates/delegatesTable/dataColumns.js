@@ -34,7 +34,7 @@ const delegateStatus = {
   standby: 'Standby',
   banned: 'Banned',
   punished: 'Punished',
-  inEligible: 'Ineligible',
+  ineligible: 'Ineligible',
 };
 
 export const DelegateRank = ({ data, activeTab }) => (
@@ -144,7 +144,7 @@ const getDelegateStatus = (key, voteWeight) => {
     return [key, delegateStatus[key]];
   }
   if (voteWeight < DEFAULT_STANDBY_THRESHOLD) {
-    return ['inEligible', delegateStatus.inEligible];
+    return ['ineligible', delegateStatus.ineligible];
   }
 
   return [key, delegateStatus[key]];
