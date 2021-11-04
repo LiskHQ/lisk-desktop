@@ -37,7 +37,7 @@ const Wallet = ({
         discreetMode={discreetMode}
         account={account.data}
       />
-      <TabsContainer>
+      <TabsContainer name="main-tabs">
         <Transactions
           pending={[]}
           activeToken={activeToken}

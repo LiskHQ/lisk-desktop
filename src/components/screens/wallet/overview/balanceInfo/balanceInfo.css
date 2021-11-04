@@ -123,6 +123,13 @@
   }
 }
 
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  color: gray;
+  font-weight: 100;
+}
+
 .emptyBalanceTooltipWrapper {
   display: inline-block;
 }
