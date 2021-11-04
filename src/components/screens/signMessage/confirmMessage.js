@@ -78,16 +78,13 @@ const ConfirmMessage = ({
     ref.current = setTimeout(() => setCopied(false), 3000);
   };
 
-  const signUsingPassphrase = () => {
-    const signedMessage = cryptography.signMessageWithPassphrase(
-      message,
-      account.passphrase,
-      account.summary?.publicKey,
-    );
+  const signUsingPrivateKey = () => {
+    const msgBytes = cryptography.digestMessage(message);
+    const signedMessage = cryptography.signDataWithPrivateKey(msgBytes, Buffer.from(account.summary.privateKey, 'hex'));
     const result = cryptography.printSignedMessage({
       message,
-      publicKey: account.summary?.publicKey,
-      signature: signedMessage.signature,
+      publicKey: account.summary.publicKey,
+      signature: signedMessage,
     });
     return result;
   };
@@ -99,7 +96,7 @@ const ConfirmMessage = ({
     });
     const result = cryptography.printSignedMessage({
       message,
-      publicKey: account.summary?.publicKey,
+      publicKey: account.summary.publicKey,
       signature: signedMessage,
     });
     return result;
@@ -107,7 +104,7 @@ const ConfirmMessage = ({
 
   useEffect(() => {
     if (account.loginType === loginTypes.passphrase.code) {
-      setSignature(signUsingPassphrase());
+      setSignature(signUsingPrivateKey());
     } else {
       signUsingHW()
         .then(setSignature)
