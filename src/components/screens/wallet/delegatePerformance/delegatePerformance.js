@@ -21,7 +21,7 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
   const { dpos: { delegate: { pomHeights, status, consecutiveMissedBlocks } } } = data;
   const headerTitle = {
     punished: 'Punishment details',
-    banned: 'Banning details',
+    banned: 'Ban details',
   };
 
   return (
@@ -33,28 +33,34 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
         <Box className={grid.row}>
           <Box className={`${grid['col-md-12']} ${grid['col-xs-12']}`}>
             <p className={styles.description}>
-              {delegatePerformanceDetails(pomHeights.length, status, consecutiveMissedBlocks)}
+              {pomHeights?.length
+                ? delegatePerformanceDetails(pomHeights.length, status, consecutiveMissedBlocks)
+                : 'The delegate was banned after 5 punishments.'}
             </p>
           </Box>
         </Box>
-        <Box className={`${grid.row} ${styles.performanceContainer}`}>
-          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
-            <p className={styles.header}>Punishment starts</p>
-          </Box>
-          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
-            <p className={styles.header}>Punishment ends</p>
-          </Box>
-        </Box>
-        {pomHeights && pomHeights.map((height, index) => (
-          <Box className={`${grid.row} ${styles.performanceContainer}`} key={`${height.start}-${index}`}>
-            <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
-              <p className={styles.details}>{height.start}</p>
+        {pomHeights ? (
+          <>
+            <Box className={`${grid.row} ${styles.performanceContainer}`}>
+              <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
+                <p className={styles.header}>Punishment starts</p>
+              </Box>
+              <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
+                <p className={styles.header}>Punishment ends</p>
+              </Box>
             </Box>
-            <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
-              <p className={styles.details}>{height.end}</p>
-            </Box>
-          </Box>
-        ))}
+            {pomHeights.map((height, index) => (
+              <Box className={`${grid.row} ${styles.performanceContainer}`} key={`${height.start}-${index}`}>
+                <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
+                  <p className={styles.details}>{height.start}</p>
+                </Box>
+                <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
+                  <p className={styles.details}>{height.end}</p>
+                </Box>
+              </Box>
+            ))}
+          </>
+        ) : null}
       </BoxContent>
     </Box>
   );
