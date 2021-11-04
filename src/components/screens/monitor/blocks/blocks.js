@@ -50,14 +50,15 @@ const Blocks = ({
       <Box isLoading={blocks.isLoading} width="full" main>
         <BoxHeader className={styles.header}>
           <h2 className="blocks-header-title">{t('All blocks')}</h2>
+          <LoadLatestButton
+            buttonClassName={styles.loadButton}
+            entity="block"
+            onClick={loadLastBlocks}
+          >
+            {t('New blocks')}
+          </LoadLatestButton>
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
         </BoxHeader>
-        <LoadLatestButton
-          entity="block"
-          onClick={loadLastBlocks}
-        >
-          {t('New blocks')}
-        </LoadLatestButton>
         <FilterBar {...{
           clearFilter, clearAllFilters, filters, formatters, t,
         }}

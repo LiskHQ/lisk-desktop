@@ -4,11 +4,18 @@
   background-color: var(--color-mystic);
 }
 
+.loadButton {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  align-self: end;
+}
+
 .tableHeader {
   position: sticky;
   top: 70px;
   background: white;
-  z-index: 3;
+  z-index: 2;
   border-bottom: 2px solid var(--color-mystic);
 }
 
