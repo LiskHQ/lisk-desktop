@@ -15,12 +15,12 @@ import styles from './delegateProfile.css';
 
 export const getStatus = (data) => {
   if (data.status) {
-    return data.status;
+    return data.status.replace('non-eligible', 'ineligible');
   }
   if (data.voteWeight >= DEFAULT_STANDBY_THRESHOLD) {
-    return 'standBy';
+    return 'standby';
   }
-  return 'inEligible';
+  return 'ineligible';
 };
 
 const Item = ({
@@ -81,7 +81,7 @@ const StandByDelegate = ({ theme, t }) => (
   </div>
 );
 
-const InEligibleDelegate = ({ theme, t }) => (
+const IneligibleDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
       {t('The delegate weight is below 1,000 LSK meaning that the delegate is not eligible to forge.')}
@@ -126,7 +126,7 @@ const getDelegateComponent = (status) => {
   const components = {
     active: ActiveDelegate,
     standby: StandByDelegate,
-    inEligible: InEligibleDelegate,
+    ineligible: IneligibleDelegate,
     punished: PunishedDelegate,
     banned: BannedDelegate,
   };
