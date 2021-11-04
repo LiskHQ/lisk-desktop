@@ -1,7 +1,11 @@
 import React, { useMemo, useState } from 'react';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, minAccountBalance } from '@constants';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, MIN_ACCOUNT_BALANCE } from '@constants';
 import { toRawLsk } from '@utils/lsk';
-import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
+import TransactionPriority, {
+  useTransactionFeeCalculation,
+  useTransactionPriority,
+  normalizeVotesForTx,
+} from '@shared/transactionPriority';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
@@ -15,23 +19,6 @@ import VoteRow from './voteRow';
 import EmptyState from './emptyState';
 import header from './tableHeader';
 import styles from './editor.css';
-
-/**
- * Converts the votes object stored in Redux store
- * which looks like { delegateAddress: { confirmed, unconfirmed } }
- * into an array of objects that Lisk Element expects, looking like
- * [{ delegatesAddress, amount }]
- *
- * @param {Object} votes - votes object retrieved from the Redux store
- * @returns {Array} Array of votes as Lisk Element expects
- */
-const normalizeVotesForTx = votes =>
-  Object.keys(votes)
-    .filter(address => votes[address].confirmed !== votes[address].unconfirmed)
-    .map(delegateAddress => ({
-      delegateAddress,
-      amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed).toString(),
-    }));
 
 /**
  * Determines the number of votes that have been
@@ -102,7 +89,7 @@ const validateVotes = (votes, balance, fee, account, t) => {
     messages.push(t('You don\'t have enough LSK in your account.'));
   }
 
-  if ((balance - addedVoteAmount) < minAccountBalance && (balance - addedVoteAmount)) {
+  if ((balance - addedVoteAmount) < MIN_ACCOUNT_BALANCE && (balance - addedVoteAmount)) {
     messages.push('The vote amounts are too high. You should keep 0.05 LSK available in your account.');
   }
 

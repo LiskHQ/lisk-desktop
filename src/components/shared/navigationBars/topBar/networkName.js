@@ -11,11 +11,11 @@ const Network = ({ network, t, token }) => {
     [networkKeys.testNet]: t('Testnet').toLowerCase(),
     [networkKeys.customNode]: t('Devnet').toLowerCase(),
   };
-  const activeNetwork = getNetworkName(network, token);
+  const activeNetwork = getNetworkName(network);
   const statusColor = network.status.online ? styles.online : styles.offline;
 
   return (
-    <section className={`${styles.wrapper} network-status`}>
+    <section className={styles.wrapper}>
       <span className={`${styles.status} ${statusColor}`} />
       <div className={styles.message}>
         <span>{t('Connected to:')}</span>

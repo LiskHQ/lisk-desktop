@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from '@utils/validators';
+import { selectAccountBalance } from '@store/selectors';
 import { tokenMap, regex } from '@constants';
+import { useSelector } from 'react-redux';
 
 let loaderTimeout = null;
 
@@ -25,22 +27,6 @@ const getAmountFeedbackAndError = (value, balance) => {
 };
 
 /**
- * Calculates the maximum free/available balance to use for voting,
- * Accounts for votes in vote queue and voting fee cap
- *
- * @param {Object} state - The Redux state
- * @returns {Number} - Available balance
- */
-// const getMaxAmount = (state) => {
-//   const { balance } = state.account.info.LSK;
-//   const totalUnconfirmedVotes = Object.values(state.voting)
-//     .map(vote => Math.max(vote.confirmed, vote.unconfirmed))
-//     .reduce((total, amount) => (total + amount), 0);
-
-//   return balance - totalUnconfirmedVotes - 1e8; // only considering fee cap
-// };
-
-/**
  * Formats and defines potential errors of the vote mount value
  * Also provides a setter function
  *
@@ -48,8 +34,9 @@ const getAmountFeedbackAndError = (value, balance) => {
  * @param {Number} accountBalance - The account balance value in Beddows
  * @returns {[Boolean, Function]} The error flag, The setter function
  */
-const useVoteAmountField = (initialValue, accountBalance) => {
+const useVoteAmountField = (initialValue) => {
   const { i18n } = useTranslation();
+  const balance = useSelector(selectAccountBalance);
   const [amountField, setAmountField] = useState({
     value: initialValue,
     isLoading: false,
@@ -68,7 +55,7 @@ const useVoteAmountField = (initialValue, accountBalance) => {
     }
   }, [initialValue]);
 
-  const onAmountInputChange = ({ value }, balance = accountBalance) => {
+  const onAmountInputChange = ({ value }) => {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
     clearTimeout(loaderTimeout);
@@ -78,11 +65,12 @@ const useVoteAmountField = (initialValue, accountBalance) => {
       value,
       isLoading: true,
     });
+    const feedback = getAmountFeedbackAndError(value, balance);
     loaderTimeout = setTimeout(() => {
       setAmountField({
         isLoading: false,
         value,
-        ...getAmountFeedbackAndError(value, balance),
+        ...feedback,
       });
     }, 300);
   };

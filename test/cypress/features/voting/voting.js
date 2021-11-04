@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Then } from 'cypress-cucumber-preprocessor/steps';
-import { ss } from '@constants';
+import { ss } from '../../../constants';
 
 Then(/^I should see that (.*?) LSK are locked$/, function (amount) {
   cy.wait(10000);

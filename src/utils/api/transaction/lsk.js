@@ -3,7 +3,7 @@ import { transactions } from '@liskhq/lisk-client';
 
 import {
   tokenMap,
-  minFeePerByte,
+  MIN_FEE_PER_BYTE,
   DEFAULT_NUMBER_OF_SIGNATURES,
   MODULE_ASSETS_MAP,
   MODULE_ASSETS_NAME_ID_MAP,
@@ -268,7 +268,7 @@ export const getTransactionFee = async ({
 
   // tie breaker is only meant for medium and high processing speeds
   const tieBreaker = selectedPriority.selectedIndex === 0
-    ? 0 : (minFeePerByte * feePerByte * Math.random());
+    ? 0 : (MIN_FEE_PER_BYTE * feePerByte * Math.random());
 
   const size = transactions.getBytes(schema, transactionObject).length;
 

@@ -32,7 +32,7 @@ const ReadMode = ({
   return (
     <div className={`${styles.customNode} ${styles.readMode}`}>
       <span
-        className={styles.title}
+        className={`${styles.title} custom-node-address`}
         onClick={connect}
       >
         {storedCustomNetwork}
