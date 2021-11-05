@@ -45,7 +45,7 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
             <p className={styles.header}>Punishment ends</p>
           </Box>
         </Box>
-        {pomHeights.map((height, index) => (
+        {pomHeights && pomHeights.map((height, index) => (
           <Box className={`${grid.row} ${styles.performanceContainer}`} key={`${height.start}-${index}`}>
             <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
               <p className={styles.details}>{height.start}</p>
