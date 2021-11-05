@@ -33,7 +33,7 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
         <Box className={grid.row}>
           <Box className={`${grid['col-md-12']} ${grid['col-xs-12']}`}>
             <p className={styles.description}>
-              {delegatePerformanceDetails(pomHeights.length, status, consecutiveMissedBlocks)}
+              {delegatePerformanceDetails(pomHeights, status, consecutiveMissedBlocks)}
             </p>
           </Box>
         </Box>
