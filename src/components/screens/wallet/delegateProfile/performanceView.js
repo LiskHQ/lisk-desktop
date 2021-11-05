@@ -109,13 +109,6 @@ const BannedDelegate = ({ theme, t }) => (
     <p>
       {t('The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.')}
     </p>
-    <DialogLink
-      className={grid.row}
-      component="delegatePerformance"
-      data={{ status: 'banned' }}
-    >
-      <div className={`${styles.details} ${grid.col} ${grid['col-md-12']}`}><p>Details &gt;</p></div>
-    </DialogLink>
   </div>
 );
 
