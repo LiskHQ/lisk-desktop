@@ -33,34 +33,28 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
         <Box className={grid.row}>
           <Box className={`${grid['col-md-12']} ${grid['col-xs-12']}`}>
             <p className={styles.description}>
-              {pomHeights?.length
-                ? delegatePerformanceDetails(pomHeights.length, status, consecutiveMissedBlocks)
-                : 'The delegate was banned after 5 punishments.'}
+              {delegatePerformanceDetails(pomHeights.length, status, consecutiveMissedBlocks)}
             </p>
           </Box>
         </Box>
-        {pomHeights ? (
-          <>
-            <Box className={`${grid.row} ${styles.performanceContainer}`}>
-              <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
-                <p className={styles.header}>Punishment starts</p>
-              </Box>
-              <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
-                <p className={styles.header}>Punishment ends</p>
-              </Box>
+        <Box className={`${grid.row} ${styles.performanceContainer}`}>
+          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
+            <p className={styles.header}>Punishment starts</p>
+          </Box>
+          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
+            <p className={styles.header}>Punishment ends</p>
+          </Box>
+        </Box>
+        {pomHeights.map((height, index) => (
+          <Box className={`${grid.row} ${styles.performanceContainer}`} key={`${height.start}-${index}`}>
+            <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
+              <p className={styles.details}>{height.start}</p>
             </Box>
-            {pomHeights.map((height, index) => (
-              <Box className={`${grid.row} ${styles.performanceContainer}`} key={`${height.start}-${index}`}>
-                <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
-                  <p className={styles.details}>{height.start}</p>
-                </Box>
-                <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
-                  <p className={styles.details}>{height.end}</p>
-                </Box>
-              </Box>
-            ))}
-          </>
-        ) : null}
+            <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
+              <p className={styles.details}>{height.end}</p>
+            </Box>
+          </Box>
+        ))}
       </BoxContent>
     </Box>
   );
