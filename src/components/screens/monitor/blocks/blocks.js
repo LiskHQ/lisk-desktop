@@ -40,14 +40,17 @@ const Blocks = ({
   };
 
   /* istanbul ignore next */
-  const loadLastBlocks = () => applyFilters(filters);
+  const loadLastBlocks = () => {
+    document.querySelector('.blocks-container').scrollIntoView(true);
+    return applyFilters(filters);
+  };
 
   const canLoadMore = blocks.meta && blocks.meta.total > blocks.data.length;
 
   return (
     <div>
       <BlocksOverview t={t} />
-      <Box isLoading={blocks.isLoading} width="full" main>
+      <Box isLoading={blocks.isLoading} className="blocks-container" width="full" main>
         <BoxHeader className={styles.header}>
           <h2 className="blocks-header-title">{t('All blocks')}</h2>
           <LoadLatestButton

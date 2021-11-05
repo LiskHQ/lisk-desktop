@@ -44,6 +44,11 @@ const TransactionsTable = ({
     transactions.loadData(params);
   };
 
+  const loadLastTransactions = () => {
+    document.querySelector('.transactions-box').scrollIntoView(true);
+    return transactions.loadData;
+  };
+
   /* istanbul ignore next */
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
@@ -60,7 +65,7 @@ const TransactionsTable = ({
           <LoadLatestButton
             buttonClassName={styles.loadButton}
             entity="transaction"
-            onClick={transactions.loadData}
+            onClick={loadLastTransactions}
           >
             {t('New transactions')}
           </LoadLatestButton>
