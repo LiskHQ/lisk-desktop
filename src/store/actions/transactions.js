@@ -4,7 +4,8 @@ import {
   actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes, DEFAULT_LIMIT,
 } from '@constants';
 import { getTransactions, create, broadcast } from '@api/transaction';
-import { transformTransaction } from '@utils/transaction';
+import { selectActiveTokenAccount, selectNetworkIdentifier } from '@store/selectors';
+import { signTransaction, transformTransaction } from '@utils/transaction';
 import { signSendTransaction } from '@utils/hwManager';
 import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
@@ -125,10 +126,40 @@ export const transactionCreated = data => async (dispatch, getState) => {
   });
 };
 
-export const transactionDoubleSigned = data => ({
-  type: actionTypes.transactionDoubleSigned,
-  data,
-});
+/**
+ * Signs the transaction using a given second passphrase
+ *
+ * @param {object} data
+ * @param {string} data.secondPass
+ */
+export const transactionDoubleSigned = data => async (dispatch, getState) => {
+  const {
+    transactions, network, account, settings,
+  } = getState();
+  const networkIdentifier = selectNetworkIdentifier({ network });
+  const activeAccount = selectActiveTokenAccount({ account, settings });
+  const [signedTx, err] = signTransaction(
+    transformTransaction(transactions.signedTransaction),
+    data.secondPass,
+    networkIdentifier,
+    {
+      data: activeAccount,
+    },
+    false,
+  );
+
+  if (!err) {
+    dispatch({
+      type: actionTypes.transactionDoubleSigned,
+      data: signedTx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: err,
+    });
+  }
+};
 
 /**
  * Calls transactionAPI.broadcast function for put the tx object (signed) into the network

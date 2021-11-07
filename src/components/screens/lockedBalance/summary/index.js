@@ -6,8 +6,7 @@ import { transactionDoubleSigned } from '@actions';
 import { MODULE_ASSETS_NAME_ID_MAP, actionTypes } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
-import { signTransaction, transformTransaction } from '@utils/transaction';
-import { selectNetworkIdentifier, selectTransactions } from '@store/selectors';
+import { selectActiveToken, selectTransactions } from '@store/selectors';
 import Piwik from '@utils/piwik';
 import { isEmpty } from '@utils/helpers';
 import styles from './summary.css';
@@ -20,11 +19,10 @@ const Summary = ({
   prevStep,
   t,
   nextStep,
-  account,
 }) => {
   const dispatch = useDispatch();
-  const networkIdentifier = useSelector(selectNetworkIdentifier);
   const transactions = useSelector(selectTransactions);
+  const account = useSelector(selectActiveToken);
   const [secondPass, setSecondPass] = useState('');
 
   useEffect(() => {
@@ -36,16 +34,7 @@ const Summary = ({
 
   useEffect(() => {
     if (secondPass) {
-      const [signedTx, err] = signTransaction(
-        transformTransaction(transactions.signedTransaction),
-        secondPass,
-        networkIdentifier,
-        { data: account },
-        false,
-      );
-      if (!err) {
-        dispatch(transactionDoubleSigned(signedTx));
-      }
+      dispatch(transactionDoubleSigned({ secondPass }));
     }
   }, [secondPass]);
 
