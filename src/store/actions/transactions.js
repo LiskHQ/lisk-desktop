@@ -79,7 +79,6 @@ export const transactionsRetrieved = ({
   }
 };
 
-// TODO remove this function once create and broadcast HOC be implemented
 export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,
 });
