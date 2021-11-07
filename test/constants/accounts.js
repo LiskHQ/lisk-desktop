@@ -174,6 +174,30 @@ const accounts = {
       balance: '13600000000',
     },
   },
+  secondPass: {
+    secondPass: 'fall audit ankle myself cook gospel common matrix limit load frost stay',
+    passphrase: 'steak avoid couple fog ability chalk jacket electric rifle fuel tuition van',
+    summary: {
+      address: 'lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp',
+      balance: '5835970000',
+      publicKey: '6b40b2c68d52b1532d0374a078974798cff0b59d0a409a8d574378fe2c69daef',
+      isMultisignature: true,
+    },
+    token: {
+      balance: '5835970000',
+    },
+    sequence: {
+      nonce: '19',
+    },
+    keys: {
+      numberOfSignatures: 2,
+      mandatoryKeys: [
+        '3182b14f4679fcecdfcba89045cdcc770d9acaa6abcfaebe52a40ddb6436b6cc',
+        '6b40b2c68d52b1532d0374a078974798cff0b59d0a409a8d574378fe2c69daef'
+      ],
+      optionalKeys: [],
+    },
+  },
 };
 
 export default accounts;
