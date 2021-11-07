@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import store from '@store';
 import externalLinks from '@utils/externalLinks';
+import updateApp from '@utils/updateApp';
 import ipcLocale from '@utils/ipcLocale';
 import { cryptography } from '@liskhq/lisk-client';
 import i18n from './i18n';
@@ -14,6 +15,7 @@ import App from './app';
 BigInt.prototype.toJSON = function () { return `${this.toString()}n`; };
 
 ipcLocale.init(i18n);
+updateApp.init();
 
 if (PRODUCTION) {
   externalLinks.init();
