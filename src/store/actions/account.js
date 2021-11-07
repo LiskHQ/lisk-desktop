@@ -1,9 +1,17 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
-import { loginTypes, actionTypes, tokenMap } from '@constants';
+import {
+  MODULE_ASSETS_NAME_ID_MAP,
+  loginTypes,
+  actionTypes,
+  tokenMap,
+} from '@constants';
+import { toRawLsk } from '@utils/lsk';
+import { create } from '@api/transaction';
+import { selectCurrentBlockHeight } from '@store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
-import { extractKeyPair } from '@utils/account';
+import { extractKeyPair, getUnlockableUnlockObjects } from '@utils/account';
 import { networkStatusUpdated } from './network';
 
 /**
@@ -153,3 +161,59 @@ export const login = ({
       });
     }
   };
+
+/**
+ * Submits unlock balance transactions
+ *
+ * @param {object} data
+ * @param {string} data.selectedFee
+ * @returns {promise}
+ */
+export const balanceUnlocked = data => async (dispatch, getState) => {
+  //
+  // Collect data
+  //
+  const {
+    account, network, blocks,
+  } = getState();
+  const currentBlockHeight = selectCurrentBlockHeight({ blocks });
+  const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
+
+  //
+  // Create the transaction
+  //
+  const result = await create({
+    network,
+    account,
+    transactionObject: {
+      moduleAssetId,
+      senderPublicKey: account.summary.publicKey,
+      nonce: account.sequence?.nonce,
+      fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
+      unlockObjects: getUnlockableUnlockObjects(
+        account.dpos?.unlocking, currentBlockHeight,
+      ),
+    },
+  }, tokenMap.LSK.key);
+
+  console.log('Unlock result', result);
+
+  //
+  // Dispatch corresponding action
+  //
+  if (!result.error) {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: result.data,
+    });
+    // nextStep({
+    //   transactionInfo: tx, fee, account,
+    // });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: result.error,
+    });
+    // nextStep({ fee, account });
+  }
+};

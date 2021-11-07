@@ -46,10 +46,8 @@ const LockedBalance = (props) => {
   return (
     <Form
       data={{
-        account,
         customFee,
         fee,
-        currentBlockHeight,
         unlockableBalance,
       }}
       {...props}
