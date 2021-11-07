@@ -13,7 +13,19 @@ const addWarningMessage = (t) => {
       >
         <>
           <p>{t('Using your recovery phrase this way should be avoided, and if you don’t need to access your funds now, we recommend waiting for full support of hardware wallets in Lisk Desktop 2.2.0.')}</p>
-          <p>{t('Lisk desktop does not store your recovery seed anywhere and is open-source. However, be aware that if your computer is compromised or running malware, entering your recovery phrase could lead to the loss of all crypto assets stored with your device, not only LSK tokens.')}</p>
+          <p>
+            <span>
+              {t('Lisk desktop does not store your recovery seed anywhere and is open-source. However, be aware that if your computer is compromised or running malware, entering your recovery phrase could lead to the loss of all crypto assets stored with your device, not only LSK tokens.')}
+            </span>
+            <span> </span>
+            <a
+              href="https://lisk.com/blog/development/hardware-wallet-user-guide"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              { t('Read more') }
+            </a>
+          </p>
         </>
       </WarningMessage>
     ),
