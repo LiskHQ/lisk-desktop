@@ -196,8 +196,6 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
     },
   }, tokenMap.LSK.key);
 
-  console.log('Unlock result', result);
-
   //
   // Dispatch corresponding action
   //
@@ -206,14 +204,10 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
       type: actionTypes.transactionCreatedSuccess,
       data: result.data,
     });
-    // nextStep({
-    //   transactionInfo: tx, fee, account,
-    // });
   } else {
     dispatch({
       type: actionTypes.transactionSignError,
       data: result.error,
     });
-    // nextStep({ fee, account });
   }
 };
