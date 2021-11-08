@@ -169,6 +169,7 @@ export const login = ({
  * @param {string} data.selectedFee
  * @returns {promise}
  */
+/* istanbul ignore next */
 export const balanceUnlocked = data => async (dispatch, getState) => {
   //
   // Collect data
