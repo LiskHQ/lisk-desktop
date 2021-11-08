@@ -197,6 +197,7 @@ const accounts = {
       ],
       optionalKeys: [],
     },
+    dpos: { delegate: {} },
   },
 };
 
