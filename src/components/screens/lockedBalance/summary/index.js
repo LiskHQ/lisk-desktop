@@ -3,10 +3,10 @@ import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { transactionDoubleSigned } from '@actions';
-import { MODULE_ASSETS_NAME_ID_MAP, actionTypes } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
-import { selectActiveToken, selectTransactions } from '@store/selectors';
+import { selectActiveTokenAccount, selectTransactions } from '@store/selectors';
 import Piwik from '@utils/piwik';
 import { isEmpty } from '@utils/helpers';
 import styles from './summary.css';
@@ -22,15 +22,8 @@ const Summary = ({
 }) => {
   const dispatch = useDispatch();
   const transactions = useSelector(selectTransactions);
-  const account = useSelector(selectActiveToken);
+  const account = useSelector(selectActiveTokenAccount);
   const [secondPass, setSecondPass] = useState('');
-
-  useEffect(() => {
-    dispatch({
-      type: actionTypes.transactionCreatedSuccess,
-      data: transactionInfo,
-    });
-  }, []);
 
   useEffect(() => {
     if (secondPass) {
