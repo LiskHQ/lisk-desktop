@@ -24,9 +24,9 @@ export const getPrices = ({ network }) => http({
  * @returns {Promise} http call
  */
 export const getNews = ({
-  params = {},
+  params = {}, network,
 }) => http({
-  path: '/api/v1/market/newsfeed',
-  baseUrl: 'https://cloud.lisk.com',
+  path: '/api/v2/newsfeed',
   params,
+  network,
 });

@@ -42,8 +42,7 @@ describe('API: Market', () => {
       http.mockImplementation(() => Promise.resolve(expectedResponse));
       await expect(market.getNews({ params })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
-        baseUrl: 'https://cloud.lisk.com',
-        path: '/api/v1/market/newsfeed',
+        path: '/api/v2/newsfeed',
         params,
       });
     });
