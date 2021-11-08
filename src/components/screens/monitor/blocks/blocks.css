@@ -16,7 +16,7 @@
   top: 70px;
   background: white;
   z-index: 2;
-  border-bottom: 2px solid var(--color-mystic);
+  border-bottom: 1px solid var(--color-mystic);
 }
 
 .content {

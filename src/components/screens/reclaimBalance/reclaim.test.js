@@ -30,7 +30,7 @@ describe('Reclaim balance screen', () => {
         push: jest.fn(),
       },
     };
-    wrapper = mountWithRouterAndStore(Reclaim, props, {}, state);
+    { wrapper } = mountWithRouterAndStore(Reclaim, props, {}, state);
   });
 
   it('should render legacy and new addresses', () => {

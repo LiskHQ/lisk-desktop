@@ -52,7 +52,7 @@ describe('EditVote', () => {
     },
   };
   it('Should render as addVote when we have not voted to this account yet', () => {
-    const wrapper = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       EditVote, propsWithoutSearch, {}, { ...state, voting: noVote },
     );
     expect(wrapper.html()).toContain('Add vote');
@@ -61,7 +61,7 @@ describe('EditVote', () => {
   });
 
   it('Should render as addVote when we have not voted to this account yet', () => {
-    const wrapper = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
     );
     expect(wrapper.html()).toContain('Edit vote');
@@ -69,7 +69,7 @@ describe('EditVote', () => {
   });
 
   it('should dispatch remove vote for host if not called with address search param', () => {
-    const wrapper = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
     );
     wrapper.find('.remove-vote').at(0).simulate('click');
@@ -80,7 +80,7 @@ describe('EditVote', () => {
   });
 
   it('should dispatch remove vote for host if called with address search param', () => {
-    const wrapper = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       EditVote, propsWithSearch, {}, { ...state, voting: withVotes },
     );
     wrapper.find('.remove-vote').at(0).simulate('click');
@@ -91,7 +91,7 @@ describe('EditVote', () => {
   });
 
   it('should dispatch add vote for host if not called with address search param', () => {
-    const wrapper = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
     );
     wrapper.find('input[name="vote"]').at(0).simulate('change', {
@@ -108,7 +108,7 @@ describe('EditVote', () => {
   });
 
   it('should display error if called with amount that will cause insufficient balance after voting', () => {
-    const wrapper = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
     );
     let amountField = wrapper.find('input[name="vote"]').at(0);
@@ -128,7 +128,7 @@ describe('EditVote', () => {
   });
 
   it('should dispatch remove vote for host if called with address search param', () => {
-    const wrapper = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       EditVote, propsWithSearch, {}, { ...state, voting: withVotes },
     );
     wrapper.find('input[name="vote"]').at(0).simulate('change', {

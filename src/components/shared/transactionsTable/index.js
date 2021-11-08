@@ -44,6 +44,7 @@ const TransactionsTable = ({
     transactions.loadData(params);
   };
 
+  /* istanbul ignore next */
   const loadLastTransactions = () => {
     document.querySelector('.transactions-box').scrollIntoView(true);
     return transactions.loadData;
@@ -63,7 +64,7 @@ const TransactionsTable = ({
         <h1>{title}</h1>
         {isLoadMoreEnabled && (
           <LoadLatestButton
-            buttonClassName={styles.loadButton}
+            buttonClassName={`${styles.loadButton} load-latest`}
             entity="transaction"
             onClick={loadLastTransactions}
           >

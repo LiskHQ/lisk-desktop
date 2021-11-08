@@ -1,6 +1,9 @@
-import { mountWithRouter } from '@utils/testHelpers';
-import TransactionsPure from './transactions';
+import { act } from 'react-dom/test-utils';
+import { mountWithRouter, mountWithRouterAndStore } from '@utils/testHelpers';
+import { actionTypes } from '@constants';
 import transactions from '../../../../../test/constants/transactions';
+import { getState } from '../../../../../test/fixtures/transactions';
+import TransactionsPure from './transactions';
 
 describe('Transactions monitor page', () => {
   const props = {
@@ -45,6 +48,36 @@ describe('Transactions monitor page', () => {
     expect(props.transactions.loadData).toHaveBeenCalledWith(
       { offset: transactionsWithData.data.length, sort },
     );
+  });
+
+  it('allows to load latest transactions', () => {
+    const { wrapper, store } = mountWithRouterAndStore(
+      TransactionsPure,
+      { ...props, transactions: transactionsWithData },
+      {},
+      getState(),
+    );
+    console.log({ store.getState() });
+    wrapper.update();
+    store.dispatch({
+      type: actionTypes.newBlockCreated,
+      data: {
+        block: { height: 123123124 },
+      },
+    });
+    store.dispatch({
+      type: actionTypes.newBlockCreated,
+      data: {
+        block: { height: 123123125 },
+      },
+    });
+    act(() => { wrapper.update(); });
+    console.log({ blocks: store.getState().blocks });
+    // simulate new transactions
+    // wrapper.update();
+    wrapper.find('button.load-latest').simulate('click');
+    expect(props.transactions.loadData).toHaveBeenCalled();
+    // expect(store.dispatch).toHaveBeenCalledTimes(2);
   });
 
   it('shows error if API failed', () => {

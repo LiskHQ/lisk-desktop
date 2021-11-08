@@ -183,7 +183,7 @@ const NotSignedInState = {
 
 describe('Recent Transactions', () => {
   it('Should render Recent Transactions properly with LSK active token', () => {
-    const wrapper = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       RecentTransactions,
       { t, transactions: LiskTransactions },
       {},
@@ -193,7 +193,7 @@ describe('Recent Transactions', () => {
   });
 
   it('Should render Recent Transactions properly with BTC active token', () => {
-    const wrapper = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       RecentTransactions,
       { t, transactions: BitcoinTransactions },
       {},

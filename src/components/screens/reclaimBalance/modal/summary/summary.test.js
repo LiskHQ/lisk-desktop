@@ -60,7 +60,7 @@ describe('Reclaim balance Summary', () => {
   };
 
   it('renders properly Symmary component', () => {
-    const wrapper = mountWithRouterAndStore(Summary, props, {}, state);
+    const { wrapper } = mountWithRouterAndStore(Summary, props, {}, state);
     const html = wrapper.html();
     expect(html).toContain(accounts.non_migrated.legacy.address);
     expect(html).toContain(truncateAddress(accounts.non_migrated.summary.address, 'medium'));
@@ -71,7 +71,7 @@ describe('Reclaim balance Summary', () => {
 
   it('Go to next page when continue button is clicked', async () => {
     create.mockImplementation(() => Promise.resolve(response));
-    const wrapper = mountWithRouterAndStore(Summary, props, {}, state);
+    const { wrapper } = mountWithRouterAndStore(Summary, props, {}, state);
     wrapper.find('button.confirm-button').simulate('click');
     await flushPromises();
     expect(create).toHaveBeenCalled();
