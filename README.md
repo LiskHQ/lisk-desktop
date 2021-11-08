@@ -103,7 +103,7 @@ npm run dev-hardware-wallet
 or to launch electron and receive live updates from already running `webpack-dev-server` on port `8080` and you can run
 
 ```
-LISK_HUB_URL="http://localhost:8080" DEBUG=true npm run start
+LISK_DESKTOP_URL="http://localhost:8080" DEBUG=true npm run start
 ```
 This comes with Redux dev tools.
 
