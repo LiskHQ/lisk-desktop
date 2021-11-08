@@ -8,7 +8,7 @@ import {
 } from '@constants';
 import { toRawLsk } from '@utils/lsk';
 import { create } from '@api/transaction';
-import { selectCurrentBlockHeight } from '@store/selectors';
+import { selectActiveTokenAccount, selectCurrentBlockHeight } from '@store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
 import { extractKeyPair, getUnlockableUnlockObjects } from '@utils/account';
@@ -173,25 +173,23 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
   //
   // Collect data
   //
-  const {
-    account, network, blocks,
-  } = getState();
-  const currentBlockHeight = selectCurrentBlockHeight({ blocks });
-  const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
+  const state = getState();
+  const currentBlockHeight = selectCurrentBlockHeight(state);
+  const activeAccount = selectActiveTokenAccount(state);
 
   //
   // Create the transaction
   //
   const result = await create({
-    network,
-    account,
+    network: state.network,
+    account: activeAccount,
     transactionObject: {
-      moduleAssetId,
-      senderPublicKey: account.summary.publicKey,
-      nonce: account.sequence?.nonce,
+      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+      senderPublicKey: activeAccount.summary.publicKey,
+      nonce: activeAccount.sequence?.nonce,
       fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
       unlockObjects: getUnlockableUnlockObjects(
-        account.dpos?.unlocking, currentBlockHeight,
+        activeAccount.dpos?.unlocking, currentBlockHeight,
       ),
     },
   }, tokenMap.LSK.key);
