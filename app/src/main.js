@@ -49,6 +49,19 @@ const createWindow = () => {
   }
 };
 
+const handleProtocol = () => {
+  // Protocol handler for MacOS
+  app.on('open-url', (event, url) => {
+    event.preventDefault();
+    if (win.browser === null && appIsReady) {
+      createWindow();
+      win.send({ event: 'openUrl', value: url });
+    }
+    win.browser?.show();
+    win.send({ event: 'openUrl', value: url });
+  });
+};
+
 app.on('ready', () => {
   appIsReady = true;
   createWindow();
@@ -72,9 +85,7 @@ if (process.platform === 'darwin') {
 app.on('activate', () => {
   // sometimes, the event is triggered before app.on('ready', ...)
   // then creating new windows will fail
-  if (win.browser === null && appIsReady) {
-    createWindow();
-  }
+  handleProtocol();
 });
 
 // Set app protocol
@@ -94,16 +105,7 @@ app.on('second-instance', (argv) => {
 
 // ToDo - enable this feature when it is implemented in the new design
 app.on('will-finish-launching', () => {
-  // Protocol handler for MacOS
-  app.on('open-url', (event, url) => {
-    event.preventDefault();
-    if (win.browser === null && appIsReady) {
-      createWindow();
-      win.send({ event: 'openUrl', value: url });
-    }
-    win.browser?.show();
-    win.send({ event: 'openUrl', value: url });
-  });
+  handleProtocol();
 });
 
 // ToDo - enable this feature when it is implemented in the new design
@@ -126,8 +128,4 @@ ipcMain.on('storeConfig', (event, data) => {
 
 ipcMain.on('retrieveConfig', () => {
   readConfig();
-});
-
-ipcMain.on('updateQuitAndInstall', () => {
-  autoUpdater.quitAndInstall();
 });
