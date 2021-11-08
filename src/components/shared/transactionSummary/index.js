@@ -117,21 +117,23 @@ class TransactionSummary extends React.Component {
               : null
           }
         </BoxContent>
-        <Footer
-          confirmButton={confirmButton}
-          cancelButton={cancelButton}
-          footerClassName={footerClassName}
-          showCancelButton={showCancelButton}
-          confirmation={confirmation}
-          isConfirmed={isConfirmed}
-          createTransaction={createTransaction}
-          isMultisignature={token === tokenMap.LSK.key && account.summary.isMultisignature}
-          hasSecondPass={
-            keys && keys.mandatoryKeys.length === 2 && keys.optionalKeys.length === 0
-          }
-          t={t}
-          setSecondPass={setSecondPass}
-        />
+        {!isHardwareWalletConnected && (
+          <Footer
+            confirmButton={confirmButton}
+            cancelButton={cancelButton}
+            footerClassName={footerClassName}
+            showCancelButton={showCancelButton}
+            confirmation={confirmation}
+            isConfirmed={isConfirmed}
+            createTransaction={createTransaction}
+            isMultisignature={token === tokenMap.LSK.key && account.summary.isMultisignature}
+            hasSecondPass={
+              keys && keys.mandatoryKeys.length === 2 && keys.optionalKeys.length === 0
+            }
+            t={t}
+            setSecondPass={setSecondPass}
+          />
+        )}
       </Box>
     );
   }

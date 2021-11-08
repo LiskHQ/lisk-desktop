@@ -27,6 +27,7 @@ const Summary = ({
   prevStep,
   nextStep,
 }) => {
+  // eslint-disable-next-line max-statements
   const signTransaction = async () => {
     const isHwSigning = account.loginType !== loginTypes.passphrase.code;
     let [error, transaction] = await to(
@@ -58,7 +59,10 @@ const Summary = ({
         transaction.transactionObject,
         transaction.transactionBytes,
       ));
-      transaction.id = computeTransactionId({ transaction });
+
+      if (!error && transaction) {
+        transaction.id = computeTransactionId({ transaction });
+      }
     }
 
     if (error) {

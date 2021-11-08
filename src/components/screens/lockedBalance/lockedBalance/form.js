@@ -79,6 +79,7 @@ const Form = ({
         data: error,
       });
       nextStep({ fee, account });
+      return;
     }
 
     if (isHwSigning) {
@@ -89,7 +90,10 @@ const Form = ({
         tx.transactionObject,
         tx.transactionBytes,
       ));
-      tx.id = computeTransactionId({ transaction: tx });
+
+      if (!error && tx) {
+        tx.id = computeTransactionId({ transaction: tx });
+      }
     }
 
     if (!error) {

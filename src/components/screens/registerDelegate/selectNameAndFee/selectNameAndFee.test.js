@@ -4,6 +4,7 @@ import { networks } from '@constants';
 import * as delegatesApi from '@api/delegate';
 import { getTransactionBaseFees, getTransactionFee, create } from '@api/transaction';
 import { fromRawLsk } from '@utils/lsk';
+import * as hwManagerAPI from '@utils/hwManager';
 import accounts from '../../../../../test/constants/accounts';
 import SelectNameAndFee from './selectNameAndFee';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
@@ -13,6 +14,7 @@ jest.mock('@api/transaction');
 jest.mock('@api/delegate', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
 }));
+jest.mock('@utils/hwManager');
 
 const transactionBaseFees = {
   Low: 156,
@@ -54,9 +56,8 @@ describe('SelectNameAndFee', () => {
   };
 
   beforeEach(() => {
-    // delegatesApi.getDelegate.mockReset();
-
     wrapper = mount(<SelectNameAndFee {...props} />);
+    hwManagerAPI.signTransactionByHW.mockResolvedValue({});
   });
 
   afterEach(() => {

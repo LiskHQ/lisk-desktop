@@ -93,7 +93,10 @@ const SelectNameAndFee = ({ account, ...props }) => {
         tx.transactionObject,
         tx.transactionBytes,
       ));
-      tx.id = computeTransactionId({ transaction: tx });
+
+      if (!error && tx) {
+        tx.id = computeTransactionId({ transaction: tx });
+      }
     }
 
     if (!error) {

@@ -1,7 +1,8 @@
 import { act } from 'react-dom/test-utils';
 import { tokenMap, networks } from '@constants';
 import { mountWithProps } from '@utils/testHelpers';
-import { create } from '@api/transaction';
+import * as transactionAPI from '@api/transaction';
+import * as hwManagerAPI from '@utils/hwManager';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import LockedBalance from './index';
@@ -11,13 +12,14 @@ import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 jest.mock('@shared/transactionPriority/useTransactionPriority');
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@api/transaction');
+jest.mock('@utils/hwManager');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
   useTransactionPriority.mockImplementation(() => (
     [
       { selectedIndex: 1 },
-      () => {},
+      () => { },
       [
         { title: 'Low', value: 0.001 },
         { title: 'Medium', value: 0.005 },
@@ -87,6 +89,7 @@ describe('Unlock LSK modal', () => {
 
   beforeEach(() => {
     wrapper = mountWithProps(LockedBalance, props, store);
+    hwManagerAPI.signTransactionByHW.mockResolvedValue({});
   });
 
   it('renders the LockedBalance component properly', () => {
@@ -96,30 +99,31 @@ describe('Unlock LSK modal', () => {
   });
 
   it('calls nextStep passing transactionInfo', async () => {
-    const tx = { id: 1 };
-    create.mockImplementation(() =>
-      new Promise((resolve) => {
-        resolve(tx);
-      }));
+    // Arrange
+    transactionAPI.create.mockResolvedValue([{ tx: { networkIdentifier: '', transactionObject: {}, transactionBytes: '' } }]);
 
+    // Act
     wrapper.find('.unlock-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
+
+    // Assert
     expect(nextStep).toBeCalledWith(
       expect.objectContaining({ transactionInfo: expect.any(Object) }),
     );
   });
 
   it('calls nextStep without passing transactionInfo when error', async () => {
+    // Assert
     const error = { message: 'error:test' };
-    create.mockImplementation(() =>
-      new Promise((_, reject) => {
-        reject(error);
-      }));
+    transactionAPI.create.mockRejectedValue(error);
 
+    // Act
     wrapper.find('.unlock-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
+
+    // Assert
     expect(nextStep).toBeCalledWith(
       expect.not.objectContaining({ transactionInfo: expect.any(Object) }),
     );

@@ -182,6 +182,8 @@ describe('actions: transactions', () => {
 
       // Assert
       expect(transactionsApi.create).toHaveBeenCalled();
+      expect(hwManagerApi.signTransactionByHW).toHaveBeenCalledTimes(0);
+      expect(transactionsApi.computeTransactionId).toHaveBeenCalledTimes(0);
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
 
@@ -204,6 +206,26 @@ describe('actions: transactions', () => {
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
 
+    it('should dispatch signed transaction from hardware wallet with transaction id', async () => {
+      // Arrange
+      loginTypes.passphrase.code = 1;
+      transactionsApi.create.mockResolvedValue({ tx: newTransaction });
+      hwManagerApi.signTransactionByHW.mockResolvedValue(newTransaction);
+      const expectedAction = {
+        type: actionTypes.transactionCreatedSuccess,
+        data: expect.anything(),
+      };
+
+      // Act
+      await transactionCreated(newTransaction)(dispatch, getState);
+
+      // Assert
+      expect(transactionsApi.create).toHaveBeenCalled();
+      expect(hwManagerApi.signTransactionByHW).toHaveBeenCalled();
+      expect(transactionsApi.computeTransactionId).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+    });
+
     it('should dispatch transactionSignError when signTransactionByHW returns error', async () => {
       // Arrange
       transactionsApi.create.mockResolvedValue([{ tx: { networkIdentifier: '', transactionObject: {}, transactionBytes: '' } }]);
@@ -220,8 +242,8 @@ describe('actions: transactions', () => {
       await transactionCreated(newTransaction)(dispatch, getState);
 
       // Assert
-      // expect(hwManagerApi.signTransactionByHW).rejects.toThrow(transactionError);
       expect(hwManagerApi.signTransactionByHW).toHaveBeenCalled();
+      expect(transactionsApi.computeTransactionId).toHaveBeenCalledTimes(0);
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });
