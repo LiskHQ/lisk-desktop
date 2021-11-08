@@ -21,7 +21,12 @@ const {
 
 const EMPTY_BUFFER = Buffer.from('');
 export const convertStringToBinary = value => Buffer.from(value, 'hex');
-const convertBinaryToString = value => value && value.toString('hex');
+const convertBinaryToString = value => {
+  if (value instanceof Uint8Array) {
+    return Buffer.from(value).toString('hex');
+  }
+  return value.toString('hex');
+};
 const convertBigIntToString = value => {
   if (typeof value === 'bigint') {
     return String(value);
@@ -252,7 +257,13 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
   return transaction;
 };
 
-const isBufferArray = (arr) => arr.every(element => Buffer.isBuffer(element));
+const isBufferArray = (arr) => arr.every(element => {
+  if (element instanceof Uint8Array) {
+    return Buffer.isBuffer(Buffer.from(element));
+  }
+
+  return Buffer.isBuffer(element);
+});
 
 const convertBuffersToHex = (value) => {
   let result = value;
@@ -393,7 +404,7 @@ const signTransaction = (
   let err;
 
   const isGroupRegistration = transaction.moduleAssetId
-      === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 
   const { mandatoryKeys, optionalKeys } = getKeys({
     senderAccount: senderAccount.data, transaction, isGroupRegistration,

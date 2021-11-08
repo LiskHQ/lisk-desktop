@@ -1,5 +1,10 @@
 import { mountWithRouterAndStore } from '@utils/testHelpers';
-import { getTransactionBaseFees, getTransactionFee, create, computeTransactionId } from '@api/transaction';
+import {
+  getTransactionBaseFees,
+  getTransactionFee,
+  create,
+  computeTransactionId,
+} from '@api/transaction';
 import { tokenMap } from '@constants';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { fromRawLsk } from '@utils/lsk';
@@ -79,7 +84,7 @@ describe('Reclaim balance Summary', () => {
     expect(html).toContain('confirm-button');
   });
 
-  it.only('should navigate to next page when continue button is clicked', async () => {
+  it('should navigate to next page when continue button is clicked', async () => {
     // Arrange
     const wrapper = mountWithRouterAndStore(Summary, props, {}, state);
     create.mockImplementation(() => Promise.resolve(response));

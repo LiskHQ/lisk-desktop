@@ -106,7 +106,10 @@ export const votesSubmitted = ({ fee, votes }) =>
         tx.transactionObject,
         tx.transactionBytes,
       ));
-      tx.id = computeTransactionId({ transaction: tx });
+
+      if (!error && tx) {
+        tx.id = computeTransactionId({ transaction: tx });
+      }
     }
 
     if (error) {

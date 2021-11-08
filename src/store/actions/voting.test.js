@@ -15,6 +15,7 @@ import accounts from '../../../test/constants/accounts';
 
 jest.mock('@api/transaction', () => ({
   create: jest.fn(),
+  computeTransactionId: jest.fn(),
 }));
 
 jest.mock('@api/delegate', () => ({
@@ -40,7 +41,7 @@ describe('actions: voting', () => {
       },
     },
     account: {
-      loginType: loginTypes.passphrase.code,
+      loginType: 0,
       info: {
         LSK: {
           summary: {
@@ -100,6 +101,30 @@ describe('actions: voting', () => {
       await votesSubmitted(data)(dispatch, getState);
       expect(transactionApi.create).toHaveBeenCalled();
       expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.votesSubmitted,
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    });
+
+    it('should call create transactions', async () => {
+      const tx = { data: sampleVotes[0] };
+      loginTypes.passphrase.code = 1;
+      transactionApi.create.mockResolvedValue(tx);
+      hwManager.signTransactionByHW.mockResolvedValue(tx);
+      const data = [{
+        address: 'dummy',
+        amount: 1e10,
+      }];
+
+      await votesSubmitted(data)(dispatch, getState);
+      expect(transactionApi.create).toHaveBeenCalled();
+      expect(transactionApi.computeTransactionId).toHaveBeenCalled();
+      expect(hwManager.signTransactionByHW).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.votesSubmitted,

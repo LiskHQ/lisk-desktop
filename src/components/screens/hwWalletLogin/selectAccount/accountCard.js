@@ -17,7 +17,7 @@ const AccountCard = ({
   onSelectAccount,
   t,
 }) => (
-  <div id={account.summary.address} className={`${styles.account} hw-account`}>
+  <div id={account.summary?.address} className={`${styles.account} hw-account`}>
     <header className={styles.header}>
       { accountOnEditMode === index
         ? (
