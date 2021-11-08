@@ -54,8 +54,8 @@ const NewsFeed = (props) => {
       <BoxContent className={styles.container}>
         {
             filteredNewsFeed.length > 0
-              ? filteredNewsFeed.map(news => (
-                <BoxRow isClickable key={news.sourceId} className={styles.row}>
+              ? filteredNewsFeed.map((news, index) => (
+                <BoxRow isClickable key={`${news.sourceId}-${index}`} className={styles.row}>
                   <News
                     t={t}
                     {...news}
