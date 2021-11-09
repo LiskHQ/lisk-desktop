@@ -193,7 +193,7 @@ const accounts = {
       numberOfSignatures: 2,
       mandatoryKeys: [
         '3182b14f4679fcecdfcba89045cdcc770d9acaa6abcfaebe52a40ddb6436b6cc',
-        '6b40b2c68d52b1532d0374a078974798cff0b59d0a409a8d574378fe2c69daef'
+        '6b40b2c68d52b1532d0374a078974798cff0b59d0a409a8d574378fe2c69daef',
       ],
       optionalKeys: [],
     },
