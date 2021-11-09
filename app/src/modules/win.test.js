@@ -119,7 +119,7 @@ describe('Electron Browser Window Wrapper', () => {
       expect(events[1].event).to.equal('blur');
     });
 
-    it.skip('Creates the window with menu when platform is "darwin"', () => {
+    it('Creates the window with menu when platform is "darwin"', () => {
       processMock.expects('isPlatform').atLeast(2).withArgs('linux').returns(false);
       processMock.expects('isPlatform').atLeast(2).withArgs('darwin').returns(true);
 
@@ -130,7 +130,7 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser).to.not.equal(null);
 
       // detect the locale
-      callbacks.config(null, { lang: 'de' });
+      win.send({ event: 'detectedLocale', value: 'de' });
       expect(win.eventStack.length).to.equal(1);
       expect(win.eventStack[0].event).to.equal('detectedLocale');
       expect(win.eventStack[0].value).to.equal('de');
@@ -155,7 +155,7 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser).to.equal(null);
     });
 
-    it.skip('Creates the window with menu when platform is not "darwin"', () => {
+    it('Creates the window with menu when platform is not "darwin"', () => {
       processMock.expects('isPlatform').atLeast(2).withArgs('darwin').returns(false);
       processMock.expects('isPlatform').atLeast(2).withArgs('linux').returns(true);
       processMock.expects('getArgv').atLeast(2).withArgs().returns([]);
@@ -167,7 +167,7 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser).to.not.equal(null);
 
       // detect the locale
-      callbacks.config(null, { lang: 'de' });
+      win.send({ event: 'detectedLocale', value: 'de' });
       expect(win.eventStack.length).to.equal(2);
       expect(win.eventStack[0].event).to.equal('openUrl');
       expect(win.eventStack[0].value).to.equal('/');
