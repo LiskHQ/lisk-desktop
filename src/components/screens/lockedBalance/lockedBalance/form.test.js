@@ -28,7 +28,7 @@ describe('Unlock LSK form', () => {
     );
   });
 
-  it('calls nextStep when the transactions is successfully signed', async () => {
+  it('calls nextStep without tx details if failed to sign', async () => {
     wrapper.setProps({ txSignatureError: { message: 'some error' } });
     act(() => { wrapper.update(); });
     expect(props.nextStep).toBeCalledWith(
