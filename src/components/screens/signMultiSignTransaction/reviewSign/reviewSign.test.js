@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import { signTransaction } from '@utils/transaction';
 import Review from './reviewSign';
@@ -20,7 +21,7 @@ describe('Sign Multisignature Tx Review component', () => {
     t: v => v,
     transaction: {
       id: '12510531279763703865',
-      moduleAssetId: '2:0',
+      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
       nonce: '158',
       sender: {
         address: accounts.multiSig.summary.address,
