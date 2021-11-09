@@ -2,7 +2,10 @@ import { autoUpdater } from 'electron-updater';
 import electron from 'electron';
 import electronLocalshortcut from 'electron-localshortcut';
 import getPort from 'get-port';
-import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS,
+} from 'electron-devtools-installer';
 import path from 'path';
 import win from './modules/win';
 import localeHandler from './modules/localeHandler';
@@ -17,8 +20,8 @@ i18nSetup();
 
 const defaultServerPort = 5659;
 let serverUrl;
-const startServer = () => getPort({ port: defaultServerPort })
-  .then((port) => {
+const startServer = () =>
+  getPort({ port: defaultServerPort }).then((port) => {
     serverUrl = server.init(port);
   });
 
@@ -37,7 +40,12 @@ let appIsReady = false;
 
 const createWindow = () => {
   win.create({
-    electron, path, electronLocalshortcut, storage, checkForUpdates, serverUrl,
+    electron,
+    path,
+    electronLocalshortcut,
+    storage,
+    checkForUpdates,
+    serverUrl,
   });
 
   if (process.env.DEBUG) {
@@ -85,7 +93,9 @@ if (process.platform === 'darwin') {
 app.on('activate', () => {
   // sometimes, the event is triggered before app.on('ready', ...)
   // then creating new windows will fail
-  handleProtocol();
+  if (win.browser === null && appIsReady) {
+    createWindow();
+  }
 });
 
 // Set app protocol
@@ -113,7 +123,11 @@ ipcMain.on('set-locale', (event, locale) => {
   const langCode = locale.substr(0, 2);
   if (langCode) {
     localeHandler.update({
-      langCode, electron, storage, event, checkForUpdates,
+      langCode,
+      electron,
+      storage,
+      event,
+      checkForUpdates,
     });
   }
 });
