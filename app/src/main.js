@@ -61,10 +61,6 @@ const handleProtocol = () => {
   // Protocol handler for MacOS
   app.on('open-url', (event, url) => {
     event.preventDefault();
-    if (win.browser === null && appIsReady) {
-      createWindow();
-      win.send({ event: 'openUrl', value: url });
-    }
     win.browser?.show();
     win.send({ event: 'openUrl', value: url });
   });
