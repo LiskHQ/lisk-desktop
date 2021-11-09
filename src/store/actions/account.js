@@ -1,9 +1,17 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
-import { loginTypes, actionTypes, tokenMap } from '@constants';
+import {
+  MODULE_ASSETS_NAME_ID_MAP,
+  loginTypes,
+  actionTypes,
+  tokenMap,
+} from '@constants';
+import { toRawLsk } from '@utils/lsk';
+import { create } from '@api/transaction';
+import { selectActiveTokenAccount, selectCurrentBlockHeight } from '@store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
-import { extractKeyPair } from '@utils/account';
+import { extractKeyPair, getUnlockableUnlockObjects } from '@utils/account';
 import { networkStatusUpdated } from './network';
 
 /**
@@ -153,3 +161,52 @@ export const login = ({
       });
     }
   };
+
+/**
+ * Submits unlock balance transactions
+ *
+ * @param {object} data
+ * @param {string} data.selectedFee
+ * @returns {promise}
+ */
+/* istanbul ignore next */
+export const balanceUnlocked = data => async (dispatch, getState) => {
+  //
+  // Collect data
+  //
+  const state = getState();
+  const currentBlockHeight = selectCurrentBlockHeight(state);
+  const activeAccount = selectActiveTokenAccount(state);
+
+  //
+  // Create the transaction
+  //
+  const result = await create({
+    network: state.network,
+    account: activeAccount,
+    transactionObject: {
+      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+      senderPublicKey: activeAccount.summary.publicKey,
+      nonce: activeAccount.sequence?.nonce,
+      fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
+      unlockObjects: getUnlockableUnlockObjects(
+        activeAccount.dpos?.unlocking, currentBlockHeight,
+      ),
+    },
+  }, tokenMap.LSK.key);
+
+  //
+  // Dispatch corresponding action
+  //
+  if (!result.error) {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: result.data,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: result.error,
+    });
+  }
+};
