@@ -49,7 +49,7 @@ export const mountWithRouter = (Component, props, routeConfig = {}) => mount(
  * @returns {Object} Mounted component
  */
 export const mountWithRouterAndStore = (Component, props, routeConfig = {}, reduxStore) => {
-  const store = configureStore()(reduxStore)
+  const store = configureStore()(reduxStore);
   const wrapper = mount(
     <Provider store={store}>
       <MemoryRouter
@@ -60,4 +60,4 @@ export const mountWithRouterAndStore = (Component, props, routeConfig = {}, redu
     </Provider>,
   );
   return { store, wrapper };
-}
+};

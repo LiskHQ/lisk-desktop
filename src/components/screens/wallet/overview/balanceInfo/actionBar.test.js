@@ -1,11 +1,11 @@
 import { mountWithRouterAndStore } from '@utils/testHelpers';
-import { tokenMap } from '@constants';
+import { tokenMap, actionTypes } from '@constants';
 import ActionBar from './actionBar';
+import { act } from 'react-dom/test-utils';
 
 describe('Reclaim balance screen', () => {
   const hostAddress = 'lskmjr8hrnhzc6j653eto5fbh2p3kwdpa9ccdnhk6';
   const explorerAddress = 'lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws';
-  let wrapper;
   const props = {
     username: undefined,
     address: hostAddress,
@@ -33,10 +33,11 @@ describe('Reclaim balance screen', () => {
       },
     },
     settings: { token: { active: tokenMap.LSK.key } },
+    voting: {},
   };
 
   it('Should display register delegate button and send', () => {
-    { wrapper } = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       ActionBar,
       props,
       {},
@@ -50,7 +51,7 @@ describe('Reclaim balance screen', () => {
   });
 
   it('Should not display register delegate button', () => {
-    { wrapper } = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       ActionBar,
       { ...props, activeToken: tokenMap.BTC.key, address: 'mnrutC4CgQhMos4f8HWYRy8rKQ3UisGwYJ' },
       {},
@@ -62,12 +63,7 @@ describe('Reclaim balance screen', () => {
     expect(html).not.toContain('register-delegate');
     expect(html).not.toContain('open-add-vote-dialog');
 
-    { wrapper } = mountWithRouterAndStore(
-      ActionBar,
-      { ...props, address: explorerAddress },
-      {},
-      { ...state, account: { info: { LSK: balanceAccount } } },
-    );
+    wrapper.setProps({ address: explorerAddress });
     html = wrapper.html();
 
     expect(html).toContain('open-send-dialog');
@@ -76,7 +72,7 @@ describe('Reclaim balance screen', () => {
   });
 
   it('Should display add/edit vote correctly', () => {
-    { wrapper } = mountWithRouterAndStore(
+    let { wrapper } = mountWithRouterAndStore(
       ActionBar,
       { ...props, username: 'delegate' },
       {},
@@ -90,7 +86,7 @@ describe('Reclaim balance screen', () => {
     expect(html).toContain('Add to votes');
     expect(html).not.toContain('Edit vote');
 
-    { wrapper } = mountWithRouterAndStore(
+    const result = mountWithRouterAndStore(
       ActionBar,
       { ...props, username: 'delegate' },
       {},
@@ -102,6 +98,8 @@ describe('Reclaim balance screen', () => {
         },
       },
     );
+    wrapper = result.wrapper;
+    act(() => { wrapper.update(); });
     html = wrapper.html();
 
     expect(html).toContain('Edit vote');
@@ -109,7 +107,7 @@ describe('Reclaim balance screen', () => {
   });
 
   it('Should disable buttons', () => {
-    { wrapper } = mountWithRouterAndStore(
+    const { wrapper } = mountWithRouterAndStore(
       ActionBar,
       props,
       {},
