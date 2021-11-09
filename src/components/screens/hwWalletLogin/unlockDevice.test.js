@@ -29,12 +29,8 @@ describe('Unlock Device', () => {
 
   it('Should render asking for opening app on Ledger', async () => {
     expect(props.nextStep).not.toBeCalled();
-    // TODO refactor this as should be a better way to test it https://stackoverflow.com/a/43855794
-    jest.advanceTimersByTime(1000);
-    setImmediate(() => {
-      wrapper.find('button').simulate('click');
-      expect(props.goBack).toBeCalled();
-    });
+    wrapper.find('button').simulate('click');
+    expect(props.goBack).toBeCalled();
   });
 
   it('Should call nextStep if openApp = true, or not Ledger', () => {

@@ -87,6 +87,29 @@ const accounts = {
       sentVotes: [],
     },
   },
+  multiSig: {
+    passphrase: 'approve tribe main deposit luxury obtain knock problem pulse claw social select',
+    summary: {
+      publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+      serverPublicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+      address: 'lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz',
+      balance: '9897000000000000',
+      isMigrated: true,
+      isMultisignature: true,
+      privateKey: 'ae7522b1fd7a24886b1396b392368fe6c9b2e0e40cf86ecf193e46babe3cbe8a0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+    },
+    token: { balance: '9897000000000000' },
+    sequence: { nonce: '1' },
+    keys: {
+      numberOfSignatures: 2,
+      mandatoryKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f'],
+      optionalKeys: ['0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', '197cf311f678406bc72a8edfdc3dffe6f59f49c4550a860e4b68fb20382211d0']
+    },
+    dpos: {
+      delegate: {},
+      sentVotes: [],
+    },
+  },
   send_all_account: {
     passphrase: 'oyster flush inquiry bright leopard gas replace ball hold pudding teach swear',
     summary: {
