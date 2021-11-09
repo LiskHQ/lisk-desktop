@@ -1,5 +1,3 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import { mountWithRouterAndStore } from '@utils/testHelpers';
 import Summary from './index';
 import accounts from '../../../../../test/constants/accounts';
@@ -11,11 +9,17 @@ describe('Delegate Registration Summary', () => {
         unlockObjects: [{ amount: '2500000000000' }],
       },
     },
-    account: accounts.genesis,
     fee: 10,
     nextStep: jest.fn(),
     prevStep: jest.fn(),
     t: key => key,
+  };
+  const state = {
+    transactions: {
+      txSignatureError: null,
+      signedTransaction: { id: 1 },
+    },
+    account: { info: { LSK: accounts.genesis } },
   };
 
   afterEach(() => {
@@ -23,7 +27,12 @@ describe('Delegate Registration Summary', () => {
   });
 
   it('renders properly Summary component', () => {
-    const wrapper = mount(<Summary {...props} />);
+    const wrapper = mountWithRouterAndStore(
+      Summary,
+      props,
+      {},
+      state,
+    );
     expect(wrapper).toContainMatchingElement('.address-label');
     expect(wrapper).toContainMatchingElement('.amount-label');
     expect(wrapper).toContainMatchingElement('button.confirm-button');
@@ -31,7 +40,12 @@ describe('Delegate Registration Summary', () => {
   });
 
   it('go to prev page when click Go Back button', () => {
-    const wrapper = mount(<Summary {...props} />);
+    const wrapper = mountWithRouterAndStore(
+      Summary,
+      props,
+      {},
+      state,
+    );
     expect(props.prevStep).not.toBeCalled();
     wrapper.find('button.cancel-button').simulate('click');
     expect(props.prevStep).toBeCalled();
@@ -42,12 +56,7 @@ describe('Delegate Registration Summary', () => {
       Summary,
       props,
       {},
-      {
-        transactions: {
-          txSignatureError: null,
-          signedTransaction: { id: 1 },
-        },
-      },
+      state,
     );
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
@@ -55,12 +64,13 @@ describe('Delegate Registration Summary', () => {
   });
 
   it('submit user data when click in confirm button but fails', () => {
-    const error = {};
+    const error = { message: 'some error' };
     const { wrapper } = mountWithRouterAndStore(
       Summary,
       props,
       {},
       {
+        account: state.account,
         transactions: {
           txSignatureError: error,
           signedTransaction: { id: 1 },

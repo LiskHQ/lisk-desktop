@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { fromRawLsk } from '@utils/lsk';
 import Piwik from '@utils/piwik';
 import { isEmpty } from '@utils/helpers';
-import { signTransaction, transformTransaction } from '@utils/transaction';
 import TransactionInfo from '@shared/transactionInfo';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
-import { selectNetworkIdentifier } from '@store/selectors';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
 
@@ -42,7 +39,6 @@ const Summary = ({
   t, removed = {}, edited = {}, added = {}, selfUnvote = {},
   fee, account, prevStep, nextStep, transactions, transactionDoubleSigned, ...props
 }) => {
-  const networkIdentifier = useSelector(selectNetworkIdentifier);
   const [secondPass, setSecondPass] = useState('');
   const {
     locked, unlockable,
@@ -59,16 +55,7 @@ const Summary = ({
 
   useEffect(() => {
     if (secondPass) {
-      const [signedTx, err] = signTransaction(
-        transformTransaction(transactions.signedTransaction),
-        secondPass,
-        networkIdentifier,
-        { data: account },
-        false,
-      );
-      if (!err) {
-        transactionDoubleSigned(signedTx);
-      }
+      transactionDoubleSigned({ secondPass });
     }
   }, [secondPass]);
 

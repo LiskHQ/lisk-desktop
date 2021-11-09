@@ -40,15 +40,17 @@ const Sort = ({
 };
 
 const Header = ({ data, currentSort, headerClassName }) => {
+  /**
+   * In case we define a config array for header
+   */
   if (Array.isArray(data)) {
+    const defaultSize = Math.floor(12 / data.length);
     return (
       <header className={`${grid.row} ${styles.row} ${styles.header} ${headerClassName || ''}`}>
         {
           data.map((item, index) => (
-            // @todo should define the default grid size
-            // based on the number of children
             <div
-              className={item.classList ? item.classList : grid['col-md-2']}
+              className={item.classList ? item.classList : grid[`col-md-${defaultSize}`]}
               key={`table-header-${index}`}
             >
               {
@@ -74,12 +76,19 @@ const Header = ({ data, currentSort, headerClassName }) => {
       </header>
     );
   }
+
+  /**
+   * In case we define a custom header component
+   */
   if (isReactComponent(data)) {
     const Element = data;
     return <Element />;
   }
-  // @todo what should we put here?
-  return (<header>Header</header>);
+
+  /**
+   * If the data is not passed or it's none of the above
+   */
+  return (<header className={styles.header}>Header</header>);
 };
 
 export default Header;
