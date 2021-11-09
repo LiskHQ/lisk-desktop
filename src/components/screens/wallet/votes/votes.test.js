@@ -1,42 +1,41 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import * as reactRedux from 'react-redux';
+import { mountWithRouter } from '@utils/testHelpers';
 import { routes } from '@constants';
 import accounts from '../../../../../test/constants/accounts';
 import Votes from './votes';
 
-describe.skip('Votes Tab Component', () => {
+describe('Votes Tab Component', () => {
   let wrapper;
   const props = {
-    address: accounts.genesis.summary.address,
-    history: { push: jest.fn() },
     votes: {
       data: [],
       loadData: jest.fn(),
     },
-    delegates: {
+    accounts: {
       data: {},
       loadData: jest.fn(),
     },
+    address: accounts.genesis.summary.address,
     t: v => v,
+    history: { push: jest.fn() },
   };
-
-  const network = {
-    network: {
-      networks: {
-        LSK: { apiVersion: '2' }, // @todo Remove?
-      },
-    },
+  const votes = {
+    ...props.votes,
+    data: [...Array(10)].map((_, i) => ({
+      username: `user_${i}`,
+      address: `lsk${i}`,
+      rank: i + 1,
+      rewards: '40500000000',
+      productivity: Math.random() * 100,
+      vote: '9999988456732672',
+    })),
   };
-
-  reactRedux.useSelector = jest.fn().mockImplementation(() => network);
 
   afterEach(() => {
     props.votes.loadData.mockRestore();
-    props.delegates.loadData.mockRestore();
+    props.accounts.loadData.mockRestore();
   });
 
-  const setup = data => mount(<Votes {...data} />);
+  const setup = customProps => mountWithRouter(Votes, customProps);
 
   it('Should render with empty state', () => {
     wrapper = setup(props);
@@ -48,54 +47,35 @@ describe.skip('Votes Tab Component', () => {
     expect(wrapper).toContainMatchingElement('.loading');
   });
 
-  it('Should render only 30 visible and clicking show more shows 30 more', () => {
-    const votes = [...Array(101)].map((_, i) => ({
-      username: `user_${i}`,
-      address: `${i}L`,
-      rank: i + 1,
-      rewards: '40500000000',
-      productivity: Math.random() * 100,
-      vote: '9999988456732672',
-    }));
-    wrapper = setup({ ...props });
-    wrapper.setProps({ votes: { ...props.votes, data: votes } });
-    wrapper.update();
-    expect(wrapper).toContainMatchingElements(30, 'VoteRow');
-    wrapper.find('button.load-more').simulate('click');
-    expect(wrapper).toContainMatchingElements(60, 'VoteRow');
+  it('Should render votes', () => {
+    const customProps = {
+      ...props,
+      votes,
+    };
+    wrapper = setup(customProps);
+    expect(wrapper).toContainMatchingElements(10, 'VoteRow');
   });
 
   it('Should go to account page on clicking row', () => {
-    const votes = [...Array(101)].map((_, i) => ({
-      username: `user_${i}`,
-      address: `${i}L`,
-      rank: i + 1,
-      rewards: '40500000000',
-      productivity: Math.random() * 100,
-      vote: '9999988456732672',
-    }));
-    wrapper = setup({ ...props });
-    wrapper.setProps({ votes: { ...props.votes, data: votes } });
-    wrapper.update();
-    wrapper.find('VoteRow').at(0).simulate('click');
-    expect(props.history.push).toBeCalledWith(`${routes.account.path}?address=0L`);
+    const customProps = {
+      ...props,
+      votes,
+    };
+    wrapper = setup(customProps);
+    wrapper.find('.vote-row').at(0).simulate('click');
+    jest.advanceTimersByTime(300);
+    expect(props.history.push).toBeCalledWith(`${routes.account.path}?address=lsk0`);
   });
 
   it('Should filter votes per username and show error message if no results found', () => {
-    const votes = [...Array(101)].map((_, i) => ({
-      username: `user_${i}`,
-      address: `${i}L`,
-      rank: i + 1,
-      rewards: '40500000000',
-      productivity: Math.random() * 100,
-      vote: '9999988456732672',
-    }));
-    wrapper = setup({ ...props });
-    wrapper.setProps({ votes: { ...props.votes, data: votes } });
-    wrapper.update();
-    wrapper.find('.filterHolder input').simulate('change', { target: { value: 'user_100' } });
+    const customProps = {
+      ...props,
+      votes,
+    };
+    wrapper = setup(customProps);
+    wrapper.find('.filterHolder input').simulate('change', { target: { value: 'user_1' } });
     jest.advanceTimersByTime(300);
-    expect(wrapper).toContainMatchingElements(1, 'VoteRow');
+    expect(wrapper).toContainMatchingElements(1, '.vote-row');
     wrapper.find('.filterHolder input').simulate('change', { target: { value: 'not user name' } });
     jest.advanceTimersByTime(300);
     expect(wrapper).toContainMatchingElements(1, 'Empty');
