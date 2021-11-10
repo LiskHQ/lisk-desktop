@@ -2,6 +2,7 @@ import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-depen
 import { spy, mock } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './win';
 import process from './process';
+import menu from '../menu';
 import server from '../../server';
 
 describe('Electron Browser Window Wrapper', () => {
@@ -57,6 +58,8 @@ describe('Electron Browser Window Wrapper', () => {
     win.browser = null;
     win.isUILoaded = false;
     win.eventStack.length = 0;
+    menu.selectionMenu = undefined;
+    menu.inputMenu = undefined;
     events.length = 0;
     processMock.restore();
     serverMock.restore();
@@ -124,6 +127,9 @@ describe('Electron Browser Window Wrapper', () => {
       processMock.expects('isPlatform').atLeast(2).withArgs('darwin').returns(true);
 
       expect(win.browser).to.equal(null);
+      expect(menu.selectionMenu).to.equal(undefined);
+      expect(menu.inputMenu).to.equal(undefined);
+
       win.create({
         electron, path, electronLocalshortcut, storage,
       });
@@ -136,12 +142,12 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.eventStack[0].value).to.equal('de');
 
       // check the menu gets build
-      // todo: think of a better way to test this? don't actually execute 'buildMenu'
       expect(electron.Menu.setApplicationMenu).to.have.been.calledWith(electron.Menu);
+      expect(menu.selectionMenu).to.equal(electron.Menu);
+      expect(menu.inputMenu).to.equal(electron.Menu);
 
-      // todo: think of a way to differentiate between 'inputMenu' and 'selectionMenu' in the test
       callbacks['context-menu'](null, { isEditable: true });
-      expect(electron.Menu.popup).to.have.been.calledWith(win.browser);
+      expect(menu.inputMenu.popup).to.have.been.calledWith(win.browser);
 
       // fire finish load event
       expect(events.length).to.equal(0);
@@ -161,6 +167,9 @@ describe('Electron Browser Window Wrapper', () => {
       processMock.expects('getArgv').atLeast(2).withArgs().returns([]);
 
       expect(win.browser).to.equal(null);
+      expect(menu.selectionMenu).to.equal(undefined);
+      expect(menu.inputMenu).to.equal(undefined);
+
       win.create({
         electron, path, electronLocalshortcut, storage,
       });
@@ -175,12 +184,12 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.eventStack[1].value).to.equal('de');
 
       // check the menu gets build
-      // todo: think of a better way to test this? don't actually execute 'buildMenu'
       expect(electron.Menu.setApplicationMenu).to.have.been.calledWith(electron.Menu);
+      expect(menu.selectionMenu).to.equal(electron.Menu);
+      expect(menu.inputMenu).to.equal(electron.Menu);
 
-      // todo: think of a way to differentiate between 'inputMenu' and 'selectionMenu' in the test
       callbacks['context-menu'](null, { selectionText: 'some text' });
-      expect(electron.Menu.popup).to.have.been.calledWith(win.browser);
+      expect(menu.selectionMenu.popup).to.have.been.calledWith(win.browser);
 
       // fire finish load event
       expect(events.length).to.equal(0);
