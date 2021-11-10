@@ -80,7 +80,10 @@ export const votesSubmitted = ({ fee, votes }) =>
     };
     const params = {
       network,
-      account: account.info.LSK,
+      account: {
+        ...account.info.LSK,
+        hwInfo: account.hwInfo, // @todo remove this by #3898
+      },
       transactionObject: {
         ...transaction,
         moduleAssetId,

@@ -109,7 +109,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
     },
     account: {
       ...account.info[activeToken],
-      hwInfo: account.hwInfo,
+      hwInfo: account.hwInfo, // @todo remove this by #3898
     },
     passphrase: account.passphrase,
     network,
