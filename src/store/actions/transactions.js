@@ -107,7 +107,10 @@ export const transactionCreated = data => async (dispatch, getState) => {
       ...data,
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     },
-    account: account.info[activeToken],
+    account: {
+      ...account.info[activeToken],
+      hwInfo: account.hwInfo,
+    },
     passphrase: account.passphrase,
     network,
     isHwSigning: account.loginType !== loginTypes.passphrase.code,

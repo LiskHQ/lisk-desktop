@@ -398,11 +398,12 @@ export const create = async ({
         schema, transaction, networkIdentifier, keys, privateKey,
         isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
       );
-    } if (account.loginType !== loginTypes.passphrase.code) {
-      return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
     }
-    const signedTx = await signUsingHW(schema, transaction, account);
-    return signedTx;
+    if (account.loginType !== loginTypes.passphrase.code) {
+      const signedTx = await signUsingHW(schema, transaction, account);
+      return signedTx;
+    }
+    return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
   } catch (error) {
     return error;
   }
