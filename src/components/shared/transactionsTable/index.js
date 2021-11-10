@@ -46,7 +46,9 @@ const TransactionsTable = ({
 
   /* istanbul ignore next */
   const loadLastTransactions = () => {
-    document.querySelector('.transactions-box').scrollIntoView(true);
+    if (document.querySelector(`.${styles.header}`).getBoundingClientRect().top - window.scrollY <= 50) {
+      document.querySelector('.transactions-box').scrollIntoView(true);
+    }
     return transactions.loadData;
   };
 

@@ -41,7 +41,6 @@ const Blocks = ({
 
   /* istanbul ignore next */
   const loadLastBlocks = () => {
-    console.log(document.querySelector(`.${styles.header}`).getBoundingClientRect().top - window.scrollY);
     // When the header is fixed at the top, the position is 50px
     // Therefore the page should only scroll into the view if the header is not at the top
     if (document.querySelector(`.${styles.header}`).getBoundingClientRect().top - window.scrollY <= 50) {
