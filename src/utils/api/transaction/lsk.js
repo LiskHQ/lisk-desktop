@@ -2,6 +2,7 @@
 import { transactions, cryptography } from '@liskhq/lisk-client';
 
 import {
+  loginTypes,
   tokenMap,
   MIN_FEE_PER_BYTE,
   DEFAULT_NUMBER_OF_SIGNATURES,
@@ -10,11 +11,12 @@ import {
   moduleAssetSchemas,
   BASE_FEES,
 } from '@constants';
-
 import { joinModuleAndAssetIds } from '@utils/moduleAssets';
+import { signTransactionByHW } from '@utils/hwManager';
 import {
   createTransactionObject, convertStringToBinary, transformTransaction, flattenTransaction,
 } from '@utils/transaction';
+import result from '@screens/multiSignature/result/index';
 import { validateAddress } from '../../validators';
 import http from '../http';
 import { getDelegates } from '../delegate';
@@ -288,6 +290,73 @@ export const getTransactionFee = async ({
   };
 };
 
+const signMultisigUsingPrivateKey = (
+  schema, transaction, networkIdentifier, keys, privateKey,
+  isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
+) => {
+  const keysInBinary = {
+    optionalKeys: keys.optionalKeys.map(convertStringToBinary),
+    mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
+  };
+
+  let signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
+    schema,
+    transaction,
+    networkIdentifier,
+    Buffer.from(privateKey, 'hex'),
+    keysInBinary,
+    isMultiSignatureRegistration,
+  );
+
+  const transactionKeys = {
+    mandatoryKeys: rawTransaction.mandatoryKeys ?? [],
+    optionalKeys: rawTransaction.optionalKeys ?? [],
+  };
+
+  const needsDoubleSign = [
+    ...transactionKeys.mandatoryKeys,
+    ...transactionKeys.optionalKeys,
+  ].includes(publicKey);
+
+  if (isMultiSignatureRegistration && needsDoubleSign) {
+    const transformedTransaction = transformTransaction(signedTransaction);
+    const flattenedTransaction = flattenTransaction(transformedTransaction);
+    const tx = createTransactionObject(flattenedTransaction, moduleAssetId);
+    const transactionKeysInBinary = {
+      mandatoryKeys: transactionKeys.mandatoryKeys.map(convertStringToBinary),
+      optionalKeys: transactionKeys.optionalKeys.map(convertStringToBinary),
+    };
+
+    signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
+      schema,
+      tx,
+      networkIdentifier,
+      Buffer.from(privateKey, 'hex'),
+      transactionKeysInBinary,
+      isMultiSignatureRegistration,
+    );
+  }
+};
+
+const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey) =>
+  transactions.signTransactionWithPrivateKey(
+    schema,
+    transaction,
+    networkIdentifier,
+    Buffer.from(privateKey, 'hex'),
+  );
+
+const signUsingHW = async (schema, transaction, account, networkIdentifier) => {
+  const signingBytes = transactions.getSigningBytes(schema, transaction);
+  result = await signTransactionByHW(
+    account,
+    networkIdentifier,
+    transaction,
+    signingBytes,
+  );
+  return result;
+};
+
 /**
  * creates a new transaction
  *
@@ -300,13 +369,12 @@ export const getTransactionFee = async ({
  * @returns {Promise} promise that resolves to a transaction or
  * rejects with an error
  */
-export const create = ({
+// eslint-disable-next-line max-statements
+export const create = async ({
   network,
   account,
   transactionObject,
-  isHwSigning,
-  // eslint-disable-next-line max-statements
-}) => new Promise((resolve, reject) => {
+}) => {
   const {
     summary: { publicKey, isMultisignature, privateKey },
     keys,
@@ -321,80 +389,24 @@ export const create = ({
 
   const schema = moduleAssetSchemas[moduleAssetId];
 
-  if (isHwSigning) {
-    // In case of hardware wallet, return signing bytes to HW device
-    const signingBytes = transactions.getSigningBytes(schema, transaction);
-    resolve({
-      networkIdentifier,
-      transactionObject: transaction,
-      transactionBytes: signingBytes,
-    });
-    return;
-  }
-
   try {
-    let signedTransaction;
-
     const isMultiSignatureRegistration = moduleAssetId
       === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 
     if (isMultisignature || isMultiSignatureRegistration) {
-      const keysInBinary = {
-        optionalKeys: keys.optionalKeys.map(convertStringToBinary),
-        mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
-      };
-
-      signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
-        schema,
-        transaction,
-        networkIdentifier,
-        Buffer.from(privateKey, 'hex'),
-        keysInBinary,
-        isMultiSignatureRegistration,
+      return signMultisigUsingPrivateKey(
+        schema, transaction, networkIdentifier, keys, privateKey,
+        isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
       );
-
-      const transactionKeys = {
-        mandatoryKeys: rawTransaction.mandatoryKeys ?? [],
-        optionalKeys: rawTransaction.optionalKeys ?? [],
-      };
-
-      const needsDoubleSign = [
-        ...transactionKeys.mandatoryKeys,
-        ...transactionKeys.optionalKeys,
-      ].includes(publicKey);
-
-      if (isMultiSignatureRegistration && needsDoubleSign) {
-        const transformedTransaction = transformTransaction(signedTransaction);
-        const flattenedTransaction = flattenTransaction(transformedTransaction);
-        const tx = createTransactionObject(flattenedTransaction, moduleAssetId);
-        const transactionKeysInBinary = {
-          mandatoryKeys: transactionKeys.mandatoryKeys.map(convertStringToBinary),
-          optionalKeys: transactionKeys.optionalKeys.map(convertStringToBinary),
-        };
-
-        signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
-          schema,
-          tx,
-          networkIdentifier,
-          Buffer.from(privateKey, 'hex'),
-          transactionKeysInBinary,
-          isMultiSignatureRegistration,
-        );
-      }
-    } else {
-      signedTransaction = transactions.signTransactionWithPrivateKey(
-        schema,
-        transaction,
-        networkIdentifier,
-        Buffer.from(privateKey, 'hex'),
-      );
+    } if (account.loginType !== loginTypes.passphrase.code) {
+      return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
     }
-
-    resolve(signedTransaction);
+    const signedTx = await signUsingHW(schema, transaction, account);
+    return signedTx;
   } catch (error) {
-    reject(error);
+    return error;
   }
-});
+};
 
 /**
  * broadcasts a transaction over the network
