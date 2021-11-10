@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import { transactions, cryptography } from '@liskhq/lisk-client';
+import { to } from 'await-to-js';
 
 import {
   loginTypes,
@@ -290,6 +291,23 @@ export const getTransactionFee = async ({
   };
 };
 
+/**
+ * Computes transaction id
+ * @param {object} transaction
+ * @returns {Promise} returns transaction id for a given transaction object
+ */
+export const computeTransactionId = ({ transaction }) => {
+  const moduleAssetId = joinModuleAndAssetIds({
+    moduleID: transaction.moduleID,
+    assetID: transaction.assetID,
+  });
+  const schema = moduleAssetSchemas[moduleAssetId];
+  const transactionBytes = transactions.getBytes(schema, transaction);
+  const id = cryptography.hash(transactionBytes);
+
+  return id;
+};
+
 const signMultisigUsingPrivateKey = (
   schema, transaction, networkIdentifier, keys, privateKey,
   isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
@@ -348,13 +366,17 @@ const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey)
 
 const signUsingHW = async (schema, transaction, account, networkIdentifier) => {
   const signingBytes = transactions.getSigningBytes(schema, transaction);
-  result = await signTransactionByHW(
+  const [error, signedTransaction] = await to(signTransactionByHW(
     account,
     networkIdentifier,
     transaction,
     signingBytes,
-  );
-  return result;
+  ));
+  const id = computeTransactionId({ transaction: signedTransaction });
+  if (error) {
+    throw error;
+  }
+  return { ...signedTransaction, id };
 };
 
 /**
@@ -400,7 +422,9 @@ export const create = async ({
       );
     }
     if (account.loginType !== loginTypes.passphrase.code) {
-      const signedTx = await signUsingHW(schema, transaction, account);
+      const signedTx = await signUsingHW(schema, transaction, account, networkIdentifier);
+
+      if (result.error) { throw result.error; }
       return signedTx;
     }
     return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
@@ -436,21 +460,4 @@ export const broadcast = async ({ transaction, serviceUrl }) => {
   });
 
   return response;
-};
-
-/**
- * Computes transaction id
- * @param {object} transaction
- * @returns {Promise} returns transaction id for a given transaction object
- */
-export const computeTransactionId = ({ transaction }) => {
-  const moduleAssetId = joinModuleAndAssetIds({
-    moduleID: transaction.moduleID,
-    assetID: transaction.assetID,
-  });
-  const schema = moduleAssetSchemas[moduleAssetId];
-  const transactionBytes = transactions.getBytes(schema, transaction);
-  const id = cryptography.hash(transactionBytes);
-
-  return id;
 };
