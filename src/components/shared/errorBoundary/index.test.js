@@ -1,48 +1,31 @@
 import React from 'react';
-import { expect } from 'chai';
-import { spy } from 'sinon';
+import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
 import { mountWithContext } from '../../../../test/unit-test-utils/mountHelpers';
 import ErrorBoundary from './index';
 
 describe('ErrorBoundary:', () => {
-  const NonProblematicChild = () =>
-    <div className='child-no-error'></div>; // eslint-disable-line
-
-  /* eslint-disable no-console */
-  const pauseErrorLogging = (codeToRun) => {
-    const logger = console.error;
-    console.error = () => {};
-    codeToRun();
-    console.error = logger;
+  const NonProblematicChild = () => <div className='child-no-error'></div>; // eslint-disable-line
+  const ProblematicChild = () => {
+    throw new Error('Error thrown from problem child');
+    return <div>Error</div>; // eslint-disable-line
   };
-  /* eslint-enable no-console */
 
   describe('when rendering childs', () => {
     let wrapper;
     const props = {
       errorMessage: 'Should show this message on error',
     };
-    const ProblematicChild = () => {
-      throw new Error('Error thrown from problem child');
-      return <div>Error</div>; // eslint-disable-line
-    };
 
-    // TODO: reenable once enzyme gives support to react 16
-    // github.com/airbnb/enzyme/issues/1255
-    it.skip('should show error message when error occured in child', (done) => {
-      const componentDidCatchSpy = spy(ErrorBoundary.prototype, 'componentDidCatch');
-      try {
-        pauseErrorLogging(() => {
-          wrapper = mountWithContext(<ErrorBoundary {...props}>
-            <ProblematicChild />
-          </ErrorBoundary>, { storeState: {} });
-        });
-      } catch (err) {
-        expect(componentDidCatchSpy).to.have.been.called();
-        expect(wrapper.find('.error-header')).to.have.text(props.errorMessage);
-        componentDidCatchSpy.restore();
-        done();
-      } // eslint-disable-line 
+    it('should show error message when error occured in child', () => {
+      wrapper = mountWithContext(<ErrorBoundary {...props}>
+        <ProblematicChild />
+      </ErrorBoundary>, { storeState: {} });
+
+      expect(wrapper.find('.error-boundary-container').exists()).toBeTruthy();
+      expect(wrapper.find('h2')).toHaveText('An error occurred.');
+      expect(wrapper.find(PrimaryButton)).toHaveText('Reload the page');
+      expect(wrapper.find(TertiaryButton)).toHaveText('Report the error via email');
+      expect(wrapper.find('a').at(0).props().href).toEqual('mailto:desktopdev@lisk.com?&subject=User Reported Error - Lisk - &body=Error: Error thrown from problem child:%0A%0A in ProblematicChild%0A in ErrorBoundary%0A in Unknown (created by WrapperComponent)%0A in WrapperComponent');
     });
 
     it('should render childs when no errors', () => {
@@ -50,8 +33,7 @@ describe('ErrorBoundary:', () => {
         <NonProblematicChild />
       </ErrorBoundary>, { storeState: {} });
 
-      wrapper.update();
-      expect(wrapper.find('.error-header')).not.to.be.present();
+      expect(wrapper.find('.error-boundary-container').exists()).toBeFalsy();
     });
   });
 });
