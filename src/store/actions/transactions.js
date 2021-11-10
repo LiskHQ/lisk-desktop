@@ -123,14 +123,6 @@ export const transactionCreated = data => async (dispatch, getState) => {
       type: actionTypes.transactionSignError,
       data: error,
     });
-    return;
-  }
-
-  if (error) {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: error,
-    });
   } else {
     dispatch({
       type: actionTypes.transactionCreatedSuccess,

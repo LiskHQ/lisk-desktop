@@ -91,45 +91,21 @@ export const votesSubmitted = ({ fee, votes }) =>
       isHwSigning: account.loginType !== loginTypes.passphrase.code,
     };
 
-    let [error, tx] = await to(create(params, tokenMap.LSK.key));
+    const [error, tx] = await to(create(params, tokenMap.LSK.key));
 
     if (error) {
       dispatch({
         type: actionTypes.transactionSignError,
         data: error,
       });
-      return;
-    }
-
-    if (params.isHwSigning) {
-      // tx contain transactionObject and transactionBytes that needs to be signed by HW
-      [error, tx] = await to(signTransactionByHW(
-        account,
-        tx.networkIdentifier,
-        tx.transactionObject,
-        tx.transactionBytes,
-      ));
-
-      if (!error && tx) {
-        tx.id = computeTransactionId({ transaction: tx });
-      }
-    }
-
-    if (error) {
+    } else {
+      dispatch({ type: actionTypes.votesSubmitted });
+      dispatch(timerReset());
       dispatch({
-        type: actionTypes.transactionSignError,
-        data: error,
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
       });
-
-      return;
     }
-
-    dispatch({ type: actionTypes.votesSubmitted });
-    dispatch(timerReset());
-    dispatch({
-      type: actionTypes.transactionCreatedSuccess,
-      data: tx,
-    });
   };
 
 /**
