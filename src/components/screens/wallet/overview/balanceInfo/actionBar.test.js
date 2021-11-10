@@ -1,7 +1,7 @@
-import { mountWithRouterAndStore } from '@utils/testHelpers';
-import { tokenMap, actionTypes } from '@constants';
-import ActionBar from './actionBar';
 import { act } from 'react-dom/test-utils';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
+import { tokenMap } from '@constants';
+import ActionBar from './actionBar';
 
 describe('Reclaim balance screen', () => {
   const hostAddress = 'lskmjr8hrnhzc6j653eto5fbh2p3kwdpa9ccdnhk6';
