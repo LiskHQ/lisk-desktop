@@ -37,7 +37,7 @@ describe('Reclaim balance screen', () => {
   };
 
   it('Should display register delegate button and send', () => {
-    const { wrapper } = mountWithRouterAndStore(
+    const wrapper = mountWithRouterAndStore(
       ActionBar,
       props,
       {},
@@ -51,7 +51,7 @@ describe('Reclaim balance screen', () => {
   });
 
   it('Should not display register delegate button', () => {
-    const { wrapper } = mountWithRouterAndStore(
+    const wrapper = mountWithRouterAndStore(
       ActionBar,
       { ...props, activeToken: tokenMap.BTC.key, address: 'mnrutC4CgQhMos4f8HWYRy8rKQ3UisGwYJ' },
       {},
@@ -72,7 +72,7 @@ describe('Reclaim balance screen', () => {
   });
 
   it('Should display add/edit vote correctly', () => {
-    let { wrapper } = mountWithRouterAndStore(
+    let wrapper = mountWithRouterAndStore(
       ActionBar,
       { ...props, username: 'delegate' },
       {},
@@ -107,7 +107,7 @@ describe('Reclaim balance screen', () => {
   });
 
   it('Should disable buttons', () => {
-    const { wrapper } = mountWithRouterAndStore(
+    const wrapper = mountWithRouterAndStore(
       ActionBar,
       props,
       {},

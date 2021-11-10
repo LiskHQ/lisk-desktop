@@ -52,7 +52,7 @@ describe('Delegate Registration Summary', () => {
   });
 
   it('submit user data when click in confirm button', () => {
-    const { wrapper } = mountWithRouterAndStore(
+    const wrapper = mountWithRouterAndStore(
       Summary,
       props,
       {},
@@ -65,7 +65,7 @@ describe('Delegate Registration Summary', () => {
 
   it('submit user data when click in confirm button but fails', () => {
     const error = { message: 'some error' };
-    const { wrapper } = mountWithRouterAndStore(
+    const wrapper = mountWithRouterAndStore(
       Summary,
       props,
       {},

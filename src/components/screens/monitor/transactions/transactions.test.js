@@ -71,7 +71,7 @@ describe('Transactions monitor page', () => {
         ],
       },
     };
-    const { wrapper } = mountWithRouterAndStore(
+    const wrapper = mountWithRouterAndStore(
       TransactionsPure,
       { ...props, transactions: transactionsWithData },
       {},

@@ -28,7 +28,7 @@ describe('Status', () => {
   };
 
   beforeEach(() => {
-    { wrapper } = mountWithRouterAndStore(Status, props, {}, state);
+    wrapper = mountWithRouterAndStore(Status, props, {}, state);
   });
 
   it('should render properly transactionStatus', () => {
@@ -38,7 +38,7 @@ describe('Status', () => {
   it('should render close modal and go to wallet when success', () => {
     const newProps = { ...props, isMigrated: true };
     newProps.transactions.confirmed = [{ amount: 1 }];
-    { wrapper } = mountWithRouterAndStore(Status, newProps, {}, state);
+    wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
     wrapper.find('.close-modal').at(0).simulate('click');
     expect(props.history.push).toBeCalledWith('/wallet');
   });
@@ -47,7 +47,7 @@ describe('Status', () => {
     const newProps = { ...props };
     newProps.transactions.confirmed = [];
     newProps.transactions.txBroadcastError = { amount: 1 };
-    { wrapper } = mountWithRouterAndStore(Status, newProps, {}, state);
+    wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
     expect(wrapper).toContainMatchingElement('.report-error-link');
   });
 });

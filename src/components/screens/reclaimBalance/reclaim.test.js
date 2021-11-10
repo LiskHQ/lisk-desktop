@@ -32,14 +32,14 @@ describe('Reclaim balance screen', () => {
   });
 
   it('should render legacy and new addresses', () => {
-    const { wrapper } = mountWithRouterAndStore(Reclaim, props, {}, state);
+    const wrapper = mountWithRouterAndStore(Reclaim, props, {}, state);
     const html = wrapper.html();
     expect(html).toContain(accounts.non_migrated.legacy.address);
     expect(html).toContain(truncateAddress(accounts.non_migrated.summary.address, 'medium'));
   });
 
   it('Opens send modal', () => {
-    const { wrapper } = mountWithRouterAndStore(Reclaim, props, {}, state);
+    const wrapper = mountWithRouterAndStore(Reclaim, props, {}, state);
     wrapper.find(styles.button).first().simulate('click');
     expect(
       addSearchParamsToUrl,

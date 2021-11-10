@@ -31,7 +31,7 @@ describe('Multisignature account details', () => {
     };
 
     it('should return null if the account is not multisig', () => {
-      const { wrapper } = mountWithRouterAndStore(
+      const wrapper = mountWithRouterAndStore(
         MultisigAccountDetails,
         props,
         {},
@@ -56,7 +56,7 @@ describe('Multisignature account details', () => {
     };
 
     it('Create Members for each publicKey', () => {
-      const { wrapper } = mountWithRouterAndStore(
+      const wrapper = mountWithRouterAndStore(
         MultisigAccountDetails,
         props,
         { pathname: routes.wallet.path },
