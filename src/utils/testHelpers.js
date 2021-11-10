@@ -44,7 +44,7 @@ export const mountWithRouter = (Component, props, routeConfig = {}) => mount(
  * @param {Class|Function} Component - A React component to be tested
  * @param {Object} props - Set of props to be passed to the component
  * @param {?Object} routeConfig - A fake history.location object
- * @param {?Object} reduxStore - A fake redux store object
+ * @param {?Object} store - A fake redux store object
  *
  * @returns {Object} Mounted component
  */
