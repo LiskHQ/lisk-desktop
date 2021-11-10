@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { compose } from 'redux';
 
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
 import { tokenMap } from '@constants';
@@ -17,6 +18,7 @@ import BoxInfoText from '@toolbox/box/infoText';
 import AmountField from '@shared/amountField';
 import LiskAmount from '@shared/liskAmount';
 import Converter from '@shared/converter';
+import WarnPunishedDelegate from '@shared/warnPunishedDelegate';
 import { PrimaryButton, WarningButton } from '@toolbox/buttons';
 import useVoteAmountField from './useVoteAmountField';
 import getMaxAmount from './getMaxAmount';
@@ -41,6 +43,8 @@ const AddVote = ({
   const { account, network, voting } = useSelector(state => state);
   const host = useSelector(state => state.account.info.LSK.summary.address);
   const address = selectSearchParamValue(history.location.search, 'address');
+  const start = selectSearchParamValue(history.location.search, 'start');
+  const end = selectSearchParamValue(history.location.search, 'end');
   const existingVote = useSelector(state => state.voting[address || host]);
   const balance = useSelector(selectAccountBalance);
   const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');
@@ -94,6 +98,12 @@ const AddVote = ({
               />
             </div>
           </BoxInfoText>
+          {start !== undefined && (
+          <>
+            <WarnPunishedDelegate pomHeight={{ start, end }} vote />
+            <span className={styles.space} />
+          </>
+          )}
           <label className={styles.fieldGroup}>
             <AmountField
               amount={voteAmount}
@@ -125,4 +135,7 @@ const AddVote = ({
   );
 };
 
-export default withRouter(withTranslation()(AddVote));
+export default compose(
+  withRouter,
+  withTranslation(),
+)(AddVote);

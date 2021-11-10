@@ -27,7 +27,7 @@ const blockListener = ({ getState, dispatch }) => {
     const now = new Date();
 
     if (activeToken === tokenMap.LSK.key
-      && block.data[0].height !== blocks.latestBlocks[0].height) {
+      && block.data[0]?.height !== blocks.latestBlocks[0]?.height) {
       dispatch({
         type: actionTypes.newBlockCreated,
         data: {

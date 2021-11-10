@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectNetworkIdentifier, selectTransactions } from '@store/selectors';
+import { selectTransactions } from '@store/selectors';
 import { MODULE_ASSETS_NAME_ID_MAP, actionTypes } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
 import { fromRawLsk } from '@utils/lsk';
 import { transactionDoubleSigned } from '@actions';
-import { signTransaction, transformTransaction } from '@utils/transaction';
 import Piwik from '@utils/piwik';
 import { isEmpty } from '@utils/helpers';
 import styles from './summary.css';
@@ -22,7 +21,6 @@ const Summary = ({
   transactionInfo,
 }) => {
   const dispatch = useDispatch();
-  const networkIdentifier = useSelector(selectNetworkIdentifier);
   const transactions = useSelector(selectTransactions);
   const [secondPass, setSecondPass] = useState('');
 
@@ -35,16 +33,7 @@ const Summary = ({
 
   useEffect(() => {
     if (secondPass) {
-      const [signedTx, err] = signTransaction(
-        transformTransaction(transactions.signedTransaction),
-        secondPass,
-        networkIdentifier,
-        { data: account },
-        false,
-      );
-      if (!err) {
-        dispatch(transactionDoubleSigned(signedTx));
-      }
+      dispatch(transactionDoubleSigned({ secondPass }));
     }
   }, [secondPass]);
 

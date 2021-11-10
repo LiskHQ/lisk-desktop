@@ -1,26 +1,16 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import to from 'await-to-js';
-import { signTransactionByHW } from '@utils/hwManager';
-import {
-  MODULE_ASSETS_NAME_ID_MAP,
-  actionTypes,
-  loginTypes,
-  tokenMap,
-} from '@constants';
-import { toRawLsk } from '@utils/lsk';
-import { getUnlockableUnlockObjects } from '@utils/account';
-import { create, computeTransactionId } from '@api/transaction';
+import { tokenMap } from '@constants';
+import { balanceUnlocked } from '@actions/account';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
 import BoxHeader from '@toolbox/box/header';
 import { PrimaryButton } from '@toolbox/buttons';
+import { isEmpty } from '@utils/helpers';
 import LiskAmount from '@shared/liskAmount';
 import styles from './lockedBalance.css';
-
-const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const ButtonTitle = ({ unlockableBalance, t }) => {
   if (unlockableBalance === 0) {
@@ -40,78 +30,37 @@ const Form = ({
   children,
   nextStep,
   data,
+  signedTransaction,
+  txSignatureError,
 }) => {
   const {
-    account,
     customFee,
     fee,
-    currentBlockHeight,
     unlockableBalance,
   } = data;
   const dispatch = useDispatch();
-  const network = useSelector(state => state.network);
 
   // eslint-disable-next-line max-statements
   const onClickUnlock = async () => {
     const selectedFee = customFee ? customFee.value : fee.value;
-    const isHwSigning = account.loginType !== loginTypes.passphrase.code;
-
-    let [error, tx] = await to(
-      create({
-        network,
-        account,
-        transactionObject: {
-          moduleAssetId,
-          senderPublicKey: account.summary.publicKey,
-          nonce: account.sequence?.nonce,
-          fee: `${toRawLsk(parseFloat(selectedFee))}`,
-          unlockObjects: getUnlockableUnlockObjects(
-            account.dpos?.unlocking, currentBlockHeight,
-          ),
-        },
-        isHwSigning,
-      }, tokenMap.LSK.key),
-    );
-
-    if (error) {
-      dispatch({
-        type: actionTypes.transactionSignError,
-        data: error,
-      });
-      nextStep({ fee, account });
-      return;
-    }
-
-    if (isHwSigning) {
-      // tx contain txObject and txBytes that needs to be signed by HW
-      [error, tx] = await to(signTransactionByHW(
-        account,
-        tx.networkIdentifier,
-        tx.transactionObject,
-        tx.transactionBytes,
-      ));
-
-      if (!error && tx) {
-        tx.id = computeTransactionId({ transaction: tx });
-      }
-    }
-
-    if (!error) {
-      dispatch({
-        type: actionTypes.transactionCreatedSuccess,
-        data: tx,
-      });
-      nextStep({
-        transactionInfo: tx, fee, account,
-      });
-    } else {
-      dispatch({
-        type: actionTypes.transactionSignError,
-        data: error,
-      });
-      nextStep({ fee, account });
-    }
+    dispatch(balanceUnlocked({ selectedFee }));
   };
+
+  useEffect(() => {
+    // success
+    if (!isEmpty(signedTransaction)) {
+      nextStep({
+        transactionInfo: signedTransaction, fee,
+      });
+    }
+  }, [signedTransaction]);
+
+  useEffect(() => {
+    // error
+    if (txSignatureError) {
+      nextStep({ fee });
+    }
+  }, [txSignatureError]);
 
   return (
     <Box className={styles.wrapper}>

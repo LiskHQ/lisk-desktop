@@ -36,7 +36,8 @@
           ["@shared", "./src/components/shared"],
           ["@screens", "./src/components/screens/"],
           ["@toolbox", "./src/components/toolbox/"],
-          ["@src", "./src"]
+          ["@src", "./src"],
+          ["@fixtures", "./test/constants/"]
         ],
         "extensions": [".js"]
       }

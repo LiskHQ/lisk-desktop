@@ -3,13 +3,15 @@ import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { PrimaryButton, SecondaryButton, TertiaryButton } from '@toolbox/buttons';
 import DialogLink from '@toolbox/dialog/link';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import SignInTooltipWrapper from '@shared/signInTooltipWrapper';
 import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
 import EmptyBalanceTooltipWrapper from './emptyBalanceTooltipWrapper';
 import styles from './balanceInfo.css';
 
+// eslint-disable-next-line complexity
 const ActionBar = ({
-  username, address, t, isWalletRoute, activeToken,
+  username, address, t, isWalletRoute, activeToken, isBanned, pomStart,
 }) => {
   const hostBalance = useSelector(selectAccountBalance);
   const disableButtons = hostBalance === 0;
@@ -31,14 +33,30 @@ const ActionBar = ({
         <div className={styles.actionRow}>
           {
             username && (
-              <DialogLink component="editVote" className={`${styles.button} add-vote`}>
-                <SecondaryButton
-                  className={`${styles.voteButton} open-add-vote-dialog`}
-                  size="m"
-                  disabled={disableButtons}
+              <DialogLink
+                component={!isBanned && 'editVote'}
+                data={pomStart}
+                className={`${styles.button} add-vote`}
+              >
+                <Tooltip
+                  position="bottom"
+                  size="maxContent"
+                  content={(
+                    <SecondaryButton
+                      className={`${styles.voteButton} ${
+                        isBanned && styles.disabled} ${!isBanned && 'open-add-vote-dialog'}`}
+                      size="m"
+                    >
+                      {voteButtonTitle}
+                    </SecondaryButton>
+                  )}
                 >
-                  {voteButtonTitle}
-                </SecondaryButton>
+                  <p>
+                    {isBanned
+                      ? t('You cannot vote for this delegate')
+                      : t('Vote for delegate')}
+                  </p>
+                </Tooltip>
               </DialogLink>
             )
           }

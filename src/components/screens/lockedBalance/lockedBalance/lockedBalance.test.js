@@ -3,6 +3,8 @@ import { tokenMap, networks } from '@constants';
 import { mountWithProps } from '@utils/testHelpers';
 import * as transactionAPI from '@api/transaction';
 import * as hwManagerAPI from '@utils/hwManager';
+import { create } from '@api/transaction';
+import { balanceUnlocked } from '@actions/account';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import LockedBalance from './index';
@@ -12,7 +14,9 @@ import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 jest.mock('@shared/transactionPriority/useTransactionPriority');
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@api/transaction');
-jest.mock('@utils/hwManager');
+jest.mock('@actions/account', () => ({
+  balanceUnlocked: jest.fn(),
+}));
 
 describe('Unlock LSK modal', () => {
   let wrapper;
@@ -85,6 +89,10 @@ describe('Unlock LSK modal', () => {
       },
       status: { online: true },
     },
+    transactions: {
+      signedTransaction: {},
+      txSignatureError: null,
+    },
   };
 
   beforeEach(() => {
@@ -98,34 +106,17 @@ describe('Unlock LSK modal', () => {
     expect(wrapper).toContainMatchingElement('.unlock-btn');
   });
 
-  it('calls nextStep passing transactionInfo', async () => {
-    // Arrange
-    transactionAPI.create.mockResolvedValue([{ tx: { networkIdentifier: '', transactionObject: {}, transactionBytes: '' } }]);
+  it('fires balanceUnlocked action with selected fee', async () => {
+    const tx = { id: 1 };
+    create.mockImplementation(() =>
+      new Promise((resolve) => {
+        resolve(tx);
+      }));
 
     // Act
     wrapper.find('.unlock-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
-
-    // Assert
-    expect(nextStep).toBeCalledWith(
-      expect.objectContaining({ transactionInfo: expect.any(Object) }),
-    );
-  });
-
-  it('calls nextStep without passing transactionInfo when error', async () => {
-    // Assert
-    const error = { message: 'error:test' };
-    transactionAPI.create.mockRejectedValue(error);
-
-    // Act
-    wrapper.find('.unlock-btn').at(0).simulate('click');
-    act(() => { wrapper.update(); });
-    await flushPromises();
-
-    // Assert
-    expect(nextStep).toBeCalledWith(
-      expect.not.objectContaining({ transactionInfo: expect.any(Object) }),
-    );
+    expect(balanceUnlocked).toBeCalledWith({ selectedFee: '0.1' });
   });
 });

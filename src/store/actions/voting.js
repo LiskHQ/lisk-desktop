@@ -67,6 +67,11 @@ export const voteEdited = data => async (dispatch, getState) => {
  * Makes Api call to register votes
  * Adds pending state and then after the duration of one round
  * cleans the pending state
+ *
+ * @param {object} data
+ * @param {object} data.fee
+ * @param {object} data.votes
+ * @param {promise} API call response
  */
 export const votesSubmitted = ({ fee, votes }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements

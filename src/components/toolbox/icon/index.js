@@ -180,8 +180,8 @@ import delegateActive from '../../../assets/images/icons/delegate-active.svg';
 import delegateActiveDark from '../../../assets/images/icons/delegate-active-dark.svg';
 import delegateStandby from '../../../assets/images/icons/delegate-standby.svg';
 import delegateStandbyDark from '../../../assets/images/icons/delegate-standby-dark.svg';
-import delegateIneligible from '../../../assets/images/icons/delegate-non-eligible.svg';
-import delegateIneligibleDark from '../../../assets/images/icons/delegate-non-eligible-dark.svg';
+import delegateIneligible from '../../../assets/images/icons/delegate-ineligible.svg';
+import delegateIneligibleDark from '../../../assets/images/icons/delegate-ineligible-dark.svg';
 import delegatePunished from '../../../assets/images/icons/delegate-punished.svg';
 import delegatePunishedDark from '../../../assets/images/icons/delegate-punished-dark.svg';
 import delegateBanned from '../../../assets/images/icons/delegate-banned.svg';
@@ -196,6 +196,8 @@ import linkIcon from '../../../assets/images/icons/link-icon.svg';
 import refresh from '../../../assets/images/icons/refresh.svg';
 import reportDelegateMisbehavior from '../../../assets/images/icons/reportDelegateMisbehavior.svg';
 import reportDelegateMisbehaviorDark from '../../../assets/images/icons/reportDelegateMisbehavior-dark.svg';
+import downloadUpdateFinish from '../../../assets/images/icons/download-update-finish.svg';
+import downloadUpdateProgress from '../../../assets/images/icons/download-update-progress.svg';
 
 export const icons = {
   academy,
@@ -392,6 +394,8 @@ export const icons = {
   reportDelegateMisbehavior,
   reportDelegateMisbehaviorDark,
   zodiacBlueLock,
+  downloadUpdateProgress,
+  downloadUpdateFinish,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

@@ -1,5 +1,3 @@
-/* eslint-disable import/prefer-default-export */
-
 export { default as loginTypes } from './loginTypes';
 export { default as keyCodes } from './keyCodes';
 export * from './moduleAssets';

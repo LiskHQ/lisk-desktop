@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
-import { networks, ss, urls, accounts } from '@constants'
 import numeral from 'numeral';
+import { networks, ss } from '../../../constants';
 import { fromRawLsk } from '../../../../src/utils/lsk';
 
 Given(/^showNetwork setting is true$/, function () {
@@ -14,18 +14,18 @@ Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
   );
   switch (networkName) {
     case 'mainnet':
-      cy.get(ss.networkStatus).should('have.text', 'Connected to:mainnet');
+      cy.get(ss.networkName).should('have.text', 'mainnet');
       break;
     case 'testnet':
-      cy.get(ss.networkStatus).should('have.text', 'Connected to:testnet');
+      cy.get(ss.networkName).should('have.text', 'testnet');
       break;
     case 'devnet':
-      cy.get(ss.networkStatus).should('contain', 'Connected to:devnet');
+      cy.get(ss.networkName).should('contain', 'devnet');
       break;
     default:
       throw new Error(`Network should be one of : mainnet , testnet, devnet. Was: ${networkName}`);
   }
-  cy.get(ss.networkStatus).contains(`Connected to:${networkName}`);
+  cy.get(ss.networkName).contains(networkName);
 });
 
 Given(/^I choose ([^\s]+)$/, function (networkName) {
@@ -41,7 +41,7 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
     case 'devnet':
       cy.get(ss.networkDropdown).click();
       cy.get(ss.networkOptions).eq(2).click();
-      cy.get(ss.addressInput).clear().type(networks.devnet.node);
+      cy.get(ss.addressInput).clear().type(networks.devnet.serviceUrl);
       cy.get(ss.connectButton).click();
       break;
     case 'invalid':

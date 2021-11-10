@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import { networks, ss } from '@constants'
-import { accounts } from '@constants';
+import { ss, networks, accounts } from '../../../constants';
 
 Then(/^I should see 30 transactions$/, function () {
   cy.get(ss.transactionRow).should('have.length', 30);
@@ -40,5 +39,5 @@ Then(/^I send LSK$/, function () {
 });
 
 Then(/^I should see ([^s]+) in recipient$/, function (accountName) {
-  cy.get(ss.recipientInput).should('have.value', accounts[accountName].address);
+  cy.get(ss.recipientInput).should('have.value', accounts[accountName].summary.address);
 });

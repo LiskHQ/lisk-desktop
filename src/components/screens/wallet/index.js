@@ -2,8 +2,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
 
 import { parseSearchParams, addSearchParamsToUrl } from '@utils/searchParams';
+import { withRouter } from 'react-router';
 import { transactionsRetrieved } from '@actions';
 import {
   selectAccount,
@@ -51,7 +53,7 @@ const Wallet = ({ t, history }) => {
         hwInfo={account.hwInfo}
         transactions={confirmed}
       />
-      <TabsContainer>
+      <TabsContainer name="main-tabs">
         <Transactions
           pending={pending || []}
           confirmedLength={confirmed.length}
@@ -93,4 +95,4 @@ const Wallet = ({ t, history }) => {
   );
 };
 
-export default withTranslation()(Wallet);
+export default compose(withRouter, withTranslation())(Wallet);

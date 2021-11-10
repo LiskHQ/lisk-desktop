@@ -11,8 +11,9 @@ import LockedBalanceLink from './unlocking';
 import ActionBar from './actionBar';
 import styles from './balanceInfo.css';
 
+// eslint-disable-next-line complexity
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, username,
+  t, activeToken, balance, isWalletRoute, address, username, isBanned, pomStart,
 }) => (
   <Box className={`${styles.wrapper}`}>
     <BoxContent className={styles.content}>
@@ -39,6 +40,8 @@ const BalanceInfo = ({
         username={username}
         isWalletRoute={isWalletRoute}
         activeToken={activeToken}
+        isBanned={isBanned}
+        pomStart={pomStart}
       />
     </BoxContent>
   </Box>

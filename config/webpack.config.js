@@ -14,6 +14,7 @@ const config = {
       '@actions': resolve(__dirname, '../src/store/actions'),
       '@store': resolve(__dirname, '../src/store'),
       '@src': resolve(__dirname, '../src'),
+      '@fixtures': resolve(__dirname, '../test/constants'),
     },
     fallback: {
       net: false,
