@@ -97,7 +97,6 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
 
     // Removes all errors and the signed transaction
     // To start a fresh transaction.
-    // @todo Check if this is redundant since we already have broadcastedTransactionSuccess
     case actionTypes.resetTransactionResult:
       return {
         ...state,

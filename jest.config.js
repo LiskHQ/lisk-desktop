@@ -88,7 +88,6 @@ module.exports = {
     'src/components/shared/voteWeight/index.js',
     'src/components/shared/transactionTypeFigure/index.js',
     'src/components/shared/filterDropdownButton/textFilter.js',
-    'src/components/shared/rankOrStatus/index.js',
     'src/components/shared/transactionAmount/index.js',
     'src/components/shared/searchBar/transactions.js',
     'src/components/shared/navigationBars/topBar/networkName.js',
