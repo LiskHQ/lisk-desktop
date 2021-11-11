@@ -109,12 +109,10 @@ app.on('second-instance', (argv) => {
   }
 });
 
-// ToDo - enable this feature when it is implemented in the new design
 app.on('will-finish-launching', () => {
   handleProtocol();
 });
 
-// ToDo - enable this feature when it is implemented in the new design
 ipcMain.on('set-locale', (event, locale) => {
   const langCode = locale.substr(0, 2);
   if (langCode) {

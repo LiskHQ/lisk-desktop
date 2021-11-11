@@ -2,6 +2,7 @@ import { act } from 'react-dom/test-utils';
 import { tokenMap, networks } from '@constants';
 import { mountWithProps } from '@utils/testHelpers';
 import { create } from '@api/transaction';
+import { balanceUnlocked } from '@actions/account';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import LockedBalance from './index';
@@ -11,6 +12,9 @@ import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 jest.mock('@shared/transactionPriority/useTransactionPriority');
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@api/transaction');
+jest.mock('@actions/account', () => ({
+  balanceUnlocked: jest.fn(),
+}));
 
 describe('Unlock LSK modal', () => {
   let wrapper;
@@ -83,6 +87,10 @@ describe('Unlock LSK modal', () => {
       },
       status: { online: true },
     },
+    transactions: {
+      signedTransaction: {},
+      txSignatureError: null,
+    },
   };
 
   beforeEach(() => {
@@ -95,7 +103,7 @@ describe('Unlock LSK modal', () => {
     expect(wrapper).toContainMatchingElement('.unlock-btn');
   });
 
-  it('calls nextStep passing transactionInfo', async () => {
+  it('fires balanceUnlocked action with selected fee', async () => {
     const tx = { id: 1 };
     create.mockImplementation(() =>
       new Promise((resolve) => {
@@ -105,23 +113,6 @@ describe('Unlock LSK modal', () => {
     wrapper.find('.unlock-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
-    expect(nextStep).toBeCalledWith(
-      expect.objectContaining({ transactionInfo: expect.any(Object) }),
-    );
-  });
-
-  it('calls nextStep without passing transactionInfo when error', async () => {
-    const error = { message: 'error:test' };
-    create.mockImplementation(() =>
-      new Promise((_, reject) => {
-        reject(error);
-      }));
-
-    wrapper.find('.unlock-btn').at(0).simulate('click');
-    act(() => { wrapper.update(); });
-    await flushPromises();
-    expect(nextStep).toBeCalledWith(
-      expect.not.objectContaining({ transactionInfo: expect.any(Object) }),
-    );
+    expect(balanceUnlocked).toBeCalledWith({ selectedFee: '0.1' });
   });
 });
