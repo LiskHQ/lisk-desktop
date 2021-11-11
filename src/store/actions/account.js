@@ -300,3 +300,43 @@ export const multisigGroupRegistered = ({
     });
   }
 };
+
+export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
+  //
+  // Collect data
+  //
+  const state = getState();
+  const activeAccount = selectActiveTokenAccount(state);
+
+  //
+  // Create the transaction
+  //
+  const [error, tx] = await to(
+    create({
+      network: state.network,
+      account: activeAccount,
+      transactionObject: {
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
+        fee: toRawLsk(fee.value),
+        amount: activeAccount.legacy.balance,
+        keys: { numberOfSignatures: 0 },
+      },
+      isHwSigning: activeAccount.loginType !== loginTypes.passphrase.code,
+    }, tokenMap.LSK.key),
+  );
+
+  //
+  // Dispatch corresponding action
+  //
+  if (!error) {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};
