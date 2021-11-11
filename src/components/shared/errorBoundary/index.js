@@ -32,7 +32,7 @@ class ErrorBoundary extends React.Component {
 
     const renderErrorSection = () => (
       <section className={styles.errorBoundaryPage}>
-        <div className={styles.errorMessageContainer}>
+        <div className={`${styles.errorMessageContainer} error-boundary-container`}>
           <Illustration name="errorBoundaryPage" />
           <h2>{t('An error occurred.')}</h2>
           <p>{t('To recover, you can try to reload the page, by clicking the button below. If the problem persists, report the error via email.')}</p>

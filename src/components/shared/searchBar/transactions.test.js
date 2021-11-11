@@ -1,4 +1,5 @@
-import { mountWithProps } from '@utils/testHelpers';
+import React from 'react';
+import { mount } from 'enzyme';
 import Transactions from './transactions';
 
 describe('Transactions', () => {
@@ -18,22 +19,9 @@ describe('Transactions', () => {
     rowItemIndex: 0,
     updateRowItemIndex: jest.fn(),
   };
-  const store = {
-    network: {
-      networks: {
-        LSK: {
-          apiVersion: 2, // @todo remove?
-        },
-      },
-    },
-  };
 
   it('should render properly empty transactions', () => {
-    const wrapper = mountWithProps(
-      Transactions,
-      props,
-      store,
-    );
+    const wrapper = mount(<Transactions {...props} />);
     expect(wrapper).toContainMatchingElement('.transactions');
     expect(wrapper).toContainMatchingElement('.transactions-header');
     expect(wrapper).toContainMatchingElement('.transactions-subtitle');
@@ -53,11 +41,7 @@ describe('Transactions', () => {
         moduleAssetName: 'transfer',
       },
     ];
-    const wrapper = mountWithProps(
-      Transactions,
-      newProps,
-      store,
-    );
+    const wrapper = mount(<Transactions {...props} />);
 
     expect(wrapper).toContainMatchingElement('.transactions');
     expect(wrapper).toContainMatchingElement('.transactions-header');
@@ -78,11 +62,7 @@ describe('Transactions', () => {
         moduleAssetName: 'registerDelegate',
       },
     ];
-    const wrapper = mountWithProps(
-      Transactions,
-      newProps,
-      store,
-    );
+    const wrapper = mount(<Transactions {...props} />);
 
     expect(wrapper).toContainMatchingElement('.transactions');
     expect(wrapper).toContainMatchingElement('.transactions-header');
@@ -103,11 +83,7 @@ describe('Transactions', () => {
         moduleAssetName: 'voteDelegate',
       },
     ];
-    const wrapper = mountWithProps(
-      Transactions,
-      newProps,
-      store,
-    );
+    const wrapper = mount(<Transactions {...props} />);
 
     expect(wrapper).toContainMatchingElement('.transactions');
     expect(wrapper).toContainMatchingElement('.transactions-header');

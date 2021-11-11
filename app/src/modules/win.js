@@ -56,13 +56,13 @@ const win = {
 
     Menu.setApplicationMenu(menu.build(electron, checkForUpdates));
 
-    const selectionMenu = Menu.buildFromTemplate([
+    menu.selectionMenu = Menu.buildFromTemplate([
       { role: 'copy' },
       { type: 'separator' },
       { role: 'selectall' },
     ]);
 
-    const inputMenu = Menu.buildFromTemplate([
+    menu.inputMenu = Menu.buildFromTemplate([
       { role: 'undo' },
       { role: 'redo' },
       { type: 'separator' },
@@ -74,7 +74,12 @@ const win = {
     ]);
 
     win.browser.webContents.on('context-menu', (e, props) => {
-      menuPopup({ props, selectionMenu, inputMenu }); // eslint-disable-line no-use-before-define
+      const { selectionText, isEditable } = props;
+      if (isEditable) {
+        menu.inputMenu.popup(win.browser);
+      } else if (selectionText && selectionText.trim() !== '') {
+        menu.selectionMenu.popup(win.browser);
+      }
     });
 
     const handleRedirect = (e, url) => {
@@ -102,15 +107,6 @@ const win = {
       win.eventStack.push({ event, value });
     }
   },
-};
-
-const menuPopup = ({ props, inputMenu, selectionMenu }) => {
-  const { selectionText, isEditable } = props;
-  if (isEditable) {
-    inputMenu.popup(win.browser);
-  } else if (selectionText && selectionText.trim() !== '') {
-    selectionMenu.popup(win.browser);
-  }
 };
 
 const sendEventsFromEventStack = () => {

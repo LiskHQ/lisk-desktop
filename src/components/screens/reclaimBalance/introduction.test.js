@@ -8,12 +8,11 @@ window.open = jest.fn();
 describe('Reclaim balance introduction screen', () => {
   const props = { nextStep: jest.fn() };
 
-  // TODO unskip this test when we add the correct link
-  it.skip('Opens lisk blog windows', () => {
+  it('Opens lisk blog windows', () => {
     const wrapper = mount(<Introduction {...props} />);
-    wrapper.find(styles.link).first().simulate('click');
+    wrapper.find('.link').first().simulate('click');
     expect(window.open).toHaveBeenCalledWith(
-      '',
+      'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration',
       '_blank',
       'rel=noopener noreferrer',
     );

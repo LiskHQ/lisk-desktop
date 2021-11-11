@@ -6,7 +6,7 @@ import { getDelegates } from '@api/delegate';
 import { Context } from '../transactionDetails';
 import styles from './styles.css';
 
-const TransactionVotes = ({ t, votedDelegates }) => {
+export const TransactionVotesComp = ({ t, votedDelegates }) => {
   const { transaction } = useContext(Context);
   const { votes } = transaction.asset;
 
@@ -32,7 +32,7 @@ const TransactionVotes = ({ t, votedDelegates }) => {
               truncate
               title={
                 votedDelegates.data[vote.delegateAddress]
-                && votedDelegates.data[vote.delegateAddress].username
+                && votedDelegates.data[vote.delegateAddress].dpos?.delegate?.username
               }
             />
           ))}
@@ -48,11 +48,11 @@ export default withData({
     defaultData: {},
     transformResponse: (response) => {
       const responseMap = response.data.reduce((acc, delegate) => {
-        acc[delegate.address] = delegate.summary?.address;
+        acc[delegate.summary?.address] = delegate;
         return acc;
       }, {});
 
       return responseMap;
     },
   },
-})(TransactionVotes);
+})(TransactionVotesComp);

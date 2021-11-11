@@ -32,7 +32,7 @@ const VoteItem = ({
           {title || (truncate ? truncateAddress(address) : address)}
         </span>
       </Link>
-      <span className={styles.value}>
+      <span className={`${styles.value} vote-item-value`}>
         {vote.confirmed && vote.unconfirmed
           ? (
             <>
