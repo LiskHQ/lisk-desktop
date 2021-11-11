@@ -57,7 +57,7 @@ const SelectNameAndFee = ({
   );
 
   // eslint-disable-next-line max-statements
-  const onConfirm = async () => {
+  const onConfirm = () => {
     dispatch(delegateRegistered({ fee, username: state.nickname }));
   };
 
