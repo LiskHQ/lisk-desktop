@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import {
@@ -233,6 +234,54 @@ export const delegateRegistered = ({ fee, username }) => async (dispatch, getSta
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
       },
       isHwSigning: state.account.loginType !== loginTypes.passphrase.code,
+    }, tokenMap.LSK.key),
+  );
+
+  //
+  // Dispatch corresponding action
+  //
+  if (!error) {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};
+
+export const multisigGroupRegistered = ({
+  fee,
+  mandatoryKeys,
+  optionalKeys,
+  numberOfSignatures,
+}) => async (dispatch, getState) => {
+  //
+  // Collect data
+  //
+  const state = getState();
+  const activeAccount = selectActiveTokenAccount(state);
+
+  //
+  // Create the transaction
+  //
+  const [error, tx] = await to(
+    create({
+      network: state.network,
+      account: activeAccount,
+      transactionObject: {
+        mandatoryKeys,
+        optionalKeys,
+        numberOfSignatures,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
+        fee: toRawLsk(fee),
+        nonce: activeAccount.sequence.nonce,
+        senderPublicKey: activeAccount.summary.publicKey,
+      },
+      isHwSigning: activeAccount.loginType !== loginTypes.passphrase.code,
     }, tokenMap.LSK.key),
   );
 
