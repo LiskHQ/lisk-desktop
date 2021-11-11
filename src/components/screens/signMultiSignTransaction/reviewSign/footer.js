@@ -15,13 +15,13 @@ export const ActionBar = ({
     className={styles.footer}
   >
     <SecondaryButton
-      className={`${useTheme() === 'dark' && 'dark'}`}
+      className={`${useTheme() === 'dark' && 'dark'} reject`}
       size="l"
       onClick={() => removeSearchParamsFromUrl(history, ['modal'])}
     >
       {t('Reject')}
     </SecondaryButton>
-    <PrimaryButton size="l" onClick={nextButton.onClick}>
+    <PrimaryButton className="sign" size="l" onClick={nextButton.onClick}>
       {nextButton.title}
     </PrimaryButton>
   </BoxFooter>

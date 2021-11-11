@@ -95,6 +95,7 @@ describe('Transaction Details Component', () => {
       data: {},
       loadData: jest.fn(),
     },
+    account: accounts.genesis,
   };
 
   describe('Transfer transactions', () => {
@@ -221,9 +222,8 @@ describe('Transaction Details Component', () => {
     });
   });
 
-  // @todo discuss if we need to show username separately
   describe('Register delegate transaction', () => {
-    it.skip('Should render register delegate details', () => {
+    it('Should render register delegate details', () => {
       const delegateRegTx = {
         data: {
           id: 'fe680a5cfba50acb66c135cc11e92808991c5679b1d5f78f6a777817c5c4157c',
@@ -240,13 +240,13 @@ describe('Transaction Details Component', () => {
           sender: {
             address: 'lskd6yo4kkzrbjadh3tx6kz2qt5o3vy5zdnuwycmw',
             publicKey: 'ea62fbdd5731a748a63b593db2c22129462f47db0f066d4ed3fc70957a456ebc',
-            username: 'vxbzrajmtpkplvlqeuqa',
+            username: 'testUsername',
           },
           signatures: [
             '7bceb31d6f4dbeae27c3dee1acf0f950381ba3933d74d8b60831ef960fd6f17e9b9c48e88ac4e33bd3015329978e85f03d53d4659bf352b2865a3d2ff56a650b',
           ],
           asset: {
-            username: 'vxbzrajmtpkplvlqeuqa',
+            username: 'testUsername',
           },
           isPending: false,
         },
@@ -257,7 +257,7 @@ describe('Transaction Details Component', () => {
         { id: transaction.id },
       );
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
-      expect(wrapper.find('DelegateUsername')).toHaveLength(1);
+      expect(wrapper.find('.hasName').contains('testUsername')).toBe(true);
     });
   });
 
@@ -275,16 +275,15 @@ describe('Transaction Details Component', () => {
     });
   });
 
-  // @todo to remove .skip when we have unlock transactionn signature
-  describe.skip('Unlock transaction', () => {
+  describe('Unlock transaction', () => {
     it('Should render unlock LSK details', () => {
       const unlockTx = {
         data: {
-          type: 14,
+          moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
           sender: {
             senderId: accounts.genesis.summary.address,
           },
-          id: 123,
+          id: '123',
           asset: {
             unlockObjects: [
               {
@@ -298,6 +297,7 @@ describe('Transaction Details Component', () => {
             ],
           },
           title: 'unlockToken',
+          block: { height: '1234567890' },
         },
       };
       const wrapper = mountWithRouter(
@@ -306,7 +306,7 @@ describe('Transaction Details Component', () => {
         { id: transaction.id },
       );
       expect(wrapper).toContainMatchingElement('.transaction-image');
-      expect(wrapper.find('.tx-header').text()).toEqual(MODULE_ASSETS_NAME_ID_MAP.unlockToken);
+      expect(wrapper.find('.tx-header').text()).toEqual('Unlock');
       expect(wrapper).toContainMatchingElement('.transaction-id');
       expect(wrapper).toContainMatchingElement('.tx-amount');
       expect(wrapper).toContainMatchingElement('.tx-fee');
