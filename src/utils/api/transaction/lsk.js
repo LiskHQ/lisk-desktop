@@ -3,7 +3,6 @@ import { transactions, cryptography } from '@liskhq/lisk-client';
 import { to } from 'await-to-js';
 
 import {
-  loginTypes,
   tokenMap,
   MIN_FEE_PER_BYTE,
   DEFAULT_NUMBER_OF_SIGNATURES,
@@ -312,17 +311,15 @@ const signMultisigUsingPrivateKey = (
   schema, transaction, networkIdentifier, keys, privateKey,
   isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
 ) => {
-  const keysInBinary = {
-    optionalKeys: keys.optionalKeys.map(convertStringToBinary),
-    mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
-  };
-
   let signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
     schema,
     transaction,
     networkIdentifier,
     Buffer.from(privateKey, 'hex'),
-    keysInBinary,
+    {
+      optionalKeys: keys.optionalKeys.map(convertStringToBinary),
+      mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
+    },
     isMultiSignatureRegistration,
   );
 
@@ -354,6 +351,8 @@ const signMultisigUsingPrivateKey = (
       isMultiSignatureRegistration,
     );
   }
+
+  return signedTransaction;
 };
 
 const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey) =>
@@ -421,7 +420,7 @@ export const create = async ({
         isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
       );
     }
-    if (account.loginType !== loginTypes.passphrase.code) {
+    if (account.hwInfo) {
       const signedTx = await signUsingHW(schema, transaction, account, networkIdentifier);
 
       if (result.error) { throw result.error; }
