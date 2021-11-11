@@ -24,6 +24,8 @@ const RegisterDelegate = ({
         t={t}
         account={account}
         network={network}
+        signedTransaction={transactions.signedTransaction}
+        txSignatureError={transactions.txSignatureError}
       />
       <Summary
         t={t}

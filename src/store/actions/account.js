@@ -183,7 +183,7 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
   //
   const result = await create({
     network: state.network,
-    account: activeAccount,
+    account: activeAccount, // Does it have HW info?
     transactionObject: {
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
       senderPublicKey: activeAccount.summary.publicKey,
@@ -207,6 +207,47 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
     dispatch({
       type: actionTypes.transactionSignError,
       data: result.error,
+    });
+  }
+};
+
+export const delegateRegistered = ({ fee, username }) => async (dispatch, getState) => {
+//
+  // Collect data
+  //
+  const state = getState();
+  const activeAccount = selectActiveTokenAccount(state);
+
+  //
+  // Create the transaction
+  //
+  const [error, tx] = await to(
+    create({
+      network: state.network,
+      account: activeAccount,
+      transactionObject: {
+        senderPublicKey: activeAccount.summary.publicKey,
+        nonce: activeAccount.sequence?.nonce,
+        fee: toRawLsk(parseFloat(fee.value)),
+        username,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
+      },
+      isHwSigning: state.account.loginType !== loginTypes.passphrase.code,
+    }, tokenMap.LSK.key),
+  );
+
+  //
+  // Dispatch corresponding action
+  //
+  if (!error) {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
     });
   }
 };
