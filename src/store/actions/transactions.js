@@ -1,8 +1,9 @@
 import to from 'await-to-js';
 
 import {
-  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes, DEFAULT_LIMIT,
+  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, DEFAULT_LIMIT,
 } from '@constants';
+import { isEmpty } from '@utils/helpers';
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { selectActiveTokenAccount, selectNetworkIdentifier } from '@store/selectors';
 import { signTransaction, transformTransaction } from '@utils/transaction';
@@ -98,21 +99,18 @@ export const transactionCreated = data => async (dispatch, getState) => {
   } = getState();
   const activeToken = settings.token.active;
 
-  const params = {
+  const [error, tx] = await to(create({
     transactionObject: {
       ...data,
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     },
     account: {
       ...account.info[activeToken],
-      hwInfo: account.hwInfo, // @todo remove this by #3898
+      hwInfo: isEmpty(account.hwInfo) ? undefined : account.hwInfo, // @todo remove this by #3898
+      passphrase: account.passphrase,
     },
-    passphrase: account.passphrase,
     network,
-    isHwSigning: account.loginType !== loginTypes.passphrase.code,
-  };
-
-  const [error, tx] = await to(create(params, activeToken));
+  }, activeToken));
 
   if (error) {
     dispatch({

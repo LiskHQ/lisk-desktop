@@ -1,10 +1,11 @@
 import to from 'await-to-js';
 import {
-  actionTypes, loginTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP,
+  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
 import { create } from '@api/transaction';
 import { getAccount } from '@api/account';
 import { getVotes } from '@api/delegate';
+import { isEmpty } from '@utils/helpers';
 import { timerReset } from './account';
 
 export const votesReset = () => ({
@@ -73,29 +74,26 @@ export const voteEdited = data => async (dispatch, getState) => {
  * @param {promise} API call response
  */
 export const votesSubmitted = ({ fee, votes }) =>
-  async (dispatch, getState) => { // eslint-disable-line max-statements
-    const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
-    const { network, account } = getState();
-    const senderPublicKey = account.info.LSK.summary.publicKey;
-    const nonce = account.info.LSK.sequence.nonce;
-
-    const transaction = {
-      fee, votes, nonce, senderPublicKey,
+  async (dispatch, getState) => {
+    const state = getState();
+    // @todo Fix this by #3898
+    const activeAccount = {
+      ...state.account.info.LSK,
+      hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
+      passphrase: state.account.passphrase,
     };
-    const params = {
-      network,
-      account: {
-        ...account.info.LSK,
-        hwInfo: account.hwInfo, // @todo remove this by #3898
-      },
+
+    const [error, tx] = await to(create({
+      network: state.network,
+      account: activeAccount,
       transactionObject: {
-        ...transaction,
-        moduleAssetId,
+        fee,
+        votes,
+        nonce: activeAccount.sequence.nonce,
+        senderPublicKey: activeAccount.summary.publicKey,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
       },
-      isHwSigning: account.loginType !== loginTypes.passphrase.code,
-    };
-
-    const [error, tx] = await to(create(params, tokenMap.LSK.key));
+    }, tokenMap.LSK.key));
 
     if (error) {
       dispatch({

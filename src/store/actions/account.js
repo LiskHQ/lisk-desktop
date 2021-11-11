@@ -8,8 +8,9 @@ import {
   tokenMap,
 } from '@constants';
 import { toRawLsk } from '@utils/lsk';
+import { isEmpty } from '@utils/helpers';
 import { create } from '@api/transaction';
-import { selectActiveTokenAccount, selectCurrentBlockHeight } from '@store/selectors';
+import { selectCurrentBlockHeight } from '@store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
 import { extractKeyPair, getUnlockableUnlockObjects } from '@utils/account';
@@ -177,37 +178,44 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
   //
   const state = getState();
   const currentBlockHeight = selectCurrentBlockHeight(state);
-  const activeAccount = selectActiveTokenAccount(state);
+  // @todo Fix this by #3898
+  const activeAccount = {
+    ...state.account.info.LSK,
+    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
+    passphrase: state.account.passphrase,
+  };
 
   //
   // Create the transaction
   //
-  const result = await create({
-    network: state.network,
-    account: activeAccount, // Does it have HW info?
-    transactionObject: {
-      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
-      senderPublicKey: activeAccount.summary.publicKey,
-      nonce: activeAccount.sequence?.nonce,
-      fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
-      unlockObjects: getUnlockableUnlockObjects(
-        activeAccount.dpos?.unlocking, currentBlockHeight,
-      ),
-    },
-  }, tokenMap.LSK.key);
+  const [error, tx] = await to(
+    create({
+      network: state.network,
+      account: activeAccount,
+      transactionObject: {
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        senderPublicKey: activeAccount.summary.publicKey,
+        nonce: activeAccount.sequence?.nonce,
+        fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
+        unlockObjects: getUnlockableUnlockObjects(
+          activeAccount.dpos?.unlocking, currentBlockHeight,
+        ),
+      },
+    }, tokenMap.LSK.key),
+  );
 
   //
   // Dispatch corresponding action
   //
-  if (!result.error) {
+  if (!error) {
     dispatch({
       type: actionTypes.transactionCreatedSuccess,
-      data: result.data,
+      data: tx,
     });
   } else {
     dispatch({
       type: actionTypes.transactionSignError,
-      data: result.error,
+      data: error,
     });
   }
 };
@@ -217,7 +225,11 @@ export const delegateRegistered = ({ fee, username }) => async (dispatch, getSta
   // Collect data
   //
   const state = getState();
-  const activeAccount = selectActiveTokenAccount(state);
+  const activeAccount = {
+    ...state.account.info.LSK,
+    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
+    passphrase: state.account.passphrase,
+  };
 
   //
   // Create the transaction
@@ -233,7 +245,6 @@ export const delegateRegistered = ({ fee, username }) => async (dispatch, getSta
         username,
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
       },
-      isHwSigning: state.account.loginType !== loginTypes.passphrase.code,
     }, tokenMap.LSK.key),
   );
 
@@ -263,7 +274,11 @@ export const multisigGroupRegistered = ({
   // Collect data
   //
   const state = getState();
-  const activeAccount = selectActiveTokenAccount(state);
+  const activeAccount = {
+    ...state.account.info.LSK,
+    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
+    passphrase: state.account.passphrase,
+  };
 
   //
   // Create the transaction
@@ -281,7 +296,6 @@ export const multisigGroupRegistered = ({
         nonce: activeAccount.sequence.nonce,
         senderPublicKey: activeAccount.summary.publicKey,
       },
-      isHwSigning: activeAccount.loginType !== loginTypes.passphrase.code,
     }, tokenMap.LSK.key),
   );
 
@@ -306,7 +320,11 @@ export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
   // Collect data
   //
   const state = getState();
-  const activeAccount = selectActiveTokenAccount(state);
+  const activeAccount = {
+    ...state.account.info.LSK,
+    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
+    passphrase: state.account.passphrase,
+  };
 
   //
   // Create the transaction
@@ -321,7 +339,6 @@ export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
         amount: activeAccount.legacy.balance,
         keys: { numberOfSignatures: 0 },
       },
-      isHwSigning: activeAccount.loginType !== loginTypes.passphrase.code,
     }, tokenMap.LSK.key),
   );
 
