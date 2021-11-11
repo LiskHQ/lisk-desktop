@@ -86,7 +86,7 @@ describe('Reclaim balance screen', () => {
     expect(html).toContain('Add to votes');
     expect(html).not.toContain('Edit vote');
 
-    const result = mountWithRouterAndStore(
+    wrapper = mountWithRouterAndStore(
       ActionBar,
       { ...props, username: 'delegate' },
       {},
@@ -98,7 +98,6 @@ describe('Reclaim balance screen', () => {
         },
       },
     );
-    wrapper = result.wrapper;
     act(() => { wrapper.update(); });
     html = wrapper.html();
 
