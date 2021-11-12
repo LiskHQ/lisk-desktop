@@ -20,7 +20,7 @@ const shouldShow = {
 };
 
 const LoadLatestButton = ({
-  children, onClick, entity, latestBlocks,
+  children, buttonClassName, onClick, entity, latestBlocks,
 }) => {
   const [updateHeight, setUpdateHeight] = useState(
     latestBlocks.length ? latestBlocks[0].height : 0,
@@ -39,7 +39,7 @@ const LoadLatestButton = ({
 
   return shouldShow[entity] && shouldShow[entity](updateHeight, latestBlocks)
     ? (
-      <PrimaryButton onClick={handleClick} className={styles.button}>
+      <PrimaryButton onClick={handleClick} className={`${styles.button} ${buttonClassName || ''}`}>
         <Icon name="refresh" className={styles.icon} />
         <span>{children}</span>
       </PrimaryButton>

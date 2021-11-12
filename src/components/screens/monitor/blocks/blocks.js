@@ -40,24 +40,33 @@ const Blocks = ({
   };
 
   /* istanbul ignore next */
-  const loadLastBlocks = () => applyFilters(filters);
+  const loadLastBlocks = () => {
+    // When the header is fixed at the top, the position is 50px
+    // Therefore the page should only scroll into the view if the header is not at the top
+    if (document.querySelector(`.${styles.header}`).getBoundingClientRect().top - window.scrollY <= 50) {
+      document.querySelector('.blocks-container')
+        .scrollIntoView(true);
+    }
+    return applyFilters(filters);
+  };
 
   const canLoadMore = blocks.meta && blocks.meta.total > blocks.data.length;
 
   return (
     <div>
       <BlocksOverview t={t} />
-      <Box isLoading={blocks.isLoading} width="full" main>
-        <BoxHeader>
+      <Box isLoading={blocks.isLoading} className="blocks-container" width="full" main>
+        <BoxHeader className={styles.header}>
           <h2 className="blocks-header-title">{t('All blocks')}</h2>
+          <LoadLatestButton
+            buttonClassName={styles.loadButton}
+            entity="block"
+            onClick={loadLastBlocks}
+          >
+            {t('New blocks')}
+          </LoadLatestButton>
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
         </BoxHeader>
-        <LoadLatestButton
-          entity="block"
-          onClick={loadLastBlocks}
-        >
-          {t('New blocks')}
-        </LoadLatestButton>
         <FilterBar {...{
           clearFilter, clearAllFilters, filters, formatters, t,
         }}
@@ -69,6 +78,7 @@ const Blocks = ({
             row={BlockRow}
             loadData={handleLoadMore}
             header={header(changeSort, t)}
+            headerClassName={styles.tableHeader}
             currentSort={sort}
             canLoadMore={canLoadMore}
             error={blocks.error}
