@@ -179,27 +179,8 @@ describe('TopBar', () => {
         },
       },
     );
-    wrapper.find('.token-selector-BTC').first().simulate('click');
-    wrapper.find('.token-selector-LSK').first().simulate('click');
     wrapper.find('.bookmark-list-toggle').first().simulate('click');
     wrapper.find('.search-toggle').first().simulate('click');
     expect(props.history.push).not.toHaveBeenCalled();
-  });
-
-  // can we remove this test?
-  it.skip('hides search icon if token is BTC', () => {
-    const wrapper = mountWithRouter(
-      TopBar,
-      props,
-      { pathname: routes.wallet.path },
-    );
-    expect(wrapper).toContainMatchingElement('.search-icon');
-    wrapper.setProps({
-      token: {
-        active: 'BTC',
-        list: [],
-      },
-    });
-    expect(wrapper).not.toContainMatchingElement('.search-icon');
   });
 });
