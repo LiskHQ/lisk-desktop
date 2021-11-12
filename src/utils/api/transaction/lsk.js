@@ -369,18 +369,16 @@ const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey)
 
 const signUsingHW = async (schema, transaction, account, networkIdentifier, network) => {
   const signingBytes = transactions.getSigningBytes(schema, transaction);
-  console.log('signUsingHW 1', signingBytes);
   const [error, signedTransaction] = await to(signTransactionByHW(
     account,
     networkIdentifier,
     transaction,
     signingBytes,
   ));
-  console.log('signUsingHW 2', signedTransaction);
-  const id = computeTransactionId({ transaction: signedTransaction, network });
   if (error) {
     throw error;
   }
+  const id = computeTransactionId({ transaction: signedTransaction, network });
   return { ...signedTransaction, id };
 };
 
@@ -402,7 +400,6 @@ export const create = async ({
   account,
   transactionObject,
 }) => {
-  console.log('-> 1.1', transactionObject);
   const {
     summary: { publicKey, isMultisignature, privateKey },
     keys,
