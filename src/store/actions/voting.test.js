@@ -114,8 +114,6 @@ describe('actions: voting', () => {
     it('should call create transactions', async () => {
       const tx = { data: sampleVotes[0] };
       loginTypes.passphrase.code = 1;
-      transactionApi.create.mockResolvedValue(tx);
-      hwManager.signTransactionByHW.mockResolvedValue(tx);
       const data = [{
         address: 'dummy',
         amount: 1e10,
@@ -123,8 +121,6 @@ describe('actions: voting', () => {
 
       await votesSubmitted(data)(dispatch, getState);
       expect(transactionApi.create).toHaveBeenCalled();
-      expect(transactionApi.computeTransactionId).toHaveBeenCalled();
-      expect(hwManager.signTransactionByHW).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.votesSubmitted,

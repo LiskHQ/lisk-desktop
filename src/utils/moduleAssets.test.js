@@ -1,8 +1,10 @@
-import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
-import { getModuleAssetSenderLabel, retrieveSchemas } from './moduleAssets';
-import http from './api/http';
-
-jest.mock('./api/http');
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import {
+  getModuleAssetSenderLabel,
+  getModuleAssetTitle,
+  splitModuleAndAssetIds,
+  joinModuleAndAssetIds,
+} from './moduleAssets';
 
 describe('Utils: moduleAssets', () => {
   describe('getModuleAssetSenderLabel', () => {
@@ -17,29 +19,33 @@ describe('Utils: moduleAssets', () => {
     });
   });
 
-  describe('selectSchema', () => {
-    beforeEach(() => {
-      http.mockClear();
-    });
+  describe('getModuleAssetTitle', () => {
+    it('should return a dictionary of strings', () => {
+      const t = jest.fn(str => str);
+      const dict = getModuleAssetTitle(t);
+      const label = dict[MODULE_ASSETS_NAME_ID_MAP.transfer];
 
-    it('should retrieve and set schema', async () => {
-      const schema = { properties: [] };
-      const data = [
-        { moduleAssetId: '2:0', schema },
-        { moduleAssetId: '4:0', schema },
-        { moduleAssetId: '5:0', schema },
-        { moduleAssetId: '5:1', schema },
-        { moduleAssetId: '5:2', schema },
-      ];
-      http.mockImplementation(() => Promise.resolve({ data }));
-      await retrieveSchemas({ serviceUrl: 'http://sample.url' });
-      expect(moduleAssetSchemas).toEqual({
-        '2:0': schema,
-        '4:0': schema,
-        '5:0': schema,
-        '5:1': schema,
-        '5:2': schema,
-      });
+      expect(label).toBeDefined();
+      expect(typeof label).toBe('string');
+      expect(t).toHaveBeenCalled();
+    });
+  });
+
+  describe('splitModuleAndAssetIds', () => {
+    it('should split module and asset ids', () => {
+      const moduleAssetId = '5:1';
+      const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
+
+      expect(moduleID).toEqual(5);
+      expect(assetID).toEqual(1);
+    });
+  });
+
+  describe('joinModuleAndAssetIds', () => {
+    it('should join module and asset ids', () => {
+      const [moduleID, assetID] = [5, 1];
+      const moduleAssetId = joinModuleAndAssetIds({ moduleID, assetID });
+      expect(moduleAssetId).toEqual('5:1');
     });
   });
 });

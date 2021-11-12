@@ -113,6 +113,8 @@ export const transactionCreated = data => async (dispatch, getState) => {
     network,
   }, activeToken));
 
+  console.log({ error, tx });
+
   if (error) {
     dispatch({
       type: actionTypes.transactionSignError,

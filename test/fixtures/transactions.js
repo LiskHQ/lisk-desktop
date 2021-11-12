@@ -52,6 +52,8 @@ const getState = () => ({
               },
             },
           },
+          '4:0': {},
+          '5:0': {},
           '5:1': {
             $id: 'lisk/dpos/vote',
             type: 'object',
@@ -86,6 +88,7 @@ const getState = () => ({
               },
             },
           },
+          '5:2': {},
         },
       },
     },

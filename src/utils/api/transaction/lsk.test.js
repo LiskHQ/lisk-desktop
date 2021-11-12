@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { getTxAmount } from '@utils/transaction';
 import {
   getTransaction,
@@ -12,10 +12,12 @@ import {
 import http from '../http';
 import * as delegates from '../delegate';
 import accounts from '../../../../test/constants/accounts';
+import { getState } from '../../../../test/fixtures/transactions';
 
 const {
   transfer, voteDelegate, registerDelegate, registerMultisignatureGroup, unlockToken, reclaimLSK,
 } = MODULE_ASSETS_NAME_ID_MAP;
+const { network } = getState();
 
 jest.mock('../http', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
@@ -28,186 +30,8 @@ jest.mock('../delegate', () => ({
 }));
 
 describe('API: LSK Transactions', () => {
-  const network = {
-    serviceUrl: 'http://sample.com/',
-    networks: {
-      LSK: {
-        moduleAssets: [
-          { id: '2:0', name: 'token:transfer' },
-          { id: '4:0', name: 'keys:registerMultisignatureGroup' },
-          { id: '5:0', name: 'dpos:registerDelegate' },
-          { id: '5:1', name: 'dpos:voteDelegate' },
-          { id: '5:2', name: 'dpos:unlockToken' },
-          { id: '5:3', name: 'dpos:reportDelegateMisbehavior' },
-          { id: '1000:0', name: 'legacyAccount:reclaimLSK' },
-        ],
-      },
-    },
-  };
   const baseUrl = 'http://custom-basse-url.com/';
   const sampleId = 'sample_id';
-
-  moduleAssetSchemas['2:0'] = {
-    $id: 'lisk/transfer-asset',
-    properties: {
-      amount: { dataType: 'uint64', fieldNumber: 1 },
-      recipientAddress: {
-        dataType: 'bytes', fieldNumber: 2, maxLength: 20, minLength: 20,
-      },
-      data: {
-        dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0,
-      },
-    },
-    required: ['amount', 'recipientAddress', 'data'],
-    title: 'Transfer transaction asset',
-    type: 'object',
-  };
-
-  moduleAssetSchemas['5:0'] = {
-    $id: 'lisk/dpos/register',
-    type: 'object',
-    required: [
-      'username',
-    ],
-    properties: {
-      username: {
-        dataType: 'string',
-        fieldNumber: 1,
-        minLength: 1,
-        maxLength: 20,
-      },
-    },
-  };
-
-  moduleAssetSchemas['5:1'] = {
-    $id: 'lisk/dpos/vote',
-    type: 'object',
-    required: [
-      'votes',
-    ],
-    properties: {
-      votes: {
-        type: 'array',
-        minItems: 1,
-        maxItems: 20,
-        items: {
-          type: 'object',
-          required: [
-            'delegateAddress',
-            'amount',
-          ],
-          properties: {
-            delegateAddress: {
-              dataType: 'bytes',
-              fieldNumber: 1,
-              minLength: 20,
-              maxLength: 20,
-            },
-            amount: {
-              dataType: 'sint64',
-              fieldNumber: 2,
-            },
-          },
-        },
-        fieldNumber: 1,
-      },
-    },
-  };
-
-  moduleAssetSchemas['5:2'] = {
-    $id: 'lisk/dpos/unlock',
-    type: 'object',
-    required: [
-      'unlockObjects',
-    ],
-    properties: {
-      unlockObjects: {
-        type: 'array',
-        minItems: 1,
-        maxItems: 20,
-        items: {
-          type: 'object',
-          required: [
-            'delegateAddress',
-            'amount',
-            'unvoteHeight',
-          ],
-          properties: {
-            delegateAddress: {
-              dataType: 'bytes',
-              fieldNumber: 1,
-              minLength: 20,
-              maxLength: 20,
-            },
-            amount: {
-              dataType: 'uint64',
-              fieldNumber: 2,
-            },
-            unvoteHeight: {
-              dataType: 'uint32',
-              fieldNumber: 3,
-            },
-          },
-        },
-        fieldNumber: 1,
-      },
-    },
-  };
-
-  moduleAssetSchemas['4:0'] = {
-    $id: 'lisk/keys/register',
-    type: 'object',
-    required: [
-      'numberOfSignatures',
-      'optionalKeys',
-      'mandatoryKeys',
-    ],
-    properties: {
-      numberOfSignatures: {
-        dataType: 'uint32',
-        fieldNumber: 1,
-        minimum: 1,
-        maximum: 64,
-      },
-      mandatoryKeys: {
-        type: 'array',
-        items: {
-          dataType: 'bytes',
-          minLength: 32,
-          maxLength: 32,
-        },
-        fieldNumber: 2,
-        minItems: 0,
-        maxItems: 64,
-      },
-      optionalKeys: {
-        type: 'array',
-        items: {
-          dataType: 'bytes',
-          minLength: 32,
-          maxLength: 32,
-        },
-        fieldNumber: 3,
-        minItems: 0,
-        maxItems: 64,
-      },
-    },
-  };
-
-  moduleAssetSchemas['1000:0'] = {
-    $id: 'lisk/legacyAccount/reclaim',
-    title: 'Reclaim transaction asset',
-    type: 'object',
-    required: [
-      'amount',
-    ],
-    properties: {
-      amount: {
-        dataType: 'uint64',
-        fieldNumber: 1,
-      },
-    },
-  };
 
   describe('getTransaction', () => {
     beforeEach(() => {
@@ -409,9 +233,12 @@ describe('API: LSK Transactions', () => {
       value: 0,
       title: 'LOW',
     };
+
     it('should return fee in Beddows', async () => {
       const result = await getTransactionFee({
-        transaction: txData, selectedPriority,
+        transaction: txData,
+        selectedPriority,
+        network,
       });
       expect(Number(result.value)).toBeGreaterThan(0);
     });

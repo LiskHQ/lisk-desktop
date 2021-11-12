@@ -15,7 +15,6 @@ import { signTransactionByHW } from '@utils/hwManager';
 import {
   createTransactionObject, convertStringToBinary, transformTransaction, flattenTransaction,
 } from '@utils/transaction';
-import result from '@screens/multiSignature/result/index';
 import { validateAddress } from '../../validators';
 import http from '../http';
 import { getDelegates } from '../delegate';
@@ -246,14 +245,18 @@ export const getTransactionBaseFees = network =>
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
-  transaction, selectedPriority, account,
-  numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES, network,
+  transaction,
+  selectedPriority,
+  account,
+  numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
+  network,
 }) => {
   const feePerByte = selectedPriority.value;
 
   const {
     moduleAssetId, ...rawTransaction
   } = transaction;
+
   const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
   const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);

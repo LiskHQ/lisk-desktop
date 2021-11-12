@@ -4,12 +4,38 @@ import {
   networkSelected, networkConfigSet, networkStatusUpdated,
   customNetworkStored, customNetworkRemoved,
 } from './network';
+import { getState } from '../../../test/fixtures/transactions';
 
-jest.mock('@api/network', () => ({ getNetworkConfig: jest.fn() }));
+jest.mock('@api/network', () => ({
+  getNetworkConfig:
+    jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({
+          data: [],
+          meta: { total: 0 },
+        }),
+        ok: true,
+      })),
+}));
+
+const state = getState();
+
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({
+      data: [{
+        moduleAssetId: '5:1',
+        schema: state.network.networks.LSK.moduleAssetSchemas['5:1'],
+      }],
+      meta: { total: 0 },
+    }),
+    ok: true,
+  }));
 
 describe('actions: network', () => {
   beforeEach(() => {
     jest.resetModules();
+    fetch.mockClear();
   });
 
   afterEach(() => {

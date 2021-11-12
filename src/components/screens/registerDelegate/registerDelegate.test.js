@@ -45,6 +45,9 @@ describe('RegisterDelegate', () => {
     delegateRegistered: jest.fn(),
     nextStep: jest.fn(),
     t: key => key,
+    transactions: {
+      signedTransaction: {},
+    },
   };
 
   beforeEach(() => {

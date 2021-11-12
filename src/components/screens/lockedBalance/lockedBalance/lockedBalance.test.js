@@ -1,7 +1,6 @@
 import { act } from 'react-dom/test-utils';
 import { tokenMap, networks } from '@constants';
 import { mountWithProps } from '@utils/testHelpers';
-import * as transactionAPI from '@api/transaction';
 import * as hwManagerAPI from '@utils/hwManager';
 import { create } from '@api/transaction';
 import { balanceUnlocked } from '@actions/account';
@@ -17,6 +16,7 @@ jest.mock('@api/transaction');
 jest.mock('@actions/account', () => ({
   balanceUnlocked: jest.fn(),
 }));
+jest.mock('@utils/hwManager');
 
 describe('Unlock LSK modal', () => {
   let wrapper;

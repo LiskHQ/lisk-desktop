@@ -13,8 +13,6 @@ import {
 import { sampleTransaction } from '../../../test/constants/transactions';
 import accounts from '../../../test/constants/accounts';
 import { getState } from '../../../test/fixtures/transactions';
-import signedTransaction from '../../../test/fixtures/signedTx.json';
-import hwSignedTransaction from '../../../test/fixtures/hwSignedTx.json';
 
 jest.mock('@api/delegate');
 jest.mock('@utils/hwManager');
@@ -237,74 +235,20 @@ describe('actions: transactions', () => {
       );
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
-
-    it('should dispatch signed transaction from hardware wallet with transaction id', async () => {
-      // Arrange
-      const data = {
-        amount: '21000000',
-        data: '',
-        recipientAddress: 'lsky3t7xfxbcjf5xmskrbhkmwzxpowex6eubghtws',
-        fee: 141000,
-      };
-      loginTypes.passphrase.code = 1;
-      hwManagerApi.signTransactionByHW.mockResolvedValue(hwSignedTransaction);
-      const expectedAction = {
-        type: actionTypes.transactionCreatedSuccess,
-        data: expect.anything(),
-      };
-
-      // Act
-      await transactionCreated(data)(dispatch, getStateWithHW);
-
-      // Assert
-      expect(hwManagerApi.signTransactionByHW).toHaveBeenCalled();
-      expect(dispatch).toHaveBeenCalledWith(expectedAction);
-    });
   });
 
   describe.skip('transactionDoubleSigned', () => {
-    // transactionsModifyApi.transformTransaction.mockReturnValue({
-    //   moduleAssetId: '2:0',
-    //   id: 'f8ddab3b1a23d7c19e17855fe82ca5c1fa701ba82b8896da2ba332fccc308e90',
-    //   fee: '207000',
-    //   nonce: '19',
-    //   signatures: [
-    //     {
-    //       type: 'Buffer',
-    //       data: [],
-    //     },
-    //     {
-    //       type: 'Buffer',
-    //       // eslint-disable-next-line max-len
-    //       data: [193, 83, 141, 74, 106, 154, 208, 111, 153, 199, 64, 82, 0, 126, 223, 90, 149, 53, 175, 19, 100, 107, 116, 125, 165, 184, 206, 190, 178, 229, 8, 139, 235, 29, 152, 57, 28, 30, 143, 193, 50, 230, 110, 138, 203, 191, 188, 13, 228, 65, 187, 225, 90, 45, 240, 40, 174, 37, 108, 32, 115, 186, 104, 8],
-    //     },
-    //   ],
-    //   sender: {
-    //     address: 'lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp',
-    //     publicKey: '6b40b2c68d52b1532d0374a078974798cff0b59d0a409a8d574378fe2c69daef',
-    //   },
-    //   asset: {
-    //     amount: '12000000',
-    //     data: '',
-    //     recipient: { address: 'lskhqy429nwm2tew3j5j29ef6pguyynf6jxcmgrh2' },
-    //   },
-    // });
     const { network, account, settings } = getState();
     const getStateWithTx = () => ({
       network,
       account,
       settings,
       transactions: {
-        signedTransaction,
+        signedTransaction: sampleTransaction,
       },
     });
 
     it('should create an action to store double signed tx', async () => {
-      // Prepare the store
-      // transactionsModifyApi.signTransaction.mockReturnValue([{
-      //   id: 'f8ddab3b1a23d7c19e17855fe82ca5c1fa701ba82b8896da2ba332fccc308e90',
-      // }]);
-
       // Consume the utility
       await transactionDoubleSigned({
         secondPass: accounts.secondPass.secondPass,
