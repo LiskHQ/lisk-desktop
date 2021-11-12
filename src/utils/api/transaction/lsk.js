@@ -210,7 +210,11 @@ export const getTransactionStats = ({ network, params: { period } }) => {
 export const getSchemas = ({ baseUrl }) => http({
   path: httpPaths.schemas,
   baseUrl,
-});
+}).then((response) =>
+  response.data.reduce((acc, data) => {
+    acc[data.moduleAssetId] = data.schema;
+    return acc;
+  }, {}));
 
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
@@ -243,14 +247,15 @@ export const getTransactionBaseFees = network =>
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
-  transaction, selectedPriority, account, numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
+  transaction, selectedPriority, account,
+  numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES, network,
 }) => {
   const feePerByte = selectedPriority.value;
 
   const {
     moduleAssetId, ...rawTransaction
   } = transaction;
-  const schema = moduleAssetSchemas[moduleAssetId];
+  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
   const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
   const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
   let numberOfEmptySignatures;
@@ -295,12 +300,12 @@ export const getTransactionFee = async ({
  * @param {object} transaction
  * @returns {Promise} returns transaction id for a given transaction object
  */
-export const computeTransactionId = ({ transaction }) => {
+export const computeTransactionId = ({ transaction, network }) => {
   const moduleAssetId = joinModuleAndAssetIds({
     moduleID: transaction.moduleID,
     assetID: transaction.assetID,
   });
-  const schema = moduleAssetSchemas[moduleAssetId];
+  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
   const transactionBytes = transactions.getBytes(schema, transaction);
   const id = cryptography.hash(transactionBytes);
 
@@ -363,15 +368,17 @@ const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey)
     Buffer.from(privateKey, 'hex'),
   );
 
-const signUsingHW = async (schema, transaction, account, networkIdentifier) => {
+const signUsingHW = async (schema, transaction, account, networkIdentifier, network) => {
   const signingBytes = transactions.getSigningBytes(schema, transaction);
+  console.log('signUsingHW 1', signingBytes);
   const [error, signedTransaction] = await to(signTransactionByHW(
     account,
     networkIdentifier,
     transaction,
     signingBytes,
   ));
-  const id = computeTransactionId({ transaction: signedTransaction });
+  console.log('signUsingHW 2', signedTransaction);
+  const id = computeTransactionId({ transaction: signedTransaction, network });
   if (error) {
     throw error;
   }
@@ -396,6 +403,7 @@ export const create = async ({
   account,
   transactionObject,
 }) => {
+  console.log('-> 1.1', transactionObject);
   const {
     summary: { publicKey, isMultisignature, privateKey },
     keys,
@@ -406,9 +414,11 @@ export const create = async ({
   const { moduleAssetId, ...rawTransaction } = transactionObject;
   rawTransaction.nonce = sequence.nonce;
   rawTransaction.senderPublicKey = publicKey;
+  console.log('-> 1.2', rawTransaction, moduleAssetId);
   const transaction = createTransactionObject(rawTransaction, moduleAssetId);
 
-  const schema = moduleAssetSchemas[moduleAssetId];
+  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
+  console.log('-> 2', transaction);
 
   try {
     const isMultiSignatureRegistration = moduleAssetId
@@ -420,8 +430,9 @@ export const create = async ({
         isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
       );
     }
+    console.log('-> 3', schema);
     if (account.hwInfo) {
-      const signedTx = await signUsingHW(schema, transaction, account, networkIdentifier);
+      const signedTx = await signUsingHW(schema, transaction, account, networkIdentifier, network);
 
       if (result.error) { throw result.error; }
       return signedTx;
@@ -441,12 +452,12 @@ export const create = async ({
  * @param {string} network.address - the node address e.g. https://service.lisk.com
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
-export const broadcast = async ({ transaction, serviceUrl }) => {
+export const broadcast = async ({ transaction, serviceUrl, network }) => {
   const moduleAssetId = joinModuleAndAssetIds({
     moduleID: transaction.moduleID,
     assetID: transaction.assetID,
   });
-  const schema = moduleAssetSchemas[moduleAssetId];
+  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
   const binary = transactions.getBytes(schema, transaction);
   const payload = binary.toString('hex');
   const body = JSON.stringify({ transaction: payload });

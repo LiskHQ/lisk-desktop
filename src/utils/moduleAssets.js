@@ -1,5 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP, moduleAssetSchemas } from '@constants';
-import { getSchemas } from './api/transaction';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 
 const getModuleAssetSenderLabel = (t = str => str) => ({
   [MODULE_ASSETS_NAME_ID_MAP.transfer]: t('Sender'),
@@ -21,13 +20,6 @@ const getModuleAssetTitle = (t = str => str) => ({
   [MODULE_ASSETS_NAME_ID_MAP.reportDelegateMisbehavior]: t('Report delegate misbehaviour'),
 });
 
-const retrieveSchemas = async ({ serviceUrl }) => {
-  const response = await getSchemas({ baseUrl: serviceUrl });
-  response.data.forEach((data) => {
-    moduleAssetSchemas[data.moduleAssetId] = data.schema;
-  });
-};
-
 const splitModuleAndAssetIds = (moduleAssetId) => {
   const [moduleID, assetID] = moduleAssetId.split(':');
   return [Number(moduleID), Number(assetID)];
@@ -36,7 +28,6 @@ const splitModuleAndAssetIds = (moduleAssetId) => {
 const joinModuleAndAssetIds = ({ moduleID, assetID }) => [moduleID, assetID].join(':');
 
 export {
-  retrieveSchemas,
   getModuleAssetTitle,
   joinModuleAndAssetIds,
   splitModuleAndAssetIds,

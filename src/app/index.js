@@ -15,8 +15,6 @@ import NavigationBars from '@shared/navigationBars';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DialogHolder from '@toolbox/dialog/holder';
 import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@actions';
-import { retrieveSchemas } from '@utils/moduleAssets';
-import { selectServiceUrl } from '@store/selectors';
 import routesMap from '../routesMap';
 import ThemeContext from '../contexts/theme';
 import styles from './app.css';
@@ -27,7 +25,6 @@ const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
-  const serviceUrl = useSelector(selectServiceUrl);
 
   useIpc(history);
 
@@ -37,12 +34,6 @@ const App = ({ history }) => {
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
   }, []);
-
-  useEffect(() => {
-    if (serviceUrl) {
-      retrieveSchemas({ serviceUrl });
-    }
-  }, [serviceUrl]);
 
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find(r => r.path === history.location.pathname) || {};
