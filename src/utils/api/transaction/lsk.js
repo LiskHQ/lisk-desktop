@@ -410,33 +410,24 @@ export const create = async ({
   const { moduleAssetId, ...rawTransaction } = transactionObject;
   rawTransaction.nonce = sequence.nonce;
   rawTransaction.senderPublicKey = publicKey;
-  console.log('-> 1.2', rawTransaction, moduleAssetId);
   const transaction = createTransactionObject(rawTransaction, moduleAssetId);
 
   const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
-  console.log('-> 2', transaction);
 
-  try {
-    const isMultiSignatureRegistration = moduleAssetId
-      === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+  const isMultiSignatureRegistration = moduleAssetId
+    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 
-    if (isMultisignature || isMultiSignatureRegistration) {
-      return signMultisigUsingPrivateKey(
-        schema, transaction, networkIdentifier, keys, privateKey,
-        isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
-      );
-    }
-    console.log('-> 3', schema);
-    if (account.hwInfo) {
-      const signedTx = await signUsingHW(schema, transaction, account, networkIdentifier, network);
-
-      if (result.error) { throw result.error; }
-      return signedTx;
-    }
-    return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
-  } catch (error) {
-    return error;
+  if (isMultisignature || isMultiSignatureRegistration) {
+    return signMultisigUsingPrivateKey(
+      schema, transaction, networkIdentifier, keys, privateKey,
+      isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
+    );
   }
+  if (account.hwInfo) {
+    const signedTx = await signUsingHW(schema, transaction, account, networkIdentifier, network);
+    return signedTx;
+  }
+  return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
 };
 
 /**
