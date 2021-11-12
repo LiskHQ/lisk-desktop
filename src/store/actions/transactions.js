@@ -98,6 +98,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
     account, settings, network,
   } = getState();
   const activeToken = settings.token.active;
+  const hwInfo = isEmpty(account.hwInfo) ? undefined : account.hwInfo; // @todo remove this by #3898
 
   const [error, tx] = await to(create({
     transactionObject: {
@@ -106,7 +107,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
     },
     account: {
       ...account.info[activeToken],
-      hwInfo: isEmpty(account.hwInfo) ? undefined : account.hwInfo, // @todo remove this by #3898
+      hwInfo,
       passphrase: account.passphrase,
     },
     network,
@@ -145,6 +146,7 @@ export const transactionDoubleSigned = data => async (dispatch, getState) => {
       data: activeAccount,
     },
     false,
+    network,
   );
 
   if (!err) {
@@ -177,7 +179,7 @@ export const transactionBroadcasted = transaction =>
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
     const [error] = await to(broadcast(
-      { transaction, serviceUrl },
+      { transaction, serviceUrl, network },
       activeToken,
     ));
 
