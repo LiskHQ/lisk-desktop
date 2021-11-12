@@ -8,7 +8,6 @@ import {
   DEFAULT_NUMBER_OF_SIGNATURES,
   MODULE_ASSETS_MAP,
   MODULE_ASSETS_NAME_ID_MAP,
-  moduleAssetSchemas,
   BASE_FEES,
 } from '@constants';
 import { joinModuleAndAssetIds } from '@utils/moduleAssets';

@@ -17,7 +17,7 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.transfer;
 // eslint-disable-next-line max-statements
 const FormLsk = (props) => {
   const {
-    t, token, getInitialValue, account,
+    t, token, getInitialValue, account, network,
   } = props;
   const [customFee, setCustomFee] = useState();
   const [
@@ -29,6 +29,7 @@ const FormLsk = (props) => {
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
 
   const { fee, maxAmount, minFee } = useTransactionFeeCalculation({
+    network,
     selectedPriority,
     token,
     account,

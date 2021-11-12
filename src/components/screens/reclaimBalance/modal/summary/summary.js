@@ -12,6 +12,7 @@ const Summary = ({
   balanceReclaimed,
   nextStep,
   account,
+  network,
   t,
 }) => {
   const [
@@ -19,6 +20,7 @@ const Summary = ({
   ] = useTransactionPriority(tokenMap.LSK.key);
 
   const { minFee } = useTransactionFeeCalculation({
+    network,
     selectedPriority,
     token: tokenMap.LSK.key,
     account: account.info.LSK,

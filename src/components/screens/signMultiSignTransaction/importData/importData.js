@@ -8,13 +8,12 @@ import BoxFooter from '@toolbox/box/footer';
 import { PrimaryButton } from '@toolbox/buttons';
 import Feedback from '@toolbox/feedback/feedback';
 import { validateTransaction } from '@liskhq/lisk-transactions';
-import { moduleAssetSchemas } from '@constants';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const reader = new FileReader();
 
-const ImportData = ({ t, nextStep }) => {
+const ImportData = ({ t, nextStep, network }) => {
   const [transaction, setTransaction] = useState();
   const [error, setError] = useState();
 
@@ -36,7 +35,7 @@ const ImportData = ({ t, nextStep }) => {
         assetID: parsedInput.assetID,
       });
 
-      const schema = moduleAssetSchemas[moduleAssetId];
+      const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
       const transformedTransaction = transformTransaction(parsedInput);
       const flattenedTransaction = flattenTransaction(transformedTransaction);
       const transactionObject = createTransactionObject(flattenedTransaction, moduleAssetId);

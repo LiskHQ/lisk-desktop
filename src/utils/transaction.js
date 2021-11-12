@@ -1,9 +1,6 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
-import {
-  MODULE_ASSETS_NAME_ID_MAP,
-  moduleAssetSchemas,
-} from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import {
   extractAddressFromPublicKey,
   getBase32AddressFromAddress,
@@ -399,6 +396,7 @@ const signTransaction = (
   networkIdentifier,
   senderAccount,
   isFullySigned,
+  network,
 ) => {
   let signedTransaction;
   let err;
@@ -422,7 +420,7 @@ const signTransaction = (
 
   try {
     signedTransaction = transactions.signMultiSignatureTransaction(
-      moduleAssetSchemas[transaction.moduleAssetId],
+      network.networks.LSK.moduleAssetSchemas[transaction.moduleAssetId],
       transactionObject,
       Buffer.from(networkIdentifier, 'hex'),
       passphrase,

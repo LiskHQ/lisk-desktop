@@ -38,6 +38,7 @@ const SelectNameAndFee = ({
   ] = useTransactionPriority(token);
 
   const { fee, minFee } = useTransactionFeeCalculation({
+    network,
     selectedPriority,
     token,
     account,
@@ -56,7 +57,6 @@ const SelectNameAndFee = ({
     ),
   );
 
-  // eslint-disable-next-line max-statements
   const onConfirm = () => {
     dispatch(delegateRegistered({ fee, username: state.nickname }));
   };

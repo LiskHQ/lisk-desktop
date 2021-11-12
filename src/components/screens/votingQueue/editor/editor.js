@@ -101,7 +101,7 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
 
 // eslint-disable-next-line max-statements
 const Editor = ({
-  t, votes, account, isVotingTxPending, nextStep,
+  t, votes, account, network, isVotingTxPending, nextStep,
 }) => {
   const [customFee, setCustomFee] = useState();
   const [
@@ -116,6 +116,7 @@ const Editor = ({
   const normalizedVotes = useMemo(() => normalizeVotesForTx(votes), [votes]);
 
   const { fee, minFee } = useTransactionFeeCalculation({
+    network,
     selectedPriority,
     token,
     account,

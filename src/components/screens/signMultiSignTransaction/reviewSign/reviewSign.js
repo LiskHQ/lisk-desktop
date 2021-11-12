@@ -15,6 +15,7 @@ import styles from '../styles.css';
 const ReviewSign = ({
   t,
   transaction,
+  network,
   account,
   networkIdentifier,
   nextStep,
@@ -43,6 +44,7 @@ const ReviewSign = ({
       networkIdentifier,
       senderAccount,
       isFullySigned,
+      network,
     );
     nextStep({
       transaction: signedTx,
