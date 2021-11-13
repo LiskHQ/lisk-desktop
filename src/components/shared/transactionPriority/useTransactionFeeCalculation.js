@@ -46,7 +46,7 @@ export const getNumberOfSignatures = (account) => {
  * @param {array} data.priorityOptions - Array of priority configs for High, Mid, Low
  * @returns {object}
  */
-const useTransactionFeeCalculation = async ({
+const useTransactionFeeCalculation = ({
   token, account, selectedPriority, transaction, priorityOptions,
 }) => {
   const network = useSelector(state => state.network);
