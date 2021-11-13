@@ -67,9 +67,8 @@ const Overview = ({
         isBanned,
         pomHeight: pomHeights[pomHeights.length - 1],
         readMore: () => {
-          // TODO define blog entry url - #3907
-          const url = '';
-          window.open(url, '_blank', 'rel="noopener noreferrer');
+          const url = 'https://www.youtube.com/watch?v=BHr09qYXkek';
+          window.open(url, 'rel="noopener noreferrer');
         },
       });
     } else {
