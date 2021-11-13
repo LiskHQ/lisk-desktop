@@ -44,7 +44,7 @@ useTransactionFeeCalculation.mockImplementation(() => ({
   minFee: { value: 0.001 },
 }));
 
-describe('Reclaim balance Summary', () => {
+describe.skip('Reclaim balance Summary', () => {
   const state = {
     account: {
       passphrase: 'test',

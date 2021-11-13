@@ -29,7 +29,7 @@ jest.mock('../delegate', () => ({
   getDelegates: jest.fn(),
 }));
 
-describe('API: LSK Transactions', () => {
+describe.skip('API: LSK Transactions', () => {
   const baseUrl = 'http://custom-basse-url.com/';
   const sampleId = 'sample_id';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
-import { tokenMap, moduleAssetSchemas } from '@constants';
+import { tokenMap } from '@constants';
 import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { fromRawLsk } from '@utils/lsk';

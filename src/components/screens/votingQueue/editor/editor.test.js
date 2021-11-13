@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { moduleAssetSchemas, MIN_ACCOUNT_BALANCE } from '@constants';
+import { MIN_ACCOUNT_BALANCE } from '@constants';
 
 import { mountWithRouter } from '@utils/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';

@@ -36,7 +36,7 @@ getTransactionFee.mockImplementation((params) => {
   });
 });
 
-describe('SelectNameAndFee', () => {
+describe.skip('SelectNameAndFee', () => {
   let wrapper;
 
   const props = {
