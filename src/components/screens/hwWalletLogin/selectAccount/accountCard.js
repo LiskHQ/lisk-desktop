@@ -16,10 +16,14 @@ const AccountCard = ({
   onEditAccount,
   onSaveNameAccounts,
   onSelectAccount,
+  onInputBlur,
   t,
 }) => (
-  //<div id={account.summary?.address} className={`${styles.account} hw-account select-account`} onClick={() => onSelectAccount(account, index)}>
-  <div id={account.summary?.address} className={`${styles.account} hw-account select-account`}>
+  <div
+    id={account.summary?.address}
+    className={`${styles.account} hw-account select-account`}
+    onClick={() => onSelectAccount(account, index)}
+  >
     <div className={styles.content}>
       <div>
         <AccountVisual
@@ -35,13 +39,19 @@ const AccountCard = ({
                 <Input
                   value={account.name}
                   size="s"
+                  onClick={e => e.stopPropagation()}
                   onChange={event => onChangeAccountTitle(event.target.value, index)}
+                  onBlur={onInputBlur}
                   className="account-name"
                   placeholder={t('Account name')}
+                  autoFocus
                 />
                 <TertiaryButton
                   className={`${styles.saveBtn} save-account`}
-                  onClick={() => onSaveNameAccounts()}
+                  onClick={e => {
+                    e.stopPropagation();
+                    onSaveNameAccounts();
+                  }}
                 >
                   {t('Save')}
                 </TertiaryButton>
@@ -53,7 +63,10 @@ const AccountCard = ({
                   {account.name === null ? t('Unnamed account') : account.name}
                   <Icon
                     className={`${styles.editBtn} edit-account`}
-                    onClick={() => onEditAccount(index)}
+                    onClick={e => {
+                      e.stopPropagation();
+                      onEditAccount(index);
+                    }}
                     name="edit"
                   />
                 </p>

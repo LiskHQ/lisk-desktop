@@ -32,7 +32,7 @@ class SelectAccount extends React.Component {
 
   componentDidUpdate() {
     // istanbul ignore else
-    if (this.props.account?.summary.address) {
+    if (this.props.account?.summary?.address) {
       this.props.history.push(`${routes.dashboard.path}`);
     }
     const { devices, device } = this.props;
@@ -45,7 +45,7 @@ class SelectAccount extends React.Component {
     // istanbul ignore else
     if (Array.isArray(settings.hardwareAccounts[device.model])) {
       const storedAccount = settings.hardwareAccounts[device.model].filter(account =>
-        account.summary.address === address);
+        account.address === address);
       return storedAccount.length ? storedAccount[0].name : null;
     }
 
@@ -168,6 +168,7 @@ class SelectAccount extends React.Component {
                       onEditAccount={this.onEditAccount}
                       onSaveNameAccounts={this.onSaveNameAccounts}
                       onSelectAccount={this.onSelectAccount}
+                      onInputBlur={() => { this.setState({ accountOnEditMode: -1 }); }}
                       t={t}
                     />
                   ))}
