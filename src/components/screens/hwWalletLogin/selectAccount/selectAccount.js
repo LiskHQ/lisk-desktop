@@ -7,7 +7,6 @@ import { TertiaryButton } from '@toolbox/buttons';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';
-import accounts from '../../../../../test/constants/accounts';
 
 class SelectAccount extends React.Component {
   constructor(props) {
@@ -55,18 +54,16 @@ class SelectAccount extends React.Component {
 
   async getAccountsFromDevice() {
     const { device, network } = this.props;
-    //const [error, accounts] = await to(getAccountsFromDevice({ device, network }));
-    /*if (error) {
+    const [error, accounts] = await to(getAccountsFromDevice({ device, network }));
+    if (error) {
       toast.error(`Error retrieving accounts from device: ${error}`);
-    } else {*/
-      //const hwAccounts = accounts.map((account, index) => ({
-      const hwAccounts = [accounts.genesis, accounts.genesis, accounts.delegate, accounts.empty_account].map((account, index) => ({
+    } else {
+      const hwAccounts = accounts.map((account) => ({
         ...account,
         name: this.getNameFromAccount(account.summary.address),
-        isEmpty: !(account.summary.balance > 0),
       }));
       this.setState({ hwAccounts });
-    //}
+    }
   }
 
   onEditAccount(index) {
@@ -130,16 +127,14 @@ class SelectAccount extends React.Component {
   }
 
   render() {
-    console.log('render:SelectAccount');
     const { t, device } = this.props;
     const { accountOnEditMode, hwAccounts, showEmptyAccounts } = this.state;
 
-    console.log(hwAccounts);
     const { nonEmptyAccounts, emptyAccounts } = hwAccounts.reduce((acc, account) => {
-      if (account.isEmpty) {
-        acc.emptyAccounts = [...acc.emptyAccounts, account];
-      } else {
+      if (account.token.balance > 0) {
         acc.nonEmptyAccounts = [...acc.nonEmptyAccounts, account];
+      } else {
+        acc.emptyAccounts = [...acc.emptyAccounts, account];
       }
       return acc;
     }, { nonEmptyAccounts: [], emptyAccounts: [] });
