@@ -53,7 +53,7 @@ describe('TopBar', () => {
       active: 'LSK',
       list: {
         LSK: true,
-        BTC: true,
+        BTC: false,
       },
     },
     network: {

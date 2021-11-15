@@ -171,7 +171,7 @@ describe('actions: account', () => {
           token: {
             list: {
               LSK: true,
-              BTC: true,
+              BTC: false,
             },
           },
         },

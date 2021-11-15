@@ -13,7 +13,7 @@ describe('Setting', () => {
     discreetMode: false,
     token: {
       list: {
-        BTC: true,
+        BTC: false,
         LSK: true,
       },
       active: 'LSK',

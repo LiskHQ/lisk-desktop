@@ -21,6 +21,9 @@ const validateToken = state => (
     : state
 );
 
+const tokenObj = tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {});
+export const tokenList = { ...tokenObj, btc: false };
+
 // load setting data from localStorage if it exists and merge with initial state
 export const initialState = {
   autoLog: true,
@@ -33,7 +36,7 @@ export const initialState = {
   discreetMode: false,
   token: {
     active: tokenKeys[0],
-    list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
+    list: tokenList,
   },
   sideBarExpanded: true,
   currency: 'USD',

@@ -1,5 +1,5 @@
 import { actionTypes, tokenKeys } from '@constants';
-import settings from './settings';
+import settings, { tokenList } from './settings';
 
 describe('Reducer: settings(state, action)', () => {
   let initializeState;
@@ -9,7 +9,7 @@ describe('Reducer: settings(state, action)', () => {
       autoLog: true,
       token: {
         active: tokenKeys[0],
-        list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
+        list: tokenList,
       },
     };
   });

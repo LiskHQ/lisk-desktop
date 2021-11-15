@@ -31,7 +31,7 @@ const defaultStore = {
     token: {
       active: 'LSK',
       list: {
-        BTC: true,
+        BTC: false,
         LSK: true,
       },
     },
