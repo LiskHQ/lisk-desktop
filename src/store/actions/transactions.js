@@ -134,6 +134,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {object} data
  * @param {string} data.secondPass
  */
+/* istanbul ignore next */
 export const transactionDoubleSigned = data => async (dispatch, getState) => {
   const {
     transactions, network, account, settings,

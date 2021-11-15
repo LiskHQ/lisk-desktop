@@ -220,6 +220,7 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
   }
 };
 
+/* istanbul ignore next */
 export const delegateRegistered = ({ fee, username }) => async (dispatch, getState) => {
 //
   // Collect data
@@ -264,6 +265,7 @@ export const delegateRegistered = ({ fee, username }) => async (dispatch, getSta
   }
 };
 
+/* istanbul ignore next */
 export const multisigGroupRegistered = ({
   fee,
   mandatoryKeys,
@@ -315,6 +317,7 @@ export const multisigGroupRegistered = ({
   }
 };
 
+/* istanbul ignore next */
 export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
   //
   // Collect data
