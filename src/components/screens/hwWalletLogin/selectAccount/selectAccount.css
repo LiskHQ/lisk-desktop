@@ -31,7 +31,7 @@
       padding: 0 12px 0 20px;
     }
 
-    & > div:nth-child(2){
+    & > div:nth-child(2) {
       width: 100%;
       padding-right: 20px;
       display: flex;
@@ -146,7 +146,7 @@
   width: calc(100% - 14px);
   padding: 8px 0;
   position: relative;
-  
+
   &.closed {
     border: 1px solid var(--color-platinum);
     border-radius: var(--border-radius-standard);
