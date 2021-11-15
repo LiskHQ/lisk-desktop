@@ -16,7 +16,7 @@ class SelectAccount extends React.Component {
     this.state = {
       accountOnEditMode: -1,
       hwAccounts: [],
-      showEmptyAccounts: true,
+      showEmptyAccounts: false,
     };
 
     this.onEditAccount = this.onEditAccount.bind(this);
@@ -177,17 +177,20 @@ class SelectAccount extends React.Component {
                     />
                   ))}
                 </div>
-                <TertiaryButton
-                  className={styles.showEmptyAccountsToggle}
-                  onClick={() => {
-                    this.setState({
-                      ...this.state,
-                      showEmptyAccounts: !showEmptyAccounts,
-                    });
-                  }}
-                >
-                  {t(showEmptyAccounts ? 'Hide empty accounts' : 'Show empty accounts')}
-                </TertiaryButton>
+                <span className={`${styles.showEmptyAccountsToggleContainer} ${showEmptyAccounts ? styles.open : styles.closed}`}>
+                  {showEmptyAccounts && <div className={styles.stroke} />}
+                  <TertiaryButton
+                    className={styles.showEmptyAccountsToggle}
+                    onClick={() => {
+                      this.setState({
+                        ...this.state,
+                        showEmptyAccounts: !showEmptyAccounts,
+                      });
+                    }}
+                  >
+                    {t(showEmptyAccounts ? 'Hide empty accounts' : 'Show empty accounts')}
+                  </TertiaryButton>
+                </span>
                 <div>
                   {showEmptyAccounts
                     && emptyAccounts.map((hwAccount, index) => (
