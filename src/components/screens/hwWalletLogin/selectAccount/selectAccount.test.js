@@ -12,30 +12,39 @@ describe('Select Account', () => {
 
   const mockValue = [
     {
-      name: 'Unnamed account',
       summary: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-        balance: 100,
+      },
+      token: {
+        balance: 100000000,
       },
     },
     {
-      name: 'Unnamed account',
       summary: {
         address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-        balance: 50,
+      },
+      token: {
+        balance: 500000000,
+      },
+      dpos: {
+        delegate: {
+          username: 'ABCD',
+        },
       },
     },
     {
-      name: 'Unnamed account',
       summary: {
         address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
-        balance: 150,
+      },
+      token: {
+        balance: 200000000,
       },
     },
     {
-      name: 'Unnamed account',
       summary: {
         address: 'lsksckkjs2c8dnu7vhcku825cp62ed6eyxd8pbt6p',
+      },
+      token: {
         balance: 0,
       },
     },
@@ -94,15 +103,6 @@ describe('Select Account', () => {
   it('Should render SelectAccount properly', async () => {
     expect(wrapper).toContainMatchingElement('.create-account');
     expect(wrapper).toContainMatchingElement('.hw-container');
-    expect(wrapper).toContainMatchingElement('.go-back');
-  });
-
-  it('Should call push function if do click in Go Back button', () => {
-    wrapper = mount(<SelectAccount {...props} />);
-    expect(props.goBack).not.toBeCalled();
-    wrapper.find('.go-back').at(0).simulate('click');
-    wrapper.update();
-    expect(props.goBack).toBeCalled();
   });
 
   it('Should change name "label" of one account', async () => {
@@ -125,16 +125,24 @@ describe('Select Account', () => {
     expect(wrapper).toContainMatchingElements(3, '.hw-account');
     wrapper.find('.create-account').at(0).simulate('click');
     wrapper.update();
-    expect(wrapper).toContainMatchingElements(4, '.hw-account');
+    expect(wrapper).toContainMatchingElements(3, '.hw-account');
   });
 
   it('Should NOT add another account to the list after do click on create account button', () => {
     expect(wrapper).toContainMatchingElement('.create-account');
     wrapper.find('.create-account').at(0).simulate('click');
-    expect(wrapper).toContainMatchingElements(4, '.hw-account');
+    expect(wrapper).toContainMatchingElements(3, '.hw-account');
     wrapper.find('.create-account').at(0).simulate('click');
     wrapper.update();
     expect(toast.error).toBeCalled();
+  });
+
+  it('Should display empty accounts', () => {
+    wrapper.update();
+    expect(wrapper).toContainMatchingElement('.show-empty-accounts');
+    wrapper.find('button.show-empty-accounts').at(0).simulate('click');
+    wrapper.update();
+    expect(wrapper).toContainMatchingElements(4, '.hw-account');
   });
 
   it('Should call login function after click on a select account button', () => {

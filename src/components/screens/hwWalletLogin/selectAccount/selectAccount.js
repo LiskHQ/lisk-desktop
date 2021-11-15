@@ -175,7 +175,7 @@ class SelectAccount extends React.Component {
                 <span className={`${styles.showEmptyAccountsToggleContainer} ${showEmptyAccounts ? styles.open : styles.closed}`}>
                   {showEmptyAccounts && <div className={styles.stroke} />}
                   <TertiaryButton
-                    className={styles.showEmptyAccountsToggle}
+                    className={`${styles.showEmptyAccountsToggle} show-empty-accounts`}
                     onClick={() => {
                       this.setState({
                         ...this.state,
