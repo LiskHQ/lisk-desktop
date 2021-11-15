@@ -199,6 +199,47 @@ const accounts = {
     },
     dpos: { delegate: {} },
   },
+  account2P: {
+    summary: {
+      address: 'lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp',
+      balance: '5834556000',
+      publicKey: '6b40b2c68d52b1532d0374a078974798cff0b59d0a409a8d574378fe2c69daef',
+      isMultisignature: true,
+    },
+    token: { balance: '5834556000' },
+    sequence: { nonce: '21' },
+    keys: {
+      numberOfSignatures: 2,
+      mandatoryKeys: [
+        '3182b14f4679fcecdfcba89045cdcc770d9acaa6abcfaebe52a40ddb6436b6cc',
+        '6b40b2c68d52b1532d0374a078974798cff0b59d0a409a8d574378fe2c69daef',
+      ],
+      optionalKeys: [],
+      members: [
+        {
+          address: 'lskadd9hd2kvxusbkqd4mroeeeds59m68v24fsctb',
+          publicKey: '3182b14f4679fcecdfcba89045cdcc770d9acaa6abcfaebe52a40ddb6436b6cc',
+          isMandatory: true,
+        },
+        {
+          address: 'lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp',
+          publicKey: '6b40b2c68d52b1532d0374a078974798cff0b59d0a409a8d574378fe2c69daef',
+          isMandatory: true,
+        },
+      ],
+      memberships: [
+        {
+          address: 'lskqsh6v8k2d24japgz69t8sbftb932uvwayqwdz5',
+          publicKey: '4329462a6023c7090c3267c86f8dee21ed249fbb3871744422dbe25f3a880365',
+          username: '!@$&',
+        },
+      ],
+    },
+    dpos: {
+      delegate: {},
+      unlocking: [],
+    },
+  },
 };
 
 export default accounts;
