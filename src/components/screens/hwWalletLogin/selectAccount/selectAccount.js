@@ -7,6 +7,7 @@ import { TertiaryButton } from '@toolbox/buttons';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';
+import accounts from '../../../../../test/constants/accounts';
 
 class SelectAccount extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class SelectAccount extends React.Component {
     this.state = {
       accountOnEditMode: -1,
       hwAccounts: [],
+      showEmptyAccounts: true,
     };
 
     this.onEditAccount = this.onEditAccount.bind(this);
@@ -53,17 +55,18 @@ class SelectAccount extends React.Component {
 
   async getAccountsFromDevice() {
     const { device, network } = this.props;
-    const [error, accounts] = await to(getAccountsFromDevice({ device, network }));
-    if (error) {
+    //const [error, accounts] = await to(getAccountsFromDevice({ device, network }));
+    /*if (error) {
       toast.error(`Error retrieving accounts from device: ${error}`);
-    } else {
-      const hwAccounts = accounts.map((account, index) => ({
+    } else {*/
+      //const hwAccounts = accounts.map((account, index) => ({
+      const hwAccounts = [accounts.genesis, accounts.genesis, accounts.delegate, accounts.empty_account].map((account, index) => ({
         ...account,
         name: this.getNameFromAccount(account.summary.address),
-        shouldShow: account.summary.balance > 0 || index === 0,
+        isEmpty: !(account.summary.balance > 0),
       }));
       this.setState({ hwAccounts });
-    }
+    //}
   }
 
   onEditAccount(index) {
@@ -126,8 +129,19 @@ class SelectAccount extends React.Component {
   }
 
   render() {
-    const { t, device, goBack } = this.props;
-    const { accountOnEditMode, hwAccounts } = this.state;
+    console.log('render:SelectAccount');
+    const { t, device } = this.props;
+    const { accountOnEditMode, hwAccounts, showEmptyAccounts } = this.state;
+
+    console.log(hwAccounts);
+    const { nonEmptyAccounts, emptyAccounts } = hwAccounts.reduce((acc, account) => {
+      if (account.isEmpty) {
+        acc.emptyAccounts = [...acc.emptyAccounts, account];
+      } else {
+        acc.nonEmptyAccounts = [...acc.nonEmptyAccounts, account];
+      }
+      return acc;
+    }, { nonEmptyAccounts: [], emptyAccounts: [] });
 
     return (
       <div>
@@ -145,26 +159,55 @@ class SelectAccount extends React.Component {
         <div className={`${styles.deviceContainer} hw-container`}>
           {
           hwAccounts.length
-            ? hwAccounts.filter(({ shouldShow }) => shouldShow).map((hwAccount, index) => (
-              <AccountCard
-                key={index}
-                account={hwAccount}
-                accountOnEditMode={accountOnEditMode}
-                index={index}
-                onChangeAccountTitle={this.onChangeAccountTitle}
-                onEditAccount={this.onEditAccount}
-                onSaveNameAccounts={this.onSaveNameAccounts}
-                onSelectAccount={this.onSelectAccount}
-                t={t}
-              />
-            ))
+            ? (
+              <>
+                <div>
+                  {nonEmptyAccounts.map((hwAccount, index) => (
+                    <AccountCard
+                      key={index}
+                      account={hwAccount}
+                      accountOnEditMode={accountOnEditMode}
+                      index={index}
+                      onChangeAccountTitle={this.onChangeAccountTitle}
+                      onEditAccount={this.onEditAccount}
+                      onSaveNameAccounts={this.onSaveNameAccounts}
+                      onSelectAccount={this.onSelectAccount}
+                      t={t}
+                    />
+                  ))}
+                </div>
+                <TertiaryButton
+                  className={styles.showEmptyAccountsToggle}
+                  onClick={() => {
+                    this.setState({
+                      ...this.state,
+                      showEmptyAccounts: !showEmptyAccounts,
+                    });
+                  }}
+                >
+                  {t(showEmptyAccounts ? 'Hide empty accounts' : 'Show empty accounts')}
+                </TertiaryButton>
+                <div>
+                  {showEmptyAccounts
+                    && emptyAccounts.map((hwAccount, index) => (
+                      <AccountCard
+                        key={index}
+                        account={hwAccount}
+                        accountOnEditMode={accountOnEditMode}
+                        index={index}
+                        onChangeAccountTitle={this.onChangeAccountTitle}
+                        onEditAccount={this.onEditAccount}
+                        onSaveNameAccounts={this.onSaveNameAccounts}
+                        onSelectAccount={this.onSelectAccount}
+                        t={t}
+                      />
+                    ))}
+                </div>
+              </>
+            )
             : <LoadingIcon />
         }
         </div>
-
-        <TertiaryButton className="go-back" onClick={goBack}>
-          {t('Go back')}
-        </TertiaryButton>
       </div>
     );
   }
