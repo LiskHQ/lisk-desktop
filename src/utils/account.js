@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 import {
   tokenMap, regex, balanceNeededForReclaim, balanceNeededForInitialization,
