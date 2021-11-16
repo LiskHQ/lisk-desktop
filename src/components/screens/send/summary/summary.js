@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { loginTypes, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import React from 'react';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import { isEmpty } from '@utils/helpers';
-import Piwik from '@utils/piwik';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
 
 const Summary = ({
-  transactionDoubleSigned,
   resetTransactionResult,
   transactionCreated,
   isInitialization,
@@ -19,52 +17,19 @@ const Summary = ({
   token,
   t,
 }) => {
-  const [secondPass, setSecondPass] = useState('');
-
-  useEffect(() => {
-    transactionCreated({
-      amount: `${toRawLsk(fields.amount.value)}`,
-      data: fields.reference ? fields.reference.value : '',
-      recipientAddress: fields.recipient.address,
-      fee: toRawLsk(parseFloat(fields.fee.value)),
+  const signTransaction = () => {
+    nextStep({
+      rawTransaction: {
+        amount: `${toRawLsk(fields.amount.value)}`,
+        data: fields.reference ? fields.reference.value : '',
+        recipientAddress: fields.recipient.address,
+        fee: toRawLsk(parseFloat(fields.fee.value)),
+      },
+      actionFunction: transactionCreated,
     });
-  }, []);
-
-  useEffect(() => {
-    if (secondPass) {
-      transactionDoubleSigned({ secondPass });
-    }
-  }, [secondPass]);
-
-  const submitTransaction = (fn) => {
-    if (!account.summary.isMultisignature || secondPass) {
-      Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
-      if (account.loginType !== loginTypes.passphrase.code
-          && transactions.txSignatureError) {
-        nextStep({
-          fields: {
-            ...fields,
-            hwTransactionStatus: 'error',
-          },
-        });
-      }
-
-      if (!isEmpty(transactions.signedTransaction)
-        && !transactions.txSignatureError) {
-        nextStep({
-          fields: {
-            ...fields,
-            hwTransactionStatus: false,
-          },
-        });
-      }
-    } else {
-      fn(transactions.signedTransaction);
-    }
   };
 
   const goBack = () => {
-    Piwik.trackingEvent('Send_Summary', 'button', 'Previous step');
     resetTransactionResult();
     prevStep({ fields });
   };
@@ -76,22 +41,15 @@ const Summary = ({
   return (
     <TransactionSummary
       title={t('Transaction summary')}
-      t={t}
-      account={account}
       confirmButton={{
         label: isInitialization ? t('Send') : t('Send {{amount}} {{token}}', { amount, token }),
-        onClick: submitTransaction,
+        onClick: signTransaction,
       }}
       cancelButton={{
         label: t('Edit transaction'),
         onClick: goBack,
       }}
-      showCancelButton={!isInitialization}
       fee={!account.summary.isMultisignature && fields.fee.value}
-      token={token}
-      createTransaction={submitTransaction}
-      keys={account.keys}
-      setSecondPass={setSecondPass}
     >
       <TransactionInfo
         fields={fields}
