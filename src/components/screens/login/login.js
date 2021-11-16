@@ -7,7 +7,6 @@ import { routes } from '@constants';
 import { parseSearchParams, stringifySearchParams } from '@utils/searchParams';
 import { getNetworksList } from '@utils/getNetwork';
 import Piwik from '@utils/piwik';
-import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import { PrimaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
 import Icon from '@toolbox/icon/index';
@@ -45,7 +44,6 @@ const Login = ({
   t, settings, network, history, account, login,
 }) => {
   const [isRecoveryPhraseMode, setIsRecoveryPhrase] = useState(false);
-  const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
   const [passphrase, setPass] = useState({ value: '', isValid: false });
   const canHWSignIn = true;
 
@@ -59,7 +57,7 @@ const Login = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
     Piwik.trackingEvent('Login', 'button', 'Login submission');
-    login({ passphrase: passphrase.value, isRecoveryPhraseMode, derivationPath });
+    login({ passphrase: passphrase.value, isRecoveryPhraseMode });
   };
 
   const handleKeyPress = (e) => {
@@ -112,8 +110,6 @@ const Login = ({
                 t={t}
                 isRecoveryPhraseMode={isRecoveryPhraseMode}
                 setIsRecoveryPhrase={setIsRecoveryPhrase}
-                derivationPath={derivationPath}
-                setDerivationPath={setDerivationPath}
               />
             </fieldset>
             <div className={`${styles.buttonsHolder}`}>
