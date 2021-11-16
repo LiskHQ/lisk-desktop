@@ -70,6 +70,12 @@ const Footer = ({
 
   return (
     <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
+      <Actions
+        cancelButton={cancelButton}
+        confirmButton={confirmButton}
+        hasSecondPass={hasSecondPass}
+        inputStatus={inputStatus}
+      />
       {
           hasSecondPass ? (
             <SecondPassInput
@@ -80,12 +86,6 @@ const Footer = ({
             />
           ) : null
         }
-      <Actions
-        cancelButton={cancelButton}
-        confirmButton={confirmButton}
-        hasSecondPass={hasSecondPass}
-        inputStatus={inputStatus}
-      />
     </BoxFooter>
   );
 };
