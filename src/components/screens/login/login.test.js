@@ -124,7 +124,7 @@ describe('Login', () => {
       wrapper.find('button.login-button').simulate('submit');
       expect(props.login).toHaveBeenCalledWith({
         derivationPath: "m/44'/134'/0'",
-        isRecoveryPhraseMode: false,
+        enableCustomDerivationPath: false,
         passphrase: accounts.delegate.passphrase,
       });
     });
@@ -151,7 +151,7 @@ describe('Login', () => {
       wrapper.find('button.login-button').simulate('submit');
       expect(props.login).toHaveBeenCalledWith({
         derivationPath,
-        isRecoveryPhraseMode: true,
+        enableCustomDerivationPath: true,
         passphrase: accounts.delegate.passphrase,
       });
     });

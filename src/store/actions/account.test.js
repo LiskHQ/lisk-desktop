@@ -217,7 +217,7 @@ describe('actions: account', () => {
 
     it('should call extractPublicKey with params', async () => {
       accountApi.getAccount.mockResolvedValue({ balance, address });
-      await login({ passphrase, isRecoveryPhraseMode: false, derivationPath: '1/2' })(dispatch, getState);
+      await login({ passphrase, enableCustomDerivationPath: false, derivationPath: '1/2' })(dispatch, getState);
       expect(extractKeyPair).toHaveBeenCalledWith(passphrase, false, '1/2');
     });
 

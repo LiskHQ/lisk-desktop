@@ -43,7 +43,6 @@ const redirectToReferrer = (history) => {
 const Login = ({
   t, settings, network, history, account, login,
 }) => {
-  const [isRecoveryPhraseMode, setIsRecoveryPhrase] = useState(false);
   const [passphrase, setPass] = useState({ value: '', isValid: false });
   const canHWSignIn = true;
 
@@ -57,7 +56,7 @@ const Login = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
     Piwik.trackingEvent('Login', 'button', 'Login submission');
-    login({ passphrase: passphrase.value, isRecoveryPhraseMode });
+    login({ passphrase: passphrase.value });
   };
 
   const handleKeyPress = (e) => {
@@ -106,12 +105,8 @@ const Login = ({
                 keyPress={handleKeyPress}
               />
               <DiscreetModeToggle className={styles.discreetMode} />
-              <RecoveryPhrase
-                t={t}
-                isRecoveryPhraseMode={isRecoveryPhraseMode}
-                setIsRecoveryPhrase={setIsRecoveryPhrase}
-              />
             </fieldset>
+            <RecoveryPhrase t={t} />
             <div className={`${styles.buttonsHolder}`}>
               <PrimaryButton
                 className={`${styles.button} login-button`}
