@@ -1,23 +1,32 @@
 import React from 'react';
-import { withTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
+import { fromRawLsk } from '@utils/lsk';
+import { getUnlockableUnlockObjects } from '@utils/account';
 import TransactionInfo from '@shared/transactionInfo';
-import { selectActiveTokenAccount } from '@store/selectors';
 import { balanceUnlocked } from '@actions/account';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const Summary = ({
+  currentBlockHeight,
   rawTransaction,
   prevStep,
   nextStep,
+  account,
   t,
 }) => {
-  const account = useSelector(selectActiveTokenAccount);
+  const transaction = {
+    nonce: account.sequence.nonce,
+    fee: fromRawLsk(rawTransaction.selectedFee),
+    asset: {
+      unlockObjects: getUnlockableUnlockObjects(
+        account.dpos?.unlocking, currentBlockHeight,
+      ),
+    },
+  };
 
   const onSubmit = () => {
     nextStep({
@@ -45,7 +54,7 @@ const Summary = ({
     >
       <TransactionInfo
         moduleAssetId={moduleAssetId}
-        transaction={rawTransaction}
+        transaction={transaction}
         account={account}
         isMultisignature={account.summary.isMultisignature}
       />
@@ -53,4 +62,4 @@ const Summary = ({
   );
 };
 
-export default withTranslation()(Summary);
+export default Summary;
