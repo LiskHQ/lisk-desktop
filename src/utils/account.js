@@ -45,7 +45,7 @@ export const extractKeyPair = ({
 export const extractPublicKey = (
   passphrase, enableCustomDerivationPath = false, derivationPath,
 ) => {
-  const keyPair = extractKeyPair(passphrase, enableCustomDerivationPath, derivationPath);
+  const keyPair = extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
 
   if (keyPair.isValid) {
     return keyPair.publicKey;
@@ -65,7 +65,7 @@ export const extractPublicKey = (
 export const extractPrivateKey = (
   passphrase, enableCustomDerivationPath = false, derivationPath,
 ) => {
-  const keyPair = extractKeyPair(passphrase, enableCustomDerivationPath, derivationPath);
+  const keyPair = extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
 
   if (keyPair.isValid) {
     return keyPair.privateKey;
