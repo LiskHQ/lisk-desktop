@@ -148,9 +148,9 @@ class Settings extends React.Component {
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
-                  name="showCustomDerivationPath"
-                  className={`${styles.checkbox} showCustomDerivationPath`}
-                  checked={settings.showCustomDerivationPath}
+                  name="enableCustomDerivationPath"
+                  className={`${styles.checkbox} enableCustomDerivationPath`}
+                  checked={settings.enableCustomDerivationPath}
                   onChange={this.handleCheckboxChange}
                 />
                 <div>
