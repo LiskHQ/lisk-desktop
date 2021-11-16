@@ -1,37 +1,11 @@
 /* eslint-disable complexity */
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 import { getErrorReportMailto, isEmpty } from '@utils/helpers';
 import { transactionToJSON } from '@utils/transaction';
 import { TertiaryButton } from '@toolbox/buttons';
 import Illustration from '@toolbox/illustration';
-import { selectActiveTokenNetwork } from '@store/selectors';
+import illustrations from './illustrations';
 import styles from './transactionResult.css';
-
-const illustrations = {
-  default: {
-    pending: 'transactionPending',
-    success: 'transactionSuccess',
-    error: 'transactionError',
-  },
-  vote: {
-    pending: 'votingSuccess',
-    success: 'votingSuccess',
-    error: 'transactionError',
-  },
-  registerMultisignature: {
-    pending: 'registerMultisignatureSuccess',
-    success: 'registerMultisignatureSuccess',
-    error: 'registerMultisignatureError',
-  },
-  signMultisignature: {
-    SIGN_SUCCEEDED: 'registerMultisignatureSuccess',
-    SIGN_FAILED: 'registerMultisignatureError',
-    BROADCASTED: 'transactionSuccess',
-    BROADCAST_FAILED: 'transactionError',
-    PENDING: 'registerMultisignatureSuccess',
-  },
-};
 
 const errorTypes = ['SIGN_FAILED', 'BROADCAST_FAILED', 'error'];
 
@@ -39,7 +13,6 @@ const errorTypes = ['SIGN_FAILED', 'BROADCAST_FAILED', 'error'];
  * Defines the status of the broadcasted tx.
  *
  * @param {Object} transactions - Transactions status from the redux store
- * @param {*} isHardwareWalletError ??
  * @returns {Object} The status code and message
  */
 export const getBroadcastStatus = (transactions, isHardwareWalletError) => {
@@ -53,9 +26,21 @@ export const getBroadcastStatus = (transactions, isHardwareWalletError) => {
 };
 
 export const TransactionResult = ({
-  title, message, t, status, children, illustration, className,
+  transactions, network,
+  title, message, t, status,
+  children, illustration, className,
+  resetTransactionResult, transactionBroadcasted,
 }) => {
-  const network = useSelector(selectActiveTokenNetwork);
+  useEffect(() => {
+    if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
+      /**
+       * Broadcast the successfully signed tx
+       */
+      transactionBroadcasted(transactions.signedTransaction);
+    }
+
+    return resetTransactionResult;
+  }, []);
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
