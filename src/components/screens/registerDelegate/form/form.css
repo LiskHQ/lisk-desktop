@@ -36,14 +36,14 @@
     text-decoration: none;
   }
 
-  & > .nicknameLabel {
+  & > .usernameLabel {
     @mixin contentNormal bold;
 
     color: var(--color-maastricht-blue);
     margin: 22px 0 10px;
   }
 
-  & .inputNickname {
+  & .inputUsernamename {
     padding: 8px 14px;
   }
 

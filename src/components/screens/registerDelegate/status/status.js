@@ -10,7 +10,7 @@ const Status = ({
   transactionBroadcasted, resetTransactionResult,
 }) => {
   const [status, setStatus] = useState('pending');
-  const isConfirmed = !!account.dpos.delegate;
+  const isConfirmed = !!account.dpos.delegate?.username;
   const template = statusMessages(t)[status];
 
   useEffect(() => {
@@ -25,12 +25,12 @@ const Status = ({
   }, []);
 
   useEffect(() => {
-    if (transactions.txBroadcastError) {
+    if (transactions.txBroadcastError && status === 'pending') {
       setStatus('error');
-    } else if (isConfirmed) {
+    } else if (isConfirmed && status === 'pending') {
       setStatus('success');
     }
-  }, [transactions.txBroadcastError]);
+  }, [transactions.txBroadcastError, transactions.signedTransaction]);
 
   return (
     <div className={`${styles.wrapper} status-container`}>
@@ -52,4 +52,9 @@ const Status = ({
   );
 };
 
-export default Status;
+const areEqual = (prev, next) => (
+  !next.account.dpos.delegate
+  || prev.account.dpos.delegate?.username === next.account.dpos.delegate?.username
+);
+
+export default React.memo(Status, areEqual);

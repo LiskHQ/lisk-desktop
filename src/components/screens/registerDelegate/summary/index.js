@@ -2,16 +2,18 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@utils/account';
-import Form from './form';
+import { delegateRegistered } from '@actions';
+import Summary from './summary';
 
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
-  transactions: state.transactions,
   network: state.network,
-  signedTransaction: state.transactions.signedTransaction,
-  txSignatureError: state.transactions.txSignatureError,
 });
 
+const mapDispatchToProps = {
+  delegateRegistered,
+};
+
 export default connect(
-  mapStateToProps,
-)(withTranslation()(Form));
+  mapStateToProps, mapDispatchToProps,
+)(withTranslation()(Summary));
