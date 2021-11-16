@@ -1,5 +1,5 @@
-import { actionTypes, tokenKeys } from '@constants';
-import settings, { tokenList } from './settings';
+import { actionTypes, tokenMap } from '@constants';
+import settings from './settings';
 
 describe('Reducer: settings(state, action)', () => {
   let initializeState;
@@ -8,8 +8,11 @@ describe('Reducer: settings(state, action)', () => {
     initializeState = {
       autoLog: true,
       token: {
-        active: tokenKeys[0],
-        list: tokenList,
+        active: tokenMap.LSK.key,
+        list: {
+          [tokenMap.LSK.key]: true,
+          [tokenMap.BTC.key]: false,
+        },
       },
     };
   });
