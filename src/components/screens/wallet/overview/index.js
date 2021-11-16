@@ -67,7 +67,7 @@ const Overview = ({
         isBanned,
         pomHeight: pomHeights[pomHeights.length - 1],
         readMore: () => {
-          const url = 'https://www.youtube.com/watch?v=BHr09qYXkek';
+          const url = 'https://lisk.com/blog/development/lisk-voting-process';
           window.open(url, 'rel="noopener noreferrer');
         },
       });
