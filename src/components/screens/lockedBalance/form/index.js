@@ -14,12 +14,11 @@ import Form from './form';
 import BalanceTable from './balanceTable';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
-/* eslint-disable-next-line max-statements */
+
 const LockedBalance = (props) => {
   const account = useSelector(state => getActiveTokenAccount(state));
   const token = useSelector(state => state.settings.token.active);
   const network = useSelector(state => state.network);
-  const transactions = useSelector(state => state.transactions);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   const unlockableBalance = calculateUnlockableBalance(
@@ -48,8 +47,6 @@ const LockedBalance = (props) => {
 
   return (
     <Form
-      signedTransaction={transactions.signedTransaction}
-      txSignatureError={transactions.txSignatureError}
       data={{
         customFee,
         fee,
