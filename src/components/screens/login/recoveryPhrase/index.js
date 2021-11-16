@@ -20,7 +20,7 @@ const RecoveryPhrase = ({ t }) => {
 
   return (
     <fieldset className={`${styles.inputsHolder}`}>
-      <label>{t('Custom derivation path (optional)')}</label>
+      <label>{t('Custom derivation path')}</label>
       <Input
         className={styles.derivationPathInput}
         size="l"
