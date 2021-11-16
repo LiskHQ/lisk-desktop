@@ -4,7 +4,6 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getAccount } from '@api/account';
 import { getActiveTokenAccount } from '@utils/account';
-import { transactionBroadcasted, resetTransactionResult } from '@actions';
 import withData from '@utils/withData';
 import TransactionStatus from './transactionStatus';
 
@@ -14,11 +13,6 @@ const mapStateToProps = state => ({
   transactions: state.transactions,
   token: state.settings.token.active,
 });
-
-const mapDispatchToProps = {
-  resetTransactionResult,
-  transactionBroadcasted,
-};
 
 const apis = {
   recipientAccount: {
@@ -31,7 +25,7 @@ const apis = {
 };
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps),
   withData(apis),
   withTranslation(),
 )(TransactionStatus);

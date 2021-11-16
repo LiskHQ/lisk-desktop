@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { downloadJSON, transactionToJSON } from '@utils/transaction';
 import copyToClipboard from 'copy-to-clipboard';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
+import TransactionResult, { getBroadcastStatus } from '@shared/transactionResult';
 import Icon from '@toolbox/icon';
 import statusMessages from './statusMessages';
 import ProgressBar from '../progressBar';

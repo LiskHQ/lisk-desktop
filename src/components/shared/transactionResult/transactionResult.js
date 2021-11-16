@@ -1,7 +1,6 @@
 /* eslint-disable complexity */
 import React, { useEffect } from 'react';
 import { getErrorReportMailto, isEmpty } from '@utils/helpers';
-import { transactionToJSON } from '@utils/transaction';
 import { TertiaryButton } from '@toolbox/buttons';
 import Illustration from '@toolbox/illustration';
 import illustrations from './illustrations';
@@ -9,23 +8,7 @@ import styles from './transactionResult.css';
 
 const errorTypes = ['SIGN_FAILED', 'BROADCAST_FAILED', 'error'];
 
-/**
- * Defines the status of the broadcasted tx.
- *
- * @param {Object} transactions - Transactions status from the redux store
- * @returns {Object} The status code and message
- */
-export const getBroadcastStatus = (transactions, isHardwareWalletError) => {
-  if (!isEmpty(transactions.signedTransaction)) {
-    return { code: 'pending' };
-  }
-  if (!transactions.txBroadcastError && !isHardwareWalletError) {
-    return { code: 'success' };
-  }
-  return { code: 'error', message: transactionToJSON(transactions.txBroadcastError) };
-};
-
-export const TransactionResult = ({
+const TransactionResult = ({
   transactions, network,
   title, message, t, status,
   children, illustration, className,

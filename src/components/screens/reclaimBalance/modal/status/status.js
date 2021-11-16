@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
+import React from 'react';
+import TransactionResult, { getBroadcastStatus } from '@shared/transactionResult';
 import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
 import { tokenMap } from '@constants';
 import Spinner from '@toolbox/spinner';
-import { isEmpty } from '@utils/helpers';
 import statusMessages from './statusMessages';
 import styles from './status.css';
 
@@ -49,19 +48,7 @@ const PendingAction = ({ template }) => (
 
 const Status = ({
   t, transactions, history, balance, isMigrated,
-  transactionBroadcasted, resetTransactionResult,
 }) => {
-  useEffect(() => {
-    if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
-      /**
-       * Broadcast the successfully signed tx
-       */
-      transactionBroadcasted(transactions.signedTransaction);
-    }
-
-    return resetTransactionResult;
-  }, []);
-
   const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
   const template = statusMessages(t, history)[status.code];
 

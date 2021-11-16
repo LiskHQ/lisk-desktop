@@ -1,24 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { routes } from '@constants';
 import { PrimaryButton } from '@toolbox/buttons';
-import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
+import TransactionResult, { getBroadcastStatus } from '@shared/transactionResult';
 import statusMessages from './statusMessages';
 import styles from './status.css';
 
 const TransactionStatus = ({
-  transactionBroadcasted,
   transactions,
   history,
-  error,
   t,
 }) => {
   const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
   const onSuccess = () => history.push(routes.wallet.path);
   const template = statusMessages(t, onSuccess)[status.code];
-
-  useEffect(() => {
-    if (!error) transactionBroadcasted(transactions.signedTransaction);
-  }, [error]);
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>

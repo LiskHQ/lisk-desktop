@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { isEmpty } from '@utils/helpers';
 import { PrimaryButton } from '@toolbox/buttons';
-import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
+import TransactionResult, { getBroadcastStatus } from '@shared/transactionResult';
 import DialogLink from '@toolbox/dialog/link';
 import statusMessages from './statusMessages';
 import styles from './transactionStatus.css';
@@ -28,8 +28,6 @@ const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
 
 // eslint-disable-next-line complexity
 const TransactionStatus = ({
-  transactionBroadcasted,
-  resetTransactionResult,
   recipientAccount,
   transactions,
   rawTransaction,
@@ -41,17 +39,10 @@ const TransactionStatus = ({
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
       /**
-       * Broadcast the successfully signed tx
-       */
-      transactionBroadcasted(transactions.signedTransaction);
-
-      /**
        * Retrieve recipient info to use for bookmarking
        */
       recipientAccount.loadData({ address: rawTransaction.recipientAddress });
     }
-
-    return resetTransactionResult;
   }, []);
 
   const showBookmark = shouldShowBookmark(bookmarks, account, rawTransaction, token);

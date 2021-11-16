@@ -4,7 +4,7 @@ import copyToClipboard from 'copy-to-clipboard';
 import { downloadJSON, transactionToJSON } from '@utils/transaction';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
-import { TransactionResult } from '@shared/transactionResult';
+import TransactionResult from '@shared/transactionResult';
 
 import ProgressBar from '../progressBar';
 import { CopyAndSendFooter, CopyFooter } from './footer';
