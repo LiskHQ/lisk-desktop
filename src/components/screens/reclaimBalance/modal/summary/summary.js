@@ -61,15 +61,11 @@ const Summary = ({
   return (
     <TransactionSummary
       title={t('Transaction summary')}
-      t={t}
-      account={account.info.LSK}
       confirmButton={{
         label: t('Continue'),
         onClick: onSubmit,
       }}
-      showCancelButton={false}
       fee={minFee.value}
-      token={tokenMap.LSK.key}
       classNames={styles.summaryContainer}
     >
       <TransactionInfo account={account} moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.reclaimLSK} />
