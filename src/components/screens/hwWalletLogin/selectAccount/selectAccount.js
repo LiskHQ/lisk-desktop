@@ -130,7 +130,7 @@ class SelectAccount extends React.Component {
     const { accountOnEditMode, hwAccounts, showEmptyAccounts } = this.state;
 
     const { nonEmptyAccounts, emptyAccounts } = hwAccounts.reduce((acc, account) => {
-      if (account.token.balance > 0) {
+      if (account.summary?.balance > 0) {
         acc.nonEmptyAccounts = [...acc.nonEmptyAccounts, account];
       } else {
         acc.emptyAccounts = [...acc.emptyAccounts, account];
