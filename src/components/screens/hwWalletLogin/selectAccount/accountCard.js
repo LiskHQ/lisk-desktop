@@ -1,6 +1,7 @@
 import React from 'react';
 import { tokenMap } from '@constants';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import { truncateAddress } from '@utils/account';
+import { TertiaryButton } from '@toolbox/buttons';
 import AccountVisual from '@toolbox/accountVisual';
 import LiskAmount from '@shared/liskAmount';
 import { Input } from '@toolbox/inputs';
@@ -17,64 +18,56 @@ const AccountCard = ({
   onSelectAccount,
   t,
 }) => (
-  <div id={account.summary?.address} className={`${styles.account} hw-account`}>
-    <header className={styles.header}>
-      { accountOnEditMode === index
-        ? (
-          <>
-            <Input
-              value={account.name}
-              size="xs"
-              onChange={event => onChangeAccountTitle(event.target.value, index)}
-              className="account-name"
-              placeholder={t('Account name')}
-            />
-            <PrimaryButton
-              className={`${styles.saveBtn} save-account`}
-              onClick={() => onSaveNameAccounts()}
-            >
-              {t('Save')}
-            </PrimaryButton>
-          </>
-        )
-        : (
-          <>
-            <span className={`${styles.accountTitle} account-name`}>
-              {account.name === null ? t('Unnamed account') : account.name}
-            </span>
-            <SecondaryButton
-              className={`${styles.editBtn} edit-account`}
-              onClick={() => onEditAccount(index)}
-            >
-              {t('Edit')}
-              <Icon name="edit" />
-            </SecondaryButton>
-          </>
-        )}
-    </header>
-
+  //<div id={account.summary?.address} className={`${styles.account} hw-account select-account`} onClick={() => onSelectAccount(account, index)}>
+  <div id={account.summary?.address} className={`${styles.account} hw-account select-account`}>
     <div className={styles.content}>
-      <AccountVisual
-        address={account.summary?.address || ''}
-        size={55}
-      />
-      <div className={`${styles.row} row-address`}>
-        <p>{account.summary?.address}</p>
-        <span>{t('Address')}</span>
+      <div>
+        <AccountVisual
+          address={account.summary?.address || ''}
+          size={40}
+        />
       </div>
-      <div className={`${styles.row} row-balance`}>
-        <p>
-          <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
-        </p>
-        <span>{t('Balance')}</span>
+      <div>
+        <header className={styles.header}>
+          { accountOnEditMode === index
+            ? (
+              <div className={styles.editAccountTitle}>
+                <Input
+                  value={account.name}
+                  size="s"
+                  onChange={event => onChangeAccountTitle(event.target.value, index)}
+                  className="account-name"
+                  placeholder={t('Account name')}
+                />
+                <TertiaryButton
+                  className={`${styles.saveBtn} save-account`}
+                  onClick={() => onSaveNameAccounts()}
+                >
+                  {t('Save')}
+                </TertiaryButton>
+              </div>
+            )
+            : (
+              <>
+                <p className={`${styles.accountTitle} account-name`}>
+                  {account.name === null ? t('Unnamed account') : account.name}
+                  <Icon
+                    className={`${styles.editBtn} edit-account`}
+                    onClick={() => onEditAccount(index)}
+                    name="edit"
+                  />
+                </p>
+                <p className={`${styles.accountAddress} row-address`}>{truncateAddress(account.summary?.address)}</p>
+              </>
+            )}
+        </header>
+        <div className={`${styles.accountBalance} row-balance`}>
+          <p>{t('Balance:')}</p>
+          <p>
+            <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
+          </p>
+        </div>
       </div>
-
-      <PrimaryButton
-        className="select-account"
-        onClick={() => onSelectAccount(account, index)}
-      >
-        {t('Select this account')}
-      </PrimaryButton>
     </div>
   </div>
 );
