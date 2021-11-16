@@ -14,6 +14,7 @@ import { selectCurrentBlockHeight } from '@store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
 import { extractKeyPair, getUnlockableUnlockObjects } from '@utils/account';
+import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import { networkStatusUpdated } from './network';
 
 /**
@@ -110,13 +111,13 @@ export const accountDataUpdated = tokensTypes =>
  * @param {String} data.publicKey - Lisk publicKey used for hardware wallet login
  * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
  * @param {boolean} data.isRecoveryPhraseMode - enable custom derivation for HW
- * @param {String} data.derivationPath - custom derivation path for HW
  */
 export const login = ({
-  passphrase, publicKey, hwInfo, isRecoveryPhraseMode, derivationPath,
+  passphrase, publicKey, hwInfo, isRecoveryPhraseMode,
 }) =>
   async (dispatch, getState) => {
     const { network, settings } = getState();
+    const { enableCustomDerivationPath, customDerivationPath } = settings;
     dispatch(accountLoading());
 
     const params = Object.keys(settings.token.list)
@@ -129,9 +130,13 @@ export const login = ({
         } else {
           let keyPair = {};
           if (passphrase) {
-            keyPair = extractKeyPair(
-              passphrase, isRecoveryPhraseMode, derivationPath,
-            );
+            keyPair = extractKeyPair({
+              passphrase,
+              isRecoveryPhraseMode,
+              derivationPath: enableCustomDerivationPath && customDerivationPath
+                ? customDerivationPath
+                : defaultDerivationPath,
+            });
           } else if (publicKey) {
             keyPair.publicKey = publicKey;
           }

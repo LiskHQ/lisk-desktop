@@ -12,7 +12,7 @@ import { getCustomDerivationKeyPair } from '@utils/explicitBipKeyDerivation';
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {object} - Extracted publicKey for a given valid passphrase
  */
-export const extractKeyPair = (passphrase, isRecoveryPhraseMode = false, derivationPath) => {
+export const extractKeyPair = ({ passphrase, isRecoveryPhraseMode = false, derivationPath }) => {
   if (isRecoveryPhraseMode) {
     const keyPair = getCustomDerivationKeyPair(passphrase, derivationPath);
     return {

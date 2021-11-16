@@ -1,15 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { settingsUpdated } from '@actions';
 import { selectSettings } from '@store/selectors';
 import CheckBox from '@toolbox/checkBox';
 import { Input } from '@toolbox/inputs';
+import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import styles from './recoveryPhrase.css';
 
 const RecoveryPhrase = ({
-  t, derivationPath, setDerivationPath,
-  isRecoveryPhraseMode, setIsRecoveryPhrase,
+  t, isRecoveryPhraseMode, setIsRecoveryPhrase,
 }) => {
-  const { showCustomDerivationPath } = useSelector(selectSettings);
+  const { enableCustomDerivationPath, customDerivationPath } = useSelector(selectSettings);
+  const dispatch = useDispatch();
+
+  const onPathInputChange = (e) => {
+    dispatch(settingsUpdated({ customDerivationPath: e.target.value }));
+  };
 
   return (
     <>
@@ -24,12 +30,12 @@ const RecoveryPhrase = ({
         />
         <span>{t('Enable recovery phrase mode (optional)')}</span>
       </div>
-      {isRecoveryPhraseMode && showCustomDerivationPath && (
+      {isRecoveryPhraseMode && enableCustomDerivationPath && (
         <Input
           className={styles.derivationPathInput}
           size="l"
-          onChange={(e) => { setDerivationPath(e.target.value); }}
-          value={derivationPath}
+          onChange={onPathInputChange}
+          value={customDerivationPath || defaultDerivationPath}
         />
       )}
     </>
