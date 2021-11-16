@@ -208,7 +208,6 @@ describe('actions: account', () => {
           data: expect.objectContaining({
             info: {
               LSK: expect.objectContaining({ address, balance }),
-              BTC: expect.objectContaining({ address, balance }),
             },
           }),
         }),
