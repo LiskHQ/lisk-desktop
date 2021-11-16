@@ -10,7 +10,7 @@ import BoxFooter from '@toolbox/box/footer';
 import { Input } from '@toolbox/inputs';
 import { PrimaryButton } from '@toolbox/buttons';
 import Tooltip from '@toolbox/tooltip/tooltip';
-import styles from './selectNameAndFee.css';
+import styles from './form.css';
 
 const token = tokenMap.LSK.key;
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
