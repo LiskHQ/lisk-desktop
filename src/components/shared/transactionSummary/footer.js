@@ -1,64 +1,17 @@
 // istanbul ignore file
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PrimaryButton, SecondaryButton, TertiaryButton } from '@toolbox/buttons';
-import { transactionToJSON, downloadJSON } from '@utils/transaction';
 import PassphraseInput from '@toolbox/passphraseInput';
 import BoxFooter from '@toolbox/box/footer';
-import copyToClipboard from 'copy-to-clipboard';
-import Icon from '@toolbox/icon';
 import styles from './transactionSummary.css';
 
-const MultisigActions = ({
-  onDownload,
-  onCopy,
-  copied,
-  t,
+const Actions = ({
   cancelButton,
-  createTransaction,
-}) => (
-  <div className={styles.primaryActions}>
-    <SecondaryButton
-      className="cancel-button"
-      onClick={cancelButton.onClick}
-    >
-      {t('Go back')}
-    </SecondaryButton>
-    <SecondaryButton
-      className="copy-button"
-      onClick={() => {
-        createTransaction(onCopy);
-      }}
-    >
-      <span className={styles.buttonContent}>
-        <Icon name={copied ? 'checkmark' : 'copy'} />
-        {t(copied ? 'Copied' : 'Copy')}
-      </span>
-    </SecondaryButton>
-    <PrimaryButton
-      className="download-button"
-      onClick={() => {
-        createTransaction(onDownload);
-      }}
-    >
-      <span className={styles.buttonContent}>
-        <Icon name="download" />
-        {t('Download')}
-      </span>
-    </PrimaryButton>
-  </div>
-);
-
-const NormalActions = ({
-  showCancelButton,
-  cancelButton,
-  confirmation,
-  isConfirmed,
   confirmButton,
-  hasSecondPass,
-  secondPass,
+  inputStatus,
 }) => (
   <div className={styles.primaryActions}>
-    {showCancelButton && (
+    {cancelButton && (
       <SecondaryButton
         className="cancel-button"
         onClick={cancelButton.onClick}
@@ -68,11 +21,7 @@ const NormalActions = ({
     )}
     <PrimaryButton
       className="confirm-button"
-      disabled={
-        (confirmation && !isConfirmed)
-        || confirmButton.disabled
-        || (hasSecondPass && !secondPass)
-      }
+      disabled={confirmButton.disabled || inputStatus === 'visible'}
       onClick={confirmButton.onClick}
     >
       {confirmButton.label}
@@ -80,75 +29,63 @@ const NormalActions = ({
   </div>
 );
 
-const Footer = ({
-  confirmButton, cancelButton, footerClassName, showCancelButton, hasSecondPass,
-  confirmation, isConfirmed, isMultisignature, t, createTransaction, setSecondPass,
+const SecondPassInput = ({
+  t, transactionDoubleSigned, inputStatus, setInputStatus,
 }) => {
-  const [copied, setCopied] = useState(false);
-  const [useSecondPass, setUseSecondPass] = useState(false);
-  const [secondPassPhrase, setSecondPassPhrase] = useState('');
+  const [secondPass, set2ndPass] = useState('');
 
-  const onDownload = (bufferTx = {}) => {
-    const transaction = JSON.parse(transactionToJSON(bufferTx));
-    downloadJSON(transaction, `tx-${transaction.id}`);
-  };
+  useEffect(() => {
+    if (secondPass) {
+      transactionDoubleSigned({ secondPass });
+      setInputStatus('valid');
+    }
+  }, [secondPass]);
 
-  const onCopy = (transaction) => {
-    copyToClipboard(transactionToJSON(transaction));
-    setCopied(true);
-  };
+  return inputStatus === 'hidden' ? (
+    <div className={styles.secondaryActions}>
+      <span className={styles.or}>or</span>
+      <TertiaryButton
+        onClick={() => setInputStatus('visible')}
+      >
+        {t('Send using second passphrase right away')}
+      </TertiaryButton>
+    </div>
+  ) : (
+    <div className={styles.secondPassphrase}>
+      <PassphraseInput
+        t={t}
+        onFill={set2ndPass}
+        inputsLength={12}
+        maxInputsLength={24}
+      />
+    </div>
+  );
+};
+
+const Footer = ({
+  confirmButton, cancelButton, footerClassName,
+  t, transactionDoubleSigned, hasSecondPass,
+}) => {
+  const [inputStatus, setInputStatus] = useState(hasSecondPass ? 'hidden' : 'notRequired');
 
   return (
     <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
       {
-        isMultisignature && !useSecondPass ? (
-          <MultisigActions
-            onDownload={onDownload}
-            onCopy={onCopy}
-            copied={copied}
-            t={t}
-            cancelButton={cancelButton}
-            createTransaction={createTransaction}
-          />
-        ) : null
-      }
-      {
-        hasSecondPass && !useSecondPass ? (
-          <div className={styles.secondaryActions}>
-            <span className={styles.or}>or</span>
-            <TertiaryButton
-              onClick={() => setUseSecondPass(true)}
-            >
-              {t('Send using second passphrase right away')}
-            </TertiaryButton>
-          </div>
-        ) : null
-      }
-      {
-        hasSecondPass && useSecondPass ? (
-          <div className={styles.secondPassphrase}>
-            <PassphraseInput
+          hasSecondPass ? (
+            <SecondPassInput
               t={t}
-              onFill={(pass) => { setSecondPassPhrase(pass); setSecondPass(pass); }}
-              inputsLength={12}
-              maxInputsLength={24}
+              transactionDoubleSigned={transactionDoubleSigned}
+              inputStatus={inputStatus}
+              setInputStatus={setInputStatus}
             />
-          </div>
-        ) : null
-      }
-      {
-        !isMultisignature || (hasSecondPass && useSecondPass) ? (
-          <NormalActions
-            showCancelButton={showCancelButton}
-            cancelButton={cancelButton}
-            confirmation={confirmation}
-            isConfirmed={isConfirmed}
-            confirmButton={confirmButton}
-            hasSecondPass={hasSecondPass}
-            secondPass={secondPassPhrase}
-          />
-        ) : null
-      }
+          ) : null
+        }
+      <Actions
+        cancelButton={cancelButton}
+        confirmButton={confirmButton}
+        hasSecondPass={hasSecondPass}
+        inputStatus={inputStatus}
+      />
     </BoxFooter>
   );
 };
