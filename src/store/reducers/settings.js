@@ -1,4 +1,4 @@
-import { actionTypes, tokenKeys } from '@constants';
+import { actionTypes, tokenMap } from '@constants';
 import { deepMergeObj } from '@utils/helpers';
 
 export const channels = {
@@ -17,12 +17,9 @@ export const channels = {
  */
 const validateToken = state => (
   state.token && !state.token.list[state.token.active]
-    ? { ...state, token: { active: tokenKeys[0], list: state.token.list } }
+    ? { ...state, token: { active: tokenMap.LSK.key, list: state.token.list } }
     : state
 );
-
-const tokenObj = tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {});
-export const tokenList = { ...tokenObj, btc: false };
 
 // load setting data from localStorage if it exists and merge with initial state
 export const initialState = {
@@ -35,8 +32,11 @@ export const initialState = {
   areTermsOfUseAccepted: false,
   discreetMode: false,
   token: {
-    active: tokenKeys[0],
-    list: tokenList,
+    active: tokenMap.LSK.key,
+    list: {
+      [tokenMap.LSK.key]: true,
+      [tokenMap.BTC.key]: false,
+    },
   },
   sideBarExpanded: true,
   currency: 'USD',

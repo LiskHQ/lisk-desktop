@@ -10,7 +10,16 @@ export const settingsRetrieved = () => (dispatch) => {
   getFromStorage('settings', initialState, (data) => {
     dispatch({
       type: actionTypes.settingsRetrieved,
-      data,
+      data: {
+        ...data,
+        token: {
+          active: 'LSK',
+          list: {
+            BTC: false,
+            LSK: true,
+          },
+        },
+      },
     });
   });
 };
