@@ -4,6 +4,7 @@ import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
 import { tokenMap } from '@constants';
 import Spinner from '@toolbox/spinner';
+import { isEmpty } from '@utils/helpers';
 import statusMessages from './statusMessages';
 import styles from './status.css';
 
@@ -39,12 +40,6 @@ const SuccessAction = ({
 const FailAction = ({ template }) => (
   <>
     <p className="transaction-status body-message">{template.message}</p>
-    <PrimaryButton
-      className={`${styles.btn} ${template.button.className}`}
-      onClick={template.button.onClick}
-    >
-      {template.button.title}
-    </PrimaryButton>
   </>
 );
 
@@ -52,28 +47,23 @@ const PendingAction = ({ template }) => (
   <p className="transaction-status body-message">{template.message}</p>
 );
 
-// eslint-disable-next-line max-statements
 const Status = ({
-  t, transactionBroadcasted, transactions,
-  transactionInfo, history,
-  balance, isMigrated,
+  t, transactions, history, balance, isMigrated,
+  transactionBroadcasted, resetTransactionResult,
 }) => {
-  const broadcastTransaction = () => {
-    if (transactionInfo) {
-      transactionBroadcasted(transactionInfo);
-    }
-  };
-
-  const onRetry = () => {
-    broadcastTransaction();
-  };
-
   useEffect(() => {
-    if (transactionInfo) broadcastTransaction();
+    if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
+      /**
+       * Broadcast the successfully signed tx
+       */
+      transactionBroadcasted(transactions.signedTransaction);
+    }
+
+    return resetTransactionResult;
   }, []);
 
   const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
-  const template = statusMessages(t, history, onRetry)[status.code];
+  const template = statusMessages(t, history)[status.code];
 
   return (
     <div className={`${styles.wrapper} status-container`}>

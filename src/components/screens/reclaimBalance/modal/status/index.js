@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { transactionBroadcasted } from '@actions';
+import { resetTransactionResult, transactionBroadcasted } from '@actions';
 import Status from './status';
 
 const mapStateToProps = state => ({
@@ -11,9 +13,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   transactionBroadcasted,
+  resetTransactionResult,
 };
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Status));
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps),
+  withTranslation(),
+)(Status);

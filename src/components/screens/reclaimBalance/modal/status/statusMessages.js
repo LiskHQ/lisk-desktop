@@ -20,11 +20,6 @@ const statusMessages = (t, history, onRetry) => ({
   error: {
     title: t('Transaction failed'),
     message: t('There was an error in the transaction. Please try again!'),
-    button: {
-      onClick: onRetry,
-      title: t('Try again'),
-      className: 'on-retry',
-    },
   },
   hw: {
     title: t('Transaction aborted on device'),
