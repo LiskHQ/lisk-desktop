@@ -19,7 +19,16 @@ const settings = store => next => (action) => {
       if (action.data.token && action.data.token.active !== token.active) {
         store.dispatch(emptyTransactionsData());
       }
-      setInStorage('settings', store.getState().settings);
+      setInStorage('settings', {
+        ...store.getState().settings,
+        token: {
+          active: 'LSK',
+          list: {
+            BTC: false,
+            LSK: true,
+          },
+        },
+      });
       break;
     default:
       break;
