@@ -2,12 +2,13 @@
   "parser": "babel-eslint",
   "extends": [
     "airbnb",
-    "plugin:react/recommended"
+    "prettier"
   ],
   "plugins": [
     "import",
     "babel",
-    "jest"
+    "jest",
+    "prettier"
   ],
   "globals": {
     "describe": true,

@@ -22,7 +22,7 @@ const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
       pomHeight={pomHeight}
       readMore={readMore}
     />,
-    'WarnPunishedDelegate',
+    'WarnPunishedDelegate'
   );
 };
 
@@ -51,14 +51,15 @@ const Overview = ({
 
   const { confirmed } = useSelector(selectTransactions);
   const bookmark = useSelector((state) =>
-    state.bookmarks[activeToken].find((item) => item.address === address));
+    state.bookmarks[activeToken].find((item) => item.address === address)
+  );
   const host = useSelector(
     (state) =>
-      (state.account
-        && state.account.info
-        && state.account.info[activeToken]
-        && state.account.info[activeToken].summary?.address)
-      || '',
+      (state.account &&
+        state.account.info &&
+        state.account.info[activeToken] &&
+        state.account.info[activeToken].summary?.address) ||
+      ''
   );
 
   const showWarning = () => {
@@ -92,9 +93,7 @@ const Overview = ({
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
-      {
-        showWarning()
-      }
+      {showWarning()}
       <div
         className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}
       >
@@ -123,9 +122,9 @@ const Overview = ({
           username={account?.dpos?.delegate?.username}
           address={address}
           isBanned={isBanned}
-          pomStart={pomHeights?.length
-            ? { ...pomHeights[pomHeights.length - 1] }
-            : {}}
+          pomStart={
+            pomHeights?.length ? { ...pomHeights[pomHeights.length - 1] } : {}
+          }
         />
       </div>
       <div
@@ -159,5 +158,5 @@ export default compose(
       autoload: false,
     },
   }),
-  withTranslation(),
+  withTranslation()
 )(Overview);
