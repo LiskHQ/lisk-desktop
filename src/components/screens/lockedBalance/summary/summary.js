@@ -1,48 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { transactionDoubleSigned } from '@actions';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
-import { selectActiveTokenAccount, selectTransactions } from '@store/selectors';
-import Piwik from '@utils/piwik';
-import { isEmpty } from '@utils/helpers';
+import { selectActiveTokenAccount } from '@store/selectors';
+import { balanceUnlocked } from '@actions/account';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const Summary = ({
-  transactionInfo,
-  fee,
+  rawTransaction,
   prevStep,
-  t,
   nextStep,
+  t,
 }) => {
-  const dispatch = useDispatch();
-  const transactions = useSelector(selectTransactions);
   const account = useSelector(selectActiveTokenAccount);
-  const [secondPass, setSecondPass] = useState('');
-
-  useEffect(() => {
-    if (secondPass) {
-      dispatch(transactionDoubleSigned({ secondPass }));
-    }
-  }, [secondPass]);
 
   const onSubmit = () => {
-    if (!account.summary.isMultisignature || secondPass) {
-      Piwik.trackingEvent('UnlockBalance_SubmitTransaction', 'button', 'Next step');
-      if (!transactions.txSignatureError
-        && !isEmpty(transactions.signedTransaction)) {
-        nextStep();
-      } else if (transactions.txSignatureError) {
-        nextStep({
-          error: transactions.txSignatureError,
-        });
-      }
-    }
+    nextStep({
+      rawTransaction,
+      actionFunction: balanceUnlocked,
+    });
   };
 
   const onConfirmAction = {
@@ -59,12 +40,12 @@ const Summary = ({
       title={t('Unlock LSK summary')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      fee={!account.summary.isMultisignature && fee.value}
+      fee={!account.summary.isMultisignature && rawTransaction.selectedFee.value}
       classNames={`${styles.box} ${styles.summaryContainer}`}
     >
       <TransactionInfo
         moduleAssetId={moduleAssetId}
-        transaction={transactionInfo}
+        transaction={rawTransaction}
         account={account}
         isMultisignature={account.summary.isMultisignature}
       />
