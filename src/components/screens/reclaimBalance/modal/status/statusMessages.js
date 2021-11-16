@@ -1,7 +1,7 @@
 import { routes } from '@constants';
 
 /* istanbul ignore file */
-const statusMessages = (t, history, onRetry) => ({
+const statusMessages = (t, history) => ({
   pending: {
     title: t('Submitting your transaction'),
     message: t('Your transaction is being submitted to the blockchain.'),
