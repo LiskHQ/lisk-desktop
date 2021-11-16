@@ -6,7 +6,7 @@ import { getTransactionBaseFees, getTransactionFee, create } from '@api/transact
 import { fromRawLsk } from '@utils/lsk';
 import * as hwManagerAPI from '@utils/hwManager';
 import accounts from '../../../../../test/constants/accounts';
-import SelectNameAndFee from './index';
+import SelectNameAndFee from './form';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('@api/network');
