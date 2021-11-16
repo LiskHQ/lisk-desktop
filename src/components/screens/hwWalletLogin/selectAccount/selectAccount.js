@@ -31,7 +31,7 @@ class SelectAccount extends React.Component {
 
   componentDidUpdate() {
     // istanbul ignore else
-    if (this.props.account?.summary.address) {
+    if (this.props.account?.summary?.address) {
       this.props.history.push(`${routes.dashboard.path}`);
     }
     const { devices, device } = this.props;
@@ -44,7 +44,7 @@ class SelectAccount extends React.Component {
     // istanbul ignore else
     if (Array.isArray(settings.hardwareAccounts[device.model])) {
       const storedAccount = settings.hardwareAccounts[device.model].filter(account =>
-        account.summary.address === address);
+        account.summary?.address === address);
       return storedAccount.length ? storedAccount[0].name : null;
     }
 
@@ -93,8 +93,7 @@ class SelectAccount extends React.Component {
     const { t } = this.props;
     const { hwAccounts } = this.state;
     const lastAccount = hwAccounts[hwAccounts.length - 1];
-
-    if (!lastAccount.shouldShow) {
+    if (lastAccount && lastAccount.shouldShow === false) {
       hwAccounts[hwAccounts.length - 1] = {
         ...lastAccount,
         shouldShow: true,

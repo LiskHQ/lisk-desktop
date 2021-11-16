@@ -59,7 +59,7 @@ const Summary = ({
     }
   }, [secondPass]);
 
-  const submitTransaction = () => {
+  const onConfirm = () => {
     if (!account.summary.isMultisignature || secondPass) {
       Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
       if (!transactions.txSignatureError
@@ -77,7 +77,7 @@ const Summary = ({
 
   const onConfirmAction = {
     label: t('Confirm'),
-    onClick: submitTransaction,
+    onClick: onConfirm,
   };
   const onCancelAction = {
     label: t('Edit'),

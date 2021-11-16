@@ -10,6 +10,7 @@ import Piwik from '@utils/piwik';
 import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import { PrimaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
+import Icon from '@toolbox/icon/index';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
 import NetworkSelector from './networkSelector';
 import RecoveryPhrase from './recoveryPhrase';
@@ -46,6 +47,8 @@ const Login = ({
   const [isRecoveryPhraseMode, setIsRecoveryPhrase] = useState(false);
   const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
   const [passphrase, setPass] = useState({ value: '', isValid: false });
+  const canHWSignIn = true;
+
   const setPassphrase = (value, error) => {
     setPass({
       value,
@@ -121,7 +124,7 @@ const Login = ({
               >
                 {t('Sign in')}
               </PrimaryButton>
-              {/* {
+              {
                 canHWSignIn
                   ? (
                     <Link
@@ -132,8 +135,7 @@ const Login = ({
                       {t('Sign in with a hardware wallet')}
                     </Link>
                   ) : null
-              } */}
-
+              }
             </div>
           </form>
         </div>

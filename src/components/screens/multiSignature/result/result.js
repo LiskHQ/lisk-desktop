@@ -9,17 +9,17 @@ import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Result = ({
-  t, transactions, error, transaction, prevStep,
+  t, transactions, error, prevStep,
 }) => {
   const [copied, setCopied] = useState(false);
 
   const onDownload = () => {
-    const transactionId = transaction.id.toString('hex');
-    downloadJSON(transaction, `tx-${transactionId}`);
+    const transactionId = transactions.signedTransaction.id.toString('hex');
+    downloadJSON(transactions.signedTransaction, `tx-${transactionId}`);
   };
 
   const onCopy = () => {
-    copyToClipboard(transactionToJSON(transaction));
+    copyToClipboard(transactionToJSON(transactions.signedTransaction));
     setCopied(true);
   };
 

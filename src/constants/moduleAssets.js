@@ -56,8 +56,6 @@ const moduleAssetMap = {
   },
 };
 
-const moduleAssetSchemas = {};
-
 const MODULE_ASSETS_NAME_ID_MAP = Object.freeze(moduleAssetNameIdMap);
 const MODULE_ASSETS_MAP = Object.freeze(moduleAssetMap);
 const BASE_FEES = [
@@ -72,5 +70,4 @@ export {
   BASE_FEES,
   MODULE_ASSETS_MAP,
   MODULE_ASSETS_NAME_ID_MAP,
-  moduleAssetSchemas,
 };

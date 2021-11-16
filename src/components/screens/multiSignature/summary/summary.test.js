@@ -1,13 +1,25 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import * as hwManagerAPI from '@utils/hwManager';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
-const mockTransaction = { id: 1 };
+const mockTransaction = {
+  fee: 0.02,
+  mandatoryKeys: [
+    '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+    '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19',
+  ],
+  numberOfSignatures: 2,
+  optionalKeys: [],
+};
+
 jest.mock('@api/transaction/lsk', () => ({
   create: jest.fn(() => Promise.resolve(mockTransaction)),
+  computeTransactionId: jest.fn(() => mockTransaction.id),
 }));
+jest.mock('@utils/hwManager');
 
 describe('Multisignature summary component', () => {
   const members = [accounts.genesis, accounts.delegate].map(item => ({
@@ -34,16 +46,18 @@ describe('Multisignature summary component', () => {
       },
       name: 'customNode',
     },
+    multisigGroupRegistered: jest.fn(),
   };
 
   beforeEach(() => {
     wrapper = mount(<Summary {...props} />);
+    hwManagerAPI.signTransactionByHW.mockResolvedValue({});
   });
 
   it('Should call props.nextStep', async () => {
     wrapper.find('button.confirm').simulate('click');
     await flushPromises();
-    expect(props.nextStep).toHaveBeenCalledWith({ transaction: mockTransaction });
+    expect(props.multisigGroupRegistered).toHaveBeenCalledWith(mockTransaction);
   });
 
   it('Should call props.prevStep', () => {

@@ -10,7 +10,7 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.transfer;
 
 const FormBtc = (props) => {
   const {
-    token, getInitialValue, account,
+    token, getInitialValue, account, network,
   } = props;
 
   const [
@@ -19,6 +19,7 @@ const FormBtc = (props) => {
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), account.summary?.balance ?? 0, token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));
   const { fee, maxAmount, minFee } = useTransactionFeeCalculation({
+    network,
     selectedPriority,
     token,
     account,

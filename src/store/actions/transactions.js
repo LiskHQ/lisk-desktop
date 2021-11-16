@@ -1,12 +1,12 @@
 import to from 'await-to-js';
 
 import {
-  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes, DEFAULT_LIMIT,
+  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, DEFAULT_LIMIT,
 } from '@constants';
+import { isEmpty } from '@utils/helpers';
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { selectActiveTokenAccount, selectNetworkIdentifier } from '@store/selectors';
 import { signTransaction, transformTransaction } from '@utils/transaction';
-import { signSendTransaction } from '@utils/hwManager';
 import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
@@ -98,31 +98,34 @@ export const transactionCreated = data => async (dispatch, getState) => {
     account, settings, network,
   } = getState();
   const activeToken = settings.token.active;
+  const hwInfo = isEmpty(account.hwInfo) ? undefined : account.hwInfo; // @todo remove this by #3898
 
-  const params = {
+  const [error, tx] = await to(create({
     transactionObject: {
       ...data,
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     },
-    account: account.info[activeToken],
-    passphrase: account.passphrase,
+    account: {
+      ...account.info[activeToken],
+      hwInfo,
+      passphrase: account.passphrase,
+    },
     network,
-  };
+  }, activeToken));
 
-  const [error, tx] = account.loginType === loginTypes.passphrase.code
-    ? await to(create(params, activeToken))
-    : await to(signSendTransaction(account, data));
+  console.log({ error, tx });
 
-  if (error || (account.loginType !== loginTypes.passphrase.code && !tx.signatures)) {
+  if (error) {
     dispatch({
       type: actionTypes.transactionSignError,
       data: error,
     });
+  } else {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
   }
-  dispatch({
-    type: actionTypes.transactionCreatedSuccess,
-    data: tx,
-  });
 };
 
 /**
@@ -131,6 +134,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {object} data
  * @param {string} data.secondPass
  */
+/* istanbul ignore next */
 export const transactionDoubleSigned = data => async (dispatch, getState) => {
   const {
     transactions, network, account, settings,
@@ -145,6 +149,7 @@ export const transactionDoubleSigned = data => async (dispatch, getState) => {
       data: activeAccount,
     },
     false,
+    network,
   );
 
   if (!err) {
@@ -177,7 +182,7 @@ export const transactionBroadcasted = transaction =>
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
     const [error] = await to(broadcast(
-      { transaction, serviceUrl },
+      { transaction, serviceUrl, network },
       activeToken,
     ));
 

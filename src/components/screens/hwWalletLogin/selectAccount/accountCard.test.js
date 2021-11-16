@@ -9,9 +9,11 @@ describe('Account Card', () => {
   beforeEach(() => {
     props = {
       account: {
-        address: '123456L',
-        balance: 100,
-        name: 'Lisk',
+        summary: {
+          address: '123456L',
+          balance: 100,
+          name: 'Lisk',
+        },
       },
       accountOnEditMode: -1,
       index: 0,

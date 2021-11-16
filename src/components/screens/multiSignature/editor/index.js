@@ -7,7 +7,8 @@ import EditorComp from './editor';
 const Editor = (props) => {
   const { t } = useTranslation();
   const account = useSelector(getActiveTokenAccount);
-  return <EditorComp t={t} account={account} {...props} />;
+  const network = useSelector(state => state.network);
+  return <EditorComp t={t} account={account} network={network} {...props} />;
 };
 
 export default Editor;

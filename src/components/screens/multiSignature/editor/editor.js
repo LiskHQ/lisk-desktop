@@ -49,7 +49,7 @@ const validateState = ({
 
 // eslint-disable-next-line max-statements
 const Editor = ({
-  t, account, nextStep, prevState = {},
+  t, account, network, nextStep, prevState = {},
 }) => {
   const [requiredSignatures, setRequiredSignatures] = useState(() =>
     getInitialSignaturesState(prevState));
@@ -76,6 +76,7 @@ const Editor = ({
   }, [members]);
 
   const { fee, minFee } = useTransactionFeeCalculation({
+    network,
     selectedPriority,
     token,
     account,

@@ -7,6 +7,7 @@ const transactionAPI = functionMapper(lsk, btc);
 export const broadcast = transactionAPI.broadcast;
 export const calculateTransactionFee = transactionAPI.calculateTransactionFee;
 export const create = transactionAPI.create;
+export const computeTransactionId = transactionAPI.computeTransactionId;
 export const createTransactionInstance = transactionAPI.createTransactionInstance;
 export const getMinTxFee = transactionAPI.getMinTxFee;
 export const getRegisteredDelegates = transactionAPI.getRegisteredDelegates;

@@ -10,15 +10,16 @@ import ReviewSignComp from './reviewSign';
 
 const ReviewSign = (props) => {
   const { t } = useTranslation();
-  const networkIdentifier = useSelector(state => state.network.networks.LSK.networkIdentifier);
+  const network = useSelector(state => state.network);
   const account = useSelector(getActiveTokenAccount);
 
   return (
     <ReviewSignComp
       t={t}
       {...props}
-      networkIdentifier={networkIdentifier}
+      networkIdentifier={network.networks.LSK.networkIdentifier}
       account={account}
+      network={network}
     />
   );
 };

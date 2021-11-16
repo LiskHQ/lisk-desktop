@@ -104,8 +104,9 @@
     "stepDefinitions": "features/"
   },
   "dependencies": {
-    "@ledgerhq/hw-transport-node-hid": "5.50.0",
-    "@ledgerhq/hw-transport-u2f": "5.33.1-alpha.3",
+    "@hirishh/lisk-ledger.js": "2.2.0",
+    "@ledgerhq/hw-transport": "6.3.0",
+    "@ledgerhq/hw-transport-node-hid": "6.6.0",
     "@liskhq/lisk-client": "5.2.0",
     "@testing-library/react-hooks": "5.1.2",
     "await-to-js": "2.1.1",
@@ -120,7 +121,6 @@
     "cheerio": "1.0.0-rc.2",
     "core-js": "3.11.0",
     "crypto-browserify": "^3.12.0",
-    "dpos-ledger-api": "3.0.1",
     "electron-localshortcut": "3.2.1",
     "electron-store": "8.0.0",
     "enzyme-adapter-react-16": "1.15.6",

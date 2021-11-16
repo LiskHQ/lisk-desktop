@@ -487,7 +487,6 @@
   "The statistics shown only reflects peers connected to the current Lisk Service node.": "The statistics shown only reflects peers connected to the current Lisk Service node.",
   "The total amount of votes received for a delegate.": "The total amount of votes received for a delegate.",
   "The total amount of votes received from this account.": "The total amount of votes received from this account.",
-  "The transaction has been canceled on your {{model}}": "The transaction has been canceled on your {{model}}",
   "The transaction was broadcasted to the network. It will appear in sender account's wallet after confirmation.": "The transaction was broadcasted to the network. It will appear in sender account's wallet after confirmation.",
   "The ultimate gateway to the ecosystem. Lisk’s new design lets you easily manage your LSK (and much, much more).": "The ultimate gateway to the ecosystem. Lisk’s new design lets you easily manage your LSK (and much, much more).",
   "The updated amount after voting": "The updated amount after voting",

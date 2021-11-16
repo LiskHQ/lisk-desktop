@@ -90,10 +90,13 @@ const ConfirmMessage = ({
   };
 
   const signUsingHW = async () => {
-    const signedMessage = await signMessageByHW({
+    let signedMessage = await signMessageByHW({
       account,
       message,
     });
+    if (signedMessage instanceof Uint8Array) {
+      signedMessage = Buffer.from(signedMessage);
+    }
     const result = cryptography.printSignedMessage({
       message,
       publicKey: account.summary.publicKey,

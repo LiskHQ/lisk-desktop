@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import to from 'await-to-js';
-import { create } from '@api/transaction';
-import { toRawLsk } from '@utils/lsk';
+import { useDispatch } from 'react-redux';
+import { delegateRegistered } from '@actions/account';
+import { isEmpty } from '@utils/helpers';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@constants';
 import { getDelegate } from '@api/delegate';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
@@ -18,10 +18,11 @@ const token = tokenMap.LSK.key;
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
 
 // eslint-disable-next-line max-statements
-const SelectNameAndFee = ({ account, ...props }) => {
-  const {
-    t, nextStep, network, prevState,
-  } = props;
+const SelectNameAndFee = ({
+  account, t, nextStep, network, prevState,
+  signedTransaction, txSignatureError,
+}) => {
+  const dispatch = useDispatch();
   const timeout = useRef();
 
   const [state, _setState] = useState({
@@ -37,6 +38,7 @@ const SelectNameAndFee = ({ account, ...props }) => {
   ] = useTransactionPriority(token);
 
   const { fee, minFee } = useTransactionFeeCalculation({
+    network,
     selectedPriority,
     token,
     account,
@@ -55,31 +57,8 @@ const SelectNameAndFee = ({ account, ...props }) => {
     ),
   );
 
-  const onConfirm = async () => {
-    const data = {
-      network,
-      account,
-      transactionObject: {
-        senderPublicKey: account.summary.publicKey,
-        nonce: account.sequence?.nonce,
-        fee: toRawLsk(parseFloat(fee.value)),
-        username: state.nickname,
-        moduleAssetId,
-      },
-    };
-
-    const [error, tx] = await to(
-      create(data, tokenMap.LSK.key),
-    );
-
-    if (!error) {
-      nextStep({
-        nickname: state.nickname,
-        transactionInfo: tx,
-      });
-    } else {
-      nextStep({ error });
-    }
+  const onConfirm = () => {
+    dispatch(delegateRegistered({ fee, username: state.nickname }));
   };
 
   const getNicknameFromPrevState = () => {
@@ -162,6 +141,23 @@ const SelectNameAndFee = ({ account, ...props }) => {
   useEffect(() => {
     hasUserEnoughFunds();
   }, [fee]);
+
+  useEffect(() => {
+    // success
+    if (!isEmpty(signedTransaction)) {
+      nextStep({
+        nickname: state.nickname,
+        transactionInfo: signedTransaction,
+      });
+    }
+  }, [signedTransaction]);
+
+  useEffect(() => {
+    // error
+    if (txSignatureError) {
+      nextStep({ error: txSignatureError });
+    }
+  }, [txSignatureError]);
 
   const isBtnDisabled = () => {
     if (state.customFee && state.customFee.error) return true;

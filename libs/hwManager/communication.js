@@ -60,7 +60,8 @@ const getAddress = async (data) => {
  * @param {object} data -> Object that contain the information about the device and data
  * @param {string} data.deviceId -> Id of the hw device
  * @param {number} data.index -> index of the account of which will extract information
- * @param {object} data.tx -> Object with all transaction information
+ * @param {number} data.networkIdentifier -> lisk network identifier
+ * @param {object} data.transactionBytes -> transaction bytes to be signed
  */
 const signTransaction = async (data) => {
   const response = await executeCommand(
@@ -135,7 +136,7 @@ const subscribeToDevicesList = (fn) => {
     fn(response);
   };
   IPC.on(IPC_MESSAGES.DEVICE_LIST_CHANGED, updateDevices);
-  setImmediate(updateDevices);
+  setTimeout(updateDevices, 0);
   return {
     unsubscribe: IPC.removeListener.bind(IPC, IPC_MESSAGES.DEVICE_LIST_CHANGED, fn),
   };

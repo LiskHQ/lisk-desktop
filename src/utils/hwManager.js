@@ -25,7 +25,7 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
     // eslint-disable-next-line no-await-in-loop
     const publicKey = await getPublicKey({ index, deviceId });
     // eslint-disable-next-line no-await-in-loop
-    account = await getAccount({ network, publicKey }, 'LSK');
+    account = await getAccount({ network, params: { publicKey } }, 'LSK');
     if (index === 0 || accounts[index - 1].summary.balance) {
       accounts.push(account);
     }
@@ -34,71 +34,33 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
 };
 
 /**
- * signSendTransaction - Function.
- * This function is used for sign a send transaction.
+ * signTransactionByHW - Function.
+ * This function is used for sign a send hardware wallet transaction.
  */
-const signSendTransaction = async () => {
-// const signSendTransaction = async (account, data) => {
-  // const { transfer, utils } = Lisk.transaction;
-  // const transactionObject = {
-  //   ...transfer(data),
-  //   senderPublicKey: account.info.LSK ? account.info.LSK.publicKey : null,
-  // };
-
-  // const transaction = {
-  //   deviceId: account.hwInfo.deviceId,
-  //   index: account.hwInfo.derivationIndex,
-  //   tx: transactionObject,
-  // };
-
-  // try {
-  //   const signature = await signTransaction(transaction);
-  //   const signedTransaction = { ...transactionObject, signature };
-  //   const result = { ...signedTransaction, id: utils.getTransactionId(signedTransaction) };
-  //   return result;
-  // } catch (error) {
-  //   throw new Error(error);
-  // }
-};
-
-/**
- * signVoteTransaction - Function.
- * This function is used for sign a vote transaction.
- */
-const signVoteTransaction = async (
+const signTransactionByHW = async (
   account,
-  votes,
-  timeOffset,
   networkIdentifier,
+  transactionObject,
+  transactionBytes,
 ) => {
-  // eslint-disable-next-line no-undef
-  const { castVotes, utils } = Lisk.transaction;
+  const transaction = {
+    deviceId: account.hwInfo.deviceId,
+    index: account.hwInfo.derivationIndex,
+    networkIdentifier,
+    transactionBytes,
+  };
 
   try {
-    const transactionObject = {
-      ...castVotes({ votes, timeOffset, networkIdentifier }),
-      senderPublicKey: account.publicKey,
-      recipientId: account.address, // @todo should we remove this?
-    };
+    const signature = await signTransaction(transaction);
+    if (Array.isArray(transactionObject.signatures)) {
+      transactionObject.signatures.push(signature);
+    } else {
+      Object.assign(transactionObject, { signatures: [signature] });
+    }
 
-    // eslint-disable-next-line no-await-in-loop
-    const signature = await signTransaction({
-      deviceId: account.hwInfo.deviceId,
-      index: account.hwInfo.derivationIndex,
-      tx: transactionObject,
-    });
-
-    return {
-      ...transactionObject,
-      signature,
-      // @ todo core 3.x getId
-      id: utils.getTransactionId({ ...transactionObject, signature }),
-    };
+    return transactionObject;
   } catch (error) {
-    throw new Error(i18next.t(
-      'The transaction has been canceled on your {{model}}',
-      { model: account.hwInfo.deviceModel },
-    ));
+    throw new Error(error);
   }
 };
 
@@ -134,8 +96,7 @@ export {
   getAccountsFromDevice,
   getAddress,
   getPublicKey,
-  signSendTransaction,
-  signVoteTransaction,
+  signTransactionByHW,
   subscribeToDeviceConnected,
   subscribeToDeviceDisconnected,
   subscribeToDevicesList,

@@ -1,4 +1,5 @@
 import accounts from './accounts';
+import moduleAssetSchemas from './schemas';
 
 export default {
   account: {
@@ -33,6 +34,7 @@ export default {
     networks: {
       LSK: {
         serviceUrl: 'http://example.com',
+        moduleAssetSchemas,
       },
     },
   },

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import {
@@ -7,8 +8,9 @@ import {
   tokenMap,
 } from '@constants';
 import { toRawLsk } from '@utils/lsk';
+import { isEmpty } from '@utils/helpers';
 import { create } from '@api/transaction';
-import { selectActiveTokenAccount, selectCurrentBlockHeight } from '@store/selectors';
+import { selectCurrentBlockHeight } from '@store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@api/account';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
 import { extractKeyPair, getUnlockableUnlockObjects } from '@utils/account';
@@ -176,37 +178,185 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
   //
   const state = getState();
   const currentBlockHeight = selectCurrentBlockHeight(state);
-  const activeAccount = selectActiveTokenAccount(state);
+  // @todo Fix this by #3898
+  const activeAccount = {
+    ...state.account.info.LSK,
+    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
+    passphrase: state.account.passphrase,
+  };
 
   //
   // Create the transaction
   //
-  const result = await create({
-    network: state.network,
-    account: activeAccount,
-    transactionObject: {
-      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
-      senderPublicKey: activeAccount.summary.publicKey,
-      nonce: activeAccount.sequence?.nonce,
-      fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
-      unlockObjects: getUnlockableUnlockObjects(
-        activeAccount.dpos?.unlocking, currentBlockHeight,
-      ),
-    },
-  }, tokenMap.LSK.key);
+  const [error, tx] = await to(
+    create({
+      network: state.network,
+      account: activeAccount,
+      transactionObject: {
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        senderPublicKey: activeAccount.summary.publicKey,
+        nonce: activeAccount.sequence?.nonce,
+        fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
+        unlockObjects: getUnlockableUnlockObjects(
+          activeAccount.dpos?.unlocking, currentBlockHeight,
+        ),
+      },
+    }, tokenMap.LSK.key),
+  );
 
   //
   // Dispatch corresponding action
   //
-  if (!result.error) {
+  if (!error) {
     dispatch({
       type: actionTypes.transactionCreatedSuccess,
-      data: result.data,
+      data: tx,
     });
   } else {
     dispatch({
       type: actionTypes.transactionSignError,
-      data: result.error,
+      data: error,
+    });
+  }
+};
+
+/* istanbul ignore next */
+export const delegateRegistered = ({ fee, username }) => async (dispatch, getState) => {
+//
+  // Collect data
+  //
+  const state = getState();
+  const activeAccount = {
+    ...state.account.info.LSK,
+    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
+    passphrase: state.account.passphrase,
+  };
+
+  //
+  // Create the transaction
+  //
+  const [error, tx] = await to(
+    create({
+      network: state.network,
+      account: activeAccount,
+      transactionObject: {
+        senderPublicKey: activeAccount.summary.publicKey,
+        nonce: activeAccount.sequence?.nonce,
+        fee: toRawLsk(parseFloat(fee.value)),
+        username,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
+      },
+    }, tokenMap.LSK.key),
+  );
+
+  //
+  // Dispatch corresponding action
+  //
+  if (!error) {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};
+
+/* istanbul ignore next */
+export const multisigGroupRegistered = ({
+  fee,
+  mandatoryKeys,
+  optionalKeys,
+  numberOfSignatures,
+}) => async (dispatch, getState) => {
+  //
+  // Collect data
+  //
+  const state = getState();
+  const activeAccount = {
+    ...state.account.info.LSK,
+    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
+    passphrase: state.account.passphrase,
+  };
+
+  //
+  // Create the transaction
+  //
+  const [error, tx] = await to(
+    create({
+      network: state.network,
+      account: activeAccount,
+      transactionObject: {
+        mandatoryKeys,
+        optionalKeys,
+        numberOfSignatures,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
+        fee: toRawLsk(fee),
+        nonce: activeAccount.sequence.nonce,
+        senderPublicKey: activeAccount.summary.publicKey,
+      },
+    }, tokenMap.LSK.key),
+  );
+
+  //
+  // Dispatch corresponding action
+  //
+  if (!error) {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};
+
+/* istanbul ignore next */
+export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
+  //
+  // Collect data
+  //
+  const state = getState();
+  const activeAccount = {
+    ...state.account.info.LSK,
+    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
+    passphrase: state.account.passphrase,
+  };
+
+  //
+  // Create the transaction
+  //
+  const [error, tx] = await to(
+    create({
+      network: state.network,
+      account: activeAccount,
+      transactionObject: {
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
+        fee: toRawLsk(fee.value),
+        amount: activeAccount.legacy.balance,
+        keys: { numberOfSignatures: 0 },
+      },
+    }, tokenMap.LSK.key),
+  );
+
+  //
+  // Dispatch corresponding action
+  //
+  if (!error) {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
     });
   }
 };

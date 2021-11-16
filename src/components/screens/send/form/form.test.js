@@ -1,7 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
-import { tokenMap, moduleAssetSchemas } from '@constants';
+import { tokenMap } from '@constants';
 import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { fromRawLsk } from '@utils/lsk';
@@ -37,35 +37,6 @@ useTransactionFeeCalculation.mockImplementation(() => ({
 }));
 
 describe('Form', () => {
-  moduleAssetSchemas['2:0'] = {
-    $id: 'lisk/transfer-asset',
-    title: 'Transfer transaction asset',
-    type: 'object',
-    required: [
-      'amount',
-      'recipientAddress',
-      'data',
-    ],
-    properties: {
-      amount: {
-        dataType: 'uint64',
-        fieldNumber: 1,
-      },
-      recipientAddress: {
-        dataType: 'bytes',
-        fieldNumber: 2,
-        minLength: 20,
-        maxLength: 20,
-      },
-      data: {
-        dataType: 'string',
-        fieldNumber: 3,
-        minLength: 0,
-        maxLength: 64,
-      },
-    },
-  };
-
   let props;
   let bookmarks;
 

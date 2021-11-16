@@ -40,6 +40,7 @@ const Form = ({
   } = data;
   const dispatch = useDispatch();
 
+  // eslint-disable-next-line max-statements
   const onClickUnlock = async () => {
     const selectedFee = customFee ? customFee.value : fee.value;
     dispatch(balanceUnlocked({ selectedFee }));
@@ -68,7 +69,7 @@ const Form = ({
       </BoxHeader>
       <BoxContent className={styles.content}>
         <p>{t('Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.')}</p>
-        { children }
+        {children}
       </BoxContent>
       <BoxFooter>
         <PrimaryButton
