@@ -1,0 +1,15 @@
+.wrapper {
+  min-height: 400px;
+
+  & .content {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+
+    & h5 {
+      font-weight: var(--font-weight-bold);
+    }
+  }
+}
