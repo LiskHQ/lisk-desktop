@@ -59,14 +59,14 @@ const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 })
 };
 
 /* istanbul ignore file */
-const statusMessages = (t, locked, unlockable, selfUnvote) => ({
+const statusMessages = (t, statusInfo) => ({
   pending: {
     title: t('Submitting your votes'),
     message: t('Your votes are being submitted to the blockchain.'),
   },
   success: {
     title: t('Votes are submitted'),
-    message: getSuccessMessage(t, locked, unlockable, selfUnvote),
+    message: getSuccessMessage(t, statusInfo.locked, statusInfo.unlockable, statusInfo.selfUnvote),
   },
   error: {
     title: t('Vote submission failed'),
