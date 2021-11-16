@@ -57,17 +57,10 @@ const Summary = ({
   return (
     <TransactionSummary
       title={t('Unlock LSK summary')}
-      t={t}
-      account={account}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       fee={!account.summary.isMultisignature && fee.value}
       classNames={`${styles.box} ${styles.summaryContainer}`}
-      createTransaction={(callback) => {
-        callback(transactionInfo);
-      }}
-      keys={account.keys}
-      setSecondPass={setSecondPass}
     >
       <TransactionInfo
         moduleAssetId={moduleAssetId}

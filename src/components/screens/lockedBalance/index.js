@@ -1,7 +1,7 @@
 import React from 'react';
 import Dialog from '@toolbox/dialog/dialog';
 import MultiStep from '@shared/multiStep';
-import LockedBalance from './lockedBalance';
+import Form from './form';
 import TransactionStatus from './transactionStatus';
 import Summary from './summary';
 
@@ -10,7 +10,7 @@ const Modal = () => (
     <MultiStep
       key="unlockBalance"
     >
-      <LockedBalance />
+      <Form />
       <Summary />
       <TransactionStatus />
     </MultiStep>
