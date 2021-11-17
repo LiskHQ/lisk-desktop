@@ -1,4 +1,5 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@constants';
 import { truncateAddress } from '@utils/account';
 import { TertiaryButton } from '@toolbox/buttons';
@@ -17,7 +18,6 @@ const AccountCard = ({
   onSaveNameAccounts,
   onSelectAccount,
   onInputBlur,
-  isLegacy = false,
   t,
 }) => (
   <div
@@ -34,14 +34,16 @@ const AccountCard = ({
       </div>
       <div>
         <header className={styles.header}>
-          { accountOnEditMode === index
+          { accountOnEditMode === account.summary?.address
             ? (
               <div className={styles.editAccountTitle}>
                 <Input
                   value={account.name}
                   size="s"
                   onClick={e => e.stopPropagation()}
-                  onChange={event => onChangeAccountTitle(event.target.value, index)}
+                  onChange={
+                    event => onChangeAccountTitle(event.target.value, account.summary?.address)
+                  }
                   onBlur={onInputBlur}
                   className="account-name"
                   placeholder={t('Account name')}
@@ -66,7 +68,7 @@ const AccountCard = ({
                     className={`${styles.editBtn} edit-account`}
                     onClick={e => {
                       e.stopPropagation();
-                      onEditAccount(index);
+                      onEditAccount(account.summary?.address);
                     }}
                     name="edit"
                   />
@@ -75,14 +77,7 @@ const AccountCard = ({
               </>
             )}
         </header>
-        {!isLegacy ? (
-          <div className={`${styles.accountBalance} row-balance`}>
-            <p>{t('Balance:')}</p>
-            <p>
-              <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
-            </p>
-          </div>
-        ) : (
+        {account.legacy ? (
           <>
             <div className={`${styles.accountBalance} ${styles.legacyBalance} row-balance`}>
               <p>{t('Old account:')}</p>
@@ -97,10 +92,17 @@ const AccountCard = ({
               </p>
             </div>
           </>
+        ) : (
+          <div className={`${styles.accountBalance} row-balance`}>
+            <p>{t('Balance:')}</p>
+            <p>
+              <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
+            </p>
+          </div>
         )}
       </div>
     </div>
   </div>
 );
 
-export default AccountCard;
+export default withTranslation()(AccountCard);

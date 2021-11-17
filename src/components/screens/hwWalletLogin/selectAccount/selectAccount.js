@@ -9,17 +9,40 @@ import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';
 
+const Tab = ({
+  tabName, tabId, accountsList,
+  accountOnEditMode, onChangeAccountTitle, onEditAccount,
+  onSaveNameAccounts, onSelectAccount, onInputBlur,
+}) => (
+  <div tabName={tabName} tabId={tabId} className={`${styles.deviceContainer} hw-container`}>
+    {accountsList.map((account, index) => (
+      <AccountCard
+        key={index}
+        account={account}
+        index={index}
+        accountOnEditMode={accountOnEditMode}
+        onChangeAccountTitle={onChangeAccountTitle}
+        onEditAccount={onEditAccount}
+        onSaveNameAccounts={onSaveNameAccounts}
+        onSelectAccount={onSelectAccount}
+        onInputBlur={onInputBlur}
+      />
+    ))}
+  </div>
+);
+
 class SelectAccount extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      accountOnEditMode: -1,
+      accountOnEditMode: '',
       hwAccounts: [],
     };
 
     this.onEditAccount = this.onEditAccount.bind(this);
     this.onChangeAccountTitle = this.onChangeAccountTitle.bind(this);
+    this.onAccountCardBlur = this.onAccountCardBlur.bind(this);
     this.onSaveNameAccounts = this.onSaveNameAccounts.bind(this);
     this.onAddNewAccount = this.onAddNewAccount.bind(this);
     this.onSelectAccount = this.onSelectAccount.bind(this);
@@ -66,15 +89,23 @@ class SelectAccount extends React.Component {
     }
   }
 
-  onEditAccount(index) {
+  onEditAccount(address) {
     this.onSaveNameAccounts();
-    this.setState({ accountOnEditMode: index });
+    this.setState({ accountOnEditMode: address });
   }
 
-  onChangeAccountTitle(value, index) {
-    const newAccounts = this.state.hwAccounts;
-    newAccounts[index].name = value;
+  onChangeAccountTitle(value, address) {
+    const newAccounts = this.state.hwAccounts.map((account) => {
+      if (account.summary.address === address) {
+        account.name = value;
+      }
+      return account;
+    });
     this.setState({ hwAccounts: newAccounts });
+  }
+
+  onAccountCardBlur() {
+    this.setState({ accountOnEditMode: '' });
   }
 
   onSaveNameAccounts() {
@@ -86,7 +117,7 @@ class SelectAccount extends React.Component {
         [this.props.device.model]: accountNames,
       },
     });
-    this.setState({ accountOnEditMode: -1 });
+    this.setState({ accountOnEditMode: '' });
   }
 
   onAddNewAccount() {
@@ -162,65 +193,39 @@ class SelectAccount extends React.Component {
           hwAccounts.length
             ? (
               <TabsContainer name="main-tabs">
-                <div
+                <Tab
                   tabName={t('Active')}
                   tabId="active"
-                  className={`${styles.deviceContainer} hw-container`}
-                >
-                  {nonEmptyAccounts.map((hwAccount, index) => (
-                    <AccountCard
-                      key={index}
-                      account={hwAccount}
-                      accountOnEditMode={accountOnEditMode}
-                      index={index}
-                      onChangeAccountTitle={this.onChangeAccountTitle}
-                      onEditAccount={this.onEditAccount}
-                      onSaveNameAccounts={this.onSaveNameAccounts}
-                      onSelectAccount={this.onSelectAccount}
-                      onInputBlur={() => { this.setState({ accountOnEditMode: -1 }); }}
-                      t={t}
-                    />
-                  ))}
-                </div>
-                <div
+                  accountsList={nonEmptyAccounts}
+                  accountOnEditMode={accountOnEditMode}
+                  onChangeAccountTitle={this.onChangeAccountTitle}
+                  onEditAccount={this.onEditAccount}
+                  onSaveNameAccounts={this.onSaveNameAccounts}
+                  onSelectAccount={this.onSelectAccount}
+                  onInputBlur={this.onAccountCardBlur}
+                />
+                <Tab
                   tabName={t('Empty')}
                   tabId="empty"
-                  className={`${styles.deviceContainer} hw-container`}
-                >
-                  {emptyAccounts.map((hwAccount, index) => (
-                    <AccountCard
-                      key={index}
-                      account={hwAccount}
-                      accountOnEditMode={accountOnEditMode}
-                      index={index}
-                      onChangeAccountTitle={this.onChangeAccountTitle}
-                      onEditAccount={this.onEditAccount}
-                      onSaveNameAccounts={this.onSaveNameAccounts}
-                      onSelectAccount={this.onSelectAccount}
-                      t={t}
-                    />
-                  ))}
-                </div>
-                <div
+                  accountsList={emptyAccounts}
+                  accountOnEditMode={accountOnEditMode}
+                  onChangeAccountTitle={this.onChangeAccountTitle}
+                  onEditAccount={this.onEditAccount}
+                  onSaveNameAccounts={this.onSaveNameAccounts}
+                  onSelectAccount={this.onSelectAccount}
+                  onInputBlur={this.onAccountCardBlur}
+                />
+                <Tab
                   tabName={t('Reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
                   tabId="reclaim"
-                  className={`${styles.deviceContainer} hw-container`}
-                >
-                  {reclaimAccounts.map((hwAccount, index) => (
-                    <AccountCard
-                      key={index}
-                      account={hwAccount}
-                      accountOnEditMode={accountOnEditMode}
-                      index={index}
-                      onChangeAccountTitle={this.onChangeAccountTitle}
-                      onEditAccount={this.onEditAccount}
-                      onSaveNameAccounts={this.onSaveNameAccounts}
-                      onSelectAccount={this.onSelectAccount}
-                      isLegacy
-                      t={t}
-                    />
-                  ))}
-                </div>
+                  accountsList={reclaimAccounts}
+                  accountOnEditMode={accountOnEditMode}
+                  onChangeAccountTitle={this.onChangeAccountTitle}
+                  onEditAccount={this.onEditAccount}
+                  onSaveNameAccounts={this.onSaveNameAccounts}
+                  onSelectAccount={this.onSelectAccount}
+                  onInputBlur={this.onAccountCardBlur}
+                />
               </TabsContainer>
             )
             : <LoadingIcon />
