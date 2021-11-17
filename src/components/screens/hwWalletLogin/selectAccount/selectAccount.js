@@ -14,7 +14,7 @@ const Tab = ({
   accountOnEditMode, onChangeAccountTitle, onEditAccount,
   onSaveNameAccounts, onSelectAccount, onInputBlur,
 }) => (
-  <div tabName={tabName} tabId={tabId} className={`${styles.deviceContainer} hw-container`}>
+  <div tabName={tabName} tabId={tabId} className={`${styles.deviceContainer} ${`tab-${tabId}`} hw-container`}>
     {accountsList.map((account, index) => (
       <AccountCard
         key={index}
